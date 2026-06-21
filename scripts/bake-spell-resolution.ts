@@ -13,7 +13,14 @@ import { join } from "node:path";
 import { spells } from "../src/data/compendium/spells";
 import { deriveSpellResolution } from "../src/lib/spellMechanicsDerivation";
 
-type Rec = Record<string, any>;
+interface Rec {
+	[key: string]: unknown;
+	id?: string;
+	description?: string | null;
+	effect?: string | null;
+	type?: string | null;
+	effects?: { primary?: string | null } | null;
+}
 
 const isRecord = (v: unknown): v is Rec =>
 	!!v && typeof v === "object" && !Array.isArray(v);
@@ -71,7 +78,8 @@ function buildResolution(s: Rec): Rec {
 
 const targets = new Map<string, Rec>();
 for (const s of spells as unknown as Rec[]) {
-	if (!hasResolution(s)) targets.set(s.id, buildResolution(s));
+	if (!hasResolution(s) && typeof s.id === "string")
+		targets.set(s.id, buildResolution(s));
 }
 console.log(`Spells needing baked resolution: ${targets.size}`);
 

@@ -12,7 +12,7 @@
  */
 
 import { spawnSync } from "node:child_process";
-import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync } from "node:fs";
 import {
 	appendFile,
 	copyFile,
@@ -24,14 +24,7 @@ import {
 } from "node:fs/promises";
 import http from "node:http";
 import https from "node:https";
-import {
-	basename,
-	dirname,
-	extname,
-	join,
-	relative,
-	resolve,
-} from "node:path";
+import { dirname, extname, join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import sharp from "sharp";
 
@@ -53,7 +46,11 @@ const COMFY_EXAMPLE_WORKFLOW = join(
 	"config",
 	"comfy-rift-sdxl-workflow-api.example.json",
 );
-const COMFY_WORKFLOW = join(ROOT, "config", "comfy-rift-sdxl-workflow-api.json");
+const COMFY_WORKFLOW = join(
+	ROOT,
+	"config",
+	"comfy-rift-sdxl-workflow-api.json",
+);
 
 const DEFAULT_CHECKPOINT = "stabilityai/stable-diffusion-xl-base-1.0";
 const DEFAULT_A1111_URL = "http://127.0.0.1:7860";
@@ -116,10 +113,12 @@ function parseArgs(argv) {
 		else if (arg === "--allow-current-model") args.allowCurrentModel = true;
 		else if (arg === "--skip-existing") args.skipExisting = true;
 		else if (arg === "--continue-on-error") args.continueOnError = true;
-		else if (arg === "--skip-post-apply-checks") args.skipPostApplyChecks = true;
+		else if (arg === "--skip-post-apply-checks")
+			args.skipPostApplyChecks = true;
 		else if (arg === "--all-reviewed") args.allReviewed = true;
 		else if (arg === "--limit") args.limit = Number(argv[++i]);
-		else if (arg === "--variants") args.variants = Math.max(1, Number(argv[++i]));
+		else if (arg === "--variants")
+			args.variants = Math.max(1, Number(argv[++i]));
 		else if (arg === "--backend") args.backend = String(argv[++i] ?? "auto");
 		else if (arg === "--sd-url") args.sdUrl = String(argv[++i] ?? "");
 		else if (arg === "--checkpoint") args.checkpoint = String(argv[++i] ?? "");
@@ -231,13 +230,19 @@ function selectedPrompts(prompts, args) {
 		selected = selected.filter((prompt) => prompt.priority === "high");
 	}
 	if (args.type) {
-		selected = selected.filter((prompt) => normalizeType(prompt.type) === args.type);
+		selected = selected.filter(
+			(prompt) => normalizeType(prompt.type) === args.type,
+		);
 	}
 	if (args.promptId) {
-		selected = selected.filter((prompt) => prompt.promptRecordId === args.promptId);
+		selected = selected.filter(
+			(prompt) => prompt.promptRecordId === args.promptId,
+		);
 	}
 	if (args.skipExisting) {
-		selected = selected.filter((prompt) => !promptHasExistingCandidate(prompt, args));
+		selected = selected.filter(
+			(prompt) => !promptHasExistingCandidate(prompt, args),
+		);
 	}
 	if (args.limit !== null) {
 		selected = selected.slice(0, args.limit);
@@ -248,7 +253,9 @@ function selectedPrompts(prompts, args) {
 function promptHasExistingCandidate(prompt, args) {
 	for (let variant = 0; variant < args.variants; variant += 1) {
 		const seed = args.seed ?? prompt.seed + variant;
-		const plannedDiskPath = appPathToDisk(candidateAppPath(prompt, seed, variant, "png"));
+		const plannedDiskPath = appPathToDisk(
+			candidateAppPath(prompt, seed, variant, "png"),
+		);
 		if (!existingCandidateMatchesPrompt(plannedDiskPath, prompt, seed)) {
 			return false;
 		}
@@ -264,12 +271,12 @@ async function ensureComfyExampleWorkflow() {
 	if (existsSync(COMFY_EXAMPLE_WORKFLOW)) return;
 	await mkdir(dirname(COMFY_EXAMPLE_WORKFLOW), { recursive: true });
 	const workflow = {
-		"1": {
+		1: {
 			class_type: "CheckpointLoaderSimple",
 			inputs: { ckpt_name: "sd_xl_base_1.0.safetensors" },
 			_meta: { title: "Load SDXL Base checkpoint" },
 		},
-		"2": {
+		2: {
 			class_type: "CLIPTextEncode",
 			inputs: {
 				text: "RIFT_POSITIVE_PROMPT",
@@ -277,7 +284,7 @@ async function ensureComfyExampleWorkflow() {
 			},
 			_meta: { title: "Positive prompt" },
 		},
-		"3": {
+		3: {
 			class_type: "CLIPTextEncode",
 			inputs: {
 				text: "RIFT_NEGATIVE_PROMPT",
@@ -285,7 +292,7 @@ async function ensureComfyExampleWorkflow() {
 			},
 			_meta: { title: "Negative prompt" },
 		},
-		"4": {
+		4: {
 			class_type: "EmptyLatentImage",
 			inputs: {
 				width: 1024,
@@ -294,7 +301,7 @@ async function ensureComfyExampleWorkflow() {
 			},
 			_meta: { title: "Latent size" },
 		},
-		"5": {
+		5: {
 			class_type: "KSampler",
 			inputs: {
 				seed: 1,
@@ -310,7 +317,7 @@ async function ensureComfyExampleWorkflow() {
 			},
 			_meta: { title: "Sampler" },
 		},
-		"6": {
+		6: {
 			class_type: "VAEDecode",
 			inputs: {
 				samples: ["5", 0],
@@ -318,7 +325,7 @@ async function ensureComfyExampleWorkflow() {
 			},
 			_meta: { title: "Decode" },
 		},
-		"7": {
+		7: {
 			class_type: "SaveImage",
 			inputs: {
 				filename_prefix: "rift_ascendant",
@@ -334,7 +341,12 @@ async function ensureComfyExampleWorkflow() {
 	);
 }
 
-async function requestBuffer(url, options = {}, timeoutMs = 4000, redirects = 0) {
+async function requestBuffer(
+	url,
+	options = {},
+	timeoutMs = 4000,
+	redirects = 0,
+) {
 	const parsed = new URL(url);
 	const client = parsed.protocol === "https:" ? https : http;
 	const body = options.body ? Buffer.from(options.body) : null;
@@ -434,7 +446,9 @@ function findA1111Checkpoint(models, requested) {
 			model.filename,
 			model.hash,
 		].filter(Boolean);
-		if (candidates.some((candidate) => checkpointMatches(candidate, requested))) {
+		if (
+			candidates.some((candidate) => checkpointMatches(candidate, requested))
+		) {
 			return model.title || model.model_name || model.filename;
 		}
 	}
@@ -516,9 +530,13 @@ async function detectComfy(url, checkpoint, allowCurrentModel) {
 
 async function detectBackend(args) {
 	const a1111Url =
-		args.backend === "a1111" ? args.sdUrl || DEFAULT_A1111_URL : DEFAULT_A1111_URL;
+		args.backend === "a1111"
+			? args.sdUrl || DEFAULT_A1111_URL
+			: DEFAULT_A1111_URL;
 	const comfyUrl =
-		args.backend === "comfy" ? args.sdUrl || DEFAULT_COMFY_URL : DEFAULT_COMFY_URL;
+		args.backend === "comfy"
+			? args.sdUrl || DEFAULT_COMFY_URL
+			: DEFAULT_COMFY_URL;
 
 	if (args.backend === "a1111") {
 		return await detectA1111(a1111Url, args.checkpoint, args.allowCurrentModel);
@@ -555,7 +573,9 @@ function printSetupInstructions(reason, checkpoint) {
 	console.warn(`[setup] Required default checkpoint: ${checkpoint}`);
 	console.warn("");
 	console.warn("AUTOMATIC1111:");
-	console.warn(`  1. Install SDXL Base 1.0 from Hugging Face: ${DEFAULT_CHECKPOINT}`);
+	console.warn(
+		`  1. Install SDXL Base 1.0 from Hugging Face: ${DEFAULT_CHECKPOINT}`,
+	);
 	console.warn(
 		"  2. Place the checkpoint in stable-diffusion-webui/models/Stable-diffusion/",
 	);
@@ -563,7 +583,9 @@ function printSetupInstructions(reason, checkpoint) {
 	console.warn(`  4. Retry with --backend a1111 --sd-url ${DEFAULT_A1111_URL}`);
 	console.warn("");
 	console.warn("ComfyUI:");
-	console.warn(`  1. Install SDXL Base 1.0 from Hugging Face: ${DEFAULT_CHECKPOINT}`);
+	console.warn(
+		`  1. Install SDXL Base 1.0 from Hugging Face: ${DEFAULT_CHECKPOINT}`,
+	);
 	console.warn("  2. Place checkpoints in ComfyUI/models/checkpoints/");
 	console.warn(
 		"  3. Export an API workflow to config/comfy-rift-sdxl-workflow-api.json",
@@ -603,14 +625,21 @@ async function generateWithA1111(prompts, args, backendInfo) {
 	for (const prompt of prompts) {
 		for (let variant = 0; variant < args.variants; variant += 1) {
 			const seed = args.seed ?? prompt.seed + variant;
-			const plannedCandidatePath = candidateAppPath(prompt, seed, variant, "png");
+			const plannedCandidatePath = candidateAppPath(
+				prompt,
+				seed,
+				variant,
+				"png",
+			);
 			const plannedDiskPath = appPathToDisk(plannedCandidatePath);
 			if (existingCandidateMatchesPrompt(plannedDiskPath, prompt, seed)) {
 				console.log(`[a1111] Skipped existing ${plannedCandidatePath}`);
 				continue;
 			}
 			if (hasOutdatedCandidate(plannedDiskPath)) {
-				console.log(`[a1111] Regenerating changed prompt ${plannedCandidatePath}`);
+				console.log(
+					`[a1111] Regenerating changed prompt ${plannedCandidatePath}`,
+				);
 			}
 			try {
 				const payload = {
@@ -656,16 +685,31 @@ async function generateWithA1111(prompts, args, backendInfo) {
 				sidecars.push(sidecar);
 				console.log(`[a1111] Generated ${candidatePath}`);
 			} catch (error) {
-				await handleGenerationError(error, prompt, variant, seed, "a1111", args);
+				await handleGenerationError(
+					error,
+					prompt,
+					variant,
+					seed,
+					"a1111",
+					args,
+				);
 			}
 		}
 	}
-	await writeReviewGalleries(prompts, [...(await readCandidateSidecars()), ...sidecars]);
+	await writeReviewGalleries(prompts, [
+		...(await readCandidateSidecars()),
+		...sidecars,
+	]);
 }
 
 async function ensureA1111CheckpointLoaded(backendInfo) {
 	if (backendInfo.usingCurrentModel || !backendInfo.checkpoint) return;
-	if (checkpointMatches(backendInfo.options?.sd_model_checkpoint, backendInfo.checkpoint)) {
+	if (
+		checkpointMatches(
+			backendInfo.options?.sd_model_checkpoint,
+			backendInfo.checkpoint,
+		)
+	) {
 		return;
 	}
 	console.log(`[a1111] Loading checkpoint once: ${backendInfo.checkpoint}`);
@@ -680,7 +724,13 @@ async function ensureA1111CheckpointLoaded(backendInfo) {
 	);
 }
 
-async function saveBase64Candidate(imageBase64, prompt, seed, variant, extension) {
+async function saveBase64Candidate(
+	imageBase64,
+	prompt,
+	seed,
+	variant,
+	extension,
+) {
 	const clean = imageBase64.replace(/^data:image\/\w+;base64,/, "");
 	const bytes = Buffer.from(clean, "base64");
 	const diskPath = candidateDiskPath(prompt, seed, variant, extension);
@@ -693,7 +743,10 @@ function candidateFileName(prompt, seed, variant, extension) {
 }
 
 function candidateDiskPath(prompt, seed, variant, extension) {
-	return join(CANDIDATE_DIR, candidateFileName(prompt, seed, variant, extension));
+	return join(
+		CANDIDATE_DIR,
+		candidateFileName(prompt, seed, variant, extension),
+	);
 }
 
 function candidateAppPath(prompt, seed, variant, extension) {
@@ -727,7 +780,10 @@ async function generateWithComfy(prompts, args, backendInfo) {
 	await ensureCandidateDir();
 	await ensureComfyExampleWorkflow();
 	if (!existsSync(COMFY_WORKFLOW)) {
-		printSetupInstructions("ComfyUI workflow JSON is missing.", args.checkpoint);
+		printSetupInstructions(
+			"ComfyUI workflow JSON is missing.",
+			args.checkpoint,
+		);
 		console.warn(
 			`[comfy] Created/verified example workflow: ${COMFY_EXAMPLE_WORKFLOW}`,
 		);
@@ -740,17 +796,29 @@ async function generateWithComfy(prompts, args, backendInfo) {
 	for (const prompt of prompts) {
 		for (let variant = 0; variant < args.variants; variant += 1) {
 			const seed = args.seed ?? prompt.seed + variant;
-			const plannedCandidatePath = candidateAppPath(prompt, seed, variant, "png");
+			const plannedCandidatePath = candidateAppPath(
+				prompt,
+				seed,
+				variant,
+				"png",
+			);
 			const plannedDiskPath = appPathToDisk(plannedCandidatePath);
 			if (existingCandidateMatchesPrompt(plannedDiskPath, prompt, seed)) {
 				console.log(`[comfy] Skipped existing ${plannedCandidatePath}`);
 				continue;
 			}
 			if (hasOutdatedCandidate(plannedDiskPath)) {
-				console.log(`[comfy] Regenerating changed prompt ${plannedCandidatePath}`);
+				console.log(
+					`[comfy] Regenerating changed prompt ${plannedCandidatePath}`,
+				);
 			}
 			try {
-				const workflow = patchComfyWorkflow(baseWorkflow, prompt, seed, backendInfo);
+				const workflow = patchComfyWorkflow(
+					baseWorkflow,
+					prompt,
+					seed,
+					backendInfo,
+				);
 				const queued = await fetchJson(
 					`${backendInfo.url}/prompt`,
 					{
@@ -787,14 +855,31 @@ async function generateWithComfy(prompts, args, backendInfo) {
 				sidecars.push(sidecar);
 				console.log(`[comfy] Generated ${candidatePath}`);
 			} catch (error) {
-				await handleGenerationError(error, prompt, variant, seed, "comfy", args);
+				await handleGenerationError(
+					error,
+					prompt,
+					variant,
+					seed,
+					"comfy",
+					args,
+				);
 			}
 		}
 	}
-	await writeReviewGalleries(prompts, [...(await readCandidateSidecars()), ...sidecars]);
+	await writeReviewGalleries(prompts, [
+		...(await readCandidateSidecars()),
+		...sidecars,
+	]);
 }
 
-async function handleGenerationError(error, prompt, variant, seed, backend, args) {
+async function handleGenerationError(
+	error,
+	prompt,
+	variant,
+	seed,
+	backend,
+	args,
+) {
 	const message = `[${backend}] Failed ${prompt.promptRecordId || prompt.assetPath} v${variant + 1}: ${error?.message || error}`;
 	if (!args.continueOnError) throw error;
 	console.warn(message);
@@ -829,7 +914,8 @@ function patchComfyWorkflow(baseWorkflow, prompt, seed, backendInfo) {
 			inputs.ckpt_name = backendInfo.checkpoint;
 		}
 		if (Object.hasOwn(inputs, "text")) {
-			inputs.text = textNodeIndex === 0 ? prompt.positivePrompt : prompt.negativePrompt;
+			inputs.text =
+				textNodeIndex === 0 ? prompt.positivePrompt : prompt.negativePrompt;
 			textNodeIndex += 1;
 		}
 		if (Object.hasOwn(inputs, "width")) inputs.width = prompt.width;
@@ -863,9 +949,11 @@ async function pollComfyImage(url, promptId) {
 	const started = Date.now();
 	while (Date.now() - started < COMFY_GENERATION_TIMEOUT_MS) {
 		await wait(1500);
-		const history = await fetchJson(`${url}/history/${promptId}`, {}, 15000).catch(
-			() => null,
-		);
+		const history = await fetchJson(
+			`${url}/history/${promptId}`,
+			{},
+			15000,
+		).catch(() => null);
 		const item = history?.[promptId];
 		if (!item) continue;
 		const status = item.status ?? {};
@@ -882,10 +970,7 @@ async function pollComfyImage(url, promptId) {
 			const payload = Array.isArray(executionError) ? executionError[1] : {};
 			const nodeType = payload?.node_type ? ` ${payload.node_type}` : "";
 			const nodeId = payload?.node_id ? ` node ${payload.node_id}` : "";
-			const exception = [
-				payload?.exception_type,
-				payload?.exception_message,
-			]
+			const exception = [payload?.exception_type, payload?.exception_message]
 				.filter(Boolean)
 				.join(": ");
 			const stderrHint = /invalid argument|tqdm|stderr|flush/i.test(exception)
@@ -982,7 +1067,9 @@ function sidecarMatchesCurrentPrompt(sidecar, prompt) {
 async function writeReviewGalleries(prompts, sidecars) {
 	await mkdir(DOCS_DIR, { recursive: true });
 	const sidecarsByPrompt = new Map();
-	const promptById = new Map(prompts.map((prompt) => [prompt.promptRecordId, prompt]));
+	const promptById = new Map(
+		prompts.map((prompt) => [prompt.promptRecordId, prompt]),
+	);
 	for (const sidecar of sidecars) {
 		const key = sidecar.promptRecordId || sidecar.sourceAssetPath;
 		const prompt = promptById.get(key);
@@ -1106,7 +1193,9 @@ function buildReviewMarkdown(prompts, sidecarsByPrompt) {
 	const lines = [];
 	lines.push("# Generated Image Review");
 	lines.push("");
-	lines.push("Generated candidates start as pending. Edit candidate sidecar JSON after review to apply a replacement.");
+	lines.push(
+		"Generated candidates start as pending. Edit candidate sidecar JSON after review to apply a replacement.",
+	);
 	lines.push("");
 	for (const prompt of prompts) {
 		const sidecars = sidecarsByPrompt.get(promptReviewKey(prompt)) ?? [];
@@ -1124,7 +1213,9 @@ function buildReviewMarkdown(prompts, sidecarsByPrompt) {
 		lines.push(`- Apply target: \`${prompt.applyTargetPath}\``);
 		lines.push(`- Type: ${prompt.type}`);
 		lines.push(`- Category: ${prompt.category ?? ""}`);
-		lines.push(`- Source category: ${(prompt.sourceCategory ?? []).join(", ")}`);
+		lines.push(
+			`- Source category: ${(prompt.sourceCategory ?? []).join(", ")}`,
+		);
 		lines.push(`- Priority: ${prompt.priority}`);
 		lines.push(`- Usage references: ${(prompt.references ?? []).length}`);
 		lines.push(`- Checkpoint: ${candidate?.checkpoint ?? prompt.checkpoint}`);
@@ -1148,7 +1239,8 @@ function buildReviewMarkdown(prompts, sidecarsByPrompt) {
 
 function isApproved(sidecar, planByAsset) {
 	const plan =
-		planByAsset.get(sidecar.promptRecordId) || planByAsset.get(sidecar.sourceAssetPath);
+		planByAsset.get(sidecar.promptRecordId) ||
+		planByAsset.get(sidecar.sourceAssetPath);
 	const approved = (item) =>
 		item?.recommendedReplacement === "yes" && item?.confidence === "high";
 	return approved(sidecar) || approved(sidecar.review) || approved(plan);
@@ -1189,11 +1281,14 @@ async function applyReviewedCandidates(args = {}) {
 	const promptById = new Map(
 		prompts.map((prompt) => [prompt.promptRecordId, prompt]),
 	);
-	const plan = existsSync(PLAN_FILE) ? await readJson(PLAN_FILE) : { assets: [] };
+	const plan = existsSync(PLAN_FILE)
+		? await readJson(PLAN_FILE)
+		: { assets: [] };
 	const planByAsset = new Map();
 	for (const item of [...(plan.promptRecords ?? []), ...(plan.assets ?? [])]) {
 		if (item.promptRecordId) planByAsset.set(item.promptRecordId, item);
-		if (item.assetPath ?? item.path) planByAsset.set(item.assetPath ?? item.path, item);
+		if (item.assetPath ?? item.path)
+			planByAsset.set(item.assetPath ?? item.path, item);
 	}
 	const approved = sidecars.filter((sidecar) => {
 		const prompt = promptById.get(sidecar.promptRecordId);
@@ -1207,7 +1302,7 @@ async function applyReviewedCandidates(args = {}) {
 	});
 	if (approved.length === 0) {
 		console.log(
-			"[apply] No reviewed high-confidence candidates found. Set recommendedReplacement to \"yes\" and confidence to \"high\" in a candidate sidecar first.",
+			'[apply] No reviewed high-confidence candidates found. Set recommendedReplacement to "yes" and confidence to "high" in a candidate sidecar first.',
 		);
 		return;
 	}
@@ -1227,13 +1322,16 @@ async function applyReviewedCandidates(args = {}) {
 			console.warn(`[apply] Missing candidate file: ${sidecar.candidatePath}`);
 			continue;
 		}
-		const originalTargetPath = sidecar.applyTargetPath || sidecar.sourceAssetPath;
+		const originalTargetPath =
+			sidecar.applyTargetPath || sidecar.sourceAssetPath;
 		let targetPath = rasterApplyTargetPath(originalTargetPath);
 		let targetDisk = appPathToDisk(targetPath);
 		await mkdir(dirname(targetDisk), { recursive: true });
 
 		if (await candidateAlreadyApplied(sidecar, targetPath)) {
-			console.log(`[apply] Already applied ${sidecar.candidatePath} -> ${targetPath}`);
+			console.log(
+				`[apply] Already applied ${sidecar.candidatePath} -> ${targetPath}`,
+			);
 			continue;
 		}
 
@@ -1271,7 +1369,11 @@ async function applyReviewedCandidates(args = {}) {
 			sidecar.sourceAssetPath !== targetPath &&
 			Array.isArray(sidecar.references)
 		) {
-			await updateReferences(sidecar.sourceAssetPath, targetPath, sidecar.references);
+			await updateReferences(
+				sidecar.sourceAssetPath,
+				targetPath,
+				sidecar.references,
+			);
 		}
 
 		applied.push({ source: sidecar.candidatePath, target: targetPath });
@@ -1425,7 +1527,9 @@ function runPostApplyChecks() {
 	console.log("[apply] Running post-apply checks...");
 	runCommand("node", ["scripts/audit-assets.mjs"]);
 
-	const packageJson = JSON.parse(readFileSync(join(ROOT, "package.json"), "utf8"));
+	const packageJson = JSON.parse(
+		readFileSync(join(ROOT, "package.json"), "utf8"),
+	);
 	const postApplyScripts = [
 		"lint",
 		"typecheck",

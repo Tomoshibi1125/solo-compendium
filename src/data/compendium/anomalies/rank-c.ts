@@ -19,7 +19,8 @@ export const anomalies_c = [
 			Perception: 2,
 			Stealth: 5,
 		},
-		image: "/generated/compendium/anomalies/anomaly-anomaly-eternal-void-beast-11fdrq.webp",
+		image:
+			"/generated/compendium/anomalies/anomaly-anomaly-eternal-void-beast-11fdrq.webp",
 		description:
 			"A fearsome Beast that serves the shadow armies. This C rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
@@ -132,7 +133,8 @@ export const anomalies_c = [
 		skills: {
 			Perception: 2,
 		},
-		image: "/generated/compendium/anomalies/anomaly-anomaly-eternal-void-wraith-1tacui.webp",
+		image:
+			"/generated/compendium/anomalies/anomaly-anomaly-eternal-void-wraith-1tacui.webp",
 		description:
 			"A fearsome anomaly that serves the shadow armies. This C rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
@@ -232,7 +234,8 @@ export const anomalies_c = [
 			Perception: 2,
 			Arcana: 2,
 		},
-		image: "/generated/compendium/anomalies/anomaly-anomaly-eternal-void-stalker-ivplb.webp",
+		image:
+			"/generated/compendium/anomalies/anomaly-anomaly-eternal-void-stalker-ivplb.webp",
 		description:
 			"A fearsome Elemental that serves the shadow armies. This C rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast"],
@@ -345,7 +348,8 @@ export const anomalies_c = [
 			Perception: 2,
 			Intimidation: 3,
 		},
-		image: "/generated/compendium/anomalies/anomaly-anomaly-eternal-void-devourer-1r34sp.webp",
+		image:
+			"/generated/compendium/anomalies/anomaly-anomaly-eternal-void-devourer-1r34sp.webp",
 		description:
 			"A fearsome Dragon that serves the shadow armies. This C rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
@@ -455,7 +459,8 @@ export const anomalies_c = [
 			Perception: 3,
 			Arcana: 2,
 		},
-		image: "/generated/compendium/anomalies/anomaly-anomaly-corrupted-void-beast-zgrobw.webp",
+		image:
+			"/generated/compendium/anomalies/anomaly-anomaly-corrupted-void-beast-zgrobw.webp",
 		description:
 			"A fearsome Anomaly that serves the shadow armies. This C rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
@@ -562,7 +567,8 @@ export const anomalies_c = [
 			Perception: 3,
 			Deception: 2,
 		},
-		image: "/generated/compendium/anomalies/anomaly-anomaly-corrupted-void-wraith-1pyq3k.webp",
+		image:
+			"/generated/compendium/anomalies/anomaly-anomaly-corrupted-void-wraith-1pyq3k.webp",
 		description:
 			"A fearsome Humanoid that serves the shadow armies. This C rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast"],
@@ -676,7 +682,8 @@ export const anomalies_c = [
 			Perception: 2,
 			Stealth: 5,
 		},
-		image: "/generated/compendium/anomalies/anomaly-anomaly-corrupted-void-stalker-1sc46u.webp",
+		image:
+			"/generated/compendium/anomalies/anomaly-anomaly-corrupted-void-stalker-1sc46u.webp",
 		description:
 			"A fearsome Beast that serves the shadow armies. This C rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
@@ -789,7 +796,8 @@ export const anomalies_c = [
 		skills: {
 			Perception: 2,
 		},
-		image: "/generated/compendium/anomalies/anomaly-anomaly-corrupted-void-devourer-xejury.webp",
+		image:
+			"/generated/compendium/anomalies/anomaly-anomaly-corrupted-void-devourer-xejury.webp",
 		description:
 			"A fearsome anomaly that serves the shadow armies. This C rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
@@ -889,7 +897,8 @@ export const anomalies_c = [
 			Perception: 2,
 			Arcana: 2,
 		},
-		image: "/generated/compendium/anomalies/anomaly-anomaly-blessed-void-beast-140223.webp",
+		image:
+			"/generated/compendium/anomalies/anomaly-anomaly-blessed-void-beast-140223.webp",
 		description:
 			"A fearsome Elemental that serves the shadow armies. This C rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast"],
@@ -1002,7 +1011,8 @@ export const anomalies_c = [
 			Perception: 2,
 			Intimidation: 3,
 		},
-		image: "/generated/compendium/anomalies/anomaly-anomaly-blessed-void-wraith-5a2r5d.webp",
+		image:
+			"/generated/compendium/anomalies/anomaly-anomaly-blessed-void-wraith-5a2r5d.webp",
 		description:
 			"A fearsome Dragon that serves the shadow armies. This C rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
@@ -1112,7 +1122,8 @@ export const anomalies_c = [
 			Perception: 3,
 			Arcana: 2,
 		},
-		image: "/generated/compendium/anomalies/anomaly-anomaly-blessed-void-stalker-781itv.webp",
+		image:
+			"/generated/compendium/anomalies/anomaly-anomaly-blessed-void-stalker-781itv.webp",
 		description:
 			"A fearsome Anomaly that serves the shadow armies. This C rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
@@ -1219,7 +1230,8 @@ export const anomalies_c = [
 			Perception: 3,
 			Deception: 2,
 		},
-		image: "/generated/compendium/anomalies/anomaly-anomaly-blessed-void-devourer-1fr75k.webp",
+		image:
+			"/generated/compendium/anomalies/anomaly-anomaly-blessed-void-devourer-1fr75k.webp",
 		description:
 			"A fearsome Humanoid that serves the shadow armies. This C rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
@@ -1333,7 +1345,8 @@ export const anomalies_c = [
 			Perception: 2,
 			Stealth: 5,
 		},
-		image: "/generated/compendium/anomalies/anomaly-anomaly-cursed-void-beast-1xuxaq.webp",
+		image:
+			"/generated/compendium/anomalies/anomaly-anomaly-cursed-void-beast-1xuxaq.webp",
 		description:
 			"A fearsome Beast that serves the shadow armies. This C rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
@@ -1446,7 +1459,8 @@ export const anomalies_c = [
 		skills: {
 			Perception: 2,
 		},
-		image: "/generated/compendium/anomalies/anomaly-anomaly-cursed-void-wraith-1vq85m.webp",
+		image:
+			"/generated/compendium/anomalies/anomaly-anomaly-cursed-void-wraith-1vq85m.webp",
 		description:
 			"A fearsome anomaly that serves the shadow armies. This C rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
@@ -1546,7 +1560,8 @@ export const anomalies_c = [
 			Perception: 2,
 			Arcana: 2,
 		},
-		image: "/generated/compendium/anomalies/anomaly-anomaly-cursed-void-stalker-102i69.webp",
+		image:
+			"/generated/compendium/anomalies/anomaly-anomaly-cursed-void-stalker-102i69.webp",
 		description:
 			"A fearsome Elemental that serves the shadow armies. This C rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
@@ -1659,7 +1674,8 @@ export const anomalies_c = [
 			Perception: 2,
 			Intimidation: 3,
 		},
-		image: "/generated/compendium/anomalies/anomaly-anomaly-cursed-void-devourer-1k9j1r.webp",
+		image:
+			"/generated/compendium/anomalies/anomaly-anomaly-cursed-void-devourer-1k9j1r.webp",
 		description:
 			"A fearsome Dragon that serves the shadow armies. This C rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast"],
@@ -1769,7 +1785,8 @@ export const anomalies_c = [
 			Perception: 3,
 			Arcana: 2,
 		},
-		image: "/generated/compendium/anomalies/anomaly-anomaly-ancient-void-beast-h44dji.webp",
+		image:
+			"/generated/compendium/anomalies/anomaly-anomaly-ancient-void-beast-h44dji.webp",
 		description:
 			"A fearsome Anomaly that serves the shadow armies. This C rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
@@ -1876,7 +1893,8 @@ export const anomalies_c = [
 			Perception: 3,
 			Deception: 2,
 		},
-		image: "/generated/compendium/anomalies/anomaly-anomaly-ancient-void-wraith-1c1opl.webp",
+		image:
+			"/generated/compendium/anomalies/anomaly-anomaly-ancient-void-wraith-1c1opl.webp",
 		description:
 			"A fearsome Humanoid that serves the shadow armies. This C rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast"],
@@ -1990,7 +2008,8 @@ export const anomalies_c = [
 			Perception: 2,
 			Stealth: 5,
 		},
-		image: "/generated/compendium/anomalies/anomaly-anomaly-ancient-void-stalker-sxhsn.webp",
+		image:
+			"/generated/compendium/anomalies/anomaly-anomaly-ancient-void-stalker-sxhsn.webp",
 		description:
 			"A fearsome Beast that serves the shadow armies. This C rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
@@ -2103,7 +2122,8 @@ export const anomalies_c = [
 		skills: {
 			Perception: 2,
 		},
-		image: "/generated/compendium/anomalies/anomaly-anomaly-ancient-void-devourer-19kzhu.webp",
+		image:
+			"/generated/compendium/anomalies/anomaly-anomaly-ancient-void-devourer-19kzhu.webp",
 		description:
 			"A fearsome anomaly that serves the shadow armies. This C rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
@@ -2203,7 +2223,8 @@ export const anomalies_c = [
 			Perception: 2,
 			Arcana: 2,
 		},
-		image: "/generated/compendium/anomalies/anomaly-anomaly-primordial-void-beast-mjtfe9.webp",
+		image:
+			"/generated/compendium/anomalies/anomaly-anomaly-primordial-void-beast-mjtfe9.webp",
 		description:
 			"A fearsome Elemental that serves the shadow armies. This C rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
@@ -2316,7 +2337,8 @@ export const anomalies_c = [
 			Perception: 2,
 			Intimidation: 3,
 		},
-		image: "/generated/compendium/anomalies/anomaly-anomaly-primordial-void-wraith-1g0ltg.webp",
+		image:
+			"/generated/compendium/anomalies/anomaly-anomaly-primordial-void-wraith-1g0ltg.webp",
 		description:
 			"A fearsome Dragon that serves the shadow armies. This C rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast"],
@@ -2426,7 +2448,8 @@ export const anomalies_c = [
 			Perception: 3,
 			Arcana: 2,
 		},
-		image: "/generated/compendium/anomalies/anomaly-anomaly-primordial-void-stalker-1gqsxh.webp",
+		image:
+			"/generated/compendium/anomalies/anomaly-anomaly-primordial-void-stalker-1gqsxh.webp",
 		description:
 			"A fearsome Anomaly that serves the shadow armies. This C rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
@@ -2533,7 +2556,8 @@ export const anomalies_c = [
 			Perception: 3,
 			Deception: 2,
 		},
-		image: "/generated/compendium/anomalies/anomaly-anomaly-primordial-void-devourer-15td56.webp",
+		image:
+			"/generated/compendium/anomalies/anomaly-anomaly-primordial-void-devourer-15td56.webp",
 		description:
 			"A fearsome Humanoid that serves the shadow armies. This C rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast"],
@@ -2647,7 +2671,8 @@ export const anomalies_c = [
 			Perception: 2,
 			Stealth: 5,
 		},
-		image: "/generated/compendium/anomalies/anomaly-anomaly-supreme-void-beast-m2fgsj.webp",
+		image:
+			"/generated/compendium/anomalies/anomaly-anomaly-supreme-void-beast-m2fgsj.webp",
 		description:
 			"A fearsome Beast that serves the shadow armies. This C rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
@@ -2760,7 +2785,8 @@ export const anomalies_c = [
 		skills: {
 			Perception: 2,
 		},
-		image: "/generated/compendium/anomalies/anomaly-anomaly-supreme-void-wraith-1qzfec.webp",
+		image:
+			"/generated/compendium/anomalies/anomaly-anomaly-supreme-void-wraith-1qzfec.webp",
 		description:
 			"A fearsome anomaly that serves the shadow armies. This C rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
@@ -2860,7 +2886,8 @@ export const anomalies_c = [
 			Perception: 2,
 			Arcana: 2,
 		},
-		image: "/generated/compendium/anomalies/anomaly-anomaly-supreme-void-stalker-18y5ef.webp",
+		image:
+			"/generated/compendium/anomalies/anomaly-anomaly-supreme-void-stalker-18y5ef.webp",
 		description:
 			"A fearsome Elemental that serves the shadow armies. This C rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast"],
@@ -2973,7 +3000,8 @@ export const anomalies_c = [
 			Perception: 2,
 			Intimidation: 3,
 		},
-		image: "/generated/compendium/anomalies/anomaly-anomaly-supreme-void-devourer-111712.webp",
+		image:
+			"/generated/compendium/anomalies/anomaly-anomaly-supreme-void-devourer-111712.webp",
 		description:
 			"A fearsome Dragon that serves the shadow armies. This C rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
@@ -3083,7 +3111,8 @@ export const anomalies_c = [
 			Perception: 3,
 			Arcana: 2,
 		},
-		image: "/generated/compendium/anomalies/anomaly-anomaly-legendary-void-beast-18ye2x.webp",
+		image:
+			"/generated/compendium/anomalies/anomaly-anomaly-legendary-void-beast-18ye2x.webp",
 		description:
 			"A fearsome Anomaly that serves the shadow armies. This C rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
@@ -3190,7 +3219,8 @@ export const anomalies_c = [
 			Perception: 3,
 			Deception: 2,
 		},
-		image: "/generated/compendium/anomalies/anomaly-anomaly-legendary-void-wraith-et1bpa.webp",
+		image:
+			"/generated/compendium/anomalies/anomaly-anomaly-legendary-void-wraith-et1bpa.webp",
 		description:
 			"A fearsome Humanoid that serves the shadow armies. This C rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast"],
@@ -3304,7 +3334,8 @@ export const anomalies_c = [
 			Perception: 2,
 			Stealth: 5,
 		},
-		image: "/generated/compendium/anomalies/anomaly-anomaly-legendary-void-stalker-1aozx3.webp",
+		image:
+			"/generated/compendium/anomalies/anomaly-anomaly-legendary-void-stalker-1aozx3.webp",
 		description:
 			"A fearsome Beast that serves the shadow armies. This C rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
@@ -3417,7 +3448,8 @@ export const anomalies_c = [
 		skills: {
 			Perception: 2,
 		},
-		image: "/generated/compendium/anomalies/anomaly-anomaly-legendary-void-devourer-5rzzk3.webp",
+		image:
+			"/generated/compendium/anomalies/anomaly-anomaly-legendary-void-devourer-5rzzk3.webp",
 		description:
 			"A fearsome anomaly that serves the shadow armies. This C rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast"],
@@ -3517,7 +3549,8 @@ export const anomalies_c = [
 			Perception: 2,
 			Arcana: 2,
 		},
-		image: "/generated/compendium/anomalies/anomaly-anomaly-mythic-void-beast-11gkxj.webp",
+		image:
+			"/generated/compendium/anomalies/anomaly-anomaly-mythic-void-beast-11gkxj.webp",
 		description:
 			"A fearsome Elemental that serves the shadow armies. This C rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast"],
@@ -3630,7 +3663,8 @@ export const anomalies_c = [
 			Perception: 2,
 			Intimidation: 3,
 		},
-		image: "/generated/compendium/anomalies/anomaly-anomaly-mythic-void-wraith-16oile.webp",
+		image:
+			"/generated/compendium/anomalies/anomaly-anomaly-mythic-void-wraith-16oile.webp",
 		description:
 			"A fearsome Dragon that serves the shadow armies. This C rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
@@ -3740,7 +3774,8 @@ export const anomalies_c = [
 			Perception: 3,
 			Arcana: 2,
 		},
-		image: "/generated/compendium/anomalies/anomaly-anomaly-mythic-void-stalker-19esv8.webp",
+		image:
+			"/generated/compendium/anomalies/anomaly-anomaly-mythic-void-stalker-19esv8.webp",
 		description:
 			"A fearsome Anomaly that serves the shadow armies. This C rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast"],
@@ -3847,7 +3882,8 @@ export const anomalies_c = [
 			Perception: 3,
 			Deception: 2,
 		},
-		image: "/generated/compendium/anomalies/anomaly-anomaly-mythic-void-devourer-gmi2n9.webp",
+		image:
+			"/generated/compendium/anomalies/anomaly-anomaly-mythic-void-devourer-gmi2n9.webp",
 		description:
 			"A fearsome Humanoid that serves the shadow armies. This C rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
@@ -3961,7 +3997,8 @@ export const anomalies_c = [
 			Perception: 2,
 			Stealth: 5,
 		},
-		image: "/generated/compendium/anomalies/anomaly-anomaly-divine-void-beast-1glde9.webp",
+		image:
+			"/generated/compendium/anomalies/anomaly-anomaly-divine-void-beast-1glde9.webp",
 		description:
 			"A fearsome Beast that serves the shadow armies. This C rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
@@ -4074,7 +4111,8 @@ export const anomalies_c = [
 		skills: {
 			Perception: 2,
 		},
-		image: "/generated/compendium/anomalies/anomaly-anomaly-divine-void-wraith-tni03m.webp",
+		image:
+			"/generated/compendium/anomalies/anomaly-anomaly-divine-void-wraith-tni03m.webp",
 		description:
 			"A fearsome anomaly that serves the shadow armies. This C rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
@@ -4174,7 +4212,8 @@ export const anomalies_c = [
 			Perception: 2,
 			Arcana: 2,
 		},
-		image: "/generated/compendium/anomalies/anomaly-anomaly-divine-void-stalker-hlncnc.webp",
+		image:
+			"/generated/compendium/anomalies/anomaly-anomaly-divine-void-stalker-hlncnc.webp",
 		description:
 			"A fearsome Elemental that serves the shadow armies. This C rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
@@ -4287,7 +4326,8 @@ export const anomalies_c = [
 			Perception: 2,
 			Intimidation: 3,
 		},
-		image: "/generated/compendium/anomalies/anomaly-anomaly-divine-void-devourer-go7son.webp",
+		image:
+			"/generated/compendium/anomalies/anomaly-anomaly-divine-void-devourer-go7son.webp",
 		description:
 			"A fearsome Dragon that serves the shadow armies. This C rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
@@ -4397,7 +4437,8 @@ export const anomalies_c = [
 			Perception: 4,
 			Arcana: 3,
 		},
-		image: "/generated/compendium/anomalies/anomaly-anomaly-infernal-void-beast-1fjaao.webp",
+		image:
+			"/generated/compendium/anomalies/anomaly-anomaly-infernal-void-beast-1fjaao.webp",
 		description:
 			"A fearsome Anomaly that serves the shadow armies. This C rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
@@ -4504,7 +4545,8 @@ export const anomalies_c = [
 			Perception: 4,
 			Deception: 3,
 		},
-		image: "/generated/compendium/anomalies/anomaly-anomaly-infernal-void-wraith-1f9xa5.webp",
+		image:
+			"/generated/compendium/anomalies/anomaly-anomaly-infernal-void-wraith-1f9xa5.webp",
 		description:
 			"A fearsome Humanoid that serves the shadow armies. This C rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
@@ -4618,7 +4660,8 @@ export const anomalies_c = [
 			Perception: 3,
 			Stealth: 6,
 		},
-		image: "/generated/compendium/anomalies/anomaly-anomaly-infernal-void-stalker-gbtwz9.webp",
+		image:
+			"/generated/compendium/anomalies/anomaly-anomaly-infernal-void-stalker-gbtwz9.webp",
 		description:
 			"A fearsome Beast that serves the shadow armies. This C rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
@@ -4731,7 +4774,8 @@ export const anomalies_c = [
 		skills: {
 			Perception: 3,
 		},
-		image: "/generated/compendium/anomalies/anomaly-anomaly-infernal-void-devourer-m76eee.webp",
+		image:
+			"/generated/compendium/anomalies/anomaly-anomaly-infernal-void-devourer-m76eee.webp",
 		description:
 			"A fearsome anomaly that serves the shadow armies. This C rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast"],
@@ -4831,7 +4875,8 @@ export const anomalies_c = [
 			Perception: 3,
 			Arcana: 3,
 		},
-		image: "/generated/compendium/anomalies/anomaly-anomaly-celestial-void-beast-obzwf2.webp",
+		image:
+			"/generated/compendium/anomalies/anomaly-anomaly-celestial-void-beast-obzwf2.webp",
 		description:
 			"A fearsome Elemental that serves the shadow armies. This C rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
@@ -4944,7 +4989,8 @@ export const anomalies_c = [
 			Perception: 3,
 			Intimidation: 4,
 		},
-		image: "/generated/compendium/anomalies/anomaly-anomaly-celestial-void-wraith-1mc081.webp",
+		image:
+			"/generated/compendium/anomalies/anomaly-anomaly-celestial-void-wraith-1mc081.webp",
 		description:
 			"A fearsome Dragon that serves the shadow armies. This C rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast"],
@@ -5054,7 +5100,8 @@ export const anomalies_c = [
 			Perception: 4,
 			Arcana: 3,
 		},
-		image: "/generated/compendium/anomalies/anomaly-anomaly-celestial-void-stalker-1s7dg6.webp",
+		image:
+			"/generated/compendium/anomalies/anomaly-anomaly-celestial-void-stalker-1s7dg6.webp",
 		description:
 			"A fearsome Anomaly that serves the shadow armies. This C rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
@@ -5161,7 +5208,8 @@ export const anomalies_c = [
 			Perception: 4,
 			Deception: 3,
 		},
-		image: "/generated/compendium/anomalies/anomaly-anomaly-celestial-void-devourer-jk6koo.webp",
+		image:
+			"/generated/compendium/anomalies/anomaly-anomaly-celestial-void-devourer-jk6koo.webp",
 		description:
 			"A fearsome Humanoid that serves the shadow armies. This C rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
@@ -5284,7 +5332,14 @@ export const anomalies_c = [
 		condition_immunities: ["charmed", "frightened", "poisoned"],
 		xp: 1100,
 		stats: {
-			ability_scores: { strength: 13, agility: 14, vitality: 16, intelligence: 9, sense: 16, presence: 17 },
+			ability_scores: {
+				strength: 13,
+				agility: 14,
+				vitality: 16,
+				intelligence: 9,
+				sense: 16,
+				presence: 17,
+			},
 			speed: 30,
 			challenge_rating: 4,
 			proficiency_bonus: 2,

@@ -208,15 +208,13 @@ export interface RaWallet {
 	mana: number;
 }
 
-export interface LegacyWallet {
+interface LegacyWallet {
 	pp?: number; // platinum   → core
 	gp?: number; // gold       → gate
 	sp?: number; // silver     → crystal
 	cp?: number; // copper     → mana
 	ep?: number; // electrum   → 5 silver = 50 mana (rolled into crystal)
 }
-
-const DEFAULT_WALLET: RaWallet = { core: 0, gate: 0, crystal: 0, mana: 0 };
 
 /**
  * Convert a wallet object using legacy keys into the canonical RA shape.
@@ -304,4 +302,3 @@ export function formatWallet(wallet: Partial<RaWallet>): string {
 	if (wallet.mana) parts.push(`${wallet.mana} MC`);
 	return parts.length > 0 ? parts.join(" ") : "0 MC";
 }
-export { DEFAULT_WALLET };

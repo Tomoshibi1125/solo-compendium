@@ -13,7 +13,7 @@ import type { Session } from "@supabase/supabase-js";
 import { create } from "zustand";
 import type { AuthUser } from "@/lib/auth/authContext";
 
-export interface AuthStoreState {
+interface AuthStoreState {
 	user: AuthUser | null;
 	session: Session | null;
 	loading: boolean;

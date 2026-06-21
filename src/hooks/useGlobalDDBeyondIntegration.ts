@@ -212,12 +212,8 @@ export function useWardenToolsEnhancements(
 		useEncounterRewards();
 	const { generateCampaignReport, getCampaignAnalytics, exportAnalyticsData } =
 		useCampaignAnalytics();
-	const {
-		uploadVTTAsset,
-		appendToken,
-		updateToken,
-		removeToken,
-	} = useVTTManager();
+	const { uploadVTTAsset, appendToken, updateToken, removeToken } =
+		useVTTManager();
 
 	return {
 		endCombatSession: async (

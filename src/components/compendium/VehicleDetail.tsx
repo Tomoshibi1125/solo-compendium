@@ -17,7 +17,7 @@ import { Badge } from "@/components/ui/badge";
 import { formatRegentVernacular } from "@/lib/vernacular";
 import type { CompendiumVehicle } from "@/types/compendium";
 
-export interface VehicleData extends CompendiumVehicle {}
+interface VehicleData extends CompendiumVehicle {}
 
 const vehicleTypeLabels: Record<string, string> = {
 	mount: "Mount",
@@ -132,11 +132,13 @@ export const VehicleDetail = ({ data }: { data: VehicleData }) => {
 					{Array.isArray((data as { tags?: string[] | null }).tags) &&
 						(data as { tags: string[] }).tags.length > 0 && (
 							<div className="flex flex-wrap gap-2">
-								{[...new Set((data as { tags: string[] }).tags ?? [])].map((t) => (
-									<Badge key={t} variant="outline" className="text-[10px]">
-										{formatRegentVernacular(t)}
-									</Badge>
-								))}
+								{[...new Set((data as { tags: string[] }).tags ?? [])].map(
+									(t) => (
+										<Badge key={t} variant="outline" className="text-[10px]">
+											{formatRegentVernacular(t)}
+										</Badge>
+									),
+								)}
 							</div>
 						)}
 					{data.description && (

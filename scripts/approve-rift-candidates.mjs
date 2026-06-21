@@ -30,14 +30,14 @@ function parseArgs(argv) {
 		type: null,
 		candidate: null,
 		promptId: null,
-		note:
-			"Approved for apply by explicit user instruction to run the Rift asset workflow start to finish.",
+		note: "Approved for apply by explicit user instruction to run the Rift asset workflow start to finish.",
 	};
 	for (let i = 0; i < argv.length; i += 1) {
 		const arg = argv[i];
 		if (arg === "--all") args.all = true;
 		else if (arg === "--only-high-priority") args.onlyHighPriority = true;
-		else if (arg === "--type") args.type = String(argv[++i] ?? "").toLowerCase();
+		else if (arg === "--type")
+			args.type = String(argv[++i] ?? "").toLowerCase();
 		else if (arg === "--candidate") args.candidate = String(argv[++i] ?? "");
 		else if (arg === "--prompt-id") args.promptId = String(argv[++i] ?? "");
 		else if (arg === "--note") args.note = String(argv[++i] ?? args.note);
@@ -76,7 +76,9 @@ async function main() {
 	}
 
 	const prompts = await readJson(PROMPTS_FILE);
-	const promptById = new Map(prompts.map((prompt) => [prompt.promptRecordId, prompt]));
+	const promptById = new Map(
+		prompts.map((prompt) => [prompt.promptRecordId, prompt]),
+	);
 	const hasApprovalScope =
 		args.all ||
 		args.onlyHighPriority ||
@@ -148,7 +150,8 @@ async function main() {
 			references: prompt.references ?? [],
 			updateReferencesOnApply:
 				Boolean(prompt.updateReferencesOnApply) ||
-				rasterApplyTargetPath(prompt.applyTargetPath) !== prompt.applyTargetPath,
+				rasterApplyTargetPath(prompt.applyTargetPath) !==
+					prompt.applyTargetPath,
 			recommendedReplacement: "yes",
 			confidence: "high",
 			notes: sidecar.notes ? `${sidecar.notes}\n${args.note}` : args.note,
@@ -159,7 +162,9 @@ async function main() {
 	}
 
 	console.log(`[approve] Approved ${approved} current candidate sidecars.`);
-	console.log(`[approve] Skipped ${skipped} stale, unmatched, or filtered sidecars.`);
+	console.log(
+		`[approve] Skipped ${skipped} stale, unmatched, or filtered sidecars.`,
+	);
 }
 
 main().catch((error) => {

@@ -27,7 +27,7 @@ const ABILITY_CODE_BY_NAME: Record<string, AbilityScore> = (() => {
  * Normalize a single ability name or code to its canonical `ability_score`
  * enum code, or `null` when the value is not a recognized ability.
  */
-export function normalizeAbilityScoreCode(
+function normalizeAbilityScoreCode(
 	value: string | null | undefined,
 ): AbilityScore | null {
 	if (!value) return null;

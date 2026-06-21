@@ -9,7 +9,9 @@
 	},
 	"scripts": {
 		"dev": "node scripts/write-runtime-env.mjs && vite --host --port 8080",
-		"lint": "npx @biomejs/biome check --write ./src",
+		"lint": "npx @biomejs/biome check --write ./src ./scripts ./tests ./tools ./supabase/functions ./vite.config.ts ./vite.sourcebook.config.ts ./vitest.config.ts ./playwright.config.ts",
+		"lint:check": "npx @biomejs/biome check ./src ./scripts ./tests ./tools ./supabase/functions ./vite.config.ts ./vite.sourcebook.config.ts ./vitest.config.ts ./playwright.config.ts",
+		"check:deno": "deno check supabase/functions/**/*.ts",
 		"build": "node scripts/write-runtime-env.mjs && vite build",
 		"build:vercel": "node scripts/write-runtime-env.mjs && vite build",
 		"preview": "vite preview --host",
@@ -179,8 +181,11 @@
 			"src/entry-source-book.tsx",
 			"supabase/functions/*/index.ts",
 			"scripts/**/*.{ts,js,mjs}",
+			"tests/**/*.ts",
+			"tools/**/*.ts",
 			"src/index.ts",
-			"src/components/warden-directives/WardenWiringHub.tsx"
+			"src/components/warden-directives/WardenWiringHub.tsx",
+			"src/lib/sovereign/sovereignContract.ts"
 		],
 		"project": [
 			"src/**/*.{ts,tsx}"

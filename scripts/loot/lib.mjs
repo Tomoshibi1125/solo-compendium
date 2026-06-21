@@ -1172,7 +1172,7 @@ const TEMPLATES = {
 			],
 		},
 	}),
-	consumable_signal: (rarity) => ({
+	consumable_signal: (_rarity) => ({
 		item_type: "consumable",
 		type: "consumable",
 		properties: {},
@@ -1736,7 +1736,7 @@ export function generateDescription(archetype, name, id) {
 	return pickFrom(pool, `${id}::${name}::desc`);
 }
 
-export function generateLore(name, id) {
+export function generateLore(_name, id) {
 	return {
 		origin: pickFrom(ORIGIN_POOL, `${id}::origin`),
 		history: pickFrom(HISTORY_POOL, `${id}::history`),
@@ -1757,6 +1757,6 @@ export function generateFlavor(archetype, name, id) {
 	return pickFrom(pool, `${id}::${name}::flavor`);
 }
 
-export function generateDiscoveryLore(name, id) {
+export function generateDiscoveryLore(_name, id) {
 	return pickFrom(DISCOVERY_POOL, `${id}::discovery`);
 }

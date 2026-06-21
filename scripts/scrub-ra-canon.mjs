@@ -19,11 +19,7 @@ import { readdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
 import { dirname, join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
 
-import {
-	THEME_TAG_FIXES,
-	TERMINOLOGY_FIXES,
-	scrubText,
-} from "./loot/lib.mjs";
+import { scrubText, TERMINOLOGY_FIXES, THEME_TAG_FIXES } from "./loot/lib.mjs";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);

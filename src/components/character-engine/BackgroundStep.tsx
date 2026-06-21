@@ -218,7 +218,7 @@ function BackgroundFeatureCard({
 					{mechanics.proficiencies.length > 0 && (
 						<div className="text-[10px]">
 							<span className="text-muted-foreground font-medium uppercase tracking-wider">
-								Grants: {" "}
+								Grants:{" "}
 							</span>
 							<span className="text-primary/80">
 								{mechanics.proficiencies.map(formatRegentVernacular).join(", ")}
@@ -229,7 +229,7 @@ function BackgroundFeatureCard({
 					{mechanics.equipmentBundle.length > 0 && (
 						<div className="text-[10px]">
 							<span className="text-muted-foreground font-medium uppercase tracking-wider">
-								Equipment: {" "}
+								Equipment:{" "}
 							</span>
 							<span className="text-primary/80">
 								{mechanics.equipmentBundle
@@ -242,7 +242,7 @@ function BackgroundFeatureCard({
 					{mechanics.downtimeHooks.length > 0 && (
 						<div className="text-[10px]">
 							<span className="text-muted-foreground font-medium uppercase tracking-wider">
-								Downtime: {" "}
+								Downtime:{" "}
 							</span>
 							<span className="text-primary/80">
 								{mechanics.downtimeHooks.map(formatRegentVernacular).join(", ")}
@@ -289,7 +289,8 @@ export const BackgroundStep: React.FC<BackgroundStepProps> = ({
 		: [];
 	const backgroundInventory = collectStringValues(
 		selectedBackgroundData?.starting_equipment ??
-			(selectedBackgroundData as { equipment?: unknown } | undefined)?.equipment,
+			(selectedBackgroundData as { equipment?: unknown } | undefined)
+				?.equipment,
 	);
 	const singularFeature =
 		selectedBackgroundData?.feature_name &&

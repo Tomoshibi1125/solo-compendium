@@ -54,11 +54,8 @@ function sfc32(a, b, c, d) {
 	};
 }
 function rand(id) {
-	const s = cyrb128(id + "_img_v1");
+	const s = cyrb128(`${id}_img_v1`);
 	return sfc32(s[0], s[1], s[2], s[3]);
-}
-function pick(a, r) {
-	return a[Math.floor(r() * a.length)];
 }
 
 // ═══ DISPLAY NAME ═══
@@ -164,7 +161,6 @@ const CATEGORY_THEMES = {
 function generateSvgDataUri(name, tableName, r) {
 	const theme =
 		CATEGORY_THEMES[tableName] || CATEGORY_THEMES.compendium_equipment;
-	const hueShift = Math.floor(r() * 30) - 15; // Slight variation per item
 
 	// Generate a unique pattern element based on the name hash
 	const patternType = Math.floor(r() * 4);

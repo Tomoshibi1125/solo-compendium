@@ -17,7 +17,7 @@ import type { VTTScene } from "@/types/vtt";
  * reduced opacity in the canvas. Wardens can author per-stratum
  * walls / lights / tokens via the Strata Drawer (separate component).
  */
-export interface StrataSelectorProps {
+interface StrataSelectorProps {
 	scene: VTTScene;
 	activeLevelId: string | null;
 	onChange: (levelId: string) => void;

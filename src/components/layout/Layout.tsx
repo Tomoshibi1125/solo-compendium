@@ -128,7 +128,9 @@ export function Layout({ children, className, fullBleed }: LayoutProps) {
 				tabIndex={-1}
 				className={cn(
 					"flex-1",
-					!fullBleed && (isMobile ? "px-4 pt-6 pb-32" : "px-8 pt-8 pb-32"),
+					// Bottom-nav clearance is owned by MainLayout's <main>; keep the
+					// inner padding modest on mobile to avoid excessive dead space.
+					!fullBleed && (isMobile ? "px-4 pt-6 pb-6" : "px-8 pt-8 pb-32"),
 					fullBleed && "vtt-fullbleed",
 				)}
 			>

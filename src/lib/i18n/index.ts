@@ -27,28 +27,6 @@ import en from "@/locales/en-US.json";
 import es from "@/locales/es-ES.json";
 import ko from "@/locales/ko-KR.json";
 
-export const SUPPORTED_LOCALES = ["en-US", "ko-KR", "es-ES"] as const;
-export type SupportedLocale = (typeof SUPPORTED_LOCALES)[number];
-
-/**
- * Bureau glossary — terms that MUST translate consistently across
- * locales. Community translators see these flagged in the
- * contribution doc as "canon locked".
- */
-export const BUREAU_GLOSSARY_KEYS = [
-	"glossary.bureau",
-	"glossary.warden",
-	"glossary.ascendant",
-	"glossary.rift",
-	"glossary.anomaly",
-	"glossary.stratum",
-	"glossary.sovereign",
-	"glossary.regent",
-	"glossary.gate",
-	"glossary.commnet",
-	"glossary.system",
-] as const;
-
 void i18n
 	.use(LanguageDetector)
 	.use(initReactI18next)
@@ -73,5 +51,3 @@ void i18n
 		},
 		returnNull: false,
 	});
-
-export default i18n;

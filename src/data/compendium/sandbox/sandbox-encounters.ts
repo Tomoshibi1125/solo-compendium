@@ -90,7 +90,8 @@ export const sandboxEncounters: SandboxEncounter[] = [
 				hp: 22,
 				ac: 12,
 				initiative: 1,
-				notes: "Appears in the lengthening hallway if the party runs from the wrong question.",
+				notes:
+					"Appears in the lengthening hallway if the party runs from the wrong question.",
 			},
 		],
 	},
@@ -158,7 +159,11 @@ export const sandboxEncounters: SandboxEncounter[] = [
 			"Bioluminescent caps reveal hidden paths on a DC 15 Perception check.",
 			"Secrets spoken aloud here may return later as fungal echoes.",
 		],
-		rewards: ["D-Rank loot table roll.", "Mycelium reagent.", "Mother Rust treatment component."],
+		rewards: [
+			"D-Rank loot table roll.",
+			"Mycelium reagent.",
+			"Mother Rust treatment component.",
+		],
 		monsters: [
 			{ name: "Fungal Swarm", quantity: 12, hp: 18, ac: 11, initiative: 0 },
 			{
@@ -167,7 +172,8 @@ export const sandboxEncounters: SandboxEncounter[] = [
 				hp: 72,
 				ac: 14,
 				initiative: 1,
-				notes: "Regenerates while touching the network. Fire stops regeneration for one round.",
+				notes:
+					"Regenerates while touching the network. Fire stops regeneration for one round.",
 			},
 		],
 	},
@@ -182,7 +188,11 @@ export const sandboxEncounters: SandboxEncounter[] = [
 			"Harvest Bell summons orchard thralls unless silenced or its claim on a stolen memory is broken.",
 			"Attacking the Caretaker before learning the orchard's custom turns villagers hostile or terrified.",
 		],
-		rewards: ["Memory fruit clue.", "A Means clue.", "Civilian trust if the custom is broken safely."],
+		rewards: [
+			"Memory fruit clue.",
+			"A Means clue.",
+			"Civilian trust if the custom is broken safely.",
+		],
 		monsters: [
 			{ name: "Orchard Thrall", quantity: 6, hp: 45, ac: 14, initiative: 3 },
 			{
@@ -191,7 +201,8 @@ export const sandboxEncounters: SandboxEncounter[] = [
 				hp: 80,
 				ac: 15,
 				initiative: 4,
-				notes: "Can graft memories, redirect attacks, and call the Harvest Bell.",
+				notes:
+					"Can graft memories, redirect attacks, and call the Harvest Bell.",
 			},
 		],
 	},
@@ -206,7 +217,11 @@ export const sandboxEncounters: SandboxEncounter[] = [
 			"Furnace detonation on round 6 if not disabled: 8d6 fire in 20 ft. radius.",
 			"Chains of molten memory can bind characters to a fresh grief or loss.",
 		],
-		rewards: ["C-Rank loot table roll.", "A truth the burning hall cannot deny.", "A Means clue."],
+		rewards: [
+			"C-Rank loot table roll.",
+			"A truth the burning hall cannot deny.",
+			"A Means clue.",
+		],
 		monsters: [
 			{ name: "Cinder-Wraith", quantity: 8, hp: 38, ac: 13, initiative: 3 },
 			{
@@ -263,7 +278,8 @@ export const sandboxEncounters: SandboxEncounter[] = [
 				hp: 180,
 				ac: 18,
 				initiative: 1,
-				notes: "Cannot be defeated permanently while the Bastion's oath remains unresolved.",
+				notes:
+					"Cannot be defeated permanently while the Bastion's oath remains unresolved.",
 			},
 		],
 	},
@@ -278,7 +294,11 @@ export const sandboxEncounters: SandboxEncounter[] = [
 			"Unresolved reflections give the Quiet a lure shaped for that character during the finale.",
 			"Accepting a Spire bargain grants power and establishes a visible cost.",
 		],
-		rewards: ["A-Rank loot table.", "Obsidian Prism.", "A truth about the Quiet, or Watcher alliance."],
+		rewards: [
+			"A-Rank loot table.",
+			"Obsidian Prism.",
+			"A truth about the Quiet, or Watcher alliance.",
+		],
 		monsters: [
 			{
 				name: "Mirror-Self",
@@ -286,7 +306,8 @@ export const sandboxEncounters: SandboxEncounter[] = [
 				hp: 0,
 				ac: 0,
 				initiative: 0,
-				notes: "Stats scale to the character being tested. Defeat, confession, refusal, or reconciliation can resolve the trial.",
+				notes:
+					"Stats scale to the character being tested. Defeat, confession, refusal, or reconciliation can resolve the trial.",
 			},
 			{ name: "Spire Guardian", quantity: 1, hp: 200, ac: 18, initiative: 5 },
 		],
@@ -314,7 +335,8 @@ export const sandboxEncounters: SandboxEncounter[] = [
 				hp: 78,
 				ac: 13,
 				initiative: 2,
-				notes: "anomaly-0701. The dead it sends ahead, wearing faces the party knows.",
+				notes:
+					"anomaly-0701. The dead it sends ahead, wearing faces the party knows.",
 			},
 			{
 				name: "The Quiet",
@@ -322,7 +344,8 @@ export const sandboxEncounters: SandboxEncounter[] = [
 				hp: 444,
 				ac: 19,
 				initiative: 8,
-				notes: "anomaly-0700. Legendary + lair actions. Unkillable unless the party are Level 9+ and hold the Means (see The Means to End It). It takes someone if it can.",
+				notes:
+					"anomaly-0700. Legendary + lair actions. Unkillable unless the party are Level 9+ and hold the Means (see The Means to End It). It takes someone if it can.",
 			},
 		],
 	},
@@ -348,7 +371,8 @@ export const sandboxEncounters: SandboxEncounter[] = [
 				hp: 78,
 				ac: 13,
 				initiative: 2,
-				notes: "anomaly-0701 (scale up by tier to The Caller 0702, The Wrong Shape 0703, The Hollowed 0704). Lures and ambushers wearing the dead.",
+				notes:
+					"anomaly-0701 (scale up by tier to The Caller 0702, The Wrong Shape 0703, The Hollowed 0704). Lures and ambushers wearing the dead.",
 			},
 		],
 	},

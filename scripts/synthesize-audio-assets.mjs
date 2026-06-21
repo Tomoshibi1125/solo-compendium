@@ -156,17 +156,6 @@ function scale(samples, gain) {
 	return samples;
 }
 
-function concat(...arrays) {
-	const total = arrays.reduce((a, b) => a + b.length, 0);
-	const out = new Float32Array(total);
-	let off = 0;
-	for (const a of arrays) {
-		out.set(a, off);
-		off += a.length;
-	}
-	return out;
-}
-
 function sineWave(freqHz, durationSec, phase = 0) {
 	const n = Math.floor(durationSec * SAMPLE_RATE);
 	const out = new Float32Array(n);
@@ -180,25 +169,6 @@ function sawtoothWave(freqHz, durationSec) {
 	const out = new Float32Array(n);
 	const period = SAMPLE_RATE / freqHz;
 	for (let i = 0; i < n; i++) out[i] = 2 * ((i % period) / period) - 1;
-	return out;
-}
-
-function triangleWave(freqHz, durationSec) {
-	const n = Math.floor(durationSec * SAMPLE_RATE);
-	const out = new Float32Array(n);
-	const period = SAMPLE_RATE / freqHz;
-	for (let i = 0; i < n; i++) {
-		const p = (i % period) / period;
-		out[i] = p < 0.5 ? 4 * p - 1 : 3 - 4 * p;
-	}
-	return out;
-}
-
-function squareWave(freqHz, durationSec) {
-	const n = Math.floor(durationSec * SAMPLE_RATE);
-	const out = new Float32Array(n);
-	const period = SAMPLE_RATE / freqHz;
-	for (let i = 0; i < n; i++) out[i] = (i % period) / period < 0.5 ? 1 : -1;
 	return out;
 }
 

@@ -1,10 +1,7 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useBackgroundSync } from "@/hooks/useBackgroundSync";
-import {
-	isSupabaseConfigured,
-	supabase,
-} from "@/integrations/supabase/client";
+import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import type { Database } from "@/integrations/supabase/types";
 import { AppError } from "@/lib/appError";
 import { resolveCharacterCanonicalIds } from "@/lib/canonicalCompendium";
@@ -251,10 +248,16 @@ export const useCreateCharacter = () => {
 					await resolveCharacterCanonicalIds(data),
 				);
 			} catch (enrichErr) {
-				console.warn("Canonical ID enrichment failed, using raw data:", enrichErr);
+				console.warn(
+					"Canonical ID enrichment failed, using raw data:",
+					enrichErr,
+				);
 				dataWithCanonicalIds = data;
 			}
-			if (!isSupabaseConfigured || (guestEnabled && !hasStoredSupabaseSession())) {
+			if (
+				!isSupabaseConfigured ||
+				(guestEnabled && !hasStoredSupabaseSession())
+			) {
 				return createLocalCharacter(dataWithCanonicalIds);
 			}
 
@@ -277,15 +280,14 @@ export const useCreateCharacter = () => {
 			// the real insert error surfaced below.
 			if (user.email) {
 				try {
-					await supabase.from("profiles").upsert(
-						{ id: user.id, email: user.email },
-						{ onConflict: "id", ignoreDuplicates: true },
-					);
+					await supabase
+						.from("profiles")
+						.upsert(
+							{ id: user.id, email: user.email },
+							{ onConflict: "id", ignoreDuplicates: true },
+						);
 				} catch (profileErr) {
-					logErrorWithContext(
-						profileErr,
-						"useCreateCharacter: ensure profile",
-					);
+					logErrorWithContext(profileErr, "useCreateCharacter: ensure profile");
 				}
 			}
 

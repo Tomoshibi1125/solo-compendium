@@ -25,7 +25,16 @@ import {
 } from "../src/lib/monster5eTable";
 
 type Rank = "D" | "C" | "B" | "A" | "S";
-type AnyEntry = Record<string, any>;
+interface AnyEntry {
+	[key: string]: unknown;
+	id?: string;
+	type?: string;
+	stats?: {
+		ability_scores?: Record<string, unknown> | null;
+		[key: string]: unknown;
+	} | null;
+	actions?: Array<{ name?: string } & Record<string, unknown>>;
+}
 
 const ABILITY_LONG = [
 	"strength",
@@ -237,7 +246,8 @@ function reconstruct(
 
 	// HP spread within the CR band, deterministic + unique per entry.
 	const bandSize = table.hp_max - table.hp_min + 1;
-	const targetHp = table.hp_min + ((hash(entry.id) + idx * 13) % bandSize);
+	const targetHp =
+		table.hp_min + ((hash(entry.id ?? "") + idx * 13) % bandSize);
 
 	// AC: table floor + armor bump for naturally-armored types.
 	const acBump =
@@ -257,7 +267,7 @@ function reconstruct(
 	for (const a of ABILITY_LONG) {
 		ability_scores[a] =
 			typeof oldScores[a] === "number"
-				? oldScores[a]
+				? (oldScores[a] as number)
 				: 10 + table.proficiency_bonus;
 	}
 
@@ -293,7 +303,7 @@ function reconstruct(
 	}
 
 	// Elemental palette for this entry (3 distinct damage types).
-	const e0 = hash(entry.id) % ELEMENTS.length;
+	const e0 = hash(entry.id ?? "") % ELEMENTS.length;
 	const dt = [
 		ELEMENTS[e0],
 		ELEMENTS[(e0 + 3) % ELEMENTS.length],

@@ -70,7 +70,7 @@ export interface ACBreakdown {
  * considered automatically. When omitted, calculateAC behaves like the
  * baseline single-formula calculator for backward compatibility.
  */
-export interface ACContextExtras {
+interface ACContextExtras {
 	job?: string | null;
 	abilities?: Record<AbilityScore, number>;
 	mageArmorActive?: boolean;

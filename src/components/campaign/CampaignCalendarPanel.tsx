@@ -12,7 +12,7 @@ import { formatClock, formatRiftCyclePip } from "@/lib/campaignCalendar";
  * persists via `useCampaignCalendar` → `useCampaignToolState`
  * (always-on local mirror invariant preserved).
  */
-export interface CampaignCalendarPanelProps {
+interface CampaignCalendarPanelProps {
 	campaignId: string;
 	canManage: boolean;
 }

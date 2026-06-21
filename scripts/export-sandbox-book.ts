@@ -15,7 +15,7 @@ import { mkdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { chromium } from "playwright";
-
+import { anomalies } from "../src/data/compendium/anomalies";
 import { chaptersPart1 } from "../src/data/compendium/sandbox/sandbox-chapters-part1";
 import { chaptersPart2 } from "../src/data/compendium/sandbox/sandbox-chapters-part2";
 import { chaptersPart3 } from "../src/data/compendium/sandbox/sandbox-chapters-part3";
@@ -32,7 +32,6 @@ import { sandboxQuests } from "../src/data/compendium/sandbox/sandbox-quests";
 import { sandboxTimeline } from "../src/data/compendium/sandbox/sandbox-timeline";
 import { sandboxWardenNotes } from "../src/data/compendium/sandbox/sandbox-warden-notes";
 import { sandboxRecruitableNPCs } from "../src/data/compendium/sandbox-npcs";
-import { anomalies } from "../src/data/compendium/anomalies";
 
 // ---------------------------------------------------------------------------
 // Module metadata (mirrors ascendant-sandbox-module.ts — kept in sync by hand
@@ -164,7 +163,9 @@ function mdToHtml(md: string): string {
 				buf.push(lines[i].replace(/^\s*[-*]\s+/, ""));
 				i++;
 			}
-			out.push(`<ul>${buf.map((x) => `<li>${inlineMd(x)}</li>`).join("")}</ul>`);
+			out.push(
+				`<ul>${buf.map((x) => `<li>${inlineMd(x)}</li>`).join("")}</ul>`,
+			);
 			continue;
 		}
 		if (/^\s*\d+\.\s+/.test(line)) {
@@ -173,7 +174,9 @@ function mdToHtml(md: string): string {
 				buf.push(lines[i].replace(/^\s*\d+\.\s+/, ""));
 				i++;
 			}
-			out.push(`<ol>${buf.map((x) => `<li>${inlineMd(x)}</li>`).join("")}</ol>`);
+			out.push(
+				`<ol>${buf.map((x) => `<li>${inlineMd(x)}</li>`).join("")}</ol>`,
+			);
 			continue;
 		}
 		const buf: string[] = [];
@@ -187,16 +190,85 @@ function mdToHtml(md: string): string {
 }
 
 function titleCase(s: string): string {
-	return s
-		.replace(/[_-]+/g, " ")
-		.replace(/\b\w/g, (c) => c.toUpperCase());
+	return s.replace(/[_-]+/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
 }
 
 // ---------------------------------------------------------------------------
 // Appendix renderers (structured data -> HTML).
 // ---------------------------------------------------------------------------
+interface NpcEntry {
+	name?: string;
+	title?: string;
+	faction?: string;
+	level?: string | number;
+	ac?: string | number;
+	hp?: string | number;
+	location?: string;
+	job?: string;
+	description?: string;
+	personality?: string;
+	motivation?: string;
+	keyAbilities?: string[];
+	recruitCondition?: string;
+}
+
+interface FactionEntry {
+	name?: string;
+	tagline?: string;
+	description?: string;
+	startingReputation?: string | number;
+	joiningBenefits?: string[];
+}
+
+type MonsterRef = string | { name?: string; alias?: string; count?: number };
+
+interface EncounterEntry {
+	name?: string;
+	difficulty?: string;
+	sceneRef?: string;
+	description?: string;
+	monsters?: MonsterRef[];
+	hazards?: string[];
+	rewards?: string[];
+}
+
+interface QuestEntry {
+	rank?: string;
+	title?: string;
+	summary?: string;
+	objectives?: string[];
+	rewardNotes?: string;
+}
+
+type LootRef = string | { name?: string; item?: string };
+
+interface LootTableEntry {
+	name?: string;
+	rank?: string;
+	entries?: LootRef[];
+}
+
+interface TimelineEntry {
+	day?: string | number;
+	title?: string;
+	description?: string;
+	factionImpact?: string;
+}
+
+interface HandoutEntry {
+	title?: string;
+	visibleToPlayers?: boolean;
+	content?: string;
+}
+
+interface WardenNoteEntry {
+	title?: string;
+	category?: string;
+	content?: string;
+}
+
 function renderNpcs(): string {
-	const npcs = sandboxRecruitableNPCs as any[];
+	const npcs = sandboxRecruitableNPCs as unknown as NpcEntry[];
 	const cards = npcs
 		.map((n) => {
 			const abilities = Array.isArray(n.keyAbilities)
@@ -222,7 +294,7 @@ function renderNpcs(): string {
 }
 
 function renderFactions(): string {
-	const factions = sandboxFactions as any[];
+	const factions = sandboxFactions as unknown as FactionEntry[];
 	return factions
 		.map((f) => {
 			const benefits = Array.isArray(f.joiningBenefits)
@@ -240,12 +312,12 @@ function renderFactions(): string {
 }
 
 function renderEncounters(): string {
-	const encs = sandboxEncounters as any[];
+	const encs = sandboxEncounters as unknown as EncounterEntry[];
 	return encs
 		.map((e) => {
 			const monsters = Array.isArray(e.monsters)
 				? e.monsters
-						.map((m: any) =>
+						.map((m) =>
 							typeof m === "string"
 								? m
 								: `${m.name ?? m.alias ?? "anomaly"}${m.count ? ` ×${m.count}` : ""}`,
@@ -267,7 +339,7 @@ function renderEncounters(): string {
 }
 
 function renderQuests(): string {
-	const quests = sandboxQuests as any[];
+	const quests = sandboxQuests as unknown as QuestEntry[];
 	return quests
 		.map((q) => {
 			const objs = Array.isArray(q.objectives)
@@ -284,13 +356,14 @@ function renderQuests(): string {
 }
 
 function renderLoot(): string {
-	const tables = sandboxLootTables as any[];
+	const tables = sandboxLootTables as unknown as LootTableEntry[];
 	return tables
 		.map((t) => {
 			const entries = Array.isArray(t.entries)
 				? `<ul>${t.entries
-						.map((e: any) =>
-							`<li>${inlineMd(typeof e === "string" ? e : (e.name ?? e.item ?? JSON.stringify(e)))}</li>`,
+						.map(
+							(e) =>
+								`<li>${inlineMd(typeof e === "string" ? e : (e.name ?? e.item ?? JSON.stringify(e)))}</li>`,
 						)
 						.join("")}</ul>`
 				: "";
@@ -300,7 +373,7 @@ function renderLoot(): string {
 }
 
 function renderTimeline(): string {
-	const events = sandboxTimeline as any[];
+	const events = sandboxTimeline as unknown as TimelineEntry[];
 	const rows = events
 		.map(
 			(e) =>
@@ -311,7 +384,7 @@ function renderTimeline(): string {
 }
 
 function renderHandouts(): string {
-	const handouts = sandboxHandoutsExpanded as any[];
+	const handouts = sandboxHandoutsExpanded as unknown as HandoutEntry[];
 	return handouts
 		.map(
 			(h) =>
@@ -321,13 +394,53 @@ function renderHandouts(): string {
 }
 
 function renderWardenNotes(): string {
-	const notes = sandboxWardenNotes as any[];
+	const notes = sandboxWardenNotes as unknown as WardenNoteEntry[];
 	return notes
 		.map(
 			(n) =>
 				`<div class="card"><h3>${esc(n.title ?? "Note")} <span class="tag">${esc(String(n.category ?? ""))}</span></h3>${mdToHtml(String(n.content ?? ""))}</div>`,
 		)
 		.join("\n");
+}
+
+interface AnomalyStats {
+	speed?: string | number;
+	extra_speeds?: Record<string, unknown>;
+	saving_throws?: Record<string, unknown>;
+	ability_scores?: Record<string, unknown>;
+	challenge_rating?: string | number;
+	proficiency_bonus?: string | number;
+	[key: string]: unknown;
+}
+
+interface AnomalyEntry {
+	id?: string;
+	name?: string;
+	size?: string;
+	type?: string;
+	rank?: string;
+	alignment?: string;
+	ac?: string | number;
+	ac_source?: string;
+	hit_dice?: string;
+	hp?: string | number;
+	senses?: string;
+	languages?: string;
+	xp?: string | number;
+	description?: string;
+	weaknesses?: string[];
+	traits?: unknown[];
+	actions?: unknown[];
+	reactions?: unknown[];
+	lair_actions?: unknown[];
+	legendary_actions?: unknown[];
+	damage_vulnerabilities?: unknown;
+	damage_resistances?: unknown;
+	damage_immunities?: unknown;
+	condition_immunities?: unknown;
+	skills?: Record<string, unknown>;
+	stats?: AnomalyStats;
+	[key: string]: unknown;
 }
 
 function renderBestiary(): string {
@@ -341,14 +454,16 @@ function renderBestiary(): string {
 		"anomaly-0704",
 		"anomaly-0700",
 	];
-	const byId = new Map((anomalies as any[]).map((a) => [a.id, a]));
-	const mod = (score: any) => {
+	const byId = new Map(
+		(anomalies as unknown as AnomalyEntry[]).map((a) => [a.id, a]),
+	);
+	const mod = (score: unknown) => {
 		const n = Number(score);
 		if (!Number.isFinite(n)) return "";
 		const m = Math.floor((n - 10) / 2);
 		return ` (${m >= 0 ? "+" : ""}${m})`;
 	};
-	const abilityRow = (s: any) => {
+	const abilityRow = (s: Record<string, unknown> | null | undefined) => {
 		if (!s) return "";
 		const cols: [string, string][] = [
 			["STR", "strength"],
@@ -365,31 +480,31 @@ function renderBestiary(): string {
 			)
 			.join("")}</div>`;
 	};
-	const kv = (obj: any) =>
+	const kv = (obj: unknown) =>
 		obj && typeof obj === "object"
 			? Object.entries(obj)
 					.map(([k, v]) => `${k} +${v}`)
 					.join(", ")
 			: "";
-	const block = (label: string, arr: any) =>
+	const block = (label: string, arr: unknown) =>
 		Array.isArray(arr) && arr.length
 			? `<div class="block-head">${label}</div>${arr
 					.map(
-						(t: any) =>
+						(t) =>
 							`<p class="entry"><strong>${esc(String(t.name ?? ""))}.</strong> ${inlineMd(String(t.description ?? ""))}</p>`,
 					)
 					.join("")}`
 			: "";
-	const dmg = (arr: any, label: string) =>
+	const dmg = (arr: unknown, label: string) =>
 		Array.isArray(arr) && arr.length
 			? `<p class="line"><strong>${label}</strong> ${esc(arr.join(", "))}</p>`
 			: "";
 
 	const blocks = order
 		.map((id) => {
-			const a = byId.get(id) as any;
+			const a = byId.get(id);
 			if (!a) return "";
-			const st = a.stats ?? {};
+			const st: AnomalyStats = a.stats ?? {};
 			const saves = kv(st.saving_throws);
 			const skills = kv(a.skills);
 			const speeds = [
@@ -434,8 +549,7 @@ function renderBestiary(): string {
 		})
 		.join("\n");
 
-	const intro =
-		`<p class="muted">The Quiet is never a stand-up fight until the very end. These blocks cover the worn dead it sends ahead — the lures and hunters that can intrude on any zone — and, last, the apex itself, for the gated endgame. For most of the campaign the Quiet takes a character when the Hunt Clock peaks rather than rolling initiative; see "Running This Horror." Remember that ordinary combat means noise, light, and Essence, and every one of those fills the Hunt Clock — so even these lesser hunts draw the apex closer.</p>`;
+	const intro = `<p class="muted">The Quiet is never a stand-up fight until the very end. These blocks cover the worn dead it sends ahead — the lures and hunters that can intrude on any zone — and, last, the apex itself, for the gated endgame. For most of the campaign the Quiet takes a character when the Hunt Clock peaks rather than rolling initiative; see "Running This Horror." Remember that ordinary combat means noise, light, and Essence, and every one of those fills the Hunt Clock — so even these lesser hunts draw the apex closer.</p>`;
 	return `${intro}\n${blocks}`;
 }
 
@@ -444,13 +558,31 @@ function renderQuickReference(): string {
 	// engine — kept in sync with that chapter by hand. Numbers (6-segment Hunt
 	// Clock, reset-to-2, Dread 0-6, the two locks, L9+) mirror the canon there.
 	const dreadRows = [
-		["1–2", "<strong>Unsettled.</strong> No mechanical effect — describe the fraying."],
-		["3", "<strong>Shaken</strong> — disadvantage on the first save each scene against fear or the uncanny."],
-		["4", "<strong>Fraying</strong> — once per scene the Warden may have the character mis-see an ally as the Quiet, or hear a lure in a trusted voice."],
-		["5", "<strong>Breaking</strong> — disadvantage on checks while any familiar face is present; may act on a hallucination once."],
-		["6", "<strong>Unmade</strong> — at the worst moment the character does the thing that gets someone taken. Player keeps agency; Warden gains one hard complication."],
+		[
+			"1–2",
+			"<strong>Unsettled.</strong> No mechanical effect — describe the fraying.",
+		],
+		[
+			"3",
+			"<strong>Shaken</strong> — disadvantage on the first save each scene against fear or the uncanny.",
+		],
+		[
+			"4",
+			"<strong>Fraying</strong> — once per scene the Warden may have the character mis-see an ally as the Quiet, or hear a lure in a trusted voice.",
+		],
+		[
+			"5",
+			"<strong>Breaking</strong> — disadvantage on checks while any familiar face is present; may act on a hallucination once.",
+		],
+		[
+			"6",
+			"<strong>Unmade</strong> — at the worst moment the character does the thing that gets someone taken. Player keeps agency; Warden gains one hard complication.",
+		],
 	]
-		.map(([d, e]) => `<tr><td style="text-align:center;width:42px"><strong>${d}</strong></td><td>${e}</td></tr>`)
+		.map(
+			([d, e]) =>
+				`<tr><td style="text-align:center;width:42px"><strong>${d}</strong></td><td>${e}</td></tr>`,
+		)
 		.join("");
 
 	return `<div class="refcard">
@@ -493,7 +625,10 @@ function renderQuickReference(): string {
 // Assemble the book HTML.
 // ---------------------------------------------------------------------------
 function slug(s: string): string {
-	return s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+	return s
+		.toLowerCase()
+		.replace(/[^a-z0-9]+/g, "-")
+		.replace(/^-|-$/g, "");
 }
 
 const tocItems = chapters
@@ -513,16 +648,56 @@ const appendix = (id: string, title: string, body: string) =>
 // One source of truth for the appendices, so the Table of Contents and the
 // rendered sections can never drift apart.
 const appendixSections: { id: string; title: string; body: string }[] = [
-	{ id: "appendix-allies", title: "Appendix A — Recruitable Allies", body: renderNpcs() },
-	{ id: "appendix-factions", title: "Appendix B — Factions of the Gloamreach", body: renderFactions() },
-	{ id: "appendix-encounters", title: "Appendix C — Encounters of the Gloamreach", body: renderEncounters() },
-	{ id: "appendix-quests", title: "Appendix D — Side Quests", body: renderQuests() },
-	{ id: "appendix-loot", title: "Appendix E — Treasure & Relics", body: renderLoot() },
-	{ id: "appendix-timeline", title: "Appendix F — The Gate Break Track", body: renderTimeline() },
-	{ id: "appendix-handouts", title: "Appendix G — Handouts", body: renderHandouts() },
-	{ id: "appendix-warden", title: "Appendix H — Warden's Secrets", body: renderWardenNotes() },
-	{ id: "appendix-bestiary", title: "Appendix I — The Quiet and Its Worn Dead", body: renderBestiary() },
-	{ id: "appendix-quickref", title: "Appendix J — Warden's Quick Reference", body: renderQuickReference() },
+	{
+		id: "appendix-allies",
+		title: "Appendix A — Recruitable Allies",
+		body: renderNpcs(),
+	},
+	{
+		id: "appendix-factions",
+		title: "Appendix B — Factions of the Gloamreach",
+		body: renderFactions(),
+	},
+	{
+		id: "appendix-encounters",
+		title: "Appendix C — Encounters of the Gloamreach",
+		body: renderEncounters(),
+	},
+	{
+		id: "appendix-quests",
+		title: "Appendix D — Side Quests",
+		body: renderQuests(),
+	},
+	{
+		id: "appendix-loot",
+		title: "Appendix E — Treasure & Relics",
+		body: renderLoot(),
+	},
+	{
+		id: "appendix-timeline",
+		title: "Appendix F — The Gate Break Track",
+		body: renderTimeline(),
+	},
+	{
+		id: "appendix-handouts",
+		title: "Appendix G — Handouts",
+		body: renderHandouts(),
+	},
+	{
+		id: "appendix-warden",
+		title: "Appendix H — Warden's Secrets",
+		body: renderWardenNotes(),
+	},
+	{
+		id: "appendix-bestiary",
+		title: "Appendix I — The Quiet and Its Worn Dead",
+		body: renderBestiary(),
+	},
+	{
+		id: "appendix-quickref",
+		title: "Appendix J — Warden's Quick Reference",
+		body: renderQuickReference(),
+	},
 ];
 
 const appendicesHtml = appendixSections
@@ -595,7 +770,7 @@ hr { border: none; border-top: 1px solid var(--rule); margin: 14px 0; }
   <div class="kicker">Rift Ascendant · Warden's Edition</div>
   <h1>${esc(MODULE_TITLE)}</h1>
   <div class="sub">${esc(MODULE_SUBTITLE)}</div>
-  <div class="meta">Generated from the live compendium module · v${MODULE_VERSION} · ${new Date().toISOString().slice(0, 10)}<br/>${chapters.length} chapters · ${appendixSections.length} appendices · ${(sandboxRecruitableNPCs as any[]).length} allies · ${(sandboxHandoutsExpanded as any[]).length} handouts</div>
+  <div class="meta">Generated from the live compendium module · v${MODULE_VERSION} · ${new Date().toISOString().slice(0, 10)}<br/>${chapters.length} chapters · ${appendixSections.length} appendices · ${(sandboxRecruitableNPCs as unknown as NpcEntry[]).length} allies · ${(sandboxHandoutsExpanded as unknown as HandoutEntry[]).length} handouts</div>
 </div>
 <nav class="toc"><h1>Contents</h1><ol>${tocItems}</ol><h2>Appendices</h2><ul class="appx">${appendixToc}</ul></nav>
 ${chaptersHtml}

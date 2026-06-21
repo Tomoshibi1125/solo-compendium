@@ -9,7 +9,7 @@
  * Add a new theme: append a row here, no migration required.
  */
 
-export interface SheetTheme {
+interface SheetTheme {
 	id: string;
 	name: string;
 	description: string;

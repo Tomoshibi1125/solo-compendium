@@ -78,7 +78,10 @@ describe("creation setup idempotency", () => {
 	});
 
 	it("addLevel1Features only grants level-1 class features once across re-runs", async () => {
-		const row = createLocalCharacter({ name: "Idem A", job: "Idempotency Job" });
+		const row = createLocalCharacter({
+			name: "Idem A",
+			job: "Idempotency Job",
+		});
 		const job = fixtureJob();
 
 		await addLevel1Features(row.id, job);
@@ -105,7 +108,10 @@ describe("creation setup idempotency", () => {
 	});
 
 	it("addStartingEquipment does not duplicate job gear across re-runs", async () => {
-		const row = createLocalCharacter({ name: "Idem C", job: "Idempotency Job" });
+		const row = createLocalCharacter({
+			name: "Idem C",
+			job: "Idempotency Job",
+		});
 		const job = fixtureJob();
 		const background = fixtureBackground(); // no starting_equipment → bg branch skipped
 

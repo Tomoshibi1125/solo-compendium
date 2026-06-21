@@ -243,7 +243,16 @@ export default function CharacterSheetV2() {
 		setSelectedDetail({ ...detail, type, icon });
 	};
 
-	const mobileTabs = ["actions", "powers", "inventory", "features", "stats"];
+	const mobileTabs = [
+		"actions",
+		"powers",
+		"inventory",
+		"features",
+		"bio",
+		"quests",
+		"extras",
+		"stats",
+	];
 	const bindMobileGestures = useDrag(
 		({ swipe: [swipeX] }: { swipe: [number, number] }) => {
 			if (swipeX !== 0) {
@@ -750,7 +759,7 @@ export default function CharacterSheetV2() {
 
 				{/* Quick Actions Panel */}
 				{!isReadOnly && (
-					<div className="p-4 flex items-center gap-3 bg-primary/5 min-w-[200px]">
+					<div className="p-4 flex flex-wrap items-center gap-3 bg-primary/5 w-full md:w-auto md:min-w-[200px]">
 						<HealthDialog
 							isOpen={persistentModals.health}
 							onOpenChange={(open) => sheetController.setModal("health", open)}
@@ -962,7 +971,7 @@ export default function CharacterSheetV2() {
 				{/* Desktop 3-Column Layout */}
 				<div className="hidden md:grid grid-cols-[120px_300px_1fr] gap-8 items-start">
 					{/* COLUMN 1: Ability Scores (Vertical) */}
-					<aside className="sticky top-16 pt-4 space-y-4">
+					<aside className="sticky top-16 pt-4 space-y-4 max-h-[calc(100dvh-120px)] overflow-y-auto pr-1 scrollbar-none hover:scrollbar-thin scrollbar-thumb-primary/20">
 						<AbilityScoreStrip
 							abilities={character.abilities}
 							modifiers={stats.calculatedStats.abilityModifiers}
@@ -974,7 +983,7 @@ export default function CharacterSheetV2() {
 					</aside>
 
 					{/* COLUMN 2: Proficiencies (Vertical) */}
-					<aside className="sticky top-16 pt-4 space-y-4 h-[calc(100vh-120px)] overflow-y-auto pr-2 scrollbar-none hover:scrollbar-thin scrollbar-thumb-primary/20">
+					<aside className="sticky top-16 pt-4 space-y-4 max-h-[calc(100dvh-120px)] overflow-y-auto pr-2 scrollbar-none hover:scrollbar-thin scrollbar-thumb-primary/20">
 						<ProficiencySidebar
 							saves={stats.calculatedStats.savingThrows}
 							skills={stats.skills}
@@ -1170,7 +1179,7 @@ export default function CharacterSheetV2() {
 						onValueChange={setActiveMobileTab}
 						className="w-full"
 					>
-						<TabsList className="flex w-full items-center justify-start gap-8 h-14 bg-obsidian-charcoal/80 border-y border-primary/20 rounded-none sticky top-16 z-20 overflow-x-auto scrollbar-none px-4 shadow-[0_4px_12px_rgba(0,0,0,0.5)]">
+						<TabsList className="flex w-full items-center justify-start gap-6 h-14 bg-obsidian-charcoal/80 border-y border-primary/20 rounded-none sticky top-16 z-20 overflow-x-auto scrollbar-none px-4 shadow-[0_4px_12px_rgba(0,0,0,0.5)]">
 							<TabsTrigger
 								value="actions"
 								className="text-[11px] uppercase font-mono tracking-wider data-[state=active]:bg-transparent data-[state=active]:text-primary border-b-2 border-transparent data-[state=active]:border-primary rounded-none h-full transition-all"
@@ -1196,6 +1205,24 @@ export default function CharacterSheetV2() {
 								Feats
 							</TabsTrigger>
 							<TabsTrigger
+								value="bio"
+								className="text-[11px] uppercase font-mono tracking-wider data-[state=active]:bg-transparent data-[state=active]:text-primary border-b-2 border-transparent data-[state=active]:border-primary rounded-none h-full transition-all"
+							>
+								Bio
+							</TabsTrigger>
+							<TabsTrigger
+								value="quests"
+								className="text-[11px] uppercase font-mono tracking-wider data-[state=active]:bg-transparent data-[state=active]:text-primary border-b-2 border-transparent data-[state=active]:border-primary rounded-none h-full transition-all"
+							>
+								Notes
+							</TabsTrigger>
+							<TabsTrigger
+								value="extras"
+								className="text-[11px] uppercase font-mono tracking-wider data-[state=active]:bg-transparent data-[state=active]:text-primary border-b-2 border-transparent data-[state=active]:border-primary rounded-none h-full transition-all"
+							>
+								Extras
+							</TabsTrigger>
+							<TabsTrigger
 								value="stats"
 								className="text-[11px] uppercase font-mono tracking-wider data-[state=active]:bg-transparent data-[state=active]:text-primary border-b-2 border-transparent data-[state=active]:border-primary rounded-none h-full transition-all"
 							>
@@ -1209,6 +1236,9 @@ export default function CharacterSheetV2() {
 							<TabsContent value="powers">{powers}</TabsContent>
 							<TabsContent value="inventory">{inventory}</TabsContent>
 							<TabsContent value="features">{features}</TabsContent>
+							<TabsContent value="bio">{bio}</TabsContent>
+							<TabsContent value="quests">{quests}</TabsContent>
+							<TabsContent value="extras">{extras}</TabsContent>
 							<TabsContent value="stats" className="space-y-6 pt-4">
 								<AbilityScoreStrip
 									abilities={character.abilities}

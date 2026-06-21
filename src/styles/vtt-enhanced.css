@@ -669,7 +669,9 @@
 		border-radius: 0;
 		border: none;
 		height: 100dvh;
-		width: 100vw;
+		/* left:0 + right:0 already span the viewport; 100vw includes the
+		   scrollbar width and causes horizontal overflow on some phones. */
+		width: 100%;
 	}
 
 	/* Tokens are larger for touch */

@@ -16,6 +16,7 @@ import {
 	ScrollText,
 	Share2,
 	Skull,
+	SlidersHorizontal,
 	Sparkles,
 	Swords,
 	Users,
@@ -56,6 +57,13 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
+import {
+	Sheet,
+	SheetContent,
+	SheetHeader,
+	SheetTitle,
+	SheetTrigger,
+} from "@/components/ui/sheet";
 import type { StaticCompendiumEntry } from "@/data/compendium/providers";
 import { useToast } from "@/hooks/use-toast";
 import { useJoinedCampaigns, useMyCampaigns } from "@/hooks/useCampaigns";
@@ -170,6 +178,7 @@ const Compendium = () => {
 	const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
 	const [currentPage, setCurrentPage] = useState(1);
 	const [showGeminiProtocol, setShowGeminiProtocol] = useState(false);
+	const [filtersOpen, setFiltersOpen] = useState(false);
 	const [_sendingItem, setSendingItem] = useState<CompendiumEntry | null>(null);
 	const [_isSendDialogOpen, setIsSendDialogOpen] = useState(false);
 
@@ -1028,6 +1037,46 @@ const Compendium = () => {
 		"legendary",
 	];
 
+	// Shared props for the filter sidebar — rendered both as the desktop rail and
+	// inside the mobile "Filters" drawer (Sheet).
+	const sidebarProps = {
+		categories: categories.map((cat) => ({ ...cat, count: counts[cat.id] })),
+		selectedCategory: filters.selectedCategory,
+		onCategoryChange: (cat: string) =>
+			setFilters((prev) => ({ ...prev, selectedCategory: cat })),
+		sourceBooks,
+		selectedSourceBooks: filters.selectedSourceBooks,
+		onSourceBookToggle: handleSourceBookToggle,
+		schools: availableSchools,
+		selectedSchools: filters.selectedSchools,
+		onSchoolToggle: handleSchoolToggle,
+		gateRanks,
+		selectedGateRanks: filters.selectedGateRanks,
+		onGateRankToggle: handleGateRankToggle,
+		showFavoritesOnly: filters.showFavoritesOnly,
+		onToggleFavorites: () =>
+			setFilters((prev) => ({
+				...prev,
+				showFavoritesOnly: !prev.showFavoritesOnly,
+			})),
+		favoriteCount,
+		showBossOnly: filters.showBossOnly,
+		onToggleBossOnly: () =>
+			setFilters((prev) => ({ ...prev, showBossOnly: !prev.showBossOnly })),
+		showMiniBossOnly: filters.showMiniBossOnly,
+		onToggleMiniBossOnly: () =>
+			setFilters((prev) => ({
+				...prev,
+				showMiniBossOnly: !prev.showMiniBossOnly,
+			})),
+		rarities: availableRarities,
+		selectedRarities: filters.selectedRarities,
+		onRarityToggle: handleRarityToggle,
+		elements: availableElements,
+		selectedElements: filters.selectedElements,
+		onElementToggle: handleElementToggle,
+	};
+
 	return (
 		<Layout>
 			<div className="container mx-auto px-3 sm:px-4 py-4 sm:py-8 relative">
@@ -1036,12 +1085,12 @@ const Compendium = () => {
 				<div className="absolute inset-0 bg-gradient-to-b from-amethyst-purple/5 via-transparent to-transparent pointer-events-none" />
 
 				{/* Header with Ascendant UI styling */}
-				<div className="mb-6 sm:mb-8 relative z-10">
+				<div className="mb-3 sm:mb-8 relative z-10">
 					<RiftHeading
 						level={1}
 						variant="sovereign"
 						dimensional
-						className="mb-2 tracking-wider"
+						className="mb-1 sm:mb-2 tracking-wider"
 					>
 						Compendium
 					</RiftHeading>
@@ -1057,7 +1106,7 @@ const Compendium = () => {
 
 				{/* Search and Controls */}
 				<section
-					className="flex flex-col gap-4 mb-6"
+					className="flex flex-col gap-3 sm:gap-4 mb-4 sm:mb-6"
 					aria-label="Search and filters"
 				>
 					<div className="flex flex-col sm:flex-row gap-4">
@@ -1085,6 +1134,33 @@ const Compendium = () => {
 							/>
 						</div>
 						<div className="flex gap-2 flex-wrap sm:flex-nowrap">
+							{/* Mobile filter drawer trigger (desktop uses the rail) */}
+							<Sheet open={filtersOpen} onOpenChange={setFiltersOpen}>
+								<SheetTrigger asChild>
+									<Button
+										variant="outline"
+										className="lg:hidden gap-2 min-h-[44px]"
+										aria-label="Open filters"
+									>
+										<SlidersHorizontal className="w-4 h-4" />
+										Filters
+										{filterChips.length > 0 && (
+											<Badge variant="secondary" className="ml-1">
+												{filterChips.length}
+											</Badge>
+										)}
+									</Button>
+								</SheetTrigger>
+								<SheetContent
+									side="left"
+									className="w-[88vw] max-w-sm overflow-y-auto p-4"
+								>
+									<SheetHeader className="mb-4">
+										<SheetTitle>Filters</SheetTitle>
+									</SheetHeader>
+									<CompendiumSidebar {...sidebarProps} showCategories={false} />
+								</SheetContent>
+							</Sheet>
 							<Select
 								value={filters.sortBy}
 								onValueChange={(v) =>
@@ -1144,55 +1220,47 @@ const Compendium = () => {
 					)}
 				</section>
 
+				{/* Mobile category quick-switch — DDB-style horizontal chips so
+				    switching category is one tap without opening the drawer. */}
+				<div className="lg:hidden -mx-3 sm:-mx-4 px-3 sm:px-4 mb-4 overflow-x-auto scrollbar-none">
+					<div className="flex gap-2 w-max pb-1">
+						{categories.map((cat) => {
+							const Icon = cat.icon;
+							const active = filters.selectedCategory === cat.id;
+							const count = counts[cat.id];
+							return (
+								<Button
+									key={cat.id}
+									variant={active ? "default" : "outline"}
+									size="sm"
+									onClick={() =>
+										setFilters((prev) => ({
+											...prev,
+											selectedCategory: cat.id,
+										}))
+									}
+									className={cn(
+										"shrink-0 gap-1.5 min-h-[40px]",
+										active && "bg-primary text-primary-foreground",
+									)}
+								>
+									<Icon className="w-4 h-4" />
+									{cat.name}
+									{count !== undefined && count > 0 && (
+										<Badge variant="secondary" className="ml-0.5">
+											{count}
+										</Badge>
+									)}
+								</Button>
+							);
+						})}
+					</div>
+				</div>
+
 				<div className="flex flex-col lg:flex-row gap-6">
-					{/* Sidebar */}
-					<CompendiumSidebar
-						categories={categories.map((cat) => ({
-							...cat,
-							count: counts[cat.id],
-						}))}
-						selectedCategory={filters.selectedCategory}
-						onCategoryChange={(cat) =>
-							setFilters((prev) => ({ ...prev, selectedCategory: cat }))
-						}
-						sourceBooks={sourceBooks}
-						selectedSourceBooks={filters.selectedSourceBooks}
-						onSourceBookToggle={handleSourceBookToggle}
-						schools={availableSchools}
-						selectedSchools={filters.selectedSchools}
-						onSchoolToggle={handleSchoolToggle}
-						gateRanks={gateRanks}
-						selectedGateRanks={filters.selectedGateRanks}
-						onGateRankToggle={handleGateRankToggle}
-						showFavoritesOnly={filters.showFavoritesOnly}
-						onToggleFavorites={() =>
-							setFilters((prev) => ({
-								...prev,
-								showFavoritesOnly: !prev.showFavoritesOnly,
-							}))
-						}
-						favoriteCount={favoriteCount}
-						showBossOnly={filters.showBossOnly}
-						onToggleBossOnly={() =>
-							setFilters((prev) => ({
-								...prev,
-								showBossOnly: !prev.showBossOnly,
-							}))
-						}
-						showMiniBossOnly={filters.showMiniBossOnly}
-						onToggleMiniBossOnly={() =>
-							setFilters((prev) => ({
-								...prev,
-								showMiniBossOnly: !prev.showMiniBossOnly,
-							}))
-						}
-						rarities={availableRarities}
-						selectedRarities={filters.selectedRarities}
-						onRarityToggle={handleRarityToggle}
-						elements={availableElements}
-						selectedElements={filters.selectedElements}
-						onElementToggle={handleElementToggle}
-					/>
+					{/* Filter sidebar — desktop rail only; mobile uses the
+					    Filters drawer (see controls section above). */}
+					<CompendiumSidebar {...sidebarProps} className="hidden lg:block" />
 
 					{/* Results Grid */}
 					<div className="flex-1 min-w-0">

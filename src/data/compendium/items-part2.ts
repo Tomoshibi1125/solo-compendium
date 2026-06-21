@@ -2312,7 +2312,8 @@ export const items_part2: Item[] = [
 			"A stealth-treated tactical vest issued by Bureau quartermasters.",
 		rarity: "uncommon",
 		type: "armor",
-		image: "/generated/compendium/armor/armor-armor-nano-weave-exo-suit-afmeh0.webp",
+		image:
+			"/generated/compendium/armor/armor-armor-nano-weave-exo-suit-afmeh0.webp",
 		weight: 1,
 		value: 448,
 		item_type: "armor",
@@ -4524,7 +4525,8 @@ export const items_part2: Item[] = [
 		description: "A field-issued potion. Bitter, fast-acting, reliable.",
 		rarity: "common",
 		type: "consumable",
-		image: "/generated/compendium/items/item-item-purified-beast-repellent-15ydol.webp",
+		image:
+			"/generated/compendium/items/item-item-purified-beast-repellent-15ydol.webp",
 		weight: 2,
 		value: 186,
 		item_type: "consumable",

@@ -47,7 +47,8 @@ async function writeTextFileWithRetry(file, content, encoding = "utf8") {
 	const delays = [75, 150, 300, 600, 1000, 1500];
 	let lastError = null;
 	for (const delay of [0, ...delays]) {
-		if (delay > 0) await new Promise((resolveDelay) => setTimeout(resolveDelay, delay));
+		if (delay > 0)
+			await new Promise((resolveDelay) => setTimeout(resolveDelay, delay));
 		try {
 			await writeFile(file, content, encoding);
 			return;
@@ -85,10 +86,8 @@ const NEGATIVE_PROMPTS = {
 		"landscape-only image, empty map, UI icon only, cropped face, tiny distant subject, muddy silhouette, unreadable token, blurry, low resolution, text, watermark, logo",
 	location:
 		"generic fantasy tavern, generic castle unless lore requires it, spaceship, unrelated cyberpunk city, empty stock landscape, tourist photo, too cluttered for UI, unreadable composition, blurry, low resolution, text, watermark, logo, signature",
-	item:
-		"person, people, humanoid, owner, adventurer, warrior, hands, person holding object, gun, rifle, firearm, weapon, armor, helmet, character portrait, human face, open case, visible contents, loose tools, accessories, baked letters, caption, multiple objects, many variants, product sheet, parts sheet, exploded view, multiple camera angles, living creature, animal, monster, bird wings, tree, plant, roots, landscape-only image, generic sword, generic potion, random jewelry, stock icon, cluttered background, unreadable small details, bad perspective, blurry, low resolution, text, watermark, logo",
-	map:
-		"character portrait, single creature, single item, empty cinematic landscape, low-angle hero shot, unreadable layout, extreme perspective, heavy fog hiding layout, text, labels, watermark, logo, blurry, low resolution",
+	item: "person, people, humanoid, owner, adventurer, warrior, hands, person holding object, gun, rifle, firearm, weapon, armor, helmet, character portrait, human face, open case, visible contents, loose tools, accessories, baked letters, caption, multiple objects, many variants, product sheet, parts sheet, exploded view, multiple camera angles, living creature, animal, monster, bird wings, tree, plant, roots, landscape-only image, generic sword, generic potion, random jewelry, stock icon, cluttered background, unreadable small details, bad perspective, blurry, low resolution, text, watermark, logo",
+	map: "character portrait, single creature, single item, empty cinematic landscape, low-angle hero shot, unreadable layout, extreme perspective, heavy fog hiding layout, text, labels, watermark, logo, blurry, low resolution",
 	weapon:
 		"multiple weapons, duplicate weapon, secondary weapons, many variants, multiple guns, duplicate gun, three guns, multiple spearheads, spearhead collection, weapon head collection, product sheet, design sheet, parts sheet, exploded view, orthographic views, multiple camera angles, comparison sheet, collage, parchment page, diagram, labels, text block, circular emblems, side icons, unrelated orbs, generic sword unless the subject is a sword, generic gun unless the subject is a firearm, random jewelry, character holding the weapon, hands, full character portrait, cluttered background, unreadable silhouette, bad perspective, blurry, low resolution, text, watermark, logo",
 	armor:
@@ -355,7 +354,10 @@ function isConcreteAssetPath(path) {
 function inferFieldName(source, index) {
 	const lineStart = source.lastIndexOf("\n", index) + 1;
 	const lineEnd = source.indexOf("\n", index);
-	const line = source.slice(lineStart, lineEnd === -1 ? source.length : lineEnd);
+	const line = source.slice(
+		lineStart,
+		lineEnd === -1 ? source.length : lineEnd,
+	);
 	const match = line.match(/([A-Za-z0-9_]+)\s*:\s*["'`]/);
 	return match?.[1] ?? "unknown";
 }
@@ -365,9 +367,8 @@ function lastFieldValue(slice, field) {
 		`(?:^|[^A-Za-z0-9_])${field}\\s*:\\s*(["'])([\\s\\S]*?)\\1`,
 		"g",
 	);
-	let match;
 	let last = null;
-	while ((match = re.exec(slice)) !== null) {
+	for (let match = re.exec(slice); match !== null; match = re.exec(slice)) {
 		last = match[2];
 	}
 	return last;
@@ -446,7 +447,8 @@ function inferSubject(source, index, path) {
 
 	const name = lastFieldValue(before, "name") || lastFieldValue(after, "name");
 	if (name) return name;
-	const title = lastFieldValue(before, "title") || lastFieldValue(after, "title");
+	const title =
+		lastFieldValue(before, "title") || lastFieldValue(after, "title");
 	if (title) return title;
 	const id = lastFieldValue(before, "id") || lastFieldValue(after, "id");
 	if (id) return titleCase(slugToWords(id));
@@ -506,8 +508,7 @@ function extractPathMatches(source) {
 	const matches = [];
 	const re =
 		/(["'`])(\/(?:generated|audio|images)\/[^"'`\\]+\.(?:webp|png|jpg|jpeg|svg|mp3|ogg|wav|m4a))\1/gi;
-	let match;
-	while ((match = re.exec(source)) !== null) {
+	for (let match = re.exec(source); match !== null; match = re.exec(source)) {
 		if (!isConcreteAssetPath(match[2])) continue;
 		const identity = inferRecordIdentity(source, match.index, match[2]);
 		matches.push({
@@ -515,7 +516,8 @@ function extractPathMatches(source) {
 			index: match.index,
 			line: lineNumberAt(source, match.index),
 			field: inferFieldName(source, match.index),
-			subject: identity.recordName || inferSubject(source, match.index, match[2]),
+			subject:
+				identity.recordName || inferSubject(source, match.index, match[2]),
 			recordId: identity.recordId,
 			recordName: identity.recordName,
 			context: firstUsefulText(
@@ -530,8 +532,11 @@ function extractSandboxSceneAssetMatches(source) {
 	const matches = [];
 	const mapRe =
 		/name:\s*"([^"]+)"[\s\S]*?image:\s*"([^"]+\.(?:png|webp|jpg|jpeg|svg))"/g;
-	let match;
-	while ((match = mapRe.exec(source)) !== null) {
+	for (
+		let match = mapRe.exec(source);
+		match !== null;
+		match = mapRe.exec(source)
+	) {
 		const path = `/generated/compendium/sandbox_assets/${match[2]}`;
 		matches.push({
 			path,
@@ -654,7 +659,8 @@ function sourceCategoryForFile(relFile) {
 
 function sourceRecordKeyForRef(ref) {
 	const subject = cleanSubjectName(ref.subject, ref.recordName ?? "asset");
-	const id = ref.recordId || slugify(ref.recordName || subject) || `line-${ref.line}`;
+	const id =
+		ref.recordId || slugify(ref.recordName || subject) || `line-${ref.line}`;
 	return `${ref.file}#${id}`;
 }
 
@@ -698,7 +704,8 @@ function assetTypeFor(path, category, refs) {
 	if (sourceText.includes("pantheon.ts")) return "regent";
 	if (sourceText.includes("regentPortraits.ts")) return "regent";
 	if (path.includes("/sandbox_npcs/")) return "character";
-	if (category.includes("character") || category.includes("npc")) return "character";
+	if (category.includes("character") || category.includes("npc"))
+		return "character";
 	if (path.includes("/tokens/")) return "token";
 	if (category.includes("mount")) return "mount";
 	if (category.includes("vehicle")) return "vehicle";
@@ -707,7 +714,8 @@ function assetTypeFor(path, category, refs) {
 	if (category.includes("anomaly")) return "anomaly";
 	if (category.includes("monster")) return "monster";
 	if (category.includes("regent")) return "regent";
-	if (category.includes("artifact") || category.includes("relic")) return "relic";
+	if (category.includes("artifact") || category.includes("relic"))
+		return "relic";
 	if (category.includes("spell")) return "spell";
 	if (category.includes("power")) {
 		if (hasTerm(haystack, CREATURE_TERMS)) return "monster";
@@ -735,7 +743,8 @@ function assetTypeFor(path, category, refs) {
 	}
 	if (category.includes("mechanical")) {
 		if (hasTerm(haystack, VEHICLE_TERMS)) return "vehicle";
-		if (hasTerm(haystack, ["automaton", "golem", "construct"])) return "monster";
+		if (hasTerm(haystack, ["automaton", "golem", "construct"]))
+			return "monster";
 		if (hasTerm(haystack, LOCATION_TERMS)) return "location";
 		return "item";
 	}
@@ -852,7 +861,10 @@ function uniqueSubjects(refs, fallback) {
 		const key = slugify(subject);
 		if (!subjectsBySlug.has(key)) subjectsBySlug.set(key, subject);
 	}
-	return [...subjectsBySlug.values()].filter(Boolean).slice(0, 8).join(", ") || fallback;
+	return (
+		[...subjectsBySlug.values()].filter(Boolean).slice(0, 8).join(", ") ||
+		fallback
+	);
 }
 
 function loreSummaryFor(record) {
@@ -908,7 +920,8 @@ function recordText(record) {
 		record.assetType,
 		record.likelySubjectName,
 		...record.references.map(
-			(r) => `${r.file} ${r.field} ${r.subject} ${r.recordName ?? ""} ${r.context}`,
+			(r) =>
+				`${r.file} ${r.field} ${r.subject} ${r.recordName ?? ""} ${r.context}`,
 		),
 	]
 		.join(" ")
@@ -923,7 +936,9 @@ function anomalyDesignCue(record) {
 	if (haystack.includes("worn mimic") || haystack.includes("worn dead")) {
 		return "dead-worn lure and hunter, familiar human shape subtly wrong, predatory mimicry, grief-bait horror, not a normal portrait";
 	}
-	if (hasTerm(haystack, ["beast", "boar", "hound", "wolf", "serpent", "wyrm"])) {
+	if (
+		hasTerm(haystack, ["beast", "boar", "hound", "wolf", "serpent", "wyrm"])
+	) {
 		return "nonhuman beast anatomy, predatory animalistic or aberrant body, powerful creature silhouette, no armor, no human face, no human hunter";
 	}
 	if (
@@ -977,11 +992,15 @@ function itemDesignCue(record) {
 	const haystack = recordText(record);
 	const identityText = [
 		record.likelySubjectName,
-		...record.references.map((ref) => `${ref.recordId ?? ""} ${ref.recordName ?? ""}`),
+		...record.references.map(
+			(ref) => `${ref.recordId ?? ""} ${ref.recordName ?? ""}`,
+		),
 	]
 		.join(" ")
 		.toLowerCase();
-	if (hasTerm(identityText, ["kit", "toolkit", "breach kit", "tool set", "tools"])) {
+	if (
+		hasTerm(identityText, ["kit", "toolkit", "breach kit", "tool set", "tools"])
+	) {
 		return "one closed compact black tactical hard-shell equipment case, three-quarter view, one rugged rectangular case only, blank surface, faint violet rift seal glow, no visible contents, no loose tools";
 	}
 	if (hasTerm(identityText, ["spyglass", "monocular", "scope"])) {
@@ -990,13 +1009,33 @@ function itemDesignCue(record) {
 	if (hasTerm(identityText, ["light", "flashlight", "lantern", "torch"])) {
 		return "one compact tactical light device only, modern rugged flashlight or lantern form, visible lens and power housing";
 	}
-	if (hasTerm(identityText, ["serum", "vial", "antidote", "elixir", "potion"])) {
+	if (
+		hasTerm(identityText, ["serum", "vial", "antidote", "elixir", "potion"])
+	) {
 		return "one sealed medical vial or injector only, clear glass and metal cap, luminous Essence fluid inside";
 	}
-	if (hasTerm(identityText, ["mre", "ration", "rations", "meal", "food", "provisional mre"])) {
+	if (
+		hasTerm(identityText, [
+			"mre",
+			"ration",
+			"rations",
+			"meal",
+			"food",
+			"provisional mre",
+		])
+	) {
 		return "solo packshot of exactly one plain sealed modern field ration pouch, one compact unlabeled foil meal packet centered, one packet only, no readable label text, no extra packets, no food spread, no tree, no plant";
 	}
-	if (hasTerm(haystack, ["ring", "band", "amulet", "pendant", "necklace", "bracelet"])) {
+	if (
+		hasTerm(haystack, [
+			"ring",
+			"band",
+			"amulet",
+			"pendant",
+			"necklace",
+			"bracelet",
+		])
+	) {
 		return "single jewelry object, centered relic-like accessory, readable small silhouette";
 	}
 	if (hasTerm(haystack, ["battery", "cell", "core", "engine"])) {
@@ -1011,23 +1050,69 @@ function itemDesignCue(record) {
 function weaponDesignCue(record) {
 	const identityText = [
 		record.likelySubjectName,
-		...record.references.map((ref) => `${ref.recordId ?? ""} ${ref.recordName ?? ""}`),
+		...record.references.map(
+			(ref) => `${ref.recordId ?? ""} ${ref.recordName ?? ""}`,
+		),
 	]
 		.join(" ")
 		.toLowerCase();
 	if (hasTerm(identityText, ["revolver"])) {
 		return "single compact revolver side-view render, exactly one complete handgun only, visible rotating cylinder, short barrel, one grip, one trigger, no duplicate views, no second gun, not a cannon";
 	}
-	if (hasTerm(identityText, ["pistol", "sidearm", "firearm", "gun", "rifle", "carbine", "scattergun", "shotgun", "smg"])) {
+	if (
+		hasTerm(identityText, [
+			"pistol",
+			"sidearm",
+			"firearm",
+			"gun",
+			"rifle",
+			"carbine",
+			"scattergun",
+			"shotgun",
+			"smg",
+		])
+	) {
 		return "single firearm side-view render, exactly one complete gun only, one barrel, one grip, one trigger, no duplicate views, no second gun";
 	}
-	if (hasTerm(identityText, ["spear", "halberd", "glaive", "polearm", "javelin", "staff", "quarterstaff"])) {
+	if (
+		hasTerm(identityText, [
+			"spear",
+			"halberd",
+			"glaive",
+			"polearm",
+			"javelin",
+			"staff",
+			"quarterstaff",
+		])
+	) {
 		return "single full-length pole weapon, one shaft with one connected head, entire weapon visible, no extra spearheads";
 	}
-	if (hasTerm(identityText, ["dagger", "knife", "shortsword", "sword", "greatsword", "rapier", "saber", "katana", "blade"])) {
+	if (
+		hasTerm(identityText, [
+			"dagger",
+			"knife",
+			"shortsword",
+			"sword",
+			"greatsword",
+			"rapier",
+			"saber",
+			"katana",
+			"blade",
+		])
+	) {
 		return "single bladed weapon, one handle and one blade, entire weapon visible, no duplicate blade variants";
 	}
-	if (hasTerm(identityText, ["axe", "greataxe", "maul", "mace", "warhammer", "hammer", "club"])) {
+	if (
+		hasTerm(identityText, [
+			"axe",
+			"greataxe",
+			"maul",
+			"mace",
+			"warhammer",
+			"hammer",
+			"club",
+		])
+	) {
 		return "single heavy melee weapon, one handle with one striking head, entire weapon visible, no alternate heads";
 	}
 	if (hasTerm(identityText, ["bow", "crossbow", "longbow", "shortbow"])) {
@@ -1039,14 +1124,25 @@ function weaponDesignCue(record) {
 function armorDesignCue(record) {
 	const identityText = [
 		record.likelySubjectName,
-		...record.references.map((ref) => `${ref.recordId ?? ""} ${ref.recordName ?? ""}`),
+		...record.references.map(
+			(ref) => `${ref.recordId ?? ""} ${ref.recordName ?? ""}`,
+		),
 	]
 		.join(" ")
 		.toLowerCase();
 	if (hasTerm(identityText, ["bracer", "vambrace"])) {
 		return "detached single forearm bracer prop only, one hollow wrist cuff with protective plate, tabletop inventory object, no human arm, no sleeve, no glove, no torso, no full suit";
 	}
-	if (hasTerm(identityText, ["vest", "chestplate", "breastplate", "plate", "mail", "aegis"])) {
+	if (
+		hasTerm(identityText, [
+			"vest",
+			"chestplate",
+			"breastplate",
+			"plate",
+			"mail",
+			"aegis",
+		])
+	) {
 		return "detached torso protection vest object only, empty wearable shell on a simple stand, no head, no arms, no sleeves, no legs, no full suit, no wearer";
 	}
 	if (hasTerm(identityText, ["helmet", "helm", "headgear", "headpiece"])) {
@@ -1070,22 +1166,64 @@ function armorDesignCue(record) {
 function equipmentNegativeCue(record) {
 	const identityText = [
 		record.likelySubjectName,
-		...record.references.map((ref) => `${ref.recordId ?? ""} ${ref.recordName ?? ""}`),
+		...record.references.map(
+			(ref) => `${ref.recordId ?? ""} ${ref.recordName ?? ""}`,
+		),
 	]
 		.join(" ")
 		.toLowerCase();
 	const cues = [];
-	if (hasTerm(identityText, ["revolver", "pistol", "sidearm", "firearm", "gun", "rifle", "carbine", "scattergun", "shotgun", "smg"])) {
-		cues.push("multiple guns, duplicate firearms, weapon comparison sheet, three-view gun render, cannon, oversized barrel, shotgun body");
+	if (
+		hasTerm(identityText, [
+			"revolver",
+			"pistol",
+			"sidearm",
+			"firearm",
+			"gun",
+			"rifle",
+			"carbine",
+			"scattergun",
+			"shotgun",
+			"smg",
+		])
+	) {
+		cues.push(
+			"multiple guns, duplicate firearms, weapon comparison sheet, three-view gun render, cannon, oversized barrel, shotgun body",
+		);
 	}
-	if (hasTerm(identityText, ["spear", "halberd", "glaive", "polearm", "javelin", "staff", "quarterstaff"])) {
-		cues.push("extra spearheads, spearhead collection, broken weapon parts, multiple polearms");
+	if (
+		hasTerm(identityText, [
+			"spear",
+			"halberd",
+			"glaive",
+			"polearm",
+			"javelin",
+			"staff",
+			"quarterstaff",
+		])
+	) {
+		cues.push(
+			"extra spearheads, spearhead collection, broken weapon parts, multiple polearms",
+		);
 	}
 	if (hasTerm(identityText, ["bracer", "vambrace"])) {
-		cues.push("human arm, sleeve, glove, torso armor, shirt, coat, chestplate, combat vest, full suit, helmet, boots, whole body");
+		cues.push(
+			"human arm, sleeve, glove, torso armor, shirt, coat, chestplate, combat vest, full suit, helmet, boots, whole body",
+		);
 	}
-	if (hasTerm(identityText, ["vest", "chestplate", "breastplate", "plate", "mail", "aegis"])) {
-		cues.push("helmet, arms, sleeves, legs, pants, full bodysuit, person wearing armor, costume sheet");
+	if (
+		hasTerm(identityText, [
+			"vest",
+			"chestplate",
+			"breastplate",
+			"plate",
+			"mail",
+			"aegis",
+		])
+	) {
+		cues.push(
+			"helmet, arms, sleeves, legs, pants, full bodysuit, person wearing armor, costume sheet",
+		);
 	}
 	if (hasTerm(identityText, ["helmet", "helm", "headgear", "headpiece"])) {
 		cues.push("full armor suit, torso, shoulders, person wearing helmet, face");
@@ -1093,18 +1231,33 @@ function equipmentNegativeCue(record) {
 	if (hasTerm(identityText, ["shield", "buckler", "kite shield"])) {
 		cues.push("sword, spear, warrior, full knight, heraldic text");
 	}
-	if (hasTerm(identityText, ["mre", "ration", "rations", "meal", "food", "provisional mre"])) {
-		cues.push("multiple pouches, ration sheet, packaging layout, nutrition label, readable text, tree, roots, plant, open picnic, plated meal, restaurant food, creature");
+	if (
+		hasTerm(identityText, [
+			"mre",
+			"ration",
+			"rations",
+			"meal",
+			"food",
+			"provisional mre",
+		])
+	) {
+		cues.push(
+			"multiple pouches, ration sheet, packaging layout, nutrition label, readable text, tree, roots, plant, open picnic, plated meal, restaurant food, creature",
+		);
 	}
 	if (hasTerm(identityText, ["spyglass", "monocular", "scope"])) {
-		cues.push("rifle, pistol, gun stock, trigger, camera body, person looking through lens");
+		cues.push(
+			"rifle, pistol, gun stock, trigger, camera body, person looking through lens",
+		);
 	}
 	return cues.join(", ");
 }
 
 function visualSubjectName(record) {
 	const subject = record.likelySubjectName;
-	if (["item", "weapon", "armor", "vehicle", "mount"].includes(record.assetType)) {
+	if (
+		["item", "weapon", "armor", "vehicle", "mount"].includes(record.assetType)
+	) {
 		const possessive = subject.match(/^(.+)'s\s+(.+)$/);
 		if (possessive) {
 			return possessive[2];
@@ -1115,8 +1268,12 @@ function visualSubjectName(record) {
 
 function visualLoreForPrompt(record) {
 	const visualSubject = visualSubjectName(record);
-	const lore = loreSummaryFor(record).split(record.likelySubjectName).join(visualSubject);
-	if (!["item", "weapon", "armor", "vehicle", "mount"].includes(record.assetType)) {
+	const lore = loreSummaryFor(record)
+		.split(record.likelySubjectName)
+		.join(visualSubject);
+	if (
+		!["item", "weapon", "armor", "vehicle", "mount"].includes(record.assetType)
+	) {
 		return lore;
 	}
 	return compactText(stripMechanicalRulesText(lore), 520);
@@ -1228,13 +1385,21 @@ function recommendedDimensions(assetType, metadata) {
 		if (ratio > 0.9 && ratio < 1.1) return { width: 1024, height: 1024 };
 		return { width: 1344, height: 768 };
 	}
-	if (assetType === "anomaly" || assetType === "monster" || assetType === "regent")
+	if (
+		assetType === "anomaly" ||
+		assetType === "monster" ||
+		assetType === "regent"
+	)
 		return { width: 1024, height: 1024 };
 	return { width: 1024, height: 1024 };
 }
 
 function defaultSteps(assetType) {
-	if (assetType === "map" || assetType === "location" || assetType === "background")
+	if (
+		assetType === "map" ||
+		assetType === "location" ||
+		assetType === "background"
+	)
 		return 40;
 	if (
 		assetType === "item" ||
@@ -1260,7 +1425,10 @@ function generationModeFor(record) {
 
 function analyzeRecord(path, refs, category, existsInfo, metadata) {
 	const assetType = assetTypeFor(path, category, refs);
-	const likelySubjectName = uniqueSubjects(refs, titleCase(basename(path, extname(path))));
+	const likelySubjectName = uniqueSubjects(
+		refs,
+		titleCase(basename(path, extname(path))),
+	);
 	const reasons = [];
 	let placeholderSuspicion = "none";
 	let mismatchSuspicion = "none";
@@ -1292,7 +1460,10 @@ function analyzeRecord(path, refs, category, existsInfo, metadata) {
 		reasons.push("Path casing can break Linux deployments.");
 	}
 
-	if (sourceFiles.includes("regentPortraits.ts") && !path.includes("/regents/")) {
+	if (
+		sourceFiles.includes("regentPortraits.ts") &&
+		!path.includes("/regents/")
+	) {
 		mismatchSuspicion = "likely";
 		priority = "high";
 		reasons.push(
@@ -1309,7 +1480,9 @@ function analyzeRecord(path, refs, category, existsInfo, metadata) {
 	if (isGenericImageName(path) && placeholderSuspicion === "none") {
 		placeholderSuspicion = assetType === "item" ? "possible" : "likely";
 		if (assetType !== "item") priority = maxPriority(priority, "medium");
-		reasons.push("Generic generated filename suggests placeholder or pooled art.");
+		reasons.push(
+			"Generic generated filename suggests placeholder or pooled art.",
+		);
 	}
 
 	if (
@@ -1353,7 +1526,9 @@ function analyzeRecord(path, refs, category, existsInfo, metadata) {
 	if (distinctSubjects.size > 2 && isGenericImageName(path)) {
 		mismatchSuspicion = maxSuspicion(mismatchSuspicion, "possible");
 		priority = maxPriority(priority, "medium");
-		reasons.push("Same generic image is reused for multiple distinct subjects.");
+		reasons.push(
+			"Same generic image is reused for multiple distinct subjects.",
+		);
 	}
 
 	if (isGloamreachLike(refs) && category === "image-map" && refs.length > 1) {
@@ -1416,7 +1591,10 @@ function distinctSubjectNames(refs, fallback) {
 }
 
 function shouldSplitPromptRecord(record) {
-	const subjects = distinctSubjectNames(record.references, record.likelySubjectName);
+	const subjects = distinctSubjectNames(
+		record.references,
+		record.likelySubjectName,
+	);
 	return (
 		subjects.length > 1 ||
 		isGenericImageName(record.path) ||
@@ -1488,7 +1666,9 @@ function applyTargetPathFor(record) {
 		return `/generated/compendium/regents/${slugify(record.likelySubjectName)}.webp`;
 	}
 	if (
-		record.references.some((r) => r.file.includes("sandbox-asset-resolver.ts")) &&
+		record.references.some((r) =>
+			r.file.includes("sandbox-asset-resolver.ts"),
+		) &&
 		record.likelySubjectName.toLowerCase().includes("quiet")
 	) {
 		return "/generated/compendium/sandbox_npcs/the-quiet.webp";
@@ -1516,15 +1696,17 @@ function buildPromptRecord(record) {
 		outputBaseName: outputBaseNameFor(record),
 		type: record.assetType,
 		category: record.category,
-		sourceCategory: [...new Set(record.references.map((ref) => ref.sourceCategory))].filter(
-			Boolean,
-		),
+		sourceCategory: [
+			...new Set(record.references.map((ref) => ref.sourceCategory)),
+		].filter(Boolean),
 		sourceRecordKeys,
 		sourceRecordIds: [
 			...new Set(record.references.map((ref) => ref.recordId).filter(Boolean)),
 		],
 		sourceRecordNames: [
-			...new Set(record.references.map((ref) => ref.recordName).filter(Boolean)),
+			...new Set(
+				record.references.map((ref) => ref.recordName).filter(Boolean),
+			),
 		],
 		subject: record.likelySubjectName,
 		loreSummary: loreSummaryFor(record),
@@ -1629,7 +1811,10 @@ function uniqueByPromptRecordId(records) {
 		const existing = byId.get(record.promptRecordId);
 		existing.references = [...existing.references, ...record.references];
 		existing.sourceCategory = [
-			...new Set([...(existing.sourceCategory ?? []), ...(record.sourceCategory ?? [])]),
+			...new Set([
+				...(existing.sourceCategory ?? []),
+				...(record.sourceCategory ?? []),
+			]),
 		].filter(Boolean);
 		existing.sourceRecordKeys = [
 			...new Set([
@@ -1659,7 +1844,9 @@ function buildMarkdownSummary(summary, promptRecords) {
 	lines.push("");
 	lines.push(`Generated: ${summary.generatedAt}`);
 	lines.push("");
-	lines.push(`- **Unique asset paths referenced**: ${summary.totals.uniquePaths}`);
+	lines.push(
+		`- **Unique asset paths referenced**: ${summary.totals.uniquePaths}`,
+	);
 	lines.push(`- **Image paths referenced**: ${summary.totals.imagePaths}`);
 	lines.push(`- **Missing files on disk**: ${summary.totals.missing}`);
 	lines.push(
@@ -1668,9 +1855,7 @@ function buildMarkdownSummary(summary, promptRecords) {
 	lines.push(
 		`- **Anomaly placeholder pool references**: ${summary.totals.placeholderAnomalies}`,
 	);
-	lines.push(
-		`- **Likely placeholders**: ${summary.totals.likelyPlaceholders}`,
-	);
+	lines.push(`- **Likely placeholders**: ${summary.totals.likelyPlaceholders}`);
 	lines.push(
 		`- **High-priority replacements**: ${summary.totals.highPriorityReplacements}`,
 	);
@@ -1722,7 +1907,9 @@ function buildMarkdownSummary(summary, promptRecords) {
 
 function buildReplacementPlanMarkdown(summary, promptRecords) {
 	const high = summary.assets.filter((a) => a.replacementPriority === "high");
-	const medium = summary.assets.filter((a) => a.replacementPriority === "medium");
+	const medium = summary.assets.filter(
+		(a) => a.replacementPriority === "medium",
+	);
 	const lines = [];
 	lines.push("# Rift Image Replacement Plan");
 	lines.push("");
@@ -1736,7 +1923,9 @@ function buildReplacementPlanMarkdown(summary, promptRecords) {
 	lines.push(`- Medium-priority replacements: ${medium.length}`);
 	lines.push(`- Prompt records: ${promptRecords.length}`);
 	lines.push("");
-	lines.push("The audit uses repo lore first. Global tone comes from `docs/rift-ascendant-world-lore.md`; Gloamreach prompts use current Run Silent / The Quiet sandbox text where present.");
+	lines.push(
+		"The audit uses repo lore first. Global tone comes from `docs/rift-ascendant-world-lore.md`; Gloamreach prompts use current Run Silent / The Quiet sandbox text where present.",
+	);
 	lines.push("");
 	lines.push("## High Priority");
 	lines.push("");
@@ -1757,7 +1946,9 @@ function buildReplacementPlanMarkdown(summary, promptRecords) {
 	lines.push("## Medium Priority");
 	lines.push("");
 	for (const asset of medium.slice(0, 100)) {
-		lines.push(`- \`${asset.path}\` - ${asset.likelySubjectName}: ${asset.reason}`);
+		lines.push(
+			`- \`${asset.path}\` - ${asset.likelySubjectName}: ${asset.reason}`,
+		);
 	}
 	return lines.join("\n");
 }
@@ -1843,7 +2034,9 @@ function buildReviewMarkdown(promptRecords) {
 	const lines = [];
 	lines.push("# Generated Image Review");
 	lines.push("");
-	lines.push("Generated candidates start as pending. Edit candidate sidecar JSON after review to apply a replacement.");
+	lines.push(
+		"Generated candidates start as pending. Edit candidate sidecar JSON after review to apply a replacement.",
+	);
 	lines.push("");
 	for (const record of promptRecords.slice(0, 200)) {
 		lines.push(`## ${record.subject}`);
@@ -1854,7 +2047,9 @@ function buildReviewMarkdown(promptRecords) {
 		lines.push(`- Apply target: \`${record.applyTargetPath}\``);
 		lines.push(`- Type: ${record.type}`);
 		lines.push(`- Category: ${record.category ?? ""}`);
-		lines.push(`- Source category: ${(record.sourceCategory ?? []).join(", ")}`);
+		lines.push(
+			`- Source category: ${(record.sourceCategory ?? []).join(", ")}`,
+		);
 		lines.push(`- Priority: ${record.priority}`);
 		lines.push(`- Checkpoint: ${record.checkpoint}`);
 		lines.push(`- Seed: ${record.seed}`);
@@ -1947,7 +2142,11 @@ async function main() {
 	for (const [path, ref] of pathRefs) {
 		const category = categorise(path);
 		const existsInfo = fileExists(path);
-		const metadata = await imageMetadata(existsInfo.abs, existsInfo.exists, path);
+		const metadata = await imageMetadata(
+			existsInfo.abs,
+			existsInfo.exists,
+			path,
+		);
 		const analysis = analyzeRecord(
 			path,
 			ref.refs,
@@ -2046,17 +2245,15 @@ async function main() {
 		assets
 			.filter((asset) => isImagePath(asset.path))
 			.filter((asset) => asset.recommendedGenerationMode !== "skip")
-			.filter((asset) =>
-				["high", "medium"].includes(asset.replacementPriority),
-			)
+			.filter((asset) => ["high", "medium"].includes(asset.replacementPriority))
 			.flatMap(buildPromptRecordsForAsset),
 	).sort((a, b) => {
-			const priority = { high: 0, medium: 1, low: 2 };
-			return (
-				(priority[a.priority] ?? 3) - (priority[b.priority] ?? 3) ||
-				a.assetPath.localeCompare(b.assetPath)
-			);
-		});
+		const priority = { high: 0, medium: 1, low: 2 };
+		return (
+			(priority[a.priority] ?? 3) - (priority[b.priority] ?? 3) ||
+			a.assetPath.localeCompare(b.assetPath)
+		);
+	});
 
 	const summary = {
 		generatedAt: new Date().toISOString(),
@@ -2104,11 +2301,17 @@ async function main() {
 	};
 
 	const outJson = join(AUDIT_DIR, "assets-report.json");
-	await writeTextFileWithRetry(outJson, `${JSON.stringify(summary, null, 2)}\n`);
+	await writeTextFileWithRetry(
+		outJson,
+		`${JSON.stringify(summary, null, 2)}\n`,
+	);
 	console.log(`[audit] Wrote ${outJson}`);
 
 	const outMd = join(AUDIT_DIR, "SUMMARY.md");
-	await writeTextFileWithRetry(outMd, buildMarkdownSummary(summary, promptRecords));
+	await writeTextFileWithRetry(
+		outMd,
+		buildMarkdownSummary(summary, promptRecords),
+	);
 	console.log(`[audit] Wrote ${outMd}`);
 
 	const planJson = join(PLAN_DATA_DIR, "rift-image-replacement-plan.json");
@@ -2126,7 +2329,10 @@ async function main() {
 	console.log(`[audit] Wrote ${promptJson}`);
 
 	const planMd = join(DOCS_DIR, "rift-image-replacement-plan.md");
-	await writeTextFileWithRetry(planMd, buildReplacementPlanMarkdown(summary, promptRecords));
+	await writeTextFileWithRetry(
+		planMd,
+		buildReplacementPlanMarkdown(summary, promptRecords),
+	);
 	console.log(`[audit] Wrote ${planMd}`);
 
 	const reviewHtml = join(DOCS_DIR, "generated-image-review.html");

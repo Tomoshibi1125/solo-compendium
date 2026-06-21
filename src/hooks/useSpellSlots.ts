@@ -52,7 +52,7 @@ const casterTypeToFraction = (caster: CasterType): CasterFraction => {
  * unlocked regent casts, the Job's native progression is returned unchanged —
  * preserving exact existing behavior for every non-gestalt character.
  */
-export const getExpectedSlotsWithGestalt = (
+const getExpectedSlotsWithGestalt = (
 	job: JobReference,
 	characterLevel: number,
 	regentIds: readonly string[],

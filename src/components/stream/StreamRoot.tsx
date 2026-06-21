@@ -16,7 +16,7 @@ import { useCampaign } from "@/hooks/useCampaigns";
  * stream feels native to the Bureau brand even when composited on
  * top of a streamer's own background art.
  */
-export interface CampaignStreamRootProps {
+interface CampaignStreamRootProps {
 	campaignId: string;
 	viewMode: string;
 	accent?: string;

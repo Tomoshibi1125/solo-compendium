@@ -14,7 +14,7 @@
  */
 import { getCRXP } from "@/lib/experience";
 
-export interface MonsterCrStats {
+interface MonsterCrStats {
 	/** Canonical CR label, e.g. "1/4", "5". */
 	cr: string;
 	/** Numeric CR for ordering/derivation (1/8 = 0.125, etc.). */
@@ -454,7 +454,7 @@ export function getMonsterCrXp(cr: string): number {
  * bands rise monotonically D < C < B < A < S. `target_level` is the rank's
  * entry character level (used by the encounter-balance validator).
  */
-export interface RankCrBand {
+interface RankCrBand {
 	rank: "D" | "C" | "B" | "A" | "S";
 	target_level_min: number;
 	target_level_max: number;
@@ -534,11 +534,4 @@ export function crForRankPosition(
 	const clamped = Math.min(1, Math.max(0, position));
 	const idx = lo + Math.round(clamped * (hi - lo));
 	return ORDERED_CRS[idx] ?? band.cr_min;
-}
-
-/** Midpoint HP for a CR — the value the reconstruction assigns. */
-export function midpointHpForCr(cr: string): number {
-	const row = BY_CR.get(cr);
-	if (!row) return 1;
-	return Math.round((row.hp_min + row.hp_max) / 2);
 }

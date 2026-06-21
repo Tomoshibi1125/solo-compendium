@@ -731,7 +731,7 @@ function mergeWeapon(merged, archetype, variant, theme, rarity, key) {
 	merged.effects = effects;
 }
 
-function computeWeaponType(archetype, variant) {
+function computeWeaponType(archetype, _variant) {
 	if (archetype.startsWith("firearm_")) return "martial ranged";
 	if (archetype === "ranged_bow" || archetype === "ranged_crossbow")
 		return "martial ranged";
@@ -858,7 +858,7 @@ function mergeConsumable(merged, archetype, variant, theme, rarity, key) {
 			passives.push(`On ${actVerb.toLowerCase()}, restore ${hp} hit points.`);
 			actives.push({
 				name: actName,
-				description: `${archetype === "consumable_stim" ? "Bonus action. Restore" : "Action. Drink the potion. Restore"} ${hp} HP${archetype === "consumable_stim" ? " to a willing creature within " + range : ""}.`,
+				description: `${archetype === "consumable_stim" ? "Bonus action. Restore" : "Action. Drink the potion. Restore"} ${hp} HP${archetype === "consumable_stim" ? ` to a willing creature within ${range}` : ""}.`,
 				action: archetype === "consumable_stim" ? "bonus-action" : "action",
 				frequency: "at-will",
 			});

@@ -111,7 +111,23 @@ INPUT DATA:
 	);
 }
 
-async function generateWithAI(batch: any[], type: string): Promise<any> {
+interface BatchEntry {
+	id?: string;
+	name?: string;
+	description?: string;
+	rank?: string;
+	level?: string | number;
+	mechanics?: {
+		damage_profile?: string;
+		attack?: { damage?: string };
+	};
+	[key: string]: unknown;
+}
+
+async function generateWithAI(
+	batch: BatchEntry[],
+	type: string,
+): Promise<Record<string, Record<string, unknown>> | null> {
 	const minifiedInput = batch.map((b) => ({
 		id: b.id,
 		name: b.name,
@@ -169,14 +185,14 @@ async function generateWithAI(batch: any[], type: string): Promise<any> {
 
 function arrayToTypeScriptExport(
 	arrayName: string,
-	data: any[],
+	data: unknown[],
 	headerDocs: string,
 ) {
 	const jsonStr = JSON.stringify(data, null, "\t").replace(
 		/"([a-zA-Z0-9_]+)":/g,
 		"$1:",
 	);
-	return headerDocs + "\n\nexport const " + arrayName + " = " + jsonStr + ";\n";
+	return `${headerDocs}\n\nexport const ${arrayName} = ${jsonStr};\n`;
 }
 
 async function processFile(
@@ -186,11 +202,11 @@ async function processFile(
 	header: string,
 ) {
 	const absolutePath = path.resolve(process.cwd(), filePath);
-	console.log("\\nReading " + absolutePath + "...");
+	console.log(`\\nReading ${absolutePath}...`);
 
-	let dataModule: any;
+	let dataModule: Record<string, unknown>;
 	try {
-		dataModule = await import("file:///" + absolutePath.replace(/\\/g, "/"));
+		dataModule = await import(`file:///${absolutePath.replace(/\\/g, "/")}`);
 	} catch (e) {
 		console.error("Failed to load map:", e);
 		return;
@@ -198,7 +214,7 @@ async function processFile(
 
 	const dataArray = dataModule[exportName];
 	if (!dataArray || !Array.isArray(dataArray)) {
-		console.error("Export " + exportName + " missing.");
+		console.error(`Export ${exportName} missing.`);
 		return;
 	}
 
@@ -221,12 +237,12 @@ async function processFile(
 		const chunk = dataArray.slice(i, i + BATCH_SIZE);
 
 		let attempts = 0;
-		let aiData: any = null;
+		let aiData: Record<string, Record<string, unknown>> | null = null;
 		while (attempts < 3 && !aiData) {
 			aiData = await generateWithAI(chunk, type);
 			if (!aiData) {
 				attempts++;
-				console.log("Retry " + attempts + "...");
+				console.log(`Retry ${attempts}...`);
 				await new Promise((r) => setTimeout(r, 4000));
 			}
 		}
@@ -253,10 +269,10 @@ async function processFile(
 						if (item.mechanics) {
 							item.mechanics.special_abilities = [
 								generated.mechanics_passive
-									? "Passive: " + generated.mechanics_passive
+									? `Passive: ${generated.mechanics_passive}`
 									: "",
 								generated.mechanics_active
-									? "Active: " + generated.mechanics_active
+									? `Active: ${generated.mechanics_active}`
 									: "",
 							].filter(Boolean);
 						}
@@ -306,7 +322,7 @@ async function processFile(
 
 	const fileContent = arrayToTypeScriptExport(exportName, dataArray, header);
 	fs.writeFileSync(absolutePath, fileContent, "utf8");
-	console.log("Saved " + filePath);
+	console.log(`Saved ${filePath}`);
 }
 
 async function run() {

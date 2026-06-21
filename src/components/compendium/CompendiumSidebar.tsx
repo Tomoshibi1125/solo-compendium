@@ -38,6 +38,10 @@ interface CompendiumSidebarProps {
 	elements?: string[];
 	selectedElements?: string[];
 	onElementToggle?: (element: string) => void;
+	/** Hide the CATEGORIES block (mobile uses a separate category chip bar). */
+	showCategories?: boolean;
+	/** Extra classes for the root <aside> (e.g. responsive show/hide). */
+	className?: string;
 }
 
 export function CompendiumSidebar({
@@ -66,6 +70,8 @@ export function CompendiumSidebar({
 	elements = [],
 	selectedElements = [],
 	onElementToggle,
+	showCategories = true,
+	className,
 }: CompendiumSidebarProps) {
 	const activeFiltersCount =
 		selectedSourceBooks.length +
@@ -78,7 +84,7 @@ export function CompendiumSidebar({
 		(showMiniBossOnly ? 1 : 0);
 
 	return (
-		<aside className="w-64 shrink-0 space-y-4">
+		<aside className={cn("w-full lg:w-64 lg:shrink-0 space-y-4", className)}>
 			{/* Quick Filters */}
 			<AscendantWindow title="QUICK FILTERS" className="p-4">
 				<div className="space-y-2">
@@ -100,37 +106,42 @@ export function CompendiumSidebar({
 			</AscendantWindow>
 
 			{/* Categories */}
-			<AscendantWindow title="CATEGORIES" className="p-4 flex flex-col min-h-0">
-				<ScrollArea className="max-h-[60vh] h-full overflow-y-auto pr-2">
-					<div className="space-y-1">
-						{categories.map((category) => {
-							const Icon = category.icon;
-							const isActive = selectedCategory === category.id;
+			{showCategories && (
+				<AscendantWindow
+					title="CATEGORIES"
+					className="p-4 flex flex-col min-h-0"
+				>
+					<ScrollArea className="max-h-[60vh] h-full overflow-y-auto pr-2">
+						<div className="space-y-1">
+							{categories.map((category) => {
+								const Icon = category.icon;
+								const isActive = selectedCategory === category.id;
 
-							return (
-								<Button
-									key={category.id}
-									variant={isActive ? "default" : "ghost"}
-									size="sm"
-									className={cn(
-										"w-full justify-start gap-2",
-										isActive && "bg-primary text-primary-foreground",
-									)}
-									onClick={() => onCategoryChange(category.id)}
-								>
-									<Icon className="w-4 h-4" />
-									<span className="flex-1 text-left">{category.name}</span>
-									{category.count !== undefined && (
-										<Badge variant="secondary" className="ml-auto">
-											{category.count}
-										</Badge>
-									)}
-								</Button>
-							);
-						})}
-					</div>
-				</ScrollArea>
-			</AscendantWindow>
+								return (
+									<Button
+										key={category.id}
+										variant={isActive ? "default" : "ghost"}
+										size="sm"
+										className={cn(
+											"w-full justify-start gap-2",
+											isActive && "bg-primary text-primary-foreground",
+										)}
+										onClick={() => onCategoryChange(category.id)}
+									>
+										<Icon className="w-4 h-4" />
+										<span className="flex-1 text-left">{category.name}</span>
+										{category.count !== undefined && (
+											<Badge variant="secondary" className="ml-auto">
+												{category.count}
+											</Badge>
+										)}
+									</Button>
+								);
+							})}
+						</div>
+					</ScrollArea>
+				</AscendantWindow>
+			)}
 
 			{/* Source Books */}
 			{sourceBooks.length > 0 && (

@@ -18,7 +18,7 @@ import {
 } from "@/lib/vtt/regions";
 import type { VTTRiftRegion, VTTTokenInstance } from "@/types/vtt";
 
-export interface UseVTTRegionEngineOptions {
+interface UseVTTRegionEngineOptions {
 	enabled: boolean;
 	tokens: VTTTokenInstance[];
 	regions: VTTRiftRegion[] | undefined;

@@ -211,18 +211,18 @@ function main(): void {
 	console.log("=== Cross-tier name collisions ===");
 	for (const [name, entries] of datasets) {
 		const results = crossTierNameCollisions(name, entries);
-		for (const r of results) console.log("- " + r);
+		for (const r of results) console.log(`- ${r}`);
 	}
 
 	console.log("\n=== Damage-type vs name-theme mismatches ===");
-	for (const m of damageTypeMismatches(allEntries)) console.log("- " + m);
+	for (const m of damageTypeMismatches(allEntries)) console.log(`- ${m}`);
 
 	console.log("\n=== Utility/support names with damage rolls ===");
-	for (const m of utilityNameWithDamage(allEntries)) console.log("- " + m);
+	for (const m of utilityNameWithDamage(allEntries)) console.log(`- ${m}`);
 
 	console.log("\n=== Naming case inconsistency (sample of 20) ===");
 	const caseMessages = namingCaseMismatches(allEntries);
-	for (const m of caseMessages.slice(0, 20)) console.log("- " + m);
+	for (const m of caseMessages.slice(0, 20)) console.log(`- ${m}`);
 	if (caseMessages.length > 20)
 		console.log(`... and ${caseMessages.length - 20} more`);
 

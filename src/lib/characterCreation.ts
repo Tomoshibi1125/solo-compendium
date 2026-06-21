@@ -3221,7 +3221,8 @@ export async function applyJobAwakeningTraitsToCharacter(
 		pre?: number | null;
 	};
 
-	let existing: AwakeningTraitsRow | null = (existingCharacterData as AwakeningTraitsRow | undefined) ?? null;
+	let existing: AwakeningTraitsRow | null =
+		(existingCharacterData as AwakeningTraitsRow | undefined) ?? null;
 	if (!existing) {
 		const { data: fetched, error: readErr } = await supabase
 			.from("characters")
@@ -3355,7 +3356,8 @@ export async function addJobAwakeningBenefitsForLevel(
 		return;
 	}
 	const jobName = typeof job === "string" ? job : job?.name;
-	const existingNames = knownFeatureNames ?? await getExistingFeatureNames(characterId);
+	const existingNames =
+		knownFeatureNames ?? (await getExistingFeatureNames(characterId));
 
 	// Handle scaling awakening features that need to update with character level.
 	if (
@@ -3762,19 +3764,26 @@ export async function addLevel1Features(
 					is_active: true,
 				});
 			} else {
-				const { error: featErr } = await supabase.from("character_features").insert({
-					character_id: characterId,
-					name: cf.name,
-					source: "Job: Level 1",
-					level_acquired: 1,
-					description: cf.description,
-					action_type: null,
-					uses_max: null,
-					uses_current: null,
-					recharge: null,
-					is_active: true,
-				});
-				if (featErr) console.warn("addLevel1Features: insert failed for", cf.name, featErr);
+				const { error: featErr } = await supabase
+					.from("character_features")
+					.insert({
+						character_id: characterId,
+						name: cf.name,
+						source: "Job: Level 1",
+						level_acquired: 1,
+						description: cf.description,
+						action_type: null,
+						uses_max: null,
+						uses_current: null,
+						recharge: null,
+						is_active: true,
+					});
+				if (featErr)
+					console.warn(
+						"addLevel1Features: insert failed for",
+						cf.name,
+						featErr,
+					);
 			}
 		}
 	}
@@ -3804,17 +3813,20 @@ export async function addBackgroundFeatures(
 				is_active: true,
 			});
 		} else {
-			const { error: bgFeatErr } = await supabase.from("character_features").insert({
-				character_id: characterId,
-				name: background.feature_name,
-				source: `Background: ${background.name}`,
-				level_acquired: 1,
-				description:
-					background.feature_description ||
-					`Background feature: ${background.feature_name}`,
-				is_active: true,
-			});
-			if (bgFeatErr) console.warn("addBackgroundFeatures: insert failed", bgFeatErr);
+			const { error: bgFeatErr } = await supabase
+				.from("character_features")
+				.insert({
+					character_id: characterId,
+					name: background.feature_name,
+					source: `Background: ${background.name}`,
+					level_acquired: 1,
+					description:
+						background.feature_description ||
+						`Background feature: ${background.feature_name}`,
+					is_active: true,
+				});
+			if (bgFeatErr)
+				console.warn("addBackgroundFeatures: insert failed", bgFeatErr);
 		}
 	}
 }
@@ -3865,9 +3877,10 @@ export async function addStartingEquipment(
 	}
 	const characterId = character_id;
 	const equipmentChoices = equipment_choices;
-	const campaignId = knownCampaignId !== undefined
-		? knownCampaignId
-		: await getCharacterCampaignId(characterId);
+	const campaignId =
+		knownCampaignId !== undefined
+			? knownCampaignId
+			: await getCharacterCampaignId(characterId);
 
 	// Snapshot the equipment the character already had BEFORE this pass, so the
 	// function is safe to re-run (creation retry / reconcile) without duplicating
@@ -3943,11 +3956,17 @@ export async function addStartingEquipment(
 			if (isLocalCharacterId(characterId)) {
 				addLocalEquipment(characterId, equipData);
 			} else {
-				const { error: eqErr } = await supabase.from("character_equipment").insert({
-					character_id: characterId,
-					...equipData,
-				});
-				if (eqErr) console.warn("addStartingEquipment: job equipment insert failed", eqErr);
+				const { error: eqErr } = await supabase
+					.from("character_equipment")
+					.insert({
+						character_id: characterId,
+						...equipData,
+					});
+				if (eqErr)
+					console.warn(
+						"addStartingEquipment: job equipment insert failed",
+						eqErr,
+					);
 			}
 		}
 	}
@@ -3997,24 +4016,30 @@ export async function addStartingEquipment(
 					}),
 				});
 			} else {
-				const { error: bgEqErr } = await supabase.from("character_equipment").insert({
-					character_id: characterId,
-					item_id: normalizedItem.id ?? null,
-					name: normalizedItem.name,
-					item_type: itemType,
-					description: normalizedItem.description || null,
-					properties: itemProps,
-					weight: weightValue,
-					quantity: 1,
-					is_equipped: false,
-					sigil_slots_base: getDefaultSigilSlotsBaseForEquipment({
-						item_type: itemType,
-						properties: itemProps,
+				const { error: bgEqErr } = await supabase
+					.from("character_equipment")
+					.insert({
+						character_id: characterId,
+						item_id: normalizedItem.id ?? null,
 						name: normalizedItem.name,
-						rarity: mapToDbRarity(normalizedItem.rarity),
-					}),
-				});
-				if (bgEqErr) console.warn("addStartingEquipment: bg equipment insert failed", bgEqErr);
+						item_type: itemType,
+						description: normalizedItem.description || null,
+						properties: itemProps,
+						weight: weightValue,
+						quantity: 1,
+						is_equipped: false,
+						sigil_slots_base: getDefaultSigilSlotsBaseForEquipment({
+							item_type: itemType,
+							properties: itemProps,
+							name: normalizedItem.name,
+							rarity: mapToDbRarity(normalizedItem.rarity),
+						}),
+					});
+				if (bgEqErr)
+					console.warn(
+						"addStartingEquipment: bg equipment insert failed",
+						bgEqErr,
+					);
 			}
 		}
 	}

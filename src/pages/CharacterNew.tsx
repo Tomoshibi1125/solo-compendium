@@ -35,6 +35,7 @@ import { useInitializeSpellSlots } from "@/hooks/useSpellSlots";
 import { useStaticJobs } from "@/hooks/useStaticJobs";
 import { supabase } from "@/integrations/supabase/client";
 import type { Json } from "@/integrations/supabase/types";
+import { toAbilityScoreCodes } from "@/lib/abilityScoreCodes";
 import { isSafeNextPath } from "@/lib/campaignInviteUtils";
 import {
 	formatAttackLine,
@@ -50,7 +51,6 @@ import {
 	listLearnableSpells,
 	listLearnableTechniques,
 } from "@/lib/canonicalCompendium";
-import { toAbilityScoreCodes } from "@/lib/abilityScoreCodes";
 import type { CharacterAbilityAccessContext } from "@/lib/characterAbilityAccess";
 import {
 	calculateCharacterStats,
@@ -852,25 +852,25 @@ const CharacterNew = () => {
 
 	const { data: availableTechniques = [], isLoading: techniquesLoading } =
 		useQuery<StaticCompendiumEntry[]>({
-		queryKey: [
-			"creation-techniques",
-			selectedJob,
-			selectedPathName,
-			requiredTechniqueChoices,
-			homebrewCampaignId,
-		],
-		queryFn: async () => {
-			if (!jobData?.name || requiredTechniqueChoices <= 0) return [];
-			return listLearnableTechniques({
-				accessContext: { campaignId: homebrewCampaignId },
-				jobName: jobData.name,
-				pathName: selectedPathName,
-				characterLevel: 1,
-				maxLevel: 1,
-			});
-		},
-		enabled: !!jobData?.name && requiredTechniqueChoices > 0,
-	});
+			queryKey: [
+				"creation-techniques",
+				selectedJob,
+				selectedPathName,
+				requiredTechniqueChoices,
+				homebrewCampaignId,
+			],
+			queryFn: async () => {
+				if (!jobData?.name || requiredTechniqueChoices <= 0) return [];
+				return listLearnableTechniques({
+					accessContext: { campaignId: homebrewCampaignId },
+					jobName: jobData.name,
+					pathName: selectedPathName,
+					characterLevel: 1,
+					maxLevel: 1,
+				});
+			},
+			enabled: !!jobData?.name && requiredTechniqueChoices > 0,
+		});
 
 	const { data: availableCantrips = [], isLoading: cantripsLoading } = useQuery<
 		CanonicalCastableEntry[]
@@ -938,39 +938,37 @@ const CharacterNew = () => {
 		enabled: !!jobData?.name && requiredSpellChoices > 0,
 	});
 
-	const {
-		data: availableSpellbookSpells = [],
-		isLoading: spellbookLoading,
-	} = useQuery<CanonicalCastableEntry[]>({
-		queryKey: [
-			"creation-spellbook",
-			selectedJob,
-			selectedPathName,
-			requiredSpellbookInscriptions,
-			homebrewCampaignId,
-			homebrewSpells.map((spell) => spell.id).join(","),
-		],
-		queryFn: async () => {
-			if (!jobData?.name || requiredSpellbookInscriptions <= 0) return [];
-			const spells = await listLearnableSpells({
-				accessContext: { campaignId: homebrewCampaignId },
-				jobName: jobData.name,
-				pathName: selectedPathName,
-				characterLevel: 1,
-			});
-			const matchingHomebrew = homebrewSpells.filter(
-				(spell) =>
-					spell.power_level > 0 &&
-					spell.power_level <= creationSpellLevelCap &&
-					runtimeSpellMatchesCharacter(spell, jobData.name, selectedPathName),
-			);
-			return [
-				...spells.filter((spell) => spell.power_level > 0),
-				...(matchingHomebrew as unknown as CanonicalCastableEntry[]),
-			];
-		},
-		enabled: !!jobData?.name && requiredSpellbookInscriptions > 0,
-	});
+	const { data: availableSpellbookSpells = [], isLoading: spellbookLoading } =
+		useQuery<CanonicalCastableEntry[]>({
+			queryKey: [
+				"creation-spellbook",
+				selectedJob,
+				selectedPathName,
+				requiredSpellbookInscriptions,
+				homebrewCampaignId,
+				homebrewSpells.map((spell) => spell.id).join(","),
+			],
+			queryFn: async () => {
+				if (!jobData?.name || requiredSpellbookInscriptions <= 0) return [];
+				const spells = await listLearnableSpells({
+					accessContext: { campaignId: homebrewCampaignId },
+					jobName: jobData.name,
+					pathName: selectedPathName,
+					characterLevel: 1,
+				});
+				const matchingHomebrew = homebrewSpells.filter(
+					(spell) =>
+						spell.power_level > 0 &&
+						spell.power_level <= creationSpellLevelCap &&
+						runtimeSpellMatchesCharacter(spell, jobData.name, selectedPathName),
+				);
+				return [
+					...spells.filter((spell) => spell.power_level > 0),
+					...(matchingHomebrew as unknown as CanonicalCastableEntry[]),
+				];
+			},
+			enabled: !!jobData?.name && requiredSpellbookInscriptions > 0,
+		});
 
 	useEffect(() => {
 		setSelectedPowerIds((current) => {
@@ -1231,7 +1229,9 @@ const CharacterNew = () => {
 				getStaticBackgroundsAll() as unknown as StaticBackground[]
 			).find((b: StaticBackground) => b.name === dbBg.name);
 			if (!bgData) {
-				const { allBackgrounds } = await import("@/data/compendium/backgrounds-index");
+				const { allBackgrounds } = await import(
+					"@/data/compendium/backgrounds-index"
+				);
 				bgData = (allBackgrounds as unknown as StaticBackground[]).find(
 					(b: StaticBackground) => b.name === dbBg.name,
 				);
@@ -1378,175 +1378,192 @@ const CharacterNew = () => {
 			// (idempotent, single authority). Homebrew jobs bake ASI into the row above.
 
 			try {
-			if (selectedHomebrewJob) {
-				await insertHomebrewRuntimeFeatures(
-					character.id,
-					selectedHomebrewJob.classFeatures,
-					1,
-					`Homebrew Job: ${selectedHomebrewJob.name}`,
+				if (selectedHomebrewJob) {
+					await insertHomebrewRuntimeFeatures(
+						character.id,
+						selectedHomebrewJob.classFeatures,
+						1,
+						`Homebrew Job: ${selectedHomebrewJob.name}`,
+					);
+					await insertHomebrewRuntimeFeatures(
+						character.id,
+						selectedHomebrewJob.awakeningFeatures,
+						1,
+						`Homebrew Awakening: ${selectedHomebrewJob.name}`,
+					);
+					await insertHomebrewRuntimeFeatures(
+						character.id,
+						selectedHomebrewJob.jobTraits,
+						1,
+						`Homebrew Trait: ${selectedHomebrewJob.name}`,
+					);
+				} else {
+					await addLevel1Features(character.id, job, bgData);
+				}
+				const selectedHomebrewPath = homebrewPaths.find(
+					(path) => path.id === selectedPath,
 				);
-				await insertHomebrewRuntimeFeatures(
+				if (selectedHomebrewPath) {
+					await insertHomebrewRuntimeFeatures(
+						character.id,
+						selectedHomebrewPath.features,
+						1,
+						`Homebrew Path: ${selectedHomebrewPath.name}`,
+					);
+				}
+				await addStartingEquipment(
 					character.id,
-					selectedHomebrewJob.awakeningFeatures,
-					1,
-					`Homebrew Awakening: ${selectedHomebrewJob.name}`,
+					job,
+					bgData,
+					selectedSkills,
+					equipmentChoices,
+					null,
 				);
-				await insertHomebrewRuntimeFeatures(
-					character.id,
-					selectedHomebrewJob.jobTraits,
-					1,
-					`Homebrew Trait: ${selectedHomebrewJob.name}`,
-				);
-			} else {
-				await addLevel1Features(character.id, job, bgData);
-			}
-			const selectedHomebrewPath = homebrewPaths.find(
-				(path) => path.id === selectedPath,
-			);
-			if (selectedHomebrewPath) {
-				await insertHomebrewRuntimeFeatures(
-					character.id,
-					selectedHomebrewPath.features,
-					1,
-					`Homebrew Path: ${selectedHomebrewPath.name}`,
-				);
-			}
-			await addStartingEquipment(
-				character.id,
-				job,
-				bgData,
-				selectedSkills,
-				equipmentChoices,
-				null,
-			);
 			} catch (automationErr) {
-				logErrorWithContext(automationErr, "CharacterNew: level-1 features/equipment");
+				logErrorWithContext(
+					automationErr,
+					"CharacterNew: level-1 features/equipment",
+				);
 			}
 			try {
-			const selectedPowerEntries = availablePowers.filter((power) =>
-				selectedPowerIds.includes(power.id),
-			);
-			for (const power of selectedPowerEntries) {
-				if (!isCanonicalPowerLearnable(power, creationAbilityContext)) {
-					console.warn(`Creation: skipping power "${power.name}" — not learnable for this job/path`);
-					continue;
+				const selectedPowerEntries = availablePowers.filter((power) =>
+					selectedPowerIds.includes(power.id),
+				);
+				for (const power of selectedPowerEntries) {
+					if (!isCanonicalPowerLearnable(power, creationAbilityContext)) {
+						console.warn(
+							`Creation: skipping power "${power.name}" — not learnable for this job/path`,
+						);
+						continue;
+					}
+					const payload = {
+						power_id: power.id,
+						name: power.name,
+						power_level: power.power_level,
+						source: "Creation Power Imprint",
+						casting_time: power.casting_time || null,
+						range: power.range || null,
+						duration: power.duration || null,
+						concentration: power.concentration || false,
+						description: power.description || null,
+						higher_levels: power.higher_levels || null,
+						is_prepared: false,
+						is_known: true,
+					};
+					if (isLocalCharacterId(character.id)) {
+						addLocalPower(character.id, payload);
+					} else {
+						await supabase.from("character_powers").insert({
+							character_id: character.id,
+							...payload,
+						});
+					}
 				}
-				const payload = {
-					power_id: power.id,
-					name: power.name,
-					power_level: power.power_level,
-					source: "Creation Power Imprint",
-					casting_time: power.casting_time || null,
-					range: power.range || null,
-					duration: power.duration || null,
-					concentration: power.concentration || false,
-					description: power.description || null,
-					higher_levels: power.higher_levels || null,
-					is_prepared: false,
-					is_known: true,
-				};
-				if (isLocalCharacterId(character.id)) {
-					addLocalPower(character.id, payload);
-				} else {
-					await supabase.from("character_powers").insert({
-						character_id: character.id,
-						...payload,
-					});
-				}
-			}
 
-			const selectedTechniqueEntries = availableTechniques.filter((technique) =>
-				selectedTechniqueIds.includes(technique.id),
-			);
-			for (const technique of selectedTechniqueEntries) {
-				if (!isCanonicalTechniqueLearnable(technique, creationAbilityContext)) {
-					console.warn(`Creation: skipping technique "${technique.id}" — not learnable for this job/path`);
-					continue;
-				}
-				if (isLocalCharacterId(character.id)) {
-					addLocalTechnique(character.id, {
-						technique_id: technique.id,
-						source: "Creation Technique Protocol",
-					});
-				} else {
-					await supabase.from("character_techniques").insert({
-						character_id: character.id,
-						technique_id: technique.id,
-						source: "Creation Technique Protocol",
-					});
-				}
-			}
-
-			const selectedCantripEntries = availableCantrips.filter((cantrip) =>
-				selectedCantripIds.includes(cantrip.id),
-			);
-			const selectedSpellEntries = availableSpells.filter((spell) =>
-				selectedSpellIds.includes(spell.id),
-			);
-			const selectedSpellbookEntries = availableSpellbookSpells.filter(
-				(spell) => selectedSpellbookIds.includes(spell.id),
-			);
-			for (const spell of [
-				...selectedCantripEntries.map((entry) => ({
-					entry,
-					source: "Creation Cantrip Alignment",
-					countsAgainstLimit: true,
-				})),
-				...selectedSpellEntries.map((entry) => ({
-					entry,
-					source: "Creation Power Inscription",
-					countsAgainstLimit: true,
-				})),
-				...selectedSpellbookEntries.map((entry) => ({
-					entry,
-					source: "Creation Spellbook Inscription",
-					countsAgainstLimit: false,
-				})),
-			]) {
-				const isHomebrewSpell = (spell.entry as { _homebrew?: boolean })
-					._homebrew;
-				if (isHomebrewSpell) {
+				const selectedTechniqueEntries = availableTechniques.filter(
+					(technique) => selectedTechniqueIds.includes(technique.id),
+				);
+				for (const technique of selectedTechniqueEntries) {
 					if (
-						!runtimeSpellMatchesCharacter(
-							spell.entry as unknown as HomebrewRuntimeSpell,
-							dbJob.name,
-							selectedPathName,
-						)
+						!isCanonicalTechniqueLearnable(technique, creationAbilityContext)
 					) {
-						console.warn(`Creation: skipping homebrew spell "${spell.entry.name}" — not available for this job/path`);
+						console.warn(
+							`Creation: skipping technique "${technique.id}" — not learnable for this job/path`,
+						);
 						continue;
 					}
-				} else {
-					if (!isCanonicalSpellLearnable(spell.entry, creationAbilityContext)) {
-						console.warn(`Creation: skipping spell "${spell.entry.name}" — not learnable for this job/path`);
-						continue;
+					if (isLocalCharacterId(character.id)) {
+						addLocalTechnique(character.id, {
+							technique_id: technique.id,
+							source: "Creation Technique Protocol",
+						});
+					} else {
+						await supabase.from("character_techniques").insert({
+							character_id: character.id,
+							technique_id: technique.id,
+							source: "Creation Technique Protocol",
+						});
 					}
 				}
-				const payload = {
-					spell_id: isHomebrewSpell ? null : spell.entry.id,
-					name: spell.entry.name,
-					spell_level: spell.entry.power_level,
-					source: isHomebrewSpell ? `${spell.source} (Homebrew)` : spell.source,
-					casting_time: spell.entry.casting_time || null,
-					range: spell.entry.range || null,
-					duration: spell.entry.duration || null,
-					concentration: spell.entry.concentration || false,
-					ritual: spell.entry.ritual || false,
-					description: spell.entry.description || null,
-					higher_levels: spell.entry.higher_levels || null,
-					is_prepared: false,
-					is_known: true,
-					counts_against_limit: spell.countsAgainstLimit,
-				};
-				if (isLocalCharacterId(character.id)) {
-					addLocalSpell(character.id, payload);
-				} else {
-					await supabase.from("character_spells").insert({
-						character_id: character.id,
-						...payload,
-					});
+
+				const selectedCantripEntries = availableCantrips.filter((cantrip) =>
+					selectedCantripIds.includes(cantrip.id),
+				);
+				const selectedSpellEntries = availableSpells.filter((spell) =>
+					selectedSpellIds.includes(spell.id),
+				);
+				const selectedSpellbookEntries = availableSpellbookSpells.filter(
+					(spell) => selectedSpellbookIds.includes(spell.id),
+				);
+				for (const spell of [
+					...selectedCantripEntries.map((entry) => ({
+						entry,
+						source: "Creation Cantrip Alignment",
+						countsAgainstLimit: true,
+					})),
+					...selectedSpellEntries.map((entry) => ({
+						entry,
+						source: "Creation Power Inscription",
+						countsAgainstLimit: true,
+					})),
+					...selectedSpellbookEntries.map((entry) => ({
+						entry,
+						source: "Creation Spellbook Inscription",
+						countsAgainstLimit: false,
+					})),
+				]) {
+					const isHomebrewSpell = (spell.entry as { _homebrew?: boolean })
+						._homebrew;
+					if (isHomebrewSpell) {
+						if (
+							!runtimeSpellMatchesCharacter(
+								spell.entry as unknown as HomebrewRuntimeSpell,
+								dbJob.name,
+								selectedPathName,
+							)
+						) {
+							console.warn(
+								`Creation: skipping homebrew spell "${spell.entry.name}" — not available for this job/path`,
+							);
+							continue;
+						}
+					} else {
+						if (
+							!isCanonicalSpellLearnable(spell.entry, creationAbilityContext)
+						) {
+							console.warn(
+								`Creation: skipping spell "${spell.entry.name}" — not learnable for this job/path`,
+							);
+							continue;
+						}
+					}
+					const payload = {
+						spell_id: isHomebrewSpell ? null : spell.entry.id,
+						name: spell.entry.name,
+						spell_level: spell.entry.power_level,
+						source: isHomebrewSpell
+							? `${spell.source} (Homebrew)`
+							: spell.source,
+						casting_time: spell.entry.casting_time || null,
+						range: spell.entry.range || null,
+						duration: spell.entry.duration || null,
+						concentration: spell.entry.concentration || false,
+						ritual: spell.entry.ritual || false,
+						description: spell.entry.description || null,
+						higher_levels: spell.entry.higher_levels || null,
+						is_prepared: false,
+						is_known: true,
+						counts_against_limit: spell.countsAgainstLimit,
+					};
+					if (isLocalCharacterId(character.id)) {
+						addLocalSpell(character.id, payload);
+					} else {
+						await supabase.from("character_spells").insert({
+							character_id: character.id,
+							...payload,
+						});
+					}
 				}
-			}
 			} catch (imprintErr) {
 				logErrorWithContext(imprintErr, "CharacterNew: imprint inscription");
 			}
@@ -1576,27 +1593,32 @@ const CharacterNew = () => {
 			}
 
 			try {
-			// Apply racial ASI + innate senses/resistances/saves FIRST so a canon
-			// character's core stats land even if a later (idempotent) awakening step
-			// throws. For canon jobs this is the single racial-ASI authority — it
-			// updates the row + character_abilities and writes the marker, and is safe
-			// to re-run. Rift Ascendant jobs are race+class fused, so these innate
-			// traits must flow onto the character row at creation.
-			await applyJobAwakeningTraitsToCharacter(
-				character.id,
-				job,
-				selectedLanguages,
-			);
-			await addJobAwakeningBenefitsForLevel(character.id, job, 1, new Set<string>());
-			for (const terrain of selectedFavoredTerrains) {
-				await insertCharacterFeature(character.id, {
-					name: `Favored Terrain: ${terrain}`,
-					source: "Creation Favored Terrain",
-					level_acquired: 1,
-					description: `Starting gate biome imprint: ${terrain}.`,
-					is_active: true,
-				});
-			}
+				// Apply racial ASI + innate senses/resistances/saves FIRST so a canon
+				// character's core stats land even if a later (idempotent) awakening step
+				// throws. For canon jobs this is the single racial-ASI authority — it
+				// updates the row + character_abilities and writes the marker, and is safe
+				// to re-run. Rift Ascendant jobs are race+class fused, so these innate
+				// traits must flow onto the character row at creation.
+				await applyJobAwakeningTraitsToCharacter(
+					character.id,
+					job,
+					selectedLanguages,
+				);
+				await addJobAwakeningBenefitsForLevel(
+					character.id,
+					job,
+					1,
+					new Set<string>(),
+				);
+				for (const terrain of selectedFavoredTerrains) {
+					await insertCharacterFeature(character.id, {
+						name: `Favored Terrain: ${terrain}`,
+						source: "Creation Favored Terrain",
+						level_acquired: 1,
+						description: `Starting gate biome imprint: ${terrain}.`,
+						is_active: true,
+					});
+				}
 			} catch (awakeningErr) {
 				logErrorWithContext(awakeningErr, "CharacterNew: awakening benefits");
 			}

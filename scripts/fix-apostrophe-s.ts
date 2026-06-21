@@ -43,7 +43,7 @@ function processFile(absolutePath: string): number {
 	let updated = 0;
 	const next = original.replace(
 		NAME_LINE,
-		(full, prefix: string, value: string, suffix: string) => {
+		(_full, prefix: string, value: string, suffix: string) => {
 			const fixed = fixApostropheS(value);
 			if (fixed !== value) updated += 1;
 			return `${prefix}${fixed}${suffix}`;

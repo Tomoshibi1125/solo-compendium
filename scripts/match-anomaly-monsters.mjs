@@ -38,8 +38,6 @@ const AUDIT_DIR = join(ROOT, "audit");
 // Anomaly parser — extracts { id, name, type, rank, image } from rank-*.ts
 // ---------------------------------------------------------------------------
 
-const ANOMALY_BLOCK_RE = /\{\s*[\s\S]*?id:\s*"(anomaly-[^"]+)"[\s\S]*?\}/g;
-
 function extractField(block, key) {
 	const re = new RegExp(`\\b${key}:\\s*"([^"]+)"`);
 	const m = block.match(re);

@@ -10,7 +10,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 
-export interface FieldRosterListing {
+interface FieldRosterListing {
 	id: string;
 	name: string;
 	share_code: string;
@@ -68,7 +68,7 @@ function normalizeListing(row: PublicListingRow): FieldRosterListing {
  * recent `last_session_iso` rank first; ties fall back to listing
  * recency. Pure — exposed for tests.
  */
-export function compareFieldRosterListings(
+function compareFieldRosterListings(
 	a: FieldRosterListing,
 	b: FieldRosterListing,
 ): number {

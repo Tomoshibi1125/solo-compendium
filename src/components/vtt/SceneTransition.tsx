@@ -21,7 +21,7 @@ import { useEffect, useState } from "react";
  * Ascendant gold accent. No new design tokens.
  */
 
-export interface SceneTransitionProps {
+interface SceneTransitionProps {
 	/** Active scene id. Changing this triggers a transition. */
 	sceneId: string | null;
 	/** Master enable toggle from `useVTTSettings.sceneTransitionEnabled`. */

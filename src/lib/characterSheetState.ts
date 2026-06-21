@@ -21,18 +21,6 @@ export type SheetNoteSection =
 	| "conditions"
 	| "notes";
 
-export const SHEET_NOTE_SECTIONS: ReadonlyArray<SheetNoteSection> = [
-	"description",
-	"equipment",
-	"features",
-	"spells",
-	"powers",
-	"techniques",
-	"runes",
-	"conditions",
-	"notes",
-];
-
 export interface CharacterSheetState {
 	resources: CharacterResources;
 	customModifiers: CustomModifier[];

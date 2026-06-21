@@ -48,12 +48,38 @@ export const sandboxFactions: SandboxFaction[] = [
 		].join("\n"),
 		startingReputation: 1,
 		reputationThresholds: [
-			{ threshold: -5, tier: "hostile", unlocks: "Detainment order. Annex closed to party." },
-			{ threshold: -2, tier: "unfriendly", unlocks: "No contracts. Quartermaster access restricted." },
-			{ threshold: 0, tier: "neutral", unlocks: "Standard emergency contract access." },
-			{ threshold: 3, tier: "friendly", unlocks: "Preferred contracts. Park and Hayashi speak plainly." },
-			{ threshold: 6, tier: "trusted", unlocks: "Classified Interior files, Relic analysis, and Park recruitment path." },
-			{ threshold: 10, tier: "kin", unlocks: "Final-operation support, rare requisition, and Bureau cordon leverage." },
+			{
+				threshold: -5,
+				tier: "hostile",
+				unlocks: "Detainment order. Annex closed to party.",
+			},
+			{
+				threshold: -2,
+				tier: "unfriendly",
+				unlocks: "No contracts. Quartermaster access restricted.",
+			},
+			{
+				threshold: 0,
+				tier: "neutral",
+				unlocks: "Standard emergency contract access.",
+			},
+			{
+				threshold: 3,
+				tier: "friendly",
+				unlocks: "Preferred contracts. Park and Hayashi speak plainly.",
+			},
+			{
+				threshold: 6,
+				tier: "trusted",
+				unlocks:
+					"Classified Interior files, Relic analysis, and Park recruitment path.",
+			},
+			{
+				threshold: 10,
+				tier: "kin",
+				unlocks:
+					"Final-operation support, rare requisition, and Bureau cordon leverage.",
+			},
 		],
 		joiningBenefits: [
 			"Safe rest and medical care at the Annex while it remains functional.",
@@ -78,12 +104,37 @@ export const sandboxFactions: SandboxFaction[] = [
 		].join("\n"),
 		startingReputation: 0,
 		reputationThresholds: [
-			{ threshold: -5, tier: "hostile", unlocks: "Blacklist. Outpost doors close and bounty hunters get paid." },
-			{ threshold: -2, tier: "unfriendly", unlocks: "Prices double. Information becomes deliberately incomplete." },
-			{ threshold: 0, tier: "neutral", unlocks: "Standard Outpost market access." },
-			{ threshold: 3, tier: "friendly", unlocks: "Exclusive bounties, better salvage prices, limited shelter." },
-			{ threshold: 6, tier: "trusted", unlocks: "Black-market services, rare tattoos, restricted Sigils." },
-			{ threshold: 10, tier: "kin", unlocks: "Orin's direct support, private vault access, Outpost defenders in the finale." },
+			{
+				threshold: -5,
+				tier: "hostile",
+				unlocks: "Blacklist. Outpost doors close and bounty hunters get paid.",
+			},
+			{
+				threshold: -2,
+				tier: "unfriendly",
+				unlocks: "Prices double. Information becomes deliberately incomplete.",
+			},
+			{
+				threshold: 0,
+				tier: "neutral",
+				unlocks: "Standard Outpost market access.",
+			},
+			{
+				threshold: 3,
+				tier: "friendly",
+				unlocks: "Exclusive bounties, better salvage prices, limited shelter.",
+			},
+			{
+				threshold: 6,
+				tier: "trusted",
+				unlocks: "Black-market services, rare tattoos, restricted Sigils.",
+			},
+			{
+				threshold: 10,
+				tier: "kin",
+				unlocks:
+					"Orin's direct support, private vault access, Outpost defenders in the finale.",
+			},
 		],
 		joiningBenefits: [
 			"Exclusive loot, Sigil, tattoo, and salvage access.",
@@ -96,7 +147,8 @@ export const sandboxFactions: SandboxFaction[] = [
 		id: "awoko-cult",
 		name: "Awoko Cult",
 		tagline: "To awaken is to remember what you always were.",
-		emblem: "Seven-rayed eye with a tear-shaped pupil and script woven through the iris.",
+		emblem:
+			"Seven-rayed eye with a tear-shaped pupil and script woven through the iris.",
 		description: [
 			"A grief cult that preaches the Quiet as proof you do not have to stay prey — that a thing in this country climbed out of being hunted and became the hunter. Their comfort is real. Their rituals are predatory. Their leader, the Hollow Mother, does not want to hide from the Quiet or kill it. She wants to be remade by it into something that hunts.",
 			"",
@@ -106,12 +158,37 @@ export const sandboxFactions: SandboxFaction[] = [
 		].join("\n"),
 		startingReputation: -1,
 		reputationThresholds: [
-			{ threshold: -5, tier: "hostile", unlocks: "Cult assassins and ritual hunters actively pursue the party." },
-			{ threshold: -2, tier: "unfriendly", unlocks: "Ambushes near shrines, clinics, and grief-dense settlements." },
-			{ threshold: 0, tier: "neutral", unlocks: "Mid-rank cultists will speak before violence." },
-			{ threshold: 3, tier: "friendly", unlocks: "Sanctum approach, cult theology, and defectors become available." },
-			{ threshold: 6, tier: "trusted", unlocks: "Hollow Mother audience; Bureau reputation penalty likely." },
-			{ threshold: 10, tier: "kin", unlocks: "Dark path: participation in the Ritual of Becoming." },
+			{
+				threshold: -5,
+				tier: "hostile",
+				unlocks: "Cult assassins and ritual hunters actively pursue the party.",
+			},
+			{
+				threshold: -2,
+				tier: "unfriendly",
+				unlocks: "Ambushes near shrines, clinics, and grief-dense settlements.",
+			},
+			{
+				threshold: 0,
+				tier: "neutral",
+				unlocks: "Mid-rank cultists will speak before violence.",
+			},
+			{
+				threshold: 3,
+				tier: "friendly",
+				unlocks:
+					"Sanctum approach, cult theology, and defectors become available.",
+			},
+			{
+				threshold: 6,
+				tier: "trusted",
+				unlocks: "Hollow Mother audience; Bureau reputation penalty likely.",
+			},
+			{
+				threshold: 10,
+				tier: "kin",
+				unlocks: "Dark path: participation in the Ritual of Becoming.",
+			},
 		],
 		joiningBenefits: [
 			"Access to Awoko comfort networks and hidden sanctum routes.",
@@ -134,12 +211,34 @@ export const sandboxFactions: SandboxFaction[] = [
 		].join("\n"),
 		startingReputation: 0,
 		reputationThresholds: [
-			{ threshold: -5, tier: "hostile", unlocks: "Shelters hide from the party. Civilians warn each other to bar their doors against them." },
-			{ threshold: -2, tier: "unfriendly", unlocks: "Cold doors, no rumors, no food." },
+			{
+				threshold: -5,
+				tier: "hostile",
+				unlocks:
+					"Shelters hide from the party. Civilians warn each other to bar their doors against them.",
+			},
+			{
+				threshold: -2,
+				tier: "unfriendly",
+				unlocks: "Cold doors, no rumors, no food.",
+			},
 			{ threshold: 0, tier: "neutral", unlocks: "Basic settlement access." },
-			{ threshold: 3, tier: "friendly", unlocks: "Free clinic care and honest rumors." },
-			{ threshold: 6, tier: "trusted", unlocks: "Safehouse network and settlement guides." },
-			{ threshold: 10, tier: "kin", unlocks: "Civilian support and open wardlines during the final crossing." },
+			{
+				threshold: 3,
+				tier: "friendly",
+				unlocks: "Free clinic care and honest rumors.",
+			},
+			{
+				threshold: 6,
+				tier: "trusted",
+				unlocks: "Safehouse network and settlement guides.",
+			},
+			{
+				threshold: 10,
+				tier: "kin",
+				unlocks:
+					"Civilian support and open wardlines during the final crossing.",
+			},
 		],
 		joiningBenefits: [
 			"Clinic healing and safer long rests in protected settlements.",
@@ -162,12 +261,39 @@ export const sandboxFactions: SandboxFaction[] = [
 		].join("\n"),
 		startingReputation: 0,
 		reputationThresholds: [
-			{ threshold: -5, tier: "hostile", unlocks: "They hide, flee, or lead the party into danger." },
-			{ threshold: -2, tier: "unfriendly", unlocks: "Warnings become vague. Doors close early." },
-			{ threshold: 0, tier: "neutral", unlocks: "Will answer direct questions." },
-			{ threshold: 3, tier: "friendly", unlocks: "Memory fragments, Gloamreach instincts, and safe approach cues." },
-			{ threshold: 6, tier: "trusted", unlocks: "Access to altered perception, dream paths, and nonhuman insights into the Means." },
-			{ threshold: 10, tier: "kin", unlocks: "A Gloamreach-touched ally can turn the Quiet's own worn dead against it for one crucial moment in the final crossing." },
+			{
+				threshold: -5,
+				tier: "hostile",
+				unlocks: "They hide, flee, or lead the party into danger.",
+			},
+			{
+				threshold: -2,
+				tier: "unfriendly",
+				unlocks: "Warnings become vague. Doors close early.",
+			},
+			{
+				threshold: 0,
+				tier: "neutral",
+				unlocks: "Will answer direct questions.",
+			},
+			{
+				threshold: 3,
+				tier: "friendly",
+				unlocks:
+					"Memory fragments, Gloamreach instincts, and safe approach cues.",
+			},
+			{
+				threshold: 6,
+				tier: "trusted",
+				unlocks:
+					"Access to altered perception, dream paths, and nonhuman insights into the Means.",
+			},
+			{
+				threshold: 10,
+				tier: "kin",
+				unlocks:
+					"A Gloamreach-touched ally can turn the Quiet's own worn dead against it for one crucial moment in the final crossing.",
+			},
 		],
 		joiningBenefits: [
 			"Gloamreach instincts that warn of false shelter and the worn dead.",

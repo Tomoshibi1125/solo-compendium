@@ -14,7 +14,7 @@
  */
 
 import { readFileSync, writeFileSync } from "node:fs";
-import { resolve, dirname } from "node:path";
+import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -40,20 +40,14 @@ for (const rel of FILES) {
 	let next = original;
 
 	// Pass 1: fill empty success/failure inside saving_throw object literals.
-	next = next.replace(
-		/(saving_throw:\s*\{[^}]*?)success:\s*""/g,
-		(_, head) => {
-			totalSuccessFix++;
-			return `${head}success: ${JSON.stringify(SUCCESS_DEFAULT)}`;
-		},
-	);
-	next = next.replace(
-		/(saving_throw:\s*\{[^}]*?)failure:\s*""/g,
-		(_, head) => {
-			totalFailureFix++;
-			return `${head}failure: ${JSON.stringify(FAILURE_DEFAULT)}`;
-		},
-	);
+	next = next.replace(/(saving_throw:\s*\{[^}]*?)success:\s*""/g, (_, head) => {
+		totalSuccessFix++;
+		return `${head}success: ${JSON.stringify(SUCCESS_DEFAULT)}`;
+	});
+	next = next.replace(/(saving_throw:\s*\{[^}]*?)failure:\s*""/g, (_, head) => {
+		totalFailureFix++;
+		return `${head}failure: ${JSON.stringify(FAILURE_DEFAULT)}`;
+	});
 
 	// Pass 2: spells with empty effects.primary AND no attack/save details
 	// AND no healing AND no damage roll — seed primary with the description.
@@ -66,22 +60,24 @@ for (const rel of FILES) {
 		if (!/effects:\s*\{\s*primary:\s*""\s*,\s*secondary:\s*""/.test(block)) {
 			return block;
 		}
-		const hasAttack = /attack:\s*\{/.test(block) && !/attack:\s*null/.test(block);
+		const hasAttack =
+			/attack:\s*\{/.test(block) && !/attack:\s*null/.test(block);
 		const hasSaveDetails =
 			/saving_throw:\s*\{[^}]*?(success:\s*"[^"]+"|failure:\s*"[^"]+"|dc:\s*\d+)/.test(
 				block,
 			);
 		const hasHealing =
 			/(?:healing|heal_roll|hit_points_restored|hp_restore):/i.test(block);
-		const hasDamage =
-			/damage_roll:\s*"[^"]+"|damage:\s*"[^"]+"/.test(block);
+		const hasDamage = /damage_roll:\s*"[^"]+"|damage:\s*"[^"]+"/.test(block);
 		if (hasAttack || hasSaveDetails || hasHealing || hasDamage) return block;
 
 		// Extract description to seed primary effect.
 		const descMatch = block.match(
 			/description:\s*\n?\s*"([^"\\]*(?:\\.[^"\\]*)*)"/,
 		);
-		const desc = descMatch ? descMatch[1] : "Spell resolves per its description.";
+		const desc = descMatch
+			? descMatch[1]
+			: "Spell resolves per its description.";
 		const summary = desc
 			.replace(/\\"/g, '"')
 			.split(/[.!?]\s+/)[0]
@@ -91,7 +87,7 @@ for (const rel of FILES) {
 		totalResolutionFix++;
 		return block.replace(
 			/effects:\s*\{\s*primary:\s*""\s*,\s*secondary:\s*""\s*\}/,
-			`effects: { primary: ${JSON.stringify(summary + ".")}, secondary: "" }`,
+			`effects: { primary: ${JSON.stringify(`${summary}.`)}, secondary: "" }`,
 		);
 	});
 

@@ -21,7 +21,7 @@
 
 import { supabase } from "@/integrations/supabase/client";
 
-export interface DerivedStatsSnapshot {
+interface DerivedStatsSnapshot {
 	armorClass: number;
 	speed: number;
 	initiative: number;
@@ -117,20 +117,4 @@ export function getEffectiveHpMax(
 		character.hp_max_override > 0;
 	if (hasOverride) return base;
 	return Math.max(1, base + Math.max(0, regentHpContribution));
-}
-
-/**
- * Whether the cached derived-stats row may be stale relative to a known
- * input-mutation timestamp. Use this on read paths that need to decide
- * whether to trust the cached column or trigger a fresh engine run.
- *
- * Returns true if the cache is missing or older than the input mutation.
- */
-export function isDerivedCacheStale(
-	cachedAt: string | null | undefined,
-	inputsUpdatedAt: string | null | undefined,
-): boolean {
-	if (!cachedAt) return true;
-	if (!inputsUpdatedAt) return false;
-	return new Date(cachedAt) < new Date(inputsUpdatedAt);
 }

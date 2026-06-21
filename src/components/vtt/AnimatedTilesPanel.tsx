@@ -25,7 +25,7 @@ import type { VTTAnimatedTile, VTTScene } from "@/types/vtt";
  *
  * Mounts in the left-rail Scenes drawer as a sibling of `<StrataDrawer>`.
  */
-export interface AnimatedTilesPanelProps {
+interface AnimatedTilesPanelProps {
 	scene: VTTScene;
 	onSceneChange: (next: VTTScene) => void;
 }

@@ -171,9 +171,7 @@ test("warden session zero playthrough — prep + run Session 0 end-to-end", asyn
 		await page.getByRole("tab", { name: /^Notes$/i }).click();
 		await expect(
 			page
-				.getByText(
-					/Warden|Anchor|Subject Zero|Pressure Clock|Secret/i,
-				)
+				.getByText(/Warden|Anchor|Subject Zero|Pressure Clock|Secret/i)
 				.first(),
 		).toBeVisible({ timeout: 15_000 });
 		await shot("warden-notes");
@@ -182,7 +180,9 @@ test("warden session zero playthrough — prep + run Session 0 end-to-end", asyn
 	await test.step("Phase 7 — Wiki tab (lore + faction + quest)", async () => {
 		await page.getByRole("tab", { name: /^Wiki$/i }).click();
 		await expect(
-			page.getByText(/Gloamreach|Gate Domain|Bureau|Vermillion|Hollow Choir/i).first(),
+			page
+				.getByText(/Gloamreach|Gate Domain|Bureau|Vermillion|Hollow Choir/i)
+				.first(),
 		).toBeVisible({ timeout: 15_000 });
 		await shot("wiki-lore");
 	});

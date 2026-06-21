@@ -19,7 +19,8 @@ export const anomalies_s = [
 			Perception: 7,
 			Intimidation: 8,
 		},
-		image: "/generated/compendium/anomalies/anomaly-anomaly-eternal-celestial-guardian-159jka.webp",
+		image:
+			"/generated/compendium/anomalies/anomaly-anomaly-eternal-celestial-guardian-159jka.webp",
 		description:
 			"A fearsome Dragon that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
@@ -165,7 +166,8 @@ export const anomalies_s = [
 			Perception: 8,
 			Arcana: 7,
 		},
-		image: "/generated/compendium/anomalies/anomaly-anomaly-eternal-celestial-serpent-6liz0p.webp",
+		image:
+			"/generated/compendium/anomalies/anomaly-anomaly-eternal-celestial-serpent-6liz0p.webp",
 		description:
 			"A fearsome Anomaly that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
@@ -308,7 +310,8 @@ export const anomalies_s = [
 			Perception: 8,
 			Deception: 7,
 		},
-		image: "/generated/compendium/anomalies/anomaly-anomaly-eternal-celestial-phoenix-1epks7.webp",
+		image:
+			"/generated/compendium/anomalies/anomaly-anomaly-eternal-celestial-phoenix-1epks7.webp",
 		description:
 			"A fearsome Humanoid that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
@@ -458,7 +461,8 @@ export const anomalies_s = [
 			Perception: 7,
 			Stealth: 11,
 		},
-		image: "/generated/compendium/anomalies/anomaly-anomaly-eternal-celestial-herald-16pj6q.webp",
+		image:
+			"/generated/compendium/anomalies/anomaly-anomaly-eternal-celestial-herald-16pj6q.webp",
 		description:
 			"A fearsome Beast that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
@@ -607,7 +611,8 @@ export const anomalies_s = [
 		skills: {
 			Perception: 7,
 		},
-		image: "/generated/compendium/anomalies/anomaly-anomaly-corrupted-celestial-guardian-mfwlwd.webp",
+		image:
+			"/generated/compendium/anomalies/anomaly-anomaly-corrupted-celestial-guardian-mfwlwd.webp",
 		description:
 			"A fearsome anomaly that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast"],
@@ -743,7 +748,8 @@ export const anomalies_s = [
 			Perception: 7,
 			Arcana: 7,
 		},
-		image: "/generated/compendium/anomalies/anomaly-anomaly-corrupted-celestial-serpent-kv6kz7.webp",
+		image:
+			"/generated/compendium/anomalies/anomaly-anomaly-corrupted-celestial-serpent-kv6kz7.webp",
 		description:
 			"A fearsome Elemental that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
@@ -892,7 +898,8 @@ export const anomalies_s = [
 			Perception: 7,
 			Intimidation: 8,
 		},
-		image: "/generated/compendium/anomalies/anomaly-anomaly-corrupted-celestial-phoenix-1ikjo5.webp",
+		image:
+			"/generated/compendium/anomalies/anomaly-anomaly-corrupted-celestial-phoenix-1ikjo5.webp",
 		description:
 			"A fearsome Dragon that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast"],
@@ -1038,7 +1045,8 @@ export const anomalies_s = [
 			Perception: 8,
 			Arcana: 7,
 		},
-		image: "/generated/compendium/anomalies/anomaly-anomaly-corrupted-celestial-herald-1quk3g.webp",
+		image:
+			"/generated/compendium/anomalies/anomaly-anomaly-corrupted-celestial-herald-1quk3g.webp",
 		description:
 			"A fearsome Anomaly that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast"],
@@ -1181,7 +1189,8 @@ export const anomalies_s = [
 			Perception: 8,
 			Deception: 7,
 		},
-		image: "/generated/compendium/anomalies/anomaly-anomaly-blessed-celestial-guardian-5sjdfb.webp",
+		image:
+			"/generated/compendium/anomalies/anomaly-anomaly-blessed-celestial-guardian-5sjdfb.webp",
 		description:
 			"A fearsome Humanoid that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast"],
@@ -1331,7 +1340,8 @@ export const anomalies_s = [
 			Perception: 7,
 			Stealth: 11,
 		},
-		image: "/generated/compendium/anomalies/anomaly-anomaly-blessed-celestial-serpent-12qc34.webp",
+		image:
+			"/generated/compendium/anomalies/anomaly-anomaly-blessed-celestial-serpent-12qc34.webp",
 		description:
 			"A fearsome Beast that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast"],
@@ -1480,7 +1490,8 @@ export const anomalies_s = [
 		skills: {
 			Perception: 7,
 		},
-		image: "/generated/compendium/anomalies/anomaly-anomaly-blessed-celestial-phoenix-1mzyny.webp",
+		image:
+			"/generated/compendium/anomalies/anomaly-anomaly-blessed-celestial-phoenix-1mzyny.webp",
 		description:
 			"A fearsome anomaly that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
@@ -1616,7 +1627,8 @@ export const anomalies_s = [
 			Perception: 7,
 			Arcana: 7,
 		},
-		image: "/generated/compendium/anomalies/anomaly-anomaly-blessed-celestial-herald-1ux3cw.webp",
+		image:
+			"/generated/compendium/anomalies/anomaly-anomaly-blessed-celestial-herald-1ux3cw.webp",
 		description:
 			"A fearsome Elemental that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast"],
@@ -1765,7 +1777,8 @@ export const anomalies_s = [
 			Perception: 7,
 			Intimidation: 8,
 		},
-		image: "/generated/compendium/anomalies/anomaly-anomaly-cursed-celestial-guardian-itup2x.webp",
+		image:
+			"/generated/compendium/anomalies/anomaly-anomaly-cursed-celestial-guardian-itup2x.webp",
 		description:
 			"A fearsome Dragon that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
@@ -1911,7 +1924,8 @@ export const anomalies_s = [
 			Perception: 8,
 			Arcana: 7,
 		},
-		image: "/generated/compendium/anomalies/anomaly-anomaly-cursed-celestial-serpent-1jxirn.webp",
+		image:
+			"/generated/compendium/anomalies/anomaly-anomaly-cursed-celestial-serpent-1jxirn.webp",
 		description:
 			"A fearsome Anomaly that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
@@ -2054,7 +2068,8 @@ export const anomalies_s = [
 			Perception: 8,
 			Deception: 7,
 		},
-		image: "/generated/compendium/anomalies/anomaly-anomaly-cursed-celestial-phoenix-7ybjbs.webp",
+		image:
+			"/generated/compendium/anomalies/anomaly-anomaly-cursed-celestial-phoenix-7ybjbs.webp",
 		description:
 			"A fearsome Humanoid that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
@@ -2204,7 +2219,8 @@ export const anomalies_s = [
 			Perception: 7,
 			Stealth: 11,
 		},
-		image: "/generated/compendium/anomalies/anomaly-anomaly-cursed-celestial-herald-12a46x.webp",
+		image:
+			"/generated/compendium/anomalies/anomaly-anomaly-cursed-celestial-herald-12a46x.webp",
 		description:
 			"A fearsome Beast that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
@@ -2353,7 +2369,8 @@ export const anomalies_s = [
 		skills: {
 			Perception: 7,
 		},
-		image: "/generated/compendium/anomalies/anomaly-anomaly-ancient-celestial-guardian-4kr3qr.webp",
+		image:
+			"/generated/compendium/anomalies/anomaly-anomaly-ancient-celestial-guardian-4kr3qr.webp",
 		description:
 			"A fearsome anomaly that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast"],
@@ -2489,7 +2506,8 @@ export const anomalies_s = [
 			Perception: 7,
 			Arcana: 7,
 		},
-		image: "/generated/compendium/anomalies/anomaly-anomaly-ancient-celestial-serpent-1xowx2.webp",
+		image:
+			"/generated/compendium/anomalies/anomaly-anomaly-ancient-celestial-serpent-1xowx2.webp",
 		description:
 			"A fearsome Elemental that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
@@ -2638,7 +2656,8 @@ export const anomalies_s = [
 			Perception: 7,
 			Intimidation: 8,
 		},
-		image: "/generated/compendium/anomalies/anomaly-anomaly-ancient-celestial-phoenix-xds61m.webp",
+		image:
+			"/generated/compendium/anomalies/anomaly-anomaly-ancient-celestial-phoenix-xds61m.webp",
 		description:
 			"A fearsome Dragon that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast"],
@@ -2784,7 +2803,8 @@ export const anomalies_s = [
 			Perception: 8,
 			Arcana: 7,
 		},
-		image: "/generated/compendium/anomalies/anomaly-anomaly-ancient-celestial-herald-1wwup2.webp",
+		image:
+			"/generated/compendium/anomalies/anomaly-anomaly-ancient-celestial-herald-1wwup2.webp",
 		description:
 			"A fearsome Anomaly that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast"],
@@ -2927,7 +2947,8 @@ export const anomalies_s = [
 			Perception: 8,
 			Deception: 7,
 		},
-		image: "/generated/compendium/anomalies/anomaly-anomaly-primordial-celestial-guardian-1xua91.webp",
+		image:
+			"/generated/compendium/anomalies/anomaly-anomaly-primordial-celestial-guardian-1xua91.webp",
 		description:
 			"A fearsome Humanoid that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast"],
@@ -3077,7 +3098,8 @@ export const anomalies_s = [
 			Perception: 7,
 			Stealth: 11,
 		},
-		image: "/generated/compendium/anomalies/anomaly-anomaly-primordial-celestial-serpent-1grmfe.webp",
+		image:
+			"/generated/compendium/anomalies/anomaly-anomaly-primordial-celestial-serpent-1grmfe.webp",
 		description:
 			"A fearsome Beast that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast"],
@@ -3226,7 +3248,8 @@ export const anomalies_s = [
 		skills: {
 			Perception: 8,
 		},
-		image: "/generated/compendium/anomalies/anomaly-anomaly-primordial-celestial-phoenix-s4lht5.webp",
+		image:
+			"/generated/compendium/anomalies/anomaly-anomaly-primordial-celestial-phoenix-s4lht5.webp",
 		description:
 			"A fearsome anomaly that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast"],
@@ -3362,7 +3385,8 @@ export const anomalies_s = [
 			Perception: 8,
 			Arcana: 8,
 		},
-		image: "/generated/compendium/anomalies/anomaly-anomaly-primordial-celestial-herald-1lh8ph.webp",
+		image:
+			"/generated/compendium/anomalies/anomaly-anomaly-primordial-celestial-herald-1lh8ph.webp",
 		description:
 			"A fearsome Elemental that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast"],
@@ -3511,7 +3535,8 @@ export const anomalies_s = [
 			Perception: 8,
 			Intimidation: 9,
 		},
-		image: "/generated/compendium/anomalies/anomaly-anomaly-supreme-celestial-guardian-b7i2m.webp",
+		image:
+			"/generated/compendium/anomalies/anomaly-anomaly-supreme-celestial-guardian-b7i2m.webp",
 		description:
 			"A fearsome Dragon that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast"],
@@ -3657,7 +3682,8 @@ export const anomalies_s = [
 			Perception: 9,
 			Arcana: 8,
 		},
-		image: "/generated/compendium/anomalies/anomaly-anomaly-supreme-celestial-serpent-ptm94o.webp",
+		image:
+			"/generated/compendium/anomalies/anomaly-anomaly-supreme-celestial-serpent-ptm94o.webp",
 		description:
 			"A fearsome Anomaly that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
@@ -3800,7 +3826,8 @@ export const anomalies_s = [
 			Perception: 9,
 			Deception: 8,
 		},
-		image: "/generated/compendium/anomalies/anomaly-anomaly-supreme-celestial-phoenix-1ygt4m.webp",
+		image:
+			"/generated/compendium/anomalies/anomaly-anomaly-supreme-celestial-phoenix-1ygt4m.webp",
 		description:
 			"A fearsome Humanoid that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
@@ -3950,7 +3977,8 @@ export const anomalies_s = [
 			Perception: 8,
 			Stealth: 12,
 		},
-		image: "/generated/compendium/anomalies/anomaly-anomaly-supreme-celestial-herald-1nozyw.webp",
+		image:
+			"/generated/compendium/anomalies/anomaly-anomaly-supreme-celestial-herald-1nozyw.webp",
 		description:
 			"A fearsome Beast that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
@@ -4099,7 +4127,8 @@ export const anomalies_s = [
 		skills: {
 			Perception: 8,
 		},
-		image: "/generated/compendium/anomalies/anomaly-anomaly-legendary-celestial-guardian-dlm9rw.webp",
+		image:
+			"/generated/compendium/anomalies/anomaly-anomaly-legendary-celestial-guardian-dlm9rw.webp",
 		description:
 			"A fearsome anomaly that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast"],
@@ -4235,7 +4264,8 @@ export const anomalies_s = [
 			Perception: 8,
 			Arcana: 8,
 		},
-		image: "/generated/compendium/anomalies/anomaly-anomaly-legendary-celestial-serpent-1j1w2t.webp",
+		image:
+			"/generated/compendium/anomalies/anomaly-anomaly-legendary-celestial-serpent-1j1w2t.webp",
 		description:
 			"A fearsome Elemental that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast"],
@@ -4384,7 +4414,8 @@ export const anomalies_s = [
 			Perception: 8,
 			Intimidation: 9,
 		},
-		image: "/generated/compendium/anomalies/anomaly-anomaly-legendary-celestial-phoenix-156t89.webp",
+		image:
+			"/generated/compendium/anomalies/anomaly-anomaly-legendary-celestial-phoenix-156t89.webp",
 		description:
 			"A fearsome Dragon that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
@@ -4530,7 +4561,8 @@ export const anomalies_s = [
 			Perception: 9,
 			Arcana: 8,
 		},
-		image: "/generated/compendium/anomalies/anomaly-anomaly-legendary-celestial-herald-lw1kc9.webp",
+		image:
+			"/generated/compendium/anomalies/anomaly-anomaly-legendary-celestial-herald-lw1kc9.webp",
 		description:
 			"A fearsome Anomaly that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast"],
@@ -4673,7 +4705,8 @@ export const anomalies_s = [
 			Perception: 9,
 			Deception: 8,
 		},
-		image: "/generated/compendium/anomalies/anomaly-anomaly-mythic-celestial-guardian-1u4ovc.webp",
+		image:
+			"/generated/compendium/anomalies/anomaly-anomaly-mythic-celestial-guardian-1u4ovc.webp",
 		description:
 			"A fearsome Humanoid that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast"],
@@ -4823,7 +4856,8 @@ export const anomalies_s = [
 			Perception: 8,
 			Stealth: 12,
 		},
-		image: "/generated/compendium/anomalies/anomaly-anomaly-mythic-celestial-serpent-1ju77o.webp",
+		image:
+			"/generated/compendium/anomalies/anomaly-anomaly-mythic-celestial-serpent-1ju77o.webp",
 		description:
 			"A fearsome Beast that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
@@ -4972,7 +5006,8 @@ export const anomalies_s = [
 		skills: {
 			Perception: 8,
 		},
-		image: "/generated/compendium/anomalies/anomaly-anomaly-mythic-celestial-phoenix-158jvs.webp",
+		image:
+			"/generated/compendium/anomalies/anomaly-anomaly-mythic-celestial-phoenix-158jvs.webp",
 		description:
 			"A fearsome anomaly that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast"],
@@ -5108,7 +5143,8 @@ export const anomalies_s = [
 			Perception: 8,
 			Arcana: 8,
 		},
-		image: "/generated/compendium/anomalies/anomaly-anomaly-mythic-celestial-herald-xsxnxb.webp",
+		image:
+			"/generated/compendium/anomalies/anomaly-anomaly-mythic-celestial-herald-xsxnxb.webp",
 		description:
 			"A fearsome Elemental that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast"],
@@ -5257,7 +5293,8 @@ export const anomalies_s = [
 			Perception: 8,
 			Intimidation: 9,
 		},
-		image: "/generated/compendium/anomalies/anomaly-anomaly-divine-celestial-guardian-145c8d.webp",
+		image:
+			"/generated/compendium/anomalies/anomaly-anomaly-divine-celestial-guardian-145c8d.webp",
 		description:
 			"A fearsome Dragon that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast"],
@@ -5403,7 +5440,8 @@ export const anomalies_s = [
 			Perception: 9,
 			Arcana: 8,
 		},
-		image: "/generated/compendium/anomalies/anomaly-anomaly-divine-celestial-serpent-qoa0q.webp",
+		image:
+			"/generated/compendium/anomalies/anomaly-anomaly-divine-celestial-serpent-qoa0q.webp",
 		description:
 			"A fearsome Anomaly that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
@@ -5546,7 +5584,8 @@ export const anomalies_s = [
 			Perception: 9,
 			Deception: 8,
 		},
-		image: "/generated/compendium/anomalies/anomaly-anomaly-divine-celestial-phoenix-6cfc7l.webp",
+		image:
+			"/generated/compendium/anomalies/anomaly-anomaly-divine-celestial-phoenix-6cfc7l.webp",
 		description:
 			"A fearsome Humanoid that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
@@ -5696,7 +5735,8 @@ export const anomalies_s = [
 			Perception: 8,
 			Stealth: 12,
 		},
-		image: "/generated/compendium/anomalies/anomaly-anomaly-divine-celestial-herald-tkknc6.webp",
+		image:
+			"/generated/compendium/anomalies/anomaly-anomaly-divine-celestial-herald-tkknc6.webp",
 		description:
 			"A fearsome Beast that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
@@ -5845,7 +5885,8 @@ export const anomalies_s = [
 		skills: {
 			Perception: 8,
 		},
-		image: "/generated/compendium/anomalies/anomaly-anomaly-infernal-celestial-guardian-1lfjq4.webp",
+		image:
+			"/generated/compendium/anomalies/anomaly-anomaly-infernal-celestial-guardian-1lfjq4.webp",
 		description:
 			"A fearsome anomaly that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast"],
@@ -5981,7 +6022,8 @@ export const anomalies_s = [
 			Perception: 8,
 			Arcana: 8,
 		},
-		image: "/generated/compendium/anomalies/anomaly-anomaly-infernal-celestial-serpent-vd8jij.webp",
+		image:
+			"/generated/compendium/anomalies/anomaly-anomaly-infernal-celestial-serpent-vd8jij.webp",
 		description:
 			"A fearsome Elemental that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
@@ -6130,7 +6172,8 @@ export const anomalies_s = [
 			Perception: 8,
 			Intimidation: 9,
 		},
-		image: "/generated/compendium/anomalies/anomaly-anomaly-infernal-celestial-phoenix-8zwvqc.webp",
+		image:
+			"/generated/compendium/anomalies/anomaly-anomaly-infernal-celestial-phoenix-8zwvqc.webp",
 		description:
 			"A fearsome Dragon that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
@@ -6276,7 +6319,8 @@ export const anomalies_s = [
 			Perception: 9,
 			Arcana: 8,
 		},
-		image: "/generated/compendium/anomalies/anomaly-anomaly-infernal-celestial-herald-1e5733.webp",
+		image:
+			"/generated/compendium/anomalies/anomaly-anomaly-infernal-celestial-herald-1e5733.webp",
 		description:
 			"A fearsome Anomaly that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
@@ -6419,7 +6463,8 @@ export const anomalies_s = [
 			Perception: 9,
 			Deception: 8,
 		},
-		image: "/generated/compendium/anomalies/anomaly-anomaly-celestial-celestial-guardian-9875j7.webp",
+		image:
+			"/generated/compendium/anomalies/anomaly-anomaly-celestial-celestial-guardian-9875j7.webp",
 		description:
 			"A fearsome Humanoid that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
@@ -6569,7 +6614,8 @@ export const anomalies_s = [
 			Perception: 8,
 			Stealth: 12,
 		},
-		image: "/generated/compendium/anomalies/anomaly-anomaly-celestial-celestial-serpent-1s6dfr.webp",
+		image:
+			"/generated/compendium/anomalies/anomaly-anomaly-celestial-celestial-serpent-1s6dfr.webp",
 		description:
 			"A fearsome Beast that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
@@ -6718,7 +6764,8 @@ export const anomalies_s = [
 		skills: {
 			Perception: 8,
 		},
-		image: "/generated/compendium/anomalies/anomaly-anomaly-celestial-celestial-phoenix-1cepxd.webp",
+		image:
+			"/generated/compendium/anomalies/anomaly-anomaly-celestial-celestial-phoenix-1cepxd.webp",
 		description:
 			"A fearsome anomaly that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
@@ -6854,7 +6901,8 @@ export const anomalies_s = [
 			Perception: 9,
 			Arcana: 9,
 		},
-		image: "/generated/compendium/anomalies/anomaly-anomaly-celestial-celestial-herald-w58xp6.webp",
+		image:
+			"/generated/compendium/anomalies/anomaly-anomaly-celestial-celestial-herald-w58xp6.webp",
 		description:
 			"A fearsome Elemental that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
@@ -7002,7 +7050,8 @@ export const anomalies_s = [
 		skills: {
 			Perception: 9,
 		},
-		image: "/generated/compendium/anomalies/anomaly-anomaly-eternal-shadow-overlord-su5yad.webp",
+		image:
+			"/generated/compendium/anomalies/anomaly-anomaly-eternal-shadow-overlord-su5yad.webp",
 		description:
 			"An eternal overlord of shadows that commands legions of darkness. This S rank anomaly possesses godlike power and threatens the very fabric of reality.",
 		abilities: [
@@ -7142,7 +7191,8 @@ export const anomalies_s = [
 			Perception: 9,
 			Athletics: 15,
 		},
-		image: "/generated/compendium/anomalies/anomaly-anomaly-void-titan-ascendant-1dpw04.webp",
+		image:
+			"/generated/compendium/anomalies/anomaly-anomaly-void-titan-ascendant-1dpw04.webp",
 		description:
 			"A titanic entity that has ascended beyond mortal comprehension. This S rank titan wields the power of the void itself.",
 		abilities: ["Void Titan Slam", "Reality Shatter", "Abyssal Devastation"],
@@ -7285,7 +7335,8 @@ export const anomalies_s = [
 			Perception: 9,
 			Insight: 9,
 		},
-		image: "/generated/compendium/anomalies/anomaly-anomaly-supreme-abyssal-god-1vhfid.webp",
+		image:
+			"/generated/compendium/anomalies/anomaly-anomaly-supreme-abyssal-god-1vhfid.webp",
 		description:
 			"The supreme god of the abyss who has achieved ultimate power. This S rank deity represents the pinnacle of shadow evolution.",
 		abilities: [
@@ -7451,7 +7502,11 @@ export const anomalies_s = [
 		},
 		description:
 			"The apex predator of the Gloamreach, and the reason the Interior cannot be cleared. The Quiet is almost never seen; it is felt — a cold, a pressure, a silence where insect-sound should be. It hunts by noise, light, and the use of Essence, wears the faces and voices of the dead to lure prey into the dark, and cannot be put down by ordinary force. A stand-up fight with it is a party's last mistake — until, at high tier and with the right means assembled, it finally isn't. Use this block for the gated endgame attempt and for the rare moment the party must survive it directly; most of the campaign, the Quiet takes a character when the Hunt Clock peaks rather than rolling initiative.",
-		abilities: ["Wears the Dead", "Drawn to Noise, Light, and Essence", "Almost Never Seen"],
+		abilities: [
+			"Wears the Dead",
+			"Drawn to Noise, Light, and Essence",
+			"Almost Never Seen",
+		],
 		weaknesses: [
 			"Only truly killable once the party is 9th level or higher and has assembled the means to end it (see the Run Silent module)",
 		],

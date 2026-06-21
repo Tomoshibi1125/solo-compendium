@@ -75,7 +75,8 @@ export const REGENT_PORTRAITS_DATA: RegentPortraitDescriptor[] = [
 	{
 		regentId: "gravity_regent",
 		name: "Gravity Regent",
-		imageUrl: "/generated/compendium/regents/gravity-regent-generated-10x4ud5.webp",
+		imageUrl:
+			"/generated/compendium/regents/gravity-regent-generated-10x4ud5.webp",
 		tags: ["regent", "gravity", "cosmic", "singularity"],
 	},
 ];

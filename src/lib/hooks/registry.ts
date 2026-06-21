@@ -78,11 +78,11 @@ export interface HookPayloadMap {
 
 export type HookKind = keyof HookPayloadMap;
 
-export type HookListener<K extends HookKind> = (
+type HookListener<K extends HookKind> = (
 	payload: Readonly<HookPayloadMap[K]>,
 ) => void;
 
-export type HookDisposer = () => void;
+type HookDisposer = () => void;
 
 // -------------------------------------------------------------------
 // Registry impl. One module-level instance covers the whole app; this
@@ -90,7 +90,7 @@ export type HookDisposer = () => void;
 // so each test gets a fresh bus without cross-test leakage.
 // -------------------------------------------------------------------
 
-export interface HookRegistry {
+interface HookRegistry {
 	on<K extends HookKind>(kind: K, listener: HookListener<K>): HookDisposer;
 	off<K extends HookKind>(kind: K, listener: HookListener<K>): void;
 	once<K extends HookKind>(kind: K, listener: HookListener<K>): HookDisposer;

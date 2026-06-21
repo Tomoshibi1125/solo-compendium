@@ -65,14 +65,14 @@ const ATTACK_ABILITY_RE = new RegExp(
 const HEALING_RE =
 	/\b(?:regains?|heals?|restores?|gains?)\b[^.]*?(\d+d\d+)[^.]*?(?:hit points|\bhp\b|temporary hit points|temp hp)/i;
 
-export interface DerivableSpell {
+interface DerivableSpell {
 	description?: string | null;
 	effect?: string | null;
 	type?: string | null;
 	effects?: { primary?: string | null } | null;
 }
 
-export interface DerivedSpellAttack {
+interface DerivedSpellAttack {
 	type?: string;
 	mode?: string;
 	resolution?: string;
@@ -81,7 +81,7 @@ export interface DerivedSpellAttack {
 	damage_type?: string;
 }
 
-export interface DerivedResolution {
+interface DerivedResolution {
 	attack?: DerivedSpellAttack;
 	saving_throw?: { ability: string; dc: number };
 	healing?: { dice: string };

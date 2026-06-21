@@ -157,7 +157,9 @@ test("session zero — import The Shadow of the Regent and populate every tab", 
 	// on the wiki tab. The tab renders all articles; a Gloamreach title proves
 	// wiki injection worked.
 	await expect(
-		page.getByText(/Gloamreach|Rift Interior|Anchor Scan|Rift Threshold/i).first(),
+		page
+			.getByText(/Gloamreach|Rift Interior|Anchor Scan|Rift Threshold/i)
+			.first(),
 	).toBeVisible({ timeout: 15_000 });
 
 	// ── 6. Sessions tab: Session 0 + scaffolded recap templates ────────────

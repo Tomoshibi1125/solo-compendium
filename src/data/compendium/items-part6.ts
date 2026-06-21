@@ -2919,7 +2919,8 @@ export const items_part6: Item[] = [
 			"A multi-layer combat coat woven from impact-resistant fabric.",
 		rarity: "uncommon",
 		type: "armor",
-		image: "/generated/compendium/armor/armor-armor-gate-forged-combat-vest-1pacak.webp",
+		image:
+			"/generated/compendium/armor/armor-armor-gate-forged-combat-vest-1pacak.webp",
 		weight: 4,
 		value: 279,
 		item_type: "armor",

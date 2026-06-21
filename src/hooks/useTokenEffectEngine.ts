@@ -24,7 +24,7 @@ import {
 } from "@/lib/vtt/tokenEffects";
 import type { TokenEffect, VTTTokenInstance } from "@/types/vtt";
 
-export interface UseTokenEffectEngineOptions {
+interface UseTokenEffectEngineOptions {
 	enabled: boolean;
 	tokens: VTTTokenInstance[];
 	applyTokenEffects: (tokenId: string, effects: TokenEffect[]) => void;

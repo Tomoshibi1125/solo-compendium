@@ -184,13 +184,17 @@ export function getStaticJobs(): CompendiumJob[] {
 }
 export function getStaticItems(): CompendiumItem[] {
 	if (!registry.initialized) {
-		console.warn("getStaticItems called before ProtocolDataManager initialized");
+		console.warn(
+			"getStaticItems called before ProtocolDataManager initialized",
+		);
 	}
 	return registry.items;
 }
 export function getStaticBackgrounds(): CompendiumBackground[] {
 	if (!registry.initialized) {
-		console.warn("getStaticBackgrounds called before ProtocolDataManager initialized");
+		console.warn(
+			"getStaticBackgrounds called before ProtocolDataManager initialized",
+		);
 	}
 	return registry.backgrounds;
 }
@@ -235,7 +239,9 @@ export function getStaticPaths(): CompendiumPath[] {
 }
 export function getStaticBackgroundsAll(): CompendiumBackground[] {
 	if (!registry.initialized) {
-		console.warn("getStaticBackgroundsAll called before ProtocolDataManager initialized");
+		console.warn(
+			"getStaticBackgroundsAll called before ProtocolDataManager initialized",
+		);
 	}
 	return registry.backgroundsAll;
 }

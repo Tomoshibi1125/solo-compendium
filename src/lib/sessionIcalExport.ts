@@ -34,7 +34,7 @@ export interface IcalSessionInput {
 	recurrence_parent_id?: string | null;
 }
 
-export interface BuildIcsOptions {
+interface BuildIcsOptions {
 	/** Campaign name, used as the calendar name. */
 	campaignName: string;
 	/**

@@ -90,7 +90,7 @@ export const JobsChapter = () => {
 									Class Progression
 								</h3>
 								<div className="bg-void/50 border border-white/5 rounded-sm overflow-hidden overflow-x-auto">
-									<table className="w-full text-xs font-mono text-left">
+									<table className="w-full min-w-[560px] text-xs font-mono text-left">
 										<thead className="bg-cyan/10 border-b border-cyan/20 text-cyan">
 											<tr>
 												<th className="p-3">Level</th>

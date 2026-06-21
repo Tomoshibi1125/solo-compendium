@@ -4,20 +4,20 @@ import { formatSignedNumber } from "./powerActionFormulas";
 const DICE_ONLY_RE = /^\s*\d+d\d+\s*$/i;
 const TRAILING_SIGN_RE = /[+-]\s*\d+(?:\.\d+)?$/;
 
-export interface AttackLineInput {
+interface AttackLineInput {
 	ability?: AbilityScore | string | null;
 	abilityModifier?: number | null;
 	attackRoll?: string | null;
 	attackBonus?: number | null;
 }
 
-export interface DamageLineInput {
+interface DamageLineInput {
 	damageRoll?: string | null;
 	damageType?: string | null;
 	abilityModifier?: number | null;
 }
 
-export interface SaveLineInput {
+interface SaveLineInput {
 	saveDC?: number | null;
 	saveAbility?: AbilityScore | string | null;
 }
@@ -85,9 +85,4 @@ export function formatCompactActionLine(input: {
 	if (save) parts.push(save);
 	if (damage) parts.push(damage);
 	return parts.join(" · ");
-}
-
-export function formatPassiveScore(score: number | null | undefined): string {
-	if (typeof score !== "number" || !Number.isFinite(score)) return "—";
-	return String(score);
 }

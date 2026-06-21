@@ -12,16 +12,56 @@ const JOBS = {
 	berserker: { kind: "martial", spells: false, powers: true, techniques: true },
 	assassin: { kind: "martial", spells: false, powers: true, techniques: true },
 	striker: { kind: "martial", spells: false, powers: true, techniques: true },
-	"holy knight": { kind: "half-caster", spells: true, powers: true, techniques: true },
-	technomancer: { kind: "half-caster", spells: true, powers: true, techniques: true },
-	stalker: { kind: "half-caster", spells: true, powers: true, techniques: true },
+	"holy knight": {
+		kind: "half-caster",
+		spells: true,
+		powers: true,
+		techniques: true,
+	},
+	technomancer: {
+		kind: "half-caster",
+		spells: true,
+		powers: true,
+		techniques: true,
+	},
+	stalker: {
+		kind: "half-caster",
+		spells: true,
+		powers: true,
+		techniques: true,
+	},
 	mage: { kind: "full-caster", spells: true, powers: false, techniques: false },
-	esper: { kind: "full-caster", spells: true, powers: false, techniques: false },
-	revenant: { kind: "full-caster", spells: true, powers: false, techniques: false },
-	summoner: { kind: "full-caster", spells: true, powers: false, techniques: false },
+	esper: {
+		kind: "full-caster",
+		spells: true,
+		powers: false,
+		techniques: false,
+	},
+	revenant: {
+		kind: "full-caster",
+		spells: true,
+		powers: false,
+		techniques: false,
+	},
+	summoner: {
+		kind: "full-caster",
+		spells: true,
+		powers: false,
+		techniques: false,
+	},
 	idol: { kind: "full-caster", spells: true, powers: false, techniques: false },
-	herald: { kind: "full-caster", spells: true, powers: false, techniques: false },
-	contractor: { kind: "pact-caster", spells: true, powers: false, techniques: false },
+	herald: {
+		kind: "full-caster",
+		spells: true,
+		powers: false,
+		techniques: false,
+	},
+	contractor: {
+		kind: "pact-caster",
+		spells: true,
+		powers: false,
+		techniques: false,
+	},
 };
 
 const JOB_NAMES = Object.keys(JOBS);
@@ -45,8 +85,19 @@ function capitalize(s) {
 const KEYWORD_RULES = [
 	{
 		keywords: [
-			"smite", "oath", "divine", "radiant", "sacred", "sanctified", "judgment",
-			"aegis", "devotion", "bastion", "purge", "searing", "war god",
+			"smite",
+			"oath",
+			"divine",
+			"radiant",
+			"sacred",
+			"sanctified",
+			"judgment",
+			"aegis",
+			"devotion",
+			"bastion",
+			"purge",
+			"searing",
+			"war god",
 		],
 		allowed: ["holy knight"],
 		type: "holy-knight",
@@ -57,7 +108,15 @@ const KEYWORD_RULES = [
 		type: "contractor",
 	},
 	{
-		keywords: ["idol", "hymn", "crescendo", "dance", "signal", "rhythm", "sonic"],
+		keywords: [
+			"idol",
+			"hymn",
+			"crescendo",
+			"dance",
+			"signal",
+			"rhythm",
+			"sonic",
+		],
 		allowed: [],
 		type: "idol",
 	},
@@ -67,7 +126,14 @@ const KEYWORD_RULES = [
 		type: "stealth",
 	},
 	{
-		keywords: ["prey", "quarry", "hamstring", "entangle", "anomaly hunter", "predator"],
+		keywords: [
+			"prey",
+			"quarry",
+			"hamstring",
+			"entangle",
+			"anomaly hunter",
+			"predator",
+		],
 		allowed: ["assassin", "stalker"],
 		type: "hunter",
 	},
@@ -96,7 +162,9 @@ function parseItemArrayFile(filePath, exportName) {
 	);
 	const m = text.match(re);
 	if (!m) {
-		throw new Error(`Could not extract array literal for ${exportName} in ${filePath}`);
+		throw new Error(
+			`Could not extract array literal for ${exportName} in ${filePath}`,
+		);
 	}
 	const literal = m[1];
 	let arr;
@@ -124,7 +192,7 @@ function auditAndFixFile(fileName, exportName, abilityType) {
 	const report = [];
 
 	for (const entry of arr) {
-		let currentClasses = Array.isArray(entry.classes)
+		const currentClasses = Array.isArray(entry.classes)
 			? entry.classes.map(normalizeJob)
 			: [];
 		let newClasses = [...currentClasses];
@@ -134,11 +202,14 @@ function auditAndFixFile(fileName, exportName, abilityType) {
 		newClasses = newClasses.filter((j) => baseJobs.includes(j));
 
 		// 2. Keyword check
-		const nameLower = entry.name.toLowerCase();
 		let appliedRule = null;
 
 		for (const rule of KEYWORD_RULES) {
-			if (rule.keywords.some((kw) => new RegExp(`\\b${kw}\\b`, "i").test(entry.name))) {
+			if (
+				rule.keywords.some((kw) =>
+					new RegExp(`\\b${kw}\\b`, "i").test(entry.name),
+				)
+			) {
 				appliedRule = rule;
 				// Filter to only allowed jobs
 				newClasses = newClasses.filter((j) => rule.allowed.includes(j));
@@ -165,11 +236,14 @@ function auditAndFixFile(fileName, exportName, abilityType) {
 			});
 
 			// Regex to find just this entry's classes array string
-			const idMatch = new RegExp(`id:\\s*"${entry.id}"[\\s\\S]*?classes:\\s*\\[([^\\]]*)\\]`);
+			const idMatch = new RegExp(
+				`id:\\s*"${entry.id}"[\\s\\S]*?classes:\\s*\\[([^\\]]*)\\]`,
+			);
 			modifiedText = modifiedText.replace(idMatch, (match, classesStr) => {
-				const newClassesStr = newClasses.length > 0 
-					? newClasses.map((c) => `"${capitalize(c)}"`).join(", ")
-					: "";
+				const newClassesStr =
+					newClasses.length > 0
+						? newClasses.map((c) => `"${capitalize(c)}"`).join(", ")
+						: "";
 				return match.replace(`[${classesStr}]`, `[${newClassesStr}]`);
 			});
 		}
@@ -178,14 +252,26 @@ function auditAndFixFile(fileName, exportName, abilityType) {
 	if (modifiedText !== text) {
 		writeFileSync(filePath, modifiedText, "utf8");
 	}
-	
+
 	return report;
 }
 
 const report1 = auditAndFixFile("powers-core.ts", "powers_core", "powers");
-const report2 = auditAndFixFile("powers-supplemental.ts", "powers_supplemental", "powers");
-const report3 = auditAndFixFile("techniques-core.ts", "techniques_core", "techniques");
-const report4 = auditAndFixFile("techniques-supplemental.ts", "techniques_supplemental", "techniques");
+const report2 = auditAndFixFile(
+	"powers-supplemental.ts",
+	"powers_supplemental",
+	"powers",
+);
+const report3 = auditAndFixFile(
+	"techniques-core.ts",
+	"techniques_core",
+	"techniques",
+);
+const report4 = auditAndFixFile(
+	"techniques-supplemental.ts",
+	"techniques_supplemental",
+	"techniques",
+);
 
 const fullReport = [...report1, ...report2, ...report3, ...report4];
 const reportPath = join(ROOT, "scripts", "audit", "class-access-report.json");

@@ -1306,7 +1306,7 @@ const vehiclesRare: CompendiumVehicle[] = [
 // Aggregated exports
 // ──────────────────────────────────────────────────────────────────────
 
-export const allMounts: CompendiumVehicle[] = [
+const allMounts: CompendiumVehicle[] = [
 	...mountsRealWorld,
 	...mountsBondedAnomalies,
 	...mountsNetNew,
@@ -1314,12 +1314,6 @@ export const allMounts: CompendiumVehicle[] = [
 
 export const allVehicles: CompendiumVehicle[] = [
 	...allMounts,
-	...vehiclesRealWorld,
-	...vehiclesRiftTech,
-	...vehiclesRare,
-];
-
-export const ridingVehicles: CompendiumVehicle[] = [
 	...vehiclesRealWorld,
 	...vehiclesRiftTech,
 	...vehiclesRare,

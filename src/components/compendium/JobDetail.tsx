@@ -850,7 +850,7 @@ export const JobDetail = ({ data }: { data: JobData }) => {
 				Object.keys(data.spellcasting.spellSlots).length > 0 && (
 					<AscendantWindow title="SPELLCASTING TABLE">
 						<div className="overflow-x-auto">
-							<table className="w-full text-sm">
+							<table className="w-full min-w-[640px] text-sm">
 								<thead>
 									<tr className="border-b border-border">
 										<th className="text-left py-2 px-2 font-heading text-muted-foreground">
@@ -976,7 +976,7 @@ export const JobDetail = ({ data }: { data: JobData }) => {
 				data.class_features.length > 0 && (
 					<AscendantWindow title="LEVEL PROGRESSION">
 						<div className="overflow-x-auto">
-							<table className="w-full text-sm">
+							<table className="w-full min-w-[640px] text-sm">
 								<thead>
 									<tr className="border-b border-border">
 										<th className="text-left py-2 px-3 font-heading text-muted-foreground w-16">

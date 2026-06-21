@@ -14,7 +14,7 @@ import { resolvePowerActionFormula } from "@/lib/powerActionFormulas";
 import { cn } from "@/lib/utils";
 import type { AbilityScore } from "@/types/core-rules";
 
-export type SpellcastingStatsScope = "spells" | "powers" | "techniques";
+type SpellcastingStatsScope = "spells" | "powers" | "techniques";
 
 interface SpellcastingStatsCardProps {
 	characterId: string;

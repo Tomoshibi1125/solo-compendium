@@ -99,7 +99,7 @@ async function fetchServerNotifications(): Promise<Notification[]> {
 	}
 }
 
-export interface ServerNotificationInput {
+interface ServerNotificationInput {
 	userId: string;
 	type:
 		| "info"

@@ -33,7 +33,9 @@ test.describe
 			await expect
 				.poll(async () => {
 					return await dmPage.evaluate(() =>
-						localStorage.getItem("solo-compendium.Warden-tools.rollable-tables.v1"),
+						localStorage.getItem(
+							"solo-compendium.Warden-tools.rollable-tables.v1",
+						),
 					);
 				})
 				.not.toBeNull();
@@ -120,7 +122,9 @@ test.describe
 			await expect
 				.poll(async () => {
 					return await dmPage.evaluate(() =>
-						localStorage.getItem("solo-compendium.warden-directives.gate-generator.v2"),
+						localStorage.getItem(
+							"solo-compendium.warden-directives.gate-generator.v2",
+						),
 					);
 				})
 				.not.toBeNull();

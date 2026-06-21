@@ -1,19 +1,6 @@
 import * as fs from "node:fs";
 import * as path from "node:path";
 
-// Helper to write files
-function arrayToTypeScriptExport(
-	arrayName: string,
-	data: unknown[],
-	headerDocs: string,
-) {
-	const jsonStr = JSON.stringify(data, null, "\t").replace(
-		/"([a-zA-Z_$][0-9a-zA-Z_$]*)":/g,
-		"$1:",
-	);
-	return `${headerDocs}\n\nexport const ${arrayName} = ${jsonStr};\n`;
-}
-
 // 1. Anomalies
 const anomalyRanks = ["a", "b", "c", "d", "s"];
 for (const rank of anomalyRanks) {
@@ -30,13 +17,13 @@ for (const rank of anomalyRanks) {
 async function dedupeLocal(
 	modulePath: string,
 	exportName: string,
-	header: string,
+	_header: string,
 ) {
 	const fullPath = path.join(process.cwd(), modulePath);
 	if (!fs.existsSync(fullPath)) return;
 
 	// Use require to bypass caching if we wanted, or dynamic import
-	const fileUrl = "file://" + fullPath.replace(/\\/g, "/") + "?t=" + Date.now();
+	const fileUrl = `file://${fullPath.replace(/\\/g, "/")}?t=${Date.now()}`;
 	const mod = await import(fileUrl);
 	const arr = mod[exportName] || mod.default || Object.values(mod)[0];
 
@@ -45,7 +32,7 @@ async function dedupeLocal(
 		return;
 	}
 
-	const unique: any[] = [];
+	const unique: unknown[] = [];
 	const ids = new Set();
 	const names = new Set();
 

@@ -7,7 +7,7 @@ import { useCampaignMembers } from "@/hooks/useCampaigns";
  * corner overlay so streamers don't have to maintain a separate
  * "party" graphic. Reads from the existing campaign-members query.
  */
-export interface RosterOverlayProps {
+interface RosterOverlayProps {
 	campaignId: string;
 }
 

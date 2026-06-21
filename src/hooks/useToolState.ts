@@ -11,10 +11,6 @@ import type { Database, Json } from "@/integrations/supabase/types";
 import { useAuth } from "@/lib/auth/authContext";
 import { warn as logWarn } from "@/lib/logger";
 
-export type {
-	ToolStateOptions,
-	ToolStateResult,
-} from "@/hooks/createPersistedToolState";
 // Re-exported for backward compatibility — these now live in the factory so the
 // generic persistence layer has no Supabase dependency.
 export {

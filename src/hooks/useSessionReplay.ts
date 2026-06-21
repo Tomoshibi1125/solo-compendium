@@ -10,7 +10,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import { hooks } from "@/lib/hooks/registry";
 
-export interface SessionEventRow {
+interface SessionEventRow {
 	id: number;
 	campaign_id: string;
 	session_id: string | null;
@@ -20,12 +20,12 @@ export interface SessionEventRow {
 	created_at: string;
 }
 
-export interface UseSessionReplayOptions {
+interface UseSessionReplayOptions {
 	campaignId: string;
 	sessionId?: string | null;
 }
 
-export interface UseSessionReplayResult {
+interface UseSessionReplayResult {
 	events: SessionEventRow[];
 	isLoading: boolean;
 	cursor: number;

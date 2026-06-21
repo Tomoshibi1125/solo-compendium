@@ -36,7 +36,8 @@ export const sandboxTimeline: SandboxTimelineEvent[] = [
 		title: "Day 1 · Act I — Threshold Day",
 		description:
 			"The party crosses the Rift as the first team in, and discovers the Rift is only the door. The exit becomes unreliable, the old roads turn dangerous, and something vast and patient in the dark takes notice of the first living things to come through in a very long time.",
-		factionImpact: "Bureau +1 if the party reports the truth instead of sanitizing it.",
+		factionImpact:
+			"Bureau +1 if the party reports the truth instead of sanitizing it.",
 		linkedNpcName: "Commander Park Jae-won",
 		linkedSceneName: "Rift Threshold",
 	},
@@ -45,7 +46,8 @@ export const sandboxTimeline: SandboxTimelineEvent[] = [
 		title: "Day 4 · Act I — First Loss",
 		description:
 			"A nearby community loses someone to the dark — or the party watch it pay the hard price that keeps its wards lit. The Drowned Ledgerfen wakes and begins making the dead, and the not-yet-dead, dangerously real.",
-		factionImpact: "Independent Survivors +2 if the party protects civilians without exploiting them.",
+		factionImpact:
+			"Independent Survivors +2 if the party protects civilians without exploiting them.",
 		linkedSceneName: "Warded Hamlet",
 	},
 	{
@@ -60,7 +62,8 @@ export const sandboxTimeline: SandboxTimelineEvent[] = [
 		title: "Day 13 · Act I — Hayashi's Warning",
 		description:
 			"A delayed Bureau transmission reaches the party. Dr. Hayashi confirms the Gloamreach is an uncleared, inhabited Interior with an apex predator that cannot be cleared by force — only survived, or fled.",
-		factionImpact: "Bureau Trusted path opens if the party shares field evidence.",
+		factionImpact:
+			"Bureau Trusted path opens if the party shares field evidence.",
 		linkedNpcName: "Dr. Serin Hayashi",
 	},
 	{
@@ -78,7 +81,8 @@ export const sandboxTimeline: SandboxTimelineEvent[] = [
 		title: "Day 27 · Act II — The Cult Moves",
 		description:
 			"Awoko comfort-workers begin open recruitment in grief-dense places. The Hollow Mother sends a sermon, dream, or private message. Her followers say serve. She says become.",
-		factionImpact: "Awoko reputation and suspicion rise. Sister Veil defection path can open.",
+		factionImpact:
+			"Awoko reputation and suspicion rise. Sister Veil defection path can open.",
 		linkedNpcName: "The Hollow Mother",
 		linkedSceneName: "Awoko Sanctum",
 	},
@@ -94,7 +98,8 @@ export const sandboxTimeline: SandboxTimelineEvent[] = [
 		title: "Day 41 · Act II — Crane's Memory",
 		description:
 			"Old Man Crane offers hard lore, or warns the party that some hunts end only by sacrifice. If ignored, he goes alone into the deep dark.",
-		factionImpact: "Independent Survivors +1 if the party honors Crane's warning instead of treating him as a weapon.",
+		factionImpact:
+			"Independent Survivors +1 if the party honors Crane's warning instead of treating him as a weapon.",
 		linkedNpcName: "Old Man Crane",
 	},
 	{
@@ -102,7 +107,8 @@ export const sandboxTimeline: SandboxTimelineEvent[] = [
 		title: "Day 49 · Act II — The Hollow Mother Declares",
 		description:
 			"Awoko pamphlets, songs, and sermons spread through settlements. Civilian unrest rises. The cult claims the Quiet offers a way to stop being prey — to be remade into a hunter.",
-		factionImpact: "Awoko +2 if unopposed; Bureau and Independent trust may drop if the party ignores recruitment.",
+		factionImpact:
+			"Awoko +2 if unopposed; Bureau and Independent trust may drop if the party ignores recruitment.",
 		linkedSceneName: "Awoko Sanctum",
 	},
 	{
@@ -127,7 +133,8 @@ export const sandboxTimeline: SandboxTimelineEvent[] = [
 		title: "Day 74 · Act III — Ritual of Becoming",
 		description:
 			"The Awoko Sanctum reaches full ritual strength. If not disrupted, the Hollow Mother gains leverage over the final act and may try to make herself a new hunter as the party near the Threshold.",
-		factionImpact: "Awoko power rises. Sister Veil, Mara, or Whisper can still disrupt the rite if saved.",
+		factionImpact:
+			"Awoko power rises. Sister Veil, Mara, or Whisper can still disrupt the rite if saved.",
 		linkedNpcName: "Sister Veil",
 		linkedSceneName: "Awoko Sanctum",
 	},
@@ -136,7 +143,8 @@ export const sandboxTimeline: SandboxTimelineEvent[] = [
 		title: "Day 80 · Act III — Final Preparations",
 		description:
 			"All major factions understand the final crossing is near. Allies must be chosen, debts come due, settlement trust is counted, and the old roads offer the shortest route under the worst terms.",
-		factionImpact: "All faction support is locked at the end of this stage unless the Warden allows a final dramatic reversal.",
+		factionImpact:
+			"All faction support is locked at the end of this stage unless the Warden allows a final dramatic reversal.",
 		linkedSceneName: "The Old Roads",
 	},
 	{
@@ -144,7 +152,8 @@ export const sandboxTimeline: SandboxTimelineEvent[] = [
 		title: "Day 84 · Act III — The Threshold",
 		description:
 			"The climax. The party make their last crossing through the deep dark to the sealed Threshold — to escape, or, with the Means assembled and at Level 9+, to make the one stand that ends the Quiet. Outside the Rift the Bureau floodlights gutter; inside, the Gloamreach goes utterly silent for the first time. If the party are not ready, escalate the hunt rather than forcing an ending by fiat.",
-		factionImpact: "All faction reputations convert into final-operation support, betrayal, neutrality, or obstruction.",
+		factionImpact:
+			"All faction reputations convert into final-operation support, betrayal, neutrality, or obstruction.",
 		linkedSceneName: "The Threshold",
 	},
 ];

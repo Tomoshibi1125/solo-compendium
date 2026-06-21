@@ -93,7 +93,7 @@ export const DIFFICULTY_THRESHOLDS = {
 	},
 } as const;
 
-export type EncounterDifficulty = "easy" | "medium" | "hard" | "deadly";
+type EncounterDifficulty = "easy" | "medium" | "hard" | "deadly";
 
 /**
  * The XP a single monster may be worth before a solo fight against a party of

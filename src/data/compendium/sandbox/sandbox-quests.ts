@@ -134,7 +134,8 @@ export const sandboxQuests: SandboxQuest[] = [
 			"Evidence preserved but researcher lost.",
 			"The fire takes the researcher, and the hall burns hotter for it.",
 		],
-		rewardNotes: "Bureau research unlock; a truth the burning hall cannot deny; fire or blood Sigil.",
+		rewardNotes:
+			"Bureau research unlock; a truth the burning hall cannot deny; fire or blood Sigil.",
 		linkedFactionId: "bureau-sentinels",
 		linkedNpcName: "Dr. Serin Hayashi",
 	},
@@ -246,7 +247,9 @@ export const sandboxQuests: SandboxQuest[] = [
 			"Resolve each reflection by defeat, confession, refusal, or reconciliation",
 			"Reach the Watcher's Gallery",
 		],
-		completionTriggers: ["All reflections resolved and the Watcher's trial answered."],
+		completionTriggers: [
+			"All reflections resolved and the Watcher's trial answered.",
+		],
 		rewardNotes:
 			"A-Rank Relic or Sigil; a truth about the Quiet; temptation consequence based on choices.",
 		linkedNpcName: "The Watcher",
@@ -302,8 +305,11 @@ export const sandboxQuests: SandboxQuest[] = [
 			"Resolve his choice before the final crossing",
 			"Use or lose Bureau final-operation support",
 		],
-		completionTriggers: ["Park's choice resolved during the final preparation window."],
-		rewardNotes: "Finale support, emotional payoff, and Bureau epilogue consequences.",
+		completionTriggers: [
+			"Park's choice resolved during the final preparation window.",
+		],
+		rewardNotes:
+			"Finale support, emotional payoff, and Bureau epilogue consequences.",
 		linkedFactionId: "bureau-sentinels",
 		linkedNpcName: "Commander Park Jae-won",
 	},

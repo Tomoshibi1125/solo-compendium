@@ -29,7 +29,7 @@
  *       node scripts/vernacular-compliance.mjs --apply   (write)
  */
 import { readdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
-import { join, extname } from "node:path";
+import { extname, join } from "node:path";
 
 const APPLY = process.argv.includes("--apply");
 const ROOTS = ["src", "docs"];
@@ -74,46 +74,98 @@ function walk(dir, out) {
 	return out;
 }
 
-function transformLine(line, file, stats) {
+function transformLine(line, stats) {
 	let s = line;
 
-	s = s.replace(/Dungeon Masters/g, () => (stats.dungeonMaster++, "Wardens"));
-	s = s.replace(/Dungeon Master/g, () => (stats.dungeonMaster++, "Warden"));
+	s = s.replace(/Dungeon Masters/g, () => {
+		stats.dungeonMaster++;
+		return "Wardens";
+	});
+	s = s.replace(/Dungeon Master/g, () => {
+		stats.dungeonMaster++;
+		return "Warden";
+	});
 
 	// Capital DM/GM/Hunter use \w-only boundaries so hyphenated PROSE
 	// compounds (e.g. "Hunter-only", "DM-only") are converted. Capital
 	// forms are verified never to be identifiers/IDs/values, so allowing
 	// a hyphen boundary is safe. (Lowercase forms below keep [\w-] to
 	// protect kebab-case IDs like "anomaly-hunter".)
-	s = s.replace(/(?<!\w)DMs(?!\w)/g, () => (stats.dmgm++, "Wardens"));
-	s = s.replace(/(?<!\w)DM(?!\w)/g, () => (stats.dmgm++, "Warden"));
-	s = s.replace(/(?<!\w)GMs(?!\w)/g, () => (stats.dmgm++, "Wardens"));
-	s = s.replace(/(?<!\w)GM(?!\w)/g, () => (stats.dmgm++, "Warden"));
+	s = s.replace(/(?<!\w)DMs(?!\w)/g, () => {
+		stats.dmgm++;
+		return "Wardens";
+	});
+	s = s.replace(/(?<!\w)DM(?!\w)/g, () => {
+		stats.dmgm++;
+		return "Warden";
+	});
+	s = s.replace(/(?<!\w)GMs(?!\w)/g, () => {
+		stats.dmgm++;
+		return "Wardens";
+	});
+	s = s.replace(/(?<!\w)GM(?!\w)/g, () => {
+		stats.dmgm++;
+		return "Warden";
+	});
 
-	s = s.replace(/(?<!\w)Hunters(?!\w)/g, () => (stats.hunterCap++, "Ascendants"));
-	s = s.replace(/(?<!\w)Hunter(?!\w)/g, () => (stats.hunterCap++, "Ascendant"));
+	s = s.replace(/(?<!\w)Hunters(?!\w)/g, () => {
+		stats.hunterCap++;
+		return "Ascendants";
+	});
+	s = s.replace(/(?<!\w)Hunter(?!\w)/g, () => {
+		stats.hunterCap++;
+		return "Ascendant";
+	});
 
 	if (!LOWER_HUNTER_SKIP.test(line)) {
-		s = s.replace(/(?<![\w-])hunters(?![\w-])/g, () => (stats.hunterLow++, "ascendants"));
-		s = s.replace(/(?<![\w-])hunter(?![\w-])/g, () => (stats.hunterLow++, "ascendant"));
+		s = s.replace(/(?<![\w-])hunters(?![\w-])/g, () => {
+			stats.hunterLow++;
+			return "ascendants";
+		});
+		s = s.replace(/(?<![\w-])hunter(?![\w-])/g, () => {
+			stats.hunterLow++;
+			return "ascendant";
+		});
 	}
 
 	// monster → Anomaly (narrative prose only; schema/identifiers preserved)
 	if (!MONSTER_SKIP.test(line)) {
-		s = s.replace(/(?<![\w-])Monsters(?![\w-])/g, () => (stats.monster++, "Anomalies"));
-		s = s.replace(/(?<![\w-])Monster(?![\w-])/g, () => (stats.monster++, "Anomaly"));
-		s = s.replace(/(?<![\w-])monsters(?![\w-])/g, () => (stats.monster++, "anomalies"));
-		s = s.replace(/(?<![\w-])monster(?![\w-])/g, () => (stats.monster++, "anomaly"));
+		s = s.replace(/(?<![\w-])Monsters(?![\w-])/g, () => {
+			stats.monster++;
+			return "Anomalies";
+		});
+		s = s.replace(/(?<![\w-])Monster(?![\w-])/g, () => {
+			stats.monster++;
+			return "Anomaly";
+		});
+		s = s.replace(/(?<![\w-])monsters(?![\w-])/g, () => {
+			stats.monster++;
+			return "anomalies";
+		});
+		s = s.replace(/(?<![\w-])monster(?![\w-])/g, () => {
+			stats.monster++;
+			return "anomaly";
+		});
 	}
 
 	// Collapse redundancy introduced when a pre-existing "Warden (DM)" /
 	// "Warden (GM)" clarifier became "Warden (Warden)".
-	s = s.replace(/Warden \(Warden\)/g, () => (stats.redundancy++, "Warden"));
+	s = s.replace(/Warden \(Warden\)/g, () => {
+		stats.redundancy++;
+		return "Warden";
+	});
 	return s;
 }
 
 const files = ROOTS.flatMap((r) => walk(r, []));
-const stats = { dungeonMaster: 0, dmgm: 0, hunterCap: 0, hunterLow: 0, monster: 0, redundancy: 0 };
+const stats = {
+	dungeonMaster: 0,
+	dmgm: 0,
+	hunterCap: 0,
+	hunterLow: 0,
+	monster: 0,
+	redundancy: 0,
+};
 const changedFiles = [];
 
 for (const file of files) {
@@ -121,7 +173,7 @@ for (const file of files) {
 	const original = readFileSync(file, "utf8");
 	const next = original
 		.split("\n")
-		.map((l) => transformLine(l, file, stats))
+		.map((l) => transformLine(l, stats))
 		.join("\n");
 	if (next !== original) {
 		changedFiles.push(file);

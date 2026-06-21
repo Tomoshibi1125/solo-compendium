@@ -101,7 +101,7 @@ function normalizeFile(absolutePath: string): { updated: number } {
 
 	const next = original.replace(
 		NAME_LINE,
-		(full, prefix: string, nameValue: string, suffix: string) => {
+		(_full, prefix: string, nameValue: string, suffix: string) => {
 			// Preserve prefix "Rune of " but normalize after it.
 			let cleaned = nameValue;
 			let runePrefix = "";

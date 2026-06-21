@@ -157,9 +157,8 @@ Deno.serve(async (req) => {
 		return json(404, { error: "Campaign not found" }, origin);
 	}
 
-	const webhookUrl = (
-		campaign as { discord_webhook_url?: string | null }
-	).discord_webhook_url;
+	const webhookUrl = (campaign as { discord_webhook_url?: string | null })
+		.discord_webhook_url;
 
 	if (!webhookUrl || !isValidDiscordWebhook(webhookUrl)) {
 		// Soft-OK: caller doesn't need to know whether a hook is set.

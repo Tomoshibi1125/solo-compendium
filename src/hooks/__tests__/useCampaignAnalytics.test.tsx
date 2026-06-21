@@ -144,7 +144,10 @@ describe("useCampaignAnalytics — character progression", () => {
 	it("maps current_level and character_name from the embedded user_characters row", async () => {
 		progressionRows = [
 			{ character_id: "char-1", user_characters: { name: "Hero", level: 5 } },
-			{ character_id: "char-2", user_characters: { name: "Sidekick", level: 3 } },
+			{
+				character_id: "char-2",
+				user_characters: { name: "Sidekick", level: 3 },
+			},
 		];
 
 		const { getFn, cleanup } = mountProbe();

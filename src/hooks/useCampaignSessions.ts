@@ -41,8 +41,6 @@ interface CampaignSessionRecord {
 	recurrence_parent_id?: string | null;
 }
 
-export type { CampaignSessionRecord };
-
 interface CampaignSessionLogRecord {
 	id: string;
 	campaign_id: string;

@@ -146,40 +146,6 @@ const STOCK_FLAVOR_PHRASE_POOLS: Record<string, string[]> = {
 		],
 };
 
-// -- Sigil stock lore replacement pools --
-const SIGIL_HISTORY_POOL = [
-	"Filed in the Bureau's inscription registry alongside its authenticated casting sample.",
-	"Archived with the Artificer Guild for comparison against similar socket-class entries.",
-	"Logged by the Bureau's materiel tracking office at time of first deployment.",
-	"Catalogued in the Hunter Bureau's shared-workbench reference.",
-	"Documented in the Artificer Guild's socketable-inscriptions volume.",
-	"Entered into the Bureau's standard-issue inscription manifest.",
-];
-
-const SIGIL_PERSONALITY_POOL = [
-	"Responsive only to licensed inscribers.",
-	"Quiet until paired with a compatible socket.",
-	"Steady once the bond to its host item settles.",
-	"Holds its resonance even in ambient-mana dead zones.",
-	"Reliably inert outside of its inscription conditions.",
-];
-
-const SIGIL_CURRENT_OWNER_POOL = [
-	"Held in Bureau-authorized inventory at rank-appropriate chapters.",
-	"Stocked by licensed Hunter Guild Artificers for requisition.",
-	"Issued to field-qualified Hunters against signed chain-of-custody.",
-	"Available to Bureau-certified inscribers with active credentials.",
-	"Released to Guild artificers on confirmed work orders.",
-];
-
-const SIGIL_FLAVOR_POOL = [
-	"A tidy, bureaucratic inscription doing its job.",
-	"Small, quiet, and reliably competent.",
-	"Engineered to be boring when it works.",
-	"Designed not to announce itself.",
-	"Predictable in exactly the ways the Bureau designed for.",
-];
-
 // -- Tattoo stock lore replacement pools --
 const TATTOO_ORIGIN_POOL = [
 	"Documented by the Bureau's bodily-augmentation review board.",
@@ -187,62 +153,6 @@ const TATTOO_ORIGIN_POOL = [
 	"Developed within a Bureau-licensed ink studio under safety oversight.",
 	"Refined by Bureau alchemists authorized for Hunter augmentation.",
 	"Catalogued by the Guild's certified dermal-weave practitioners.",
-];
-
-const TATTOO_HISTORY_POOL = [
-	"Subject to Bureau tattoo-slot regulations and quarterly re-certification.",
-	"Covered by the standard Hunter-augmentation license agreement.",
-	"Requires a signed Bureau consent form at the time of application.",
-	"Tracked per the Hunter Bureau's dermal-mod compliance schedule.",
-	"Logged under the Guild Association's augmentation ledger.",
-];
-
-const TATTOO_CURRENT_OWNER_POOL = [
-	"Applied to Bureau-qualified Hunters under supervised studio conditions.",
-	"Inked onto credentialed field operatives through Bureau-approved studios.",
-	"Issued to licensed Hunters during their periodic augmentation windows.",
-	"Available to active-duty Hunters through Bureau-authorized channels.",
-	"Reserved for Hunters cleared for elective dermal modification.",
-];
-
-const TATTOO_PRIOR_OWNERS_POOL: string[][] = [
-	["Bureau Augmentation Cell", "Licensed Artisans Guild"],
-	["Hunter Augmentation Study Group", "Bureau Oversight Council"],
-	["Dermal-Weave Research Unit", "Bureau Materiel Office"],
-	["Awakened Augmentation Trial", "Guild Safety Review"],
-	["Bureau Certified Ink Studio", "Hunter Medical Corps"],
-];
-
-const TATTOO_FLAVOR_POOL = [
-	"A Bureau-standard augmentation rendered in ink.",
-	"Clean application; predictable activation.",
-	"Calibrated to the Hunter's existing lattice pattern.",
-	"Designed around standard dermal-inscription tolerances.",
-	"A quiet, competent working whose output matches the spec sheet.",
-];
-
-const GENERIC_PERSONALITY_POOL = [
-	"Neutral under typical ambient-mana conditions.",
-	"Holds a stable resonance at rest.",
-	"Responsive only to its bound Hunter.",
-	"Quiet outside of intentional activation.",
-	"Unremarkable at rest, decisive on command.",
-];
-
-const GENERIC_CURRENT_OWNER_POOL = [
-	"Available to Bureau-certified operators at the appropriate rank.",
-	"Held by Guild-cleared Hunters with current credentials.",
-	"Issued under standard Bureau requisition policy.",
-	"Kept in Bureau circulation with quarterly audit review.",
-	"Tracked through the Hunter Guild's inventory ledger.",
-];
-
-const GENERIC_PRIOR_OWNER_PAIRS: string[][] = [
-	["Bureau Training Squad Alpha", "Guild Research Cell Delta"],
-	["A retired Bureau artificer", "The Guild's open-materiel roster"],
-	["Hunter Academy Instructor Team", "Bureau Materiel Archive"],
-	["A decommissioned Hunter unit", "The Bureau's shared issue pool"],
-	["Guild Practice Corps", "Bureau Reserve Issue"],
 ];
 
 const SILENT_HUNGRY_POOL = [

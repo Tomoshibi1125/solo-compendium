@@ -981,8 +981,7 @@ const independents: SandboxNPC[] = [
 			"The closest thing the Gloamreach has to a bank: she changes Essence-cores, favours, debts, and writs into one another, and never blinks at the rate.",
 		personality:
 			"Precise, unflappable, and fluent in exactly what a thing is worth to the person holding it.",
-		motivation:
-			"Stay the one ledger the dark does not fully control.",
+		motivation: "Stay the one ledger the dark does not fully control.",
 		backstory:
 			"Esha can read the true value of anything offered across her counter — including the cost a buyer is hiding from themselves. She has refused the dark twice. There will not be a third polite request.",
 		keyAbilities: [
@@ -1236,7 +1235,8 @@ const independents: SandboxNPC[] = [
 			"The eldest voice of the Writ-Bound Hamlet, who keeps the village polite, paid, and barely intact.",
 		personality:
 			"Courteous, tired, unbreakable, and quietly ashamed of every bargain she has kept.",
-		motivation: "Keep her people off the worn dead's roster for one more season.",
+		motivation:
+			"Keep her people off the worn dead's roster for one more season.",
 		backstory:
 			"Saph has signed more invitations than anyone living and outlived everyone she signed them for. She knows exactly which courtesies are safe and which are slow nooses.",
 		keyAbilities: ["Settlement Lore", "Read the Writ", "Calm the Room"],
@@ -1600,7 +1600,8 @@ const independents: SandboxNPC[] = [
 		isRecruitable: true,
 		guildAffiliation: null,
 		location: "Remembering Orchard",
-		questHook: "The Caretaker knows where a piece of the Means grew last season.",
+		questHook:
+			"The Caretaker knows where a piece of the Means grew last season.",
 	}),
 	makeNPC({
 		id: "npc-ind-012",
@@ -1910,7 +1911,8 @@ const anomalyAdjacent: SandboxNPC[] = [
 		isRecruitable: false,
 		guildAffiliation: null,
 		location: "Obsidian Spire",
-		questHook: "The Watcher can identify what truth about itself the Quiet most fears.",
+		questHook:
+			"The Watcher can identify what truth about itself the Quiet most fears.",
 	}),
 	makeNPC({
 		id: "npc-anom-003",

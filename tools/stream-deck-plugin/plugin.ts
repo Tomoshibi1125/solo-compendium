@@ -66,12 +66,10 @@ type ActionUuid =
 
 class CommDeckPlugin {
 	private socket: WebSocket | null = null;
-	private pluginUuid = "";
 	private settings: Map<string, PluginSettings> = new Map();
 	private commNetMuted = false;
 
 	connect(port: number, uuid: string, registerEvent: string) {
-		this.pluginUuid = uuid;
 		this.socket = new WebSocket(`ws://127.0.0.1:${port}`);
 		this.socket.addEventListener("open", () => {
 			this.send({ event: registerEvent, uuid });
@@ -113,7 +111,10 @@ class CommDeckPlugin {
 			case "didReceiveSettings":
 			case "willAppear":
 				if (evt.payload?.settings) {
-					this.settings.set(evt.context, evt.payload.settings as PluginSettings);
+					this.settings.set(
+						evt.context,
+						evt.payload.settings as PluginSettings,
+					);
 				}
 				break;
 			case "keyDown":
@@ -144,7 +145,9 @@ class CommDeckPlugin {
 			case "com.riftascendant.comm-deck.commnet-mute":
 				this.commNetMuted = !this.commNetMuted;
 				this.setState(context, this.commNetMuted ? 1 : 0);
-				await this.dispatch(context, "commnet:mute", { muted: this.commNetMuted });
+				await this.dispatch(context, "commnet:mute", {
+					muted: this.commNetMuted,
+				});
 				break;
 			case "com.riftascendant.comm-deck.ping":
 				if (!s.pingCoord) return this.showAlert(context);
@@ -156,7 +159,9 @@ class CommDeckPlugin {
 				});
 				break;
 			case "com.riftascendant.comm-deck.transition":
-				await this.dispatch(context, "scene:transition", { sceneId: s.sceneId });
+				await this.dispatch(context, "scene:transition", {
+					sceneId: s.sceneId,
+				});
 				break;
 			case "com.riftascendant.comm-deck.music-next":
 				await this.dispatch(context, "audio:next", {});
@@ -207,27 +212,24 @@ class CommDeckPlugin {
 		}
 		try {
 			const channel = `vtt:${s.campaignId}${s.sessionId ? `:${s.sessionId}` : ""}`;
-			const resp = await fetch(
-				`${s.supabaseUrl}/realtime/v1/api/broadcast`,
-				{
-					method: "POST",
-					headers: {
-						apikey: s.supabaseAnonKey,
-						Authorization: `Bearer ${s.supabaseAnonKey}`,
-						"Content-Type": "application/json",
-					},
-					body: JSON.stringify({
-						messages: [
-							{
-								topic: channel,
-								event: "stream_deck",
-								payload: { kind, ...payload },
-								private: false,
-							},
-						],
-					}),
+			const resp = await fetch(`${s.supabaseUrl}/realtime/v1/api/broadcast`, {
+				method: "POST",
+				headers: {
+					apikey: s.supabaseAnonKey,
+					Authorization: `Bearer ${s.supabaseAnonKey}`,
+					"Content-Type": "application/json",
 				},
-			);
+				body: JSON.stringify({
+					messages: [
+						{
+							topic: channel,
+							event: "stream_deck",
+							payload: { kind, ...payload },
+							private: false,
+						},
+					],
+				}),
+			});
 			if (!resp.ok) this.showAlert(context);
 		} catch {
 			this.showAlert(context);

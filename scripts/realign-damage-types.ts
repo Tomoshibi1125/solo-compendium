@@ -188,7 +188,7 @@ function parseEntries(source: string): {
 
 function rewriteEntryLines(
 	entryLines: string[],
-	name: string,
+	_name: string,
 	canonical: string,
 	alts: string[],
 ): { updated: string[]; changed: boolean } {
@@ -258,7 +258,7 @@ function processFile(absolutePath: string): { changedEntries: number } {
 
 	if (changedEntries > 0) {
 		const body = entries.flatMap((entry) => entry.lines).join("\n");
-		const next = prelude.join("\n") + body + "\n" + tail.join("\n");
+		const next = `${prelude.join("\n") + body}\n${tail.join("\n")}`;
 		writeFileSync(absolutePath, next, "utf8");
 	}
 	return { changedEntries };

@@ -44,7 +44,7 @@ const INCREASES_AT_RE =
 
 // ── Public API ──────────────────────────────────────────────────────
 
-export interface UpcastScalingResult {
+interface UpcastScalingResult {
 	/** Additional damage formula, e.g. "+2d10". Empty string if no scaling. */
 	additionalDamage: string;
 	/** Number of slot levels above the base level the spell is being cast at. */

@@ -93,7 +93,9 @@ async function main() {
 	const result = await resp.json();
 	console.log(
 		`✅ Registered ${Array.isArray(result) ? result.length : 1} slash command(s)${
-			GUILD_ID ? ` to guild ${GUILD_ID}` : " globally (may take up to 1 hour to propagate)"
+			GUILD_ID
+				? ` to guild ${GUILD_ID}`
+				: " globally (may take up to 1 hour to propagate)"
 		}.`,
 	);
 	console.log(

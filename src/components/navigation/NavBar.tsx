@@ -1,4 +1,5 @@
-import { Menu, Volume2, VolumeX } from "lucide-react";
+import { Menu, Search, Volume2, VolumeX, X } from "lucide-react";
+import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AscendantSigil } from "@/components/ui/AscendantSigil";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -19,6 +20,7 @@ export function NavBar() {
 	const navigate = useNavigate();
 	const location = useLocation();
 	const { soundEnabled, setSoundEnabled, setSidebarOpen } = useAppStore();
+	const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
 
 	const isAuthPage =
 		location.pathname.startsWith("/login") ||
@@ -65,6 +67,21 @@ export function NavBar() {
 
 				{/* Right Actions: Search, Notifications, User Profile */}
 				<div className="flex items-center gap-2 sm:gap-4">
+					<Button
+						variant="ghost"
+						size="icon"
+						className="md:hidden min-h-[44px] min-w-[44px] text-muted-foreground hover:text-primary"
+						onClick={() => setMobileSearchOpen((v) => !v)}
+						aria-label={mobileSearchOpen ? "Close search" : "Open search"}
+						aria-expanded={mobileSearchOpen}
+					>
+						{mobileSearchOpen ? (
+							<X className="h-5 w-5" />
+						) : (
+							<Search className="h-5 w-5" />
+						)}
+					</Button>
+
 					<GlobalSearch className="hidden md:block w-48 lg:w-64" />
 
 					<Button
@@ -139,6 +156,14 @@ export function NavBar() {
 					)}
 				</div>
 			</div>
+
+			{/* Mobile search row: GlobalSearch is hidden < md, so reveal it here
+			    when the search button is tapped. */}
+			{mobileSearchOpen && (
+				<div className="md:hidden px-4 pb-3">
+					<GlobalSearch className="w-full" />
+				</div>
+			)}
 		</header>
 	);
 }

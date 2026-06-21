@@ -2389,7 +2389,8 @@ export const jobs: Job[] = [
 		techniquesKnown: [
 			2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6,
 		],
-		image: "/generated/compendium/characters/character-character-holy-knight-14ln86.webp",
+		image:
+			"/generated/compendium/characters/character-character-holy-knight-14ln86.webp",
 		stats: {
 			strength: 15,
 			agility: 10,

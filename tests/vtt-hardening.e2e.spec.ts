@@ -191,7 +191,8 @@ test("warden can move tokens via arrow keys and canvas drag", async ({
 		await expect(tokenPanel).toBeVisible({ timeout: 10_000 });
 		const pos = await tokenPanel.getAttribute("data-active-token-pos");
 		expect(pos).toBeTruthy();
-		const [x, y] = pos!.split(",").map(Number);
+		if (pos === null) throw new Error("data-active-token-pos was not set");
+		const [x, y] = pos.split(",").map(Number);
 		// Close the dialog so keyboard shortcuts work (inputs steal focus).
 		// Then blur the active element so isVttShortcutTarget doesn't block
 		// arrow keys when focus rests on a button.
@@ -304,7 +305,8 @@ test("warden can drag a token to a new cell and pan the map", async ({
 		await expect(tokenPanel).toBeVisible({ timeout: 10_000 });
 		const pos = await tokenPanel.getAttribute("data-active-token-pos");
 		expect(pos).toBeTruthy();
-		const [x, y] = pos!.split(",").map(Number);
+		if (pos === null) throw new Error("data-active-token-pos was not set");
+		const [x, y] = pos.split(",").map(Number);
 		const closeBtn = page
 			.getByRole("dialog", { name: /Selected Token/i })
 			.getByRole("button", { name: /Close/i });

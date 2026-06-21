@@ -2527,7 +2527,18 @@ export function VttPixiStage({
 				if (pinch.startDist <= 0) return;
 				const ratio = dist / pinch.startDist;
 				const nextZoom = Math.max(0.1, Math.min(3, pinch.startZoom * ratio));
-				onRequestZoom(nextZoom);
+				// Zoom about the live pinch midpoint (finger-anchored, like DDB
+				// Maps / Foundry) so the map doesn't drift away from the fingers.
+				const pinchContainer = containerRef.current;
+				if (pinchContainer) {
+					const rect = pinchContainer.getBoundingClientRect();
+					onRequestZoom(nextZoom, {
+						x: (a.clientX + b.clientX) / 2 - rect.left,
+						y: (a.clientY + b.clientY) / 2 - rect.top,
+					});
+				} else {
+					onRequestZoom(nextZoom);
+				}
 			}
 		};
 
@@ -2654,6 +2665,9 @@ export function VttPixiStage({
 			pointersRef.current.set(e.pointerId, e);
 
 			if (pointersRef.current.size === 2) {
+				// A second finger starts a pinch — cancel any single-finger pan so
+				// the viewport doesn't scroll and zoom simultaneously.
+				scrollDragRef.current = null;
 				const entries = [...pointersRef.current.values()];
 				const a = entries[0];
 				const b = entries[1];
@@ -2666,6 +2680,29 @@ export function VttPixiStage({
 					centerClientY: (a.clientY + b.clientY) / 2,
 				};
 				return;
+			}
+
+			// Single-finger touch on the empty map pans the viewport (DDB / Foundry
+			// touch parity). The Pixi token handler runs first and sets a drag/
+			// rotate state when a token is grabbed, so we only pan when none is
+			// active and no draw/ruler tool is selected.
+			if (
+				enableViewportPan &&
+				containerRef.current &&
+				e.pointerType === "touch" &&
+				pointersRef.current.size === 1 &&
+				drawMode === "none" &&
+				!dragStateRef.current &&
+				!rotateStateRef.current &&
+				!longPressRef.current
+			) {
+				scrollDragRef.current = {
+					pointerId: e.pointerId,
+					startX: e.clientX,
+					startY: e.clientY,
+					startLeft: containerRef.current.scrollLeft,
+					startTop: containerRef.current.scrollTop,
+				};
 			}
 		};
 

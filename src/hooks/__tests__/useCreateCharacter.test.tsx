@@ -3,8 +3,8 @@ import type React from "react";
 import { act, useEffect, useRef } from "react";
 import { createRoot } from "react-dom/client";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { useCreateCharacter } from "@/hooks/useCharacters";
 import type { Character } from "@/hooks/useCharacters";
+import { useCreateCharacter } from "@/hooks/useCharacters";
 
 const mocks = vi.hoisted(() => ({
 	fromSpy: vi.fn(),

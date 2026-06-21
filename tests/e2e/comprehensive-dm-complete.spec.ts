@@ -501,7 +501,12 @@ test.describe("Comprehensive DM Complete Test", () => {
 			{ width: 1366, height: 768, name: "Laptop" },
 			{ width: 768, height: 1024, name: "Tablet" },
 			{ width: 375, height: 667, name: "Mobile" },
+			{ width: 360, height: 800, name: "Android" },
+			{ width: 844, height: 390, name: "Landscape" },
 		];
+
+		// Collect any viewport where content spills off-screen horizontally.
+		const overflowViolations: string[] = [];
 
 		for (const viewport of viewports) {
 			console.log(
@@ -536,22 +541,29 @@ test.describe("Comprehensive DM Complete Test", () => {
 					}
 				}
 
-				// Test content adaptation
-				const contentOverflow = await page.evaluate(() => {
-					const body = document.body;
-					return (
-						body.scrollWidth > body.clientWidth ||
-						body.scrollHeight > body.clientHeight
-					);
+				// Horizontal overflow is a hard failure — content must never spill
+				// off-screen sideways on any device. Vertical scrolling is expected.
+				const horizontalOverflowPx = await page.evaluate(() => {
+					const de = document.documentElement;
+					return de.scrollWidth - de.clientWidth;
 				});
-
-				console.log(`    Content overflow: ${contentOverflow}`);
+				console.log(`    Horizontal overflow: ${horizontalOverflowPx}px`);
+				if (horizontalOverflowPx > 2) {
+					overflowViolations.push(
+						`${viewport.name} (${viewport.width}px): ${horizontalOverflowPx}px`,
+					);
+				}
 			} catch (viewportError) {
 				console.log(
 					`    ❌ ${viewport.name} viewport failed: ${(viewportError as Error).message}`,
 				);
 			}
 		}
+
+		expect(
+			overflowViolations,
+			`Horizontal overflow detected at: ${overflowViolations.join(", ") || "none"}`,
+		).toEqual([]);
 
 		testResults.responsive = true;
 

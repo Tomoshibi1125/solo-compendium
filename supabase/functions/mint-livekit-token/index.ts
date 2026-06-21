@@ -16,8 +16,9 @@
  * RA theming: the response refers to this as a "Bureau uplink badge"
  * but the field shape is what the LiveKit client SDK expects.
  */
-import { createClient } from "https://esm.sh/@supabase/supabase-js@2.90.1";
+
 import { create as jwtCreate } from "https://deno.land/x/djwt@v3.0.2/mod.ts";
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2.90.1";
 
 const buildCorsHeaders = (origin: string | null) => {
 	const allowOrigin = origin?.trim() ? origin : "*";

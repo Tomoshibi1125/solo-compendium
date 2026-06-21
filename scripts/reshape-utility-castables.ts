@@ -358,7 +358,7 @@ function rewriteEntry(
 				}
 				if (closeLine > 0) {
 					const indent = entryLines[mechStart].match(/^\s*/)?.[0] ?? "";
-					const innerIndent = indent + "\t";
+					const innerIndent = `${indent}\t`;
 					const healingBlock = [
 						`${innerIndent}healing: {`,
 						`${innerIndent}\tdice: "5d4",`,

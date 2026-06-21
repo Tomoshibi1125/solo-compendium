@@ -29,7 +29,7 @@ export type EffectInstance = {
 	destroy: () => void;
 };
 
-export type CreateEffectOptions = {
+type CreateEffectOptions = {
 	preset: EffectPreset;
 	/** Burst centre in world pixels. */
 	cx: number;

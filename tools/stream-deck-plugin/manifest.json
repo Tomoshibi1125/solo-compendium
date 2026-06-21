@@ -23,9 +23,7 @@
 			"Name": "Switch Rift Scene",
 			"Tooltip": "Push the configured scene to LIVE for every connected operative.",
 			"Icon": "icons/scene",
-			"States": [
-				{ "Image": "icons/scene", "TitleAlignment": "bottom" }
-			]
+			"States": [{ "Image": "icons/scene", "TitleAlignment": "bottom" }]
 		},
 		{
 			"UUID": "com.riftascendant.comm-deck.commnet-mute",

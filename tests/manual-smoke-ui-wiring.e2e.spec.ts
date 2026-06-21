@@ -87,9 +87,7 @@ test("manual smoke (headed): crit, upcast, PDF, level-up — Mage L1", async ({
 		const cancelBtn = page
 			.getByRole("button", { name: /Cancel|Close|^Back$/i })
 			.first();
-		if (
-			await cancelBtn.isVisible({ timeout: 2_000 }).catch(() => false)
-		) {
+		if (await cancelBtn.isVisible({ timeout: 2_000 }).catch(() => false)) {
 			await cancelBtn.click();
 		} else {
 			await page.keyboard.press("Escape");
@@ -99,18 +97,14 @@ test("manual smoke (headed): crit, upcast, PDF, level-up — Mage L1", async ({
 
 	// ─── T2 — Upcast picker (Spells tab) ─────────────────────────────────
 	await test.step("T2 — Upcast picker visibility on Spells tab", async () => {
-		const spellsTab = page
-			.getByRole("tab", { name: /Spells/i })
-			.first();
+		const spellsTab = page.getByRole("tab", { name: /Spells/i }).first();
 		if (await spellsTab.isVisible({ timeout: 5_000 }).catch(() => false)) {
 			await spellsTab.click();
 			await dwell(page, 1000);
 		} else {
 			// Fallback: click any element labeled Spells (may be a section button)
 			const spellsAny = page.getByText(/^SPELLS$/i).first();
-			if (
-				await spellsAny.isVisible({ timeout: 3_000 }).catch(() => false)
-			) {
+			if (await spellsAny.isVisible({ timeout: 3_000 }).catch(() => false)) {
 				await spellsAny.scrollIntoViewIfNeeded().catch(() => {});
 			}
 		}
@@ -163,9 +157,7 @@ test("manual smoke (headed): crit, upcast, PDF, level-up — Mage L1", async ({
 		// reachable: click any visible Damage button so the user sees the
 		// damage-roll path with our forced max rolls, then we'll surface the
 		// crit-message format via the unit tests as the canonical proof.
-		const damageBtn = page
-			.getByRole("button", { name: /^Damage:/i })
-			.first();
+		const damageBtn = page.getByRole("button", { name: /^Damage:/i }).first();
 		const hasDamageBtn = await damageBtn
 			.isVisible({ timeout: 4_000 })
 			.catch(() => false);

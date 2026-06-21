@@ -7,21 +7,21 @@
 import { useCallback, useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 
-export interface UseLiveKitTokenOptions {
+interface UseLiveKitTokenOptions {
 	campaignId: string | null | undefined;
 	sessionId?: string | null;
 	/** Set false to skip token minting entirely (e.g. trystero transport). */
 	enabled: boolean;
 }
 
-export interface LiveKitTokenSnapshot {
+interface LiveKitTokenSnapshot {
 	url: string;
 	token: string;
 	room: string;
 	expiresAt: number;
 }
 
-export interface UseLiveKitTokenResult {
+interface UseLiveKitTokenResult {
 	snapshot: LiveKitTokenSnapshot | null;
 	isLoading: boolean;
 	error: Error | null;

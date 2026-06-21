@@ -1,5 +1,5 @@
-import * as fs from "fs";
-import * as path from "path";
+import * as fs from "node:fs";
+import * as path from "node:path";
 
 const featsFilePath = path.join(
 	process.cwd(),
@@ -8,7 +8,7 @@ const featsFilePath = path.join(
 const newFeatsPath = path.join(process.cwd(), "new_feats.json");
 
 const newFeatsJson = fs.readFileSync(newFeatsPath, "utf-8");
-const featsArray = JSON.parse(newFeatsJson);
+const featsArray = JSON.parse(newFeatsJson) as unknown[];
 
 // We convert the JSON to a string that looks like JS objects
 const featsString = featsArray
@@ -21,8 +21,7 @@ let content = fs.readFileSync(featsFilePath, "utf-8");
 const lastBracketIndex = content.lastIndexOf("];");
 
 if (lastBracketIndex !== -1) {
-	content =
-		content.slice(0, lastBracketIndex) + ",\n\t" + featsString + "\n];\n";
+	content = `${content.slice(0, lastBracketIndex)},\n\t${featsString}\n];\n`;
 	fs.writeFileSync(featsFilePath, content);
 	console.log("Appended feats successfully.");
 } else {

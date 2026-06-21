@@ -2108,7 +2108,16 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-1-31-second-wind",
-		classes: ["Destroyer", "Berserker", "Assassin", "Striker", "Holy Knight", "Stalker", "Technomancer", "Revenant"],
+		classes: [
+			"Destroyer",
+			"Berserker",
+			"Assassin",
+			"Striker",
+			"Holy Knight",
+			"Stalker",
+			"Technomancer",
+			"Revenant",
+		],
 		name: "Second Wind",
 		display_name: "Second Wind",
 		description:

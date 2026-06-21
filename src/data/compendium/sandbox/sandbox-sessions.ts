@@ -154,8 +154,17 @@ export const sandboxSessions: SandboxSession[] = [
 		status: "planned",
 		order: 3,
 		recommendedLevel: 5,
-		sceneRefs: ["Vermillion Outpost", "Remembering Orchard", "Awoko Sanctum approach"],
-		npcRefs: ["Guildmaster Orin", "Rat-King Ji", "The Hollow Mother", "Sister Veil"],
+		sceneRefs: [
+			"Vermillion Outpost",
+			"Remembering Orchard",
+			"Awoko Sanctum approach",
+		],
+		npcRefs: [
+			"Guildmaster Orin",
+			"Rat-King Ji",
+			"The Hollow Mother",
+			"Sister Veil",
+		],
 		logs: [
 			{
 				logType: "session",
@@ -222,7 +231,12 @@ export const sandboxSessions: SandboxSession[] = [
 		order: 6,
 		recommendedLevel: 13,
 		sceneRefs: ["The Threshold", "The Gathered Dead", "The Deep Undercroft"],
-		npcRefs: ["The Quiet", "Dr. Serin Hayashi", "Commander Park Jae-won", "Old Man Crane"],
+		npcRefs: [
+			"The Quiet",
+			"Dr. Serin Hayashi",
+			"Commander Park Jae-won",
+			"Old Man Crane",
+		],
 		logs: [
 			{
 				logType: "session",

@@ -431,44 +431,45 @@ export class PlayerPage {
 				await satisfyCheckboxRequirements();
 				await clickNext(20_000);
 			} else if (step === "imprints") {
-					// Select required imprints. Options live in buckets that re-render
-					// on each pick (counter/metadata update) and the spellbook bucket
-					// loads async. Click the LAST selectable option (stable, away from
-					// the churn near the selected items) with a forced, scrolled-to-
-					// centre click (the sticky status header otherwise intercepts top-of-
-					// list clicks), verify the selection actually committed, and keep
-					// going patiently until Advance enables.
-					const imprintSelector =
-						'button[data-testid^="creation-"][data-selected="false"]:not([disabled])';
-					for (let attempt = 0; attempt < 200; attempt += 1) {
-						if (await nextButton().isEnabled({ timeout: 300 }).catch(() => false)) {
-							break;
-						}
-						const selectable = this.page.locator(imprintSelector);
-						const before = await selectable.count();
-						if (before === 0) {
-							await this.page.waitForTimeout(400);
-							continue;
-						}
-						const candidate = selectable.last();
-						await candidate
-							.evaluate((el) => el.scrollIntoView({ block: "center" }))
-							.catch(() => {});
-						await candidate
-							.click({ force: true, timeout: 4000 })
-							.catch(() => {});
-						// Wait for the pick to register (selectable count drops) so a
-						// click lost to a re-render is retried next pass.
-						await this.page
-							.waitForFunction(
-								({ s, prev }) =>
-									document.querySelectorAll(s).length !== prev,
-								{ s: imprintSelector, prev: before },
-								{ timeout: 2000 },
-							)
-							.catch(() => {});
+				// Select required imprints. Options live in buckets that re-render
+				// on each pick (counter/metadata update) and the spellbook bucket
+				// loads async. Click the LAST selectable option (stable, away from
+				// the churn near the selected items) with a forced, scrolled-to-
+				// centre click (the sticky status header otherwise intercepts top-of-
+				// list clicks), verify the selection actually committed, and keep
+				// going patiently until Advance enables.
+				const imprintSelector =
+					'button[data-testid^="creation-"][data-selected="false"]:not([disabled])';
+				for (let attempt = 0; attempt < 200; attempt += 1) {
+					if (
+						await nextButton()
+							.isEnabled({ timeout: 300 })
+							.catch(() => false)
+					) {
+						break;
 					}
-					await clickNext(30_000);
+					const selectable = this.page.locator(imprintSelector);
+					const before = await selectable.count();
+					if (before === 0) {
+						await this.page.waitForTimeout(400);
+						continue;
+					}
+					const candidate = selectable.last();
+					await candidate
+						.evaluate((el) => el.scrollIntoView({ block: "center" }))
+						.catch(() => {});
+					await candidate.click({ force: true, timeout: 4000 }).catch(() => {});
+					// Wait for the pick to register (selectable count drops) so a
+					// click lost to a re-render is retried next pass.
+					await this.page
+						.waitForFunction(
+							({ s, prev }) => document.querySelectorAll(s).length !== prev,
+							{ s: imprintSelector, prev: before },
+							{ timeout: 2000 },
+						)
+						.catch(() => {});
+				}
+				await clickNext(30_000);
 			} else if (step === "review") {
 				break;
 			}

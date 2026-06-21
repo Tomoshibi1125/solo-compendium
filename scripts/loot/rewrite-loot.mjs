@@ -18,17 +18,15 @@
 // All field shapes are preserved per the existing `Item` interface in items.ts.
 
 import { readFileSync, writeFileSync } from "node:fs";
-import { dirname, join, relative, resolve } from "node:path";
-import { fileURLToPath, pathToFileURL } from "node:url";
+import { dirname, join, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
 
 import {
 	assignImage,
 	classifyArchetype,
-	generateDescription,
 	generateDiscoveryLore,
 	generateFlavor,
 	generateLore,
-	getTemplate,
 	isIntentionalImage,
 	scrubText,
 	scrubThemeTags,
@@ -132,36 +130,12 @@ const BOILERPLATE_FLAVOR_PATTERNS = [
 	/.*The last thing many anomalies ever see\.$/,
 ];
 
-const BOILERPLATE_DESC_PATTERNS = [
-	/^A weapon forged from gate anomaly materials\. Radiates a faint, deadly hum\.$/,
-	/^A popular item among hunters venturing into E to C rank gates\.$/,
-	/^Modern tactical armor laced with mana-reactive alloys for enhanced protection\.$/,
-	/^Modern light armor laced with mana-reactive alloys for enhanced protection\.$/,
-	/^A standard sidearm blade for Hunters who prefer steel to firearms\.$/,
-	/^A balanced blade with a fuller groove that channels excess kinetic mana\.$/,
-];
-
-const BOILERPLATE_PASSIVE_PATTERNS = [
-	/^\+1 to attack rolls against beasts\.$/,
-	/^Restores 2d4 \+ 2 HP or Mana\.$/,
-];
-
 function isBoilerplateFlavor(s) {
 	if (typeof s !== "string") return false;
 	return BOILERPLATE_FLAVOR_PATTERNS.some((re) => re.test(s));
 }
 
-function isBoilerplateDescription(s) {
-	if (typeof s !== "string") return false;
-	return BOILERPLATE_DESC_PATTERNS.some((re) => re.test(s));
-}
-
-function isBoilerplatePassive(s) {
-	if (typeof s !== "string") return false;
-	return BOILERPLATE_PASSIVE_PATTERNS.some((re) => re.test(s));
-}
-
-function patchLore(item, file) {
+function patchLore(item, _file) {
 	const lore =
 		item.lore && typeof item.lore === "object" ? { ...item.lore } : null;
 	if (!lore) return item;
@@ -254,7 +228,7 @@ function deepScrubText(obj) {
 	}
 }
 
-function patchBoilerplateFlavor(item, file) {
+function patchBoilerplateFlavor(item, _file) {
 	if (isBoilerplateFlavor(item.flavor)) {
 		const archetype = classifyArchetype(item.name, item.type);
 		return { ...item, flavor: generateFlavor(archetype, item.name, item.id) };
@@ -262,7 +236,7 @@ function patchBoilerplateFlavor(item, file) {
 	return item;
 }
 
-function patchBoilerplateDiscovery(item, file) {
+function patchBoilerplateDiscovery(item, _file) {
 	if (
 		typeof item.discovery_lore === "string" &&
 		item.discovery_lore.length > 0

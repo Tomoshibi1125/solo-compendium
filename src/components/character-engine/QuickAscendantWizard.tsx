@@ -41,11 +41,11 @@ import {
 } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 import { useCreateCharacter } from "@/hooks/useCharacters";
-import { toAbilityScoreCodes } from "@/lib/abilityScoreCodes";
 import { useDialogSwipeClose } from "@/hooks/useDialogSwipeClose";
 import { useInitializeSpellSlots } from "@/hooks/useSpellSlots";
 import { supabase } from "@/integrations/supabase/client";
 import { getJobPrimaryAbility } from "@/lib/5eCharacterCalculations";
+import { toAbilityScoreCodes } from "@/lib/abilityScoreCodes";
 import {
 	calculateHPMax,
 	getAbilityModifier,
@@ -309,13 +309,17 @@ export function QuickAscendantWizard({
 				);
 				await addJobAwakeningBenefitsForLevel(
 					character.id,
-					job as unknown as Parameters<typeof addJobAwakeningBenefitsForLevel>[1],
+					job as unknown as Parameters<
+						typeof addJobAwakeningBenefitsForLevel
+					>[1],
 					1,
 					new Set<string>(),
 				);
 				await applyJobAwakeningTraitsToCharacter(
 					character.id,
-					job as unknown as Parameters<typeof applyJobAwakeningTraitsToCharacter>[1],
+					job as unknown as Parameters<
+						typeof applyJobAwakeningTraitsToCharacter
+					>[1],
 				);
 			} catch (automationErr) {
 				logger.warn("Quick Ascendant: automation setup failed", automationErr);

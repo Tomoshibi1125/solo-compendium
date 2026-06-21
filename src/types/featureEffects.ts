@@ -23,29 +23,6 @@ import type { AbilityScore } from "@/types/core-rules";
 
 // ── Discriminated union ────────────────────────────────────────────
 
-/**
- * The kind of mechanical impact a feature has. Each kind narrows the
- * remaining shape via TypeScript discriminated-union semantics.
- */
-export type FeatureEffectKind =
-	| "ability_score"
-	| "hp_per_level"
-	| "hp_flat"
-	| "speed_bonus"
-	| "ac_formula"
-	| "ac_bonus"
-	| "proficiency"
-	| "expertise"
-	| "resistance"
-	| "advantage"
-	| "passive_bonus"
-	| "resource_grant"
-	| "spell_grant"
-	| "save_proficiency"
-	| "initiative_bonus"
-	| "attack_bonus"
-	| "damage_bonus";
-
 export type ProficiencyKind =
 	| "skill"
 	| "save"
@@ -130,35 +107,6 @@ export const FEAT_EFFECT_PRESETS: Record<string, FeatureEffect[]> = {
 };
 
 // ── Helpers ─────────────────────────────────────────────────────────
-
-/**
- * Type predicate for use in pipelines.
- */
-export function isFeatureEffect(value: unknown): value is FeatureEffect {
-	if (!value || typeof value !== "object") return false;
-	const kind = (value as { kind?: unknown }).kind;
-	if (typeof kind !== "string") return false;
-	const known: FeatureEffectKind[] = [
-		"ability_score",
-		"hp_per_level",
-		"hp_flat",
-		"speed_bonus",
-		"ac_formula",
-		"ac_bonus",
-		"proficiency",
-		"expertise",
-		"resistance",
-		"advantage",
-		"passive_bonus",
-		"resource_grant",
-		"spell_grant",
-		"save_proficiency",
-		"initiative_bonus",
-		"attack_bonus",
-		"damage_bonus",
-	];
-	return known.includes(kind as FeatureEffectKind);
-}
 
 /**
  * Compute the additive HP-per-level contribution from a list of

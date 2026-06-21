@@ -1,19 +1,12 @@
-import * as fs from "fs";
-import * as path from "path";
+import * as fs from "node:fs";
+import * as path from "node:path";
 
 // Loaders
 import { comprehensiveFeats } from "../src/data/compendium/feats-comprehensive";
 import { powers } from "../src/data/compendium/powers";
 import { techniques } from "../src/data/compendium/techniques";
 
-function titleCase(str: string) {
-	return str
-		.split("-")
-		.map((w) => w.charAt(0).toUpperCase() + w.substring(1))
-		.join(" ");
-}
-
-function rand(arr: any[]) {
+function rand<T>(arr: T[]): T {
 	return arr[Math.floor(Math.random() * arr.length)];
 }
 
@@ -89,15 +82,6 @@ const flavors = [
 	"The manifestation of true Hunter authority.",
 ];
 
-const ranges = [
-	"Self",
-	"30 feet",
-	"60 feet",
-	"120 feet",
-	"Touch",
-	"15-foot cone",
-	"30-foot line",
-];
 const saves = [
 	"Strength",
 	"Agility",
@@ -152,10 +136,10 @@ function generateMechanics(rankType: string, isCombat: boolean) {
 }
 
 function processArray(
-	dataOrigin: any[],
+	dataOrigin: Array<{ id?: string; name?: string }>,
 	type: string,
 	rankOrType: string,
-	isSpell: boolean,
+	_isSpell: boolean,
 	isCombat: boolean,
 ) {
 	return dataOrigin.map((old, index) => {
@@ -192,7 +176,7 @@ function processArray(
 		};
 
 		// Construct exactly based on compendium.ts types
-		const res: any = {
+		const res: Record<string, unknown> = {
 			id: id,
 			name: baseName,
 			display_name: baseName,
@@ -323,15 +307,15 @@ function dump(
 	exportName: string,
 	typeName: string,
 	importPathStr: string,
-	arr: any[],
+	arr: unknown[],
 ) {
 	const full = path.resolve(process.cwd(), filename);
 	let c = `import type { ${typeName} } from "${importPathStr}";\n\n`;
 	c += `export const ${exportName}: ${typeName}[] = [\n`;
 	const s = arr
-		.map((a) => "\t" + JSON.stringify(a, null, "\t").split("\n").join("\n\t"))
+		.map((a) => `\t${JSON.stringify(a, null, "\t").split("\n").join("\n\t")}`)
 		.join(",\n");
-	c += s + "\n];\n";
+	c += `${s}\n];\n`;
 	fs.writeFileSync(full, c, "utf8");
 	console.log(`Saved ${filename} [${arr.length} items]`);
 }

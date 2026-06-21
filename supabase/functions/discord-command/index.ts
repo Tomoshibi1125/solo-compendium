@@ -93,22 +93,11 @@ const publicReply = (content: string) =>
 		data: { content },
 	});
 
-const hexToBytes = (hex: string): Uint8Array => {
+const hexToBytes = (hex: string): Uint8Array<ArrayBuffer> => {
 	const clean = hex.replace(/[^0-9a-f]/gi, "");
 	const out = new Uint8Array(clean.length / 2);
 	for (let i = 0; i < out.length; i++) {
 		out[i] = Number.parseInt(clean.slice(i * 2, i * 2 + 2), 16);
-	}
-	return out;
-};
-
-const concatBytes = (...arrays: Uint8Array[]): Uint8Array => {
-	const total = arrays.reduce((n, a) => n + a.length, 0);
-	const out = new Uint8Array(total);
-	let off = 0;
-	for (const arr of arrays) {
-		out.set(arr, off);
-		off += arr.length;
 	}
 	return out;
 };
@@ -125,7 +114,9 @@ async function verifyDiscordSignature(args: {
 }): Promise<boolean> {
 	const publicKey = hexToBytes(args.publicKeyHex);
 	const signature = hexToBytes(args.signatureHex);
-	const message = new TextEncoder().encode(args.timestamp + args.body);
+	const message = new Uint8Array(
+		new TextEncoder().encode(args.timestamp + args.body),
+	);
 	try {
 		const key = await crypto.subtle.importKey(
 			"raw",
@@ -169,7 +160,8 @@ function rollDice(formula: string): { total: number; breakdown: string } {
 	}
 	const sum = rolls.reduce((acc, n) => acc + n, 0);
 	const total = sum + modifier;
-	const mod = modifier === 0 ? "" : modifier > 0 ? ` + ${modifier}` : ` ${modifier}`;
+	const mod =
+		modifier === 0 ? "" : modifier > 0 ? ` + ${modifier}` : ` ${modifier}`;
 	return {
 		total,
 		breakdown: `🎲 \`${count}d${sides}\` [${rolls.join(", ")}]${mod} = **${total}**`,
@@ -289,18 +281,15 @@ Deno.serve(async (req) => {
 		// the bot has no prior link; richer membership resolution is a
 		// follow-up (Warden manually maps via dashboard). The audit row
 		// captures the Discord side so admins can correlate.
-		const { error: linkErr } = await admin
-			.from("discord_account_links")
-			.upsert(
-				{
-					campaign_id: campaignId,
-					discord_user_id: discordUser.id,
-					discord_username:
-						discordUser.global_name ?? discordUser.username,
-					user_id: campaignRow.owner_id,
-				},
-				{ onConflict: "campaign_id,discord_user_id" },
-			);
+		const { error: linkErr } = await admin.from("discord_account_links").upsert(
+			{
+				campaign_id: campaignId,
+				discord_user_id: discordUser.id,
+				discord_username: discordUser.global_name ?? discordUser.username,
+				user_id: campaignRow.owner_id,
+			},
+			{ onConflict: "campaign_id,discord_user_id" },
+		);
 		if (linkErr) {
 			console.error("[discord-command] link insert failed:", linkErr);
 			await audit("link_failed");

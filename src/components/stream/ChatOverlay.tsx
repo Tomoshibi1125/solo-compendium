@@ -13,7 +13,7 @@ import {
  * Designed to drop into OBS / Streamlabs / Twitch Studio over a
  * streamer's existing layout.
  */
-export interface ChatOverlayProps {
+interface ChatOverlayProps {
 	campaignId: string;
 	fadeMs?: number;
 	limit?: number;

@@ -45,12 +45,7 @@ function getDexCapFromArmorType(armorType: string | undefined): number | null {
  *
  * Returns `null` only when no armor classification can be inferred.
  */
-export type InferredArmorType =
-	| "light"
-	| "medium"
-	| "heavy"
-	| "shield"
-	| "unarmored";
+type InferredArmorType = "light" | "medium" | "heavy" | "shield" | "unarmored";
 
 export function inferArmorType(
 	input: string | string[] | null | undefined,

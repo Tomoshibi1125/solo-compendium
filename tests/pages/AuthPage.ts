@@ -101,15 +101,12 @@ export class AuthPage {
 		await this.page.getByTestId("email-input").fill(email);
 		await this.page.getByTestId("password-input").fill(password);
 
-		await this.page
-			.getByRole("button", { name: /Enter the Rift/i })
-			.click();
+		await this.page.getByRole("button", { name: /Enter the Rift/i }).click();
 
 		try {
-			await this.page.waitForURL(
-				(url) => !url.pathname.startsWith("/login"),
-				{ timeout: 30_000 },
-			);
+			await this.page.waitForURL((url) => !url.pathname.startsWith("/login"), {
+				timeout: 30_000,
+			});
 			return true;
 		} catch {
 			return false;

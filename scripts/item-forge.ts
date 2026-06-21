@@ -1,5 +1,5 @@
-import * as fs from "fs";
-import * as path from "path";
+import * as fs from "node:fs";
+import * as path from "node:path";
 import { artifacts } from "../src/data/compendium/artifacts";
 import { baseEquipment } from "../src/data/compendium/items-base-equipment";
 // Item imports
@@ -16,8 +16,27 @@ import { comprehensiveRelics } from "../src/data/compendium/relics-comprehensive
 import { sigils } from "../src/data/compendium/sigils";
 import { tattoos } from "../src/data/compendium/tattoos";
 
-function rand(arr: any[]) {
+function rand<T>(arr: T[]): T {
 	return arr[Math.floor(Math.random() * arr.length)];
+}
+
+interface ForgeLore {
+	origin?: string;
+	history?: string;
+	curse?: string;
+	personality?: string;
+	current_owner?: string;
+	prior_owners?: string[];
+	[key: string]: unknown;
+}
+
+interface ForgeItemRecord {
+	flavor?: string;
+	lore?: ForgeLore;
+	effects?: Record<string, unknown> | unknown[];
+	mechanics?: Record<string, unknown> | unknown[];
+	passive_bonuses?: Record<string, unknown> | unknown[];
+	[key: string]: unknown;
 }
 
 const origins = [
@@ -75,33 +94,38 @@ function cleanText(text: string): string {
 	return newText;
 }
 
-function processItems(arr: any[], isCombat: boolean) {
-	return arr.map((obj) => {
-		["name", "description", "flavor", "discovery_lore"].forEach((k) => {
-			if (typeof obj[k] === "string") obj[k] = cleanText(obj[k]);
-		});
+function processItems(arr: unknown[], isCombat: boolean) {
+	return arr.map((raw) => {
+		const obj = raw as ForgeItemRecord;
+		for (const k of ["name", "description", "flavor", "discovery_lore"]) {
+			if (typeof obj[k] === "string") obj[k] = cleanText(obj[k] as string);
+		}
 
 		if (!obj.lore) obj.lore = {};
-		if (!obj.lore.origin || obj.lore.origin === "")
-			obj.lore.origin = rand(origins);
-		if (!obj.lore.history || obj.lore.history === "")
-			obj.lore.history = "Its true history remains a protected Guild secret.";
-		if (!obj.lore.curse || obj.lore.curse === "")
-			obj.lore.curse = isCombat
+		const lore = obj.lore;
+		if (!lore.origin || lore.origin === "") lore.origin = rand(origins);
+		if (!lore.history || lore.history === "")
+			lore.history = "Its true history remains a protected Guild secret.";
+		if (!lore.curse || lore.curse === "")
+			lore.curse = isCombat
 				? "Slowly drains ambient stamina from the wielder."
 				: "Emanates a faint aura of dread.";
-		if (!obj.lore.personality || obj.lore.personality === "")
-			obj.lore.personality = "Silent, waiting.";
-		if (!obj.lore.current_owner || obj.lore.current_owner === "")
-			obj.lore.current_owner = "Held by the Vanguard Guild.";
-		if (!obj.lore.prior_owners || obj.lore.prior_owners.length === 0)
-			obj.lore.prior_owners = ["A rogue Awakened"];
+		if (!lore.personality || lore.personality === "")
+			lore.personality = "Silent, waiting.";
+		if (!lore.current_owner || lore.current_owner === "")
+			lore.current_owner = "Held by the Vanguard Guild.";
+		if (!lore.prior_owners || lore.prior_owners.length === 0)
+			lore.prior_owners = ["A rogue Awakened"];
 
-		["origin", "history", "curse", "personality", "current_owner"].forEach(
-			(k) => {
-				obj.lore[k] = cleanText(obj.lore[k]);
-			},
-		);
+		for (const k of [
+			"origin",
+			"history",
+			"curse",
+			"personality",
+			"current_owner",
+		]) {
+			lore[k] = cleanText(lore[k] as string);
+		}
 
 		if (!obj.flavor || obj.flavor === "") obj.flavor = rand(flavors);
 
@@ -146,7 +170,7 @@ function dump(
 	exportName: string,
 	typeName: string,
 	importPathStr: string | null,
-	arr: any[],
+	arr: unknown[],
 	additionalHeader: string = "",
 ) {
 	const full = path.resolve(process.cwd(), filepath);
@@ -159,9 +183,9 @@ function dump(
 
 	c += `export const ${exportName}: ${typeName}[] = [\n`;
 	const s = arr
-		.map((a) => "\t" + JSON.stringify(a, null, "\t").split("\n").join("\n\t"))
+		.map((a) => `\t${JSON.stringify(a, null, "\t").split("\n").join("\n\t")}`)
 		.join(",\n");
-	c += s + "\n];\n";
+	c += `${s}\n];\n`;
 	fs.writeFileSync(full, c, "utf8");
 	console.log(`Saved ${filepath} [${arr.length} items]`);
 }

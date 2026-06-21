@@ -173,11 +173,6 @@ const THEMES_BY_RARITY = {
 	],
 };
 
-function pickAdj(rarity, hashSeed) {
-	const pool = THEMES_BY_RARITY[rarity] || THEMES_BY_RARITY.common;
-	return pool[hashSeed % pool.length];
-}
-
 const NOUNS_BY_ARCHETYPE = {
 	// Gear
 	gear_amulet: [
@@ -933,16 +928,9 @@ const TARGETS = [
 // Generation
 // =============================================================
 
-function rotateNoun(archetype, idx) {
-	const pool = NOUNS_BY_ARCHETYPE[archetype];
-	if (!pool) return "Item";
-	return pool[idx % pool.length];
-}
-
 function generate() {
 	const out = [];
 	const seenNames = new Set();
-	let counter = 0;
 	for (const target of TARGETS) {
 		const { archetype, counts } = target;
 		for (const rarity of ["common", "uncommon", "rare", "epic", "legendary"]) {
@@ -974,7 +962,6 @@ function generate() {
 				idx += 1;
 				if (seenNames.has(name.toLowerCase())) continue;
 				seenNames.add(name.toLowerCase());
-				counter += 1;
 				const id = `gap_${archetype}_${rarity}_${placed}`;
 				const rawItem = {
 					id,
