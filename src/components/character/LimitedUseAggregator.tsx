@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Clock, Moon, Sun, Sunrise } from "lucide-react";
 import { useMemo } from "react";
 import { AutoLinkText } from "@/components/compendium/AutoLinkText";
+import { ExpandableText } from "@/components/ui/ExpandableText";
 import { Badge } from "@/components/ui/badge";
 import {
 	Card,
@@ -269,9 +270,9 @@ export function LimitedUseAggregator({
 									</Badge>
 								)}
 							</div>
-							<div className="text-xs text-muted-foreground line-clamp-2">
+							<ExpandableText className="text-xs text-muted-foreground" lines={2}>
 								<AutoLinkText text={entry.description} />
-							</div>
+							</ExpandableText>
 						</div>
 					))}
 				</div>

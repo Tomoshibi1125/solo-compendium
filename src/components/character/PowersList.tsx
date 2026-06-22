@@ -1,6 +1,7 @@
 import { AlertTriangle, Plus, Trash2, Wand2 } from "lucide-react";
 import { useCallback, useState } from "react";
 import { AutoLinkText } from "@/components/compendium/AutoLinkText";
+import { ExpandableText } from "@/components/ui/ExpandableText";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -602,9 +603,9 @@ export function PowersList({
 														)}
 													</div>
 													{displayDescription && (
-														<div className="text-xs text-muted-foreground line-clamp-3">
+														<ExpandableText className="text-xs text-muted-foreground" lines={3}>
 															<AutoLinkText text={power.description || ""} />
-														</div>
+														</ExpandableText>
 													)}
 													<div className="flex flex-wrap gap-2 mt-1 text-xs text-muted-foreground">
 														{displayCastingTime && (

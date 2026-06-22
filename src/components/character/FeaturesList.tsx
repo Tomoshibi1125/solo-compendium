@@ -9,6 +9,7 @@ import {
 } from "lucide-react";
 import { useCallback, useState } from "react";
 import { AutoLinkText } from "@/components/compendium/AutoLinkText";
+import { ExpandableText } from "@/components/ui/ExpandableText";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -343,9 +344,9 @@ export function FeaturesList({
 													)}
 												</div>
 												{feature.description && (
-													<div className="text-xs text-muted-foreground line-clamp-3">
+													<ExpandableText className="text-xs text-muted-foreground" lines={3}>
 														<AutoLinkText text={feature.description} />
-													</div>
+													</ExpandableText>
 												)}
 												{feature.uses_max !== null && (
 													<div className="flex items-center gap-2 mt-2">

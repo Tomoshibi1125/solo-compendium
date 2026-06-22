@@ -9,6 +9,7 @@
 import { Play, Plus, Sword, Trash2 } from "lucide-react";
 import { useState } from "react";
 import { AutoLinkText } from "@/components/compendium/AutoLinkText";
+import { ExpandableText } from "@/components/ui/ExpandableText";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -279,9 +280,9 @@ export function TechniquesList({
 												</div>
 											)}
 											{description && (
-												<div className="text-xs text-muted-foreground line-clamp-3">
+												<ExpandableText className="text-xs text-muted-foreground" lines={3}>
 													<AutoLinkText text={description} />
-												</div>
+												</ExpandableText>
 											)}
 										</div>
 										<div className="flex items-center gap-1">

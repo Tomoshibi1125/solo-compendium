@@ -1,6 +1,7 @@
 import { AlertTriangle, Plus, ScrollText, Trash2 } from "lucide-react";
 import { type DragEvent, useMemo, useState } from "react";
 import { AutoLinkText } from "@/components/compendium/AutoLinkText";
+import { ExpandableText } from "@/components/ui/ExpandableText";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -468,9 +469,9 @@ export function SpellsList({
 													)}
 												</div>
 												{displayDescription && (
-													<div className="text-xs text-muted-foreground line-clamp-3">
+													<ExpandableText className="text-xs text-muted-foreground" lines={3}>
 														<AutoLinkText text={spell.description || ""} />
-													</div>
+													</ExpandableText>
 												)}
 												{actionFormula && (
 													<div className="flex flex-wrap gap-x-3 gap-y-1 mt-1 text-[11px] text-muted-foreground">

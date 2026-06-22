@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { Compass, Lock, Sparkles } from "lucide-react";
 import { AutoLinkText } from "@/components/compendium/AutoLinkText";
+import { ExpandableText } from "@/components/ui/ExpandableText";
 import { Badge } from "@/components/ui/badge";
 import {
 	Card,
@@ -119,9 +120,9 @@ export function PathFeaturesDisplay({
 										Lvl {feature.level}
 									</Badge>
 								</div>
-								<div className="text-xs text-muted-foreground line-clamp-2">
+								<ExpandableText className="text-xs text-muted-foreground" lines={2}>
 									<AutoLinkText text={feature.description} />
-								</div>
+								</ExpandableText>
 							</button>
 						))
 					)}

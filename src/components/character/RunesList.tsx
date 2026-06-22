@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import { useMemo, useState } from "react";
 import { AutoLinkText } from "@/components/compendium/AutoLinkText";
+import { ExpandableText } from "@/components/ui/ExpandableText";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -246,9 +247,9 @@ export function RunesList({
 														</Badge>
 													</div>
 													{runeDescription && (
-														<div className="text-xs text-muted-foreground mt-1 line-clamp-3">
+														<ExpandableText className="text-xs text-muted-foreground mt-1" lines={3}>
 															<AutoLinkText text={runeDescription} />
-														</div>
+														</ExpandableText>
 													)}
 													{absorptionPreviews[rk.rune_id]?.isCrossType && (
 														<div className="flex items-center gap-1.5 mt-1.5">

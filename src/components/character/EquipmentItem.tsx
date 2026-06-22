@@ -1,6 +1,7 @@
 import { Trash2 } from "lucide-react";
 import { memo } from "react";
 import { AutoLinkText } from "@/components/compendium/AutoLinkText";
+import { ExpandableText } from "@/components/ui/ExpandableText";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -209,9 +210,9 @@ function EquipmentItemComponent({
 						</div>
 					)}
 					{item.description && (
-						<div className="text-xs text-muted-foreground line-clamp-3">
+						<ExpandableText className="text-xs text-muted-foreground" lines={3}>
 							<AutoLinkText text={item.description} />
-						</div>
+						</ExpandableText>
 					)}
 					{displayProperties.length > 0 && (
 						<div className="flex flex-wrap gap-1 mt-1">

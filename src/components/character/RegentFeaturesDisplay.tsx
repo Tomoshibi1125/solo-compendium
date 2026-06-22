@@ -1,5 +1,6 @@
 import { CheckCircle, Crown, Lock } from "lucide-react";
 import { AutoLinkText } from "@/components/compendium/AutoLinkText";
+import { ExpandableText } from "@/components/ui/ExpandableText";
 import { Badge } from "@/components/ui/badge";
 import {
 	Card,
@@ -165,9 +166,9 @@ export function RegentFeaturesDisplay({
 						<span className="font-medium">{regentData?.name}</span>
 						<Badge variant="secondary">{regentData?.rank}</Badge>
 					</div>
-					<div className="text-sm text-muted-foreground line-clamp-2">
+					<ExpandableText className="text-sm text-muted-foreground" lines={2}>
 						<AutoLinkText text={regentData?.description || ""} />
-					</div>
+					</ExpandableText>
 				</button>
 
 				{/* Gestalt overlay summary — the full-class mechanics the Regent
@@ -260,9 +261,9 @@ export function RegentFeaturesDisplay({
 										</Badge>
 									)}
 								</div>
-								<div className="text-sm text-muted-foreground line-clamp-2">
+								<ExpandableText className="text-sm text-muted-foreground" lines={2}>
 									<AutoLinkText text={feature.description || ""} />
-								</div>
+								</ExpandableText>
 							</button>
 						))}
 						{regentFeatures.length === 0 && (
