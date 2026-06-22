@@ -26,7 +26,7 @@ import type {
  * displays these — e.g. token rail shows `derived.speed` not
  * `token.speed`.
  */
-interface DerivedTokenStats {
+export interface DerivedTokenStats {
 	ac: number;
 	speedMultiplier: number;
 	resistances: string[];

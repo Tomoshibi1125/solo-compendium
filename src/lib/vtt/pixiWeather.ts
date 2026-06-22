@@ -30,7 +30,7 @@ export type WeatherEmitter = {
 	destroy: () => void;
 };
 
-type CreateWeatherEmitterOptions = {
+export type CreateWeatherEmitterOptions = {
 	type: WeatherType;
 	/** World bounds in pixels (scene width/height × grid × zoom). */
 	width: number;

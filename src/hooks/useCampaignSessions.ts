@@ -18,7 +18,7 @@ export type CampaignSessionLogType =
 	| "event"
 	| "note";
 
-interface CampaignSessionRecord {
+export interface CampaignSessionRecord {
 	id: string;
 	campaign_id: string;
 	title: string;

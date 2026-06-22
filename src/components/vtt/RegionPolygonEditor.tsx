@@ -16,7 +16,7 @@ import { Button } from "@/components/ui/button";
  *
  * Pure UI — no scene mutation. Bubbles vertex changes via `onChange`.
  */
-interface RegionPolygonEditorProps {
+export interface RegionPolygonEditorProps {
 	polygon: Array<{ x: number; y: number }>;
 	onChange: (next: Array<{ x: number; y: number }>) => void;
 }

@@ -1,4 +1,5 @@
 import { useMemo } from "react";
+import { useCharacterFeatures } from "@/hooks/useCharacterFeatures";
 import { useCharacterSheetState } from "@/hooks/useCharacterSheetState";
 import {
 	type CharacterWithAbilities,
@@ -20,6 +21,10 @@ import {
 	appendAbilityModifierToDamageFormula,
 	resolvePowerActionFormula,
 } from "@/lib/powerActionFormulas";
+import {
+	isActionableActionType,
+	isSovereignFeatureSource,
+} from "@/lib/sovereign/applySovereign";
 import { resolveSpellActionFormula } from "@/lib/spellActionFormulas";
 import { resolveWeaponActionFormula } from "@/lib/weaponActionFormulas";
 import type { CompendiumPower, CompendiumTechnique } from "@/types/compendium";
@@ -120,6 +125,7 @@ export const useCombatActions = (characterId: string) => {
 	const { data: runeKnowledge = [] } = useCharacterRuneKnowledge(characterId);
 	const { tattoos, isLoading: tattoosLoading } = useTattoos(characterId);
 	const { state: sheetState } = useCharacterSheetState(characterId);
+	const { data: charFeatures = [] } = useCharacterFeatures(characterId);
 
 	const derivedStats = useCharacterDerivedStats(
 		character,
@@ -725,6 +731,35 @@ export const useCombatActions = (characterId: string) => {
 			});
 		});
 
+		// Sovereign fusion abilities: surface the ACTIVE ones (those that cost
+		// an action / bonus / reaction) as combat actions, mirroring how the
+		// same character_features rows appear in the Features tab. Passive
+		// abilities remain in Features only. Applies identically to embedded
+		// and externally-imported Sovereigns.
+		for (const feat of charFeatures) {
+			if (!feat.is_active) continue;
+			if (!isSovereignFeatureSource(feat.source)) continue;
+			if (!isActionableActionType(feat.action_type)) continue;
+			result.push({
+				id: `sovereign-feat-${feat.id}`,
+				name: feat.name,
+				type: "power",
+				description: feat.description || "",
+				activation: feat.action_type || "1 action",
+				range: "Self",
+				target: "",
+				payload: {
+					version: 1,
+					id: `sovereign-feat-${feat.id}`,
+					name: feat.name,
+					source: { type: "power", entryId: feat.id },
+					kind: "effect",
+					description: feat.description || undefined,
+				},
+				sourceId: feat.id,
+			});
+		}
+
 		return result;
 	}, [
 		character,
@@ -736,6 +771,7 @@ export const useCombatActions = (characterId: string) => {
 		sigils,
 		canonicalEquipmentMap,
 		sheetState.customModifiers,
+		charFeatures,
 	]);
 
 	return {

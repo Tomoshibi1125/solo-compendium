@@ -282,7 +282,7 @@ export interface AIConfiguration {
 export const DEFAULT_AI_SERVICES: AIService[] = [
 	{
 		id: "gemini-native",
-		name: "Google Gemini 2.0 Flash (Native)",
+		name: "Free AI — Gemini 2.5 Flash + free fallbacks",
 		type: "gemini-native",
 		capabilities: [
 			"enhance-prompt",
@@ -300,7 +300,7 @@ export const DEFAULT_AI_SERVICES: AIService[] = [
 			"generate-optimizations",
 		],
 		endpoint: "",
-		model: "gemini-2.0-flash",
+		model: "gemini-2.5-flash",
 		maxTokens: 4096,
 		temperature: 0.8,
 		enabled: true,

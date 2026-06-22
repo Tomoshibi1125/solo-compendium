@@ -2,11 +2,22 @@ import type { AIService } from "./types";
 
 export type AIUserProvider = "free" | "custom";
 
+/**
+ * Which free model the embedded AI should prefer. "auto" lets the server pick
+ * the best-in-class free model and fall back automatically; the others pin a
+ * specific provider first (still falling back if it's rate-limited or blocked).
+ */
+export type AIFreeModel = "auto" | "gemini" | "openrouter" | "pollinations";
+
 export interface AIUserSettings {
 	provider: AIUserProvider;
 	apiKey: string;
 	apiBase: string;
 	model: string;
+	/** Preferred free provider when provider === "free". */
+	freeModel: AIFreeModel;
+	/** Optional explicit model id override for the chosen free provider. */
+	freeModelId: string;
 }
 
 const STORAGE_KEY = "solo-compendium-ai-settings";
@@ -18,6 +29,8 @@ export const DEFAULT_AI_USER_SETTINGS: AIUserSettings = {
 	apiKey: "",
 	apiBase: DEFAULT_CUSTOM_BASE,
 	model: DEFAULT_CUSTOM_MODEL,
+	freeModel: "auto",
+	freeModelId: "",
 };
 
 export function loadAIUserSettings(): AIUserSettings {

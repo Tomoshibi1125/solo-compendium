@@ -1051,6 +1051,21 @@ export class AIServiceManager {
 			);
 			const prompt = this.formatInput(request);
 
+			// Honor the user's free-model choice. "auto" lets the server pick the
+			// best free model and fall back automatically; a specific choice is
+			// tried FIRST but the server still falls back to the rest of the free
+			// chain if that provider is rate-limited or blocked.
+			const userSettings = loadAIUserSettings();
+			const useFree = userSettings.provider === "free";
+			const preferredProvider =
+				useFree && userSettings.freeModel !== "auto"
+					? userSettings.freeModel
+					: undefined;
+			const preferredModelId =
+				useFree && userSettings.freeModelId.trim()
+					? userSettings.freeModelId.trim()
+					: undefined;
+
 			const proxyResponse = await this.fetchWithTimeout(
 				AI_PROXY_ENDPOINT,
 				{
@@ -1060,6 +1075,8 @@ export class AIServiceManager {
 						prompt,
 						systemPrompt,
 						maxTokens: service.maxTokens ?? 4096,
+						...(preferredProvider ? { provider: preferredProvider } : {}),
+						...(preferredModelId ? { model: preferredModelId } : {}),
 					}),
 				},
 				REQUEST_TIMEOUT_MS,
@@ -1104,7 +1121,7 @@ export class AIServiceManager {
 			return {
 				success: true,
 				data: data.text,
-				metadata: { model: data.model ?? service.model ?? "gemini-2.0-flash" },
+				metadata: { model: data.model ?? service.model ?? "gemini-2.5-flash" },
 				usage: {
 					promptTokens: data.usage?.promptTokens,
 					completionTokens: data.usage?.completionTokens,

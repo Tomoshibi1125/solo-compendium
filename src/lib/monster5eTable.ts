@@ -14,7 +14,7 @@
  */
 import { getCRXP } from "@/lib/experience";
 
-interface MonsterCrStats {
+export interface MonsterCrStats {
 	/** Canonical CR label, e.g. "1/4", "5". */
 	cr: string;
 	/** Numeric CR for ordering/derivation (1/8 = 0.125, etc.). */
@@ -454,7 +454,7 @@ export function getMonsterCrXp(cr: string): number {
  * bands rise monotonically D < C < B < A < S. `target_level` is the rank's
  * entry character level (used by the encounter-balance validator).
  */
-interface RankCrBand {
+export interface RankCrBand {
 	rank: "D" | "C" | "B" | "A" | "S";
 	target_level_min: number;
 	target_level_max: number;

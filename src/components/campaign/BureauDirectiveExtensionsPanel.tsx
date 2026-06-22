@@ -19,7 +19,7 @@ import { type ModuleManifest, moduleHost } from "@/lib/modules/host";
  * RA theming: "Bureau Directive Extensions" — sandboxed protocol
  * overrides the Warden authorizes for their campaign.
  */
-interface BureauDirectiveExtensionsPanelProps {
+export interface BureauDirectiveExtensionsPanelProps {
 	campaignId: string;
 }
 

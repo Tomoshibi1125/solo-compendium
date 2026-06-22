@@ -13,8 +13,162 @@ dotenvConfig();
  * Vite dev middleware plugin that mimics the Vercel serverless function
  * at /api/ai so AI features work during local development.
  */
-const DEV_GEMINI_MODEL = "gemini-2.0-flash";
-const DEV_GEMINI_TIMEOUT_MS = 30_000;
+// Dev mirror of the production /api/ai free provider chain (api/ai.js), so local
+// dev gets the same best-in-class free model AND works with zero config via the
+// keyless Pollinations fallback.
+const DEV_GEMINI_MODEL = process.env.GEMINI_MODEL || "gemini-2.5-flash";
+const DEV_OPENROUTER_MODEL =
+	process.env.OPENROUTER_MODEL || "deepseek/deepseek-chat-v3-0324:free";
+const DEV_POLLINATIONS_MODEL = process.env.POLLINATIONS_MODEL || "openai";
+const DEV_AI_TIMEOUT_MS = 30_000;
+
+type DevAIResult = {
+	text: string;
+	model: string;
+	usage?: Record<string, unknown>;
+};
+type DevAIArgs = {
+	prompt: string;
+	systemPrompt?: string;
+	maxTokens?: number;
+	model?: string;
+};
+
+async function devCallGemini({
+	prompt,
+	systemPrompt,
+	maxTokens,
+	model: modelOverride,
+}: DevAIArgs): Promise<DevAIResult> {
+	const apiKey = process.env.GEMINI_API_KEY;
+	if (!apiKey) throw new Error("GEMINI_API_KEY not set");
+	const model = modelOverride || DEV_GEMINI_MODEL;
+	const ai = new GoogleGenAI({ apiKey });
+	const controller = new AbortController();
+	const timer = setTimeout(() => controller.abort(), DEV_AI_TIMEOUT_MS);
+	try {
+		const response = await ai.models.generateContent({
+			model,
+			contents: prompt,
+			config: {
+				systemInstruction: systemPrompt,
+				maxOutputTokens: Math.min(maxTokens || 4096, 4096),
+				temperature: 0.8,
+				abortSignal: controller.signal,
+			},
+		});
+		const text = response.text || "";
+		if (!text.trim()) throw new Error("Gemini empty response");
+		return {
+			text,
+			model,
+			usage: {
+				promptTokens: response.usageMetadata?.promptTokenCount,
+				completionTokens: response.usageMetadata?.candidatesTokenCount,
+				totalTokens: response.usageMetadata?.totalTokenCount,
+			},
+		};
+	} finally {
+		clearTimeout(timer);
+	}
+}
+
+async function devCallOpenRouter({
+	prompt,
+	systemPrompt,
+	maxTokens,
+	model: modelOverride,
+}: DevAIArgs): Promise<DevAIResult> {
+	const apiKey = process.env.OPENROUTER_API_KEY;
+	if (!apiKey) throw new Error("OPENROUTER_API_KEY not set");
+	const model = modelOverride || DEV_OPENROUTER_MODEL;
+	const messages: Array<{ role: string; content: string }> = [];
+	if (systemPrompt) messages.push({ role: "system", content: systemPrompt });
+	messages.push({ role: "user", content: prompt });
+	const response = await fetch(
+		"https://openrouter.ai/api/v1/chat/completions",
+		{
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${apiKey}`,
+				"X-Title": "Rift Ascendant",
+			},
+			body: JSON.stringify({
+				model,
+				messages,
+				max_tokens: Math.min(maxTokens || 4096, 4096),
+				temperature: 0.8,
+			}),
+		},
+	);
+	if (!response.ok) throw new Error(`OpenRouter error ${response.status}`);
+	const data = (await response.json()) as {
+		model?: string;
+		choices?: Array<{ message?: { content?: string } }>;
+	};
+	const text = data?.choices?.[0]?.message?.content || "";
+	if (!text.trim()) throw new Error("OpenRouter empty response");
+	return { text, model: data?.model || model };
+}
+
+async function devCallPollinations({
+	prompt,
+	systemPrompt,
+	model: modelOverride,
+}: DevAIArgs): Promise<DevAIResult> {
+	const model = modelOverride || DEV_POLLINATIONS_MODEL;
+	const messages: Array<{ role: string; content: string }> = [];
+	if (systemPrompt) messages.push({ role: "system", content: systemPrompt });
+	messages.push({ role: "user", content: prompt });
+	const response = await fetch("https://text.pollinations.ai/openai", {
+		method: "POST",
+		headers: { "Content-Type": "application/json" },
+		body: JSON.stringify({ model, messages }),
+	});
+	if (!response.ok) throw new Error(`Pollinations error ${response.status}`);
+	const raw = await response.text();
+	let text = raw;
+	try {
+		const data = JSON.parse(raw) as {
+			choices?: Array<{ message?: { content?: string } }>;
+		};
+		text = data?.choices?.[0]?.message?.content ?? raw;
+	} catch {
+		// plain text body — use as-is
+	}
+	if (!text.trim()) throw new Error("Pollinations empty response");
+	return { text, model: `pollinations:${model}` };
+}
+
+const DEV_AI_PROVIDERS: Record<
+	string,
+	(args: DevAIArgs) => Promise<DevAIResult>
+> = {
+	gemini: devCallGemini,
+	openrouter: devCallOpenRouter,
+	pollinations: devCallPollinations,
+};
+
+function devProviderOrder(preferred?: string): string[] {
+	const raw = process.env.AI_PROVIDER_ORDER || "gemini,openrouter,pollinations";
+	let order = raw
+		.split(",")
+		.map((s) => s.trim().toLowerCase())
+		.filter((s) => DEV_AI_PROVIDERS[s]);
+	if (order.length === 0) order = ["pollinations"];
+	if (preferred && DEV_AI_PROVIDERS[preferred]) {
+		order = [preferred, ...order.filter((s) => s !== preferred)];
+	}
+	return order;
+}
+
+function devProviderAvailable(name: string): boolean {
+	if (name === "gemini") return Boolean(process.env.GEMINI_API_KEY);
+	if (name === "openrouter") return Boolean(process.env.OPENROUTER_API_KEY);
+	return true; // pollinations is keyless
+}
+
 function devAIProxy(): Plugin {
 	return {
 		name: "dev-ai-proxy",
@@ -40,18 +194,6 @@ function devAIProxy(): Plugin {
 					return;
 				}
 
-				const apiKey = process.env.GEMINI_API_KEY;
-				if (!apiKey) {
-					res.statusCode = 503;
-					res.end(
-						JSON.stringify({
-							error: "AI service not configured. Set GEMINI_API_KEY in .env",
-							available: false,
-						}),
-					);
-					return;
-				}
-
 				// Read body
 				let rawBody = "";
 				await new Promise<void>((resolve) => {
@@ -70,10 +212,18 @@ function devAIProxy(): Plugin {
 					return;
 				}
 
-				const { prompt, systemPrompt, maxTokens } = body as {
+				const {
+					prompt,
+					systemPrompt,
+					maxTokens,
+					provider: preferredProvider,
+					model: preferredModel,
+				} = body as {
 					prompt?: string;
 					systemPrompt?: string;
 					maxTokens?: number;
+					provider?: string;
+					model?: string;
 				};
 
 				if (!prompt || typeof prompt !== "string") {
@@ -82,76 +232,57 @@ function devAIProxy(): Plugin {
 					return;
 				}
 
-				const geminiModel = DEV_GEMINI_MODEL;
-				const ai = new GoogleGenAI({ apiKey });
-
-				const controller = new AbortController();
-				const timer = setTimeout(
-					() => controller.abort(),
-					DEV_GEMINI_TIMEOUT_MS,
-				);
-
-				try {
-					const response = await ai.models.generateContent({
-						model: geminiModel,
-						contents: prompt,
-						config: {
-							systemInstruction: systemPrompt,
-							maxOutputTokens: Math.min((maxTokens as number) || 4096, 4096),
-							temperature: 0.8,
-							abortSignal: controller.signal,
-						},
-					});
-					clearTimeout(timer);
-
-					const text = response.text || "";
-
-					if (!text.trim()) {
-						res.statusCode = 502;
+				// Honor a user-selected provider/model (first), still falling back
+				// across the free chain if it's rate-limited or blocked. The keyless
+				// Pollinations leg guarantees a response even with no keys set.
+				const normalizedPreferred =
+					typeof preferredProvider === "string"
+						? preferredProvider.trim().toLowerCase()
+						: undefined;
+				const requestedModel =
+					typeof preferredModel === "string" && preferredModel.trim()
+						? preferredModel.trim()
+						: undefined;
+				const order = devProviderOrder(normalizedPreferred);
+				const errors: string[] = [];
+				for (const name of order) {
+					if (!devProviderAvailable(name)) continue;
+					try {
+						const result = await DEV_AI_PROVIDERS[name]({
+							prompt,
+							systemPrompt,
+							maxTokens: maxTokens as number | undefined,
+							model: name === normalizedPreferred ? requestedModel : undefined,
+						});
+						res.statusCode = 200;
+						res.setHeader("Content-Type", "application/json");
 						res.end(
 							JSON.stringify({
-								error: "Gemini returned empty response",
-								available: true,
+								success: true,
+								text: result.text,
+								model: result.model,
+								usage: result.usage || {},
+								provider: name,
 							}),
 						);
 						return;
-					}
-
-					res.statusCode = 200;
-					res.setHeader("Content-Type", "application/json");
-					res.end(
-						JSON.stringify({
-							success: true,
-							text,
-							model: geminiModel,
-							usage: {
-								promptTokens: response.usageMetadata?.promptTokenCount,
-								completionTokens: response.usageMetadata?.candidatesTokenCount,
-								totalTokens: response.usageMetadata?.totalTokenCount,
-							},
-						}),
-					);
-				} catch (err: unknown) {
-					clearTimeout(timer);
-					if (err instanceof Error && err.name === "AbortError") {
-						res.statusCode = 504;
-						res.end(
-							JSON.stringify({
-								error: "Gemini request timed out",
-								available: true,
-							}),
+					} catch (err: unknown) {
+						errors.push(
+							`${name}: ${err instanceof Error ? err.message : "error"}`,
 						);
-						return;
 					}
-					res.statusCode = 500;
-					res.end(
-						JSON.stringify({
-							error:
-								err instanceof Error ? err.message : "Internal proxy error",
-							available: true,
-						}),
-					);
 				}
+
+				res.statusCode = 502;
+				res.end(
+					JSON.stringify({
+						error:
+							errors.length > 0
+								? `All free AI providers failed. ${errors.join(" | ")}`
+								: "No free AI provider configured.",
+						available: false,
+					}),
+				);
 			});
 		},
 	};

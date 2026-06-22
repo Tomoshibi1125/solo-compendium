@@ -10,7 +10,7 @@
  * diagonal overlap). It is a *display* value only and changes no game rule.
  */
 
-type GridCell = { gridX: number; gridY: number };
+export type GridCell = { gridX: number; gridY: number };
 
 /**
  * Snap a world-space pixel position to the nearest grid cell index. `cellPx` is

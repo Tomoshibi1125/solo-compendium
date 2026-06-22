@@ -17,7 +17,7 @@ import {
 	type EncounterScalingSignal,
 } from "@/lib/encounterScaling";
 
-interface UseLiveEncounterScalerResult {
+export interface UseLiveEncounterScalerResult {
 	signal: EncounterScalingSignal | null;
 	analyze: (snapshot: CombatRoundSnapshot) => EncounterScalingSignal;
 	clear: () => void;

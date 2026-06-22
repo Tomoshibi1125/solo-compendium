@@ -11,7 +11,7 @@ import { cn } from "@/lib/utils";
  * multi-monitor Wardens. State stays in sync automatically because all
  * panels are backed by Supabase realtime + TanStack Query.
  */
-interface PopOutButtonProps {
+export interface PopOutButtonProps {
 	name: string;
 	path: string;
 	width?: number;

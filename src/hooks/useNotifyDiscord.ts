@@ -8,14 +8,14 @@
 import { useCallback } from "react";
 import { supabase } from "@/integrations/supabase/client";
 
-type DiscordNotifyKind =
+export type DiscordNotifyKind =
 	| "session_scheduled"
 	| "session_reminder"
 	| "warden_broadcast"
 	| "dice_roll"
 	| "test";
 
-interface DiscordNotifyPayload {
+export interface DiscordNotifyPayload {
 	title?: string;
 	date?: string;
 	message?: string;
@@ -25,7 +25,7 @@ interface DiscordNotifyPayload {
 	[key: string]: unknown;
 }
 
-interface DiscordNotifyResult {
+export interface DiscordNotifyResult {
 	delivered: boolean;
 	reason?: string;
 	status?: number;

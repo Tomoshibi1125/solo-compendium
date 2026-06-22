@@ -6,8 +6,19 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import {
+	Select,
+	SelectContent,
+	SelectItem,
+	SelectTrigger,
+	SelectValue,
+} from "@/components/ui/select";
 import { aiService } from "@/lib/ai/aiService";
-import type { AIUserProvider, AIUserSettings } from "@/lib/ai/userSettings";
+import type {
+	AIFreeModel,
+	AIUserProvider,
+	AIUserSettings,
+} from "@/lib/ai/userSettings";
 import {
 	DEFAULT_AI_USER_SETTINGS,
 	loadAIUserSettings,
@@ -19,11 +30,37 @@ interface AIProviderSettingsProps {
 	className?: string;
 }
 
-const FREE_PROVIDER_LABEL = "Google Gemini 2.0 Flash (Free, Integrated)";
+const FREE_PROVIDER_LABEL = "Best Free AI (Integrated, 100% free)";
 const FREE_PROVIDER_ENDPOINT = "Integrated Server-side Proxy";
-const FREE_PROVIDER_MODEL = "gemini-2.0-flash";
-const LOCAL_FALLBACK_LABEL = "Ollama (Local Fallback)";
-const LOCAL_FALLBACK_MODEL = "qwen2.5:14b-instruct";
+const FREE_PROVIDER_MODEL = "gemini-2.5-flash";
+const FREE_FALLBACK_LABEL = "OpenRouter free models, then keyless Pollinations";
+
+const FREE_MODEL_OPTIONS: {
+	value: AIFreeModel;
+	label: string;
+	hint: string;
+}[] = [
+	{
+		value: "auto",
+		label: "Auto — best free model (recommended)",
+		hint: "Picks the best free model and falls back automatically if one is rate-limited or blocked.",
+	},
+	{
+		value: "gemini",
+		label: "Google Gemini 2.5 Flash",
+		hint: "Best overall free model — ~1,500 requests/day, no card.",
+	},
+	{
+		value: "openrouter",
+		label: "OpenRouter (free models)",
+		hint: "DeepSeek / Llama / Qwen free models — stricter limits, lots of variety.",
+	},
+	{
+		value: "pollinations",
+		label: "Pollinations (keyless)",
+		hint: "Always-on and key-free — a reliable choice when others are limited.",
+	},
+];
 
 export function AIProviderSettings({ className }: AIProviderSettingsProps) {
 	const [settings, setSettings] = useState<AIUserSettings>(
@@ -70,12 +107,11 @@ export function AIProviderSettings({ className }: AIProviderSettingsProps) {
 				<div className="text-sm text-muted-foreground">
 					Default AI: {FREE_PROVIDER_LABEL} ({FREE_PROVIDER_ENDPOINT})
 					<br />
-					Model priority: <code className="text-xs">{FREE_PROVIDER_MODEL}</code>{" "}
-					(hosted) -&gt; <code className="text-xs">{LOCAL_FALLBACK_MODEL}</code>{" "}
-					(local fallback when available).
+					Best-in-class free chain:{" "}
+					<code className="text-xs">{FREE_PROVIDER_MODEL}</code> (Gemini 2.5
+					Flash) → {FREE_FALLBACK_LABEL}.
 					<br />
-					Fallback runtime: {LOCAL_FALLBACK_LABEL} at{" "}
-					<code className="text-xs">http://localhost:11434</code>.
+					No setup or API key needed — it just works, on every device.
 				</div>
 
 				<RadioGroup
@@ -94,6 +130,69 @@ export function AIProviderSettings({ className }: AIProviderSettingsProps) {
 						<Label htmlFor="ai-provider-custom">Use my API key</Label>
 					</div>
 				</RadioGroup>
+
+				{settings.provider === "free" && (
+					<div className="grid gap-3 rounded-md border border-border/60 p-3">
+						<div className="space-y-2">
+							<Label htmlFor="ai-free-model">Free model</Label>
+							<Select
+								value={settings.freeModel}
+								onValueChange={(value) =>
+									setSettings((prev) => ({
+										...prev,
+										freeModel: value as AIFreeModel,
+									}))
+								}
+							>
+								<SelectTrigger id="ai-free-model">
+									<SelectValue />
+								</SelectTrigger>
+								<SelectContent>
+									{FREE_MODEL_OPTIONS.map((opt) => (
+										<SelectItem key={opt.value} value={opt.value}>
+											{opt.label}
+										</SelectItem>
+									))}
+								</SelectContent>
+							</Select>
+							<p className="text-xs text-muted-foreground">
+								{
+									FREE_MODEL_OPTIONS.find((o) => o.value === settings.freeModel)
+										?.hint
+								}
+								{settings.freeModel !== "auto" &&
+									" If it's rate-limited or blocked, the app automatically falls back to the other free models."}
+							</p>
+						</div>
+
+						<div className="space-y-2">
+							<Label htmlFor="ai-free-model-id">
+								Specific model id (optional)
+							</Label>
+							<Input
+								id="ai-free-model-id"
+								value={settings.freeModelId}
+								disabled={settings.freeModel === "auto"}
+								onChange={(event) =>
+									setSettings((prev) => ({
+										...prev,
+										freeModelId: event.target.value,
+									}))
+								}
+								placeholder={
+									settings.freeModel === "openrouter"
+										? "e.g. meta-llama/llama-3.3-70b-instruct:free"
+										: settings.freeModel === "gemini"
+											? "e.g. gemini-2.5-flash"
+											: "Leave blank for the default"
+								}
+							/>
+							<p className="text-xs text-muted-foreground">
+								Advanced — pin an exact free model for the provider above.
+							</p>
+						</div>
+					</div>
+				)}
 
 				{settings.provider === "custom" && (
 					<div className="grid gap-4">

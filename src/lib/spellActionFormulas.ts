@@ -35,7 +35,7 @@ import {
 	getProficiencyBonus,
 } from "@/types/core-rules";
 
-interface SpellActionFormulaInput {
+export interface SpellActionFormulaInput {
 	job: string | { name: string } | null | undefined;
 	abilities: Record<AbilityScore, number>;
 	/**

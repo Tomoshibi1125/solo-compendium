@@ -2,17 +2,23 @@ import {
 	ChevronDown,
 	ChevronUp,
 	Crown,
+	Dna,
 	Lock,
 	Shield,
+	Sparkles,
 	Star,
 	Zap,
 } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
+import { useToast } from "@/hooks/use-toast";
 import { useCharacterSovereign } from "@/hooks/useSavedSovereigns";
+import { useSovereignReady } from "@/hooks/useSovereignReady";
 import type { FusionAbility } from "@/lib/geminiProtocol";
 import { cn } from "@/lib/utils";
 
@@ -91,22 +97,67 @@ export function SovereignOverlayPanel({
 	characterId,
 }: SovereignOverlayPanelProps) {
 	const { data: sovereign, isLoading } = useCharacterSovereign(characterId);
+	const ready = useSovereignReady(characterId);
+	const navigate = useNavigate();
+	const { toast } = useToast();
+
+	// One-time "fusion ready" toast per character per session (the on-sheet CTA
+	// below is the persistent notification).
+	const notifiedRef = useRef(false);
+	useEffect(() => {
+		if (!ready.isReady || notifiedRef.current) return;
+		notifiedRef.current = true;
+		const key = `sovereign-ready-notified:${characterId}`;
+		if (typeof window !== "undefined") {
+			if (window.sessionStorage.getItem(key)) return;
+			window.sessionStorage.setItem(key, "1");
+		}
+		toast({
+			title: "Sovereign fusion ready",
+			description:
+				"You've unlocked two Regents — forge your permanent Sovereign overlay.",
+			duration: 6000,
+		});
+	}, [ready.isReady, characterId, toast]);
 
 	if (isLoading) return null;
 
 	if (!sovereign) {
 		return (
 			<AscendantWindow title="SOVEREIGN OVERLAY">
-				<div className="flex items-center gap-3 text-muted-foreground text-sm py-2">
-					<Lock className="w-4 h-4 shrink-0" />
-					<p>
-						No Sovereign overlay locked in. Generate one via the{" "}
-						<span className="text-resurge-violet font-semibold">
-							Gemini Protocol
-						</span>{" "}
-						once you have unlocked two Regents.
-					</p>
-				</div>
+				{ready.isReady ? (
+					<div className="space-y-3 py-1">
+						<div className="flex items-center gap-2">
+							<Sparkles className="w-4 h-4 text-resurge-violet shrink-0" />
+							<p className="text-sm font-semibold text-resurge-violet">
+								Your Sovereign fusion is ready.
+							</p>
+						</div>
+						<p className="text-sm text-muted-foreground leading-relaxed">
+							You've unlocked two Regents. Forge a permanent Sovereign overlay
+							with the built-in AI — or bring one from your own AI — and it
+							applies straight to this sheet.
+						</p>
+						<Button
+							size="sm"
+							onClick={() => navigate("/compendium?tab=sovereign")}
+						>
+							<Dna className="w-4 h-4 mr-2" />
+							Begin Fusion
+						</Button>
+					</div>
+				) : (
+					<div className="flex items-center gap-3 text-muted-foreground text-sm py-2">
+						<Lock className="w-4 h-4 shrink-0" />
+						<p>
+							No Sovereign overlay locked in. Generate one via the{" "}
+							<span className="text-resurge-violet font-semibold">
+								Gemini Protocol
+							</span>{" "}
+							once you have unlocked two Regents.
+						</p>
+					</div>
+				)}
 			</AscendantWindow>
 		);
 	}

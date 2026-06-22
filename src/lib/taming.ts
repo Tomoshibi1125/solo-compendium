@@ -19,7 +19,7 @@ import type { AbilityScore } from "@/types/core-rules";
 // Types
 // ──────────────────────────────────────────────────────────────────────
 
-interface TamingTargetMeta {
+export interface TamingTargetMeta {
 	dc: number;
 	ability: AbilityScore;
 	min_party_rank?: "D" | "C" | "B" | "A" | "S";
@@ -34,7 +34,7 @@ export interface TamingCharacterContext {
 	proficiencyBonus: number;
 }
 
-interface TamingAttemptResult {
+export interface TamingAttemptResult {
 	success: boolean;
 	roll: number;
 	total: number;
@@ -43,7 +43,7 @@ interface TamingAttemptResult {
 	reason?: string;
 }
 
-interface ControllerBonuses {
+export interface ControllerBonuses {
 	hasPackLeader: boolean;
 	hasSummoner: boolean;
 	hasContractor: boolean;

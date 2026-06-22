@@ -208,7 +208,7 @@ export interface RaWallet {
 	mana: number;
 }
 
-interface LegacyWallet {
+export interface LegacyWallet {
 	pp?: number; // platinum   → core
 	gp?: number; // gold       → gate
 	sp?: number; // silver     → crystal

@@ -20,7 +20,7 @@ import { useSessionReplay } from "@/hooks/useSessionReplay";
  * Pixi stage, initiative tracker, and chat surface reconstruct the
  * past automatically.
  */
-interface SessionReplayPanelProps {
+export interface SessionReplayPanelProps {
 	campaignId: string;
 	canManage: boolean;
 }

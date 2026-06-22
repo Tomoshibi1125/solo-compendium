@@ -23,7 +23,7 @@ import {
 	Wand2,
 } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { CompendiumImage } from "@/components/compendium/CompendiumImage";
 import { CompendiumSidebar } from "@/components/compendium/CompendiumSidebar";
 import { EmptyState } from "@/components/compendium/EmptyState";
@@ -179,6 +179,14 @@ const Compendium = () => {
 	const [currentPage, setCurrentPage] = useState(1);
 	const [showGeminiProtocol, setShowGeminiProtocol] = useState(false);
 	const [filtersOpen, setFiltersOpen] = useState(false);
+	const [searchParams] = useSearchParams();
+	// Deep-link: /compendium?tab=sovereign opens the Fusion Console directly
+	// (used by the "fusion ready" CTA on the character sheet).
+	useEffect(() => {
+		if (searchParams.get("tab") === "sovereign") {
+			setShowGeminiProtocol(true);
+		}
+	}, [searchParams]);
 	const [_sendingItem, setSendingItem] = useState<CompendiumEntry | null>(null);
 	const [_isSendDialogOpen, setIsSendDialogOpen] = useState(false);
 

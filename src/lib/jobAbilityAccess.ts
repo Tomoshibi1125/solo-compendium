@@ -373,7 +373,7 @@ export function spellSchoolMatchesJob(
 // ─────────────────────────────────────────────────────────────────────────
 
 /** Normalized owner-job tokens declared on an entry's `classes` list. */
-function getAbilityOwnerJobs(
+export function getAbilityOwnerJobs(
 	entry: { classes?: string[] | null } | null | undefined,
 ): string[] {
 	const classes = entry?.classes;

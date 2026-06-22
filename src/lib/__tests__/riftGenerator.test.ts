@@ -114,6 +114,8 @@ describe("AI Fallback Chain — Provider Priority", () => {
 			apiKey: "",
 			apiBase: "https://api.openai.com/v1",
 			model: "gpt-4o-mini",
+			freeModel: "auto",
+			freeModelId: "",
 		});
 
 		const config = manager.getConfiguration();
@@ -127,6 +129,8 @@ describe("AI Fallback Chain — Provider Priority", () => {
 			apiKey: "sk-test",
 			apiBase: "https://api.openai.com/v1",
 			model: "gpt-4o-mini",
+			freeModel: "auto",
+			freeModelId: "",
 		});
 
 		const config = manager.getConfiguration();

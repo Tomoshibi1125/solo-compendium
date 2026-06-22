@@ -46,7 +46,7 @@ function toPathChoiceSource(
 	};
 }
 
-interface CharacterChoiceTotals {
+export interface CharacterChoiceTotals {
 	cantrips: number;
 	spells: number;
 	powers: number;

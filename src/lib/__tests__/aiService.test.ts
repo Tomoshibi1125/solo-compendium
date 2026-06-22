@@ -47,6 +47,8 @@ describe("AIServiceManager free-first integration", () => {
 			apiKey: "",
 			apiBase: "https://api.openai.com/v1",
 			model: "gpt-4o-mini",
+			freeModel: "auto",
+			freeModelId: "",
 		};
 
 		manager.applyUserSettings(freeSettings);
@@ -65,6 +67,8 @@ describe("AIServiceManager free-first integration", () => {
 			apiKey: "sk-test",
 			apiBase: "https://api.openai.com/v1",
 			model: "gpt-4o-mini",
+			freeModel: "auto",
+			freeModelId: "",
 		};
 
 		manager.applyUserSettings(customSettings);

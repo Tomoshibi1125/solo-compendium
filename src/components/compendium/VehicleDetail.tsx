@@ -17,7 +17,7 @@ import { Badge } from "@/components/ui/badge";
 import { formatRegentVernacular } from "@/lib/vernacular";
 import type { CompendiumVehicle } from "@/types/compendium";
 
-interface VehicleData extends CompendiumVehicle {}
+export interface VehicleData extends CompendiumVehicle {}
 
 const vehicleTypeLabels: Record<string, string> = {
 	mount: "Mount",

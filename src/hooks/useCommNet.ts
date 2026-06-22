@@ -54,7 +54,7 @@ export interface CommNetPeer {
 
 export type CommNetTransportKind = "trystero" | "livekit";
 
-interface UseCommNetOptions {
+export interface UseCommNetOptions {
 	campaignId: string | null | undefined;
 	/** Optional session subdivision; defaults to "shared". */
 	sessionId?: string | null;
@@ -83,7 +83,7 @@ interface UseCommNetOptions {
 	livekitToken?: string;
 }
 
-interface UseCommNetResult {
+export interface UseCommNetResult {
 	peers: ReadonlyArray<CommNetPeer>;
 	localStream: MediaStream | null;
 	micEnabled: boolean;

@@ -69,7 +69,7 @@ interface InstalledModule {
  * lifecycle and translates between Worker messages and the Bureau
  * Directive Bus + scene state.
  */
-class ModuleHost {
+export class ModuleHost {
 	private installed: Map<string, InstalledModule> = new Map();
 	private sceneSnapshotProvider: () => unknown = () => null;
 

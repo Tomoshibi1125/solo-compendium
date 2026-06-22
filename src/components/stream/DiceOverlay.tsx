@@ -9,7 +9,7 @@ import { useCampaignMessages } from "@/hooks/useCampaignChat";
  * fades out. Streamlabs / Twitch Studio composite it on top of the
  * gameplay layer.
  */
-interface DiceOverlayProps {
+export interface DiceOverlayProps {
 	campaignId: string;
 }
 

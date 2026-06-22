@@ -37,7 +37,7 @@ import {
 } from "@/lib/characterCalculations";
 import type { AbilityScore } from "@/types/core-rules";
 
-interface CustomSkill {
+export interface CustomSkill {
 	id: string;
 	name: string;
 	ability: AbilityScore;

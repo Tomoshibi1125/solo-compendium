@@ -20,7 +20,7 @@ import {
 	type Track,
 } from "livekit-client";
 
-interface LiveKitTransportOptions {
+export interface LiveKitTransportOptions {
 	url: string;
 	token: string;
 	roomName: string;

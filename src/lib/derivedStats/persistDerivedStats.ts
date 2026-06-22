@@ -21,7 +21,7 @@
 
 import { supabase } from "@/integrations/supabase/client";
 
-interface DerivedStatsSnapshot {
+export interface DerivedStatsSnapshot {
 	armorClass: number;
 	speed: number;
 	initiative: number;

@@ -8,7 +8,7 @@
 import type { AbilityScore } from "@/types/core-rules";
 
 // Standard array values — DDB Quickbuilder uses the same baseline.
-const STANDARD_ARRAY: ReadonlyArray<number> = [15, 14, 13, 12, 10, 8];
+export const STANDARD_ARRAY: ReadonlyArray<number> = [15, 14, 13, 12, 10, 8];
 
 export const ALL_ABILITIES_CANONICAL_ORDER: ReadonlyArray<AbilityScore> = [
 	"STR",

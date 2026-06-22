@@ -21,7 +21,7 @@ import { cn } from "@/lib/utils";
  * RA theming: "Comm-Net" = Bureau communications uplink. Mute =
  * "Cloak Channel". Cam off = "Mask Identity". PTT = "Push Burst".
  */
-interface CommNetPanelProps {
+export interface CommNetPanelProps {
 	campaignId: string | null;
 	sessionId?: string | null;
 	enabled: boolean;

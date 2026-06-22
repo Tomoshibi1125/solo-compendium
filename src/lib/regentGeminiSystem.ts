@@ -3,7 +3,7 @@
 // Nine Regents — S-Rank sovereign powers unlocked through gate trials
 
 import type { Character } from "../types/character";
-import { NINE_REGENTS } from "./nineRegents";
+import { ALL_REGENTS } from "./regentDatabase";
 
 export type AbilityScore = "STR" | "AGI" | "VIT" | "INT" | "SENSE" | "PRE";
 export type Job = string;
@@ -66,8 +66,11 @@ interface FusionResponseData {
 export class RegentGeminiSystem {
 	private constructor() {}
 
-	// Import the Nine Regents from nineRegents.ts
-	static readonly REGENT_DATABASE: RegentPath[] = NINE_REGENTS;
+	// Complete regent database: every CANONICAL regent (by canonical id) plus any
+	// legacy nine-regent entries. Sourced from regentDatabase.ts so that AI- and
+	// externally-generated Sovereigns (which reference canonical monarch ids) are
+	// always resolvable and their fusion abilities are never dropped.
+	static readonly REGENT_DATABASE: RegentPath[] = ALL_REGENTS;
 	static readonly MAX_REGENTS_PER_CHARACTER = 2;
 
 	/**

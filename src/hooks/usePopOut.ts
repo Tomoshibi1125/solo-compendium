@@ -14,7 +14,7 @@ import { useCallback } from "react";
  *
  * Safe to call from any click handler. No-ops on SSR.
  */
-interface UsePopOutOptions {
+export interface UsePopOutOptions {
 	/**
 	 * Unique window name (also used as the popup target). Same name →
 	 * same window across re-opens (focuses instead of duplicating).

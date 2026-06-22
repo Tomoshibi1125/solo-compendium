@@ -12,6 +12,7 @@ import {
 	Zap,
 } from "lucide-react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { SovereignExportImportPanel } from "@/components/character/SovereignExportImportPanel";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -25,6 +26,7 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
 import { useActiveCharacter } from "@/hooks/useActiveCharacter";
 import { useCampaignByCharacterId } from "@/hooks/useCampaigns";
@@ -769,24 +771,62 @@ export function GeminiProtocolGenerator() {
 						</div>
 					)}
 
-					<Button
-						onClick={handleGenerate}
-						disabled={
-							!canGenerate || (autoMode && !templateReady) || isGenerating
-						}
-						className="w-full"
-					>
-						{isGenerating ? (
-							<Loader2 className="h-4 w-4 mr-2 animate-spin" />
-						) : (
-							<Dna className="h-4 w-4 mr-2" />
-						)}
-						{isGenerating
-							? "Fusing with AI..."
-							: autoMode
-								? "Generate Sovereign Overlay"
-								: "Initiate Gemini Protocol Fusion"}
-					</Button>
+					{/* Choose how to forge the Sovereign: the app's built-in free AI,
+					    or your own outside AI (export the prompt, bring back the JSON). */}
+					<Tabs defaultValue="embedded" className="w-full">
+						<TabsList className="grid w-full grid-cols-2">
+							<TabsTrigger value="embedded">
+								<Sparkles className="h-4 w-4 mr-2" />
+								Built-in AI
+							</TabsTrigger>
+							<TabsTrigger value="outside" disabled={!templateReady}>
+								<Link2 className="h-4 w-4 mr-2" />
+								Use my own AI
+							</TabsTrigger>
+						</TabsList>
+
+						<TabsContent value="embedded" className="mt-4">
+							<Button
+								onClick={handleGenerate}
+								disabled={
+									!canGenerate || (autoMode && !templateReady) || isGenerating
+								}
+								className="w-full"
+							>
+								{isGenerating ? (
+									<Loader2 className="h-4 w-4 mr-2 animate-spin" />
+								) : (
+									<Dna className="h-4 w-4 mr-2" />
+								)}
+								{isGenerating
+									? "Fusing with AI..."
+									: autoMode
+										? "Generate Sovereign Overlay"
+										: "Initiate Gemini Protocol Fusion"}
+							</Button>
+						</TabsContent>
+
+						<TabsContent value="outside" className="mt-4">
+							{templateReady &&
+							selectedJobEntry &&
+							selectedPathEntry &&
+							selectedRegentAEntry &&
+							selectedRegentBEntry ? (
+								<SovereignExportImportPanel
+									job={selectedJobEntry as never}
+									path={selectedPathEntry as never}
+									regentA={selectedRegentAEntry as never}
+									regentB={selectedRegentBEntry as never}
+									characterId={characterId}
+									alreadyLockedIn={Boolean(existingSovereign)}
+								/>
+							) : (
+								<p className="text-sm text-muted-foreground">
+									Select a Job, Path, and two {REGENT_LABEL_PLURAL} first.
+								</p>
+							)}
+						</TabsContent>
+					</Tabs>
 				</CardContent>
 			</Card>
 

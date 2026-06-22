@@ -23,7 +23,7 @@ import type { VTTScene, VTTSceneLevel } from "@/types/vtt";
  * controls. Token assignment to a specific stratum happens through
  * the token action bar (separate surface).
  */
-interface StrataDrawerProps {
+export interface StrataDrawerProps {
 	scene: VTTScene;
 	onSceneChange: (next: VTTScene) => void;
 }

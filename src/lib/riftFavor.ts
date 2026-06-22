@@ -14,7 +14,7 @@ export interface RiftFavorOption {
 
 export const RIFT_BOOST_OPTION_ID = "favor-inspiration";
 
-interface RiftFavorBoostRoll {
+export interface RiftFavorBoostRoll {
 	diceFormula: string;
 	roll: number;
 	result: number;

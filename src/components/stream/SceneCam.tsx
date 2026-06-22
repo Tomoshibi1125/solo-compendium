@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
  * "click to open" prompt and a fallback note so OBS users know what
  * to point their layout at.
  */
-interface SceneCamProps {
+export interface SceneCamProps {
 	campaignId: string;
 }
 

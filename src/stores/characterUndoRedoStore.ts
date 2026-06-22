@@ -27,7 +27,7 @@ const EMPTY_HISTORY: HistoryInfo = {
 	canRedo: false,
 };
 
-interface CharacterUndoRedoState {
+export interface CharacterUndoRedoState {
 	scopeId: string | null;
 	manager: UndoRedoManager<CharacterWithAbilities> | null;
 	/** Bumped on every push/undo/redo/scope change to drive re-renders. */

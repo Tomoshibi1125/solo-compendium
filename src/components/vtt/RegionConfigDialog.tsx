@@ -37,7 +37,7 @@ import type { VTTRegionBehavior, VTTRiftRegion } from "@/types/vtt";
  * Bleed, Sovereign Aura, Sanctum Ward, Healing Spring, Difficult
  * Terrain) plus custom behavior add-on.
  */
-interface RegionConfigDialogProps {
+export interface RegionConfigDialogProps {
 	open: boolean;
 	region: VTTRiftRegion | null;
 	onClose: () => void;

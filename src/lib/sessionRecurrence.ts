@@ -9,7 +9,7 @@
 
 export type RecurrenceFrequency = "weekly" | "biweekly" | "monthly";
 
-interface RecurrenceRule {
+export interface RecurrenceRule {
 	frequency: RecurrenceFrequency;
 	/** Number of instances to generate, including the seed. Capped 1..52. */
 	count: number;

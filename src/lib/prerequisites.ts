@@ -24,7 +24,7 @@ import type { AbilityScore } from "@/types/core-rules";
  * Structured prerequisite. All fields are optional; absent fields are
  * unconstrained. Multiple constraints AND together.
  */
-interface PrerequisiteSpec {
+export interface PrerequisiteSpec {
 	/** Minimum ability score requirements, e.g. `{ STR: 13, AGI: 13 }`. */
 	minAbility?: Partial<Record<AbilityScore, number>>;
 	/** Minimum character level. */
@@ -48,7 +48,7 @@ export interface PrereqCharacterContext {
 	proficiencies?: string[] | null; // armor/weapon/skill names
 }
 
-interface PrereqValidation {
+export interface PrereqValidation {
 	ok: boolean;
 	missing: string[];
 }

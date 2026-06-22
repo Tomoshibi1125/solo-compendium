@@ -21,6 +21,8 @@
 		"audit:assets:update": "node scripts/audit-assets.mjs --update-baseline",
 		"enrich:compendium": "tsx scripts/enrich-compendium.ts",
 		"export:book": "tsx scripts/export-sandbox-book.ts",
+		"books:build": "tsx books/scripts/build-books.ts",
+		"books:verify": "tsx books/scripts/build-books.ts --verify-only",
 		"test": "vitest",
 		"test:ui": "vitest --ui",
 		"test:run": "vitest run",
@@ -184,9 +186,9 @@
 			"tests/**/*.ts",
 			"tools/**/*.ts",
 			"src/index.ts",
-			"src/components/warden-directives/WardenWiringHub.tsx",
-			"src/lib/sovereign/sovereignContract.ts"
+			"src/components/warden-directives/WardenWiringHub.tsx"
 		],
+		"ignoreExportsUsedInFile": true,
 		"project": [
 			"src/**/*.{ts,tsx}"
 		]

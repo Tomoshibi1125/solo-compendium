@@ -150,7 +150,7 @@ export function getRegentHpContributionForIds(
 
 // ── Proficiency / saving-throw union ───────────────────────────────────────
 
-interface GestaltProficiencies {
+export interface GestaltProficiencies {
 	savingThrows: AbilityScore[];
 	skills: string[];
 	armor: string[];
@@ -196,7 +196,7 @@ export function getGestaltProficiencies(
 
 // ── Leveled class features ─────────────────────────────────────────────────
 
-interface GestaltFeature {
+export interface GestaltFeature {
 	regentId: string;
 	regentName: string;
 	level: number;
@@ -369,7 +369,7 @@ export function getGestaltSpellSlots(
 
 // ── Convenience: full gestalt summary for a character ──────────────────────
 
-interface GestaltSummary {
+export interface GestaltSummary {
 	active: boolean;
 	regents: Regent[];
 	regentHitDieContribution: number;

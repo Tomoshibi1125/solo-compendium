@@ -4,20 +4,20 @@ import { formatSignedNumber } from "./powerActionFormulas";
 const DICE_ONLY_RE = /^\s*\d+d\d+\s*$/i;
 const TRAILING_SIGN_RE = /[+-]\s*\d+(?:\.\d+)?$/;
 
-interface AttackLineInput {
+export interface AttackLineInput {
 	ability?: AbilityScore | string | null;
 	abilityModifier?: number | null;
 	attackRoll?: string | null;
 	attackBonus?: number | null;
 }
 
-interface DamageLineInput {
+export interface DamageLineInput {
 	damageRoll?: string | null;
 	damageType?: string | null;
 	abilityModifier?: number | null;
 }
 
-interface SaveLineInput {
+export interface SaveLineInput {
 	saveDC?: number | null;
 	saveAbility?: AbilityScore | string | null;
 }
