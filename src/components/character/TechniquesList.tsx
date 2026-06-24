@@ -9,10 +9,10 @@
 import { Play, Plus, Sword, Trash2 } from "lucide-react";
 import { useState } from "react";
 import { AutoLinkText } from "@/components/compendium/AutoLinkText";
-import { ExpandableText } from "@/components/ui/ExpandableText";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { ExpandableText } from "@/components/ui/ExpandableText";
 import { useToast } from "@/hooks/use-toast";
 import { useCharacter } from "@/hooks/useCharacters";
 import { useCombatActions } from "@/hooks/useCombatActions";
@@ -280,7 +280,10 @@ export function TechniquesList({
 												</div>
 											)}
 											{description && (
-												<ExpandableText className="text-xs text-muted-foreground" lines={3}>
+												<ExpandableText
+													className="text-xs text-muted-foreground"
+													lines={3}
+												>
 													<AutoLinkText text={description} />
 												</ExpandableText>
 											)}

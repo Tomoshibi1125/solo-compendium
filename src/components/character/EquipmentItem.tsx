@@ -1,9 +1,9 @@
 import { Trash2 } from "lucide-react";
 import { memo } from "react";
 import { AutoLinkText } from "@/components/compendium/AutoLinkText";
-import { ExpandableText } from "@/components/ui/ExpandableText";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { ExpandableText } from "@/components/ui/ExpandableText";
 import {
 	Select,
 	SelectContent,

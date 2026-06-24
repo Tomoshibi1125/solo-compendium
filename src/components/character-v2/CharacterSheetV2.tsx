@@ -1,21 +1,27 @@
+import * as TabsPrimitive from "@radix-ui/react-tabs";
 import { useDrag } from "@use-gesture/react";
 import type { LucideIcon } from "lucide-react";
 import {
+	BarChart3,
 	Copy,
 	Crown,
 	Ghost,
+	LayoutGrid,
+	Package,
 	Palette,
 	Printer,
 	Redo2,
+	ScrollText,
 	Shield,
 	Sparkles,
 	Sun,
 	Swords,
 	Undo2,
+	User,
 	Wand2,
 	Zap,
 } from "lucide-react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { ConcentrationBanner } from "@/components/CharacterSheet/ConcentrationBanner";
 import { ConditionBadgeBar } from "@/components/CharacterSheet/ConditionBadgeBar";
 import { DefensesModal } from "@/components/CharacterSheet/DefensesModal";
@@ -40,6 +46,10 @@ import { JournalPanel } from "@/components/character/JournalPanel";
 import { LanguagesPanel } from "@/components/character/LanguagesPanel";
 import { LevelUpWizardModal } from "@/components/character/LevelUpWizardModal";
 import { LimitedUseAggregator } from "@/components/character/LimitedUseAggregator";
+import {
+	type PartyInventoryItem,
+	PartyInventoryPanel,
+} from "@/components/character/PartyInventoryPanel";
 import { PathFeaturesDisplay } from "@/components/character/PathFeaturesDisplay";
 import { RegentFeaturesDisplay } from "@/components/character/RegentFeaturesDisplay";
 import { RegentUnlocksPanel } from "@/components/character/RegentUnlocksPanel";
@@ -82,6 +92,7 @@ import {
 	getSheetTheme,
 } from "@/data/sheetThemes";
 import { useCharacterPageModel } from "@/hooks/useCharacterPageModel";
+import { useEquipment } from "@/hooks/useEquipment";
 import { type RegentUnlock, useRegentUnlocks } from "@/hooks/useRegentUnlocks";
 import type { Json } from "@/integrations/supabase/types";
 import {
@@ -106,6 +117,19 @@ import { AbilityScoreStrip } from "./AbilityScoreStrip";
 import { CharacterScrollHeader } from "./CharacterScrollHeader";
 import { ProficiencySidebar } from "./ProficiencySidebar";
 import { StatusHeader } from "./StatusHeader";
+
+// DDB-style mobile section selector: a grid of tappable "boxes" (icon + label),
+// no horizontal scroll. Order must match the `mobileTabs` swipe array.
+const MOBILE_SECTIONS: { value: string; label: string; icon: LucideIcon }[] = [
+	{ value: "actions", label: "Combat", icon: Swords },
+	{ value: "powers", label: "Abilities", icon: Wand2 },
+	{ value: "inventory", label: "Items", icon: Package },
+	{ value: "features", label: "Feats", icon: Sparkles },
+	{ value: "bio", label: "Bio", icon: User },
+	{ value: "quests", label: "Notes", icon: ScrollText },
+	{ value: "extras", label: "Extras", icon: LayoutGrid },
+	{ value: "stats", label: "Stats", icon: BarChart3 },
+];
 
 // CharacterSheetV2 is now the single authoritative page component.
 
@@ -144,6 +168,25 @@ export default function CharacterSheetV2() {
 		deathSaves,
 		undoRedo,
 	} = pm;
+
+	// DDB advantage/disadvantage applied to d20 checks/saves/skills/initiative.
+	const [rollMode, setRollMode] = useState<
+		"normal" | "advantage" | "disadvantage"
+	>("normal");
+
+	const { addEquipment } = useEquipment(character?.id ?? "");
+	const [invView, setInvView] = useState<"my" | "party">("my");
+	const handleClaimPartyItem = async (item: PartyInventoryItem) => {
+		if (!character) return;
+		await addEquipment({
+			character_id: character.id,
+			name: item.name,
+			item_type: "gear",
+			description: item.notes ?? null,
+			properties: [],
+			quantity: item.quantity ?? 1,
+		});
+	};
 
 	const {
 		ui: { modals: persistentModals },
@@ -362,6 +405,7 @@ export default function CharacterSheetV2() {
 			title: `${ability} Check`,
 			formula: "1d20",
 			rollType: "ability",
+			advantage: rollMode,
 			context: `${ability} ability check`,
 			modifier: getAbilityModifier(stats.finalAbilities[ability]),
 		});
@@ -371,6 +415,7 @@ export default function CharacterSheetV2() {
 			title: `${ability} Save`,
 			formula: "1d20",
 			rollType: "save",
+			advantage: rollMode,
 			context: `${ability} saving throw`,
 			modifier: stats.calculatedStats.savingThrows[ability],
 		});
@@ -382,6 +427,7 @@ export default function CharacterSheetV2() {
 			title: `${skill} Check`,
 			formula: "1d20",
 			rollType: "skill",
+			advantage: rollMode,
 			context: `${skill} skill check`,
 			modifier,
 		});
@@ -392,6 +438,7 @@ export default function CharacterSheetV2() {
 			title: "Initiative",
 			formula: "1d20",
 			rollType: "initiative",
+			advantage: rollMode,
 			context: "Initiative roll",
 			modifier: stats.finalInitiative,
 		});
@@ -540,22 +587,51 @@ export default function CharacterSheetV2() {
 
 	const inventory = (
 		<div className="space-y-6">
-			<EquipmentList
-				characterId={character.id}
-				onSelectDetail={(detail) => onSelectDetail(detail, "Item", Shield)}
-			/>
-			<InlineSectionNote
-				section="equipment"
-				label="Inventory"
-				value={sectionNotes.equipment ?? ""}
-				onChange={(v) => handleSectionNote("equipment", v)}
-				readOnly={isReadOnly}
-			/>
-			<TattoosList
-				characterId={character.id}
-				onSelectDetail={(detail) => onSelectDetail(detail, "Tattoo", Sparkles)}
-			/>
-			<CurrencyManager characterId={character.id} />
+			<div className="flex gap-2">
+				<Button
+					variant={invView === "my" ? "default" : "outline"}
+					size="sm"
+					onClick={() => setInvView("my")}
+				>
+					My Inventory
+				</Button>
+				<Button
+					variant={invView === "party" ? "default" : "outline"}
+					size="sm"
+					onClick={() => setInvView("party")}
+				>
+					Party Inventory
+				</Button>
+			</div>
+			{invView === "my" ? (
+				<>
+					<EquipmentList
+						characterId={character.id}
+						onSelectDetail={(detail) => onSelectDetail(detail, "Item", Shield)}
+					/>
+					<InlineSectionNote
+						section="equipment"
+						label="Inventory"
+						value={sectionNotes.equipment ?? ""}
+						onChange={(v) => handleSectionNote("equipment", v)}
+						readOnly={isReadOnly}
+					/>
+					<TattoosList
+						characterId={character.id}
+						onSelectDetail={(detail) =>
+							onSelectDetail(detail, "Tattoo", Sparkles)
+						}
+					/>
+					<CurrencyManager characterId={character.id} />
+				</>
+			) : (
+				<PartyInventoryPanel
+					campaignId={campaignId ?? null}
+					characterName={character.name}
+					readOnly={isReadOnly}
+					onClaim={handleClaimPartyItem}
+				/>
+			)}
 		</div>
 	);
 	const features = (
@@ -595,13 +671,6 @@ export default function CharacterSheetV2() {
 				campaignId={campaignId ?? undefined}
 				onSelectDetail={(detail) => onSelectDetail(detail, "Rune", Sparkles)}
 			/>
-			<ShadowSoldiersPanel
-				characterId={character.id}
-				characterLevel={character.level || 1}
-				campaignId={campaignId ?? undefined}
-				onSelectDetail={(detail) => onSelectDetail(detail, "Shadow", Ghost)}
-			/>
-			<VehiclesPanel characterId={character.id} readOnly={isReadOnly} />
 		</div>
 	);
 	const bio = (
@@ -629,6 +698,13 @@ export default function CharacterSheetV2() {
 	const extras = (
 		<>
 			<CharacterExtrasPanel characterId={character.id} />
+			<VehiclesPanel characterId={character.id} readOnly={isReadOnly} />
+			<ShadowSoldiersPanel
+				characterId={character.id}
+				characterLevel={character.level || 1}
+				campaignId={campaignId ?? undefined}
+				onSelectDetail={(detail) => onSelectDetail(detail, "Shadow", Ghost)}
+			/>
 			<JobResourcePools characterId={character.id} />
 			<SpellSlotsDisplay
 				characterId={character.id}
@@ -968,6 +1044,33 @@ export default function CharacterSheetV2() {
 						/>
 					)}
 
+				{!isReadOnly && (
+					<div className="flex items-center gap-2 flex-wrap">
+						<span className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground">
+							Roll Mode
+						</span>
+						{(["normal", "advantage", "disadvantage"] as const).map((m) => (
+							<button
+								key={m}
+								type="button"
+								onClick={() => setRollMode(m)}
+								className={cn(
+									"min-h-[32px] px-3 rounded border text-[10px] font-mono uppercase tracking-wider transition-colors",
+									rollMode === m
+										? m === "advantage"
+											? "border-green-500 bg-green-500/15 text-green-400"
+											: m === "disadvantage"
+												? "border-red-500 bg-red-500/15 text-red-400"
+												: "border-primary bg-primary/15 text-primary"
+										: "border-primary/15 text-muted-foreground hover:border-primary/40",
+								)}
+							>
+								{m === "normal" ? "Normal" : m === "advantage" ? "Adv" : "Dis"}
+							</button>
+						))}
+					</div>
+				)}
+
 				{/* Desktop 3-Column Layout */}
 				<div className="hidden md:grid grid-cols-[120px_300px_1fr] gap-8 items-start">
 					{/* COLUMN 1: Ability Scores (Vertical) */}
@@ -1064,46 +1167,46 @@ export default function CharacterSheetV2() {
 							onValueChange={setActiveTab}
 							className="bg-obsidian-charcoal/40 border border-primary/20 rounded-[2px] backdrop-blur-md p-4 min-h-[600px]"
 						>
-							<TabsList className="flex bg-transparent border-b border-primary/10 w-full justify-start gap-6 rounded-none h-12 mb-4 px-2 overflow-x-auto scrollbar-none relative">
+							<TabsList className="flex bg-transparent border-b border-primary/10 w-full justify-start gap-1 rounded-none h-12 mb-4 px-2 relative">
 								<TabsTrigger
 									value="actions"
-									className="data-[state=active]:bg-transparent data-[state=active]:text-primary border-b-2 border-transparent data-[state=active]:border-primary rounded-none h-full px-1 uppercase font-mono text-xs tracking-widest transition-all hover:text-primary/70"
+									className="data-[state=active]:bg-transparent data-[state=active]:text-primary border-b-2 border-transparent data-[state=active]:border-primary rounded-none h-full px-3 uppercase font-mono text-xs tracking-widest transition-all hover:text-primary/70"
 								>
 									Actions
 								</TabsTrigger>
 								<TabsTrigger
 									value="powers"
-									className="data-[state=active]:bg-transparent data-[state=active]:text-primary border-b-2 border-transparent data-[state=active]:border-primary rounded-none h-full px-1 uppercase font-mono text-xs tracking-widest transition-all hover:text-primary/70"
+									className="data-[state=active]:bg-transparent data-[state=active]:text-primary border-b-2 border-transparent data-[state=active]:border-primary rounded-none h-full px-3 uppercase font-mono text-xs tracking-widest transition-all hover:text-primary/70"
 								>
 									Abilities
 								</TabsTrigger>
 								<TabsTrigger
 									value="inventory"
-									className="data-[state=active]:bg-transparent data-[state=active]:text-primary border-b-2 border-transparent data-[state=active]:border-primary rounded-none h-full px-1 uppercase font-mono text-xs tracking-widest transition-all hover:text-primary/70"
+									className="data-[state=active]:bg-transparent data-[state=active]:text-primary border-b-2 border-transparent data-[state=active]:border-primary rounded-none h-full px-3 uppercase font-mono text-xs tracking-widest transition-all hover:text-primary/70"
 								>
 									Items
 								</TabsTrigger>
 								<TabsTrigger
 									value="features"
-									className="data-[state=active]:bg-transparent data-[state=active]:text-primary border-b-2 border-transparent data-[state=active]:border-primary rounded-none h-full px-1 uppercase font-mono text-xs tracking-widest transition-all hover:text-primary/70"
+									className="data-[state=active]:bg-transparent data-[state=active]:text-primary border-b-2 border-transparent data-[state=active]:border-primary rounded-none h-full px-3 uppercase font-mono text-xs tracking-widest transition-all hover:text-primary/70"
 								>
 									Features
 								</TabsTrigger>
 								<TabsTrigger
 									value="bio"
-									className="data-[state=active]:bg-transparent data-[state=active]:text-primary border-b-2 border-transparent data-[state=active]:border-primary rounded-none h-full px-1 uppercase font-mono text-xs tracking-widest transition-all hover:text-primary/70"
+									className="data-[state=active]:bg-transparent data-[state=active]:text-primary border-b-2 border-transparent data-[state=active]:border-primary rounded-none h-full px-3 uppercase font-mono text-xs tracking-widest transition-all hover:text-primary/70"
 								>
 									Bio
 								</TabsTrigger>
 								<TabsTrigger
 									value="quests"
-									className="data-[state=active]:bg-transparent data-[state=active]:text-primary border-b-2 border-transparent data-[state=active]:border-primary rounded-none h-full px-1 uppercase font-mono text-xs tracking-widest transition-all hover:text-primary/70"
+									className="data-[state=active]:bg-transparent data-[state=active]:text-primary border-b-2 border-transparent data-[state=active]:border-primary rounded-none h-full px-3 uppercase font-mono text-xs tracking-widest transition-all hover:text-primary/70"
 								>
 									Notes
 								</TabsTrigger>
 								<TabsTrigger
 									value="extras"
-									className="data-[state=active]:bg-transparent data-[state=active]:text-primary border-b-2 border-transparent data-[state=active]:border-primary rounded-none h-full px-1 uppercase font-mono text-xs tracking-widest transition-all hover:text-primary/70"
+									className="data-[state=active]:bg-transparent data-[state=active]:text-primary border-b-2 border-transparent data-[state=active]:border-primary rounded-none h-full px-3 uppercase font-mono text-xs tracking-widest transition-all hover:text-primary/70"
 								>
 									Extras
 								</TabsTrigger>
@@ -1179,56 +1282,23 @@ export default function CharacterSheetV2() {
 						onValueChange={setActiveMobileTab}
 						className="w-full"
 					>
-						<TabsList className="flex w-full items-center justify-start gap-6 h-14 bg-obsidian-charcoal/80 border-y border-primary/20 rounded-none sticky top-16 z-20 overflow-x-auto scrollbar-none px-4 shadow-[0_4px_12px_rgba(0,0,0,0.5)]">
-							<TabsTrigger
-								value="actions"
-								className="text-[11px] uppercase font-mono tracking-wider data-[state=active]:bg-transparent data-[state=active]:text-primary border-b-2 border-transparent data-[state=active]:border-primary rounded-none h-full transition-all"
-							>
-								Combat
-							</TabsTrigger>
-							<TabsTrigger
-								value="powers"
-								className="text-[11px] uppercase font-mono tracking-wider data-[state=active]:bg-transparent data-[state=active]:text-primary border-b-2 border-transparent data-[state=active]:border-primary rounded-none h-full transition-all"
-							>
-								Abilities
-							</TabsTrigger>
-							<TabsTrigger
-								value="inventory"
-								className="text-[11px] uppercase font-mono tracking-wider data-[state=active]:bg-transparent data-[state=active]:text-primary border-b-2 border-transparent data-[state=active]:border-primary rounded-none h-full transition-all"
-							>
-								Items
-							</TabsTrigger>
-							<TabsTrigger
-								value="features"
-								className="text-[11px] uppercase font-mono tracking-wider data-[state=active]:bg-transparent data-[state=active]:text-primary border-b-2 border-transparent data-[state=active]:border-primary rounded-none h-full transition-all"
-							>
-								Feats
-							</TabsTrigger>
-							<TabsTrigger
-								value="bio"
-								className="text-[11px] uppercase font-mono tracking-wider data-[state=active]:bg-transparent data-[state=active]:text-primary border-b-2 border-transparent data-[state=active]:border-primary rounded-none h-full transition-all"
-							>
-								Bio
-							</TabsTrigger>
-							<TabsTrigger
-								value="quests"
-								className="text-[11px] uppercase font-mono tracking-wider data-[state=active]:bg-transparent data-[state=active]:text-primary border-b-2 border-transparent data-[state=active]:border-primary rounded-none h-full transition-all"
-							>
-								Notes
-							</TabsTrigger>
-							<TabsTrigger
-								value="extras"
-								className="text-[11px] uppercase font-mono tracking-wider data-[state=active]:bg-transparent data-[state=active]:text-primary border-b-2 border-transparent data-[state=active]:border-primary rounded-none h-full transition-all"
-							>
-								Extras
-							</TabsTrigger>
-							<TabsTrigger
-								value="stats"
-								className="text-[11px] uppercase font-mono tracking-wider data-[state=active]:bg-transparent data-[state=active]:text-primary border-b-2 border-transparent data-[state=active]:border-primary rounded-none h-full transition-all"
-							>
-								Stats
-							</TabsTrigger>
-						</TabsList>
+						<TabsPrimitive.List className="grid grid-cols-4 gap-2 w-full mb-2">
+							{MOBILE_SECTIONS.map(({ value, label, icon: Icon }) => (
+								<TabsPrimitive.Trigger
+									key={value}
+									value={value}
+									className={cn(
+										"flex flex-col items-center justify-center gap-1 min-h-[56px] rounded-md border px-1 py-2 text-[10px] font-mono uppercase tracking-wide transition-colors",
+										"border-primary/15 text-muted-foreground hover:border-primary/40 hover:text-foreground",
+										"data-[state=active]:border-primary data-[state=active]:bg-primary/15 data-[state=active]:text-primary data-[state=active]:shadow-[0_0_12px_hsl(var(--primary)/0.25)]",
+										"focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary/50",
+									)}
+								>
+									<Icon className="w-4 h-4 shrink-0" />
+									<span className="leading-none">{label}</span>
+								</TabsPrimitive.Trigger>
+							))}
+						</TabsPrimitive.List>
 
 						{/* Swipeable Container */}
 						<div {...bindMobileGestures()} className="touch-pan-y min-h-[50vh]">
@@ -1247,8 +1317,10 @@ export default function CharacterSheetV2() {
 										character.saving_throw_proficiencies || []
 									}
 									onRoll={onRollAbility}
+									variant="grid"
 								/>
 								<ProficiencySidebar
+									variant="panel"
 									saves={stats.calculatedStats.savingThrows}
 									skills={stats.skills}
 									allSkills={stats.allSkills}

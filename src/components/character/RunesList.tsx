@@ -11,10 +11,10 @@ import {
 } from "lucide-react";
 import { useMemo, useState } from "react";
 import { AutoLinkText } from "@/components/compendium/AutoLinkText";
-import { ExpandableText } from "@/components/ui/ExpandableText";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { ExpandableText } from "@/components/ui/ExpandableText";
 import { useToast } from "@/hooks/use-toast";
 import { useCharacter } from "@/hooks/useCharacters";
 import { useFeatures } from "@/hooks/useFeatures";
@@ -247,7 +247,10 @@ export function RunesList({
 														</Badge>
 													</div>
 													{runeDescription && (
-														<ExpandableText className="text-xs text-muted-foreground mt-1" lines={3}>
+														<ExpandableText
+															className="text-xs text-muted-foreground mt-1"
+															lines={3}
+														>
 															<AutoLinkText text={runeDescription} />
 														</ExpandableText>
 													)}

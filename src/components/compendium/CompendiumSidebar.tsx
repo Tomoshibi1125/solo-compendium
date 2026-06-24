@@ -146,7 +146,7 @@ export function CompendiumSidebar({
 			{/* Source Books */}
 			{sourceBooks.length > 0 && (
 				<AscendantWindow title="SOURCE BOOKS" className="p-4">
-					<ScrollArea className="h-[200px]">
+					<ScrollArea className="max-h-[50vh]">
 						<div className="space-y-2">
 							{sourceBooks.map((book) => {
 								const isSelected = selectedSourceBooks.includes(book);
@@ -176,7 +176,7 @@ export function CompendiumSidebar({
 			{/* Power Schools (for Powers) */}
 			{schools.length > 0 && onSchoolToggle && (
 				<AscendantWindow title="POWER SCHOOLS" className="p-4">
-					<ScrollArea className="h-[200px]">
+					<ScrollArea className="max-h-[50vh]">
 						<div className="space-y-2">
 							{schools.map((school) => {
 								const isSelected = selectedSchools?.includes(school);
@@ -303,7 +303,7 @@ export function CompendiumSidebar({
 			{/* Elements */}
 			{elements.length > 0 && onElementToggle && (
 				<AscendantWindow title="ELEMENTS" className="p-4">
-					<ScrollArea className="h-[150px]">
+					<ScrollArea className="max-h-[50vh]">
 						<div className="space-y-2">
 							{elements.map((element) => {
 								const isSelected = selectedElements?.includes(element);

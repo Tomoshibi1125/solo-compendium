@@ -37,6 +37,11 @@ interface ProficiencySidebarProps {
 		vulnerabilities: string[];
 		conditionImmunities: string[];
 	};
+	/**
+	 * `rail` = capped width for the desktop sidebar (default, unchanged).
+	 * `panel` = full width for the mobile Stats tab.
+	 */
+	variant?: "rail" | "panel";
 }
 
 export function ProficiencySidebar({
@@ -48,10 +53,16 @@ export function ProficiencySidebar({
 	onRollSkill,
 	senses,
 	defenses,
+	variant = "rail",
 }: ProficiencySidebarProps) {
 	return (
 		<TooltipProvider delayDuration={200}>
-			<div className="flex flex-col gap-6 w-full max-w-[300px]">
+			<div
+				className={cn(
+					"flex flex-col gap-6 w-full",
+					variant === "rail" && "max-w-[300px]",
+				)}
+			>
 				{/* Saving Throws Section */}
 				<section className="space-y-3">
 					<h3 className="text-[10px] font-mono text-primary font-bold uppercase tracking-[0.2em] px-2 mb-2 border-l-2 border-primary">
@@ -321,7 +332,7 @@ export function ProficiencySidebar({
 																: "bg-transparent",
 													)}
 												/>
-												<span className="text-xs font-heading font-medium truncate text-white/80 group-hover:text-white transition-colors">
+												<span className="text-xs font-heading font-medium text-white/80 group-hover:text-white transition-colors">
 													{skill.name}
 												</span>
 												<span className="text-[9px] font-mono text-primary/40 uppercase">

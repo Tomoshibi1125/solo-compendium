@@ -789,7 +789,7 @@ export const JobDetail = ({ data }: { data: JobData }) => {
 							>
 								<Wand2 className="w-5 h-5 text-primary flex-shrink-0" />
 								<div className="flex-1 min-w-0">
-									<h4 className="font-heading font-semibold group-hover:text-primary transition-colors truncate">
+									<h4 className="font-heading font-semibold group-hover:text-primary transition-colors">
 										{formatRegentVernacular(power.display_name || power.name)}
 									</h4>
 									<p className="text-xs text-muted-foreground">
@@ -822,7 +822,7 @@ export const JobDetail = ({ data }: { data: JobData }) => {
 							>
 								<Swords className="w-5 h-5 text-primary flex-shrink-0" />
 								<div className="flex-1 min-w-0">
-									<h4 className="font-heading font-semibold group-hover:text-primary transition-colors truncate">
+									<h4 className="font-heading font-semibold group-hover:text-primary transition-colors">
 										{formatRegentVernacular(
 											technique.display_name || technique.name,
 										)}

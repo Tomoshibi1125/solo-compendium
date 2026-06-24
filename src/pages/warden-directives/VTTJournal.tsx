@@ -479,7 +479,7 @@ const VTTJournal = () => {
 						)}
 
 						<AscendantWindow title="ENTRIES">
-							<div className="space-y-2 max-h-[600px] overflow-y-auto">
+							<div className="space-y-2 max-h-none sm:max-h-[600px] overflow-y-auto">
 								{isLoading ? (
 									<AscendantText className="block text-xs text-muted-foreground text-center py-4">
 										Loading entries...
@@ -503,7 +503,7 @@ const VTTJournal = () => {
 										>
 											<div className="flex items-start justify-between mb-1">
 												<div className="flex-1 min-w-0">
-													<div className="font-heading font-semibold text-sm truncate">
+													<div className="font-heading font-semibold text-sm">
 														{entry.title}
 													</div>
 													<div className="flex items-center gap-2 mt-1">

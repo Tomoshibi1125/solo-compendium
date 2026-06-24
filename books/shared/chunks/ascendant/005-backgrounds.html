@@ -1,0 +1,1725 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8"/>
+	<title>Rift Ascendant  -  Ascendant Guide - Backgrounds</title>
+	<style>/* ============================================================
+   RIFT ASCENDANT — SOURCEBOOK DESIGN SYSTEM
+   Professional TTRPG print stylesheet
+   ============================================================ */
+
+/* --- Google Fonts ----------------------------------------- */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400;1,8..60,600&family=JetBrains+Mono:wght@400;700&display=swap');
+
+/* --- Page Setup ------------------------------------------- */
+@page {
+	size: Letter;
+	margin: 0.58in 0.56in 0.72in;
+}
+
+/* --- Design Tokens ---------------------------------------- */
+:root {
+	/* Rift Ascendant brand palette */
+	--ra-bg:          #070812;
+	--ra-panel:       #101524;
+	--ra-panel-2:     #151b2f;
+	--ra-ink:         #f3f8ff;
+	--ra-muted:       #a8b6c7;
+	--ra-cyan:        #74f2ff;
+	--ra-violet:      #a78bfa;
+	--ra-silver:      #d8e3ef;
+	--ra-crimson:     #d84b63;
+	--ra-line:        #31415b;
+	--ra-paper:       #f5f0e5;
+	--ra-paper-ink:   #1a1410;
+	--ra-paper-muted: #5d574d;
+	--ra-paper-line:  #cdbf9e;
+
+	/* Typography */
+	--font-heading: 'Outfit', 'Segoe UI', system-ui, sans-serif;
+	--font-body:    'Source Serif 4', 'Georgia', 'Times New Roman', serif;
+	--font-mono:    'JetBrains Mono', 'Cascadia Mono', 'Consolas', monospace;
+
+	/* Entry tier accents */
+	--tier-legendary-border: #b8860b;
+	--tier-legendary-bg:     #fdf6e3;
+	--tier-legendary-title:  #78350f;
+	--tier-rare-border:      var(--ra-cyan);
+	--tier-rare-bg:          #f0f9ff;
+	--tier-rare-title:       #0c4a6e;
+	--tier-uncommon-border:  #94a3b8;
+	--tier-uncommon-bg:      #f8fafc;
+	--tier-uncommon-title:   #1e293b;
+}
+
+/* --- Reset ------------------------------------------------ */
+*, *::before, *::after {
+	box-sizing: border-box;
+}
+
+/* --- Base ------------------------------------------------- */
+html {
+	background: var(--ra-paper);
+}
+
+body {
+	margin: 0;
+	background: var(--ra-paper);
+	color: var(--ra-paper-ink);
+	font-family: var(--font-body);
+	font-size: 9.5pt;
+	line-height: 1.46;
+	-webkit-print-color-adjust: exact;
+	print-color-adjust: exact;
+}
+
+/* --- Type Scale ------------------------------------------- */
+h1, h2, h3, h4, h5 {
+	font-family: var(--font-heading);
+	line-height: 1.1;
+	margin: 0 0 0.16in;
+	color: #1a0f05;
+	font-variant: normal;
+	letter-spacing: -0.01em;
+	text-rendering: optimizeLegibility;
+}
+
+h1 { font-size: 26pt; font-weight: 800; }
+h2 { font-size: 17pt; font-weight: 700; }
+h3 { font-size: 12pt; font-weight: 700; }
+h4 { font-size: 10pt; font-weight: 600; }
+h5 { font-size: 8.5pt; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; }
+
+p {
+	margin: 0 0 0.075in;
+	orphans: 3;
+	widows: 3;
+}
+
+ul, ol {
+	margin: 0.03in 0 0.08in 0.17in;
+	padding: 0;
+}
+
+li {
+	margin: 0.015in 0;
+	orphans: 3;
+	widows: 3;
+}
+
+strong { color: #2d1a08; }
+
+em { font-style: italic; }
+
+code, pre {
+	font-family: var(--font-mono);
+}
+
+pre {
+	white-space: pre-wrap;
+	background: #1e1a15;
+	color: #f5f0e5;
+	border: 0.5pt solid #4a3f2f;
+	padding: 0.09in;
+	margin: 0.08in 0 0.12in;
+	font-size: 7pt;
+	break-inside: avoid;
+}
+
+table {
+	border-collapse: collapse;
+	width: 100%;
+	margin: 0.07in 0 0.11in;
+	font-size: 8.35pt;
+	break-inside: auto;
+}
+
+th, td {
+	border: 0.5pt solid var(--ra-paper-line);
+	padding: 0.042in 0.052in;
+	vertical-align: top;
+}
+
+th {
+	background: #2a1a0e;
+	color: #f5f0e5;
+	font-family: var(--font-heading);
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+	font-size: 7.2pt;
+	font-weight: 700;
+}
+
+td {
+	background: rgba(255, 255, 255, 0.45);
+	font-family: var(--font-body);
+}
+
+tr:nth-child(even) td {
+	background: rgba(205, 191, 158, 0.18);
+}
+
+/* --- Cover ------------------------------------------------ */
+.cover {
+	height: 130vw;
+	min-height: 130vw;
+	color: var(--ra-ink);
+	background:
+		linear-gradient(180deg, rgba(4, 6, 15, 0.9) 0%, rgba(10, 15, 30, 0.2) 40%, rgba(10, 15, 30, 0.3) 60%, rgba(4, 6, 15, 0.95) 100%),
+		var(--cover-image, none),
+		radial-gradient(ellipse at 15% 12%, rgba(116, 242, 255, 0.28) 0%, transparent 40%),
+		radial-gradient(ellipse at 85% 20%, rgba(167, 139, 250, 0.26) 0%, transparent 38%),
+		radial-gradient(ellipse at 50% 85%, rgba(216, 75, 99, 0.12) 0%, transparent 35%),
+		#070812;
+	background-size: cover;
+	background-position: center;
+	border: 0;
+	padding: 0.65in;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	overflow: hidden;
+	page-break-after: always;
+	break-after: page;
+}
+
+.cover::before {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	height: 5pt;
+	background: linear-gradient(90deg, var(--ra-cyan), var(--ra-violet), var(--ra-crimson));
+}
+
+.cover-kicker,
+.book-code,
+.classification,
+.eyebrow,
+.tag,
+.meta,
+.caption {
+	text-transform: uppercase;
+	letter-spacing: 0.09em;
+}
+
+.cover-kicker {
+	color: var(--ra-cyan);
+	font-family: var(--font-heading);
+	font-size: 8.5pt;
+	font-weight: 700;
+	margin-bottom: 0.1in;
+}
+
+.cover h1 {
+	color: #ffffff;
+	font-family: var(--font-heading);
+	font-size: 36pt;
+	font-weight: 800;
+	letter-spacing: -0.02em;
+	line-height: 0.96;
+	max-width: 6.4in;
+	text-shadow: 0 0 24px rgba(116, 242, 255, 0.22), 0 2px 8px rgba(0,0,0,0.8);
+	margin-bottom: 0.14in;
+}
+
+.cover-subtitle {
+	max-width: 5.6in;
+	font-family: var(--font-heading);
+	font-size: 12pt;
+	font-weight: 400;
+	color: #c8d8ea;
+	letter-spacing: 0.01em;
+	margin-bottom: 0.06in;
+}
+
+.cover-grid {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 0.1in;
+	margin-top: 0.22in;
+}
+
+.cover-tile {
+	border: 0.5pt solid rgba(116, 242, 255, 0.3);
+	background: rgba(8, 14, 30, 0.78);
+	backdrop-filter: blur(4px);
+	padding: 0.11in 0.12in;
+	break-inside: avoid;
+}
+
+.cover-tile strong {
+	display: block;
+	color: var(--ra-cyan);
+	font-family: var(--font-heading);
+	font-size: 14pt;
+	font-weight: 800;
+	margin-bottom: 0.02in;
+}
+
+.book-code {
+	font-family: var(--font-heading);
+	font-size: 8pt;
+	color: rgba(200, 216, 234, 0.65);
+	letter-spacing: 0.1em;
+}
+
+/* --- Front Matter ----------------------------------------- */
+.front-matter,
+.front-card,
+.callout,
+.classified,
+.entry,
+.statblock,
+.figure-card,
+.compact-entry,
+.cover-tile,
+.sidebar-note,
+.sidebar-tip,
+.sidebar-warning,
+.flavor-box,
+.read-aloud {
+	break-inside: avoid;
+}
+
+.front-matter {
+	padding: 0.04in 0;
+}
+
+.front-matter h1 {
+	font-size: 24pt;
+	font-family: var(--font-heading);
+	font-weight: 800;
+	border-bottom: 2pt solid var(--ra-paper-line);
+	padding-bottom: 0.07in;
+	margin-bottom: 0.14in;
+}
+
+.front-card {
+	border-left: 4pt solid var(--ra-cyan);
+	background: rgba(255, 255, 255, 0.42);
+	padding: 0.14in 0.16in;
+	margin: 0 0 0.14in;
+	border-radius: 0 2pt 2pt 0;
+}
+
+.front-card p:last-child { margin-bottom: 0; }
+
+/* --- Table of Contents ------------------------------------ */
+.toc {
+	page-break-after: always;
+}
+
+.toc h1 {
+	font-size: 24pt;
+	font-family: var(--font-heading);
+	font-weight: 800;
+	border-bottom: 2pt solid var(--ra-paper-line);
+	padding-bottom: 0.07in;
+}
+
+.toc ol {
+	column-count: 2;
+	column-gap: 0.28in;
+	margin-left: 0.16in;
+	font-family: var(--font-body);
+	font-size: 9pt;
+}
+
+.toc li {
+	margin-bottom: 0.08in;
+	break-inside: avoid;
+	list-style: none;
+	position: relative;
+	left: -0.16in;
+}
+
+.toc a {
+	text-decoration: none;
+	color: inherit;
+}
+
+.toc-chapter-num {
+	font-family: var(--font-heading);
+	font-weight: 800;
+	color: var(--ra-cyan);
+	margin-right: 0.05in;
+	font-size: 10pt;
+}
+
+.toc-chapter-summary {
+	display: block;
+	font-size: 8pt;
+	color: #555;
+	font-style: italic;
+	margin-left: 0.22in;
+	line-height: 1.2;
+	margin-top: 0.02in;
+}
+.toc .toc-part {
+	list-style: none;
+	margin: 0.11in 0 0.035in -0.14in;
+	padding-top: 0.04in;
+	border-top: 0.5pt solid #8a6c4e;
+	color: #4a2e14;
+	font-family: var(--font-heading);
+	font-weight: 800;
+	text-transform: uppercase;
+	letter-spacing: 0.07em;
+	font-size: 7.8pt;
+}
+
+/* --- Chapter Structure ------------------------------------ */
+.chapter {
+	page-break-before: always;
+}
+
+.chapter-opener {
+	position: relative;
+	color: var(--ra-ink);
+	background:
+		linear-gradient(155deg, rgba(5, 7, 18, 0.97), rgba(14, 20, 40, 0.84)),
+		var(--chapter-image, none),
+		#070812;
+	background-size: cover;
+	background-position: center;
+	border: 0;
+	padding: 0 0.36in 0.36in;
+	padding-top: 0.22in;
+	margin-bottom: 0.2in;
+	min-height: 3in;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-end;
+	overflow: hidden;
+}
+
+.chapter-opener::before {
+	content: "";
+	display: block;
+	height: 4pt;
+	background: linear-gradient(90deg, var(--ra-cyan), var(--ra-violet));
+	margin-bottom: 0.22in;
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+}
+
+.chapter-opener h1 {
+	color: #ffffff;
+	font-family: var(--font-heading);
+	font-size: 28pt;
+	font-weight: 800;
+	margin-bottom: 0.06in;
+	text-shadow: 0 2px 12px rgba(0,0,0,0.7);
+}
+
+.chapter-opener p {
+	max-width: 6in;
+	color: #d4e8f8;
+	font-family: var(--font-body);
+	font-size: 9.5pt;
+	font-style: italic;
+	margin: 0;
+}
+
+.eyebrow {
+	color: var(--ra-cyan);
+	font-family: var(--font-heading);
+	font-size: 7pt;
+	font-weight: 700;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+	margin-bottom: 0.07in;
+}
+
+/* --- Section Intro ---------------------------------------- */
+.section-intro {
+	background: rgba(255, 255, 255, 0.3);
+	border-top: 2pt solid #7a6047;
+	border-bottom: 0.5pt solid var(--ra-paper-line);
+	border-left: 0;
+	border-right: 0;
+	padding: 0.11in 0.14in;
+	margin-bottom: 0.13in;
+	column-span: all;
+}
+
+.section-intro h2 {
+	font-size: 18pt;
+	font-family: var(--font-heading);
+	font-weight: 800;
+	color: #1a0f05;
+	margin-bottom: 0.05in;
+}
+
+.section-intro p:last-child { margin-bottom: 0; }
+
+/* --- Two-Column Prose ------------------------------------- */
+.prose-columns {
+	column-count: 2;
+	column-gap: 0.3in;
+	column-rule: 0.35pt solid rgba(95, 70, 50, 0.3);
+	hyphens: auto;
+}
+
+/* Drop cap on first paragraph of a chapter */
+.chapter > .prose-columns > p:first-of-type::first-letter,
+.chapter > .section-block > .prose-columns > p:first-of-type::first-letter {
+	font-family: var(--font-heading);
+	font-size: 3.2em;
+	font-weight: 800;
+	line-height: 0.78;
+	float: left;
+	margin: 0.02em 0.06em 0 0;
+	color: #7a6047;
+}
+
+.prose-columns h2,
+.prose-columns h3,
+.prose-columns h4 {
+	break-after: avoid;
+}
+
+.prose-columns table,
+.prose-columns blockquote,
+.prose-columns ol,
+.prose-columns ul {
+	break-inside: avoid;
+}
+
+/* --- Catalog Grid ----------------------------------------- */
+.catalog-grid {
+	display: block;
+	column-count: 2;
+	column-gap: 0.28in;
+	column-rule: 0.35pt solid rgba(95, 70, 50, 0.28);
+}
+
+/* --- Entry Cards ------------------------------------------ */
+.entry {
+	display: inline-block;
+	width: 100%;
+	background: rgba(255, 255, 255, 0.28);
+	border: 0;
+	border-top: 1pt solid #8a6e50;
+	padding: 0.09in 0.04in 0.1in;
+	margin: 0 0 0.09in;
+	box-shadow: none;
+	break-inside: avoid;
+}
+
+.entry h3 {
+	font-family: var(--font-heading);
+	font-size: 12pt;
+	font-weight: 700;
+	color: #1a0f05;
+	margin-bottom: 0.035in;
+}
+
+.entry-description {
+	color: #1f2937;
+	font-style: italic;
+	margin: 0.04in 0 0.07in;
+	font-size: 9pt;
+}
+
+/* Flavor / lore text block inside entries */
+.entry-description blockquote,
+.callout {
+	border-left: 3pt solid var(--ra-cyan);
+	background: rgba(220, 248, 255, 0.35);
+	padding: 0.07in 0.09in;
+	margin: 0.07in 0;
+	font-style: italic;
+}
+
+/* Entry Tier Variants */
+.entry--legendary {
+	border-top: 4pt solid var(--tier-legendary-border);
+	background: var(--tier-legendary-bg);
+}
+.entry--legendary h3 { color: var(--tier-legendary-title); }
+
+.entry--rare {
+	border-top: 3pt solid var(--tier-rare-border);
+	background: var(--tier-rare-bg);
+}
+.entry--rare h3 { color: var(--tier-rare-title); }
+
+.entry--uncommon {
+	border-top: 2pt solid var(--tier-uncommon-border);
+	background: var(--tier-uncommon-bg);
+}
+.entry--uncommon h3 { color: var(--tier-uncommon-title); }
+
+.entry--classified {
+	background: #111827;
+	color: #e5f2ff;
+	border: 0.8pt solid #334155;
+	border-left: 4pt solid var(--ra-crimson);
+	border-top: 0.8pt solid #334155;
+	padding: 0.1in;
+}
+.entry--classified h3 { color: #ffffff; }
+.entry--classified .field-grid dt { color: #fca5a5; }
+
+/* --- Compact Catalog -------------------------------------- */
+.compact-catalog {
+	column-count: 2;
+	column-gap: 0.24in;
+	column-rule: 0.3pt solid rgba(95, 70, 50, 0.25);
+}
+
+.compact-entry {
+	display: inline-block;
+	width: 100%;
+	margin: 0 0 0.075in;
+	padding: 0.06in 0.04in 0.065in;
+	border-top: 0.6pt solid #8b6f51;
+	background: rgba(255, 255, 255, 0.2);
+	break-inside: avoid;
+}
+
+.compact-entry h3 {
+	font-family: var(--font-heading);
+	margin: 0 0 0.022in;
+	font-size: 10pt;
+	font-weight: 700;
+	line-height: 1.12;
+	color: #111827;
+}
+
+.compact-meta {
+	margin-bottom: 0.022in;
+	font-size: 7.2pt;
+}
+
+.compact-line {
+	margin: 0 0 0.032in;
+	font-size: 7.8pt;
+	line-height: 1.32;
+}
+
+.compact-line strong {
+	font-family: var(--font-heading);
+	color: #5f3b13;
+	font-size: 7pt;
+	text-transform: uppercase;
+	letter-spacing: 0.03em;
+}
+
+/* --- Meta & Tags ------------------------------------------ */
+.meta {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.03in;
+	margin-bottom: 0.045in;
+}
+
+.tag {
+	border: 0.5pt solid #a89779;
+	background: rgba(255, 255, 255, 0.45);
+	color: #3a2a1b;
+	border-radius: 0.04in;
+	padding: 0.02in 0.042in;
+	font-family: var(--font-heading);
+	font-size: 6.8pt;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+}
+
+.tag.hot {
+	background: #fff1f2;
+	border-color: #f0a2ae;
+	color: #9f1239;
+}
+
+/* --- Field Grid ------------------------------------------- */
+.field-grid {
+	display: grid;
+	grid-template-columns: 0.9in 1fr;
+	column-gap: 0.055in;
+	row-gap: 0.032in;
+	margin: 0.038in 0 0;
+}
+
+.field-grid dt {
+	color: #334155;
+	font-family: var(--font-heading);
+	font-weight: 700;
+	font-size: 7.2pt;
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+}
+
+.field-grid dd {
+	margin: 0;
+	min-width: 0;
+	font-family: var(--font-body);
+	font-size: 8.8pt;
+}
+
+.nested-grid {
+	display: block;
+	margin: 0.018in 0;
+}
+
+.nested-grid dt {
+	display: inline;
+	font-family: var(--font-heading);
+	font-size: 7pt;
+	font-weight: 700;
+	letter-spacing: 0.03em;
+	color: #4a3520;
+}
+
+.nested-grid dt::after {
+	content: ": ";
+}
+
+.nested-grid dd {
+	display: inline;
+}
+
+.nested-grid dd::after {
+	content: "";
+	display: block;
+	margin-bottom: 0.022in;
+}
+
+.nested-card {
+	background: rgba(255, 255, 255, 0.32);
+	border: 0.5pt solid var(--ra-paper-line);
+	padding: 0.05in;
+	margin: 0.03in 0;
+}
+
+.compact-list {
+	margin-left: 0.12in;
+}
+
+/* --- Stat Blocks ------------------------------------------ */
+.statblock {
+	background: #fffaf0;
+	border: 0.7pt solid #c9a84c;
+	border-top: 0;
+	padding: 0 0 0.12in;
+	margin: 0 0 0.13in;
+	display: block;
+	width: 100%;
+	break-inside: auto;
+	page-break-inside: auto;
+	border-radius: 0 0 3pt 3pt;
+}
+
+.statblock-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	background: linear-gradient(135deg, #1e0e04, #2d1a08);
+	border-radius: 3pt 3pt 0 0;
+	padding: 0.075in 0.13in;
+	margin-bottom: 0;
+}
+
+.statblock-header h3 {
+	font-family: var(--font-heading);
+	font-size: 14pt;
+	font-weight: 800;
+	color: #ffffff;
+	margin: 0;
+	text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+}
+
+.threat-badge {
+	background: rgba(184, 137, 56, 0.28);
+	border: 0.5pt solid #b88938;
+	color: #fef3c7;
+	font-family: var(--font-heading);
+	font-size: 7pt;
+	font-weight: 700;
+	padding: 0.02in 0.06in;
+	border-radius: 2pt;
+	white-space: nowrap;
+	letter-spacing: 0.04em;
+}
+
+.statblock-type {
+	font-style: italic;
+	font-family: var(--font-body);
+	color: #5c3a1a;
+	font-size: 9pt;
+	padding: 0.04in 0.13in 0.02in;
+}
+
+.statblock-divider {
+	height: 1.5pt;
+	background: linear-gradient(90deg, transparent, #b88938 20%, #d4a84b 50%, #b88938 80%, transparent);
+	margin: 0.04in 0.13in;
+}
+
+.statblock-core {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.1in;
+	padding: 0.05in 0.13in;
+	font-family: var(--font-mono);
+	font-size: 8.5pt;
+	line-height: 1.3;
+}
+
+.statblock-core span strong {
+	font-family: var(--font-heading);
+	color: #7c2d12;
+	text-transform: uppercase;
+	font-size: 6.8pt;
+	letter-spacing: 0.05em;
+	display: block;
+}
+
+.statblock-section {
+	padding: 0 0.13in;
+}
+
+.statblock-section h4 {
+	font-family: var(--font-heading);
+	font-size: 9.5pt;
+	font-weight: 700;
+	color: #7c2d12;
+	border-bottom: 0.5pt solid #d7b97a;
+	margin: 0.06in 0 0.04in;
+	padding-bottom: 0.02in;
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+}
+
+/* Legacy stat block h3 (fallback for old-format entries) */
+.statblock > h3 {
+	background: linear-gradient(135deg, #1e0e04, #2d1a08);
+	color: #ffffff;
+	font-family: var(--font-heading);
+	font-size: 14pt;
+	font-weight: 800;
+	margin: 0 0 0.06in;
+	padding: 0.075in 0.13in;
+	border-radius: 3pt 3pt 0 0;
+}
+
+/* --- Ability Grid ----------------------------------------- */
+.ability-grid {
+	display: grid;
+	grid-template-columns: repeat(6, 1fr);
+	gap: 0.03in;
+	margin: 0.06in 0.13in;
+	text-align: center;
+}
+
+.ability-grid div {
+	border: 0.5pt solid #d7b97a;
+	background: #fff6dd;
+	padding: 0.03in 0.015in;
+}
+
+.ability-grid strong {
+	display: block;
+	font-family: var(--font-heading);
+	color: #7c2d12;
+	font-size: 6.5pt;
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+	margin-bottom: 0.01in;
+}
+
+.ability-grid span {
+	font-family: var(--font-mono);
+	font-size: 9pt;
+	font-weight: 700;
+}
+
+/* --- Sidebar & Callout System ----------------------------- */
+.sidebar-note {
+	background: #f5f0e8;
+	border-left: 3pt solid #8b6f51;
+	padding: 0.1in 0.12in;
+	margin: 0.1in 0;
+	border-radius: 0 2pt 2pt 0;
+	font-size: 8.8pt;
+	break-inside: avoid;
+}
+
+.sidebar-note > h4:first-child,
+.sidebar-note > h5:first-child {
+	color: #5f3b13;
+	font-family: var(--font-heading);
+	font-size: 9pt;
+	margin-bottom: 0.04in;
+}
+
+.sidebar-tip {
+	background: #ecfeff;
+	border-left: 3pt solid var(--ra-cyan);
+	padding: 0.1in 0.12in;
+	margin: 0.1in 0;
+	border-radius: 0 2pt 2pt 0;
+	font-size: 8.8pt;
+	break-inside: avoid;
+}
+
+.sidebar-tip > h4:first-child,
+.sidebar-tip > h5:first-child {
+	color: #0c4a6e;
+	font-family: var(--font-heading);
+	font-size: 9pt;
+	margin-bottom: 0.04in;
+}
+
+.sidebar-warning {
+	background: #1e1215;
+	color: #fecdd3;
+	border-left: 4pt solid var(--ra-crimson);
+	padding: 0.1in 0.12in;
+	margin: 0.1in 0;
+	border-radius: 0 2pt 2pt 0;
+	font-size: 8.8pt;
+	break-inside: avoid;
+}
+
+.sidebar-warning > h4:first-child,
+.sidebar-warning > h5:first-child {
+	color: #fda4af;
+	font-family: var(--font-heading);
+	font-size: 9pt;
+	margin-bottom: 0.04in;
+}
+
+.sidebar-warning p { color: #fecdd3; }
+
+.flavor-box {
+	position: relative;
+	font-style: italic;
+	font-family: var(--font-body);
+	background: rgba(255, 255, 255, 0.18);
+	padding: 0.1in 0.14in 0.1in 0.22in;
+	border-left: 2pt solid var(--ra-paper-line);
+	margin: 0.09in 0;
+	color: #3a2a1b;
+	font-size: 9pt;
+	break-inside: avoid;
+}
+
+.flavor-box::before {
+	content: "\201C";
+	position: absolute;
+	left: 0.04in;
+	top: 0.04in;
+	font-family: var(--font-heading);
+	font-size: 24pt;
+	line-height: 1;
+	color: var(--ra-paper-line);
+}
+
+.flavor-box p:last-child { margin-bottom: 0; }
+
+.read-aloud {
+	background: #e8eef4;
+	border-left: 3pt solid #64748b;
+	padding: 0.11in 0.15in;
+	margin: 0.09in 0;
+	font-style: italic;
+	font-family: var(--font-body);
+	font-size: 9pt;
+	color: #1e293b;
+	break-inside: avoid;
+}
+
+.read-aloud p:last-child { margin-bottom: 0; }
+
+/* --- Classified Entries ----------------------------------- */
+.classified {
+	background: #111827;
+	color: #e5f2ff;
+	border: 0.8pt solid #334155;
+	border-left: 4pt solid var(--ra-crimson);
+	padding: 0.11in;
+	margin: 0.11in 0;
+	break-inside: avoid;
+}
+
+.classified h3,
+.classified h4 {
+	color: #ffffff;
+}
+
+.classified .field-grid dt {
+	color: #fca5a5;
+}
+
+.classified .tag {
+	background: rgba(216, 75, 99, 0.14);
+	border-color: rgba(216, 75, 99, 0.5);
+	color: #ffd7dd;
+}
+
+/* --- Figures & Art ---------------------------------------- */
+.figure-card {
+	border: 0.5pt solid var(--ra-paper-line);
+	background: rgba(255, 255, 255, 0.38);
+	padding: 0.05in;
+	margin: 0.07in 0 0.11in;
+	break-inside: avoid;
+}
+
+.figure-card img,
+.entry-figure img {
+	width: 100%;
+	height: auto;
+	display: block;
+}
+
+.entry-figure {
+	float: right;
+	width: 1.25in;
+	margin: 0 0 0.055in 0.08in;
+	border: 0.5pt solid #bdc8d8;
+	background: #f8fbff;
+	padding: 0.025in;
+	break-inside: avoid;
+}
+
+/* --- Sourcebook Guide ------------------------------------- */
+.sourcebook-guide {
+	column-span: all;
+	border-top: 1pt solid #7a6047;
+	border-bottom: 0.5pt solid var(--ra-paper-line);
+	background: rgba(255, 255, 255, 0.3);
+	padding: 0.09in 0.11in;
+	margin: 0 0 0.11in;
+}
+
+.sourcebook-guide h3 {
+	font-family: var(--font-heading);
+	font-size: 11pt;
+	font-weight: 700;
+	margin-bottom: 0.035in;
+}
+
+/* --- Caption --------------------------------------------- */
+.caption {
+	font-family: var(--font-heading);
+	font-size: 6.5pt;
+	color: var(--ra-paper-muted);
+	margin-top: 0.032in;
+	text-transform: uppercase;
+	letter-spacing: 0.06em;
+}
+
+/* --- Index ----------------------------------------------- */
+.index-table {
+	column-count: 3;
+	column-gap: 0.2in;
+	font-size: 8pt;
+}
+
+.index-table p {
+	break-inside: avoid;
+	margin-bottom: 0.032in;
+}
+
+/* --- Utility --------------------------------------------- */
+.page-warning {
+	border: 1pt solid #d84b63;
+	background: #fff1f2;
+	color: #881337;
+	padding: 0.11in;
+	margin: 0.09in 0;
+	break-inside: avoid;
+}
+
+.small  { font-size: 7.8pt; }
+.muted  { color: var(--ra-paper-muted); }
+.no-print { display: none; }
+
+/* --- Section Block ---------------------------------------- */
+.section-block {
+	margin-bottom: 0.08in;
+}
+
+/* --- Rules Tables ----------------------------------------- */
+.rules-table {
+	width: 100%;
+	font-size: 8.35pt;
+	break-inside: auto;
+}
+
+.rules-table th {
+	background: #2a1a0e;
+	color: #f5f0e5;
+}
+
+/* --- Print Overrides (Vivliostyle / @media print) --------- */
+@page {
+	size: Letter;
+	margin: 0.58in 0.56in 0.72in;
+	@top-left {
+		content: "Rift Ascendant";
+		font-family: 'Outfit', 'Segoe UI', sans-serif;
+		font-size: 6.8pt;
+		color: #7a6047;
+		letter-spacing: 0.06em;
+		text-transform: uppercase;
+	}
+	@top-right {
+		content: string(chapter-title);
+		font-family: 'Outfit', 'Segoe UI', sans-serif;
+		font-size: 6.8pt;
+		color: #7a6047;
+	}
+	@bottom-center {
+		content: none;
+	}
+}
+
+@page :first {
+	margin: 0;
+	@top-left   { content: none; }
+	@top-right  { content: none; }
+	@bottom-center { content: none; }
+}
+
+@media print {
+	* {
+		-webkit-print-color-adjust: exact;
+		print-color-adjust: exact;
+	}
+
+	body {
+		font-family: 'Source Serif 4', 'Georgia', serif;
+		font-size: 9.5pt;
+		line-height: 1.46;
+		color: #1a1410;
+		background: #f5f0e5;
+	}
+
+	h1, h2, h3, h4 {
+		font-family: 'Outfit', 'Segoe UI', sans-serif;
+		letter-spacing: -0.01em;
+		color: #1a0f05;
+	}
+
+	.chapter > .chapter-opener h1 {
+		string-set: chapter-title content(text);
+	}
+
+	/* Cover */
+	.cover {
+		height: 11in;
+		min-height: 11in;
+		border: 0;
+	}
+
+	/* Chapter openers */
+	.chapter-opener {
+		min-height: 3in;
+		border: 0;
+		border-radius: 0;
+		background-size: cover;
+		background-position: center;
+		color: #f8fbff;
+	}
+
+	/* Callouts and cards */
+	.front-card,
+	.callout {
+		background: #eef7fb;
+		border: 0.6pt solid #8bd7e6;
+		border-left: 4pt solid #0891b2;
+	}
+
+	.sidebar-note {
+		background: #f5f0e8;
+		border-left: 3pt solid #8b6f51;
+	}
+
+	.sidebar-tip {
+		background: #ecfeff;
+		border-left: 3pt solid #74f2ff;
+	}
+
+	/* Tables */
+	table, .rules-table {
+		break-inside: auto;
+		page-break-inside: auto;
+		font-size: 8.35pt;
+	}
+
+	tr, th, td { break-inside: avoid; page-break-inside: avoid; }
+
+	th {
+		background: #2a1a0e;
+		color: #f5f0e5;
+		border-color: #4a3020;
+	}
+
+	td { background: rgba(255, 255, 255, 0.55); }
+
+	/* Entries */
+	.entry, .compact-entry, .statblock {
+		border-radius: 2pt;
+	}
+
+	.entry { padding: 0.09in 0.035in 0.1in; margin-bottom: 0.09in; }
+	.entry h3 { font-size: 12pt; }
+	.compact-entry { padding: 0.06in 0.042in 0.065in; margin-bottom: 0.075in; }
+	.compact-entry h3 { font-size: 10pt; line-height: 1.12; }
+	.compact-line { font-size: 7.8pt; line-height: 1.32; }
+
+	/* Stat blocks */
+	.statblock {
+		break-inside: auto;
+		page-break-inside: auto;
+	}
+
+	.statblock-header { background: linear-gradient(135deg, #1e0e04, #2d1a08); }
+	.statblock-header h3 { color: #ffffff; font-size: 14pt; }
+
+	/* Art figures */
+	.entry-figure { width: 1.25in; }
+
+	/* Tags */
+	.meta span, .tag {
+		background: #0f253b;
+		color: #ecfeff;
+		border-color: #27667d;
+		font-size: 6.8pt;
+		letter-spacing: 0.04em;
+	}
+
+	/* Index */
+	.index-table { font-size: 8pt; column-gap: 0.2in; }
+
+	/* Utility */
+	.small { font-size: 7.8pt; }
+
+	p, li { orphans: 3; widows: 3; }
+}
+</style>
+	<style>
+@page {
+	size: Letter;
+	margin: 0.58in 0.56in 0.72in;
+	@top-left {
+		content: "Rift Ascendant";
+		font-family: "Outfit", "Segoe UI", sans-serif;
+		font-size: 6.8pt;
+		color: #7a6047;
+		text-transform: uppercase;
+		letter-spacing: 0.06em;
+	}
+	@top-right {
+		content: string(chapter-title);
+		font-family: "Outfit", "Segoe UI", sans-serif;
+		font-size: 6.8pt;
+		color: #7a6047;
+	}
+	@bottom-center {
+		content: none;
+	}
+}
+@page :first {
+	margin: 0;
+	@top-left { content: none; }
+	@top-right { content: none; }
+	@bottom-center { content: none; }
+}
+@media print {
+	* {
+		-webkit-print-color-adjust: exact;
+		print-color-adjust: exact;
+	}
+	body {
+		font-family: "Source Serif 4", "Georgia", serif;
+		font-size: 9.5pt;
+		line-height: 1.46;
+		color: #1a1410;
+		background: #f5f0e5;
+	}
+	h1, h2, h3, h4 {
+		font-family: "Outfit", "Segoe UI", sans-serif;
+		letter-spacing: -0.01em;
+		color: #1a0f05;
+	}
+	.chapter > .chapter-opener h1 {
+		string-set: chapter-title content(text);
+	}
+	.cover {
+		height: 11in;
+		min-height: 11in;
+		border: 0;
+		background:
+			linear-gradient(155deg, rgba(4, 6, 15, 0.97) 0%, rgba(10, 15, 30, 0.82) 60%, rgba(6, 10, 22, 0.92) 100%),
+			var(--cover-image, none),
+			radial-gradient(ellipse at 15% 12%, rgba(116, 242, 255, 0.28) 0%, transparent 40%),
+			radial-gradient(ellipse at 85% 20%, rgba(167, 139, 250, 0.26) 0%, transparent 38%),
+			#070812;
+	}
+	.cover h1 {
+		font-size: 36pt;
+		line-height: 0.96;
+		letter-spacing: -0.02em;
+		font-weight: 800;
+	}
+	.cover-tile {
+		border-color: rgba(116, 242, 255, 0.3);
+		background: rgba(8, 14, 30, 0.78);
+	}
+	.front-card,
+	.callout {
+		background: rgba(255, 255, 255, 0.42);
+		border: 0;
+		border-left: 4pt solid #74f2ff;
+	}
+	.chapter-opener {
+		border: 0;
+		background:
+			linear-gradient(155deg, rgba(5, 7, 18, 0.97), rgba(14, 20, 40, 0.84)),
+			var(--chapter-image, none),
+			#070812;
+		background-size: cover;
+		background-position: center;
+		color: #f8fbff;
+		min-height: 3in;
+	}
+	.chapter-opener h1,
+	.chapter-opener p,
+	.chapter-opener .eyebrow {
+		color: #f8fbff;
+	}
+	.section-intro {
+		border-top: 2pt solid #7a6047;
+		border-bottom: 0.5pt solid #cdbf9e;
+		padding: 0.11in 0.14in;
+		margin-bottom: 0.13in;
+	}
+	.section-intro h2 {
+		font-size: 18pt;
+		color: #1a0f05;
+	}
+	.prose-columns,
+	.catalog-grid,
+	.compact-catalog {
+		column-gap: 0.3in;
+	}
+	.sourcebook-guide {
+		border-top: 1pt solid #7a6047;
+		border-bottom: 0.5pt solid #cdbf9e;
+		background: rgba(255, 255, 255, 0.3);
+		padding: 0.09in 0.11in;
+		margin-bottom: 0.11in;
+	}
+	.sourcebook-guide h3 {
+		font-size: 11pt;
+		color: #1a0f05;
+		margin-bottom: 0.035in;
+	}
+	table,
+	.rules-table {
+		break-inside: auto;
+		page-break-inside: auto;
+		font-size: 8.35pt;
+	}
+	tr,
+	th,
+	td {
+		break-inside: avoid;
+		page-break-inside: avoid;
+	}
+	th {
+		background: #2a1a0e;
+		color: #f5f0e5;
+		border-color: #4a3020;
+	}
+	td {
+		background: rgba(255, 255, 255, 0.55);
+	}
+	.entry,
+	.compact-entry,
+	.statblock {
+		border-radius: 2pt;
+		box-shadow: none;
+	}
+	.entry {
+		padding: 0.09in 0.035in 0.1in;
+		margin-bottom: 0.09in;
+	}
+	.entry h3 {
+		font-size: 12pt;
+		font-family: "Outfit", sans-serif;
+	}
+	.compact-entry {
+		padding: 0.06in 0.042in 0.065in;
+		margin-bottom: 0.075in;
+	}
+	.compact-entry h3 {
+		font-size: 10pt;
+		line-height: 1.12;
+		font-family: "Outfit", sans-serif;
+	}
+	.compact-line {
+		font-size: 7.8pt;
+		line-height: 1.32;
+	}
+	.statblock {
+		break-inside: auto;
+		page-break-inside: auto;
+	}
+	.statblock-header h3 {
+		font-size: 14pt;
+		font-family: "Outfit", sans-serif;
+	}
+	.field-grid dt {
+		font-size: 7.2pt;
+		font-family: "Outfit", sans-serif;
+	}
+	.nested-grid {
+		display: block;
+		margin: 0.02in 0;
+	}
+	.nested-grid dt {
+		display: inline;
+		font-size: 7pt;
+		letter-spacing: 0.03em;
+		font-family: "Outfit", sans-serif;
+	}
+	.nested-grid dt::after {
+		content: ": ";
+	}
+	.nested-grid dd {
+		display: inline;
+	}
+	.nested-grid dd::after {
+		content: "";
+		display: block;
+		margin-bottom: 0.022in;
+	}
+	.entry-figure {
+		width: 1.25in;
+	}
+	.meta span,
+	.tag {
+		background: #0f253b;
+		color: #ecfeff;
+		border-color: #27667d;
+		font-size: 6.8pt;
+		letter-spacing: 0.04em;
+		font-family: "Outfit", sans-serif;
+	}
+	.index-table {
+		font-size: 8pt;
+		column-gap: 0.2in;
+	}
+	.small {
+		font-size: 7.8pt;
+	}
+	p, li {
+		orphans: 3;
+		widows: 3;
+	}
+	.split-notice {
+		border: 1pt solid #1a0f05;
+		background: #ece7da;
+		padding: 0.15in;
+		margin: 0.15in 0;
+		text-align: center;
+		page-break-inside: avoid;
+	}
+	.split-notice h2 {
+		margin: 0 0 0.05in;
+		font-size: 14pt;
+		color: #5a1c15;
+	}
+	.split-notice p {
+		margin: 0;
+		font-size: 9.5pt;
+		font-style: italic;
+	}
+	.rules-table p {
+		margin: 0;
+		padding: 0 0 0.04in 0;
+		line-height: 1.25;
+	}
+}
+</style>
+</head>
+<body>
+	<section class="chapter" id="backgrounds">
+		<div class="chapter-opener" style="--chapter-image: url('file:///C:/Users/jjcal/Documents/solo-compendium/books/shared/assets/ascendant-backgrounds-45ed706ee2.jpg')">
+			<div class="eyebrow">Part 2: Creating An Ascendant / Origin Records / Chapter 5</div>
+			<h1>Backgrounds</h1>
+			<p>Before the Awakening, you were someone. Your Background defines who that was  -  and what you carried into the Rift Age.</p>
+		</div>
+		<section class="section-block">
+		<div class="section-intro">
+			<h2>Backgrounds</h2>
+			<p>Every Ascendant had a life before the change. Your Background is the training, the connections, and the scars you bring to the fight.</p>
+		</div>
+		<div class="catalog-grid"><article class="entry entry--rare" id="background-aether-scientist">
+		
+		<h3>Aether-Scientist</h3>
+		<div class="meta"><span class="tag">Rank: A</span><span class="tag">Type: background</span></div>
+		<div class="entry-description"><p>You are a brilliant researcher employed by a mega-corporation or the government. You study mana, reverse-engineer alien biology, and develop the potions and gear that keep Ascendants alive. You were likely awakened during a lab accident.</p></div>
+		<dl class="field-grid"><dt>Skill Proficiencies</dt><dd><ul class="compact-list"><li>Mana Flow</li><li>Medicine</li></ul></dd><dt>Tool Proficiencies</dt><dd><ul class="compact-list"><li>Alchemist's Supplies</li><li>Poisoner's Kit</li></ul></dd><dt>Languages</dt><dd><ul class="compact-list"><li>Two additional languages</li></ul></dd><dt>Equipment</dt><dd><ul class="compact-list"><li>A pristine lab coat</li><li>A datapad with sensitive research</li><li>A set of protective goggles</li><li>Several empty sample vials</li><li>A badge to a high-tech lab</li></ul></dd><dt>Starting Credits</dt><dd><span>1400</span></dd><dt>Features</dt><dd><div class="nested-card"><dl class="field-grid nested-grid"><dt>Name</dt><dd><p>Lab Access &amp; Analysis</p></dd><dt>Description</dt><dd><p>You have access to state-of-the-art corporate laboratories. By spending an hour in a lab, you can identify the exact properties, weaknesses, and biological functions of any anomaly corpse or mana crystal.</p></dd></dl></div></dd><dt>Personality Traits</dt><dd><ul class="compact-list"><li>I view everything as a fascinating scientific specimen.</li><li>I take notes constantly during combat.</li><li>I use overly complex terminology to describe simple things.</li><li>I lack basic self-preservation instincts when presented with a new discovery.</li><li>I am easily distracted by glowing objects.</li><li>I am highly condescending to those without a PhD.</li></ul></dd><dt>Ideals</dt><dd><ul class="compact-list"><li>Knowledge. The rifts are the greatest scientific puzzle in history. (Neutral)</li><li>Progress. We must harness this energy to advance humanity. (Lawful)</li><li>Power. My research will create the ultimate weapon. (Evil)</li><li>Cure. I will find a way to stop the magical diseases plaguing the world. (Good)</li><li>Innovation. Rules are meant to be broken in the name of science. (Chaotic)</li><li>Legacy. I want a new species of anomaly named after me. (Any)</li></ul></dd><dt>Bonds</dt><dd><ul class="compact-list"><li>My revolutionary research was stolen by my mentor.</li><li>I am trying to cure a loved one infected by a rare gate-disease.</li><li>I am bonded to a symbiotic alien organism I kept as a pet.</li><li>I owe my life to the Ascendant who pulled me from my ruined lab.</li><li>I am obsessed with dissecting a specific Sovereign.</li><li>I carry the only prototype of a world-changing invention.</li></ul></dd><dt>Flaws</dt><dd><ul class="compact-list"><li>I will conduct unethical experiments if the data is worth it.</li><li>I am physically frail and complain about fieldwork.</li><li>I am intensely arrogant and ignore the advice of 'grunts'.</li><li>I am oblivious to social cues.</li><li>I have a dangerous addiction to experimental mana-potions.</li><li>I will endanger the party to secure a rare specimen.</li></ul></dd></dl>
+	</article><article class="entry entry--rare" id="background-aetheric-pulse">
+		
+		<h3>Aetheric Pulse</h3>
+		<div class="meta"><span class="tag">Rank: A</span><span class="tag">Type: background</span></div>
+		<div class="entry-description"><p>You are highly sensitive to mana, capable of feeling the fluctuations of aether in the air. You might have been a radar operator, a meteorologist, or just someone with extreme migraines before awakening.</p></div>
+		<dl class="field-grid"><dt>Skill Proficiencies</dt><dd><ul class="compact-list"><li>Perception</li><li>Gate Topology</li></ul></dd><dt>Tool Proficiencies</dt><dd><ul class="compact-list"><li>Alchemist's Supplies</li></ul></dd><dt>Languages</dt><dd><ul class="compact-list"><li>One additional language</li></ul></dd><dt>Equipment</dt><dd><ul class="compact-list"><li>A portable mana-density meter</li><li>A set of sensory-dampening earplugs</li><li>Common clothes</li><li>A journal of mana fluctuations</li></ul></dd><dt>Starting Credits</dt><dd><span>600</span></dd><dt>Features</dt><dd><div class="nested-card"><dl class="field-grid nested-grid"><dt>Name</dt><dd><p>Natural Resonance</p></dd><dt>Description</dt><dd><p>You can accurately predict when and where a gate will open up to 24 hours in advance within your city, and you can sense if an Awakened individual is actively concealing their true rank.</p></dd></dl></div></dd><dt>Personality Traits</dt><dd><ul class="compact-list"><li>I frequently complain about the 'noise' of high-mana areas.</li><li>I am deeply spiritual about the flow of energy.</li><li>I get headaches before major events.</li><li>I speak in metaphors related to weather and waves.</li><li>I am incredibly observant of minor details.</li><li>I avoid crowded places due to sensory overload.</li></ul></dd><dt>Ideals</dt><dd><ul class="compact-list"><li>Harmony. We must balance our world with the mana leaking into it. (Neutral)</li><li>Warning. I must use my gift to evacuate people before breaks happen. (Good)</li><li>Exploitation. Knowing where gates open first means I get the best loot. (Evil)</li><li>Understanding. The rifts are a puzzle I must solve. (Lawful)</li><li>Flow. Go where the energy takes you. (Chaotic)</li><li>Adaptation. Humanity must evolve to survive the aether. (Any)</li></ul></dd><dt>Bonds</dt><dd><ul class="compact-list"><li>I predicted a gate break but no one believed me, resulting in tragedy.</li><li>I am tracking a specific, massive mana signature that haunts my dreams.</li><li>I work for the Association's early-warning division.</li><li>My mentor taught me how to filter the noise; I owe them everything.</li><li>I have a piece of a core that hums a specific frequency to me.</li><li>I am trying to find a cure for the physical toll my sensitivity takes on me.</li></ul></dd><dt>Flaws</dt><dd><ul class="compact-list"><li>I am physically crippled by sudden spikes in mana.</li><li>I am arrogant, believing my senses make me superior.</li><li>I frequently ignore mundane threats because I'm distracted by magical ones.</li><li>I am addicted to mana-dense environments.</li><li>I am deeply superstitious.</li><li>I panic when I am in a 'dead zone' with no ambient mana.</li></ul></dd></dl>
+	</article><article class="entry entry--uncommon" id="background-ascendant-academy-graduate">
+		
+		<h3>Ascendant Academy Graduate</h3>
+		<div class="meta"><span class="tag">Rank: B</span><span class="tag">Type: background</span></div>
+		<div class="entry-description"><p>You were identified as an Awakened early and sent to a prestigious academy funded by the mega-guilds. You have been trained in magical theory, gate mechanics, and PR. You are polished, educated, and expected to be a star.</p></div>
+		<dl class="field-grid"><dt>Skill Proficiencies</dt><dd><ul class="compact-list"><li>Mana Flow</li><li>Dimensional Lore</li></ul></dd><dt>Tool Proficiencies</dt><dd><ul class="compact-list"><li>Calligrapher's Supplies</li></ul></dd><dt>Languages</dt><dd><ul class="compact-list"><li>Two additional languages of your choice</li></ul></dd><dt>Equipment</dt><dd><ul class="compact-list"><li>A diploma or signet ring from the Academy</li><li>A high-end tablet with gate data</li><li>Fine clothes</li><li>A stylish pen</li></ul></dd><dt>Starting Credits</dt><dd><span>1500</span></dd><dt>Features</dt><dd><div class="nested-card"><dl class="field-grid nested-grid"><dt>Name</dt><dd><p>Academy Credentials</p></dd><dt>Description</dt><dd><p>Your alumni status grants you access to restricted Ascendant Bureau archives, high-society guild galas, and an audience with local guild masters. Other alumni are generally disposed to help you.</p></dd></dl></div></dd><dt>Personality Traits</dt><dd><ul class="compact-list"><li>I quote textbooks and theory in the middle of combat.</li><li>I look down on self-taught or 'street' ascendants.</li><li>I care deeply about my public image and ranking.</li><li>I treat gate diving like a graded exam.</li><li>I am overly formal and polite, even to my enemies.</li><li>I name my attacks based on classic magical theory.</li></ul></dd><dt>Ideals</dt><dd><ul class="compact-list"><li>Excellence. I must live up to the legacy of my academy. (Lawful)</li><li>Knowledge. Understanding the rifts is the key to closing them. (Neutral)</li><li>Elitism. The educated should lead the unwashed masses. (Evil)</li><li>Duty. My training obligates me to protect society. (Good)</li><li>Fame. I want to be the valedictorian of the Ascendant rankings. (Any)</li><li>Innovation. Theory is useless unless applied in new ways. (Chaotic)</li></ul></dd><dt>Bonds</dt><dd><ul class="compact-list"><li>My favorite professor went missing in an S-Rank gate.</li><li>I have a fierce rivalry with the top student of my graduating class.</li><li>My tuition was paid by a shadowy corporate sponsor I must repay.</li><li>I want to make my mundane parents proud of my magical talents.</li><li>I carry a prototype weapon developed by the academy's tech lab.</li><li>I am secretly in love with my former combat instructor.</li></ul></dd><dt>Flaws</dt><dd><ul class="compact-list"><li>I panic when theory doesn't match reality.</li><li>I am incredibly arrogant and underestimate opponents.</li><li>I am easily manipulated by flattery regarding my intellect.</li><li>I refuse to get my hands dirty if I can avoid it.</li><li>I prioritize saving data and research over saving lives.</li><li>I have massive impostor syndrome despite my high grades.</li></ul></dd></dl>
+	</article><article class="entry entry--uncommon" id="background-ascendant-crimes-detective">
+		
+		<h3>Ascendant Crimes Detective</h3>
+		<div class="meta"><span class="tag">Rank: B</span><span class="tag">Type: background</span></div>
+		<div class="entry-description"><p>When a Ascendant murders someone inside a gate, the normal police can't do anything. You are a specialized detective working for the government or the Association, tasked with solving crimes committed by gods among men.</p></div>
+		<dl class="field-grid"><dt>Skill Proficiencies</dt><dd><ul class="compact-list"><li>Investigation</li><li>Insight</li></ul></dd><dt>Tool Proficiencies</dt><dd><ul class="compact-list"><li>Disguise Kit</li><li>Forgery Kit</li></ul></dd><dt>Languages</dt><dd><ul class="compact-list"><li>One additional language</li></ul></dd><dt>Equipment</dt><dd><ul class="compact-list"><li>A detective's badge</li><li>A concealed holster</li><li>A datapad with criminal records</li><li>A trench coat</li><li>A pair of handcuffs</li></ul></dd><dt>Starting Credits</dt><dd><span>1000</span></dd><dt>Features</dt><dd><div class="nested-card"><dl class="field-grid nested-grid"><dt>Name</dt><dd><p>Jurisdiction</p></dd><dt>Description</dt><dd><p>You have the legal authority to enter crime scenes, demand cooperation from local police, and request access to a Ascendant's public dungeon-dive records from the Association.</p></dd></dl></div></dd><dt>Personality Traits</dt><dd><ul class="compact-list"><li>I am deeply cynical and expect everyone to lie to me.</li><li>I narrate my thoughts out loud like a noir detective.</li><li>I drink too much coffee and sleep too little.</li><li>I am unfazed by gore or horrific crime scenes.</li><li>I constantly play with a coin or lighter when thinking.</li><li>I am intensely protective of innocent bystanders.</li></ul></dd><dt>Ideals</dt><dd><ul class="compact-list"><li>Justice. Even S-Rankers must answer for their crimes. (Lawful)</li><li>Truth. The truth must be uncovered, no matter who it hurts. (Neutral)</li><li>Protection. I am the shield between the gods and the mortals. (Good)</li><li>Corruption. I use my badge to extort the guilty. (Evil)</li><li>Vengeance. I use the law as a weapon against those I hate. (Chaotic)</li><li>Duty. I do the job because no one else will. (Any)</li></ul></dd><dt>Bonds</dt><dd><ul class="compact-list"><li>I am hunting a serial killer who uses gates to dispose of bodies.</li><li>My former partner was murdered by a Guild Master who got away with it.</li><li>I have an informant in the underworld I would die to protect.</li><li>I am deeply devoted to my family, whom I keep isolated from my work.</li><li>I carry the badge of my father, who was also a detective.</li><li>I am secretly investigating the Chairman of the Ascendant Bureau.</li></ul></dd><dt>Flaws</dt><dd><ul class="compact-list"><li>I am a functional alcoholic.</li><li>I am obsessed with my cases to the detriment of my health.</li><li>I am deeply paranoid and trust no one.</li><li>I will break the law to catch a criminal.</li><li>I push away anyone who tries to get close to me.</li><li>I hold deep-seated prejudices against high-ranking Ascendants.</li></ul></dd></dl>
+	</article><article class="entry" id="background-association-bureaucrat">
+		
+		<h3>Association Bureaucrat</h3>
+		<div class="meta"><span class="tag">Rank: C</span><span class="tag">Type: background</span></div>
+		<div class="entry-description"><p>You worked a desk job for the Ascendant Bureau. You measured gate mana waves, issued Ascendant licenses, processed compensation claims for property damage, and dealt with the massive red tape of the Awakened world.</p></div>
+		<dl class="field-grid"><dt>Skill Proficiencies</dt><dd><ul class="compact-list"><li>Investigation</li><li>Persuasion</li></ul></dd><dt>Tool Proficiencies</dt><dd><ul class="compact-list"><li>Calligrapher's Supplies</li><li>Forgery Kit</li></ul></dd><dt>Languages</dt><dd><ul class="compact-list"><li>One additional language</li></ul></dd><dt>Equipment</dt><dd><ul class="compact-list"><li>A stack of official Association forms</li><li>A high-end smartphone</li><li>A tailored business suit</li><li>An Association ID badge</li><li>A voice recorder</li></ul></dd><dt>Starting Credits</dt><dd><span>1000</span></dd><dt>Features</dt><dd><div class="nested-card"><dl class="field-grid nested-grid"><dt>Name</dt><dd><p>Red Tape Cutter</p></dd><dt>Description</dt><dd><p>You know exactly how to navigate the Ascendant Bureau's bureaucracy. You can expedite gate clearances, secure meetings with high-ranking officials, and legally bypass standard quarantine protocols for your party.</p></dd></dl></div></dd><dt>Personality Traits</dt><dd><ul class="compact-list"><li>I cite Association bylaws in casual conversation.</li><li>I am obsessively organized and neat.</li><li>I treat life-or-death situations as paperwork issues.</li><li>I always read the fine print before doing anything.</li><li>I am extremely polite, even when threatening someone.</li><li>I drink copious amounts of coffee.</li></ul></dd><dt>Ideals</dt><dd><ul class="compact-list"><li>Order. The Association is the only thing keeping society from collapsing. (Lawful)</li><li>Corruption. The system is rigged, so I might as well get mine. (Evil)</li><li>Service. I do the boring work so the Ascendants can save lives. (Good)</li><li>Efficiency. Time is money, and bureaucracy wastes both. (Chaotic)</li><li>Neutrality. I just stamp the forms; I don't make the rules. (Neutral)</li><li>Ambition. I will climb the corporate ladder to the Director's seat. (Any)</li></ul></dd><dt>Bonds</dt><dd><ul class="compact-list"><li>I covered up a massive scandal for a major Guild, and they owe me.</li><li>My mentor in the Association was assassinated; I seek the truth.</li><li>I am secretly leaking Association data to a whistle-blowing journalist.</li><li>I am fiercely loyal to the current Chairman of the Association.</li><li>I have a stack of rejected compensation claims from victims I want to help.</li><li>I lost my desk job because of a Ascendant's mistake, and now I'm forced to dive.</li></ul></dd><dt>Flaws</dt><dd><ul class="compact-list"><li>I am paralyzed by indecision if there isn't a protocol for the situation.</li><li>I am incredibly arrogant toward 'uneducated' combat Ascendants.</li><li>I will accept bribes to look the other way.</li><li>I am physically unfit and complain about manual labor.</li><li>I prioritize the Association's reputation over human lives.</li><li>I am a stickler for rules to a highly detrimental degree.</li></ul></dd></dl>
+	</article><article class="entry" id="background-awakened-delinquent">
+		
+		<h3>Awakened Delinquent</h3>
+		<div class="meta"><span class="tag">Rank: C</span><span class="tag">Type: background</span></div>
+		<div class="entry-description"><p>Before the awakening, you were a street punk, a gang member, or a petty criminal. When you got your powers, you used them to rule the streets - until the Association or a major Guild forced you into legitimate hunting as an alternative to prison.</p></div>
+		<dl class="field-grid"><dt>Skill Proficiencies</dt><dd><ul class="compact-list"><li>Intimidation</li><li>Sleight of Hand</li></ul></dd><dt>Tool Proficiencies</dt><dd><ul class="compact-list"><li>Thieves' Tools</li><li>Vehicles (Land)</li></ul></dd><dt>Languages</dt><dd><ul class="compact-list"><li>Underworld Slang</li></ul></dd><dt>Equipment</dt><dd><ul class="compact-list"><li>A leather jacket with gang colors</li><li>A customized motorcycle key</li><li>A crowbar</li><li>A burner phone</li><li>A lighter</li></ul></dd><dt>Starting Credits</dt><dd><span>200</span></dd><dt>Features</dt><dd><div class="nested-card"><dl class="field-grid nested-grid"><dt>Name</dt><dd><p>Street Cred</p></dd><dt>Description</dt><dd><p>You are known in the slums and the underworld. Street gangs, petty thieves, and low-level fences will not mess with you, and you can easily secure safehouses or local rumors in impoverished districts.</p></dd></dl></div></dd><dt>Personality Traits</dt><dd><ul class="compact-list"><li>I am loud, brash, and easily provoked.</li><li>I spit on the ground to show disrespect.</li><li>I am fiercely loyal to my 'crew'.</li><li>I have zero respect for authority figures.</li><li>I am constantly posturing to look tough.</li><li>I have a soft spot for street kids and strays.</li></ul></dd><dt>Ideals</dt><dd><ul class="compact-list"><li>Freedom. No one tells me what to do. (Chaotic)</li><li>Power. The strong rule the streets. (Evil)</li><li>Loyalty. You don't turn your back on your family. (Lawful)</li><li>Protection. I look out for the people the Association ignores. (Good)</li><li>Survival. It's a dog-eat-dog world. (Neutral)</li><li>Respect. I will make sure everyone knows my name. (Any)</li></ul></dd><dt>Bonds</dt><dd><ul class="compact-list"><li>My old gang leader is now a powerful villain I must stop.</li><li>I am hunting to pay off a massive debt to keep my family safe.</li><li>I am fiercely protective of the neighborhood I grew up in.</li><li>I have a parole officer (an Association agent) I must appease.</li><li>I carry a weapon that belonged to my murdered best friend.</li><li>I am secretly in love with a high-society Academy graduate.</li></ul></dd><dt>Flaws</dt><dd><ul class="compact-list"><li>I have a severe anger management problem.</li><li>I am incredibly impulsive and hate planning.</li><li>I am deeply insecure about my lack of education.</li><li>I will pick a fight with anyone who disrespects me.</li><li>I am prone to substance abuse.</li><li>I refuse to cooperate with police or investigators.</li></ul></dd></dl>
+	</article><article class="entry entry--uncommon" id="background-black-market-relic-dealer">
+		
+		<h3>Black Market Relic Dealer</h3>
+		<div class="meta"><span class="tag">Rank: B</span><span class="tag">Type: background</span></div>
+		<div class="entry-description"><p>Not all artifacts get registered. Not all cores get taxed. You operate in the criminal underworld, fencing illegal gate drops, cursed weapons, and untraceable mana potions to Assassin, villains, and desperate heroes alike.</p></div>
+		<dl class="field-grid"><dt>Skill Proficiencies</dt><dd><ul class="compact-list"><li>Deception</li><li>Sleight of Hand</li></ul></dd><dt>Tool Proficiencies</dt><dd><ul class="compact-list"><li>Thieves' Tools</li><li>Jeweler's Tools</li></ul></dd><dt>Languages</dt><dd><ul class="compact-list"><li>Thieves' Cant (or Underworld Slang)</li></ul></dd><dt>Equipment</dt><dd><ul class="compact-list"><li>A set of dark clothes with hidden pockets</li><li>A magnifying loupe</li><li>A digital scale for cores</li><li>A burner phone</li><li>A forged Ascendant License</li></ul></dd><dt>Starting Credits</dt><dd><span>1500</span></dd><dt>Features</dt><dd><div class="nested-card"><dl class="field-grid nested-grid"><dt>Name</dt><dd><p>Underworld Connections</p></dd><dt>Description</dt><dd><p>You know the hidden hubs of the black market in every major city. You can find buyers for illegal goods, locate untraceable medical care, and secure meetings with crime bosses without being killed on sight.</p></dd></dl></div></dd><dt>Personality Traits</dt><dd><ul class="compact-list"><li>I never give my real name.</li><li>I constantly evaluate the price of everything I see.</li><li>I speak in euphemisms and slang.</li><li>I am extremely paranoid about surveillance and wiretaps.</li><li>I always have an exit strategy.</li><li>I am overly friendly to people I plan to scam.</li></ul></dd><dt>Ideals</dt><dd><ul class="compact-list"><li>Greed. Everything and everyone has a price. (Evil)</li><li>Freedom. The Association's taxes are theft; I operate outside their control. (Chaotic)</li><li>Honor. I am a crook, but I never betray a business partner. (Lawful)</li><li>Survival. I sell to whoever pays because I need to eat. (Neutral)</li><li>Redemption. I use my illicit funds to support a good cause. (Good)</li><li>Power. Controlling the flow of artifacts means controlling the Ascendants. (Any)</li></ul></dd><dt>Bonds</dt><dd><ul class="compact-list"><li>I owe a massive debt to a dangerous Yakuza/Cartel boss.</li><li>I am trying to buy back a family heirloom I was forced to sell.</li><li>My sibling is an honest Association investigator; we pretend not to know each other.</li><li>I have a trusted fence who is the only person I consider a friend.</li><li>I sold a cursed artifact that killed a town; I must retrieve it.</li><li>I am secretly gathering funds to buy a cure for my magical illness.</li></ul></dd><dt>Flaws</dt><dd><ul class="compact-list"><li>I will betray my friends if the payout is high enough.</li><li>I am addicted to the thrill of the deal.</li><li>I cannot resist stealing small, valuable items.</li><li>I am deeply distrustful of any lawful authority.</li><li>I am a compulsive liar.</li><li>I hoard wealth but refuse to spend it on improving my life.</li></ul></dd></dl>
+	</article><article class="entry" id="background-construction-worker">
+		
+		<h3>Construction Worker</h3>
+		<div class="meta"><span class="tag">Rank: C</span><span class="tag">Type: background</span></div>
+		<div class="entry-description"><p>You built the cities, and when the gates destroyed them, you rebuilt them. You are used to hard manual labor, dangerous heights, and heavy machinery. Your awakening just made you hit harder.</p></div>
+		<dl class="field-grid"><dt>Skill Proficiencies</dt><dd><ul class="compact-list"><li>Athletics</li><li>Perception</li></ul></dd><dt>Tool Proficiencies</dt><dd><ul class="compact-list"><li>Mason's Tools</li><li>Carpenter's Tools</li></ul></dd><dt>Equipment</dt><dd><ul class="compact-list"><li>A hard hat</li><li>Steel-toed boots</li><li>A heavy sledgehammer or wrench</li><li>A high-visibility vest</li><li>A lunchbox</li></ul></dd><dt>Starting Credits</dt><dd><span>500</span></dd><dt>Features</dt><dd><div class="nested-card"><dl class="field-grid nested-grid"><dt>Name</dt><dd><p>Structural Analysis</p></dd><dt>Description</dt><dd><p>You can instantly identify the weak points in any physical structure (buildings, bridges, dungeon walls). You have advantage on checks made to break objects or navigate collapsing ruins safely.</p></dd></dl></div></dd><dt>Personality Traits</dt><dd><ul class="compact-list"><li>I speak loudly, used to talking over heavy machinery.</li><li>I am blunt and straightforward.</li><li>I constantly assess the structural integrity of rooms I enter.</li><li>I take pride in an honest day's physical labor.</li><li>I am protective of my tools and equipment.</li><li>I distrust people who have soft hands.</li></ul></dd><dt>Ideals</dt><dd><ul class="compact-list"><li>Hard Work. The only thing that matters is the sweat on your brow. (Neutral)</li><li>Solidarity. The union protects its own; Ascendants should too. (Lawful)</li><li>Rebuilding. I will restore the cities the anomalies destroyed. (Good)</li><li>Destruction. Tearing things down is easier than building them. (Chaotic)</li><li>Profit. Hazard pay is hazard pay. (Evil)</li><li>Foundation. A strong team needs a strong foundation. (Any)</li></ul></dd><dt>Bonds</dt><dd><ul class="compact-list"><li>I am fiercely loyal to my old construction crew.</li><li>I am trying to rebuild my family home that was destroyed by a gate.</li><li>I carry a tool that belonged to my late father.</li><li>I owe my life to a Ascendant who saved my crew during a break.</li><li>I am angry at the mega-guild that refused to pay my crew for a job.</li><li>I want to build an impenetrable fortress to protect my loved ones.</li></ul></dd><dt>Flaws</dt><dd><ul class="compact-list"><li>I am incredibly stubborn and refuse to back down from an argument.</li><li>I struggle with complex academic or magical concepts.</li><li>I am prone to settling disputes with my fists.</li><li>I deeply resent wealthy or highly educated people.</li><li>I am reckless and ignore safety protocols if it slows me down.</li><li>I drink heavily to deal with the physical pain of my life.</li></ul></dd></dl>
+	</article><article class="entry entry--legendary" id="background-corporate-executive">
+		
+		<h3>Corporate Executive</h3>
+		<div class="meta"><span class="tag">Rank: S</span><span class="tag">Type: background</span></div>
+		<div class="entry-description"><p>You are a shark in a tailored suit. You ran a Fortune 500 company before the gates, and when you awakened, you realized the true profit lay in mana crystals and guild acquisitions. You are a CEO, a board member, or a ruthless venture capitalist.</p></div>
+		<dl class="field-grid"><dt>Skill Proficiencies</dt><dd><ul class="compact-list"><li>Persuasion</li><li>Insight</li></ul></dd><dt>Tool Proficiencies</dt><dd><ul class="compact-list"><li>Calligrapher's Supplies</li><li>Forgery Kit</li></ul></dd><dt>Languages</dt><dd><ul class="compact-list"><li>Two additional languages</li></ul></dd><dt>Equipment</dt><dd><ul class="compact-list"><li>A tailored Armani suit</li><li>A platinum credit card</li><li>A high-end smartwatch</li><li>A briefcase of contracts</li><li>A pen worth more than a car</li></ul></dd><dt>Starting Credits</dt><dd><span>3000</span></dd><dt>Features</dt><dd><div class="nested-card"><dl class="field-grid nested-grid"><dt>Name</dt><dd><p>Hostile Takeover</p></dd><dt>Description</dt><dd><p>You have massive financial leverage. You can secure vast loans, hire elite mercenary teams, or acquire properties and businesses instantly by throwing your corporate weight around.</p></dd></dl></div></dd><dt>Personality Traits</dt><dd><ul class="compact-list"><li>I view people as assets or liabilities.</li><li>I speak in calm, measured tones, even when threatening someone.</li><li>I delegate all physical labor to subordinates.</li><li>I am constantly checking the stock market and crystal prices.</li><li>I negotiate aggressively for every single advantage.</li><li>I dress impeccably in all situations.</li></ul></dd><dt>Ideals</dt><dd><ul class="compact-list"><li>Profit. The bottom line is the only thing that matters. (Evil)</li><li>Order. The corporate structure is the pinnacle of human achievement. (Lawful)</li><li>Efficiency. Waste is a sin; I optimize everything. (Neutral)</li><li>Power. I want to own the Ascendant Bureau itself. (Any)</li><li>Philanthropy. I use my wealth to rebuild cities destroyed by gates. (Good)</li><li>Disruption. I break established markets to create new opportunities. (Chaotic)</li></ul></dd><dt>Bonds</dt><dd><ul class="compact-list"><li>I am trying to orchestrate a hostile takeover of a rival mega-guild.</li><li>I am fiercely protective of my company's proprietary technology.</li><li>I owe a massive debt to a shadowy cabal of investors.</li><li>I want to secure a monopoly on S-Rank mana crystals.</li><li>I am secretly funding a Assassin research lab.</li><li>I am trying to groom my disappointing child to take over the company.</li></ul></dd><dt>Flaws</dt><dd><ul class="compact-list"><li>I am a ruthless sociopath who cares nothing for human life.</li><li>I am physically cowardly and will flee if my bodyguards fall.</li><li>I am obsessed with accumulating wealth.</li><li>I will betray my closest allies for a 1% increase in profit.</li><li>I am deeply paranoid about assassination attempts.</li><li>I view myself as fundamentally superior to the working class.</li></ul></dd></dl>
+	</article><article class="entry" id="background-delivery-driver">
+		
+		<h3>Delivery Driver</h3>
+		<div class="meta"><span class="tag">Rank: D</span><span class="tag">Type: background</span></div>
+		<div class="entry-description"><p>You delivered packages, food, or illicit goods across the city. You know every shortcut, every back alley, and how to avoid traffic - and now, how to avoid roaming anomalies.</p></div>
+		<dl class="field-grid"><dt>Skill Proficiencies</dt><dd><ul class="compact-list"><li>Survival</li><li>Acrobatics</li></ul></dd><dt>Tool Proficiencies</dt><dd><ul class="compact-list"><li>Vehicles (Land)</li><li>Navigators Tools</li></ul></dd><dt>Equipment</dt><dd><ul class="compact-list"><li>A sturdy courier bag</li><li>A high-end GPS smartphone</li><li>A helmet or cap</li><li>Comfortable running shoes</li><li>A receipt book</li></ul></dd><dt>Starting Credits</dt><dd><span>400</span></dd><dt>Features</dt><dd><div class="nested-card"><dl class="field-grid nested-grid"><dt>Name</dt><dd><p>Urban Navigator</p></dd><dt>Description</dt><dd><p>You know the layout of your home city perfectly. You can navigate through back alleys, rooftops, and subway tunnels to travel twice as fast through urban environments, bypassing traffic and blockades.</p></dd></dl></div></dd><dt>Personality Traits</dt><dd><ul class="compact-list"><li>I am always in a hurry and walk incredibly fast.</li><li>I complain about traffic and bad drivers constantly.</li><li>I know the best food spots in every neighborhood.</li><li>I am highly observant of addresses and locations.</li><li>I am intensely protective of my vehicle/bike.</li><li>I am pragmatic and focused on completing the 'delivery'.</li></ul></dd><dt>Ideals</dt><dd><ul class="compact-list"><li>Speed. The faster I go, the more money I make. (Chaotic)</li><li>Reliability. A package accepted is a package delivered. (Lawful)</li><li>Survival. Keep your head down and peddle faster. (Neutral)</li><li>Service. People rely on me to bring them what they need. (Good)</li><li>Profit. I'll deliver anything if the price is right. (Evil)</li><li>Freedom. The open road is the only place I feel alive. (Any)</li></ul></dd><dt>Bonds</dt><dd><ul class="compact-list"><li>I am trying to pay off the debt on my expensive vehicle.</li><li>I owe my life to a customer who warned me about a gate break.</li><li>I am fiercely loyal to my dispatcher/boss.</li><li>I carry a package I was never able to deliver.</li><li>I am secretly couriering illegal goods for the black market.</li><li>I am saving up to leave the city and start a quiet life.</li></ul></dd><dt>Flaws</dt><dd><ul class="compact-list"><li>I am incredibly reckless and ignore safety rules.</li><li>I am impatient and hate waiting for anything.</li><li>I will abandon my team if my 'vehicle' is threatened.</li><li>I am easily distracted by the promise of a big tip.</li><li>I am deeply cynical and expect everyone to stiff me.</li><li>I lack formal combat training and panic in drawn-out fights.</li></ul></dd></dl>
+	</article><article class="entry entry--uncommon" id="background-e-sports-champion">
+		
+		<h3>E-Sports Champion</h3>
+		<div class="meta"><span class="tag">Rank: B</span><span class="tag">Type: background</span></div>
+		<div class="entry-description"></div>
+		<dl class="field-grid"><dt>Skill Proficiencies</dt><dd><ul class="compact-list"><li>Insight</li><li>Perception</li></ul></dd><dt>Tool Proficiencies</dt><dd><ul class="compact-list"><li>Gaming Set</li><li>Tinker's Tools</li></ul></dd><dt>Languages</dt><dd><ul class="compact-list"><li>Korean (or another language common in E-Sports)</li></ul></dd><dt>Equipment</dt><dd><ul class="compact-list"><li>A high-end gaming headset</li><li>A mechanical keyboard (modified into a weapon or focus)</li><li>A team jersey</li><li>Energy drinks</li><li>A mousepad</li></ul></dd><dt>Starting Credits</dt><dd><span>800</span></dd><dt>Features</dt><dd><div class="nested-card"><dl class="field-grid nested-grid"><dt>Name</dt><dd><p>APM Mastery</p></dd><dt>Description</dt><dd><p>Your hand-eye coordination is legendary. You excel at fine motor tasks under extreme pressure, and you can instantly memorize the precise layout of any digital or physical interface you see.</p></dd></dl></div></dd><dt>Personality Traits</dt><dd><ul class="compact-list"><li>I refer to combat situations using gaming terms (aggro, DPS, wiping).</li><li>I am highly competitive and hate losing.</li><li>I drink copious amounts of energy drinks.</li><li>I have incredibly fast, twitchy reflexes.</li><li>I trash-talk enemies during combat.</li><li>I am analytical, calculating probabilities in my head.</li></ul></dd><dt>Ideals</dt><dd><ul class="compact-list"><li>Victory. I play to win, and I am the best. (Any)</li><li>Teamwork. A well-coordinated team can defeat any boss. (Lawful)</li><li>Glory. I want my name on the top of the leaderboards. (Chaotic)</li><li>Wealth. The prize money is what matters. (Neutral)</li><li>Protection. I will 'carry' my weaker teammates to safety. (Good)</li><li>Dominance. I want to crush my opponents and humiliate them. (Evil)</li></ul></dd><dt>Bonds</dt><dd><ul class="compact-list"><li>I am trying to lead my team to the World Championship of Guilds.</li><li>I am fiercely loyal to my former E-Sports teammates.</li><li>I have a bitter rivalry with another top-ranked Ascendant/Gamer.</li><li>I am trying to secure a massive sponsorship deal.</li><li>I want to prove that gamers make the best Ascendants.</li><li>I am searching for a 'glitch' or exploit in the gate system.</li></ul></dd><dt>Flaws</dt><dd><ul class="compact-list"><li>I am incredibly arrogant and rage when things go wrong.</li><li>I view people as NPCs or 'noobs'.</li><li>I struggle to take the danger of the rifts seriously.</li><li>I have a terrible diet and sleep schedule.</li><li>I will ignore the plan if I think I can make a 'big play'.</li><li>I am highly susceptible to bait and taunts.</li></ul></dd></dl>
+	</article><article class="entry entry--rare" id="background-elite-breach-tactician">
+		
+		<h3>Elite Breach-Tactician</h3>
+		<div class="meta"><span class="tag">Rank: A</span><span class="tag">Type: background</span></div>
+		<div class="entry-description"><p>You are the chess master of the raid team. You don't just fight; you analyze boss patterns, coordinate cooldowns, and direct the flow of battle. You are highly sought after by top guilds.</p></div>
+		<dl class="field-grid"><dt>Skill Proficiencies</dt><dd><ul class="compact-list"><li>Perception</li><li>Insight</li></ul></dd><dt>Tool Proficiencies</dt><dd><ul class="compact-list"><li>Dragonchess Set (or similar gaming set)</li><li>Calligrapher's Supplies</li></ul></dd><dt>Languages</dt><dd><ul class="compact-list"><li>One additional language</li></ul></dd><dt>Equipment</dt><dd><ul class="compact-list"><li>A tactical headset</li><li>A holographic command tablet</li><li>A sharp suit or sleek armor</li><li>A clipboard with raid plans</li></ul></dd><dt>Starting Credits</dt><dd><span>1500</span></dd><dt>Features</dt><dd><div class="nested-card"><dl class="field-grid nested-grid"><dt>Name</dt><dd><p>Boss-Sense</p></dd><dt>Description</dt><dd><p>By observing a anomaly for 1 minute, you can deduce its relative threat level, its primary damage type, and its most obvious vulnerability or resistance.</p></dd></dl></div></dd><dt>Personality Traits</dt><dd><ul class="compact-list"><li>I refer to people by their designated roles (Tank, DPS, Healer).</li><li>I am incredibly calm under pressure.</li><li>I click a pen or tap my fingers when analyzing a situation.</li><li>I view casualties as 'acceptable losses' in a spreadsheet.</li><li>I am brutally honest about people's flaws and weaknesses.</li><li>I plan every conversation like a military campaign.</li></ul></dd><dt>Ideals</dt><dd><ul class="compact-list"><li>Efficiency. The goal is maximum yield with minimum loss. (Lawful)</li><li>Victory. I play to win, no matter the cost. (Evil)</li><li>Protection. My plans ensure everyone comes home. (Good)</li><li>Ego. I am the smartest person in the room, and I know it. (Chaotic)</li><li>Logic. Emotion has no place in the dungeon. (Neutral)</li><li>Glory. A flawless raid is a work of art. (Any)</li></ul></dd><dt>Bonds</dt><dd><ul class="compact-list"><li>I orchestrated a raid that resulted in a total wipe; I seek redemption.</li><li>My sibling is a reckless front-liner I must protect.</li><li>I am the protégé of a legendary S-Rank tactician.</li><li>I am heavily invested in the success of my specific guild.</li><li>I carry the broken weapon of a tank who died following my orders.</li><li>I am trying to solve the 'unbeatable' pattern of a specific S-Rank boss.</li></ul></dd><dt>Flaws</dt><dd><ul class="compact-list"><li>I view my teammates as disposable pawns.</li><li>I freeze if my plan goes off the rails.</li><li>I am incredibly arrogant and refuse to admit when I'm wrong.</li><li>I overcomplicate simple situations.</li><li>I struggle to show empathy or emotional support.</li><li>I will abandon the mission if the math says we can't win.</li></ul></dd></dl>
+	</article><article class="entry" id="background-firefighter">
+		
+		<h3>Firefighter</h3>
+		<div class="meta"><span class="tag">Rank: C</span><span class="tag">Type: background</span></div>
+		<div class="entry-description"><p>You ran into burning buildings while everyone else ran out. When the gates opened, the fires just got hotter and the buildings fell faster. You are an expert in search and rescue and hazardous environments.</p></div>
+		<dl class="field-grid"><dt>Skill Proficiencies</dt><dd><ul class="compact-list"><li>Athletics</li><li>Survival</li></ul></dd><dt>Tool Proficiencies</dt><dd><ul class="compact-list"><li>Vehicles (Land)</li><li>Carpenter's Tools</li></ul></dd><dt>Equipment</dt><dd><ul class="compact-list"><li>A heavy turnout coat</li><li>A fire axe</li><li>A respirator mask</li><li>A heavy flashlight</li><li>A sturdy helmet</li></ul></dd><dt>Starting Credits</dt><dd><span>600</span></dd><dt>Features</dt><dd><div class="nested-card"><dl class="field-grid nested-grid"><dt>Name</dt><dd><p>Breach and Clear</p></dd><dt>Description</dt><dd><p>You excel at navigating hazardous terrain (fires, toxic gas, collapsing structures). You can force open jammed doors and clear rubble twice as fast as normal, and you automatically know the safest structural path through a ruin.</p></dd></dl></div></dd><dt>Personality Traits</dt><dd><ul class="compact-list"><li>I am incredibly brave, bordering on reckless.</li><li>I speak loudly and clearly, used to communicating over sirens.</li><li>I am fiercely protective of my 'crew'.</li><li>I constantly assess the fire hazards of a room.</li><li>I am physically imposing and use it to comfort people.</li><li>I enjoy the adrenaline rush of a crisis.</li></ul></dd><dt>Ideals</dt><dd><ul class="compact-list"><li>Bravery. Someone has to run into the fire. (Good)</li><li>Duty. I swore to protect the city. (Lawful)</li><li>Camaraderie. I never leave a brother or sister behind. (Any)</li><li>Thrill. I live for the heat of the moment. (Chaotic)</li><li>Survival. Get in, save who you can, get out. (Neutral)</li><li>Glory. I want to be the hero everyone cheers for. (Evil)</li></ul></dd><dt>Bonds</dt><dd><ul class="compact-list"><li>I lost my entire crew in a gate break; I am the only survivor.</li><li>I am fiercely loyal to the firehouse that raised me.</li><li>I owe my life to a Ascendant who pulled me from a collapsing building.</li><li>I carry the charred helmet of my former captain.</li><li>I am trying to support the families of my fallen comrades.</li><li>I am obsessed with killing a specific fire-elemental boss.</li></ul></dd><dt>Flaws</dt><dd><ul class="compact-list"><li>I suffer from a hero complex and take unnecessary risks.</li><li>I am deeply traumatized by the people I couldn't save.</li><li>I struggle to follow orders from people who haven't 'been in the fire'.</li><li>I am a heavy drinker to cope with the stress.</li><li>I am overly aggressive toward arsonists or fire-magic users.</li><li>I lack subtlety and solve problems by smashing them.</li></ul></dd></dl>
+	</article><article class="entry" id="background-gate-site-scavenger">
+		
+		<h3>Gate-Site Scavenger</h3>
+		<div class="meta"><span class="tag">Rank: C</span><span class="tag">Type: background</span></div>
+		<div class="entry-description"><p>When the big guilds clear an A-Rank gate, they leave the small stuff behind. You are a 'hyena', illegally sneaking into uncleared or recently cleared gates to mine overlooked crystals or scavenge gear from dead Ascendants.</p></div>
+		<dl class="field-grid"><dt>Skill Proficiencies</dt><dd><ul class="compact-list"><li>Stealth</li><li>Survival</li></ul></dd><dt>Tool Proficiencies</dt><dd><ul class="compact-list"><li>Thieves' Tools</li><li>Cobbler's Tools</li></ul></dd><dt>Equipment</dt><dd><ul class="compact-list"><li>A crowbar</li><li>A stained, patched-up backpack</li><li>A gas mask</li><li>A set of dark, durable clothes</li><li>A half-empty mana potion</li></ul></dd><dt>Starting Credits</dt><dd><span>300</span></dd><dt>Features</dt><dd><div class="nested-card"><dl class="field-grid nested-grid"><dt>Name</dt><dd><p>Hyena's Path</p></dd><dt>Description</dt><dd><p>You know how to bypass Association police barricades and security perimeters around active gates. You can also identify areas in a dungeon where loot is likely to be hidden or overlooked by main raid teams.</p></dd></dl></div></dd><dt>Personality Traits</dt><dd><ul class="compact-list"><li>I am incredibly scrappy and resourceful.</li><li>I have a morbid sense of humor about death.</li><li>I move quietly and stay close to the walls.</li><li>I despise the wealthy elites of the mega-guilds.</li><li>I am fiercely territorial over my 'finds'.</li><li>I smell faintly of dungeon rot and ozone.</li></ul></dd><dt>Ideals</dt><dd><ul class="compact-list"><li>Survival. The scraps of the rich are the feasts of the poor. (Neutral)</li><li>Rebellion. The guilds don't own the gates; the gates belong to everyone. (Chaotic)</li><li>Greed. I'll pick the gold off a corpse before it gets cold. (Evil)</li><li>Family. I scavenge to feed the orphans in my slum. (Good)</li><li>Code. I never steal from a living Ascendant, only the dead. (Lawful)</li><li>Ambition. One big score and I'm out of the gutters forever. (Any)</li></ul></dd><dt>Bonds</dt><dd><ul class="compact-list"><li>I scavenged the signature weapon of a famous dead Ascendant, and now people are looking for it.</li><li>I am fiercely protective of my fellow street hyenas.</li><li>I owe my life to a guild team that caught me but let me go.</li><li>I am looking for the body of my parent who died in a gate.</li><li>I know a secret entrance to a permanent gate that no one else knows.</li><li>I have a pet anomaly cub I rescued from a cleared dungeon.</li></ul></dd><dt>Flaws</dt><dd><ul class="compact-list"><li>I am a kleptomaniac.</li><li>I have a deep-seated inferiority complex regarding high-ranking Ascendants.</li><li>I will flee at the first sign of a boss-level threat.</li><li>I am incredibly stingy and refuse to share resources.</li><li>I hold onto grudges forever.</li><li>I lack formal education and struggle with complex technology or magic.</li></ul></dd></dl>
+	</article><article class="entry" id="background-gate-worshipping-cultist">
+		
+		<h3>Gate-Worshipping Cultist</h3>
+		<div class="meta"><span class="tag">Rank: D</span><span class="tag">Type: background</span></div>
+		<div class="entry-description"><p>You were a member of a doomsday cult that believes the Sovereigns and the rifts are divine judgments. You either escaped the cult when you awakened, or you are secretly still a member acting as a sleeper agent among the Ascendants.</p></div>
+		<dl class="field-grid"><dt>Skill Proficiencies</dt><dd><ul class="compact-list"><li>Cosmic Lore</li><li>Deception</li></ul></dd><dt>Tool Proficiencies</dt><dd><ul class="compact-list"><li>Disguise Kit</li><li>Poisoner's Kit</li></ul></dd><dt>Languages</dt><dd><ul class="compact-list"><li>One exotic language</li></ul></dd><dt>Equipment</dt><dd><ul class="compact-list"><li>A hidden cult symbol</li><li>Dark robes</li><li>A sacrificial dagger</li><li>A strange, humming piece of a gate</li><li>A book of prophecies</li></ul></dd><dt>Starting Credits</dt><dd><span>200</span></dd><dt>Features</dt><dd><div class="nested-card"><dl class="field-grid nested-grid"><dt>Name</dt><dd><p>Cult Sympathizers</p></dd><dt>Description</dt><dd><p>You know the secret signs and phrases of the gate-cults. You can find safehouses, secure black-market healing, or gather rumors from cultists in any major city without being attacked.</p></dd></dl></div></dd><dt>Personality Traits</dt><dd><ul class="compact-list"><li>I speak in apocalyptic prophecies and metaphors.</li><li>I am intensely charismatic and persuasive.</li><li>I stare unblinkingly at people.</li><li>I am calm, even joyful, in the face of terrifying anomalies.</li><li>I constantly recite silent prayers.</li><li>I am deeply secretive about my past.</li></ul></dd><dt>Ideals</dt><dd><ul class="compact-list"><li>Devotion. The Sovereigns are gods; we must prepare for their arrival. (Evil)</li><li>Redemption. I must atone for the horrific things I did in the cult. (Good)</li><li>Nihilism. The world is ending; nothing matters but the rifts. (Chaotic)</li><li>Order. The cult provides the only true structure in a broken world. (Lawful)</li><li>Survival. I play whatever role keeps me alive. (Neutral)</li><li>Truth. I must uncover the true nature of the Sovereigns. (Any)</li></ul></dd><dt>Bonds</dt><dd><ul class="compact-list"><li>I am hunting the cult leader who brainwashed me.</li><li>I am trying to rescue my family who is still in the cult.</li><li>I carry a prophecy that names me as the harbinger of the end.</li><li>I am fiercely protective of another escapee.</li><li>I owe my life to the Ascendant who raided our compound.</li><li>I am secretly preparing a ritual to summon a Sovereign.</li></ul></dd><dt>Flaws</dt><dd><ul class="compact-list"><li>I suffer from severe delusions and hallucinations.</li><li>I am completely devoid of empathy for non-believers.</li><li>I will obey orders from high-ranking cultists instinctively.</li><li>I am deeply paranoid that the cult is hunting me.</li><li>I enjoy the suffering of others.</li><li>I refuse to use modern medicine, relying only on mana.</li></ul></dd></dl>
+	</article><article class="entry entry--uncommon" id="background-guardian-legionnaire">
+		
+		<h3>Guardian Legionnaire</h3>
+		<div class="meta"><span class="tag">Rank: B</span><span class="tag">Type: background</span></div>
+		<div class="entry-description"><p>You were part of a specialized mundane military unit designed to hold the line against gate breaks before Ascendants became common. You survived through extreme discipline and heavy firepower.</p></div>
+		<dl class="field-grid"><dt>Skill Proficiencies</dt><dd><ul class="compact-list"><li>Athletics</li><li>Medicine</li></ul></dd><dt>Tool Proficiencies</dt><dd><ul class="compact-list"><li>Land Vehicles</li><li>Smith's Tools</li></ul></dd><dt>Equipment</dt><dd><ul class="compact-list"><li>A piece of battered military armor</li><li>Dog tags of your fallen squad</li><li>A tactical medkit</li><li>A military-issue radio</li></ul></dd><dt>Starting Credits</dt><dd><span>700</span></dd><dt>Features</dt><dd><div class="nested-card"><dl class="field-grid nested-grid"><dt>Name</dt><dd><p>Gate-Line Stance</p></dd><dt>Description</dt><dd><p>You have an encyclopedic knowledge of military logistics and barricade construction. You can requisition supplies from military outposts, and mundane soldiers will follow your tactical commands in a crisis.</p></dd></dl></div></dd><dt>Personality Traits</dt><dd><ul class="compact-list"><li>I bark orders in high-stress situations.</li><li>I maintain my gear with obsessive precision.</li><li>I am fiercely loyal to the chain of command.</li><li>I use military slang constantly.</li><li>I stand at attention when speaking to superiors.</li><li>I judge people entirely by their performance under fire.</li></ul></dd><dt>Ideals</dt><dd><ul class="compact-list"><li>Duty. The line must be held at all costs. (Lawful)</li><li>Sacrifice. We bleed so the civilians don't have to. (Good)</li><li>Order. Chaos is the enemy; discipline is survival. (Lawful)</li><li>Camaraderie. I never leave a man behind. (Any)</li><li>Might. Superior firepower solves all problems. (Evil)</li><li>Survival. Adapt, overcome, survive. (Neutral)</li></ul></dd><dt>Bonds</dt><dd><ul class="compact-list"><li>I am the last survivor of my original unit.</li><li>I owe my life to a Ascendant who saved my squad.</li><li>I carry the dog tags of my commanding officer.</li><li>My military pension was cut, so I hunt to survive.</li><li>I am fiercely protective of my new raid team, treating them like my old squad.</li><li>I harbor a deep hatred for the specific anomaly type that wiped out my base.</li></ul></dd><dt>Flaws</dt><dd><ul class="compact-list"><li>I suffer from severe PTSD triggered by loud alarms.</li><li>I am incredibly rigid and struggle to adapt to magical solutions.</li><li>I despise Ascendants who act like celebrities.</li><li>I will blindly follow orders from a recognized authority figure.</li><li>I am overly aggressive toward insubordination.</li><li>I drink heavily to forget the faces of the men I lost.</li></ul></dd></dl>
+	</article><article class="entry entry--legendary" id="background-guild-master">
+		
+		<h3>Guild Master</h3>
+		<div class="meta"><span class="tag">Rank: S</span><span class="tag">Type: background</span></div>
+		<div class="entry-description"><p>You are the founder or inherited leader of a Ascendant Guild. Whether it's a massive corporate entity or a struggling indie startup, you are responsible for managing contracts, paying out shares, and leading raids.</p></div>
+		<dl class="field-grid"><dt>Skill Proficiencies</dt><dd><ul class="compact-list"><li>Persuasion</li><li>Insight</li></ul></dd><dt>Tool Proficiencies</dt><dd><ul class="compact-list"><li>Forgery Kit</li></ul></dd><dt>Languages</dt><dd><ul class="compact-list"><li>One additional language</li></ul></dd><dt>Equipment</dt><dd><ul class="compact-list"><li>A bespoke business suit</li><li>Guild master seal or keycard</li><li>A high-end comms earpiece</li><li>A ledger of debts</li></ul></dd><dt>Starting Credits</dt><dd><span>2500</span></dd><dt>Features</dt><dd><div class="nested-card"><dl class="field-grid nested-grid"><dt>Name</dt><dd><p>Guild Authority</p></dd><dt>Description</dt><dd><p>You can leverage your guild's name to secure loans, bypass standard Association bureaucracy, and requisition basic mundane gear from affiliated businesses. You also command the loyalty of low-rank guild employees.</p></dd></dl></div></dd><dt>Personality Traits</dt><dd><ul class="compact-list"><li>I view every interaction as a negotiation.</li><li>I am incredibly protective of my guild members.</li><li>I speak in corporate buzzwords and synergy jargon.</li><li>I always dress impeccably, even in a dungeon.</li><li>I delegate tasks constantly, rarely doing grunt work.</li><li>I calculate the monetary value of anomaly corpses mid-fight.</li></ul></dd><dt>Ideals</dt><dd><ul class="compact-list"><li>Power. A strong guild dictates the laws of the new world. (Evil)</li><li>Responsibility. Heavy is the head that wears the crown. (Lawful)</li><li>Wealth. The rifts are the greatest gold rush in history. (Neutral)</li><li>Family. My guild is my family, and I will die for them. (Good)</li><li>Freedom. I built my own guild so I'd answer to no one. (Chaotic)</li><li>Legacy. I want my guild's name to live forever. (Any)</li></ul></dd><dt>Bonds</dt><dd><ul class="compact-list"><li>My guild is heavily in debt to a dangerous cartel.</li><li>I founded the guild to honor a fallen comrade.</li><li>I am fiercely protective of the guild's youngest recruit.</li><li>My former co-founder betrayed me and started a rival guild.</li><li>The guild's headquarters is my true home.</li><li>I am trying to buyout a legendary S-Ranker to join us.</li></ul></dd><dt>Flaws</dt><dd><ul class="compact-list"><li>I value profit margins over the safety of my B-Team.</li><li>I am a workaholic who cannot relax.</li><li>I am incredibly paranoid about corporate espionage.</li><li>I will lie to my team if I think it will boost morale.</li><li>I refuse to show weakness, even when mortally wounded.</li><li>I micromanage everything to a detrimental degree.</li></ul></dd></dl>
+	</article><article class="entry" id="background-journalist">
+		
+		<h3>Journalist</h3>
+		<div class="meta"><span class="tag">Rank: D</span><span class="tag">Type: background</span></div>
+		<div class="entry-description"><p>You are an investigative reporter, a blogger, or a war correspondent. You risk your life to get the truth about the Ascendant Bureau, the mega-guilds, and the origin of the gates.</p></div>
+		<dl class="field-grid"><dt>Skill Proficiencies</dt><dd><ul class="compact-list"><li>Investigation</li><li>Insight</li></ul></dd><dt>Tool Proficiencies</dt><dd><ul class="compact-list"><li>Calligrapher's Supplies</li><li>Forgery Kit</li></ul></dd><dt>Languages</dt><dd><ul class="compact-list"><li>One additional language</li></ul></dd><dt>Equipment</dt><dd><ul class="compact-list"><li>A digital voice recorder</li><li>A high-end camera</li><li>A press pass</li><li>A notebook filled with shorthand</li><li>A cup of black coffee</li></ul></dd><dt>Starting Credits</dt><dd><span>700</span></dd><dt>Features</dt><dd><div class="nested-card"><dl class="field-grid nested-grid"><dt>Name</dt><dd><p>Press Credentials</p></dd><dt>Description</dt><dd><p>You can leverage your press pass to gain entry to restricted Association press conferences, guild headquarters lobbies, and crime scenes. People are more likely to answer your questions if they think it will get them good PR.</p></dd></dl></div></dd><dt>Personality Traits</dt><dd><ul class="compact-list"><li>I ask probing, uncomfortable questions.</li><li>I am deeply skeptical of any official statement.</li><li>I document everything.</li><li>I am fearless when chasing a lead.</li><li>I speak in headlines and soundbites.</li><li>I am highly observant of minor inconsistencies.</li></ul></dd><dt>Ideals</dt><dd><ul class="compact-list"><li>Truth. The public has a right to know the dark secrets of the gates. (Good)</li><li>Exposure. I will tear down the corrupt guilds with my pen. (Chaotic)</li><li>Fame. I want to win a Pulitzer for my reporting. (Neutral)</li><li>Blackmail. Information is power, and I sell it to the highest bidder. (Evil)</li><li>Integrity. I will never compromise my sources or my reporting. (Lawful)</li><li>Curiosity. I simply must know why the rifts opened. (Any)</li></ul></dd><dt>Bonds</dt><dd><ul class="compact-list"><li>I am protecting a whistleblower from a major mega-guild.</li><li>I am trying to solve the disappearance of a fellow journalist.</li><li>I owe my career to a grizzled editor who believed in me.</li><li>I carry a encrypted hard drive with explosive information.</li><li>I am deeply loyal to my publication.</li><li>I want to clear the name of an innocent Ascendant framed by the Association.</li></ul></dd><dt>Flaws</dt><dd><ul class="compact-list"><li>I will endanger my team to get a good story.</li><li>I am incredibly nosy and violate people's privacy.</li><li>I am arrogant and believe I am smarter than the people I interview.</li><li>I have a terrible reputation and many enemies.</li><li>I will betray a confidence if the story is big enough.</li><li>I am physically cowardly in actual combat.</li></ul></dd></dl>
+	</article><article class="entry entry--uncommon" id="background-k-pop-idol">
+		
+		<h3>K-Pop Idol</h3>
+		<div class="meta"><span class="tag">Rank: B</span><span class="tag">Type: background</span></div>
+		<div class="entry-description"><p>You were a manufactured pop star, trained for years to be perfect. Your awakening was a PR nightmare - or a PR miracle. Now, your agency manages your Ascendant career, and you fight anomalies while maintaining perfect choreography.</p></div>
+		<dl class="field-grid"><dt>Skill Proficiencies</dt><dd><ul class="compact-list"><li>Performance</li><li>Persuasion</li></ul></dd><dt>Tool Proficiencies</dt><dd><ul class="compact-list"><li>Musical Instrument</li><li>Disguise Kit</li></ul></dd><dt>Languages</dt><dd><ul class="compact-list"><li>Korean</li><li>One additional language</li></ul></dd><dt>Equipment</dt><dd><ul class="compact-list"><li>A microphone (can be a focus)</li><li>Designer combat outfits</li><li>A fan letter</li><li>A compact mirror and makeup</li><li>A pair of sunglasses</li></ul></dd><dt>Starting Credits</dt><dd><span>1500</span></dd><dt>Features</dt><dd><div class="nested-card"><dl class="field-grid nested-grid"><dt>Name</dt><dd><p>Idol Aura</p></dd><dt>Description</dt><dd><p>You are universally recognizable and adored. You can easily bypass security at clubs, hotels, and events, and fans will eagerly do small favors for you (like providing a disguise, a ride, or a distraction).</p></dd></dl></div></dd><dt>Personality Traits</dt><dd><ul class="compact-list"><li>I strike a pose when I land a finishing blow.</li><li>I am intensely disciplined and practice my 'routines' daily.</li><li>I always smile, even when I am furious or in pain.</li><li>I am deeply concerned with my diet and appearance.</li><li>I treat my teammates like backup dancers.</li><li>I speak to fans with rehearsed, syrupy sweetness.</li></ul></dd><dt>Ideals</dt><dd><ul class="compact-list"><li>Perfection. I must be flawless in every aspect of my life. (Lawful)</li><li>Inspiration. I fight to give my fans hope in a dark world. (Good)</li><li>Fame. I want to be the most famous person on the planet. (Any)</li><li>Control. I will break free from my agency's iron grip. (Chaotic)</li><li>Wealth. I am a brand, and my brand is expensive. (Neutral)</li><li>Manipulation. I use my charm to get exactly what I want. (Evil)</li></ul></dd><dt>Bonds</dt><dd><ul class="compact-list"><li>I am secretly dating a member of a rival idol group/guild.</li><li>I am trapped in an abusive contract with my entertainment agency.</li><li>I am fiercely protective of my sasaeng (obsessive) fans.</li><li>I am trying to protect my younger sibling from the industry.</li><li>I want to avenge a former bandmate who died in a gate.</li><li>I carry a specific song lyric that holds the key to my awakening.</li></ul></dd><dt>Flaws</dt><dd><ul class="compact-list"><li>I suffer from severe burnout and depression.</li><li>I am anorexic or have severe body image issues.</li><li>I will compromise a mission if it threatens my physical appearance.</li><li>I am completely dependent on my manager for basic life skills.</li><li>I am secretly incredibly cruel and vindictive behind closed doors.</li><li>I panic if I lose my voice or damage my face.</li></ul></dd></dl>
+	</article><article class="entry" id="background-mechanic">
+		
+		<h3>Mechanic</h3>
+		<div class="meta"><span class="tag">Rank: C</span><span class="tag">Type: background</span></div>
+		<div class="entry-description"><p>You fixed cars, heavy machinery, or HVAC systems. You know how things work, and more importantly, how to take them apart. The transition from fixing engines to dismantling golem cores was surprisingly easy.</p></div>
+		<dl class="field-grid"><dt>Skill Proficiencies</dt><dd><ul class="compact-list"><li>Investigation</li><li>Athletics</li></ul></dd><dt>Tool Proficiencies</dt><dd><ul class="compact-list"><li>Tinker's Tools</li><li>Smith's Tools</li></ul></dd><dt>Equipment</dt><dd><ul class="compact-list"><li>A set of grease-stained coveralls</li><li>A heavy wrench</li><li>A rag</li><li>A multi-tool</li><li>A pair of safety glasses</li></ul></dd><dt>Starting Credits</dt><dd><span>600</span></dd><dt>Features</dt><dd><div class="nested-card"><dl class="field-grid nested-grid"><dt>Name</dt><dd><p>Jury-Rigger</p></dd><dt>Description</dt><dd><p>You can temporarily repair any broken mundane mechanical device (vehicles, generators, locks) using scavenged parts. The repair lasts for exactly as long as you need it to before breaking down again.</p></dd></dl></div></dd><dt>Personality Traits</dt><dd><ul class="compact-list"><li>I wipe my hands on a rag constantly.</li><li>I view complex magic as just another type of engine.</li><li>I speak in mechanical metaphors.</li><li>I am fiercely protective of my tools.</li><li>I am pragmatic and prefer simple, robust solutions.</li><li>I curse creatively when things don't work.</li></ul></dd><dt>Ideals</dt><dd><ul class="compact-list"><li>Function. If it works, it's good. If it's broken, fix it. (Neutral)</li><li>Reliability. People depend on the things I build. (Lawful)</li><li>Innovation. I want to build a machine that runs on mana. (Chaotic)</li><li>Profit. I charge triple for rush jobs. (Evil)</li><li>Community. I keep the neighborhood running. (Good)</li><li>Perfection. I want to build the ultimate, flawless machine. (Any)</li></ul></dd><dt>Bonds</dt><dd><ul class="compact-list"><li>I am trying to repair a massive, mysterious piece of alien tech.</li><li>I owe a debt to the garage owner who taught me my trade.</li><li>I am fiercely loyal to my customized, junk-built vehicle.</li><li>I carry a specific tool that was passed down in my family.</li><li>I am trying to earn enough to open my own high-end shop.</li><li>I want to reverse-engineer Ascendant gear to sell on the black market.</li></ul></dd><dt>Flaws</dt><dd><ul class="compact-list"><li>I am socially awkward and prefer machines to people.</li><li>I am incredibly stubborn and refuse to ask for help.</li><li>I will ignore my team to investigate an interesting piece of tech.</li><li>I am greedy and overcharge for my services.</li><li>I am deeply cynical and expect everything to break eventually.</li><li>I lack formal education and struggle with abstract magical theory.</li></ul></dd></dl>
+	</article><article class="entry entry--rare" id="background-mega-guild-heir-chaebol">
+		
+		<h3>Mega-Guild Heir (Chaebol)</h3>
+		<div class="meta"><span class="tag">Rank: A</span><span class="tag">Type: background</span></div>
+		<div class="entry-description"><p>You are the scion of a massive corporate conglomerate that runs a top-tier Ascendant Guild. You were born with a silver spoon and awakened with an S-Rank or A-Rank potential. The world expects you to lead, but you have yet to prove you're more than just nepotism.</p></div>
+		<dl class="field-grid"><dt>Skill Proficiencies</dt><dd><ul class="compact-list"><li>Persuasion</li><li>Dimensional Lore</li></ul></dd><dt>Tool Proficiencies</dt><dd><ul class="compact-list"><li>Vehicles (Land)</li><li>Gaming Set</li></ul></dd><dt>Languages</dt><dd><ul class="compact-list"><li>Two additional languages</li></ul></dd><dt>Equipment</dt><dd><ul class="compact-list"><li>Designer clothes</li><li>A high-end sports car key (flavor)</li><li>A gold-plated guild signet</li><li>A flagship smartphone</li><li>An expensive watch</li></ul></dd><dt>Starting Credits</dt><dd><span>5000</span></dd><dt>Features</dt><dd><div class="nested-card"><dl class="field-grid nested-grid"><dt>Name</dt><dd><p>Corporate Nepotism</p></dd><dt>Description</dt><dd><p>You have a massive trust fund and corporate backing. Once per week, you can requisition a piece of mundane equipment, a vehicle, or secure a meeting with any high-ranking official by dropping your family's name.</p></dd></dl></div></dd><dt>Personality Traits</dt><dd><ul class="compact-list"><li>I expect people to open doors for me.</li><li>I complain about the quality of food and accommodations.</li><li>I am secretly terrified of failing my family.</li><li>I throw money at problems to make them go away.</li><li>I am incredibly charismatic and used to the camera.</li><li>I am deeply naive about how the 'real world' works.</li></ul></dd><dt>Ideals</dt><dd><ul class="compact-list"><li>Legacy. I must uphold the honor of my family's name. (Lawful)</li><li>Power. My family rules the world; I am just taking my throne. (Evil)</li><li>Responsibility. With great wealth comes a duty to protect the weak. (Good)</li><li>Freedom. I want to escape my family's shadow and be my own person. (Chaotic)</li><li>Success. The only metric that matters is the bottom line. (Neutral)</li><li>Ego. I will prove I am the best, not just the richest. (Any)</li></ul></dd><dt>Bonds</dt><dd><ul class="compact-list"><li>I am fiercely loyal to my personal bodyguard/butler.</li><li>I am trying to earn the respect of my cold, distant parent.</li><li>I have a bitter rivalry with the heir of a competing mega-guild.</li><li>I am secretly funding an illegal underground guild.</li><li>I am engaged to someone for purely political/corporate reasons.</li><li>I am desperately searching for a cure for my sibling's magical illness.</li></ul></dd><dt>Flaws</dt><dd><ul class="compact-list"><li>I am incredibly arrogant and entitled.</li><li>I have no concept of the value of money.</li><li>I will throw a tantrum if I am publicly humiliated.</li><li>I am easily manipulated by flattery.</li><li>I am secretly a coward when my life is actually in danger.</li><li>I rely completely on my gear and connections, not my skills.</li></ul></dd></dl>
+	</article><article class="entry entry--rare" id="background-movie-star">
+		
+		<h3>Movie Star</h3>
+		<div class="meta"><span class="tag">Rank: A</span><span class="tag">Type: background</span></div>
+		<div class="entry-description"><p>You were an A-list celebrity, known across the globe for your blockbuster films. When you awakened, your studio immediately pivoted to funding your Ascendant raids as live-action reality movies. You are the ultimate action star.</p></div>
+		<dl class="field-grid"><dt>Skill Proficiencies</dt><dd><ul class="compact-list"><li>Deception</li><li>Performance</li></ul></dd><dt>Tool Proficiencies</dt><dd><ul class="compact-list"><li>Disguise Kit</li><li>Vehicles (Land)</li></ul></dd><dt>Languages</dt><dd><ul class="compact-list"><li>One additional language</li></ul></dd><dt>Equipment</dt><dd><ul class="compact-list"><li>A prop from your most famous movie</li><li>A tailored suit or dress</li><li>A pair of dark sunglasses</li><li>A contract with a major studio</li><li>A bottle of expensive champagne</li></ul></dd><dt>Starting Credits</dt><dd><span>2000</span></dd><dt>Features</dt><dd><div class="nested-card"><dl class="field-grid nested-grid"><dt>Name</dt><dd><p>Star Power</p></dd><dt>Description</dt><dd><p>Your fame opens doors that money cannot. You can secure VIP access, private transportation, and high-level meetings simply by virtue of being famous. People naturally defer to you in social situations.</p></dd></dl></div></dd><dt>Personality Traits</dt><dd><ul class="compact-list"><li>I treat everything as a movie set and everyone as an extra.</li><li>I demand a 'stunt double' for dangerous non-combat tasks.</li><li>I speak in dramatic, rehearsed monologues.</li><li>I am deeply concerned with my 'lighting' and angles.</li><li>I name-drop famous people constantly.</li><li>I am incredibly charming and charismatic.</li></ul></dd><dt>Ideals</dt><dd><ul class="compact-list"><li>Legacy. I want to be remembered forever. (Any)</li><li>Art. Combat is just another form of expression. (Chaotic)</li><li>Image. My public perception is more important than reality. (Lawful)</li><li>Heroism. I want to be the hero I play in the movies. (Good)</li><li>Ego. I am the greatest talent of my generation. (Evil)</li><li>Wealth. Blockbusters pay well, but S-Rank cores pay better. (Neutral)</li></ul></dd><dt>Bonds</dt><dd><ul class="compact-list"><li>I am trying to win an Oscar for 'Best Live-Action Raid'.</li><li>I am fiercely protective of my long-suffering personal assistant.</li><li>I am hiding a massive scandal that a tabloid journalist is blackmailing me with.</li><li>I want to prove I'm a real Ascendant, not just a studio plant.</li><li>I am deeply in love with my co-star from a previous film.</li><li>I carry a script for a movie I want to direct someday.</li></ul></dd><dt>Flaws</dt><dd><ul class="compact-list"><li>I am incredibly vain and shallow.</li><li>I am a diva who demands constant pampering.</li><li>I will freeze if I don't know my 'lines'.</li><li>I struggle to distinguish reality from fiction.</li><li>I am addicted to painkillers or alcohol.</li><li>I am terrified of aging or losing my looks.</li></ul></dd></dl>
+	</article><article class="entry entry--uncommon" id="background-occult-investigator">
+		
+		<h3>Occult Investigator</h3>
+		<div class="meta"><span class="tag">Rank: B</span><span class="tag">Type: background</span></div>
+		<div class="entry-description"><p>Before the gates, you investigated the paranormal. After the gates, you got a massive budget. You track down Assassin Ascendants, illegal artifact smuggling, and cults worshipping the Sovereigns.</p></div>
+		<dl class="field-grid"><dt>Skill Proficiencies</dt><dd><ul class="compact-list"><li>Investigation</li><li>Insight</li></ul></dd><dt>Tool Proficiencies</dt><dd><ul class="compact-list"><li>Disguise Kit</li><li>Thieves' Tools</li></ul></dd><dt>Equipment</dt><dd><ul class="compact-list"><li>A trench coat</li><li>A UV flashlight</li><li>A badge (real or fake)</li><li>A notebook filled with crazed sketches</li><li>A flask</li></ul></dd><dt>Starting Credits</dt><dd><span>800</span></dd><dt>Features</dt><dd><div class="nested-card"><dl class="field-grid nested-grid"><dt>Name</dt><dd><p>Detection Mandate</p></dd><dt>Description</dt><dd><p>You have a network of informants in the criminal underworld and the Ascendant Bureau. You can always find a contact who knows something about illegal magical activities in any major city.</p></dd></dl></div></dd><dt>Personality Traits</dt><dd><ul class="compact-list"><li>I am deeply cynical and expect the worst of everyone.</li><li>I chain-smoke or constantly chew gum.</li><li>I ask pointed, uncomfortable questions.</li><li>I document everything with photographs.</li><li>I speak in a gruff, hardboiled cadence.</li><li>I trust my gut over official reports.</li></ul></dd><dt>Ideals</dt><dd><ul class="compact-list"><li>Truth. The public deserves to know what's really happening. (Lawful)</li><li>Justice. Assassin Ascendants must be put down. (Good)</li><li>Profit. Blackmail is a lucrative business. (Evil)</li><li>Curiosity. I must uncover the deepest secrets of the rifts. (Neutral)</li><li>Freedom. The Association's lies must be exposed. (Chaotic)</li><li>Vengeance. I will find the cult that took my family. (Any)</li></ul></dd><dt>Bonds</dt><dd><ul class="compact-list"><li>My former partner was corrupted by an artifact and I have to hunt them.</li><li>I am protecting a witness who knows too much about a mega-guild.</li><li>I owe a massive debt to a crime boss who feeds me intel.</li><li>My office is my sanctuary; I protect it fiercely.</li><li>I am obsessed with a cold case involving a vanished S-Ranker.</li><li>I have a daughter I keep hidden from my dangerous life.</li></ul></dd><dt>Flaws</dt><dd><ul class="compact-list"><li>I am a functional alcoholic.</li><li>I push away anyone who gets too close.</li><li>I frequently break the law to solve a case.</li><li>I am paranoid and trust no one, not even my team.</li><li>I will take foolish risks to get a lead.</li><li>I hold deep grudges against authority figures.</li></ul></dd></dl>
+	</article><article class="entry" id="background-office-worker">
+		
+		<h3>Office Worker</h3>
+		<div class="meta"><span class="tag">Rank: D</span><span class="tag">Type: background</span></div>
+		<div class="entry-description"><p>You were a corporate drone, living a life of spreadsheets, endless meetings, and lukewarm coffee. Your awakening was the most exciting thing to ever happen to you - or the most terrifying interruption to your routine.</p></div>
+		<dl class="field-grid"><dt>Skill Proficiencies</dt><dd><ul class="compact-list"><li>Dimensional Lore</li><li>Persuasion</li></ul></dd><dt>Tool Proficiencies</dt><dd><ul class="compact-list"><li>Calligrapher's Supplies</li><li>Forgery Kit</li></ul></dd><dt>Languages</dt><dd><ul class="compact-list"><li>One additional language</li></ul></dd><dt>Equipment</dt><dd><ul class="compact-list"><li>A slightly crumpled business suit</li><li>A briefcase</li><li>A company ID badge</li><li>A thermos of lukewarm coffee</li><li>A stress ball</li></ul></dd><dt>Starting Credits</dt><dd><span>800</span></dd><dt>Features</dt><dd><div class="nested-card"><dl class="field-grid nested-grid"><dt>Name</dt><dd><p>Corporate Invisible</p></dd><dt>Description</dt><dd><p>You blend in perfectly in any office, bureaucratic, or corporate setting. You can easily pass as an employee to gain access to restricted areas, and you excel at finding specific files or information in massive archives.</p></dd></dl></div></dd><dt>Personality Traits</dt><dd><ul class="compact-list"><li>I speak in corporate buzzwords (synergy, bandwidth).</li><li>I am obsessively punctual.</li><li>I panic if my inbox has unread messages.</li><li>I am incredibly passive-aggressive.</li><li>I find comfort in spreadsheets and organization.</li><li>I am perpetually exhausted.</li></ul></dd><dt>Ideals</dt><dd><ul class="compact-list"><li>Stability. A steady paycheck and a quiet life is all I want. (Lawful)</li><li>Escape. I will never go back to a cubicle again. (Chaotic)</li><li>Climbing. I will use the rifts to become the CEO. (Evil)</li><li>Service. I do the boring work so society can function. (Good)</li><li>Pragmatism. Work is work, whether it's filing taxes or killing goblins. (Neutral)</li><li>Ambition. I will be the best at whatever job I have. (Any)</li></ul></dd><dt>Bonds</dt><dd><ul class="compact-list"><li>I am deeply loyal to my former coworkers who survived a gate break.</li><li>I am trying to pay off my massive student loans.</li><li>I owe everything to the manager who fired me, forcing me to awaken.</li><li>I carry a photo of the family I support.</li><li>I am secretly embezzling from the mega-guild I work for.</li><li>I want to protect the mundane world from the chaos of the rifts.</li></ul></dd><dt>Flaws</dt><dd><ul class="compact-list"><li>I am a severe coward in the face of physical violence.</li><li>I am a stickler for rules and hate improvising.</li><li>I will throw my teammates under the bus to avoid blame.</li><li>I am deeply uncreative and struggle to think outside the box.</li><li>I am easily intimidated by authority figures.</li><li>I complain constantly about the working conditions in the dungeon.</li></ul></dd></dl>
+	</article><article class="entry entry--rare" id="background-order-inscriber">
+		
+		<h3>Order Inscriber</h3>
+		<div class="meta"><span class="tag">Rank: A</span><span class="tag">Type: background</span></div>
+		<div class="entry-description"><p>You are a master of runic technology, blending modern computer science with ancient magical sigils. You design the containment fields that keep gates from breaking and craft the magical gear Ascendants rely on.</p></div>
+		<dl class="field-grid"><dt>Skill Proficiencies</dt><dd><ul class="compact-list"><li>Mana Flow</li><li>Investigation</li></ul></dd><dt>Tool Proficiencies</dt><dd><ul class="compact-list"><li>Tinker's Tools</li><li>Jeweler's Tools</li></ul></dd><dt>Languages</dt><dd><ul class="compact-list"><li>One exotic language</li></ul></dd><dt>Equipment</dt><dd><ul class="compact-list"><li>A set of precision engraving tools</li><li>A tablet filled with runic code</li><li>Safety goggles</li><li>A pouch of low-grade mana crystals</li></ul></dd><dt>Starting Credits</dt><dd><span>1200</span></dd><dt>Features</dt><dd><div class="nested-card"><dl class="field-grid nested-grid"><dt>Name</dt><dd><p>Master Technician</p></dd><dt>Description</dt><dd><p>You can identify the function and creator of any runic or magical device. You can also bypass magical locks and containment fields given enough time and your tools.</p></dd></dl></div></dd><dt>Personality Traits</dt><dd><ul class="compact-list"><li>I treat magical spells like poorly optimized code.</li><li>I am constantly tinkering with my gear, even during downtime.</li><li>I speak in technical jargon that confuses laymen.</li><li>I am fascinated by the architecture of ancient ruins.</li><li>I view combat as an equation to be solved.</li><li>I am incredibly dismissive of 'brute force' ascendants.</li></ul></dd><dt>Ideals</dt><dd><ul class="compact-list"><li>Knowledge. The universe is a machine we just haven't reverse-engineered yet. (Neutral)</li><li>Innovation. We must build better tools to survive the rifts. (Chaotic)</li><li>Perfection. A flawed rune is a fatal flaw. (Lawful)</li><li>Profit. Good tech is expensive, and I am very good. (Evil)</li><li>Protection. My wards keep the cities safe. (Good)</li><li>Curiosity. I must know how the Sovereigns' magic works. (Any)</li></ul></dd><dt>Bonds</dt><dd><ul class="compact-list"><li>I created a weapon that caused a catastrophic accident; I seek to destroy it.</li><li>My masterpiece was stolen by a rival guild.</li><li>I am deeply indebted to the corporation that funds my lab.</li><li>I am obsessed with deciphering a specific, ancient tablet.</li><li>My former assistant was lost in a gate we were studying.</li><li>I want to build an ultimate weapon to close all gates permanently.</li></ul></dd><dt>Flaws</dt><dd><ul class="compact-list"><li>I am oblivious to social cues and emotional needs.</li><li>I will risk the lives of my team to study a rare artifact.</li><li>I am deeply arrogant about my intellect.</li><li>I refuse to use gear I didn't personally inspect or create.</li><li>I become violently angry if my work is interrupted.</li><li>I am physically weak and rely entirely on my tech.</li></ul></dd></dl>
+	</article><article class="entry" id="background-paramedic">
+		
+		<h3>Paramedic</h3>
+		<div class="meta"><span class="tag">Rank: C</span><span class="tag">Type: background</span></div>
+		<div class="entry-description"><p>You were a first responder, used to rushing into danger to save lives. When the gates opened, the casualties skyrocketed. Your awakening allowed you to heal wounds that modern medicine couldn't touch.</p></div>
+		<dl class="field-grid"><dt>Skill Proficiencies</dt><dd><ul class="compact-list"><li>Medicine</li><li>Athletics</li></ul></dd><dt>Tool Proficiencies</dt><dd><ul class="compact-list"><li>Vehicles (Land)</li><li>Herbalism Kit</li></ul></dd><dt>Equipment</dt><dd><ul class="compact-list"><li>A fully stocked trauma kit</li><li>A high-visibility jacket</li><li>A radio scanner</li><li>A flashlight</li><li>A set of scrubs</li></ul></dd><dt>Starting Credits</dt><dd><span>600</span></dd><dt>Features</dt><dd><div class="nested-card"><dl class="field-grid nested-grid"><dt>Name</dt><dd><p>Triage Veteran</p></dd><dt>Description</dt><dd><p>You can instantly assess the severity of any creature's wounds (current HP percentage) and the exact nature of any disease or poison afflicting them. Medical personnel and hospitals will often grant you free lodging and basic supplies.</p></dd></dl></div></dd><dt>Personality Traits</dt><dd><ul class="compact-list"><li>I am completely desensitized to blood and gore.</li><li>I speak in a calm, soothing voice during emergencies.</li><li>I drink copious amounts of black coffee.</li><li>I use dark humor to cope with tragedy.</li><li>I am incredibly organized and methodical under pressure.</li><li>I scold people for taking unnecessary risks.</li></ul></dd><dt>Ideals</dt><dd><ul class="compact-list"><li>Life. Every life is worth saving, no matter the cost. (Good)</li><li>Duty. I swore an oath to help the injured. (Lawful)</li><li>Adrenaline. I am addicted to the rush of saving a life on the brink. (Chaotic)</li><li>Pragmatism. You can't save everyone; save the ones you can. (Neutral)</li><li>Profit. Healing magic is expensive, and I expect to be paid. (Evil)</li><li>Compassion. The world is cruel; I will be kind. (Any)</li></ul></dd><dt>Bonds</dt><dd><ul class="compact-list"><li>I lost a patient I should have been able to save; it haunts me.</li><li>I am fiercely protective of my former ambulance partner.</li><li>I owe my awakening to a Sovereign who saved me from a dying patient.</li><li>I am trying to find a magical cure for my spouse's mundane illness.</li><li>I carry the stethoscope of my mentor.</li><li>I am deeply loyal to the city hospital where I worked.</li></ul></dd><dt>Flaws</dt><dd><ul class="compact-list"><li>I suffer from severe burnout and compassion fatigue.</li><li>I will risk the entire raid to save one injured teammate.</li><li>I am arrogant about my medical knowledge.</li><li>I struggle to connect with people emotionally outside of a crisis.</li><li>I have a dangerous addiction to medical stimulants.</li><li>I am deeply cynical about 'heroic' Ascendants who cause collateral damage.</li></ul></dd></dl>
+	</article><article class="entry" id="background-police-officer">
+		
+		<h3>Police Officer</h3>
+		<div class="meta"><span class="tag">Rank: C</span><span class="tag">Type: background</span></div>
+		<div class="entry-description"><p>You walked the beat in a city that was rapidly changing. Before the gates, you dealt with gangs and thieves. After the gates, you dealt with Awakened criminals and anomalies. You are a street-level enforcer of the law.</p></div>
+		<dl class="field-grid"><dt>Skill Proficiencies</dt><dd><ul class="compact-list"><li>Investigation</li><li>Intimidation</li></ul></dd><dt>Tool Proficiencies</dt><dd><ul class="compact-list"><li>Vehicles (Land)</li></ul></dd><dt>Equipment</dt><dd><ul class="compact-list"><li>A police badge</li><li>A sturdy pair of handcuffs</li><li>A tactical flashlight</li><li>A dark blue uniform</li><li>A radio</li></ul></dd><dt>Starting Credits</dt><dd><span>700</span></dd><dt>Features</dt><dd><div class="nested-card"><dl class="field-grid nested-grid"><dt>Name</dt><dd><p>The Badge</p></dd><dt>Description</dt><dd><p>You can flash your badge to gain access to crime scenes, command the cooperation of mundane civilians, and request backup or information from local law enforcement precincts.</p></dd></dl></div></dd><dt>Personality Traits</dt><dd><ul class="compact-list"><li>I am deeply cynical and expect people to lie.</li><li>I always sit facing the door.</li><li>I speak in police codes and jargon.</li><li>I am fiercely protective of my partner.</li><li>I eat fast, expecting to be interrupted.</li><li>I am highly observant of people's hands and body language.</li></ul></dd><dt>Ideals</dt><dd><ul class="compact-list"><li>Law. The rules are the only thing keeping us from chaos. (Lawful)</li><li>Protection. I serve and protect the innocent. (Good)</li><li>Authority. I demand respect and compliance. (Evil)</li><li>Justice. I will bend the rules if it means catching the bad guy. (Chaotic)</li><li>Survival. Make it to the end of the shift. (Neutral)</li><li>Camaraderie. The thin blue line protects its own. (Any)</li></ul></dd><dt>Bonds</dt><dd><ul class="compact-list"><li>I am trying to solve the murder of my former partner.</li><li>I am fiercely loyal to my precinct and my captain.</li><li>I owe my life to a Ascendant who saved me during a shootout.</li><li>I carry the bullet that nearly killed me.</li><li>I am trying to protect my family from the criminals I put away.</li><li>I am secretly investigating corruption within my own department.</li></ul></dd><dt>Flaws</dt><dd><ul class="compact-list"><li>I am overly aggressive and quick to resort to violence.</li><li>I am deeply prejudiced against Awakened criminals.</li><li>I will cover up the mistakes of my fellow officers.</li><li>I am a stickler for protocol, even when it costs time.</li><li>I am an alcoholic.</li><li>I struggle to show emotion or vulnerability.</li></ul></dd></dl>
+	</article><article class="entry entry--uncommon" id="background-private-military-operator-pmc">
+		
+		<h3>Private Military Operator (PMC)</h3>
+		<div class="meta"><span class="tag">Rank: B</span><span class="tag">Type: background</span></div>
+		<div class="entry-description"><p>You are an ex-military operative who transitioned into the lucrative private sector. You are hired by mega-guilds and corporations to provide security outside the gates, protect VIPs, or handle 'wetwork' against rival guilds.</p></div>
+		<dl class="field-grid"><dt>Skill Proficiencies</dt><dd><ul class="compact-list"><li>Intimidation</li><li>Athletics</li></ul></dd><dt>Tool Proficiencies</dt><dd><ul class="compact-list"><li>Land Vehicles</li><li>Smith's Tools</li></ul></dd><dt>Languages</dt><dd><ul class="compact-list"><li>One additional language</li></ul></dd><dt>Equipment</dt><dd><ul class="compact-list"><li>Tactical body armor</li><li>A high-end earpiece</li><li>A military ID</li><li>A pair of dark sunglasses</li><li>A combat knife</li></ul></dd><dt>Starting Credits</dt><dd><span>1200</span></dd><dt>Features</dt><dd><div class="nested-card"><dl class="field-grid nested-grid"><dt>Name</dt><dd><p>Corporate Security Clearance</p></dd><dt>Description</dt><dd><p>Your PMC credentials grant you access to secure corporate buildings, VIP lounges, and restricted airspace. You also know how to acquire military-grade mundane weaponry on short notice.</p></dd></dl></div></dd><dt>Personality Traits</dt><dd><ul class="compact-list"><li>I speak in military acronyms and brevity codes.</li><li>I am constantly scanning the perimeter for threats.</li><li>I maintain a stoic, emotionless facade.</li><li>I treat my weapon better than I treat people.</li><li>I am fiercely loyal to the client who pays me.</li><li>I wake up at the exact same time every morning.</li></ul></dd><dt>Ideals</dt><dd><ul class="compact-list"><li>Professionalism. A job is a job; I execute it flawlessly. (Lawful)</li><li>Wealth. I kill things for money; it's a simple life. (Neutral)</li><li>Loyalty. My squad is my life. (Good)</li><li>Power. Might makes right in the corporate wars. (Evil)</li><li>Independence. I am a gun for hire, answering to no state. (Chaotic)</li><li>Efficiency. Why use magic when a bullet works fine? (Any)</li></ul></dd><dt>Bonds</dt><dd><ul class="compact-list"><li>My PMC squad was wiped out by a Assassin S-Rank Ascendant; I seek revenge.</li><li>I am secretly acting as a bodyguard for someone who doesn't know it.</li><li>I am fiercely loyal to my former commanding officer, now a Guild Master.</li><li>I carry a bullet that was surgically removed from my chest.</li><li>I am trying to clear my name after being framed for a war crime.</li><li>I send all my earnings back to my family in another country.</li></ul></dd><dt>Flaws</dt><dd><ul class="compact-list"><li>I am trigger-happy and escalate situations to violence quickly.</li><li>I am incredibly cynical and trust no one's motives.</li><li>I struggle with severe PTSD from my deployments.</li><li>I despise magic users and consider them undisciplined.</li><li>I will ruthlessly betray an ally if my contract demands it.</li><li>I rely heavily on combat stimulants.</li></ul></dd></dl>
+	</article><article class="entry entry--uncommon" id="background-pro-athlete">
+		
+		<h3>Pro Athlete</h3>
+		<div class="meta"><span class="tag">Rank: B</span><span class="tag">Type: background</span></div>
+		<div class="entry-description"><p>You were at the peak of human physical performance before the awakening. You were an Olympian, a martial arts champion, or a star quarterback. Your awakening simply pushed your already superhuman body past the limits of physics.</p></div>
+		<dl class="field-grid"><dt>Skill Proficiencies</dt><dd><ul class="compact-list"><li>Athletics</li><li>Acrobatics</li></ul></dd><dt>Tool Proficiencies</dt><dd><ul class="compact-list"><li>Vehicles (Land)</li></ul></dd><dt>Languages</dt><dd><ul class="compact-list"><li>One additional language</li></ul></dd><dt>Equipment</dt><dd><ul class="compact-list"><li>A gold medal or championship ring</li><li>High-end athletic wear</li><li>A duffel bag</li><li>A water bottle and protein supplements</li><li>A jump rope</li></ul></dd><dt>Starting Credits</dt><dd><span>1000</span></dd><dt>Features</dt><dd><div class="nested-card"><dl class="field-grid nested-grid"><dt>Name</dt><dd><p>Physical Specimen</p></dd><dt>Description</dt><dd><p>Your athletic background gives you an intuitive understanding of physical limits. You can accurately gauge the physical strength and agility of any humanoid or anomaly by observing them move for 1 minute.</p></dd></dl></div></dd><dt>Personality Traits</dt><dd><ul class="compact-list"><li>I stretch constantly and do calisthenics during downtime.</li><li>I view combat purely as a sport with rules and scores.</li><li>I am highly competitive and turn everything into a race.</li><li>I speak in sports cliches and motivational quotes.</li><li>I am intensely disciplined about my diet and training.</li><li>I respect anyone who puts in the physical work.</li></ul></dd><dt>Ideals</dt><dd><ul class="compact-list"><li>Competition. I want to test myself against the strongest anomalies. (Chaotic)</li><li>Discipline. Hard work beats talent when talent doesn't work hard. (Lawful)</li><li>Victory. Winning isn't everything; it's the only thing. (Evil)</li><li>Teamwork. There is no 'I' in 'Raid'. (Good)</li><li>Glory. I want to be the #1 ranked Ascendant in the world. (Any)</li><li>Health. My body is a temple; I must protect it. (Neutral)</li></ul></dd><dt>Bonds</dt><dd><ul class="compact-list"><li>I am trying to win the 'Ascendant Olympics' against rival guilds.</li><li>I owe my success to a harsh but fair coach.</li><li>I suffered a career-ending injury that my awakening healed; I must prove I'm still the best.</li><li>I am fiercely loyal to my hometown team.</li><li>I want to avenge a teammate who was killed in a gate.</li><li>I carry the jersey of my childhood idol.</li></ul></dd><dt>Flaws</dt><dd><ul class="compact-list"><li>I am an adrenaline junkie who takes unnecessary risks.</li><li>I am incredibly arrogant about my physical superiority.</li><li>I struggle to understand strategy or magic, relying purely on brawn.</li><li>I am a sore loser who throws tantrums.</li><li>I have a secret gambling debt.</li><li>I will ignore injuries to stay in the game, endangering myself.</li></ul></dd></dl>
+	</article><article class="entry entry--legendary" id="background-regents-chosen">
+		
+		<h3>Regent's Chosen</h3>
+		<div class="meta"><span class="tag">Rank: S</span><span class="tag">Type: background</span></div>
+		<div class="entry-description"><p>You were directly spoken to by a Sovereign or a high-ranking entity of the rifts when you awakened. You bear a mark, a burden, and a destiny that you barely understand.</p></div>
+		<dl class="field-grid"><dt>Skill Proficiencies</dt><dd><ul class="compact-list"><li>Cosmic Lore</li><li>Intimidation</li></ul></dd><dt>Languages</dt><dd><ul class="compact-list"><li>Two exotic languages (e.g., Celestial, Infernal)</li></ul></dd><dt>Equipment</dt><dd><ul class="compact-list"><li>A strange glowing brand or tattoo</li><li>A relic from the entity</li><li>Vestments or imposing clothes</li><li>A pouch of strange coins</li></ul></dd><dt>Starting Credits</dt><dd><span>1000</span></dd><dt>Features</dt><dd><div class="nested-card"><dl class="field-grid nested-grid"><dt>Name</dt><dd><p>Regent's Mark</p></dd><dt>Description</dt><dd><p>Lesser anomalies of your Regent's type will not attack you unless provoked. Cultists and scholars of the rifts will recognize your mark and offer you shelter, information, or terrifying reverence.</p></dd></dl></div></dd><dt>Personality Traits</dt><dd><ul class="compact-list"><li>I speak with unwavering, terrifying conviction.</li><li>I often stare into space, listening to voices no one else hears.</li><li>I believe I am destined for something greater than mortal concerns.</li><li>I treat common people with patronizing pity.</li><li>I am intensely curious about the deep lore of the gates.</li><li>I bear physical signs of my patron's influence (e.g., glowing eyes).</li></ul></dd><dt>Ideals</dt><dd><ul class="compact-list"><li>Destiny. I am the instrument of a higher power. (Any)</li><li>Dominion. My patron will rule this world, and I will be its vanguard. (Evil)</li><li>Rebellion. I will use the power given to me to destroy the one who gave it. (Chaotic)</li><li>Order. The Sovereigns bring a necessary hierarchy to the cosmos. (Lawful)</li><li>Protection. I use this dark power as a shield for humanity. (Good)</li><li>Ascension. I will become a Sovereign myself. (Neutral)</li></ul></dd><dt>Bonds</dt><dd><ul class="compact-list"><li>I am terrified of the entity that chose me, and I seek to appease it.</li><li>I am hunting another Chosen who serves a rival Regent.</li><li>My family was taken by the entity; I serve to keep them safe.</li><li>I am fiercely loyal to the cult that raised me after my awakening.</li><li>I carry a weapon forged in the entity's realm.</li><li>I am trying to sever my connection without losing my powers.</li></ul></dd><dt>Flaws</dt><dd><ul class="compact-list"><li>I suffer from terrifying hallucinations of my patron.</li><li>I am incredibly arrogant, believing myself untouchable.</li><li>I will obey orders from my patron, even if they harm my friends.</li><li>I struggle to relate to mundane human emotions.</li><li>I am hunted by the Ascendant Bureau as a potential threat.</li><li>I occasionally lose control of my body to the entity.</li></ul></dd></dl>
+	</article><article class="entry" id="background-rift-porter-logistics">
+		
+		<h3>Rift Porter (Logistics)</h3>
+		<div class="meta"><span class="tag">Rank: C</span><span class="tag">Type: background</span></div>
+		<div class="entry-description"><p>You are the unsung hero of the dungeon raids. A non-combatant Awakened (or incredibly brave civilian) hired to carry heavy gear, harvest mana crystals from corpses, and haul the loot out. You have unparalleled endurance and a knack for avoiding aggro.</p></div>
+		<dl class="field-grid"><dt>Skill Proficiencies</dt><dd><ul class="compact-list"><li>Athletics</li><li>Survival</li></ul></dd><dt>Tool Proficiencies</dt><dd><ul class="compact-list"><li>Weaver's Tools</li><li>Vehicles (Land)</li></ul></dd><dt>Equipment</dt><dd><ul class="compact-list"><li>A massive, reinforced expedition backpack</li><li>Mining pick</li><li>A set of durable coveralls</li><li>A heavy-duty flashlight</li><li>A ledger of current market prices for crystals</li></ul></dd><dt>Starting Credits</dt><dd><span>400</span></dd><dt>Features</dt><dd><div class="nested-card"><dl class="field-grid nested-grid"><dt>Name</dt><dd><p>Loot Appraiser</p></dd><dt>Description</dt><dd><p>You instantly know the exact market value of any anomaly part, mana crystal, or magical artifact you find. Furthermore, merchants and guilds will always buy your salvaged goods at a 10% premium because of your reputation for quality extraction.</p></dd></dl></div></dd><dt>Personality Traits</dt><dd><ul class="compact-list"><li>I complain about my back constantly.</li><li>I have an uncanny ability to fade into the background when danger appears.</li><li>I appraise everything people wear in terms of credit value.</li><li>I am fiercely protective of my backpack.</li><li>I eat constantly to fuel my metabolism.</li><li>I offer unsolicited advice on how to butcher anomalies properly.</li></ul></dd><dt>Ideals</dt><dd><ul class="compact-list"><li>Wealth. I am doing this to get rich and retire early. (Neutral)</li><li>Support. The heroes can't win without someone carrying the load. (Good)</li><li>Exploitation. I skim off the top of every haul; they never notice. (Evil)</li><li>Reliability. A contract signed is a contract honored. (Lawful)</li><li>Survival. Drop the bag and run if the boss looks at you. (Chaotic)</li><li>Family. Every crystal mined pays for my mother's hospital bills. (Any)</li></ul></dd><dt>Bonds</dt><dd><ul class="compact-list"><li>I am deeply indebted to the Guild Master who gave me a chance.</li><li>I am saving up to buy a resurrection artifact for my dead spouse.</li><li>I carry a lucky charm from my first successful D-Rank raid.</li><li>I have a bitter rivalry with another porter over scavenging rights.</li><li>My younger sibling is a hotshot A-Ranker; I keep them grounded.</li><li>I found an incredibly rare artifact and I'm hiding it from the Association.</li></ul></dd><dt>Flaws</dt><dd><ul class="compact-list"><li>I am a coward and will flee if not directly protected.</li><li>I am incredibly greedy and will risk my life for a shiny core.</li><li>I resent the combat ascendants who treat me like a pack mule.</li><li>I constantly complain about the conditions of the dungeon.</li><li>I have a gambling addiction that drains my hard-earned credits.</li><li>I hoard useless junk 'just in case it's valuable later.'</li></ul></dd></dl>
+	</article><article class="entry entry--rare" id="background-rift-survivor">
+		
+		<h3>Rift Survivor</h3>
+		<div class="meta"><span class="tag">Rank: A</span><span class="tag">Type: background</span></div>
+		<div class="entry-description"><p>You are one of the few who survived a dungeon break before you even awakened. You spent days trapped in a collapsed building or a transformed subway station, hiding from anomalies. The trauma awakened you, and now you hunt the things that once hunted you.</p></div>
+		<dl class="field-grid"><dt>Skill Proficiencies</dt><dd><ul class="compact-list"><li>Stealth</li><li>Perception</li></ul></dd><dt>Tool Proficiencies</dt><dd><ul class="compact-list"><li>Thieves' Tools</li></ul></dd><dt>Languages</dt><dd><ul class="compact-list"><li>One language spoken by anomalies (e.g., Abyssal, anomaly)</li></ul></dd><dt>Equipment</dt><dd><ul class="compact-list"><li>A token of someone you lost</li><li>A makeshift weapon you kept</li><li>Dark common clothes</li><li>A flashlight with extra batteries</li></ul></dd><dt>Starting Credits</dt><dd><span>300</span></dd><dt>Features</dt><dd><div class="nested-card"><dl class="field-grid nested-grid"><dt>Name</dt><dd><p>Survivor's Fortitude</p></dd><dt>Description</dt><dd><p>You can go twice as long without food and water before suffering exhaustion. In urban environments, you can always find a hidden place to rest where anomalies or patrols are unlikely to find you.</p></dd></dl></div></dd><dt>Personality Traits</dt><dd><ul class="compact-list"><li>I never sleep with my back to a door or window.</li><li>I speak in whispers out of habit.</li><li>I am incredibly protective of civilians caught in the crossfire.</li><li>I view modern conveniences as fragile illusions.</li><li>I hoard food and hide it in various stashes.</li><li>I stare intensely at shadows, convinced something is moving.</li></ul></dd><dt>Ideals</dt><dd><ul class="compact-list"><li>Vengeance. I will exterminate the anomalies that destroyed my life. (Evil)</li><li>Protection. No one else should have to go through what I did. (Good)</li><li>Resilience. What doesn't kill me makes me an apex predator. (Chaotic)</li><li>Vigilance. The next break is always coming. We must be ready. (Lawful)</li><li>Apathy. Everything ends in ruin eventually; why care? (Neutral)</li><li>Strength. Only the strong survive the new world. (Any)</li></ul></dd><dt>Bonds</dt><dd><ul class="compact-list"><li>I am searching for another survivor who was separated from me.</li><li>The site of my survival is sacred to me; I visit it often.</li><li>I owe everything to the rescue team that finally dug me out.</li><li>I kept the journal of someone who didn't make it out.</li><li>My family was wiped out; my guild is my only family now.</li><li>I am terrified of the specific type of anomaly that trapped me.</li></ul></dd><dt>Flaws</dt><dd><ul class="compact-list"><li>I am severely claustrophobic.</li><li>I suffer from debilitating flashbacks when cornered.</li><li>I am overly aggressive toward anyone who dismisses the danger of gates.</li><li>I refuse to retreat, even when heavily outmatched.</li><li>I mistrust Authority and official Ascendant Bureau protocols.</li><li>I rely heavily on sedatives or alcohol to sleep.</li></ul></dd></dl>
+	</article><article class="entry entry--rare" id="background-rift-displaced-contractor">
+		
+		<h3>Rift-Displaced Contractor</h3>
+		<div class="meta"><span class="tag">Rank: A</span><span class="tag">Type: background</span></div>
+		<div class="entry-description"><p>A former civilian drafted by an A-Rank guild during a catastrophic gate break. You were pulled into a rift and survived purely by sticking close to the combat teams and carrying their gear. You've seen the horrors of the dungeons and the brutal corporate reality of the guilds.</p></div>
+		<dl class="field-grid"><dt>Skill Proficiencies</dt><dd><ul class="compact-list"><li>Survival</li><li>Athletics</li></ul></dd><dt>Tool Proficiencies</dt><dd><ul class="compact-list"><li>Vehicles (Land)</li></ul></dd><dt>Languages</dt><dd><ul class="compact-list"><li>One additional language of your choice</li></ul></dd><dt>Equipment</dt><dd><ul class="compact-list"><li>Reinforced uniform</li><li>50 ft rope</li><li>Survival ration pack</li><li>A set of dark common clothes</li><li>A sturdy backpack</li></ul></dd><dt>Starting Credits</dt><dd><span>500</span></dd><dt>Features</dt><dd><div class="nested-card"><dl class="field-grid nested-grid"><dt>Name</dt><dd><p>Hazard Instinct</p></dd><dt>Description</dt><dd><p>You have advantage on perception checks related to environmental traps inside a gate. Additionally, you can always find safe passage through non-magical difficult terrain.</p></dd></dl></div></dd><dt>Personality Traits</dt><dd><ul class="compact-list"><li>I always pack twice as much water as I think I'll need.</li><li>I'm deeply cynical about guild politics and PR statements.</li><li></li><li>I constantly check exits and structural integrity when entering a room.</li><li>I have a dark sense of humor regarding death and dismemberment.</li><li>I prefer the company of support staff over 'heroic' A-Rankers.</li></ul></dd><dt>Ideals</dt><dd><ul class="compact-list"><li>Survival. The only victory is coming out alive. (Any)</li><li>Solidarity. The grunts at the bottom need to stick together. (Good)</li><li>Wealth. I didn't go through hell for free. I want my cut. (Evil)</li><li>Caution. Fools rush in and get eaten. (Lawful)</li><li>Independence. I never want to be helpless again. (Chaotic)</li><li>Preparedness. Proper planning prevents poor performance. (Lawful)</li></ul></dd><dt>Bonds</dt><dd><ul class="compact-list"><li>I owe my life to a veteran Ascendant who dragged me out of my first gate.</li><li>My family thinks I work a safe desk job at the Guild.</li><li>I lost someone close to me in the gate break that drafted me.</li><li>I kept a strange, unregistered mana crystal from my first dive.</li><li>My old neighborhood is in the shadow of an active, volatile gate.</li><li>I have a deep loyalty to my fellow contractors who survived with me.</li></ul></dd><dt>Flaws</dt><dd><ul class="compact-list"><li>I hoard supplies obsessively.</li><li>I freeze or panic when surrounded by too many people.</li><li>I hold a deep grudge against higher-ranked Ascendants.</li><li>I will abandon the mission if I feel the risk is too high.</li><li>I have night terrors about the things I saw in the dark.</li><li>I secretly believe the Sovereigns are right and humanity is doomed.</li></ul></dd></dl>
+	</article><article class="entry entry--uncommon" id="background-rift-scout">
+		
+		<h3>Rift-Scout</h3>
+		<div class="meta"><span class="tag">Rank: B</span><span class="tag">Type: background</span></div>
+		<div class="entry-description"><p>Before the raid team goes in, you go in. You are a specialist in stealth and reconnaissance, tasked with mapping the gate, identifying the boss room, and slipping out before the anomalies notice you.</p></div>
+		<dl class="field-grid"><dt>Skill Proficiencies</dt><dd><ul class="compact-list"><li>Stealth</li><li>Investigation</li></ul></dd><dt>Tool Proficiencies</dt><dd><ul class="compact-list"><li>Cartographer's Tools</li><li>Navigators Tools</li></ul></dd><dt>Equipment</dt><dd><ul class="compact-list"><li>Night-vision goggles</li><li>A bundle of glow sticks</li><li>A specialized digital mapping device</li><li>Dark tactical gear</li><li></li></ul></dd><dt>Starting Credits</dt><dd><span>800</span></dd><dt>Features</dt><dd><div class="nested-card"><dl class="field-grid nested-grid"><dt>Name</dt><dd><p>Aether-Pathfinder</p></dd><dt>Description</dt><dd><p>You have a flawless memory for dungeon layouts. You can always retrace your steps in a gate, and you can accurately estimate the rank and type of anomalies in an area based on ambient mana traces.</p></dd></dl></div></dd><dt>Personality Traits</dt><dd><ul class="compact-list"><li>I prefer being alone in the dark.</li><li>I map every room I enter in my head.</li><li>I speak quickly and concisely, reporting only facts.</li><li>I am deeply uncomfortable in open, brightly lit spaces.</li><li>I collect a small souvenir from every gate I map.</li><li>I am always looking for the quickest exit.</li></ul></dd><dt>Ideals</dt><dd><ul class="compact-list"><li>Information. Knowledge is the difference between a successful raid and a wipe. (Neutral)</li><li>Thrill. There is no high like sneaking past a sleeping dragon. (Chaotic)</li><li>Duty. My maps keep the strike teams alive. (Good)</li><li>Professionalism. I do the job, I get paid, I leave. (Lawful)</li><li>Secrecy. The best ascendants are the ones no one knows exist. (Any)</li><li>Greed. I map the boss room, but I pocket the loose crystals on the way. (Evil)</li></ul></dd><dt>Bonds</dt><dd><ul class="compact-list"><li>I once mapped a gate that I swore I would never return to.</li><li>I owe my career to a mentor who didn't make it back from a scouting run.</li><li>My maps are my legacy; I fiercely protect my digital archives.</li><li>I am trying to find a gate that swallowed my hometown.</li><li>I have a strange, sympathetic bond with a anomaly I watched for days.</li><li>I work to pay for my sibling's expensive medical care.</li></ul></dd><dt>Flaws</dt><dd><ul class="compact-list"><li>I am overly risk-averse and will flee at the first sign of trouble.</li><li>I struggle to work in a team; I'm a lone wolf.</li><li>I am hyper-vigilant to the point of severe anxiety.</li><li>I hoard information and refuse to share it without payment.</li><li>I sometimes intentionally misdirect rival guilds.</li><li>I am addicted to the adrenaline of near-misses.</li></ul></dd></dl>
+	</article><article class="entry" id="background-security-guard">
+		
+		<h3>Security Guard</h3>
+		<div class="meta"><span class="tag">Rank: D</span><span class="tag">Type: background</span></div>
+		<div class="entry-description"><p>You were a mall cop, a night watchman, or corporate security. You are used to boredom punctuated by moments of sheer terror. Your awakening gave you the power to actually fight back.</p></div>
+		<dl class="field-grid"><dt>Skill Proficiencies</dt><dd><ul class="compact-list"><li>Perception</li><li>Investigation</li></ul></dd><dt>Tool Proficiencies</dt><dd><ul class="compact-list"><li>Vehicles (Land)</li><li>Thieves' Tools</li></ul></dd><dt>Equipment</dt><dd><ul class="compact-list"><li>A heavy flashlight</li><li>A walkie-talkie</li><li>A security uniform</li><li>A keyring</li><li>A thermos</li></ul></dd><dt>Starting Credits</dt><dd><span>400</span></dd><dt>Features</dt><dd><div class="nested-card"><dl class="field-grid nested-grid"><dt>Name</dt><dd><p>Watchman's Eye</p></dd><dt>Description</dt><dd><p>You have an instinct for security layouts. You can instantly locate cameras, alarm systems, and guard patrol routes in any modern building. You also excel at staying awake during long watches.</p></dd></dl></div></dd><dt>Personality Traits</dt><dd><ul class="compact-list"><li>I am highly observant of exits and blind spots.</li><li>I am cynical and expect people to cause trouble.</li><li>I drink copious amounts of coffee to stay awake.</li><li>I am rigidly adherent to protocols and rules.</li><li>I am highly protective of the property I am guarding.</li><li>I am deeply bored most of the time.</li></ul></dd><dt>Ideals</dt><dd><ul class="compact-list"><li>Duty. I am paid to watch, so I watch. (Lawful)</li><li>Protection. I keep the bad guys out so the good guys can sleep. (Good)</li><li>Apathy. I do the bare minimum to not get fired. (Neutral)</li><li>Authority. I enjoy the small amount of power my badge gives me. (Evil)</li><li>Vigilance. The threat is always there, waiting for you to blink. (Any)</li><li>Rebellion. Rules are meant to be broken when no one is watching. (Chaotic)</li></ul></dd><dt>Bonds</dt><dd><ul class="compact-list"><li>I failed to stop a break-in that cost lives; I seek redemption.</li><li>I am fiercely loyal to the small business owner I guard.</li><li>I am trying to provide for my family on a meager salary.</li><li>I owe my life to a Ascendant who saved my building from a anomaly.</li><li>I carry the badge of my father, who was a real cop.</li><li>I am secretly investigating the corporation I work for.</li></ul></dd><dt>Flaws</dt><dd><ul class="compact-list"><li>I am incredibly lazy and try to avoid actual work.</li><li>I am easily bribed to look the other way.</li><li>I freeze when faced with overwhelming danger.</li><li>I am a stickler for rules to the point of absurdity.</li><li>I suffer from severe insomnia.</li><li>I harbor a deep resentment for people with actual authority.</li></ul></dd></dl>
+	</article><article class="entry" id="background-social-media-influencer">
+		
+		<h3>Social Media Influencer</h3>
+		<div class="meta"><span class="tag">Rank: C</span><span class="tag">Type: background</span></div>
+		<div class="entry-description"><p>You are famous for being famous. You don't necessarily have a specific talent like singing or sports, but you have millions of followers who hang on your every word. Your awakening was the ultimate content opportunity.</p></div>
+		<dl class="field-grid"><dt>Skill Proficiencies</dt><dd><ul class="compact-list"><li>Persuasion</li><li>Deception</li></ul></dd><dt>Tool Proficiencies</dt><dd><ul class="compact-list"><li>Disguise Kit</li><li>Calligrapher's Supplies</li></ul></dd><dt>Languages</dt><dd><ul class="compact-list"><li>One additional language</li></ul></dd><dt>Equipment</dt><dd><ul class="compact-list"><li>A high-end smartphone</li><li>A portable makeup kit</li><li>Fashionable, impractical clothes</li><li>A ring light</li><li>A business card for a PR firm</li></ul></dd><dt>Starting Credits</dt><dd><span>1000</span></dd><dt>Features</dt><dd><div class="nested-card"><dl class="field-grid nested-grid"><dt>Name</dt><dd><p>Cancel Culture</p></dd><dt>Description</dt><dd><p>You know how to manipulate public perception. You can easily start a viral rumor or trend that will sway public opinion against a specific person or guild within a day, causing them social or bureaucratic difficulties.</p></dd></dl></div></dd><dt>Personality Traits</dt><dd><ul class="compact-list"><li>I refer to everything in terms of 'aesthetics' and 'vibes'.</li><li>I am constantly taking selfies.</li><li>I am incredibly superficial.</li><li>I speak in hashtags and buzzwords.</li><li>I am fiercely protective of my 'brand'.</li><li>I treat everyone as a potential networking opportunity.</li></ul></dd><dt>Ideals</dt><dd><ul class="compact-list"><li>Fame. I want everyone to know my name. (Any)</li><li>Influence. I want to dictate what is popular and what is not. (Evil)</li><li>Positivity. I want to spread good vibes and happiness. (Good)</li><li>Wealth. I am here for the sponsorships. (Neutral)</li><li>Drama. I thrive on conflict and tea. (Chaotic)</li><li>Image. I must maintain a flawless public persona. (Lawful)</li></ul></dd><dt>Bonds</dt><dd><ul class="compact-list"><li>I am trying to secure a sponsorship from the largest mega-guild.</li><li>I am fiercely loyal to my core group of followers.</li><li>I am engaged in a bitter feud with a rival influencer.</li><li>I am hiding a massive scandal that would ruin my career.</li><li>I want to prove I am more than just a pretty face.</li><li>I am secretly funding a charity for victims of gate breaks.</li></ul></dd><dt>Flaws</dt><dd><ul class="compact-list"><li>I am incredibly vain and shallow.</li><li>I will betray anyone for a boost in followers.</li><li>I am completely dependent on the approval of strangers.</li><li>I am a compulsive liar who exaggerates everything.</li><li>I panic if I don't have internet access.</li><li>I am terrified of being irrelevant.</li></ul></dd></dl>
+	</article><article class="entry" id="background-social-worker">
+		
+		<h3>Social Worker</h3>
+		<div class="meta"><span class="tag">Rank: D</span><span class="tag">Type: background</span></div>
+		<div class="entry-description"><p>You navigated the broken system of the modern world, trying to help those who fell through the cracks. After the gates appeared, the cracks became chasms. You use your awakening to protect the vulnerable.</p></div>
+		<dl class="field-grid"><dt>Skill Proficiencies</dt><dd><ul class="compact-list"><li>Insight</li><li>Persuasion</li></ul></dd><dt>Tool Proficiencies</dt><dd><ul class="compact-list"><li>Calligrapher's Supplies</li></ul></dd><dt>Languages</dt><dd><ul class="compact-list"><li>One additional language</li></ul></dd><dt>Equipment</dt><dd><ul class="compact-list"><li>A thick binder of case files</li><li>A comfortable cardigan</li><li>A reliable pen</li><li>A smartphone</li><li>A thermos of tea</li></ul></dd><dt>Starting Credits</dt><dd><span>500</span></dd><dt>Features</dt><dd><div class="nested-card"><dl class="field-grid nested-grid"><dt>Name</dt><dd><p>System Navigator</p></dd><dt>Description</dt><dd><p>You know how to access social services, homeless shelters, and charity networks. You can easily find safe harbor, free food, or local information among the displaced and impoverished populations of any city.</p></dd></dl></div></dd><dt>Personality Traits</dt><dd><ul class="compact-list"><li>I am incredibly empathetic and an excellent listener.</li><li>I speak in a calm, de-escalating tone.</li><li>I am deeply cynical about the government and mega-guilds.</li><li>I always carry snacks and basic first aid.</li><li>I am exhausted but refuse to stop working.</li><li>I look past people's aggressive fronts to see their pain.</li></ul></dd><dt>Ideals</dt><dd><ul class="compact-list"><li>Compassion. Everyone deserves dignity and help. (Good)</li><li>Justice. The system is broken; we must fix it or break it further. (Chaotic)</li><li>Duty. I must protect those who cannot protect themselves. (Lawful)</li><li>Pragmatism. Help who you can, mourn who you can't. (Neutral)</li><li>Power. I will climb the ladder to change the system from the top. (Evil)</li><li>Equality. The rich Ascendants shouldn't abandon the poor civilians. (Any)</li></ul></dd><dt>Bonds</dt><dd><ul class="compact-list"><li>I am fiercely protective of an orphanage in the safe zone.</li><li>I owe my career to a mentor who burned out.</li><li>I am trying to find a specific child who went missing during a break.</li><li>I carry a handmade gift from someone I helped.</li><li>I am secretly funding a charity with my dungeon loot.</li><li>I am fighting a legal battle against a mega-guild that destroyed a neighborhood.</li></ul></dd><dt>Flaws</dt><dd><ul class="compact-list"><li>I suffer from severe compassion fatigue and depression.</li><li>I am deeply naive about the true evil of some people.</li><li>I will put myself in extreme danger to negotiate instead of fighting.</li><li>I am physically weak and rely on my words.</li><li>I harbor a deep, quiet rage against the wealthy.</li><li>I prioritize strangers over my own well-being.</li></ul></dd></dl>
+	</article><article class="entry" id="background-street-vendor">
+		
+		<h3>Street Vendor</h3>
+		<div class="meta"><span class="tag">Rank: D</span><span class="tag">Type: background</span></div>
+		<div class="entry-description"><p>You ran a food stall, a convenience store, or sold cheap trinkets near a popular gate site. You know the local Ascendants, the guild rivalries, and the ebb and flow of the awakened economy better than anyone.</p></div>
+		<dl class="field-grid"><dt>Skill Proficiencies</dt><dd><ul class="compact-list"><li>Persuasion</li><li>Insight</li></ul></dd><dt>Tool Proficiencies</dt><dd><ul class="compact-list"><li>Cook's Utensils</li><li>Brewer's Supplies</li></ul></dd><dt>Languages</dt><dd><ul class="compact-list"><li>One additional language</li></ul></dd><dt>Equipment</dt><dd><ul class="compact-list"><li>A portable cooking set</li><li>A fanny pack of loose change</li><li>Comfortable walking shoes</li><li>A stash of cheap snacks</li><li>A token from a famous Ascendant</li></ul></dd><dt>Starting Credits</dt><dd><span>300</span></dd><dt>Features</dt><dd><div class="nested-card"><dl class="field-grid nested-grid"><dt>Name</dt><dd><p>Street Gossip</p></dd><dt>Description</dt><dd><p>You know the word on the street. By spending an hour in a local market or near a gate entrance, you can discover local guild rivalries, the general rank of nearby anomalies, and the location of black-market fences.</p></dd></dl></div></dd><dt>Personality Traits</dt><dd><ul class="compact-list"><li>I try to sell something to everyone I meet.</li><li>I am incredibly friendly and approachable.</li><li>I haggle over everything, even non-monetary things.</li><li>I know the favorite food of every Ascendant I meet.</li><li>I am highly observant of people's wealth and status.</li><li>I am pragmatic and deeply grounded in reality.</li></ul></dd><dt>Ideals</dt><dd><ul class="compact-list"><li>Community. I feed the neighborhood, and the neighborhood feeds me. (Good)</li><li>Profit. A coin is a coin, no matter whose pocket it comes from. (Neutral)</li><li>Survival. Keep your head down and your prices fair. (Lawful)</li><li>Opportunity. I'll sell water to a drowning man if he pays. (Evil)</li><li>Freedom. I am my own boss, answering to no mega-guild. (Chaotic)</li><li>Hard Work. Success comes to those who hustle. (Any)</li></ul></dd><dt>Bonds</dt><dd><ul class="compact-list"><li>I am fiercely protective of my small neighborhood.</li><li>I owe a debt to a Ascendant who protected my stall from thugs.</li><li>I am saving up to buy a real restaurant in the safe zone.</li><li>I carry a recipe passed down through my family.</li><li>I am hiding from a local gang that demanded protection money.</li><li>I want to provide for my extended family who rely on me.</li></ul></dd><dt>Flaws</dt><dd><ul class="compact-list"><li>I am incredibly cheap and refuse to spend money.</li><li>I am a gossip who cannot keep a secret.</li><li>I will scam naive or wealthy people without hesitation.</li><li>I am physically weak and avoid conflict.</li><li>I am overly deferential to high-ranking Ascendants.</li><li>I judge people entirely by how much they tip.</li></ul></dd></dl>
+	</article><article class="entry" id="background-teacher">
+		
+		<h3>Teacher</h3>
+		<div class="meta"><span class="tag">Rank: D</span><span class="tag">Type: background</span></div>
+		<div class="entry-description"><p>You were an educator, shaping the minds of the next generation. When the gates opened, you found yourself protecting your students. Your awakening gave you the power to ensure they had a future.</p></div>
+		<dl class="field-grid"><dt>Skill Proficiencies</dt><dd><ul class="compact-list"><li>Dimensional Lore</li><li>Insight</li></ul></dd><dt>Tool Proficiencies</dt><dd><ul class="compact-list"><li>Calligrapher's Supplies</li></ul></dd><dt>Languages</dt><dd><ul class="compact-list"><li>Two additional languages</li></ul></dd><dt>Equipment</dt><dd><ul class="compact-list"><li>A satchel full of graded papers</li><li>A sturdy ruler or pointer</li><li>A thermos of tea or coffee</li><li>Comfortable clothes</li><li>A pair of reading glasses</li></ul></dd><dt>Starting Credits</dt><dd><span>500</span></dd><dt>Features</dt><dd><div class="nested-card"><dl class="field-grid nested-grid"><dt>Name</dt><dd><p>Pedagogue's Authority</p></dd><dt>Description</dt><dd><p>You have a commanding 'Teacher Voice.' You can easily gain the attention of a panicking crowd and direct civilians to safety. Furthermore, people tend to assume you are an authority figure in mundane situations.</p></dd></dl></div></dd><dt>Personality Traits</dt><dd><ul class="compact-list"><li>I correct people's grammar and facts reflexively.</li><li>I speak loudly and clearly, projecting my voice.</li><li>I am incredibly patient, even with foolish people.</li><li>I treat my younger teammates like my students.</li><li>I always carry a red pen.</li><li>I am deeply passionate about my chosen subject.</li></ul></dd><dt>Ideals</dt><dd><ul class="compact-list"><li>Education. Knowledge is the only weapon against the darkness. (Lawful)</li><li>Protection. The children are the future; they must be saved. (Good)</li><li>Truth. Ignorance is the root of all evil. (Neutral)</li><li>Discipline. A strict hand builds a strong character. (Lawful)</li><li>Rebellion. I teach my students to question authority. (Chaotic)</li><li>Control. I know what is best for everyone. (Evil)</li></ul></dd><dt>Bonds</dt><dd><ul class="compact-list"><li>I am fiercely protective of a specific student who awakened.</li><li>I owe my life to a former student who became a high-ranking Ascendant.</li><li>I am trying to rebuild my destroyed school.</li><li>I carry a drawing made by a student I couldn't save.</li><li>I am deeply loyal to my fellow educators.</li><li>I am secretly researching the gates to teach humanity how to close them.</li></ul></dd><dt>Flaws</dt><dd><ul class="compact-list"><li>I am incredibly condescending and treat everyone like children.</li><li>I struggle to adapt to situations that aren't in a textbook.</li><li>I will risk everything to save a child, even if it dooms the mission.</li><li>I am a stickler for rules and hate cheating.</li><li>I am easily overwhelmed by chaotic, unstructured environments.</li><li>I am deeply naive about the cruelty of the Ascendant world.</li></ul></dd></dl>
+	</article><article class="entry entry--uncommon" id="background-underground-hacker">
+		
+		<h3>Underground Hacker</h3>
+		<div class="meta"><span class="tag">Rank: B</span><span class="tag">Type: background</span></div>
+		<div class="entry-description"><p>You are a ghost in the machine. You grew up in the dark web, breaching corporate firewalls and stealing Association data. Your awakening enhanced your mind, allowing you to interface with technology and magic simultaneously.</p></div>
+		<dl class="field-grid"><dt>Skill Proficiencies</dt><dd><ul class="compact-list"><li>Investigation</li><li>Sleight of Hand</li></ul></dd><dt>Tool Proficiencies</dt><dd><ul class="compact-list"><li>Thieves' Tools</li><li>Tinker's Tools</li></ul></dd><dt>Languages</dt><dd><ul class="compact-list"><li>Machine Code (or one exotic language)</li></ul></dd><dt>Equipment</dt><dd><ul class="compact-list"><li>A heavily modified laptop</li><li>A set of lockpicks</li><li>A burner phone</li><li>A flash drive with encrypted blackmail</li><li>A dark hoodie</li></ul></dd><dt>Starting Credits</dt><dd><span>800</span></dd><dt>Features</dt><dd><div class="nested-card"><dl class="field-grid nested-grid"><dt>Name</dt><dd><p>Backdoor Access</p></dd><dt>Description</dt><dd><p>You can bypass any mundane or low-level magical security system given time. You also have access to the dark web, allowing you to buy illegal goods or information anonymously.</p></dd></dl></div></dd><dt>Personality Traits</dt><dd><ul class="compact-list"><li>I speak in internet slang and l33tspeak.</li><li>I am intensely paranoid about surveillance.</li><li>I prefer the company of machines to people.</li><li>I am incredibly arrogant about my intellect.</li><li>I tap my fingers rhythmically as if typing.</li><li>I rarely make eye contact, preferring to look at a screen.</li></ul></dd><dt>Ideals</dt><dd><ul class="compact-list"><li>Information. All data wants to be free. (Chaotic)</li><li>Truth. I expose the lies of the mega-guilds. (Good)</li><li>Profit. I sell corporate secrets to the highest bidder. (Evil)</li><li>Logic. The world is just a system waiting to be optimized. (Lawful)</li><li>Anonymity. I am a ghost; I exist only in the code. (Neutral)</li><li>Power. Controlling the flow of information is true power. (Any)</li></ul></dd><dt>Bonds</dt><dd><ul class="compact-list"><li>I am trying to hack the Ascendant Bureau's deepest database.</li><li>I am fiercely loyal to my online hacker collective.</li><li>I am blackmailing a corrupt Guild Master.</li><li>I am running from a corporate hit squad I stole from.</li><li>I want to find the true origin of the gates hidden in the code.</li><li>I am searching for my sibling who was 'deleted' by the government.</li></ul></dd><dt>Flaws</dt><dd><ul class="compact-list"><li>I am deeply anti-social and struggle to communicate.</li><li>I am incredibly physically unfit.</li><li>I suffer from a severe superiority complex.</li><li>I will risk the mission to steal valuable data.</li><li>I am intensely paranoid and trust no one.</li><li>I view people as NPCs in my game.</li></ul></dd></dl>
+	</article><article class="entry entry--legendary" id="background-vault-warden">
+		
+		<h3>Vault Warden</h3>
+		<div class="meta"><span class="tag">Rank: S</span><span class="tag">Type: background</span></div>
+		<div class="entry-description"><p>You are a trusted guardian of the Ascendant Bureau's deepest vaults, where S-Rank artifacts, cursed items, and high-value prisoner cores are kept. You have been exposed to extreme magical radiation.</p></div>
+		<dl class="field-grid"><dt>Skill Proficiencies</dt><dd><ul class="compact-list"><li>Insight</li><li>Dimensional Lore</li></ul></dd><dt>Tool Proficiencies</dt><dd><ul class="compact-list"><li>Thieves' Tools</li><li>Tinker's Tools</li></ul></dd><dt>Equipment</dt><dd><ul class="compact-list"><li>A heavy ring of master keys</li><li>A lead-lined containment box</li><li>A uniform of the Vault Guard</li><li>A high-security ID badge</li></ul></dd><dt>Starting Credits</dt><dd><span>2000</span></dd><dt>Features</dt><dd><div class="nested-card"><dl class="field-grid nested-grid"><dt>Name</dt><dd><p>Containment Mandates</p></dd><dt>Description</dt><dd><p>Your Association clearance allows you to confiscate 'dangerous' artifacts from other Ascendants legally. You have access to the Association's black-site databases and secure transport networks.</p></dd></dl></div></dd><dt>Personality Traits</dt><dd><ul class="compact-list"><li>I am intensely paranoid about security.</li><li>I never take off my gloves.</li><li>I speak in a low, monotone voice.</li><li>I am deeply suspicious of anyone showing interest in artifacts.</li><li>I meticulously log everything I do.</li><li>I have a habit of checking locks repeatedly.</li></ul></dd><dt>Ideals</dt><dd><ul class="compact-list"><li>Containment. Some things were not meant for human hands. (Lawful)</li><li>Duty. The vault must be protected at all costs. (Lawful)</li><li>Power. I guard the greatest weapons in the world; perhaps I should use them. (Evil)</li><li>Safety. I keep the darkness locked away so the innocent can sleep. (Good)</li><li>Knowledge. The artifacts sing to me; I must understand them. (Neutral)</li><li>Freedom. The artifacts want to be free, and so do I. (Chaotic)</li></ul></dd><dt>Bonds</dt><dd><ul class="compact-list"><li>I am guarding an artifact that holds the soul of someone I love.</li><li>I failed to stop a heist that cost the Association a Sovereign core.</li><li>My mentor went mad guarding the deep vaults.</li><li>I am secretly hoarding confiscated artifacts for my own use.</li><li>I am fiercely loyal to the Director of the Association.</li><li>I hear a specific cursed sword whispering to me in my dreams.</li></ul></dd><dt>Flaws</dt><dd><ul class="compact-list"><li>I am corrupted by the magical radiation, suffering strange sicknesses.</li><li>I am highly possessive of magical items and reluctant to part with them.</li><li>I am deeply distrustful of all other Ascendants.</li><li>I rigidly adhere to protocol, even when it costs lives.</li><li>I secretly desire the power of the things I guard.</li><li>I suffer from extreme agoraphobia after years underground.</li></ul></dd></dl>
+	</article><article class="entry" id="background-viral-streamer">
+		
+		<h3>Viral Streamer</h3>
+		<div class="meta"><span class="tag">Rank: C</span><span class="tag">Type: background</span></div>
+		<div class="entry-description"><p>You make your living broadcasting your life to millions. When the gates opened, you didn't run; you turned the camera on. You are an Awakened influencer who live-streams dungeon dives for superchats and sponsorships.</p></div>
+		<dl class="field-grid"><dt>Skill Proficiencies</dt><dd><ul class="compact-list"><li>Performance</li><li>Acrobatics</li></ul></dd><dt>Tool Proficiencies</dt><dd><ul class="compact-list"><li>Disguise Kit</li></ul></dd><dt>Languages</dt><dd><ul class="compact-list"><li>One additional language</li></ul></dd><dt>Equipment</dt><dd><ul class="compact-list"><li>A high-end floating drone camera</li><li>A smartphone</li><li>Flashy, branded combat gear</li><li>A portable ring light</li><li>A selfie stick</li></ul></dd><dt>Starting Credits</dt><dd><span>1000</span></dd><dt>Features</dt><dd><div class="nested-card"><dl class="field-grid nested-grid"><dt>Name</dt><dd><p>Sponsored Content</p></dd><dt>Description</dt><dd><p>You have a massive online following. Once per city, you can leverage your fanbase to secure free lodging, a distraction, or gather localized information via social media crowdsourcing.</p></dd></dl></div></dd><dt>Personality Traits</dt><dd><ul class="compact-list"><li>I narrate my actions as if speaking to an audience.</li><li>I am obsessed with my follower count and engagement metrics.</li><li>I always prioritize getting a good angle over safety.</li><li>I use internet slang constantly.</li><li>I am incredibly chipper and energetic, even when exhausted.</li><li>I view other Ascendants as 'collabs' rather than teammates.</li></ul></dd><dt>Ideals</dt><dd><ul class="compact-list"><li>Fame. The only thing worse than dying is being forgotten. (Any)</li><li>Wealth. I am here for the sponsorships and superchats. (Neutral)</li><li>Entertainment. The world is dark; I bring the light. (Good)</li><li>Ego. I am the main character of reality. (Chaotic)</li><li>Influence. With a million viewers, I can change the world. (Lawful)</li><li>Exploitation. I will use my fans for whatever I need. (Evil)</li></ul></dd><dt>Bonds</dt><dd><ul class="compact-list"><li>I am trying to out-stream a bitter rival influencer.</li><li>I owe everything to a dedicated mod who manages my life.</li><li>I am hiding a dark secret that would ruin my career if exposed.</li><li>I am desperately seeking a sponsor to pay off a massive debt.</li><li>I want to document the ultimate S-Rank boss fight.</li><li>I am trying to find a missing fan who disappeared in a gate.</li></ul></dd><dt>Flaws</dt><dd><ul class="compact-list"><li>I will risk the lives of my party for a viral clip.</li><li>I am deeply insecure and need constant validation.</li><li>I am a narcissist who cannot handle criticism.</li><li>I will leak sensitive guild information if it gets views.</li><li>I am terrified of being 'canceled' or losing relevance.</li><li>I struggle to distinguish my online persona from my real self.</li></ul></dd></dl>
+	</article></div>
+	</section>
+	</section>
+</body>
+</html>

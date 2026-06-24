@@ -1,0 +1,1557 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8"/>
+	<title>Rift Ascendant  -  Ascendant Guide - Jobs</title>
+	<style>/* ============================================================
+   RIFT ASCENDANT — SOURCEBOOK DESIGN SYSTEM
+   Professional TTRPG print stylesheet
+   ============================================================ */
+
+/* --- Google Fonts ----------------------------------------- */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400;1,8..60,600&family=JetBrains+Mono:wght@400;700&display=swap');
+
+/* --- Page Setup ------------------------------------------- */
+@page {
+	size: Letter;
+	margin: 0.58in 0.56in 0.72in;
+}
+
+/* --- Design Tokens ---------------------------------------- */
+:root {
+	/* Rift Ascendant brand palette */
+	--ra-bg:          #070812;
+	--ra-panel:       #101524;
+	--ra-panel-2:     #151b2f;
+	--ra-ink:         #f3f8ff;
+	--ra-muted:       #a8b6c7;
+	--ra-cyan:        #74f2ff;
+	--ra-violet:      #a78bfa;
+	--ra-silver:      #d8e3ef;
+	--ra-crimson:     #d84b63;
+	--ra-line:        #31415b;
+	--ra-paper:       #f5f0e5;
+	--ra-paper-ink:   #1a1410;
+	--ra-paper-muted: #5d574d;
+	--ra-paper-line:  #cdbf9e;
+
+	/* Typography */
+	--font-heading: 'Outfit', 'Segoe UI', system-ui, sans-serif;
+	--font-body:    'Source Serif 4', 'Georgia', 'Times New Roman', serif;
+	--font-mono:    'JetBrains Mono', 'Cascadia Mono', 'Consolas', monospace;
+
+	/* Entry tier accents */
+	--tier-legendary-border: #b8860b;
+	--tier-legendary-bg:     #fdf6e3;
+	--tier-legendary-title:  #78350f;
+	--tier-rare-border:      var(--ra-cyan);
+	--tier-rare-bg:          #f0f9ff;
+	--tier-rare-title:       #0c4a6e;
+	--tier-uncommon-border:  #94a3b8;
+	--tier-uncommon-bg:      #f8fafc;
+	--tier-uncommon-title:   #1e293b;
+}
+
+/* --- Reset ------------------------------------------------ */
+*, *::before, *::after {
+	box-sizing: border-box;
+}
+
+/* --- Base ------------------------------------------------- */
+html {
+	background: var(--ra-paper);
+}
+
+body {
+	margin: 0;
+	background: var(--ra-paper);
+	color: var(--ra-paper-ink);
+	font-family: var(--font-body);
+	font-size: 9.5pt;
+	line-height: 1.46;
+	-webkit-print-color-adjust: exact;
+	print-color-adjust: exact;
+}
+
+/* --- Type Scale ------------------------------------------- */
+h1, h2, h3, h4, h5 {
+	font-family: var(--font-heading);
+	line-height: 1.1;
+	margin: 0 0 0.16in;
+	color: #1a0f05;
+	font-variant: normal;
+	letter-spacing: -0.01em;
+	text-rendering: optimizeLegibility;
+}
+
+h1 { font-size: 26pt; font-weight: 800; }
+h2 { font-size: 17pt; font-weight: 700; }
+h3 { font-size: 12pt; font-weight: 700; }
+h4 { font-size: 10pt; font-weight: 600; }
+h5 { font-size: 8.5pt; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; }
+
+p {
+	margin: 0 0 0.075in;
+	orphans: 3;
+	widows: 3;
+}
+
+ul, ol {
+	margin: 0.03in 0 0.08in 0.17in;
+	padding: 0;
+}
+
+li {
+	margin: 0.015in 0;
+	orphans: 3;
+	widows: 3;
+}
+
+strong { color: #2d1a08; }
+
+em { font-style: italic; }
+
+code, pre {
+	font-family: var(--font-mono);
+}
+
+pre {
+	white-space: pre-wrap;
+	background: #1e1a15;
+	color: #f5f0e5;
+	border: 0.5pt solid #4a3f2f;
+	padding: 0.09in;
+	margin: 0.08in 0 0.12in;
+	font-size: 7pt;
+	break-inside: avoid;
+}
+
+table {
+	border-collapse: collapse;
+	width: 100%;
+	margin: 0.07in 0 0.11in;
+	font-size: 8.35pt;
+	break-inside: auto;
+}
+
+th, td {
+	border: 0.5pt solid var(--ra-paper-line);
+	padding: 0.042in 0.052in;
+	vertical-align: top;
+}
+
+th {
+	background: #2a1a0e;
+	color: #f5f0e5;
+	font-family: var(--font-heading);
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+	font-size: 7.2pt;
+	font-weight: 700;
+}
+
+td {
+	background: rgba(255, 255, 255, 0.45);
+	font-family: var(--font-body);
+}
+
+tr:nth-child(even) td {
+	background: rgba(205, 191, 158, 0.18);
+}
+
+/* --- Cover ------------------------------------------------ */
+.cover {
+	height: 130vw;
+	min-height: 130vw;
+	color: var(--ra-ink);
+	background:
+		linear-gradient(180deg, rgba(4, 6, 15, 0.9) 0%, rgba(10, 15, 30, 0.2) 40%, rgba(10, 15, 30, 0.3) 60%, rgba(4, 6, 15, 0.95) 100%),
+		var(--cover-image, none),
+		radial-gradient(ellipse at 15% 12%, rgba(116, 242, 255, 0.28) 0%, transparent 40%),
+		radial-gradient(ellipse at 85% 20%, rgba(167, 139, 250, 0.26) 0%, transparent 38%),
+		radial-gradient(ellipse at 50% 85%, rgba(216, 75, 99, 0.12) 0%, transparent 35%),
+		#070812;
+	background-size: cover;
+	background-position: center;
+	border: 0;
+	padding: 0.65in;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	overflow: hidden;
+	page-break-after: always;
+	break-after: page;
+}
+
+.cover::before {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	height: 5pt;
+	background: linear-gradient(90deg, var(--ra-cyan), var(--ra-violet), var(--ra-crimson));
+}
+
+.cover-kicker,
+.book-code,
+.classification,
+.eyebrow,
+.tag,
+.meta,
+.caption {
+	text-transform: uppercase;
+	letter-spacing: 0.09em;
+}
+
+.cover-kicker {
+	color: var(--ra-cyan);
+	font-family: var(--font-heading);
+	font-size: 8.5pt;
+	font-weight: 700;
+	margin-bottom: 0.1in;
+}
+
+.cover h1 {
+	color: #ffffff;
+	font-family: var(--font-heading);
+	font-size: 36pt;
+	font-weight: 800;
+	letter-spacing: -0.02em;
+	line-height: 0.96;
+	max-width: 6.4in;
+	text-shadow: 0 0 24px rgba(116, 242, 255, 0.22), 0 2px 8px rgba(0,0,0,0.8);
+	margin-bottom: 0.14in;
+}
+
+.cover-subtitle {
+	max-width: 5.6in;
+	font-family: var(--font-heading);
+	font-size: 12pt;
+	font-weight: 400;
+	color: #c8d8ea;
+	letter-spacing: 0.01em;
+	margin-bottom: 0.06in;
+}
+
+.cover-grid {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 0.1in;
+	margin-top: 0.22in;
+}
+
+.cover-tile {
+	border: 0.5pt solid rgba(116, 242, 255, 0.3);
+	background: rgba(8, 14, 30, 0.78);
+	backdrop-filter: blur(4px);
+	padding: 0.11in 0.12in;
+	break-inside: avoid;
+}
+
+.cover-tile strong {
+	display: block;
+	color: var(--ra-cyan);
+	font-family: var(--font-heading);
+	font-size: 14pt;
+	font-weight: 800;
+	margin-bottom: 0.02in;
+}
+
+.book-code {
+	font-family: var(--font-heading);
+	font-size: 8pt;
+	color: rgba(200, 216, 234, 0.65);
+	letter-spacing: 0.1em;
+}
+
+/* --- Front Matter ----------------------------------------- */
+.front-matter,
+.front-card,
+.callout,
+.classified,
+.entry,
+.statblock,
+.figure-card,
+.compact-entry,
+.cover-tile,
+.sidebar-note,
+.sidebar-tip,
+.sidebar-warning,
+.flavor-box,
+.read-aloud {
+	break-inside: avoid;
+}
+
+.front-matter {
+	padding: 0.04in 0;
+}
+
+.front-matter h1 {
+	font-size: 24pt;
+	font-family: var(--font-heading);
+	font-weight: 800;
+	border-bottom: 2pt solid var(--ra-paper-line);
+	padding-bottom: 0.07in;
+	margin-bottom: 0.14in;
+}
+
+.front-card {
+	border-left: 4pt solid var(--ra-cyan);
+	background: rgba(255, 255, 255, 0.42);
+	padding: 0.14in 0.16in;
+	margin: 0 0 0.14in;
+	border-radius: 0 2pt 2pt 0;
+}
+
+.front-card p:last-child { margin-bottom: 0; }
+
+/* --- Table of Contents ------------------------------------ */
+.toc {
+	page-break-after: always;
+}
+
+.toc h1 {
+	font-size: 24pt;
+	font-family: var(--font-heading);
+	font-weight: 800;
+	border-bottom: 2pt solid var(--ra-paper-line);
+	padding-bottom: 0.07in;
+}
+
+.toc ol {
+	column-count: 2;
+	column-gap: 0.28in;
+	margin-left: 0.16in;
+	font-family: var(--font-body);
+	font-size: 9pt;
+}
+
+.toc li {
+	margin-bottom: 0.08in;
+	break-inside: avoid;
+	list-style: none;
+	position: relative;
+	left: -0.16in;
+}
+
+.toc a {
+	text-decoration: none;
+	color: inherit;
+}
+
+.toc-chapter-num {
+	font-family: var(--font-heading);
+	font-weight: 800;
+	color: var(--ra-cyan);
+	margin-right: 0.05in;
+	font-size: 10pt;
+}
+
+.toc-chapter-summary {
+	display: block;
+	font-size: 8pt;
+	color: #555;
+	font-style: italic;
+	margin-left: 0.22in;
+	line-height: 1.2;
+	margin-top: 0.02in;
+}
+.toc .toc-part {
+	list-style: none;
+	margin: 0.11in 0 0.035in -0.14in;
+	padding-top: 0.04in;
+	border-top: 0.5pt solid #8a6c4e;
+	color: #4a2e14;
+	font-family: var(--font-heading);
+	font-weight: 800;
+	text-transform: uppercase;
+	letter-spacing: 0.07em;
+	font-size: 7.8pt;
+}
+
+/* --- Chapter Structure ------------------------------------ */
+.chapter {
+	page-break-before: always;
+}
+
+.chapter-opener {
+	position: relative;
+	color: var(--ra-ink);
+	background:
+		linear-gradient(155deg, rgba(5, 7, 18, 0.97), rgba(14, 20, 40, 0.84)),
+		var(--chapter-image, none),
+		#070812;
+	background-size: cover;
+	background-position: center;
+	border: 0;
+	padding: 0 0.36in 0.36in;
+	padding-top: 0.22in;
+	margin-bottom: 0.2in;
+	min-height: 3in;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-end;
+	overflow: hidden;
+}
+
+.chapter-opener::before {
+	content: "";
+	display: block;
+	height: 4pt;
+	background: linear-gradient(90deg, var(--ra-cyan), var(--ra-violet));
+	margin-bottom: 0.22in;
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+}
+
+.chapter-opener h1 {
+	color: #ffffff;
+	font-family: var(--font-heading);
+	font-size: 28pt;
+	font-weight: 800;
+	margin-bottom: 0.06in;
+	text-shadow: 0 2px 12px rgba(0,0,0,0.7);
+}
+
+.chapter-opener p {
+	max-width: 6in;
+	color: #d4e8f8;
+	font-family: var(--font-body);
+	font-size: 9.5pt;
+	font-style: italic;
+	margin: 0;
+}
+
+.eyebrow {
+	color: var(--ra-cyan);
+	font-family: var(--font-heading);
+	font-size: 7pt;
+	font-weight: 700;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+	margin-bottom: 0.07in;
+}
+
+/* --- Section Intro ---------------------------------------- */
+.section-intro {
+	background: rgba(255, 255, 255, 0.3);
+	border-top: 2pt solid #7a6047;
+	border-bottom: 0.5pt solid var(--ra-paper-line);
+	border-left: 0;
+	border-right: 0;
+	padding: 0.11in 0.14in;
+	margin-bottom: 0.13in;
+	column-span: all;
+}
+
+.section-intro h2 {
+	font-size: 18pt;
+	font-family: var(--font-heading);
+	font-weight: 800;
+	color: #1a0f05;
+	margin-bottom: 0.05in;
+}
+
+.section-intro p:last-child { margin-bottom: 0; }
+
+/* --- Two-Column Prose ------------------------------------- */
+.prose-columns {
+	column-count: 2;
+	column-gap: 0.3in;
+	column-rule: 0.35pt solid rgba(95, 70, 50, 0.3);
+	hyphens: auto;
+}
+
+/* Drop cap on first paragraph of a chapter */
+.chapter > .prose-columns > p:first-of-type::first-letter,
+.chapter > .section-block > .prose-columns > p:first-of-type::first-letter {
+	font-family: var(--font-heading);
+	font-size: 3.2em;
+	font-weight: 800;
+	line-height: 0.78;
+	float: left;
+	margin: 0.02em 0.06em 0 0;
+	color: #7a6047;
+}
+
+.prose-columns h2,
+.prose-columns h3,
+.prose-columns h4 {
+	break-after: avoid;
+}
+
+.prose-columns table,
+.prose-columns blockquote,
+.prose-columns ol,
+.prose-columns ul {
+	break-inside: avoid;
+}
+
+/* --- Catalog Grid ----------------------------------------- */
+.catalog-grid {
+	display: block;
+	column-count: 2;
+	column-gap: 0.28in;
+	column-rule: 0.35pt solid rgba(95, 70, 50, 0.28);
+}
+
+/* --- Entry Cards ------------------------------------------ */
+.entry {
+	display: inline-block;
+	width: 100%;
+	background: rgba(255, 255, 255, 0.28);
+	border: 0;
+	border-top: 1pt solid #8a6e50;
+	padding: 0.09in 0.04in 0.1in;
+	margin: 0 0 0.09in;
+	box-shadow: none;
+	break-inside: avoid;
+}
+
+.entry h3 {
+	font-family: var(--font-heading);
+	font-size: 12pt;
+	font-weight: 700;
+	color: #1a0f05;
+	margin-bottom: 0.035in;
+}
+
+.entry-description {
+	color: #1f2937;
+	font-style: italic;
+	margin: 0.04in 0 0.07in;
+	font-size: 9pt;
+}
+
+/* Flavor / lore text block inside entries */
+.entry-description blockquote,
+.callout {
+	border-left: 3pt solid var(--ra-cyan);
+	background: rgba(220, 248, 255, 0.35);
+	padding: 0.07in 0.09in;
+	margin: 0.07in 0;
+	font-style: italic;
+}
+
+/* Entry Tier Variants */
+.entry--legendary {
+	border-top: 4pt solid var(--tier-legendary-border);
+	background: var(--tier-legendary-bg);
+}
+.entry--legendary h3 { color: var(--tier-legendary-title); }
+
+.entry--rare {
+	border-top: 3pt solid var(--tier-rare-border);
+	background: var(--tier-rare-bg);
+}
+.entry--rare h3 { color: var(--tier-rare-title); }
+
+.entry--uncommon {
+	border-top: 2pt solid var(--tier-uncommon-border);
+	background: var(--tier-uncommon-bg);
+}
+.entry--uncommon h3 { color: var(--tier-uncommon-title); }
+
+.entry--classified {
+	background: #111827;
+	color: #e5f2ff;
+	border: 0.8pt solid #334155;
+	border-left: 4pt solid var(--ra-crimson);
+	border-top: 0.8pt solid #334155;
+	padding: 0.1in;
+}
+.entry--classified h3 { color: #ffffff; }
+.entry--classified .field-grid dt { color: #fca5a5; }
+
+/* --- Compact Catalog -------------------------------------- */
+.compact-catalog {
+	column-count: 2;
+	column-gap: 0.24in;
+	column-rule: 0.3pt solid rgba(95, 70, 50, 0.25);
+}
+
+.compact-entry {
+	display: inline-block;
+	width: 100%;
+	margin: 0 0 0.075in;
+	padding: 0.06in 0.04in 0.065in;
+	border-top: 0.6pt solid #8b6f51;
+	background: rgba(255, 255, 255, 0.2);
+	break-inside: avoid;
+}
+
+.compact-entry h3 {
+	font-family: var(--font-heading);
+	margin: 0 0 0.022in;
+	font-size: 10pt;
+	font-weight: 700;
+	line-height: 1.12;
+	color: #111827;
+}
+
+.compact-meta {
+	margin-bottom: 0.022in;
+	font-size: 7.2pt;
+}
+
+.compact-line {
+	margin: 0 0 0.032in;
+	font-size: 7.8pt;
+	line-height: 1.32;
+}
+
+.compact-line strong {
+	font-family: var(--font-heading);
+	color: #5f3b13;
+	font-size: 7pt;
+	text-transform: uppercase;
+	letter-spacing: 0.03em;
+}
+
+/* --- Meta & Tags ------------------------------------------ */
+.meta {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.03in;
+	margin-bottom: 0.045in;
+}
+
+.tag {
+	border: 0.5pt solid #a89779;
+	background: rgba(255, 255, 255, 0.45);
+	color: #3a2a1b;
+	border-radius: 0.04in;
+	padding: 0.02in 0.042in;
+	font-family: var(--font-heading);
+	font-size: 6.8pt;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+}
+
+.tag.hot {
+	background: #fff1f2;
+	border-color: #f0a2ae;
+	color: #9f1239;
+}
+
+/* --- Field Grid ------------------------------------------- */
+.field-grid {
+	display: grid;
+	grid-template-columns: 0.9in 1fr;
+	column-gap: 0.055in;
+	row-gap: 0.032in;
+	margin: 0.038in 0 0;
+}
+
+.field-grid dt {
+	color: #334155;
+	font-family: var(--font-heading);
+	font-weight: 700;
+	font-size: 7.2pt;
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+}
+
+.field-grid dd {
+	margin: 0;
+	min-width: 0;
+	font-family: var(--font-body);
+	font-size: 8.8pt;
+}
+
+.nested-grid {
+	display: block;
+	margin: 0.018in 0;
+}
+
+.nested-grid dt {
+	display: inline;
+	font-family: var(--font-heading);
+	font-size: 7pt;
+	font-weight: 700;
+	letter-spacing: 0.03em;
+	color: #4a3520;
+}
+
+.nested-grid dt::after {
+	content: ": ";
+}
+
+.nested-grid dd {
+	display: inline;
+}
+
+.nested-grid dd::after {
+	content: "";
+	display: block;
+	margin-bottom: 0.022in;
+}
+
+.nested-card {
+	background: rgba(255, 255, 255, 0.32);
+	border: 0.5pt solid var(--ra-paper-line);
+	padding: 0.05in;
+	margin: 0.03in 0;
+}
+
+.compact-list {
+	margin-left: 0.12in;
+}
+
+/* --- Stat Blocks ------------------------------------------ */
+.statblock {
+	background: #fffaf0;
+	border: 0.7pt solid #c9a84c;
+	border-top: 0;
+	padding: 0 0 0.12in;
+	margin: 0 0 0.13in;
+	display: block;
+	width: 100%;
+	break-inside: auto;
+	page-break-inside: auto;
+	border-radius: 0 0 3pt 3pt;
+}
+
+.statblock-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	background: linear-gradient(135deg, #1e0e04, #2d1a08);
+	border-radius: 3pt 3pt 0 0;
+	padding: 0.075in 0.13in;
+	margin-bottom: 0;
+}
+
+.statblock-header h3 {
+	font-family: var(--font-heading);
+	font-size: 14pt;
+	font-weight: 800;
+	color: #ffffff;
+	margin: 0;
+	text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+}
+
+.threat-badge {
+	background: rgba(184, 137, 56, 0.28);
+	border: 0.5pt solid #b88938;
+	color: #fef3c7;
+	font-family: var(--font-heading);
+	font-size: 7pt;
+	font-weight: 700;
+	padding: 0.02in 0.06in;
+	border-radius: 2pt;
+	white-space: nowrap;
+	letter-spacing: 0.04em;
+}
+
+.statblock-type {
+	font-style: italic;
+	font-family: var(--font-body);
+	color: #5c3a1a;
+	font-size: 9pt;
+	padding: 0.04in 0.13in 0.02in;
+}
+
+.statblock-divider {
+	height: 1.5pt;
+	background: linear-gradient(90deg, transparent, #b88938 20%, #d4a84b 50%, #b88938 80%, transparent);
+	margin: 0.04in 0.13in;
+}
+
+.statblock-core {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.1in;
+	padding: 0.05in 0.13in;
+	font-family: var(--font-mono);
+	font-size: 8.5pt;
+	line-height: 1.3;
+}
+
+.statblock-core span strong {
+	font-family: var(--font-heading);
+	color: #7c2d12;
+	text-transform: uppercase;
+	font-size: 6.8pt;
+	letter-spacing: 0.05em;
+	display: block;
+}
+
+.statblock-section {
+	padding: 0 0.13in;
+}
+
+.statblock-section h4 {
+	font-family: var(--font-heading);
+	font-size: 9.5pt;
+	font-weight: 700;
+	color: #7c2d12;
+	border-bottom: 0.5pt solid #d7b97a;
+	margin: 0.06in 0 0.04in;
+	padding-bottom: 0.02in;
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+}
+
+/* Legacy stat block h3 (fallback for old-format entries) */
+.statblock > h3 {
+	background: linear-gradient(135deg, #1e0e04, #2d1a08);
+	color: #ffffff;
+	font-family: var(--font-heading);
+	font-size: 14pt;
+	font-weight: 800;
+	margin: 0 0 0.06in;
+	padding: 0.075in 0.13in;
+	border-radius: 3pt 3pt 0 0;
+}
+
+/* --- Ability Grid ----------------------------------------- */
+.ability-grid {
+	display: grid;
+	grid-template-columns: repeat(6, 1fr);
+	gap: 0.03in;
+	margin: 0.06in 0.13in;
+	text-align: center;
+}
+
+.ability-grid div {
+	border: 0.5pt solid #d7b97a;
+	background: #fff6dd;
+	padding: 0.03in 0.015in;
+}
+
+.ability-grid strong {
+	display: block;
+	font-family: var(--font-heading);
+	color: #7c2d12;
+	font-size: 6.5pt;
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+	margin-bottom: 0.01in;
+}
+
+.ability-grid span {
+	font-family: var(--font-mono);
+	font-size: 9pt;
+	font-weight: 700;
+}
+
+/* --- Sidebar & Callout System ----------------------------- */
+.sidebar-note {
+	background: #f5f0e8;
+	border-left: 3pt solid #8b6f51;
+	padding: 0.1in 0.12in;
+	margin: 0.1in 0;
+	border-radius: 0 2pt 2pt 0;
+	font-size: 8.8pt;
+	break-inside: avoid;
+}
+
+.sidebar-note > h4:first-child,
+.sidebar-note > h5:first-child {
+	color: #5f3b13;
+	font-family: var(--font-heading);
+	font-size: 9pt;
+	margin-bottom: 0.04in;
+}
+
+.sidebar-tip {
+	background: #ecfeff;
+	border-left: 3pt solid var(--ra-cyan);
+	padding: 0.1in 0.12in;
+	margin: 0.1in 0;
+	border-radius: 0 2pt 2pt 0;
+	font-size: 8.8pt;
+	break-inside: avoid;
+}
+
+.sidebar-tip > h4:first-child,
+.sidebar-tip > h5:first-child {
+	color: #0c4a6e;
+	font-family: var(--font-heading);
+	font-size: 9pt;
+	margin-bottom: 0.04in;
+}
+
+.sidebar-warning {
+	background: #1e1215;
+	color: #fecdd3;
+	border-left: 4pt solid var(--ra-crimson);
+	padding: 0.1in 0.12in;
+	margin: 0.1in 0;
+	border-radius: 0 2pt 2pt 0;
+	font-size: 8.8pt;
+	break-inside: avoid;
+}
+
+.sidebar-warning > h4:first-child,
+.sidebar-warning > h5:first-child {
+	color: #fda4af;
+	font-family: var(--font-heading);
+	font-size: 9pt;
+	margin-bottom: 0.04in;
+}
+
+.sidebar-warning p { color: #fecdd3; }
+
+.flavor-box {
+	position: relative;
+	font-style: italic;
+	font-family: var(--font-body);
+	background: rgba(255, 255, 255, 0.18);
+	padding: 0.1in 0.14in 0.1in 0.22in;
+	border-left: 2pt solid var(--ra-paper-line);
+	margin: 0.09in 0;
+	color: #3a2a1b;
+	font-size: 9pt;
+	break-inside: avoid;
+}
+
+.flavor-box::before {
+	content: "\201C";
+	position: absolute;
+	left: 0.04in;
+	top: 0.04in;
+	font-family: var(--font-heading);
+	font-size: 24pt;
+	line-height: 1;
+	color: var(--ra-paper-line);
+}
+
+.flavor-box p:last-child { margin-bottom: 0; }
+
+.read-aloud {
+	background: #e8eef4;
+	border-left: 3pt solid #64748b;
+	padding: 0.11in 0.15in;
+	margin: 0.09in 0;
+	font-style: italic;
+	font-family: var(--font-body);
+	font-size: 9pt;
+	color: #1e293b;
+	break-inside: avoid;
+}
+
+.read-aloud p:last-child { margin-bottom: 0; }
+
+/* --- Classified Entries ----------------------------------- */
+.classified {
+	background: #111827;
+	color: #e5f2ff;
+	border: 0.8pt solid #334155;
+	border-left: 4pt solid var(--ra-crimson);
+	padding: 0.11in;
+	margin: 0.11in 0;
+	break-inside: avoid;
+}
+
+.classified h3,
+.classified h4 {
+	color: #ffffff;
+}
+
+.classified .field-grid dt {
+	color: #fca5a5;
+}
+
+.classified .tag {
+	background: rgba(216, 75, 99, 0.14);
+	border-color: rgba(216, 75, 99, 0.5);
+	color: #ffd7dd;
+}
+
+/* --- Figures & Art ---------------------------------------- */
+.figure-card {
+	border: 0.5pt solid var(--ra-paper-line);
+	background: rgba(255, 255, 255, 0.38);
+	padding: 0.05in;
+	margin: 0.07in 0 0.11in;
+	break-inside: avoid;
+}
+
+.figure-card img,
+.entry-figure img {
+	width: 100%;
+	height: auto;
+	display: block;
+}
+
+.entry-figure {
+	float: right;
+	width: 1.25in;
+	margin: 0 0 0.055in 0.08in;
+	border: 0.5pt solid #bdc8d8;
+	background: #f8fbff;
+	padding: 0.025in;
+	break-inside: avoid;
+}
+
+/* --- Sourcebook Guide ------------------------------------- */
+.sourcebook-guide {
+	column-span: all;
+	border-top: 1pt solid #7a6047;
+	border-bottom: 0.5pt solid var(--ra-paper-line);
+	background: rgba(255, 255, 255, 0.3);
+	padding: 0.09in 0.11in;
+	margin: 0 0 0.11in;
+}
+
+.sourcebook-guide h3 {
+	font-family: var(--font-heading);
+	font-size: 11pt;
+	font-weight: 700;
+	margin-bottom: 0.035in;
+}
+
+/* --- Caption --------------------------------------------- */
+.caption {
+	font-family: var(--font-heading);
+	font-size: 6.5pt;
+	color: var(--ra-paper-muted);
+	margin-top: 0.032in;
+	text-transform: uppercase;
+	letter-spacing: 0.06em;
+}
+
+/* --- Index ----------------------------------------------- */
+.index-table {
+	column-count: 3;
+	column-gap: 0.2in;
+	font-size: 8pt;
+}
+
+.index-table p {
+	break-inside: avoid;
+	margin-bottom: 0.032in;
+}
+
+/* --- Utility --------------------------------------------- */
+.page-warning {
+	border: 1pt solid #d84b63;
+	background: #fff1f2;
+	color: #881337;
+	padding: 0.11in;
+	margin: 0.09in 0;
+	break-inside: avoid;
+}
+
+.small  { font-size: 7.8pt; }
+.muted  { color: var(--ra-paper-muted); }
+.no-print { display: none; }
+
+/* --- Section Block ---------------------------------------- */
+.section-block {
+	margin-bottom: 0.08in;
+}
+
+/* --- Rules Tables ----------------------------------------- */
+.rules-table {
+	width: 100%;
+	font-size: 8.35pt;
+	break-inside: auto;
+}
+
+.rules-table th {
+	background: #2a1a0e;
+	color: #f5f0e5;
+}
+
+/* --- Print Overrides (Vivliostyle / @media print) --------- */
+@page {
+	size: Letter;
+	margin: 0.58in 0.56in 0.72in;
+	@top-left {
+		content: "Rift Ascendant";
+		font-family: 'Outfit', 'Segoe UI', sans-serif;
+		font-size: 6.8pt;
+		color: #7a6047;
+		letter-spacing: 0.06em;
+		text-transform: uppercase;
+	}
+	@top-right {
+		content: string(chapter-title);
+		font-family: 'Outfit', 'Segoe UI', sans-serif;
+		font-size: 6.8pt;
+		color: #7a6047;
+	}
+	@bottom-center {
+		content: none;
+	}
+}
+
+@page :first {
+	margin: 0;
+	@top-left   { content: none; }
+	@top-right  { content: none; }
+	@bottom-center { content: none; }
+}
+
+@media print {
+	* {
+		-webkit-print-color-adjust: exact;
+		print-color-adjust: exact;
+	}
+
+	body {
+		font-family: 'Source Serif 4', 'Georgia', serif;
+		font-size: 9.5pt;
+		line-height: 1.46;
+		color: #1a1410;
+		background: #f5f0e5;
+	}
+
+	h1, h2, h3, h4 {
+		font-family: 'Outfit', 'Segoe UI', sans-serif;
+		letter-spacing: -0.01em;
+		color: #1a0f05;
+	}
+
+	.chapter > .chapter-opener h1 {
+		string-set: chapter-title content(text);
+	}
+
+	/* Cover */
+	.cover {
+		height: 11in;
+		min-height: 11in;
+		border: 0;
+	}
+
+	/* Chapter openers */
+	.chapter-opener {
+		min-height: 3in;
+		border: 0;
+		border-radius: 0;
+		background-size: cover;
+		background-position: center;
+		color: #f8fbff;
+	}
+
+	/* Callouts and cards */
+	.front-card,
+	.callout {
+		background: #eef7fb;
+		border: 0.6pt solid #8bd7e6;
+		border-left: 4pt solid #0891b2;
+	}
+
+	.sidebar-note {
+		background: #f5f0e8;
+		border-left: 3pt solid #8b6f51;
+	}
+
+	.sidebar-tip {
+		background: #ecfeff;
+		border-left: 3pt solid #74f2ff;
+	}
+
+	/* Tables */
+	table, .rules-table {
+		break-inside: auto;
+		page-break-inside: auto;
+		font-size: 8.35pt;
+	}
+
+	tr, th, td { break-inside: avoid; page-break-inside: avoid; }
+
+	th {
+		background: #2a1a0e;
+		color: #f5f0e5;
+		border-color: #4a3020;
+	}
+
+	td { background: rgba(255, 255, 255, 0.55); }
+
+	/* Entries */
+	.entry, .compact-entry, .statblock {
+		border-radius: 2pt;
+	}
+
+	.entry { padding: 0.09in 0.035in 0.1in; margin-bottom: 0.09in; }
+	.entry h3 { font-size: 12pt; }
+	.compact-entry { padding: 0.06in 0.042in 0.065in; margin-bottom: 0.075in; }
+	.compact-entry h3 { font-size: 10pt; line-height: 1.12; }
+	.compact-line { font-size: 7.8pt; line-height: 1.32; }
+
+	/* Stat blocks */
+	.statblock {
+		break-inside: auto;
+		page-break-inside: auto;
+	}
+
+	.statblock-header { background: linear-gradient(135deg, #1e0e04, #2d1a08); }
+	.statblock-header h3 { color: #ffffff; font-size: 14pt; }
+
+	/* Art figures */
+	.entry-figure { width: 1.25in; }
+
+	/* Tags */
+	.meta span, .tag {
+		background: #0f253b;
+		color: #ecfeff;
+		border-color: #27667d;
+		font-size: 6.8pt;
+		letter-spacing: 0.04em;
+	}
+
+	/* Index */
+	.index-table { font-size: 8pt; column-gap: 0.2in; }
+
+	/* Utility */
+	.small { font-size: 7.8pt; }
+
+	p, li { orphans: 3; widows: 3; }
+}
+</style>
+	<style>
+@page {
+	size: Letter;
+	margin: 0.58in 0.56in 0.72in;
+	@top-left {
+		content: "Rift Ascendant";
+		font-family: "Outfit", "Segoe UI", sans-serif;
+		font-size: 6.8pt;
+		color: #7a6047;
+		text-transform: uppercase;
+		letter-spacing: 0.06em;
+	}
+	@top-right {
+		content: string(chapter-title);
+		font-family: "Outfit", "Segoe UI", sans-serif;
+		font-size: 6.8pt;
+		color: #7a6047;
+	}
+	@bottom-center {
+		content: none;
+	}
+}
+@page :first {
+	margin: 0;
+	@top-left { content: none; }
+	@top-right { content: none; }
+	@bottom-center { content: none; }
+}
+@media print {
+	* {
+		-webkit-print-color-adjust: exact;
+		print-color-adjust: exact;
+	}
+	body {
+		font-family: "Source Serif 4", "Georgia", serif;
+		font-size: 9.5pt;
+		line-height: 1.46;
+		color: #1a1410;
+		background: #f5f0e5;
+	}
+	h1, h2, h3, h4 {
+		font-family: "Outfit", "Segoe UI", sans-serif;
+		letter-spacing: -0.01em;
+		color: #1a0f05;
+	}
+	.chapter > .chapter-opener h1 {
+		string-set: chapter-title content(text);
+	}
+	.cover {
+		height: 11in;
+		min-height: 11in;
+		border: 0;
+		background:
+			linear-gradient(155deg, rgba(4, 6, 15, 0.97) 0%, rgba(10, 15, 30, 0.82) 60%, rgba(6, 10, 22, 0.92) 100%),
+			var(--cover-image, none),
+			radial-gradient(ellipse at 15% 12%, rgba(116, 242, 255, 0.28) 0%, transparent 40%),
+			radial-gradient(ellipse at 85% 20%, rgba(167, 139, 250, 0.26) 0%, transparent 38%),
+			#070812;
+	}
+	.cover h1 {
+		font-size: 36pt;
+		line-height: 0.96;
+		letter-spacing: -0.02em;
+		font-weight: 800;
+	}
+	.cover-tile {
+		border-color: rgba(116, 242, 255, 0.3);
+		background: rgba(8, 14, 30, 0.78);
+	}
+	.front-card,
+	.callout {
+		background: rgba(255, 255, 255, 0.42);
+		border: 0;
+		border-left: 4pt solid #74f2ff;
+	}
+	.chapter-opener {
+		border: 0;
+		background:
+			linear-gradient(155deg, rgba(5, 7, 18, 0.97), rgba(14, 20, 40, 0.84)),
+			var(--chapter-image, none),
+			#070812;
+		background-size: cover;
+		background-position: center;
+		color: #f8fbff;
+		min-height: 3in;
+	}
+	.chapter-opener h1,
+	.chapter-opener p,
+	.chapter-opener .eyebrow {
+		color: #f8fbff;
+	}
+	.section-intro {
+		border-top: 2pt solid #7a6047;
+		border-bottom: 0.5pt solid #cdbf9e;
+		padding: 0.11in 0.14in;
+		margin-bottom: 0.13in;
+	}
+	.section-intro h2 {
+		font-size: 18pt;
+		color: #1a0f05;
+	}
+	.prose-columns,
+	.catalog-grid,
+	.compact-catalog {
+		column-gap: 0.3in;
+	}
+	.sourcebook-guide {
+		border-top: 1pt solid #7a6047;
+		border-bottom: 0.5pt solid #cdbf9e;
+		background: rgba(255, 255, 255, 0.3);
+		padding: 0.09in 0.11in;
+		margin-bottom: 0.11in;
+	}
+	.sourcebook-guide h3 {
+		font-size: 11pt;
+		color: #1a0f05;
+		margin-bottom: 0.035in;
+	}
+	table,
+	.rules-table {
+		break-inside: auto;
+		page-break-inside: auto;
+		font-size: 8.35pt;
+	}
+	tr,
+	th,
+	td {
+		break-inside: avoid;
+		page-break-inside: avoid;
+	}
+	th {
+		background: #2a1a0e;
+		color: #f5f0e5;
+		border-color: #4a3020;
+	}
+	td {
+		background: rgba(255, 255, 255, 0.55);
+	}
+	.entry,
+	.compact-entry,
+	.statblock {
+		border-radius: 2pt;
+		box-shadow: none;
+	}
+	.entry {
+		padding: 0.09in 0.035in 0.1in;
+		margin-bottom: 0.09in;
+	}
+	.entry h3 {
+		font-size: 12pt;
+		font-family: "Outfit", sans-serif;
+	}
+	.compact-entry {
+		padding: 0.06in 0.042in 0.065in;
+		margin-bottom: 0.075in;
+	}
+	.compact-entry h3 {
+		font-size: 10pt;
+		line-height: 1.12;
+		font-family: "Outfit", sans-serif;
+	}
+	.compact-line {
+		font-size: 7.8pt;
+		line-height: 1.32;
+	}
+	.statblock {
+		break-inside: auto;
+		page-break-inside: auto;
+	}
+	.statblock-header h3 {
+		font-size: 14pt;
+		font-family: "Outfit", sans-serif;
+	}
+	.field-grid dt {
+		font-size: 7.2pt;
+		font-family: "Outfit", sans-serif;
+	}
+	.nested-grid {
+		display: block;
+		margin: 0.02in 0;
+	}
+	.nested-grid dt {
+		display: inline;
+		font-size: 7pt;
+		letter-spacing: 0.03em;
+		font-family: "Outfit", sans-serif;
+	}
+	.nested-grid dt::after {
+		content: ": ";
+	}
+	.nested-grid dd {
+		display: inline;
+	}
+	.nested-grid dd::after {
+		content: "";
+		display: block;
+		margin-bottom: 0.022in;
+	}
+	.entry-figure {
+		width: 1.25in;
+	}
+	.meta span,
+	.tag {
+		background: #0f253b;
+		color: #ecfeff;
+		border-color: #27667d;
+		font-size: 6.8pt;
+		letter-spacing: 0.04em;
+		font-family: "Outfit", sans-serif;
+	}
+	.index-table {
+		font-size: 8pt;
+		column-gap: 0.2in;
+	}
+	.small {
+		font-size: 7.8pt;
+	}
+	p, li {
+		orphans: 3;
+		widows: 3;
+	}
+	.split-notice {
+		border: 1pt solid #1a0f05;
+		background: #ece7da;
+		padding: 0.15in;
+		margin: 0.15in 0;
+		text-align: center;
+		page-break-inside: avoid;
+	}
+	.split-notice h2 {
+		margin: 0 0 0.05in;
+		font-size: 14pt;
+		color: #5a1c15;
+	}
+	.split-notice p {
+		margin: 0;
+		font-size: 9.5pt;
+		font-style: italic;
+	}
+	.rules-table p {
+		margin: 0;
+		padding: 0 0 0.04in 0;
+		line-height: 1.25;
+	}
+}
+</style>
+</head>
+<body>
+	<section class="chapter" id="jobs">
+		<div class="chapter-opener" style="--chapter-image: url('file:///C:/Users/jjcal/Documents/solo-compendium/books/shared/assets/ascendant-jobs-ce24b2fcb5.jpg')">
+			<div class="eyebrow">Part 2: Creating An Ascendant / Awakening Classifications / Chapter 3</div>
+			<h1>Jobs</h1>
+			<p>Your Job defines the shape of your Awakening  -  how you fight, what you channel, and what the Bureau classifies you as.</p>
+		</div>
+		<section class="section-block">
+		<div class="section-intro">
+			<h2>Jobs</h2>
+			<p>When the Rift first touches you, something inside rewrites itself. The Bureau calls these patterns Jobs  -  broad classifications for how Ascendant power expresses.</p>
+		</div>
+		<div class="catalog-grid"><article class="entry entry--uncommon" id="job-assassin">
+		<figure class="entry-figure"><img src="file:///C:/Users/jjcal/Documents/solo-compendium/public/generated/compendium/jobs/assassin.webp" alt="Assassin"/></figure>
+		<h3>Assassin</h3>
+		<div class="meta"><span class="tag">Rank: B</span><span class="tag">Type: Job</span></div>
+		<div class="entry-description"><p>The Assassin is an Awakened identity that specializes in the Dimensional Phase Operative and Umbral Walker mandate. As an Ascendant of this lineage, their consciousness partially exists between realities, granting them the ability to phase through the physical world and strike from impossible angles. In the modern era, the Assassin is the supreme specialist in surgical rift-clearing and high-value target extraction within high-rank gates.</p></div>
+		<dl class="field-grid"><dt>Primary Abilities</dt><dd><ul class="compact-list"><li>Agility</li><li>Intelligence</li></ul></dd><dt>Saving Throws</dt><dd><ul class="compact-list"><li>Agility</li><li>Intelligence</li></ul></dd><dt>Tool Proficiencies</dt><dd><ul class="compact-list"><li>Thieves' tools</li></ul></dd><dt>Abilities</dt><dd><ul class="compact-list"><li>Specialist Training</li><li>Vulnerability Analysis</li><li>Phase Shift</li><li>Reflex Burst</li><li>Dimensional Slip</li><li>Umbral Discipline</li></ul></dd></dl>
+	</article><article class="entry" id="job-berserker">
+		<figure class="entry-figure"><img src="file:///C:/Users/jjcal/Documents/solo-compendium/public/generated/compendium/jobs/berserker.webp" alt="Berserker"/></figure>
+		<h3>Berserker</h3>
+		<div class="meta"><span class="tag">Rank: C</span><span class="tag">Type: Job</span></div>
+		<div class="entry-description"><p>The Berserker is an Awakened identity that specializes in the Overload Tank and Unstable Resonance mandate. As an Ascendant of this lineage, their core is defined by an unstable connection to the Absolute, flooding their physiology with raw energy under stress. In the modern world, Berserkers are walking spectacles of power - visible mana veins flare across their skin as their muscles swell with crystallized essence. The Ascendant Bureau classifies them as high-risk but indispensable assets who specialized in the controlled demolition of high-rank gates.</p></div>
+		<dl class="field-grid"><dt>Primary Abilities</dt><dd><ul class="compact-list"><li>Strength</li><li>Vitality</li></ul></dd><dt>Saving Throws</dt><dd><ul class="compact-list"><li>Strength</li><li>Vitality</li></ul></dd><dt>Abilities</dt><dd><ul class="compact-list"><li>Overload State</li><li>Mana-Hardened Body</li><li>Damage Conversion</li><li>Cascading Strikes</li><li>Mana Shockwave</li><li>Overload Path</li></ul></dd></dl>
+	</article><article class="entry entry--uncommon" id="job-contractor">
+		<figure class="entry-figure"><img src="file:///C:/Users/jjcal/Documents/solo-compendium/public/generated/compendium/jobs/Contractor-generated-kth97v.webp" alt="Contractor"/></figure>
+		<h3>Contractor</h3>
+		<div class="meta"><span class="tag">Rank: B</span><span class="tag">Type: Job</span></div>
+		<div class="entry-description"><p>The Contractor is an Awakened identity that specializes in the Rift-Pact Vessel mandate. As an Ascendant of this lineage, their Awakening was not a gift from the Absolute  -  it was a bargain with an extraplanar entity whose sigil is literally branded onto their vessel. They draw power through an aetheric umbilical to their patron, trading autonomy for aetheric bandwidth that vastly exceeds their rank. In the modern world, Contractors are both the Bureau's most flexible pact-specialists and its most-watched liability; every pact is registered with Extraplanar Affairs, and every Contractor is subject to monthly resonance audits.</p></div>
+		<dl class="field-grid"><dt>Primary Abilities</dt><dd><ul class="compact-list"><li>Presence</li><li>Vitality</li></ul></dd><dt>Saving Throws</dt><dd><ul class="compact-list"><li>Sense</li><li>Presence</li></ul></dd><dt>Abilities</dt><dd><ul class="compact-list"><li>Pact Bargain</li><li>Pact Casting</li><li>Invocations</li><li>Pact Boon</li><li>Mystic Arcanum</li><li>Patron's Shield</li></ul></dd></dl>
+	</article><article class="entry" id="job-destroyer">
+		<figure class="entry-figure"><img src="file:///C:/Users/jjcal/Documents/solo-compendium/public/generated/compendium/jobs/warrior.webp" alt="Destroyer"/></figure>
+		<h3>Destroyer</h3>
+		<div class="meta"><span class="tag">Rank: C</span><span class="tag">Type: Job</span></div>
+		<div class="entry-description"><p>The Destroyer is an Awakened identity that specializes in the Living Siege Engine mandate. As an Ascendant of this lineage, their physiology is fundamentally restructured with crystallized mana, granting them bone density and combat instincts that surpass the human limit. They possess an innate Aetheric-Sight that perceives the structural weaknesses of enemies and gates alike. In the modern world, the Destroyer is the premier frontline asset of the Ascendant Bureau, their presence stabilizing the absolute order during gate eruptions.</p></div>
+		<dl class="field-grid"><dt>Primary Abilities</dt><dd><ul class="compact-list"><li>Strength</li><li>Vitality</li></ul></dd><dt>Saving Throws</dt><dd><ul class="compact-list"><li>Strength</li><li>Vitality</li></ul></dd><dt>Abilities</dt><dd><ul class="compact-list"><li>Aetheric Mark</li><li>Essence Harvest</li><li>Unfettered Release</li><li>Vulnerability Resonance</li><li>Aetheric Realignment</li><li>Destruction Path</li></ul></dd></dl>
+	</article><article class="entry entry--uncommon" id="job-esper">
+		<figure class="entry-figure"><img src="file:///C:/Users/jjcal/Documents/solo-compendium/public/generated/compendium/jobs/tank.webp" alt="Esper"/></figure>
+		<h3>Esper</h3>
+		<div class="meta"><span class="tag">Rank: B</span><span class="tag">Type: Job</span></div>
+		<div class="entry-description"><p>The Esper is an Awakened identity that specializes in the Reality Distorter and Unfiltered Vessel mandate. As the SA version of a Esper, their connection to the Aetheric-Weave is raw and volatile - mana bleeds from their body like radiation, reshaping reality through sheer willpower. In modern society, Espers are celebrities and pariahs in equal measure; their aetheric flares reshape the tapestry of existence with absolute authority.</p></div>
+		<dl class="field-grid"><dt>Primary Abilities</dt><dd><ul class="compact-list"><li>Presence</li><li>Vitality</li></ul></dd><dt>Saving Throws</dt><dd><ul class="compact-list"><li>Vitality</li><li>Presence</li></ul></dd><dt>Abilities</dt><dd><ul class="compact-list"><li>Innate Channeling</li><li>Anomaly Source</li><li>Flux Pool</li><li>Reality Sculpting</li><li>Mana Feedback Loop</li></ul></dd></dl>
+	</article><article class="entry entry--uncommon" id="job-herald">
+		<figure class="entry-figure"><img src="file:///C:/Users/jjcal/Documents/solo-compendium/public/generated/compendium/jobs/healer.webp" alt="Herald"/></figure>
+		<h3>Herald</h3>
+		<div class="meta"><span class="tag">Rank: B</span><span class="tag">Type: Job</span></div>
+		<div class="entry-description"><p>The Herald is an Awakened identity that specializes in the Absolute Transmission mandate. As an Ascendant of this lineage, their nervous system was restructured at Awakening into a living antenna  -  a receiver tuned to the Absolute's broadcast, translating sanctified resonance into restorative, radiant, and reality-correcting mantras. In the modern world, Heralds are the Ascendant Bureau's field chaplains and raid medics; their very presence re-anchors an ally's vitals, and their mantras can mend shattered bones or incinerate unholy anomalies with equal authority. They are the bridge between civilians and the Absolute's will.</p></div>
+		<dl class="field-grid"><dt>Primary Abilities</dt><dd><ul class="compact-list"><li>Presence</li><li>Sense</li></ul></dd><dt>Saving Throws</dt><dd><ul class="compact-list"><li>Sense</li><li>Presence</li></ul></dd><dt>Abilities</dt><dd><ul class="compact-list"><li>Absolute Channeling</li><li>Receive Signal</li><li>Channel Absolute</li><li>Mandate</li><li>Broadcast Anomaly</li><li>Absolute Intervention</li></ul></dd></dl>
+	</article><article class="entry entry--rare" id="job-holy-knight">
+		<figure class="entry-figure"><img src="file:///C:/Users/jjcal/Documents/solo-compendium/public/generated/compendium/characters/character-character-holy-knight-14ln86.webp" alt="Holy Knight"/></figure>
+		<h3>Holy Knight</h3>
+		<div class="meta"><span class="tag">Rank: A</span><span class="tag">Type: Job</span></div>
+		<div class="entry-description"><p>The Holy Knight is an Awakened identity that specializes in the Oath-Bound Enforcer and Absolute Covenant mandate. As an Ascendant of this lineage, they serve as the ultimate guardians of modern society, their power fueled by a binding oath to the Absolute itself - a literal covenant inscribed into their mana pathways. They work as guild leaders, Ascendant Bureau enforcement officers, and public defenders against gate threats. The oath grants devastating combat power, but break its tenets and the power is revoked painfully. They channel radiant Absolute energy through weapons, heal allies, and project protective auras.</p></div>
+		<dl class="field-grid"><dt>Primary Abilities</dt><dd><ul class="compact-list"><li>Strength</li><li>Presence</li></ul></dd><dt>Saving Throws</dt><dd><ul class="compact-list"><li>Sense</li><li>Presence</li></ul></dd><dt>Abilities</dt><dd><ul class="compact-list"><li>Oath Sense</li><li>Covenant's Mercy</li><li>Covenant Strike</li><li>Sworn Oath</li><li>Oath Ward</li><li>Covenant Assault</li></ul></dd></dl>
+	</article><article class="entry entry--uncommon" id="job-idol">
+		<figure class="entry-figure"><img src="file:///C:/Users/jjcal/Documents/solo-compendium/public/generated/compendium/jobs/Idol-generated-3qxkaa.webp" alt="Idol"/></figure>
+		<h3>Idol</h3>
+		<div class="meta"><span class="tag">Rank: B</span><span class="tag">Type: Job</span></div>
+		<div class="entry-description"><p>The Idol is an Awakened identity that specializes in the Frequency Manipulator and Resonance Caster mandate. As an Ascendant of this lineage, their power is attuned to the Absolute's harmonic frequencies, allowing them to broadcast buffs and hype with absolute presence. In modern society, Idols are the most publicly visible ascendants  -  they have millions of followers, record albums infused with mana, headline gate-clearance livestreams, and their Hype abilities make them the ultimate party buffers.</p></div>
+		<dl class="field-grid"><dt>Primary Abilities</dt><dd><ul class="compact-list"><li>Presence</li><li>Agility</li></ul></dd><dt>Saving Throws</dt><dd><ul class="compact-list"><li>Agility</li><li>Presence</li></ul></dd><dt>Tool Proficiencies</dt><dd><ul class="compact-list"><li>Three musical instruments</li></ul></dd><dt>Abilities</dt><dd><ul class="compact-list"><li>Frequency Casting</li><li>Hype</li><li>Absolute Versatility</li><li>Frequency Restoration</li><li>Resonance Path</li><li>Cross-Frequency Access</li></ul></dd></dl>
+	</article><article class="entry" id="job-mage">
+		<figure class="entry-figure"><img src="file:///C:/Users/jjcal/Documents/solo-compendium/public/generated/compendium/jobs/mage.webp" alt="Mage"/></figure>
+		<h3>Mage</h3>
+		<div class="meta"><span class="tag">Rank: C</span><span class="tag">Type: Job</span></div>
+		<div class="entry-description"><p>The Mage is an Awakened identity that specializes in the Arcane Custodian and Aetheric Scholar mandate. As an Ascendant of this lineage, their Awakening provides a direct attunement to the Aetheric-Weave - the fundamental tapestry of absolute magical phenomena. In the modern world, Mages treat magic with the analytical rigor of higher mathematics, optimizing their rites with a precision that defines the modern era of aetheric research.</p></div>
+		<dl class="field-grid"><dt>Primary Abilities</dt><dd><ul class="compact-list"><li>Intelligence</li><li>Sense</li></ul></dd><dt>Saving Throws</dt><dd><ul class="compact-list"><li>Intelligence</li><li>Sense</li></ul></dd><dt>Abilities</dt><dd><ul class="compact-list"><li>Lattice Compilation</li><li>Spell Deconstruction</li><li>Spell Layering</li><li>Permanent Cache</li><li>Specialization Rite</li></ul></dd></dl>
+	</article><article class="entry entry--rare" id="job-revenant">
+		<figure class="entry-figure"><img src="file:///C:/Users/jjcal/Documents/solo-compendium/public/generated/compendium/jobs/Revenant-generated-106m11v.webp" alt="Revenant"/></figure>
+		<h3>Revenant</h3>
+		<div class="meta"><span class="tag">Rank: A</span><span class="tag">Type: Job</span></div>
+		<div class="entry-description"><p>The Revenant is an Awakened identity bound to the End-Cycle mandate of Marthos, the Dragon-King of Void and Harbinger of Annihilation. As an Ascendant of this lineage, their body no longer runs on life - it runs on death. Sustained by the Void-Breath and by Remnants (fragments of severed life-essence reclaimed at the instant a creature dies), the Revenant is an unarmored drain tank that holds the line by feeding on the dying around it. They wear no armor and need none; entropy itself sheathes them, and the wounds that would fell others only deepen the harvest. The Ascendant Bureau deploys Revenants as immovable anchors at the worst gate breaks - the figure who walks into annihilation and walks back out, fuller than before.</p></div>
+		<dl class="field-grid"><dt>Primary Abilities</dt><dd><ul class="compact-list"><li>Intelligence</li><li>Vitality</li></ul></dd><dt>Saving Throws</dt><dd><ul class="compact-list"><li>Intelligence</li><li>Vitality</li></ul></dd><dt>Abilities</dt><dd><ul class="compact-list"><li>Gravebound Flesh</li><li>Remnant Harvest</li><li>Reaper's Ledger</li><li>Mortal Harvest</li><li>Zenith Mandate</li></ul></dd></dl>
+	</article><article class="entry entry--uncommon" id="job-stalker">
+		<figure class="entry-figure"><img src="file:///C:/Users/jjcal/Documents/solo-compendium/public/generated/compendium/jobs/Stalker-generated-1kbwpn2.webp" alt="Stalker"/></figure>
+		<h3>Stalker</h3>
+		<div class="meta"><span class="tag">Rank: B</span><span class="tag">Type: Job</span></div>
+		<div class="entry-description"><p>The Stalker is an Awakened identity that specializes in the Dimensional Predator mandate. As an Ascendant of this lineage, their body was restructured for pursuit  -  their leg musculature, lung capacity, and cardiovascular system are optimized for sustained high-speed chase, and their aetheric sense is permanently tuned to dimensional anomalies. In the modern world, Stalkers are the Bureau's preferred bounty and extraction specialists; they work alone, they always catch their mark, and when their name appears on a contract the global bounty network goes quiet.</p></div>
+		<dl class="field-grid"><dt>Primary Abilities</dt><dd><ul class="compact-list"><li>Agility</li><li>Sense</li></ul></dd><dt>Saving Throws</dt><dd><ul class="compact-list"><li>Strength</li><li>Agility</li></ul></dd><dt>Abilities</dt><dd><ul class="compact-list"><li>Prey Lock</li><li>Gate Navigator</li><li>Primal Tracking</li><li>Ambush Tactics</li><li>Pursuit Strike</li><li>Pursuit Path</li></ul></dd></dl>
+	</article><article class="entry entry--rare" id="job-striker">
+		<figure class="entry-figure"><img src="file:///C:/Users/jjcal/Documents/solo-compendium/public/generated/compendium/jobs/Striker-generated-sxicfg.webp" alt="Striker"/></figure>
+		<h3>Striker</h3>
+		<div class="meta"><span class="tag">Rank: A</span><span class="tag">Type: Job</span></div>
+		<div class="entry-description"><p>The Striker is an Awakened identity that specializes in the Neural Overdrive and Impulse Channeling mandate. As an Ascendant of this lineage, their entire nervous system was rewired into a mana-conductive network, allowing them to channel kinetic force through their limbs like living railguns. In modern society, Strikers are the premier rapid-response assets for urban gate eruptions, utilizing their impossible speed to neutralize threats with absolute precision.</p></div>
+		<dl class="field-grid"><dt>Primary Abilities</dt><dd><ul class="compact-list"><li>Agility</li><li>Sense</li></ul></dd><dt>Saving Throws</dt><dd><ul class="compact-list"><li>Strength</li><li>Agility</li></ul></dd><dt>Abilities</dt><dd><ul class="compact-list"><li>Kinetic Barrier</li><li>Impulse Combat</li><li>Impulse Gates</li><li>Velocity Chain</li><li>Combat Doctrine</li><li>Nerve Strike</li></ul></dd></dl>
+	</article><article class="entry entry--uncommon" id="job-summoner">
+		<figure class="entry-figure"><img src="file:///C:/Users/jjcal/Documents/solo-compendium/public/generated/compendium/jobs/summoner.webp" alt="Summoner"/></figure>
+		<h3>Summoner</h3>
+		<div class="meta"><span class="tag">Rank: B</span><span class="tag">Type: Job</span></div>
+		<div class="entry-description"><p>The Summoner is an Awakened identity granted the mandate of the Hive-Mother. As an Ascendant of this lineage, their mana is harmonized with the extraterrestrial ecosystems that bleed through the gates. They do not merely fight; they command the very flora and fauna of the dungeon dimensions. In modern society, Summoners are the premier ecologists of the Ascendant Bureau, serving as the bridge between human civilization and the rapidly evolving lifeforms of the Gate-Era. They shapeshift into gate creatures, command gate environments, and are the only ascendants who can predict boss spawns by reading resonance markers.</p></div>
+		<dl class="field-grid"><dt>Primary Abilities</dt><dd><ul class="compact-list"><li>Sense</li><li>Intelligence</li></ul></dd><dt>Saving Throws</dt><dd><ul class="compact-list"><li>Intelligence</li><li>Sense</li></ul></dd><dt>Tool Proficiencies</dt><dd><ul class="compact-list"><li>Herbalism kit</li></ul></dd><dt>Abilities</dt><dd><ul class="compact-list"><li>Biome Attunement</li><li>Gate Ecology Sense</li><li>Entity Shift</li><li>Biome Command</li><li>Affinity Circle</li><li>Hybrid Casting</li></ul></dd></dl>
+	</article><article class="entry entry--uncommon" id="job-technomancer">
+		<figure class="entry-figure"><img src="file:///C:/Users/jjcal/Documents/solo-compendium/public/generated/compendium/jobs/artificer.webp" alt="Technomancer"/></figure>
+		<h3>Technomancer</h3>
+		<div class="meta"><span class="tag">Rank: B</span><span class="tag">Type: Job</span></div>
+		<div class="entry-description"><p>The Technomancer is an Awakened identity that specializes in the Absolute Architect and Aetheric Design mandate. As an Ascendant of this lineage, their Awakening provides architectural access to the Weave-Resonance layer - the fundamental interface between magic and physical matter. In the modern world, Technomancers are the most commercially valuable ascendants, turning Silicon Valley and Shenzhen into hubs of Aetheric innovation. They build devices that redefine reality: mana-powered drones, self-repairing gear, and resonance-enabled technologies.</p></div>
+		<dl class="field-grid"><dt>Primary Abilities</dt><dd><ul class="compact-list"><li>Intelligence</li><li>Vitality</li></ul></dd><dt>Saving Throws</dt><dd><ul class="compact-list"><li>Vitality</li><li>Intelligence</li></ul></dd><dt>Tool Proficiencies</dt><dd><ul class="compact-list"><li>Thieves' tools</li><li>Tinker's tools</li><li>One artisan's tool</li></ul></dd><dt>Abilities</dt><dd><ul class="compact-list"><li>Mandate Tinkering</li><li>Technical Casting</li><li>Absolute Infusion</li><li>Architectural Path</li><li>Absolute Assist</li><li>Spell Capacitor</li></ul></dd></dl>
+	</article></div>
+	</section>
+	</section>
+</body>
+</html>

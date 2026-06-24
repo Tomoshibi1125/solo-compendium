@@ -9,10 +9,10 @@ import {
 } from "lucide-react";
 import { useCallback, useState } from "react";
 import { AutoLinkText } from "@/components/compendium/AutoLinkText";
-import { ExpandableText } from "@/components/ui/ExpandableText";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { ExpandableText } from "@/components/ui/ExpandableText";
 import { Label } from "@/components/ui/label";
 import { SortableList } from "@/components/ui/SortableList";
 import {
@@ -344,7 +344,10 @@ export function FeaturesList({
 													)}
 												</div>
 												{feature.description && (
-													<ExpandableText className="text-xs text-muted-foreground" lines={3}>
+													<ExpandableText
+														className="text-xs text-muted-foreground"
+														lines={3}
+													>
 														<AutoLinkText text={feature.description} />
 													</ExpandableText>
 												)}

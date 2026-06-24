@@ -3,6 +3,7 @@ import { useMemo, useState } from "react";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { ExpandableText } from "@/components/ui/ExpandableText";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { useToast } from "@/hooks/use-toast";
@@ -221,9 +222,12 @@ export function TattoosList({
 												)}
 											</div>
 											{effectSummary && (
-												<p className="text-xs text-muted-foreground mt-2 line-clamp-2">
+												<ExpandableText
+													className="text-xs text-muted-foreground mt-2"
+													lines={2}
+												>
 													{formatRegentVernacular(effectSummary)}
-												</p>
+												</ExpandableText>
 											)}
 											{tattoo.source && (
 												<div className="text-[10px] text-muted-foreground mt-2">

@@ -124,3 +124,7 @@ __pycache__/
 
 public/nul
 dist-sourcebook/
+
+# Sourcebook payload - too large for GitHub (1.6GB+), managed separately
+sourcebook-payload/
+sourcebook-payload.zip

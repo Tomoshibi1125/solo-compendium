@@ -49,8 +49,13 @@ import {
 	normalizeCustomModifiers,
 	resolveAdvantageFromCustomModifiers,
 } from "@/lib/customModifiers";
-import { formatRollResult, rollDiceString } from "@/lib/diceRoller";
+import {
+	type DiceRoll,
+	formatRollResult,
+	rollDiceString,
+} from "@/lib/diceRoller";
 import { isLocalCharacterId } from "@/lib/guestStore";
+import { quickRoll } from "@/lib/rollEngine";
 import { isSourcebookAccessible } from "@/lib/sourcebookAccess";
 import { formatRegentVernacular } from "@/lib/vernacular";
 
@@ -559,6 +564,7 @@ export function useCharacterPageModel() {
 		rollType: string;
 		context: string;
 		modifier?: number;
+		advantage?: "advantage" | "disadvantage" | "normal";
 	}) => {
 		if (!character) return;
 		try {
@@ -566,20 +572,48 @@ export function useCharacterPageModel() {
 				typeof options.modifier === "number"
 					? `${options.formula}${options.modifier >= 0 ? "+" : ""}${options.modifier}`
 					: options.formula;
-			const roll = rollDiceString(finalFormula);
+			const advantage = options.advantage ?? "normal";
+			let roll: DiceRoll;
+			let dropped: number[] | undefined;
+			if (advantage !== "normal") {
+				const qr = quickRoll(finalFormula, advantage);
+				const rollSum = qr.rolls.reduce((sum, r) => sum + r, 0);
+				roll = {
+					dice: finalFormula,
+					rolls: qr.rolls,
+					modifier: qr.modifier,
+					total: rollSum,
+					result: qr.total,
+				};
+				dropped = qr.droppedRolls;
+			} else {
+				roll = rollDiceString(finalFormula);
+			}
+			const advTag =
+				advantage === "advantage"
+					? " [ADV]"
+					: advantage === "disadvantage"
+						? " [DIS]"
+						: "";
 			const scope = campaignId && isCampaignConnected ? "campaign" : "local";
-			const message = `${options.title}: ${formatRollResult(roll)}${scope === "campaign" ? " (shared)" : ""}`;
+			const message = `${options.title}: ${formatRollResult(roll)}${advTag}${scope === "campaign" ? " (shared)" : ""}`;
 			toast({ title: "Dice Roll", description: message });
+			const rollModifiers: Record<string, unknown> = {};
+			if (typeof options.modifier === "number")
+				rollModifiers.modifier = options.modifier;
+			if (advantage !== "normal") {
+				rollModifiers.advantage = advantage;
+				if (dropped) rollModifiers.dropped = dropped;
+			}
 			recordRoll.mutate({
 				dice_formula: roll.dice,
 				result: roll.result,
 				rolls: roll.rolls,
 				roll_type: options.rollType,
 				context: options.context,
-				modifiers:
-					typeof options.modifier === "number"
-						? { modifier: options.modifier }
-						: null,
+				modifiers: Object.keys(rollModifiers).length
+					? (rollModifiers as never)
+					: null,
 				campaign_id: characterCampaign?.id ?? null,
 				character_id: character.id,
 			});

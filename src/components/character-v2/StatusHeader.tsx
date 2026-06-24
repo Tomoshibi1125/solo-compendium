@@ -371,7 +371,7 @@ export function StatusHeader({
 								<Plus className="w-3 h-3 text-primary/40" />
 							</button>
 						</div>
-						<span className="text-[8px] text-primary/50 uppercase truncate">
+						<span className="text-[10px] text-primary/50 uppercase">
 							HIT_DICE
 						</span>
 						<span className="text-[9px] text-primary/40 italic">
@@ -390,7 +390,7 @@ export function StatusHeader({
 										{riftFavor.current}/{riftFavor.max}
 									</span>
 								</div>
-								<span className="text-[8px] text-amber-500/70 uppercase truncate mt-1 font-bold flex items-center gap-1">
+								<span className="text-[10px] text-amber-500/70 uppercase mt-1 font-bold flex items-center gap-1">
 									<Sparkles className="w-2 h-2" /> SPEND FAVOR
 								</span>
 								<span className="text-[9px] text-amber-500/50 mt-0.5">

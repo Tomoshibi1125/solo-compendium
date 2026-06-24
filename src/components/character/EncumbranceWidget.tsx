@@ -4,11 +4,7 @@ import {
 	CheckCircle2,
 	Weight,
 } from "lucide-react";
-import {
-	Tooltip,
-	TooltipContent,
-	TooltipTrigger,
-} from "@/components/ui/tooltip";
+import { InfoPopover } from "@/components/ui/InfoPopover";
 import { useCharacter } from "@/hooks/useCharacters";
 import { useEncumbranceSettings } from "@/hooks/useEncumbranceSettings";
 import { useEquipment } from "@/hooks/useEquipment";
@@ -99,29 +95,32 @@ export function EncumbranceWidget({
 
 	if (compact) {
 		return (
-			<Tooltip>
-				<TooltipTrigger asChild>
-					<div className="flex items-center gap-1.5 cursor-default select-none min-w-[130px]">
-						<StatusIcon className={cn("w-3.5 h-3.5 shrink-0", cfg.iconClass)} />
-						<WeightBar pct={progressPct} barClass={cfg.barClass} />
-						<span className="text-[10px] text-muted-foreground font-mono tabular-nums whitespace-nowrap">
-							{totalWeight.toFixed(1)}/{carryingCapacity} lb
-						</span>
-					</div>
-				</TooltipTrigger>
-				<TooltipContent side="bottom" className="text-xs space-y-1 max-w-xs">
-					<p className="font-semibold">{cfg.label}</p>
-					<p>
-						Carrying:{" "}
-						<span className="font-mono">{totalWeight.toFixed(1)} lb</span> of{" "}
-						<span className="font-mono">{carryingCapacity} lb</span>
-					</p>
-					{cfg.penalty && <p className="text-orange-400">{cfg.penalty}</p>}
-					<p className="text-muted-foreground">
-						Push/drag/lift: {enc.pushDragLift} lb
-					</p>
-				</TooltipContent>
-			</Tooltip>
+			<InfoPopover
+				side="bottom"
+				ariaLabel={`${cfg.label} carrying details`}
+				triggerClassName="flex items-center gap-1.5 select-none min-w-[130px]"
+				className="text-xs space-y-1 max-w-xs"
+				content={
+					<>
+						<p className="font-semibold">{cfg.label}</p>
+						<p>
+							Carrying:{" "}
+							<span className="font-mono">{totalWeight.toFixed(1)} lb</span> of{" "}
+							<span className="font-mono">{carryingCapacity} lb</span>
+						</p>
+						{cfg.penalty && <p className="text-orange-400">{cfg.penalty}</p>}
+						<p className="text-muted-foreground">
+							Push/drag/lift: {enc.pushDragLift} lb
+						</p>
+					</>
+				}
+			>
+				<StatusIcon className={cn("w-3.5 h-3.5 shrink-0", cfg.iconClass)} />
+				<WeightBar pct={progressPct} barClass={cfg.barClass} />
+				<span className="text-[10px] text-muted-foreground font-mono tabular-nums whitespace-nowrap">
+					{totalWeight.toFixed(1)}/{carryingCapacity} lb
+				</span>
+			</InfoPopover>
 		);
 	}
 

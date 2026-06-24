@@ -48,13 +48,14 @@ interface MissingAsset {
 	reason: string;
 }
 
-type BookSlug = "ascendant" | "warden" | "vaults" | "anomaly-manual";
+type BookSlug = "ascendant" | "warden" | "vaults" | "anomaly-manual" | "worldbook" | "awakened-arts";
 
 interface BookDefinition {
 	slug: BookSlug;
 	title: string;
 	subtitle: string;
 	classification: string;
+	tagline: string;
 	outputBase: string;
 	coverImage: string;
 	sections: BookSection[];
@@ -112,11 +113,13 @@ const toolCacheRoot = resolve("C:/tmp/ra_pdf_tools");
 const activeOutputBases = [
 	"Rift Ascendant - Ascendant Guide",
 	"Rift Ascendant - Warden Guide",
+	"Rift Ascendant - Rift Age Worldbook",
+	"Rift Ascendant - Awakened Arts",
 	"Rift Ascendant - Vaults of the Rift",
 	"Rift Ascendant - Anomaly Manual",
 ];
 const staleOutputBases = ["Rift Ascendant - Run Silent Campaign"];
-const activeBookSlugs: BookSlug[] = ["ascendant", "warden", "vaults", "anomaly-manual"];
+const activeBookSlugs: BookSlug[] = ["ascendant", "warden", "worldbook", "awakened-arts", "vaults", "anomaly-manual"];
 const vivliostyleFullBookByteLimit = 1_500_000;
 const heroImageMinDimension = 900;
 const heroImageTargetDimension = 2200;
@@ -149,23 +152,23 @@ type AssetRole = "hero" | "entry";
 const RA_CANDIDATE_ROOT = "/generated/rift-ascendant-candidates";
 const bookArt = {
 	ascendantCover: "/ui-art/rift-gate-hero.png",
-	ascendantWorld: "/ui-art/gate-portal-3d.webp",
+	ascendantWorld: `${RA_CANDIDATE_ROOT}/location-background-shadow-realm-exile-1nsqp5-v1-3031651259.png`,
 	ascendantJobs: `${RA_CANDIDATE_ROOT}/character-character-striker-fsk9mx-v1-1749336172.png`,
 	ascendantPaths: `${RA_CANDIDATE_ROOT}/character-character-holy-knight-p092r5-v1-1813314876.png`,
 	ascendantBackgrounds: `${RA_CANDIDATE_ROOT}/character-character-contractor-sfraea-v1-1258837483.png`,
 	ascendantAbilities: `${RA_CANDIDATE_ROOT}/weapon-weapon-bonded-conductor-jrhva8-v1-930401703.png`,
-	ascendantRunes: "/generated/magical/rune-circle.webp",
+	ascendantRunes: `${RA_CANDIDATE_ROOT}/item-item-sworn-sealed-inscription-1buuji-v1-1871931860.png`,
 	ascendantGear: `${RA_CANDIDATE_ROOT}/weapon-weapon-aetheric-compact-smg-pu1oxq-v1-4010952125.png`,
-	wardenCover: "/generated/maps/premade/arcane-schematic.webp",
+	wardenCover: `${RA_CANDIDATE_ROOT}/item-item-world-ender-reliquary-1jhkij-v1-3056116143.png`,
 	wardenProcedures: `${RA_CANDIDATE_ROOT}/character-character-city-guard-1q3i9c-v1-296750299.png`,
-	wardenRift: "/ui-art/gate-portal-3d.webp",
-	wardenOperations: "/ui-art/system-interface.webp",
+	wardenRift: `${RA_CANDIDATE_ROOT}/location-location-void-portal-1m1hic-v1-2589780808.png`,
+	wardenOperations: `${RA_CANDIDATE_ROOT}/item-item-bureau-approved-map-nz6kn7-v1-134383353.png`,
 	wardenWorld: `${RA_CANDIDATE_ROOT}/map-map-vermillion-outpost-1az275-v1-3746029370.png`,
 	wardenRegents: "/generated/compendium/regents/spatial-regent.webp",
 	wardenAnomaly: `${RA_CANDIDATE_ROOT}/anomaly-anomaly-blessed-demonic-overlord-i0to55-v1-3897619112.png`,
 	wardenRewards: "/generated/props/treasure-cache.webp",
 	vaultsCover: `${RA_CANDIDATE_ROOT}/weapon-weapon-bonded-conductor-jrhva8-v1-930401703.png`,
-	vaultsRunes: "/generated/magical/rune-circle.webp",
+	vaultsRunes: `${RA_CANDIDATE_ROOT}/item-item-riftbound-sigil-scroll-zr8wwc-v1-4225377924.png`,
 	vaultsItems: `${RA_CANDIDATE_ROOT}/weapon-weapon-aetheric-compact-smg-pu1oxq-v1-4010952125.png`,
 	vaultsRelics: `${RA_CANDIDATE_ROOT}/weapon-weapon-archon-s-club-2anxuq-v1-3171127125.png`,
 	anomalyCover: `${RA_CANDIDATE_ROOT}/anomaly-anomaly-blessed-void-wraith-5a2r5d-v1-2002275154.png`,
@@ -396,7 +399,43 @@ function mdToHtml(markdown: unknown): string {
 				block.push(lines[i].replace(/^\s*>\s?/, ""));
 				i++;
 			}
-			out.push(`<blockquote>${inlineMd(block.join(" "))}</blockquote>`);
+			let text = block.join(" ").trim();
+			let className = "callout";
+			let header = "";
+			const calloutMatch = /^\[!(NOTE|TIP|WARNING|FLAVOR|READ)\](.*)$/i.exec(text);
+			if (calloutMatch) {
+				const type = calloutMatch[1].toUpperCase();
+				let remainder = calloutMatch[2].trim();
+				const titleMatch = /^(.*?)\s*(?:[-:]|\*\*)\s*(.*)$/.exec(remainder);
+				if (titleMatch && type !== "FLAVOR" && type !== "READ") {
+					header = titleMatch[1];
+					text = titleMatch[2];
+					if (header.startsWith("**") && header.endsWith("**")) {
+					    header = header.slice(2, -2).trim();
+					} else if (header.startsWith("**")) {
+						header = header.slice(2).trim();
+					}
+				} else {
+					text = remainder;
+					if (type === "NOTE") header = "Note";
+					if (type === "TIP") header = "Tip";
+					if (type === "WARNING") header = "Warning";
+				}
+				
+				if (type === "NOTE") className = "sidebar-note";
+				else if (type === "TIP") className = "sidebar-tip";
+				else if (type === "WARNING") className = "sidebar-warning";
+				else if (type === "FLAVOR") className = "flavor-box";
+				else if (type === "READ") className = "read-aloud";
+			}
+			
+			if (header) {
+				out.push(`<div class="${className}"><h4>${inlineMd(header)}</h4><p>${inlineMd(text)}</p></div>`);
+			} else if (className !== "callout") {
+				out.push(`<div class="${className}"><p>${inlineMd(text)}</p></div>`);
+			} else {
+				out.push(`<blockquote>${inlineMd(text)}</blockquote>`);
+			}
 			continue;
 		}
 		if (/^\s*[-*]\s+/.test(line)) {
@@ -829,6 +868,15 @@ function curatedAnomalyFields(entry: EntryRecord, stats: EntryRecord): EntryReco
 	return fields;
 }
 
+function entryTierClass(entry: EntryRecord): string {
+	const rarity = cleanText(entry.rarity).toLowerCase();
+	const rank = cleanText(entry.rank).toLowerCase();
+	if (rarity === "legendary" || rarity === "artifact" || rank === "s") return "entry--legendary";
+	if (rarity === "rare" || rarity === "epic" || rank === "a") return "entry--rare";
+	if (rarity === "uncommon" || rank === "b") return "entry--uncommon";
+	return "";
+}
+
 function renderEntry(
 	entry: EntryRecord,
 	options: { folder?: string; context: string; classified?: boolean; includeArt?: boolean } = {
@@ -843,8 +891,11 @@ function renderEntry(
 		? entryImage(entry, options.folder, `${options.context}: ${title}`)
 		: null;
 	const fields = curatedEntryFields(entry, options.context);
-	const className = options.classified ? "entry classified" : "entry";
-	return `<article class="${className}" id="${slugify(`${options.context}-${title}`)}">
+	const tier = entryTierClass(entry);
+	const classNames = options.classified
+		? `entry entry--classified`
+		: tier ? `entry ${tier}` : "entry";
+	return `<article class="${classNames}" id="${slugify(`${options.context}-${title}`)}">
 		${image ? `<figure class="entry-figure"><img src="${image}" alt="${esc(title)}"/></figure>` : ""}
 		<h3>${esc(title)}</h3>
 		${metaTags(entry)}
@@ -878,19 +929,38 @@ function renderAnomaly(
 	];
 	const fields = curatedAnomalyFields(entry, stats);
 	const coreStats = anomalyCoreStats(entry, stats);
+	const rank = cleanText(entry.rank || stats.rank || "");
+	const cr = cleanText(stats.challenge_rating || entry.challenge_rating || "");
+	const ac = cleanText(stats.armor_class || entry.armor_class || "");
+	const hp = cleanText(stats.hit_points || entry.hit_points || "");
+	const speed = cleanText(stats.speed || entry.speed || "");
+	const typeStr = cleanText(entry.creature_type || entry.type || stats.type || "");
+	const threatLabel = [rank ? `Rank ${rank}` : "", cr ? `CR ${cr}` : ""].filter(Boolean).join(" \u00b7 ");
+	const coreStatParts = [
+		ac ? `<span><strong>AC</strong> ${esc(ac)}</span>` : "",
+		hp ? `<span><strong>HP</strong> ${esc(hp)}</span>` : "",
+		speed ? `<span><strong>Speed</strong> ${esc(speed)}</span>` : "",
+	].filter(Boolean).join("");
 	return `<article class="statblock" id="${slugify(`anomaly-${title}`)}">
-		${image ? `<figure class="entry-figure"><img src="${image}" alt="${esc(title)}"/></figure>` : ""}
-		<h3>${esc(title)}</h3>
-		${metaTags(entry)}
-		${!isEmpty(entry.description) ? `<div class="entry-description">${mdToHtml(entry.description)}</div>` : ""}
+		<div class="statblock-header">
+			<h3>${esc(title)}</h3>
+			${threatLabel ? `<span class="threat-badge">\u2694 ${esc(threatLabel)}</span>` : ""}
+		</div>
+		${typeStr ? `<div class="statblock-type">${esc(typeStr)}</div>` : ""}
+		${coreStatParts ? `<div class="statblock-divider"></div><div class="statblock-core">${coreStatParts}</div>` : ""}
+		<div class="statblock-divider"></div>
 		<div class="ability-grid">${abilityKeys
 			.map(
 				([label, key]) =>
-					`<div><strong>${label}</strong>${esc(scores[key] ?? "-")}</div>`,
+					`<div><strong>${label}</strong><span>${esc(scores[key] ?? "-")}</span></div>`,
 			)
 			.join("")}</div>
-		${renderObject(coreStats)}
-		${renderObject(fields)}
+		<div class="statblock-divider"></div>
+		${image ? `<figure class="entry-figure"><img src="${image}" alt="${esc(title)}"/></figure>` : ""}
+		${!isEmpty(entry.description) ? `<div class="entry-description">${mdToHtml(entry.description)}</div>` : ""}
+		${metaTags(entry)}
+		<div class="statblock-section">${renderObject(coreStats)}</div>
+		<div class="statblock-section">${renderObject(fields)}</div>
 	</article>`;
 }
 
@@ -910,14 +980,11 @@ function renderCatalog(
 			cleanText(b.name || b.title || b.id),
 		),
 	);
-	const guide = catalogUseGuide(title, options.context, options.anomaly ?? false);
 	return `<section class="section-block">
 		<div class="section-intro">
 			<h2>${esc(title)}</h2>
 			<p>${esc(summary)}</p>
-			<p class="small muted">Reference entries: ${sorted.length}.</p>
 		</div>
-		${guide}
 		<div class="catalog-grid">${sorted
 			.map((entry, index) =>
 				options.anomaly
@@ -946,25 +1013,79 @@ function shouldFeatureEntryArt(
 ): boolean {
 	const rarity = cleanText(entry.rarity).toLowerCase();
 	const rank = cleanText(entry.rank).toUpperCase();
-	if (total <= 12) return true;
-	if (total > 80) return false;
-	if (/sample|regent|pantheon|relic|artifact/i.test(context)) return index < 8 || index % 12 === 0;
-	if (isAnomaly) return index < 5;
+	if (total <= 24) return true;
+	if (total > 150) return index % 8 === 0;
+	if (/sample|regent|pantheon|relic|artifact|class|origin|subclass|discipline/i.test(context)) return true;
+	if (isAnomaly) return index % 2 === 0 || rank === "S" || rank === "A";
 	if (/(legendary|artifact|mythic|epic)/i.test(rarity)) return true;
-	if (rank === "S" || rank === "A") return index % 3 === 0;
-	return index < 6 || index % 16 === 0;
+	if (rank === "S" || rank === "A" || rank === "B") return index % 2 === 0;
+	return index % 4 === 0;
 }
 
-function catalogUseGuide(title: string, _context: string, isAnomaly: boolean): string {
-	const noun = isAnomaly ? "stat block" : "entry";
-	return `<aside class="sourcebook-guide">
-		<h3>${esc(title)} At The Table</h3>
-		<p>Read each ${noun} for its decision points first: rank, rarity, activation, cost, limits, tags, and lore hooks. In Rift Ascendant play, a catalog item should create a tactical choice, a faction consequence, or a clue about the Rift that produced it.</p>
-		<p class="small muted">Curated art marks anchor entries and high-impact references; routine records stay text-first for fast lookup and manageable PDF size.</p>
-	</aside>`;
+function catalogUseGuide(_title: string, _context: string, _isAnomaly: boolean): string {
+	return "";
 }
+
+const LABEL_MAP: Record<string, string> = {
+	uses_per_rest: "Recovery",
+	uses_per_rest_formula: "Recharge",
+	activation_action: "Action",
+	activation_cost: "Cost",
+	activation: "Activation",
+	level_requirement: "Prerequisite Level",
+	damage_type: "Damage Type",
+	damage_roll: "Damage",
+	higher_levels: "At Higher Levels",
+	saving_throw: "Save",
+	hit_dice: "Hit Dice",
+	armor_class: "Armor Class",
+	hit_points: "Hit Points",
+	proficiency_bonus: "Proficiency Bonus",
+	challenge_rating: "Challenge Rating",
+	condition_immunities: "Condition Immunities",
+	damage_resistances: "Damage Resistances",
+	damage_immunities: "Damage Immunities",
+	damage_vulnerabilities: "Damage Vulnerabilities",
+	saving_throws: "Saving Throws",
+	skill_proficiencies: "Skill Proficiencies",
+	armor_proficiencies: "Armor Proficiencies",
+	weapon_proficiencies: "Weapon Proficiencies",
+	tool_proficiencies: "Tool Proficiencies",
+	starting_equipment: "Starting Equipment",
+	starting_credits: "Starting Credits",
+	personality_traits: "Personality Traits",
+	primary_abilities: "Primary Abilities",
+	effect_description: "Effect",
+	effect_type: "Effect Type",
+	active_feature: "Active Feature",
+	passive_bonuses: "Passive Bonuses",
+	can_inscribe_on: "Inscribe On",
+	requires_level: "Required Level",
+	inscription_difficulty: "Inscription Difficulty",
+	body_part: "Body Location",
+	ink_type: "Ink Type",
+	active_veins: "Active Veins",
+	resonance_effect: "Resonance Effect",
+	corruption_risk: "Corruption Risk",
+	carry_capacity_lbs: "Carry Capacity",
+	cargo_capacity_lbs: "Cargo Capacity",
+	crew_positions: "Crew Positions",
+	bonded_from_name: "Bonded From",
+	condition_effects: "Effects",
+	condition_duration: "Duration",
+	condition_removal: "Removal",
+	condition_save: "Save",
+	cure_lore: "Cure",
+	regent_requirements: "Requirements",
+	class_features: "Class Features",
+	legendary_actions: "Legendary Actions",
+	bonus_actions: "Bonus Actions",
+	non_damage_resolution: "Resolution",
+	line_of_effect: "Line of Effect",
+};
 
 function labelFromKey(key: string): string {
+	if (LABEL_MAP[key]) return LABEL_MAP[key];
 	return key
 		.replace(/_/g, " ")
 		.replace(/\b\w/g, (letter) => letter.toUpperCase());
@@ -1115,7 +1236,6 @@ function renderCompactCatalog(
 		<div class="section-intro">
 			<h2>${esc(title)}</h2>
 			<p>${esc(summary)}</p>
-			<p class="small muted">Reference entries: ${sorted.length}.</p>
 		</div>
 		<div class="compact-catalog">${sorted
 			.map((entry) => compactEntry(entry, options.kind, options.context))
@@ -1791,7 +1911,7 @@ function wardenRulesPrimer(): string {
 	return `<section class="section-block">
 		<div class="section-intro">
 			<h2>Running the Game</h2>
-			<p>The Warden frames danger, tracks pressure, presents fair consequences, and lets the players choose how deeply to push into the Rift. Use the procedures below as table-facing rules, not software implementation notes.</p>
+			<p>The Warden frames danger, tracks pressure, presents fair consequences, and lets the players choose how deeply to push into the Rift. The procedures below are your tools for running the game.</p>
 		</div>
 		<div class="prose-columns">
 			<h3>Encounter Budgets</h3>
@@ -1854,6 +1974,375 @@ function wardenRulesPrimer(): string {
 	</section>`;
 }
 
+// ─── Curated ability samplers for Ascendant Guide ───────────────────────────
+
+function curatedTechSample(): EntryRecord[] {
+	return [...techniques as EntryRecord[]]
+		.sort((a, b) => cleanText(a.name || a.id).localeCompare(cleanText(b.name || b.id)))
+		.slice(0, 12);
+}
+
+function curatedPowerSample(): EntryRecord[] {
+	return [...powers as EntryRecord[]]
+		.sort((a, b) => cleanText(a.name || a.id).localeCompare(cleanText(b.name || b.id)))
+		.slice(0, 12);
+}
+
+function curatedSpellSample(): EntryRecord[] {
+	return [...spells as EntryRecord[]]
+		.sort((a, b) => cleanText(a.name || a.id).localeCompare(cleanText(b.name || b.id)))
+		.slice(0, 12);
+}
+
+function conditionsQuickRef(): string {
+	const sorted = [...conditions as EntryRecord[]].sort((a, b) =>
+		cleanText(a.name || a.id).localeCompare(cleanText(b.name || b.id)),
+	);
+	const rows: [string, string][] = sorted.map((c) => {
+		const name = cleanText(c.name || c.id);
+		const raw = cleanText(c.effects || c.condition_effects || c.description || "");
+		const summary = raw.slice(0, 140) + (raw.length > 140 ? "..." : "");
+		return [name, summary];
+	});
+	return `<section class="section-block">
+		<div class="section-intro">
+			<h2>Conditions Quick Reference</h2>
+			<p>Conditions affect Ascendants and Anomalies during combat, hazards, and Rift pressure. The Warden Guide contains the full condition entries with adjudication guidance; this table is the player-facing quick reference.</p>
+		</div>
+		${rulesTable(["Condition", "Primary Effect"], rows)}
+	</section>`;
+}
+
+// ─── Rift Age Worldbook authored prose ───────────────────────────────────────
+
+function worldbookRiftEcology(): string {
+	return `<section class="section-block">
+		<div class="section-intro">
+			<h2>Rifts and the Rift Ecology</h2>
+			<p>A Rift is a wound in the world that has not healed. Every Rift operates by its own interior logic, expels things that should not exist here, and leaves the ground around it changed forever.</p>
+		</div>
+		<div class="prose-columns">
+			<h3>Anatomy of a Rift</h3>
+			${rulesTable(["Term", "What It Means in the World"], [
+				["Rift Threshold", "The boundary zone where Rift space meets mundane reality. Ascendants can cross it. Anomalies can exit through it. Civilians are advised not to approach it."],
+				["Rift Interior", "The space inside the Rift — shaped by its Domain\u2019s rules, pressure level, and whatever originally opened it. Physics may not behave normally."],
+				["Rift Site", "A location with a history of Rift formation or a currently open threshold. Bureau records classify these sites and restrict civilian access."],
+				["Rift Clear", "A Rift that has been successfully closed, leaving behind a scarred site with residual Essence, altered ecology, and documented anomaly patterns."],
+				["Rift Break", "An uncontrolled Rift collapse. What was inside may exit. What exits may not be containable."],
+				["Domain", "A persistent Rift Interior that has stabilized around its own rules. Domains do not close on their own. They have hearts, ecologies, and often seem to have goals."],
+			])}
+			<h3>How Rifts Form</h3>
+			<p>The Bureau maintains twelve active theories on Rift formation. The most widely accepted holds that Rifts form at sites where Essence pressure accumulates faster than the environment can dissipate it \u2014 geology and emotional history both appear to contribute. The most politically uncomfortable theory holds that Rift formation correlates with Ascendant Awakening events: the first Ascendants may have created the first Rifts by existing.</p>
+			<p>What everyone agrees on: Rifts respond to Essence. An Ascendant\u2019s presence inside a Rift accelerates the Rift\u2019s pressure state. Sustained high-Essence activity inside an unstable Rift can cause it to evolve, grow, or break. The Bureau measures this relationship carefully and does not publish its projections.</p>
+			<h3>Rift Rank Classification</h3>
+			${rulesTable(["Rank", "Scale", "Public Threat Level", "Authority Response"], [
+				["D", "Room to building scale", "Contained incident; standard hazard advisory", "Local Bureau response team, standard containment"],
+				["C", "Block to district scale", "Elevated hazard; evacuation advisory", "Rapid response, AFA notification, media management"],
+				["B", "District to city zone", "Serious threat; evacuation order", "AFA joint command, Bureau emergency powers"],
+				["A", "City to regional scale", "Catastrophic; civilian authority suspended", "Federal response, full AFA activation, asset deployment"],
+				["S", "Regional to world scale", "Existential event; all normal protocols superseded", "All available forces, classified continuity protocols"],
+			])}
+			<h3>Rift Frequency in the Rift Age</h3>
+			<p>In the early years, Rifts opened at irregular intervals across major population centers. The Bureau now tracks over four hundred active sites globally in any given month. The rate of new openings has not decreased. Most Rifts close on their own within seventy-two hours. The ones that do not are the ones that become Domains.</p>
+		</div>
+	</section>`;
+}
+
+function worldbookEssenceAndAwakening(): string {
+	return `<section class="section-block">
+		<div class="section-intro">
+			<h2>Essence and Awakening</h2>
+			<p>Essence is the energy that powers the Rift Age. Awakening is what happens when a human being begins to channel it. Neither process is fully understood. Both are irreversible.</p>
+		</div>
+		<div class="prose-columns">
+			<h3>What Essence Is</h3>
+			<p>Essence is measurable \u2014 it appears on Bureau sensors as a consistent field distortion pattern in the electromagnetic spectrum. It is present everywhere in trace amounts but concentrates dramatically inside and around Rifts. Prolonged Essence exposure changes living tissue in ways that are statistically significant but individually unpredictable.</p>
+			<p>In practice, Essence is what Ascendants use to do impossible things. The internal experience varies widely: some describe it as a pressure behind the eyes, a heat in the chest, a feeling of alignment when abilities activate. The Bureau describes it as an internal reserve with measurable volume and observable depletion curves.</p>
+			<h3>Awakening</h3>
+			<p>Awakening is the moment a human being develops the capacity to actively channel Essence. Before Awakening, Essence passes through a person without visible effect. After, it collects, accumulates, and responds to intention.</p>
+			<p>Awakening events are rarely clean. The most common triggers are proximity to a Rift opening, proximity to a major Essence event, and acute physiological or psychological stress. Some Awakenings are gradual \u2014 weeks or months of subtle changes before the threshold moment. Some happen in an instant. A small number are violent, for the Ascendant and everyone nearby.</p>
+			${rulesTable(["Awakening Type", "Common Presentation"], [
+				["Threshold Event", "A specific triggering moment \u2014 a Rift, a near-death experience, an extreme decision \u2014 that produces immediate, measurable Awakening."],
+				["Gradual Awakening", "A slow accumulation over weeks or months, often dismissed as stress response or heightened reflexes until it becomes unmistakable."],
+				["Latent Awakening", "Suppressed or delayed potential that arrives suddenly under pressure, often with less control than threshold events."],
+				["Induced Awakening", "Artificially triggered through high-Essence exposure, experimental protocols, or unregulated means. Carries higher instability risk."],
+			])}
+			<h3>What Awakening Changes</h3>
+			<p>An Ascendant can enter Rifts without the psychological dissociation that incapacitates most civilians. They can channel Essence through trained ability expressions. They heal faster than unawakened humans and sustain higher Essence exposure without degradation. They also register on Bureau sensors, which is how they get licensed \u2014 and audited.</p>
+			<p>What Awakening does not change: Ascendants still age, need rest, form attachments, make bad decisions, and die. The Bureau is careful to document this. The media is considerably less careful.</p>
+		</div>
+	</section>`;
+}
+
+function worldbookAnomaliesAsForce(): string {
+	return `<section class="section-block">
+		<div class="section-intro">
+			<h2>Anomalies as a World Force</h2>
+			<p>Anomalies are what came through the Rifts. They are not monsters in the traditional sense \u2014 many of them were not anything recognizable before they passed through. They are Essence made physical, given weight and appetite by the logic of whatever Rift produced them.</p>
+		</div>
+		<div class="prose-columns">
+			<h3>What Anomalies Are</h3>
+			<p>Bureau classification defines an Anomaly as any entity of confirmed non-mundane origin with a measurable Essence signature above civilian baseline that demonstrates autonomous behavior incompatible with natural species classification. In practical terms: if it came from a Rift and it is moving with intent, it is an Anomaly.</p>
+			<p>Anomalies vary enormously. Some are clearly derived from natural creatures \u2014 fauna shaped by Rift passage into something larger and more dangerous. Some appear to be fragments of whatever exists on the other side of the Rift membrane \u2014 pure Essence given form by rules with no Earth equivalent. A small number appear to have been human at some point.</p>
+			<h3>Anomaly Ecology</h3>
+			<p>Inside a Rift or Domain, Anomalies often behave in structured ways suggesting internal hierarchy. Apex Anomalies anchor a Domain\u2019s heart and appear to organize lesser threats around them. Cleared Anomalies leave residual Essence that feeds smaller creatures. Some Domains appear to generate new Anomalies continuously as long as the heart remains stable.</p>
+			<p>Outside a Rift following a Break or containment failure, Anomalies behave unpredictably. Some seek Essence concentrations. Some appear disoriented and do not survive long in the mundane world. A few adapt. These are the ones the Bureau classifies as long-term population threats.</p>
+			<h3>Anomaly Rank and Society</h3>
+			${rulesTable(["Rank", "Societal Impact When One Appears in Public Space"], [
+				["D", "Local emergency. Standard Bureau response. Media coverage typical but rarely national."],
+				["C", "District emergency. AFA notification. Insurance and legal consequences for the host site."],
+				["B", "City or regional alert. Major media event. Potential political consequences for local authorities."],
+				["A", "National crisis. Federal response. Long-term site condemnation. Careers end. Legislation follows."],
+				["S", "Generational event. Everything changes. The Bureau\u2019s S-rank records are the most classified documents it holds."],
+			])}
+			<div class="sourcebook-guide"><h3>See Anomaly Manual</h3><p>The complete Anomaly stat catalog is in the Anomaly Manual. This chapter covers Anomalies as a world and setting force, not as encounter opponents.</p></div>
+		</div>
+	</section>`;
+}
+
+function worldbookRelicsInSociety(): string {
+	return `<section class="section-block">
+		<div class="section-intro">
+			<h2>Relics in Society</h2>
+			<p>A Relic is a Rift-originated object with measurable and persistent Essence properties. Every one of them is worth an argument, a crime, or a war. The Rift Age was already rewriting society before Relics started coming out of the Rifts.</p>
+		</div>
+		<div class="prose-columns">
+			<h3>Bureau Classification</h3>
+			<p>The Bureau maintains a Relic registry. Ascendants are legally required to register any Relic recovered from a cleared Rift site within forty-eight hours of extraction. The Bureau assesses each one, assigns a classification tier, and makes a recommendation on usage, sale, or destruction. In practice, the Bureau recommends retention of approximately sixty percent of all registered Relics. Fifteen percent are recommended for destruction. The remaining twenty-five percent enter classification tiers that licensed Ascendants are not briefed on.</p>
+			<h3>Relic Economics</h3>
+			<p>Legal Relic trade is substantial. Guilds broker the sale of registered Relics between Ascendants and approved buyers \u2014 Relics serve as equipment, leverage, and investment simultaneously. The black market is larger. Unregistered Relics move through collectors, criminal networks, and people who cannot or will not use legal channels. Corporations pay what the market allows and contract lawyers to make the paperwork disappear.</p>
+			<h3>Relic Politics</h3>
+			<p>Several major world powers have built military and intelligence capacity around Relic deployment. This is not publicly acknowledged by any of them. The Bureau is aware. The Bureau\u2019s jurisdiction does not extend into defense ministries, which is widely regarded as one of the core structural problems of the Rift Age.</p>
+			${rulesTable(["Relic Status", "Legal Standing", "Common Outcome"], [
+				["Registered, approved", "Legal to possess and use", "Standard deployment, insurance coverage, Guild access"],
+				["Registered, restricted", "Legal to hold; activation requires Bureau waiver", "Bureaucratic delay, political leverage, emergency use provisions"],
+				["Registered, condemned", "Illegal to possess", "Forced surrender or buyout; black market if Ascendant declines"],
+				["Unregistered", "Technically illegal in most jurisdictions", "Gray-market trade, legal risk during Bureau audit"],
+				["Bureau-classified", "Unknown status", "The Bureau does not comment on classified Relic records"],
+			])}
+		</div>
+	</section>`;
+}
+
+function worldbookFactions(): string {
+	return `<section class="section-block">
+		<div class="section-intro">
+			<h2>The Bureau</h2>
+			<p>The Bureau of Rift Operations is the oldest international body that predates the Rift Age and survived into it. It was an obscure multinational environmental monitoring commission when the first Rifts opened. Within two years it had absorbed emergency Rift authority from nineteen national governments. It has not returned any of that authority.</p>
+		</div>
+		<div class="prose-columns">
+			<h3>What the Bureau Does</h3>
+			${rulesTable(["Bureau Function", "In Practice"], [
+				["Ascendant licensing", "The Bureau licenses Ascendants to operate inside Rifts and in official containment roles. Unlicensed operation is illegal in most jurisdictions."],
+				["Rift classification", "Every Rift is ranked, documented, and assigned a response protocol by Bureau analysts. Most of this data is not public."],
+				["Anomaly containment", "The Bureau coordinates containment with national authorities and has enforcement powers that supersede local law inside active Rift perimeters."],
+				["Relic registration", "The Bureau maintains the official Relic registry. Registration is mandatory under Bureau operating treaties."],
+				["Information management", "The Bureau manages public-facing alerts and media briefings. What it releases is curated. What it withholds is extensive."],
+			])}
+			<h3>Bureau Structure</h3>
+			<p>The Bureau is organized into Directorates: Directorate Containment (field response), Directorate Intelligence and Assessment, Directorate Ascendant Affairs (licensing, compliance, audit), and Directorate Zero \u2014 classified programs acknowledged but not briefed to other Directorates. Field Ascendants interact primarily with Directorate Ascendant Affairs. Bureau Containment rapid-response teams are separately licensed and do not take open contracts from civilian clients.</p>
+		</div>
+	</section>
+	<section class="section-block">
+		<div class="section-intro">
+			<h2>The AFA</h2>
+			<p>The Ascendant Field Authority is the Bureau\u2019s high-threat arm \u2014 the organization called in when a Rift is too large, too fast, or too strange for standard response. It operates under Bureau authority but functions with significant operational independence.</p>
+		</div>
+		<div class="prose-columns">
+			<h3>AFA Mandate</h3>
+			<p>The AFA coordinates inter-jurisdiction operations across national borders, handles disaster triage in large-scale Rift events, and manages classified cleanups involving S-rank threats or Regent-attributed Rift signatures. Its Ascendants are among the highest-licensed operatives in existence.</p>
+			<p>The AFA does not do routine contract work. When the AFA arrives at a Rift site, it means the Bureau\u2019s standard response models predicted something that required a different kind of answer. Independent contractors typically view AFA arrival as a sign that the contract has become complicated.</p>
+		</div>
+	</section>
+	<section class="section-block">
+		<div class="section-intro">
+			<h2>Guilds</h2>
+			<p>Guilds are the Rift Age\u2019s answer to what Ascendants do when they need to work outside Bureau channels and still need to eat. Some are mercenary organizations. Some are trade bodies. Some are barely legal fronts for organized crime. Most are some combination of all three.</p>
+		</div>
+		<div class="prose-columns">
+			<h3>What Guilds Provide</h3>
+			${rulesTable(["Service", "How Guilds Deliver It"], [
+				["Contract access", "Guilds receive private contracts from corporations, individuals, and governments that cannot or will not use Bureau channels."],
+				["Legal cover", "Guild membership provides access to lawyers who know how to navigate licensing, audit, and Relic registration disputes."],
+				["Equipment and credit", "Most Guilds operate internal credit systems, equipment pools, and item lockers accessible to member Ascendants."],
+				["Reputation currency", "Guild standing translates into contract access, partner trust, and back-channel influence in Rift Age commerce."],
+				["Black market adjacency", "The Guild officially knows nothing about this. The Guild unofficially runs a significant portion of it."],
+			])}
+		</div>
+	</section>
+	<section class="section-block">
+		<div class="section-intro">
+			<h2>Corporations, Media, Law, Faith, and the Black Market</h2>
+			<p>The Rift Age did not pause the rest of the world. Corporations adapted faster than governments. Media learned that Ascendants were the most compelling subjects it had ever covered. Law developed faster than law enforcement. The black market became the most honest institution in the Rift economy.</p>
+		</div>
+		<div class="prose-columns">
+			<h3>Corporations</h3>
+			<p>Several major multinational corporations have established Rift-related divisions that rival or exceed Bureau operational capacity in specific domains. They cannot legally run Rift operations directly, so they contract licensed Guilds and Ascendants. The distinction is nominal in practice. Corporate Rift divisions employ more analysts, equipment designers, and intelligence staff than most Bureau Directorates.</p>
+			<h3>Media</h3>
+			<p>Ascendants are public figures whether they choose to be or not. Bureau licensing records are technically public. Rift site coordinates become local news within hours of containment perimeter establishment. A licensed Ascendant operating in public during a Rift event will be recorded, identified, and discussed by morning. Some Ascendants have learned to use this. Most find it a complication.</p>
+			<h3>Law</h3>
+			<p>The legal status of Ascendants varies significantly by jurisdiction. In Bureau-treaty nations, Ascendants have specific legal designations affecting criminal liability, licensing requirements, Relic property rights, and civil responsibility during Rift events. In non-treaty jurisdictions, they may have no legal status at all \u2014 which cuts both ways.</p>
+			<h3>Faith</h3>
+			<p>Every major religious tradition has produced multiple interpretive responses to the Rift Age. The range runs from integration (Rifts are a new phase of creation, Awakening is a form of calling) to opposition (Rifts are intrusions of a hostile reality, Ascendants are contaminated) to exploitation (several small sects treat Rift sites as sacred and Anomalies as divine messengers). The Pantheon\u2019s apparent existence has not produced official theological consensus anywhere.</p>
+			<h3>Black Market</h3>
+			<p>The unregistered Relic market, unlicensed contract network, and gray-zone services outside Bureau oversight collectively represent the largest parallel economy in the Rift Age. It operates through Guild adjacency, criminal organization, private collectors, and individual Ascendants who have decided the administrative costs of compliance exceed the operational benefits. The Bureau is aware. Its enforcement resources are finite.</p>
+		</div>
+	</section>`;
+}
+
+function worldbookDomains(): string {
+	return `<section class="section-block">
+		<div class="section-intro">
+			<h2>Domains and Persistent Rift Interiors</h2>
+			<p>A Domain is a Rift Interior that has stabilized. It has its own rules, its own ecology, a heart that keeps it alive, and \u2014 in some documented cases \u2014 something that functions like intent. Domains do not close on their own. The Bureau considers every active Domain a long-term liability.</p>
+		</div>
+		<div class="prose-columns">
+			<h3>What Makes a Domain</h3>
+			<p>Domains form when a Rift Interior reaches internal coherence \u2014 when its rules become self-sustaining rather than dependent on the threshold event that created it. The heart of a Domain is an Anomaly or construct that embodies and enforces those rules. As long as the heart persists, the Domain persists.</p>
+			<h3>Domain Properties</h3>
+			${rulesTable(["Property", "Meaning for Operations Inside"], [
+				["Threshold stability", "A stable Domain has a reliable entry point. An unstable Domain\u2019s threshold may move, multiply, close temporarily, or apply conditions to those crossing it."],
+				["Internal rules", "Every Domain establishes rules that override mundane physics. Time, gravity, perception, Essence recovery, and visibility may all behave differently."],
+				["Ecological pressure", "Domains generate Anomalies as long as the heart is stable. Cleared Anomalies return. Closing the heart is the only way to end a Domain\u2019s ecology permanently."],
+				["Reward density", "Domains accumulate Essence, Relics, and remains in ways that temporary Rifts do not. Extended Domain operations are lucrative \u2014 and they are never brief."],
+				["Persistence after clearing", "A wounded-but-surviving heart may allow the Domain to reconstruct itself within days, weeks, or months. Confirm termination before declaring a Domain cleared."],
+			])}
+			<h3>Domain Classification Types</h3>
+			<p>The Bureau classifies Domains by internal logic type, which predicts behavior better than rank alone for operations planning. Common types: <strong>Spatial</strong> (geometry does not behave normally), <strong>Temporal</strong> (time pressure or apparent loops), <strong>Ecological</strong> (living Domain with active growth patterns), <strong>Mechanical</strong> (structured rule enforcement, often trap-like), and <strong>Sovereign</strong> (the Domain has something approaching will and may recognize the existence of negotiation).</p>
+		</div>
+	</section>`;
+}
+
+function worldbookInUniverseDocs(): string {
+	return `<section class="section-block">
+		<div class="section-intro">
+			<h2>In-Universe Documents</h2>
+			<p>The Rift Age generates documentation. The Bureau produces it. The media circulates it. Ascendants carry it into the field. The following are representative samples of what an Ascendant encounters in their operational life.</p>
+		</div>
+		<div class="prose-columns">
+			<h3>Bureau Field Advisory</h3>
+			<div class="read-aloud"><p><strong>BUREAU OF RIFT OPERATIONS \u2014 FIELD ADVISORY</strong><br/>Classification: Public \u2014 Standard Distribution<br/>Event ID: BRO-C-20260419-0047<br/>Site: Industrial Corridor, Sector 7. Grid reference withheld per containment protocol.<br/>Rank: C \u2014 Elevated Hazard. Threshold Status: Stable. No active expansion at time of filing.<br/>Anomaly Activity: Two confirmed Type-III signatures. One Type-II mobile. Civilian evacuation radius: 400 meters.<br/>Contract Status: Open to licensed Ascendants, Rank C minimum. Bureau oversight officer: Pending assignment.<br/>Note: Site access requires valid license at perimeter checkpoint. Unauthorized entry will trigger immediate license suspension review.</p></div>
+			<h3>Guild Contract Bulletin</h3>
+			<div class="read-aloud"><p><strong>IRONCLAD EXTRACTION SERVICES \u2014 MEMBER BULLETIN</strong><br/>Contract Reference: ICE-2026-0883. Type: Extraction \u2014 Relic, contested.<br/>Site: BRO-C-20260419-0047. Client: Withheld \u2014 corporate, non-Bureau affiliated.<br/>Objective: Locate and extract one (1) unregistered Relic confirmed via satellite Essence signature. Client documentation establishes prior ownership claim \u2014 legal status disputed.<br/>Payout: Base 14,000 credit. Bonus 6,000 if extracted before Bureau oversight arrives on site.<br/>Note: This contract runs parallel to Bureau licensed activity. Coordination is the Ascendant\u2019s responsibility. ICE does not carry liability for post-operation licensing review.</p></div>
+			<h3>Civilian Witness Statement \u2014 Excerpt</h3>
+			<div class="read-aloud"><p><em>Taken from Bureau voluntary witness intake. Released in redacted form under public transparency provisions.</em><br/>\u201cI heard it before I saw it. The air made a sound like someone pressing a finger against the inside of a speaker. Then there was a light \u2014 not like electricity, more like something deciding to become visible. And then one of them came through. The Ascendant. She was running. I don\u2019t know where she went. There was a sound behind her that I haven\u2019t found a word for. I don\u2019t sleep well anymore. I want the record to say that.\u201d</p></div>
+			<h3>Media Headlines \u2014 Archive</h3>
+			${rulesTable(["Outlet", "Headline", "Tone"], [
+				["National Post", "Bureau Reports 47th Rift Event This Month \u2014 Record High Since Tracking Began", "Factual, alarmed"],
+				["The Sovereign Report", "Ascendants: Public Heroes or Government-Licensed Weapons?", "Adversarial, high readership"],
+				["Economic Digest", "Relic Market Valuation Exceeds Traditional Precious Metals for Third Consecutive Quarter", "Clinical, bullish"],
+				["Local Voice", "Our Neighborhood Hasn\u2019t Been the Same Since the Rift Clear. We\u2019re Still Here.", "Human interest, resigned"],
+				["Unnamed Broadcast", "They Came Through a Hole in the Sky and We\u2019re Supposed to Pretend That\u2019s Normal", "Panic-adjacent, viral"],
+			])}
+		</div>
+	</section>`;
+}
+
+// ─── Awakened Arts authored prose ────────────────────────────────────────────
+
+function awakenedArtsSystemPrimer(): string {
+	return `<section class="section-block">
+		<div class="section-intro">
+			<h2>How Abilities Work</h2>
+			<p>An Ascendant\u2019s abilities are the practical expression of their Awakening \u2014 everything from a precisely trained combat maneuver to a reality-warping spell. They fall into five categories: Techniques, Powers, Spells, Runes, and Inscriptions (Sigils and Tattoos). Each category has its own access rules, resource model, and range of expression.</p>
+		</div>
+		<div class="prose-columns">
+			<h3>Ability Categories</h3>
+			${rulesTable(["Category", "What It Is", "How You Get It", "Primary Resource"], [
+				["Technique", "A trained martial or tactical action \u2014 a fighting pattern, weapon maneuver, or combat movement refined through experience.", "Job progression, Path features, Fighting Style selection, feat acquisition.", "Stamina-based uses per rest, or triggered by conditions (stance, weapon, position)."],
+				["Power", "An innate authority expression \u2014 something your Awakening grants you direct access to, shaped by your Job.", "Job progression and Path features at specific levels.", "Internal Essence pool; refreshes on short or long rest depending on tier."],
+				["Spell", "A structured Essence effect with defined components, range, duration, and often concentration requirements.", "Spellcasting Jobs and Paths; tutors, spellbooks, or rune absorption.", "Spell slots of the appropriate level; cost printed on each spell entry."],
+				["Rune", "An absorbed Essence pattern that teaches a specific ability when consumed.", "Found in Rifts, purchased from vendors, recovered from Anomaly remains, given as contract rewards.", "Consumed on absorption; the learned ability uses its own resource (see Rune Mechanics chapter)."],
+				["Sigil / Tattoo", "A permanent inscription \u2014 on a weapon, armor, or the Ascendant\u2019s skin \u2014 granting passive or activated benefits.", "Inscribed by a trained specialist or self-inscribed by a qualified Ascendant.", "Attunement slots; activation costs as printed on the entry."],
+			])}
+			<h3>Job and Path Access</h3>
+			<p>Your Job determines which ability categories you can access natively. A martial Job like Striker learns Techniques natively and has no native spell slot access. A casting Job like Sorcerer has native Spell access and may have Power access through specific Paths. Your Path specifies which abilities within those categories you unlock at each level.</p>
+			<p>Cross-access is possible through Rune absorption: a Striker can absorb a spell-teaching Rune and use that spell through cross-access mechanics, even without native spell slots. The Warden\u2019s Guide covers which cross-access is balanced for your table; this book provides every ability entry as written.</p>
+			<h3>Reading an Ability Entry</h3>
+			${rulesTable(["Field", "What It Tells You"], [
+				["Activation / Action", "The action type required: Action, Bonus Action, Reaction, or free action."],
+				["Range", "Self affects only you. Touch requires adjacency. A numbered range is in feet."],
+				["Duration", "Instantaneous means the effect resolves at once. Concentration means you can only maintain one concentration effect at a time."],
+				["Uses per rest", "Short rest recharge: intended for 2\u20133 uses per session. Long rest recharge: intended for 1\u20132 uses per session."],
+				["Higher levels / At Rank", "How the ability scales. If this field is absent, the ability does not scale beyond its printed text."],
+			])}
+		</div>
+	</section>`;
+}
+
+function awakenedArtsRuneDeepDive(): string {
+	return `<section class="section-block">
+		<div class="section-intro">
+			<h2>Rune Mechanics</h2>
+			<p>A Rune is an inscribed Essence pattern that can be absorbed by an Ascendant to learn the ability it contains. Native absorption works cleanly. Cross-access absorption works with limits. Both are permanent once completed.</p>
+		</div>
+		<div class="prose-columns">
+			${runePrimer()}
+			<h3>Absorption Procedure</h3>
+			${rulesTable(["Step", "What Happens"], [
+				["Acquire the Rune", "Recovered from Rift loot, purchased from a licensed vendor, or obtained as a contract reward. Physical Rune objects deteriorate within 24\u201372 hours if not absorbed."],
+				["Assess access type", "Check whether the ability the Rune teaches is in your Job\u2019s native category. Native = full access. Outside your category = cross-access."],
+				["Absorb", "One hour of focused Essence attunement. The Rune is consumed on completion. The pattern becomes part of the Ascendant\u2019s Essence structure permanently."],
+				["Apply access rules", "Native absorption: ability added permanently at its normal cost. Cross-access: ability available with limited uses per long rest per the formula below."],
+			])}
+			<h3>Cross-Access Absorption</h3>
+			<p>When you absorb a Rune outside your native categories, you gain the ability with a limited-use cap: <strong>uses per long rest = max(1, proficiency bonus + primary ability modifier + rarity bonus)</strong>.</p>
+			${rulesTable(["Rune Rarity", "Common", "Uncommon", "Rare", "Epic", "Legendary"], [
+				["Rarity bonus to formula", "+0", "+1", "+2", "+3", "+4"],
+			])}
+			<h3>Cross-Access Active Slots</h3>
+			<p>An Ascendant may have an unlimited number of absorbed Runes, but may only actively maintain cross-access Rune abilities equal to their proficiency bonus at any time. Runes beyond this limit are learned but dormant \u2014 they can be swapped into active slots during a long rest. Native-access rune abilities do not count toward this limit.</p>
+			<h3>Warden Approval</h3>
+			<p>The Warden approves all cross-access Rune absorption. They may restrict specific Rune types by campaign, setting, or character context. This book provides the full mechanical entry for every ability; the Warden\u2019s Guide covers how to adjudicate Rune availability at your table.</p>
+		</div>
+	</section>`;
+}
+
+function awakenedArtsWardenGuidance(): string {
+	return `<section class="section-block">
+		<div class="section-intro">
+			<h2>Warden Approval and Ability Balance</h2>
+			<p>This book is the complete ability catalog. The Warden decides which abilities are available at their table. These guidelines help both Wardens and players understand how abilities are designed and where the balance touchpoints are.</p>
+		</div>
+		<div class="prose-columns">
+			<h3>Balance Touchpoints</h3>
+			${rulesTable(["Concern", "Suggested Approach"], [
+				["Ability deals very high damage", "Check uses-per-rest. High damage once per long rest is generally acceptable."],
+				["Ability invalidates skill challenges", "Have a direct conversation about when table-level detection bypasses apply."],
+				["Significant crowd control", "Watch for concentration \u2014 most crowd control should require it."],
+				["Cross-access ability feels too powerful", "Apply rarity cap strictly and enforce the active cross-access slot limit per the Rune Mechanics chapter."],
+				["Ability lacks clear limits", "Rule that it follows standard action economy for its listed activation and read the description conservatively."],
+			])}
+			<h3>Ability Design Philosophy</h3>
+			<p>Rift Ascendant abilities are designed to be expressive rather than optimal. The goal is that every Ascendant has a distinct action vocabulary \u2014 a way of playing that feels recognizably theirs. When building characters, prioritize abilities that generate interesting decisions rather than abilities that eliminate decision points for others at the table.</p>
+			<h3>Cross-Book Reference</h3>
+			<p>The Ascendant Guide has curated representative examples of Techniques, Powers, and Spells to introduce players to the system. This book contains the full catalogs. The Warden Guide has the adjudication rules for contested ability use. The Companion App has the searchable complete database including every generated variant.</p>
+		</div>
+	</section>`;
+}
+
+function awakenedArtsAppGuide(): string {
+	return `<section class="section-block">
+		<div class="section-intro">
+			<h2>Using the Companion App</h2>
+			<p>This book is the print edition of Awakened Arts \u2014 curated, authored, and laid out for table reference. The Companion App is the searchable complete database. Use both together for the full system.</p>
+		</div>
+		<div class="prose-columns">
+			${rulesTable(["Task", "Best Tool"], [
+				["Look up a specific ability during a session", "This book \u2014 flip to the catalog section by type"],
+				["Browse all available Runes by rarity or school", "App \u2014 filtered search is faster than a print index"],
+				["Check whether a spell is in your Job\u2019s native list", "App \u2014 cross-reference is instant"],
+				["Understand how Rune absorption mechanics work", "This book \u2014 the Rune Mechanics chapter is here"],
+				["Track which Runes are absorbed and their current status", "App \u2014 character sheet integration"],
+				["Find all abilities with specific keyword combinations", "App \u2014 full-text search"],
+				["Read the canonical text of a specific ability", "This book \u2014 all entries are printed in full"],
+			])}
+		</div>
+	</section>`;
+}
+
+// ─── Book Builders ────────────────────────────────────────────────────────────
+
 function buildAscendantBook(): BookDefinition {
 	const playerCoreRunes = coreRunes();
 	const playerCoreItems = coreItems();
@@ -1862,9 +2351,9 @@ function buildAscendantBook(): BookDefinition {
 			id: "world-lore",
 			part: "Part 1: The Rift Age",
 			title: "The Rift Age",
-			kicker: "Player Field Primer",
+			kicker: "Welcome",
 			summary:
-				"Canonical player-facing world lore, terminology, institutions, and Rift Age assumptions.",
+				"The world broke open. Rifts tore through reality, Anomalies poured out, and ordinary people began to change. This is the world you live in now.",
 			image: bookArt.ascendantWorld,
 			body: () => proseBlock(riftWorldLore()),
 		}),
@@ -1872,9 +2361,9 @@ function buildAscendantBook(): BookDefinition {
 			id: "core-mechanics",
 			part: "Part 1: The Rift Age",
 			title: "Core Rules",
-			kicker: "Ascendant Systems",
+			kicker: "How The Game Works",
 			summary:
-				"Player-facing d20 procedures, action economy, resources, rests, active abilities, and Rift Favor.",
+				"How checks work, how combat flows, what your resources are, and how the Rift gives you an edge when you need it most.",
 			image: bookArt.ascendantAbilities,
 			body: playerRulesPrimer(),
 		}),
@@ -1884,9 +2373,9 @@ function buildAscendantBook(): BookDefinition {
 			title: "Jobs",
 			kicker: "Awakening Classifications",
 			summary:
-				"All canonical Jobs with progression, traits, awakening features, proficiencies, hit dice, and structured mechanics.",
+				"Your Job defines the shape of your Awakening \u2014 how you fight, what you channel, and what the Bureau classifies you as.",
 			image: bookArt.ascendantJobs,
-			body: renderCatalog("Jobs", "The Bureau's broad classifications for Ascendant power expression.", jobs, {
+			body: renderCatalog("Jobs", "When the Rift first touches you, something inside rewrites itself. The Bureau calls these patterns Jobs \u2014 broad classifications for how Ascendant power expresses.", jobs, {
 				folder: "jobs",
 				context: "Job",
 			}),
@@ -1897,9 +2386,9 @@ function buildAscendantBook(): BookDefinition {
 			title: "Paths",
 			kicker: "Specializations",
 			summary:
-				"All canonical Paths, prerequisites, features, path tiers, linked Jobs, and mechanics.",
+				"A Path is your specialization within your Job. It\u2019s the difference between a Striker who fights with fists and one who fights with shadow.",
 			image: bookArt.ascendantPaths,
-			body: renderCatalog("Paths", "Specialized expressions of each Job.", paths, {
+			body: renderCatalog("Paths", "Every Job branches into Paths \u2014 focused expressions of your Awakening that shape your abilities, your combat role, and your identity.", paths, {
 				context: "Path",
 			}),
 		}),
@@ -1909,144 +2398,228 @@ function buildAscendantBook(): BookDefinition {
 			title: "Backgrounds",
 			kicker: "Origin Records",
 			summary:
-				"All canonical Backgrounds with features, proficiencies, equipment, ideals, bonds, flaws, and dangers.",
+				"Before the Awakening, you were someone. Your Background defines who that was \u2014 and what you carried into the Rift Age.",
 			image: bookArt.ascendantBackgrounds,
-			body: renderCatalog("Backgrounds", "Origin, training, and social context for Ascendants.", allBackgrounds, {
+			body: renderCatalog("Backgrounds", "Every Ascendant had a life before the change. Your Background is the training, the connections, and the scars you bring to the fight.", allBackgrounds, {
 				folder: "backgrounds",
 				context: "Background",
 			}),
 		}),
 		section({
-			id: "skills-feats-styles",
+			id: "skills",
 			part: "Part 2: Creating An Ascendant",
-			title: "Skills, Feats, And Fighting Styles",
-			kicker: "Build Options",
+			title: "Skills",
+			kicker: "Proficiencies",
 			summary:
-				"All canonical skills, feats, and fighting styles with benefits, prerequisites, and rules fields.",
+				"What your Ascendant knows how to do \u2014 from athletics and arcana to persuasion and stealth.",
 			image: bookArt.ascendantAbilities,
-			body:
-				renderCatalog("Skills", "Canonical skill benefits and ability associations.", comprehensiveSkills, {
+			body: renderCatalog("Skills", "Skills represent broad areas of training and expertise.", comprehensiveSkills, {
 					context: "Skill",
-				}) +
-				renderCatalog("Feats", "Canonical feats, prerequisites, benefits, and repeatability.", comprehensiveFeats, {
+				}),
+		}),
+		section({
+			id: "feats",
+			part: "Part 2: Creating An Ascendant",
+			title: "Feats",
+			kicker: "Special Talents",
+			summary:
+				"Special talents and trained advantages that set your Ascendant apart from the rank and file.",
+			image: bookArt.ascendantAbilities,
+			body: renderCatalog("Feats", "You gain a feat when your Job progression allows it. They represent focused training outside your core Path.", comprehensiveFeats, {
 					context: "Feat",
-				}) +
-				renderCatalog("Fighting Styles", "Canonical fighting style choices and combat cues.", FIGHTING_STYLES, {
+				}),
+		}),
+		section({
+			id: "fighting-styles",
+			part: "Part 2: Creating An Ascendant",
+			title: "Fighting Styles",
+			kicker: "Combat Disciplines",
+			summary:
+				"Combat disciplines that define how you handle yourself in a fight, from heavy weapons to dual wielding.",
+			image: bookArt.ascendantAbilities,
+			body: renderCatalog("Fighting Styles", "Fighting styles are specialized approaches to combat that grant specific mechanical benefits.", FIGHTING_STYLES, {
 					context: "Fighting Style",
 				}),
 		}),
 		section({
-			id: "techniques-powers-spells",
+			id: "techniques",
 			part: "Part 3: Powers And Gear",
-			title: "Techniques, Powers, And Spells",
-			kicker: "Active Ability Catalog",
+			title: "Techniques",
+			kicker: "Martial Maneuvers",
 			summary:
-				"All three RA ability categories with activation, range, duration, components, effects, limitations, and scaling.",
+				"Martial and tactical abilities honed through training and combat experience.",
 			image: bookArt.ascendantAbilities,
-			body:
-				renderCompactCatalog("Techniques", "Martial and tactical abilities, including uses, limitations, and scaling.", techniques, {
+			body: () =>
+				splitNotice(
+					"Representative Examples",
+					"These entries introduce the Technique system. The complete catalog \u2014 every Technique in Rift Ascendant \u2014 is in Rift Ascendant: Awakened Arts.",
+				) +
+				renderCompactCatalog("Representative Techniques", "Twelve entries showing the range of the Technique system. The complete catalog is in Awakened Arts.", curatedTechSample(), {
 					context: "Technique",
 					kind: "ability",
-				}) +
-				renderCompactCatalog("Powers", "Innate or Job-driven powers with primary ability, recharge, and scaling data.", powers, {
+				}),
+		}),
+		section({
+			id: "powers",
+			part: "Part 3: Powers And Gear",
+			title: "Powers",
+			kicker: "Innate Abilities",
+			summary:
+				"Innate abilities drawn directly from your Awakening and Job.",
+			image: bookArt.ascendantAbilities,
+			body: () =>
+				splitNotice(
+					"Representative Examples",
+					"These entries introduce the Power system. The complete catalog \u2014 every Power in Rift Ascendant \u2014 is in Rift Ascendant: Awakened Arts.",
+				) +
+				renderCompactCatalog("Representative Powers", "Twelve entries showing the range of the Power system. The complete catalog is in Awakened Arts.", curatedPowerSample(), {
 					context: "Power",
 					kind: "ability",
-				}) +
-				renderCompactCatalog("Spells", "Spell-slot abilities with casting time, range, duration, components, and structured spell data.", spells, {
+				}),
+		}),
+		section({
+			id: "spells",
+			part: "Part 3: Powers And Gear",
+			title: "Spells",
+			kicker: "Structured Casting",
+			summary:
+				"Structured supernatural effects channeled through spell slots, components, and concentration.",
+			image: bookArt.ascendantAbilities,
+			body: () =>
+				splitNotice(
+					"Representative Examples",
+					"These entries introduce the Spell system. The complete catalog \u2014 every Spell in Rift Ascendant \u2014 is in Rift Ascendant: Awakened Arts.",
+				) +
+				renderCompactCatalog("Representative Spells", "Twelve entries showing the range of the Spell system. The complete catalog is in Awakened Arts.", curatedSpellSample(), {
 					context: "Spell",
 					kind: "ability",
 				}),
 		}),
 		section({
-			id: "runes-sigils-tattoos",
+			id: "runes",
 			part: "Part 3: Powers And Gear",
-			title: "Runes, Sigils, And Tattoos",
+			title: "Runes",
 			kicker: "Inscribed Power",
 			summary:
-				"All canonical learning runes, sigils, and tattoos with restrictions, activation, passive bonuses, and lore.",
+				"Inscriptions absorbed into the soul, granting active and passive abilities to the bearer.",
 			image: bookArt.ascendantRunes,
 			body:
 				runePrimer() +
 				splitNotice(
 					"Core And Vault Split",
-					"The Ascendant Guide includes common, Rank D, and level-1 learning runes for character creation and early play. Higher-rank and rarer runes are printed in Vaults of the Rift so the core player guide stays usable at the table.",
+					"This chapter covers the foundational runes for character creation and early play. Higher-rank and rarer runes are in Vaults of the Rift.",
 				) +
-				renderCompactCatalog("Core Runes", "Core learning runes for character creation, early advancement, and common table lookup.", playerCoreRunes, {
+				renderCompactCatalog("Core Runes", "Runes you can absorb during character creation and early advancement.", playerCoreRunes, {
 					context: "Rune",
 					kind: "rune",
-				}) +
-				renderCatalog("Sigils", "Permanent and active inscription effects.", sigils, {
-					context: "Sigil",
-				}) +
-				renderCatalog("Tattoos", "Attunement tattoos, body locations, active veins, and resonance effects.", tattoos, {
-					context: "Tattoo",
 				}),
 		}),
 		section({
-			id: "equipment-relics-vehicles",
+			id: "sigils-tattoos",
 			part: "Part 3: Powers And Gear",
-			title: "Equipment, Relics, Artifacts, And Vehicles",
+			title: "Sigils And Tattoos",
+			kicker: "Physical Etchings",
+			summary:
+				"Permanent inscriptions etched into weapons, armor, or living skin.",
+			image: bookArt.ascendantRunes,
+			body:
+				splitNotice(
+					"In Awakened Arts",
+					"Sigils and Tattoos are permanent inscriptions that are part of the ability system. The complete Sigil and Tattoo catalogs \u2014 with full mechanics, slots, activation, and lore \u2014 are in Rift Ascendant: Awakened Arts.",
+				),
+		}),
+		section({
+			id: "equipment",
+			part: "Part 3: Powers And Gear",
+			title: "Equipment",
 			kicker: "Field Inventory",
 			summary:
-				"All canonical items, relics, artifacts, vehicles, mounts, equipment rules, costs, properties, and mechanics.",
+				"Standard-issue loadouts, mundane gear, and weapons for the working Ascendant.",
 			image: bookArt.ascendantGear,
 			body:
 				splitNotice(
 					"Core And Vault Split",
-					"The Ascendant Guide includes base equipment and common field items. Uncommon, rare, epic, and legendary equipment move to Vaults of the Rift, matching the way expanded treasure books keep a core rulebook readable.",
+					"This chapter covers base equipment and common field gear. Uncommon, rare, and legendary equipment can be found in Vaults of the Rift.",
 				) +
-				renderCompactCatalog("Core Equipment And Items", "Base equipment and common field items for player-facing character creation and table lookup.", playerCoreItems, {
+				renderCompactCatalog("Core Equipment", "Standard-issue gear and common items available during character creation and early play.", playerCoreItems, {
 					context: "Item",
 					kind: "item",
-				}) +
-				renderCatalog("Relics", "Named high-power Rift artifacts and their mechanics.", comprehensiveRelics, {
-					folder: "relics",
-					context: "Relic",
-				}) +
-				renderCatalog("Artifacts", "Major artifact records presented as table-facing references.", artifacts, {
-					folder: "artifacts",
-					context: "Artifact",
-				}) +
-				renderCatalog("Vehicles And Mounts", "Mounts, land, air, water, and Rift vehicles.", allVehicles, {
-					context: "Vehicle",
 				}),
 		}),
 		section({
-			id: "conditions-index",
+			id: "relics-artifacts",
+			part: "Part 3: Powers And Gear",
+			title: "Relics And Artifacts",
+			kicker: "Legendary Items",
+			summary:
+				"Unique items of immense power that bend reality and paint a target on your back.",
+			image: bookArt.ascendantGear,
+			body:
+				splitNotice(
+					"In Vaults of the Rift",
+					"Relics and Artifacts are high-power Rift-origin objects with world-changing mechanics. The complete Relic and Artifact catalogs \u2014 with full stats, lore, activation, and risk profiles \u2014 are in Rift Ascendant: Vaults of the Rift.",
+				),
+		}),
+		section({
+			id: "vehicles",
+			part: "Part 3: Powers And Gear",
+			title: "Vehicles And Mounts",
+			kicker: "Transportation",
+			summary:
+				"Everything that carries you into danger \u2014 from armored transports to bonded Rift creatures.",
+			image: bookArt.ascendantGear,
+			body:
+				splitNotice(
+					"In Vaults of the Rift",
+					"Vehicles and Mounts are covered in full in Rift Ascendant: Vaults of the Rift, alongside expanded equipment, relics, artifacts, and treasure tables.",
+				),
+		}),
+		section({
+			id: "conditions",
 			part: "Appendices",
-			title: "Conditions And Player Index",
+			title: "Conditions",
 			kicker: "Reference",
 			summary:
-				"Condition rules and alphabetical references for table lookup.",
+				"Status effects, afflictions, and environmental hazards \u2014 what they do and how to end them.",
 			image: bookArt.ascendantWorld,
-			body:
-				renderCatalog("Conditions", "Canonical condition effects, stages, duration, and removal rules.", conditions, {
-					context: "Condition",
-				}) +
-				renderReferenceIndex("Ascendant Guide Index", {
+			body: conditionsQuickRef(),
+		}),
+		section({
+			id: "player-index",
+			part: "Appendices",
+			title: "Player Index",
+			kicker: "Reference",
+			summary:
+				"Alphabetical index of everything in the Ascendant Guide.",
+			image: bookArt.ascendantWorld,
+			body: renderReferenceIndex("Ascendant Guide Index", {
 					Jobs: jobs,
 					Paths: paths,
 					Backgrounds: allBackgrounds,
 					Skills: comprehensiveSkills,
 					Feats: comprehensiveFeats,
+					"Fighting Styles": FIGHTING_STYLES,
 					Techniques: techniques,
 					Powers: powers,
 					Spells: spells,
-					Runes: playerCoreRunes,
+					"Core Runes": playerCoreRunes,
 					Sigils: sigils,
 					Tattoos: tattoos,
-					Items: playerCoreItems,
+					"Core Equipment": playerCoreItems,
 					Relics: comprehensiveRelics,
+					Artifacts: artifacts,
 					Vehicles: allVehicles,
+					Conditions: conditions,
 				}),
 		}),
 	];
 	return {
 		slug: "ascendant",
-		title: "Rift Ascendant - Ascendant Guide",
+		title: "Rift Ascendant \u2014 Ascendant Guide",
 		subtitle:
-			"A full player-facing sourcebook compiled from canonical Rift Ascendant rules, mechanics, and compendium data.",
-		classification: "Player Field Edition",
+			"Everything you need to awaken, survive, and fight back.",
+		classification: "Core Rulebook",
+		tagline: "The Rifts opened. You changed. Now fight.",
 		outputBase: "Rift Ascendant - Ascendant Guide",
 		coverImage: bookArt.ascendantCover,
 		sections,
@@ -2062,7 +2635,7 @@ function buildWardenBook(): BookDefinition {
 			title: "Running Rift Ascendant",
 			kicker: "Warden Operations",
 			summary:
-				"Canonical Warden-facing procedures, world systems, encounter budgets, Rift pressure, and anomaly adjudication.",
+				"How to frame danger, run encounters, track pressure, and let your players choose how deep to go.",
 			image: bookArt.wardenProcedures,
 			body: () => wardenRulesPrimer(),
 		}),
@@ -2072,7 +2645,7 @@ function buildWardenBook(): BookDefinition {
 			title: "Pressure Clocks And Scene Control",
 			kicker: "Visible Consequences",
 			summary:
-				"Open Warden clocks for containment, hunting anomalies, civilian danger, Rift collapse, and faction heat.",
+				"Visible countdown clocks for containment failures, anomaly hunts, civilian danger, Rift collapses, and faction heat.",
 			image: bookArt.wardenCover,
 			body: () => wardenClockToolkit(),
 		}),
@@ -2242,10 +2815,11 @@ function buildWardenBook(): BookDefinition {
 	];
 	return {
 		slug: "warden",
-		title: "Rift Ascendant - Warden Guide",
+		title: "Rift Ascendant \u2014 Warden Guide",
 		subtitle:
-			"A Warden-facing sourcebook for running Rift Ascendant: Rift hazards, Domain pressure, encounter math, factions, rewards, adjudication, and world operations.",
-		classification: "Warden Classified Edition",
+			"Everything the Warden needs to run the Rift Age: hazards, factions, encounter math, Domain pressure, and world operations.",
+		classification: "Warden\u2019s Manual",
+		tagline: "Control the Domains. Escalate the pressure. Run the Rift Age.",
 		outputBase: "Rift Ascendant - Warden Guide",
 		coverImage: bookArt.wardenCover,
 		sections,
@@ -2302,21 +2876,42 @@ function buildVaultsBook(): BookDefinition {
 				}),
 		}),
 		section({
-			id: "relics-artifacts",
+			id: "relics",
 			part: "Part 4: Relics And Artifacts",
-			title: "Relics And Artifacts",
+			title: "Relics",
 			kicker: "Rift Treasure",
 			summary:
-				"Named Relics, artifacts, activation rules, limitations, rarity, lore, and mechanics.",
+				"Named Relics, activation rules, limitations, rarity, lore, and mechanics.",
 			image: bookArt.vaultsRelics,
-			body: () =>
-				renderCatalog("Relics", "Named high-power Rift artifacts and their mechanics.", comprehensiveRelics, {
+			body: () => renderCatalog("Relics", "Named high-power Rift artifacts and their mechanics.", comprehensiveRelics, {
 					folder: "relics",
 					context: "Relic",
-				}) +
-				renderCatalog("Artifacts", "Major artifact records presented as table-facing references.", artifacts, {
+				}),
+		}),
+		section({
+			id: "artifacts",
+			part: "Part 4: Relics And Artifacts",
+			title: "Artifacts",
+			kicker: "World-Shaping Power",
+			summary:
+				"Major artifact records presented as table-facing references.",
+			image: bookArt.vaultsRelics,
+			body: () => renderCatalog("Artifacts", "The most dangerous objects in the Rift Age.", artifacts, {
 					folder: "artifacts",
 					context: "Artifact",
+				}),
+		}),
+		section({
+			id: "vehicles-mounts",
+			part: "Part 4: Vehicles and Mounts",
+			title: "Vehicles and Mounts",
+			kicker: "Field Transportation",
+			summary:
+				"Armored transports, bonded Rift creatures, civilian vehicles, and everything else that carries Ascendants into danger.",
+			image: bookArt.vaultsItems,
+			body: () =>
+				renderCatalog("Vehicles And Mounts", "Vehicles, transports, and mounts for field operations in the Rift Age.", allVehicles, {
+					context: "Vehicle",
 				}),
 		}),
 		section({
@@ -2337,10 +2932,10 @@ function buildVaultsBook(): BookDefinition {
 	];
 	return {
 		slug: "vaults",
-		title: "Rift Ascendant - Vaults of the Rift",
-		subtitle:
-			"An expanded player-facing supplement for higher-rank runes, uncommon-to-legendary equipment, Relics, and artifacts.",
-		classification: "Supplement",
+		title: "Rift Ascendant \u2014 Vaults of the Rift",
+		subtitle: "Expanded items, rare equipment, and world-shaping artifacts that are too dangerous for standard issue.",
+		classification: "Player Expansion",
+		tagline: "Power has a price. These are the things worth paying for.",
 		outputBase: "Rift Ascendant - Vaults of the Rift",
 		coverImage: bookArt.vaultsCover,
 		sections,
@@ -2358,7 +2953,7 @@ function buildAnomalyManual(): BookDefinition {
 			title: "Using The Anomaly Manual",
 			kicker: "Monster Manual",
 			summary:
-				"Procedures for reading anomaly stat blocks, tuning rank, selecting threat roles, and placing rewards.",
+				"How to read a stat block, scale threats by rank, assign encounter roles, and place rewards.",
 			image: bookArt.anomalyUsing,
 			body: () =>
 				anomalyDesignPrimer() +
@@ -2373,10 +2968,10 @@ function buildAnomalyManual(): BookDefinition {
 			title: "Anomaly Catalog",
 			kicker: "Threat Stat Blocks",
 			summary:
-				"All canonical anomalies with stat blocks, traits, actions, resistances, vulnerabilities, ecology, rank, and reward data.",
+				"Every creature that crawled out of the Rift, with full stat blocks, actions, traits, and ecology.",
 			image: bookArt.anomalyCatalog,
 			body: () =>
-				renderCatalog("Anomalies", "Full general anomaly catalog for Warden reference.", anomalyCatalog, {
+				renderCatalog("Anomalies", "The things that came through the Rifts. Each entry is a complete combat-ready stat block.", anomalyCatalog, {
 					folder: "anomalies",
 					context: "Anomaly",
 					anomaly: true,
@@ -2388,10 +2983,10 @@ function buildAnomalyManual(): BookDefinition {
 			title: "Shadow Soldiers",
 			kicker: "Summoned Threats",
 			summary:
-				"Shadow soldier reference entities and stat-block style support records.",
+				"Summoned entities and corrupted operatives that serve as muscle for the Rift\u2019s darker forces.",
 			image: bookArt.anomalyShadow,
 			body: () =>
-				renderCatalog("Shadow Soldiers", "Shadow soldier reference entities.", shadowCatalog, {
+				renderCatalog("Shadow Soldiers", "Summoned threats and corrupted operatives bound to the Rift\u2019s will.", shadowCatalog, {
 					context: "Shadow Soldier",
 					anomaly: true,
 				}),
@@ -2402,7 +2997,7 @@ function buildAnomalyManual(): BookDefinition {
 			title: "Anomaly Index",
 			kicker: "Reference",
 			summary:
-				"Generated alphabetical references for anomaly lookup.",
+				"Alphabetical quick-reference index for every creature in this book.",
 			image: bookArt.anomalyCatalog,
 			body: () => renderReferenceIndex("Anomaly Manual Index", {
 				Anomalies: anomalyCatalog,
@@ -2412,12 +3007,354 @@ function buildAnomalyManual(): BookDefinition {
 	];
 	return {
 		slug: "anomaly-manual",
-		title: "Rift Ascendant - Anomaly Manual",
-		subtitle:
-			"The monster-manual style sourcebook for Rift Ascendant anomalies, shadow soldiers, threat roles, and stat blocks.",
+		title: "Rift Ascendant \u2014 Anomaly Manual",
+		subtitle: "Complete table-facing stat blocks for every threat, shadow, and Anomaly in the Rift Age.",
 		classification: "Threat Catalog",
+		tagline: "Every nightmare that crawled out of the Rift.",
 		outputBase: "Rift Ascendant - Anomaly Manual",
 		coverImage: bookArt.anomalyCover,
+		sections,
+		requiredPageTarget: false,
+	};
+}
+
+function buildWorldbookBook(): BookDefinition {
+	const worldLoreText = riftWorldLore();
+	const locationCatalog = (locations as EntryRecord[]).filter(
+		(loc) => !isCampaignScopedEntry(loc),
+	);
+	const regentCatalog = regents as EntryRecord[];
+	const pantheonCatalog = PRIME_PANTHEON as EntryRecord[];
+	const sections: BookSection[] = [
+		section({
+			id: "the-rift-age",
+			part: "Part 1: The World",
+			title: "The Rift Age",
+			kicker: "Setting Overview",
+			summary:
+				"What happened, what changed, and what the world looks like now.",
+			image: bookArt.wardenWorld,
+			body: () => proseBlock(worldLoreText),
+		}),
+		section({
+			id: "rifts-and-ecology",
+			part: "Part 1: The World",
+			title: "Rifts and the Rift Ecology",
+			kicker: "How the World Changed",
+			summary:
+				"Rift anatomy, formation, rank classification, and ecological impact on mundane life.",
+			image: bookArt.wardenRift,
+			body: () => worldbookRiftEcology(),
+		}),
+		section({
+			id: "essence-and-awakening",
+			part: "Part 1: The World",
+			title: "Essence and Awakening",
+			kicker: "The Power Behind the Rift Age",
+			summary:
+				"What Essence is, how Awakening works, and what it changes in the people it touches.",
+			image: bookArt.ascendantWorld,
+			body: () => worldbookEssenceAndAwakening(),
+		}),
+		section({
+			id: "anomalies-as-force",
+			part: "Part 1: The World",
+			title: "Anomalies as a World Force",
+			kicker: "The Threat",
+			summary:
+				"What Anomalies are, how they function ecologically, and how society responds to their presence.",
+			image: bookArt.wardenAnomaly,
+			body: () => worldbookAnomaliesAsForce(),
+		}),
+		section({
+			id: "relics-in-society",
+			part: "Part 1: The World",
+			title: "Relics in Society",
+			kicker: "The Economy of Power",
+			summary:
+				"Bureau classification, Relic economics, legal status, and the political impact of world-shaping objects.",
+			image: bookArt.vaultsRelics,
+			body: () => worldbookRelicsInSociety(),
+		}),
+		section({
+			id: "factions",
+			part: "Part 2: Organizations",
+			title: "Bureau, AFA, Guilds, and Society",
+			kicker: "The Powers That Be",
+			summary:
+				"The organizations, corporations, media, law, faith, and black markets that define Rift Age society.",
+			image: bookArt.wardenOperations,
+			body: () => worldbookFactions(),
+		}),
+		section({
+			id: "locations",
+			part: "Part 3: The World in Detail",
+			title: "Locations and World Regions",
+			kicker: "Field Dossiers",
+			summary:
+				"All canonical Rift Ascendant locations with geography, encounters, hazards, and world hooks.",
+			image: bookArt.wardenWorld,
+			body: () =>
+				renderCompactCatalog(
+					"Location Dossiers",
+					"Canonical Rift Ascendant sites, regions, and points of interest.",
+					locationCatalog,
+					{ context: "Location", kind: "record" },
+				),
+		}),
+		section({
+			id: "domains-persistent",
+			part: "Part 3: The World in Detail",
+			title: "Domains and Persistent Rift Interiors",
+			kicker: "Long-Term Threats",
+			summary:
+				"What Domains are, how they differ from ordinary Rifts, their internal logic, and their persistence.",
+			image: bookArt.wardenRift,
+			body: () => worldbookDomains(),
+		}),
+		section({
+			id: "regents",
+			part: "Part 4: Powers Beyond the Bureau",
+			title: "Regents as Setting Forces",
+			kicker: "Authority Signatures",
+			summary:
+				"Regent-class authority overlays: their roles, requirements, and world-shaping impact.",
+			image: bookArt.wardenRegents,
+			body: () =>
+				renderCatalog("Regents", "Regent-class authority overlays and their setting roles.", regentCatalog, {
+					context: "Regent",
+					folder: "regents",
+					classified: true,
+				}),
+		}),
+		section({
+			id: "pantheon",
+			part: "Part 4: Powers Beyond the Bureau",
+			title: "The Pantheon and Eternals",
+			kicker: "Deep Background",
+			summary:
+				"Eternals, Exarchs, portfolios, dogma, relationships, and their place in the world\u2019s deep history.",
+			image: bookArt.wardenCover,
+			body: () =>
+				renderCatalog("Pantheon", "Eternals, Exarchs, and the deep background powers of the Rift Age.", pantheonCatalog, {
+					context: "Pantheon",
+					classified: true,
+				}),
+		}),
+		section({
+			id: "in-universe-docs",
+			part: "Appendices",
+			title: "In-Universe Documents",
+			kicker: "Field Materials",
+			summary:
+				"Bureau alerts, Guild bulletins, witness statements, media headlines, and representative Rift Age documents.",
+			image: bookArt.wardenOperations,
+			body: () => worldbookInUniverseDocs(),
+		}),
+		section({
+			id: "worldbook-index",
+			part: "Appendices",
+			title: "Worldbook Index",
+			kicker: "Reference",
+			summary:
+				"Alphabetical cross-reference for locations, regents, and pantheon entries in this book.",
+			image: bookArt.wardenWorld,
+			body: () =>
+				renderReferenceIndex("Rift Age Worldbook Index", {
+					Locations: locationCatalog,
+					Regents: regentCatalog,
+					Pantheon: pantheonCatalog,
+				}),
+		}),
+	];
+	return {
+		slug: "worldbook",
+		title: "Rift Ascendant \u2014 Rift Age Worldbook",
+		subtitle: "The complete setting sourcebook: locations, factions, regents, and the forces that shape the world.",
+		classification: "Setting Sourcebook",
+		tagline: "The world broke open. This is what it looks like now.",
+		outputBase: "Rift Ascendant - Rift Age Worldbook",
+		coverImage: bookArt.wardenWorld,
+		sections,
+		requiredPageTarget: false,
+	};
+}
+
+function buildAwakenedArtsBook(): BookDefinition {
+	const allSpells = spells as EntryRecord[];
+	const allPowers = powers as EntryRecord[];
+	const allTechniques = techniques as EntryRecord[];
+	const allRuneEntries = allRunes as EntryRecord[];
+	const sigilCatalog = sigils as EntryRecord[];
+	const tattooCatalog = tattoos as EntryRecord[];
+	const sections: BookSection[] = [
+		section({
+			id: "using-this-book",
+			part: "Part 1: The Ability System",
+			title: "Using Awakened Arts",
+			kicker: "Ability System Overview",
+			summary:
+				"How Techniques, Powers, Spells, Runes, Sigils, and Tattoos work \u2014 access rules, resource models, and how to read an entry.",
+			image: bookArt.ascendantAbilities,
+			body: () => awakenedArtsSystemPrimer(),
+		}),
+		section({
+			id: "rune-mechanics",
+			part: "Part 1: The Ability System",
+			title: "Rune Mechanics",
+			kicker: "Absorption and Cross-Access",
+			summary:
+				"How Rune absorption works, native versus cross-access rules, limits, and Warden approval procedures.",
+			image: bookArt.ascendantRunes,
+			body: () => awakenedArtsRuneDeepDive(),
+		}),
+		section({
+			id: "warden-guidance",
+			part: "Part 1: The Ability System",
+			title: "Warden Approval and Balance",
+			kicker: "Table Authority",
+			summary:
+				"Balance guidelines for Wardens, ability design notes, and how to adjudicate unusual ability interactions.",
+			image: bookArt.ascendantAbilities,
+			body: () => awakenedArtsWardenGuidance(),
+		}),
+		section({
+			id: "techniques-catalog",
+			part: "Part 2: Ability Catalogs",
+			title: "Techniques",
+			kicker: "Martial and Tactical",
+			summary:
+				"Complete catalog of martial maneuvers, tactical abilities, and trained combat expressions.",
+			image: bookArt.ascendantAbilities,
+			body: () =>
+				renderCompactCatalog(
+					"Techniques",
+					"Stamina-fueled or tactical abilities that do not rely on raw Essence casting.",
+					allTechniques,
+					{ context: "Technique", kind: "ability" },
+				),
+		}),
+		section({
+			id: "powers-catalog",
+			part: "Part 2: Ability Catalogs",
+			title: "Powers",
+			kicker: "Innate Abilities",
+			summary:
+				"Complete catalog of innate Job abilities drawn directly from the Ascendant\u2019s Awakening.",
+			image: bookArt.ascendantAbilities,
+			body: () =>
+				renderCompactCatalog(
+					"Powers",
+					"Fueled by internal Essence. Faster to deploy than spells, less structured, more personal.",
+					allPowers,
+					{ context: "Power", kind: "ability" },
+				),
+		}),
+		section({
+			id: "spells-catalog",
+			part: "Part 2: Ability Catalogs",
+			title: "Spells",
+			kicker: "Structured Casting",
+			summary:
+				"Complete catalog of structured Essence effects channeled through spell slots, components, range, and duration.",
+			image: bookArt.ascendantAbilities,
+			body: () =>
+				renderCompactCatalog(
+					"Spells",
+					"Structured supernatural effects requiring components, concentration, and spell slots.",
+					allSpells,
+					{ context: "Spell", kind: "ability" },
+				),
+		}),
+		section({
+			id: "runes-catalog",
+			part: "Part 2: Ability Catalogs",
+			title: "Runes",
+			kicker: "Inscribed Power",
+			summary:
+				"Complete catalog of Runes \u2014 all rarities, all types, all absorption classifications.",
+			image: bookArt.ascendantRunes,
+			body: () =>
+				splitNotice(
+					"Complete Rune Catalog",
+					"This chapter contains every Rune across all rarities and access types. Foundational Runes for character creation are also in the Ascendant Guide. This catalog is the complete reference.",
+				) +
+				renderCompactCatalog(
+					"Runes",
+					"Complete Rune catalog \u2014 absorb to learn the referenced ability.",
+					allRuneEntries,
+					{ context: "Rune", kind: "rune" },
+				),
+		}),
+		section({
+			id: "sigils-catalog",
+			part: "Part 3: Inscriptions",
+			title: "Sigils",
+			kicker: "Permanent Etchings",
+			summary:
+				"Complete catalog of Sigils \u2014 inscriptions on weapons, armor, and objects granting passive or activated benefits.",
+			image: bookArt.ascendantRunes,
+			body: () =>
+				renderCatalog(
+					"Sigils",
+					"Permanent inscriptions etched into weapons, armor, or objects granting passive or activated benefits.",
+					sigilCatalog,
+					{ context: "Sigil" },
+				),
+		}),
+		section({
+			id: "tattoos-catalog",
+			part: "Part 3: Inscriptions",
+			title: "Tattoos",
+			kicker: "Living Inscriptions",
+			summary:
+				"Complete catalog of Tattoos \u2014 supernatural marks inked directly into an Ascendant\u2019s skin.",
+			image: bookArt.ascendantRunes,
+			body: () =>
+				renderCatalog(
+					"Tattoos",
+					"Supernatural marks inked directly into an Ascendant\u2019s skin, granting resonance effects tied to body and spirit.",
+					tattooCatalog,
+					{ context: "Tattoo" },
+				),
+		}),
+		section({
+			id: "arts-app-guide",
+			part: "Appendices",
+			title: "Using the Companion App",
+			kicker: "Digital Reference",
+			summary:
+				"What the Companion App contains, what this book contains, and how to use both together at the table.",
+			image: bookArt.ascendantAbilities,
+			body: () => awakenedArtsAppGuide(),
+		}),
+		section({
+			id: "arts-index",
+			part: "Appendices",
+			title: "Awakened Arts Index",
+			kicker: "Reference",
+			summary:
+				"Alphabetical cross-reference for all abilities, runes, sigils, and tattoos in this book.",
+			image: bookArt.ascendantAbilities,
+			body: () =>
+				renderReferenceIndex("Awakened Arts Index", {
+					Techniques: allTechniques,
+					Powers: allPowers,
+					Spells: allSpells,
+					Runes: allRuneEntries,
+					Sigils: sigilCatalog,
+					Tattoos: tattooCatalog,
+				}),
+		}),
+	];
+	return {
+		slug: "awakened-arts",
+		title: "Rift Ascendant \u2014 Awakened Arts",
+		subtitle: "The complete ability sourcebook: every spell, power, technique, rune, sigil, and tattoo in the Rift Age.",
+		classification: "Ability Sourcebook",
+		tagline: "The power is real. Learn what it does.",
+		outputBase: "Rift Ascendant - Awakened Arts",
+		coverImage: bookArt.ascendantRunes,
 		sections,
 		requiredPageTarget: false,
 	};
@@ -2449,20 +3386,58 @@ function coverTilesFor(definition: BookDefinition): string[][] {
 				["Stat Blocks", "Anomaly Manual"],
 				["Shadows", "Summoned Forces"],
 			];
+		case "worldbook":
+			return [
+				["Locations", "World Directory"],
+				["Regents", "Authority Forces"],
+				["Pantheon", "Deep Background"],
+			];
+		case "awakened-arts":
+			return [
+				["Spells \u00b7 Powers", "Complete Catalogs"],
+				["Runes", "Absorption Guide"],
+				["Sigils \u00b7 Tattoos", "Inscriptions"],
+			];
 	}
 }
 
 function tocFor(definition: BookDefinition): string {
 	let tocPart = "";
 	return definition.sections
-		.map((item) => {
+		.map((item, index) => {
 			const partHeading =
 				item.part && item.part !== tocPart
 					? ((tocPart = item.part), `<li class="toc-part">${esc(item.part)}</li>`)
 					: "";
-			return `${partHeading}<li><a href="#${item.id}">${esc(item.title)}</a> - ${esc(item.summary)}</li>`;
+			const chapNum = String(index + 1).padStart(2, "0");
+			return `${partHeading}<li class="toc-item"><span class="toc-chapter-num">${chapNum}</span> <a href="#${item.id}"><strong>${esc(item.title)}</strong></a><br/><span class="toc-chapter-summary">${esc(item.summary)}</span></li>`;
 		})
 		.join("");
+}
+
+function bookIntroText(definition: BookDefinition): string {
+	switch (definition.slug) {
+		case "ascendant":
+			return `<p>You are holding the Ascendant Guide \u2014 everything a player needs to create a character, learn the rules, and survive the Rift Age. If you\u2019re new to Rift Ascendant, start with <strong>The Rift Age</strong> and <strong>Core Rules</strong> to understand the world and how the game works. Then build your character using <strong>Jobs</strong>, <strong>Paths</strong>, and <strong>Backgrounds</strong>.</p>
+			<p>The second half of this book is your field manual. When you need to look up a spell, check a feat, or compare weapons during play, flip to the relevant chapter. Entries are organized for fast reference \u2014 find the name, read the rules, get back to the action.</p>`;
+		case "warden":
+			return `<p>You are holding the Warden Guide \u2014 the operations manual for running Rift Ascendant. This book explains how to manage the game world, run Rifts and Domains, handle faction operations, and build balanced encounters.</p>
+			<p>It contains rules for hazards, social conflict, mass combat, and campaign scaling. It also provides the complete loot and reward generation tables needed to distribute Relics, Artifacts, and wealth to your players.</p>`;
+		case "vaults":
+			return `<p>You are holding Vaults of the Rift \u2014 the expanded equipment and treasure catalog. This book details the rare, dangerous, and high-impact items that don\u2019t belong in the standard-issue Ascendant Guide.</p>
+			<p>Inside, you\u2019ll find expanded runes, black market tech, military vehicles, and the world-shaping Relics and Artifacts that define end-game power. Every item in this book carries a risk, a history, or a consequence.</p>`;
+		case "anomaly-manual":
+			return `<p>You are holding the Anomaly Manual \u2014 the complete threat catalog for the Rift Age. This book contains combat-ready stat blocks for every Anomaly, Shadow Soldier, and rift-born entity known to the Bureau.</p>
+			<p>Entries range from standard Rank-D drones to world-ending Rank-S apex predators. Each block is formatted for rapid table reference, detailing the creature\u2019s actions, traits, and combat behavior.</p>`;
+		case "worldbook":
+			return `<p>You are holding the Rift Age Worldbook \u2014 the definitive guide to the setting, history, and geography of Rift Ascendant. This book details the state of the world following the Rift emergence.</p>
+			<p>It covers canonical locations, Bureau operations, corporate factions, and the god-like Regents and Eternals that shape reality. Use this to anchor your campaign in the established lore.</p>`;
+		case "awakened-arts":
+			return `<p>You are holding Awakened Arts \u2014 the complete compendium of Techniques, Powers, Spells, Runes, Sigils, and Tattoos. This is the master reference for the entire ability system.</p>
+			<p>While the Ascendant Guide provides foundational abilities, this book contains the expanded, exhaustive catalog. It details the precise mechanics, scaling, and interactions of every supernatural art in the game.</p>`;
+		default:
+			return `<p>Welcome to ${esc(definition.title)}.</p>`;
+	}
 }
 
 function frontMatterHtml(definition: BookDefinition): string {
@@ -2477,14 +3452,17 @@ function frontMatterHtml(definition: BookDefinition): string {
 				${coverTiles.map(([value, label]) => `<div class="cover-tile"><strong>${esc(value)}</strong>${esc(label)}</div>`).join("")}
 			</div>
 		</div>
-		<div class="book-code">A modern supernatural urban fantasy sourcebook.</div>
+		<div class="book-code">${esc(definition.tagline)}</div>
 	</section>
 	<section class="front-matter">
-		<h1>Preface</h1>
+		<h1>Welcome to Rift Ascendant</h1>
 		<div class="front-card">
-			<p><strong>Using this book.</strong> Read the opening chapters first, then use the catalog chapters as table references. Rules entries are written for play: prerequisites, activation, range, duration, costs, limits, recharge cadence, ranks, rarity, and tags appear where the canon provides them.</p>
-			<p><strong>Terminology.</strong> An Ascendant is an Awakened character. A Job is the broad power classification. A Path is a specialization. Techniques, Powers, and Spells are separate active ability types. A Warden is the table authority for Rifts, Domains, Anomalies, and world consequences.</p>
-			<p><strong>Canon note.</strong> When a catalog entry and a prose explanation conflict, use the catalog entry at the table unless your Warden intentionally changes it for the current game.</p>
+			${bookIntroText(definition)}
+		</div>
+		<div class="front-card">
+			<p><strong>Key Terms.</strong> An <strong>Ascendant</strong> is a person changed by the Rift \u2014 your character. A <strong>Job</strong> is your broad power classification. A <strong>Path</strong> is your specialization within that Job. <strong>Techniques</strong>, <strong>Powers</strong>, and <strong>Spells</strong> are the three types of active abilities. The <strong>Warden</strong> is the person running the game \u2014 they control the world, the Rifts, the Anomalies, and everything trying to kill you.</p>
+			<p><strong>The Companion App</strong> is the searchable database that backs every sourcebook. When you need more entries than fit in a curated print catalog, the App has everything.</p>
+			<p><strong>Rules Priority.</strong> When in doubt, the entry is right. Your Warden has the final word.</p>
 		</div>
 	</section>
 	<nav class="toc">
@@ -2513,24 +3491,23 @@ function professionalPrintCss(): string {
 	margin: 0.58in 0.56in 0.72in;
 	@top-left {
 		content: "Rift Ascendant";
-		font-family: "Aptos", "Segoe UI", sans-serif;
-		font-size: 7pt;
-		color: #4b5c70;
+		font-family: "Outfit", "Segoe UI", sans-serif;
+		font-size: 6.8pt;
+		color: #7a6047;
+		text-transform: uppercase;
+		letter-spacing: 0.06em;
 	}
 	@top-right {
 		content: string(chapter-title);
-		font-family: "Aptos", "Segoe UI", sans-serif;
-		font-size: 7pt;
-		color: #4b5c70;
+		font-family: "Outfit", "Segoe UI", sans-serif;
+		font-size: 6.8pt;
+		color: #7a6047;
 	}
 	@bottom-center {
 		content: none;
-		font-family: "Aptos", "Segoe UI", sans-serif;
-		font-size: 7pt;
-		color: #4b5c70;
 	}
 }
-@page:first {
+@page :first {
 	margin: 0;
 	@top-left { content: none; }
 	@top-right { content: none; }
@@ -2542,16 +3519,16 @@ function professionalPrintCss(): string {
 		print-color-adjust: exact;
 	}
 	body {
-		font-family: "Aptos", "Segoe UI", "Arial", sans-serif;
-		font-size: 10.15pt;
-		line-height: 1.42;
-		color: #161a20;
-		background: #f6f1e8;
+		font-family: "Source Serif 4", "Georgia", serif;
+		font-size: 9.5pt;
+		line-height: 1.46;
+		color: #1a1410;
+		background: #f5f0e5;
 	}
 	h1, h2, h3, h4 {
-		font-family: "Aptos Display", "Aptos", "Segoe UI", sans-serif;
-		letter-spacing: 0;
-		color: #111827;
+		font-family: "Outfit", "Segoe UI", sans-serif;
+		letter-spacing: -0.01em;
+		color: #1a0f05;
 	}
 	.chapter > .chapter-opener h1 {
 		string-set: chapter-title content(text);
@@ -2561,36 +3538,38 @@ function professionalPrintCss(): string {
 		min-height: 11in;
 		border: 0;
 		background:
-			linear-gradient(135deg, rgba(3, 6, 15, 0.96), rgba(15, 23, 42, 0.82)),
+			linear-gradient(155deg, rgba(4, 6, 15, 0.97) 0%, rgba(10, 15, 30, 0.82) 60%, rgba(6, 10, 22, 0.92) 100%),
 			var(--cover-image, none),
-			radial-gradient(circle at 20% 18%, rgba(116, 242, 255, 0.30), transparent 33%),
-			radial-gradient(circle at 88% 8%, rgba(167, 139, 250, 0.30), transparent 28%),
-			#050711;
+			radial-gradient(ellipse at 15% 12%, rgba(116, 242, 255, 0.28) 0%, transparent 40%),
+			radial-gradient(ellipse at 85% 20%, rgba(167, 139, 250, 0.26) 0%, transparent 38%),
+			#070812;
 	}
 	.cover h1 {
-		font-size: 33pt;
-		line-height: 0.98;
-		letter-spacing: 0;
+		font-size: 36pt;
+		line-height: 0.96;
+		letter-spacing: -0.02em;
+		font-weight: 800;
 	}
 	.cover-tile {
-		border-color: rgba(116, 242, 255, 0.55);
-		background: rgba(6, 13, 28, 0.82);
+		border-color: rgba(116, 242, 255, 0.3);
+		background: rgba(8, 14, 30, 0.78);
 	}
 	.front-card,
 	.callout {
-		background: #eef7fb;
-		border: 0.7pt solid #8bd7e6;
-		border-left: 4pt solid #0891b2;
+		background: rgba(255, 255, 255, 0.42);
+		border: 0;
+		border-left: 4pt solid #74f2ff;
 	}
 	.chapter-opener {
 		border: 0;
 		background:
-			linear-gradient(135deg, rgba(7, 10, 23, 0.94), rgba(21, 28, 52, 0.78)),
+			linear-gradient(155deg, rgba(5, 7, 18, 0.97), rgba(14, 20, 40, 0.84)),
 			var(--chapter-image, none),
-			#09101f;
+			#070812;
 		background-size: cover;
 		background-position: center;
 		color: #f8fbff;
+		min-height: 3in;
 	}
 	.chapter-opener h1,
 	.chapter-opener p,
@@ -2598,14 +3577,14 @@ function professionalPrintCss(): string {
 		color: #f8fbff;
 	}
 	.section-intro {
-		border-top: 1.8pt solid #0891b2;
-		border-bottom: 0.5pt solid #b8c7d8;
-		padding: 0.08in 0;
+		border-top: 2pt solid #7a6047;
+		border-bottom: 0.5pt solid #cdbf9e;
+		padding: 0.11in 0.14in;
 		margin-bottom: 0.13in;
 	}
 	.section-intro h2 {
-		font-size: 16.5pt;
-		color: #0f172a;
+		font-size: 18pt;
+		color: #1a0f05;
 	}
 	.prose-columns,
 	.catalog-grid,
@@ -2613,15 +3592,15 @@ function professionalPrintCss(): string {
 		column-gap: 0.3in;
 	}
 	.sourcebook-guide {
-		border-top: 1.2pt solid #0f766e;
-		border-bottom: 0.5pt solid #b8c7d8;
-		background: #f0f8f7;
-		padding: 0.1in 0.12in;
-		margin-bottom: 0.14in;
+		border-top: 1pt solid #7a6047;
+		border-bottom: 0.5pt solid #cdbf9e;
+		background: rgba(255, 255, 255, 0.3);
+		padding: 0.09in 0.11in;
+		margin-bottom: 0.11in;
 	}
 	.sourcebook-guide h3 {
-		font-size: 11.8pt;
-		color: #0f172a;
+		font-size: 11pt;
+		color: #1a0f05;
 		margin-bottom: 0.035in;
 	}
 	table,
@@ -2637,49 +3616,51 @@ function professionalPrintCss(): string {
 		page-break-inside: avoid;
 	}
 	th {
-		background: #102033;
-		color: #f8fbff;
-		border-color: #324963;
+		background: #2a1a0e;
+		color: #f5f0e5;
+		border-color: #4a3020;
 	}
 	td {
-		background: rgba(255, 255, 255, 0.58);
+		background: rgba(255, 255, 255, 0.55);
 	}
 	.entry,
 	.compact-entry,
 	.statblock {
 		border-radius: 2pt;
-		border-color: #93a4ba;
 		box-shadow: none;
 	}
 	.entry {
-		padding: 0.095in 0.035in 0.105in;
-		margin-bottom: 0.1in;
+		padding: 0.09in 0.035in 0.1in;
+		margin-bottom: 0.09in;
 	}
 	.entry h3 {
-		font-size: 12.1pt;
+		font-size: 12pt;
+		font-family: "Outfit", sans-serif;
 	}
 	.compact-entry {
-		padding: 0.065in 0.045in 0.07in;
-		margin-bottom: 0.08in;
+		padding: 0.06in 0.042in 0.065in;
+		margin-bottom: 0.075in;
 	}
 	.compact-entry h3 {
-		font-size: 10.1pt;
+		font-size: 10pt;
 		line-height: 1.12;
+		font-family: "Outfit", sans-serif;
 	}
 	.compact-line {
-		font-size: 8pt;
-		line-height: 1.3;
+		font-size: 7.8pt;
+		line-height: 1.32;
 	}
 	.statblock {
 		break-inside: auto;
 		page-break-inside: auto;
-		padding: 0.13in;
 	}
-	.statblock h3 {
-		font-size: 13pt;
+	.statblock-header h3 {
+		font-size: 14pt;
+		font-family: "Outfit", sans-serif;
 	}
 	.field-grid dt {
-		font-size: 7.7pt;
+		font-size: 7.2pt;
+		font-family: "Outfit", sans-serif;
 	}
 	.nested-grid {
 		display: block;
@@ -2687,8 +3668,9 @@ function professionalPrintCss(): string {
 	}
 	.nested-grid dt {
 		display: inline;
-		font-size: 7.2pt;
-		letter-spacing: 0.02em;
+		font-size: 7pt;
+		letter-spacing: 0.03em;
+		font-family: "Outfit", sans-serif;
 	}
 	.nested-grid dt::after {
 		content: ": ";
@@ -2699,7 +3681,7 @@ function professionalPrintCss(): string {
 	.nested-grid dd::after {
 		content: "";
 		display: block;
-		margin-bottom: 0.025in;
+		margin-bottom: 0.022in;
 	}
 	.entry-figure {
 		width: 1.25in;
@@ -2709,19 +3691,43 @@ function professionalPrintCss(): string {
 		background: #0f253b;
 		color: #ecfeff;
 		border-color: #27667d;
-		font-size: 7pt;
-		letter-spacing: 0.03em;
+		font-size: 6.8pt;
+		letter-spacing: 0.04em;
+		font-family: "Outfit", sans-serif;
 	}
 	.index-table {
-		font-size: 8.2pt;
-		column-gap: 0.22in;
+		font-size: 8pt;
+		column-gap: 0.2in;
 	}
 	.small {
-		font-size: 8pt;
+		font-size: 7.8pt;
 	}
 	p, li {
-		orphans: 2;
-		widows: 2;
+		orphans: 3;
+		widows: 3;
+	}
+	.split-notice {
+		border: 1pt solid #1a0f05;
+		background: #ece7da;
+		padding: 0.15in;
+		margin: 0.15in 0;
+		text-align: center;
+		page-break-inside: avoid;
+	}
+	.split-notice h2 {
+		margin: 0 0 0.05in;
+		font-size: 14pt;
+		color: #5a1c15;
+	}
+	.split-notice p {
+		margin: 0;
+		font-size: 9.5pt;
+		font-style: italic;
+	}
+	.rules-table p {
+		margin: 0;
+		padding: 0 0 0.04in 0;
+		line-height: 1.25;
 	}
 }
 `;
@@ -2971,6 +3977,10 @@ function tryVivliostyle(htmlPath: string, pdfPath: string): boolean {
 }
 
 function tryVivliostyleChunk(htmlPath: string, pdfPath: string, label: string): boolean {
+	if (vivliostyleTimedOut) {
+		report.failedExportAttempts.push(`Vivliostyle skipped for ${label} due to earlier timeout.`);
+		return false;
+	}
 	const vivliostyle = getVivliostyleExecutable();
 	if (!vivliostyle) {
 		report.failedExportAttempts.push(
@@ -2982,9 +3992,17 @@ function tryVivliostyleChunk(htmlPath: string, pdfPath: string, label: string): 
 		vivliostyle,
 		["build", htmlPath, "-o", pdfPath, "--size", "letter"],
 		repoRoot,
-		120000,
+		300000, // 5 min per chunk — large image-heavy chapters can be slow
 	);
 	if (result.status === 0 && existsSync(pdfPath)) return true;
+	if (result.status === null) {
+		// Single chunk timed out — fall back for this chunk only, don't kill all remaining
+		report.failedExportAttempts.push(
+			`Vivliostyle timed out for ${label} (>300s); this chunk rendered via Playwright fallback.`,
+		);
+		if (existsSync(pdfPath)) rmSync(pdfPath, { force: true });
+		return false;
+	}
 	if (existsSync(pdfPath)) rmSync(pdfPath, { force: true });
 	report.failedExportAttempts.push(
 		`Vivliostyle chunk fallback for ${label}: ${result.stderr || result.stdout || "no diagnostic output"}`,
@@ -3774,6 +4792,8 @@ async function main() {
 	const builds = [
 		{ slug: "ascendant" as const, build: buildAscendantBook },
 		{ slug: "warden" as const, build: buildWardenBook },
+		{ slug: "worldbook" as const, build: buildWorldbookBook },
+		{ slug: "awakened-arts" as const, build: buildAwakenedArtsBook },
 		{ slug: "vaults" as const, build: buildVaultsBook },
 		{ slug: "anomaly-manual" as const, build: buildAnomalyManual },
 	].filter((item) => !onlyBook || item.slug === onlyBook);

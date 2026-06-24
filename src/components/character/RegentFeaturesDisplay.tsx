@@ -1,6 +1,5 @@
 import { CheckCircle, Crown, Lock } from "lucide-react";
 import { AutoLinkText } from "@/components/compendium/AutoLinkText";
-import { ExpandableText } from "@/components/ui/ExpandableText";
 import { Badge } from "@/components/ui/badge";
 import {
 	Card,
@@ -9,6 +8,7 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
+import { ExpandableText } from "@/components/ui/ExpandableText";
 import { getStaticRegents } from "@/lib/ProtocolDataManager";
 import { cn } from "@/lib/utils";
 import type { DetailData } from "@/types/character";
@@ -261,7 +261,10 @@ export function RegentFeaturesDisplay({
 										</Badge>
 									)}
 								</div>
-								<ExpandableText className="text-sm text-muted-foreground" lines={2}>
+								<ExpandableText
+									className="text-sm text-muted-foreground"
+									lines={2}
+								>
 									<AutoLinkText text={feature.description || ""} />
 								</ExpandableText>
 							</button>

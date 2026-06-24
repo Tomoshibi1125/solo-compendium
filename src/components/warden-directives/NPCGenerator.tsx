@@ -298,7 +298,7 @@ Include: Stat block, combat tactics, full lore, dialogue samples, and plot hooks
 											Enhanced Dossier
 										</span>
 									</div>
-									<div className="text-sm text-muted-foreground whitespace-pre-line bg-black/40 rounded-lg p-4 max-h-[400px] overflow-y-auto border border-primary/10">
+									<div className="text-sm text-muted-foreground whitespace-pre-line bg-black/40 rounded-lg p-4 max-h-none sm:max-h-[400px] overflow-y-auto border border-primary/10">
 										{isEnhancing ? (
 											<div className="flex items-center justify-center py-8">
 												<Loader2 className="w-8 h-8 animate-spin text-primary/40" />

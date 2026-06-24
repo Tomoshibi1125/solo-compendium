@@ -1,0 +1,1493 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8"/>
+	<title>Rift Ascendant  -  Ascendant Guide - The Rift Age</title>
+	<style>/* ============================================================
+   RIFT ASCENDANT — SOURCEBOOK DESIGN SYSTEM
+   Professional TTRPG print stylesheet
+   ============================================================ */
+
+/* --- Google Fonts ----------------------------------------- */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400;1,8..60,600&family=JetBrains+Mono:wght@400;700&display=swap');
+
+/* --- Page Setup ------------------------------------------- */
+@page {
+	size: Letter;
+	margin: 0.58in 0.56in 0.72in;
+}
+
+/* --- Design Tokens ---------------------------------------- */
+:root {
+	/* Rift Ascendant brand palette */
+	--ra-bg:          #070812;
+	--ra-panel:       #101524;
+	--ra-panel-2:     #151b2f;
+	--ra-ink:         #f3f8ff;
+	--ra-muted:       #a8b6c7;
+	--ra-cyan:        #74f2ff;
+	--ra-violet:      #a78bfa;
+	--ra-silver:      #d8e3ef;
+	--ra-crimson:     #d84b63;
+	--ra-line:        #31415b;
+	--ra-paper:       #f5f0e5;
+	--ra-paper-ink:   #1a1410;
+	--ra-paper-muted: #5d574d;
+	--ra-paper-line:  #cdbf9e;
+
+	/* Typography */
+	--font-heading: 'Outfit', 'Segoe UI', system-ui, sans-serif;
+	--font-body:    'Source Serif 4', 'Georgia', 'Times New Roman', serif;
+	--font-mono:    'JetBrains Mono', 'Cascadia Mono', 'Consolas', monospace;
+
+	/* Entry tier accents */
+	--tier-legendary-border: #b8860b;
+	--tier-legendary-bg:     #fdf6e3;
+	--tier-legendary-title:  #78350f;
+	--tier-rare-border:      var(--ra-cyan);
+	--tier-rare-bg:          #f0f9ff;
+	--tier-rare-title:       #0c4a6e;
+	--tier-uncommon-border:  #94a3b8;
+	--tier-uncommon-bg:      #f8fafc;
+	--tier-uncommon-title:   #1e293b;
+}
+
+/* --- Reset ------------------------------------------------ */
+*, *::before, *::after {
+	box-sizing: border-box;
+}
+
+/* --- Base ------------------------------------------------- */
+html {
+	background: var(--ra-paper);
+}
+
+body {
+	margin: 0;
+	background: var(--ra-paper);
+	color: var(--ra-paper-ink);
+	font-family: var(--font-body);
+	font-size: 9.5pt;
+	line-height: 1.46;
+	-webkit-print-color-adjust: exact;
+	print-color-adjust: exact;
+}
+
+/* --- Type Scale ------------------------------------------- */
+h1, h2, h3, h4, h5 {
+	font-family: var(--font-heading);
+	line-height: 1.1;
+	margin: 0 0 0.16in;
+	color: #1a0f05;
+	font-variant: normal;
+	letter-spacing: -0.01em;
+	text-rendering: optimizeLegibility;
+}
+
+h1 { font-size: 26pt; font-weight: 800; }
+h2 { font-size: 17pt; font-weight: 700; }
+h3 { font-size: 12pt; font-weight: 700; }
+h4 { font-size: 10pt; font-weight: 600; }
+h5 { font-size: 8.5pt; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; }
+
+p {
+	margin: 0 0 0.075in;
+	orphans: 3;
+	widows: 3;
+}
+
+ul, ol {
+	margin: 0.03in 0 0.08in 0.17in;
+	padding: 0;
+}
+
+li {
+	margin: 0.015in 0;
+	orphans: 3;
+	widows: 3;
+}
+
+strong { color: #2d1a08; }
+
+em { font-style: italic; }
+
+code, pre {
+	font-family: var(--font-mono);
+}
+
+pre {
+	white-space: pre-wrap;
+	background: #1e1a15;
+	color: #f5f0e5;
+	border: 0.5pt solid #4a3f2f;
+	padding: 0.09in;
+	margin: 0.08in 0 0.12in;
+	font-size: 7pt;
+	break-inside: avoid;
+}
+
+table {
+	border-collapse: collapse;
+	width: 100%;
+	margin: 0.07in 0 0.11in;
+	font-size: 8.35pt;
+	break-inside: auto;
+}
+
+th, td {
+	border: 0.5pt solid var(--ra-paper-line);
+	padding: 0.042in 0.052in;
+	vertical-align: top;
+}
+
+th {
+	background: #2a1a0e;
+	color: #f5f0e5;
+	font-family: var(--font-heading);
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+	font-size: 7.2pt;
+	font-weight: 700;
+}
+
+td {
+	background: rgba(255, 255, 255, 0.45);
+	font-family: var(--font-body);
+}
+
+tr:nth-child(even) td {
+	background: rgba(205, 191, 158, 0.18);
+}
+
+/* --- Cover ------------------------------------------------ */
+.cover {
+	height: 130vw;
+	min-height: 130vw;
+	color: var(--ra-ink);
+	background:
+		linear-gradient(180deg, rgba(4, 6, 15, 0.9) 0%, rgba(10, 15, 30, 0.2) 40%, rgba(10, 15, 30, 0.3) 60%, rgba(4, 6, 15, 0.95) 100%),
+		var(--cover-image, none),
+		radial-gradient(ellipse at 15% 12%, rgba(116, 242, 255, 0.28) 0%, transparent 40%),
+		radial-gradient(ellipse at 85% 20%, rgba(167, 139, 250, 0.26) 0%, transparent 38%),
+		radial-gradient(ellipse at 50% 85%, rgba(216, 75, 99, 0.12) 0%, transparent 35%),
+		#070812;
+	background-size: cover;
+	background-position: center;
+	border: 0;
+	padding: 0.65in;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	overflow: hidden;
+	page-break-after: always;
+	break-after: page;
+}
+
+.cover::before {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	height: 5pt;
+	background: linear-gradient(90deg, var(--ra-cyan), var(--ra-violet), var(--ra-crimson));
+}
+
+.cover-kicker,
+.book-code,
+.classification,
+.eyebrow,
+.tag,
+.meta,
+.caption {
+	text-transform: uppercase;
+	letter-spacing: 0.09em;
+}
+
+.cover-kicker {
+	color: var(--ra-cyan);
+	font-family: var(--font-heading);
+	font-size: 8.5pt;
+	font-weight: 700;
+	margin-bottom: 0.1in;
+}
+
+.cover h1 {
+	color: #ffffff;
+	font-family: var(--font-heading);
+	font-size: 36pt;
+	font-weight: 800;
+	letter-spacing: -0.02em;
+	line-height: 0.96;
+	max-width: 6.4in;
+	text-shadow: 0 0 24px rgba(116, 242, 255, 0.22), 0 2px 8px rgba(0,0,0,0.8);
+	margin-bottom: 0.14in;
+}
+
+.cover-subtitle {
+	max-width: 5.6in;
+	font-family: var(--font-heading);
+	font-size: 12pt;
+	font-weight: 400;
+	color: #c8d8ea;
+	letter-spacing: 0.01em;
+	margin-bottom: 0.06in;
+}
+
+.cover-grid {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 0.1in;
+	margin-top: 0.22in;
+}
+
+.cover-tile {
+	border: 0.5pt solid rgba(116, 242, 255, 0.3);
+	background: rgba(8, 14, 30, 0.78);
+	backdrop-filter: blur(4px);
+	padding: 0.11in 0.12in;
+	break-inside: avoid;
+}
+
+.cover-tile strong {
+	display: block;
+	color: var(--ra-cyan);
+	font-family: var(--font-heading);
+	font-size: 14pt;
+	font-weight: 800;
+	margin-bottom: 0.02in;
+}
+
+.book-code {
+	font-family: var(--font-heading);
+	font-size: 8pt;
+	color: rgba(200, 216, 234, 0.65);
+	letter-spacing: 0.1em;
+}
+
+/* --- Front Matter ----------------------------------------- */
+.front-matter,
+.front-card,
+.callout,
+.classified,
+.entry,
+.statblock,
+.figure-card,
+.compact-entry,
+.cover-tile,
+.sidebar-note,
+.sidebar-tip,
+.sidebar-warning,
+.flavor-box,
+.read-aloud {
+	break-inside: avoid;
+}
+
+.front-matter {
+	padding: 0.04in 0;
+}
+
+.front-matter h1 {
+	font-size: 24pt;
+	font-family: var(--font-heading);
+	font-weight: 800;
+	border-bottom: 2pt solid var(--ra-paper-line);
+	padding-bottom: 0.07in;
+	margin-bottom: 0.14in;
+}
+
+.front-card {
+	border-left: 4pt solid var(--ra-cyan);
+	background: rgba(255, 255, 255, 0.42);
+	padding: 0.14in 0.16in;
+	margin: 0 0 0.14in;
+	border-radius: 0 2pt 2pt 0;
+}
+
+.front-card p:last-child { margin-bottom: 0; }
+
+/* --- Table of Contents ------------------------------------ */
+.toc {
+	page-break-after: always;
+}
+
+.toc h1 {
+	font-size: 24pt;
+	font-family: var(--font-heading);
+	font-weight: 800;
+	border-bottom: 2pt solid var(--ra-paper-line);
+	padding-bottom: 0.07in;
+}
+
+.toc ol {
+	column-count: 2;
+	column-gap: 0.28in;
+	margin-left: 0.16in;
+	font-family: var(--font-body);
+	font-size: 9pt;
+}
+
+.toc li {
+	margin-bottom: 0.08in;
+	break-inside: avoid;
+	list-style: none;
+	position: relative;
+	left: -0.16in;
+}
+
+.toc a {
+	text-decoration: none;
+	color: inherit;
+}
+
+.toc-chapter-num {
+	font-family: var(--font-heading);
+	font-weight: 800;
+	color: var(--ra-cyan);
+	margin-right: 0.05in;
+	font-size: 10pt;
+}
+
+.toc-chapter-summary {
+	display: block;
+	font-size: 8pt;
+	color: #555;
+	font-style: italic;
+	margin-left: 0.22in;
+	line-height: 1.2;
+	margin-top: 0.02in;
+}
+.toc .toc-part {
+	list-style: none;
+	margin: 0.11in 0 0.035in -0.14in;
+	padding-top: 0.04in;
+	border-top: 0.5pt solid #8a6c4e;
+	color: #4a2e14;
+	font-family: var(--font-heading);
+	font-weight: 800;
+	text-transform: uppercase;
+	letter-spacing: 0.07em;
+	font-size: 7.8pt;
+}
+
+/* --- Chapter Structure ------------------------------------ */
+.chapter {
+	page-break-before: always;
+}
+
+.chapter-opener {
+	position: relative;
+	color: var(--ra-ink);
+	background:
+		linear-gradient(155deg, rgba(5, 7, 18, 0.97), rgba(14, 20, 40, 0.84)),
+		var(--chapter-image, none),
+		#070812;
+	background-size: cover;
+	background-position: center;
+	border: 0;
+	padding: 0 0.36in 0.36in;
+	padding-top: 0.22in;
+	margin-bottom: 0.2in;
+	min-height: 3in;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-end;
+	overflow: hidden;
+}
+
+.chapter-opener::before {
+	content: "";
+	display: block;
+	height: 4pt;
+	background: linear-gradient(90deg, var(--ra-cyan), var(--ra-violet));
+	margin-bottom: 0.22in;
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+}
+
+.chapter-opener h1 {
+	color: #ffffff;
+	font-family: var(--font-heading);
+	font-size: 28pt;
+	font-weight: 800;
+	margin-bottom: 0.06in;
+	text-shadow: 0 2px 12px rgba(0,0,0,0.7);
+}
+
+.chapter-opener p {
+	max-width: 6in;
+	color: #d4e8f8;
+	font-family: var(--font-body);
+	font-size: 9.5pt;
+	font-style: italic;
+	margin: 0;
+}
+
+.eyebrow {
+	color: var(--ra-cyan);
+	font-family: var(--font-heading);
+	font-size: 7pt;
+	font-weight: 700;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+	margin-bottom: 0.07in;
+}
+
+/* --- Section Intro ---------------------------------------- */
+.section-intro {
+	background: rgba(255, 255, 255, 0.3);
+	border-top: 2pt solid #7a6047;
+	border-bottom: 0.5pt solid var(--ra-paper-line);
+	border-left: 0;
+	border-right: 0;
+	padding: 0.11in 0.14in;
+	margin-bottom: 0.13in;
+	column-span: all;
+}
+
+.section-intro h2 {
+	font-size: 18pt;
+	font-family: var(--font-heading);
+	font-weight: 800;
+	color: #1a0f05;
+	margin-bottom: 0.05in;
+}
+
+.section-intro p:last-child { margin-bottom: 0; }
+
+/* --- Two-Column Prose ------------------------------------- */
+.prose-columns {
+	column-count: 2;
+	column-gap: 0.3in;
+	column-rule: 0.35pt solid rgba(95, 70, 50, 0.3);
+	hyphens: auto;
+}
+
+/* Drop cap on first paragraph of a chapter */
+.chapter > .prose-columns > p:first-of-type::first-letter,
+.chapter > .section-block > .prose-columns > p:first-of-type::first-letter {
+	font-family: var(--font-heading);
+	font-size: 3.2em;
+	font-weight: 800;
+	line-height: 0.78;
+	float: left;
+	margin: 0.02em 0.06em 0 0;
+	color: #7a6047;
+}
+
+.prose-columns h2,
+.prose-columns h3,
+.prose-columns h4 {
+	break-after: avoid;
+}
+
+.prose-columns table,
+.prose-columns blockquote,
+.prose-columns ol,
+.prose-columns ul {
+	break-inside: avoid;
+}
+
+/* --- Catalog Grid ----------------------------------------- */
+.catalog-grid {
+	display: block;
+	column-count: 2;
+	column-gap: 0.28in;
+	column-rule: 0.35pt solid rgba(95, 70, 50, 0.28);
+}
+
+/* --- Entry Cards ------------------------------------------ */
+.entry {
+	display: inline-block;
+	width: 100%;
+	background: rgba(255, 255, 255, 0.28);
+	border: 0;
+	border-top: 1pt solid #8a6e50;
+	padding: 0.09in 0.04in 0.1in;
+	margin: 0 0 0.09in;
+	box-shadow: none;
+	break-inside: avoid;
+}
+
+.entry h3 {
+	font-family: var(--font-heading);
+	font-size: 12pt;
+	font-weight: 700;
+	color: #1a0f05;
+	margin-bottom: 0.035in;
+}
+
+.entry-description {
+	color: #1f2937;
+	font-style: italic;
+	margin: 0.04in 0 0.07in;
+	font-size: 9pt;
+}
+
+/* Flavor / lore text block inside entries */
+.entry-description blockquote,
+.callout {
+	border-left: 3pt solid var(--ra-cyan);
+	background: rgba(220, 248, 255, 0.35);
+	padding: 0.07in 0.09in;
+	margin: 0.07in 0;
+	font-style: italic;
+}
+
+/* Entry Tier Variants */
+.entry--legendary {
+	border-top: 4pt solid var(--tier-legendary-border);
+	background: var(--tier-legendary-bg);
+}
+.entry--legendary h3 { color: var(--tier-legendary-title); }
+
+.entry--rare {
+	border-top: 3pt solid var(--tier-rare-border);
+	background: var(--tier-rare-bg);
+}
+.entry--rare h3 { color: var(--tier-rare-title); }
+
+.entry--uncommon {
+	border-top: 2pt solid var(--tier-uncommon-border);
+	background: var(--tier-uncommon-bg);
+}
+.entry--uncommon h3 { color: var(--tier-uncommon-title); }
+
+.entry--classified {
+	background: #111827;
+	color: #e5f2ff;
+	border: 0.8pt solid #334155;
+	border-left: 4pt solid var(--ra-crimson);
+	border-top: 0.8pt solid #334155;
+	padding: 0.1in;
+}
+.entry--classified h3 { color: #ffffff; }
+.entry--classified .field-grid dt { color: #fca5a5; }
+
+/* --- Compact Catalog -------------------------------------- */
+.compact-catalog {
+	column-count: 2;
+	column-gap: 0.24in;
+	column-rule: 0.3pt solid rgba(95, 70, 50, 0.25);
+}
+
+.compact-entry {
+	display: inline-block;
+	width: 100%;
+	margin: 0 0 0.075in;
+	padding: 0.06in 0.04in 0.065in;
+	border-top: 0.6pt solid #8b6f51;
+	background: rgba(255, 255, 255, 0.2);
+	break-inside: avoid;
+}
+
+.compact-entry h3 {
+	font-family: var(--font-heading);
+	margin: 0 0 0.022in;
+	font-size: 10pt;
+	font-weight: 700;
+	line-height: 1.12;
+	color: #111827;
+}
+
+.compact-meta {
+	margin-bottom: 0.022in;
+	font-size: 7.2pt;
+}
+
+.compact-line {
+	margin: 0 0 0.032in;
+	font-size: 7.8pt;
+	line-height: 1.32;
+}
+
+.compact-line strong {
+	font-family: var(--font-heading);
+	color: #5f3b13;
+	font-size: 7pt;
+	text-transform: uppercase;
+	letter-spacing: 0.03em;
+}
+
+/* --- Meta & Tags ------------------------------------------ */
+.meta {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.03in;
+	margin-bottom: 0.045in;
+}
+
+.tag {
+	border: 0.5pt solid #a89779;
+	background: rgba(255, 255, 255, 0.45);
+	color: #3a2a1b;
+	border-radius: 0.04in;
+	padding: 0.02in 0.042in;
+	font-family: var(--font-heading);
+	font-size: 6.8pt;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+}
+
+.tag.hot {
+	background: #fff1f2;
+	border-color: #f0a2ae;
+	color: #9f1239;
+}
+
+/* --- Field Grid ------------------------------------------- */
+.field-grid {
+	display: grid;
+	grid-template-columns: 0.9in 1fr;
+	column-gap: 0.055in;
+	row-gap: 0.032in;
+	margin: 0.038in 0 0;
+}
+
+.field-grid dt {
+	color: #334155;
+	font-family: var(--font-heading);
+	font-weight: 700;
+	font-size: 7.2pt;
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+}
+
+.field-grid dd {
+	margin: 0;
+	min-width: 0;
+	font-family: var(--font-body);
+	font-size: 8.8pt;
+}
+
+.nested-grid {
+	display: block;
+	margin: 0.018in 0;
+}
+
+.nested-grid dt {
+	display: inline;
+	font-family: var(--font-heading);
+	font-size: 7pt;
+	font-weight: 700;
+	letter-spacing: 0.03em;
+	color: #4a3520;
+}
+
+.nested-grid dt::after {
+	content: ": ";
+}
+
+.nested-grid dd {
+	display: inline;
+}
+
+.nested-grid dd::after {
+	content: "";
+	display: block;
+	margin-bottom: 0.022in;
+}
+
+.nested-card {
+	background: rgba(255, 255, 255, 0.32);
+	border: 0.5pt solid var(--ra-paper-line);
+	padding: 0.05in;
+	margin: 0.03in 0;
+}
+
+.compact-list {
+	margin-left: 0.12in;
+}
+
+/* --- Stat Blocks ------------------------------------------ */
+.statblock {
+	background: #fffaf0;
+	border: 0.7pt solid #c9a84c;
+	border-top: 0;
+	padding: 0 0 0.12in;
+	margin: 0 0 0.13in;
+	display: block;
+	width: 100%;
+	break-inside: auto;
+	page-break-inside: auto;
+	border-radius: 0 0 3pt 3pt;
+}
+
+.statblock-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	background: linear-gradient(135deg, #1e0e04, #2d1a08);
+	border-radius: 3pt 3pt 0 0;
+	padding: 0.075in 0.13in;
+	margin-bottom: 0;
+}
+
+.statblock-header h3 {
+	font-family: var(--font-heading);
+	font-size: 14pt;
+	font-weight: 800;
+	color: #ffffff;
+	margin: 0;
+	text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+}
+
+.threat-badge {
+	background: rgba(184, 137, 56, 0.28);
+	border: 0.5pt solid #b88938;
+	color: #fef3c7;
+	font-family: var(--font-heading);
+	font-size: 7pt;
+	font-weight: 700;
+	padding: 0.02in 0.06in;
+	border-radius: 2pt;
+	white-space: nowrap;
+	letter-spacing: 0.04em;
+}
+
+.statblock-type {
+	font-style: italic;
+	font-family: var(--font-body);
+	color: #5c3a1a;
+	font-size: 9pt;
+	padding: 0.04in 0.13in 0.02in;
+}
+
+.statblock-divider {
+	height: 1.5pt;
+	background: linear-gradient(90deg, transparent, #b88938 20%, #d4a84b 50%, #b88938 80%, transparent);
+	margin: 0.04in 0.13in;
+}
+
+.statblock-core {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.1in;
+	padding: 0.05in 0.13in;
+	font-family: var(--font-mono);
+	font-size: 8.5pt;
+	line-height: 1.3;
+}
+
+.statblock-core span strong {
+	font-family: var(--font-heading);
+	color: #7c2d12;
+	text-transform: uppercase;
+	font-size: 6.8pt;
+	letter-spacing: 0.05em;
+	display: block;
+}
+
+.statblock-section {
+	padding: 0 0.13in;
+}
+
+.statblock-section h4 {
+	font-family: var(--font-heading);
+	font-size: 9.5pt;
+	font-weight: 700;
+	color: #7c2d12;
+	border-bottom: 0.5pt solid #d7b97a;
+	margin: 0.06in 0 0.04in;
+	padding-bottom: 0.02in;
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+}
+
+/* Legacy stat block h3 (fallback for old-format entries) */
+.statblock > h3 {
+	background: linear-gradient(135deg, #1e0e04, #2d1a08);
+	color: #ffffff;
+	font-family: var(--font-heading);
+	font-size: 14pt;
+	font-weight: 800;
+	margin: 0 0 0.06in;
+	padding: 0.075in 0.13in;
+	border-radius: 3pt 3pt 0 0;
+}
+
+/* --- Ability Grid ----------------------------------------- */
+.ability-grid {
+	display: grid;
+	grid-template-columns: repeat(6, 1fr);
+	gap: 0.03in;
+	margin: 0.06in 0.13in;
+	text-align: center;
+}
+
+.ability-grid div {
+	border: 0.5pt solid #d7b97a;
+	background: #fff6dd;
+	padding: 0.03in 0.015in;
+}
+
+.ability-grid strong {
+	display: block;
+	font-family: var(--font-heading);
+	color: #7c2d12;
+	font-size: 6.5pt;
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+	margin-bottom: 0.01in;
+}
+
+.ability-grid span {
+	font-family: var(--font-mono);
+	font-size: 9pt;
+	font-weight: 700;
+}
+
+/* --- Sidebar & Callout System ----------------------------- */
+.sidebar-note {
+	background: #f5f0e8;
+	border-left: 3pt solid #8b6f51;
+	padding: 0.1in 0.12in;
+	margin: 0.1in 0;
+	border-radius: 0 2pt 2pt 0;
+	font-size: 8.8pt;
+	break-inside: avoid;
+}
+
+.sidebar-note > h4:first-child,
+.sidebar-note > h5:first-child {
+	color: #5f3b13;
+	font-family: var(--font-heading);
+	font-size: 9pt;
+	margin-bottom: 0.04in;
+}
+
+.sidebar-tip {
+	background: #ecfeff;
+	border-left: 3pt solid var(--ra-cyan);
+	padding: 0.1in 0.12in;
+	margin: 0.1in 0;
+	border-radius: 0 2pt 2pt 0;
+	font-size: 8.8pt;
+	break-inside: avoid;
+}
+
+.sidebar-tip > h4:first-child,
+.sidebar-tip > h5:first-child {
+	color: #0c4a6e;
+	font-family: var(--font-heading);
+	font-size: 9pt;
+	margin-bottom: 0.04in;
+}
+
+.sidebar-warning {
+	background: #1e1215;
+	color: #fecdd3;
+	border-left: 4pt solid var(--ra-crimson);
+	padding: 0.1in 0.12in;
+	margin: 0.1in 0;
+	border-radius: 0 2pt 2pt 0;
+	font-size: 8.8pt;
+	break-inside: avoid;
+}
+
+.sidebar-warning > h4:first-child,
+.sidebar-warning > h5:first-child {
+	color: #fda4af;
+	font-family: var(--font-heading);
+	font-size: 9pt;
+	margin-bottom: 0.04in;
+}
+
+.sidebar-warning p { color: #fecdd3; }
+
+.flavor-box {
+	position: relative;
+	font-style: italic;
+	font-family: var(--font-body);
+	background: rgba(255, 255, 255, 0.18);
+	padding: 0.1in 0.14in 0.1in 0.22in;
+	border-left: 2pt solid var(--ra-paper-line);
+	margin: 0.09in 0;
+	color: #3a2a1b;
+	font-size: 9pt;
+	break-inside: avoid;
+}
+
+.flavor-box::before {
+	content: "\201C";
+	position: absolute;
+	left: 0.04in;
+	top: 0.04in;
+	font-family: var(--font-heading);
+	font-size: 24pt;
+	line-height: 1;
+	color: var(--ra-paper-line);
+}
+
+.flavor-box p:last-child { margin-bottom: 0; }
+
+.read-aloud {
+	background: #e8eef4;
+	border-left: 3pt solid #64748b;
+	padding: 0.11in 0.15in;
+	margin: 0.09in 0;
+	font-style: italic;
+	font-family: var(--font-body);
+	font-size: 9pt;
+	color: #1e293b;
+	break-inside: avoid;
+}
+
+.read-aloud p:last-child { margin-bottom: 0; }
+
+/* --- Classified Entries ----------------------------------- */
+.classified {
+	background: #111827;
+	color: #e5f2ff;
+	border: 0.8pt solid #334155;
+	border-left: 4pt solid var(--ra-crimson);
+	padding: 0.11in;
+	margin: 0.11in 0;
+	break-inside: avoid;
+}
+
+.classified h3,
+.classified h4 {
+	color: #ffffff;
+}
+
+.classified .field-grid dt {
+	color: #fca5a5;
+}
+
+.classified .tag {
+	background: rgba(216, 75, 99, 0.14);
+	border-color: rgba(216, 75, 99, 0.5);
+	color: #ffd7dd;
+}
+
+/* --- Figures & Art ---------------------------------------- */
+.figure-card {
+	border: 0.5pt solid var(--ra-paper-line);
+	background: rgba(255, 255, 255, 0.38);
+	padding: 0.05in;
+	margin: 0.07in 0 0.11in;
+	break-inside: avoid;
+}
+
+.figure-card img,
+.entry-figure img {
+	width: 100%;
+	height: auto;
+	display: block;
+}
+
+.entry-figure {
+	float: right;
+	width: 1.25in;
+	margin: 0 0 0.055in 0.08in;
+	border: 0.5pt solid #bdc8d8;
+	background: #f8fbff;
+	padding: 0.025in;
+	break-inside: avoid;
+}
+
+/* --- Sourcebook Guide ------------------------------------- */
+.sourcebook-guide {
+	column-span: all;
+	border-top: 1pt solid #7a6047;
+	border-bottom: 0.5pt solid var(--ra-paper-line);
+	background: rgba(255, 255, 255, 0.3);
+	padding: 0.09in 0.11in;
+	margin: 0 0 0.11in;
+}
+
+.sourcebook-guide h3 {
+	font-family: var(--font-heading);
+	font-size: 11pt;
+	font-weight: 700;
+	margin-bottom: 0.035in;
+}
+
+/* --- Caption --------------------------------------------- */
+.caption {
+	font-family: var(--font-heading);
+	font-size: 6.5pt;
+	color: var(--ra-paper-muted);
+	margin-top: 0.032in;
+	text-transform: uppercase;
+	letter-spacing: 0.06em;
+}
+
+/* --- Index ----------------------------------------------- */
+.index-table {
+	column-count: 3;
+	column-gap: 0.2in;
+	font-size: 8pt;
+}
+
+.index-table p {
+	break-inside: avoid;
+	margin-bottom: 0.032in;
+}
+
+/* --- Utility --------------------------------------------- */
+.page-warning {
+	border: 1pt solid #d84b63;
+	background: #fff1f2;
+	color: #881337;
+	padding: 0.11in;
+	margin: 0.09in 0;
+	break-inside: avoid;
+}
+
+.small  { font-size: 7.8pt; }
+.muted  { color: var(--ra-paper-muted); }
+.no-print { display: none; }
+
+/* --- Section Block ---------------------------------------- */
+.section-block {
+	margin-bottom: 0.08in;
+}
+
+/* --- Rules Tables ----------------------------------------- */
+.rules-table {
+	width: 100%;
+	font-size: 8.35pt;
+	break-inside: auto;
+}
+
+.rules-table th {
+	background: #2a1a0e;
+	color: #f5f0e5;
+}
+
+/* --- Print Overrides (Vivliostyle / @media print) --------- */
+@page {
+	size: Letter;
+	margin: 0.58in 0.56in 0.72in;
+	@top-left {
+		content: "Rift Ascendant";
+		font-family: 'Outfit', 'Segoe UI', sans-serif;
+		font-size: 6.8pt;
+		color: #7a6047;
+		letter-spacing: 0.06em;
+		text-transform: uppercase;
+	}
+	@top-right {
+		content: string(chapter-title);
+		font-family: 'Outfit', 'Segoe UI', sans-serif;
+		font-size: 6.8pt;
+		color: #7a6047;
+	}
+	@bottom-center {
+		content: none;
+	}
+}
+
+@page :first {
+	margin: 0;
+	@top-left   { content: none; }
+	@top-right  { content: none; }
+	@bottom-center { content: none; }
+}
+
+@media print {
+	* {
+		-webkit-print-color-adjust: exact;
+		print-color-adjust: exact;
+	}
+
+	body {
+		font-family: 'Source Serif 4', 'Georgia', serif;
+		font-size: 9.5pt;
+		line-height: 1.46;
+		color: #1a1410;
+		background: #f5f0e5;
+	}
+
+	h1, h2, h3, h4 {
+		font-family: 'Outfit', 'Segoe UI', sans-serif;
+		letter-spacing: -0.01em;
+		color: #1a0f05;
+	}
+
+	.chapter > .chapter-opener h1 {
+		string-set: chapter-title content(text);
+	}
+
+	/* Cover */
+	.cover {
+		height: 11in;
+		min-height: 11in;
+		border: 0;
+	}
+
+	/* Chapter openers */
+	.chapter-opener {
+		min-height: 3in;
+		border: 0;
+		border-radius: 0;
+		background-size: cover;
+		background-position: center;
+		color: #f8fbff;
+	}
+
+	/* Callouts and cards */
+	.front-card,
+	.callout {
+		background: #eef7fb;
+		border: 0.6pt solid #8bd7e6;
+		border-left: 4pt solid #0891b2;
+	}
+
+	.sidebar-note {
+		background: #f5f0e8;
+		border-left: 3pt solid #8b6f51;
+	}
+
+	.sidebar-tip {
+		background: #ecfeff;
+		border-left: 3pt solid #74f2ff;
+	}
+
+	/* Tables */
+	table, .rules-table {
+		break-inside: auto;
+		page-break-inside: auto;
+		font-size: 8.35pt;
+	}
+
+	tr, th, td { break-inside: avoid; page-break-inside: avoid; }
+
+	th {
+		background: #2a1a0e;
+		color: #f5f0e5;
+		border-color: #4a3020;
+	}
+
+	td { background: rgba(255, 255, 255, 0.55); }
+
+	/* Entries */
+	.entry, .compact-entry, .statblock {
+		border-radius: 2pt;
+	}
+
+	.entry { padding: 0.09in 0.035in 0.1in; margin-bottom: 0.09in; }
+	.entry h3 { font-size: 12pt; }
+	.compact-entry { padding: 0.06in 0.042in 0.065in; margin-bottom: 0.075in; }
+	.compact-entry h3 { font-size: 10pt; line-height: 1.12; }
+	.compact-line { font-size: 7.8pt; line-height: 1.32; }
+
+	/* Stat blocks */
+	.statblock {
+		break-inside: auto;
+		page-break-inside: auto;
+	}
+
+	.statblock-header { background: linear-gradient(135deg, #1e0e04, #2d1a08); }
+	.statblock-header h3 { color: #ffffff; font-size: 14pt; }
+
+	/* Art figures */
+	.entry-figure { width: 1.25in; }
+
+	/* Tags */
+	.meta span, .tag {
+		background: #0f253b;
+		color: #ecfeff;
+		border-color: #27667d;
+		font-size: 6.8pt;
+		letter-spacing: 0.04em;
+	}
+
+	/* Index */
+	.index-table { font-size: 8pt; column-gap: 0.2in; }
+
+	/* Utility */
+	.small { font-size: 7.8pt; }
+
+	p, li { orphans: 3; widows: 3; }
+}
+</style>
+	<style>
+@page {
+	size: Letter;
+	margin: 0.58in 0.56in 0.72in;
+	@top-left {
+		content: "Rift Ascendant";
+		font-family: "Outfit", "Segoe UI", sans-serif;
+		font-size: 6.8pt;
+		color: #7a6047;
+		text-transform: uppercase;
+		letter-spacing: 0.06em;
+	}
+	@top-right {
+		content: string(chapter-title);
+		font-family: "Outfit", "Segoe UI", sans-serif;
+		font-size: 6.8pt;
+		color: #7a6047;
+	}
+	@bottom-center {
+		content: none;
+	}
+}
+@page :first {
+	margin: 0;
+	@top-left { content: none; }
+	@top-right { content: none; }
+	@bottom-center { content: none; }
+}
+@media print {
+	* {
+		-webkit-print-color-adjust: exact;
+		print-color-adjust: exact;
+	}
+	body {
+		font-family: "Source Serif 4", "Georgia", serif;
+		font-size: 9.5pt;
+		line-height: 1.46;
+		color: #1a1410;
+		background: #f5f0e5;
+	}
+	h1, h2, h3, h4 {
+		font-family: "Outfit", "Segoe UI", sans-serif;
+		letter-spacing: -0.01em;
+		color: #1a0f05;
+	}
+	.chapter > .chapter-opener h1 {
+		string-set: chapter-title content(text);
+	}
+	.cover {
+		height: 11in;
+		min-height: 11in;
+		border: 0;
+		background:
+			linear-gradient(155deg, rgba(4, 6, 15, 0.97) 0%, rgba(10, 15, 30, 0.82) 60%, rgba(6, 10, 22, 0.92) 100%),
+			var(--cover-image, none),
+			radial-gradient(ellipse at 15% 12%, rgba(116, 242, 255, 0.28) 0%, transparent 40%),
+			radial-gradient(ellipse at 85% 20%, rgba(167, 139, 250, 0.26) 0%, transparent 38%),
+			#070812;
+	}
+	.cover h1 {
+		font-size: 36pt;
+		line-height: 0.96;
+		letter-spacing: -0.02em;
+		font-weight: 800;
+	}
+	.cover-tile {
+		border-color: rgba(116, 242, 255, 0.3);
+		background: rgba(8, 14, 30, 0.78);
+	}
+	.front-card,
+	.callout {
+		background: rgba(255, 255, 255, 0.42);
+		border: 0;
+		border-left: 4pt solid #74f2ff;
+	}
+	.chapter-opener {
+		border: 0;
+		background:
+			linear-gradient(155deg, rgba(5, 7, 18, 0.97), rgba(14, 20, 40, 0.84)),
+			var(--chapter-image, none),
+			#070812;
+		background-size: cover;
+		background-position: center;
+		color: #f8fbff;
+		min-height: 3in;
+	}
+	.chapter-opener h1,
+	.chapter-opener p,
+	.chapter-opener .eyebrow {
+		color: #f8fbff;
+	}
+	.section-intro {
+		border-top: 2pt solid #7a6047;
+		border-bottom: 0.5pt solid #cdbf9e;
+		padding: 0.11in 0.14in;
+		margin-bottom: 0.13in;
+	}
+	.section-intro h2 {
+		font-size: 18pt;
+		color: #1a0f05;
+	}
+	.prose-columns,
+	.catalog-grid,
+	.compact-catalog {
+		column-gap: 0.3in;
+	}
+	.sourcebook-guide {
+		border-top: 1pt solid #7a6047;
+		border-bottom: 0.5pt solid #cdbf9e;
+		background: rgba(255, 255, 255, 0.3);
+		padding: 0.09in 0.11in;
+		margin-bottom: 0.11in;
+	}
+	.sourcebook-guide h3 {
+		font-size: 11pt;
+		color: #1a0f05;
+		margin-bottom: 0.035in;
+	}
+	table,
+	.rules-table {
+		break-inside: auto;
+		page-break-inside: auto;
+		font-size: 8.35pt;
+	}
+	tr,
+	th,
+	td {
+		break-inside: avoid;
+		page-break-inside: avoid;
+	}
+	th {
+		background: #2a1a0e;
+		color: #f5f0e5;
+		border-color: #4a3020;
+	}
+	td {
+		background: rgba(255, 255, 255, 0.55);
+	}
+	.entry,
+	.compact-entry,
+	.statblock {
+		border-radius: 2pt;
+		box-shadow: none;
+	}
+	.entry {
+		padding: 0.09in 0.035in 0.1in;
+		margin-bottom: 0.09in;
+	}
+	.entry h3 {
+		font-size: 12pt;
+		font-family: "Outfit", sans-serif;
+	}
+	.compact-entry {
+		padding: 0.06in 0.042in 0.065in;
+		margin-bottom: 0.075in;
+	}
+	.compact-entry h3 {
+		font-size: 10pt;
+		line-height: 1.12;
+		font-family: "Outfit", sans-serif;
+	}
+	.compact-line {
+		font-size: 7.8pt;
+		line-height: 1.32;
+	}
+	.statblock {
+		break-inside: auto;
+		page-break-inside: auto;
+	}
+	.statblock-header h3 {
+		font-size: 14pt;
+		font-family: "Outfit", sans-serif;
+	}
+	.field-grid dt {
+		font-size: 7.2pt;
+		font-family: "Outfit", sans-serif;
+	}
+	.nested-grid {
+		display: block;
+		margin: 0.02in 0;
+	}
+	.nested-grid dt {
+		display: inline;
+		font-size: 7pt;
+		letter-spacing: 0.03em;
+		font-family: "Outfit", sans-serif;
+	}
+	.nested-grid dt::after {
+		content: ": ";
+	}
+	.nested-grid dd {
+		display: inline;
+	}
+	.nested-grid dd::after {
+		content: "";
+		display: block;
+		margin-bottom: 0.022in;
+	}
+	.entry-figure {
+		width: 1.25in;
+	}
+	.meta span,
+	.tag {
+		background: #0f253b;
+		color: #ecfeff;
+		border-color: #27667d;
+		font-size: 6.8pt;
+		letter-spacing: 0.04em;
+		font-family: "Outfit", sans-serif;
+	}
+	.index-table {
+		font-size: 8pt;
+		column-gap: 0.2in;
+	}
+	.small {
+		font-size: 7.8pt;
+	}
+	p, li {
+		orphans: 3;
+		widows: 3;
+	}
+	.split-notice {
+		border: 1pt solid #1a0f05;
+		background: #ece7da;
+		padding: 0.15in;
+		margin: 0.15in 0;
+		text-align: center;
+		page-break-inside: avoid;
+	}
+	.split-notice h2 {
+		margin: 0 0 0.05in;
+		font-size: 14pt;
+		color: #5a1c15;
+	}
+	.split-notice p {
+		margin: 0;
+		font-size: 9.5pt;
+		font-style: italic;
+	}
+	.rules-table p {
+		margin: 0;
+		padding: 0 0 0.04in 0;
+		line-height: 1.25;
+	}
+}
+</style>
+</head>
+<body>
+	<section class="chapter" id="world-lore">
+		<div class="chapter-opener" style="--chapter-image: url('file:///C:/Users/jjcal/Documents/solo-compendium/books/shared/assets/ascendant-player-index-cc20eb338e.jpg')">
+			<div class="eyebrow">Part 1: The Rift Age / Welcome / Chapter 1</div>
+			<h1>The Rift Age</h1>
+			<p>The world broke open. Rifts tore through reality, Anomalies poured out, and ordinary people began to change. This is the world you live in now.</p>
+		</div>
+		<div class="prose-columns"><p>Rift Ascendant: Player's Guide to the World Welcome to the Rift Age Rift Ascendant takes place in a modern Earth-like world transformed by the arrival of Rifts. This is not a fallen world. Cities still shine at night. People still go to work, pay rent, attend school, watch sports, follow celebrities, argue politics, post online, take vacations, fall in love, and worry about money. Governments still pass laws. Corporations still compete. News networks still chase ratings. Hospitals still treat the sick. Police still patrol streets. Families still gather for dinner . The difference is that reality now has doors where doors should not be. A Rift is a tear in the structure of the world. Some appear for only minutes before collapsing. Others stabilize into dangerous thresholds that lead into impossible interior spaces. These spaces may be small enough to clear in a few hours or large enough to contain cities, ecosystems, ruins, and weather patterns that do not belong to Earth. The first Rifts changed everything. Humanity did not collapse. It adapted. New agencies were formed. New industries were born. New laws were written. New careers emerged. New celebrities rose. New weapons were developed. New religions formed around the question of what the Rifts meant. New markets grew around Essence, Relics, and Rift materials. And new kinds of people Awakened. They are called Ascendants. Ascendants are the rare individuals capable of entering Rifts, surviving the environments within, and fighting the Anomalies that dwell there. Some are heroes. Some are professionals. Some are celebrities. Some are soldiers. Some are corporate assets. Some are criminals. Some are ordinary people who Awakened under extraordinary pressure and now live in a world that immediately placed a value on their power . You are one of them. The Core Truth of the Setting Rifts are dangerous, but they are not rare myths.</p>
+<p>They are part of modern life. Most people will never enter one. Most people do not understand what truly happens inside. But everyone knows Rifts exist. Everyone has seen news footage. Everyone knows the names of famous Ascendants. Everyone understands that a Rift alert near your neighborhood is serious. To civilians, Rifts are disasters, resources, miracles, and nightmares all at once. To governments, Rifts are public safety threats and strategic assets. To corporations, Rifts are markets. To guilds, Rifts are contracts. To Ascendants, Rifts are where reputations are made, fortunes are won, and bodies are left behind. The world has learned to live with Rifts. It has not mastered them. A Brief History of the Rift Age Before the Rifts Before the Rift Age, history looked much like our own. Nations rose and fell. Technology advanced. Cities expanded. Wealth concentrated. People lived ordinary lives under ordinary skies. There were myths of other worlds, spirits, gods, monsters, and hidden powers, but most people treated them as folklore, religion, or fiction. Then the first Rift opened. First Contact The first confirmed Rifts were treated as isolated disasters. Governments attempted containment. Scientists deployed instruments. Militaries established perimeter zones. Civilians were evacuated when possible. Early reports were confused and often suppressed. Witnesses described impossible architecture, nonhuman creatures, spatial distortions, missing response teams, and materials that violated known physics. At first, conventional forces attempted to enter and clear Rifts. They failed often enough that the world changed its approach.</p>
+<p>The First Awakened The first Ascendants emerged during the early Rift disasters. Some were survivors pulled from collapsed interiors after days without food or water . Some were soldiers who returned from failed operations with abilities they had not possessed before. Some were civilians exposed to Rift energy. Some Awakened without ever approaching a Rift at all. No single explanation satisfied everyone. What mattered was that Ascendants could do what ordinary humans could not. They could withstand Rift pressure. They could fight Anomalies. They could sense Essence. They could wield powers that looked like magic, psychic force, divine miracles, martial transcendence, impossible technology, or something stranger . The world needed them immediately. The Bureau Era Governments created regulatory agencies to classify Rifts, license Ascendants, track incidents, and prevent private groups from turning Rift response into uncontrolled warfare. The largest and most influential of these institutions is commonly called the Bureau. The Bureau does not own every Ascendant. It does not control every Rift. It does not always act quickly, wisely, or morally. But it is the official framework most of the world relies on. The Bureau ranks Rifts. It certifies Ascendants. It issues clearances. It records casualties. It investigates illegal Rift activity. It establishes response procedures. It coordinates with military, police, medical, scientific, and corporate partners. Many people resent the Bureau. Almost everyone relies on it anyway. The Guild Boom Where there is danger , there is money.</p>
+<p>Once Essence and Relics proved valuable, private Ascendant guilds became unavoidable. Guilds began as emergency teams, mercenary companies, rescue groups, and informal crews. Over time, many became powerful organizations with contracts, headquarters, training programs, sponsorship deals, legal teams, insurance packages, medical wings, media departments, and private security. Some guilds are respected public defenders. Some are ruthless corporations. Some are family-like crews. Some are little more than armed contractors with better branding. Some are fronts for smugglers, political factions, or illegal research groups. For many Ascendants, joining a guild is the clearest path to money, training, equipment, medical support, and reputation. It is also the clearest path to being owned by someone else's contract. The Modern Rift Age Today, the world has normalized the impossible. Rift alerts appear on phones. Ascendant rankings trend online. Guild recruitment ads play before videos. Essence-powered medical treatments save lives. Relic auctions draw billionaires. Raid footage leaks to the public. Famous Ascendants have fans, critics, sponsorships, scandals, and documentaries. Insurance companies calculate Rift proximity risk. Universities offer Rift studies programs. Military academies teach Anomaly doctrine.</p>
+<p>Black markets sell illegal cores, forged clearances, counterfeit Relics, and unregistered Rift maps. Children grow up knowing that Ascendants are real. Some dream of Awakening. Some fear it. Some understand that power is rarely free. What Is a Rift? A Rift is a tear in reality that connects the normal world to an impossible interior space. Most people use the word Rift broadly. It can refer to the breach itself, the threshold, the operation site, the interior , or the incident as a whole. Specialists use more precise terms. Rift Threshold The Rift Threshold is the entrance point. It may appear as a glowing rupture, a dark doorway, a distortion in space, a circular fracture, a vertical wound in the air , a mirror-like surface, an opening in the ground, or an area where normal space simply stops behaving correctly. Some thresholds are stable. Some pulse, flicker , widen, shrink, or move. Rift Interior The Rift Interior is the space beyond the threshold. A Rift Interior might be a cave system, ruined temple, abandoned city block, crystalline cavern, flooded station, black forest, desert battlefield, alien laboratory, frozen fortress, impossible skyscraper , or living maze. The size and danger of a Rift Interior varies dramatically. Low-rank Rifts may be cleared in hours. High-rank Rifts may require days, weeks, or multiple operations. Rift Site A Rift Site is the area around an active Rift in the normal world.</p>
+<p>This may include Bureau barricades, emergency medical tents, police lines, media zones, guild staging areas, Essence containment vehicles, civilian evacuation points, and restricted access checkpoints. In a normal city, an active Rift Site can look like a mix of crime scene, military checkpoint, film set, disaster response area, and corporate trade show. Rift Clear A Rift Clear is a successful operation that neutralizes the primary threat inside a Rift. This usually means defeating the dominant Anomaly, stabilizing or collapsing the interior , recovering critical Essence or Relic materials, and confirming that nothing further will spill into the normal world. A Rift Clear is not always clean. Sometimes teams return wounded. Sometimes civilians are lost. Sometimes Anomalies escape before the threshold collapses. Sometimes a Rift is declared cleared because that is what the report needs to say. Rift Break A Rift Break occurs when containment fails and Rift conditions spill into the normal world. This is what civilians fear most. During a Rift Break, Anomalies may emerge. Weather may distort. Structures may warp. Roads may no longer lead where they should. Communication may fail. Ordinary people may be exposed to hostile mana, contamination, or predatory entities. Most Rift Breaks are contained quickly. The ones that are not become history. Anomalies Anomalies are the creatures, entities, hazards, and lifeforms found inside Rifts. The public often calls them monsters. That is sometimes accurate.</p>
+<p>It is not always complete. Anomalies can be beasts, spirits, constructs, parasites, humanoids, swarms, living weapons, intelligent predators, machines, elementals, warped animals, alien soldiers, memory-echoes, or things that do not fit any known category. Some are mindless. Some are clever . Some are capable of tactics. Some can speak. Some build. Some worship. Some command others. Some are not hostile until disturbed. Some appear to follow laws, instincts, or hierarchies that humanity barely understands. To most civilians, the distinction does not matter . If an Anomaly comes through a Rift, people die. To Ascendants, the distinction matters a great deal. A predator can be baited. A soldier can be misled. A guardian can be bypassed. A parasite can be contained. An intelligent Anomaly can negotiate, lie, threaten, plead, or remember . Knowing the difference can save a team. Essence Essence is the most important resource of the Rift Age.</p>
+<p>It is the energy, material, residue, crystal, core, or metaphysical substance recovered from Rifts and Anomalies. The exact form varies. Some Essence appears as glowing crystals. Some as cores harvested from defeated Anomalies. Some as liquid, dust, thread, bone, metal, light, or compressed mana. Essence changed the world. It powers new technology. It revolutionized medicine. It created new weapons. It altered construction, communications, prosthetics, transportation, computing, energy storage, military research, luxury goods, and black-market augmentation. Essence made Ascendants necessary. It also made them profitable. Many civilians owe their lives to Essence-based medicine. Many corporations owe their fortunes to Essence extraction. Many governments classify high-grade Essence as a strategic resource. Every Rift operation has two public goals: contain the threat and protect civilians. Most also have a third goal: recover Essence before someone else does. Relics Relics are objects recovered from Rifts or created through Rift-touched processes. Some are weapons. Some are armor . Some are tools. Some are implants, masks, rings, books, keys, lenses, engines, charms, instruments, vessels, or devices that do not obey normal physics. A low-grade Relic might slightly improve survivability. A high-grade Relic can define an Ascendant's career . Relics can be legal, restricted, classified, stolen, cursed, experimental, counterfeit, or impossible to categorize.</p>
+<p>Some are mass-studied and reproduced in weaker forms. Some are unique. Some have names. Some seem to choose users. Some should never have left the Rift. To the public, Relics are symbols of power . To guilds, they are assets. To the Bureau, they are regulated hazards. To Ascendants, they are tools, temptations, and sometimes liabilities. Ascendants Ascendants are people who have Awakened the ability to survive, fight, and act within Rifts. Awakening changes a person. The change may be dramatic or subtle. Some Ascendants manifest obvious powers immediately. Others develop slowly. Some experience visions, pain, fever , sensory overload, emotional instability, physical transformation, or sudden instinctive knowledge. Some describe their Awakening as divine. Some describe it as medical trauma. Some remember nothing. No one fully understands why Awakening happens. Theories include genetics, Rift exposure, Essence contamination, near-death stress, bloodline resonance, spiritual alignment, neurological mutation, or selection by forces beyond human understanding. The truth may not be the same for everyone. What matters is that an Ascendant can do what ordinary humans cannot. They can channel mana. They can withstand Rift pressure. They can fight Anomalies. They can wield Relics safely.</p>
+<p>They can develop abilities that exceed normal human limits. They can enter the impossible and come back. Sometimes. Ascendant Life Being an Ascendant does not automatically make someone rich, famous, or respected. Rank, guild membership, public image, record of successful clears, sponsorship, social class, nationality, Bureau relationship, and luck all matter . Some Ascendants become celebrities with fan clubs and luxury contracts. Some are low-rank laborers clearing minor Rifts for poor pay. Some work private security. Some serve in Bureau units. Some join military programs. Some become emergency responders. Some work for corporations. Some stream their operations illegally. Some hunt black-market Rifts. Some retire early because trauma ended their career . Some disappear . The public loves Ascendants when they win. The public judges them when they fail. The public rarely understands what a Rift costs. Jobs A Job is the Bureau's classification for the broad shape of an Ascendant's power .</p>
+<p>In game terms, your Job is your class. In the world, your Job is not a profession you chose from a college catalog. It is the label placed on how your power expresses itself. A person does not become a Destroyer because they signed up to be one. They are classified as a Destroyer because their mana, body, instincts, and combat output fit that pattern. Jobs help the Bureau assign clearances. They help guilds build balanced teams. They help insurers calculate risk. They help sponsors market Ascendants. They help civilians understand what kind of hero they are looking at. They are useful. They are also reductive. You are not just your Job. Common Job Archetypes Destroyers express power through force, durability, direct combat, and battlefield pressure. Berserkers channel escalating violence, pain tolerance, fury, survival instinct, or unstable resonance. Assassins specialize in precision, stealth, mobility, and eliminating priority threats. Strikers use speed, kinetic force, martial skill, and close-quarters pressure. Mages shape mana through structured spells, destructive force, barriers, probability, illusion, matter , or spatial effects. Espers express power through psychic force, perception, telekinesis, sensory expansion, or mental resonance. Revenants channel death, decay, entropy, void effects, or survival beyond normal limits. Summoners bind, call, shape, command, or cooperate with creatures, constructs, swarms, echoes, or Rift- born forces. Heralds project restorative, radiant, supportive, storm, knowledge, or command-based resonance. Contractors draw power through bargains, patrons, entities, oaths, forbidden channels, or external sources. Stalkers specialize in hunting, tracking, scouting, survival, ambush, and threat elimination.</p>
+<p>Holy Knights manifest protection, judgment, devotion, radiant power , oaths, and defensive authority. Technomancers blend mana with devices, drones, tools, armor systems, constructs, chemistry, engineering, or Essence technology. Idols manipulate presence, performance, rhythm, image, voice, emotion, and resonance through charisma- driven power . Paths A Path is the specialized expression of an Ascendant's Job. In game terms, your Path is your subclass. In the world, a Path may emerge from training, instinct, trauma, culture, doctrine, personality, Relic exposure, guild education, or repeated Rift experience. Two Mages may look nothing alike. One may be a Detonation Specialist who solves problems through overwhelming destructive output. Another may be a Shield Architect who builds barriers and protects teams. Another may bend probability, illusion, matter , or Rift geometry. The Job is the broad classification. The Path is the personal expression. Rank Rank is the world's attempt to measure the impossible. Rifts, Anomalies, Relics, and Ascendants are commonly classified by Rank. Different nations and agencies may use slightly different systems, but the public understands the broad idea. Lower ranks are more common and usually manageable by trained teams. Higher ranks require elite Ascendants, specialized planning, and significant Bureau oversight. An S-Rank event is not just dangerous. It is political, economic, military, and historical. Rank affects nearly every part of Ascendant life. It determines pay.</p>
+<p>It influences contracts. It shapes fame. It affects legal freedom. It attracts guild attention. It determines whether civilians see you as inspiring, useful, disposable, terrifying, or untouchable. Rank is important. Rank is not truth. Rifts can be misclassified. Ascendants can be underestimated. Anomalies can evolve. A supposedly routine clear can become a disaster . Veteran Ascendants respect Rank. They do not worship it. The Bureau The Bureau is the official regulatory and response authority for Rift activity. Its exact structure varies by region, but its core functions are widely recognized. The Bureau identifies and classifies Rifts. It licenses Ascendants. It issues clearances. It tracks Rank. It coordinates public safety. It investigates illegal Rift activity. It manages emergency response.</p>
+<p>It regulates Essence and Relic recovery. It maintains casualty records. It decides who is allowed to enter a Rift and under what conditions. The Bureau is not a single personality. It is an institution. It contains brave responders, brilliant researchers, exhausted clerks, political operators, corrupt officials, idealistic recruits, ruthless commanders, and people doing their best inside a machine too large to care about every individual case. Many civilians trust the Bureau because they need to. Many Ascendants distrust the Bureau because they have seen how reports are written after things go wrong. Both views can be true. Ascendant Guilds Guilds are private organizations built around Ascendant labor . A guild may be a small crew of friends, a regional response company, a celebrity team, a paramilitary contractor , a corporate-owned brand, a religious order , a black-market front, or a multinational powerhouse. Guilds compete for Rift contracts, Essence rights, Relic claims, recruitment prospects, sponsorships, and public reputation. A good guild provides training, medical support, legal coverage, housing, equipment, tactical planning, retirement benefits, and family support if a member dies. A bad guild treats Ascendants as replaceable tools. Most guilds are somewhere in between. Guild politics matter . Rival teams may sabotage each other socially, legally, financially, or physically. Guild masters negotiate with Bureau officials, corporations, politicians, media outlets, and criminal brokers. For many Ascendants, guild membership is the difference between survival and debt. Corporations Corporations transformed the Rift Age into an economy.</p>
+<p>Essence technology created trillion-credit industries. Medical companies developed treatments once thought impossible. Weapons manufacturers built mana-compatible arms. Construction firms developed Rift-resistant materials. Media companies turned Ascendants into stars. Security firms hired low-rank Ascendants for private work. Research divisions pushed dangerous experiments into legal gray zones. Corporations sponsor guilds, purchase Relics, lobby governments, fund research, suppress scandals, and compete for exclusive Essence refinement rights. Some corporations genuinely save lives. Some knowingly send people into danger . Most do both, depending on the quarter . Civilians Most people are civilians. They do not enter Rifts. They do not fight Anomalies. They do not wield Relics. They experience the Rift Age through its effects on daily life. A civilian might follow Ascendant rankings like sports. They might work for a guild office. They might sell insurance in a Rift-prone district. They might teach children what to do during a Rift alert. They might protest unsafe Essence refineries. They might worship Ascendants as chosen protectors. They might resent Ascendants for the destruction that follows them. They might have lost family in a Rift Break. They might owe their life to an Ascendant team. They might simply want to get through the week. The world is not made only of heroes and monsters. Most of it is made of people trying to live near the impossible.</p>
+<p>Media and Celebrity Ascendants are public figures. Some avoid attention. Others build careers around it. High-rank Ascendants may have fan clubs, sponsors, stylists, documentaries, interviews, brand deals, scandals, rivalries, and political influence. Raid footage can go viral. A heroic rescue can make a career . A failed operation can destroy one. Some guilds carefully manage public image. Others sell raw danger as entertainment. Low-rank Ascendants often resent this celebrity culture. Many risk their lives for little pay while famous elites make fortunes from sponsorships. The public sees highlight reels. Ascendants remember the smell of the Rift. Law and Crime Where there are Rifts, there is crime. Illegal Rift entry. Essence smuggling. Relic theft. False Rank certification. Black-market augmentation. Unlicensed Ascendant labor . Corporate data suppression. Anomaly trafficking. Counterfeit Bureau clearances.</p>
+<p>Raid sabotage. Debt contracts. Illegal betting on Rift clears. Assassination disguised as operational failure. Criminal groups thrive in the gaps between Bureau control, guild ambition, and corporate greed. Some criminals are ordinary people trying to survive. Some are Ascendants who realized their powers work just as well outside a Rift. Faith and Philosophy The Rifts changed religion and philosophy across the world. Some faiths interpret Rifts as divine tests. Some call them wounds in creation. Some see Ascendants as chosen warriors. Some see them as cursed. New cults and movements have formed around Essence, Awakening, Anomalies, and the belief that Rifts are not invasions but invitations. Scientists argue that Rifts are dimensional phenomena. Theologians argue they are spiritual events. Corporations argue they are opportunities. Ascendants usually argue less after the first time something inside a Rift whispers their name. The world does not agree on what the Rifts mean. That uncertainty is part of the setting. Technology in the Rift Age Modern technology still exists.</p>
+<p>Phones, cars, aircraft, drones, satellites, firearms, cameras, computers, social media, hospitals, body armor , surveillance systems, and electric grids remain part of daily life. Rifts did not replace technology. They changed it. Essence technology has created new tools: mana scanners, Rift-resistant armor , resonance sensors, emergency threshold monitors, Essence batteries, advanced prosthetics, Relic stabilizers, anti-Anomaly munitions, containment fields, and Ascendant Field Apps. Technology works normally in the outside world. Inside Rifts, reliability varies. Signals may fail. Drones may lose navigation. Firearms may jam due to mana interference. Digital maps may distort. Sensors may return impossible readings. AFA data may become unreliable. Veterans carry modern gear . Smart veterans also carry backup tools. The AFA The Ascendant Field App, usually called the AFA, is the standard field interface for licensed Ascendants. Depending on region and resources, it may appear as a phone app, wrist device, visor , earpiece, tactical tablet, implant-linked display, contact lens overlay, or guild-customized operating system. The AFA tracks mission data, team status, injury warnings, Rift readings, Rank estimates, Essence signatures, contract terms, emergency alerts, map data, and Bureau notices. The AFA is not magic. It is not fate.</p>
+<p>It does not make decisions for you. It measures, records, warns, and reports. Inside Rifts, the AFA is only as reliable as the conditions allow. If your AFA glitches, pay attention. If your AFA says everything is fine while your instincts say otherwise, trust your instincts. Life Before Awakening Every Ascendant had a life before power . That life matters. A character might have been a student, soldier , firefighter , nurse, mechanic, idol trainee, streamer , office worker , athlete, criminal, delivery driver , teacher , programmer , police officer , researcher , security guard, construction worker , doctor , child of a guild family, or ordinary civilian. Awakening does not erase that past. It complicates it. Your old debts still exist. Your family still worries. Your job may not wait for you. Your friends may treat you differently. Your government may want to register you. Guilds may want to recruit you. Corporations may want to sponsor you. Criminals may want to exploit you. Civilians may expect you to be brave even when you are terrified. The most important question is not only what power you have. It is what your power did to your life.</p>
+<p>Creating a Character in Rift Ascendant When creating a character , start with the person before the power . Ask who they were before Awakening. Then decide how Awakening changed their life. Then choose how they fit into the Rift Age. Step One: Choose Your Former Life Before you were an Ascendant, what were you? A student chasing a degree. A soldier transitioning to civilian life. A corporate employee buried in debt. A firefighter who responded to the wrong emergency. A medic who lost a patient during a Rift incident. A streamer who accidentally filmed something classified. A criminal who survived an illegal Rift job. A researcher exposed to Essence contamination. A guild child trying to live up to a famous family name. A normal person who never wanted power . Step Two: Choose Your Awakening How did your power appear? You survived a Rift Break. You were exposed to Essence. You nearly died inside a Rift. You were tested by the Bureau.</p>
+<p>You inherited a strange family trait. You touched a Relic. You heard something call from inside a Rift. You Awakened during an act of desperation. You do not know what caused it. Step Three: Choose Your Relationship to Power How do you feel about being an Ascendant? Proud. Afraid. Addicted to the danger . Angry. Grateful. Exploited. Chosen. Cursed. Responsible. Famous and loving it. Famous and hating it. Still waiting for someone to tell you it was a mistake. Step Four: Choose Your Place in Society Who do you answer to? The Bureau. A major guild.</p>
+<p>A small independent crew. A corporation. A military program. A research institute. A family legacy. A criminal debt holder . No one, at least on paper . Step Five: Choose Why You Enter Rifts Ascendants enter Rifts for many reasons. Money. Duty. Fame. Research. Revenge. Survival. Debt. Faith. Curiosity. Protection. Addiction. Ambition. Because someone has to. Because something inside a Rift took someone from you.</p>
+<p>Because the world pays better when you risk your life. Because you are good at it. Because you are afraid of who you would be without it. Use one or more of these to shape your character . Bureau Licensed You are officially registered and cleared for Rift work. You may trust the system, resent it, or simply need the license to get paid. Guild Ascendant You belong to a guild. It may be powerful, struggling, famous, corrupt, loyal, family-like, or exploitative. Independent Contractor You work outside major guild structures. You have freedom, but fewer protections. Rift Survivor You survived a Rift incident before you Awakened. You know what Anomalies do to ordinary people. Corporate Asset A corporation funds your gear , training, medical care, or public image. They expect returns. Relic-Touched A Relic changed your life. It may be a tool, inheritance, curse, secret, or reason people are hunting you. Debt-Bound Someone paid for your treatment, training, equipment, legal defense, or family's survival. Now you owe them. Celebrity Ascendant People know your name. That fame may be earned, manufactured, embarrassing, useful, or dangerous.</p>
+<p>Failed Team Member You survived an operation others did not. The public knows one version. You know another . Illegal Diver Before licensing, you entered Rifts illegally for money, thrill, survival, or desperation. Bureau Skeptic You believe the Bureau hides too much, moves too slowly, or protects institutions before people. Guild Heir You come from an Ascendant family or guild dynasty. Your name opens doors and creates expectations. Player Questions Answer these before play. Who were you before Awakening? How did you Awaken? Who knows the truth about your Awakening? Who benefited from your power? Who suffered because of it? Do you trust the Bureau? Are you part of a guild? What do you think of famous Ascendants? What do you fear inside Rifts? What would make you risk your life inside one? What does your family think of your work? What would you do for enough money? What would you refuse to do even for survival?</p>
+<p>What kind of Ascendant do you want the world to believe you are? What kind are you afraid you actually are? What Everyone Knows Rifts are real. Anomalies are dangerous. Ascendants are rare. The Bureau regulates Rift work. Guilds compete for contracts. Essence is valuable. Relics are powerful and risky. Rank matters, but it can be wrong. Famous Ascendants are not always the best people. Low-rank Ascendants are not always weak. Rift work pays well because people die doing it. Most civilians never see the inside of a Rift. Most Ascendants eventually wish they had not seen so many. What Most People Do Not Know No one truly understands why Rifts appear . No one fully understands why some people Awaken. No one can perfectly predict what waits inside a high-rank Rift. No one agrees on whether Rifts are natural, artificial, divine, alien, or something beyond those categories. Some Bureau files are sealed for a reason. Some guilds have recovered things they never reported.</p>
+<p>Some Relics are more intelligent than their owners admit. Some Rifts do not behave like places. Some Anomalies remember humanity better than humanity remembers them. The Tone of Rift Ascendant Rift Ascendant is modern action fantasy with danger beyond the threshold. The outside world is modern, functional, commercial, political, connected, and alive. The inside of a Rift is where the rules become uncertain. Outside, there are contracts, cameras, sponsors, laws, hospitals, rankings, interviews, insurance, family obligations, and public consequences. Inside, there are Anomalies, Essence, Relics, impossible environments, strange laws, broken maps, unreliable signals, and choices no contract prepared you for . The setting is not about a ruined world. It is about a normal world that has learned to profit from the impossible. It is about people with extraordinary power trying to remain human while everyone else decides what that power is worth. You are an Ascendant. The world knows what that means. You are about to learn whether the world is right. Glossary AFA: Ascendant Field App. A field interface used to track mission data, team status, Rift readings, injuries, contracts, and alerts. Anomaly: A creature, entity, hazard, or lifeform originating from within a Rift. Ascendant: A person who has Awakened supernatural abilities and can operate inside Rifts. Awakening: The event or process through which a person becomes an Ascendant.</p>
+<p>Bureau: The official institution responsible for Rift regulation, Ascendant licensing, classifications, clearances, and public safety. Essence: Energy, material, cores, crystals, or other valuable resources recovered from Rifts and Anomalies. Guild: A private Ascendant organization that takes Rift contracts, trains members, recovers Essence, and competes for reputation and profit. Job: The broad classification of an Ascendant's power . This is the setting equivalent of a 5e class. Path: The specialized expression of a Job. This is the setting equivalent of a 5e subclass. Rank: A classification system used to measure the danger or power of Rifts, Anomalies, Relics, and Ascendants. Relic: A powerful object recovered from or created through Rift-related forces. Rift: A tear in reality leading to an impossible interior space. Rift Break: A containment failure where Anomalies or Rift conditions spill into the normal world. Rift Clear: A successful operation that neutralizes the primary threat inside a Rift. Rift Interior: The space beyond a Rift Threshold. Rift Site: The operation area surrounding an active Rift. Rift Threshold: The visible entrance into a Rift.</p></div>
+	</section>
+</body>
+</html>

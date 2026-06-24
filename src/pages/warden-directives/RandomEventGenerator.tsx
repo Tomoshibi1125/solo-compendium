@@ -356,7 +356,7 @@ Provide ALL of the following sections with full detail:
 										AI-ENHANCED DETAILS
 									</span>
 								</div>
-								<div className="text-sm text-muted-foreground whitespace-pre-line bg-primary/5 rounded-lg p-4 max-h-[500px] overflow-y-auto">
+								<div className="text-sm text-muted-foreground whitespace-pre-line bg-primary/5 rounded-lg p-4 max-h-none sm:max-h-[500px] overflow-y-auto">
 									{enhancedText}
 								</div>
 							</div>
