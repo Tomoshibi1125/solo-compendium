@@ -26,7 +26,7 @@ import { formatModifier } from "@/lib/characterCalculations";
 import {
 	type DiceRoll,
 	formatRollResult,
-	rollDiceString,
+	tryRollDiceString,
 } from "@/lib/diceRoller";
 import { cn } from "@/lib/utils";
 import { formatRegentVernacular } from "@/lib/vernacular";
@@ -145,40 +145,53 @@ function ActionCardComponent({
 			let formula = "";
 
 			if (payload) {
-				if (rollType === "attack" && payload.attack) {
-					const outcome = resolveAttack(payload, 10);
-					if (outcome.kind === "attack") {
-						const attackVal = outcome.attackTotal;
-						const critPrefix = outcome.criticalHit ? "💥 CRITICAL HIT! " : "";
-						message = `${critPrefix}${displayName} Attack: ${attackVal} (vs AC 10)`;
-						if (outcome.damageTotal) {
-							message += ` | Damage: ${outcome.damageTotal}${
-								outcome.criticalHit ? " (dice doubled)" : ""
-							}`;
+				try {
+					if (rollType === "attack" && payload.attack) {
+						const outcome = resolveAttack(payload, 10);
+						if (outcome.kind === "attack") {
+							const attackVal = outcome.attackTotal;
+							const critPrefix = outcome.criticalHit ? "💥 CRITICAL HIT! " : "";
+							message = `${critPrefix}${displayName} Attack: ${attackVal} (vs AC 10)`;
+							if (outcome.damageTotal) {
+								message += ` | Damage: ${outcome.damageTotal}${
+									outcome.criticalHit ? " (dice doubled)" : ""
+								}`;
+							}
+							formula = payload.attack.roll;
 						}
-						formula = payload.attack.roll;
-					}
-				} else if (rollType === "save" && payload.save) {
-					const outcome = resolveSave(payload);
-					if (outcome.kind === "save") {
-						message = `${displayName} Save DC ${payload.save.dc}: ${outcome.success ? "Success" : "Failure"}`;
-						if (outcome.damageTotal) {
-							message += ` | Damage: ${outcome.damageTotal}`;
+					} else if (rollType === "save" && payload.save) {
+						const outcome = resolveSave(payload);
+						if (outcome.kind === "save") {
+							message = `${displayName} Save DC ${payload.save.dc}: ${outcome.success ? "Success" : "Failure"}`;
+							if (outcome.damageTotal) {
+								message += ` | Damage: ${outcome.damageTotal}`;
+							}
+							formula = `DC ${payload.save.dc}`;
 						}
-						formula = `DC ${payload.save.dc}`;
+					} else if (rollType === "damage" && payload.damage) {
+						const outcome = resolveDamage(payload);
+						if (outcome.kind === "damage") {
+							message = `${displayName} Damage: ${outcome.damageTotal}`;
+							formula = payload.damage.roll;
+						}
+					} else if (rollType === "effect" || payload.kind === "effect") {
+						const outcome = resolveEffect(payload);
+						if (outcome.kind === "effect") {
+							message = `${displayName} Activated: ${outcome.name}${outcome.description ? ` - ${outcome.description}` : ""}`;
+							formula = "effect";
+						}
 					}
-				} else if (rollType === "damage" && payload.damage) {
-					const outcome = resolveDamage(payload);
-					if (outcome.kind === "damage") {
-						message = `${displayName} Damage: ${outcome.damageTotal}`;
-						formula = payload.damage.roll;
-					}
-				} else if (rollType === "effect" || payload.kind === "effect") {
-					const outcome = resolveEffect(payload);
-					if (outcome.kind === "effect") {
-						message = `${displayName} Activated: ${outcome.name}${outcome.description ? ` - ${outcome.description}` : ""}`;
-						formula = "effect";
-					}
+				} catch {
+					// A payload value (e.g. a descriptive damage string) wasn't a
+					// rollable formula. Degrade to a static summary rather than
+					// surfacing a hard "Roll failed".
+					const staticVal =
+						payload.attack?.roll ??
+						payload.damage?.roll ??
+						(payload.save ? `DC ${payload.save.dc}` : undefined) ??
+						"resolved";
+					message = `${displayName} ${rollType}: ${staticVal}`;
+					formula = String(staticVal);
 				}
 
 				if (message) {
@@ -212,12 +225,16 @@ function ActionCardComponent({
 
 			if (rollType === "attack" && attackBonus !== undefined) {
 				formula = `1d20${attackBonus >= 0 ? "+" : ""}${attackBonus}`;
-				rollData = rollDiceString(formula);
-				message = `${displayName} Attack: ${formatRollResult(rollData)}`;
+				rollData = tryRollDiceString(formula) ?? undefined;
+				message = rollData
+					? `${displayName} Attack: ${formatRollResult(rollData)}`
+					: `${displayName} Attack: ${formula}`;
 			} else if (rollType === "damage" && damage) {
 				formula = damage;
-				rollData = rollDiceString(formula);
-				message = `${displayName} Damage: ${formatRollResult(rollData)}`;
+				rollData = tryRollDiceString(formula) ?? undefined;
+				message = rollData
+					? `${displayName} Damage: ${formatRollResult(rollData)}`
+					: `${displayName} Damage: ${displayDamage || damage}`;
 			}
 
 			if (message) {
@@ -239,10 +256,10 @@ function ActionCardComponent({
 				}
 			}
 		} catch (error) {
-			console.error("Roll failed:", error);
+			console.error("Roll failed:", error, { action: name, rollType });
 			toast({
 				title: "Roll failed",
-				description: "Could not execute roll.",
+				description: `Could not roll "${displayName}".`,
 				variant: "destructive",
 			});
 		}

@@ -82,7 +82,7 @@ async function fetchServerNotifications(): Promise<Notification[]> {
 		const { data: authData } = await supabase.auth.getUser();
 		if (!authData?.user) return loadNotifications();
 		const { data, error } = await supabase
-			.from("user_notifications" as never)
+			.from("user_notifications")
 			.select("*")
 			.eq("user_id", authData.user.id)
 			.order("created_at", { ascending: false })

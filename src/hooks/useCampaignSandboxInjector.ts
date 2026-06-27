@@ -627,6 +627,8 @@ export function useCampaignSandboxInjector(campaignId: string | null) {
 										Date.now() + s.order * 86_400_000,
 									).toISOString(),
 									location: null,
+									recurrence_parent_id: null,
+									recurrence_rule: null,
 									created_by: wardenId,
 									created_at: nowIso(),
 									updated_at: nowIso(),
@@ -1016,6 +1018,9 @@ export function useCampaignSandboxInjector(campaignId: string | null) {
 								vit: null,
 								vulnerabilities: null,
 								weapon_proficiencies: null,
+								sheet_accent: null,
+								sheet_backdrop: null,
+								sheet_theme: null,
 								created_at: now,
 								updated_at: now,
 							} as LocalCharacterRow);

@@ -80,6 +80,35 @@ export function rollDiceString(diceStr: string): DiceRoll {
 }
 
 /**
+ * True when a string contains a dice term (e.g. "2d6", "1d20+5") that
+ * `rollDiceString` can actually evaluate. Bare numbers ("4") and descriptive
+ * values ("fire damage") return false — `rollDiceString` throws on those — so
+ * callers can degrade gracefully instead of letting it throw.
+ */
+export function isRollableDiceString(
+	diceStr: string | null | undefined,
+): boolean {
+	if (!diceStr) return false;
+	return /\d+\s*d\s*\d+/i.test(diceStr);
+}
+
+/**
+ * Roll a dice string, returning `null` instead of throwing when the input is not
+ * a rollable formula. Use this from UI roll handlers so an action whose
+ * damage/attack value is descriptive text doesn't surface a "Roll failed" error.
+ */
+export function tryRollDiceString(
+	diceStr: string | null | undefined,
+): DiceRoll | null {
+	if (!isRollableDiceString(diceStr)) return null;
+	try {
+		return rollDiceString(diceStr as string);
+	} catch {
+		return null;
+	}
+}
+
+/**
  * Format roll result for display
  */
 export function formatRollResult(roll: DiceRoll): string {

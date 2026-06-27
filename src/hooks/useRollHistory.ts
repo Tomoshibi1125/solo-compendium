@@ -6,6 +6,7 @@ import {
 	isLocalCharacterId,
 	listLocalRollHistory,
 } from "@/lib/guestStore";
+import { logger } from "@/lib/logger";
 
 export type RollRecord = Database["public"]["Tables"]["roll_history"]["Row"];
 type RollRecordInsert = Database["public"]["Tables"]["roll_history"]["Insert"];
@@ -179,6 +180,12 @@ export const useRecordRoll = () => {
 		},
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: ["roll-history"] });
+		},
+		onError: (error) => {
+			// The roll result toast still fires and the optimistic local cache keeps
+			// the entry, so don't interrupt the user — but stop swallowing the
+			// failure: log it so a broken roll_history insert/RLS is diagnosable.
+			logger.error("Failed to persist roll to history", error);
 		},
 	});
 };

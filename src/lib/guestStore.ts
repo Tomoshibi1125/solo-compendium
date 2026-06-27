@@ -341,6 +341,10 @@ export function createLocalCharacter(
 		condition_immunities: [],
 		// Racial parity — union of job.languages + player-selected languages.
 		languages: ((data as Record<string, unknown>).languages as string[]) ?? [],
+		// Sheet personalization columns (default to schema null).
+		sheet_theme: null,
+		sheet_accent: null,
+		sheet_backdrop: null,
 	};
 
 	// Seed the abilities map from the character row's scores rather than the

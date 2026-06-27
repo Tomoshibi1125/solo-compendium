@@ -57,7 +57,7 @@ const JOB_RESOURCES: JobResourceDef[] = [
 		id: "flux-pool",
 		label: "Flux Pool",
 		description:
-			"Internal mana reactor. Overcharge spells, absorb slots into flux, or manifest slots from flux.",
+			"Internal flux reactor. Overcharge spells, absorb slots into flux, or manifest slots from flux.",
 		icon: Zap,
 		maxFromCharacter: (c) => Math.max(1, c.level ?? 1),
 		recovery: "long-rest",
@@ -139,7 +139,7 @@ const JOB_RESOURCES: JobResourceDef[] = [
 		id: "impulse-points",
 		label: "Impulse Points",
 		description:
-			"Channel kinetic mana through your nerve gates — spend on Rites of Speed, Force, or Iron.",
+			"Channel kinetic force through your nerve gates — spend on Rites of Speed, Force, or Iron.",
 		icon: Gauge,
 		maxFromCharacter: (c) => Math.max(1, c.level ?? 1),
 		recovery: "short-rest",
@@ -152,7 +152,7 @@ const JOB_RESOURCES: JobResourceDef[] = [
 		id: "adrenaline-surge",
 		label: "Adrenaline",
 		description:
-			"Overclock your mana-fueled adrenal core: surge damage and absorb impact as built-in spirit armor.",
+			"Overclock your spirit-fueled adrenal core: surge damage and absorb impact as built-in spirit armor.",
 		icon: Zap,
 		maxFromCharacter: (c) => 2 + Math.floor(((c.level ?? 1) - 1) / 4),
 		recovery: "short-rest",

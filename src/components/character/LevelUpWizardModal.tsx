@@ -1723,7 +1723,7 @@ export const LevelUpWizardModal = ({
 				const featureIds = newFeatures.map((f) => f.id).filter(Boolean);
 				if (featureIds.length > 0) {
 					const { data: groups } = await supabase
-						.from("compendium_feature_choice_groups" as never)
+						.from("compendium_feature_choice_groups")
 						.select("id")
 						.in("feature_id", featureIds);
 
@@ -1732,7 +1732,7 @@ export const LevelUpWizardModal = ({
 					);
 					if (groupIds.length > 0) {
 						const { data: chosen } = await supabase
-							.from("character_feature_choices" as never)
+							.from("character_feature_choices")
 							.select("group_id")
 							.eq("character_id", character.id)
 							.in("group_id", groupIds);

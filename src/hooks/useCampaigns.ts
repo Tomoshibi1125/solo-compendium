@@ -1,4 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import type { Database } from "@/integrations/supabase/types";
@@ -474,6 +475,36 @@ export const useCampaignByShareCode = (shareCode: string) => {
 // Fetch campaign members
 export const useCampaignMembers = (campaignId: string) => {
 	const { user, loading } = useAuth();
+	const queryClient = useQueryClient();
+
+	// Realtime: when an Ascendant joins (or their link/role changes), the Warden's
+	// roster must update without a manual refresh. Mirrors the campaign_messages
+	// channel pattern; the table is added to the supabase_realtime publication in
+	// migration 20260627* so postgres_changes actually fires here.
+	useEffect(() => {
+		if (!campaignId || isLocalMode() || !isSupabaseConfigured) return;
+		const channel = supabase
+			.channel(`campaign-members-${campaignId}`)
+			.on(
+				"postgres_changes",
+				{
+					event: "*",
+					schema: "public",
+					table: "campaign_members",
+					filter: `campaign_id=eq.${campaignId}`,
+				},
+				() => {
+					queryClient.invalidateQueries({
+						queryKey: ["campaigns", campaignId, "members"],
+					});
+				},
+			)
+			.subscribe();
+		return () => {
+			supabase.removeChannel(channel);
+		};
+	}, [campaignId, queryClient]);
+
 	return useQuery({
 		queryKey: ["campaigns", campaignId, "members"],
 		queryFn: async () => {

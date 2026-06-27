@@ -78,7 +78,7 @@ export function useSessionReplay({
 		const load = async () => {
 			setIsLoading(true);
 			const query = supabase
-				.from("campaign_session_events" as never)
+				.from("campaign_session_events")
 				.select("*")
 				.eq("campaign_id", campaignId)
 				.order("created_at", { ascending: true })

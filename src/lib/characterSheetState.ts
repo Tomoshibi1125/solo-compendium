@@ -19,6 +19,9 @@ export type SheetNoteSection =
 	| "techniques"
 	| "runes"
 	| "conditions"
+	| "ideals"
+	| "bonds"
+	| "flaws"
 	| "notes";
 
 export interface CharacterSheetState {

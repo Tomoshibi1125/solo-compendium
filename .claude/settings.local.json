@@ -116,7 +116,20 @@
       "PowerShell(npx @biomejs/biome check ./scripts ./tests ./tools ./supabase/functions ./vite.config.ts ./vitest.config.ts ./playwright.config.ts --reporter=summary 2>&1)",
       "PowerShell(npx @biomejs/biome check ./src --reporter=summary 2>&1)",
       "PowerShell(git status --porcelain | Where-Object { $_ -match '\\(biome|knip\\)' } | Select-Object -First 15; Write-Output \"--- tracked artifact count ---\"; \\(git ls-files | Select-String -Pattern '^\\(biome|knip|final_|full_|audit_\\)' \\).Count)",
-      "PowerShell(npx knip --no-progress 2>&1 | Tee-Object -FilePath \"$env:TEMP\\\\knip-plan.txt\" | Select-Object -Last 50 | Out-String)"
+      "PowerShell(npx knip --no-progress 2>&1 | Tee-Object -FilePath \"$env:TEMP\\\\knip-plan.txt\" | Select-Object -Last 50 | Out-String)",
+      "Bash(python -c \"import pypdf; r=pypdf.PdfReader\\('books/exports/Rift Ascendant - Run Silent Campaign.pdf'\\); print\\('PAGES:', len\\(r.pages\\)\\); print\\('OUTLINE entries \\(top\\):', len\\(r.outline\\) if r.outline else 0\\)\")",
+      "Bash(pdfinfo \"books/exports/Rift Ascendant - Run Silent Campaign.pdf\")",
+      "Bash(node -e \"require\\('child_process'\\)\")",
+      "Bash(curl -s -m 4 http://127.0.0.1:8188/system_stats)",
+      "mcp__mcp-registry__list_connectors",
+      "Bash(cd \"C:/Users/jjcal/Documents/solo-compendium\" && echo \"=== ComfyUI install check ===\" && if [ -f \"/c/Users/jjcal/OneDrive/Desktop/ComfyUI/main.py\" ]; then echo \"ComfyUI main.py: PRESENT\"; else echo \"ComfyUI main.py: MISSING\"; fi && if [ -f \"/c/Users/jjcal/OneDrive/Desktop/ComfyUI/venv/Scripts/python.exe\" ]; then echo \"ComfyUI venv python: PRESENT\"; else echo \"ComfyUI venv python: MISSING\"; fi && echo \"\" && echo \"=== SDXL checkpoints present? ===\" && ls -1 \"/c/Users/jjcal/OneDrive/Desktop/ComfyUI/models/checkpoints/\" 2>/dev/null | head || echo \"\\(checkpoints dir not found / inaccessible\\)\" && echo \"\" && echo \"=== rift-image-prompts.json exists? ===\" && if [ -f data/rift-image-prompts.json ]; then echo \"PRESENT \\($\\(wc -c < data/rift-image-prompts.json\\) bytes\\)\"; else echo \"MISSING\"; fi)",
+      "Bash(grep -nE \"^import |from \\\\\"\\\\.\\\\./\\\\.\\\\./src|canonicalCompendium|compendium|require\\\\\\(\" books/scripts/build-books.ts)",
+      "Bash(read p *)",
+      "Bash([ -f \"public$p\" ])",
+      "Bash(cd \"C:/Users/jjcal/Documents/solo-compendium\" && echo \"=== ComfyUI install + checkpoints ===\" && ls \"/c/Users/jjcal/OneDrive/Desktop/ComfyUI/main.py\" >/dev/null 2>&1 && echo \"ComfyUI: PRESENT\" || echo \"ComfyUI: MISSING\"; ls -la \"/c/Users/jjcal/OneDrive/Desktop/ComfyUI/models/checkpoints/\" 2>/dev/null | grep -iE \"\\\\.safetensors|\\\\.ckpt|put_check\" | head; echo \"\" && echo \"=== ComfyUI reachable? ===\" && curl -s -m 4 http://127.0.0.1:8188/system_stats 2>/dev/null | head -c 120 || echo \"NOT REACHABLE\"; echo \"\" && echo \"=== generated candidate art present? ===\" && ls public/generated/rift-ascendant-candidates/ 2>/dev/null | head; ls public/ui-art/run-silent/ 2>/dev/null | head)",
+      "WebFetch(domain:play.google.com)",
+      "Bash(timeout 30 tail -f \"C:\\\\Users\\\\jjcal\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\C--Users-jjcal-Documents-solo-compendium\\\\f36a0eda-a200-421f-bf9b-549a6c03bf88\\\\tasks\\\\bljoupkxo.output\")",
+      "Bash(xargs grep -l \"vtt\")"
     ]
   }
 }

@@ -83,7 +83,7 @@ export function useFieldRoster() {
 		queryFn: async (): Promise<FieldRosterListing[]> => {
 			if (!isSupabaseConfigured) return [];
 			const { data, error } = await supabase
-				.from("campaigns_public_listings" as never)
+				.from("campaigns_public_listings")
 				.select("id, name, share_code, public_listing, updated_at")
 				.order("updated_at", { ascending: false })
 				.limit(120);

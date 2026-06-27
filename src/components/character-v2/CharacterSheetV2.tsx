@@ -270,12 +270,18 @@ export default function CharacterSheetV2() {
 	}, [undoRedo, updateCharacter]);
 
 	useEffect(() => {
-		const handleScroll = () => {
-			// Show header after scrolling past the main header (approx 400px)
-			setShowScrollHeader(window.scrollY > 400);
+		const handleScroll = (e: Event) => {
+			// The app scrolls an inner overflow container (MainLayout's <main>), not
+			// window — scroll doesn't bubble, so capture it and read the real scroller.
+			const t = e.target;
+			let top: number;
+			if (t instanceof HTMLElement && t.tagName === "MAIN") top = t.scrollTop;
+			else if (t === document || t === window) top = window.scrollY;
+			else return; // ignore inner panel scrollbars (asides, scroll areas)
+			setShowScrollHeader(top > 400);
 		};
-		window.addEventListener("scroll", handleScroll);
-		return () => window.removeEventListener("scroll", handleScroll);
+		document.addEventListener("scroll", handleScroll, true);
+		return () => document.removeEventListener("scroll", handleScroll, true);
 	}, [setShowScrollHeader]);
 
 	const onSelectDetail = (
@@ -676,11 +682,52 @@ export default function CharacterSheetV2() {
 	const bio = (
 		<>
 			<JournalPanel characterId={character.id} />
+			{displayNames.background && (
+				<AscendantWindow title="BACKGROUND">
+					<div className="p-2 flex items-center justify-between gap-2">
+						<span className="font-heading font-semibold">
+							{displayNames.background}
+						</span>
+						{character.background_id && (
+							<Button
+								variant="outline"
+								size="sm"
+								onClick={() =>
+									navigate(`/compendium/backgrounds/${character.background_id}`)
+								}
+							>
+								View details
+							</Button>
+						)}
+					</div>
+				</AscendantWindow>
+			)}
 			<InlineSectionNote
 				section="description"
 				label="Description"
 				value={sectionNotes.description ?? ""}
 				onChange={(v) => handleSectionNote("description", v)}
+				readOnly={isReadOnly}
+			/>
+			<InlineSectionNote
+				section="ideals"
+				label="Ideals"
+				value={sectionNotes.ideals ?? ""}
+				onChange={(v) => handleSectionNote("ideals", v)}
+				readOnly={isReadOnly}
+			/>
+			<InlineSectionNote
+				section="bonds"
+				label="Bonds"
+				value={sectionNotes.bonds ?? ""}
+				onChange={(v) => handleSectionNote("bonds", v)}
+				readOnly={isReadOnly}
+			/>
+			<InlineSectionNote
+				section="flaws"
+				label="Flaws"
+				value={sectionNotes.flaws ?? ""}
+				onChange={(v) => handleSectionNote("flaws", v)}
 				readOnly={isReadOnly}
 			/>
 			<InlineSectionNote
@@ -797,6 +844,14 @@ export default function CharacterSheetV2() {
 									<span className="text-primary/30">/</span>
 									<span className="text-[10px] font-mono text-primary/40 uppercase tracking-widest">
 										{displayNames.path}
+									</span>
+								</>
+							)}
+							{displayNames.background && (
+								<>
+									<span className="text-primary/30">•</span>
+									<span className="text-[10px] font-mono text-primary/40 uppercase tracking-widest">
+										{displayNames.background}
 									</span>
 								</>
 							)}
@@ -1246,8 +1301,11 @@ export default function CharacterSheetV2() {
 							temp: calculateTotalTempHP(characterResources),
 						}}
 						ac={stats.calculatedStats.armorClass}
+						acBreakdown={stats.armorClassDetail.formula}
 						initiative={stats.finalInitiative}
+						initiativeBreakdown={`Base Mod: ${getAbilityModifier(stats.finalAbilities.AGI)} | Custom/Sigils: ${stats.finalInitiative - getAbilityModifier(stats.finalAbilities.AGI)}`}
 						speed={stats.finalSpeed}
+						speedBreakdown={`Base Speed: ${stats.baseStats.speed} | Custom/Sigils/Encumbrance: ${stats.finalSpeed - stats.baseStats.speed}`}
 						proficiencyBonus={getProficiencyBonus(character.level || 1)}
 						characterLevel={character.level || 1}
 						hitDice={{
@@ -1261,6 +1319,7 @@ export default function CharacterSheetV2() {
 							die: getRiftFavorDie(character.level || 1),
 							level: character.level || 1,
 						}}
+						campaignId={campaignId ?? undefined}
 						onRollInitiative={onRollInitiative}
 						onRollHitDice={onRollHitDice}
 						onHPClick={onHPClick}

@@ -37,11 +37,11 @@ export function useCharacterVehicles(characterId: string | undefined) {
 			if (!characterId || !isSupabaseConfigured)
 				return [] as CharacterVehicleRow[];
 			const { data, error } = await supabase
-				.from("character_vehicles" as never)
+				.from("character_vehicles")
 				.select("*")
 				.eq("character_id", characterId);
 			if (error) throw error;
-			return (data as unknown as CharacterVehicleRow[]) || [];
+			return (data ?? []) as unknown as CharacterVehicleRow[];
 		},
 		enabled: !!characterId,
 	});
@@ -59,21 +59,18 @@ export function useAddCharacterVehicle() {
 		}) => {
 			if (!isSupabaseConfigured)
 				throw new AppError("Supabase not configured", "CONFIG");
-			const { data, error } = await (supabase
-				.from("character_vehicles" as never)
+			const { data, error } = await supabase
+				.from("character_vehicles")
 				.insert({
 					character_id: input.characterId,
 					vehicle_id: input.vehicleId,
 					nickname: input.nickname ?? null,
 					current_hp: input.initialHp,
-				} as never)
+				})
 				.select()
-				.single() as unknown as Promise<{
-				data: CharacterVehicleRow;
-				error: Error | null;
-			}>);
+				.single();
 			if (error) throw error;
-			return data;
+			return data as unknown as CharacterVehicleRow;
 		},
 		onSuccess: (_, variables) => {
 			queryClient.invalidateQueries({
@@ -81,23 +78,29 @@ export function useAddCharacterVehicle() {
 			});
 			toast({ title: "Vehicle added" });
 		},
+		onError: (error) => {
+			toast({
+				title: "Failed to add vehicle",
+				description: error instanceof Error ? error.message : "Unknown error",
+				variant: "destructive",
+			});
+		},
 	});
 }
 
 export function useUpdateCharacterVehicleHP() {
 	const queryClient = useQueryClient();
+	const { toast } = useToast();
 	return useMutation({
 		mutationFn: async (input: {
 			characterId: string;
 			vehicleLinkId: string;
 			currentHp: number;
 		}) => {
-			const { error } = await (supabase
-				.from("character_vehicles" as never)
-				.update({ current_hp: input.currentHp } as never)
-				.eq("id", input.vehicleLinkId) as unknown as Promise<{
-				error: Error | null;
-			}>);
+			const { error } = await supabase
+				.from("character_vehicles")
+				.update({ current_hp: input.currentHp })
+				.eq("id", input.vehicleLinkId);
 			if (error) throw error;
 		},
 		onSuccess: (_, variables) => {
@@ -105,27 +108,40 @@ export function useUpdateCharacterVehicleHP() {
 				queryKey: CHAR_KEY(variables.characterId),
 			});
 		},
+		onError: (error) => {
+			toast({
+				title: "Failed to update vehicle",
+				description: error instanceof Error ? error.message : "Unknown error",
+				variant: "destructive",
+			});
+		},
 	});
 }
 
 export function useDeleteCharacterVehicle() {
 	const queryClient = useQueryClient();
+	const { toast } = useToast();
 	return useMutation({
 		mutationFn: async (input: {
 			characterId: string;
 			vehicleLinkId: string;
 		}) => {
-			const { error } = await (supabase
-				.from("character_vehicles" as never)
+			const { error } = await supabase
+				.from("character_vehicles")
 				.delete()
-				.eq("id", input.vehicleLinkId) as unknown as Promise<{
-				error: Error | null;
-			}>);
+				.eq("id", input.vehicleLinkId);
 			if (error) throw error;
 		},
 		onSuccess: (_, variables) => {
 			queryClient.invalidateQueries({
 				queryKey: CHAR_KEY(variables.characterId),
+			});
+		},
+		onError: (error) => {
+			toast({
+				title: "Failed to remove vehicle",
+				description: error instanceof Error ? error.message : "Unknown error",
+				variant: "destructive",
 			});
 		},
 	});

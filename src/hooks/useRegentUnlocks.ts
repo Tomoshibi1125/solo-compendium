@@ -1,4 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { listCanonicalEntries } from "@/lib/canonicalCompendium";
@@ -61,6 +62,33 @@ export function useRegentUnlocks(characterId: string) {
 		},
 		enabled: !!characterId,
 	});
+
+	// Realtime: when a Warden unlocks a regent for this character, it must appear
+	// on the player's open sheet without a refresh. character_regent_unlocks is
+	// added to the supabase_realtime publication in migration 20260627*.
+	useEffect(() => {
+		if (!characterId) return;
+		const channel = supabase
+			.channel(`regent-unlocks-${characterId}`)
+			.on(
+				"postgres_changes",
+				{
+					event: "*",
+					schema: "public",
+					table: "character_regent_unlocks",
+					filter: `character_id=eq.${characterId}`,
+				},
+				() => {
+					queryClient.invalidateQueries({
+						queryKey: ["regent-unlocks", characterId],
+					});
+				},
+			)
+			.subscribe();
+		return () => {
+			supabase.removeChannel(channel);
+		};
+	}, [characterId, queryClient]);
 
 	const unlockRegentMutation = useMutation({
 		mutationFn: async ({
