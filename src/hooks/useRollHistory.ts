@@ -1,4 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useToast } from "@/hooks/use-toast";
 import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import type { Database } from "@/integrations/supabase/types";
 import {
@@ -100,6 +101,7 @@ export const useRollHistory = (characterId?: string, limit = 50) => {
 
 export const useRecordRoll = () => {
 	const queryClient = useQueryClient();
+	const { toast } = useToast();
 
 	return useMutation({
 		mutationFn: async (roll: RollRecordInsertClient) => {
@@ -186,6 +188,14 @@ export const useRecordRoll = () => {
 			// the entry, so don't interrupt the user — but stop swallowing the
 			// failure: log it so a broken roll_history insert/RLS is diagnosable.
 			logger.error("Failed to persist roll to history", error);
+			toast({
+				title: "Roll history not saved",
+				description:
+					error instanceof Error
+						? error.message
+						: "The roll resolved locally, but history persistence failed.",
+				variant: "destructive",
+			});
 		},
 	});
 };

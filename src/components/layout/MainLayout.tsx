@@ -14,11 +14,6 @@ interface MainLayoutProps {
 export function MainLayout({ children, className }: MainLayoutProps) {
 	const location = useLocation();
 	const isCharacterSheet = location.pathname.startsWith("/characters/");
-	// Full-viewport VTT map routes render their own chrome; suppress the bottom
-	// nav there so it never covers the map or the VTT's own bottom controls.
-	const isFullBleedVtt = /\/vtt(-map|-enhanced)?(\/spectate)?$/.test(
-		location.pathname,
-	);
 
 	return (
 		<div className="min-h-[100dvh] w-full flex bg-transparent selection:bg-primary/30 relative">
@@ -46,9 +41,8 @@ export function MainLayout({ children, className }: MainLayoutProps) {
 				</main>
 			</div>
 
-			{/* Thumb-reachable bottom nav (phones/tablets). Hidden on desktop and
-			    on full-bleed VTT map routes. */}
-			{!isFullBleedVtt && <MobileBottomNav />}
+			{/* Thumb-reachable bottom nav (phones/tablets). Hidden on desktop. */}
+			<MobileBottomNav />
 		</div>
 	);
 }

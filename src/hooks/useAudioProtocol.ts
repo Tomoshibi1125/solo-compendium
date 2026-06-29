@@ -2,7 +2,7 @@
  * Unified Audio Protocol Hook
  *
  * Provides a single audio playback interface used by both
- * the Warden AudioManager and VTT session audio systems.
+ * the Warden AudioManager and campaign session audio systems.
  * Handles browser autoplay policies, preloading, and graceful
  * error recovery with user-facing feedback.
  */

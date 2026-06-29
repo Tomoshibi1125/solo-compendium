@@ -5,7 +5,6 @@ import {
 	CalendarClock,
 	Crown,
 	FileText,
-	Layers,
 	Loader2,
 	MessageSquare,
 	Settings,
@@ -347,13 +346,6 @@ const CampaignDetail = () => {
 								<span>Overview</span>
 							</TabsTrigger>
 							<TabsTrigger
-								value="vtt"
-								className="flex-1 gap-1.5 text-xs sm:text-sm min-h-[44px] px-2"
-							>
-								<Layers className="w-3 h-3 sm:w-4 sm:h-4 shrink-0" />
-								<span>VTT</span>
-							</TabsTrigger>
-							<TabsTrigger
 								value="wiki"
 								className="flex-1 gap-1.5 text-xs sm:text-sm min-h-[44px] px-2"
 							>
@@ -415,81 +407,6 @@ const CampaignDetail = () => {
 								</TabsTrigger>
 							)}
 						</TabsList>
-
-						<TabsContent value="vtt">
-							<AscendantWindow title="VIRTUAL TABLETOP" variant="quest">
-								<div className="space-y-6 text-center py-12">
-									<Layers className="w-16 h-16 text-primary mx-auto mb-4 opacity-50" />
-									<RiftHeading
-										level={2}
-										variant="gate"
-										dimensional
-										className="mb-4 text-center mx-auto"
-									>
-										Full-Featured VTT Interface
-									</RiftHeading>
-									<ManaFlowText
-										variant="rift"
-										speed="slow"
-										className="max-w-2xl mx-auto mb-6"
-									>
-										Access the complete Virtual Tabletop system with maps,
-										tokens, initiative tracking, dice rolling, chat, fog of war,
-										and more. Everything you need for running sessions online.
-									</ManaFlowText>
-									<div className="flex items-center justify-center gap-4 flex-wrap">
-										<Button className="btn-umbral" size="lg" asChild>
-											<Link to={`/campaigns/${id}/vtt`}>
-												<Layers className="w-5 h-5 mr-2" />
-												Launch VTT
-											</Link>
-										</Button>
-										{hasWardenAccess && (
-											<Button
-												variant="outline"
-												size="lg"
-												className="border-primary/50 hover:border-primary hover:bg-primary/10"
-												asChild
-											>
-												<Link to={`/campaigns/${id}/book`}>
-													<BookOpen className="w-5 h-5 mr-2" />
-													Campaign Book
-												</Link>
-											</Button>
-										)}
-									</div>
-									<div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4 text-left max-w-3xl mx-auto">
-										<div className="p-4 rounded-lg border border-border bg-muted/30">
-											<h3 className="font-heading font-semibold mb-2">
-												Token Management
-											</h3>
-											<AscendantText className="block text-xs text-foreground/70">
-												Place character tokens, Anomalies, and NPCs. Drag,
-												rotate, and manage HP directly on tokens.
-											</AscendantText>
-										</div>
-										<div className="p-4 rounded-lg border border-border bg-muted/30">
-											<h3 className="font-heading font-semibold mb-2">
-												Initiative Tracking
-											</h3>
-											<AscendantText className="block text-xs text-foreground/70">
-												Track combat initiative with automatic sorting. Manage
-												turn order and combat flow.
-											</AscendantText>
-										</div>
-										<div className="p-4 rounded-lg border border-border bg-muted/30">
-											<h3 className="font-heading font-semibold mb-2">
-												Dice & Chat
-											</h3>
-											<AscendantText className="block text-xs text-foreground/70">
-												Roll dice with full notation support. Chat with party
-												members in real-time.
-											</AscendantText>
-										</div>
-									</div>
-								</div>
-							</AscendantWindow>
-						</TabsContent>
 
 						<TabsContent value="overview" className="space-y-6">
 							<div className="grid grid-cols-1 lg:grid-cols-2 gap-6">

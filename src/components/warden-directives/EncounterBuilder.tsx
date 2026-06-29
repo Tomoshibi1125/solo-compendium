@@ -151,7 +151,7 @@ const loadCanonicalAnomalies = async (
 export interface EncounterBuilderProps {
 	campaignId?: string | null;
 	className?: string;
-	/** When true, renders in a stacked single-column layout suitable for narrow VTT sidebars */
+	/** When true, renders in a stacked single-column layout suitable for narrow sidebars */
 	embedded?: boolean;
 }
 

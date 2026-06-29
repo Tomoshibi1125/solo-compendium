@@ -29,7 +29,8 @@ export function useCharacterRoll({
 
 	const getAbilityModifier = useCallback(
 		(ability: string): number => {
-			const score = abilities[ability] || 10;
+			const normalized = ability.toUpperCase();
+			const score = abilities[ability] ?? abilities[normalized] ?? 10;
 			return getAbilityModifierFromScore(score);
 		},
 		[abilities],
@@ -38,7 +39,10 @@ export function useCharacterRoll({
 	const getSaveModifier = useCallback(
 		(ability: string): number => {
 			const baseMod = getAbilityModifier(ability);
-			const isProficient = savingThrowProficiencies.includes(ability);
+			const normalized = ability.toUpperCase();
+			const isProficient = savingThrowProficiencies.some(
+				(entry) => entry.toUpperCase() === normalized,
+			);
 			return baseMod + (isProficient ? proficiencyBonus : 0);
 		},
 		[getAbilityModifier, savingThrowProficiencies, proficiencyBonus],
@@ -48,45 +52,32 @@ export function useCharacterRoll({
 		(skill: string): number => {
 			// Map skills to their abilities
 			const skillAbilityMap: Record<string, string> = {
-				athletics: "str",
-				Athletics: "str",
-				acrobatics: "agi",
-				Acrobatics: "agi",
-				sleight_of_hand: "agi",
-				"Sleight of Hand": "agi",
-				stealth: "agi",
-				Stealth: "agi",
-				arcana: "int",
-				Arcana: "int",
-				history: "int",
-				History: "int",
-				investigation: "int",
-				Investigation: "int",
-				nature: "int",
-				Nature: "int",
-				religion: "int",
-				Religion: "int",
-				insight: "sense",
-				Insight: "sense",
-				medicine: "sense",
-				Medicine: "sense",
-				perception: "sense",
-				Perception: "sense",
-				survival: "sense",
-				Survival: "sense",
-				deception: "pre",
-				Deception: "pre",
-				intimidation: "pre",
-				Intimidation: "pre",
-				performance: "pre",
-				Performance: "pre",
-				persuasion: "pre",
-				Persuasion: "pre",
+				athletics: "STR",
+				acrobatics: "AGI",
+				sleight_of_hand: "AGI",
+				"sleight of hand": "AGI",
+				stealth: "AGI",
+				arcana: "INT",
+				history: "INT",
+				investigation: "INT",
+				nature: "INT",
+				religion: "INT",
+				insight: "SENSE",
+				medicine: "SENSE",
+				perception: "SENSE",
+				survival: "SENSE",
+				deception: "PRE",
+				intimidation: "PRE",
+				performance: "PRE",
+				persuasion: "PRE",
 			};
 
-			const ability = skillAbilityMap[skill] || "str";
+			const normalizedSkill = skill.toLowerCase().replaceAll("_", " ");
+			const ability = skillAbilityMap[normalizedSkill] || "STR";
 			const baseMod = getAbilityModifier(ability);
-			const isProficient = skillProficiencies.includes(skill);
+			const isProficient = skillProficiencies.some(
+				(entry) => entry.toLowerCase().replaceAll("_", " ") === normalizedSkill,
+			);
 			return baseMod + (isProficient ? proficiencyBonus : 0);
 		},
 		[getAbilityModifier, skillProficiencies, proficiencyBonus],

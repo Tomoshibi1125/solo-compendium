@@ -10,7 +10,7 @@ describe("buildIcsForCampaignSessions", () => {
 		title: "Session 1: Yongsan Gate",
 		description: "Investigate the breach in Yongsan District.",
 		scheduled_for: "2026-06-01T18:00:00.000Z",
-		location: "Discord / VTT",
+		location: "Discord / Table",
 	};
 
 	it("emits a valid VCALENDAR envelope with the campaign name", () => {

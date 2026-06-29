@@ -135,8 +135,8 @@ export function getRegentHpContribution(
 
 /**
  * Convenience: additive gestalt HP contribution for a set of persisted regent
- * ids at a given character level. For external readers (VTT party dashboard,
- * VTT character panel) that have regent ids but not the full engine output.
+ * ids at a given character level. For external readers (party dashboard,
+ * character panel) that have regent ids but not the full engine output.
  * Pairs with `getEffectiveHpMax(character, <this>)`.
  */
 export function getRegentHpContributionForIds(

@@ -24,10 +24,7 @@ export type DiceRollPayload = {
 	details?: Record<string, unknown>;
 };
 
-export type MapUpdatePayload =
-	| import("@/types/vtt").VTTTokenInstance
-	| import("@/types/vtt").VTTScene
-	| Record<string, unknown>;
+export type MapUpdatePayload = Record<string, unknown>;
 export type CombatStatePayload = Record<string, unknown>;
 
 type CollaborationEventBase = {
@@ -47,10 +44,7 @@ type CollaborationEvent =
 	| (CollaborationEventBase & { type: "dice_roll"; data: DiceRollPayload })
 	| (CollaborationEventBase & {
 			type: "map_update";
-			data:
-				| import("@/types/vtt").VTTTokenInstance
-				| import("@/types/vtt").VTTScene
-				| Record<string, unknown>;
+			data: Record<string, unknown>;
 	  })
 	| (CollaborationEventBase & {
 			type: "combat_state";

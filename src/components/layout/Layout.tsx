@@ -13,7 +13,7 @@ interface LayoutProps {
 	className?: string;
 	/**
 	 * When true, removes the default horizontal/vertical padding on <main> so the
-	 * page can render a full-viewport experience (used by VTT canvas pages).
+	 * page can render a full-viewport experience.
 	 */
 	fullBleed?: boolean;
 }

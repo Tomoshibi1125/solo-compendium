@@ -1,5 +1,5 @@
 import { AlertTriangle, Plus, ScrollText, Trash2 } from "lucide-react";
-import { type DragEvent, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { AutoLinkText } from "@/components/compendium/AutoLinkText";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
@@ -31,7 +31,6 @@ import {
 } from "@/lib/characterCalculations";
 import { cn } from "@/lib/utils";
 import { formatRegentVernacular } from "@/lib/vernacular";
-import { buildSpellTemplateDragData, VTT_SPELL_TEMPLATE_MIME } from "@/lib/vtt";
 import type { DetailData } from "@/types/character";
 import { AddSpellDialog } from "./AddSpellDialog";
 import { SpellcastingStatsCard } from "./SpellcastingStatsCard";
@@ -261,24 +260,6 @@ export function SpellsList({
 		});
 	};
 
-	const handleSpellDragStart = (
-		e: DragEvent<HTMLElement>,
-		spell: CharacterSpell,
-	) => {
-		e.dataTransfer.setData(
-			VTT_SPELL_TEMPLATE_MIME,
-			buildSpellTemplateDragData({
-				id: spell.spell_id ?? spell.id,
-				name: spell.name,
-				range: spell.spell?.range ?? spell.range,
-				target: spell.spell?.target,
-				description: spell.description,
-				mechanics: spell.spell?.mechanics,
-			}),
-		);
-		e.dataTransfer.effectAllowed = "copy";
-	};
-
 	const handleRemove = async (spell: CharacterSpell) => {
 		const displayName = formatRegentVernacular(spell.name);
 		if (!confirm(`Remove ${displayName}?`)) return;
@@ -427,9 +408,6 @@ export function SpellsList({
 								return (
 									<fieldset
 										key={spell.id}
-										aria-label={`Draggable spell ${displayName}`}
-										draggable
-										onDragStart={(e) => handleSpellDragStart(e, spell)}
 										className="p-3 rounded-lg border bg-muted/30 min-w-0"
 									>
 										<div className="flex items-start justify-between gap-2">

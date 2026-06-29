@@ -33,7 +33,7 @@ interface AscendantWindowProps {
 	 * Rift Ascendant theme (backdrop blur, scan lines, animated shadow pulse,
 	 * four large corner brackets). `compact` strips the heavy overlays and
 	 * uses a solid-ish background with only two small corner hints — intended
-	 * for nested stacked panels (VTT sidebars) where the full chrome hurts
+	 * for nested stacked panels where the full chrome hurts
 	 * legibility and causes corner brackets to overlap neighbours.
 	 */
 	density?: "full" | "compact";

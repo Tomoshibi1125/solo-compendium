@@ -204,10 +204,10 @@ export interface GeneratedSovereignExtended {
 	fusionName?: string;
 }
 
-// ─── VTT Types ──────────────────────────────────────────────────────────────────
+// ─── Scene Types ────────────────────────────────────────────────────────────────
 
-/** Weather type for VTT scenes */
-export type VTTWeatherType =
+/** Weather type for campaign scenes */
+export type SceneWeatherType =
 	| "clear"
 	| "rain"
 	| "snow"

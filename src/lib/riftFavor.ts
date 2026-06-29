@@ -121,7 +121,7 @@ function getRiftFavorDie(level: number): number {
 	return 10;
 }
 
-// ── VTT State Management ──────────────────────────────────────────────
+// ── Rift Favor State Management ───────────────────────────────────────
 
 export interface RiftFavorState {
 	/** Current Rift Favor points */

@@ -2,7 +2,6 @@ import { BadgeCheck, Info, Shield, Zap } from "lucide-react";
 import type { DragEvent } from "react";
 import { AutoLinkText } from "@/components/compendium/AutoLinkText";
 import { DetailMetaFooter } from "@/components/compendium/DetailMetaFooter";
-import { ShareToVTTButton } from "@/components/compendium/ShareToVTTButton";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { formatRarityLabel } from "@/lib/labels";
@@ -36,10 +35,7 @@ export const SigilDetail = ({ data }: SigilDetailProps) => {
 			onDragStart={handleSigilDragStart}
 			data-testid="sigil-detail-draggable"
 		>
-			<AscendantWindow
-				className="relative overflow-hidden border-primary/20 bg-background/40 backdrop-blur-xl"
-				actions={<ShareToVTTButton itemType="Sigil" itemName={displayName} />}
-			>
+			<AscendantWindow className="relative overflow-hidden border-primary/20 bg-background/40 backdrop-blur-xl">
 				<div className="absolute top-0 right-0 w-96 h-96 bg-primary/10 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2 pointer-events-none" />
 				<div className="absolute bottom-0 left-0 w-64 h-64 bg-blue-500/10 rounded-full blur-[80px] translate-y-1/2 -translate-x-1/2 pointer-events-none" />
 

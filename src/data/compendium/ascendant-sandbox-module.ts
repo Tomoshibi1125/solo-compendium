@@ -2,9 +2,8 @@ import {
 	type SandboxNPC,
 	sandboxRecruitableNPCs,
 } from "@/data/compendium/sandbox-npcs";
-import type { VTTScene } from "@/types/vtt";
 
-// Sub-module imports - 39 chapters, 24 handouts, 20 VTT scenes
+// Sub-module imports - 39 chapters, 24 handouts, 20 campaign scenes
 import { riftAscendantWorldLoreChapter } from "./sandbox/rift-ascendant-world-lore";
 import { chaptersPart1 } from "./sandbox/sandbox-chapters-part1";
 import { chaptersPart2 } from "./sandbox/sandbox-chapters-part2";
@@ -29,10 +28,6 @@ import {
 } from "./sandbox/sandbox-loot";
 import { type SandboxQuest, sandboxQuests } from "./sandbox/sandbox-quests";
 import {
-	type SandboxVTTScene,
-	sandboxVTTScenesExpanded,
-} from "./sandbox/sandbox-scenes";
-import {
 	type SandboxSession,
 	sandboxSessions,
 } from "./sandbox/sandbox-sessions";
@@ -53,7 +48,7 @@ import {
 // Levels 1-15: a first-entry Ascendant team, trapped behind a sealed threshold,
 // hunted by an unseen apex predator (the Quiet) it cannot fight — only survive,
 // learn the natives' rules and wards, and escape (or, gated and late, kill).
-// Automatically populates the Campaign Wiki, VTT Maps, and Handouts.
+// Automatically populates the Campaign Wiki and Handouts.
 // ============================================================================
 
 interface SandboxModule {
@@ -68,7 +63,6 @@ interface SandboxModule {
 	 */
 	version: number;
 	chapters: SandboxChapter[];
-	scenes: (VTTScene & { audioTracks?: { url: string; name: string }[] })[];
 	handouts: SandboxHandout[];
 	npcs: SandboxNPC[];
 	sessions: SandboxSession[];
@@ -108,8 +102,6 @@ export const sandboxWikiChapters: SandboxChapter[] = [
 
 export const sandboxHandouts: SandboxHandout[] = sandboxHandoutsExpanded;
 
-export const sandboxVTTScenes: SandboxVTTScene[] = sandboxVTTScenesExpanded;
-
 export const massiveSandboxModule: SandboxModule = {
 	id: "sandbox-shadow-regent",
 	// v9: RA-accuracy pass — Regent is non-human (Kael Voss Anchor, the "once
@@ -118,14 +110,14 @@ export const massiveSandboxModule: SandboxModule = {
 	// and the flat 14-day clock rescaled to a multi-stage Rift Break track.
 	// v8: restores player handouts to the Gloamreach naming scheme so imports
 	// no longer surface Thornwake, Hollow Choir, Gallows Road, or old camp labels.
-	// v7: restores the 20-scene Gloamreach VTT map list and updates NPC token routing.
+	// v7: restores the 20-scene Gloamreach map list and updates NPC token routing.
 	// v6: restored the full Gloamreach scale rewrite across chapters, quests,
 	// factions, NPCs, encounters, timeline, Warden notes, and loot after revert.
 	// v5: reasserted Gloamreach-only canon and removed Subject Zero from module text.
 	// v4: full Gloamreach Rift Interior rewrite.
 	// v3: added the prior world lore sourcebook chapter.
 	// v2: expanded injector seeds sessions, warden notes, NPCs, encounters,
-	// quests, factions, loot, timeline, VTT audio tracks, and pinned assets.
+	// quests, factions, loot, timeline, audio tracks, and pinned assets.
 	// v11: full Regent→Quiet content sweep complete — all 42 chapters + every data
 	// file reframed (NPCs incl. the worn-dead cast that replaced the Regent's Court,
 	// encounters, quests, loot, timeline, handouts, scenes, sessions, factions,
@@ -141,7 +133,6 @@ export const massiveSandboxModule: SandboxModule = {
 	description:
 		"A full-length S-Rank Rift Interior survival and psychological horror campaign for Levels 1-10, set inside the Gloamreach: a country-sized Rift Interior, old and inhabited, behind a threshold that seals the moment the first-ever Ascendant team crosses it. There is no lord to dethrone — there is the Quiet, an unseen apex predator that hunts by noise, light, and the use of Essence, wears the dead to lure prey, and cannot be cleared, only survived or fled. The party must learn how the natives live behind their wards and rules, keep each other alive and sane against a rising Hunt and Dread, and find the way out — or, late and well-earned, take the one chance to put the Quiet down for good.",
 	chapters: sandboxWikiChapters,
-	scenes: sandboxVTTScenes,
 	handouts: sandboxHandouts,
 	npcs: sandboxRecruitableNPCs,
 	sessions: sandboxSessions,

@@ -31,8 +31,15 @@ const toJournalCategory = (value: Json): string => {
 		: "note";
 };
 
-const readLocalJournals = (campaignId: string): HandoutEntry[] => {
-	const saved = localStorage.getItem(`vtt-journal-${campaignId}`);
+const handoutStorageKey = (campaignId: string) =>
+	`solo-compendium.handouts.${campaignId}`;
+const legacyJournalStorageKey = (campaignId: string) =>
+	`vtt-journal-${campaignId}`;
+
+const readLocalHandouts = (campaignId: string): HandoutEntry[] => {
+	const saved =
+		localStorage.getItem(handoutStorageKey(campaignId)) ??
+		localStorage.getItem(legacyJournalStorageKey(campaignId));
 	if (!saved) return [];
 	try {
 		return JSON.parse(saved) as HandoutEntry[];
@@ -41,25 +48,26 @@ const readLocalJournals = (campaignId: string): HandoutEntry[] => {
 	}
 };
 
-const writeLocalJournals = (campaignId: string, entries: HandoutEntry[]) => {
-	localStorage.setItem(`vtt-journal-${campaignId}`, JSON.stringify(entries));
+const writeLocalHandouts = (campaignId: string, entries: HandoutEntry[]) => {
+	localStorage.setItem(handoutStorageKey(campaignId), JSON.stringify(entries));
+	localStorage.removeItem(legacyJournalStorageKey(campaignId));
 };
 
 /**
  * Reactive hook for campaign handouts — uses `useQuery` so that
- * `queryClient.invalidateQueries({ queryKey: ["vtt_journal_entries", campaignId] })`
+ * `queryClient.invalidateQueries({ queryKey: ["campaign_handouts", campaignId] })`
  * from the sandbox injector triggers an automatic refetch.
  */
 export const useCampaignHandouts = (campaignId: string | null) => {
 	const { loading } = useAuth();
 
 	const { data: entries = [], isLoading } = useQuery({
-		queryKey: ["vtt_journal_entries", campaignId],
+		queryKey: ["campaign_handouts", campaignId],
 		queryFn: async (): Promise<HandoutEntry[]> => {
 			if (!campaignId) return [];
 
 			if (await isLocalMode()) {
-				return readLocalJournals(campaignId);
+				return readLocalHandouts(campaignId);
 			}
 
 			const { data, error } = await supabase
@@ -73,7 +81,7 @@ export const useCampaignHandouts = (campaignId: string | null) => {
 			if (error) {
 				console.error("[useCampaignHandouts] Query error:", error);
 				// Fall back to local cache
-				return readLocalJournals(campaignId);
+				return readLocalHandouts(campaignId);
 			}
 
 			const mapped = (data || []).map((row) => ({
@@ -87,7 +95,7 @@ export const useCampaignHandouts = (campaignId: string | null) => {
 			}));
 
 			// Mirror to localStorage for offline fallback
-			writeLocalJournals(campaignId, mapped);
+			writeLocalHandouts(campaignId, mapped);
 			return mapped;
 		},
 		enabled: !!campaignId && !loading,

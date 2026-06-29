@@ -7,7 +7,6 @@
 import { useEffect } from "react";
 import type { StatRowProps } from "@/components/compendium/StatBlock";
 import type { DynamicStyleProps } from "@/components/ui/DynamicStyle";
-import * as vttSandboxValue from "@/components/vtt/VTTSandbox";
 import type {
 	Cell,
 	CellType,
@@ -78,7 +77,6 @@ import type {
 	CompendiumTechnique,
 	TechniqueRow,
 } from "@/hooks/useTechniques";
-import type { VTTMacro } from "@/hooks/useVTTRealtime";
 import type {
 	ActiveSpellRow,
 	ArtifactRequirements,
@@ -97,10 +95,10 @@ import type {
 	FeatureRow,
 	GeneratedSovereignExtended,
 	RegentUnlockExtended,
+	SceneWeatherType,
 	SheetStateExtended,
 	SpellDurationType,
 	PowerRow as SupabasePowerRow,
-	VTTWeatherType,
 } from "@/integrations/supabase/supabaseExtended";
 import * as supabaseExt from "@/integrations/supabase/supabaseExtended";
 import type {
@@ -173,29 +171,6 @@ import type { FilterableQuery } from "@/lib/searchOperators";
 import type { EquipmentRow, SigilRarity } from "@/lib/sigilAutomation";
 import type { EffectTarget } from "@/lib/spellEffectPipeline";
 import type { UnarmoredDefenseJob } from "@/lib/unarmoredDefense";
-// VTT Protocols
-import type {
-	AssetCategory,
-	ChatSegment,
-	DrawingPoint,
-	HexCell,
-	HexOrientation,
-	InlineRollResult,
-	MacroBar,
-	MacroCategory,
-	MeasurementResult,
-	MeasurementTemplate,
-	ParsedChatMessage,
-	PingConfig,
-	RollMacro,
-	TerrainType,
-	TokenVision,
-	VisibilityPolygon,
-	VTTAsset,
-	WeatherEffect,
-	WhisperMessage,
-} from "@/lib/vtt";
-import * as vttCore from "@/lib/vtt";
 import type { CharacterCreateRequest } from "@/types/character";
 import type {
 	CompendiumBackground as Background,
@@ -212,7 +187,7 @@ import type { Anomaly } from "@/types/core-rules";
 export const SystemManifest = {
 	version: "1.0.0-ZeroLegacy",
 	protocols: {
-		vtt: "Virtual Tabletop Broadcasting Hub",
+		campaign: "Campaign Operations Hub",
 		ai: "Gemini 2.0 Integration Lattice",
 		db: "Supabase Extended Schema",
 		rules: "Rift Ascendant Rules Engine",
@@ -225,23 +200,6 @@ export const SystemManifest = {
  * Formally references every identified type symbol to ensure 100% build integrity.
  */
 export type ProtocolWiringLattice = {
-	vtt: {
-		points: DrawingPoint;
-		cells: HexCell;
-		vision: VisibilityPolygon;
-		orientation: HexOrientation;
-		chat: ChatSegment;
-		roll: InlineRollResult;
-		msg: ParsedChatMessage;
-		token: TokenVision;
-		ping: PingConfig;
-		macros: { bar: MacroBar; main: RollMacro; cat: MacroCategory };
-		terrain: TerrainType;
-		weather: WeatherEffect;
-		assets: { cat: AssetCategory; item: VTTAsset };
-		whisper: WhisperMessage;
-		measure: { res: MeasurementResult; temp: MeasurementTemplate };
-	};
 	ai: {
 		char: AICharacterInput;
 		regent: AIRegentInput;
@@ -279,7 +237,7 @@ export type ProtocolWiringLattice = {
 			choices: ChoiceDataExtended;
 			regent: RegentUnlockExtended;
 			sov: GeneratedSovereignExtended;
-			weather: VTTWeatherType;
+			weather: SceneWeatherType;
 		};
 	};
 	rules: {
@@ -342,7 +300,6 @@ export type ProtocolWiringLattice = {
 			payload: TextChangePayload;
 			user: ActiveUser;
 		};
-		vtt: { macro: VTTMacro };
 		stats: { derived: import("@/hooks/useCharacterDerivedStats").DerivedStats };
 	};
 	services: {
@@ -440,14 +397,9 @@ export const _ArchitecturalProof = {
 			name: "CONDITION_PROTOCOL",
 			loader: async () => condSys,
 		},
-		{ name: "VTT_PROTOCOL", loader: async () => vttCore },
 		{
 			name: "UI_PROTOCOL",
 			loader: async () => wiringHubValue,
-		},
-		{
-			name: "VTT_SANDBOX",
-			loader: async () => vttSandboxValue,
 		},
 	],
 };
@@ -477,7 +429,7 @@ export async function verifyArchitecturalIntegrity(): Promise<{
 				);
 			} else {
 				const hasExports = Object.keys(mod).length > 0;
-				if (!hasExports && item.name !== "VTT_SANDBOX") {
+				if (!hasExports) {
 					errors.push(
 						`Vacuum Protocol: ${item.name} materialized but contains no active symbols.`,
 					);

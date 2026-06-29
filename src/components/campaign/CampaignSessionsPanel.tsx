@@ -349,7 +349,7 @@ export function CampaignSessionsPanel({
 									id="session-location"
 									value={sessionLocation}
 									onChange={(event) => setSessionLocation(event.target.value)}
-									placeholder="Discord / Table / VTT"
+									placeholder="Discord / Table"
 								/>
 							</div>
 							<div>

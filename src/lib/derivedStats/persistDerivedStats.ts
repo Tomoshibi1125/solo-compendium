@@ -45,7 +45,7 @@ export interface DerivedStatsSnapshot {
  * No-op for unauthenticated or missing characterId.
  *
  * Caches ONLY the pure-derived columns (armor_class, speed, initiative) so
- * external readers (VTT token sync, party dashboard) see fresh values without
+ * external readers (party dashboard, API consumers) see fresh values without
  * re-running the engine. `hp_max` is intentionally NOT written here — it is
  * authoritative-stored (see DerivedStatsSnapshot.hpMax).
  *

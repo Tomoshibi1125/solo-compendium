@@ -90,13 +90,6 @@ export function CampaignSettings({ campaignId }: CampaignSettingsProps) {
 		campaign?.discord_public_key ?? "",
 	);
 
-	// Misty Pearl I3 — Comm-Net LiveKit SFU opt-in.
-	const [livekitUrl, setLivekitUrl] = useState(campaign?.livekit_url ?? "");
-	const [livekitApiKey, setLivekitApiKey] = useState(
-		campaign?.livekit_api_key ?? "",
-	);
-	const [livekitApiSecret, setLivekitApiSecret] = useState("");
-
 	const { injectSandbox, isInjecting, progressString } =
 		useCampaignSandboxInjector(campaignId);
 
@@ -115,11 +108,6 @@ export function CampaignSettings({ campaignId }: CampaignSettingsProps) {
 			setDiscordWebhookUrl(campaign.discord_webhook_url ?? "");
 			setDiscordAppId(campaign.discord_app_id ?? "");
 			setDiscordPublicKey(campaign.discord_public_key ?? "");
-			setLivekitUrl(campaign.livekit_url ?? "");
-			setLivekitApiKey(campaign.livekit_api_key ?? "");
-			// Secret never round-trips; cleared on hydrate so the user
-			// only writes a new value when they explicitly type one in.
-			setLivekitApiSecret("");
 		}
 	}, [campaign]);
 
@@ -172,13 +160,6 @@ export function CampaignSettings({ campaignId }: CampaignSettingsProps) {
 					// Misty Pearl G2 — Discord two-way bot configuration.
 					discord_app_id: discordAppId.trim() || null,
 					discord_public_key: discordPublicKey.trim() || null,
-					// Misty Pearl I3 — Comm-Net LiveKit SFU opt-in. Secret
-					// only sent when the user typed a fresh value.
-					livekit_url: livekitUrl.trim() || null,
-					livekit_api_key: livekitApiKey.trim() || null,
-					...(livekitApiSecret.trim()
-						? { livekit_api_secret: livekitApiSecret.trim() }
-						: {}),
 				},
 			},
 			{
@@ -457,80 +438,6 @@ export function CampaignSettings({ campaignId }: CampaignSettingsProps) {
 							/>
 						</div>
 					</div>
-
-					{/* Misty Pearl I3 — Comm-Net LiveKit transport */}
-					<div className="p-3 bg-muted/50 rounded space-y-2">
-						<div className="flex items-center gap-2">
-							<MessageSquare className="w-4 h-4 text-primary" />
-							<Label
-								htmlFor="livekit-url"
-								className="font-heading font-semibold"
-							>
-								Comm-Net SFU (LiveKit) — optional
-							</Label>
-						</div>
-						<p className="text-xs text-muted-foreground">
-							Default Comm-Net is mesh P2P (great for ≤6 operatives). For larger
-							parties or mobile-heavy tables, point a{" "}
-							<a
-								href="https://livekit.io"
-								target="_blank"
-								rel="noopener noreferrer"
-								className="underline text-primary"
-							>
-								LiveKit
-							</a>{" "}
-							server here (free Cloud tier or MIT self-host). Tokens are minted
-							server-side by the{" "}
-							<code className="text-[10px] bg-muted px-1">
-								mint-livekit-token
-							</code>{" "}
-							edge function; the secret never reaches the browser.
-						</p>
-						<div>
-							<Label htmlFor="livekit-url" className="text-xs">
-								URL
-							</Label>
-							<Input
-								id="livekit-url"
-								type="url"
-								inputMode="url"
-								placeholder="wss://your-livekit.example.com"
-								value={livekitUrl}
-								onChange={(e) => setLivekitUrl(e.target.value)}
-								className="mt-1 font-mono text-xs"
-								data-testid="livekit-url-input"
-							/>
-						</div>
-						<div>
-							<Label htmlFor="livekit-api-key" className="text-xs">
-								API Key
-							</Label>
-							<Input
-								id="livekit-api-key"
-								placeholder="APIxxxxxxxxx"
-								value={livekitApiKey}
-								onChange={(e) => setLivekitApiKey(e.target.value)}
-								className="mt-1 font-mono text-xs"
-								data-testid="livekit-api-key-input"
-							/>
-						</div>
-						<div>
-							<Label htmlFor="livekit-api-secret" className="text-xs">
-								API Secret (write-only — leave blank to keep current)
-							</Label>
-							<Input
-								id="livekit-api-secret"
-								type="password"
-								autoComplete="new-password"
-								placeholder="Set once; never displayed back."
-								value={livekitApiSecret}
-								onChange={(e) => setLivekitApiSecret(e.target.value)}
-								className="mt-1 font-mono text-xs"
-								data-testid="livekit-api-secret-input"
-							/>
-						</div>
-					</div>
 				</div>
 				<div className="pt-4 border-t border-border space-y-3">
 					<Button
@@ -599,7 +506,7 @@ export function CampaignSettings({ campaignId }: CampaignSettingsProps) {
 							</p>
 							<p className="text-xs text-muted-foreground mt-1">
 								Import or re-import the sandbox module into this campaign.
-								Populates VTT maps, wiki, and encounters.
+								Populates wiki, handouts, and encounters.
 							</p>
 						</div>
 						<Button
@@ -670,8 +577,8 @@ export function CampaignSettings({ campaignId }: CampaignSettingsProps) {
 						</DialogTitle>
 						<DialogDescription>
 							This will permanently delete <strong>{campaign.name}</strong> and
-							all associated data (wiki, sessions, VTT maps, handouts, notes,
-							chat, members). This action is irreversible.
+							all associated data (wiki, sessions, handouts, notes, chat,
+							members). This action is irreversible.
 						</DialogDescription>
 					</DialogHeader>
 					<div className="py-4">

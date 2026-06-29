@@ -853,8 +853,8 @@ export function useCharacterDerivedStats(
 
 	// ─── P0.2: Denormalized cache write-through ─────────────────────
 	// Whenever the engine output changes, persist the derived snapshot
-	// back to the `characters` row so external readers (VTT token sync,
-	// party dashboard, API consumers) see fresh values without re-running
+	// back to the `characters` row so external readers (party dashboard,
+	// API consumers) see fresh values without re-running
 	// the engine. Best-effort — see persistDerivedStats JSDoc.
 	const characterId = character?.id ?? null;
 	const cacheAC = memoized?.calculatedStats.armorClass ?? null;

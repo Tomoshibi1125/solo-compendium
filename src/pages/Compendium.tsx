@@ -8,6 +8,7 @@ import {
 	Gem,
 	GitBranch,
 	Grid3X3,
+	Hammer,
 	Heart,
 	List,
 	Loader2,
@@ -120,6 +121,7 @@ const categories = [
 	{ id: "equipment", name: "Equipment", icon: Swords },
 	{ id: "items", name: "Items", icon: Package },
 	{ id: "vehicles", name: "Vehicles & Mounts", icon: ArrowUpDown },
+	{ id: "crafting", name: "Crafting", icon: Hammer },
 	{ id: "tattoos", name: "Tattoos", icon: Heart },
 	{ id: "pantheon", name: "Pantheon", icon: Crown },
 	{ id: "locations", name: "Locations", icon: MapPin },
@@ -291,6 +293,7 @@ const Compendium = () => {
 				"tattoos",
 				"pantheon",
 				"vehicles",
+				"crafting",
 				"npcs",
 			] as const;
 
@@ -372,6 +375,9 @@ const Compendium = () => {
 								break;
 							case "vehicles":
 								data = await staticDataProvider.getVehicles(parsedQuery.text);
+								break;
+							case "crafting":
+								data = await staticDataProvider.getCrafting(parsedQuery.text);
 								break;
 							case "npcs":
 								data = await staticDataProvider.getNpcs(parsedQuery.text);

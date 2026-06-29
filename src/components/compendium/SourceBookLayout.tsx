@@ -1,3 +1,4 @@
+import { ShieldAlert } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "@/styles/source-book.css";
@@ -74,9 +75,6 @@ const BOOKS = [
 	},
 ];
 
-import { Ghost, Layers, Music, Radio, ShieldAlert } from "lucide-react";
-import { getAssetSummary } from "@/lib/vtt";
-
 // ... BOOKS definition remains the same
 
 export const SourceBookLayout: React.FC<SourceBookLayoutProps> = ({
@@ -85,7 +83,6 @@ export const SourceBookLayout: React.FC<SourceBookLayoutProps> = ({
 }) => {
 	const navigate = useNavigate();
 	const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-	const assetSummary = getAssetSummary();
 
 	// Flatten all sections to find current active status
 	let currentSectionLabel = activeSection;
@@ -145,34 +142,6 @@ export const SourceBookLayout: React.FC<SourceBookLayoutProps> = ({
 						</div>
 					))}
 				</nav>
-
-				{/* WIRING: Lattice Node Status (Using getAssetSummary) */}
-				<div className="p-4 border-t border-fuchsia-500/20 bg-void/50 text-[9px] font-mono space-y-3 relative z-10">
-					<div className="text-fuchsia-500/70 border-b border-fuchsia-500/10 pb-1 flex justify-between items-center">
-						<span>Lattice Node Status</span>
-						<span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-					</div>
-					<div className="grid grid-cols-2 gap-2 text-slate-500">
-						<div className="flex items-center gap-1.5">
-							<Layers className="w-2.5 h-2.5 text-cyan-500" />
-							<span>Rifts: {assetSummary.map || 0}</span>
-						</div>
-						<div className="flex items-center gap-1.5">
-							<Ghost className="w-2.5 h-2.5 text-fuchsia-500" />
-							<span>Echoes: {assetSummary.token || 0}</span>
-						</div>
-						<div className="flex items-center gap-1.5">
-							<Music className="w-2.5 h-2.5 text-amber-500" />
-							<span>
-								Hymns: {assetSummary.music || assetSummary.audio || 0}
-							</span>
-						</div>
-						<div className="flex items-center gap-1.5">
-							<Radio className="w-2.5 h-2.5 text-emerald-500" />
-							<span>Relics: {assetSummary.prop || 0}</span>
-						</div>
-					</div>
-				</div>
 			</aside>
 
 			{/* Main Content Area */}

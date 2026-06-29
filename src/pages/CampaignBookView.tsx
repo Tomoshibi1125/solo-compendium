@@ -3,12 +3,9 @@ import {
 	ChevronLeft,
 	Download,
 	FileText,
-	Layers,
 	Loader2,
 	Lock,
-	Map as MapIcon,
 	Search,
-	Send,
 	ShieldAlert,
 	ShieldX,
 	Sparkles,
@@ -34,7 +31,6 @@ import { useCampaign, useHasWardenAccess } from "@/hooks/useCampaigns";
 import { useCampaignWiki } from "@/hooks/useCampaignWiki";
 import { useCampaignToolState } from "@/hooks/useToolState";
 import { formatRarityLabel } from "@/lib/labels";
-import type { VTTScene } from "@/types/vtt";
 import "@/styles/source-book.css";
 import { BookMarkdown } from "@/components/campaign/BookMarkdown";
 import { RunSilentTrackers } from "@/components/campaign/RunSilentTrackers";
@@ -46,7 +42,6 @@ type SectionType = {
 		| "static"
 		| "wiki"
 		| "handout"
-		| "scene"
 		| "npc-roster"
 		| "session"
 		| "encounter"
@@ -103,15 +98,6 @@ const CampaignBookView = () => {
 	const { data: sessionLogs = [] } = useCampaignSessionLogs(id || "");
 	const { data: encounters = [] } = useCampaignEncounters(id || "");
 
-	// VTT Scenes from campaign_tool_states
-	const { state: vttState } = useCampaignToolState<{
-		scenes: VTTScene[];
-		currentSceneId?: string;
-	} | null>(id || null, "vtt_scenes", {
-		initialState: null,
-		storageKey: `vtt-scenes-${id}`,
-	});
-	const vttScenes = vttState?.scenes ?? [];
 	const { state: lootTables = [] } = useCampaignToolState<
 		SandboxLootTableState[]
 	>(id || null, "sandbox_loot_tables", {
@@ -120,9 +106,9 @@ const CampaignBookView = () => {
 	});
 	const { state: audioTracks = [] } = useCampaignToolState<
 		SandboxAudioTrackState[]
-	>(id || null, "vtt_audio", {
+	>(id || null, "campaign_audio", {
 		initialState: [],
-		storageKey: `vtt-audio-${id}`,
+		storageKey: `campaign-audio-${id}`,
 	});
 	const { injectSandbox, isInjecting, progressString } =
 		useCampaignSandboxInjector(id || null);
@@ -312,16 +298,13 @@ const CampaignBookView = () => {
 					type: "loot" as const,
 				}))),
 		...audioTracks.map((track) => {
-			const sceneName =
-				vttScenes.find((scene) => scene.id === track.scene_id)?.name ??
-				track.scene_id ??
-				"Campaign";
+			const audioScope = track.scene_id ?? "Campaign";
 			return {
 				id: `audio-${track.id}`,
 				title: track.name,
 				content: [
 					`**Type:** ${track.type}`,
-					`**Scene:** ${sceneName}`,
+					`**Scope:** ${audioScope}`,
 					`**URL:** ${track.url}`,
 				].join("\n\n"),
 				type: "audio" as const,
@@ -332,19 +315,6 @@ const CampaignBookView = () => {
 		...(npcArticles.length > 0
 			? [{ id: "npc-roster", title: "NPC Roster", type: "npc-roster" as const }]
 			: []),
-		// VTT Scenes
-		...vttScenes.map((scene, idx) => ({
-			id: `scene-${idx}`,
-			title: scene.name,
-			type: "scene" as const,
-			meta: {
-				tokenCount: scene.tokens?.length ?? 0,
-				fogOfWar: scene.fogOfWar,
-				width: scene.width,
-				height: scene.height,
-				sceneId: scene.id,
-			},
-		})),
 	];
 
 	const activeSection =
@@ -377,22 +347,6 @@ const CampaignBookView = () => {
 		await injectSandbox();
 	};
 
-	const handleSendToVTT = (sectionTitle: string, content: string) => {
-		// Store the content in sessionStorage so the VTT can pick it up
-		const vttPayload = {
-			type: "campaign-book-import",
-			title: sectionTitle,
-			content: content || "",
-			timestamp: Date.now(),
-			campaignId: id,
-		};
-		sessionStorage.setItem("vtt-book-import", JSON.stringify(vttPayload));
-		toast({
-			title: "Content Queued for VTT",
-			description: `"${sectionTitle}" has been prepared for import. Open the VTT to use it.`,
-		});
-	};
-
 	const handleDownloadSection = () => {
 		if (!activeSection) return;
 		const content = activeSection.content || campaign.description || "";
@@ -416,17 +370,6 @@ const CampaignBookView = () => {
 			title: "Download Ready",
 			description: `"${activeSection.title}" has been saved as Markdown.`,
 		});
-	};
-
-	const handleOpenInVTT = () => {
-		// Send the active section to VTT and navigate there
-		if (activeSection) {
-			handleSendToVTT(
-				activeSection.title,
-				activeSection.content || campaign.description || "",
-			);
-			navigate(`/campaigns/${id}/vtt`);
-		}
 	};
 
 	return (
@@ -605,34 +548,6 @@ const CampaignBookView = () => {
 									</div>
 								</div>
 							)}
-
-							{/* VTT Maps */}
-							{vttScenes.length > 0 && (
-								<div className="space-y-2">
-									<h3 className="px-2 text-[10px] font-bold text-amber-400/60 uppercase tracking-[0.2em] mb-3 font-display flex items-center gap-1.5">
-										<MapIcon className="w-3 h-3" />
-										VTT Maps ({vttScenes.length})
-									</h3>
-									<div className="space-y-1">
-										{sections
-											.filter((s) => s.type === "scene")
-											.map((section) => (
-												<button
-													key={section.id}
-													type="button"
-													onClick={() => setActiveSectionId(section.id)}
-													className={`w-full text-left p-2 pl-3 rounded transition-all font-display uppercase text-[10px] tracking-widest ${
-														activeSectionId === section.id
-															? "bg-amber-500/10 border-l-2 border-amber-500 text-white shadow-inner"
-															: "text-slate-500 hover:bg-amber-500/5 hover:text-amber-300"
-													}`}
-												>
-													{section.title}
-												</button>
-											))}
-									</div>
-								</div>
-							)}
 						</>
 					)}
 
@@ -661,38 +576,6 @@ const CampaignBookView = () => {
 							</div>
 						)}
 					</div>
-
-					{/* VTT Integration Actions */}
-					<div className="border-t border-fuchsia-500/20 pt-4 space-y-2">
-						<h3 className="px-2 text-[10px] font-bold text-fuchsia-400/60 uppercase tracking-[0.2em] mb-3 font-display">
-							VTT Actions
-						</h3>
-						<Button
-							variant="outline"
-							size="sm"
-							className="w-full gap-2 border-fuchsia-500/30 hover:border-fuchsia-500 hover:bg-fuchsia-500/10 text-xs"
-							onClick={handleOpenInVTT}
-						>
-							<Layers className="w-3 h-3" />
-							Open in VTT
-						</Button>
-						{activeSection?.content && (
-							<Button
-								variant="outline"
-								size="sm"
-								className="w-full gap-2 border-fuchsia-500/30 hover:border-fuchsia-500 hover:bg-fuchsia-500/10 text-xs"
-								onClick={() =>
-									handleSendToVTT(
-										activeSection.title,
-										activeSection.content || "",
-									)
-								}
-							>
-								<Send className="w-3 h-3" />
-								Send Section to VTT
-							</Button>
-						)}
-					</div>
 				</nav>
 			</aside>
 
@@ -712,15 +595,6 @@ const CampaignBookView = () => {
 						>
 							<Download className="w-3 h-3" />
 							<span className="hidden sm:inline">Download .md</span>
-						</Button>
-						<Button
-							variant="ghost"
-							size="sm"
-							className="gap-1 text-xs text-fuchsia-400 hover:text-white"
-							onClick={handleOpenInVTT}
-						>
-							<Layers className="w-3 h-3" />
-							<span className="hidden sm:inline">Open in VTT</span>
 						</Button>
 					</div>
 				</header>
@@ -749,8 +623,7 @@ const CampaignBookView = () => {
 								<p className="text-sm font-mono text-slate-400 mb-4">
 									This digital campaign book synchronizes directly with the
 									Warden's Wiki and Handouts. Updates made in the dashboard are
-									automatically reflected here. Use the VTT Actions in the
-									sidebar to import content directly into your session.
+									automatically reflected here.
 								</p>
 
 								{/* Import Manifest */}
@@ -779,14 +652,6 @@ const CampaignBookView = () => {
 											NPCs
 										</div>
 									</div>
-									<div className="bg-amber-950/40 border border-amber-500/20 rounded p-3 text-center">
-										<div className="text-2xl font-bold text-amber-400">
-											{vttScenes.length}
-										</div>
-										<div className="text-[10px] text-slate-500 uppercase tracking-wider">
-											VTT Maps
-										</div>
-									</div>
 								</div>
 
 								{wikiPages.length === 0 && (
@@ -812,25 +677,9 @@ const CampaignBookView = () => {
 
 					{activeSection?.type === "wiki" && (
 						<div className="space-y-6">
-							<div className="flex items-center justify-between">
-								<h1 className="text-4xl font-display text-white uppercase tracking-wider mb-8 border-b border-fuchsia-500/20 pb-4 flex-1">
-									{activeSection.title}
-								</h1>
-								<Button
-									variant="ghost"
-									size="sm"
-									className="gap-1 text-xs text-fuchsia-400 hover:text-white shrink-0 ml-4"
-									onClick={() =>
-										handleSendToVTT(
-											activeSection.title,
-											activeSection.content || "",
-										)
-									}
-								>
-									<Send className="w-3 h-3" />
-									Send to VTT
-								</Button>
-							</div>
+							<h1 className="text-4xl font-display text-white uppercase tracking-wider mb-8 border-b border-fuchsia-500/20 pb-4">
+								{activeSection.title}
+							</h1>
 							<div className="font-serif text-lg leading-loose">
 								<BookMarkdown>
 									{activeSection.content || "*No content recorded.*"}
@@ -849,32 +698,16 @@ const CampaignBookView = () => {
 							"audio",
 						].includes(activeSection.type) && (
 							<div className="space-y-6">
-								<div className="flex items-center justify-between">
-									<div className="flex-1">
-										<Badge
-											variant="outline"
-											className="mb-3 text-violet-400 border-violet-500/30 text-[10px]"
-										>
-											{activeSection.type.toUpperCase()}
-										</Badge>
-										<h1 className="text-4xl font-display text-white uppercase tracking-wider border-b border-violet-500/20 pb-4">
-											{activeSection.title}
-										</h1>
-									</div>
-									<Button
-										variant="ghost"
-										size="sm"
-										className="gap-1 text-xs text-violet-400 hover:text-white shrink-0 ml-4"
-										onClick={() =>
-											handleSendToVTT(
-												activeSection.title,
-												activeSection.content || "",
-											)
-										}
+								<div>
+									<Badge
+										variant="outline"
+										className="mb-3 text-violet-400 border-violet-500/30 text-[10px]"
 									>
-										<Send className="w-3 h-3" />
-										Send to VTT
-									</Button>
+										{activeSection.type.toUpperCase()}
+									</Badge>
+									<h1 className="text-4xl font-display text-white uppercase tracking-wider border-b border-violet-500/20 pb-4">
+										{activeSection.title}
+									</h1>
 								</div>
 								<div className="font-serif text-lg leading-loose">
 									<BookMarkdown>
@@ -923,60 +756,6 @@ const CampaignBookView = () => {
 									{activeSection.content || "*No content recorded.*"}
 								</BookMarkdown>
 							</div>
-						</div>
-					)}
-
-					{/* VTT Scene Renderer */}
-					{activeSection?.type === "scene" && (
-						<div className="space-y-6 not-prose">
-							<h1 className="text-4xl font-display text-white uppercase tracking-wider mb-4 border-b border-amber-500/20 pb-4">
-								{activeSection.title}
-							</h1>
-							<div className="grid grid-cols-2 gap-4">
-								<div className="bg-amber-950/30 border border-amber-500/20 rounded p-4">
-									<div className="text-[10px] text-amber-400/60 uppercase tracking-wider mb-1">
-										Tokens
-									</div>
-									<div className="text-2xl font-bold text-amber-400">
-										{String(activeSection.meta?.tokenCount ?? 0)}
-									</div>
-								</div>
-								<div className="bg-amber-950/30 border border-amber-500/20 rounded p-4">
-									<div className="text-[10px] text-amber-400/60 uppercase tracking-wider mb-1">
-										Grid Size
-									</div>
-									<div className="text-2xl font-bold text-amber-400">
-										{String(activeSection.meta?.width ?? 0)}×
-										{String(activeSection.meta?.height ?? 0)}
-									</div>
-								</div>
-								<div className="bg-amber-950/30 border border-amber-500/20 rounded p-4">
-									<div className="text-[10px] text-amber-400/60 uppercase tracking-wider mb-1">
-										Fog of War
-									</div>
-									<div className="text-2xl font-bold text-amber-400">
-										{activeSection.meta?.fogOfWar ? "Enabled" : "Disabled"}
-									</div>
-								</div>
-								<div className="bg-amber-950/30 border border-amber-500/20 rounded p-4">
-									<div className="text-[10px] text-amber-400/60 uppercase tracking-wider mb-1">
-										Scene ID
-									</div>
-									<div className="text-sm font-mono text-amber-400 truncate">
-										{String(activeSection.meta?.sceneId ?? "—")}
-									</div>
-								</div>
-							</div>
-							<Button
-								className="w-full gap-2 border-amber-500/40 hover:border-amber-400 hover:bg-amber-500/10 text-amber-400"
-								variant="outline"
-								asChild
-							>
-								<Link to={`/campaigns/${id}/vtt`}>
-									<Layers className="w-4 h-4" />
-									Launch in VTT
-								</Link>
-							</Button>
 						</div>
 					)}
 

@@ -572,7 +572,7 @@ function generateWardenTips(
 	}
 
 	tips.push(
-		"If using the VTT, place tokens for each encounter and pre-draw hazard zones before the session. Use fog of war to reveal rooms as the party explores.",
+		"Prepare each encounter area before the session, including token notes, hazard zones, and room reveals for the party's route.",
 	);
 
 	return tips;

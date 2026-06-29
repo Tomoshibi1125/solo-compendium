@@ -269,6 +269,23 @@ export interface StaticCompendiumEntry {
 	source?: string | null;
 	image?: string | null;
 	item_properties?: Record<string, Json> | null;
+	// Crafting detail support
+	crafting_type?: string | null;
+	material_type?: string | null;
+	recipe_type?: string | null;
+	time_required?: string | null;
+	project_clock?: number | null;
+	materials?: Array<{ material_id: string; quantity: number }> | null;
+	required_tools?: string[] | null;
+	outcome?: string | null;
+	failure_risk?: string | null;
+	unit?: string | null;
+	progress_required?: number | null;
+	material_requirements?: Array<{
+		material_id: string;
+		quantity: number;
+	}> | null;
+	recipe_id?: string | null;
 }
 
 export interface StaticDataProvider {
@@ -294,5 +311,6 @@ export interface StaticDataProvider {
 	getPantheon: (search?: string) => Promise<StaticCompendiumEntry[]>;
 	getShadowSoldiers: (search?: string) => Promise<StaticCompendiumEntry[]>;
 	getVehicles: (search?: string) => Promise<StaticCompendiumEntry[]>;
+	getCrafting: (search?: string) => Promise<StaticCompendiumEntry[]>;
 	getNpcs: (search?: string) => Promise<StaticCompendiumEntry[]>;
 }

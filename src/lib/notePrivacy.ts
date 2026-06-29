@@ -5,7 +5,7 @@
  * entries, and handouts. Supports private (Warden-only), shared (all players),
  * and per-player visibility with read/write permission levels.
  *
- * Roll20 / Foundry VTT parity feature.
+ * Campaign note parity feature.
  */
 
 // ─── Types ──────────────────────────────────────────────────

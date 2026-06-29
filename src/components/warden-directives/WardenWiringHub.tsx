@@ -88,7 +88,6 @@ import {
 } from "@/components/ui/sheet";
 import { toast } from "@/components/ui/sonner";
 import { ToastAction } from "@/components/ui/toast";
-import { VTTSandbox } from "@/components/vtt/VTTSandbox";
 import { WardenChatbot } from "@/components/warden-directives/WardenChatbot";
 // WardenDirectiveMatrix imports are loaded lazily to avoid circular
 // dependency (WardenDirectiveMatrix imports WardenWiringHub at top level).
@@ -102,15 +101,6 @@ import {
 import type { Job as JobData } from "@/data/compendium/jobs";
 import type { Relic as RelicComp } from "@/data/compendium/relics-comprehensive";
 import type { Skill as SkillComp } from "@/data/compendium/skills-comprehensive";
-import {
-	BACKGROUND_PORTRAITS,
-	getAnomalyVTTAssets,
-	getCompendiumItemVTTAssets,
-	getLocationVTTAssets,
-	getSpellVTTAssets,
-	JOB_PORTRAITS,
-	REGENT_PORTRAITS,
-} from "@/data/vttAssetLibrary";
 import { useArmorClass } from "@/hooks/useArmorClass";
 import { useAttunement } from "@/hooks/useAttunement";
 import { useUpdateSharePermissions } from "@/hooks/useCampaignCharacters";
@@ -162,11 +152,6 @@ import { useIncreaseBondLevel } from "@/hooks/useShadowSoldiers";
 import { buildActiveSpellEffectEntry } from "@/hooks/useSpellCasting";
 import { useRecoverSpellSlots } from "@/hooks/useSpellSlots";
 import { saveCampaignToolState, saveUserToolState } from "@/hooks/useToolState";
-import {
-	useUpdateVTTAudioSettings,
-	useVTTAudioSettings,
-} from "@/hooks/useVTTAudio";
-import { parseChatCommand, rollDiceFormula } from "@/hooks/useVTTRealtime";
 import type { FeatureModifier } from "@/integrations/supabase/supabaseExtended";
 import {
 	_asJsonArray,
@@ -526,27 +511,6 @@ import {
 	mapTarget,
 	mapType,
 } from "@/lib/unifiedEffectSystem";
-import type { AmbientSoundState as AmbientSoundStateVTT } from "@/lib/vtt";
-// chunk 2: VTT, Macros, and Realtime Hooks
-import {
-	createDefaultMacroBar,
-	createMacro,
-	generateCharacterMacros,
-	getMacroByHotkey,
-	loadMacrosFromLocal,
-	saveMacrosToLocal,
-} from "@/lib/vtt";
-import type {
-	AmbientSoundState as AmbientSoundStateLib,
-	AmbientSoundZone as AmbientSoundZoneLib,
-} from "@/lib/vtt/ambientSoundZone";
-import {
-	CATEGORY_COLORS,
-	CATEGORY_ICONS,
-	DEFAULT_MAX_SLOTS,
-	MACRO_STORAGE_KEY,
-} from "@/lib/vtt/rollMacros";
-import { VttMusicEngine } from "@/lib/vtt/vttMusicEngine";
 import DirectiveLatticePage from "@/pages/warden-directives/DirectiveMatrix";
 import {
 	authenticateTestUser,
@@ -570,8 +534,6 @@ import {
 	RARITY_LABELS,
 	SKILLS,
 } from "@/types/core-rules";
-import type { VTTBlendMode, VTTRenderMode } from "@/types/vtt";
-import { VTT_TYPE_REGISTRY_CERTIFIED } from "@/types/vtt";
 import { DirectiveLattice as DirectiveLatticeComponent } from "./DirectiveMatrix";
 
 /**
@@ -676,18 +638,7 @@ export const WardenWiringSeal = {
 			itemsAll: getStaticItemsAll,
 			ready: isProtocolDataReady,
 		},
-		vtt: {
-			assets: {
-				anomalies: getAnomalyVTTAssets,
-				items: getCompendiumItemVTTAssets,
-				locations: getLocationVTTAssets,
-				spells: getSpellVTTAssets,
-				jobs: JOB_PORTRAITS,
-				regents: REGENT_PORTRAITS,
-				backgrounds: BACKGROUND_PORTRAITS,
-				certified: VTT_TYPE_REGISTRY_CERTIFIED,
-			},
-			sandbox: VTTSandbox,
+		collab: {
 			collaboration: {
 				presence: isPresencePayload,
 				event: isCollaborationEvent,
@@ -722,11 +673,6 @@ export const WardenWiringSeal = {
 			batch: useAIBatchProcessor,
 		},
 		audio: useAudioShortcuts,
-		vttAudio: {
-			settings: useVTTAudioSettings,
-			update: useUpdateVTTAudioSettings,
-		},
-		realtime: { roll: rollDiceFormula, chat: parseChatCommand },
 	},
 	ui: {
 		network: {
@@ -857,16 +803,6 @@ export const WardenWiringSeal = {
 		search: { apply: applySearchOperators, format: formatSearchQuery },
 	},
 	chunk2: {
-		vtt: {
-			macros: {
-				createDefault: createDefaultMacroBar,
-				create: createMacro,
-				generate: generateCharacterMacros,
-				hotkey: getMacroByHotkey,
-				load: loadMacrosFromLocal,
-				save: saveMacrosToLocal,
-			},
-		},
 		campaign: {
 			auth: { campaignWarden: useIsCampaignWarden, warden: useIsWarden },
 			invites: { add: useAddAscendantCharacterToCampaign },
@@ -1055,12 +991,6 @@ export const WardenWiringSeal = {
 		},
 	},
 	extraParity: {
-		macros: {
-			CATEGORY_COLORS,
-			CATEGORY_ICONS,
-			DEFAULT_MAX_SLOTS,
-			MACRO_STORAGE_KEY,
-		},
 		backup: {
 			createLocalBackup,
 			loadLocalBackups,
@@ -1145,8 +1075,6 @@ export const MasterArchitecturalWitness = {
 		null as StaticBackground | null,
 		null as DerivedStats | null,
 		null as PowerHook | null,
-		null as VTTRenderMode | null,
-		null as VTTBlendMode | null,
 		null as FeatureModifier | null,
 		null as PowerComp | null,
 		null as RelicComp | null,
@@ -1168,9 +1096,6 @@ export const MasterArchitecturalWitness = {
 		null as CharacterExportLib | null,
 		null as AbilityScore | null,
 		null as CharacterHook | null,
-		null as AmbientSoundStateLib | null,
-		null as AmbientSoundZoneLib | null,
-		null as AmbientSoundStateVTT | null,
 		null as RuneAbsorptionInput | null,
 		null as RuneAbilityScores | null,
 		null as ConcentrationLostReason | null,
@@ -1264,15 +1189,6 @@ export const MasterArchitecturalWitness = {
 					DiceAudioEngine.prototype.setEnabled,
 					DiceAudioEngine.prototype.resume,
 					DiceAudioEngine.prototype.play,
-				],
-			},
-			music: {
-				methods: [
-					VttMusicEngine.prototype.play,
-					VttMusicEngine.prototype.setVolume,
-					VttMusicEngine.prototype.getCurrentMood,
-					VttMusicEngine.listMoods,
-					VttMusicEngine.prototype.dispose,
 				],
 			},
 		},

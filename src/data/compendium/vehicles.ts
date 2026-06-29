@@ -25,6 +25,46 @@ import type { CompendiumVehicle } from "@/types/compendium";
 
 const RA_SOURCE = "Rift Ascendant Canon";
 
+const vehicleDefaults = (
+	vehicle: CompendiumVehicle,
+	overrides: Partial<CompendiumVehicle> = {},
+): CompendiumVehicle => {
+	const isMount = vehicle.vehicle_type === "mount";
+	const rankCost: Record<string, number> = {
+		E: 0,
+		D: 0,
+		C: 1,
+		B: 2,
+		A: 3,
+		S: 5,
+	};
+	const defaultCapacity = isMount
+		? 2
+		: vehicle.size === "gargantuan"
+			? 5
+			: vehicle.size === "huge"
+				? 4
+				: 3;
+	return {
+		vrp_cost: rankCost[vehicle.rank ?? "D"] ?? 1,
+		mod_capacity: defaultCapacity,
+		allowed_mod_categories: isMount
+			? ["tack", "training", "survival"]
+			: [
+					"mobility",
+					"stealth",
+					"afa",
+					"sensors",
+					"survival",
+					"utility",
+					"repair",
+				],
+		condition_track: isMount ? "mount" : "vehicle",
+		...vehicle,
+		...overrides,
+	};
+};
+
 // ──────────────────────────────────────────────────────────────────────
 // MOUNTS — Bucket A: Real-world animals (8 entries)
 // ──────────────────────────────────────────────────────────────────────
@@ -1306,15 +1346,220 @@ const vehiclesRare: CompendiumVehicle[] = [
 // Aggregated exports
 // ──────────────────────────────────────────────────────────────────────
 
+const requisitionMounts: CompendiumVehicle[] = [
+	{
+		id: "mount-quartermaster-mule-team",
+		name: "Quartermaster Mule Team",
+		display_name: "Quartermaster Mule Team",
+		description:
+			"Reliable Bureau pack team for rough threshold logistics. Slow, quiet, and much easier to keep fed than a powered convoy.",
+		vehicle_type: "mount",
+		size: "large",
+		speed: { land: 40 },
+		armor_class: 10,
+		hit_points: { max: 22 },
+		carry_capacity_lbs: 1200,
+		crew_positions: [{ id: "handler", name: "Handler" }],
+		abilities: [
+			{
+				name: "Steady Pack Line",
+				description:
+					"Advantage on checks to keep cargo secure while crossing broken or narrow ground.",
+				action_type: "passive",
+			},
+		],
+		rank: "D",
+		vrp_cost: 0,
+		mod_capacity: 2,
+		source_book: RA_SOURCE,
+	},
+	{
+		id: "mount-bureau-pack-ox-pair",
+		name: "Bureau Pack Ox Pair",
+		display_name: "Bureau Pack Ox Pair",
+		description:
+			"Heavy cargo animals for salvage recovery, bridge kits, and mobile shelter pieces. Hard to hide, harder to stop.",
+		vehicle_type: "mount",
+		size: "large",
+		speed: { land: 30 },
+		armor_class: 11,
+		hit_points: { max: 38 },
+		carry_capacity_lbs: 2400,
+		crew_positions: [{ id: "driver", name: "Driver" }],
+		abilities: [
+			{
+				name: "Heavy Haul",
+				description:
+					"Can pull or carry oversized field equipment that would overload normal mounts.",
+				action_type: "passive",
+			},
+		],
+		rank: "D",
+		vrp_cost: 1,
+		mod_capacity: 3,
+		source_book: RA_SOURCE,
+	},
+	{
+		id: "mount-rescue-litter-pair",
+		name: "Rescue Litter Mount Pair",
+		display_name: "Rescue Litter Mount Pair",
+		description:
+			"Matched pair trained to carry casualties through hostile terrain without turning a rescue into a drag line.",
+		vehicle_type: "mount",
+		size: "large",
+		speed: { land: 35 },
+		armor_class: 10,
+		hit_points: { max: 24 },
+		carry_capacity_lbs: 720,
+		crew_positions: [
+			{ id: "handler", name: "Handler" },
+			{ id: "casualty", name: "Casualty Litter" },
+		],
+		abilities: [
+			{
+				name: "Casualty Carry",
+				description:
+					"Can carry one stable casualty without imposing disadvantage on normal travel checks.",
+				action_type: "passive",
+			},
+		],
+		rank: "D",
+		vrp_cost: 1,
+		mod_capacity: 2,
+		source_book: RA_SOURCE,
+	},
+];
+
+const requisitionVehicles: CompendiumVehicle[] = [
+	{
+		id: "vehicle-bureau-light-survey-rover",
+		name: "Bureau Light Survey Rover",
+		display_name: "Bureau Light Survey Rover",
+		description:
+			"Full-party survey platform with AFA mounts, sample lockers, and roof rails. Powerful, exposed, and difficult to hide.",
+		vehicle_type: "land",
+		size: "huge",
+		speed: { land: 70 },
+		armor_class: 13,
+		hit_points: { max: 85 },
+		cargo_capacity_lbs: 1600,
+		crew_positions: [
+			{ id: "driver", name: "Driver" },
+			{ id: "scanner", name: "AFA Operator" },
+			{ id: "passenger-1", name: "Passenger" },
+			{ id: "passenger-2", name: "Passenger" },
+			{ id: "passenger-3", name: "Passenger" },
+			{ id: "passenger-4", name: "Passenger" },
+		],
+		abilities: [
+			{
+				name: "Survey Platform",
+				description:
+					"While stationary, grants advantage on team checks to catalog samples or deploy a relay.",
+				action_type: "passive",
+			},
+		],
+		rank: "D",
+		vrp_cost: 0,
+		mod_capacity: 3,
+		source_book: RA_SOURCE,
+	},
+	{
+		id: "vehicle-twin-scout-utvs",
+		name: "Twin Scout UTVs",
+		display_name: "Twin Scout UTVs",
+		description:
+			"Paired rough-terrain scouts with redundant cargo racks. Excellent for outriders, risky when teams split too far.",
+		vehicle_type: "land",
+		size: "huge",
+		speed: { land: 85 },
+		armor_class: 12,
+		hit_points: { max: 64 },
+		cargo_capacity_lbs: 900,
+		crew_positions: [
+			{ id: "driver-a", name: "Driver A" },
+			{ id: "driver-b", name: "Driver B" },
+			{ id: "passenger-a", name: "Passenger A" },
+			{ id: "passenger-b", name: "Passenger B" },
+		],
+		abilities: [
+			{
+				name: "Redundant Pair",
+				description:
+					"If one UTV is disabled, the other can still carry half the crew and one cargo cache.",
+				action_type: "passive",
+			},
+		],
+		rank: "D",
+		vrp_cost: 1,
+		mod_capacity: 4,
+		source_book: RA_SOURCE,
+	},
+	{
+		id: "vehicle-all-terrain-cargo-crawler",
+		name: "All-Terrain Cargo Crawler",
+		display_name: "All-Terrain Cargo Crawler",
+		description:
+			"Durable tracked hauler for heavy salvage and field bay supplies. It is slow, loud, and stubborn enough to matter.",
+		vehicle_type: "land",
+		size: "huge",
+		speed: { land: 35 },
+		armor_class: 14,
+		hit_points: { max: 120 },
+		cargo_capacity_lbs: 5000,
+		crew_positions: [
+			{ id: "driver", name: "Driver" },
+			{ id: "engineer", name: "Engineer" },
+		],
+		abilities: [
+			{
+				name: "Industrial Hauler",
+				description:
+					"Can carry a portable field bay, bridge kit, or large sample crate without speed reduction.",
+				action_type: "passive",
+			},
+		],
+		rank: "C",
+		vrp_cost: 2,
+		mod_capacity: 4,
+		source_book: RA_SOURCE,
+	},
+	{
+		id: "vehicle-inflatable-survey-raft",
+		name: "Inflatable Survey Raft",
+		display_name: "Inflatable Survey Raft",
+		description:
+			"Packable water-crossing platform with sealed sample bins and a small AFA bracket.",
+		vehicle_type: "water",
+		size: "large",
+		speed: { water: 30 },
+		armor_class: 10,
+		hit_points: { max: 30 },
+		cargo_capacity_lbs: 900,
+		crew_positions: [
+			{ id: "pilot", name: "Pilot" },
+			{ id: "passenger-1", name: "Passenger" },
+			{ id: "passenger-2", name: "Passenger" },
+			{ id: "passenger-3", name: "Passenger" },
+		],
+		rank: "D",
+		vrp_cost: 0,
+		mod_capacity: 2,
+		source_book: RA_SOURCE,
+	},
+];
+
 export const allMounts: CompendiumVehicle[] = [
 	...mountsRealWorld,
 	...mountsBondedAnomalies,
 	...mountsNetNew,
-];
+	...requisitionMounts,
+].map((vehicle) => vehicleDefaults(vehicle));
 
 export const allVehicles: CompendiumVehicle[] = [
 	...allMounts,
 	...vehiclesRealWorld,
 	...vehiclesRiftTech,
 	...vehiclesRare,
-];
+	...requisitionVehicles,
+].map((vehicle) => vehicleDefaults(vehicle));

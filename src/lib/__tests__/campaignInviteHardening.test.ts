@@ -8,7 +8,6 @@ import campaignHooksSource from "../../hooks/useCampaigns.ts?raw";
 import campaignDetailSource from "../../pages/CampaignDetail.tsx?raw";
 import campaignJoinSource from "../../pages/CampaignJoin.tsx?raw";
 import partyStashSource from "../../pages/PartyStash.tsx?raw";
-import vttEnhancedSource from "../../pages/warden-directives/VTTEnhanced.tsx?raw";
 
 const migrationSql = migrationSqlSource.replace(/\r\n/g, "\n");
 
@@ -85,8 +84,5 @@ describe("campaign invite/linking hardening invariants", () => {
 	it("updates dependent consumers to use linked character records", () => {
 		expect(partyStashSource).toContain("campaign_member_characters");
 		expect(partyStashSource).toContain("campaign_member_id");
-		expect(vttEnhancedSource).toContain("get_campaign_linked_characters");
-		expect(vttEnhancedSource).toContain("CampaignLinkedCharacterSummary");
-		expect(vttEnhancedSource).toContain("character.user_id");
 	});
 });

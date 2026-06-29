@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
-import { supabase } from "@/integrations/supabase/client";
+import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import type { Database } from "@/integrations/supabase/types";
 import {
 	canAttuneItem as canAttuneItemRules,
@@ -65,6 +66,38 @@ const writeCachedEquipment = (key: string, equipment: EquipmentRow[]) => {
 export const useEquipment = (characterId: string) => {
 	const queryClient = useQueryClient();
 	const { toast } = useToast();
+
+	useEffect(() => {
+		if (
+			!characterId ||
+			isLocalCharacterId(characterId) ||
+			!isSupabaseConfigured
+		) {
+			return;
+		}
+
+		const channel = supabase
+			.channel(`character-equipment-${characterId}`)
+			.on(
+				"postgres_changes",
+				{
+					event: "*",
+					schema: "public",
+					table: "character_equipment",
+					filter: `character_id=eq.${characterId}`,
+				},
+				() => {
+					queryClient.invalidateQueries({
+						queryKey: ["equipment", characterId],
+					});
+				},
+			)
+			.subscribe();
+
+		return () => {
+			supabase.removeChannel(channel);
+		};
+	}, [characterId, queryClient]);
 
 	const { data: equipment = [], isLoading } = useQuery({
 		queryKey: ["equipment", characterId],

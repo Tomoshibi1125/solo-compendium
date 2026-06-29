@@ -4,6 +4,7 @@
  */
 import { Truck } from "lucide-react";
 import { useMemo, useState } from "react";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
 	Dialog,
@@ -129,6 +130,12 @@ export function AddVehicleDialog({
 									<span className="text-[10px] text-muted-foreground">
 										{v.size}
 									</span>
+									<Badge variant="outline" className="text-[10px]">
+										{v.vrp_cost ?? 0} VRP
+									</Badge>
+									<Badge variant="outline" className="text-[10px]">
+										{v.mod_capacity ?? 0} cap
+									</Badge>
 									{v.rank && (
 										<span className="text-[10px] text-fuchsia-300">
 											Rank {v.rank}
@@ -145,6 +152,17 @@ export function AddVehicleDialog({
 
 				{selected && (
 					<div className="space-y-2 pt-2">
+						<div className="flex flex-wrap items-center gap-2 text-xs">
+							<Badge variant="secondary">{selected.vrp_cost ?? 0} VRP</Badge>
+							<Badge variant="outline">
+								{selected.mod_capacity ?? 0} mod capacity
+							</Badge>
+							{selected.requisition_notes && (
+								<span className="text-muted-foreground">
+									{selected.requisition_notes}
+								</span>
+							)}
+						</div>
 						<Label htmlFor="vehicle-nickname">Nickname (optional)</Label>
 						<Input
 							id="vehicle-nickname"

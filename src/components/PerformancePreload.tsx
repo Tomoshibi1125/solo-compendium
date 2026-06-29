@@ -25,9 +25,6 @@ const warmModules = () =>
 		),
 		import("@/components/dice/Dice3DScene"),
 		import("@/pages/DiceRoller"),
-		import("@/pages/warden-directives/VTTEnhanced"),
-		import("@/pages/warden-directives/VTTMap"),
-		import("@/pages/warden-directives/TokenLibrary"),
 	]);
 
 export default function PerformancePreload() {

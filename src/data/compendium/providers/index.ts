@@ -386,6 +386,23 @@ export interface StaticCompendiumEntry {
 	weapon_type?: string | null;
 	stealth_disadvantage?: boolean | null;
 	strength_requirement?: number | null;
+	// Crafting detail support
+	crafting_type?: string | null;
+	material_type?: string | null;
+	recipe_type?: string | null;
+	time_required?: string | null;
+	project_clock?: number | null;
+	materials?: Array<{ material_id: string; quantity: number }> | null;
+	required_tools?: string[] | null;
+	outcome?: string | null;
+	failure_risk?: string | null;
+	unit?: string | null;
+	progress_required?: number | null;
+	material_requirements?: Array<{
+		material_id: string;
+		quantity: number;
+	}> | null;
+	recipe_id?: string | null;
 }
 
 interface StaticDataProvider {
@@ -411,6 +428,7 @@ interface StaticDataProvider {
 	getPantheon: (search?: string) => Promise<StaticCompendiumEntry[]>;
 	getShadowSoldiers: (search?: string) => Promise<StaticCompendiumEntry[]>;
 	getVehicles: (search?: string) => Promise<StaticCompendiumEntry[]>;
+	getCrafting: (search?: string) => Promise<StaticCompendiumEntry[]>;
 	getNpcs: (search?: string) => Promise<StaticCompendiumEntry[]>;
 	getFightingStyles: (search?: string) => Promise<StaticCompendiumEntry[]>;
 }
@@ -2711,6 +2729,59 @@ export const staticDataProvider: StaticDataProvider = {
 	},
 	// Sandbox roster — recruitable companions & story NPCs. Cast to the wide
 	// StaticCompendiumEntry bag; NpcDetail re-narrows to CompendiumNPC.
+	getCrafting: async (search?: string) => {
+		const { allCraftingEntries } = await import("@/data/compendium/crafting");
+		type C = (typeof allCraftingEntries)[number];
+		const filtered = filterBySearch<C>(allCraftingEntries, search, [
+			"name",
+			"display_name",
+			"description",
+		]);
+		return filtered.map((entry) => {
+			const isRecipe = "recipe_type" in entry;
+			const isMaterial = "material_type" in entry;
+			const craftingType = isRecipe
+				? "recipe"
+				: isMaterial
+					? "material"
+					: "project";
+			const recipeEntry = isRecipe ? entry : null;
+			const materialEntry = isMaterial ? entry : null;
+			const projectEntry = !isRecipe && !isMaterial ? entry : null;
+
+			return {
+				id: entry.id,
+				name: entry.name,
+				display_name: entry.display_name ?? entry.name,
+				description: entry.description ?? "",
+				created_at: new Date().toISOString(),
+				tags: [
+					"crafting",
+					craftingType,
+					recipeEntry?.recipe_type,
+					materialEntry?.material_type,
+					recipeEntry?.rank,
+					materialEntry?.rarity,
+				].filter(Boolean) as string[],
+				source_book: entry.source_book ?? "Rift Ascendant Canon",
+				crafting_type: craftingType,
+				material_type: materialEntry?.material_type ?? null,
+				recipe_type: recipeEntry?.recipe_type ?? null,
+				rarity: materialEntry?.rarity ?? null,
+				rank: recipeEntry?.rank ?? null,
+				time_required: recipeEntry?.time_required ?? null,
+				project_clock: recipeEntry?.project_clock ?? null,
+				materials: recipeEntry?.materials ?? null,
+				required_tools: recipeEntry?.required_tools ?? null,
+				outcome: recipeEntry?.outcome ?? null,
+				failure_risk: recipeEntry?.failure_risk ?? null,
+				unit: materialEntry?.unit ?? null,
+				recipe_id: projectEntry?.recipe_id ?? null,
+				progress_required: projectEntry?.progress_required ?? null,
+				material_requirements: projectEntry?.material_requirements ?? null,
+			} satisfies StaticCompendiumEntry;
+		});
+	},
 	getNpcs: async (search?: string) => {
 		const { sandboxRecruitableNPCs } = await import("../sandbox-npcs");
 		type N = (typeof sandboxRecruitableNPCs)[number];

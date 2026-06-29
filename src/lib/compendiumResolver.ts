@@ -15,6 +15,8 @@ import type {
 	CompendiumAnomaly,
 	CompendiumBackground,
 	CompendiumCondition,
+	CompendiumCraftingMaterial,
+	CompendiumCraftingProject,
 	CompendiumDeity,
 	CompendiumFeat,
 	CompendiumItem,
@@ -22,6 +24,7 @@ import type {
 	CompendiumLocation,
 	CompendiumNPC,
 	CompendiumPath,
+	CompendiumRecipe,
 	CompendiumRegent,
 	CompendiumRelic,
 	CompendiumRune,
@@ -60,6 +63,7 @@ export const entryTypes = [
 	"pantheon",
 	"npcs",
 	"vehicles",
+	"crafting",
 ] as const;
 
 export type EntryType = (typeof entryTypes)[number];
@@ -84,6 +88,9 @@ export type CompendiumEntity =
 	| CompendiumSovereign
 	| CompendiumDeity
 	| CompendiumVehicle
+	| CompendiumCraftingMaterial
+	| CompendiumRecipe
+	| CompendiumCraftingProject
 	| CompendiumNPC;
 
 export type { StaticDataProvider };

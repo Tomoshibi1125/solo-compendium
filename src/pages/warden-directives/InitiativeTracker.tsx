@@ -58,8 +58,8 @@ import {
 	migrateLegacyConditions,
 	removeCondition as removeAdvancedCondition,
 } from "@/lib/conditionSystem";
+import { rollMonsterInitiative } from "@/lib/initiative";
 import { cn } from "@/lib/utils";
-import { rollMonsterInitiative } from "@/lib/vtt/initiative";
 
 interface Combatant {
 	id: string;

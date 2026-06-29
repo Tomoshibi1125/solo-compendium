@@ -41,6 +41,7 @@ const COMPENDIUM_LABELS: Record<EntryType, string> = {
 	pantheon: "Pantheon",
 	npcs: "NPCs",
 	vehicles: "Vehicles & Mounts",
+	crafting: "Crafting",
 };
 
 const ASCENDANT_TOOL_LABELS: Record<string, string> = {
@@ -77,10 +78,8 @@ const WARDEN_TOOL_LABELS: Record<string, string> = {
 	"random-event-generator": "Random Event Generator",
 	"relic-workshop": "Relic Workshop",
 	"party-tracker": "Party Tracker",
-	"token-library": "Token Library",
 	"art-generator": "Art Generator",
 	"audio-manager": "Audio Manager",
-	"vtt-map": "VTT Map",
 };
 
 const resolveTitle = (pathname: string) => {
@@ -123,12 +122,6 @@ const resolveTitle = (pathname: string) => {
 		const segments = pathname.split("/").filter(Boolean);
 		if (segments[1] === "join") {
 			return `${BASE_TITLE} - Join Campaign`;
-		}
-		if (segments[2] === "vtt") {
-			return `${BASE_TITLE} - VTT`;
-		}
-		if (segments[2] === "journal") {
-			return `${BASE_TITLE} - Campaign Journal`;
 		}
 		return `${BASE_TITLE} - Campaigns`;
 	}
@@ -318,12 +311,7 @@ export function RouteEffects() {
 				.eq("id", id)
 				.maybeSingle();
 			if (!active || error || !data?.name) return;
-			const label =
-				detail === "vtt"
-					? "VTT"
-					: detail === "journal"
-						? "Campaign Journal"
-						: "Campaign";
+			const label = detail === "journal" ? "Campaign Journal" : "Campaign";
 			setDynamicTitle(`${BASE_TITLE} - ${label}: ${data.name}`);
 		};
 

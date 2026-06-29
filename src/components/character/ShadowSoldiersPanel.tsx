@@ -6,7 +6,6 @@ import {
 	Flame,
 	Ghost,
 	Heart,
-	Map as MapIcon,
 	Minus,
 	Mountain,
 	Plus,
@@ -32,7 +31,6 @@ import {
 import { Progress } from "@/components/ui/progress";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
-import type { LibraryToken } from "@/data/tokenLibraryDefaults";
 import { useToast } from "@/hooks/use-toast";
 import { useAscendantTools } from "@/hooks/useGlobalDDBeyondIntegration";
 import { type RegentUnlock, useRegentUnlocks } from "@/hooks/useRegentUnlocks";
@@ -46,7 +44,6 @@ import {
 	useToggleSummon,
 	useUpdateSoldierHP,
 } from "@/hooks/useShadowSoldiers";
-import { useUserToolState } from "@/hooks/useToolState";
 import type { Json } from "@/integrations/supabase/types";
 import { cn } from "@/lib/utils";
 import {
@@ -118,51 +115,6 @@ export function ShadowSoldiersPanel({
 	const recordRoll = useRecordRoll();
 	const ascendantTools = useAscendantTools();
 	const { rollInCampaign } = ascendantTools;
-
-	const { state: storedTokens, saveNow: saveTokenLibrary } = useUserToolState<
-		LibraryToken[]
-	>("token_library", {
-		initialState: [],
-		storageKey: "vtt-tokens",
-	});
-
-	const handleExportToVTT = (
-		soldier: ShadowSoldier,
-		nickname: string | null,
-	) => {
-		const existingTokens = Array.isArray(storedTokens) ? storedTokens : [];
-		const displayName = nickname || soldier.name;
-		const tokenId = `shadow-${soldier.id}`;
-
-		// Check if it already exists
-		if (existingTokens.some((t) => t.id === tokenId)) {
-			toast({
-				title: "Already in Library",
-				description: `${formatRegentVernacular(displayName)} is already in your VTT library.`,
-			});
-			return;
-		}
-
-		const newToken: LibraryToken = {
-			id: tokenId,
-			name: `[Umbral] ${formatRegentVernacular(displayName)}`,
-			type: "Anomaly",
-			category: "other",
-			emoji: "👻",
-			size: "medium",
-			color: "#a855f7", // shadow-purple
-			tags: ["shadow", "summon", soldier.shadow_type],
-			notes: `${soldier.rank} - AC: ${soldier.armor_class} HP: ${soldier.hit_points}`,
-			createdAt: new Date().toISOString(),
-		};
-
-		void saveTokenLibrary([...existingTokens, newToken]);
-
-		toast({
-			title: "Added to VTT Map",
-			description: `${formatRegentVernacular(displayName)} is now available in your token library.`,
-		});
-	};
 
 	// Check if character has Umbral Regent unlock
 	const hasUmbralRegent = (regentUnlocks as RegentUnlock[]).some((unlock) => {
@@ -456,18 +408,6 @@ export function ShadowSoldiersPanel({
 														Bond Lv.{css.bond_level}
 													</span>
 												</div>
-												<Button
-													variant="ghost"
-													size="sm"
-													className="h-6 text-xs text-muted-foreground hover:text-shadow-purple"
-													onClick={() =>
-														handleExportToVTT(soldier, css.nickname)
-													}
-													title="Add Shadow to VTT Map Token Library"
-												>
-													<MapIcon className="w-3 h-3 mr-1" />
-													To Map
-												</Button>
 											</div>
 										</>
 									)}

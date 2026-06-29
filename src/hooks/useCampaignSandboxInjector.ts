@@ -36,15 +36,12 @@ import {
 	saveLocalSessions,
 	saveLocalWikiArticles,
 } from "@/lib/guestStore";
-import type { VTTScene } from "@/types/vtt";
 
 const SANDBOX_MANIFEST_TOOL_KEY = "sandbox_manifest";
-const SANDBOX_AUDIO_TOOL_KEY = "vtt_audio";
 const SANDBOX_LOOT_TOOL_KEY = "sandbox_loot_tables";
 
 const sandboxSectionKeys = [
 	"wiki",
-	"vtt_scenes",
 	"npcs",
 	"handouts",
 	"sessions",
@@ -55,8 +52,6 @@ const sandboxSectionKeys = [
 	"quests",
 	"factions",
 	"loot",
-	"assets",
-	"audio",
 ] as const;
 
 type SandboxSectionKey = (typeof sandboxSectionKeys)[number];
@@ -72,20 +67,6 @@ type SandboxManifest = {
 		>
 	>;
 	failed_inserts: number;
-};
-
-type SandboxAudioTrackState = {
-	id: string;
-	scene_id?: string;
-	name: string;
-	url: string;
-	type: "music" | "ambient" | "sfx";
-	volume: number;
-	loop: boolean;
-	is_playing: boolean;
-	created_by: string;
-	created_at: string;
-	updated_at: string;
 };
 
 /**
@@ -134,7 +115,6 @@ export function useCampaignSandboxInjector(campaignId: string | null) {
 		});
 
 		let wikiCount = 0;
-		let sceneCount = 0;
 		let npcCount = 0;
 		let handoutCount = 0;
 		let sessionCount = 0;
@@ -146,8 +126,6 @@ export function useCampaignSandboxInjector(campaignId: string | null) {
 		let factionCount = 0;
 		let lootCount = 0;
 		let timelineCount = 0;
-		let assetCount = 0;
-		let audioCount = 0;
 		let lootItemCount = 0;
 		let failedInserts = 0;
 
@@ -335,68 +313,6 @@ export function useCampaignSandboxInjector(campaignId: string | null) {
 				}
 			} catch (wikiErr) {
 				console.error("[SandboxInjector] Wiki section error:", wikiErr);
-			}
-
-			// 2. Inject VTT Maps — pass sandbox scenes through directly (they are already complete VTTScene objects)
-			try {
-				setInjectionState({
-					isInjecting: true,
-					progressString: `Constructing Sandbox VTT Maps (0/${massiveSandboxModule.scenes.length})...`,
-				});
-
-				// The sandbox scenes are already fully-formed VTTScene objects with correct
-				// dimensions, gridSize, token positions, and fog settings. Pass them through
-				// directly instead of destructively re-mapping.
-				const scenes: VTTScene[] = massiveSandboxModule.scenes.map((scene) => ({
-					id: scene.id || crypto.randomUUID(),
-					name: scene.name,
-					width: scene.width,
-					height: scene.height,
-					backgroundImage: scene.backgroundImage,
-					gridSize: scene.gridSize,
-					gridType: scene.gridType,
-					tokens: scene.tokens || [],
-					drawings: scene.drawings || [],
-					annotations: scene.annotations || [],
-					walls: scene.walls || [],
-					lights: scene.lights || [],
-					fogOfWar: scene.fogOfWar,
-				}));
-
-				if (scenes.length > 0) {
-					const scenesPayload = {
-						scenes,
-						currentSceneId: scenes[0].id,
-					};
-					// Canonical tool key — MUST match what VTTEnhanced.tsx and AscendantMapView.tsx
-					// read via useCampaignToolState. Using "vtt-scenes" (hyphen) would be a silent
-					// no-op; the consumer reads "vtt_scenes" (underscore) without any session id.
-					const VTT_SCENES_TOOL_KEY = "vtt_scenes";
-					// Legacy localStorage key pattern used by the VTT pages for offline fallback
-					// (see VTTEnhanced.tsx legacyStorageKey + useCampaignToolState storageKey).
-					const legacyStorageKey = `vtt-scenes-${targetId}`;
-
-					if (isLocalMode()) {
-						// Guest / offline mode: write directly to localStorage so the VTT
-						// legacy-fallback layer picks scenes up on next mount.
-						writeLocalToolState(legacyStorageKey, scenesPayload);
-						sceneCount = scenes.length;
-					} else {
-						// Cloud mode: persist to Supabase campaign_tool_states via the
-						// canonical tool key. Also mirror into localStorage so VTT hydration
-						// has a zero-latency fallback if the remote query hasn't resolved yet.
-						await saveCampaignToolState<typeof scenesPayload>(
-							targetId,
-							user?.id || "guest",
-							VTT_SCENES_TOOL_KEY,
-							scenesPayload,
-						);
-						writeLocalToolState(legacyStorageKey, scenesPayload);
-						sceneCount = scenes.length;
-					}
-				}
-			} catch (sceneErr) {
-				console.error("[SandboxInjector] VTT scene section error:", sceneErr);
 			}
 
 			// 3. Inject NPCs
@@ -1483,92 +1399,6 @@ export function useCampaignSandboxInjector(campaignId: string | null) {
 				);
 			}
 
-			// 11. Inject VTT custom assets — pin the 20 sandbox maps in the
-			// campaign's vtt_assets so they surface in a "Module Maps"
-			// section of the asset drawer.
-			try {
-				const scenes = massiveSandboxModule.scenes ?? [];
-				if (scenes.length > 0) {
-					const VTT_ASSETS_KEY = "vtt_assets";
-					const assets = scenes
-						.filter((s) => s.backgroundImage)
-						.map((s) => ({
-							id: `sandbox-map-${s.id}`,
-							name: s.name,
-							type: "map" as const,
-							imageUrl: s.backgroundImage,
-							thumbnailUrl: s.backgroundImage,
-							campaignId: targetId,
-							isCustom: false,
-							uploadedBy: wardenId,
-							uploadedAt: nowIso(),
-							source: "sandbox",
-						}));
-					if (assets.length > 0) {
-						if (isLocalMode()) {
-							writeLocalToolState(`vtt-assets-${targetId}`, assets);
-							assetCount = assets.length;
-						} else {
-							await saveCampaignToolState(
-								targetId,
-								wardenId,
-								VTT_ASSETS_KEY,
-								assets,
-							);
-							writeLocalToolState(`vtt-assets-${targetId}`, assets);
-							assetCount = assets.length;
-						}
-					}
-				}
-			} catch (assetErr) {
-				console.error("[SandboxInjector] Asset section error:", assetErr);
-			}
-
-			// 12. Inject VTT Audio Tracks — the sandbox defines audioTracks[]
-			// per scene; previously dropped. Now they surface in the Audio
-			// drawer once the warden opens a session.
-			//
-			// Persist per-campaign audio under campaign_tool_states so the Audio
-			// drawer can hydrate even before a live session creates vtt_audio_tracks.
-			try {
-				const scenes = massiveSandboxModule.scenes ?? [];
-				const audioRows: SandboxAudioTrackState[] = [];
-				for (const s of scenes) {
-					for (const track of s.audioTracks ?? []) {
-						const now = nowIso();
-						audioRows.push({
-							id: `sandbox-audio-${s.id}-${track.name.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`,
-							scene_id: s.id,
-							name: track.name,
-							url: track.url,
-							type: track.name.toLowerCase().includes("music")
-								? "music"
-								: "ambient",
-							volume: 0.8,
-							loop: true,
-							is_playing: false,
-							created_by: wardenId,
-							created_at: now,
-							updated_at: now,
-						});
-					}
-				}
-				if (audioRows.length > 0) {
-					writeLocalToolState(`vtt-audio-${targetId}`, audioRows);
-					if (!isLocalMode()) {
-						await saveCampaignToolState(
-							targetId,
-							wardenId,
-							SANDBOX_AUDIO_TOOL_KEY,
-							audioRows,
-						);
-					}
-					audioCount = audioRows.length;
-				}
-			} catch (audioErr) {
-				console.error("[SandboxInjector] Audio section error:", audioErr);
-			}
-
 			if (failedInserts === 0) {
 				manifest = {
 					...manifest,
@@ -1577,7 +1407,6 @@ export function useCampaignSandboxInjector(campaignId: string | null) {
 					completed_sections: {
 						...manifest.completed_sections,
 						wiki: { completed_at: nowIso(), counts: { wikiCount } },
-						vtt_scenes: { completed_at: nowIso(), counts: { sceneCount } },
 						npcs: { completed_at: nowIso(), counts: { npcCount } },
 						handouts: { completed_at: nowIso(), counts: { handoutCount } },
 						sessions: {
@@ -1600,8 +1429,6 @@ export function useCampaignSandboxInjector(campaignId: string | null) {
 							completed_at: nowIso(),
 							counts: { lootCount, lootItemCount },
 						},
-						assets: { completed_at: nowIso(), counts: { assetCount } },
-						audio: { completed_at: nowIso(), counts: { audioCount } },
 					},
 				};
 			} else {
@@ -1615,7 +1442,6 @@ export function useCampaignSandboxInjector(campaignId: string | null) {
 
 			const summary = [
 				wikiCount > 0 ? `${wikiCount} wiki chapters` : null,
-				sceneCount > 0 ? `${sceneCount} VTT maps` : null,
 				npcCount > 0 ? `${npcCount} NPC wiki entries` : null,
 				handoutCount > 0 ? `${handoutCount} handouts` : null,
 				sessionCount > 0 ? `${sessionCount} sessions` : null,
@@ -1630,8 +1456,6 @@ export function useCampaignSandboxInjector(campaignId: string | null) {
 				lootCount > 0 ? `${lootCount} loot tables` : null,
 				lootItemCount > 0 ? `${lootItemCount} loot items` : null,
 				timelineCount > 0 ? `${timelineCount} timeline events` : null,
-				assetCount > 0 ? `${assetCount} pinned maps` : null,
-				audioCount > 0 ? `${audioCount} audio tracks` : null,
 			]
 				.filter(Boolean)
 				.join(", ");
@@ -1643,7 +1467,7 @@ export function useCampaignSandboxInjector(campaignId: string | null) {
 						: "";
 				toast({
 					title: "Module Import Complete ✦ Run Silent",
-					description: `${summary}. All content is now available in the Wiki, Handouts, and VTT tabs.${failSuffix}`,
+					description: `${summary}. All content is now available in the Wiki and Handouts tabs.${failSuffix}`,
 					variant: failedInserts > 0 ? "destructive" : undefined,
 				});
 			} else if (failedInserts > 0) {
@@ -1656,19 +1480,19 @@ export function useCampaignSandboxInjector(campaignId: string | null) {
 				toast({
 					title: "Sandbox Already Imported",
 					description:
-						"All module content is already present. Check the Wiki, Handouts, and VTT tabs to view imported data.",
+						"All module content is already present. Check the Wiki and Handouts tabs to view imported data.",
 				});
 			}
 
 			// Invalidate queries with campaign-scoped keys so every Campaign
 			// Management tab refetches immediately post-import: Wiki, Handouts,
-			// Notes, Sessions + Session Logs, Encounters, Characters, and VTT
-			// tool-state (scenes + assets).
+			// Notes, Sessions + Session Logs, Encounters, Characters, and campaign
+			// tool-state.
 			queryClient.invalidateQueries({
 				queryKey: ["campaign_wiki_articles", targetId],
 			});
 			queryClient.invalidateQueries({
-				queryKey: ["vtt_journal_entries", targetId],
+				queryKey: ["campaign_handouts", targetId],
 			});
 			queryClient.invalidateQueries({
 				queryKey: ["campaign_tool_states", targetId],

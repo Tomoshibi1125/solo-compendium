@@ -75,7 +75,7 @@ export const ProtocolBroadcastButton: React.FC<
 
 			toast({
 				title: "Protocol Broadcasted",
-				description: `System Interaction beamed directly to ${campaignName} VTT.`,
+				description: `System Interaction posted to ${campaignName}.`,
 				className: "bg-void border-cyan text-cyan border",
 			});
 		} catch (error) {
@@ -93,7 +93,7 @@ export const ProtocolBroadcastButton: React.FC<
 					handleBroadcast(activeCampaigns[0].id, activeCampaigns[0].name)
 				}
 				className="flex items-center gap-2 border-cyan/40 bg-void/50 text-cyan hover:bg-cyan/20 transition-all font-mono uppercase text-[10px] tracking-wider h-7"
-				title="Broadcast to VTT Players"
+				title="Broadcast to campaign"
 			>
 				<AlertTriangle className="h-3 w-3" />
 				Broadcast Protocol

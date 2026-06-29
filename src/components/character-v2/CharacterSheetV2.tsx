@@ -32,6 +32,7 @@ import { CharacterBackupPanel } from "@/components/character/CharacterBackupPane
 import { CharacterDetailRollsPanel } from "@/components/character/CharacterDetailRollsPanel";
 import { CharacterEditDialog } from "@/components/character/CharacterEditDialog";
 import { CharacterExtrasPanel } from "@/components/character/CharacterExtrasPanel";
+import { CraftingPanel } from "@/components/character/CraftingPanel";
 import { CurrencyManager } from "@/components/character/CurrencyManager";
 import { CustomActionsList } from "@/components/character/CustomActionsList";
 import { CustomSkillsList } from "@/components/character/CustomSkillsList";
@@ -746,6 +747,7 @@ export default function CharacterSheetV2() {
 		<>
 			<CharacterExtrasPanel characterId={character.id} />
 			<VehiclesPanel characterId={character.id} readOnly={isReadOnly} />
+			<CraftingPanel characterId={character.id} readOnly={isReadOnly} />
 			<ShadowSoldiersPanel
 				characterId={character.id}
 				characterLevel={character.level || 1}

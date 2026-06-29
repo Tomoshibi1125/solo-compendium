@@ -8,7 +8,6 @@ import {
 	Timer,
 	Zap,
 } from "lucide-react";
-import type { DragEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import { AutoLinkText } from "@/components/compendium/AutoLinkText";
 import { CompendiumImage } from "@/components/compendium/CompendiumImage";
@@ -18,7 +17,6 @@ import {
 	getEffectLines,
 	getLimitationLines,
 } from "@/components/compendium/detailFormatters";
-import { ShareToVTTButton } from "@/components/compendium/ShareToVTTButton";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -29,7 +27,6 @@ import {
 import { formatRarityLabel, getRarityBadgeClass } from "@/lib/labels";
 import { buildAttackRollFormula } from "@/lib/powerActionFormulas";
 import { formatRegentVernacular } from "@/lib/vernacular";
-import { buildSpellTemplateDragData, VTT_SPELL_TEMPLATE_MIME } from "@/lib/vtt";
 import type { CompendiumMechanics, CompendiumSpell } from "@/types/compendium";
 
 export interface SpellData extends CompendiumSpell {}
@@ -185,30 +182,8 @@ export const SpellDetail = ({ data }: { data: SpellData }) => {
 		navigate(path);
 	};
 
-	const handleSpellDragStart = (e: DragEvent<HTMLFieldSetElement>) => {
-		e.dataTransfer.setData(
-			VTT_SPELL_TEMPLATE_MIME,
-			buildSpellTemplateDragData({
-				id: data.id,
-				name: displayName,
-				range: data.range,
-				target: (data as { target?: unknown }).target,
-				area: data.area,
-				description: data.description,
-				mechanics: data.mechanics,
-			}),
-		);
-		e.dataTransfer.effectAllowed = "copy";
-	};
-
 	return (
-		<fieldset
-			className="space-y-6"
-			aria-label={`Draggable spell details for ${displayName}`}
-			draggable
-			onDragStart={handleSpellDragStart}
-			data-testid="spell-detail-draggable"
-		>
+		<fieldset className="space-y-6">
 			{imageSrc && (
 				<div className="w-full flex justify-center">
 					<CompendiumImage
@@ -224,10 +199,7 @@ export const SpellDetail = ({ data }: { data: SpellData }) => {
 				</div>
 			)}
 
-			<AscendantWindow
-				title={displayName.toUpperCase()}
-				actions={<ShareToVTTButton itemType="Spell" itemName={displayName} />}
-			>
+			<AscendantWindow title={displayName.toUpperCase()}>
 				<div className="space-y-4">
 					<div className="flex flex-wrap items-center gap-2">
 						{typeof data.level === "number" && (

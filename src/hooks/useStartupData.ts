@@ -34,6 +34,7 @@ export interface CompendiumEntry {
 		| "pantheon"
 		| "sovereigns"
 		| "vehicles"
+		| "crafting"
 		| "npcs";
 	rarity?:
 		| "common"
@@ -100,6 +101,9 @@ const STARTUP_CATEGORIES = [
 	"sigils",
 	"tattoos",
 	"pantheon",
+	"vehicles",
+	"crafting",
+	"npcs",
 	"sovereigns",
 ] as const;
 
@@ -167,6 +171,10 @@ function mapStaticStartupEntry(
 		}),
 		...(category === "relics" && {
 			equipment_type: item.equipment_type,
+		}),
+		...(category === "crafting" && {
+			rank: item.rank,
+			rarity: item.rarity,
 		}),
 	};
 }

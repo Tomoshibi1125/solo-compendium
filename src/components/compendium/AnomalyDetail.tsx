@@ -11,7 +11,6 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AutoLinkText } from "@/components/compendium/AutoLinkText";
 import { CompendiumImage } from "@/components/compendium/CompendiumImage";
-import { ShareToVTTButton } from "@/components/compendium/ShareToVTTButton";
 import { StatBlock, StatSection } from "@/components/compendium/StatBlock";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
@@ -356,7 +355,6 @@ export const AnomalyDetail = ({ data }: { data: AnomalyData }) => {
 			{/* Header */}
 			<AscendantWindow
 				title={displayName.toUpperCase()}
-				actions={<ShareToVTTButton itemType="Anomaly" itemName={displayName} />}
 				variant={
 					isBoss
 						? "alert"

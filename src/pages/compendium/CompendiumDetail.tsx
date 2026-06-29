@@ -10,6 +10,10 @@ import {
 import { BackgroundDetail } from "@/components/compendium/BackgroundDetail";
 import { Breadcrumbs } from "@/components/compendium/Breadcrumbs";
 import { ConditionDetail } from "@/components/compendium/ConditionDetail";
+import {
+	type CraftingData,
+	CraftingDetail,
+} from "@/components/compendium/CraftingDetail";
 import { DeityDetail } from "@/components/compendium/DeityDetail";
 import { DetailLayout } from "@/components/compendium/DetailLayout";
 import { EquipmentDetail } from "@/components/compendium/EquipmentDetail";
@@ -287,6 +291,12 @@ const CompendiumDetail = () => {
 				{ id: "vehicle-abilities", title: "Abilities", level: 2 },
 				{ id: "vehicle-lore", title: "Lore", level: 2 },
 			);
+		} else if (type === "crafting") {
+			items.push(
+				{ id: "crafting-details", title: "Details", level: 2 },
+				{ id: "crafting-materials", title: "Materials", level: 2 },
+				{ id: "crafting-outcome", title: "Outcome", level: 2 },
+			);
 		} else if (type === "npcs") {
 			items.push(
 				{ id: "npc-stats", title: "Core Stats", level: 2 },
@@ -398,6 +408,10 @@ const CompendiumDetail = () => {
 			case "vehicles": {
 				const e = entry as CompendiumVehicle;
 				return <VehicleDetail data={e} />;
+			}
+			case "crafting": {
+				const e = entry as unknown as CraftingData;
+				return <CraftingDetail data={e} />;
 			}
 			case "npcs": {
 				const e = entry as CompendiumNPC;
@@ -536,6 +550,7 @@ const CompendiumDetail = () => {
 		pantheon: "Pantheon",
 		deities: "Pantheon",
 		npcs: "NPCs",
+		crafting: "Crafting",
 	};
 
 	return (

@@ -133,23 +133,11 @@ const DungeonMapGeneratorPage = lazy(
 	() => import("./pages/warden-directives/DungeonMapGenerator"),
 );
 // Map generator was merged into gate-generator
-const TokenLibrary = lazy(
-	() => import("./pages/warden-directives/TokenLibrary"),
-);
 const ArtGeneratorWarden = lazy(
 	() => import("./pages/warden-directives/ArtGenerator"),
 );
 const AudioManagerWarden = lazy(
 	() => import("./pages/warden-directives/AudioManager"),
-);
-const VTTMap = lazy(() => import("./pages/warden-directives/VTTMap"));
-const VTTEnhanced = lazy(() => import("./pages/warden-directives/VTTEnhanced"));
-const VTTSpectator = lazy(
-	() => import("./pages/warden-directives/VTTSpectator"),
-);
-const VTTJournal = lazy(() => import("./pages/warden-directives/VTTJournal"));
-const AscendantMapView = lazy(
-	() => import("./pages/ascendant-tools/AscendantMapView"),
 );
 const DiceRoller = lazy(() => import("./pages/DiceRoller"));
 const Favorites = lazy(() => import("./pages/Favorites"));
@@ -350,14 +338,6 @@ const AppContent = () => {
 					element={
 						<Suspense fallback={<PageLoader />}>
 							<AscendantTools />
-						</Suspense>
-					}
-				/>
-				<Route
-					path="/ascendant-tools/map"
-					element={
-						<Suspense fallback={<PageLoader />}>
-							<AscendantMapView />
 						</Suspense>
 					}
 				/>
@@ -673,16 +653,6 @@ const AppContent = () => {
 					}
 				/>
 				<Route
-					path="/warden-directives/token-library"
-					element={
-						<ProtectedRoute requireWarden>
-							<Suspense fallback={<PageLoader />}>
-								<TokenLibrary />
-							</Suspense>
-						</ProtectedRoute>
-					}
-				/>
-				<Route
 					path="/warden-directives/art-generator"
 					element={
 						<ProtectedRoute requireWarden>
@@ -700,81 +670,6 @@ const AppContent = () => {
 								<AudioManagerWarden />
 							</Suspense>
 						</ProtectedRoute>
-					}
-				/>
-				<Route
-					path="/warden-directives/vtt-map"
-					element={
-						<ProtectedRoute requireWarden>
-							<Suspense fallback={<PageLoader />}>
-								<VTTMap />
-							</Suspense>
-						</ProtectedRoute>
-					}
-				/>
-				{/* Standalone VTT routes — no campaign required */}
-				<Route
-					path="/warden-directives/vtt"
-					element={
-						<ProtectedRoute requireWarden>
-							<Suspense fallback={<PageLoader />}>
-								<VTTEnhanced />
-							</Suspense>
-						</ProtectedRoute>
-					}
-				/>
-				<Route
-					path="/warden-directives/journal"
-					element={
-						<ProtectedRoute requireWarden>
-							<Suspense fallback={<PageLoader />}>
-								<VTTJournal />
-							</Suspense>
-						</ProtectedRoute>
-					}
-				/>
-				<Route
-					path="/warden-directives/vtt-enhanced"
-					element={
-						<ProtectedRoute requireWarden>
-							<Suspense fallback={<PageLoader />}>
-								<VTTEnhanced />
-							</Suspense>
-						</ProtectedRoute>
-					}
-				/>
-				<Route
-					path="/warden-directives/vtt-journal"
-					element={
-						<ProtectedRoute requireWarden>
-							<Suspense fallback={<PageLoader />}>
-								<VTTJournal />
-							</Suspense>
-						</ProtectedRoute>
-					}
-				/>
-				<Route
-					path="/campaigns/:campaignId/vtt"
-					element={
-						<Suspense fallback={<PageLoader />}>
-							<VTTEnhanced />
-						</Suspense>
-					}
-				/>
-				<Route
-					path="/campaigns/:campaignId/vtt/spectate"
-					element={
-						<Suspense fallback={<PageLoader />}>
-							<VTTSpectator />
-						</Suspense>
-					}
-				/>
-				<Route
-					path="/campaigns/:campaignId/journal"
-					element={
-						<Suspense fallback={<PageLoader />}>
-							<VTTJournal />
-						</Suspense>
 					}
 				/>
 				<Route

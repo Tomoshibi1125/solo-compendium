@@ -6,7 +6,6 @@ import {
 	getEffectLines,
 	getLimitationLines,
 } from "@/components/compendium/detailFormatters";
-import { ShareToVTTButton } from "@/components/compendium/ShareToVTTButton";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { formatRarityLabel } from "@/lib/labels";
@@ -50,10 +49,7 @@ export const TattooDetail = ({ data }: TattooDetailProps) => {
 				</div>
 			)}
 
-			<AscendantWindow
-				title={displayName.toUpperCase()}
-				actions={<ShareToVTTButton itemType="Tattoo" itemName={displayName} />}
-			>
+			<AscendantWindow title={displayName.toUpperCase()}>
 				<div className="space-y-4">
 					<div className="flex flex-wrap items-center gap-2">
 						<Badge

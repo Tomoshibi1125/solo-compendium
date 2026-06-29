@@ -13,11 +13,9 @@ import {
 	FlaskConical,
 	Gem,
 	Globe,
-	Grid,
 	Grid3x3,
 	Heart,
 	Image as ImageIcon,
-	Map as MapIcon,
 	Palette,
 	Scroll,
 	Settings,
@@ -65,7 +63,6 @@ export const WARDEN_TOOL_CATEGORIES: ToolCatalogCategory[] = [
 	{ id: "content", name: "Content", icon: BookOpen },
 	{ id: "items", name: "Items & Equipment", icon: Shield },
 	{ id: "party", name: "Party & Session", icon: UsersRound },
-	{ id: "vtt", name: "VTT & Visual", icon: Grid },
 	{ id: "creative", name: "Creative", icon: Palette },
 	{ id: "rift", name: "System", icon: Settings },
 ];
@@ -234,47 +231,6 @@ export const WARDEN_TOOLS: ToolCatalogItem[] = [
 		glow: "group-hover:shadow-lime-500/20",
 		category: "party",
 		priority: 12,
-	},
-	{
-		id: "vtt-enhanced",
-		name: "Shared Battlemaps",
-		description:
-			"Virtual tabletop with maps, tokens, and real-time collaboration for your campaigns.",
-		icon: Grid,
-		status: "available",
-		color:
-			"from-violet-500/20 to-violet-600/10 border-violet-500/30 hover:border-violet-500/60",
-		iconColor: "text-violet-400",
-		glow: "group-hover:shadow-violet-500/20",
-		category: "vtt",
-		priority: 13,
-	},
-	{
-		id: "token-library",
-		name: "Entity Manifestations",
-		description:
-			"Manage and organize your custom token collection for Anomalies and NPCs.",
-		icon: MapIcon,
-		status: "available",
-		color:
-			"from-fuchsia-500/20 to-fuchsia-600/10 border-fuchsia-500/30 hover:border-fuchsia-500/60",
-		iconColor: "text-fuchsia-400",
-		glow: "group-hover:shadow-fuchsia-500/20",
-		category: "vtt",
-		priority: 14,
-	},
-	{
-		id: "vtt-journal",
-		name: "Localized Journals",
-		description: "Campaign wiki and knowledge base for your world.",
-		icon: BookOpen,
-		status: "available",
-		color:
-			"from-rose-500/20 to-rose-600/10 border-rose-500/30 hover:border-rose-500/60",
-		iconColor: "text-rose-400",
-		glow: "group-hover:shadow-rose-500/20",
-		category: "vtt",
-		priority: 15,
 	},
 	{
 		id: "art-generator",

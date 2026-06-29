@@ -3,8 +3,8 @@
  *
  * Pure-logic helpers for applying damage and healing to a character's
  * HP / Temp HP totals. Extracted from `CharacterSheetV2` so the math is
- * unit-testable and so any future surface (party panel, NPC sheet, VTT
- * macro) can use the same formulas.
+ * unit-testable and so any future surface (party panel, NPC sheet, macro)
+ * can use the same formulas.
  *
  * Rules locked in here:
  *   - Damage absorbs Temp HP first (5e PHB p.198).

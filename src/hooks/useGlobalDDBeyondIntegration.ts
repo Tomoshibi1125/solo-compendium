@@ -1,17 +1,19 @@
+import { useMemo } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { useCampaignAnalytics } from "@/hooks/useCampaignAnalytics";
 import { useCampaignDice } from "@/hooks/useCampaignDice";
 import { useCharacterExport } from "@/hooks/useCharacterExportImport";
 import { useCharacterRoll } from "@/hooks/useCharacterRoll";
+import { useCharacter } from "@/hooks/useCharacters";
 import { useCombatSessionManager } from "@/hooks/useCombatSessionManager";
 import { useEncounterRewards } from "@/hooks/useEncounterRewards";
 import { useOfflineDataAccess } from "@/hooks/useOfflineDataAccess";
-import { useVTTManager } from "@/hooks/useVTTManager";
 import { supabase } from "@/integrations/supabase/client";
 import type { Json } from "@/integrations/supabase/types";
 import { useAuth } from "@/lib/auth/authContext";
 import { logger } from "@/lib/logger";
 import { rollCheck } from "@/lib/rollEngine";
+import { getProficiencyBonus } from "@/types/core-rules";
 
 export interface CharacterSheetEnhancements {
 	rollAbilityCheck: (ability: string) => Promise<unknown>;
@@ -52,24 +54,6 @@ export interface WardenToolsEnhancements {
 	exportAnalytics: (campaignId: string) => Promise<Blob | null>;
 	pauseCombatSession: (sessionId: string) => Promise<boolean>;
 	resumeCombatSession: (sessionId: string) => Promise<boolean>;
-	uploadVTTAsset: (
-		campaignId: string,
-		file: File,
-		type: string,
-	) => Promise<unknown>;
-	appendToken: (
-		scene: import("@/types/vtt").VTTScene,
-		token: import("@/types/vtt").VTTTokenInstance,
-	) => import("@/types/vtt").VTTScene;
-	updateToken: (
-		scene: import("@/types/vtt").VTTScene,
-		tokenId: string,
-		updates: Partial<import("@/types/vtt").VTTTokenInstance>,
-	) => import("@/types/vtt").VTTScene;
-	removeToken: (
-		scene: import("@/types/vtt").VTTScene,
-		tokenId: string,
-	) => import("@/types/vtt").VTTScene;
 	isWarden: boolean;
 	awardEncounterRewards: (sessionId: string) => Promise<void>;
 }
@@ -128,13 +112,21 @@ export interface AscendantTools {
 export function useCharacterSheetEnhancements(
 	characterId: string,
 ): CharacterSheetEnhancements {
+	const { data: character } = useCharacter(characterId);
+	const abilities = useMemo(
+		() => character?.abilities ?? {},
+		[character?.abilities],
+	);
+	const proficiencyBonus =
+		character?.proficiency_bonus ?? getProficiencyBonus(character?.level ?? 1);
+
 	const characterRoll = useCharacterRoll({
 		characterId,
-		characterName: "Character",
-		abilities: {},
-		proficiencyBonus: 2,
-		savingThrowProficiencies: [],
-		skillProficiencies: [],
+		characterName: character?.name ?? "Character",
+		abilities,
+		proficiencyBonus,
+		savingThrowProficiencies: character?.saving_throw_proficiencies ?? [],
+		skillProficiencies: character?.skill_proficiencies ?? [],
 	});
 
 	const { exportCharacterJson, exportCharacterPdf, importCharacterJson } =
@@ -212,8 +204,6 @@ export function useWardenToolsEnhancements(
 		useEncounterRewards();
 	const { generateCampaignReport, getCampaignAnalytics, exportAnalyticsData } =
 		useCampaignAnalytics();
-	const { uploadVTTAsset, appendToken, updateToken, removeToken } =
-		useVTTManager();
 
 	return {
 		endCombatSession: async (
@@ -257,12 +247,6 @@ export function useWardenToolsEnhancements(
 			const result = await resumeCombatSession(sessionId);
 			return result.success;
 		},
-		uploadVTTAsset: async (vttCampaignId: string, file: File, type: string) => {
-			return await uploadVTTAsset(vttCampaignId, file, type as "map" | "token");
-		},
-		appendToken,
-		updateToken,
-		removeToken,
 		isWarden: true,
 		awardEncounterRewards: async (sessionId: string) => {
 			try {

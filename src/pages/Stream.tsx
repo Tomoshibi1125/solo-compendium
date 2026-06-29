@@ -7,7 +7,7 @@ import { CampaignStreamRoot } from "@/components/stream/StreamRoot";
  *
  * URL: `/campaigns/:id/stream/:viewMode` where `viewMode ∈ {
  *   "chat-overlay" | "dice-overlay" | "scene-cam" | "roster" | "cast"
- * }`. Renders a transparent-background view of one slice of the VTT,
+ * }`. Renders a transparent-background view of one campaign overlay,
  * optimized to drop into OBS / Streamlabs / Twitch Studio as a Browser
  * Source.
  *

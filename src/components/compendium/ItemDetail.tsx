@@ -2,7 +2,6 @@ import { Coins, Shield, Sparkles, Swords, Weight, Zap } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { AutoLinkText } from "@/components/compendium/AutoLinkText";
 import { CompendiumImage } from "@/components/compendium/CompendiumImage";
-import { ShareToVTTButton } from "@/components/compendium/ShareToVTTButton";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -287,10 +286,7 @@ export const ItemDetail = ({ data }: { data: ItemData }) => {
 				</div>
 			)}
 
-			<AscendantWindow
-				title={displayName.toUpperCase()}
-				actions={<ShareToVTTButton itemType="Item" itemName={displayName} />}
-			>
+			<AscendantWindow title={displayName.toUpperCase()}>
 				<div className="space-y-4">
 					<div className="flex flex-wrap items-center gap-2">
 						{data.item_type && (

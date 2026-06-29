@@ -1,17 +1,14 @@
 import {
 	Building2,
 	Crown,
-	Database,
 	Globe,
 	Layers,
-	Search,
 	ShieldAlert,
 	Zap,
 } from "lucide-react";
 import { SourceBookPage } from "@/components/compendium/SourceBookPage";
 import { SourceBookStatBlock } from "@/components/compendium/SourceBookStatBlock";
 import { RiftHeading } from "@/components/ui/AscendantText";
-import { getAssetsByTier, searchAssets } from "@/lib/vtt";
 import type { CompendiumAnomaly } from "@/types/compendium";
 
 const kaelVoss = {
@@ -293,74 +290,6 @@ export const WorldOverview = () => {
 					</div>
 					<div className="max-w-3xl mx-auto">
 						<SourceBookStatBlock Anomaly={kaelVoss} />
-					</div>
-				</section>
-
-				{/* 6. Lattice Resource Registry (WIRING) */}
-				<section className="p-8 bg-glass border border-fuchsia-500/20 rounded-xl relative overflow-hidden">
-					<div className="absolute top-0 right-0 p-4 opacity-5">
-						<Database className="w-24 h-24 text-fuchsia-500" />
-					</div>
-					<div className="flex items-center gap-4 mb-8 border-b border-fuchsia-500/10 pb-4 relative z-10">
-						<Search className="w-6 h-6 text-fuchsia-500" />
-						<h2 className="text-2xl font-display font-bold text-white uppercase tracking-widest">
-							Lattice Resource Registry
-						</h2>
-					</div>
-
-					<div className="grid md:grid-cols-2 gap-12 relative z-10">
-						<div className="space-y-6">
-							<h4 className="text-[10px] font-mono font-bold text-fuchsia-400 uppercase tracking-[0.2em] mb-4">
-								Threat Asset Distribution
-							</h4>
-							<div className="space-y-3">
-								{(["S", "A", "B", "C", "D"] as const).map((rank) => {
-									const count = getAssetsByTier(rank).length;
-									return (
-										<div
-											key={rank}
-											className="flex items-center justify-between group"
-										>
-											<span className="text-xs font-mono text-slate-400">
-												Rank {rank} Documentation
-											</span>
-											<div className="flex-1 border-b border-dotted border-white/10 mx-4 group-hover:border-fuchsia-500/30 transition-colors" />
-											<span className="text-xs font-mono text-fuchsia-400 font-bold">
-												{count.toString().padStart(2, "0")}
-											</span>
-										</div>
-									);
-								})}
-							</div>
-						</div>
-
-						<div className="space-y-6">
-							<h4 className="text-[10px] font-mono font-bold text-fuchsia-400 uppercase tracking-[0.2em] mb-4">
-								Sovereign Query Status
-							</h4>
-							<div className="p-4 bg-void/60 border border-white/5 rounded-lg space-y-4">
-								<p className="text-[10px] text-slate-500 leading-relaxed italic">
-									Live scan of the Aether Lattice for 'Sovereign' resonance
-									signatures:
-								</p>
-								<div className="flex flex-wrap gap-2">
-									{searchAssets("Sovereign")
-										.slice(0, 5)
-										.map((asset) => (
-											<span
-												key={asset.id}
-												className="px-2 py-1 bg-fuchsia-500/10 border border-fuchsia-500/20 text-[9px] text-fuchsia-300 font-mono rounded"
-											>
-												UID: {asset.id.split("-").pop()}
-											</span>
-										))}
-								</div>
-								<div className="text-[9px] text-emerald-500/70 font-mono flex items-center gap-2">
-									<div className="w-1 h-1 rounded-full bg-emerald-500 animate-ping" />
-									Protocol Sync Complete
-								</div>
-							</div>
-						</div>
 					</div>
 				</section>
 			</div>

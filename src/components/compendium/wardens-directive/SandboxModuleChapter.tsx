@@ -3,7 +3,6 @@ import { RiftHeading } from "@/components/ui/AscendantText";
 import {
 	massiveSandboxModule,
 	sandboxHandouts,
-	sandboxVTTScenes,
 	sandboxWikiChapters,
 } from "@/data/compendium/ascendant-sandbox-module";
 import { sandboxRecruitableNPCs } from "@/data/compendium/sandbox-npcs";
@@ -45,14 +44,6 @@ export const SandboxModuleChapter = () => {
 					</div>
 					<div className="bg-glass/20 border border-white/10 p-6 rounded-lg text-center">
 						<h3 className="text-4xl font-display font-bold text-blue-400 mb-2">
-							{sandboxVTTScenes.length}
-						</h3>
-						<p className="text-sm font-mono text-slate-400 uppercase tracking-widest">
-							VTT Scenes
-						</p>
-					</div>
-					<div className="bg-glass/20 border border-white/10 p-6 rounded-lg text-center">
-						<h3 className="text-4xl font-display font-bold text-blue-400 mb-2">
 							{sandboxRecruitableNPCs.length}
 						</h3>
 						<p className="text-sm font-mono text-slate-400 uppercase tracking-widest">
@@ -70,7 +61,7 @@ export const SandboxModuleChapter = () => {
 					This module can be automatically imported into any campaign via the
 					Warden's Directive dashboard. Navigating there will allow you to
 					instantly scaffold all associated Wiki entries, NPCs, handouts, and
-					VTT maps.
+					encounters.
 				</p>
 			</section>
 		</div>

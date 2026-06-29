@@ -11,7 +11,6 @@ import type { DragEvent } from "react";
 import { Link } from "react-router-dom";
 import { AutoLinkText } from "@/components/compendium/AutoLinkText";
 import { CompendiumImage } from "@/components/compendium/CompendiumImage";
-import { ShareToVTTButton } from "@/components/compendium/ShareToVTTButton";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { formatRegentVernacular } from "@/lib/vernacular";
@@ -159,9 +158,6 @@ export const VehicleDetail = ({ data }: { data: VehicleData }) => {
 							</Link>
 						</p>
 					)}
-					<div className="flex items-center gap-2 pt-2">
-						<ShareToVTTButton itemType="vehicle" itemName={displayName} />
-					</div>
 				</div>
 			</AscendantWindow>
 
@@ -202,6 +198,24 @@ export const VehicleDetail = ({ data }: { data: VehicleData }) => {
 						<span className="text-xs text-muted-foreground">lbs</span>
 					</AscendantWindow>
 				)}
+
+				<AscendantWindow title="VRP" compact>
+					<div className="flex items-center gap-2">
+						<Sparkles className="w-5 h-5 text-primary" />
+						<span className="font-display text-xl">{data.vrp_cost ?? 0}</span>
+					</div>
+					<span className="text-xs text-muted-foreground">Cost</span>
+				</AscendantWindow>
+
+				<AscendantWindow title="MOD CAPACITY" compact>
+					<div className="flex items-center gap-2">
+						<Shield className="w-5 h-5 text-primary" />
+						<span className="font-display text-xl">
+							{data.mod_capacity ?? 0}
+						</span>
+					</div>
+					<span className="text-xs text-muted-foreground">Capacity</span>
+				</AscendantWindow>
 			</div>
 
 			{/* Speed */}

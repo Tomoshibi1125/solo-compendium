@@ -2174,17 +2174,12 @@ export type Database = {
 					discord_webhook_url: string | null;
 					id: string;
 					is_active: boolean;
-					livekit_api_key: string | null;
-					livekit_api_secret: string | null;
-					livekit_url: string | null;
 					name: string;
 					party_gold: Json | null;
 					public_listing: Json | null;
 					settings: Json;
 					share_code: string;
 					updated_at: string;
-					vtt_session_status: Json;
-					vtt_settings: Json;
 					warden_id: string;
 				};
 				Insert: {
@@ -2195,17 +2190,12 @@ export type Database = {
 					discord_webhook_url?: string | null;
 					id?: string;
 					is_active?: boolean;
-					livekit_api_key?: string | null;
-					livekit_api_secret?: string | null;
-					livekit_url?: string | null;
 					name: string;
 					party_gold?: Json | null;
 					public_listing?: Json | null;
 					settings?: Json;
 					share_code: string;
 					updated_at?: string;
-					vtt_session_status?: Json;
-					vtt_settings?: Json;
 					warden_id: string;
 				};
 				Update: {
@@ -2216,17 +2206,12 @@ export type Database = {
 					discord_webhook_url?: string | null;
 					id?: string;
 					is_active?: boolean;
-					livekit_api_key?: string | null;
-					livekit_api_secret?: string | null;
-					livekit_url?: string | null;
 					name?: string;
 					party_gold?: Json | null;
 					public_listing?: Json | null;
 					settings?: Json;
 					share_code?: string;
 					updated_at?: string;
-					vtt_session_status?: Json;
-					vtt_settings?: Json;
 					warden_id?: string;
 				};
 				Relationships: [];
@@ -3738,42 +3723,51 @@ export type Database = {
 			character_vehicles: {
 				Row: {
 					character_id: string;
+					condition_state: string;
 					conditions: Json;
 					created_at: string;
 					current_hp: number;
 					id: string;
+					installed_mod_ids: string[];
 					is_active: boolean;
 					max_hp_override: number | null;
 					nickname: string | null;
 					notes: string | null;
 					updated_at: string;
 					vehicle_id: string;
+					vrp_cost_paid: number;
 				};
 				Insert: {
 					character_id: string;
+					condition_state?: string;
 					conditions?: Json;
 					created_at?: string;
 					current_hp: number;
 					id?: string;
+					installed_mod_ids?: string[];
 					is_active?: boolean;
 					max_hp_override?: number | null;
 					nickname?: string | null;
 					notes?: string | null;
 					updated_at?: string;
 					vehicle_id: string;
+					vrp_cost_paid?: number;
 				};
 				Update: {
 					character_id?: string;
+					condition_state?: string;
 					conditions?: Json;
 					created_at?: string;
 					current_hp?: number;
 					id?: string;
+					installed_mod_ids?: string[];
 					is_active?: boolean;
 					max_hp_override?: number | null;
 					nickname?: string | null;
 					notes?: string | null;
 					updated_at?: string;
 					vehicle_id?: string;
+					vrp_cost_paid?: number;
 				};
 				Relationships: [
 					{
@@ -8735,225 +8729,6 @@ export type Database = {
 				};
 				Relationships: [];
 			};
-			vtt_audio_settings: {
-				Row: {
-					ambient_volume: number;
-					created_at: string | null;
-					created_by: string;
-					id: string;
-					master_volume: number;
-					music_volume: number;
-					session_id: string;
-					sfx_volume: number;
-					updated_at: string | null;
-					voice_chat_enabled: boolean;
-					voice_chat_volume: number;
-				};
-				Insert: {
-					ambient_volume?: number;
-					created_at?: string | null;
-					created_by: string;
-					id?: string;
-					master_volume?: number;
-					music_volume?: number;
-					session_id: string;
-					sfx_volume?: number;
-					updated_at?: string | null;
-					voice_chat_enabled?: boolean;
-					voice_chat_volume?: number;
-				};
-				Update: {
-					ambient_volume?: number;
-					created_at?: string | null;
-					created_by?: string;
-					id?: string;
-					master_volume?: number;
-					music_volume?: number;
-					session_id?: string;
-					sfx_volume?: number;
-					updated_at?: string | null;
-					voice_chat_enabled?: boolean;
-					voice_chat_volume?: number;
-				};
-				Relationships: [
-					{
-						foreignKeyName: "vtt_audio_settings_session_id_fkey";
-						columns: ["session_id"];
-						isOneToOne: true;
-						referencedRelation: "active_sessions";
-						referencedColumns: ["id"];
-					},
-				];
-			};
-			vtt_audio_tracks: {
-				Row: {
-					created_at: string | null;
-					created_by: string;
-					id: string;
-					is_playing: boolean;
-					loop: boolean;
-					name: string;
-					session_id: string;
-					type: string;
-					updated_at: string | null;
-					url: string;
-					volume: number;
-				};
-				Insert: {
-					created_at?: string | null;
-					created_by: string;
-					id?: string;
-					is_playing?: boolean;
-					loop?: boolean;
-					name: string;
-					session_id: string;
-					type: string;
-					updated_at?: string | null;
-					url: string;
-					volume?: number;
-				};
-				Update: {
-					created_at?: string | null;
-					created_by?: string;
-					id?: string;
-					is_playing?: boolean;
-					loop?: boolean;
-					name?: string;
-					session_id?: string;
-					type?: string;
-					updated_at?: string | null;
-					url?: string;
-					volume?: number;
-				};
-				Relationships: [
-					{
-						foreignKeyName: "vtt_audio_tracks_session_id_fkey";
-						columns: ["session_id"];
-						isOneToOne: false;
-						referencedRelation: "active_sessions";
-						referencedColumns: ["id"];
-					},
-				];
-			};
-			vtt_chat_messages: {
-				Row: {
-					campaign_id: string;
-					created_at: string | null;
-					dice_formula: string | null;
-					dice_result: number | null;
-					id: string;
-					message: string;
-					message_type: string;
-					session_id: string | null;
-					user_id: string | null;
-					user_name: string;
-					whisper_to: string | null;
-				};
-				Insert: {
-					campaign_id: string;
-					created_at?: string | null;
-					dice_formula?: string | null;
-					dice_result?: number | null;
-					id?: string;
-					message: string;
-					message_type?: string;
-					session_id?: string | null;
-					user_id?: string | null;
-					user_name?: string;
-					whisper_to?: string | null;
-				};
-				Update: {
-					campaign_id?: string;
-					created_at?: string | null;
-					dice_formula?: string | null;
-					dice_result?: number | null;
-					id?: string;
-					message?: string;
-					message_type?: string;
-					session_id?: string | null;
-					user_id?: string | null;
-					user_name?: string;
-					whisper_to?: string | null;
-				};
-				Relationships: [
-					{
-						foreignKeyName: "vtt_chat_messages_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
-						referencedRelation: "campaign_details";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "vtt_chat_messages_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
-						referencedRelation: "campaigns";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "vtt_chat_messages_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
-						referencedRelation: "campaigns_public_listings";
-						referencedColumns: ["id"];
-					},
-				];
-			};
-			vtt_fog_state: {
-				Row: {
-					campaign_id: string | null;
-					created_at: string | null;
-					fog_data: Json | null;
-					id: string;
-					scene_id: string;
-					session_id: string | null;
-					token_data: Json | null;
-					updated_at: string | null;
-				};
-				Insert: {
-					campaign_id?: string | null;
-					created_at?: string | null;
-					fog_data?: Json | null;
-					id?: string;
-					scene_id: string;
-					session_id?: string | null;
-					token_data?: Json | null;
-					updated_at?: string | null;
-				};
-				Update: {
-					campaign_id?: string | null;
-					created_at?: string | null;
-					fog_data?: Json | null;
-					id?: string;
-					scene_id?: string;
-					session_id?: string | null;
-					token_data?: Json | null;
-					updated_at?: string | null;
-				};
-				Relationships: [
-					{
-						foreignKeyName: "vtt_fog_state_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
-						referencedRelation: "campaign_details";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "vtt_fog_state_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
-						referencedRelation: "campaigns";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "vtt_fog_state_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
-						referencedRelation: "campaigns_public_listings";
-						referencedColumns: ["id"];
-					},
-				];
-			};
 			vtt_journal_entries: {
 				Row: {
 					campaign_id: string;
@@ -9015,228 +8790,6 @@ export type Database = {
 					},
 				];
 			};
-			vtt_map_elements: {
-				Row: {
-					color: string;
-					created_at: string | null;
-					created_by: string;
-					data: Json;
-					element_type: string;
-					height: number | null;
-					id: string;
-					opacity: number | null;
-					session_id: string;
-					stroke_width: number | null;
-					updated_at: string | null;
-					visible_to_players: boolean;
-					width: number | null;
-					x: number;
-					y: number;
-				};
-				Insert: {
-					color: string;
-					created_at?: string | null;
-					created_by: string;
-					data?: Json;
-					element_type: string;
-					height?: number | null;
-					id?: string;
-					opacity?: number | null;
-					session_id: string;
-					stroke_width?: number | null;
-					updated_at?: string | null;
-					visible_to_players?: boolean;
-					width?: number | null;
-					x: number;
-					y: number;
-				};
-				Update: {
-					color?: string;
-					created_at?: string | null;
-					created_by?: string;
-					data?: Json;
-					element_type?: string;
-					height?: number | null;
-					id?: string;
-					opacity?: number | null;
-					session_id?: string;
-					stroke_width?: number | null;
-					updated_at?: string | null;
-					visible_to_players?: boolean;
-					width?: number | null;
-					x?: number;
-					y?: number;
-				};
-				Relationships: [
-					{
-						foreignKeyName: "vtt_map_elements_session_id_fkey";
-						columns: ["session_id"];
-						isOneToOne: false;
-						referencedRelation: "active_sessions";
-						referencedColumns: ["id"];
-					},
-				];
-			};
-			vtt_settings: {
-				Row: {
-					background_color: string;
-					background_image_url: string | null;
-					created_at: string | null;
-					created_by: string;
-					dynamic_lighting_enabled: boolean;
-					fog_of_war_enabled: boolean;
-					grid_size: number;
-					grid_visible: boolean;
-					id: string;
-					pan_x: number;
-					pan_y: number;
-					session_id: string;
-					snap_to_grid: boolean;
-					updated_at: string | null;
-					zoom_level: number;
-				};
-				Insert: {
-					background_color?: string;
-					background_image_url?: string | null;
-					created_at?: string | null;
-					created_by: string;
-					dynamic_lighting_enabled?: boolean;
-					fog_of_war_enabled?: boolean;
-					grid_size?: number;
-					grid_visible?: boolean;
-					id?: string;
-					pan_x?: number;
-					pan_y?: number;
-					session_id: string;
-					snap_to_grid?: boolean;
-					updated_at?: string | null;
-					zoom_level?: number;
-				};
-				Update: {
-					background_color?: string;
-					background_image_url?: string | null;
-					created_at?: string | null;
-					created_by?: string;
-					dynamic_lighting_enabled?: boolean;
-					fog_of_war_enabled?: boolean;
-					grid_size?: number;
-					grid_visible?: boolean;
-					id?: string;
-					pan_x?: number;
-					pan_y?: number;
-					session_id?: string;
-					snap_to_grid?: boolean;
-					updated_at?: string | null;
-					zoom_level?: number;
-				};
-				Relationships: [
-					{
-						foreignKeyName: "vtt_settings_session_id_fkey";
-						columns: ["session_id"];
-						isOneToOne: true;
-						referencedRelation: "active_sessions";
-						referencedColumns: ["id"];
-					},
-				];
-			};
-			vtt_tokens: {
-				Row: {
-					campaign_id: string | null;
-					color: string | null;
-					created_at: string | null;
-					created_by: string;
-					id: string;
-					image_url: string | null;
-					is_warden_token: boolean;
-					layer: number;
-					locked: boolean;
-					name: string;
-					owned_by_user_id: string | null;
-					rotation: number;
-					session_id: string;
-					size: number;
-					stats: Json | null;
-					token_type: string;
-					updated_at: string | null;
-					visible_to_players: boolean;
-					x: number;
-					y: number;
-				};
-				Insert: {
-					campaign_id?: string | null;
-					color?: string | null;
-					created_at?: string | null;
-					created_by: string;
-					id?: string;
-					image_url?: string | null;
-					is_warden_token?: boolean;
-					layer?: number;
-					locked?: boolean;
-					name: string;
-					owned_by_user_id?: string | null;
-					rotation?: number;
-					session_id: string;
-					size?: number;
-					stats?: Json | null;
-					token_type: string;
-					updated_at?: string | null;
-					visible_to_players?: boolean;
-					x?: number;
-					y?: number;
-				};
-				Update: {
-					campaign_id?: string | null;
-					color?: string | null;
-					created_at?: string | null;
-					created_by?: string;
-					id?: string;
-					image_url?: string | null;
-					is_warden_token?: boolean;
-					layer?: number;
-					locked?: boolean;
-					name?: string;
-					owned_by_user_id?: string | null;
-					rotation?: number;
-					session_id?: string;
-					size?: number;
-					stats?: Json | null;
-					token_type?: string;
-					updated_at?: string | null;
-					visible_to_players?: boolean;
-					x?: number;
-					y?: number;
-				};
-				Relationships: [
-					{
-						foreignKeyName: "vtt_tokens_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
-						referencedRelation: "campaign_details";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "vtt_tokens_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
-						referencedRelation: "campaigns";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "vtt_tokens_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
-						referencedRelation: "campaigns_public_listings";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "vtt_tokens_session_id_fkey";
-						columns: ["session_id"];
-						isOneToOne: false;
-						referencedRelation: "active_sessions";
-						referencedColumns: ["id"];
-					},
-				];
-			};
 		};
 		Views: {
 			campaign_details: {
@@ -9253,8 +8806,6 @@ export type Database = {
 					settings: Json | null;
 					share_code: string | null;
 					updated_at: string | null;
-					vtt_session_status: Json | null;
-					vtt_settings: Json | null;
 					warden_email: string | null;
 					warden_id: string | null;
 					warden_name: string | null;
@@ -9538,62 +9089,6 @@ export type Database = {
 					p_title: string;
 				};
 				Returns: string;
-			};
-			create_vtt_audio_track: {
-				Args: {
-					p_loop?: boolean;
-					p_name: string;
-					p_session_id: string;
-					p_type?: string;
-					p_url: string;
-					p_volume?: number;
-				};
-				Returns: string;
-			};
-			create_vtt_map_element: {
-				Args: {
-					p_color: string;
-					p_data?: Json;
-					p_element_type: string;
-					p_height?: number;
-					p_opacity?: number;
-					p_session_id: string;
-					p_stroke_width?: number;
-					p_visible_to_players?: boolean;
-					p_width?: number;
-					p_x: number;
-					p_y: number;
-				};
-				Returns: string;
-			};
-			create_vtt_token: {
-				Args: {
-					p_color?: string;
-					p_image_url?: string;
-					p_is_dm_token?: boolean;
-					p_name: string;
-					p_owned_by_user_id?: string;
-					p_session_id: string;
-					p_size?: number;
-					p_stats?: Json;
-					p_token_type: string;
-					p_visible_to_players?: boolean;
-					p_x?: number;
-					p_y?: number;
-				};
-				Returns: string;
-			};
-			delete_vtt_audio_track: {
-				Args: { p_session_id: string; p_track_id: string };
-				Returns: undefined;
-			};
-			delete_vtt_map_element: {
-				Args: { p_element_id: string; p_session_id: string };
-				Returns: undefined;
-			};
-			delete_vtt_token: {
-				Args: { p_session_id: string; p_token_id: string };
-				Returns: undefined;
 			};
 			deploy_campaign_encounter: {
 				Args: { p_encounter_id: string };
@@ -9983,48 +9478,6 @@ export type Database = {
 					new_xp_total: number;
 					success: boolean;
 				}[];
-			};
-			update_vtt_audio_settings: {
-				Args: {
-					p_ambient_volume?: number;
-					p_master_volume?: number;
-					p_music_volume?: number;
-					p_session_id: string;
-					p_sfx_volume?: number;
-					p_voice_chat_enabled?: boolean;
-					p_voice_chat_volume?: number;
-				};
-				Returns: undefined;
-			};
-			update_vtt_settings: {
-				Args: {
-					p_background_color?: string;
-					p_background_image_url?: string;
-					p_dynamic_lighting_enabled?: boolean;
-					p_fog_of_war_enabled?: boolean;
-					p_grid_size?: number;
-					p_grid_visible?: boolean;
-					p_pan_x?: number;
-					p_pan_y?: number;
-					p_session_id: string;
-					p_snap_to_grid?: boolean;
-					p_zoom_level?: number;
-				};
-				Returns: undefined;
-			};
-			update_vtt_token: {
-				Args: {
-					p_color?: string;
-					p_image_url?: string;
-					p_session_id: string;
-					p_size?: number;
-					p_stats?: Json;
-					p_token_id: string;
-					p_visible_to_players?: boolean;
-					p_x?: number;
-					p_y?: number;
-				};
-				Returns: undefined;
 			};
 			upsert_campaign_session: {
 				Args: {

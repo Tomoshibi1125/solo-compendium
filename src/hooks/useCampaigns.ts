@@ -37,14 +37,6 @@ export interface Campaign {
 	 * Ed25519-verify incoming interaction webhooks. NULL = bot disabled.
 	 */
 	discord_public_key?: string | null;
-	/**
-	 * Misty Pearl I3 — LiveKit SFU URL (wss://...). When set, the
-	 * Comm-Net transport selector defaults to `livekit` for this
-	 * campaign. NULL = mesh trystero transport.
-	 */
-	livekit_url?: string | null;
-	/** Misty Pearl I3 — LiveKit API key (NOT secret). */
-	livekit_api_key?: string | null;
 }
 
 export interface CampaignMember {
@@ -66,11 +58,6 @@ type CampaignUpdate = {
 	/** Misty Pearl G2 — Discord two-way bot. */
 	discord_app_id?: string | null;
 	discord_public_key?: string | null;
-	/** Misty Pearl I3 — LiveKit SFU opt-in. The API secret is set via the
-	 *  Supabase dashboard or CLI separately; the client never sees it. */
-	livekit_url?: string | null;
-	livekit_api_key?: string | null;
-	livekit_api_secret?: string | null;
 };
 
 const CAMPAIGNS_KEY = "solo-compendium.campaigns.v1";
@@ -853,15 +840,6 @@ export const useUpdateCampaign = () => {
 			}
 			if (updates.discord_public_key !== undefined) {
 				updatePayload.discord_public_key = updates.discord_public_key;
-			}
-			if (updates.livekit_url !== undefined) {
-				updatePayload.livekit_url = updates.livekit_url;
-			}
-			if (updates.livekit_api_key !== undefined) {
-				updatePayload.livekit_api_key = updates.livekit_api_key;
-			}
-			if (updates.livekit_api_secret !== undefined) {
-				updatePayload.livekit_api_secret = updates.livekit_api_secret;
 			}
 			const { data, error } = await supabase
 				.from("campaigns")

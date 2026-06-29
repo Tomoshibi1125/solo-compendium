@@ -2,13 +2,8 @@ import { Fingerprint, Radio } from "lucide-react";
 import { RiftHeading } from "@/components/ui/AscendantText";
 import { anomalies } from "@/data/compendium/anomalies";
 import { getAnomalyImageSrc } from "@/lib/anomalyImageResolver";
-import { getAnomalyTokensForTier, getAssetsByCategory } from "@/lib/vtt";
-import type { VTTAsset } from "@/lib/vtt/vttAssetManifest";
-
-type RankTier = "E" | "D" | "C" | "B" | "A" | "S";
 
 export const TheManifest = () => {
-	const vttTokenCount = getAssetsByCategory("token").length;
 	// Sort anomalies by Rank S -> A -> B -> C -> D
 	const rankOrder: Record<string, number> = { S: 5, A: 4, B: 3, C: 2, D: 1 };
 	const sortedAnomalies = [...anomalies].sort((a, b) => {
@@ -38,7 +33,7 @@ export const TheManifest = () => {
 				</p>
 				<div className="inline-flex items-center gap-4 px-6 py-2 bg-orange-500/5 border border-orange-500/20 rounded-full text-[10px] uppercase font-mono text-orange-500/80 tracking-[0.2em]">
 					<Radio className="w-3 h-3 animate-pulse" />
-					Lattice Sync Active: {vttTokenCount} Spirits Documented
+					Lattice Sync Active: {sortedAnomalies.length} Spirits Documented
 				</div>
 			</section>
 
@@ -97,49 +92,6 @@ export const TheManifest = () => {
 								</header>
 
 								<div className="p-5 flex-1 flex flex-col">
-									{/* WIRING: Display VTT Tokens for this anomaly rank/type */}
-									{(() => {
-										const rank = anomaly.rank as RankTier;
-										const tokens = getAnomalyTokensForTier(rank)
-											.filter((t: VTTAsset) =>
-												t.tags.some(
-													(tag: string) =>
-														anomaly.name
-															.toLowerCase()
-															.includes(tag.toLowerCase()) ||
-														anomaly.type
-															?.toLowerCase()
-															.includes(tag.toLowerCase()),
-												),
-											)
-											.slice(0, 3);
-
-										if (tokens.length === 0) return null;
-
-										return (
-											<div className="flex gap-2 mb-4 bg-orange-500/5 p-2 rounded border border-orange-500/10">
-												<div className="text-[8px] uppercase font-mono text-orange-500/50 [writing-mode:vertical-lr] rotate-180">
-													VTT Spirits
-												</div>
-												<div className="flex gap-2">
-													{tokens.map((token: VTTAsset) => (
-														<div
-															key={token.id}
-															className="w-8 h-8 rounded-full border border-orange-500/30 bg-void flex items-center justify-center p-1 group/token relative cursor-help"
-															title={`VTT Template: ${token.name}`}
-														>
-															<img
-																src={token.path}
-																alt={token.name}
-																className="w-full h-full object-contain opacity-50 group-hover/token:opacity-100 transition-opacity"
-															/>
-														</div>
-													))}
-												</div>
-											</div>
-										);
-									})()}
-
 									<div className="text-xs text-slate-300 italic mb-4 line-clamp-3 bg-void/40 p-3 rounded-sm border-l-2 border-orange-500/40">
 										{anomaly.description}
 									</div>

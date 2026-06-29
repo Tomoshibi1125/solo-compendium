@@ -1,8 +1,6 @@
-import { Layers, MapPin } from "lucide-react";
+import { MapPin } from "lucide-react";
 import { RiftHeading } from "@/components/ui/AscendantText";
 import { locations } from "@/data/compendium/locations";
-import { getMapsForTier } from "@/lib/vtt";
-import type { VTTAsset } from "@/lib/vtt/vttAssetManifest";
 
 type RankTier = "E" | "D" | "C" | "B" | "A" | "S";
 
@@ -12,8 +10,6 @@ export const WorldGuide = () => {
 		(rank) => ({
 			rank,
 			sites: locations.filter((loc) => loc.rank === rank),
-			// WIRING: Fetch VTT maps for this tier
-			vttMaps: getMapsForTier(rank),
 		}),
 	);
 
@@ -34,7 +30,7 @@ export const WorldGuide = () => {
 				</p>
 			</section>
 
-			{rankedLocations.map(({ rank, sites, vttMaps }) => {
+			{rankedLocations.map(({ rank, sites }) => {
 				if (sites.length === 0) return null;
 
 				return (
@@ -58,31 +54,6 @@ export const WorldGuide = () => {
 								</span>
 								Threat Zones
 							</h2>
-
-							{/* WIRING: VTT Map Catalog for this Tier */}
-							{vttMaps.length > 0 && (
-								<div className="hidden md:flex flex-col items-end gap-2 text-emerald-500/50">
-									<div className="text-[10px] font-mono uppercase tracking-[0.2em] flex items-center gap-2">
-										<Layers className="w-3 h-3" />
-										Manifested Rifts: {vttMaps.length}
-									</div>
-									<div className="flex -space-x-4">
-										{vttMaps.slice(0, 5).map((map: VTTAsset) => (
-											<div
-												key={map.id}
-												className="w-12 h-12 rounded-full border-2 border-void bg-emerald-950 overflow-hidden shadow-xl group/map relative cursor-pointer"
-												title={`VTT Map: ${map.name}`}
-											>
-												<img
-													src={map.thumbnail || map.path}
-													alt={map.name}
-													className="w-full h-full object-cover group-hover/map:scale-125 transition-transform"
-												/>
-											</div>
-										))}
-									</div>
-								</div>
-							)}
 						</header>
 
 						<div className="grid lg:grid-cols-2 gap-8">

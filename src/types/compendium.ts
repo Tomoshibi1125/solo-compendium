@@ -320,12 +320,40 @@ export interface CompendiumVehicleAbility {
 	action_type: string;
 }
 
+export type VehicleConditionState =
+	| "operational"
+	| "strained"
+	| "damaged"
+	| "crippled"
+	| "dead"
+	| "calm"
+	| "uneasy"
+	| "panicked"
+	| "injured"
+	| "broken";
+
+export type VehicleModCategory =
+	| "mobility"
+	| "stealth"
+	| "afa"
+	| "sensors"
+	| "survival"
+	| "utility"
+	| "repair"
+	| "tack"
+	| "training";
+
 export interface CompendiumVehicle extends BaseCompendiumItem {
 	vehicle_type: "mount" | "land" | "air" | "water" | "rift";
 	size: "tiny" | "small" | "medium" | "large" | "huge" | "gargantuan";
 	speed: CompendiumVehicleSpeed;
 	armor_class: number;
 	hit_points: { max: number; damage_threshold?: number };
+	vrp_cost?: number;
+	mod_capacity?: number;
+	allowed_mod_categories?: VehicleModCategory[];
+	condition_track?: "vehicle" | "mount";
+	requisition_notes?: string;
 	/** For mounts — rider + cargo limit. */
 	carry_capacity_lbs?: number;
 	/** For vessels — cargo-hold capacity. */
@@ -344,6 +372,52 @@ export interface CompendiumVehicle extends BaseCompendiumItem {
 	bonded_from_name?: string | null;
 	rank?: string;
 	source_book?: string;
+}
+
+export interface CompendiumVehicleMod extends BaseCompendiumItem {
+	mod_type: "vehicle" | "mount";
+	category: VehicleModCategory;
+	vrp_cost: number;
+	capacity_cost: number;
+	effect: string;
+	requirements?: string[];
+	source_book: string;
+}
+
+export interface CompendiumCraftingMaterial extends BaseCompendiumItem {
+	material_type:
+		| "rift_salvage"
+		| "anomaly_material"
+		| "relic_fragment"
+		| "essence_component"
+		| "field_part";
+	rarity: string;
+	unit: string;
+	source_book: string;
+}
+
+export interface CompendiumRecipe extends BaseCompendiumItem {
+	recipe_type:
+		| "repair"
+		| "refit"
+		| "field_engineering"
+		| "survival"
+		| "consumable";
+	rank: string;
+	time_required: string;
+	project_clock: number;
+	materials: Array<{ material_id: string; quantity: number }>;
+	required_tools?: string[];
+	outcome: string;
+	failure_risk?: string;
+	source_book: string;
+}
+
+export interface CompendiumCraftingProject extends BaseCompendiumItem {
+	recipe_id: string;
+	progress_required: number;
+	material_requirements: Array<{ material_id: string; quantity: number }>;
+	source_book: string;
 }
 
 export interface CompendiumSpell extends BaseCompendiumItem {

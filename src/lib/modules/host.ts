@@ -131,7 +131,7 @@ export class ModuleHost {
 					return;
 				}
 				// Action dispatch is delegated to the host UI layer via
-				// a custom DOM event so the campaign / VTT page can pick
+				// a custom DOM event so the campaign page can pick
 				// it up under the caller's RBAC. We don't directly call
 				// Supabase from here — that would bypass RLS.
 				window.dispatchEvent(

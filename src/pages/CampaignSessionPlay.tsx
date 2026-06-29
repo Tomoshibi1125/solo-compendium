@@ -17,17 +17,12 @@ import {
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { RiftNotificationOverlay } from "@/components/vtt/RiftNotificationOverlay";
 import {
 	useCampaignCombatSession,
 	useEndCombatSession,
 	useUpdateCombatSession,
 } from "@/hooks/useCampaignCombat";
 import { useWardenToolsEnhancements } from "@/hooks/useGlobalDDBeyondIntegration";
-import {
-	type BroadcastPayload,
-	useVTTBroadcast,
-} from "@/hooks/useVTTBroadcast";
 import { cn } from "@/lib/utils";
 
 const CampaignSessionPlay = () => {
@@ -40,24 +35,8 @@ const CampaignSessionPlay = () => {
 	const resolvedCampaignId = campaignId ?? "";
 	const resolvedSessionId = sessionId ?? "";
 
-	// Master integration: encounter rewards, combat tracking, VTT mgmt, analytics (DDB parity)
+	// Master integration: encounter rewards, combat tracking, analytics (DDB parity)
 	const wardenTools = useWardenToolsEnhancements();
-
-	// VTT Broadcasting Integration
-	const [activeBroadcasts, setActiveBroadcasts] = useState<BroadcastPayload[]>(
-		[],
-	);
-	const { sendBroadcast: _ } = useVTTBroadcast(
-		resolvedCampaignId,
-		sessionId,
-		(payload) => {
-			setActiveBroadcasts((prev) => [...prev, payload]);
-		},
-	);
-
-	const dismissBroadcast = (id: string) => {
-		setActiveBroadcasts((prev) => prev.filter((b) => b.id !== id));
-	};
 
 	const { data, isLoading, error } = useCampaignCombatSession(
 		resolvedCampaignId,
@@ -130,13 +109,6 @@ const CampaignSessionPlay = () => {
 						<Button variant="outline" asChild>
 							<Link to={`/campaigns/${resolvedCampaignId}`}>
 								Back to Campaign
-							</Link>
-						</Button>
-						<Button className="btn-umbral" asChild>
-							<Link
-								to={`/campaigns/${resolvedCampaignId}/vtt?sessionId=${encodeURIComponent(resolvedSessionId)}`}
-							>
-								Open VTT
 							</Link>
 						</Button>
 					</div>
@@ -362,10 +334,6 @@ const CampaignSessionPlay = () => {
 						</div>
 					)}
 				</AscendantWindow>
-				<RiftNotificationOverlay
-					notifications={activeBroadcasts}
-					onDismiss={dismissBroadcast}
-				/>
 			</div>
 		</Layout>
 	);
