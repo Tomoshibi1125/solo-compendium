@@ -78,7 +78,7 @@ export const comprehensiveRelics: Relic[] = [
 				"Various Umbral Regents",
 			],
 		},
-		flavor: "Tread carefully; magic like this has a cost.",
+		flavor: "It doesn't cut you. It deletes the space you were standing in.",
 		abilities: [
 			{
 				name: "Shadow Pierce",
@@ -265,7 +265,7 @@ export const comprehensiveRelics: Relic[] = [
 				"Countless fallen warriors",
 			],
 		},
-		flavor: "Some items tell stories. This one ends them.",
+		flavor: "Feed it, or it feeds on the hand that swings it.",
 		abilities: [
 			{
 				name: "Blood Frenzy",
@@ -429,7 +429,8 @@ export const comprehensiveRelics: Relic[] = [
 				"Tempest-Class Ascendant",
 			],
 		},
-		flavor: "Tread carefully; magic like this has a cost.",
+		flavor:
+			"The thunderclap always arrives a heartbeat after you're already cut.",
 		abilities: [
 			{
 				name: "Lightning Strike",
@@ -580,7 +581,7 @@ export const comprehensiveRelics: Relic[] = [
 		name: "Frost Axe",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"This Legendary-Rank artifact vibrates with the power to freeze reality. It allows the wielder to manifest a cryogenic field that can shatter any proximity-based dimensional distortion.",
+			"A broad-headed axe sheathed in a skin of self-renewing frost. The mana lattice worked into its blade drops the air around each swing below the threshold where motion itself begins to stall.",
 		rarity: "very_rare",
 		type: "weapon",
 		value: { currency: "gate", amount: 1100 },
@@ -606,7 +607,8 @@ export const comprehensiveRelics: Relic[] = [
 				"Frost-Class Ascendant",
 			],
 		},
-		flavor: "Tread carefully; magic like this has a cost.",
+		flavor:
+			"Everything it touches slows, then stills, then forgets it ever moved.",
 		abilities: [
 			{
 				name: "Ice Touch",
@@ -784,7 +786,8 @@ export const comprehensiveRelics: Relic[] = [
 			personality: "",
 			prior_owners: [],
 		},
-		flavor: "Power lies not in the object, but the will of its master.",
+		flavor:
+			"The last Regent to wear it never took it off. They say it took him instead.",
 		abilities: [
 			{
 				name: "Shadow Command",
@@ -984,7 +987,8 @@ export const comprehensiveRelics: Relic[] = [
 				"Shadow-Class Warlord Zara",
 			],
 		},
-		flavor: "Not glamorous. Still alive.",
+		flavor:
+			"Forged where the light gives up. It keeps you breathing where nothing wants you to.",
 		abilities: [
 			{
 				name: "Shadow Meld",
@@ -1135,7 +1139,8 @@ export const comprehensiveRelics: Relic[] = [
 			prior_owners: [],
 			priorOwners: ["Anomaly Slayer", "Anomaly Slayer", "Scale-Forged Regent"],
 		},
-		flavor: "Reforged from the ashes of a fallen Regent.",
+		flavor:
+			"Every scale still flinches from whatever killed the anomaly it was cut from.",
 		abilities: [
 			{
 				name: "anomaly Resistance",
@@ -1287,7 +1292,8 @@ export const comprehensiveRelics: Relic[] = [
 				"Regent of Night",
 			],
 		},
-		flavor: "Tread carefully; magic like this has a cost.",
+		flavor:
+			"Shadows kneel to it out of habit. Given time, so do the people commanding them.",
 		abilities: [
 			{
 				name: "Command Shadows",
@@ -1469,7 +1475,8 @@ export const comprehensiveRelics: Relic[] = [
 				"Umbral Cultist Kael",
 			],
 		},
-		flavor: "Issue-grade. Not flashy, just thorough.",
+		flavor:
+			"A bead of Regent blood set in iron — it drinks the corruption meant for you.",
 		abilities: [
 			{
 				name: "Shadow Enhancement",
@@ -1620,7 +1627,8 @@ export const comprehensiveRelics: Relic[] = [
 				"Umbral Walker Lena",
 			],
 		},
-		flavor: "Reforged from the ashes of a fallen Regent.",
+		flavor:
+			"Its needle never finds north. It finds the nearest tear in the world.",
 		abilities: [
 			{
 				name: "Dimension Sense",
@@ -1763,7 +1771,7 @@ export const comprehensiveRelics: Relic[] = [
 		name: "Crown of Sense",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"This Legendary-Rank artifact vibrates with the power to mandate reality. It allows the wielder to manifest a fundamental field that can decree any proximity-based dimensional distortion.",
+			"A slender circlet woven from mana-thread that stretches the wearer's perception past the visible spectrum — reading heat, intent, and the shape of things through solid walls.",
 		rarity: "legendary",
 		type: "accessory",
 		value: { currency: "core", amount: 1050 },
@@ -1787,7 +1795,8 @@ export const comprehensiveRelics: Relic[] = [
 				"Regent-Oracle Elena",
 			],
 		},
-		flavor: "Power lies not in the object, but the will of its master.",
+		flavor:
+			"You stop wondering what people are thinking. That is rarely a mercy.",
 		abilities: [
 			{
 				name: "All-Knowledge",
@@ -1930,7 +1939,7 @@ export const comprehensiveRelics: Relic[] = [
 		name: "Shadow Orb",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"This Legendary-Rank artifact vibrates with the power to nullify reality. It allows the wielder to manifest a umbral field that can devour any proximity-based dimensional distortion.",
+			"A sphere of compressed umbral mana that hovers at the bearer's shoulder, siphoning ambient light to deepen and sharpen every shadow they command.",
 		rarity: "epic",
 		type: "accessory",
 		value: { currency: "core", amount: 325 },
@@ -1953,7 +1962,8 @@ export const comprehensiveRelics: Relic[] = [
 				"Shadow-Class Caster",
 			],
 		},
-		flavor: "Tread carefully; magic like this has a cost.",
+		flavor:
+			"Hold it long enough and your own shadow starts taking its orders from the orb.",
 		abilities: [
 			{
 				name: "Shadow Power",
@@ -2090,7 +2100,7 @@ export const comprehensiveRelics: Relic[] = [
 		name: "Time Turner",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"This Legendary-Rank artifact vibrates with the power to suspend reality. It allows the wielder to manifest a recursive field that can accelerate any proximity-based dimensional distortion.",
+			"A ring of interlocking mana-gears that winds a private pocket of stalled time around the wearer for the length of a single held breath.",
 		rarity: "mythic",
 		type: "accessory",
 		value: { currency: "core", amount: 2200 },
@@ -2118,7 +2128,8 @@ export const comprehensiveRelics: Relic[] = [
 				"Lattice Keeper",
 			],
 		},
-		flavor: "Reforged from the ashes of a fallen Regent.",
+		flavor:
+			"A borrowed second, always repaid with interest you never see coming.",
 		abilities: [
 			{
 				name: "Time Rewind",
@@ -2301,7 +2312,8 @@ export const comprehensiveRelics: Relic[] = [
 			personality: "",
 			prior_owners: [],
 		},
-		flavor: "Tread carefully; magic like this has a cost.",
+		flavor:
+			"Distilled from a sealed Rift. It stitches you shut and asks nothing back — this once.",
 		abilities: [
 			{
 				name: "Essence Restoration",
@@ -2402,7 +2414,7 @@ export const comprehensiveRelics: Relic[] = [
 		name: "Shadow Elixir",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"This Legendary-Rank artifact vibrates with the power to nullify reality. It allows the wielder to manifest a umbral field that can devour any proximity-based dimensional distortion.",
+			"A vial of liquid umbra that thins the drinker into half-shadow — harder to see and harder to strike — for a brief, disorienting span.",
 		rarity: "very_rare",
 		type: "consumable",
 		value: { currency: "gate", amount: 1300 },
@@ -2418,7 +2430,8 @@ export const comprehensiveRelics: Relic[] = [
 			personality: "",
 			prior_owners: [],
 		},
-		flavor: "Reforged from the ashes of a fallen Regent.",
+		flavor:
+			"For a short, dizzying while you belong to the dark. The trick is climbing back out.",
 		abilities: [
 			{
 				name: "Shadow Empowerment",
@@ -2516,10 +2529,10 @@ export const comprehensiveRelics: Relic[] = [
 	},
 	{
 		id: "anomaly-blood-potion",
-		name: "anomaly Blood Potion",
+		name: "Anomaly Blood Potion",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"This Legendary-Rank artifact vibrates with the power to siphon reality. It allows the wielder to manifest a sanguine field that can clot any proximity-based dimensional distortion.",
+			"Blood drawn from a high-rank anomaly, still faintly stirring in the vial. Drinking it grafts a sliver of the creature's power onto the drinker, paid for in a burning fever.",
 		rarity: "legendary",
 		type: "consumable",
 		value: { currency: "core", amount: 1100 },
@@ -2535,7 +2548,8 @@ export const comprehensiveRelics: Relic[] = [
 			personality: "",
 			prior_owners: [],
 		},
-		flavor: "Reforged from the ashes of a fallen Regent.",
+		flavor:
+			"It's still faintly alive going down. It stays faintly alive inside you.",
 		abilities: [
 			{
 				name: "regent-tier Power",
@@ -2654,7 +2668,7 @@ export const comprehensiveRelics: Relic[] = [
 			personality: "",
 			prior_owners: [],
 		},
-		flavor: "Power lies not in the object, but the will of its master.",
+		flavor: "Point it at a shadow and the shadow looks back — annotated.",
 		abilities: [
 			{
 				name: "Shadow Vision",
@@ -2771,7 +2785,7 @@ export const comprehensiveRelics: Relic[] = [
 		name: "Essence Collector",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"This Legendary-Rank artifact vibrates with the power to mandate reality. It allows the wielder to manifest a fundamental field that can decree any proximity-based dimensional distortion.",
+			"A hand-sized protocol rig that pulls residual essence from a freshly cleared Rift and seals it into vials for later refinement.",
 		rarity: "very_rare",
 		type: "tool",
 		value: { currency: "gate", amount: 1400 },
@@ -2789,7 +2803,8 @@ export const comprehensiveRelics: Relic[] = [
 			personality: "",
 			prior_owners: [],
 		},
-		flavor: "Standard kit for those who plan to come back.",
+		flavor:
+			"Clear the Rift, then bottle what it leaves behind before it thins into nothing.",
 		abilities: [
 			{
 				name: "Essence Collection",

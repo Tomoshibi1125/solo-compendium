@@ -249,6 +249,9 @@ describe("compendium audit (provider-backed)", () => {
 			"vague_catchall_name",
 			// SRD 5.1 completeness (Phase 1b)
 			"srd_completeness",
+			// de-boilerplate + effect depth (Phase 2, enforced tier by tier)
+			"boilerplate_repetition",
+			"shallow_magic_effect",
 			// fighting styles
 			"malformed_fighting_style_prerequisites",
 			// shadow soldiers

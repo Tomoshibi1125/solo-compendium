@@ -292,6 +292,11 @@ export const RelicDetail = ({ data }: { data: RelicData }) => {
 
 			{/* Description */}
 			<AscendantWindow title="DESCRIPTION">
+				{data.flavor && (
+					<p className="text-sm italic text-cyan/70 mb-4 border-l-2 border-cyan/30 pl-3 py-1 bg-cyan/5">
+						<AutoLinkText text={data.flavor} />
+					</p>
+				)}
 				<p className="text-foreground whitespace-pre-wrap leading-relaxed text-base">
 					<AutoLinkText text={data.description || ""} />
 				</p>

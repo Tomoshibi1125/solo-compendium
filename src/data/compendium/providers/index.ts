@@ -2043,6 +2043,7 @@ export const staticDataProvider: StaticDataProvider = {
 			armor_type?: string | null;
 			charges?: number | Record<string, Json> | null;
 			effects?: Record<string, Json> | null;
+			flavor?: string | null;
 		}>("comprehensiveRelics");
 		const filtered = filterBySearch(comprehensiveRelics, search, [
 			"name",
@@ -2080,7 +2081,13 @@ export const staticDataProvider: StaticDataProvider = {
 			armor_type: relic.armor_type ?? null,
 			charges: relic.charges ?? null,
 			effects: relic.effects ?? null,
-			flavor: (relic.lore as { description?: string })?.description || null,
+			// Pass the relic's authored `flavor` through so it reaches detail views
+			// and the audit's boilerplate gate; fall back to the legacy
+			// lore-derived value only when a relic has no explicit flavor.
+			flavor:
+				(typeof relic.flavor === "string" && relic.flavor) ||
+				(relic.lore as { description?: string })?.description ||
+				null,
 		}));
 	},
 

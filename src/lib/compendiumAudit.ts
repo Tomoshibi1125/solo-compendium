@@ -1778,6 +1778,133 @@ function runContract(
 	}
 }
 
+// ──────────────────────────────────────────────────────────────────────
+// Phase 2 — de-boilerplate + effect depth.
+//
+// `boilerplate_repetition`: a narrative field whose value is shared by more
+// than BOILERPLATE_MAX_SHARE entries across the item corpus is pool-drawn
+// boilerplate and must be replaced with bespoke per-entry text.
+// `shallow_magic_effect`: an uncommon+ item whose only mechanical effect is a
+// flat "+X" (and whose name doesn't mark it an intentional "+N" item) is flagged.
+//
+// Both gates enforce only datasets in `boilerplateEnforcedDatasets` — the tiers
+// already cleaned — so the pass can land tier by tier while the suite stays
+// green. The frequency map is still computed over the whole corpus, so a
+// cleaned tier that still reuses a pooled line is caught. Grow the set as each
+// tier is de-boilerplated.
+// ──────────────────────────────────────────────────────────────────────
+const BOILERPLATE_CORPUS_DATASETS = [
+	"equipment",
+	"items",
+	"relics",
+	"artifacts",
+];
+const BOILERPLATE_MAX_SHARE = 2;
+const boilerplateEnforcedDatasets = new Set<string>(["relics"]);
+
+const boilerplateNarrativeFields: Record<string, (e: AuditEntry) => unknown> = {
+	description: (e) => e.description,
+	flavor: (e) => (e as { flavor?: unknown }).flavor,
+	"lore.origin": (e) => {
+		const lore = (e as { lore?: unknown }).lore;
+		return isRecord(lore) ? lore.origin : undefined;
+	},
+	"lore.history": (e) => {
+		const lore = (e as { lore?: unknown }).lore;
+		return isRecord(lore) ? lore.history : undefined;
+	},
+	discovery_lore: (e) => (e as { discovery_lore?: unknown }).discovery_lore,
+};
+
+function auditBoilerplateRepetition(
+	datasets: Record<string, AuditEntry[]>,
+	issues: CompendiumAuditIssue[],
+) {
+	const freq: Record<string, Map<string, number>> = {};
+	for (const label of Object.keys(boilerplateNarrativeFields))
+		freq[label] = new Map();
+	for (const ds of BOILERPLATE_CORPUS_DATASETS) {
+		for (const entry of datasets[ds] ?? []) {
+			for (const [label, get] of Object.entries(boilerplateNarrativeFields)) {
+				const value = getString(get(entry));
+				if (value) freq[label].set(value, (freq[label].get(value) ?? 0) + 1);
+			}
+		}
+	}
+	for (const ds of BOILERPLATE_CORPUS_DATASETS) {
+		if (!boilerplateEnforcedDatasets.has(ds)) continue;
+		for (const entry of datasets[ds] ?? []) {
+			for (const [label, get] of Object.entries(boilerplateNarrativeFields)) {
+				const value = getString(get(entry));
+				const count = value ? (freq[label].get(value) ?? 0) : 0;
+				if (count > BOILERPLATE_MAX_SHARE) {
+					addIssue(issues, {
+						severity: "error",
+						dataset: ds,
+						code: "boilerplate_repetition",
+						message: `${label} is pooled boilerplate (shared by ${count} entries) — author bespoke text.`,
+						entryId: entry.id,
+						entryName: entry.name,
+					});
+				}
+			}
+		}
+	}
+}
+
+function auditShallowMagicEffect(
+	datasets: Record<string, AuditEntry[]>,
+	issues: CompendiumAuditIssue[],
+) {
+	for (const ds of BOILERPLATE_CORPUS_DATASETS) {
+		if (!boilerplateEnforcedDatasets.has(ds)) continue;
+		for (const entry of datasets[ds] ?? []) {
+			const rarity = (
+				getString((entry as { rarity?: unknown }).rarity) ?? ""
+			).toLowerCase();
+			if (!rarity || rarity === "common") continue;
+			const name = getString(entry.name) ?? "";
+			// An intentional "+N Weapon/Armor/…" plain item is allowed to be flat.
+			if (/\+\s*\d+\s+\w+/.test(name)) continue;
+			const effects = isRecord(entry.effects) ? entry.effects : null;
+			const passive = Array.isArray(effects?.passive) ? effects.passive : [];
+			const active = Array.isArray(effects?.active) ? effects.active : [];
+			// Relics carry their mechanics in an `abilities[]` array (each an
+			// object with a `description`), not the Item-shaped effects.passive/
+			// active. Fold those descriptions in so a relic whose only mechanic is
+			// a flat "+X" is caught the same as a shallow item.
+			const rawAbilities = (entry as { abilities?: unknown }).abilities;
+			const abilityList: unknown[] = Array.isArray(rawAbilities)
+				? rawAbilities
+				: [];
+			const abilityText = abilityList
+				.map((a) => (isRecord(a) ? getString(a.description) : undefined))
+				.filter((x): x is string => typeof x === "string");
+			const strings = [...passive, ...active, ...abilityText].filter(
+				(x): x is string => typeof x === "string",
+			);
+			if (strings.length !== 1) continue;
+			const only = strings[0];
+			const flatPlus =
+				/\+\s*\d+/.test(only) &&
+				only.length < 40 &&
+				!/(on\s+(hit|crit)|when|if|reroll|advantage|resist|ignore|extra|additional|instead|regain|bonus action|reaction|per turn|once per)/i.test(
+					only,
+				);
+			if (flatPlus) {
+				addIssue(issues, {
+					severity: "error",
+					dataset: ds,
+					code: "shallow_magic_effect",
+					message: `Uncommon+ item's only effect is a flat "${only}" — give it a distinctive mechanic or name it an intentional "+N" item.`,
+					entryId: entry.id,
+					entryName: entry.name,
+				});
+			}
+		}
+	}
+}
+
 // SRD 5.1 completeness (Phase 1b). Every requirement in the manifest whose
 // status is `present` or `authored` must resolve to a real item name in the
 // equipment/items corpus; `omitted` requirements are documented but not gated.
@@ -1904,6 +2031,8 @@ export async function runCompendiumAudit(
 	}
 	auditItemPayloadUniqueness(datasets, issues);
 	auditSrdCompleteness(datasets, issues);
+	auditBoilerplateRepetition(datasets, issues);
+	auditShallowMagicEffect(datasets, issues);
 	auditVehicleBondedReferences(
 		datasets.vehicles ?? [],
 		datasets.anomalies ?? [],
