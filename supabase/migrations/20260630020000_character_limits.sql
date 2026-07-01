@@ -23,7 +23,25 @@ CREATE TRIGGER enforce_character_limit_trigger
   BEFORE INSERT ON public.characters
   FOR EACH ROW EXECUTE FUNCTION public.enforce_character_limit();
 
--- 2. Unique character name per user (case-insensitive). Pre-existing duplicate names
---    (if any) must be renamed before this migration can apply.
+-- 2. Unique character name per user (case-insensitive).
+-- 2a. First heal any pre-existing case-insensitive duplicates so the unique
+--     index below can be created. Keep the lowest-id row's name; append
+--     " (2)", " (3)", ... to later duplicates within the same (user, lower(name)).
+WITH ranked AS (
+  SELECT
+    id,
+    row_number() OVER (
+      PARTITION BY user_id, lower(name)
+      ORDER BY id
+    ) AS rn
+  FROM public.characters
+  WHERE user_id IS NOT NULL
+)
+UPDATE public.characters c
+SET name = c.name || ' (' || r.rn || ')'
+FROM ranked r
+WHERE c.id = r.id
+  AND r.rn > 1;
+
 CREATE UNIQUE INDEX IF NOT EXISTS characters_unique_name_per_user
   ON public.characters(user_id, lower(name));
