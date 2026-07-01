@@ -435,7 +435,18 @@ export interface ChoiceSourceData {
 	spells_known?: number[];
 	powers_known?: number[];
 	techniques_known?: number[];
-	spellbook?: { atCreation: number; perLevel: number; label: string };
+	spellbook?: {
+		atCreation: number;
+		perLevel: number;
+		label: string;
+		/**
+		 * Level at which the job gains its spellbook feature (default 1). Full
+		 * casters (Mage) inscribe from level 1; delayed casters (Revenant, whose
+		 * Reaper's Ledger is a level-2 feature) must start at their casting level
+		 * so inscriptions aren't demanded before any leveled spell is learnable.
+		 */
+		startLevel?: number;
+	};
 }
 
 function createEmptyTotals(): TotalChoices {
@@ -523,12 +534,17 @@ function applyLedgerToTotals(
 	totals.powers += powersCum;
 	totals.techniques += techniquesCum;
 
-	// 2. Spellbook inscriptions (Mage / Revenant): atCreation at L1 + perLevel
-	// for each level beyond 1st (cumulative).
+	// 2. Spellbook inscriptions (Mage / Revenant): atCreation at the spellbook's
+	// startLevel (default 1) + perLevel for each level beyond it (cumulative).
+	// startLevel gates delayed casters (e.g. Revenant, whose Reaper's Ledger is a
+	// level-2 feature) so 0 are demanded at level 1, where no leveled spell is
+	// learnable.
 	if (source.spellbook) {
-		const { atCreation, perLevel } = source.spellbook;
+		const { atCreation, perLevel, startLevel = 1 } = source.spellbook;
 		const inscribed =
-			level >= 1 ? atCreation + Math.max(0, level - 1) * perLevel : 0;
+			level >= startLevel
+				? atCreation + Math.max(0, level - startLevel) * perLevel
+				: 0;
 		totals.spellbookInscriptions += inscribed;
 	}
 
@@ -606,6 +622,14 @@ export function calculateTotalChoices(
 	// Regent features
 	if (regentData) {
 		for (const regent of regentData) {
+			// Regent overlays carry the same ledger/progression fields as jobs
+			// (cantrips_known / spells_known / powers_known / techniques_known /
+			// level_choices), so a regent grants structured picks as a full
+			// independent overlay. Backgrounds passed here at creation have none of
+			// these fields, so this is a no-op for them (regents never appear in
+			// creation). Indexing by character level realizes "grant every regent
+			// tier up to the character's level".
+			applyLedgerToTotals(totals, regent, level);
 			const features = regent.class_features || regent.features;
 			if (features) {
 				for (const feature of features) {

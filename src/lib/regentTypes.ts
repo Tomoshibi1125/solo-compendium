@@ -101,6 +101,30 @@ export interface Regent {
 		};
 	};
 
+	// --- Job-parity choice/progression systems (all optional). ---
+	// Regents are Warden-unlocked overlays, NOT chosen at creation. These mirror
+	// the job ledger (see choiceCalculations.ts) so a regent can grant structured
+	// power/technique/cantrip/spell picks as an overlay, scaled to its theme and
+	// rank-S power tier. `level` on a ledger entry is the regent-internal tier;
+	// because regents aren't level-gated, unlocking grants every tier up to the
+	// character's level at once (see regent level-up wiring).
+	levelChoices?: {
+		level: number;
+		type: string;
+		count: number;
+		source: string;
+		options?: string[];
+		filter?: {
+			maxPowerLevel?: number;
+			maxLevel?: number;
+			restrictTo?: "job-list" | "any-list";
+		};
+	}[];
+	// Cumulative known-counts per regent tier (index = tier - 1), for regents that
+	// grant martial powers / techniques as an overlay.
+	powersKnown?: number[];
+	techniquesKnown?: number[];
+
 	regent_requirements?: {
 		level: number;
 		abilities: Record<string, number>;

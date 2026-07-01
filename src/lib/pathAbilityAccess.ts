@@ -1,5 +1,6 @@
 import { getMaxAbilityLevelForJobAtLevel } from "@/lib/abilityProgression";
 import { normalizeJobAccessToken } from "@/lib/jobAbilityAccess";
+import { getActiveRegentAbilityGrants } from "@/lib/regentAbilityAccess";
 
 export type PathAbilityKind = "spell" | "power" | "technique";
 export type PathAbilityProgression = "third" | "base" | "full";
@@ -1939,28 +1940,42 @@ export function getEffectiveMaxAbilityLevel(options: {
 	pathName?: string | null;
 	characterLevel: number;
 	kind: "spell" | "power";
+	regentNames?: string[] | null;
 }): number {
 	const baseMax = getMaxAbilityLevelForJobAtLevel(
 		options.jobName,
 		options.characterLevel,
 		options.kind,
 	);
-	const grantMax = getActivePathAbilityGrants({
-		jobName: options.jobName,
-		pathName: options.pathName,
-		characterLevel: options.characterLevel,
-		kind: options.kind,
-	})
-		.filter((grant) => !grant.entryNames?.length)
-		.reduce(
-			(max, grant) =>
-				Math.max(
-					max,
-					getPathGrantMaxAbilityLevel(grant, options.characterLevel),
-				),
-			0,
-		);
-	return Math.max(baseMax, grantMax);
+	const maxFromGrants = (grants: PathAbilityGrant[]): number =>
+		grants
+			.filter((grant) => !grant.entryNames?.length)
+			.reduce(
+				(max, grant) =>
+					Math.max(
+						max,
+						getPathGrantMaxAbilityLevel(grant, options.characterLevel),
+					),
+				0,
+			);
+	const grantMax = maxFromGrants(
+		getActivePathAbilityGrants({
+			jobName: options.jobName,
+			pathName: options.pathName,
+			characterLevel: options.characterLevel,
+			kind: options.kind,
+		}),
+	);
+	// Regent overlays grant their own (full) progression on top of the base job,
+	// so a caster regent lifts the spell/power ceiling even on a martial base.
+	const regentGrantMax = maxFromGrants(
+		getActiveRegentAbilityGrants({
+			regentNames: options.regentNames,
+			characterLevel: options.characterLevel,
+			kind: options.kind,
+		}),
+	);
+	return Math.max(baseMax, grantMax, regentGrantMax);
 }
 
 export function getPathAbilityGrantTokens(

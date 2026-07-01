@@ -646,50 +646,6 @@ export function parseJobTraitEffects(
 }
 
 /**
- * Aggregate regent features (quest-gated sovereign subclass)
- * Regents are Warden-unlocked, NOT level-gated
- */
-export function aggregateRegentFeatures(
-	jobs: CharacterJob[],
-): FeatureInstance[] {
-	const features: FeatureInstance[] = [];
-
-	try {
-		for (const charJob of jobs) {
-			// Check if job has regent unlocked
-			if (!charJob.regent) continue;
-
-			// Find regent data from database
-			const regentData = RegentGeminiSystem.REGENT_DATABASE.find(
-				(r: { id: string }) => r.id === charJob.regent,
-			);
-			if (!regentData) continue;
-
-			// Add regent features
-			if (regentData.features) {
-				features.push(
-					...regentData.features.map(
-						(f: { name: string; description: string; type: string }) => ({
-							id: `${charJob.job}-regent-${f.name.toLowerCase().replace(/\s+/g, "-")}`,
-							name: f.name,
-							sourceType: "path" as const, // Regents are sovereign subclasses
-							sourceId: regentData.id,
-							description: f.description,
-							effects: parseRegentFeatureEffects(f, charJob.level),
-						}),
-					),
-				);
-			}
-		}
-	} catch (error) {
-		// Gracefully handle if regent system not available
-		console.warn("Could not load regent features:", error);
-	}
-
-	return features;
-}
-
-/**
  * Parse regent feature description into structured effects
  * Regents are full class overlays and can grant bonuses (AC, attack, damage, speed, etc.)
  * NO direct stat bonuses (STR, AGI, VIT, INT, SENSE, PRE)
@@ -1015,15 +971,9 @@ export function aggregateEffects(base: CharacterBaseData): Effect[] {
 		}
 	}
 
-	// Regent features (Priority: 170-179 - quest-gated sovereign subclasses)
-	const regentFeatures = aggregateRegentFeatures(base.jobs);
-	for (const feature of regentFeatures) {
-		if (feature.effects) {
-			allEffects.push(
-				...feature.effects.map((e) => ({ ...e, priority: e.priority ?? 170 })),
-			);
-		}
-	}
+	// Note: Regent overlay features flow onto the sheet via the gestalt path
+	// (computeGestaltSummary → useCharacterDerivedStats), not through the effects
+	// aggregator, so there is no regent step here.
 
 	// Gemini Protocol fusion (Priority: 180-199 - ultimate fusion bonuses)
 	const geminiFeatures = aggregateGeminiFeatures(base.jobs);
@@ -1374,20 +1324,9 @@ export function computeSpellSlots(
 		slots[i] = { current: maxSlots[i] ?? 0, max: maxSlots[i] ?? 0 };
 	}
 
-	// Regent overlay spell slots: if regent paths have spellcasting features,
-	// add bonus slots. Regent spellcasting adds 1 bonus slot per even level
-	// for their highest available spell level (SA parity with Foundry multiclass).
-	for (const job of jobs) {
-		if (job.regent && job.level >= 2) {
-			const regentBonusLevel = Math.min(Math.floor(job.level / 2), 5);
-			for (let sl = 1; sl <= regentBonusLevel; sl++) {
-				slots[sl] = {
-					current: slots[sl].current + 1,
-					max: slots[sl].max + 1,
-				};
-			}
-		}
-	}
+	// Note: Regent overlay spell slots are merged separately via the gestalt
+	// two-class model (regentGestalt.getGestaltSpellSlots → useSpellSlots), so
+	// they are not added here.
 
 	return slots;
 }
@@ -1814,26 +1753,6 @@ export function buildEffectsSummary(
 					value: effect.value,
 					displayText: formatEffectDisplay(effect, trait.name),
 					priority: effect.priority ?? 160,
-				});
-			}
-		}
-	}
-
-	// Add regent feature effects
-	const regentFeatures = aggregateRegentFeatures(base.jobs);
-	for (const feature of regentFeatures) {
-		if (feature.effects) {
-			for (const effect of feature.effects) {
-				computed.push({
-					source: {
-						sourceType: "path",
-						sourceId: feature.sourceId,
-						sourceName: feature.name,
-					},
-					target: effect.target,
-					value: effect.value,
-					displayText: formatEffectDisplay(effect, feature.name),
-					priority: effect.priority ?? 170,
 				});
 			}
 		}

@@ -103,7 +103,14 @@ export interface Job extends AuthoritativeStaticJob {
 		};
 	}>;
 	// Mage / Revenant only: RA-themed spellbook (Arcane Codex / Reaper's Ledger).
-	spellbook?: { atCreation: number; perLevel: number; label: string };
+	// startLevel defaults to 1 (full caster); delayed casters set it to their
+	// spellcasting level (Revenant's Reaper's Ledger is a level-2 feature).
+	spellbook?: {
+		atCreation: number;
+		perLevel: number;
+		label: string;
+		startLevel?: number;
+	};
 	// Martial + hybrid job known counts per level (index = characterLevel - 1).
 	// Populated for: Destroyer, Berserker, Assassin, Striker, Holy Knight,
 	// Technomancer, Stalker.
@@ -1866,7 +1873,14 @@ export const jobs: Job[] = [
 				source: "Reaper's Ledger",
 			},
 		],
-		spellbook: { atCreation: 6, perLevel: 2, label: "Reaper's Ledger" },
+		// Reaper's Ledger is gained at level 2, so inscriptions start at level 2
+		// (0 at creation, 6 at level 2, +2/level thereafter).
+		spellbook: {
+			atCreation: 6,
+			perLevel: 2,
+			label: "Reaper's Ledger",
+			startLevel: 2,
+		},
 		image: "/generated/compendium/jobs/Revenant-generated-106m11v.webp",
 		stats: {
 			strength: 8,

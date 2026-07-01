@@ -1,6 +1,7 @@
-import { Plus, Trash2, User } from "lucide-react";
-import { useState } from "react";
+import { Plus, ScrollText, Trash2, User } from "lucide-react";
+import { useMemo, useState } from "react";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
 	Dialog,
@@ -10,7 +11,6 @@ import {
 	DialogHeader,
 	DialogTitle,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
 	Select,
@@ -19,11 +19,13 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
+import { getRegentUnlockQuests } from "@/data/compendium/quest-contracts";
 import { useCampaignSharedCharacters } from "@/hooks/useCampaignCharacters";
 import {
 	type RegentUnlock,
-	useAvailableRegents,
+	useCampaignRegentUnlockGrants,
 	useCampaignRegentUnlocks,
+	useRegentUnlockGrants,
 	useRegentUnlocks,
 } from "@/hooks/useRegentUnlocks";
 import { REGENT_LABEL } from "@/lib/vernacular";
@@ -35,48 +37,41 @@ interface CampaignRegentOversightProps {
 export function CampaignRegentOversight({
 	campaignId,
 }: CampaignRegentOversightProps) {
-	const [unlockDialogOpen, setUnlockDialogOpen] = useState(false);
+	const [grantDialogOpen, setGrantDialogOpen] = useState(false);
 	const [selectedCharId, setSelectedCharId] = useState<string>("");
-	const [selectedRegentId, setSelectedRegentId] = useState<string>("");
-	const [questName, setQuestName] = useState("");
-	const [dmNotes, setDmNotes] = useState("");
+	const [selectedQuestId, setSelectedQuestId] = useState<string>("");
 
 	const { data: sharedCharacters = [], isLoading: loadingChars } =
 		useCampaignSharedCharacters(campaignId);
 	const { campaignUnlocks, isLoading: loadingUnlocks } =
 		useCampaignRegentUnlocks(campaignId);
+	const { campaignGrants } = useCampaignRegentUnlockGrants(campaignId);
 
-	// This hook is needed for the unlock mutation, but it requires a characterId.
-	// We'll use a placeholder or conditionally call it, but since we need to mutate,
-	// we'll use it for the specific character when the dialog is open.
-	const { unlockRegent, isUnlocking, removeUnlock } =
-		useRegentUnlocks(selectedCharId);
-	const { availableRegents } = useAvailableRegents(selectedCharId);
+	// The grant/remove mutations are keyed to the selected character.
+	const { grantRegentUnlockAsync, isGranting } =
+		useRegentUnlockGrants(selectedCharId);
+	const { removeUnlock } = useRegentUnlocks(selectedCharId);
 
-	const handleUnlock = async () => {
-		if (!selectedCharId || !selectedRegentId || !questName) return;
+	const regentQuests = useMemo(() => getRegentUnlockQuests(), []);
 
-		await unlockRegent({
-			regentId: selectedRegentId,
-			questName,
-			dmNotes,
+	const handleGrant = async () => {
+		if (!selectedCharId || !selectedQuestId) return;
+		const quest = regentQuests.find((q) => q.id === selectedQuestId);
+		if (!quest) return;
+
+		await grantRegentUnlockAsync({
+			questId: quest.id,
+			questTitle: quest.title,
 		});
 
-		setUnlockDialogOpen(false);
-		setQuestName("");
-		setDmNotes("");
-		setSelectedRegentId("");
+		setGrantDialogOpen(false);
+		setSelectedQuestId("");
 	};
 
-	const handleDelete = async (unlockId: string, charId: string) => {
+	const handleDelete = (unlockId: string, charId: string) => {
 		if (
 			confirm(`Are you sure you want to remove this ${REGENT_LABEL} unlock?`)
 		) {
-			// Note: useRegentUnlocks(charId).removeUnlock will work because charId is passed
-			// but we need the hook instance for that charId.
-			// For simplicity in this Warden view, we can just use the mutation from the hook
-			// if selectedCharId matches, OR we could make a global mutation hook.
-			// For now, let's assume the Warden selects the character first.
 			setSelectedCharId(charId);
 			setTimeout(() => removeUnlock(unlockId), 0);
 		}
@@ -95,11 +90,13 @@ export function CampaignRegentOversight({
 			<AscendantWindow title={`${REGENT_LABEL.toUpperCase()} OVERSIGHT`}>
 				<div className="flex justify-between items-center mb-6">
 					<p className="text-sm text-muted-foreground">
-						Manage {REGENT_LABEL} unlocks for all characters in this campaign.
+						Award a {REGENT_LABEL} unlock by confirming a character completed a
+						regent-tagged quest. The player then chooses which {REGENT_LABEL}
+						from three stat-ranked candidates.
 					</p>
-					<Button onClick={() => setUnlockDialogOpen(true)}>
+					<Button onClick={() => setGrantDialogOpen(true)}>
 						<Plus className="w-4 h-4 mr-2" />
-						Unlock {REGENT_LABEL}
+						Grant {REGENT_LABEL} Unlock
 					</Button>
 				</div>
 
@@ -111,13 +108,27 @@ export function CampaignRegentOversight({
 						const charUnlocks = (campaignUnlocks as RegentUnlock[]).filter(
 							(u) => u.character_id === char.id,
 						);
+						const pendingCredits = campaignGrants.filter(
+							(g) => g.character_id === char.id,
+						).length;
 
 						return (
 							<AscendantWindow key={char.id} title={char.name} variant="quest">
 								<div className="space-y-3">
-									<div className="flex items-center gap-2 text-xs text-muted-foreground mb-2">
-										<User className="w-3 h-3" />
-										Level {char.level} {char.job}
+									<div className="flex items-center justify-between gap-2 text-xs text-muted-foreground mb-2">
+										<span className="flex items-center gap-1">
+											<User className="w-3 h-3" />
+											Level {char.level} {char.job}
+										</span>
+										{pendingCredits > 0 && (
+											<Badge
+												variant="outline"
+												className="text-[10px] gap-1 border-primary/40 text-primary"
+											>
+												<ScrollText className="w-3 h-3" />
+												{pendingCredits} unspent
+											</Badge>
+										)}
 									</div>
 
 									{charUnlocks.length === 0 ? (
@@ -162,13 +173,14 @@ export function CampaignRegentOversight({
 				</div>
 			</AscendantWindow>
 
-			<Dialog open={unlockDialogOpen} onOpenChange={setUnlockDialogOpen}>
+			<Dialog open={grantDialogOpen} onOpenChange={setGrantDialogOpen}>
 				<DialogContent>
 					<DialogHeader>
-						<DialogTitle>Unlock {REGENT_LABEL}</DialogTitle>
+						<DialogTitle>Grant {REGENT_LABEL} Unlock</DialogTitle>
 						<DialogDescription>
-							Grant a new {REGENT_LABEL} to a character based on campaign
-							achievements.
+							Confirm a character has completed a regent-tagged quest. This
+							awards one unlock opportunity — the player picks which{" "}
+							{REGENT_LABEL} to attune.
 						</DialogDescription>
 					</DialogHeader>
 
@@ -193,67 +205,34 @@ export function CampaignRegentOversight({
 						</div>
 
 						<div className="space-y-2">
-							<Label>{REGENT_LABEL}</Label>
+							<Label>Completed Regent Quest</Label>
 							<Select
-								value={selectedRegentId}
-								onValueChange={setSelectedRegentId}
-								disabled={!selectedCharId}
+								value={selectedQuestId}
+								onValueChange={setSelectedQuestId}
 							>
 								<SelectTrigger>
-									<SelectValue
-										placeholder={
-											selectedCharId
-												? "Select regent"
-												: "Select character first"
-										}
-									/>
+									<SelectValue placeholder="Select the completed quest" />
 								</SelectTrigger>
 								<SelectContent>
-									{availableRegents.map((regent) => (
-										<SelectItem key={regent.id} value={regent.id}>
-											{regent.name} - {regent.title}
+									{regentQuests.map((quest) => (
+										<SelectItem key={quest.id} value={quest.id}>
+											[{quest.rank}] {quest.title}
 										</SelectItem>
 									))}
 								</SelectContent>
 							</Select>
 						</div>
-
-						<div className="space-y-2">
-							<Label>Quest/Achievement Name</Label>
-							<Input
-								placeholder="e.g. Trial of the Silver Flame"
-								value={questName}
-								onChange={(e) => setQuestName(e.target.value)}
-							/>
-						</div>
-
-						<div className="space-y-2">
-							<Label>Warden Notes (Optional)</Label>
-							<Input
-								placeholder="Internal notes about this unlock..."
-								value={dmNotes}
-								onChange={(e) => setDmNotes(e.target.value)}
-							/>
-						</div>
 					</div>
 
 					<DialogFooter>
-						<Button
-							variant="outline"
-							onClick={() => setUnlockDialogOpen(false)}
-						>
+						<Button variant="outline" onClick={() => setGrantDialogOpen(false)}>
 							Cancel
 						</Button>
 						<Button
-							onClick={handleUnlock}
-							disabled={
-								!selectedCharId ||
-								!selectedRegentId ||
-								!questName ||
-								isUnlocking
-							}
+							onClick={handleGrant}
+							disabled={!selectedCharId || !selectedQuestId || isGranting}
 						>
-							{isUnlocking ? "Unlocking..." : "Confirm Unlock"}
+							{isGranting ? "Granting..." : "Grant Unlock"}
 						</Button>
 					</DialogFooter>
 				</DialogContent>

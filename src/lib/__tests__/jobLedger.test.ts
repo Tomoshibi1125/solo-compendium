@@ -147,7 +147,46 @@ describe("levelChoices ledger parity per job", () => {
 			atCreation: 6,
 			perLevel: 2,
 			label: "Reaper's Ledger",
+			startLevel: 2,
 		});
+	});
+
+	it("Revenant spellbook inscriptions start at L2 (Reaper's Ledger is a L2 feature), not creation", () => {
+		const revenant = jobs.find((j) => j.id === "revenant");
+		const source = {
+			name: revenant?.name,
+			level_choices: revenant?.levelChoices,
+			spellbook: revenant?.spellbook,
+		};
+		// Level 1 (creation): 0 inscriptions — no spellcasting yet, no leveled
+		// spells learnable, so the creation wizard must not demand any.
+		expect(
+			calculateTotalChoices(source, null, [], 1).spellbookInscriptions,
+		).toBe(0);
+		// Level 2: the full 6 land when the Ledger is gained.
+		expect(
+			calculateTotalChoices(source, null, [], 2).spellbookInscriptions,
+		).toBe(6);
+		// Level 3: 6 + 1*2.
+		expect(
+			calculateTotalChoices(source, null, [], 3).spellbookInscriptions,
+		).toBe(8);
+	});
+
+	it("Revenant 1→2 level-up grants the full 6 Reaper's Ledger inscriptions", () => {
+		const revenant = jobs.find((j) => j.id === "revenant");
+		const deltas = getLevelUpChoiceDeltas(
+			{
+				name: revenant?.name,
+				level_choices: revenant?.levelChoices,
+				spellbook: revenant?.spellbook,
+			},
+			null,
+			[],
+			1,
+			2,
+		);
+		expect(deltas.spellbookInscriptions).toBe(6);
 	});
 
 	it("martial + hybrid jobs all have powersKnown and techniquesKnown of length 20", () => {

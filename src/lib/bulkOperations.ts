@@ -75,7 +75,12 @@ type StaticJobWithLedger = StaticJob & {
 	levelChoices?: unknown;
 	powersKnown?: number[];
 	techniquesKnown?: number[];
-	spellbook?: { atCreation: number; perLevel: number; label: string };
+	spellbook?: {
+		atCreation: number;
+		perLevel: number;
+		label: string;
+		startLevel?: number;
+	};
 	spellcasting?: {
 		ability: string;
 		focus?: string;

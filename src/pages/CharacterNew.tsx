@@ -326,7 +326,12 @@ type StaticJobCreationLedger = StaticJob & {
 	levelChoices?: LedgerChoice[];
 	powersKnown?: number[];
 	techniquesKnown?: number[];
-	spellbook?: { atCreation: number; perLevel: number; label: string };
+	spellbook?: {
+		atCreation: number;
+		perLevel: number;
+		label: string;
+		startLevel?: number;
+	};
 };
 
 const CharacterNew = () => {

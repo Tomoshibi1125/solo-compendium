@@ -32,6 +32,13 @@ export interface QuestContract {
 	summary: string;
 	objectives: string[];
 	rewardNotes: string;
+	/**
+	 * Regent-tagged quest. Completing ANY quest flagged here lets a Warden grant
+	 * the character one Regent-unlock opportunity (the player then chooses which
+	 * Regent from three stat-ranked candidates). The tag is generic — it is never
+	 * tied to a specific Regent. See `useRegentUnlockGrants` / `RegentUnlocksPanel`.
+	 */
+	grantsRegentUnlock?: boolean;
 }
 
 export const PREBUILT_QUEST_CONTRACTS: QuestContract[] = [
@@ -119,6 +126,7 @@ export const PREBUILT_QUEST_CONTRACTS: QuestContract[] = [
 			"Plant Bureau markers and file the dossier",
 		],
 		rewardNotes: "Recon fee; first-survey naming credit.",
+		grantsRegentUnlock: true,
 	},
 	{
 		id: "qc-e-quietnight",
@@ -205,6 +213,7 @@ export const PREBUILT_QUEST_CONTRACTS: QuestContract[] = [
 			"Detain the forger or recover proof of identity",
 		],
 		rewardNotes: "Bounty; Bureau commendation.",
+		grantsRegentUnlock: true,
 	},
 	{
 		id: "qc-d-sunkenrelic",
@@ -361,6 +370,7 @@ export const PREBUILT_QUEST_CONTRACTS: QuestContract[] = [
 			"Locate the Domain's anchor for a clear team",
 		],
 		rewardNotes: "Domain-watch retainer; anchor-find bonus.",
+		grantsRegentUnlock: true,
 	},
 
 	// ── B-rank ────────────────────────────────────────────────────────────────
@@ -405,6 +415,7 @@ export const PREBUILT_QUEST_CONTRACTS: QuestContract[] = [
 			"Detain or eliminate per the issued writ",
 		],
 		rewardNotes: "Bounty scaled to live capture; license revocation credit.",
+		grantsRegentUnlock: true,
 	},
 	{
 		id: "qc-b-deepmine",
@@ -477,6 +488,7 @@ export const PREBUILT_QUEST_CONTRACTS: QuestContract[] = [
 			"Land the killing blow before its enrage",
 		],
 		rewardNotes: "Elite clear bounty; titan-core and S-rank materials.",
+		grantsRegentUnlock: true,
 	},
 	{
 		id: "qc-a-warden-down",
@@ -563,6 +575,7 @@ export const PREBUILT_QUEST_CONTRACTS: QuestContract[] = [
 			"Defeat the Monarch and seal the gate",
 		],
 		rewardNotes: "Legendary clear; Monarch-grade relics; national renown.",
+		grantsRegentUnlock: true,
 	},
 	{
 		id: "qc-s-cityanchor",
@@ -577,6 +590,7 @@ export const PREBUILT_QUEST_CONTRACTS: QuestContract[] = [
 			"Sever the anchor and evacuate the collapse radius",
 		],
 		rewardNotes: "Nation-saving bounty; the highest Bureau honors.",
+		grantsRegentUnlock: true,
 	},
 	{
 		id: "qc-s-rogueregent",
@@ -591,6 +605,7 @@ export const PREBUILT_QUEST_CONTRACTS: QuestContract[] = [
 			"End the Regent before they ascend further",
 		],
 		rewardNotes: "Historic bounty; first claim on the Regent's holdings.",
+		grantsRegentUnlock: true,
 	},
 	{
 		id: "qc-s-deadgate",
@@ -606,6 +621,7 @@ export const PREBUILT_QUEST_CONTRACTS: QuestContract[] = [
 		],
 		rewardNotes:
 			"Unprecedented research reward; classified at the national level.",
+		grantsRegentUnlock: true,
 	},
 
 	// ── SS-rank ───────────────────────────────────────────────────────────────
@@ -623,6 +639,7 @@ export const PREBUILT_QUEST_CONTRACTS: QuestContract[] = [
 		],
 		rewardNotes:
 			"Era-defining renown; relics without precedent; a place in history.",
+		grantsRegentUnlock: true,
 	},
 	{
 		id: "qc-ss-fallensovereign",
@@ -638,6 +655,7 @@ export const PREBUILT_QUEST_CONTRACTS: QuestContract[] = [
 		],
 		rewardNotes:
 			"Legend beyond legend; Sovereign-grade spoils; national apotheosis.",
+		grantsRegentUnlock: true,
 	},
 ];
 
@@ -648,3 +666,11 @@ export const getPrebuiltQuestContracts = (
 	rank
 		? PREBUILT_QUEST_CONTRACTS.filter((q) => q.rank === rank)
 		: PREBUILT_QUEST_CONTRACTS;
+
+/**
+ * Regent-tagged prebuilt contracts a Warden may complete to grant a character
+ * one Regent-unlock opportunity. Spread across every rank — a Regent unlock can
+ * happen at any character level, not only endgame.
+ */
+export const getRegentUnlockQuests = (): QuestContract[] =>
+	PREBUILT_QUEST_CONTRACTS.filter((q) => q.grantsRegentUnlock);

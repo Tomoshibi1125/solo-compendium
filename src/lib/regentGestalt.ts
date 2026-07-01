@@ -31,6 +31,7 @@ import {
 	type AbilityScore,
 	SKILLS,
 } from "@/lib/5eRulesEngine";
+import { getRegentLeveledFeatures } from "@/lib/regentProgression";
 import type { Regent } from "@/lib/regentTypes";
 
 // ── Reverse lookup maps (display name → canonical key) ──────────────────
@@ -209,13 +210,13 @@ export interface GestaltFeature {
 /**
  * All gestalt features granted by the unlocked regents at `characterLevel`.
  *
- * Caster regents store leveled progression in `class_features[]` (gated by
- * `level <= characterLevel`). Martial regents (radiant/steel/destruction/war/
- * etc.) instead store content in `abilities[]` (active, level-agnostic, gated
- * by `power_level`) and `features[]` (passive traits). Both shapes are surfaced
- * so every regent's overlay appears — mirroring the RegentFeaturesDisplay UI.
- * Level-agnostic entries are reported at level 0 (always available once the
- * overlay is unlocked). De-duped by name. Sorted by level then name.
+ * Delegates to `getRegentLeveledFeatures` — the SAME normalizer the level-up
+ * wizard uses for its per-tier regent display (`getRegentFeaturesAtLevel`) — so
+ * the sheet and the wizard never disagree. That normalizer joins each regent's
+ * curated `class_features` with the `progression_table` + `abilities`/`features`
+ * derivation, giving every regent (caster and martial) a complete 1..20 leveled
+ * list. Here we surface everything with `level <= characterLevel`. De-duped by
+ * name per regent, sorted by level then name.
  */
 export function getGestaltClassFeatures(
 	regents: readonly Regent[],
@@ -223,43 +224,22 @@ export function getGestaltClassFeatures(
 ): GestaltFeature[] {
 	const out: GestaltFeature[] = [];
 	const seen = new Set<string>();
-	const push = (
-		r: Regent,
-		level: number,
-		name: string,
-		description: string,
-		type: string,
-		frequency?: string,
-	) => {
-		const key = `${r.id}::${name.toLowerCase()}`;
-		if (seen.has(key)) return;
-		seen.add(key);
-		out.push({
-			regentId: r.id,
-			regentName: r.name,
-			level,
-			name,
-			description,
-			type,
-			frequency,
-		});
-	};
 
 	for (const r of regents) {
-		// Caster-shape: leveled class features gated by character level.
-		for (const f of r.class_features ?? []) {
-			if (f.level <= characterLevel) {
-				push(r, f.level, f.name, f.description, f.type, f.frequency);
-			}
-		}
-		// Martial-shape: level-agnostic active abilities (always available once
-		// the overlay is unlocked).
-		for (const a of r.abilities ?? []) {
-			push(r, 0, a.name, a.description, a.type, a.frequency);
-		}
-		// Martial-shape: passive trait features.
-		for (const f of r.features ?? []) {
-			push(r, 0, f.name, f.description, "passive");
+		for (const f of getRegentLeveledFeatures(r)) {
+			if (f.level > characterLevel) continue;
+			const key = `${r.id}::${f.name.toLowerCase()}`;
+			if (seen.has(key)) continue;
+			seen.add(key);
+			out.push({
+				regentId: r.id,
+				regentName: r.name,
+				level: f.level,
+				name: f.name,
+				description: f.description,
+				type: f.type,
+				frequency: f.frequency,
+			});
 		}
 	}
 	out.sort((a, b) => a.level - b.level || a.name.localeCompare(b.name));

@@ -12,6 +12,7 @@ import {
 	Zap,
 } from "lucide-react";
 import { useMemo, useState } from "react";
+import { RegentCatchUpModal } from "@/components/character/RegentCatchUpModal";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -22,14 +23,14 @@ import {
 	DialogTitle,
 	DialogTrigger,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
-import { Textarea } from "@/components/ui/textarea";
-import { useToast } from "@/hooks/use-toast";
 import { useCharacter } from "@/hooks/useCharacters";
 import { useAscendantTools } from "@/hooks/useGlobalDDBeyondIntegration";
-import { useRegentUnlocks } from "@/hooks/useRegentUnlocks";
+import {
+	useRegentUnlockGrants,
+	useRegentUnlocks,
+} from "@/hooks/useRegentUnlocks";
 import { listCanonicalEntries } from "@/lib/canonicalCompendium";
 import { cn } from "@/lib/utils";
 import {
@@ -136,18 +137,22 @@ export function RegentUnlocksPanel({
 }: RegentUnlocksPanelProps) {
 	const [open, setOpen] = useState(false);
 	const [selectedRegentId, setSelectedRegentId] = useState("");
-	const [questName, setQuestName] = useState("");
-	const [dmNotes, setDmNotes] = useState("");
+	// After a player spends a credit, drive the one-time retroactive catch-up
+	// picker for the newly-attuned regent.
+	const [catchUpFor, setCatchUpFor] = useState<{
+		regentId: string;
+		unlockId: string;
+	} | null>(null);
 
 	const { data: character } = useCharacter(characterId);
 	const {
 		unlocks = [],
-		unlockRegent,
 		updateUnlock,
-		isUnlocking,
+		consumeGrantAsync,
+		isConsuming,
 	} = useRegentUnlocks(characterId);
+	const { grants, availableCredits } = useRegentUnlockGrants(characterId);
 
-	const { toast } = useToast();
 	const ascendantTools = useAscendantTools();
 
 	// Fetch all regents from canonical static with entitlement filtering.
@@ -265,47 +270,57 @@ export function RegentUnlocksPanel({
 		return ranked.slice(0, 3);
 	}, [availableLockedRegents, character]);
 
-	const handleUnlock = () => {
-		if (!selectedRegentId || !questName.trim()) return;
+	// Spend a Warden-granted credit on the chosen regent. Players can only reach
+	// here when they hold an unspent credit (availableCredits > 0) — there is no
+	// self-unlock. The Warden grants the opportunity; the player picks 1-of-3.
+	const handleConsume = async () => {
+		if (!selectedRegentId) return;
+		const grant = grants[0];
+		if (!grant) return;
 
 		const regent = allRegents.find((r) => r.id === selectedRegentId);
 		const regentName = regent
 			? formatRegentVernacular(regent.title || regent.name)
 			: "A Regent";
 
-		unlockRegent(
-			{
+		try {
+			const unlock = await consumeGrantAsync({
+				grantId: grant.id,
 				regentId: selectedRegentId,
-				questName: questName.trim(),
-				dmNotes: dmNotes.trim() || undefined,
+				questTitle: grant.quest_title,
 				isPrimary: unlocks.length === 0,
-			},
-			{
-				onSuccess: async () => {
-					const _contextMsg = `Unlocked ${REGENT_LABEL} Overlay: ${regentName}`;
+			});
 
-					await ascendantTools
-						.trackCustomFeatureUsage(
-							characterId,
-							`${REGENT_LABEL} Unlocked`,
-							regentName,
-							"SA",
-						)
-						.catch(console.error);
+			await ascendantTools
+				.trackCustomFeatureUsage(
+					characterId,
+					`${REGENT_LABEL} Unlocked`,
+					regentName,
+					"SA",
+				)
+				.catch(console.error);
 
-					toast({
-						title: `${REGENT_LABEL} Unlocked!`,
-						description: `${regentName} power acquired.`,
-					});
-
-					setOpen(false);
-					setSelectedRegentId("");
-					setQuestName("");
-					setDmNotes("");
-				},
-			},
-		);
+			setOpen(false);
+			setSelectedRegentId("");
+			// Open the one-time catch-up picker for the accumulated regent picks.
+			if (unlock?.id) {
+				setCatchUpFor({ regentId: selectedRegentId, unlockId: unlock.id });
+			}
+		} catch (err) {
+			console.error(err);
+		}
 	};
+
+	// Show the catch-up picker for a freshly-attuned regent, or for any existing
+	// unlock whose retroactive picks were never granted (caught_up_at_level null).
+	const pendingCatchUp = unlocks.find(
+		(u: { caught_up_at_level: number | null }) => u.caught_up_at_level == null,
+	);
+	const catchUpTarget =
+		catchUpFor ??
+		(pendingCatchUp
+			? { regentId: pendingCatchUp.regent_id, unlockId: pendingCatchUp.id }
+			: null);
 
 	return (
 		<AscendantWindow
@@ -476,120 +491,128 @@ export function RegentUnlocksPanel({
 					</div>
 				)}
 
-				{/* Unlock New Regent - Caps at 2 */}
-				{unlocks.length < 2 && adaptiveChoices.length > 0 && (
-					<Dialog open={open} onOpenChange={setOpen}>
-						<DialogTrigger asChild>
-							<Button
-								variant="outline"
-								className="w-full border-regent-gold/40 hover:border-regent-gold hover:bg-regent-gold/10 font-display tracking-wider"
-							>
-								<Unlock className="h-4 w-4 mr-2 text-regent-gold" />
-								APPROACH THE THRONE (Unlock {REGENT_LABEL})
-							</Button>
-						</DialogTrigger>
-						<DialogContent className="bg-card border-regent-gold/40 max-w-lg">
-							<DialogHeader>
-								<DialogTitle className="font-display text-xl gradient-text-regent flex items-center gap-2">
-									<Crown className="h-5 w-5" />
-									The Rift Analyzes Your Potential...
-								</DialogTitle>
-								<div className="text-sm text-muted-foreground mt-2">
-									Based on your capabilities and growth, the Rift offers exactly
-									three paths to ascendancy. Choose wisely; a{" "}
-									{REGENT_LABEL.toLowerCase()} overlay is a profound evolution.
-								</div>
-							</DialogHeader>
+				{/* Awaiting a Warden grant: no self-unlock, no credit yet. */}
+				{unlocks.length < 2 && availableCredits === 0 && (
+					<div className="flex items-start gap-3 p-3 rounded-lg border border-border/60 bg-muted/20">
+						<Lock className="h-4 w-4 text-muted-foreground mt-0.5 shrink-0" />
+						<p className="text-xs text-muted-foreground">
+							Complete a{" "}
+							<span className="text-regent-gold">regent-tagged quest</span> and
+							have your Warden confirm it. They will award you a {REGENT_LABEL}{" "}
+							unlock — then you choose from three paths here.
+						</p>
+					</div>
+				)}
 
-							<div className="space-y-4 pt-2">
-								<div className="space-y-3">
-									<Label className="font-heading text-regent-gold">
-										Adaptive Choices
-									</Label>
-									<div className="grid grid-cols-1 gap-2">
-										{adaptiveChoices.map((regent) => {
-											if (!regent.id) return null;
-											return (
-												<button
-													type="button"
-													key={regent.id}
-													className={cn(
-														"w-full text-left p-3 rounded-lg border cursor-pointer transition-all duration-200 flex items-center justify-between",
-														selectedRegentId === regent.id
-															? "border-regent-gold bg-regent-gold/10 shadow-[0_0_10px_hsl(var(--regent-gold)/0.2)]"
-															: "border-border hover:border-regent-gold/50 bg-background/50",
-													)}
-													onClick={() => setSelectedRegentId(regent.id)}
-												>
-													<div className="flex items-center gap-3">
-														<div
-															className={cn(
-																"w-8 h-8 rounded-full flex items-center justify-center",
-																selectedRegentId === regent.id
-																	? "bg-regent-gold text-background"
-																	: "bg-muted text-muted-foreground",
-															)}
-														>
-															{themeIcons[regent.theme as string] || (
-																<Crown className="h-4 w-4" />
-															)}
-														</div>
-														<div>
-															<div className="font-heading font-semibold text-sm">
-																{formatRegentVernacular(
-																	regent.title || regent.name,
+				{/* Spend a Warden-granted credit - Caps at 2 regents */}
+				{unlocks.length < 2 &&
+					availableCredits > 0 &&
+					adaptiveChoices.length > 0 && (
+						<Dialog open={open} onOpenChange={setOpen}>
+							<DialogTrigger asChild>
+								<Button
+									variant="outline"
+									className="w-full border-regent-gold/40 hover:border-regent-gold hover:bg-regent-gold/10 font-display tracking-wider"
+								>
+									<Unlock className="h-4 w-4 mr-2 text-regent-gold" />
+									APPROACH THE THRONE (Attune {REGENT_LABEL})
+								</Button>
+							</DialogTrigger>
+							<DialogContent className="bg-card border-regent-gold/40 max-w-lg">
+								<DialogHeader>
+									<DialogTitle className="font-display text-xl gradient-text-regent flex items-center gap-2">
+										<Crown className="h-5 w-5" />
+										The Rift Analyzes Your Potential...
+									</DialogTitle>
+									<div className="text-sm text-muted-foreground mt-2">
+										Your Warden confirmed{" "}
+										<span className="text-regent-gold">
+											{formatRegentVernacular(grants[0]?.quest_title ?? "")}
+										</span>
+										. The Rift offers exactly three paths to ascendancy, drawn
+										from your highest capabilities. Choose wisely; a{" "}
+										{REGENT_LABEL.toLowerCase()} overlay is a profound
+										evolution.
+									</div>
+								</DialogHeader>
+
+								<div className="space-y-4 pt-2">
+									<div className="space-y-3">
+										<Label className="font-heading text-regent-gold">
+											Adaptive Choices
+										</Label>
+										<div className="grid grid-cols-1 gap-2">
+											{adaptiveChoices.map((regent) => {
+												if (!regent.id) return null;
+												return (
+													<button
+														type="button"
+														key={regent.id}
+														className={cn(
+															"w-full text-left p-3 rounded-lg border cursor-pointer transition-all duration-200 flex items-center justify-between",
+															selectedRegentId === regent.id
+																? "border-regent-gold bg-regent-gold/10 shadow-[0_0_10px_hsl(var(--regent-gold)/0.2)]"
+																: "border-border hover:border-regent-gold/50 bg-background/50",
+														)}
+														onClick={() => setSelectedRegentId(regent.id)}
+													>
+														<div className="flex items-center gap-3">
+															<div
+																className={cn(
+																	"w-8 h-8 rounded-full flex items-center justify-center",
+																	selectedRegentId === regent.id
+																		? "bg-regent-gold text-background"
+																		: "bg-muted text-muted-foreground",
+																)}
+															>
+																{themeIcons[regent.theme as string] || (
+																	<Crown className="h-4 w-4" />
 																)}
 															</div>
-															<div className="text-xs text-muted-foreground">
-																{regent.theme} Theme
+															<div>
+																<div className="font-heading font-semibold text-sm">
+																	{formatRegentVernacular(
+																		regent.title || regent.name,
+																	)}
+																</div>
+																<div className="text-xs text-muted-foreground">
+																	{regent.theme} Theme
+																</div>
 															</div>
 														</div>
-													</div>
-													{selectedRegentId === regent.id && (
-														<CheckCircle className="h-4 w-4 text-regent-gold" />
-													)}
-												</button>
-											);
-										})}
+														{selectedRegentId === regent.id && (
+															<CheckCircle className="h-4 w-4 text-regent-gold" />
+														)}
+													</button>
+												);
+											})}
+										</div>
 									</div>
-								</div>
 
-								<div className="space-y-2">
-									<Label className="font-heading">Quest Name *</Label>
-									<Input
-										placeholder="e.g., Trial of the Shadow Throne"
-										value={questName}
-										onChange={(e) => setQuestName(e.target.value)}
-										className="bg-background"
-									/>
+									<Button
+										className="w-full font-display tracking-wider bg-regent-gold hover:bg-regent-gold/80 text-background"
+										onClick={handleConsume}
+										disabled={!selectedRegentId || isConsuming}
+									>
+										<Crown className="h-4 w-4 mr-2" />
+										{isConsuming
+											? "ATTUNING..."
+											: `ATTUNE ${REGENT_LABEL.toUpperCase()} POWER`}
+									</Button>
 								</div>
+							</DialogContent>
+						</Dialog>
+					)}
 
-								<div className="space-y-2">
-									<Label className="font-heading">
-										Warden Notes (optional)
-									</Label>
-									<Textarea
-										placeholder="Notes about how the quest was completed..."
-										value={dmNotes}
-										onChange={(e) => setDmNotes(e.target.value)}
-										rows={3}
-										className="bg-background"
-									/>
-								</div>
-
-								<Button
-									className="w-full font-display tracking-wider bg-regent-gold hover:bg-regent-gold/80 text-background"
-									onClick={handleUnlock}
-									disabled={
-										!selectedRegentId || !questName.trim() || isUnlocking
-									}
-								>
-									<Crown className="h-4 w-4 mr-2" />
-									UNLOCK {REGENT_LABEL.toUpperCase()} POWER
-								</Button>
-							</div>
-						</DialogContent>
-					</Dialog>
+				{catchUpTarget && (
+					<RegentCatchUpModal
+						characterId={characterId}
+						regentId={catchUpTarget.regentId}
+						unlockId={catchUpTarget.unlockId}
+						campaignId={campaignId}
+						open
+						onComplete={() => setCatchUpFor(null)}
+					/>
 				)}
 			</div>
 		</AscendantWindow>

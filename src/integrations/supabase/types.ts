@@ -2873,8 +2873,42 @@ export type Database = {
 					},
 				];
 			};
+			character_regent_unlock_grants: {
+				Row: {
+					character_id: string;
+					consumed_at: string | null;
+					consumed_unlock_id: string | null;
+					granted_at: string;
+					granted_by: string | null;
+					id: string;
+					quest_id: string | null;
+					quest_title: string;
+				};
+				Insert: {
+					character_id: string;
+					consumed_at?: string | null;
+					consumed_unlock_id?: string | null;
+					granted_at?: string;
+					granted_by?: string | null;
+					id?: string;
+					quest_id?: string | null;
+					quest_title: string;
+				};
+				Update: {
+					character_id?: string;
+					consumed_at?: string | null;
+					consumed_unlock_id?: string | null;
+					granted_at?: string;
+					granted_by?: string | null;
+					id?: string;
+					quest_id?: string | null;
+					quest_title?: string;
+				};
+				Relationships: [];
+			};
 			character_regent_unlocks: {
 				Row: {
+					caught_up_at_level: number | null;
 					character_id: string;
 					dm_notes: string | null;
 					id: string;
@@ -2884,6 +2918,7 @@ export type Database = {
 					unlocked_at: string;
 				};
 				Insert: {
+					caught_up_at_level?: number | null;
 					character_id: string;
 					dm_notes?: string | null;
 					id?: string;
@@ -2893,6 +2928,7 @@ export type Database = {
 					unlocked_at?: string;
 				};
 				Update: {
+					caught_up_at_level?: number | null;
 					character_id?: string;
 					dm_notes?: string | null;
 					id?: string;

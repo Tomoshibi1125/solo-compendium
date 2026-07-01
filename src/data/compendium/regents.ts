@@ -1,6 +1,36 @@
 import { getRegentPortraitUrl } from "@/data/compendium/regentPortraits";
 import type { Regent } from "@/lib/regentTypes";
 
+// --- Shared rank-S regent progressions (full independent overlay, à la Umbral) ---
+// Regents grant their own full caster / martial progression ON TOP of the base
+// job. Known counts are tuned to stay within the resolvable, regent-tagged
+// compendium pools (verified: every caster resolves >= its spells_known at each
+// level via regentAbilityAccess grants), so a regent overlay never demands more
+// picks than are available.
+const REGENT_FULL_CASTER_SLOTS: Record<string, number[]> = {
+	"1st": [4, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4],
+	"2nd": [2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4],
+	"3rd": [0, 0, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4],
+	"4th": [0, 0, 0, 1, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4],
+	"5th": [0, 0, 0, 0, 1, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4],
+	"6th": [0, 0, 0, 0, 0, 1, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4],
+	"7th": [0, 0, 0, 0, 0, 0, 1, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4],
+	"8th": [0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 4],
+	"9th": [0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 4],
+};
+const REGENT_CANTRIPS_KNOWN = [
+	4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5,
+];
+const REGENT_SPELLS_KNOWN = [
+	6, 7, 9, 10, 12, 14, 15, 15, 15, 18, 19, 19, 20, 22, 22, 24, 24, 25, 26, 27,
+];
+const REGENT_POWERS_KNOWN = [
+	2, 2, 3, 3, 3, 4, 4, 4, 5, 5, 5, 6, 6, 6, 7, 7, 7, 8, 8, 8,
+];
+const REGENT_TECHNIQUES_KNOWN = [
+	2, 2, 3, 3, 3, 4, 4, 4, 5, 5, 5, 6, 6, 6, 7, 7, 7, 8, 8, 8,
+];
+
 export const regents: Regent[] = [
 	{
 		id: "umbral_regent",
@@ -492,6 +522,20 @@ export const regents: Regent[] = [
 	},
 	{
 		id: "radiant_regent",
+		spellcasting: {
+			ability: "Presence",
+			spell_slots: REGENT_FULL_CASTER_SLOTS,
+			cantrips_known: REGENT_CANTRIPS_KNOWN,
+			spells_known: REGENT_SPELLS_KNOWN,
+			spell_preparation: false,
+			additional_spells: [
+				"Sacred Flame",
+				"Guiding Bolt",
+				"Flame Strike",
+				"Sunbeam",
+				"Sunburst",
+			],
+		},
 		name: "Radiant Regent",
 		title: "Radiant Regent (Regent of White Flames)",
 		theme: "White Flames and Purification",
@@ -878,6 +922,8 @@ export const regents: Regent[] = [
 	},
 	{
 		id: "steel_regent",
+		powersKnown: REGENT_POWERS_KNOWN,
+		techniquesKnown: REGENT_TECHNIQUES_KNOWN,
 		name: "Steel Regent",
 		title: "Steel Regent (Regent of Iron Body)",
 		theme: "Conceptual Invulnerability & Absolutist Defense",
@@ -1267,6 +1313,20 @@ export const regents: Regent[] = [
 	},
 	{
 		id: "destruction_regent",
+		spellcasting: {
+			ability: "Strength",
+			spell_slots: REGENT_FULL_CASTER_SLOTS,
+			cantrips_known: REGENT_CANTRIPS_KNOWN,
+			spells_known: REGENT_SPELLS_KNOWN,
+			spell_preparation: false,
+			additional_spells: [
+				"Fire Bolt",
+				"Shatter",
+				"Fireball",
+				"Disintegrate",
+				"Meteor Swarm",
+			],
+		},
 		name: "Destruction Regent",
 		title: "Destruction Regent (Regent of Destruction)",
 		theme: "Primordial Destruction and Draconic Apocalypse",
@@ -1681,6 +1741,8 @@ export const regents: Regent[] = [
 
 	{
 		id: "war_regent",
+		powersKnown: REGENT_POWERS_KNOWN,
+		techniquesKnown: REGENT_TECHNIQUES_KNOWN,
 		name: "War Regent",
 		title: "War Regent (Regent of Command)",
 		theme: "Tactical Battlefield Supremacy & Absolute Command",
@@ -2315,6 +2377,9 @@ export const regents: Regent[] = [
 				"8th": [0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 4],
 				"9th": [0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 4],
 			},
+			cantrips_known: REGENT_CANTRIPS_KNOWN,
+			spells_known: REGENT_SPELLS_KNOWN,
+			spell_preparation: false,
 			additional_spells: [
 				"Ice Knife",
 				"Sleet Storm",
@@ -2438,6 +2503,8 @@ export const regents: Regent[] = [
 	},
 	{
 		id: "beast_regent",
+		powersKnown: REGENT_POWERS_KNOWN,
+		techniquesKnown: REGENT_TECHNIQUES_KNOWN,
 		name: "Beast Regent",
 		title: "Beast Regent (Regent of Beasts)",
 		theme: "Primal Evolution & Apex Regentty",
@@ -2784,6 +2851,20 @@ export const regents: Regent[] = [
 	},
 	{
 		id: "plague_regent",
+		spellcasting: {
+			ability: "Intelligence",
+			spell_slots: REGENT_FULL_CASTER_SLOTS,
+			cantrips_known: REGENT_CANTRIPS_KNOWN,
+			spells_known: REGENT_SPELLS_KNOWN,
+			spell_preparation: false,
+			additional_spells: [
+				"Poison Spray",
+				"Ray of Sickness",
+				"Stinking Cloud",
+				"Contagion",
+				"Cloudkill",
+			],
+		},
 		name: "Plague Regent",
 		title: "Plague Regent Ascendant Class",
 		theme: "Pandemic Incarnate",
@@ -3180,6 +3261,20 @@ export const regents: Regent[] = [
 	},
 	{
 		id: "spatial_regent",
+		spellcasting: {
+			ability: "Intelligence",
+			spell_slots: REGENT_FULL_CASTER_SLOTS,
+			cantrips_known: REGENT_CANTRIPS_KNOWN,
+			spells_known: REGENT_SPELLS_KNOWN,
+			spell_preparation: false,
+			additional_spells: [
+				"Mage Hand",
+				"Misty Step",
+				"Dimension Door",
+				"Teleport",
+				"Gate",
+			],
+		},
 		name: "Spatial Regent",
 		title: "Spatial Regent (Regent of Space)",
 		theme: "Cosmic Weaving & Dimensional Void",
@@ -3524,6 +3619,8 @@ export const regents: Regent[] = [
 	},
 	{
 		id: "mimic_regent",
+		powersKnown: REGENT_POWERS_KNOWN,
+		techniquesKnown: REGENT_TECHNIQUES_KNOWN,
 		name: "Mimic Regent",
 		title: "Mimic Regent Ascendant Class",
 		theme: "Infinite Forms",
@@ -3911,6 +4008,20 @@ export const regents: Regent[] = [
 	},
 	{
 		id: "blood_regent",
+		spellcasting: {
+			ability: "Vitality",
+			spell_slots: REGENT_FULL_CASTER_SLOTS,
+			cantrips_known: REGENT_CANTRIPS_KNOWN,
+			spells_known: REGENT_SPELLS_KNOWN,
+			spell_preparation: false,
+			additional_spells: [
+				"Chill Touch",
+				"False Life",
+				"Blight",
+				"Vampiric Touch",
+				"Circle of Death",
+			],
+		},
 		name: "Blood Regent",
 		title: "Blood Regent (Regent of Blood)",
 		theme: "Hemomancy & Sanguine Regentty",
@@ -4251,6 +4362,20 @@ export const regents: Regent[] = [
 	},
 	{
 		id: "gravity_regent",
+		spellcasting: {
+			ability: "Intelligence",
+			spell_slots: REGENT_FULL_CASTER_SLOTS,
+			cantrips_known: REGENT_CANTRIPS_KNOWN,
+			spells_known: REGENT_SPELLS_KNOWN,
+			spell_preparation: false,
+			additional_spells: [
+				"Magic Stone",
+				"Levitate",
+				"Fly",
+				"Reverse Gravity",
+				"Meteor Swarm",
+			],
+		},
 		name: "Gravity Regent",
 		title: "Gravity Regent (Regent of Weight)",
 		theme: "Gravitational Mastery & Fundamental Force",

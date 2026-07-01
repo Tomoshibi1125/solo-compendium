@@ -113,6 +113,11 @@ import { logger } from "@/lib/logger";
 import { getStaticPaths, getStaticRegents } from "@/lib/ProtocolDataManager";
 import { getEffectiveMaxAbilityLevel } from "@/lib/pathAbilityAccess";
 import { rankToGateToken } from "@/lib/rankColors";
+import {
+	getRegentFeaturesAtLevel,
+	regentToChoiceSource,
+} from "@/lib/regentProgression";
+import type { Regent } from "@/lib/regentTypes";
 import { filterRowsBySourcebookAccess } from "@/lib/sourcebookAccess";
 import { cn } from "@/lib/utils";
 import { formatRegentVernacular } from "@/lib/vernacular";
@@ -177,7 +182,12 @@ type StaticJobWithLedger = StaticJob & {
 	levelChoices?: LedgerChoice[];
 	powersKnown?: number[];
 	techniquesKnown?: number[];
-	spellbook?: { atCreation: number; perLevel: number; label: string };
+	spellbook?: {
+		atCreation: number;
+		perLevel: number;
+		label: string;
+		startLevel?: number;
+	};
 };
 
 type LedgerOptionPanel = {
@@ -490,10 +500,31 @@ export const LevelUpWizardModal = ({
 		);
 	}, [character?.job, effectivePathName, homebrewPaths, selectedPathRow]);
 
+	// Active regent overlays as choice sources so their full independent
+	// progression (casters: cantrips/spells known; martials: powers/techniques
+	// known) is counted alongside the base job at level-up. Regents are never fed
+	// into character creation — this wiring lives only in the level-up wizard.
+	const regentChoiceSources = useMemo<ChoiceSourceData[]>(() => {
+		if (characterRegentNames.length === 0) return [];
+		const staticRegents = getStaticRegents() as unknown as Regent[];
+		const byKey = new Map(
+			staticRegents.map((r) => [normalizeCompendiumKey(r.name), r]),
+		);
+		return characterRegentNames
+			.map((name) => byKey.get(normalizeCompendiumKey(name)))
+			.filter((r): r is Regent => Boolean(r))
+			.map((r) => regentToChoiceSource(r));
+	}, [characterRegentNames]);
+
 	const availableChoices = useMemo(
 		() =>
-			calculateTotalChoices(jobChoiceSource, pathChoiceSource, [], newLevel),
-		[jobChoiceSource, pathChoiceSource, newLevel],
+			calculateTotalChoices(
+				jobChoiceSource,
+				pathChoiceSource,
+				regentChoiceSources,
+				newLevel,
+			),
+		[jobChoiceSource, pathChoiceSource, regentChoiceSources, newLevel],
 	);
 
 	const choiceDeltas = useMemo(() => {
@@ -501,12 +532,18 @@ export const LevelUpWizardModal = ({
 		return getLevelUpChoiceDeltas(
 			jobChoiceSource,
 			pathChoiceSource,
-			[],
+			regentChoiceSources,
 			character.level,
 			newLevel,
 			character.path ? pathChoiceSource : null,
 		);
-	}, [character, jobChoiceSource, pathChoiceSource, newLevel]);
+	}, [
+		character,
+		jobChoiceSource,
+		pathChoiceSource,
+		regentChoiceSources,
+		newLevel,
+	]);
 
 	const requiredPowerChoices = choiceDeltas.powers ?? 0;
 	const requiredTechniqueChoices = choiceDeltas.techniques ?? 0;
@@ -555,6 +592,7 @@ export const LevelUpWizardModal = ({
 				pathName: effectivePathName,
 				characterLevel: newLevel,
 				kind: "spell",
+				regentNames: characterRegentNames,
 			})
 		: 0;
 	const maxPowerLevel = character?.job
@@ -563,6 +601,7 @@ export const LevelUpWizardModal = ({
 				pathName: effectivePathName,
 				characterLevel: newLevel,
 				kind: "power",
+				regentNames: characterRegentNames,
 			})
 		: 0;
 
@@ -826,18 +865,23 @@ export const LevelUpWizardModal = ({
 				(m: { id: string }) => m.id === primaryRegentUnlock.regent_id,
 			)
 		: null;
-	const newRegentFeatures: JobFeature[] =
-		regentData?.class_features
-			?.filter((f) => f.level === newLevel)
-			.map((f, idx) => ({
-				id: `regent-lvl-${newLevel}-${idx}`,
-				name: f.name,
-				description: f.description,
-				level: f.level,
-				type: f.type,
-				frequency: f.frequency,
-				is_path_feature: false,
-			})) ?? [];
+	// Route through the regent progression normalizer so regents whose content
+	// lives in the flat `abilities`/`features` + `progression_table` (Radiant,
+	// Steel, Destruction, War, and the truncated Plague/Mimic) surface their
+	// per-level features here just like the curated ones (Umbral, Frost, …).
+	const newRegentFeatures: JobFeature[] = regentData
+		? getRegentFeaturesAtLevel(regentData as unknown as Regent, newLevel).map(
+				(f, idx) => ({
+					id: `regent-lvl-${newLevel}-${idx}`,
+					name: f.name,
+					description: f.description,
+					level: f.level,
+					type: f.type,
+					frequency: f.frequency,
+					is_path_feature: false,
+				}),
+			)
+		: [];
 
 	// Fetch features for the new level (DB first, static fallback)
 	const { data: newFeatures = [] } = useQuery<LevelUpFeatureRow[]>({

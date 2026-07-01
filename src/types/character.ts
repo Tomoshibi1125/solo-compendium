@@ -151,6 +151,8 @@ export interface StaticJob {
 		atCreation: number;
 		perLevel: number;
 		label: string;
+		/** Level the spellbook feature is gained (default 1; e.g. Revenant = 2). */
+		startLevel?: number;
 	};
 	powersKnown?: number[];
 	techniquesKnown?: number[];

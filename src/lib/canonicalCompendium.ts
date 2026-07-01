@@ -23,6 +23,7 @@ import {
 	normalizePathAbilityValue,
 	type PathAbilityGrant,
 } from "@/lib/pathAbilityAccess";
+import { getActiveRegentAbilityGrants } from "@/lib/regentAbilityAccess";
 import {
 	filterRowsBySourcebookAccess,
 	isSourcebookAccessible,
@@ -1330,12 +1331,19 @@ export function isCanonicalSpellLearnable(
 	// access to spells above the job's natural caster progression (e.g., a
 	// non-caster Destroyer learning a level-1 Mage spell via Path of the Spell
 	// Breaker at character level 3).
-	const pathGrants = getActivePathAbilityGrants({
-		jobName: options.jobName,
-		pathName: options.pathName,
-		characterLevel: options.characterLevel,
-		kind: "spell",
-	});
+	const pathGrants = [
+		...getActivePathAbilityGrants({
+			jobName: options.jobName,
+			pathName: options.pathName,
+			characterLevel: options.characterLevel,
+			kind: "spell",
+		}),
+		...getActiveRegentAbilityGrants({
+			regentNames: options.regentNames,
+			characterLevel: options.characterLevel,
+			kind: "spell",
+		}),
+	];
 	if (
 		options.jobName &&
 		!jobCanLearnSpells(options.jobName) &&
@@ -1376,12 +1384,19 @@ export function isCanonicalPowerLearnable(
 	entry: CanonicalCastableEntry,
 	options: LearnableCastableOptions = {},
 ): boolean {
-	const pathGrants = getActivePathAbilityGrants({
-		jobName: options.jobName,
-		pathName: options.pathName,
-		characterLevel: options.characterLevel,
-		kind: "power",
-	});
+	const pathGrants = [
+		...getActivePathAbilityGrants({
+			jobName: options.jobName,
+			pathName: options.pathName,
+			characterLevel: options.characterLevel,
+			kind: "power",
+		}),
+		...getActiveRegentAbilityGrants({
+			regentNames: options.regentNames,
+			characterLevel: options.characterLevel,
+			kind: "power",
+		}),
+	];
 	if (
 		options.jobName &&
 		!jobCanLearnPowers(options.jobName) &&
@@ -1551,12 +1566,19 @@ export async function isCanonicalCastableAccessible(
 export async function listLearnableSpells(
 	options: LearnableCastableOptions = {},
 ): Promise<CanonicalCastableEntry[]> {
-	const pathGrants = getActivePathAbilityGrants({
-		jobName: options.jobName,
-		pathName: options.pathName,
-		characterLevel: options.characterLevel,
-		kind: "spell",
-	});
+	const pathGrants = [
+		...getActivePathAbilityGrants({
+			jobName: options.jobName,
+			pathName: options.pathName,
+			characterLevel: options.characterLevel,
+			kind: "spell",
+		}),
+		...getActiveRegentAbilityGrants({
+			regentNames: options.regentNames,
+			characterLevel: options.characterLevel,
+			kind: "spell",
+		}),
+	];
 	if (
 		options.jobName &&
 		!jobCanLearnSpells(options.jobName) &&
@@ -1588,12 +1610,19 @@ export async function listLearnableSpells(
 export async function listLearnablePowers(
 	options: LearnableCastableOptions = {},
 ): Promise<CanonicalCastableEntry[]> {
-	const pathGrants = getActivePathAbilityGrants({
-		jobName: options.jobName,
-		pathName: options.pathName,
-		characterLevel: options.characterLevel,
-		kind: "power",
-	});
+	const pathGrants = [
+		...getActivePathAbilityGrants({
+			jobName: options.jobName,
+			pathName: options.pathName,
+			characterLevel: options.characterLevel,
+			kind: "power",
+		}),
+		...getActiveRegentAbilityGrants({
+			regentNames: options.regentNames,
+			characterLevel: options.characterLevel,
+			kind: "power",
+		}),
+	];
 	if (
 		options.jobName &&
 		!jobCanLearnPowers(options.jobName) &&
@@ -1653,12 +1682,19 @@ export function isCanonicalTechniqueLearnable(
 	options: LearnableTechniqueOptions = {},
 ): boolean {
 	if (!isAbilityEntryComplete(entry, "technique")) return false;
-	const pathGrants = getActivePathAbilityGrants({
-		jobName: options.jobName,
-		pathName: options.pathName,
-		characterLevel: options.characterLevel,
-		kind: "technique",
-	});
+	const pathGrants = [
+		...getActivePathAbilityGrants({
+			jobName: options.jobName,
+			pathName: options.pathName,
+			characterLevel: options.characterLevel,
+			kind: "technique",
+		}),
+		...getActiveRegentAbilityGrants({
+			regentNames: options.regentNames,
+			characterLevel: options.characterLevel,
+			kind: "technique",
+		}),
+	];
 	if (
 		options.jobName &&
 		!jobCanLearnTechniques(options.jobName) &&
@@ -1701,12 +1737,19 @@ export function isCanonicalTechniqueLearnable(
 export async function listLearnableTechniques(
 	options: LearnableTechniqueOptions = {},
 ): Promise<StaticCompendiumEntry[]> {
-	const pathGrants = getActivePathAbilityGrants({
-		jobName: options.jobName,
-		pathName: options.pathName,
-		characterLevel: options.characterLevel,
-		kind: "technique",
-	});
+	const pathGrants = [
+		...getActivePathAbilityGrants({
+			jobName: options.jobName,
+			pathName: options.pathName,
+			characterLevel: options.characterLevel,
+			kind: "technique",
+		}),
+		...getActiveRegentAbilityGrants({
+			regentNames: options.regentNames,
+			characterLevel: options.characterLevel,
+			kind: "technique",
+		}),
+	];
 	if (
 		options.jobName &&
 		!jobCanLearnTechniques(options.jobName) &&
