@@ -15,6 +15,35 @@ import { AppError } from "./appError";
 import { logger } from "./logger";
 
 /**
+ * Restore uses_current → uses_max for tracked per-ability power/technique rows
+ * whose recharge matches this rest (5e-SRD per-ability use economy). Untracked
+ * rows (uses_max NULL: cantrips, slot-cast jobs) are ignored.
+ */
+async function recoverTrackedAbilityUses(
+	characterId: string,
+	table: "character_powers" | "character_techniques",
+	recharges: string[],
+): Promise<void> {
+	try {
+		const { data: rows } = await supabase
+			.from(table)
+			.select("id, uses_max")
+			.eq("character_id", characterId)
+			.in("recharge", recharges);
+		for (const row of rows ?? []) {
+			if (row.uses_max !== null) {
+				await supabase
+					.from(table)
+					.update({ uses_current: row.uses_max })
+					.eq("id", row.id);
+			}
+		}
+	} catch (error) {
+		logger.error(`Failed to recover ${table} uses:`, error);
+	}
+}
+
+/**
  * Execute short rest
  * - Restore hit dice (up to half of max, rounded up)
  * - Reset short-rest recharge features
@@ -92,6 +121,14 @@ export async function executeShortRest(characterId: string): Promise<void> {
 	} catch (error) {
 		logger.error("Failed to recover spell uses:", error);
 	}
+
+	// Recover per-ability power/technique uses that recharge on a short rest.
+	await recoverTrackedAbilityUses(characterId, "character_powers", [
+		"short-rest",
+	]);
+	await recoverTrackedAbilityUses(characterId, "character_techniques", [
+		"short-rest",
+	]);
 
 	// Emit domain event
 	try {
@@ -239,6 +276,17 @@ export async function executeLongRest(
 	} catch (error) {
 		logger.error("Failed to recover spell uses:", error);
 	}
+
+	// Recover per-ability power/technique uses on a long rest (long rest also
+	// restores short-rest resources, per 5e SRD).
+	await recoverTrackedAbilityUses(characterId, "character_powers", [
+		"long-rest",
+		"short-rest",
+	]);
+	await recoverTrackedAbilityUses(characterId, "character_techniques", [
+		"long-rest",
+		"short-rest",
+	]);
 
 	// Assign daily quests after long rest (if enabled)
 	try {

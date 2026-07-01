@@ -116,7 +116,19 @@ export interface Job extends AuthoritativeStaticJob {
 	// Technomancer, Stalker.
 	powersKnown?: number[];
 	techniquesKnown?: number[];
-	classFeatures?: { level: number; name: string; description: string }[];
+	classFeatures?: {
+		level: number;
+		name: string;
+		description: string;
+		/**
+		 * Structured limited-use resource. When present, character creation /
+		 * level-up seeds the feature's `uses_max`/`uses_current`/`recharge` and a
+		 * `uses_formula` resource modifier so it appears in the Resources tab and
+		 * rescales as the character levels (see addLevel1Features /
+		 * autoUpdateFeatureUses in characterCreation.ts).
+		 */
+		uses?: { formula: string; recharge: "short-rest" | "long-rest" };
+	}[];
 	abilities: string[];
 	stats: {
 		strength: number;
@@ -262,6 +274,7 @@ export const jobs: Job[] = [
 			{
 				level: 1,
 				name: "Essence Harvest",
+				uses: { formula: "1", recharge: "short-rest" },
 				description:
 					"When you reduce a creature to 0 HP, you harvest the residual mana of the fallen. As an Ascendant of the modern era, your smartphone interface registers this influx as a [MANA ABSORBED] alert. Regain HP equal to your Destroyer level + VIT mod. Once per short rest.",
 			},
@@ -506,6 +519,7 @@ export const jobs: Job[] = [
 			{
 				level: 1,
 				name: "Overload State",
+				uses: { formula: "2", recharge: "long-rest" },
 				description:
 					"Bonus action: trigger an Absolute Surge â€” your veins glow, your muscles visibly swell, and nearby electronics emit static. Melee damage bonus = STR mod, resistance to bludgeoning/piercing/slashing, and HP temporarily increases by Berserker level (lost when Overload ends). 2/long rest, scaling to unlimited at 20th.",
 			},
@@ -1029,6 +1043,7 @@ export const jobs: Job[] = [
 			{
 				level: 2,
 				name: "Impulse Rites",
+				uses: { formula: "level", recharge: "short-rest" },
 				description:
 					"Impulse points = Striker level, short rest recharge. Activate specific nerve clusters through precise internal Rites â€” your eyes flash briefly when a gate opens. Rite of Speed (Dash/Disengage), Rite of Force (2 bonus strikes), Rite of Iron (Dodge). 1 impulse point each.",
 			},
@@ -1532,6 +1547,7 @@ export const jobs: Job[] = [
 			{
 				level: 2,
 				name: "Flux Pool",
+				uses: { formula: "level", recharge: "short-rest" },
 				description:
 					"Flux points = Esper level â€” your internal mana reactor cycles between states like a nuclear power plant. Overcharge (add 1d6 per flux to spell damage, max 3), Absorb (convert a slot into flux = slot level), or Manifest (create a slot by spending flux = slot level +1).",
 			},
@@ -2242,12 +2258,14 @@ export const jobs: Job[] = [
 			{
 				level: 1,
 				name: "Oath Sense",
+				uses: { formula: "1 + PRE mod", recharge: "long-rest" },
 				description:
 					"Your covenant pings hostile entities. Detect celestials, anomaly, and anomaly within 60 ft and know their type. 1 + Presence mod uses per long rest.",
 			},
 			{
 				level: 1,
 				name: "Covenant's Mercy",
+				uses: { formula: "5 * level", recharge: "long-rest" },
 				description:
 					"You carry a reservoir of Absolute healing energy = 5 Ã— Holy Knight level. Touch a creature to transfer HP from the pool. Spend 5 HP from the pool to cure one disease or neutralize one poison.",
 			},
@@ -2582,6 +2600,7 @@ export const jobs: Job[] = [
 			{
 				level: 7,
 				name: "Absolute Assist",
+				uses: { formula: "INT mod", recharge: "long-rest" },
 				description:
 					"Reaction: feed Absolute telemetry to an ally. Add INT mod to a creature's check or save within 30 ft. INT mod uses per long rest. If the check/save succeeds, regain one use.",
 			},
@@ -2844,6 +2863,7 @@ export const jobs: Job[] = [
 			{
 				level: 1,
 				name: "Hype",
+				uses: { formula: "PRE mod", recharge: "long-rest" },
 				description:
 					"Bonus action: broadcast an amplifying frequency â€” a shout, a riff, a motivational one-liner that literally makes your teammate better at what they're doing. Grant a Hype die (d6â†’d8â†’d10â†’d12 at 5th/10th/15th). Add to one attack/check/save within 10 min. On success, you gain temp HP = die roll (the crowd's energy feeds you back). PRE mod uses per long rest (short rest at 5th).",
 			},
@@ -3149,6 +3169,7 @@ export const jobs: Job[] = [
 			{
 				level: 1,
 				name: "Receive Signal",
+				uses: { formula: "SENSE mod", recharge: "long-rest" },
 				description:
 					"As a bonus action, detect the presence and type of celestials, anomaly, and anomaly within 60 ft. Uses = Sense mod per long rest.",
 			},
@@ -3161,6 +3182,7 @@ export const jobs: Job[] = [
 			{
 				level: 2,
 				name: "Channel Absolute",
+				uses: { formula: "1", recharge: "short-rest" },
 				description:
 					"Once per short rest, invoke the Absolute's authority for a chosen effect (Turn Unholy, Restorative Pulse, or Radiant Ignition). Additional uses and effects unlock at higher levels.",
 			},

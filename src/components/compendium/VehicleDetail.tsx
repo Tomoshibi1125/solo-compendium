@@ -13,6 +13,7 @@ import { AutoLinkText } from "@/components/compendium/AutoLinkText";
 import { CompendiumImage } from "@/components/compendium/CompendiumImage";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
+import { formatRaCurrencyValue } from "@/lib/currency";
 import { formatRegentVernacular } from "@/lib/vernacular";
 import type { CompendiumVehicle } from "@/types/compendium";
 
@@ -112,6 +113,14 @@ export const VehicleDetail = ({ data }: { data: VehicleData }) => {
 						{(data as { rank?: string | null }).rank && (
 							<Badge variant="outline">
 								Rank {(data as { rank?: string | null }).rank}
+							</Badge>
+						)}
+						{data.price != null && (
+							<Badge
+								variant="outline"
+								className="text-bond-gold border-yellow-600/40"
+							>
+								{formatRaCurrencyValue(data.price)}
 							</Badge>
 						)}
 						{data.source_book && (

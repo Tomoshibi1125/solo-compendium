@@ -7,11 +7,13 @@ import {
 	findAccessibleCanonicalTechnique,
 	getCharacterAbilityAccessContext,
 } from "@/lib/characterAbilityAccess";
+import { getAbilityUseFields } from "@/lib/characterCreation";
 import {
 	addLocalTechnique,
 	isLocalCharacterId,
 	listLocalTechniques,
 	removeLocalTechnique,
+	updateLocalTechnique,
 } from "@/lib/guestStore";
 
 export type TechniqueRow =
@@ -88,8 +90,23 @@ export const useTechniques = (characterId: string) => {
 			}
 			assertCanonicalTechniqueLearnable(technique, abilityContext);
 
+			// 5e-SRD use economy: leveled techniques are limited to (primary mod +
+			// PB) uses per rest (short/long by unlock level); empty fields → NULL.
+			const techniqueMeta = technique as {
+				level_requirement?: number | null;
+				atWill?: boolean | null;
+			};
+			const useFields = await getAbilityUseFields(characterId, {
+				kind: "technique",
+				levelRequirement: techniqueMeta.level_requirement ?? null,
+				atWill: techniqueMeta.atWill ?? null,
+			});
+
 			if (isLocalCharacterId(characterId)) {
-				return addLocalTechnique(characterId, { technique_id: techniqueId });
+				return addLocalTechnique(characterId, {
+					technique_id: techniqueId,
+					...useFields,
+				});
 			}
 
 			const { data, error } = await supabase
@@ -97,12 +114,39 @@ export const useTechniques = (characterId: string) => {
 				.insert({
 					character_id: characterId,
 					technique_id: techniqueId,
+					...useFields,
 				})
 				.select()
 				.single();
 
 			if (error) throw error;
 			return data;
+		},
+		onSuccess: () => {
+			queryClient.invalidateQueries({
+				queryKey: ["character-techniques", characterId],
+			});
+		},
+	});
+
+	const updateTechnique = useMutation({
+		mutationFn: async ({
+			id,
+			updates,
+		}: {
+			id: string;
+			updates: Database["public"]["Tables"]["character_techniques"]["Update"];
+		}) => {
+			if (isLocalCharacterId(characterId)) {
+				return updateLocalTechnique(id, updates);
+			}
+
+			const { error } = await supabase
+				.from("character_techniques")
+				.update(updates)
+				.eq("id", id);
+
+			if (error) throw error;
 		},
 		onSuccess: () => {
 			queryClient.invalidateQueries({
@@ -135,6 +179,7 @@ export const useTechniques = (characterId: string) => {
 		techniques,
 		isLoading,
 		addTechnique,
+		updateTechnique,
 		removeTechnique,
 	};
 };

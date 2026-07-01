@@ -32,6 +32,7 @@ import {
 	getSpellsKnownLimit,
 	getSpellsPreparedLimit,
 } from "@/lib/characterCalculations";
+import { getJobPowerMode } from "@/lib/jobAbilityAccess";
 import { cn } from "@/lib/utils";
 import { formatRegentVernacular } from "@/lib/vernacular";
 import type { DetailData } from "@/types/character";
@@ -151,6 +152,20 @@ export function PowersList({
 		{},
 	);
 
+	// F2 — per-class power access mode. "prepared" jobs keep the daily prep
+	// toggle + prepared limit; "known"/"at-will" jobs hide prep. "at-will" jobs
+	// (martials) can activate leveled powers without expending a slot.
+	const powerMode = getJobPowerMode(character?.job);
+	const isPreparedMode = powerMode === "prepared";
+	const isAtWillMode = powerMode === "at-will";
+	// At-will (martial) power jobs track each leveled power's uses per rest on the
+	// power row (uses_max/uses_current); cantrips and untracked powers stay free.
+	const isPowerSpent = (power: Power) =>
+		isAtWillMode &&
+		power.power_level > 0 &&
+		power.uses_max != null &&
+		(power.uses_current ?? 0) <= 0;
+
 	// Calculate spell limits
 	const spellcastingAbility = character
 		? getSpellcastingAbility(character.job)
@@ -159,9 +174,10 @@ export function PowersList({
 		character && spellcastingAbility
 			? getAbilityModifier(character.abilities?.[spellcastingAbility] || 10)
 			: 0;
-	const spellsPreparedLimit = character
-		? getSpellsPreparedLimit(character.job, character.level, abilityModifier)
-		: null;
+	const spellsPreparedLimit =
+		character && isPreparedMode
+			? getSpellsPreparedLimit(character.job, character.level, abilityModifier)
+			: null;
 	const spellsKnownLimit = character
 		? getSpellsKnownLimit(character.job, character.level)
 		: null;
@@ -275,6 +291,59 @@ export function PowersList({
 			toast({
 				title: "Power Used",
 				description: `${displayName} used with a rune-granted slot.`,
+			});
+			return;
+		}
+
+		// F1/F2 — at-will powers (martial jobs) route around the spell-slot
+		// pipeline. Per 5e SRD, leveled powers are limited to (primary mod + PB)
+		// uses per rest, tracked on the power row (uses_max/uses_current); cantrips
+		// and any ability left untracked (uses_max NULL) are free/unlimited. Still
+		// emits the usage-tracking + campaign-log side effects the pipeline would.
+		if (isAtWillMode) {
+			if (power.power_level > 0 && power.uses_max != null) {
+				if ((power.uses_current ?? 0) <= 0) {
+					toast({
+						title: "No Uses Remaining",
+						description: `${displayName} is spent — recover it on a ${
+							power.recharge === "long-rest" ? "long" : "short"
+						} rest.`,
+						variant: "destructive",
+					});
+					return;
+				}
+				await updatePower({
+					id: power.id,
+					updates: {
+						uses_current: Math.max(0, (power.uses_current ?? 0) - 1),
+					},
+				});
+			}
+			ascendantTools
+				.trackCustomFeatureUsage(characterId, power.name, "activate", "RA")
+				.catch(console.error);
+			if (campaignId && power.power_level > 0) {
+				rollInCampaign(campaignId, {
+					dice_formula: "0",
+					result: 0,
+					rolls: [],
+					roll_type: "ability",
+					context: `Activates Power: ${displayName} (Level ${power.power_level})`,
+					character_id: characterId,
+				});
+				recordRoll.mutate({
+					dice_formula: "0",
+					result: 0,
+					rolls: [],
+					roll_type: "ability",
+					context: `Activates Power: ${displayName} (Level ${power.power_level})`,
+					campaign_id: campaignId ?? null,
+					character_id: characterId,
+				});
+			}
+			toast({
+				title: power.power_level === 0 ? "Cantrip Cast" : "Power Used",
+				description: `${displayName} activated (at-will).`,
 			});
 			return;
 		}
@@ -474,7 +543,7 @@ export function PowersList({
 								</SelectContent>
 							</Select>
 						)}
-						{filter?.prepared === undefined && (
+						{isPreparedMode && filter?.prepared === undefined && (
 							<Select value={filterPrepared} onValueChange={setFilterPrepared}>
 								<SelectTrigger className="w-[140px]">
 									<SelectValue />
@@ -486,6 +555,9 @@ export function PowersList({
 								</SelectContent>
 							</Select>
 						)}
+						<Badge variant="outline" className="text-xs capitalize">
+							{powerMode.replace("-", " ")}
+						</Badge>
 					</div>
 					<Button
 						onClick={() => setAddDialogOpen(true)}
@@ -654,36 +726,62 @@ export function PowersList({
 													)}
 												</div>
 												<div className="flex items-center gap-2">
-													<div className="flex items-center gap-2">
-														<Checkbox
-															id={`prepared-${power.id}`}
-															checked={power.is_prepared ?? false}
-															onCheckedChange={() =>
-																handleTogglePrepared(power)
-															}
-															disabled={
-																!power.is_prepared && isOverPreparedLimit
-															}
-														/>
-														<label
-															htmlFor={`prepared-${power.id}`}
-															className="text-xs cursor-pointer"
-														>
-															Prep
-														</label>
-													</div>
-													{power.is_prepared && (
+													{isPreparedMode && (
+														<div className="flex items-center gap-2">
+															<Checkbox
+																id={`prepared-${power.id}`}
+																checked={power.is_prepared ?? false}
+																onCheckedChange={() =>
+																	handleTogglePrepared(power)
+																}
+																disabled={
+																	!power.is_prepared && isOverPreparedLimit
+																}
+															/>
+															<label
+																htmlFor={`prepared-${power.id}`}
+																className="text-xs cursor-pointer"
+															>
+																Prep
+															</label>
+														</div>
+													)}
+													{isAtWillMode &&
+														power.power_level > 0 &&
+														power.uses_max != null && (
+															<Badge
+																variant={
+																	isPowerSpent(power)
+																		? "destructive"
+																		: "secondary"
+																}
+																className="text-xs"
+																title={`Recovers on a ${
+																	power.recharge === "long-rest"
+																		? "long"
+																		: "short"
+																} rest`}
+															>
+																{power.uses_current ?? 0}/{power.uses_max}
+															</Badge>
+														)}
+													{/* Cast is available for known/at-will powers always, and
+													    for prepared powers only once prepared. At-will powers
+													    (martials) ignore the per-tier slot gate. */}
+													{(!isPreparedMode || power.is_prepared) && (
 														<Button
 															variant="outline"
 															size="sm"
 															onClick={() => handleCastSpell(power)}
 															disabled={
 																power.power_level > 0 &&
-																!spellSlots.find(
-																	(s) =>
-																		s.level === power.power_level &&
-																		s.current > 0,
-																)
+																(isAtWillMode
+																	? isPowerSpent(power)
+																	: !spellSlots.find(
+																			(s) =>
+																				s.level === power.power_level &&
+																				s.current > 0,
+																		))
 															}
 															className="text-xs"
 														>

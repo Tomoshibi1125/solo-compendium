@@ -1,6 +1,7 @@
 import { ExternalLink, Plus, RefreshCw, Shield, Trash2 } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { AddCompanionDialog } from "@/components/character/AddCompanionDialog";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -33,6 +34,8 @@ export function CharacterExtrasPanel({
 		useCharacterExtras(characterId);
 	const ascendantTools = useAscendantTools();
 
+	const [pickerOpen, setPickerOpen] = useState(false);
+	const [showCustom, setShowCustom] = useState(false);
 	const [draftName, setDraftName] = useState("");
 	const [draftType, setDraftType] = useState("companion");
 	const [draftHp, setDraftHp] = useState("");
@@ -96,16 +99,41 @@ export function CharacterExtrasPanel({
 						initiative.
 					</p>
 				</div>
-				{extras.length > 0 && (
-					<Badge variant="outline" className="text-xs shrink-0">
-						{extras.length}
-					</Badge>
-				)}
+				<div className="flex items-center gap-2 shrink-0">
+					{extras.length > 0 && (
+						<Badge variant="outline" className="text-xs">
+							{extras.length}
+						</Badge>
+					)}
+					{!isReadOnly && (
+						<Button size="sm" onClick={() => setPickerOpen(true)}>
+							<Plus className="w-4 h-4" /> Add Companion
+						</Button>
+					)}
+				</div>
 			</div>
 
+			{/* DDB-style catalog picker (statblocks / mounts / allies). */}
+			<AddCompanionDialog
+				open={pickerOpen}
+				onOpenChange={setPickerOpen}
+				characterId={characterId}
+			/>
+
+			{/* Custom free-form entry (homebrew fallback). */}
+			{!isReadOnly && !showCustom && (
+				<button
+					type="button"
+					onClick={() => setShowCustom(true)}
+					className="text-xs text-muted-foreground hover:text-foreground underline underline-offset-2"
+				>
+					+ Add a custom companion instead
+				</button>
+			)}
+
 			{/* Add New Section */}
-			{!isReadOnly && (
-				<AscendantWindow title="ADD EXTRA" compact variant="alert">
+			{!isReadOnly && showCustom && (
+				<AscendantWindow title="ADD CUSTOM COMPANION" compact variant="alert">
 					<div className="grid grid-cols-2 md:grid-cols-[2fr_120px_60px_60px_70px_auto] gap-2 items-end">
 						<div className="flex flex-col gap-1">
 							<span className="text-[11px] uppercase text-muted-foreground">

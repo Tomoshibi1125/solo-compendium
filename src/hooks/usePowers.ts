@@ -14,6 +14,7 @@ import {
 	assertHomebrewPowerLearnable,
 	getCharacterAbilityAccessContext,
 } from "@/lib/characterAbilityAccess";
+import { getAbilityUseFields } from "@/lib/characterCreation";
 import { getErrorMessage, logErrorWithContext } from "@/lib/errorHandling";
 import {
 	addLocalPower,
@@ -262,10 +263,25 @@ export const usePowers = (characterId: string) => {
 				);
 			}
 
+			// 5e-SRD use economy: leveled powers on at-will (martial) jobs are
+			// limited to (primary mod + PB) uses per rest; cantrips and slot-cast
+			// jobs stay unlimited (empty fields → NULL uses columns).
+			const useFields = await getAbilityUseFields(characterId, {
+				kind: "power",
+				powerLevel: powerWithCanonicalId.power_level ?? 0,
+				atWill:
+					(canonicalEntry as { atWill?: boolean | null } | null)?.atWill ??
+					null,
+			});
+			const powerWithUses: PowerInsert = {
+				...powerWithCanonicalId,
+				...useFields,
+			};
+
 			if (isLocalCharacterId(characterId)) {
 				addLocalPower(
 					characterId,
-					powerWithCanonicalId as Omit<PowerInsert, "character_id">,
+					powerWithUses as Omit<PowerInsert, "character_id">,
 				);
 				return null;
 			}
@@ -285,18 +301,21 @@ export const usePowers = (characterId: string) => {
 						character_id: characterId,
 						created_at: now,
 						display_order: cached.length,
-						name: powerWithCanonicalId.name,
-						power_id: powerWithCanonicalId.power_id ?? null,
-						power_level: powerWithCanonicalId.power_level ?? 0,
-						source: powerWithCanonicalId.source ?? null,
-						description: powerWithCanonicalId.description ?? null,
-						higher_levels: powerWithCanonicalId.higher_levels ?? null,
-						casting_time: powerWithCanonicalId.casting_time ?? null,
-						range: powerWithCanonicalId.range ?? null,
-						duration: powerWithCanonicalId.duration ?? null,
-						concentration: powerWithCanonicalId.concentration ?? false,
-						is_prepared: powerWithCanonicalId.is_prepared ?? false,
-						is_known: powerWithCanonicalId.is_known ?? true,
+						name: powerWithUses.name,
+						power_id: powerWithUses.power_id ?? null,
+						power_level: powerWithUses.power_level ?? 0,
+						source: powerWithUses.source ?? null,
+						description: powerWithUses.description ?? null,
+						higher_levels: powerWithUses.higher_levels ?? null,
+						casting_time: powerWithUses.casting_time ?? null,
+						range: powerWithUses.range ?? null,
+						duration: powerWithUses.duration ?? null,
+						concentration: powerWithUses.concentration ?? false,
+						is_prepared: powerWithUses.is_prepared ?? false,
+						is_known: powerWithUses.is_known ?? true,
+						uses_max: powerWithUses.uses_max ?? null,
+						uses_current: powerWithUses.uses_current ?? null,
+						recharge: powerWithUses.recharge ?? null,
 					};
 					writeCachedPowers(cacheKey, [...cached, optimistic]);
 				}
@@ -315,7 +334,7 @@ export const usePowers = (characterId: string) => {
 
 			const { data, error } = await supabase
 				.from("character_powers")
-				.insert({ ...powerWithCanonicalId, character_id: characterId });
+				.insert({ ...powerWithUses, character_id: characterId });
 			if (error) {
 				logErrorWithContext(error, "usePowers.addPower");
 				throw error;

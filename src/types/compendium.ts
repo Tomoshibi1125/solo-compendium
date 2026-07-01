@@ -1,4 +1,5 @@
 import type { Json } from "@/integrations/supabase/types";
+import type { RaCurrencyValue } from "@/lib/currency";
 
 interface CompendiumValue {
 	type?: string;
@@ -162,6 +163,16 @@ export interface BaseCompendiumItem {
 	effects?: CompendiumEffects | string[] | Json | null;
 	rarity?: null | string;
 	cr?: null | string;
+	/** Structured catalog price surfaced as a cost badge (Part-2 re-pricing). */
+	price?: RaCurrencyValue | null;
+	/**
+	 * Per-ability use-economy override (5e-SRD "at-will" alignment). Leave unset
+	 * for the default tier rule (cantrip/level-0 = at-will/unlimited; leveled =
+	 * limited to primary-mod + PB uses per rest). `true` forces the ability to
+	 * remain at-will even above cantrip level; `false` forces it to be tracked
+	 * even at cantrip level. See deriveAbilityUseGrant in abilityUseEconomy.ts.
+	 */
+	atWill?: boolean | null;
 }
 
 export interface JobFeature extends BaseCompendiumItem {

@@ -124,9 +124,14 @@ export function LimitedUseAggregator({
 				if (feature.level > characterLevel) continue;
 				const lower = (feature.description ?? "").toLowerCase();
 				let freq: Frequency | null = null;
-				if (lower.includes("once per long rest")) freq = "long-rest";
-				else if (lower.includes("once per short rest")) freq = "short-rest";
-				else if (lower.includes("once per day")) freq = "once-per-day";
+				// Long rest wins over short rest when both are mentioned (a feature
+				// that fully resets on a long rest but partially on a short rest is
+				// bucketed by its full-reset cadence). Covers the common RA phrasings:
+				// "recharges on a long rest", "short rest recharge", "per long rest".
+				if (lower.includes("long rest")) freq = "long-rest";
+				else if (lower.includes("short rest")) freq = "short-rest";
+				else if (lower.includes("per day") || lower.includes("once per day"))
+					freq = "once-per-day";
 				if (!freq) continue;
 				collected.push({
 					id: `job-feature:${feature.name}`,

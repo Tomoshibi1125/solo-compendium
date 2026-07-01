@@ -139,6 +139,12 @@ export interface StaticJob {
 		name: string;
 		description: string;
 		type?: string;
+		/**
+		 * Structured limited-use resource. When present, creation/level-up seeds
+		 * uses_max/uses_current/recharge + a uses_formula modifier so the feature
+		 * shows in the Resources tab and rescales on level-up.
+		 */
+		uses?: { formula: string; recharge: "short-rest" | "long-rest" };
 	}>;
 	spellcasting?: {
 		ability: string;

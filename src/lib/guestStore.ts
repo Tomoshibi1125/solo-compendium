@@ -41,6 +41,8 @@ type SpellSlotUpdate =
 type TechniqueRow = Database["public"]["Tables"]["character_techniques"]["Row"];
 type TechniqueInsert =
 	Database["public"]["Tables"]["character_techniques"]["Insert"];
+type TechniqueUpdate =
+	Database["public"]["Tables"]["character_techniques"]["Update"];
 type RuneInscriptionRow =
 	Database["public"]["Tables"]["character_rune_inscriptions"]["Row"];
 type SigilInscriptionRow =
@@ -561,6 +563,9 @@ export function addLocalPower(
 		concentration: power.concentration ?? false,
 		is_prepared: power.is_prepared ?? false,
 		is_known: power.is_known ?? true,
+		uses_max: power.uses_max ?? null,
+		uses_current: power.uses_current ?? null,
+		recharge: power.recharge ?? null,
 	};
 
 	const powers = [...entry.powers, next];
@@ -961,6 +966,9 @@ export function addLocalTechnique(
 		learned_at: now,
 		source: technique.source || null,
 		technique_id: technique.technique_id,
+		uses_max: technique.uses_max ?? null,
+		uses_current: technique.uses_current ?? null,
+		recharge: technique.recharge ?? null,
 	};
 
 	const state = loadGuestState();
@@ -973,6 +981,35 @@ export function addLocalTechnique(
 	saveGuestState(state);
 
 	return next;
+}
+
+export function updateLocalTechnique(
+	techniqueId: string,
+	updates: TechniqueUpdate,
+): void {
+	const state = loadGuestState();
+	const entries = Object.values(state.characters);
+
+	for (const entry of entries) {
+		const idx = entry.techniques.findIndex((t) => t.id === techniqueId);
+		if (idx === -1) continue;
+
+		const now = nowIso();
+		const characterId = entry.character.id;
+		const nextTechniques = [...entry.techniques];
+		nextTechniques[idx] = { ...nextTechniques[idx], ...updates };
+
+		state.characters[characterId] = {
+			...state.characters[characterId],
+			techniques: nextTechniques,
+			character: { ...entry.character, updated_at: now },
+		};
+		state.updatedAt = now;
+		saveGuestState(state);
+		return;
+	}
+
+	throw new AppError("Technique not found", "NOT_FOUND");
 }
 
 export function removeLocalTechnique(techniqueId: string): void {

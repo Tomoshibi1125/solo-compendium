@@ -26,6 +26,7 @@ import { usePublishedHomebrew } from "@/hooks/useHomebrewContent";
 import type { Json } from "@/integrations/supabase/types";
 import { listCanonicalEntries } from "@/lib/canonicalCompendium";
 import { buildItemProperties } from "@/lib/characterCreation";
+import { formatRaCurrencyValue, type RaCurrencyValue } from "@/lib/currency";
 import {
 	filterPublishedHomebrewRecords,
 	type HomebrewRuntimeItem,
@@ -35,6 +36,7 @@ import { getDefaultSigilSlotsBaseForEquipment } from "@/lib/sigilAutomation";
 import { getCharacterCampaignId } from "@/lib/sourcebookAccess";
 import { formatRegentVernacular } from "@/lib/vernacular";
 import { AddCustomItemDialog } from "./AddCustomItemDialog";
+import { AddDialogDetailPanel } from "./AddDialogDetailPanel";
 
 function mapCompendiumEquipmentTypeToInventoryType(
 	equipmentType: string | null | undefined,
@@ -161,6 +163,18 @@ export function AddEquipmentDialog({
 						null,
 					requires_attunement: item.attunement ?? false,
 					charges: typeof item.charges === "number" ? item.charges : null,
+					price: item.price ?? null,
+					range: typeof item.range === "string" ? item.range : null,
+					flavor: typeof item.flavor === "string" ? item.flavor : null,
+					lore: item.lore ?? null,
+					discovery_lore:
+						typeof item.discovery_lore === "string"
+							? item.discovery_lore
+							: null,
+					tags: Array.isArray(item.tags) ? item.tags : null,
+					effects: item.effects ?? null,
+					limitations: item.limitations ?? null,
+					mechanics: item.mechanics ?? null,
 				}));
 			const searchKey = trimmedQuery.toLowerCase();
 			const matchingHomebrew = homebrewItems.filter((item) => {
@@ -295,6 +309,9 @@ export function AddEquipmentDialog({
 								const itemDamage = item.damage;
 								const itemDamageType = item.damage_type;
 								const itemArmorClass = item.armor_class;
+								const itemPrice = (
+									item as { price?: RaCurrencyValue | number | null }
+								).price;
 								const eqType = (item.equipment_type || "gear").toLowerCase();
 								const TypeIcon =
 									eqType === "weapon"
@@ -349,6 +366,11 @@ export function AddEquipmentDialog({
 													)}
 												</div>
 												<div className="flex items-center gap-3 text-xs text-muted-foreground mb-1">
+													{itemPrice != null && (
+														<span className="text-bond-gold">
+															{formatRaCurrencyValue(itemPrice)}
+														</span>
+													)}
 													{itemDamage && (
 														<span>
 															Damage: {itemDamage} {itemDamageType || ""}
@@ -364,6 +386,67 @@ export function AddEquipmentDialog({
 														{formatRegentVernacular(item.description)}
 													</p>
 												)}
+												<AddDialogDetailPanel
+													stats={[
+														{ label: "Type", value: item.equipment_type },
+														{ label: "Rarity", value: itemRarity },
+														{
+															label: "Damage",
+															value:
+																itemDamage && itemDamageType
+																	? `${itemDamage} ${itemDamageType}`
+																	: itemDamage,
+														},
+														{
+															label: "Range",
+															value: (item as { range?: string | null }).range,
+														},
+														{ label: "AC", value: itemArmorClass },
+														{
+															label: "Weight",
+															value:
+																item.weight != null && item.weight > 0
+																	? `${item.weight} lb.`
+																	: null,
+														},
+														{
+															label: "Attunement",
+															value: itemAttunement ? "Required" : null,
+														},
+														{
+															label: "Charges",
+															value: (item as { charges?: number | null })
+																.charges,
+														},
+													]}
+													properties={
+														Array.isArray(item.properties)
+															? (item.properties as string[])
+															: []
+													}
+													effects={
+														(item as { effects?: unknown }).effects ?? null
+													}
+													limitations={
+														(item as { limitations?: unknown }).limitations ??
+														null
+													}
+													flavor={(item as { flavor?: string | null }).flavor}
+													lore={(item as { lore?: string | null }).lore ?? null}
+													discoveryLore={
+														(item as { discovery_lore?: string | null })
+															.discovery_lore
+													}
+													tags={(item as { tags?: string[] | null }).tags}
+													sourceBook={item.source_book}
+													extra={[
+														{
+															label: "Mechanics",
+															value: (item as { mechanics?: unknown })
+																.mechanics,
+														},
+													]}
+												/>
 											</div>
 											<Button size="sm" onClick={() => handleAdd(item)}>
 												Add

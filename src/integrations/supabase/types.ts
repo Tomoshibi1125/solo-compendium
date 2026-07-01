@@ -2818,7 +2818,10 @@ export type Database = {
 					power_id: string | null;
 					power_level: number;
 					range: string | null;
+					recharge: string | null;
 					source: string | null;
+					uses_current: number | null;
+					uses_max: number | null;
 				};
 				Insert: {
 					casting_time?: string | null;
@@ -2836,7 +2839,10 @@ export type Database = {
 					power_id?: string | null;
 					power_level?: number;
 					range?: string | null;
+					recharge?: string | null;
 					source?: string | null;
+					uses_current?: number | null;
+					uses_max?: number | null;
 				};
 				Update: {
 					casting_time?: string | null;
@@ -2854,7 +2860,10 @@ export type Database = {
 					power_id?: string | null;
 					power_level?: number;
 					range?: string | null;
+					recharge?: string | null;
 					source?: string | null;
+					uses_current?: number | null;
+					uses_max?: number | null;
 				};
 				Relationships: [
 					{
@@ -3700,22 +3709,31 @@ export type Database = {
 					character_id: string;
 					id: string;
 					learned_at: string;
+					recharge: string | null;
 					source: string | null;
 					technique_id: string;
+					uses_current: number | null;
+					uses_max: number | null;
 				};
 				Insert: {
 					character_id: string;
 					id?: string;
 					learned_at?: string;
+					recharge?: string | null;
 					source?: string | null;
 					technique_id: string;
+					uses_current?: number | null;
+					uses_max?: number | null;
 				};
 				Update: {
 					character_id?: string;
 					id?: string;
 					learned_at?: string;
+					recharge?: string | null;
 					source?: string | null;
 					technique_id?: string;
+					uses_current?: number | null;
+					uses_max?: number | null;
 				};
 				Relationships: [
 					{
@@ -3730,13 +3748,6 @@ export type Database = {
 						columns: ["character_id"];
 						isOneToOne: false;
 						referencedRelation: "user_characters";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "character_techniques_technique_id_fkey";
-						columns: ["technique_id"];
-						isOneToOne: false;
-						referencedRelation: "compendium_techniques";
 						referencedColumns: ["id"];
 					},
 				];

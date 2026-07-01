@@ -5,10 +5,15 @@
 
 import { supabase } from "@/integrations/supabase/client";
 import type { Database, Json } from "@/integrations/supabase/types";
+import type { AbilityScore } from "@/lib/5eRulesEngine";
 import {
 	type AbilityProgressionKind,
 	getMaxAbilityLevelForJobAtLevel as getMaxAbilityProgressionLevelForJobAtLevel,
 } from "@/lib/abilityProgression";
+import {
+	type AbilityUseKind,
+	deriveAbilityUseGrant,
+} from "@/lib/abilityUseEconomy";
 import { findCanonicalCastableByName } from "@/lib/canonicalCompendium";
 import { calculateFeatureUses } from "@/lib/characterEngine";
 import {
@@ -292,6 +297,32 @@ export function buildItemProperties(item: StaticItem): string[] {
 /**
  * Auto-update feature uses when level changes
  */
+/**
+ * Read a character's ability scores (local or cloud) as an AbilityScore record,
+ * so limited-use formulas that reference an ability modifier (e.g. "PRE mod",
+ * "INT mod + proficiency bonus") can be resolved at seed / rescale time. Returns
+ * null when scores can't be read; ability-formula features then fall back to a
+ * null uses_max rather than a wrong count.
+ */
+export async function getCharacterAbilityScores(
+	characterId: string,
+): Promise<Partial<Record<AbilityScore, number>> | null> {
+	if (isLocalCharacterId(characterId)) {
+		return getLocalCharacterWithAbilities(characterId)?.abilities ?? null;
+	}
+	// character_abilities is the per-ability source of truth the sheet reads from.
+	const { data } = await supabase
+		.from("character_abilities")
+		.select("ability, score")
+		.eq("character_id", characterId);
+	if (!data || data.length === 0) return null;
+	const scores: Partial<Record<AbilityScore, number>> = {};
+	for (const { ability, score } of data) {
+		scores[ability] = score;
+	}
+	return scores;
+}
+
 export async function autoUpdateFeatureUses(
 	characterId: string,
 ): Promise<void> {
@@ -304,6 +335,7 @@ export async function autoUpdateFeatureUses(
 	if (!character) return;
 
 	const proficiencyBonus = getProficiencyBonus(character.level);
+	const abilities = await getCharacterAbilityScores(characterId);
 
 	const { data: features } = await supabase
 		.from("character_features")
@@ -328,6 +360,7 @@ export async function autoUpdateFeatureUses(
 				usesFormula,
 				character.level,
 				proficiencyBonus,
+				abilities,
 			);
 
 			if (newMax !== null && feature.uses_max !== newMax) {
@@ -339,6 +372,118 @@ export async function autoUpdateFeatureUses(
 					})
 					.eq("id", feature.id);
 			}
+		}
+	}
+}
+
+/** Character job + level, from Supabase or the local guest store. */
+async function getCharacterJobLevel(
+	characterId: string,
+): Promise<{ job: string | null; level: number } | null> {
+	if (isLocalCharacterId(characterId)) {
+		const local = getLocalCharacterWithAbilities(characterId);
+		if (!local) return null;
+		return {
+			job: local.job ?? null,
+			level: typeof local.level === "number" ? local.level : 1,
+		};
+	}
+	const { data } = await supabase
+		.from("characters")
+		.select("job, level")
+		.eq("id", characterId)
+		.maybeSingle();
+	if (!data) return null;
+	return {
+		job: data.job ?? null,
+		level: typeof data.level === "number" ? data.level : 1,
+	};
+}
+
+/**
+ * Resolve the per-ability use fields (uses_max/uses_current/recharge) to stamp
+ * onto a new character_powers / character_techniques row under the 5e-SRD use
+ * economy. Returns `{}` when the ability should stay unlimited/untracked
+ * (cantrips, slot-cast jobs, at-will overrides) so the row keeps NULL uses.
+ * Call at every learn/seed site (hooks, level-up, feature choices, local add).
+ */
+export async function getAbilityUseFields(
+	characterId: string,
+	input: {
+		kind: AbilityUseKind;
+		powerLevel?: number | null;
+		levelRequirement?: number | null;
+		atWill?: boolean | null;
+	},
+): Promise<{ uses_max: number; uses_current: number; recharge: string }> {
+	const empty = {} as {
+		uses_max: number;
+		uses_current: number;
+		recharge: string;
+	};
+	const [jobLevel, abilities] = await Promise.all([
+		getCharacterJobLevel(characterId),
+		getCharacterAbilityScores(characterId),
+	]);
+	if (!jobLevel) return empty;
+	const grant = deriveAbilityUseGrant({
+		kind: input.kind,
+		job: jobLevel.job,
+		level: jobLevel.level,
+		abilities,
+		powerLevel: input.powerLevel,
+		levelRequirement: input.levelRequirement,
+		atWill: input.atWill,
+	});
+	if (!grant) return empty;
+	return {
+		uses_max: grant.uses_max,
+		uses_current: grant.uses_current,
+		recharge: grant.recharge,
+	};
+}
+
+/**
+ * Rescale already-seeded per-ability power/technique uses on level-up (mirrors
+ * autoUpdateFeatureUses). The grant magnitude is `max(1, primary mod + PB)`,
+ * independent of tier, so we recompute it once and apply to every tracked row
+ * (uses_max != null), clamping uses_current. Untracked rows (cantrips, slot
+ * casters) keep NULL and are skipped. Cloud-only, like autoUpdateFeatureUses.
+ */
+export async function reconcileAbilityUses(characterId: string): Promise<void> {
+	if (isLocalCharacterId(characterId)) return;
+	const [jobLevel, abilities] = await Promise.all([
+		getCharacterJobLevel(characterId),
+		getCharacterAbilityScores(characterId),
+	]);
+	if (!jobLevel) return;
+	// A technique grant is always tracked (no cantrip/slot exclusion), so it
+	// yields the canonical magnitude for this character regardless of job.
+	const sample = deriveAbilityUseGrant({
+		kind: "technique",
+		job: jobLevel.job,
+		level: jobLevel.level,
+		abilities,
+		levelRequirement: 1,
+	});
+	const newMax = sample?.uses_max ?? null;
+	if (newMax === null) return;
+
+	for (const table of ["character_powers", "character_techniques"] as const) {
+		const { data: rows } = await supabase
+			.from(table)
+			.select("id, uses_max, uses_current")
+			.eq("character_id", characterId)
+			.not("uses_max", "is", null);
+		for (const row of rows ?? []) {
+			if (row.uses_max === newMax) continue;
+			await supabase
+				.from(table)
+				.update({
+					uses_max: newMax,
+					uses_current: Math.min(row.uses_current ?? newMax, newMax),
+				})
+				.eq("id", row.id);
 		}
 	}
 }
@@ -3345,6 +3490,49 @@ export async function addJobAwakeningBenefitsForLevel(
 		}
 	}
 
+	// Canonical static classFeatures gained at this level (level > 1; level 1 is
+	// seeded at creation by addLevel1Features). This is the level-up counterpart:
+	// it grants the feature AND seeds any structured limited-use resource so the
+	// Resources tab populates (e.g. Striker Impulse at L2, Herald Channel at L2).
+	if (isStaticJob(job) && level > 1 && job.classFeatures) {
+		const abilities = await getCharacterAbilityScores(characterId);
+		const proficiencyBonus = getProficiencyBonus(level);
+		const classFeaturesAtLevel = job.classFeatures.filter(
+			(cf) => cf.level === level,
+		);
+		for (const cf of classFeaturesAtLevel) {
+			if (existingNames.has(cf.name)) continue;
+			const usesMax = cf.uses
+				? calculateFeatureUses(
+						cf.uses.formula,
+						level,
+						proficiencyBonus,
+						abilities,
+					)
+				: null;
+			await insertCharacterFeature(characterId, {
+				name: cf.name,
+				source: `Job: Level ${level}`,
+				level_acquired: level,
+				description: cf.description,
+				action_type: null,
+				uses_max: usesMax,
+				uses_current: usesMax,
+				recharge: cf.uses?.recharge ?? null,
+				modifiers: cf.uses
+					? ([
+							{
+								type: "resource",
+								target: "uses_formula",
+								value: cf.uses.formula,
+							},
+						] as unknown as Json)
+					: null,
+				is_active: true,
+			});
+		}
+	}
+
 	// Path benefits
 	let characterPath: string | null = null;
 	if (isLocalCharacterId(characterId)) {
@@ -3693,9 +3881,32 @@ export async function addLevel1Features(
 
 	// Canonical static classFeatures at level 1.
 	if (isStaticJob(job) && job.classFeatures) {
+		// Ability scores let us resolve ability-modifier uses formulas (e.g. Idol
+		// Hype = "PRE mod", Holy Knight Oath Sense = "1 + PRE mod").
+		const abilities = await getCharacterAbilityScores(characterId);
 		const level1Features = job.classFeatures.filter((cf) => cf.level === 1);
 		for (const cf of level1Features) {
 			if (existingNames.has(cf.name)) continue;
+			// Seed structured limited-use resources so charged features show up in
+			// the Resources tab and rescale on level-up (via autoUpdateFeatureUses).
+			const usesMax = cf.uses
+				? calculateFeatureUses(
+						cf.uses.formula,
+						1,
+						getProficiencyBonus(1),
+						abilities,
+					)
+				: null;
+			const recharge = cf.uses?.recharge ?? null;
+			const modifiers = cf.uses
+				? ([
+						{
+							type: "resource",
+							target: "uses_formula",
+							value: cf.uses.formula,
+						},
+					] as unknown as Json)
+				: null;
 			if (isLocalCharacterId(characterId)) {
 				addLocalFeature(characterId, {
 					name: cf.name,
@@ -3703,9 +3914,10 @@ export async function addLevel1Features(
 					level_acquired: 1,
 					description: cf.description,
 					action_type: null,
-					uses_max: null,
-					uses_current: null,
-					recharge: null,
+					uses_max: usesMax,
+					uses_current: usesMax,
+					recharge,
+					modifiers,
 					is_active: true,
 				});
 			} else {
@@ -3718,9 +3930,10 @@ export async function addLevel1Features(
 						level_acquired: 1,
 						description: cf.description,
 						action_type: null,
-						uses_max: null,
-						uses_current: null,
-						recharge: null,
+						uses_max: usesMax,
+						uses_current: usesMax,
+						recharge,
+						modifiers,
 						is_active: true,
 					});
 				if (featErr)

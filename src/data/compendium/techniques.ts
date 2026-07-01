@@ -1,5 +1,4 @@
 import type { CompendiumTechnique } from "../../types/compendium";
-import { canonicalResourceCost } from "./abilityResourceCost";
 import { techniques_archetype } from "./techniques-archetype";
 import { techniques_core } from "./techniques-core";
 import { techniques_supplemental } from "./techniques-supplemental";
@@ -9,35 +8,16 @@ function normalizeTechniqueMechanics(
 ): CompendiumTechnique {
 	// Strip mechanics keys that mirror top-level fields. Each entry's own
 	// `limitations` + `uses_per_rest_formula` (per-rest charges, recharge) is the
-	// source of truth — the per-character use count is resolved at runtime via
-	// computeTechniqueUses, which parses 5e-style formula strings.
+	// source of truth — the per-character use count is resolved at runtime via the
+	// per-ability use economy (see abilityUseEconomy.ts). Job resources
+	// (Covenant/Infusion) remain job-feature resources and are no longer injected
+	// as a per-ability "Cost" line here.
 	const mechanics =
 		technique.mechanics && typeof technique.mechanics === "object"
 			? (technique.mechanics as Record<string, unknown>)
 			: null;
 
-	// Job-exclusive techniques spend that job's canon resource (Holy Knight →
-	// Covenant, Technomancer → Infusion). Shared (multi-job) techniques keep
-	// their per-rest charge.
-	const cost = canonicalResourceCost(
-		technique.classes,
-		technique.level_requirement,
-	);
-	const withCost: CompendiumTechnique = cost
-		? {
-				...technique,
-				limitations: {
-					...(technique.limitations &&
-					typeof technique.limitations === "object" &&
-					!Array.isArray(technique.limitations)
-						? technique.limitations
-						: {}),
-					cost,
-				},
-			}
-		: technique;
-
-	if (!mechanics) return withCost;
+	if (!mechanics) return technique;
 
 	const nextMechanics: Record<string, unknown> = {};
 	for (const [key, value] of Object.entries(mechanics)) {
@@ -56,7 +36,7 @@ function normalizeTechniqueMechanics(
 	}
 
 	return {
-		...withCost,
+		...technique,
 		mechanics: nextMechanics as CompendiumTechnique["mechanics"],
 	};
 }

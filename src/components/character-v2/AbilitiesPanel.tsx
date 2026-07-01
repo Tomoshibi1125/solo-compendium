@@ -13,13 +13,17 @@
 
 import { Gauge, ScrollText, Sword, Wand2 } from "lucide-react";
 import { useState } from "react";
+import { LimitedUseAggregator } from "@/components/character/LimitedUseAggregator";
 import { LimitedUseTracker } from "@/components/character/LimitedUseTracker";
 import { PowersList } from "@/components/character/PowersList";
+import { SpellSlotsDisplay } from "@/components/character/SpellSlotsDisplay";
 import { SpellsList } from "@/components/character/SpellsList";
 import { TechniquesList } from "@/components/character/TechniquesList";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useCharacter } from "@/hooks/useCharacters";
 import type { useSpellCasting } from "@/hooks/useSpellCasting";
+import { getCasterType } from "@/lib/characterCalculations";
 import type { DetailData } from "@/types/character";
 
 interface AbilitiesPanelProps {
@@ -38,6 +42,8 @@ export function AbilitiesPanel({
 	const [activeSubTab, setActiveSubTab] = useState<
 		"spells" | "powers" | "techniques" | "resources"
 	>("spells");
+	const { data: character } = useCharacter(characterId);
+	const isCaster = !!character?.job && getCasterType(character.job) !== "none";
 
 	return (
 		<AscendantWindow title="ABILITIES">
@@ -110,8 +116,19 @@ export function AbilitiesPanel({
 					/>
 				</TabsContent>
 
-				<TabsContent value="resources" className="mt-0 outline-none">
+				<TabsContent value="resources" className="mt-0 outline-none space-y-4">
+					{isCaster && (
+						<SpellSlotsDisplay
+							characterId={characterId}
+							job={character?.job ?? null}
+							level={character?.level ?? 1}
+							abilities={character?.abilities ?? undefined}
+						/>
+					)}
+					{/* Interactive trackers for features that carry structured uses. */}
 					<LimitedUseTracker characterId={characterId} />
+					{/* Auto-derived limited-use features from job/path/regent data. */}
+					<LimitedUseAggregator characterId={characterId} />
 				</TabsContent>
 			</Tabs>
 		</AscendantWindow>

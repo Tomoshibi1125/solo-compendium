@@ -8,6 +8,7 @@ import {
 } from "@/components/compendium/detailFormatters";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
+import { formatRaCurrencyValue } from "@/lib/currency";
 import { formatRarityLabel } from "@/lib/labels";
 import { formatRegentVernacular } from "@/lib/vernacular";
 import type { CompendiumTattoo } from "@/types/compendium";
@@ -65,6 +66,14 @@ export const TattooDetail = ({ data }: TattooDetailProps) => {
 						)}
 						{data.attunement && (
 							<Badge variant="destructive">Requires Attunement</Badge>
+						)}
+						{data.price != null && (
+							<Badge
+								variant="outline"
+								className="text-bond-gold border-yellow-600/40"
+							>
+								{formatRaCurrencyValue(data.price)}
+							</Badge>
 						)}
 						{data.body_part && (
 							<Badge

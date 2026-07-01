@@ -153,7 +153,22 @@
       "Bash(echo \"TEST2A_EXIT=$?\")",
       "Bash(echo \"LINT_EXIT=$?\")",
       "Bash(ls -lt \"/c/Users/jjcal/.claude/plans/\" | head -20)",
-      "Bash(ls -lat \"C:/Users/jjcal/.claude/plans/\" | head -40)"
+      "Bash(ls -lat \"C:/Users/jjcal/.claude/plans/\" | head -40)",
+      "Bash(ls -lat \"C:/Users/jjcal/.claude/plans/\" 2>/dev/null | head -40)",
+      "Bash(node -e ' *)",
+      "Bash(npx tsx -e ' *)",
+      "Bash(cd \"C:/Users/jjcal/Documents/solo-compendium\" && cat /tmp/regerr.txt 2>/dev/null | head -20; echo \"=== field counts in regents.ts ===\"; grep -c \"spellcasting:\" src/data/compendium/regents.ts; echo \"^spellcasting blocks\"; grep -c \"powersKnown:\" src/data/compendium/regents.ts; echo \"^powersKnown\"; grep -c \"techniquesKnown:\" src/data/compendium/regents.ts; echo \"^techniquesKnown\"; grep -c \"spells_known:\" src/data/compendium/regents.ts; echo \"^spells_known\"; grep -c \"progression_table:\" src/data/compendium/regents.ts; echo \"^progression_table\"; echo \"=== regent names/ids ===\"; grep -nE \"^\\\\s*\\(id|name\\):\" src/data/compendium/regents.ts | grep -iE \"regent|_regent|id:\" | head -40)",
+      "Bash(git --no-pager diff -- src/lib/currency.ts src/data/compendium/providers/index.ts src/types/compendium.ts)",
+      "Bash(git --no-pager diff -- src/integrations/supabase/types.ts src/lib/5eCharacterCalculations.ts src/components/character/AddEquipmentDialog.tsx src/components/character/AddTattooDialog.tsx src/components/character/AddVehicleDialog.tsx src/components/compendium/TattooDetail.tsx src/components/compendium/VehicleDetail.tsx)",
+      "Bash(git --no-pager diff -- src/components/character-v2/AbilitiesPanel.tsx src/components/character/CharacterExtrasPanel.tsx src/components/character/LimitedUseAggregator.tsx src/data/compendium/jobs.ts src/lib/characterCreation.ts src/types/character.ts)",
+      "Bash(kill -0 %1)",
+      "Bash(:)",
+      "Bash(grep -qiE \"error TS|Found [0-9]+ error|^\\\\s*$\" \"C:/Users/jjcal/AppData/Local/Temp/claude/C--Users-jjcal-Documents-solo-compendium/a5211016-65ec-468c-95f5-5a59f762f5cd/tasks/bbl19pqs0.output\")",
+      "Bash(break)",
+      "Bash(awk '/character_powers: \\\\{/,/character_spells: \\\\{|character_techniques: \\\\{|character_stats: \\\\{/' src/integrations/supabase/types.ts)",
+      "Bash(awk '/character_techniques: \\\\{/,/character_[a-z]+: \\\\{/' src/integrations/supabase/types.ts)",
+      "Bash(awk '/character_spells: \\\\{/,/character_[a-z]+: \\\\{/' src/integrations/supabase/types.ts)",
+      "Bash(grep -nE \"split|\\\\\\\\+|mod|proficiency|pb|parseInt|Number|reduce|token\")"
     ]
   }
 }

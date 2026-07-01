@@ -182,6 +182,21 @@ describe("spell known/prepared count formulas", () => {
 		expect(getSpellsKnownLimit(jobName, level)).toBe(expected);
 	});
 
+	// Stalker → Ranger: a KNOWN half-caster (floor(level/2)+1, none at level 1),
+	// NOT a prepared caster.
+	it.each([
+		["Stalker", 1, 0],
+		["Stalker", 2, 2],
+		["Stalker", 9, 5],
+		["Stalker", 20, 11],
+	])("%s level %i knows floor(level/2)+1 spells", (jobName, level, expected) => {
+		expect(getSpellsKnownLimit(jobName, level)).toBe(expected);
+	});
+
+	it("Stalker does not use the prepared-spells formula", () => {
+		expect(getSpellsPreparedLimit("Stalker", 9, 4)).toBeNull();
+	});
+
 	it.each([
 		"Mage",
 		"Herald",
@@ -196,7 +211,6 @@ describe("spell known/prepared count formulas", () => {
 		["Mage", 1, -1, 1],
 		["Mage", 5, 4, 9],
 		["Technomancer", 2, 3, 5],
-		["Stalker", 9, 4, 13],
 		["Herald", 10, 5, 15],
 		["Holy Knight", 13, 1, 14],
 		["Summoner", 20, 3, 23],

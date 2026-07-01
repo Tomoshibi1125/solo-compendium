@@ -25,6 +25,7 @@ import {
 	listLearnablePowers,
 	listLearnableSpells,
 } from "@/lib/canonicalCompendium";
+import { getAbilityUseFields } from "@/lib/characterCreation";
 import { getCharacterCampaignId } from "@/lib/sourcebookAccess";
 import { formatRegentVernacular, MONARCH_LABEL } from "@/lib/vernacular";
 import type { AbilityScore } from "@/types/core-rules";
@@ -710,11 +711,20 @@ export function FeatureChoicesPanel({ characterId }: { characterId: string }) {
 						const techId = techRow?.id;
 						if (!techId) continue;
 
+						const techUseFields = await getAbilityUseFields(characterId, {
+							kind: "technique",
+							levelRequirement:
+								(techRow as { level_requirement?: number | null })
+									.level_requirement ?? null,
+							atWill: (techRow as { atWill?: boolean | null }).atWill ?? null,
+						});
+
 						await supabase.from("character_techniques").upsert(
 							{
 								character_id: characterId,
 								technique_id: techId,
 								source: `Choice: ${group.choice_key}`,
+								...techUseFields,
 							},
 							{ onConflict: "character_id,technique_id" },
 						);
@@ -761,6 +771,12 @@ export function FeatureChoicesPanel({ characterId }: { characterId: string }) {
 								? `Choice Spell: ${group.choice_key}`
 								: `Choice Power: ${group.choice_key}`;
 
+						const powerUseFields = await getAbilityUseFields(characterId, {
+							kind: "power",
+							powerLevel: powerRow.power_level ?? 0,
+							atWill: (powerRow as { atWill?: boolean | null }).atWill ?? null,
+						});
+
 						await supabase.from("character_powers").insert({
 							character_id: characterId,
 							power_id: powerRow.id ?? null,
@@ -775,6 +791,7 @@ export function FeatureChoicesPanel({ characterId }: { characterId: string }) {
 							is_known: true,
 							description: powerRow.description ?? null,
 							higher_levels: powerRow.higher_levels ?? null,
+							...powerUseFields,
 						});
 
 						existingPowerNames.add(powerName);

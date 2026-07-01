@@ -26,7 +26,9 @@ import {
 } from "@/components/ui/select";
 import { useDialogSwipeClose } from "@/hooks/useDialogSwipeClose";
 import { useAddCharacterVehicle } from "@/hooks/useVehicles";
+import { formatRaCurrencyValue } from "@/lib/currency";
 import type { CompendiumVehicle } from "@/types/compendium";
+import { AddDialogDetailPanel } from "./AddDialogDetailPanel";
 
 interface AddVehicleDialogProps {
 	open: boolean;
@@ -111,41 +113,105 @@ export function AddVehicleDialog({
 				<ScrollArea className="h-[40vh] border border-border/30 rounded">
 					<div className="space-y-1 p-2">
 						{visible.map((v) => (
-							<button
+							<div
 								key={v.id}
-								type="button"
-								onClick={() => setSelectedId(v.id)}
-								className={`w-full text-left p-2 rounded border transition-colors ${
+								className={`rounded border transition-colors ${
 									selectedId === v.id
 										? "border-primary bg-primary/15 ring-2 ring-primary/60"
 										: "border-transparent hover:border-border/50 hover:bg-black/20"
 								}`}
-								data-testid={`vehicle-catalog-${v.id}`}
 							>
-								<div className="flex items-center gap-2">
-									<span className="font-display text-sm">{v.name}</span>
-									<span className="text-[11px] uppercase text-muted-foreground">
-										{v.vehicle_type}
-									</span>
-									<span className="text-[11px] text-muted-foreground">
-										{v.size}
-									</span>
-									<Badge variant="outline" className="text-[11px]">
-										{v.vrp_cost ?? 0} VRP
-									</Badge>
-									<Badge variant="outline" className="text-[11px]">
-										{v.mod_capacity ?? 0} cap
-									</Badge>
-									{v.rank && (
-										<span className="text-[11px] text-fuchsia-300">
-											Rank {v.rank}
+								<button
+									type="button"
+									onClick={() => setSelectedId(v.id)}
+									className="w-full text-left p-2"
+									data-testid={`vehicle-catalog-${v.id}`}
+								>
+									<div className="flex items-center gap-2">
+										<span className="font-display text-sm">{v.name}</span>
+										<span className="text-[11px] uppercase text-muted-foreground">
+											{v.vehicle_type}
 										</span>
-									)}
+										<span className="text-[11px] text-muted-foreground">
+											{v.size}
+										</span>
+										{v.price != null && (
+											<Badge
+												variant="outline"
+												className="text-[11px] text-bond-gold border-yellow-600/40"
+											>
+												{formatRaCurrencyValue(v.price)}
+											</Badge>
+										)}
+										<Badge variant="outline" className="text-[11px]">
+											{v.vrp_cost ?? 0} VRP
+										</Badge>
+										<Badge variant="outline" className="text-[11px]">
+											{v.mod_capacity ?? 0} cap
+										</Badge>
+										{v.rank && (
+											<span className="text-[11px] text-fuchsia-300">
+												Rank {v.rank}
+											</span>
+										)}
+									</div>
+									<p className="text-xs text-muted-foreground mt-1 leading-relaxed">
+										{v.description}
+									</p>
+								</button>
+								<div className="px-2 pb-2">
+									<AddDialogDetailPanel
+										stats={[
+											{ label: "Type", value: v.vehicle_type },
+											{ label: "Size", value: v.size },
+											{ label: "Rank", value: v.rank },
+											{ label: "AC", value: v.armor_class },
+											{ label: "HP", value: v.hit_points?.max },
+											{
+												label: "Land Speed",
+												value: v.speed?.land ? `${v.speed.land} ft` : null,
+											},
+											{
+												label: "Air Speed",
+												value: v.speed?.air ? `${v.speed.air} ft` : null,
+											},
+											{
+												label: "Water Speed",
+												value: v.speed?.water ? `${v.speed.water} ft` : null,
+											},
+											{
+												label: "Rift Speed",
+												value: v.speed?.rift ? `${v.speed.rift} ft` : null,
+											},
+											{
+												label: "Carry Capacity",
+												value: v.carry_capacity_lbs
+													? `${v.carry_capacity_lbs} lb.`
+													: null,
+											},
+											{
+												label: "Cargo Capacity",
+												value: v.cargo_capacity_lbs
+													? `${v.cargo_capacity_lbs} lb.`
+													: null,
+											},
+											{ label: "VRP Cost", value: v.vrp_cost },
+											{ label: "Mod Capacity", value: v.mod_capacity },
+											{
+												label: "Requisition",
+												value: v.requisition_notes,
+											},
+										]}
+										properties={(v.abilities ?? []).map(
+											(ability) => ability.name,
+										)}
+										tags={(v as { tags?: string[] | null }).tags}
+										lore={v.lore ?? null}
+										discoveryLore={v.discovery_lore}
+										sourceBook={v.source_book}
+									/>
 								</div>
-								<p className="text-xs text-muted-foreground mt-1 leading-relaxed">
-									{v.description}
-								</p>
-							</button>
+							</div>
 						))}
 					</div>
 				</ScrollArea>
@@ -153,6 +219,11 @@ export function AddVehicleDialog({
 				{selected && (
 					<div className="space-y-2 pt-2">
 						<div className="flex flex-wrap items-center gap-2 text-xs">
+							{selected.price != null && (
+								<Badge variant="secondary" className="text-bond-gold">
+									{formatRaCurrencyValue(selected.price)}
+								</Badge>
+							)}
 							<Badge variant="secondary">{selected.vrp_cost ?? 0} VRP</Badge>
 							<Badge variant="outline">
 								{selected.mod_capacity ?? 0} mod capacity

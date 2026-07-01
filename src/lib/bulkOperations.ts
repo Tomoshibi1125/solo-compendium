@@ -9,6 +9,7 @@ import { AppError } from "@/lib/appError";
 import {
 	addJobAwakeningBenefitsForLevel,
 	autoUpdateFeatureUses,
+	reconcileAbilityUses,
 } from "@/lib/characterCreation";
 import {
 	type ChoiceSourceData,
@@ -402,6 +403,7 @@ export async function bulkLevelUp(
 			// Auto-update existing feature uses (proficiency-based features scale with level)
 			try {
 				await autoUpdateFeatureUses(id);
+				await reconcileAbilityUses(id);
 			} catch {
 				// Best-effort
 			}

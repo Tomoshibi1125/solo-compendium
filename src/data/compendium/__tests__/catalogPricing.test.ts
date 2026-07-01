@@ -55,4 +55,30 @@ describe("catalog pricing — surfaced prices are varied + tier-correct", () => 
 			}
 		}
 	});
+
+	it("tattoos carry a rarity-derived structured price (add-menu cost parity)", async () => {
+		const entries = await staticDataProvider.getTattoos("");
+		expect(entries.length).toBeGreaterThan(0);
+		for (const entry of entries) {
+			const price = (
+				entry as { price?: { currency?: string; amount?: number } }
+			).price;
+			expect(price, `${entry.id} missing price`).toBeTruthy();
+			expect(CURRENCY_IDS.has(price?.currency as RaCurrencyId)).toBe(true);
+			expect(price?.amount ?? 0).toBeGreaterThan(0);
+		}
+	});
+
+	it("vehicles/mounts carry a rank-derived structured price (add-menu cost parity)", async () => {
+		const entries = await staticDataProvider.getVehicles("");
+		expect(entries.length).toBeGreaterThan(0);
+		for (const entry of entries) {
+			const price = (
+				entry as { price?: { currency?: string; amount?: number } }
+			).price;
+			expect(price, `${entry.id} missing price`).toBeTruthy();
+			expect(CURRENCY_IDS.has(price?.currency as RaCurrencyId)).toBe(true);
+			expect(price?.amount ?? 0).toBeGreaterThan(0);
+		}
+	});
 });

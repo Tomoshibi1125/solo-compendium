@@ -127,4 +127,14 @@ describe("5e Character Calculations", () => {
 		const minLimit = getSpellsPreparedLimit("Mage", 1, -1);
 		expect(minLimit).toBe(1);
 	});
+
+	test("Stalker (Ranger) is a KNOWN caster, not a prepared caster", () => {
+		// Ranger is a known half-caster in 5e: no daily preparation.
+		expect(getSpellsPreparedLimit("Stalker", 5, 3)).toBeNull();
+		// No spells at level 1; floor(level/2)+1 from level 2 onward.
+		expect(getSpellsKnownLimit("Stalker", 1)).toBe(0);
+		expect(getSpellsKnownLimit("Stalker", 2)).toBe(2);
+		expect(getSpellsKnownLimit("Stalker", 5)).toBe(3);
+		expect(getSpellsKnownLimit("Stalker", 20)).toBe(11);
+	});
 });

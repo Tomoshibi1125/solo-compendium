@@ -57,6 +57,29 @@ describe("techniques data normalization", () => {
 		expect(techniques.length).toBeGreaterThanOrEqual(200);
 	});
 
+	it("technique ids are static string slugs, not DB uuids (column must stay TEXT)", () => {
+		// Regression guard for the "Failed to add technique" bug: the learned
+		// technique_id holds these static slugs, so character_techniques.technique_id
+		// is TEXT with no FK (see migration 20260701000000). If technique ids ever
+		// became uuids someone might reintroduce a compendium_techniques FK, which
+		// would break adding every static-catalog technique again.
+		const UUID_RE =
+			/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+		for (const technique of techniques) {
+			expect(typeof technique.id, `${technique.name} id is a string`).toBe(
+				"string",
+			);
+			expect(
+				technique.id.length,
+				`${technique.name} id non-empty`,
+			).toBeGreaterThan(0);
+			expect(
+				UUID_RE.test(technique.id),
+				`Technique id "${technique.id}" is a UUID; technique_id is TEXT holding static slugs — do not reintroduce a compendium_techniques FK`,
+			).toBe(false);
+		}
+	});
+
 	it("does not contain legacy stamina text anywhere", () => {
 		expect(JSON.stringify(techniques)).not.toMatch(/Stamina/i);
 	});
@@ -196,35 +219,17 @@ describe("techniques data normalization", () => {
 		expect(offenders).toEqual([]);
 	});
 
-	it("job-exclusive techniques spend that job's canon resource", () => {
-		const SINGLE_JOB_RESOURCE: Record<string, string> = {
-			"Holy Knight": "Covenant",
-			Technomancer: "Infusion",
-		};
-		const singleJob = techniques.filter(
-			(t) =>
-				Array.isArray(t.classes) &&
-				t.classes.length === 1 &&
-				(t.classes[0] as string) in SINGLE_JOB_RESOURCE,
-		);
-		expect(singleJob.length).toBeGreaterThan(0);
-		for (const technique of singleJob) {
-			const resource = SINGLE_JOB_RESOURCE[(technique.classes as string[])[0]];
-			const cost = technique.limitations.cost;
-			expect(typeof cost, `${technique.id} cost`).toBe("string");
-			expect(cost, `${technique.id} spends ${resource}`).toContain(resource);
-		}
-	});
-
-	it("shared (multi-job) techniques keep per-rest charges, no single-job resource", () => {
-		const shared = techniques.filter(
-			(t) => Array.isArray(t.classes) && t.classes.length > 1,
-		);
-		for (const technique of shared) {
-			const cost = String(technique.limitations.cost ?? "");
+	it("does not inject a per-ability Covenant/Infusion 'Cost' line on any technique", () => {
+		// Job resources (Holy Knight → Covenant, Technomancer → Infusion) are
+		// job-feature resources, NOT a per-ability cost. Under the 5e-SRD per-ability
+		// use economy, leveled techniques are limited by (primary mod + PB) uses per
+		// rest instead, so no technique should carry a borrowed single-job resource
+		// cost. Guards the removal of the old canonicalResourceCost injection.
+		for (const technique of techniques) {
+			const cost = String(technique.limitations?.cost ?? "");
 			expect(
 				cost,
-				`${technique.id} must not borrow a single-job resource`,
+				`${technique.id} must not carry a job-resource 'Cost' line`,
 			).not.toMatch(/Covenant|Infusion/);
 		}
 	});

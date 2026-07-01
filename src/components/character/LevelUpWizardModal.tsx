@@ -63,7 +63,9 @@ import {
 	addJobAwakeningBenefitsForLevel,
 	applyJobAwakeningTraitsToCharacter,
 	autoUpdateFeatureUses,
+	getAbilityUseFields,
 	insertCharacterFeature,
+	reconcileAbilityUses,
 } from "@/lib/characterCreation";
 import { calculateFeatureUses } from "@/lib/characterEngine";
 import {
@@ -1210,6 +1212,7 @@ export const LevelUpWizardModal = ({
 			// Auto-update remaining feature uses
 			try {
 				await autoUpdateFeatureUses(character.id);
+				await reconcileAbilityUses(character.id);
 			} catch (error) {
 				logger.error(
 					"Failed to auto-update feature uses on level down:",
@@ -1465,6 +1468,11 @@ export const LevelUpWizardModal = ({
 			);
 			for (const power of selectedPowerEntries) {
 				assertCanonicalPowerLearnable(power, levelUpAbilityContext);
+				const powerUseFields = await getAbilityUseFields(character.id, {
+					kind: "power",
+					powerLevel: power.power_level,
+					atWill: (power as { atWill?: boolean | null }).atWill ?? null,
+				});
 				const powerPayload = {
 					power_id: power.id,
 					name: power.name,
@@ -1478,6 +1486,7 @@ export const LevelUpWizardModal = ({
 					higher_levels: power.higher_levels || null,
 					is_prepared: false,
 					is_known: true,
+					...powerUseFields,
 				};
 
 				if (isLocalCharacterId(character.id)) {
@@ -1519,6 +1528,13 @@ export const LevelUpWizardModal = ({
 			);
 			for (const technique of selectedTechniqueEntries) {
 				assertCanonicalTechniqueLearnable(technique, levelUpAbilityContext);
+				const techniqueUseFields = await getAbilityUseFields(character.id, {
+					kind: "technique",
+					levelRequirement:
+						(technique as { level_requirement?: number | null })
+							.level_requirement ?? null,
+					atWill: (technique as { atWill?: boolean | null }).atWill ?? null,
+				});
 				if (isLocalCharacterId(character.id)) {
 					const existingTechniques = listLocalTechniques(character.id);
 					if (
@@ -1531,6 +1547,7 @@ export const LevelUpWizardModal = ({
 					addLocalTechnique(character.id, {
 						technique_id: technique.id,
 						source: `Level ${newLevel} Technique Choice`,
+						...techniqueUseFields,
 					});
 					continue;
 				}
@@ -1547,6 +1564,7 @@ export const LevelUpWizardModal = ({
 					character_id: character.id,
 					technique_id: technique.id,
 					source: `Level ${newLevel} Technique Choice`,
+					...techniqueUseFields,
 				});
 			}
 
@@ -1743,6 +1761,7 @@ export const LevelUpWizardModal = ({
 					feature.uses_formula || null,
 					newLevel,
 					newProficiencyBonus,
+					character.abilities,
 				);
 
 				await insertCharacterFeature(character.id, {
@@ -1829,6 +1848,7 @@ export const LevelUpWizardModal = ({
 			// Auto-update existing feature uses (proficiency-based features scale with level)
 			try {
 				await autoUpdateFeatureUses(character.id);
+				await reconcileAbilityUses(character.id);
 			} catch (error) {
 				logger.error("Failed to auto-update feature uses:", error);
 			}

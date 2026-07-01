@@ -28,7 +28,7 @@ import {
 import { resolveSpellActionFormula } from "@/lib/spellActionFormulas";
 import { resolveWeaponActionFormula } from "@/lib/weaponActionFormulas";
 import type { CompendiumPower, CompendiumTechnique } from "@/types/compendium";
-import { type AbilityScore, getAbilityModifier } from "@/types/core-rules";
+import type { AbilityScore } from "@/types/core-rules";
 import {
 	findCanonicalForRow,
 	useCanonicalEquipmentMap,
@@ -548,11 +548,19 @@ export const useCombatActions = (characterId: string) => {
 			const techData = t.technique as unknown as CompendiumTechnique;
 			if (!techData) return;
 
-			const strMod = getAbilityModifier(derivedStats.finalAbilities.STR);
-			const agiMod = getAbilityModifier(derivedStats.finalAbilities.AGI);
-			const techniqueAbility: AbilityScore = agiMod > strMod ? "AGI" : "STR";
-			const abiMod = Math.max(strMod, agiMod);
-			const saveDC = 8 + abiMod + profBonus + customPowerDcBonus;
+			// F3 (per-class governing ability): techniques use the job's canonical
+			// primary ability — the same map powers use via resolvePowerActionFormula
+			// (getJobPrimaryAbility) — not a shared STR/AGI heuristic. A technique
+			// that names its own save ability still overrides saveAbility below.
+			const techniqueFormula = resolvePowerActionFormula({
+				job: character.job,
+				abilities: derivedStats.finalAbilities,
+				proficiencyBonus: profBonus,
+				dcBonus: customPowerDcBonus,
+			});
+			const techniqueAbility: AbilityScore = techniqueFormula.ability;
+			const abiMod = techniqueFormula.abilityModifier;
+			const saveDC = techniqueFormula.saveDC;
 
 			const mechanics = (techData.mechanics as unknown as JsonMechanics) || {};
 			const attackMechanics =

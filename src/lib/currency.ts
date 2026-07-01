@@ -226,6 +226,48 @@ export function buildRaCurrencyItemDescription(currencyId: RaCurrencyId) {
 		: "Bureau-issued Credits backed by essence reserves.";
 }
 
+// Representative catalog price by rarity tier, using the same tier→currency
+// ladder as the Part-2 item re-pricing (cheap goods in crystal, mid gear in
+// gate, top-tier in core). Gives categories that lack an explicit `value`
+// (tattoos, vehicles/mounts) a sensible gold cost for the sheet add-menus.
+// Keep aligned with catalogPricing.test.ts: common never core, legendary/
+// artifact settle in core.
+const RARITY_PRICE_LADDER: Record<string, RaCurrencyValue> = {
+	common: { currency: "crystal", amount: 50 },
+	uncommon: { currency: "gate", amount: 5 },
+	rare: { currency: "gate", amount: 50 },
+	epic: { currency: "core", amount: 5 },
+	very_rare: { currency: "core", amount: 5 },
+	legendary: { currency: "core", amount: 25 },
+	artifact: { currency: "core", amount: 100 },
+};
+
+/** Derive a structured price from a rarity tier (defaults to uncommon). */
+export function priceForRarityTier(
+	tier: string | null | undefined,
+): RaCurrencyValue {
+	const key = (tier ?? "").trim().toLowerCase().replace(/[\s-]/g, "_");
+	return RARITY_PRICE_LADDER[key] ?? RARITY_PRICE_LADDER.uncommon;
+}
+
+// Vehicle/mount rank (D/C/B/A/S) → rarity tier for pricing.
+const VEHICLE_RANK_TO_TIER: Record<string, string> = {
+	d: "common",
+	c: "uncommon",
+	b: "rare",
+	a: "epic",
+	s: "legendary",
+};
+
+/** Derive a structured price from a vehicle/mount rank (defaults to uncommon). */
+export function priceForVehicleRank(
+	rank: string | null | undefined,
+): RaCurrencyValue {
+	const tier =
+		VEHICLE_RANK_TO_TIER[(rank ?? "").trim().toLowerCase()] ?? "uncommon";
+	return priceForRarityTier(tier);
+}
+
 // ─────────────────────────────────────────────────────────────────────────
 // P1.10: Currency overflow normalization (RA EXCEEDS DDB)
 // ─────────────────────────────────────────────────────────────────────────

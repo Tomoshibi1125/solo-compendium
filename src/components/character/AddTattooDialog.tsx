@@ -14,9 +14,11 @@ import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import { type CharacterTattooInsert, useTattoos } from "@/hooks/useTattoos";
 import { listCanonicalEntries } from "@/lib/canonicalCompendium";
+import { formatRaCurrencyValue } from "@/lib/currency";
 import { getCharacterCampaignId } from "@/lib/sourcebookAccess";
 import { formatRegentVernacular } from "@/lib/vernacular";
 import type { CompendiumTattoo } from "@/types/compendium";
+import { AddDialogDetailPanel } from "./AddDialogDetailPanel";
 
 const isRecord = (value: unknown): value is Record<string, unknown> =>
 	!!value && typeof value === "object" && !Array.isArray(value);
@@ -181,6 +183,14 @@ export function AddTattooDialog({
 													<Badge variant="outline" className="text-xs">
 														{tattoo.body_part || "Tattoo"}
 													</Badge>
+													{tattoo.price != null && (
+														<Badge
+															variant="outline"
+															className="text-xs text-bond-gold border-yellow-600/40"
+														>
+															{formatRaCurrencyValue(tattoo.price)}
+														</Badge>
+													)}
 													{requiresAttunement && (
 														<Badge
 															variant="outline"
@@ -195,6 +205,41 @@ export function AddTattooDialog({
 														{formatRegentVernacular(primaryText)}
 													</p>
 												)}
+												<AddDialogDetailPanel
+													stats={[
+														{ label: "Placement", value: tattoo.body_part },
+														{ label: "Ink Type", value: tattoo.ink_type },
+														{ label: "Rarity", value: tattoo.rarity },
+														{
+															label: "Attunement",
+															value: requiresAttunement ? "Required" : null,
+														},
+														{
+															label: "Resonance",
+															value: tattoo.resonance_effect,
+														},
+													]}
+													properties={
+														Array.isArray(tattoo.active_veins)
+															? tattoo.active_veins
+															: []
+													}
+													description={tattoo.description}
+													effects={tattoo.effects}
+													limitations={tattoo.limitations}
+													flavor={
+														typeof tattoo.flavor === "string"
+															? tattoo.flavor
+															: null
+													}
+													lore={tattoo.lore ?? null}
+													discoveryLore={tattoo.discovery_lore}
+													tags={tattoo.tags}
+													sourceBook={tattoo.source_book ?? tattoo.source}
+													extra={[
+														{ label: "Mechanics", value: tattoo.mechanics },
+													]}
+												/>
 											</div>
 											<Button size="sm" onClick={() => handleAdd(tattoo)}>
 												<Sparkles className="w-3.5 h-3.5 mr-1" />

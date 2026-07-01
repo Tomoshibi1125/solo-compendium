@@ -21,6 +21,7 @@ import { useAscendantTools } from "@/hooks/useGlobalDDBeyondIntegration";
 import { useRecordRoll } from "@/hooks/useRollHistory";
 import { useTechniques } from "@/hooks/useTechniques";
 import { formatModifier } from "@/lib/characterCalculations";
+import { getJobTechniqueMode } from "@/lib/jobAbilityAccess";
 import {
 	resolveTechniqueUseFormula,
 	resolveTechniqueUseRollType,
@@ -49,6 +50,7 @@ export function TechniquesList({
 	const {
 		techniques = [],
 		isLoading,
+		updateTechnique,
 		removeTechnique,
 	} = useTechniques(characterId);
 	const { data: character } = useCharacter(characterId);
@@ -69,6 +71,15 @@ export function TechniquesList({
 			) ?? null
 		);
 	};
+
+	// F1/F2 — this job's technique access mode. Per 5e SRD, leveled techniques are
+	// limited to (primary mod + PB) uses per rest, tracked on the technique row
+	// (uses_max/uses_current); untracked techniques (uses_max NULL) are free.
+	const techniqueMode = getJobTechniqueMode(character?.job);
+	const isTechniqueSpent = (
+		entry: (typeof techniques)[number],
+		hasRune: boolean,
+	) => !hasRune && entry.uses_max != null && (entry.uses_current ?? 0) <= 0;
 
 	const handleUse = async (
 		entry: (typeof techniques)[number],
@@ -94,6 +105,24 @@ export function TechniquesList({
 					id: runeFeature.id,
 					updates: {
 						uses_current: Math.max(0, (runeFeature.uses_current ?? 0) - 1),
+					},
+				});
+			} else if (!runeFeature && entry.uses_max != null) {
+				// 5e-SRD use economy: spend one of this technique's per-rest uses.
+				if ((entry.uses_current ?? 0) <= 0) {
+					toast({
+						title: "No Uses Remaining",
+						description: `${displayName} is spent — recover it on a ${
+							entry.recharge === "long-rest" ? "long" : "short"
+						} rest.`,
+						variant: "destructive",
+					});
+					return;
+				}
+				await updateTechnique.mutateAsync({
+					id: entry.id,
+					updates: {
+						uses_current: Math.max(0, (entry.uses_current ?? 0) - 1),
 					},
 				});
 			}
@@ -159,8 +188,13 @@ export function TechniquesList({
 			<div className="space-y-4">
 				<SpellcastingStatsCard characterId={characterId} scope="techniques" />
 				<div className="flex items-center justify-between gap-2">
-					<div className="text-xs text-muted-foreground">
-						{techniques.length} technique{techniques.length === 1 ? "" : "s"}
+					<div className="flex flex-wrap items-center gap-2">
+						<span className="text-xs text-muted-foreground">
+							{techniques.length} technique{techniques.length === 1 ? "" : "s"}
+						</span>
+						<Badge variant="outline" className="text-xs capitalize">
+							{techniqueMode.replace("-", " ")}
+						</Badge>
 					</div>
 					<Button
 						onClick={() => setAddDialogOpen(true)}
@@ -207,6 +241,9 @@ export function TechniquesList({
 								runeFeature?.uses_max !== null &&
 								runeFeature?.uses_max !== undefined &&
 								(runeFeature.uses_current ?? 0) <= 0;
+							// Non-rune techniques are blocked when their per-rest uses are
+							// spent (untracked techniques are never blocked).
+							const noPoints = isTechniqueSpent(entry, Boolean(runeFeature));
 
 							return (
 								<div
@@ -246,6 +283,17 @@ export function TechniquesList({
 												{levelReq != null && (
 													<Badge variant="secondary" className="text-xs">
 														Level {levelReq}
+													</Badge>
+												)}
+												{!runeFeature && entry.uses_max != null && (
+													<Badge
+														variant={noPoints ? "destructive" : "secondary"}
+														className="text-xs"
+														title={`Recovers on a ${
+															entry.recharge === "long-rest" ? "long" : "short"
+														} rest`}
+													>
+														{entry.uses_current ?? 0}/{entry.uses_max}
 													</Badge>
 												)}
 												{actionFormula?.formulaAbility &&
@@ -293,7 +341,7 @@ export function TechniquesList({
 												variant="outline"
 												size="sm"
 												className="h-8 gap-1 text-xs"
-												disabled={noRuneUses}
+												disabled={noRuneUses || noPoints}
 												onClick={() => handleUse(entry, name, actionFormula)}
 												aria-label={`Use ${displayName}`}
 											>

@@ -10,6 +10,8 @@
 import type { RegentExtended } from "@/integrations/supabase/supabaseExtended";
 import type { Json } from "@/integrations/supabase/types";
 import {
+	priceForRarityTier,
+	priceForVehicleRank,
 	type RaCurrencyValue,
 	toRaCurrencyValue,
 	valueToGate,
@@ -2646,6 +2648,9 @@ export const staticDataProvider: StaticDataProvider = {
 				tattoo.source_book || tattoo.source || "Rift Ascendant Canon",
 			image_url: tattoo.image,
 			rarity: tattoo.rarity || "uncommon",
+			// Tattoos carry no explicit value; derive a representative gold cost
+			// from rarity so the sheet add-menu shows a price (DDB parity).
+			price: priceForRarityTier(tattoo.rarity || "uncommon"),
 			attunement: tattoo.attunement,
 			body_part: tattoo.body_part,
 			flavor: tattoo.flavor ?? null,
@@ -2740,6 +2745,9 @@ export const staticDataProvider: StaticDataProvider = {
 					tags: [v.vehicle_type, v.size, v.rank].filter(Boolean) as string[],
 					source_book: v.source_book ?? "Rift Ascendant Canon",
 					rank: v.rank,
+					// Vehicles/mounts price in VRP (vrp_cost); derive a representative
+					// gold cost from rank too so the add-menu shows a credit price.
+					price: priceForVehicleRank(v.rank),
 					vehicle_type: v.vehicle_type,
 					size: v.size,
 					speed: v.speed,

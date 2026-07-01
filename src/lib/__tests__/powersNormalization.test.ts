@@ -339,41 +339,20 @@ describe("Power catalog — charge normalization (5e contract)", () => {
 	});
 });
 
-describe("Power catalog — canon resource costs (job-exclusive only)", () => {
-	const SINGLE_JOB_RESOURCE: Record<string, string> = {
-		"Holy Knight": "Covenant",
-		Technomancer: "Infusion",
-	};
-
+describe("Power catalog — no per-ability job-resource costs", () => {
 	const costOf = (p: (typeof powers)[number]) =>
 		(p.limitations as { cost?: unknown } | null | undefined)?.cost;
 
-	it("job-exclusive Holy Knight / Technomancer powers spend that job's canon resource", () => {
-		const singleJob = powers.filter(
-			(p) =>
-				Array.isArray(p.classes) &&
-				p.classes.length === 1 &&
-				p.classes[0] in SINGLE_JOB_RESOURCE,
-		);
-		// Census: these single-job entries exist and each carries the right cost.
-		expect(singleJob.length).toBeGreaterThan(0);
-		for (const power of singleJob) {
-			const resource = SINGLE_JOB_RESOURCE[(power.classes as string[])[0]];
-			const cost = costOf(power);
-			expect(typeof cost, `${power.id} cost`).toBe("string");
-			expect(cost, `${power.id} spends ${resource}`).toContain(resource);
-		}
-	});
-
-	it("shared (multi-job) powers keep per-rest charges, no single-job resource", () => {
-		const shared = powers.filter(
-			(p) => Array.isArray(p.classes) && p.classes.length > 1,
-		);
-		for (const power of shared) {
+	it("does not inject a per-ability Covenant/Infusion 'Cost' line on any power", () => {
+		// Job resources (Holy Knight → Covenant, Technomancer → Infusion) are
+		// job-feature resources, NOT a per-ability cost. Under the 5e-SRD per-ability
+		// use economy, leveled powers are limited by (primary mod + PB) uses per
+		// rest instead. Guards the removal of the old canonicalResourceCost injection.
+		for (const power of powers) {
 			const cost = String(costOf(power) ?? "");
 			expect(
 				cost,
-				`${power.id} must not borrow a single-job resource`,
+				`${power.id} must not carry a job-resource 'Cost' line`,
 			).not.toMatch(/Covenant|Infusion/);
 		}
 	});

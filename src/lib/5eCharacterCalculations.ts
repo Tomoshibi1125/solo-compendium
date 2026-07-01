@@ -547,9 +547,15 @@ export function getSpellsKnownLimit(
 	const jobName = typeof job === "string" ? job : job?.name;
 	if (!jobName) return null;
 
-	// Known casters have limits
+	// Stalker → Ranger: a KNOWN half-caster (not prepared). Ranger has no spells
+	// at level 1 and learns floor(level/2)+1 thereafter (2→2, 4→3, … 20→11).
+	if (jobName === "Stalker") {
+		return level < 2 ? 0 : Math.floor(level / 2) + 1;
+	}
+
+	// Known full/pact casters (Sorcerer/Warlock/Bard analogs): level + 1
 	if (["Esper", "Contractor", "Idol"].includes(jobName)) {
-		return level + 1; // Known casters: level + 1
+		return level + 1;
 	}
 
 	// Other classes are prepared casters
@@ -574,11 +580,12 @@ export function getSpellsPreparedLimit(
 		return Math.max(1, abilityModifier + Math.floor(level / 2));
 	}
 
-	// Prepared casters: ability modifier + level (minimum 1) - standard 5e
+	// Prepared casters: ability modifier + level (minimum 1) - standard 5e.
+	// Stalker is intentionally excluded — its 5e counterpart (Ranger) is a KNOWN
+	// caster, so it uses getSpellsKnownLimit instead of a prepared limit.
 	const preparedCasters = [
 		"Mage",
 		"Technomancer",
-		"Stalker",
 		"Herald",
 		"Holy Knight",
 		"Summoner",

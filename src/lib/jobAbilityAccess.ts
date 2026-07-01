@@ -323,6 +323,56 @@ export function entryHasAccessToken(
 	);
 }
 
+// ─────────────────────────────────────────────────────────────────────────
+// F2 — per-job power/technique ACCESS MODE (mirrors the caster prepared/known
+// split for spells). "prepared" = choose a daily loadout (prepared limit +
+// prep toggle); "known" = a fixed learned repertoire (no daily prep); "at-will"
+// = usable freely with no prep and no per-tier slot gate. Only meaningful for
+// jobs that actually learn powers/techniques; casters default to "at-will".
+//   - Martials (Destroyer/Berserker/Assassin/Striker): powers at-will (innate
+//     stances/arts), techniques a known repertoire.
+//   - Half-caster hybrids mirror their spell prep: prepared casters (Holy
+//     Knight, Technomancer, Revenant) prepare powers; Stalker (known caster)
+//     knows them. Techniques are a known repertoire across the board.
+// ─────────────────────────────────────────────────────────────────────────
+export type AbilityAccessMode = "prepared" | "known" | "at-will";
+
+const POWER_ACCESS_MODE: Record<string, AbilityAccessMode> = {
+	destroyer: "at-will",
+	berserker: "at-will",
+	assassin: "at-will",
+	striker: "at-will",
+	"holy knight": "prepared",
+	technomancer: "prepared",
+	revenant: "prepared",
+	stalker: "known",
+};
+
+const TECHNIQUE_ACCESS_MODE: Record<string, AbilityAccessMode> = {
+	destroyer: "known",
+	berserker: "known",
+	assassin: "known",
+	striker: "known",
+	"holy knight": "known",
+	technomancer: "known",
+	revenant: "known",
+	stalker: "known",
+};
+
+/** Access mode a job uses for POWERS (defaults to at-will for non-power jobs). */
+export function getJobPowerMode(
+	jobName: string | null | undefined,
+): AbilityAccessMode {
+	return POWER_ACCESS_MODE[normalizeJobLookup(jobName)] ?? "at-will";
+}
+
+/** Access mode a job uses for TECHNIQUES (defaults to at-will). */
+export function getJobTechniqueMode(
+	jobName: string | null | undefined,
+): AbilityAccessMode {
+	return TECHNIQUE_ACCESS_MODE[normalizeJobLookup(jobName)] ?? "at-will";
+}
+
 export function jobCanLearnPowers(jobName: string | null | undefined): boolean {
 	return getJobAbilityAccess(jobName)?.powers ?? false;
 }

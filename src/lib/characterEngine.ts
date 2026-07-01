@@ -1839,10 +1839,39 @@ export function formatEffectDisplay(
 /**
  * Auto-calculate feature uses from formula
  */
+// Ability-modifier token aliases (full names + RA/5e abbreviations) → the six
+// RA ability scores. Used by calculateFeatureUses to resolve formulas like
+// "PRE mod" or "INT mod + proficiency bonus" from a character's ability scores.
+const FEATURE_USE_ABILITY_ALIASES: Record<string, AbilityScore> = {
+	str: "STR",
+	strength: "STR",
+	agi: "AGI",
+	agility: "AGI",
+	dex: "AGI",
+	dexterity: "AGI",
+	vit: "VIT",
+	vitality: "VIT",
+	con: "VIT",
+	constitution: "VIT",
+	int: "INT",
+	intelligence: "INT",
+	sense: "SENSE",
+	wis: "SENSE",
+	wisdom: "SENSE",
+	pre: "PRE",
+	presence: "PRE",
+	cha: "PRE",
+	charisma: "PRE",
+};
+
+const FEATURE_USE_ABILITY_TOKEN =
+	/\b(str|strength|agi|agility|dex|dexterity|vit|vitality|con|constitution|int|intelligence|sense|wis|wisdom|pre|presence|cha|charisma)\s+mod(?:ifier)?\b/g;
+
 export function calculateFeatureUses(
 	formula: string | null,
 	level: number,
 	proficiencyBonus: number,
+	abilities?: Partial<Record<AbilityScore, number>> | null,
 ): number | null {
 	if (!formula) return null;
 
@@ -1857,9 +1886,29 @@ export function calculateFeatureUses(
 		return level;
 	}
 
+	// Resolve ability-modifier tokens (e.g. "PRE mod", "INT modifier") from the
+	// character's scores before the math pass. If the formula needs an ability
+	// modifier but no scores were supplied, we cannot compute it — return null so
+	// callers leave the existing value untouched (autoUpdateFeatureUses) rather
+	// than seeding a wrong count.
+	FEATURE_USE_ABILITY_TOKEN.lastIndex = 0;
+	const needsAbility = FEATURE_USE_ABILITY_TOKEN.test(lowerFormula);
+	let abilityResolved = lowerFormula;
+	if (needsAbility) {
+		if (!abilities) return null;
+		abilityResolved = lowerFormula.replace(
+			FEATURE_USE_ABILITY_TOKEN,
+			(_match, name: string) => {
+				const key = FEATURE_USE_ABILITY_ALIASES[name];
+				const score = (key ? abilities[key] : undefined) ?? 10;
+				return getAbilityModifier(score).toString();
+			},
+		);
+	}
+
 	// Try to evaluate simple math expressions safely (without eval)
 	try {
-		const expression = lowerFormula
+		const expression = abilityResolved
 			.replace(/proficiency bonus/gi, proficiencyBonus.toString())
 			.replace(/pb/gi, proficiencyBonus.toString())
 			.replace(/level/gi, level.toString())
