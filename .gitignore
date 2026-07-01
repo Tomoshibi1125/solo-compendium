@@ -128,3 +128,9 @@ dist-sourcebook/
 # Sourcebook payload - too large for GitHub (1.6GB+), managed separately
 sourcebook-payload/
 sourcebook-payload.zip
+
+# Book build workspace - never tracked (PDFs, renders, assets, renderer cache)
+books/
+
+# Stray timestamped dist backups (e.g. dist_old_1712345678/) - build artifacts
+dist_old_*/
