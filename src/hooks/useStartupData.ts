@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import type { StaticCompendiumEntry } from "@/data/compendium/providers";
 import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import { listCanonicalEntries } from "@/lib/canonicalCompendium";
+import type { RaCurrencyValue } from "@/lib/currency";
 import { logger } from "@/lib/logger";
 import { filterRowsBySourcebookAccess } from "@/lib/sourcebookAccess";
 import type { ArtifactAbility, CompendiumProperties } from "@/types/compendium";
@@ -75,6 +76,8 @@ export interface CompendiumEntry {
 	element?: string | null;
 	weight?: number | null;
 	value?: number | null;
+	// Structured catalog price (varied credit type); `value` stays numeric Gate.
+	price?: RaCurrencyValue | null;
 	attunement?: boolean | null;
 }
 

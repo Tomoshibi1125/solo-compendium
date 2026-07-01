@@ -18,7 +18,6 @@ import {
 	getCasterType,
 	getSpellSlotsPerLevel,
 	getSpellsKnownLimit,
-	getSpellsPreparedLimit,
 } from "@/lib/characterCalculations";
 import {
 	getMaxAbilityLevelForJobAtLevel,
@@ -192,16 +191,6 @@ export function canAcquireFeature(
 }
 
 /**
- * Filter features to only those accessible at the given level.
- */
-export function filterAccessibleFeatures(
-	characterLevel: number,
-	features: FeatureGateMeta[],
-): FeatureGateMeta[] {
-	return features.filter((f) => canAcquireFeature(characterLevel, f).allowed);
-}
-
-/**
  * Get features that unlock *exactly at* the given level (for level-up grants).
  */
 export function getFeaturesUnlockedAtLevel(
@@ -367,17 +356,6 @@ export function getSpellsKnown(
 	characterLevel: number,
 ): number | null {
 	return getSpellsKnownLimit(job, characterLevel);
-}
-
-/**
- * Get spells-prepared limit at the given level.
- */
-export function getSpellsPrepared(
-	job: JobReference,
-	characterLevel: number,
-	abilityModifier: number,
-): number | null {
-	return getSpellsPreparedLimit(job, characterLevel, abilityModifier);
 }
 
 // ---------------------------------------------------------------------------

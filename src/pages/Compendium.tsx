@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import {
 	AlertTriangle,
 	ArrowUpDown,
+	Castle,
 	Crown,
 	Dna,
 	Download,
@@ -75,6 +76,7 @@ import { useFilterPersistence } from "@/hooks/useFilterPersistence";
 import { useSearchHistory } from "@/hooks/useSearchHistory";
 import type { CompendiumEntry } from "@/hooks/useStartupData";
 import { isSupabaseConfigured } from "@/integrations/supabase/client";
+import { formatRaCurrencyValue } from "@/lib/currency";
 import { formatRarityLabel } from "@/lib/labels";
 import { logger } from "@/lib/logger";
 import { parseSearchQuery } from "@/lib/searchOperators";
@@ -122,6 +124,7 @@ const categories = [
 	{ id: "items", name: "Items", icon: Package },
 	{ id: "vehicles", name: "Vehicles & Mounts", icon: ArrowUpDown },
 	{ id: "crafting", name: "Crafting", icon: Hammer },
+	{ id: "guild-base", name: "Guild Base", icon: Castle },
 	{ id: "tattoos", name: "Tattoos", icon: Heart },
 	{ id: "pantheon", name: "Pantheon", icon: Crown },
 	{ id: "locations", name: "Locations", icon: MapPin },
@@ -294,6 +297,7 @@ const Compendium = () => {
 				"pantheon",
 				"vehicles",
 				"crafting",
+				"guild-base",
 				"npcs",
 			] as const;
 
@@ -379,6 +383,9 @@ const Compendium = () => {
 							case "crafting":
 								data = await staticDataProvider.getCrafting(parsedQuery.text);
 								break;
+							case "guild-base":
+								data = await staticDataProvider.getGuildBase(parsedQuery.text);
+								break;
 							case "npcs":
 								data = await staticDataProvider.getNpcs(parsedQuery.text);
 								break;
@@ -452,6 +459,10 @@ const Compendium = () => {
 										theme: item.theme,
 									}),
 									element: item.element || null,
+									// Structured catalog price → cost badge on item/equipment cards;
+									// `value` keeps the numeric Gate amount for inventory sends.
+									value: item.value ?? undefined,
+									price: item.price ?? undefined,
 								};
 							}),
 						);
@@ -1502,6 +1513,11 @@ const Compendium = () => {
 													)}
 												</AscendantText>
 												<div className="flex items-center gap-2 mt-2 text-xs text-muted-foreground">
+													{entry.price && (
+														<span className="text-amber-300/90 font-medium">
+															{formatRaCurrencyValue(entry.price)}
+														</span>
+													)}
 													{entry.cr && <span>CR {entry.cr}</span>}
 													{entry.school && <span>• {entry.school}</span>}
 												</div>
@@ -1548,6 +1564,11 @@ const Compendium = () => {
 													</AscendantText>
 												</div>
 												<div className="flex items-center gap-2 flex-shrink-0">
+													{entry.price && (
+														<span className="text-xs text-amber-300/90 font-medium">
+															{formatRaCurrencyValue(entry.price)}
+														</span>
+													)}
 													{entry.source_book && (
 														<Badge variant="outline" className="text-xs">
 															{entry.source_book}

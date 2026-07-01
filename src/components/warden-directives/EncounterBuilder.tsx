@@ -1,16 +1,31 @@
 import { useQuery } from "@tanstack/react-query";
-import { Loader2, Plus, RefreshCw, Search, Sword } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import {
+	Download,
+	FileJson,
+	Loader2,
+	Pin,
+	PinOff,
+	Plus,
+	RefreshCw,
+	Save,
+	Search,
+	Sword,
+	Target,
+	Trash2,
+} from "lucide-react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 import "./EncounterBuilder.css";
 import { useToast } from "@/hooks/use-toast";
 import { useJoinedCampaigns, useMyCampaigns } from "@/hooks/useCampaigns";
 import { useDebounce } from "@/hooks/useDebounce";
+import { useLiveEncounterScaler } from "@/hooks/useLiveEncounterScaler";
 import {
 	useCampaignToolState,
 	useUserToolState,
@@ -21,7 +36,14 @@ import { listCanonicalEntries } from "@/lib/canonicalCompendium";
 import { getRandomAnomaly } from "@/lib/compendiumAutopopulate";
 import { calculateDifficulty, calculateXP } from "@/lib/encounterMath";
 import { getCRXP } from "@/lib/experience";
+import {
+	type HistoryEntry,
+	pushGeneration,
+	removeGeneration,
+	togglePin,
+} from "@/lib/generationHistory";
 import { numericCrToLabel } from "@/lib/monster5eTable";
+import { downloadJson, downloadMarkdown } from "@/lib/toolExport";
 import { cn } from "@/lib/utils";
 import { normalizeRegentSearch } from "@/lib/vernacular";
 import type { CompendiumAnomaly } from "@/types/compendium";
@@ -37,6 +59,37 @@ interface EncounterAnomaly {
 	Anomaly: Anomaly;
 	quantity: number;
 }
+
+/** A lightweight, serializable snapshot of a built encounter for save/restore/export. */
+interface SavedEncounter {
+	name: string;
+	objectives: string;
+	hunterLevel: number;
+	hunterCount: number;
+	anomalies: {
+		id: string;
+		name: string;
+		cr: string;
+		quantity: number;
+		xp: number;
+	}[];
+	totalXP: number;
+	difficulty: string;
+}
+
+interface EncounterToolState {
+	hunterLevel: number;
+	hunterCount: number;
+	encounterAnomalies: EncounterAnomaly[];
+	objectives?: string;
+	savedEncounters?: HistoryEntry<SavedEncounter>[];
+	version?: number;
+	savedAt?: string;
+}
+
+/** Ranks offered for "Rift Optimization" random injection (keys of RANK_CR_MAP). */
+const RANK_OPTIONS = ["D", "C", "B", "A", "S"] as const;
+type OptimizationRank = (typeof RANK_OPTIONS)[number];
 
 const ENCOUNTER_STORAGE_KEY =
 	"solo-compendium.Warden-tools.encounter-builder.v1";
@@ -146,6 +199,34 @@ const loadCanonicalAnomalies = async (
 	return asAnomalies.slice(0, 50).map(mapStaticAnomaly);
 };
 
+const encounterToMarkdown = (e: SavedEncounter): string => {
+	const lines: string[] = [];
+	lines.push(`# ${e.name || "Untitled Encounter"}`);
+	lines.push("");
+	lines.push(
+		`**Party:** ${e.hunterCount} Ascendant(s) · Rating ${e.hunterLevel}`,
+	);
+	lines.push(`**Total XP:** ${e.totalXP.toLocaleString()}`);
+	lines.push(`**Projected Difficulty:** ${e.difficulty}`);
+	if (e.objectives.trim()) {
+		lines.push("");
+		lines.push("## Objectives");
+		lines.push(e.objectives.trim());
+	}
+	lines.push("");
+	lines.push("## Anomalies");
+	if (e.anomalies.length === 0) {
+		lines.push("_None_");
+	} else {
+		lines.push("| Anomaly | CR | Qty | XP |");
+		lines.push("| --- | --- | --- | --- |");
+		for (const a of e.anomalies) {
+			lines.push(`| ${a.name} | ${a.cr} | ${a.quantity} | ${a.xp} |`);
+		}
+	}
+	return `${lines.join("\n")}\n`;
+};
+
 // --- Component ---
 
 export interface EncounterBuilderProps {
@@ -175,6 +256,15 @@ export function EncounterBuilder({
 	const [encounterAnomalies, setEncounterAnomalies] = useState<
 		EncounterAnomaly[]
 	>([]);
+	const [objectives, setObjectives] = useState("");
+	const [savedEncounters, setSavedEncounters] = useState<
+		HistoryEntry<SavedEncounter>[]
+	>([]);
+	const [randomRank, setRandomRank] = useState<OptimizationRank>("C");
+	/** Projected party-stress level (0–1) the Field Calibration previews against. */
+	const [projectedStress, setProjectedStress] = useState(0.4);
+	const { signal: calibration, analyze: analyzeCalibration } =
+		useLiveEncounterScaler();
 
 	const encounterStorageKey = campaignId
 		? `${ENCOUNTER_STORAGE_KEY}.${campaignId}`
@@ -183,29 +273,32 @@ export function EncounterBuilder({
 		? `${INITIATIVE_STORAGE_KEY}.${campaignId}`
 		: INITIATIVE_STORAGE_KEY;
 
-	const userToolState = useUserToolState<{
-		hunterLevel: number;
-		hunterCount: number;
-		encounterAnomalies: EncounterAnomaly[];
-		version?: number;
-		savedAt?: string;
-	}>("encounter_builder", {
-		initialState: { hunterLevel: 1, hunterCount: 4, encounterAnomalies: [] },
-		storageKey: ENCOUNTER_STORAGE_KEY,
-		enabled: !isCampaignScoped,
-	});
+	const initialToolState: EncounterToolState = {
+		hunterLevel: 1,
+		hunterCount: 4,
+		encounterAnomalies: [],
+		objectives: "",
+		savedEncounters: [],
+	};
 
-	const campaignToolState = useCampaignToolState<{
-		hunterLevel: number;
-		hunterCount: number;
-		encounterAnomalies: EncounterAnomaly[];
-		version?: number;
-		savedAt?: string;
-	}>(campaignId ?? null, "encounter_builder", {
-		initialState: { hunterLevel: 1, hunterCount: 4, encounterAnomalies: [] },
-		storageKey: encounterStorageKey,
-		enabled: isCampaignScoped,
-	});
+	const userToolState = useUserToolState<EncounterToolState>(
+		"encounter_builder",
+		{
+			initialState: initialToolState,
+			storageKey: ENCOUNTER_STORAGE_KEY,
+			enabled: !isCampaignScoped,
+		},
+	);
+
+	const campaignToolState = useCampaignToolState<EncounterToolState>(
+		campaignId ?? null,
+		"encounter_builder",
+		{
+			initialState: initialToolState,
+			storageKey: encounterStorageKey,
+			enabled: isCampaignScoped,
+		},
+	);
 
 	const {
 		state: storedState,
@@ -226,12 +319,22 @@ export function EncounterBuilder({
 				setHunterCount(storedState.hunterCount);
 			if (Array.isArray(storedState.encounterAnomalies))
 				setEncounterAnomalies(storedState.encounterAnomalies);
+			if (typeof storedState.objectives === "string")
+				setObjectives(storedState.objectives);
+			if (Array.isArray(storedState.savedEncounters))
+				setSavedEncounters(storedState.savedEncounters);
 		}
 		hydratedContextRef.current = persistenceContext;
 	}, [isToolStateLoading, persistenceContext, storedState]);
 
 	const debouncedState = useDebounce(
-		{ hunterLevel, hunterCount, encounterAnomalies },
+		{
+			hunterLevel,
+			hunterCount,
+			encounterAnomalies,
+			objectives,
+			savedEncounters,
+		},
 		600,
 	);
 	useEffect(() => {
@@ -264,6 +367,66 @@ export function EncounterBuilder({
 			);
 		}
 	}, [totalXP]);
+
+	const currentSnapshot = useMemo<SavedEncounter>(
+		() => ({
+			name: "",
+			objectives,
+			hunterLevel,
+			hunterCount,
+			anomalies: encounterAnomalies.map((em) => ({
+				id: em.Anomaly.id,
+				name: em.Anomaly.name,
+				cr: String(em.Anomaly.cr ?? "?"),
+				quantity: em.quantity,
+				xp: calculateXP(em.Anomaly, em.quantity),
+			})),
+			totalXP,
+			difficulty: difficulty || "minimal",
+		}),
+		[
+			objectives,
+			hunterLevel,
+			hunterCount,
+			encounterAnomalies,
+			totalXP,
+			difficulty,
+		],
+	);
+
+	// Bureau Field Calibration: project how the fight tips if the party drops to
+	// `projectedStress` HP while enemies stay full — a forward-looking read using
+	// the live combat scaler against a synthetic mid-fight snapshot.
+	useEffect(() => {
+		if (encounterAnomalies.length === 0) return;
+		const party = Array.from({ length: Math.max(1, hunterCount) }, (_, i) => ({
+			id: `party-${i}`,
+			side: "party" as const,
+			hp: Math.round(100 * projectedStress),
+			maxHp: 100,
+			threat: 1 + hunterLevel / 5,
+		}));
+		const enemy = encounterAnomalies.flatMap((em) =>
+			Array.from({ length: Math.max(1, em.quantity) }, (_, i) => ({
+				id: `${em.Anomaly.id}-${i}`,
+				side: "enemy" as const,
+				hp: em.Anomaly.hit_points_average || 10,
+				maxHp: em.Anomaly.hit_points_average || 10,
+				threat: Math.max(1, calculateXP(em.Anomaly, 1) / 200),
+			})),
+		);
+		analyzeCalibration({
+			sessionId: "encounter-builder-projection",
+			round: 1,
+			combatants: [...party, ...enemy],
+		});
+	}, [
+		encounterAnomalies,
+		hunterCount,
+		hunterLevel,
+		projectedStress,
+		analyzeCalibration,
+	]);
 
 	const addAnomaly = (Anomaly: Anomaly) => {
 		hasUserInteractedRef.current = true;
@@ -301,9 +464,68 @@ export function EncounterBuilder({
 	};
 
 	const handleRandomize = async () => {
-		const rank = "C"; // Default to C-Rank for random
-		const m = await getRandomAnomaly(rank);
-		if (m) addAnomaly(m as Anomaly);
+		hasUserInteractedRef.current = true;
+		const m = await getRandomAnomaly(randomRank);
+		if (m) {
+			addAnomaly(m as Anomaly);
+		} else {
+			toast({
+				title: "No match",
+				description: `No Rank-${randomRank} Anomaly available to inject.`,
+			});
+		}
+	};
+
+	const saveCurrentEncounter = () => {
+		if (encounterAnomalies.length === 0) return;
+		hasUserInteractedRef.current = true;
+		const defaultName = `${currentSnapshot.difficulty} · ${encounterAnomalies.length} type(s) · ${totalXP.toLocaleString()} XP`;
+		const name = (
+			window.prompt("Name this encounter", defaultName) ?? ""
+		).trim();
+		if (!name) return;
+		const next = pushGeneration(
+			{ current: null, history: savedEncounters },
+			{ ...currentSnapshot, name },
+			name,
+		);
+		setSavedEncounters(next.history);
+		toast({ title: "Encounter saved", description: name });
+	};
+
+	const restoreSavedEncounter = (entry: HistoryEntry<SavedEncounter>) => {
+		hasUserInteractedRef.current = true;
+		setHunterLevel(entry.record.hunterLevel);
+		setHunterCount(entry.record.hunterCount);
+		setObjectives(entry.record.objectives ?? "");
+		toast({
+			title: "Restored settings",
+			description: `${entry.label} — party + objectives loaded. Re-add Anomalies from the registry.`,
+		});
+	};
+
+	const removeSavedEncounter = (id: string) => {
+		hasUserInteractedRef.current = true;
+		setSavedEncounters(
+			removeGeneration({ current: null, history: savedEncounters }, id).history,
+		);
+	};
+
+	const pinSavedEncounter = (id: string) => {
+		hasUserInteractedRef.current = true;
+		setSavedEncounters(
+			togglePin({ current: null, history: savedEncounters }, id).history,
+		);
+	};
+
+	const exportEncounter = (format: "md" | "json") => {
+		const record: SavedEncounter = {
+			...currentSnapshot,
+			name: currentSnapshot.name || `encounter-${currentSnapshot.difficulty}`,
+		};
+		const base = record.name || "encounter";
+		if (format === "md") downloadMarkdown(base, encounterToMarkdown(record));
+		else downloadJson(base, record);
 	};
 
 	const sendToInitiativeTracker = async () => {
@@ -358,7 +580,7 @@ export function EncounterBuilder({
 				>
 					<div className="space-y-4">
 						<div className="relative">
-							<Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-primary/40" />
+							<Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-primary/60" />
 							<Input
 								placeholder="Search entity registry..."
 								value={searchQuery}
@@ -377,7 +599,7 @@ export function EncounterBuilder({
 						>
 							{isLoading ? (
 								<div className="col-span-2 py-20 text-center">
-									<Loader2 className="w-8 h-8 animate-spin mx-auto text-primary/40" />
+									<Loader2 className="w-8 h-8 animate-spin mx-auto text-primary/60" />
 								</div>
 							) : (
 								anomalies.map((Anomaly) => (
@@ -390,11 +612,11 @@ export function EncounterBuilder({
 											<div className="flex gap-2 mt-1">
 												<Badge
 													variant="outline"
-													className="text-[10px] h-4 uppercase"
+													className="text-[11px] h-4 uppercase"
 												>
 													{Anomaly.creature_type}
 												</Badge>
-												<Badge className="text-[10px] h-4">
+												<Badge className="text-[11px] h-4">
 													CR {Anomaly.cr}
 												</Badge>
 											</div>
@@ -422,7 +644,7 @@ export function EncounterBuilder({
 					<div className="space-y-6">
 						<div className="grid grid-cols-2 gap-4">
 							<div className="space-y-2">
-								<Label className="text-[10px] uppercase tracking-widest text-muted-foreground">
+								<Label className="text-[11px] uppercase tracking-widest text-muted-foreground">
 									Ascendant Rating
 								</Label>
 								<Input
@@ -437,7 +659,7 @@ export function EncounterBuilder({
 								/>
 							</div>
 							<div className="space-y-2">
-								<Label className="text-[10px] uppercase tracking-widest text-muted-foreground">
+								<Label className="text-[11px] uppercase tracking-widest text-muted-foreground">
 									Unit Count
 								</Label>
 								<Input
@@ -454,7 +676,7 @@ export function EncounterBuilder({
 						</div>
 
 						<div className="p-4 rounded-lg bg-black/60 border border-primary/20 text-center space-y-2">
-							<p className="text-[10px] uppercase tracking-tighter text-muted-foreground">
+							<p className="text-[11px] uppercase tracking-tighter text-muted-foreground">
 								Projected Difficulty
 							</p>
 							<p
@@ -479,8 +701,61 @@ export function EncounterBuilder({
 							</div>
 						</div>
 
+						{/* Bureau Field Calibration — projected outcome at a chosen party-stress level */}
+						{calibration && encounterAnomalies.length > 0 && (
+							<div className="p-3 rounded-lg bg-black/40 border border-accent/20 space-y-2">
+								<div className="flex items-center justify-between">
+									<p className="text-[11px] uppercase tracking-widest text-accent/80 font-bold flex items-center gap-1">
+										<Target className="w-3 h-3" /> Field Calibration
+									</p>
+									<Badge
+										variant="outline"
+										className="text-[11px] h-4 uppercase"
+									>
+										{calibration.band}
+									</Badge>
+								</div>
+								<div className="flex items-center gap-2">
+									<Label className="text-[11px] uppercase tracking-widest text-muted-foreground whitespace-nowrap">
+										Party @ {Math.round(projectedStress * 100)}%
+									</Label>
+									<input
+										type="range"
+										min={10}
+										max={100}
+										step={5}
+										value={Math.round(projectedStress * 100)}
+										onChange={(e) =>
+											setProjectedStress(Number(e.target.value) / 100)
+										}
+										className="flex-1 accent-[hsl(var(--accent))]"
+										aria-label="Projected party stress level"
+									/>
+								</div>
+								<p className="text-[11px] leading-snug text-muted-foreground">
+									{calibration.recommendation}
+								</p>
+							</div>
+						)}
+
+						{/* Objectives */}
+						<div className="space-y-2">
+							<Label className="text-[11px] uppercase tracking-widest text-muted-foreground">
+								Objectives
+							</Label>
+							<Textarea
+								value={objectives}
+								onChange={(e) => {
+									hasUserInteractedRef.current = true;
+									setObjectives(e.target.value);
+								}}
+								placeholder="Win conditions, complications, terrain, escape triggers…"
+								className="min-h-[64px] text-xs bg-black/40 border-primary/20"
+							/>
+						</div>
+
 						<div className="space-y-3">
-							<p className="text-[10px] uppercase tracking-widest text-primary/60 px-1 font-bold">
+							<p className="text-[11px] uppercase tracking-widest text-primary/60 px-1 font-bold">
 								Active Lattice Entities
 							</p>
 							<div className="space-y-2 max-h-[300px] overflow-y-auto pr-1">
@@ -498,7 +773,7 @@ export function EncounterBuilder({
 												<p className="text-xs font-bold truncate">
 													{em.Anomaly.name}
 												</p>
-												<p className="text-[10px] opacity-60">
+												<p className="text-[11px] opacity-60">
 													XP {calculateXP(em.Anomaly, 1)}
 												</p>
 											</div>
@@ -540,16 +815,128 @@ export function EncounterBuilder({
 								<Sword className="w-4 h-4" />
 								Commence Combat Sync
 							</Button>
-							<Button
-								type="button"
-								onClick={handleRandomize}
-								variant="outline"
-								className="w-full h-9 gap-2"
-							>
-								<RefreshCw className="w-3 h-3" />
-								Rift Optimization
-							</Button>
+
+							<div className="flex gap-2">
+								<select
+									value={randomRank}
+									onChange={(e) =>
+										setRandomRank(e.target.value as OptimizationRank)
+									}
+									aria-label="Random injection rank"
+									className="h-9 rounded-[2px] border border-primary/20 bg-black/40 px-2 text-xs text-foreground"
+								>
+									{RANK_OPTIONS.map((r) => (
+										<option key={r} value={r}>
+											Rank {r}
+										</option>
+									))}
+								</select>
+								<Button
+									type="button"
+									onClick={handleRandomize}
+									variant="outline"
+									className="flex-1 h-9 gap-2"
+								>
+									<RefreshCw className="w-3 h-3" />
+									Rift Optimization
+								</Button>
+							</div>
+
+							<div className="flex gap-2">
+								<Button
+									type="button"
+									onClick={saveCurrentEncounter}
+									variant="outline"
+									className="flex-1 h-9 gap-2"
+									disabled={encounterAnomalies.length === 0}
+								>
+									<Save className="w-3 h-3" />
+									Save
+								</Button>
+								<Button
+									type="button"
+									onClick={() => exportEncounter("md")}
+									variant="outline"
+									size="icon"
+									className="h-9 w-9"
+									title="Export Markdown"
+									disabled={encounterAnomalies.length === 0}
+								>
+									<Download className="w-3 h-3" />
+								</Button>
+								<Button
+									type="button"
+									onClick={() => exportEncounter("json")}
+									variant="outline"
+									size="icon"
+									className="h-9 w-9"
+									title="Export JSON"
+									disabled={encounterAnomalies.length === 0}
+								>
+									<FileJson className="w-3 h-3" />
+								</Button>
+							</div>
 						</div>
+
+						{savedEncounters.length > 0 && (
+							<div className="space-y-2 pt-4 border-t border-primary/10">
+								<p className="text-[11px] uppercase tracking-widest text-primary/60 px-1 font-bold">
+									Saved Encounters
+								</p>
+								<div className="space-y-1.5 max-h-[200px] overflow-y-auto pr-1">
+									{savedEncounters.map((entry) => (
+										<div
+											key={entry.id}
+											className="flex items-center justify-between gap-2 p-2 rounded bg-primary/5 border border-primary/10"
+										>
+											<button
+												type="button"
+												onClick={() => restoreSavedEncounter(entry)}
+												className="flex-1 text-left truncate hover:text-primary transition-colors"
+												title="Restore party + objectives"
+											>
+												<span className="text-xs font-bold truncate flex items-center gap-1">
+													{entry.pinned && (
+														<Pin className="w-3 h-3 text-accent shrink-0" />
+													)}
+													{entry.label}
+												</span>
+												<span className="block text-[11px] opacity-60">
+													{entry.record.totalXP.toLocaleString()} XP ·{" "}
+													{entry.record.anomalies.length} type(s)
+												</span>
+											</button>
+											<div className="flex items-center gap-1 shrink-0">
+												<Button
+													type="button"
+													variant="ghost"
+													size="sm"
+													onClick={() => pinSavedEncounter(entry.id)}
+													className="h-6 w-6 p-0"
+													title={entry.pinned ? "Unpin" : "Pin"}
+												>
+													{entry.pinned ? (
+														<PinOff className="w-3 h-3" />
+													) : (
+														<Pin className="w-3 h-3" />
+													)}
+												</Button>
+												<Button
+													type="button"
+													variant="ghost"
+													size="sm"
+													onClick={() => removeSavedEncounter(entry.id)}
+													className="h-6 w-6 p-0 text-destructive/50 hover:text-destructive"
+													title="Delete"
+												>
+													<Trash2 className="w-3 h-3" />
+												</Button>
+											</div>
+										</div>
+									))}
+								</div>
+							</div>
+						)}
 					</div>
 				</AscendantWindow>
 			</div>

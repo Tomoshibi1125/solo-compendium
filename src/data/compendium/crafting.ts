@@ -259,6 +259,125 @@ export const craftingRecipes: CompendiumRecipe[] = [
 			"Create a reusable bridge panel that supports a medium vehicle or four creatures at a time.",
 		source_book: RA_SOURCE,
 	},
+	{
+		id: "recipe-standard-issue-kit",
+		name: "Standard-Issue Kit",
+		display_name: "Standard-Issue Kit",
+		description:
+			"Assemble and ground a guild-pattern loadout — fitted straps, warded liners, and maintained fastenings for one member.",
+		recipe_type: "refit",
+		rank: "D",
+		time_required: "1 hour",
+		project_clock: 3,
+		materials: [
+			{ material_id: "material-rift-salvage", quantity: 2 },
+			{ material_id: "material-warded-thread", quantity: 1 },
+		],
+		required_tools: ["Armory bench", "Leatherworker's or smith's tools"],
+		outcome:
+			"Refit one member's kit to guild standard; it counts as maintained, well-fitted gear.",
+		source_book: RA_SOURCE,
+	},
+	{
+		id: "recipe-essence-tonic",
+		name: "Essence Tonic",
+		display_name: "Essence Tonic",
+		description:
+			"Steep cultivated essence-blooms into a mild restorative tonic that steadies a member between clears.",
+		recipe_type: "consumable",
+		rank: "D",
+		time_required: "30 minutes",
+		project_clock: 2,
+		materials: [
+			{ material_id: "material-anomaly-tissue", quantity: 1 },
+			{ material_id: "material-field-ration-base", quantity: 1 },
+		],
+		required_tools: ["Alchemist's supplies or garden still"],
+		outcome:
+			"Create 2 tonics; drinking one restores 1d4 + 1 hit points and clears one point of fatigue.",
+		source_book: RA_SOURCE,
+	},
+	{
+		id: "recipe-warding-incense",
+		name: "Warding Incense",
+		display_name: "Warding Incense",
+		description:
+			"Bind warded thread and bloom-resin into incense cones that bleed rift-residue out of a resting squad.",
+		recipe_type: "refit",
+		rank: "D",
+		time_required: "45 minutes",
+		project_clock: 2,
+		materials: [
+			{ material_id: "material-warded-thread", quantity: 1 },
+			{ material_id: "material-containment-foam", quantity: 1 },
+		],
+		required_tools: ["Alchemist's supplies or garden still"],
+		outcome:
+			"Create 3 incense cones; burning one during a rest suppresses minor residue effects for the scene.",
+		source_book: RA_SOURCE,
+	},
+	{
+		id: "recipe-stamina-draught",
+		name: "Stamina Draught",
+		display_name: "Stamina Draught",
+		description:
+			"Distill an electrolyte-and-essence draught that keeps a member on their feet through a long deployment.",
+		recipe_type: "consumable",
+		rank: "D",
+		time_required: "30 minutes",
+		project_clock: 2,
+		materials: [
+			{ material_id: "material-field-ration-base", quantity: 1 },
+			{ material_id: "material-essence-capacitor", quantity: 1 },
+		],
+		required_tools: ["Alchemist's supplies or garden still"],
+		outcome:
+			"Create 2 draughts; drinking one grants advantage on the next save against exhaustion.",
+		source_book: RA_SOURCE,
+	},
+	{
+		id: "recipe-greater-essence-elixir",
+		name: "Greater Essence Elixir",
+		display_name: "Greater Essence Elixir",
+		description:
+			"Refine a relic-catalyzed elixir from the sanctum's finest blooms — the guild's most potent consumable.",
+		recipe_type: "consumable",
+		rank: "B",
+		time_required: "6 hours",
+		project_clock: 6,
+		materials: [
+			{ material_id: "material-relic-fragment", quantity: 1 },
+			{ material_id: "material-essence-capacitor", quantity: 2 },
+			{ material_id: "material-anomaly-tissue", quantity: 1 },
+		],
+		required_tools: ["Alchemist's supplies", "Arcana proficiency"],
+		outcome:
+			"Create 1 elixir; drinking it restores 4d4 + 4 hit points and ends one non-permanent condition.",
+		failure_risk:
+			"A failed final check spoils the batch and consumes the relic fragment.",
+		source_book: RA_SOURCE,
+	},
+	{
+		id: "recipe-foundry-overcharge",
+		name: "Foundry Overcharge",
+		display_name: "Foundry Overcharge",
+		description:
+			"Push a relit foundry line past safe tolerances for a single refit no rented bench would risk running.",
+		recipe_type: "field_engineering",
+		rank: "C",
+		time_required: "3 hours",
+		project_clock: 5,
+		materials: [
+			{ material_id: "material-essence-capacitor", quantity: 2 },
+			{ material_id: "material-rift-salvage", quantity: 2 },
+		],
+		required_tools: ["Guild forge line", "Tinker's tools"],
+		outcome:
+			"Complete one refit or repair project in half the usual clock by overdriving the foundry.",
+		failure_risk:
+			"A failed check overheats the line, consuming an extra essence capacitor.",
+		source_book: RA_SOURCE,
+	},
 ];
 
 export const craftingProjects: CompendiumCraftingProject[] =

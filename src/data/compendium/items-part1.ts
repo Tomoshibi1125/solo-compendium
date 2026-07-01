@@ -11,7 +11,7 @@ export const items_part1: Item[] = [
 		type: "wondrous",
 		image: "/generated/compendium/backgrounds/paramedic-generated-n8asxs.webp",
 		weight: 4,
-		value: 15,
+		value: { currency: "crystal", amount: 150 },
 		item_type: "misc",
 		effects: {
 			passive: ["+1 to Medicine checks when worn"],
@@ -122,7 +122,7 @@ export const items_part1: Item[] = [
 		type: "wondrous",
 		image: "/generated/compendium/items/item-0471.webp",
 		weight: 5,
-		value: 25,
+		value: { currency: "crystal", amount: 250 },
 		item_type: "tool",
 		effects: {
 			passive: ["+2 to Medicine checks to stabilize a creature"],
@@ -232,7 +232,7 @@ export const items_part1: Item[] = [
 		type: "wondrous",
 		image: "/generated/compendium/items/item-0177.webp",
 		weight: 0.2,
-		value: 5,
+		value: { currency: "gate", amount: 5 },
 		item_type: "misc",
 		effects: {
 			passive: [
@@ -349,7 +349,7 @@ export const items_part1: Item[] = [
 		type: "wondrous",
 		image: "/generated/compendium/items/item-0724.webp",
 		weight: 3,
-		value: 50,
+		value: { currency: "crystal", amount: 500 },
 		item_type: "tool",
 		effects: {
 			passive: ["+1 to Investigation checks involving data analysis"],
@@ -461,7 +461,7 @@ export const items_part1: Item[] = [
 		type: "wondrous",
 		image: "/generated/compendium/items/item-0895.webp",
 		weight: 0.1,
-		value: 1,
+		value: { currency: "crystal", amount: 10 },
 		item_type: "misc",
 		source: "Rift Ascendant Canon",
 		lore: {
@@ -570,7 +570,7 @@ export const items_part1: Item[] = [
 		type: "wondrous",
 		image: "/generated/compendium/items/item-0656.webp",
 		weight: 3,
-		value: 20,
+		value: { currency: "crystal", amount: 200 },
 		item_type: "misc",
 		effects: {
 			passive: ["+1 to Persuasion checks in formal settings"],
@@ -681,7 +681,7 @@ export const items_part1: Item[] = [
 		type: "armor",
 		image: "/generated/compendium/items/item-0893.webp",
 		weight: 2,
-		value: 10,
+		value: { currency: "crystal", amount: 100 },
 		item_type: "armor",
 		armor_class: "11 + AGI modifier",
 		armor_type: "Light",
@@ -794,7 +794,7 @@ export const items_part1: Item[] = [
 		type: "wondrous",
 		image: "/generated/compendium/items/item-0675.webp",
 		weight: 1,
-		value: 5,
+		value: { currency: "crystal", amount: 50 },
 		item_type: "misc",
 		effects: {
 			passive: ["Advantage on saves against falling debris and cave-ins"],
@@ -908,7 +908,7 @@ export const items_part1: Item[] = [
 		type: "wondrous",
 		image: "/generated/compendium/items/item-0759.webp",
 		weight: 1,
-		value: 15,
+		value: { currency: "crystal", amount: 150 },
 		item_type: "tool",
 		effects: {
 			passive: ["+1 to checks involving improvised repairs"],
@@ -1019,7 +1019,7 @@ export const items_part1: Item[] = [
 		type: "wondrous",
 		image: "/generated/compendium/items/item-0887.webp",
 		weight: 0.1,
-		value: 5,
+		value: { currency: "crystal", amount: 50 },
 		item_type: "misc",
 		effects: {
 			passive: [
@@ -1138,7 +1138,7 @@ export const items_part1: Item[] = [
 		type: "wondrous",
 		image: "/generated/compendium/items/item-0151.webp",
 		weight: 0.3,
-		value: 30,
+		value: { currency: "crystal", amount: 300 },
 		item_type: "tool",
 		effects: {
 			passive: ["+1 to Investigation checks involving interviews"],
@@ -1250,7 +1250,7 @@ export const items_part1: Item[] = [
 		type: "wondrous",
 		image: "/generated/compendium/items/item-0580.webp",
 		weight: 0.5,
-		value: 10,
+		value: { currency: "crystal", amount: 100 },
 		item_type: "misc",
 		effects: {
 			passive: [
@@ -1369,7 +1369,7 @@ export const items_part1: Item[] = [
 		type: "wondrous",
 		image: "/generated/compendium/items/item-0923.webp",
 		weight: 15,
-		value: 20,
+		value: { currency: "crystal", amount: 200 },
 		item_type: "misc",
 		source: "Rift Ascendant Canon",
 		lore: {
@@ -1479,7 +1479,7 @@ export const items_part1: Item[] = [
 		type: "wondrous",
 		image: "/generated/compendium/items/item-0004.webp",
 		weight: 0.01,
-		value: 0.1,
+		value: { currency: "crystal", amount: 1 },
 		item_type: "misc",
 		effects: {
 			passive: [
@@ -1597,7 +1597,7 @@ export const items_part1: Item[] = [
 		type: "wondrous",
 		image: "/generated/compendium/items/item-0022.webp",
 		weight: 0.5,
-		value: 5,
+		value: { currency: "crystal", amount: 50 },
 		item_type: "misc",
 		effects: {
 			passive: [
@@ -1716,7 +1716,7 @@ export const items_part1: Item[] = [
 		type: "armor",
 		image: "/generated/compendium/items/item-0755.webp",
 		weight: 5,
-		value: 25,
+		value: { currency: "crystal", amount: 250 },
 		item_type: "armor",
 		armor_class: "12 + AGI modifier",
 		armor_type: "Light",
@@ -1827,7 +1827,7 @@ export const items_part1: Item[] = [
 		type: "weapon",
 		image: "/generated/compendium/items/item-0518.webp",
 		weight: 2,
-		value: 15,
+		value: { currency: "crystal", amount: 150 },
 		item_type: "weapon",
 		weapon_type: "simple melee",
 		damage: "1d4",
@@ -1945,7 +1945,7 @@ export const items_part1: Item[] = [
 		type: "wondrous",
 		image: "/generated/compendium/items/item-0663.webp",
 		weight: 0.5,
-		value: 20,
+		value: { currency: "crystal", amount: 200 },
 		item_type: "tool",
 		effects: {
 			passive: ["Can monitor guild and emergency frequencies within 5 miles"],
@@ -2062,7 +2062,7 @@ export const items_part1: Item[] = [
 		type: "wondrous",
 		image: "/generated/compendium/items/item-0461.webp",
 		weight: 2,
-		value: 10,
+		value: { currency: "crystal", amount: 100 },
 		item_type: "misc",
 		source: "Rift Ascendant Canon",
 		lore: {
@@ -2172,7 +2172,7 @@ export const items_part1: Item[] = [
 		type: "wondrous",
 		image: "/generated/compendium/items/item-0804.webp",
 		weight: 0.3,
-		value: 40,
+		value: { currency: "gate", amount: 40 },
 		item_type: "tool",
 		effects: {
 			passive: [
@@ -2293,7 +2293,7 @@ export const items_part1: Item[] = [
 		type: "wondrous",
 		image: "/generated/compendium/items/item-0320.webp",
 		weight: 2,
-		value: 15,
+		value: { currency: "crystal", amount: 150 },
 		item_type: "misc",
 		effects: {
 			passive: [
@@ -2415,7 +2415,7 @@ export const items_part1: Item[] = [
 		type: "wondrous",
 		image: "/generated/compendium/items/item-0291.webp",
 		weight: 3,
-		value: 15,
+		value: { currency: "crystal", amount: 150 },
 		item_type: "misc",
 		effects: {
 			passive: [
@@ -2532,7 +2532,7 @@ export const items_part1: Item[] = [
 		type: "wondrous",
 		image: "/generated/compendium/items/item-0867.webp",
 		weight: 0.01,
-		value: 0.5,
+		value: { currency: "crystal", amount: 5 },
 		item_type: "misc",
 		source: "Rift Ascendant Canon",
 		lore: {
@@ -2641,7 +2641,7 @@ export const items_part1: Item[] = [
 		type: "wondrous",
 		image: "/generated/compendium/items/item-0477.webp",
 		weight: 2,
-		value: 10,
+		value: { currency: "crystal", amount: 100 },
 		item_type: "misc",
 		effects: {
 			passive: ["+1 to Dimensional Lore checks involving pre-gate events"],
@@ -2756,7 +2756,7 @@ export const items_part1: Item[] = [
 		type: "wondrous",
 		image: "/generated/compendium/items/item-0994.webp",
 		weight: 3,
-		value: 10,
+		value: { currency: "crystal", amount: 100 },
 		item_type: "misc",
 		effects: {
 			passive: ["Resistance to acid damage from mechanical fluids"],
@@ -2869,7 +2869,7 @@ export const items_part1: Item[] = [
 		type: "wondrous",
 		image: "/generated/compendium/items/item-0230.webp",
 		weight: 8,
-		value: 50,
+		value: { currency: "gate", amount: 50 },
 		item_type: "tool",
 		effects: {
 			passive: [
@@ -2986,7 +2986,7 @@ export const items_part1: Item[] = [
 		type: "wondrous",
 		image: "/generated/compendium/items/item-0916.webp",
 		weight: 1,
-		value: 35,
+		value: { currency: "gate", amount: 35 },
 		item_type: "tool",
 		effects: {
 			passive: [
@@ -3108,7 +3108,7 @@ export const items_part1: Item[] = [
 		type: "armor",
 		image: "/generated/compendium/items/item-0547.webp",
 		weight: 8,
-		value: 75,
+		value: { currency: "gate", amount: 75 },
 		item_type: "armor",
 		armor_class: "13 + AGI modifier (max 2)",
 		armor_type: "Medium",
@@ -3226,7 +3226,7 @@ export const items_part1: Item[] = [
 		type: "weapon",
 		image: "/generated/compendium/items/item-0542.webp",
 		weight: 10,
-		value: 30,
+		value: { currency: "crystal", amount: 300 },
 		item_type: "weapon",
 		weapon_type: "martial melee",
 		damage: "1d8",
@@ -3350,7 +3350,7 @@ export const items_part1: Item[] = [
 		type: "wondrous",
 		image: "/generated/compendium/items/item-0789.webp",
 		weight: 0.5,
-		value: 25,
+		value: { currency: "crystal", amount: 250 },
 		item_type: "tool",
 		effects: {
 			passive: ["Communication range: 3 miles (1 mile in gate zones)"],
@@ -3463,7 +3463,7 @@ export const items_part1: Item[] = [
 		type: "wondrous",
 		image: "/generated/compendium/items/item-0325.webp",
 		weight: 2,
-		value: 10,
+		value: { currency: "crystal", amount: 100 },
 		item_type: "misc",
 		effects: {
 			passive: ["+1 to Insight checks when reviewing documents or records"],
@@ -3580,7 +3580,7 @@ export const items_part1: Item[] = [
 		type: "wondrous",
 		image: "/generated/compendium/items/item-0842.webp",
 		weight: 0.1,
-		value: 5,
+		value: { currency: "crystal", amount: 50 },
 		item_type: "misc",
 		effects: {
 			passive: [
@@ -3698,7 +3698,7 @@ export const items_part1: Item[] = [
 		type: "wondrous",
 		image: "/generated/compendium/items/item-0595.webp",
 		weight: 0.3,
-		value: 10,
+		value: { currency: "crystal", amount: 100 },
 		item_type: "misc",
 		effects: {
 			passive: ["+1 to Persuasion checks to calm frightened or hostile NPCs"],
@@ -3813,7 +3813,7 @@ export const items_part1: Item[] = [
 		type: "armor",
 		image: "/generated/compendium/items/item-0834.webp",
 		weight: 8,
-		value: 50,
+		value: { currency: "gate", amount: 50 },
 		item_type: "armor",
 		armor_class: "14 + AGI modifier (max 2)",
 		armor_type: "Medium",
@@ -3927,7 +3927,7 @@ export const items_part1: Item[] = [
 		type: "wondrous",
 		image: "/generated/compendium/items/item-0226.webp",
 		weight: 1,
-		value: 40,
+		value: { currency: "gate", amount: 40 },
 		item_type: "misc",
 		effects: {
 			passive: [
@@ -4048,7 +4048,7 @@ export const items_part1: Item[] = [
 		type: "wondrous",
 		image: "/generated/compendium/items/item-0730.webp",
 		weight: 0.2,
-		value: 15,
+		value: { currency: "crystal", amount: 150 },
 		item_type: "misc",
 		effects: {
 			passive: [

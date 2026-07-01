@@ -15,6 +15,7 @@ import { CurrencyManager } from "@/components/character/CurrencyManager";
 import { EquipmentList } from "@/components/character/EquipmentList";
 import { FeaturesList } from "@/components/character/FeaturesList";
 import { PowersList } from "@/components/character/PowersList";
+import { RegentStatusView } from "@/components/character/RegentStatusView";
 import { RunesList } from "@/components/character/RunesList";
 import { TattoosList } from "@/components/character/TattoosList";
 import { Layout } from "@/components/layout/Layout";
@@ -74,14 +75,6 @@ const TOOL_TITLES: Record<string, { title: string; subtitle: string }> = {
 		title: "Party View",
 		subtitle: "View party members, their status, and shared information.",
 	},
-	potions: {
-		title: "Potions & Consumables",
-		subtitle: "Manage your potions, elixirs, and consumable items.",
-	},
-	achievements: {
-		title: "Achievements",
-		subtitle: "View your accomplishments and unlock rewards.",
-	},
 	"regent-status": {
 		title: "Regent Status",
 		subtitle: "Manage your regent domains and powers.",
@@ -95,8 +88,6 @@ const requiresCharacter = (toolId: string) =>
 		"abilities",
 		"character-art",
 		"quest-log",
-		"potions",
-		"achievements",
 		"regent-status",
 	].includes(toolId);
 
@@ -121,6 +112,7 @@ export default function AscendantToolDetail() {
 		if (toolId === "dice-roller") return "/dice";
 		if (toolId === "homebrew-studio") return "/homebrew";
 		if (toolId === "marketplace") return "/marketplace";
+		if (toolId === "party-view") return "/party-stash";
 		if (toolId === "character-sheet" && activeCharacter?.id) {
 			return `/characters/${activeCharacter.id}`;
 		}
@@ -198,12 +190,6 @@ export default function AscendantToolDetail() {
 						<TattoosList characterId={activeCharacter.id} />
 					</div>
 				) : null;
-			case "potions":
-				return activeCharacter ? (
-					<div className="space-y-6">
-						<EquipmentList characterId={activeCharacter.id} />
-					</div>
-				) : null;
 			case "abilities":
 				return activeCharacter ? (
 					<div className="space-y-6">
@@ -234,6 +220,16 @@ export default function AscendantToolDetail() {
 			case "quest-log":
 				return activeCharacter ? (
 					<QuestLog characterId={activeCharacter.id} />
+				) : null;
+			case "regent-status":
+				return activeCharacter ? (
+					<RegentStatusView
+						characterId={activeCharacter.id}
+						characterLevel={activeCharacter.level ?? 1}
+						job={activeCharacter.job}
+						path={activeCharacter.path}
+						campaignId={campaignId}
+					/>
 				) : null;
 			default:
 				return (

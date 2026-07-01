@@ -24,7 +24,7 @@ import { Label } from "@/components/ui/label";
 import { getFightingStylesForJob } from "@/data/compendium/fightingStyles";
 import type { StaticCompendiumEntry } from "@/data/compendium/providers/types";
 import { useToast } from "@/hooks/use-toast";
-import { useCreateCharacter } from "@/hooks/useCharacters";
+import { useCharacters, useCreateCharacter } from "@/hooks/useCharacters";
 import {
 	type CharacterTemplate,
 	useCharacterTemplates,
@@ -66,6 +66,7 @@ import {
 	getJobASI,
 	insertCharacterFeature,
 } from "@/lib/characterCreation";
+import { MAX_CHARACTERS_PER_USER } from "@/lib/characterLimits";
 import {
 	type ChoiceSourceData,
 	calculateTotalChoices,
@@ -340,6 +341,7 @@ const CharacterNew = () => {
 	const homebrewCampaignId = queryCampaignId ?? nextCampaignId;
 	const { toast } = useToast();
 	const createCharacterMutation = useCreateCharacter();
+	const { data: existingCharacters = [] } = useCharacters();
 	const initializeSpellSlots = useInitializeSpellSlots();
 
 	const { data: templates } = useCharacterTemplates();
@@ -1135,6 +1137,26 @@ const CharacterNew = () => {
 		if (loading) return;
 		if (!name.trim()) {
 			toast({ title: "Name required", variant: "destructive" });
+			return;
+		}
+		if (existingCharacters.length >= MAX_CHARACTERS_PER_USER) {
+			toast({
+				title: "Character limit reached",
+				description: `You can have at most ${MAX_CHARACTERS_PER_USER} characters. Delete one to create another.`,
+				variant: "destructive",
+			});
+			return;
+		}
+		if (
+			existingCharacters.some(
+				(c) => c.name?.trim().toLowerCase() === name.trim().toLowerCase(),
+			)
+		) {
+			toast({
+				title: "Duplicate name",
+				description: `You already have a character named "${name.trim()}". Each character must have a unique name.`,
+				variant: "destructive",
+			});
 			return;
 		}
 		if (!selectedJob || !selectedBackground) {
@@ -2374,7 +2396,7 @@ const CharacterNew = () => {
 
 								{requiredCantripChoices > 0 && (
 									<div className="space-y-3">
-										<Label className="text-[10px] uppercase tracking-widest text-primary/70">
+										<Label className="text-[11px] uppercase tracking-widest text-primary/70">
 											Cantrips ({selectedCantripIds.length}/
 											{requiredCantripChoices})
 										</Label>
@@ -2426,7 +2448,7 @@ const CharacterNew = () => {
 
 								{requiredSpellChoices > 0 && (
 									<div className="space-y-3">
-										<Label className="text-[10px] uppercase tracking-widest text-primary/70">
+										<Label className="text-[11px] uppercase tracking-widest text-primary/70">
 											Spells ({selectedSpellIds.length}/{requiredSpellChoices})
 										</Label>
 										{spellsLoading ? (
@@ -2486,7 +2508,7 @@ const CharacterNew = () => {
 
 								{requiredSpellbookInscriptions > 0 && (
 									<div className="space-y-3">
-										<Label className="text-[10px] uppercase tracking-widest text-primary/70">
+										<Label className="text-[11px] uppercase tracking-widest text-primary/70">
 											{staticJobLedgerData?.spellbook?.label ?? "Spellbook"}{" "}
 											Inscriptions ({selectedSpellbookIds.length}/
 											{requiredSpellbookInscriptions})
@@ -2550,7 +2572,7 @@ const CharacterNew = () => {
 
 								{requiredPowerChoices > 0 && (
 									<div className="space-y-3">
-										<Label className="text-[10px] uppercase tracking-widest text-primary/70">
+										<Label className="text-[11px] uppercase tracking-widest text-primary/70">
 											Powers ({selectedPowerIds.length}/{requiredPowerChoices})
 										</Label>
 										{powersLoading ? (
@@ -2610,7 +2632,7 @@ const CharacterNew = () => {
 
 								{requiredTechniqueChoices > 0 && (
 									<div className="space-y-3">
-										<Label className="text-[10px] uppercase tracking-widest text-primary/70">
+										<Label className="text-[11px] uppercase tracking-widest text-primary/70">
 											Techniques ({selectedTechniqueIds.length}/
 											{requiredTechniqueChoices})
 										</Label>
@@ -2680,7 +2702,7 @@ const CharacterNew = () => {
 
 								{requiredFightingStyleChoices > 0 && (
 									<div className="space-y-3">
-										<Label className="text-[10px] uppercase tracking-widest text-primary/70">
+										<Label className="text-[11px] uppercase tracking-widest text-primary/70">
 											Fighting Styles ({selectedFightingStyleIds.length}/
 											{requiredFightingStyleChoices})
 										</Label>
@@ -2728,7 +2750,7 @@ const CharacterNew = () => {
 
 								{requiredSpecialistTrainingChoices > 0 && (
 									<div className="space-y-3">
-										<Label className="text-[10px] uppercase tracking-widest text-primary/70">
+										<Label className="text-[11px] uppercase tracking-widest text-primary/70">
 											Specialist Training ({selectedSpecialistTraining.length}/
 											{requiredSpecialistTrainingChoices})
 										</Label>
@@ -2778,7 +2800,7 @@ const CharacterNew = () => {
 
 								{requiredFavoredTerrainChoices > 0 && (
 									<div className="space-y-3">
-										<Label className="text-[10px] uppercase tracking-widest text-primary/70">
+										<Label className="text-[11px] uppercase tracking-widest text-primary/70">
 											Favored Terrain ({selectedFavoredTerrains.length}/
 											{requiredFavoredTerrainChoices})
 										</Label>

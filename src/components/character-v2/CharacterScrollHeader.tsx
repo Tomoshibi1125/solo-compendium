@@ -46,7 +46,7 @@ export function CharacterScrollHeader({
 								className="w-full h-full object-cover"
 							/>
 						) : (
-							<div className="w-full h-full flex items-center justify-center text-primary/40 font-display text-lg">
+							<div className="w-full h-full flex items-center justify-center text-primary/60 font-display text-lg">
 								{name[0]}
 							</div>
 						)}
@@ -55,7 +55,7 @@ export function CharacterScrollHeader({
 						<span className="font-display font-bold text-xs tracking-wide text-white uppercase truncate">
 							{name}
 						</span>
-						<span className="text-[9px] font-mono text-primary/60 uppercase tracking-tighter">
+						<span className="text-[10px] font-mono text-primary/60 uppercase tracking-tighter">
 							Rank{" "}
 							{level >= 17
 								? "S"
@@ -76,8 +76,8 @@ export function CharacterScrollHeader({
 					<div className="flex items-center gap-2 flex-1 min-w-0">
 						<Heart className="w-3.5 h-3.5 text-red-500 fill-red-500/20 shrink-0" />
 						<div className="flex-1 space-y-1">
-							<div className="flex justify-between text-[9px] font-mono leading-none">
-								<span className="text-primary/40">HP</span>
+							<div className="flex justify-between text-[10px] font-mono leading-none">
+								<span className="text-primary/60">HP</span>
 								<span className="text-white font-bold">
 									{hp.current}
 									{tempHp > 0 ? `+${tempHp}` : ""}/{hp.max}
@@ -95,7 +95,7 @@ export function CharacterScrollHeader({
 					{/* AC & Init */}
 					<div className="flex items-center gap-4 shrink-0 px-2 border-l border-primary/10">
 						<div className="flex flex-col items-center">
-							<span className="text-[8px] font-mono text-primary/40 uppercase">
+							<span className="text-[10px] font-mono text-primary/60 uppercase">
 								AC
 							</span>
 							<div className="flex items-center gap-1">
@@ -104,7 +104,7 @@ export function CharacterScrollHeader({
 							</div>
 						</div>
 						<div className="flex flex-col items-center">
-							<span className="text-[8px] font-mono text-primary/40 uppercase">
+							<span className="text-[10px] font-mono text-primary/60 uppercase">
 								Init
 							</span>
 							<div className="flex items-center gap-1">
@@ -115,7 +115,7 @@ export function CharacterScrollHeader({
 							</div>
 						</div>
 						<div className="flex flex-col items-center">
-							<span className="text-[8px] font-mono text-primary/40 uppercase">
+							<span className="text-[10px] font-mono text-primary/60 uppercase">
 								PB
 							</span>
 							<div className="flex items-center gap-1">

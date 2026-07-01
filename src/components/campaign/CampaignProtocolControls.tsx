@@ -9,6 +9,7 @@ import {
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { CampaignExportMenu } from "@/components/campaign/CampaignExportMenu";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -55,10 +56,12 @@ const toNumberOrNull = (value: string) => {
 
 interface CampaignProtocolControlsProps {
 	campaignId: string;
+	campaignName?: string;
 }
 
 export function CampaignProtocolControls({
 	campaignId,
+	campaignName = "",
 }: CampaignProtocolControlsProps) {
 	const navigate = useNavigate();
 	const { toast } = useToast();
@@ -411,6 +414,21 @@ export function CampaignProtocolControls({
 						<Download className="w-4 h-4 mr-2" />
 						Export Bundle
 					</Button>
+				</div>
+				<div className="mt-3 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 border-t border-border/60 pt-3">
+					<div>
+						<p className="font-heading font-semibold">
+							Notes, Wiki &amp; Session Log
+						</p>
+						<p className="text-xs text-muted-foreground">
+							Markdown, portable JSON, a printable PDF session-log, or an `.ics`
+							calendar.
+						</p>
+					</div>
+					<CampaignExportMenu
+						campaignId={campaignId}
+						campaignName={campaignName}
+					/>
 				</div>
 			</AscendantWindow>
 		</div>

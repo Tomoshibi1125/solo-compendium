@@ -7,11 +7,6 @@ import { useCallback, useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { aiService } from "@/lib/ai/aiService";
 
-export interface AIEnhanceResult {
-	text: string;
-	model?: string;
-}
-
 export function useAIEnhance() {
 	const [isEnhancing, setIsEnhancing] = useState(false);
 	const [enhancedText, setEnhancedText] = useState<string | null>(null);

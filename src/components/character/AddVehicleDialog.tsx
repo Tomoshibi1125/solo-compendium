@@ -117,32 +117,32 @@ export function AddVehicleDialog({
 								onClick={() => setSelectedId(v.id)}
 								className={`w-full text-left p-2 rounded border transition-colors ${
 									selectedId === v.id
-										? "border-primary bg-primary/10"
+										? "border-primary bg-primary/15 ring-2 ring-primary/60"
 										: "border-transparent hover:border-border/50 hover:bg-black/20"
 								}`}
 								data-testid={`vehicle-catalog-${v.id}`}
 							>
 								<div className="flex items-center gap-2">
 									<span className="font-display text-sm">{v.name}</span>
-									<span className="text-[10px] uppercase text-muted-foreground">
+									<span className="text-[11px] uppercase text-muted-foreground">
 										{v.vehicle_type}
 									</span>
-									<span className="text-[10px] text-muted-foreground">
+									<span className="text-[11px] text-muted-foreground">
 										{v.size}
 									</span>
-									<Badge variant="outline" className="text-[10px]">
+									<Badge variant="outline" className="text-[11px]">
 										{v.vrp_cost ?? 0} VRP
 									</Badge>
-									<Badge variant="outline" className="text-[10px]">
+									<Badge variant="outline" className="text-[11px]">
 										{v.mod_capacity ?? 0} cap
 									</Badge>
 									{v.rank && (
-										<span className="text-[10px] text-fuchsia-300">
+										<span className="text-[11px] text-fuchsia-300">
 											Rank {v.rank}
 										</span>
 									)}
 								</div>
-								<p className="text-xs text-muted-foreground mt-1 line-clamp-1">
+								<p className="text-xs text-muted-foreground mt-1 leading-relaxed">
 									{v.description}
 								</p>
 							</button>

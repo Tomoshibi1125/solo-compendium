@@ -1,12 +1,4 @@
-import {
-	AlertTriangle,
-	Minus,
-	Plus,
-	Power,
-	PowerOff,
-	Star,
-	Zap,
-} from "lucide-react";
+import { AlertTriangle, Minus, Plus, Star, Zap } from "lucide-react";
 import { useCallback, useState } from "react";
 import { AutoLinkText } from "@/components/compendium/AutoLinkText";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
@@ -28,7 +20,6 @@ import { useFeatures } from "@/hooks/useFeatures";
 import { useAscendantTools } from "@/hooks/useGlobalDDBeyondIntegration";
 import { useRealtimeCollaboration } from "@/hooks/useRealtimeCollaboration";
 import { useRecordRoll } from "@/hooks/useRollHistory";
-import { cn } from "@/lib/utils";
 import { formatRegentVernacular } from "@/lib/vernacular";
 import type { DetailData } from "@/types/character";
 import { AddFeatDialog } from "./AddFeatDialog";
@@ -150,32 +141,6 @@ export function FeaturesList({
 			toast({
 				title: "Failed to update",
 				description: "Could not update feature uses.",
-				variant: "destructive",
-			});
-		}
-	};
-
-	const handleToggleActive = async (feature: (typeof features)[0]) => {
-		try {
-			const newActiveState = !feature.is_active;
-			await updateFeature({
-				id: feature.id,
-				updates: { is_active: newActiveState },
-			});
-
-			// Broadcast toggle for DDB parity
-			ascendantTools
-				.trackCustomFeatureUsage(
-					characterId,
-					feature.name,
-					newActiveState ? "activate" : "deactivate",
-					"RA",
-				)
-				.catch(console.error);
-		} catch {
-			toast({
-				title: "Failed to update",
-				description: "Could not toggle feature.",
 				variant: "destructive",
 			});
 		}
@@ -303,10 +268,7 @@ export function FeaturesList({
 								renderItem={(feature) => (
 									<div
 										key={feature.id}
-										className={cn(
-											"p-3 rounded-lg border bg-muted/30",
-											!feature.is_active && "opacity-50",
-										)}
+										className="p-3 rounded-lg border bg-muted/30"
 									>
 										<div className="flex items-start justify-between gap-2">
 											<div className="flex-1">
@@ -335,11 +297,6 @@ export function FeaturesList({
 													{feature.recharge && (
 														<Badge variant="outline" className="text-xs">
 															{formatRegentVernacular(feature.recharge)}
-														</Badge>
-													)}
-													{!feature.is_active && (
-														<Badge variant="destructive" className="text-xs">
-															Inactive
 														</Badge>
 													)}
 												</div>
@@ -386,34 +343,8 @@ export function FeaturesList({
 													</div>
 												)}
 											</div>
-											<div className="flex flex-col items-end gap-2">
-												<div className="flex items-center gap-2">
-													<Button
-														variant={feature.is_active ? "default" : "outline"}
-														size="sm"
-														onClick={() => handleToggleActive(feature)}
-														className={cn(
-															"text-xs gap-1.5 h-8",
-															feature.is_active
-																? "bg-primary/20 text-primary border-primary/30 hover:bg-primary/30"
-																: "text-muted-foreground hover:text-foreground",
-														)}
-													>
-														{feature.is_active ? (
-															<>
-																<Power className="w-3.5 h-3.5" />
-																Active
-															</>
-														) : (
-															<>
-																<PowerOff className="w-3.5 h-3.5" />
-																Inactive
-															</>
-														)}
-													</Button>
-												</div>
-
-												{feature.uses_max !== null && (
+											{feature.uses_max !== null && (
+												<div className="flex flex-col items-end gap-2">
 													<Button
 														variant="outline"
 														size="sm"
@@ -426,8 +357,8 @@ export function FeaturesList({
 														<Zap className="w-3.5 h-3.5 text-primary" />
 														Spend Use
 													</Button>
-												)}
-											</div>
+												</div>
+											)}
 										</div>
 									</div>
 								)}

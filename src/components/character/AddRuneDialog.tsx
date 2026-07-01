@@ -362,7 +362,7 @@ export function AddRuneDialog({
 														.source_book && (
 														<Badge
 															variant="secondary"
-															className="text-[9px] uppercase bg-primary/10 text-primary/70 border-primary/20"
+															className="text-[11px] uppercase bg-primary/10 text-primary/80 border-primary/20"
 														>
 															{formatRegentVernacular(
 																(rune as { source_book?: string | null })
@@ -372,7 +372,7 @@ export function AddRuneDialog({
 													)}
 												</div>
 												{rune.description && (
-													<p className="text-xs text-muted-foreground line-clamp-2 mt-1">
+													<p className="text-sm leading-relaxed text-muted-foreground mt-1">
 														{formatRegentVernacular(rune.description)}
 													</p>
 												)}

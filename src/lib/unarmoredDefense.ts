@@ -1,7 +1,5 @@
 import { getAbilityModifier } from "@/lib/5eRulesEngine";
 
-export type UnarmoredDefenseJob = "Striker" | "Berserker" | "Revenant";
-
 export function getUnarmoredDefenseBaseAC(
 	jobName: string | null | undefined,
 	abilities: Record<string, number>,

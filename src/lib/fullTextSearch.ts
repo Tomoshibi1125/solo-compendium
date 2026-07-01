@@ -3,7 +3,6 @@
  * Converts search queries to PostgreSQL full-text search format
  */
 
-import type { SupabaseClient } from "@supabase/supabase-js";
 import { normalizeRegentSearch } from "@/lib/vernacular";
 
 /**
@@ -23,59 +22,6 @@ export function normalizeSearchText(searchQuery: string): string {
 		.trim();
 
 	return normalizeRegentSearch(cleaned);
-}
-
-export function prepareSearchText(searchQuery: string): string {
-	const cleaned = normalizeSearchText(searchQuery);
-
-	if (!cleaned) return "";
-
-	// Split into words and add prefix matching
-	const words = cleaned
-		.split(" ")
-		.filter((word) => word.length > 0)
-		.map((word) => word.replace(/'/g, "''")); // Escape single quotes
-
-	// Join with AND operator and add prefix matching
-	return words.map((word) => `'${word}':*`).join(" & ");
-}
-
-/**
- * Convert a search query to PostgreSQL tsquery format (alias for prepareSearchText)
- */
-export function toTsQuery(searchQuery: string): string {
-	return prepareSearchText(searchQuery);
-}
-
-/**
- * Use RPC function for full-text search
- * This is the recommended approach with Supabase
- */
-export async function searchWithRPC(
-	supabase: Pick<SupabaseClient, "rpc">,
-	table: "jobs" | "powers" | "relics" | "Anomalies" | "paths" | "regents",
-	searchQuery: string,
-	limit: number = 50,
-) {
-	if (!searchQuery.trim()) return [];
-
-	const functionName = `search_compendium_${table}`;
-	const preparedQuery = normalizeSearchText(searchQuery);
-
-	if (!preparedQuery) return [];
-
-	const { data, error } = await supabase.rpc(functionName, {
-		p_query: preparedQuery,
-		p_limit: limit,
-		p_offset: 0,
-	});
-
-	if (error) {
-		// Fallback to ILIKE if RPC fails
-		return [];
-	}
-
-	return (data || []).slice(0, limit);
 }
 
 /**

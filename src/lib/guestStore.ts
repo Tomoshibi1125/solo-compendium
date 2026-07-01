@@ -127,12 +127,6 @@ export function getLocalUserId(): string {
 	return next;
 }
 
-export function getLocalGuestRole(): GuestRole {
-	if (!hasLocalStorage()) return "ascendant";
-	const stored = window.localStorage.getItem(ROLE_KEY);
-	return stored === "warden" || stored === "ascendant" ? stored : "ascendant";
-}
-
 export function setLocalGuestRole(role: GuestRole): void {
 	if (!hasLocalStorage()) return;
 	window.localStorage.setItem(ROLE_KEY, role);

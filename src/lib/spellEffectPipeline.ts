@@ -9,16 +9,6 @@
  *   → computeCharacterStats() picks up new activeSpells → stats recalculated
  */
 
-/** Standalone spell-engine effect — extended from characterEngine.Effect for integration */
-export interface SpellEngineEffect {
-	source: string;
-	target: string;
-	value: number;
-	type: string;
-	priority: number;
-	description: string;
-}
-
 // ─── Types ──────────────────────────────────────────────────
 export interface ActiveSpellEffectEntry {
 	id: string;
@@ -200,58 +190,6 @@ export function createActiveSpellEffect(
 }
 
 /**
- * Convert active spell effects into SpellEngineEffect[] for stat computation
- */
-export function spellEffectsToEngineEffects(
-	activeSpells: ActiveSpellEffectEntry[],
-): SpellEngineEffect[] {
-	const engineEffects: SpellEngineEffect[] = [];
-
-	for (const spell of activeSpells) {
-		for (const mod of spell.effects) {
-			engineEffects.push({
-				source: `spell:${spell.spellName}`,
-				target: mod.target,
-				value: mod.value,
-				type: mod.type,
-				priority: 300, // Spells: priority 300 (above equipment 100, features 150-180)
-				description: mod.description ?? `${spell.spellName} effect`,
-			});
-		}
-	}
-
-	return engineEffects;
-}
-
-/**
- * Process round advancement — decrement remaining rounds on active spells
- * Returns array of expired spell IDs
- */
-export function advanceRound(activeSpells: ActiveSpellEffectEntry[]): {
-	updated: ActiveSpellEffectEntry[];
-	expired: string[];
-} {
-	const updated: ActiveSpellEffectEntry[] = [];
-	const expired: string[] = [];
-
-	for (const spell of activeSpells) {
-		if (spell.remainingRounds === null) {
-			updated.push(spell); // Permanent spells don't expire
-			continue;
-		}
-
-		const remaining = spell.remainingRounds - 1;
-		if (remaining <= 0) {
-			expired.push(spell.id);
-		} else {
-			updated.push({ ...spell, remainingRounds: remaining });
-		}
-	}
-
-	return { updated, expired };
-}
-
-/**
  * Drop concentration — removes all concentration spells from a caster
  */
 export function dropConcentration(
@@ -274,11 +212,4 @@ export function dropConcentration(
  */
 export function hasKnownEffects(spellName: string): boolean {
 	return spellName.toLowerCase().trim() in SPELL_EFFECT_MAP;
-}
-
-/**
- * Get all known spell names with effects
- */
-export function getKnownSpellEffects(): string[] {
-	return Object.keys(SPELL_EFFECT_MAP);
 }

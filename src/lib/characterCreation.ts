@@ -9,15 +9,11 @@ import {
 	type AbilityProgressionKind,
 	getMaxAbilityLevelForJobAtLevel as getMaxAbilityProgressionLevelForJobAtLevel,
 } from "@/lib/abilityProgression";
-import {
-	findCanonicalCastableByName,
-	listLearnablePowers,
-} from "@/lib/canonicalCompendium";
+import { findCanonicalCastableByName } from "@/lib/canonicalCompendium";
 import { calculateFeatureUses } from "@/lib/characterEngine";
 import {
 	addLocalEquipment,
 	addLocalFeature,
-	addLocalPower,
 	addLocalSpell,
 	getLocalCharacterState,
 	getLocalCharacterWithAbilities,
@@ -31,7 +27,6 @@ import {
 } from "@/lib/guestStore";
 import { getStaticPathUnlockLevel } from "@/lib/levelGating";
 import {
-	getStaticBackgrounds,
 	getStaticItems,
 	getStaticJobs,
 	getStaticPaths,
@@ -41,13 +36,11 @@ import {
 	isSourcebookAccessible,
 } from "@/lib/sourcebookAccess";
 import type {
-	Background as DbBackground,
 	Job as DbJob,
 	StaticBackground,
 	StaticJob,
 } from "@/types/character";
 import type {
-	CompendiumBackground,
 	CompendiumJob as CompendiumJobType,
 	CompendiumItem as StaticItem,
 } from "@/types/compendium";
@@ -55,9 +48,6 @@ export type { StaticBackground, StaticJob };
 
 import { getProficiencyBonus } from "@/types/core-rules";
 import { getDefaultSigilSlotsBaseForEquipment } from "./sigilAutomation";
-
-export type Job = DbJob;
-export type Background = DbBackground;
 
 export function normalizeItemLookupName(value: string): string {
 	return value
@@ -90,34 +80,6 @@ export function findStaticItemByName(itemName: string): StaticItem | null {
 			return normalized.includes(n) || n.includes(normalized);
 		}) ?? null
 	);
-}
-
-export function _findStaticBackgroundByName(
-	backgroundName: string | null | undefined,
-): CompendiumBackground | null {
-	if (!backgroundName) return null;
-	const staticBackgrounds = getStaticBackgrounds();
-	const normalized = backgroundName.trim().toLowerCase();
-	return (
-		staticBackgrounds.find((b) => b.name.trim().toLowerCase() === normalized) ??
-		null
-	);
-}
-
-export function _splitCompoundEquipmentEntry(entry: string): string[] {
-	const trimmed = entry.trim();
-	if (!trimmed) return [];
-
-	// Handle common compound phrasing from modern backgrounds.
-	// Example: "A ring light and portable camera"
-	if (trimmed.toLowerCase().includes(" and ")) {
-		return trimmed
-			.split(/\s+and\s+/i)
-			.map((s) => s.trim())
-			.filter(Boolean);
-	}
-
-	return [trimmed];
 }
 
 export function deriveItemType(item: StaticItem): string {
@@ -379,23 +341,6 @@ export async function autoUpdateFeatureUses(
 			}
 		}
 	}
-}
-
-export function isChoiceFeatureText(value: string | null | undefined): boolean {
-	if (!value) return false;
-	return /\b(choose|select|pick)\b/i.test(value);
-}
-
-export function _isChoiceFeatureRow(feature: {
-	name?: string | null;
-	description?: string | null;
-	prerequisites?: string | null;
-}): boolean {
-	return (
-		isChoiceFeatureText(feature.name ?? null) ||
-		isChoiceFeatureText(feature.description ?? null) ||
-		isChoiceFeatureText(feature.prerequisites ?? null)
-	);
 }
 
 export type SpellProgression = "none" | "full" | "half" | "pact";
@@ -4040,78 +3985,6 @@ export async function addStartingEquipment(
 						"addStartingEquipment: bg equipment insert failed",
 						bgEqErr,
 					);
-			}
-		}
-	}
-}
-
-/**
- * Add starting powers from job
- */
-export async function addStartingPowers(
-	characterId: string,
-	job: JobReference,
-	options: {
-		pathName?: string | null;
-		characterLevel?: number | null;
-		regentNames?: string[] | null;
-	} = {},
-): Promise<void> {
-	if (!job) {
-		console.warn("Cannot add starting powers: job missing");
-		return;
-	}
-	const jobName = typeof job === "string" ? job : job?.name;
-	const campaignId = await getCharacterCampaignId(characterId);
-
-	const accessiblePowers = await listLearnablePowers({
-		accessContext: { campaignId },
-		jobName: jobName ?? null,
-		pathName: options.pathName ?? null,
-		characterLevel: options.characterLevel ?? 1,
-		regentNames: options.regentNames ?? null,
-	});
-
-	if (accessiblePowers.length > 0) {
-		for (const power of accessiblePowers) {
-			const powerLevel = power.power_level ?? power.level ?? 0;
-			const castingTime = power.casting_time || null;
-			const range = power.range || null;
-			const duration = power.duration || null;
-			const higherLevels = power.higher_levels ?? null;
-			const source = `Job Power: ${jobName}`;
-
-			if (isLocalCharacterId(characterId)) {
-				addLocalPower(characterId, {
-					power_id: power.id,
-					name: power.name,
-					power_level: powerLevel,
-					source,
-					casting_time: castingTime,
-					range,
-					duration,
-					concentration: power.concentration ?? false,
-					description: power.description || null,
-					higher_levels: higherLevels,
-					is_prepared: false,
-					is_known: true,
-				});
-			} else {
-				await supabase.from("character_powers").insert({
-					character_id: characterId,
-					power_id: power.id,
-					name: power.name,
-					power_level: powerLevel,
-					source,
-					casting_time: castingTime,
-					range,
-					duration,
-					concentration: power.concentration ?? false,
-					description: power.description || null,
-					higher_levels: higherLevels,
-					is_prepared: false,
-					is_known: true,
-				});
 			}
 		}
 	}

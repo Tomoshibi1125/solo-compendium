@@ -2,6 +2,8 @@ import {
 	AlertTriangle,
 	ArrowLeft,
 	Copy,
+	FileJson,
+	FileText,
 	Loader2,
 	RefreshCw,
 	Sparkles,
@@ -17,6 +19,7 @@ import {
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { GenerationHistoryPanel } from "@/components/warden-directives/GenerationHistoryPanel";
 import { useEmbedded } from "@/contexts/EmbeddedContext";
 import {
 	EVENT_COMPLICATIONS,
@@ -28,47 +31,142 @@ import { useToast } from "@/hooks/use-toast";
 import { useAIEnhance } from "@/hooks/useAIEnhance";
 import { useDebounce } from "@/hooks/useDebounce";
 import { useUserToolState } from "@/hooks/useToolState";
+import {
+	emptyHistory,
+	type GenerationHistoryState,
+	type HistoryEntry,
+	makeEntryId,
+	pushGeneration,
+	removeGeneration,
+	restoreGeneration,
+	togglePin,
+} from "@/lib/generationHistory";
+import { downloadJson, downloadMarkdown } from "@/lib/toolExport";
 import { formatRegentVernacular } from "@/lib/vernacular";
 import {
 	loadWardenGenerationContext,
 	type WardenLinkedEntry,
 } from "@/lib/wardenGenerationContext";
 
+type EventType = "world" | "encounter" | "complication";
+
 interface GeneratedEvent {
-	type: "world" | "encounter" | "complication";
+	id: string;
+	type: EventType;
 	title: string;
 	description: string;
-	impact: string;
+	/** Mechanical effects (skill checks, combat triggers, environmental rules). */
+	mechanics: string;
+	/** Parsed save/check DC, when the mechanics text states one. */
+	dc: number | null;
+	severity: "Minor" | "Moderate" | "Severe" | "Critical";
+	riftScale: string;
+	consequences: string;
 	linkedContent?: WardenLinkedEntry[];
+	aiEnhanced?: string;
 }
 
-function generateEvent(
-	type: "world" | "encounter" | "complication",
-): GeneratedEvent {
-	let selection: WardenEventTableEntry;
-	let title = "";
+const SEVERITIES: GeneratedEvent["severity"][] = [
+	"Minor",
+	"Moderate",
+	"Severe",
+	"Critical",
+];
 
-	if (type === "world") {
-		selection = WORLD_EVENTS[Math.floor(Math.random() * WORLD_EVENTS.length)];
-		title = "Systemic World Displacement";
-	} else if (type === "encounter") {
-		selection =
-			NPC_ENCOUNTERS[Math.floor(Math.random() * NPC_ENCOUNTERS.length)];
-		title = "Significant Entity Interaction";
-	} else {
-		selection =
-			EVENT_COMPLICATIONS[
-				Math.floor(Math.random() * EVENT_COMPLICATIONS.length)
-			];
-		title = "Hazardous Environmental Anomaly";
-	}
+const RIFT_SCALE: Record<EventType, string[]> = {
+	world: ["Localized", "Sector-wide", "Regional"],
+	encounter: ["Personal", "Cell-level", "Faction-level"],
+	complication: ["Momentary", "Scene-long", "Prolonged"],
+};
 
+const TYPE_LABEL: Record<EventType, string> = {
+	world: "World Event",
+	encounter: "NPC Encounter",
+	complication: "Complication",
+};
+
+const pick = <T,>(arr: readonly T[]): T =>
+	arr[Math.floor(Math.random() * arr.length)];
+
+/** Most authored entries lead with a name before a colon ("Rift Surge: …"). */
+function deriveTitle(description: string, type: EventType): string {
+	const idx = description.indexOf(":");
+	if (idx > 2 && idx <= 60) return description.slice(0, idx).trim();
+	return TYPE_LABEL[type];
+}
+
+function bodyAfterTitle(description: string): string {
+	const idx = description.indexOf(":");
+	return idx > 2 && idx <= 60 ? description.slice(idx + 1).trim() : description;
+}
+
+function parseDc(text: string): number | null {
+	const m = text.match(/DC\s*(\d+)/i);
+	return m ? Number(m[1]) : null;
+}
+
+function generateEvent(type: EventType): GeneratedEvent {
+	const table: WardenEventTableEntry[] =
+		type === "world"
+			? WORLD_EVENTS
+			: type === "encounter"
+				? NPC_ENCOUNTERS
+				: EVENT_COMPLICATIONS;
+	const selection = pick(table);
+	const description = formatRegentVernacular(selection.description);
+	const mechanics = formatRegentVernacular(selection.impact);
+	const severity = pick(SEVERITIES);
+	const consequences =
+		severity === "Critical" || severity === "Severe"
+			? "Left unaddressed, the effect escalates each round and spills into the next scene; a decisive response is required to contain it."
+			: "A timely, coordinated response contains the effect within the scene; ignoring it lets the impact linger.";
 	return {
+		id: makeEntryId(),
 		type,
-		title,
-		description: formatRegentVernacular(selection.description),
-		impact: formatRegentVernacular(selection.impact),
+		title: deriveTitle(description, type),
+		description: bodyAfterTitle(description),
+		mechanics,
+		dc: parseDc(mechanics),
+		severity,
+		riftScale: pick(RIFT_SCALE[type]),
+		consequences,
 	};
+}
+
+function eventToMarkdown(event: GeneratedEvent): string {
+	const linked =
+		event.linkedContent && event.linkedContent.length > 0
+			? `\n\n**Linked Compendium Signals:** ${event.linkedContent
+					.map((e) => `${e.name} (${e.type})`)
+					.join(", ")}`
+			: "";
+	return formatRegentVernacular(`# ${event.title}
+
+- **Type:** ${TYPE_LABEL[event.type]}
+- **Severity:** ${event.severity}
+- **Rift Scale:** ${event.riftScale}${event.dc != null ? `\n- **DC:** ${event.dc}` : ""}
+
+${event.description}
+
+## Mechanics
+${event.mechanics}
+
+## Consequences
+${event.consequences}${linked}
+${event.aiEnhanced ? `\n## Warden Detail (AI)\n${event.aiEnhanced}\n` : ""}`);
+}
+
+const SEVERITY_COLOR: Record<GeneratedEvent["severity"], string> = {
+	Minor: "text-green-400 border-green-400/40",
+	Moderate: "text-yellow-400 border-yellow-400/40",
+	Severe: "text-orange-400 border-orange-400/40",
+	Critical: "text-red-400 border-red-400/50",
+};
+
+interface EventToolState {
+	eventType: EventType;
+	current: GeneratedEvent | null;
+	history: HistoryEntry<GeneratedEvent>[];
 }
 
 const RandomEventGenerator = () => {
@@ -79,37 +177,70 @@ const RandomEventGenerator = () => {
 		state: storedState,
 		isLoading,
 		saveNow,
-	} = useUserToolState<{
-		eventType: GeneratedEvent["type"];
-		event: GeneratedEvent | null;
-	}>("random_event_generator", {
-		initialState: {
-			eventType: "world",
-			event: null,
-		},
+	} = useUserToolState<EventToolState>("random_event_generator", {
+		initialState: { eventType: "world", current: null, history: [] },
 		storageKey: "solo-compendium.Warden-tools.random-event-generator.v1",
 	});
 
-	const [eventType, setEventType] = useState<GeneratedEvent["type"]>("world");
-	const [event, setEvent] = useState<GeneratedEvent | null>(null);
+	const [eventType, setEventType] = useState<EventType>("world");
+	const [histState, setHistState] = useState<
+		GenerationHistoryState<GeneratedEvent>
+	>(emptyHistory<GeneratedEvent>());
+	const event = histState.current;
+	const [isGenerating, setIsGenerating] = useState(false);
 
 	const hydrated = useMemo(() => {
-		return {
-			eventType: storedState.eventType ?? "world",
-			event: storedState.event ?? null,
+		const raw = storedState as unknown as {
+			eventType?: EventType;
+			current?: GeneratedEvent | null;
+			history?: HistoryEntry<GeneratedEvent>[];
+			event?: (GeneratedEvent & { impact?: string }) | null;
 		};
-	}, [storedState.event, storedState.eventType]);
+		const type = raw.eventType ?? "world";
+		if (Array.isArray(raw.history)) {
+			return {
+				eventType: type,
+				hist: { current: raw.current ?? null, history: raw.history },
+			};
+		}
+		// Migrate legacy { eventType, event } (with `impact` instead of `mechanics`).
+		if (raw.event) {
+			const legacy = raw.event;
+			const migrated: GeneratedEvent = {
+				id: legacy.id ?? makeEntryId(),
+				type: legacy.type ?? type,
+				title: legacy.title ?? TYPE_LABEL[type],
+				description: legacy.description ?? "",
+				mechanics: legacy.mechanics ?? legacy.impact ?? "",
+				dc: legacy.dc ?? parseDc(legacy.mechanics ?? legacy.impact ?? ""),
+				severity: legacy.severity ?? "Moderate",
+				riftScale: legacy.riftScale ?? RIFT_SCALE[type][0],
+				consequences: legacy.consequences ?? "",
+				linkedContent: legacy.linkedContent,
+				aiEnhanced: legacy.aiEnhanced,
+			};
+			return { eventType: type, hist: { current: migrated, history: [] } };
+		}
+		return { eventType: type, hist: emptyHistory<GeneratedEvent>() };
+	}, [storedState]);
 
 	const hydratedRef = useRef(false);
 	useEffect(() => {
 		if (isLoading) return;
 		if (hydratedRef.current) return;
 		setEventType(hydrated.eventType);
-		setEvent(hydrated.event);
+		setHistState(hydrated.hist);
 		hydratedRef.current = true;
-	}, [hydrated.event, hydrated.eventType, isLoading]);
+	}, [hydrated, isLoading]);
 
-	const savePayload = useMemo(() => ({ eventType, event }), [event, eventType]);
+	const savePayload = useMemo<EventToolState>(
+		() => ({
+			eventType,
+			current: histState.current,
+			history: histState.history,
+		}),
+		[eventType, histState],
+	);
 	const debouncedPayload = useDebounce(savePayload, 350);
 
 	useEffect(() => {
@@ -118,70 +249,118 @@ const RandomEventGenerator = () => {
 		void saveNow(debouncedPayload);
 	}, [debouncedPayload, isLoading, saveNow]);
 
+	const { isEnhancing, enhance, clearEnhanced } = useAIEnhance();
+
 	const handleGenerate = async () => {
-		const result = generateEvent(eventType);
-		const generationContext = await loadWardenGenerationContext({
-			types: [
-				"locations",
-				"anomalies",
-				"conditions",
-				"items",
-				"equipment",
-				"relics",
-				"regents",
-			],
-		});
-		const linkedContent =
-			eventType === "world"
-				? [
-						...generationContext.pickMany("locations", 1, {
-							theme: result.description,
-						}),
-						...generationContext.pickMany("regents", 1, {
-							theme: result.impact,
-						}),
-					]
-				: eventType === "encounter"
+		clearEnhanced();
+		setIsGenerating(true);
+		try {
+			const result = generateEvent(eventType);
+			const generationContext = await loadWardenGenerationContext({
+				types: [
+					"locations",
+					"anomalies",
+					"conditions",
+					"items",
+					"equipment",
+					"relics",
+					"regents",
+				],
+			});
+			const linkedContent =
+				eventType === "world"
 					? [
-							...generationContext.pickMany("anomalies", 1, {
+							...generationContext.pickMany("locations", 1, {
 								theme: result.description,
 							}),
-							...generationContext.pickMany("equipment", 1, {
-								theme: result.impact,
+							...generationContext.pickMany("regents", 1, {
+								theme: result.mechanics,
 							}),
 						]
-					: [
-							...generationContext.pickMany("conditions", 1, {
-								theme: result.description,
-							}),
-							...generationContext.pickMany("items", 1, {
-								theme: result.impact,
-							}),
-							...generationContext.pickMany("relics", 1, {
-								theme: result.impact,
-							}),
-						].slice(0, 2);
-		result.linkedContent = linkedContent.slice(0, 3);
-		if (result.linkedContent.length > 0) {
-			result.description = `${result.description} Linked compendium signals: ${result.linkedContent.map((entry) => entry.name).join(", ")}.`;
+					: eventType === "encounter"
+						? [
+								...generationContext.pickMany("anomalies", 1, {
+									theme: result.description,
+								}),
+								...generationContext.pickMany("equipment", 1, {
+									theme: result.mechanics,
+								}),
+							]
+						: [
+								...generationContext.pickMany("conditions", 1, {
+									theme: result.description,
+								}),
+								...generationContext.pickMany("items", 1, {
+									theme: result.mechanics,
+								}),
+							];
+			result.linkedContent = linkedContent.slice(0, 3);
+			setHistState((prev) =>
+				pushGeneration(
+					prev,
+					result,
+					`${result.title} · ${TYPE_LABEL[result.type]}`,
+				),
+			);
+		} finally {
+			setIsGenerating(false);
 		}
-		setEvent(result);
+	};
+
+	const updateCurrent = (
+		updater: (current: GeneratedEvent) => GeneratedEvent,
+	) => {
+		setHistState((prev) => {
+			if (!prev.current) return prev;
+			const next = updater(prev.current);
+			return {
+				current: next,
+				history: prev.history.map((entry) =>
+					entry.id === next.id ? { ...entry, record: next } : entry,
+				),
+			};
+		});
+	};
+
+	const handleAIEnhance = async () => {
+		if (!event) return;
+		const seed = `Generate a complete, detailed random event for a Rift Ascendant TTRPG campaign.
+
+SEED DATA:
+- Type: ${event.type}
+- Title: ${event.title}
+- Severity: ${event.severity} · Rift Scale: ${event.riftScale}
+- Description: ${event.description}
+- Mechanics: ${event.mechanics}
+- Linked Content: ${event.linkedContent?.map((entry) => `${entry.name} (${entry.type})`).join("; ") || "None"}
+
+Expand with read-aloud boxed text, detailed mechanics (DCs, triggers), success/failure/partial consequences, NPC stat references, lore ties to Rift activity, and 2-3 follow-up hooks. Keep the listed mechanics intact.`;
+		const result = await enhance("event", seed);
+		if (result) {
+			updateCurrent((current) => ({ ...current, aiEnhanced: result }));
+		}
 	};
 
 	const handleCopy = () => {
 		if (!event) return;
-		const linked =
-			event.linkedContent?.map((entry) => `${entry.name} (${entry.type})`) ||
-			[];
-		const text = `${event.title}: ${event.description}\n\nImpact: ${event.impact}${linked.length > 0 ? `\n\nLinked Content: ${linked.join(", ")}` : ""}`;
-		navigator.clipboard.writeText(text);
+		navigator.clipboard.writeText(eventToMarkdown(event));
 		toast({
 			title: "Copied!",
-			description: "Event copied to clipboard.",
+			description: "Event copied to clipboard as Markdown.",
 		});
 	};
 
-	const { isEnhancing, enhancedText, enhance, clearEnhanced } = useAIEnhance();
+	const handleExportMarkdown = () => {
+		if (!event) return;
+		downloadMarkdown(`event-${event.title}`, eventToMarkdown(event));
+		toast({ title: "Exported", description: "Event exported as Markdown." });
+	};
+
+	const handleExportJson = () => {
+		if (!event) return;
+		downloadJson(`event-${event.title}`, event);
+		toast({ title: "Exported", description: "Event exported as JSON." });
+	};
 
 	const getEventColor = (type: string) => {
 		switch (type) {
@@ -252,45 +431,21 @@ const RandomEventGenerator = () => {
 					</div>
 
 					<Button
-						onClick={() => {
-							clearEnhanced();
-							void handleGenerate();
-						}}
+						onClick={handleGenerate}
 						className="w-full btn-umbral"
 						size="lg"
+						disabled={isGenerating}
 					>
-						<Sparkles className="w-4 h-4 mr-2" />
-						Generate{" "}
-						{eventType === "world"
-							? "World Event"
-							: eventType === "encounter"
-								? "NPC Encounter"
-								: "Complication"}
+						{isGenerating ? (
+							<Loader2 className="w-4 h-4 mr-2 animate-spin" />
+						) : (
+							<Sparkles className="w-4 h-4 mr-2" />
+						)}
+						Generate {TYPE_LABEL[eventType]}
 					</Button>
 					{event && (
 						<Button
-							onClick={async () => {
-								if (!event) return;
-								const seed = `Generate a complete, detailed random event for a Rift Ascendant TTRPG campaign.
-
-SEED DATA:
-- Type: ${event.type}
-- Title: ${event.title}
-- Description: ${event.description}
-- Impact: ${event.impact}
-- Linked Content: ${event.linkedContent?.map((entry) => `${entry.name} (${entry.type})`).join("; ") || "None"}
-
-Provide ALL of the following sections with full detail:
-
-1. DESCRIPTION: Read-aloud boxed text (2-3 paragraphs) with sensory details
-2. MECHANICS: Skill checks required (DCs), combat triggers, environmental effects
-3. CONSEQUENCES: Success/failure/partial outcomes with mechanical effects (HP, conditions, items)
-4. NPCs INVOLVED: Brief stat blocks (AC/HP/CR) or compendium references
-5. LORE: How the event ties to Rift activity, Regent domains, Rift anomalies
-6. FOLLOW-UP: 2-3 sequel hooks this event creates for future sessions
-7. TACTICAL OPTIONS: What clever players might do, alternative approaches`;
-								await enhance("event", seed);
-							}}
+							onClick={handleAIEnhance}
 							className="w-full gap-2 mt-2"
 							variant="outline"
 							size="lg"
@@ -310,27 +465,47 @@ Provide ALL of the following sections with full detail:
 			{event && (
 				<AscendantWindow title={event.title} className="mb-6">
 					<div className="space-y-4">
-						<Badge className={getEventColor(event.type)}>
-							{event.type.toUpperCase()}
-						</Badge>
+						<div className="flex flex-wrap items-center gap-2">
+							<Badge className={getEventColor(event.type)}>
+								{TYPE_LABEL[event.type].toUpperCase()}
+							</Badge>
+							<Badge
+								variant="outline"
+								className={SEVERITY_COLOR[event.severity]}
+							>
+								{event.severity}
+							</Badge>
+							<Badge variant="outline">{event.riftScale}</Badge>
+							{event.dc != null && (
+								<Badge variant="outline" className="text-amber-300">
+									DC {event.dc}
+								</Badge>
+							)}
+						</div>
 
-						<div className="pt-2">
-							<p className="text-lg font-heading mb-4">{event.description}</p>
-							<div className="p-4 rounded-lg bg-muted/30 border border-border">
-								<div className="flex items-start gap-2">
-									<AlertTriangle className="w-5 h-5 text-amber-400 mt-0.5" />
-									<div>
-										<h4 className="font-heading font-semibold mb-1">Impact</h4>
-										<AscendantText className="block text-sm text-muted-foreground">
-											{event.impact}
-										</AscendantText>
-									</div>
+						<p className="text-lg font-heading">{event.description}</p>
+
+						<div className="p-4 rounded-lg bg-muted/30 border border-border">
+							<div className="flex items-start gap-2">
+								<AlertTriangle className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
+								<div>
+									<h4 className="font-heading font-semibold mb-1">Mechanics</h4>
+									<AscendantText className="block text-sm text-muted-foreground">
+										{event.mechanics}
+									</AscendantText>
 								</div>
 							</div>
 						</div>
 
+						<div>
+							<h4 className="font-heading font-semibold mb-1">Consequences</h4>
+							<p className="text-sm text-muted-foreground">
+								{event.consequences}
+							</p>
+						</div>
+
 						{event.linkedContent && event.linkedContent.length > 0 && (
-							<div className="pt-2">
+							<div>
 								<h4 className="font-heading font-semibold mb-2">
 									Linked Compendium Signals
 								</h4>
@@ -348,7 +523,7 @@ Provide ALL of the following sections with full detail:
 							</div>
 						)}
 
-						{enhancedText && (
+						{event.aiEnhanced && (
 							<div className="pt-4 border-t border-primary/30">
 								<div className="flex items-center gap-2 mb-2">
 									<Sparkles className="w-4 h-4 text-primary" />
@@ -357,31 +532,53 @@ Provide ALL of the following sections with full detail:
 									</span>
 								</div>
 								<div className="text-sm text-muted-foreground whitespace-pre-line bg-primary/5 rounded-lg p-4 max-h-none sm:max-h-[500px] overflow-y-auto">
-									{enhancedText}
+									{event.aiEnhanced}
 								</div>
 							</div>
 						)}
 
-						<div className="flex gap-2 pt-2">
-							<Button onClick={handleCopy} variant="outline" className="flex-1">
-								<Copy className="w-4 h-4 mr-2" />
-								Copy Event
+						<div className="flex flex-wrap gap-2 pt-2">
+							<Button onClick={handleCopy} variant="outline" className="gap-2">
+								<Copy className="w-4 h-4" />
+								Copy
 							</Button>
 							<Button
-								onClick={() => {
-									clearEnhanced();
-									void handleGenerate();
-								}}
+								onClick={handleExportMarkdown}
 								variant="outline"
-								className="flex-1"
+								className="gap-2"
 							>
-								<RefreshCw className="w-4 h-4 mr-2" />
+								<FileText className="w-4 h-4" />
+								Markdown
+							</Button>
+							<Button
+								onClick={handleExportJson}
+								variant="outline"
+								className="gap-2"
+							>
+								<FileJson className="w-4 h-4" />
+								JSON
+							</Button>
+							<Button
+								onClick={handleGenerate}
+								variant="outline"
+								className="gap-2 ml-auto"
+								disabled={isGenerating}
+							>
+								<RefreshCw className="w-4 h-4" />
 								Regenerate
 							</Button>
 						</div>
 					</div>
 				</AscendantWindow>
 			)}
+
+			<GenerationHistoryPanel
+				state={histState}
+				onRestore={(id) => setHistState((prev) => restoreGeneration(prev, id))}
+				onTogglePin={(id) => setHistState((prev) => togglePin(prev, id))}
+				onRemove={(id) => setHistState((prev) => removeGeneration(prev, id))}
+				className="mb-6"
+			/>
 
 			<AscendantWindow title="EVENT TYPES" variant="quest">
 				<div className="space-y-4 text-sm">

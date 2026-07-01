@@ -63,12 +63,12 @@ export function GlobalCharacterHUD() {
 						</div>
 					)}
 					<div className="flex flex-col md:flex-row md:items-center gap-0 md:gap-3 min-w-0">
-						<span className="font-display font-bold text-[10px] md:text-sm tracking-wide text-primary uppercase truncate">
+						<span className="font-display font-bold text-[11px] md:text-sm tracking-wide text-primary uppercase truncate">
 							{character.name}
 						</span>
 						<Badge
 							variant="outline"
-							className="h-4 md:h-5 text-[8px] md:text-[10px] border-primary/30 text-primary/70 w-fit px-1 shrink-0"
+							className="h-4 md:h-5 text-[10px] md:text-[11px] border-primary/30 text-primary/70 w-fit px-1 shrink-0"
 						>
 							LVL {character.level}
 						</Badge>
@@ -81,7 +81,7 @@ export function GlobalCharacterHUD() {
 					<div className="flex items-center gap-2 md:gap-3 flex-1 max-w-[120px] md:max-w-none md:min-w-[200px]">
 						<Heart className="w-3 h-3 md:w-4 md:h-4 text-red-500 fill-red-500/20 shrink-0" />
 						<div className="flex-1 space-y-0.5 md:space-y-1">
-							<div className="flex justify-between text-[8px] md:text-[10px] font-mono leading-none">
+							<div className="flex justify-between text-[10px] md:text-[11px] font-mono leading-none">
 								<span className="hidden xs:inline">HP</span>
 								<span>
 									{character.hp_current}/{character.hp_max}
@@ -95,7 +95,7 @@ export function GlobalCharacterHUD() {
 					</div>
 
 					{/* Quick Defense/Init/Favor */}
-					<div className="flex items-center gap-3 md:gap-6 text-[10px] md:text-sm font-display shrink-0">
+					<div className="flex items-center gap-3 md:gap-6 text-[11px] md:text-sm font-display shrink-0">
 						<div
 							className="flex items-center gap-1.5 md:gap-2 group cursor-help"
 							title="Armor Class"
@@ -130,12 +130,12 @@ export function GlobalCharacterHUD() {
 				{/* Notifications / Toggles - Only show on larger mobile/desktop to prevent cramming */}
 				<div className="hidden sm:flex items-center gap-4 shrink-0">
 					{characterResources.inspiration.inspiration_points > 0 && (
-						<Badge className="bg-yellow-500/20 text-yellow-500 border-yellow-500/30 animate-pulse text-[10px]">
+						<Badge className="bg-yellow-500/20 text-yellow-500 border-yellow-500/30 animate-pulse text-[11px]">
 							INSPIRE
 						</Badge>
 					)}
 					{character.exhaustion_level > 0 && (
-						<Badge variant="destructive" className="text-[10px]">
+						<Badge variant="destructive" className="text-[11px]">
 							EXH {character.exhaustion_level}
 						</Badge>
 					)}

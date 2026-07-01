@@ -17,6 +17,7 @@ import {
 	featureModifiersToCustomModifiers,
 	useCharacterFeatures,
 } from "@/hooks/useCharacterFeatures";
+import { useCharacterGuildBenefits } from "@/hooks/useCharacterGuildBenefits";
 import { useCharacterSheetState } from "@/hooks/useCharacterSheetState";
 import {
 	type CharacterWithAbilities,
@@ -55,6 +56,7 @@ import {
 	rollDiceString,
 } from "@/lib/diceRoller";
 import { isLocalCharacterId } from "@/lib/guestStore";
+import { notifyAsync } from "@/lib/notify";
 import { quickRoll } from "@/lib/rollEngine";
 import { isSourcebookAccessible } from "@/lib/sourcebookAccess";
 import { formatRegentVernacular } from "@/lib/vernacular";
@@ -220,6 +222,10 @@ export function useCharacterPageModel() {
 	const { data: characterActiveSpells = [] } = useCharacterActiveSpells(
 		character?.id,
 	);
+	// Guild Base benefits: real `FeatureEffect`s granted by the character's guild
+	// (War Room +Initiative, Vanguard Tactics +Attack, …) apply to the sheet via
+	// the same custom-modifier pipeline as feats. One guild per character.
+	const guildBenefits = useCharacterGuildBenefits(character?.id);
 
 	const customModifiers = useMemo(
 		() => [
@@ -229,6 +235,11 @@ export function useCharacterPageModel() {
 			// flat modifiers can't express — per-level HP scaling, preset
 			// fallback for feats authored without explicit modifiers.
 			...featureEffectsToCustomModifiers(charFeatures, character?.level ?? 1),
+			// Guild Base effects routed through the identical converter.
+			...featureEffectsToCustomModifiers(
+				guildBenefits.syntheticFeatures,
+				character?.level ?? 1,
+			),
 			// D&D Beyond parity: persisted active spells (Bless, Shield of
 			// Faith, Haste, …) project into customModifiers so derived stats
 			// pick up their bonuses without the engine knowing about spells.
@@ -239,6 +250,7 @@ export function useCharacterPageModel() {
 			charFeatures,
 			characterActiveSpells,
 			character?.level,
+			guildBenefits.syntheticFeatures,
 		],
 	);
 
@@ -482,6 +494,13 @@ export function useCharacterPageModel() {
 			toast,
 		);
 
+		notifyAsync({
+			type: "success",
+			title: "Resources restored",
+			message: `${character.name} took a short rest — hit dice and short-rest abilities refreshed.`,
+			category: "rest",
+		});
+
 		const scope = campaignId && isCampaignConnected ? "campaign" : "local";
 		recordRoll.mutate({
 			dice_formula: "Rest",
@@ -537,6 +556,13 @@ export function useCharacterPageModel() {
 			character.exhaustion_level,
 			toast,
 		);
+
+		notifyAsync({
+			type: "success",
+			title: "Resources restored",
+			message: `${character.name} took a long rest — HP, hit dice, and spell slots restored.`,
+			category: "rest",
+		});
 
 		const scope = campaignId && isCampaignConnected ? "campaign" : "local";
 		recordRoll.mutate({

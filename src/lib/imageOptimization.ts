@@ -250,31 +250,3 @@ export async function compressImage(
 		reader.readAsDataURL(file);
 	});
 }
-
-/**
- * Get image dimensions from URL
- */
-export function getImageDimensions(
-	url: string,
-): Promise<{ width: number; height: number }> {
-	return new Promise((resolve, reject) => {
-		const img = new Image();
-		img.onload = () => {
-			resolve({ width: img.width, height: img.height });
-		};
-		img.onerror = () => reject(new Error("Failed to load image"));
-		img.src = url;
-	});
-}
-
-/**
- * Preload image for better performance
- */
-export function preloadImage(url: string): Promise<void> {
-	return new Promise((resolve, reject) => {
-		const img = new Image();
-		img.onload = () => resolve();
-		img.onerror = () => reject(new Error("Failed to preload image"));
-		img.src = url;
-	});
-}

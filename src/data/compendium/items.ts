@@ -2,6 +2,8 @@
 // Generated with full admin privileges
 // Rift Ascendant themed items with images
 
+import type { RaCurrencyValue } from "@/lib/currency";
+
 export interface Item {
 	id: string;
 	name: string;
@@ -57,7 +59,10 @@ export interface Item {
 	// 5e mechanics (Rift Ascendant themed)
 	requires_attunement?: boolean;
 	weight: number; // In pounds
-	value: number; // In Gate Credits
+	// Structured catalog price: the credit TYPE varies by tier (cheap goods in
+	// mana/crystal, gear in gate, legendary/artifacts in core). A bare number is
+	// still accepted by helpers (treated as Gate Credits) for any legacy entry.
+	value: RaCurrencyValue;
 
 	// Rift Ascendant specific fields
 	essence_cost?: number; // Essence cost to use/attune

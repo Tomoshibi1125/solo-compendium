@@ -32,7 +32,7 @@ Most people use "Rift" broadly. Specialists are precise:
 - **Rift Threshold** — the entrance: a glowing rupture, a dark doorway, a distortion, a mirror-like surface, an opening in the ground. Some are stable; some pulse, flicker, widen, shrink, or move.
 - **Rift Interior** — the space beyond: a cave system, ruined temple, abandoned city block, flooded station, black forest, frozen fortress, impossible skyscraper, or living maze. Low-rank Interiors clear in hours; high-rank ones can demand days, weeks, or multiple operations.
 - **Rift Site** — the area around an active Rift in the normal world: Bureau barricades, medical tents, police lines, media zones, guild staging, Essence containment, evacuation points. A mix of crime scene, military checkpoint, film set, and corporate trade show.
-- **Rift Clear** — a successful operation that neutralizes the primary threat. Not always clean: teams return wounded, civilians are lost, Anomalies escape — or a Rift is declared cleared because that is what the report needs to say.
+- **Rift Clear** — a successful operation that neutralizes the primary threat — normally the apex Anomaly — after which **the Threshold collapses and the Rift closes.** Most Rifts do not persist once their primary threat is gone: a Rift is a thing teams are sent in to *end*, not a permanent fixture a city learns to live beside. Not always clean: teams return wounded, civilians are lost, Anomalies escape — or a Rift is declared cleared because that is what the report needs to say.
 - **Rift Break** — containment fails and Rift conditions spill into the normal world. Anomalies emerge; weather distorts; structures warp; roads stop leading where they should; communication fails. Most Breaks are contained quickly. The ones that are not become history.
 
 ## Anomalies
@@ -105,7 +105,7 @@ Every persistent Domain has an **Anchor** — the thing that keeps its Threshold
 
 ## Contained vs. Rift Break
 
-While a Domain is **contained**, the Bureau can measure the Threshold, issue Rank clearance, deploy Ascendants, and hold a cordon. A **Rift Break** is the failure state: containment collapses and the Interior begins to **overwrite the material side** — weather first, then terrain, then Anomalies, then the Anchor's law itself. *The Bureau calls a Rift safe while its instruments still have numbers.* Numbers run out.
+While a Domain is **contained**, the Bureau can measure the Threshold, issue Rank clearance, deploy Ascendants, and hold a cordon. **Containment is a temporary holding posture, not a solution** — a Domain is closed only by clearing its Anchor, and one left uncleared pushes outward, expanding past its perimeter. A **Rift Break** is the failure state: containment collapses and the Interior begins to **overwrite the material side** — weather first, then terrain, then Anomalies, then the Anchor's law itself. *The Bureau calls a Rift safe while its instruments still have numbers.* Numbers run out.
 
 ## Regents
 

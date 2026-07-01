@@ -82,25 +82,6 @@ export function removeCondition(
 }
 
 /**
- * Remove all conditions linked to a concentration spell (when concentration breaks)
- */
-export function breakConcentrationConditions(
-	conditions: ConditionEntry[],
-	spellId: string,
-): { conditions: ConditionEntry[]; changes: ConditionChange[] } {
-	const changes: ConditionChange[] = [];
-	const updated = conditions.filter((c) => {
-		if (c.concentrationSpellId === spellId) {
-			changes.push({ type: "concentration_broken", condition: c });
-			return false;
-		}
-		return true;
-	});
-
-	return { conditions: updated, changes };
-}
-
-/**
  * Advance round — decrement remaining rounds and expire conditions
  */
 export function advanceConditionRound(
@@ -164,41 +145,6 @@ export function migrateLegacyConditions(
 		concentrationSpellId: null,
 		isActive: true,
 	}));
-}
-
-/**
- * Check if a character has a specific active condition
- */
-export function hasCondition(
-	conditions: ConditionEntry[],
-	conditionName: string,
-): boolean {
-	return conditions.some(
-		(c) => c.isActive && c.conditionName === conditionName.toLowerCase(),
-	);
-}
-
-/**
- * Get all conditions from a specific source (e.g., all conditions from a spell)
- */
-export function getConditionsFromSource(
-	conditions: ConditionEntry[],
-	sourceId: string,
-): ConditionEntry[] {
-	return conditions.filter((c) => c.sourceId === sourceId && c.isActive);
-}
-/**
- * Get condition summary for display
- */
-export function getConditionSummary(condition: ConditionEntry): string {
-	const parts = [condition.conditionName];
-	if (condition.remainingRounds !== null) {
-		parts.push(`(${condition.remainingRounds} rounds)`);
-	}
-	if (condition.sourceName && condition.sourceType !== "manual") {
-		parts.push(`from ${condition.sourceName}`);
-	}
-	return parts.join(" ");
 }
 /**
  * Clear conditions on Long Rest

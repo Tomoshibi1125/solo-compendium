@@ -1,0 +1,51 @@
+/**
+ * Print rules for the Meridian atlas — turns the gazetteer into a clean,
+ * table-ready GM handout. Scoped to `.meridian-print-root` so it never affects
+ * other routes. The visibility technique prints only the atlas region; it relies
+ * on selector specificity (`.meridian-print-root *` outranks `body *`), so no
+ * `!important` is needed.
+ */
+@media print {
+	body * {
+		visibility: hidden;
+	}
+
+	.meridian-print-root,
+	.meridian-print-root * {
+		visibility: visible;
+	}
+
+	.meridian-print-root {
+		position: absolute;
+		left: 0;
+		top: 0;
+		width: 100%;
+		padding: 0;
+		margin: 0;
+		color: #000;
+	}
+
+	/* Hide on-screen controls (toggles, buttons) in the handout. */
+	.meridian-print-root .no-print {
+		display: none;
+	}
+
+	/* Keep each map and its key together; start each district on a fresh page. */
+	.meridian-print-root .print-avoid-break {
+		break-inside: avoid;
+		page-break-inside: avoid;
+	}
+
+	.meridian-print-root .print-page {
+		break-before: page;
+		page-break-before: always;
+	}
+
+	/* Make overlay SVG ink/colors render on paper. */
+	.meridian-print-root img,
+	.meridian-print-root svg {
+		-webkit-print-color-adjust: exact;
+		print-color-adjust: exact;
+		max-width: 100%;
+	}
+}

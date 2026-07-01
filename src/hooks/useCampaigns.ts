@@ -5,11 +5,7 @@ import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import type { Database } from "@/integrations/supabase/types";
 import { AppError, type AppErrorCode } from "@/lib/appError";
 import { useAuth } from "@/lib/auth/authContext";
-import {
-	getLocalGuestRole,
-	getLocalUserId,
-	listLocalCharacters,
-} from "@/lib/guestStore";
+import { getLocalUserId, listLocalCharacters } from "@/lib/guestStore";
 
 export interface Campaign {
 	id: string;
@@ -1450,50 +1446,6 @@ export const useLeaveCampaign = () => {
 	});
 };
 
-// Check if current user is the Warden of a campaign
-export const useIsCampaignWarden = (campaignId: string) => {
-	return useQuery({
-		queryKey: ["campaigns", campaignId, "is-warden"],
-		queryFn: async () => {
-			if (isLocalMode()) {
-				const userId = getLocalUserId();
-				return loadLocalCampaigns().some(
-					(campaign) =>
-						campaign.id === campaignId && campaign.warden_id === userId,
-				);
-			}
-			const {
-				data: { session },
-				error: sessionError,
-			} = await supabase.auth.getSession();
-			if (sessionError || !session?.user) {
-				if (guestEnabled) {
-					const userId = getLocalUserId();
-					return loadLocalCampaigns().some(
-						(campaign) =>
-							campaign.id === campaignId && campaign.warden_id === userId,
-					);
-				}
-				return false;
-			}
-			const user = session.user;
-
-			const { data: campaign, error } = await supabase
-				.from("campaigns")
-				.select("warden_id")
-				.eq("id", campaignId)
-				.single();
-
-			if (error || !campaign) return false;
-			return (
-				(campaign as Database["public"]["Tables"]["campaigns"]["Row"])
-					.warden_id === user.id
-			);
-		},
-		enabled: !!campaignId,
-	});
-};
-
 // Check if current user has Warden access (is Warden or co-Warden)
 export const useHasWardenAccess = (campaignId: string) => {
 	return useQuery({
@@ -1642,43 +1594,6 @@ export const useCampaignRole = (campaignId: string) => {
 			return null;
 		},
 		enabled: !!campaignId && !loading,
-	});
-};
-
-// Check if user is a Warden - now uses profiles table
-export const useIsWarden = () => {
-	return useQuery({
-		queryKey: ["user", "is-warden"],
-		queryFn: async (): Promise<boolean> => {
-			if (isLocalMode()) {
-				const userId = getLocalUserId();
-				return loadLocalCampaigns().some(
-					(campaign) => campaign.warden_id === userId,
-				);
-			}
-			const {
-				data: { user },
-			} = await supabase.auth.getUser();
-			if (!user) {
-				if (guestEnabled) {
-					return getLocalGuestRole() === "warden";
-				}
-				return false;
-			}
-
-			const { data, error } = await supabase
-				.from("profiles")
-				.select("role")
-				.eq("id", user.id)
-				.single();
-
-			if (error || !data) return false;
-			const role = (data as Database["public"]["Tables"]["profiles"]["Row"])
-				.role;
-			const normalizedRole = role === "admin" ? "warden" : role;
-			return normalizedRole === "warden";
-		},
-		retry: false,
 	});
 };
 

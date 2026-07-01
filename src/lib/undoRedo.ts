@@ -121,21 +121,3 @@ export class UndoRedoManager<T> {
 		this.currentIndex = this.history.length - 1;
 	}
 }
-
-/**
- * React hook for undo/redo
- */
-export function useUndoRedo<T>(initialState: T, maxHistorySize: number = 50) {
-	const manager = new UndoRedoManager(initialState, maxHistorySize);
-
-	return {
-		push: (state: T, description?: string) => manager.push(state, description),
-		undo: () => manager.undo(),
-		redo: () => manager.redo(),
-		canUndo: () => manager.canUndo(),
-		canRedo: () => manager.canRedo(),
-		getCurrentState: () => manager.getCurrentState(),
-		getHistoryInfo: () => manager.getHistoryInfo(),
-		clear: () => manager.clear(),
-	};
-}

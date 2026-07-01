@@ -94,7 +94,7 @@ export function CampaignRollFeed({ campaignId }: CampaignRollFeedProps) {
 									<Badge
 										variant="outline"
 										className={cn(
-											"text-[10px] px-1.5 py-0 font-mono shrink-0",
+											"text-[11px] px-1.5 py-0 font-mono shrink-0",
 											rollTypeColor(event.roll_type),
 										)}
 									>
@@ -116,11 +116,11 @@ export function CampaignRollFeed({ campaignId }: CampaignRollFeedProps) {
 										)}
 									</div>
 
-									<span className="text-[10px] text-muted-foreground font-mono shrink-0">
+									<span className="text-[11px] text-muted-foreground font-mono shrink-0">
 										{event.dice_formula}
 									</span>
 
-									<span className="text-[10px] text-muted-foreground shrink-0">
+									<span className="text-[11px] text-muted-foreground shrink-0">
 										{formatTimeAgo(event.created_at)}
 									</span>
 								</div>

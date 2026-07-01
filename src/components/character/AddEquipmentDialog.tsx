@@ -334,7 +334,7 @@ export function AddEquipmentDialog({
 													</Badge>
 													{itemRarity && (
 														<span
-															className={`text-[10px] font-medium capitalize ${rarityColor}`}
+															className={`text-[11px] font-medium capitalize ${rarityColor}`}
 														>
 															{itemRarity}
 														</span>
@@ -342,13 +342,13 @@ export function AddEquipmentDialog({
 													{itemAttunement && (
 														<Badge
 															variant="outline"
-															className="text-[10px] px-1"
+															className="text-[11px] px-1"
 														>
 															Attunement
 														</Badge>
 													)}
 												</div>
-												<div className="flex items-center gap-3 text-[10px] text-muted-foreground mb-1">
+												<div className="flex items-center gap-3 text-xs text-muted-foreground mb-1">
 													{itemDamage && (
 														<span>
 															Damage: {itemDamage} {itemDamageType || ""}
@@ -360,7 +360,7 @@ export function AddEquipmentDialog({
 													)}
 												</div>
 												{item.description && (
-													<p className="text-xs text-muted-foreground line-clamp-2">
+													<p className="text-sm leading-relaxed text-muted-foreground">
 														{formatRegentVernacular(item.description)}
 													</p>
 												)}

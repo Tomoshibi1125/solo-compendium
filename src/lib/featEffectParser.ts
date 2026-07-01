@@ -382,17 +382,3 @@ export function computeAttacksPerAction(
 
 	return attacks;
 }
-
-/**
- * Check if a feat name has known mechanical effects
- */
-export function hasFeatEffects(featName: string): boolean {
-	return featName.toLowerCase().trim() in FEAT_EFFECTS;
-}
-
-/**
- * Check if a fighting style has known effects
- */
-export function hasFightingStyleEffects(styleName: string): boolean {
-	return styleName.toLowerCase().trim() in FIGHTING_STYLE_EFFECTS;
-}

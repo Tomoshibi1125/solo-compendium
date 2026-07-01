@@ -244,7 +244,7 @@
 		rgba(155, 109, 255, 0.02) 24px,
 		rgba(155, 109, 255, 0.02) 25px
 	);
-	animation: data-stream 8s linear infinite;
+	animation: data-stream 4s linear infinite;
 }
 
 /* ── System panel — the core "floating window" look ────────── */
@@ -791,7 +791,7 @@
 		hsl(var(--sw-glow) / 0.03) 52%,
 		transparent 100%
 	);
-	animation: rift-scan-line-subtle 6s ease-in-out infinite;
+	animation: rift-scan-line-subtle 3s ease-in-out infinite;
 }
 
 .sw-glow-top {
@@ -835,6 +835,105 @@
 
 .sw-title-text {
 	color: hsl(var(--sw-glow));
+}
+
+/* ── Reusable overlay frame (Dialog / Sheet "AscendantWindow" signature) ──
+   Adds the system-window top neon edge + four HUD corner brackets to any
+   container, driven by --sw-glow (defaults to primary). Pure CSS, no extra
+   DOM, pointer-events-none, reduced-motion safe. */
+.ra-overlay-frame {
+	--sw-glow: var(--primary);
+}
+.ra-overlay-frame::before {
+	/* top neon edge line */
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	height: 1px;
+	background: linear-gradient(
+		90deg,
+		transparent 0%,
+		hsl(var(--sw-glow) / 0.6) 30%,
+		hsl(var(--sw-glow) / 0.85) 50%,
+		hsl(var(--sw-glow) / 0.6) 70%,
+		transparent 100%
+	);
+	box-shadow: 0 0 10px hsl(var(--sw-glow) / 0.4);
+	pointer-events: none;
+	z-index: 2;
+}
+.ra-overlay-frame::after {
+	/* four HUD corner brackets via layered corner gradients */
+	content: "";
+	position: absolute;
+	inset: 0;
+	pointer-events: none;
+	z-index: 2;
+	--ra-corner: hsl(var(--sw-glow) / 0.55);
+	--ra-corner-len: 14px;
+	--ra-corner-thick: 2px;
+	background:
+		linear-gradient(var(--ra-corner), var(--ra-corner)) left top /
+		var(--ra-corner-len) var(--ra-corner-thick) no-repeat,
+		linear-gradient(var(--ra-corner), var(--ra-corner)) left top /
+		var(--ra-corner-thick) var(--ra-corner-len) no-repeat,
+		linear-gradient(var(--ra-corner), var(--ra-corner)) right top /
+		var(--ra-corner-len) var(--ra-corner-thick) no-repeat,
+		linear-gradient(var(--ra-corner), var(--ra-corner)) right top /
+		var(--ra-corner-thick) var(--ra-corner-len) no-repeat,
+		linear-gradient(var(--ra-corner), var(--ra-corner)) left bottom /
+		var(--ra-corner-len) var(--ra-corner-thick) no-repeat,
+		linear-gradient(var(--ra-corner), var(--ra-corner)) left bottom /
+		var(--ra-corner-thick) var(--ra-corner-len) no-repeat,
+		linear-gradient(var(--ra-corner), var(--ra-corner)) right bottom /
+		var(--ra-corner-len) var(--ra-corner-thick) no-repeat,
+		linear-gradient(var(--ra-corner), var(--ra-corner)) right bottom /
+		var(--ra-corner-thick) var(--ra-corner-len) no-repeat;
+	filter: drop-shadow(0 0 4px hsl(var(--sw-glow) / 0.5));
+}
+
+/* ── Semantic typography scale (DDB-caliber: larger, bolder, scannable) ──
+   Adopt across pages/sheets to replace ad-hoc font-display/heading combos. */
+.ra-heading-1 {
+	font-family: var(--font-heading);
+	font-weight: 700;
+	letter-spacing: 0.02em;
+	line-height: 1.1;
+	font-size: clamp(1.75rem, 1.2rem + 2.2vw, 2.75rem);
+}
+.ra-heading-2 {
+	font-family: var(--font-heading);
+	font-weight: 700;
+	letter-spacing: 0.02em;
+	line-height: 1.15;
+	font-size: clamp(1.375rem, 1rem + 1.4vw, 2rem);
+}
+.ra-heading-3 {
+	font-family: var(--font-heading);
+	font-weight: 600;
+	letter-spacing: 0.03em;
+	line-height: 1.2;
+	font-size: clamp(1.125rem, 0.95rem + 0.7vw, 1.5rem);
+}
+.ra-eyebrow {
+	font-family: var(--font-heading);
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: 0.22em;
+	font-size: 0.72rem;
+	color: hsl(var(--primary));
+}
+.ra-body-lg {
+	font-size: 1.0625rem;
+	line-height: 1.65;
+}
+.ra-stat-number {
+	font-family: var(--font-heading);
+	font-weight: 700;
+	font-variant-numeric: tabular-nums;
+	line-height: 1;
 }
 
 /* ── Reduced motion ────────────────────────────────────────── */

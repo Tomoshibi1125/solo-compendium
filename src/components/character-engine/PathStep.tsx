@@ -176,7 +176,7 @@ function PathMechanicCard({
 						<Badge
 							key={`${title}-${badge.label}`}
 							variant={badge.variant ?? "secondary"}
-							className="text-[9px] uppercase"
+							className="text-[11px] uppercase"
 						>
 							{badge.label}
 						</Badge>
@@ -189,7 +189,7 @@ function PathMechanicCard({
 				</AscendantText>
 			)}
 			{mechanicPreview && (
-				<div className="mt-1 text-[10px] text-primary/80 font-mono bg-primary/5 border border-primary/10 rounded px-2 py-1">
+				<div className="mt-1 text-[11px] text-primary/80 font-mono bg-primary/5 border border-primary/10 rounded px-2 py-1">
 					{mechanicPreview}
 				</div>
 			)}
@@ -209,7 +209,7 @@ export const PathStep: React.FC<PathStepProps> = ({
 			<AscendantWindow title="MODEL EVOLUTION: PATH BRANCHING">
 				<div className="space-y-6">
 					<div className="space-y-3">
-						<Label className="text-[10px] uppercase tracking-widest text-primary/60">
+						<Label className="text-[11px] uppercase tracking-widest text-primary/60">
 							Select Active Specialization Path
 						</Label>
 						<Select value={selectedPath} onValueChange={onPathChange}>
@@ -237,7 +237,7 @@ export const PathStep: React.FC<PathStepProps> = ({
 									</h4>
 									<Badge
 										variant="secondary"
-										className="text-[9px] uppercase bg-primary/10 text-primary/70 border-primary/20"
+										className="text-[11px] uppercase bg-primary/10 text-primary/70 border-primary/20"
 									>
 										{formatRegentVernacular(
 											selectedPathData.source_book ??
@@ -270,7 +270,7 @@ export const PathStep: React.FC<PathStepProps> = ({
 
 								<div className="grid grid-cols-2 gap-4 py-3 border-y border-primary/5">
 									<div className="space-y-1">
-										<Label className="text-[9px] uppercase tracking-tighter text-muted-foreground">
+										<Label className="text-[11px] uppercase tracking-tighter text-muted-foreground">
 											Unlock Level
 										</Label>
 										<div className="text-sm font-heading">
@@ -280,10 +280,10 @@ export const PathStep: React.FC<PathStepProps> = ({
 										</div>
 									</div>
 									<div className="space-y-1 text-right">
-										<Label className="text-[9px] uppercase tracking-tighter text-muted-foreground">
+										<Label className="text-[11px] uppercase tracking-tighter text-muted-foreground">
 											Integration Index
 										</Label>
-										<div className="text-[10px] uppercase tracking-widest text-primary/40 mt-1">
+										<div className="text-[11px] uppercase tracking-widest text-primary/70 mt-1">
 											Authorized Protocol
 										</div>
 									</div>
@@ -300,7 +300,7 @@ export const PathStep: React.FC<PathStepProps> = ({
 										<div className="flex flex-wrap gap-2">
 											<Badge
 												variant="secondary"
-												className="text-[10px] bg-primary/10 border-primary/20"
+												className="text-[11px] bg-primary/10 border-primary/20"
 											>
 												Primary:{" "}
 												{formatMaybe(selectedPathData.stats.primaryAttribute)}
@@ -308,7 +308,7 @@ export const PathStep: React.FC<PathStepProps> = ({
 											{selectedPathData.stats.secondaryAttribute && (
 												<Badge
 													variant="outline"
-													className="text-[10px] border-primary/20"
+													className="text-[11px] border-primary/20"
 												>
 													Secondary:{" "}
 													{formatMaybe(

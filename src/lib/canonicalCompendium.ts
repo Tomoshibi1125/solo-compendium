@@ -18,7 +18,6 @@ import {
 } from "@/lib/jobAbilityAccess";
 import {
 	getActivePathAbilityGrants,
-	getEffectiveMaxAbilityLevel,
 	getPathGrantMaxAbilityLevel,
 	isEntryPathExclusiveForJob,
 	normalizePathAbilityValue,
@@ -42,6 +41,7 @@ export const staticCanonicalEntryTypes = [
 	// Q4 of Round 3 — vehicles & mounts registry (44 entries).
 	"vehicles",
 	"crafting",
+	"guild-base",
 	"feats",
 	"skills",
 	"equipment",
@@ -85,6 +85,7 @@ const providerMethodByType: Record<
 	regents: "getRegents",
 	vehicles: "getVehicles",
 	crafting: "getCrafting",
+	"guild-base": "getGuildBase",
 	feats: "getFeats",
 	skills: "getSkills",
 	equipment: "getItems",
@@ -125,12 +126,6 @@ export function isEquipmentLikeEntry(entry: StaticCompendiumEntry): boolean {
 		.toLowerCase()
 		.trim();
 	return equipmentItemTypes.has(itemType);
-}
-
-export function classifyCanonicalItemType(
-	entry: StaticCompendiumEntry,
-): "equipment" | "items" {
-	return isEquipmentLikeEntry(entry) ? "equipment" : "items";
 }
 
 export async function listCanonicalEntries(
@@ -1061,34 +1056,6 @@ function normalizeEligibilityToken(value: string | null | undefined): string {
 	return normalizeJobAccessToken(value);
 }
 
-function matchesCastableEligibility(
-	entry: CanonicalCastableEntry,
-	filters: Pick<
-		LearnableCastableOptions,
-		"jobName" | "pathName" | "regentNames"
-	>,
-): boolean {
-	const requestedTokens = [
-		normalizeEligibilityToken(filters.jobName),
-		normalizeEligibilityToken(filters.pathName),
-		...(filters.regentNames ?? []).map(normalizeEligibilityToken),
-	].filter(Boolean);
-
-	if (requestedTokens.length === 0) return true;
-
-	const entryTokens = new Set(
-		entry.tags
-			.map(normalizeEligibilityToken)
-			.filter((token) => token.length > 0),
-	);
-
-	if (entryTokens.size === 0) {
-		return entry.canonical_type === "spells";
-	}
-
-	return requestedTokens.some((token) => entryTokens.has(token));
-}
-
 function matchesTokenEligibility(
 	entry: StaticCompendiumEntry,
 	tokens: readonly string[],
@@ -1246,36 +1213,6 @@ function pathGrantMatchesTechniqueEntry(
 	);
 }
 
-function getCastableLevelCap(
-	options: LearnableCastableOptions,
-	defaultKind: "spell" | "power",
-): number | null {
-	const explicit =
-		defaultKind === "spell"
-			? (options.maxSpellLevel ?? options.maxPowerLevel)
-			: options.maxPowerLevel;
-	if (typeof explicit === "number") return explicit;
-	if (
-		typeof options.characterLevel === "number" &&
-		options.jobName &&
-		options.pathName
-	) {
-		return getEffectiveMaxAbilityLevel({
-			jobName: options.jobName,
-			pathName: options.pathName,
-			characterLevel: options.characterLevel,
-			kind: options.castableKind ?? defaultKind,
-		});
-	}
-	if (typeof options.characterLevel !== "number" || !options.jobName)
-		return null;
-	return getMaxAbilityLevelForJobAtLevel(
-		options.jobName,
-		options.characterLevel,
-		options.castableKind ?? defaultKind,
-	);
-}
-
 function getExplicitCastableLevelCap(
 	options: LearnableCastableOptions,
 	defaultKind: "spell" | "power",
@@ -1309,20 +1246,6 @@ function isWithinBaseCastableLevelCap(
 ): boolean {
 	const maxLevel = getBaseCastableLevelCap(options, defaultKind);
 	return maxLevel === null || entry.power_level <= maxLevel;
-}
-
-function preferSpellForLearnableList(
-	existing: CanonicalCastableEntry,
-	next: CanonicalCastableEntry,
-): CanonicalCastableEntry {
-	if (
-		existing.canonical_type === "powers" &&
-		next.canonical_type === "spells"
-	) {
-		return next;
-	}
-
-	return existing;
 }
 
 export async function listCanonicalCastables(
@@ -1623,40 +1546,6 @@ export async function isCanonicalCastableAccessible(
 	);
 	if (!entry) return true;
 	return isSourcebookAccessible(entry.source_book, accessContext);
-}
-export async function listLearnableCastables(
-	options: LearnableCastableOptions = {},
-): Promise<CanonicalCastableEntry[]> {
-	const maxPowerLevel = getCastableLevelCap(
-		options,
-		options.castableKind ?? "spell",
-	);
-	const castables = await listCanonicalCastables(
-		options.search,
-		options.accessContext,
-	);
-	const filtered = castables.filter((entry) => {
-		if (typeof maxPowerLevel === "number" && entry.power_level > maxPowerLevel)
-			return false;
-
-		return matchesCastableEligibility(entry, options);
-	});
-
-	const dedupedByName = new Map<string, CanonicalCastableEntry>();
-	for (const entry of filtered) {
-		const key = entry.name.trim().toLowerCase();
-		const existing = dedupedByName.get(key);
-		if (!existing) {
-			dedupedByName.set(key, entry);
-			continue;
-		}
-
-		dedupedByName.set(key, preferSpellForLearnableList(existing, entry));
-	}
-
-	return Array.from(dedupedByName.values()).sort(
-		(a, b) => a.power_level - b.power_level || a.name.localeCompare(b.name),
-	);
 }
 
 export async function listLearnableSpells(

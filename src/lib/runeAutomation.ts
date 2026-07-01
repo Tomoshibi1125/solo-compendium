@@ -1,6 +1,5 @@
 import type { StaticCompendiumEntry } from "@/data/compendium/providers/types";
 import { supabase } from "@/integrations/supabase/client";
-import type { Database } from "@/integrations/supabase/types";
 import {
 	type CanonicalCastableEntry,
 	isCanonicalPowerLearnable,
@@ -19,8 +18,6 @@ import {
 	jobCanLearnTechniques,
 } from "./jobAbilityAccess";
 import { getEffectiveMaxAbilityLevel } from "./pathAbilityAccess";
-
-export type Rune = Database["public"]["Tables"]["compendium_runes"]["Row"];
 
 /**
  * Automatically learn runes based on character progression
@@ -60,23 +57,7 @@ export async function autoLearnRunes(
 		throw error;
 	}
 }
-
-// ---------------------------------------------------------------------------
-// Rift Ascendant Rune Absorption — cross-type resolution
-// ---------------------------------------------------------------------------
-
-export const FULL_CASTERS = [
-	"Mage",
-	"Esper",
-	"Herald",
-	"Revenant",
-	"Contractor",
-	"Technomancer",
-	"Summoner",
-	"Idol",
-];
 export const HALF_CASTERS = ["Holy Knight", "Stalker"];
-export const MARTIAL_JOBS = ["Assassin", "Berserker", "Destroyer", "Striker"];
 
 export type RuneRecharge =
 	| "at-will"

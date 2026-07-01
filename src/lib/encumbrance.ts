@@ -143,19 +143,3 @@ export function calculateEncumbrance(
 		statusMessage,
 	};
 }
-
-/**
- * Get speed penalty from encumbrance
- */
-export function getEncumbranceSpeedPenalty(
-	status: EncumbranceStatus["status"],
-): number {
-	switch (status) {
-		case "heavy":
-			return -10;
-		case "overloaded":
-			return -20;
-		default:
-			return 0;
-	}
-}

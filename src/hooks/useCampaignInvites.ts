@@ -7,11 +7,6 @@ import {
 	saveLocalCampaigns,
 	saveLocalMembers,
 } from "@/hooks/useCampaigns";
-import {
-	loadNotifications,
-	type Notification,
-	saveNotifications,
-} from "@/hooks/useNotifications";
 import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import type { Database, Json } from "@/integrations/supabase/types";
 import { AppError } from "@/lib/appError";
@@ -19,6 +14,7 @@ import {
 	deriveCampaignInviteStatus,
 	normalizeInviteAccessKey,
 } from "@/lib/campaignInviteUtils";
+import { notifyAsync } from "@/lib/notify";
 
 const guestEnabled = import.meta.env.VITE_GUEST_ENABLED !== "false";
 
@@ -587,6 +583,23 @@ export const useRedeemCampaignInvite = () => {
 				}
 			}
 
+			// Notify the campaign owner (warden) that a new Ascendant joined —
+			// the high-signal DDB-style membership event. Fire-and-forget so a
+			// failed notification never blocks the join.
+			const wardenId = joinedCampaign?.warden_id;
+			if (wardenId && wardenId !== user.id) {
+				notifyAsync({
+					userId: wardenId,
+					type: "campaign_invite",
+					title: "New Ascendant joined your campaign",
+					message: joinedCampaign?.name
+						? `"${joinedCampaign.name}" has a new member.`
+						: "Your campaign has a new member.",
+					category: "campaign",
+					link: `/campaigns/${campaignId}`,
+				});
+			}
+
 			return campaignId;
 		},
 		onSuccess: (campaignId) => {
@@ -598,34 +611,17 @@ export const useRedeemCampaignInvite = () => {
 				description: "You are now part of the campaign.",
 			});
 
-			// F5 of May 2026 remediation plan — push to the in-app activity
-			// feed so the user sees a persistent record of the join in the
-			// NotificationCenter bell.
-			try {
-				const stored = loadNotifications();
-				const note: Notification = {
-					id: `${Date.now()}-${Math.random().toString(36).slice(2, 9)}`,
-					type: "success",
-					priority: "normal",
-					title: "Campaign invite accepted",
-					message:
-						"You've joined a new campaign — open it from the Campaigns list.",
-					read: false,
-					createdAt: Date.now(),
-					category: "campaign",
-					action: {
-						label: "Open campaign",
-						onClick: () => {
-							if (typeof window !== "undefined") {
-								window.location.href = `/campaigns/${campaignId}`;
-							}
-						},
-					},
-				};
-				saveNotifications([note, ...stored]);
-			} catch {
-				// notification failure must never block invite acceptance
-			}
+			// Route the join confirmation through the single notify() bridge so
+			// it persists server-side (and surfaces on every device), not just
+			// the local cache. Targets the current user (the joiner).
+			notifyAsync({
+				type: "success",
+				title: "Campaign invite accepted",
+				message:
+					"You've joined a new campaign — open it from the Campaigns list.",
+				category: "campaign",
+				link: `/campaigns/${campaignId}`,
+			});
 		},
 		onError: (error: Error) => {
 			toast({

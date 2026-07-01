@@ -24,25 +24,12 @@ export {
 	getSpellsKnownLimit,
 	getSpellsPreparedLimit,
 } from "./5eCharacterCalculations";
-export type {
-	AbilityScore,
-	Character,
-	CharacterAction,
-	Job,
-	JobFeature,
-	JobPath,
-	Power,
-	Rarity,
-	Relic,
-	RiftFavorOption,
-	Skill,
-} from "./5eRulesEngine";
+export type { AbilityScore, Rarity, Skill } from "./5eRulesEngine";
 // From 5eRulesEngine — core utility functions and types
 export {
 	ABILITY_DISPLAY_NAMES,
 	formatModifier,
 	getAbilityModifier,
-	getAvailableFavorOptions,
 	getProficiencyBonus,
 	getRiftFavorMax,
 	LEGACY_5E_TO_SA,

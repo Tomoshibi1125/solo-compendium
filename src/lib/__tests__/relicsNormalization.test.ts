@@ -53,3 +53,37 @@ describe("relics data normalization", () => {
 		expect(duplicates).toEqual([]);
 	});
 });
+
+describe("relics catalog pricing", () => {
+	const VALID_CURRENCIES = new Set(["core", "gate", "crystal", "mana"]);
+	// Mirrors the reprice policy in scripts (gear → gate, epic+ → core).
+	const EXPECTED_CURRENCY: Record<string, string> = {
+		rare: "gate",
+		very_rare: "gate",
+		epic: "core",
+		legendary: "core",
+		mythic: "core",
+	};
+
+	it("gives every relic a structured price with a valid currency + positive amount", () => {
+		for (const r of comprehensiveRelics) {
+			expect(r.value, `${r.name} is missing a value`).toBeDefined();
+			expect(
+				VALID_CURRENCIES.has(r.value?.currency ?? ""),
+				`${r.name} has invalid currency ${r.value?.currency}`,
+			).toBe(true);
+			expect(r.value?.amount ?? 0).toBeGreaterThan(0);
+		}
+	});
+
+	it("prices each rarity in its expected credit tier", () => {
+		for (const r of comprehensiveRelics) {
+			const expected = EXPECTED_CURRENCY[r.rarity];
+			expect(expected, `unknown rarity ${r.rarity}`).toBeDefined();
+			expect(
+				r.value?.currency,
+				`${r.name} (${r.rarity}) should be priced in ${expected}`,
+			).toBe(expected);
+		}
+	});
+});

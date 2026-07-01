@@ -66,16 +66,6 @@ const CR_XP_MAP: Record<string, number> = {
 	"30": 155000,
 };
 
-// Encounter multipliers based on number of Anomalies
-export const ENCOUNTER_MULTIPLIERS: Record<string, number> = {
-	"1": 1,
-	"2": 1.5,
-	"3-6": 2,
-	"7-10": 2.5,
-	"11-14": 3,
-	"15+": 4,
-};
-
 export function getLevelFromXP(xp: number): number {
 	let level = 1;
 	for (let i = 20; i >= 1; i--) {
@@ -134,27 +124,6 @@ export function getXPForLevel(level: number): number {
 	return XP_THRESHOLDS[level] || 0;
 }
 
-export function getXPToNextLevel(currentXP: number): {
-	needed: number;
-	progress: number;
-} {
-	const currentLevel = getLevelFromXP(currentXP);
-
-	if (currentLevel >= 20) {
-		return { needed: 0, progress: 100 };
-	}
-
-	const currentThreshold = XP_THRESHOLDS[currentLevel];
-	const nextThreshold = XP_THRESHOLDS[currentLevel + 1];
-	const xpInLevel = currentXP - currentThreshold;
-	const xpNeededForLevel = nextThreshold - currentThreshold;
-
-	return {
-		needed: nextThreshold - currentXP,
-		progress: Math.floor((xpInLevel / xpNeededForLevel) * 100),
-	};
-}
-
 export function getXPProgress(currentXP: number): {
 	current: number;
 	next: number;
@@ -183,77 +152,4 @@ export function getXPProgress(currentXP: number): {
 
 export function getCRXP(cr: string): number {
 	return CR_XP_MAP[cr] || 0;
-}
-
-export function getEncounterMultiplier(AnomalyCount: number): number {
-	if (AnomalyCount === 1) return 1;
-	if (AnomalyCount === 2) return 1.5;
-	if (AnomalyCount <= 6) return 2;
-	if (AnomalyCount <= 10) return 2.5;
-	if (AnomalyCount <= 14) return 3;
-	return 4;
-}
-
-export function calculateEncounterXP(
-	Anomalies: { cr: string; count: number }[],
-): {
-	baseXP: number;
-	adjustedXP: number;
-	totalAnomalies: number;
-} {
-	let baseXP = 0;
-	let totalAnomalies = 0;
-
-	Anomalies.forEach((m) => {
-		baseXP += getCRXP(m.cr) * m.count;
-		totalAnomalies += m.count;
-	});
-
-	const multiplier = getEncounterMultiplier(totalAnomalies);
-	const adjustedXP = Math.floor(baseXP * multiplier);
-
-	return { baseXP, adjustedXP, totalAnomalies };
-}
-
-export function getEncounterDifficulty(
-	adjustedXP: number,
-	partyLevels: number[],
-): "trivial" | "easy" | "medium" | "hard" | "deadly" {
-	const thresholds = {
-		easy: [
-			25, 50, 75, 125, 250, 300, 350, 450, 550, 600, 800, 1000, 1100, 1250,
-			1400, 1600, 2000, 2100, 2400, 2800,
-		],
-		medium: [
-			50, 100, 150, 250, 500, 600, 750, 900, 1100, 1200, 1600, 2000, 2200, 2500,
-			2800, 3200, 3900, 4200, 4900, 5700,
-		],
-		hard: [
-			75, 150, 225, 375, 750, 900, 1100, 1400, 1600, 1900, 2400, 3000, 3400,
-			3800, 4300, 4800, 5900, 6300, 7300, 8500,
-		],
-		deadly: [
-			100, 200, 400, 500, 1100, 1400, 1700, 2100, 2400, 2800, 3600, 4500, 5100,
-			5700, 6400, 7200, 8800, 9500, 10900, 12700,
-		],
-	};
-
-	let easyTotal = 0,
-		mediumTotal = 0,
-		hardTotal = 0,
-		deadlyTotal = 0;
-
-	partyLevels.forEach((level) => {
-		const idx = Math.min(level - 1, 19);
-		easyTotal += thresholds.easy[idx];
-		mediumTotal += thresholds.medium[idx];
-		hardTotal += thresholds.hard[idx];
-		deadlyTotal += thresholds.deadly[idx];
-	});
-
-	if (adjustedXP >= deadlyTotal) return "deadly";
-	if (adjustedXP >= hardTotal) return "hard";
-	if (adjustedXP >= mediumTotal) return "medium";
-	if (adjustedXP >= easyTotal) return "easy";
-	return "trivial";
 }

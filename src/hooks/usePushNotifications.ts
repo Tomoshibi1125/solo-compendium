@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-interface UsePushNotificationsReturn {
+export interface UsePushNotificationsReturn {
 	isSupported: boolean;
 	permission: NotificationPermission;
 	requestPermission: () => Promise<NotificationPermission>;

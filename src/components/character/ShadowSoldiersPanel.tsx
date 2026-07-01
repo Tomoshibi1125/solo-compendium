@@ -45,6 +45,7 @@ import {
 	useUpdateSoldierHP,
 } from "@/hooks/useShadowSoldiers";
 import type { Json } from "@/integrations/supabase/types";
+import { shadowGradeBadgeClass } from "@/lib/rankColors";
 import { cn } from "@/lib/utils";
 import {
 	formatRegentVernacular,
@@ -59,18 +60,6 @@ interface ShadowSoldiersPanelProps {
 	campaignId?: string;
 	onSelectDetail?: (detail: DetailData) => void;
 }
-
-// Enhanced rank colors with Rift Ascendant theme
-const rankColors: Record<string, string> = {
-	"General Grade":
-		"bg-resurge-violet/20 text-resurge-violet border-resurge-violet/40 shadow-[0_0_10px_hsl(var(--resurge-violet)/0.3)]",
-	"Marshal Grade":
-		"bg-shadow-purple/20 text-shadow-purple border-shadow-purple/40 shadow-[0_0_8px_hsl(var(--shadow-purple)/0.3)]",
-	"Elite Knight Grade":
-		"bg-shadow-blue/20 text-shadow-blue border-shadow-blue/40 shadow-[0_0_6px_hsl(var(--shadow-blue)/0.3)]",
-	"Knight Grade": "bg-primary/20 text-primary border-primary/40",
-	"Soldier Grade": "bg-muted text-muted-foreground border-muted",
-};
 
 // Type icons with thematic styling
 const typeIcons: Record<string, { icon: React.ReactNode; color: string }> = {
@@ -264,7 +253,7 @@ export function ShadowSoldiersPanel({
 														variant="outline"
 														className={cn(
 															"text-xs",
-															rankColors[soldier.rank] || "",
+															shadowGradeBadgeClass[soldier.rank] || "",
 														)}
 													>
 														{soldier.rank}
@@ -337,12 +326,12 @@ export function ShadowSoldiersPanel({
 											asChild
 											className="ml-2 border-fuchsia-300/40 hover:border-fuchsia-300 hover:bg-fuchsia-300/10"
 											data-testid={`open-companion-sheet-${css.id}`}
-											title="Open full companion sub-sheet"
+											title="Open full Legionnaire sub-sheet"
 										>
 											<Link
 												to={`/characters/${characterId}/companions/${css.id}`}
 											>
-												Open Sheet
+												Legionnaire Sheet
 											</Link>
 										</Button>
 									</div>
@@ -503,7 +492,7 @@ export function ShadowSoldiersPanel({
 														<Badge
 															className={cn(
 																"font-display",
-																rankColors[soldier.rank] || "",
+																shadowGradeBadgeClass[soldier.rank] || "",
 															)}
 														>
 															{soldier.rank}

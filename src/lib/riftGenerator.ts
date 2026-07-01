@@ -792,6 +792,8 @@ export async function generateFullRift(
 /** Convert a full packet to the legacy GeneratedRift shape used by the DungeonMapGenerator */
 export function packetToLegacyRift(packet: GeneratedRiftPacket) {
 	return {
+		// Identity used by the map to detect a new rift and auto-build faithfully.
+		riftId: packet.id,
 		rank: packet.rank,
 		theme: packet.theme,
 		biome: packet.biome,
@@ -801,6 +803,10 @@ export function packetToLegacyRift(packet: GeneratedRiftPacket) {
 		rewards: packet.linkedContent.loot.map((e) => e.name),
 		linkedContent: packet.linkedContent,
 		description: packet.description,
+		// Structured layout source — the map places these exact rooms (no random fill).
+		roomKeys: packet.roomKeys,
+		mapParams: packet.mapParams,
+		objective: packet.objective,
 	};
 }
 

@@ -115,7 +115,7 @@ export const AttributesStep: React.FC<AttributesStepProps> = ({
 									: "bg-primary/5 border-primary/10 text-primary/80",
 							)}
 						>
-							<span className="uppercase tracking-widest text-[10px]">
+							<span className="uppercase tracking-widest text-[11px]">
 								Neural Capacitance Remaining
 							</span>
 							<span className="text-lg font-bold">
@@ -130,7 +130,7 @@ export const AttributesStep: React.FC<AttributesStepProps> = ({
 								<Button
 									variant="outline"
 									onClick={handleRollStats}
-									className="h-8 text-[10px] uppercase"
+									className="h-8 text-[11px] uppercase"
 								>
 									Execute 4D6 Protocol (Drop Lowest)
 								</Button>
@@ -145,7 +145,7 @@ export const AttributesStep: React.FC<AttributesStepProps> = ({
 								<div className="grid grid-cols-3 sm:grid-cols-6 gap-2">
 									{rolledStats.map((stat) => (
 										<div key={stat.id} className="space-y-1">
-											<Label className="text-[9px] uppercase opacity-50">
+											<Label className="text-[11px] uppercase opacity-50">
 												Node {rolledStats.indexOf(stat) + 1}
 											</Label>
 											<Input
@@ -164,7 +164,7 @@ export const AttributesStep: React.FC<AttributesStepProps> = ({
 									))}
 								</div>
 							)}
-							<AscendantText className="block text-[10px] text-muted-foreground italic">
+							<AscendantText className="block text-[11px] text-muted-foreground italic">
 								Allocate manual entries or roll to generate raw data packets.
 								Then assign to primary attributes below.
 							</AscendantText>
@@ -196,7 +196,7 @@ export const AttributesStep: React.FC<AttributesStepProps> = ({
 													key={stat.id}
 													variant="outline"
 													size="sm"
-													className="text-[9px] h-5 px-1.5 opacity-60 hover:opacity-100"
+													className="text-[11px] h-5 px-1.5 opacity-60 hover:opacity-100"
 													onClick={() => {
 														setAbilities({
 															...abilities,
@@ -223,7 +223,7 @@ export const AttributesStep: React.FC<AttributesStepProps> = ({
 										className="h-10 text-center font-heading text-lg bg-black/60 border-primary/10"
 									/>
 
-									<div className="text-[10px] text-foreground/70 uppercase flex justify-between font-medium">
+									<div className="text-[11px] text-foreground/70 uppercase flex justify-between font-medium">
 										<span>Base: {abilities[ability]}</span>
 										<span className="text-primary/70">
 											Effective: {effectiveAbilities[ability]}

@@ -191,7 +191,7 @@ export function AddTattooDialog({
 													)}
 												</div>
 												{primaryText && (
-													<p className="text-xs text-muted-foreground line-clamp-2">
+													<p className="text-sm leading-relaxed text-muted-foreground">
 														{formatRegentVernacular(primaryText)}
 													</p>
 												)}

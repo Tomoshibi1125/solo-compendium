@@ -1,6 +1,8 @@
 import {
 	CheckCircle2,
 	Clock,
+	FileJson,
+	FileText,
 	RefreshCw,
 	Shield,
 	Target,
@@ -47,6 +49,8 @@ import {
 	isQuestCompleted,
 	isQuestExpired,
 } from "@/lib/dailyQuests/types";
+import { downloadJson, downloadMarkdown } from "@/lib/toolExport";
+import "@/styles/book-print.css";
 
 type QuestConfigForm = {
 	enabled: boolean;
@@ -153,6 +157,57 @@ export function QuestLog({ characterId }: { characterId: string }) {
 	const expiredQuests = instances.filter(
 		(quest) => isQuestExpired(quest) && !isQuestCompleted(quest),
 	);
+
+	const buildQuestRows = (quests: DailyQuestInstance[]) =>
+		quests.map((quest) => {
+			const template = templateById.get(quest.template_id);
+			const progress = getQuestProgress(quest);
+			const reward = normalizeQuestReward(quest, template);
+			return {
+				name: template?.name || "Daily Quest",
+				status: quest.status,
+				objective: formatRequirement(template),
+				progress: `${progress.current}/${progress.target}`,
+				reward: formatReward(reward, allowExperienceRewards),
+				expires_at: quest.expires_at ?? null,
+			};
+		});
+
+	const buildContractLogMarkdown = () => {
+		const section = (title: string, quests: DailyQuestInstance[]) => {
+			if (quests.length === 0) return "";
+			const rows = buildQuestRows(quests)
+				.map(
+					(q) =>
+						`- **${q.name}** — _${q.status.replace("_", " ")}_\n  - Objective: ${q.objective}\n  - Progress: ${q.progress}\n  - Reward: ${q.reward}`,
+				)
+				.join("\n");
+			return `\n## ${title}\n${rows}\n`;
+		};
+		return `# Contract Log${character?.name ? ` — ${character.name}` : ""}
+
+Generated ${new Date().toLocaleString()}
+${section("Active", activeQuests)}${section("Completed", completedQuests)}${section("Expired", expiredQuests)}`;
+	};
+
+	const handleExportLog = (format: "md" | "json") => {
+		const base = `contract-log${character?.name ? `-${character.name}` : ""}`;
+		if (format === "md") {
+			downloadMarkdown(base, buildContractLogMarkdown());
+		} else {
+			downloadJson(base, {
+				character: character?.name ?? null,
+				generatedAt: new Date().toISOString(),
+				active: buildQuestRows(activeQuests),
+				completed: buildQuestRows(completedQuests),
+				expired: buildQuestRows(expiredQuests),
+			});
+		}
+		toast({
+			title: "Contract log exported",
+			description: `Saved as ${format.toUpperCase()}.`,
+		});
+	};
 
 	const handleSaveConfig = async () => {
 		try {
@@ -520,7 +575,7 @@ export function QuestLog({ characterId }: { characterId: string }) {
 	};
 
 	return (
-		<div className="space-y-6">
+		<div className="space-y-6 book-print-root">
 			<AscendantWindow
 				title="DAILY QUEST SETTINGS"
 				className="border-accent/30"
@@ -703,6 +758,30 @@ export function QuestLog({ characterId }: { characterId: string }) {
 					</div>
 				</div>
 			</AscendantWindow>
+
+			<div className="flex flex-wrap items-center justify-end gap-2">
+				<span className="mr-auto text-xs uppercase tracking-wide text-muted-foreground">
+					Export Contract Log
+				</span>
+				<Button
+					variant="outline"
+					size="sm"
+					className="gap-1"
+					onClick={() => handleExportLog("md")}
+					disabled={instances.length === 0}
+				>
+					<FileText className="w-4 h-4" /> Markdown
+				</Button>
+				<Button
+					variant="outline"
+					size="sm"
+					className="gap-1"
+					onClick={() => handleExportLog("json")}
+					disabled={instances.length === 0}
+				>
+					<FileJson className="w-4 h-4" /> JSON
+				</Button>
+			</div>
 
 			<div className="grid grid-cols-1 md:grid-cols-4 gap-4">
 				<Card>

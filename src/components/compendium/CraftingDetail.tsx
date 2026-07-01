@@ -3,6 +3,7 @@ import { AutoLinkText } from "@/components/compendium/AutoLinkText";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { craftingMaterials } from "@/data/compendium/crafting";
+import { formatRaCurrencyAmount, type RaCurrencyId } from "@/lib/currency";
 import { formatRegentVernacular } from "@/lib/vernacular";
 import type {
 	CompendiumCraftingMaterial,
@@ -33,6 +34,11 @@ export type CraftingData = (
 	recipe_id?: string | null;
 	rank?: string | null;
 	rarity?: string | null;
+	// Guild-base salvage materials (folded into Crafting) carry where they are
+	// recovered, what the forge uses them for, and a market value.
+	source?: string | null;
+	uses?: string | null;
+	cost?: { currency: RaCurrencyId; amount: number } | null;
 };
 
 const materialNameById = new Map(
@@ -61,6 +67,11 @@ export function CraftingDetail({ data }: { data: CraftingData }) {
 						<Badge variant="secondary">{humanize(craftingType)}</Badge>
 						{data.rank && <Badge variant="outline">Rank {data.rank}</Badge>}
 						{data.rarity && <Badge variant="outline">{data.rarity}</Badge>}
+						{data.cost && (
+							<Badge variant="outline" className="text-primary">
+								{formatRaCurrencyAmount(data.cost.amount, data.cost.currency)}
+							</Badge>
+						)}
 						{data.source_book && (
 							<Badge variant="outline">
 								{formatRegentVernacular(data.source_book)}
@@ -99,7 +110,37 @@ export function CraftingDetail({ data }: { data: CraftingData }) {
 							</div>
 							<div className="font-semibold">{data.unit ?? "unit"}</div>
 						</div>
+						{data.cost && (
+							<div>
+								<div className="text-xs uppercase text-muted-foreground">
+									Value
+								</div>
+								<div className="font-semibold">
+									{formatRaCurrencyAmount(data.cost.amount, data.cost.currency)}
+								</div>
+							</div>
+						)}
 					</div>
+					{(data.source || data.uses) && (
+						<div className="mt-3 space-y-2 text-sm">
+							{data.source && (
+								<p>
+									<span className="text-xs uppercase text-muted-foreground">
+										Recovered From:{" "}
+									</span>
+									{data.source}
+								</p>
+							)}
+							{data.uses && (
+								<p>
+									<span className="text-xs uppercase text-muted-foreground">
+										Used For:{" "}
+									</span>
+									{data.uses}
+								</p>
+							)}
+						</div>
+					)}
 				</AscendantWindow>
 			)}
 

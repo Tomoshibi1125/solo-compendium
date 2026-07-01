@@ -175,6 +175,50 @@ export function parseRaCurrencyString(value: string) {
 	};
 }
 
+// ─────────────────────────────────────────────────────────────────────────
+// Structured catalog prices (Part 2 re-pricing)
+// ─────────────────────────────────────────────────────────────────────────
+// Catalog items carry an explicit { currency, amount } price so the credit
+// TYPE varies by tier (cheap goods in mana/crystal, gear in gate, legendary/
+// artifacts in core) instead of everything reading as Gate Credits. A bare
+// number is still accepted for back-compat and treated as Gate Credits.
+
+export interface RaCurrencyValue {
+	currency: RaCurrencyId;
+	amount: number;
+}
+
+/** Narrow an unknown price field to a structured value (number → Gate). */
+export function toRaCurrencyValue(
+	value: RaCurrencyValue | number | null | undefined,
+): RaCurrencyValue | null {
+	if (value == null) return null;
+	if (typeof value === "number") {
+		return Number.isFinite(value)
+			? { currency: RA_STANDARD_CURRENCY_ID, amount: value }
+			: null;
+	}
+	return value;
+}
+
+/** The price expressed in Gate Credits (the standard unit) for legacy math. */
+export function valueToGate(
+	value: RaCurrencyValue | number | null | undefined,
+): number {
+	const v = toRaCurrencyValue(value);
+	if (!v) return 0;
+	return convertCurrencyAmount(v.amount, v.currency, RA_STANDARD_CURRENCY_ID);
+}
+
+/** Format a structured-or-numeric catalog price (e.g. "50 Crystal Credits"). */
+export function formatRaCurrencyValue(
+	value: RaCurrencyValue | number | null | undefined,
+): string {
+	const v = toRaCurrencyValue(value);
+	if (!v) return "—";
+	return formatRaCurrencyAmount(v.amount, v.currency);
+}
+
 export function buildRaCurrencyItemDescription(currencyId: RaCurrencyId) {
 	const currency = getRaCurrencyDefinition(currencyId);
 	return currency

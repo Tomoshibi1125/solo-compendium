@@ -4,7 +4,6 @@
 // writes are intentionally DB-only and do not serve the runtime canonical path.
 import { supabase } from "@/integrations/supabase/client";
 import type { Database } from "@/integrations/supabase/types";
-import { AppError } from "@/lib/appError";
 import { type ContentBundle, validateContentBundle } from "./contentValidator";
 
 type JobInsert = Database["public"]["Tables"]["compendium_jobs"]["Insert"];
@@ -562,21 +561,4 @@ export async function importContentBundle(
 // Parse JSON content
 export function parseJSONContent(jsonString: string): ContentBundle {
 	return JSON.parse(jsonString);
-}
-
-// Parse YAML content
-export async function parseYAMLContent(
-	yamlString: string,
-): Promise<ContentBundle> {
-	try {
-		const { parse } = await import("yaml");
-		const parsed = parse(yamlString);
-		return parsed as ContentBundle;
-	} catch (error) {
-		throw new AppError(
-			`Failed to parse YAML content: ${error instanceof Error ? error.message : "Unknown error"}`,
-			"INVALID_INPUT",
-			error,
-		);
-	}
 }

@@ -138,13 +138,13 @@ export function RunSilentTrackers({ campaignId }: { campaignId: string }) {
 			{/* Hunt Clock */}
 			<div className="mb-4">
 				<div className="mb-2 flex items-center justify-between">
-					<span className="text-[10px] uppercase tracking-widest text-slate-400">
+					<span className="text-[11px] uppercase tracking-widest text-slate-400">
 						The Hunt Clock
 					</span>
 					<button
 						type="button"
 						onClick={() => setHunt(0)}
-						className="flex items-center gap-1 text-[10px] text-slate-500 hover:text-fuchsia-300"
+						className="flex items-center gap-1 text-[11px] text-slate-500 hover:text-fuchsia-300"
 						aria-label="Reset Hunt Clock to zero"
 					>
 						<RotateCcw className="h-3 w-3" />
@@ -177,14 +177,14 @@ export function RunSilentTrackers({ campaignId }: { campaignId: string }) {
 						<Button
 							variant="ghost"
 							size="sm"
-							className="mt-1 h-6 w-full gap-1 text-[10px] text-red-300 hover:bg-red-500/10"
+							className="mt-1 h-6 w-full gap-1 text-[11px] text-red-300 hover:bg-red-500/10"
 							onClick={() => setHunt(HUNT_RESET)}
 						>
 							Resolve strike → reset to {HUNT_RESET}
 						</Button>
 					</div>
 				) : (
-					<p className="mt-1.5 text-[10px] leading-snug text-slate-500">
+					<p className="mt-1.5 text-[11px] leading-snug text-slate-500">
 						+1 for noise, light, a broken ward, or resting exposed · +1 (or +2)
 						for Essence · −1 in a warded safe-hold or a silent, dark scene.
 					</p>
@@ -193,7 +193,7 @@ export function RunSilentTrackers({ campaignId }: { campaignId: string }) {
 
 			{/* Dread */}
 			<div>
-				<div className="mb-2 text-[10px] uppercase tracking-widest text-slate-400">
+				<div className="mb-2 text-[11px] uppercase tracking-widest text-slate-400">
 					Dread (per character)
 				</div>
 				<div className="space-y-2">
@@ -245,7 +245,7 @@ export function RunSilentTrackers({ campaignId }: { campaignId: string }) {
 									</button>
 								</div>
 							</div>
-							<div className="mt-1 text-[10px] leading-snug text-slate-500">
+							<div className="mt-1 text-[11px] leading-snug text-slate-500">
 								{DREAD_EFFECTS[d.value]}
 							</div>
 						</div>

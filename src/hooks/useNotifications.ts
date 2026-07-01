@@ -25,6 +25,15 @@ const MAX_NOTIFICATIONS = 100;
 const DEFAULT_EXPIRY_DAYS = 30;
 
 /**
+ * Window event dispatched whenever the local notification cache is written
+ * out-of-band (e.g. by the standalone `notify()` bridge in `@/lib/notify`).
+ * The hook below listens for it so the NavBar bell updates live instead of
+ * only on remount. Defined here (not in notify.ts) to keep the dependency
+ * one-directional: notify.ts imports from this module, not the reverse.
+ */
+export const NOTIFICATIONS_UPDATED_EVENT = "solo:notifications-updated";
+
+/**
  * Load notifications from localStorage
  */
 export function loadNotifications(): Notification[] {
@@ -76,6 +85,20 @@ export function useNotifications() {
 	useEffect(() => {
 		const loaded = loadNotifications();
 		setNotifications(loaded);
+	}, []);
+
+	// Live-refresh from the cache when an out-of-band producer (the `notify()`
+	// bridge) or another tab writes notifications. Same-tab `localStorage`
+	// writes don't fire `storage`, so the custom event covers the same-tab case.
+	useEffect(() => {
+		if (typeof window === "undefined") return;
+		const refresh = () => setNotifications(loadNotifications());
+		window.addEventListener(NOTIFICATIONS_UPDATED_EVENT, refresh);
+		window.addEventListener("storage", refresh);
+		return () => {
+			window.removeEventListener(NOTIFICATIONS_UPDATED_EVENT, refresh);
+			window.removeEventListener("storage", refresh);
+		};
 	}, []);
 
 	// Save notifications whenever they change
@@ -137,35 +160,5 @@ export function useNotifications() {
 		removeNotification,
 		clearAll,
 		clearRead,
-	};
-}
-
-/**
- * Helper to create notification from various sources
- */
-export function createNotification(
-	type: NotificationType,
-	title: string,
-	options?: {
-		message?: string;
-		priority?: NotificationPriority;
-		category?: string;
-		action?: { label: string; onClick: () => void };
-		expiresInDays?: number;
-	},
-): Omit<Notification, "id" | "read" | "createdAt"> {
-	const now = Date.now();
-	const expiresAt = options?.expiresInDays
-		? now + options.expiresInDays * 24 * 60 * 60 * 1000
-		: undefined;
-
-	return {
-		type,
-		title,
-		message: options?.message,
-		priority: options?.priority || "normal",
-		category: options?.category,
-		action: options?.action,
-		expiresAt,
 	};
 }

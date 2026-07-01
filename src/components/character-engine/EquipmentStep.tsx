@@ -129,7 +129,7 @@ function CanonicalEquipmentDetails({
 							<Badge
 								key={`${entry.id}-${line}`}
 								variant="outline"
-								className="text-[8px] border-primary/20 bg-black/20"
+								className="text-[11px] border-primary/20 bg-black/20"
 							>
 								{line}
 							</Badge>
@@ -185,7 +185,7 @@ export const EquipmentStep: React.FC<EquipmentStepProps> = ({
 				<div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
 					<AscendantWindow title="MODEL EQUIPMENT: AUTOMATED PROVISIONING">
 						<div className="space-y-3">
-							<p className="text-[10px] uppercase tracking-widest text-primary/40 font-bold mb-3">
+							<p className="text-[11px] uppercase tracking-widest text-primary/70 font-bold mb-3">
 								Background Equipment — Standard Issue
 							</p>
 							<ul className="space-y-2 pl-1">
@@ -218,10 +218,10 @@ export const EquipmentStep: React.FC<EquipmentStepProps> = ({
 			<div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
 				<AscendantWindow title="MODEL EQUIPMENT: AUTOMATED PROVISIONING">
 					<div className="text-center py-12 text-muted-foreground border border-dashed border-primary/10 rounded-lg">
-						<p className="font-heading text-sm uppercase tracking-widest text-primary/40">
+						<p className="font-heading text-sm uppercase tracking-widest text-primary/70">
 							No Manual Provisions Required
 						</p>
-						<p className="text-[10px] mt-2 italic">
+						<p className="text-[11px] mt-2 italic">
 							Standard equipment will be initialized automatically upon unit
 							activation.
 						</p>
@@ -242,7 +242,7 @@ export const EquipmentStep: React.FC<EquipmentStepProps> = ({
 
 					{backgroundEquipment && backgroundEquipment.length > 0 && (
 						<div className="p-4 rounded-lg border border-primary/10 bg-black/20 space-y-2">
-							<p className="text-[10px] uppercase tracking-widest text-primary/40 font-bold">
+							<p className="text-[11px] uppercase tracking-widest text-primary/70 font-bold">
 								Background Equipment — Standard Issue
 							</p>
 							{backgroundEquipment.map((item) => (
@@ -269,7 +269,7 @@ export const EquipmentStep: React.FC<EquipmentStepProps> = ({
 							variant="outline"
 							size="sm"
 							onClick={() => setShowAllStats((current) => !current)}
-							className="text-[10px] uppercase tracking-widest"
+							className="text-[11px] uppercase tracking-widest"
 						>
 							{showAllStats ? "Show summary" : "Show all stats"}
 						</Button>
@@ -304,7 +304,7 @@ export const EquipmentStep: React.FC<EquipmentStepProps> = ({
 												</div>
 												<Badge
 													variant="secondary"
-													className="text-[9px] uppercase tracking-tighter bg-primary/10 border-primary/20"
+													className="text-[11px] uppercase tracking-tighter bg-primary/10 border-primary/20"
 												>
 													Standard Issue
 												</Badge>
@@ -312,12 +312,12 @@ export const EquipmentStep: React.FC<EquipmentStepProps> = ({
 										) : (
 											<div className="space-y-3">
 												<div className="flex justify-between items-center mb-1">
-													<Label className="text-[10px] uppercase tracking-widest text-primary/40 font-bold">
+													<Label className="text-[11px] uppercase tracking-widest text-primary/70 font-bold">
 														Package Selection Required
 													</Label>
 													<Badge
 														variant="outline"
-														className="text-[8px] uppercase tracking-tighter border-primary/20"
+														className="text-[11px] uppercase tracking-tighter border-primary/20"
 													>
 														Select One
 													</Badge>
@@ -379,7 +379,7 @@ export const EquipmentStep: React.FC<EquipmentStepProps> = ({
 					<div className="p-4 rounded-lg bg-primary/5 border border-primary/10 mt-6">
 						<div className="flex items-center gap-2 mb-3">
 							<div className="w-1 h-3 bg-primary" />
-							<p className="text-[10px] font-heading font-semibold text-primary uppercase tracking-widest">
+							<p className="text-[11px] font-heading font-semibold text-primary uppercase tracking-widest">
 								Current Staged Loadout
 							</p>
 						</div>
@@ -413,11 +413,11 @@ export const EquipmentStep: React.FC<EquipmentStepProps> = ({
 									key={`bg-summary-${item.replace(/\s/g, "")}`}
 									className="text-xs flex items-center gap-3 text-muted-foreground/60"
 								>
-									<Check className="w-3 h-3 text-primary/40 flex-shrink-0" />
+									<Check className="w-3 h-3 text-primary/70 flex-shrink-0" />
 									<div className="min-w-0">
 										<div>
 											{item}{" "}
-											<span className="text-[9px] uppercase tracking-tighter text-primary/30 ml-1">
+											<span className="text-[11px] uppercase tracking-tighter text-primary/70 ml-1">
 												Background
 											</span>
 										</div>
@@ -472,12 +472,12 @@ export const EquipmentStep: React.FC<EquipmentStepProps> = ({
 											) : (
 												<div className="space-y-3">
 													<div className="flex justify-between items-center mb-1">
-														<Label className="text-[10px] uppercase tracking-widest text-primary/40 font-bold">
+														<Label className="text-[11px] uppercase tracking-widest text-primary/70 font-bold">
 															Weapon Selection
 														</Label>
 														<Badge
 															variant="outline"
-															className="text-[8px] uppercase tracking-tighter border-primary/20"
+															className="text-[11px] uppercase tracking-tighter border-primary/20"
 														>
 															Select One
 														</Badge>

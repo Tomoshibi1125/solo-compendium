@@ -10,12 +10,17 @@ import {
 	type ActionResolutionPayload,
 	setPendingResolution,
 } from "@/lib/actionResolution";
-import { formatRaCurrencyAmount } from "@/lib/currency";
+import { formatRaCurrencyValue, type RaCurrencyValue } from "@/lib/currency";
 import { formatRegentVernacular } from "@/lib/vernacular";
 
 import type { CompendiumRelic } from "@/types/compendium";
 
-interface RelicData extends CompendiumRelic {}
+interface RelicData extends CompendiumRelic {
+	// Structured catalog price (varied credit type by rarity); falls back to the
+	// numeric Gate `value`/`cost` for any legacy entry.
+	price?: RaCurrencyValue | null;
+	value?: number | null;
+}
 
 type RelicAbility = NonNullable<RelicData["abilities"]>[number];
 
@@ -216,12 +221,12 @@ export const RelicDetail = ({ data }: { data: RelicData }) => {
 					</AscendantWindow>
 				)}
 
-				{data.cost && (
+				{(data.price ?? data.value ?? data.cost) != null && (
 					<AscendantWindow title="VALUE" compact>
 						<div className="flex items-center gap-2">
 							<Coins className="w-5 h-5 text-yellow-400" />
 							<span className="font-heading">
-								{formatRaCurrencyAmount(data.cost)}
+								{formatRaCurrencyValue(data.price ?? data.value ?? data.cost)}
 							</span>
 						</div>
 					</AscendantWindow>

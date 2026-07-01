@@ -1,5 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
-import { ArrowLeft, Dice6, Loader2, Sparkles } from "lucide-react";
+import {
+	ArrowLeft,
+	Dice6,
+	FileJson,
+	FileText,
+	Loader2,
+	Sparkles,
+} from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
@@ -19,12 +26,21 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth/authContext";
 import { listCanonicalEntries } from "@/lib/canonicalCompendium";
 import { rollCanonicalTable } from "@/lib/rollableTables";
+import { downloadJson, downloadMarkdown } from "@/lib/toolExport";
 import { cn } from "@/lib/utils";
 import { formatRegentVernacular } from "@/lib/vernacular";
+
+type RollLogEntry = {
+	id: string;
+	table: string;
+	result: string;
+	at: string;
+};
 
 type RollableTablesState = {
 	activeTab: "gates" | "rewards" | "npcs" | "treasure";
 	results: Record<string, string>;
+	log: RollLogEntry[];
 };
 
 type CanonicalRollableTable = StaticCompendiumEntry & {
@@ -165,6 +181,7 @@ const RollableTables = () => {
 		initialState: {
 			activeTab: "gates",
 			results: {},
+			log: [],
 		},
 		storageKey: "solo-compendium.Warden-tools.rollable-tables.v1",
 	});
@@ -196,13 +213,15 @@ const RollableTables = () => {
 	const [activeTab, setActiveTab] =
 		useState<RollableTablesState["activeTab"]>("gates");
 	const [results, setResults] = useState<Record<string, string>>({});
+	const [log, setLog] = useState<RollLogEntry[]>([]);
 
 	const hydrated = useMemo(() => {
 		return {
 			activeTab: storedState.activeTab ?? "gates",
 			results: normalizeStoredResults(storedState.results ?? {}),
+			log: Array.isArray(storedState.log) ? storedState.log : [],
 		} satisfies RollableTablesState;
-	}, [storedState.activeTab, storedState.results]);
+	}, [storedState.activeTab, storedState.results, storedState.log]);
 
 	const hydratedRef = useRef(false);
 	useEffect(() => {
@@ -210,12 +229,13 @@ const RollableTables = () => {
 		if (hydratedRef.current) return;
 		setActiveTab(hydrated.activeTab);
 		setResults(hydrated.results);
+		setLog(hydrated.log);
 		hydratedRef.current = true;
-	}, [hydrated.activeTab, hydrated.results, isStateLoading]);
+	}, [hydrated.activeTab, hydrated.results, hydrated.log, isStateLoading]);
 
 	const savePayload = useMemo(
-		() => ({ activeTab, results }) satisfies RollableTablesState,
-		[activeTab, results],
+		() => ({ activeTab, results, log }) satisfies RollableTablesState,
+		[activeTab, results, log],
 	);
 	const debouncedPayload = useDebounce(savePayload, 350);
 
@@ -261,13 +281,48 @@ For EACH result, provide:
 			return;
 		}
 		const result = formatRegentVernacular(rolled.result);
-		setResults((prev) => {
-			const next = { ...prev, [tableId]: result };
-			if (hydratedRef.current && !isStateLoading) {
-				void saveNow({ activeTab, results: next });
-			}
-			return next;
+		const label = table?.name ?? tableId;
+		const entry: RollLogEntry = {
+			id: `${Date.now()}-${Math.random().toString(36).slice(2, 7)}`,
+			table: label,
+			result,
+			at: new Date().toISOString(),
+		};
+		setResults((prev) => ({ ...prev, [tableId]: result }));
+		setLog((prev) => [entry, ...prev].slice(0, 20));
+	};
+
+	const resultsToMarkdown = () => {
+		const filled = Object.entries(results).filter(([, value]) => value);
+		const current =
+			filled
+				.map(
+					([id, value]) => `- **${tableIndex.get(id)?.name ?? id}:** ${value}`,
+				)
+				.join("\n") || "- None";
+		const logMd =
+			log.map((e) => `- ${e.table}: ${e.result}`).join("\n") || "- None";
+		return `# Warden Table Rolls
+
+## Current Results
+${current}
+
+## Roll Log
+${logMd}
+${enhancedText ? `\n## AI-Enhanced\n${enhancedText}\n` : ""}`;
+	};
+
+	const handleExportMarkdown = () => {
+		downloadMarkdown("warden-table-rolls", resultsToMarkdown());
+		toast({
+			title: "Exported",
+			description: "Table rolls exported as Markdown.",
 		});
+	};
+
+	const handleExportJson = () => {
+		downloadJson("warden-table-rolls", { results, log });
+		toast({ title: "Exported", description: "Table rolls exported as JSON." });
 	};
 
 	const renderTableCard = (config: RollableTableCardConfig) => {
@@ -374,7 +429,7 @@ For EACH result, provide:
 						const nextTab = value as RollableTablesState["activeTab"];
 						setActiveTab(nextTab);
 						if (hydratedRef.current && !isStateLoading) {
-							void saveNow({ activeTab: nextTab, results });
+							void saveNow({ activeTab: nextTab, results, log });
 						}
 					}}
 					className="w-full"
@@ -465,23 +520,41 @@ For EACH result, provide:
 					</TabsContent>
 				</Tabs>
 
-				{Object.values(results).some(Boolean) && (
+				{(Object.values(results).some(Boolean) || log.length > 0) && (
 					<div className="mt-6 space-y-4">
-						<Button
-							onClick={handleAIEnhance}
-							className="w-full gap-2 btn-umbral"
-							size="lg"
-							disabled={isEnhancing}
-						>
-							{isEnhancing ? (
-								<Loader2 className="w-4 h-4 animate-spin" />
-							) : (
-								<Sparkles className="w-4 h-4" />
-							)}
-							{isEnhancing
-								? "Enhancing All Results..."
-								: "Enhance All Results with AI"}
-						</Button>
+						<div className="flex flex-wrap gap-2">
+							<Button
+								onClick={handleAIEnhance}
+								className="flex-1 gap-2 btn-umbral"
+								size="lg"
+								disabled={isEnhancing || !Object.values(results).some(Boolean)}
+							>
+								{isEnhancing ? (
+									<Loader2 className="w-4 h-4 animate-spin" />
+								) : (
+									<Sparkles className="w-4 h-4" />
+								)}
+								{isEnhancing ? "Enhancing..." : "Enhance All Results"}
+							</Button>
+							<Button
+								onClick={handleExportMarkdown}
+								variant="outline"
+								size="lg"
+								className="gap-2"
+							>
+								<FileText className="w-4 h-4" />
+								Markdown
+							</Button>
+							<Button
+								onClick={handleExportJson}
+								variant="outline"
+								size="lg"
+								className="gap-2"
+							>
+								<FileJson className="w-4 h-4" />
+								JSON
+							</Button>
+						</div>
 						{enhancedText && (
 							<AscendantWindow title="AI-ENHANCED RESULTS">
 								<div className="flex items-center gap-2 mb-2">
@@ -492,6 +565,26 @@ For EACH result, provide:
 								</div>
 								<div className="text-sm text-muted-foreground whitespace-pre-line bg-primary/5 rounded-lg p-4 max-h-none sm:max-h-[500px] overflow-y-auto">
 									{enhancedText}
+								</div>
+							</AscendantWindow>
+						)}
+						{log.length > 0 && (
+							<AscendantWindow title="ROLL LOG">
+								<div className="space-y-1">
+									{log.map((e) => (
+										<div
+											key={e.id}
+											className="flex items-baseline gap-2 text-sm border-b border-border/40 py-1"
+										>
+											<span className="text-[11px] text-muted-foreground shrink-0 w-16">
+												{new Date(e.at).toLocaleTimeString()}
+											</span>
+											<span className="font-display text-[11px] uppercase text-muted-foreground shrink-0">
+												{e.table}
+											</span>
+											<span className="font-heading flex-1">{e.result}</span>
+										</div>
+									))}
 								</div>
 							</AscendantWindow>
 						)}

@@ -71,7 +71,7 @@ describe("campaign invite/linking hardening invariants", () => {
 			"add_ascendant_character_to_campaign",
 		);
 		expect(campaignHooksSource).toContain(
-			'["campaigns", campaignId, "is-warden"]',
+			'["campaigns", campaignId, "has-warden-access"]',
 		);
 		expect(campaignDetailSource).toContain("Invite Ascendants");
 		expect(campaignJoinSource).toContain(

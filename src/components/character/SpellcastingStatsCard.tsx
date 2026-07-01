@@ -118,13 +118,13 @@ export function SpellcastingStatsCard({
 			<div className="flex items-stretch gap-2">
 				<div className="flex items-center gap-2 px-2 border-r border-primary/10">
 					<Icon className="w-4 h-4 text-primary" />
-					<Badge variant="outline" className="text-[10px] uppercase">
+					<Badge variant="outline" className="text-[11px] uppercase">
 						{meta.resolution}
 					</Badge>
 				</div>
 				<div className="grid grid-cols-3 flex-1 gap-2">
 					<div className="text-center">
-						<div className="text-[9px] text-muted-foreground uppercase tracking-wider">
+						<div className="text-[11px] text-muted-foreground uppercase tracking-wider">
 							Ability
 						</div>
 						<div
@@ -133,12 +133,12 @@ export function SpellcastingStatsCard({
 						>
 							{stats.ability}
 						</div>
-						<div className="text-[10px] text-muted-foreground">
+						<div className="text-[11px] text-muted-foreground">
 							{formatModifier(stats.abilityModifier)}
 						</div>
 					</div>
 					<div className="text-center">
-						<div className="text-[9px] text-muted-foreground uppercase tracking-wider">
+						<div className="text-[11px] text-muted-foreground uppercase tracking-wider">
 							Save DC
 						</div>
 						<div
@@ -147,12 +147,12 @@ export function SpellcastingStatsCard({
 						>
 							{stats.saveDC}
 						</div>
-						<div className="text-[10px] text-muted-foreground">
+						<div className="text-[11px] text-muted-foreground">
 							8 + PB + mod
 						</div>
 					</div>
 					<div className="text-center">
-						<div className="text-[9px] text-muted-foreground uppercase tracking-wider">
+						<div className="text-[11px] text-muted-foreground uppercase tracking-wider">
 							Attack
 						</div>
 						<div
@@ -161,7 +161,7 @@ export function SpellcastingStatsCard({
 						>
 							{formatModifier(stats.attackBonus)}
 						</div>
-						<div className="text-[10px] text-muted-foreground">PB + mod</div>
+						<div className="text-[11px] text-muted-foreground">PB + mod</div>
 					</div>
 				</div>
 			</div>

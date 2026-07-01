@@ -932,25 +932,3 @@ export interface CompendiumNPC extends BaseCompendiumItem {
 	quest_hook?: string | null;
 	leveling?: CompendiumNpcLeveling | Json | null;
 }
-
-export type CompendiumEntity =
-	| CompendiumJob
-	| CompendiumPath
-	| CompendiumRune
-	| CompendiumRelic
-	| CompendiumAnomaly
-	| CompendiumBackground
-	| CompendiumCondition
-	| CompendiumRegent
-	| CompendiumFeat
-	| CompendiumSkill
-	| CompendiumItem
-	| CompendiumSovereign
-	| CompendiumSpell
-	| CompendiumTechnique
-	| CompendiumLocation
-	| CompendiumTattoo
-	| CompendiumDeity
-	| CompendiumSigil
-	| CompendiumShadowSoldier
-	| CompendiumNPC;

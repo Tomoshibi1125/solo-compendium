@@ -226,14 +226,6 @@ const CONDITIONS: Record<string, ConditionEffect> = {
 	},
 };
 
-export function getCondition(name: string): ConditionEffect | undefined {
-	return CONDITIONS[name.toLowerCase()];
-}
-
-export function getAllConditions(): ConditionEffect[] {
-	return Object.values(CONDITIONS);
-}
-
 export function getActiveConditionEffects(conditions: string[]): {
 	hasDisadvantage: (type: string) => boolean;
 	hasAdvantageAgainst: (type: string) => boolean;

@@ -45,36 +45,6 @@ export function startConcentration(
 	};
 }
 
-// Maintain concentration (called at start of turn)
-export function maintainConcentration(
-	state: ConcentrationState,
-): ConcentrationState {
-	if (!state.isConcentrating || !state.currentEffect) {
-		return state;
-	}
-
-	const newRemainingRounds = state.currentEffect.remainingRounds - 1;
-
-	if (newRemainingRounds <= 0) {
-		// Concentration ends naturally
-		return {
-			...state,
-			isConcentrating: false,
-			currentEffect: null,
-			damageTakenThisRound: 0,
-		};
-	}
-
-	return {
-		...state,
-		currentEffect: {
-			...state.currentEffect,
-			remainingRounds: newRemainingRounds,
-		},
-		damageTakenThisRound: 0,
-	};
-}
-
 /**
  * Compute the concentration save DC for a single damage instance.
  *
@@ -87,25 +57,6 @@ export function calculateConcentrationDC(damage: number): number {
 	return Math.max(10, Math.floor(Math.max(0, damage) / 2));
 }
 
-// Take damage while concentrating (SRD 5e: sets the DC for a required Vitality save)
-export function takeConcentrationDamage(
-	state: ConcentrationState,
-	damage: number,
-): ConcentrationState {
-	if (!state.isConcentrating || damage <= 0) {
-		return state;
-	}
-
-	const totalDamage = state.damageTakenThisRound + damage;
-	const dc = calculateConcentrationDC(damage);
-
-	return {
-		...state,
-		damageTakenThisRound: totalDamage,
-		concentrationCheckDC: dc,
-	};
-}
-
 // End concentration voluntarily
 export function endConcentration(
 	state: ConcentrationState,
@@ -115,36 +66,6 @@ export function endConcentration(
 		isConcentrating: false,
 		currentEffect: null,
 		damageTakenThisRound: 0,
-	};
-}
-
-// Make concentration saving throw
-export function makeConcentrationSave(
-	state: ConcentrationState,
-	conSaveModifier: number,
-	dc: number,
-): { success: boolean; newState: ConcentrationState } {
-	const roll = Math.floor(Math.random() * 20) + 1 + conSaveModifier;
-	const success = roll >= dc;
-
-	if (!success) {
-		return {
-			success: false,
-			newState: {
-				...state,
-				isConcentrating: false,
-				currentEffect: null,
-				damageTakenThisRound: 0,
-			},
-		};
-	}
-
-	return {
-		success: true,
-		newState: {
-			...state,
-			damageTakenThisRound: 0,
-		},
 	};
 }
 

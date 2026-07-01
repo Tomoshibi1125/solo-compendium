@@ -1,16 +1,13 @@
 import type { LucideIcon } from "lucide-react";
 import {
 	AlertTriangle,
-	Award,
 	BarChart3,
 	BookOpen,
 	Calendar,
 	Clock,
 	Crown,
-	Database,
 	Dice6,
 	Flame,
-	FlaskConical,
 	Gem,
 	Globe,
 	Grid3x3,
@@ -30,7 +27,6 @@ import {
 	User,
 	Users,
 	UsersRound,
-	Volume2,
 	Zap,
 } from "lucide-react";
 import { formatRegentVernacular } from "@/lib/vernacular";
@@ -246,34 +242,6 @@ export const WARDEN_TOOLS: ToolCatalogItem[] = [
 		priority: 16,
 	},
 	{
-		id: "audio-manager",
-		name: "Audio Manager",
-		description:
-			"Manage sound effects, music, and ambient audio for your sessions.",
-		icon: Volume2,
-		status: "available",
-		color:
-			"from-emerald-500/20 to-emerald-600/10 border-emerald-500/30 hover:border-emerald-500/60",
-		iconColor: "text-emerald-400",
-		glow: "group-hover:shadow-emerald-500/20",
-		category: "creative",
-		priority: 17,
-	},
-	{
-		id: "rift-console",
-		name: "Rift Console",
-		description:
-			"Import and validate compendium content bundles for your campaign.",
-		icon: Database,
-		status: "available",
-		color:
-			"from-slate-500/20 to-slate-600/10 border-slate-500/30 hover:border-slate-500/60",
-		iconColor: "text-slate-400",
-		glow: "group-hover:shadow-slate-500/20",
-		category: "rift",
-		priority: 18,
-	},
-	{
 		id: "content-audit",
 		name: "Content Audit",
 		description:
@@ -420,33 +388,6 @@ export const PLAYER_TOOLS: ToolCatalogItem[] = [
 		glow: "group-hover:shadow-yellow-500/20",
 		category: "economy",
 		priority: 9,
-	},
-	{
-		id: "potions",
-		name: "Essences & Consumables",
-		description:
-			"Manage your recovery essences, elixirs, and consumable items.",
-		icon: FlaskConical,
-		status: "available",
-		color:
-			"from-emerald-500/20 to-emerald-600/10 border-emerald-500/30 hover:border-emerald-500/60",
-		iconColor: "text-emerald-400",
-		glow: "group-hover:shadow-emerald-500/20",
-		category: "inventory",
-		priority: 10,
-	},
-	{
-		id: "achievements",
-		name: "Achievements",
-		description: "View your accomplishments and unlock rewards.",
-		icon: Award,
-		status: "available",
-		color:
-			"from-amber-500/20 to-amber-600/10 border-amber-500/30 hover:border-amber-500/60",
-		iconColor: "text-amber-400",
-		glow: "group-hover:shadow-amber-500/20",
-		category: "progression",
-		priority: 11,
 	},
 	{
 		id: "regent-status",

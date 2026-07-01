@@ -9,6 +9,7 @@ import {
 	type ActionResolutionPayload,
 	setPendingResolution,
 } from "@/lib/actionResolution";
+import { formatRaCurrencyValue, type RaCurrencyValue } from "@/lib/currency";
 import { formatRegentVernacular } from "@/lib/vernacular";
 
 export interface ItemData {
@@ -19,6 +20,7 @@ export interface ItemData {
 	item_type?: string | null;
 	rarity?: string | null;
 	value?: number | null;
+	price?: RaCurrencyValue | null;
 	weight?: number | null;
 	damage?: string | number | null;
 	damage_type?: string | null;
@@ -374,29 +376,22 @@ export const ItemDetail = ({ data }: { data: ItemData }) => {
 
 			<div className="grid grid-cols-2 md:grid-cols-4 gap-4">
 				{(() => {
-					const costCredits = (data as { cost_credits?: number }).cost_credits;
-					const value = data.value;
-					if (value === null || value === undefined) {
-						return typeof costCredits === "number" ? (
-							<AscendantWindow title="VALUE" compact>
-								<div className="flex items-center gap-2">
-									<Coins className="w-5 h-5 text-yellow-400" />
-									<span className="font-heading">{costCredits} cr</span>
-								</div>
-							</AscendantWindow>
-						) : null;
-					}
+					// Prefer the structured price (varied credit type by tier); fall
+					// back to a numeric Gate value for any legacy entry.
+					const price =
+						data.price ??
+						data.value ??
+						(data as { cost_credits?: number }).cost_credits ??
+						null;
+					if (price === null || price === undefined) return null;
 					return (
 						<AscendantWindow title="VALUE" compact>
 							<div className="flex items-center gap-2">
 								<Coins className="w-5 h-5 text-yellow-400" />
-								<span className="font-heading">{value}</span>
-							</div>
-							{typeof costCredits === "number" && (
-								<span className="text-xs text-muted-foreground">
-									{costCredits} cr
+								<span className="font-heading">
+									{formatRaCurrencyValue(price)}
 								</span>
-							)}
+							</div>
 						</AscendantWindow>
 					);
 				})()}

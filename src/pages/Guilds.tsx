@@ -1,6 +1,15 @@
-import { Crown, Loader2, LogOut, Plus, Shield, Users } from "lucide-react";
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import {
+	Crown,
+	Loader2,
+	LogIn,
+	LogOut,
+	Plus,
+	Shield,
+	Sparkles,
+	Users,
+} from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
 import {
 	AscendantText,
@@ -19,28 +28,106 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import {
+	Select,
+	SelectContent,
+	SelectItem,
+	SelectTrigger,
+	SelectValue,
+} from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
+import { useAIEnhance } from "@/hooks/useAIEnhance";
+import { useJoinedCampaigns, useMyCampaigns } from "@/hooks/useCampaigns";
+import { useCharacters } from "@/hooks/useCharacters";
 import {
 	useCreateGuild,
 	useJoinedGuilds,
 	useLeaveGuild,
 	useMyGuilds,
 } from "@/hooks/useGuilds";
+import { useRequestToJoinGuild } from "@/hooks/useJoinRequests";
 
 const Guilds = () => {
 	const navigate = useNavigate();
+	const location = useLocation();
 	const { toast } = useToast();
 	const [createDialogOpen, setCreateDialogOpen] = useState(false);
+	const [joinDialogOpen, setJoinDialogOpen] = useState(false);
+	const [joinShareCode, setJoinShareCode] = useState("");
+	const [joinCharacterId, setJoinCharacterId] = useState("none");
+	const [joinMessage, setJoinMessage] = useState("");
 	const [guildName, setGuildName] = useState("");
 	const [guildDescription, setGuildDescription] = useState("");
 	const [guildMotto, setGuildMotto] = useState("");
+	const [guildCampaignId, setGuildCampaignId] = useState("none");
+	// Founding character bound to the leader row (one guild per character).
+	const [guildCharacterId, setGuildCharacterId] = useState("none");
 
 	const { data: myGuilds = [], isLoading: loadingMy } = useMyGuilds();
 	const { data: joinedGuilds = [], isLoading: loadingJoined } =
 		useJoinedGuilds();
+	const { data: myCampaigns = [] } = useMyCampaigns();
+	const { data: joinedCampaigns = [] } = useJoinedCampaigns();
+	const { data: myCharacters = [] } = useCharacters();
+
+	// Default the founding-character selection to the first character when the
+	// dialog opens, so the per-character binding is the friendly default.
+	useEffect(() => {
+		if (
+			createDialogOpen &&
+			guildCharacterId === "none" &&
+			myCharacters.length > 0
+		) {
+			setGuildCharacterId(myCharacters[0].id);
+		}
+	}, [createDialogOpen, guildCharacterId, myCharacters]);
 	const createGuild = useCreateGuild();
 	const leaveGuild = useLeaveGuild();
+	const requestToJoin = useRequestToJoinGuild();
+	const { enhance, isEnhancing } = useAIEnhance();
+
+	// The /guilds/join route opens the join-by-code dialog directly.
+	useEffect(() => {
+		if (location.pathname === "/guilds/join") setJoinDialogOpen(true);
+	}, [location.pathname]);
+
+	// Default the joining-character selection to the first character.
+	useEffect(() => {
+		if (
+			joinDialogOpen &&
+			joinCharacterId === "none" &&
+			myCharacters.length > 0
+		) {
+			setJoinCharacterId(myCharacters[0].id);
+		}
+	}, [joinDialogOpen, joinCharacterId, myCharacters]);
+
+	// Campaigns the user can optionally link a new guild to (hybrid scoping).
+	const campaignOptions = useMemo(() => {
+		const seen = new Set<string>();
+		return [...myCampaigns, ...joinedCampaigns].filter((c) => {
+			if (seen.has(c.id)) return false;
+			seen.add(c.id);
+			return true;
+		});
+	}, [myCampaigns, joinedCampaigns]);
+	const campaignNameById = useMemo(
+		() => new Map(campaignOptions.map((c) => [c.id, c.name])),
+		[campaignOptions],
+	);
+
+	const handleGenerateDescription = async () => {
+		const seed = `Guild name: ${guildName || "(unnamed)"}${
+			guildMotto ? `. Motto: ${guildMotto}` : ""
+		}`;
+		const text = await enhance(
+			"guild description",
+			seed,
+			"Write a vivid 2-3 sentence guild description for a dark fantasy TTRPG guild. Return only the prose, no preamble or quotes.",
+		);
+		if (text) setGuildDescription(text.trim());
+	};
 
 	const handleCreateGuild = async () => {
 		if (!guildName.trim()) {
@@ -57,12 +144,41 @@ const Guilds = () => {
 				name: guildName,
 				description: guildDescription || undefined,
 				motto: guildMotto || undefined,
+				campaignId: guildCampaignId !== "none" ? guildCampaignId : undefined,
+				characterId: guildCharacterId !== "none" ? guildCharacterId : undefined,
 			});
 			setCreateDialogOpen(false);
 			setGuildName("");
 			setGuildDescription("");
 			setGuildMotto("");
+			setGuildCampaignId("none");
+			setGuildCharacterId("none");
 			navigate(`/guilds/${guildId}`);
+		} catch {
+			// Error handled by mutation
+		}
+	};
+
+	const handleRequestJoin = async () => {
+		if (!joinShareCode.trim()) {
+			toast({
+				title: "Share code required",
+				description: "Enter the guild's share code to request to join.",
+				variant: "destructive",
+			});
+			return;
+		}
+		try {
+			await requestToJoin.mutateAsync({
+				shareCode: joinShareCode,
+				characterId: joinCharacterId !== "none" ? joinCharacterId : undefined,
+				message: joinMessage || undefined,
+			});
+			setJoinDialogOpen(false);
+			setJoinShareCode("");
+			setJoinCharacterId("none");
+			setJoinMessage("");
+			if (location.pathname === "/guilds/join") navigate("/guilds");
 		} catch {
 			// Error handled by mutation
 		}
@@ -96,13 +212,23 @@ const Guilds = () => {
 							forge alliances across campaigns.
 						</ManaFlowText>
 					</div>
-					<Button
-						className="btn-umbral gap-2"
-						onClick={() => setCreateDialogOpen(true)}
-					>
-						<Plus className="w-4 h-4" />
-						Establish Guild
-					</Button>
+					<div className="flex items-center gap-2">
+						<Button
+							variant="outline"
+							className="gap-2"
+							onClick={() => setJoinDialogOpen(true)}
+						>
+							<LogIn className="w-4 h-4" />
+							Join Guild
+						</Button>
+						<Button
+							className="btn-umbral gap-2"
+							onClick={() => setCreateDialogOpen(true)}
+						>
+							<Plus className="w-4 h-4" />
+							Establish Guild
+						</Button>
+					</div>
 				</div>
 
 				{isLoading ? (
@@ -165,6 +291,18 @@ const Guilds = () => {
 												{isLeader ? "GUILD LEADER" : "MEMBER"}
 											</AscendantText>
 										</div>
+										{guild.campaign_id && (
+											<div className="flex items-center gap-1.5 text-xs text-muted-foreground">
+												<Shield className="w-3 h-3 text-primary/70" />
+												<span>
+													Campaign:{" "}
+													<span className="text-foreground">
+														{campaignNameById.get(guild.campaign_id) ??
+															"Linked campaign"}
+													</span>
+												</span>
+											</div>
+										)}
 										{guild.motto && (
 											<p className="text-sm italic text-muted-foreground">
 												"{guild.motto}"
@@ -243,7 +381,24 @@ const Guilds = () => {
 							/>
 						</div>
 						<div>
-							<Label htmlFor="guild-description">Description</Label>
+							<div className="flex items-center justify-between">
+								<Label htmlFor="guild-description">Description</Label>
+								<Button
+									type="button"
+									variant="ghost"
+									size="sm"
+									className="h-7 gap-1.5 text-xs"
+									onClick={handleGenerateDescription}
+									disabled={isEnhancing}
+								>
+									{isEnhancing ? (
+										<Loader2 className="w-3.5 h-3.5 animate-spin" />
+									) : (
+										<Sparkles className="w-3.5 h-3.5" />
+									)}
+									Generate
+								</Button>
+							</div>
 							<Textarea
 								id="guild-description"
 								value={guildDescription}
@@ -252,6 +407,54 @@ const Guilds = () => {
 								className="mt-1"
 								rows={3}
 							/>
+						</div>
+						<div>
+							<Label htmlFor="guild-campaign">Campaign (optional)</Label>
+							<Select
+								value={guildCampaignId}
+								onValueChange={setGuildCampaignId}
+							>
+								<SelectTrigger id="guild-campaign" className="mt-1">
+									<SelectValue />
+								</SelectTrigger>
+								<SelectContent>
+									<SelectItem value="none">
+										No campaign (personal / cross-campaign)
+									</SelectItem>
+									{campaignOptions.map((c) => (
+										<SelectItem key={c.id} value={c.id}>
+											{c.name}
+										</SelectItem>
+									))}
+								</SelectContent>
+							</Select>
+							<p className="mt-1 text-xs text-muted-foreground">
+								Tie this guild to one of your campaigns, or leave it personal.
+							</p>
+						</div>
+						<div>
+							<Label htmlFor="guild-character">Founding Ascendant</Label>
+							<Select
+								value={guildCharacterId}
+								onValueChange={setGuildCharacterId}
+							>
+								<SelectTrigger id="guild-character" className="mt-1">
+									<SelectValue />
+								</SelectTrigger>
+								<SelectContent>
+									<SelectItem value="none">
+										No character (unlinked leader)
+									</SelectItem>
+									{myCharacters.map((c) => (
+										<SelectItem key={c.id} value={c.id}>
+											{c.name}
+										</SelectItem>
+									))}
+								</SelectContent>
+							</Select>
+							<p className="mt-1 text-xs text-muted-foreground">
+								Each character may lead or join only one guild.
+							</p>
 						</div>
 					</div>
 					<DialogFooter>
@@ -275,6 +478,92 @@ const Guilds = () => {
 								<>
 									<Shield className="w-4 h-4 mr-2" />
 									Establish Guild
+								</>
+							)}
+						</Button>
+					</DialogFooter>
+				</DialogContent>
+			</Dialog>
+
+			{/* Join Guild Dialog */}
+			<Dialog open={joinDialogOpen} onOpenChange={setJoinDialogOpen}>
+				<DialogContent className="sm:max-w-lg">
+					<DialogHeader>
+						<DialogTitle className="flex items-center gap-2">
+							<LogIn className="w-5 h-5 text-primary" />
+							JOIN A GUILD
+						</DialogTitle>
+						<DialogDescription>
+							Enter a guild's share code and choose which Ascendant joins. The
+							guild's leaders will review your request.
+						</DialogDescription>
+					</DialogHeader>
+					<div className="space-y-4">
+						<div>
+							<Label htmlFor="join-code">Share Code *</Label>
+							<Input
+								id="join-code"
+								value={joinShareCode}
+								onChange={(e) => setJoinShareCode(e.target.value.toUpperCase())}
+								placeholder="e.g. AB12CD"
+								className="mt-1 font-mono tracking-widest"
+								maxLength={6}
+							/>
+						</div>
+						<div>
+							<Label htmlFor="join-character">Joining Ascendant</Label>
+							<Select
+								value={joinCharacterId}
+								onValueChange={setJoinCharacterId}
+							>
+								<SelectTrigger id="join-character" className="mt-1">
+									<SelectValue />
+								</SelectTrigger>
+								<SelectContent>
+									<SelectItem value="none">
+										No character (decide later)
+									</SelectItem>
+									{myCharacters.map((c) => (
+										<SelectItem key={c.id} value={c.id}>
+											{c.name}
+										</SelectItem>
+									))}
+								</SelectContent>
+							</Select>
+							<p className="mt-1 text-xs text-muted-foreground">
+								Each character may belong to only one guild.
+							</p>
+						</div>
+						<div>
+							<Label htmlFor="join-message">Message (optional)</Label>
+							<Textarea
+								id="join-message"
+								value={joinMessage}
+								onChange={(e) => setJoinMessage(e.target.value)}
+								placeholder="Introduce yourself to the guild leaders..."
+								className="mt-1"
+								rows={2}
+							/>
+						</div>
+					</div>
+					<DialogFooter>
+						<Button variant="outline" onClick={() => setJoinDialogOpen(false)}>
+							Cancel
+						</Button>
+						<Button
+							className="btn-umbral"
+							onClick={handleRequestJoin}
+							disabled={requestToJoin.isPending || !joinShareCode.trim()}
+						>
+							{requestToJoin.isPending ? (
+								<>
+									<Loader2 className="w-4 h-4 mr-2 animate-spin" />
+									Sending...
+								</>
+							) : (
+								<>
+									<LogIn className="w-4 h-4 mr-2" />
+									Request to Join
 								</>
 							)}
 						</Button>

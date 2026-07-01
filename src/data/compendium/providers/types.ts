@@ -1,4 +1,7 @@
 import type { Json } from "@/integrations/supabase/types";
+import type { RaCurrencyValue } from "@/lib/currency";
+import type { GuildCapability, GuildFacilityTier } from "@/lib/guildBase";
+import type { FeatureEffect } from "@/types/featureEffects";
 
 // Type definitions matching the UI expectations
 export interface StaticCompendiumEntry {
@@ -266,6 +269,8 @@ export interface StaticCompendiumEntry {
 	stats?: Record<string, Json> | null;
 	value?: number | null;
 	cost_credits?: number | null;
+	// Structured catalog price (varied credit type); `value` stays numeric Gate.
+	price?: RaCurrencyValue | null;
 	source?: string | null;
 	image?: string | null;
 	item_properties?: Record<string, Json> | null;
@@ -286,6 +291,18 @@ export interface StaticCompendiumEntry {
 		quantity: number;
 	}> | null;
 	recipe_id?: string | null;
+	// Guild Base detail support (Facilities + Guild Skills category). Materials
+	// fold into the Crafting category and reuse `rarity`/`material_type`/`source`.
+	guild_base_type?: "facility" | "skill" | null;
+	tiers?: GuildFacilityTier[] | null;
+	// Grounded guild benefits (replace the old cosmetic `buffs`). Facility tiers
+	// carry these per-tier; skills carry them at the top level. Named
+	// `guild_effects` to avoid the generic `effects` field above.
+	capability?: GuildCapability | null;
+	guild_effects?: FeatureEffect[] | null;
+	benefit?: string | null;
+	cost?: { currency: string; amount: number } | null;
+	uses?: string | null;
 }
 
 export interface StaticDataProvider {
@@ -312,5 +329,6 @@ export interface StaticDataProvider {
 	getShadowSoldiers: (search?: string) => Promise<StaticCompendiumEntry[]>;
 	getVehicles: (search?: string) => Promise<StaticCompendiumEntry[]>;
 	getCrafting: (search?: string) => Promise<StaticCompendiumEntry[]>;
+	getGuildBase: (search?: string) => Promise<StaticCompendiumEntry[]>;
 	getNpcs: (search?: string) => Promise<StaticCompendiumEntry[]>;
 }

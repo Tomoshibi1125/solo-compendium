@@ -23,7 +23,7 @@ import { OfflineStatus } from "@/components/pwa/PWAComponents";
 import { RouteEffects } from "@/components/RouteEffects";
 import { AnalyticsConsentBanner } from "@/components/ui/AnalyticsConsentBanner";
 import { CommandPalette } from "@/components/ui/CommandPalette";
-import { CosmicBackground } from "@/components/ui/CosmicBackground";
+import { ZonedCosmicBackground } from "@/components/ui/CosmicBackground";
 import { GlobalEffects } from "@/components/ui/GlobalEffects";
 import { OfflineIndicator } from "@/components/ui/OfflineIndicator";
 import { ServiceWorkerUpdatePrompt } from "@/components/ui/ServiceWorkerUpdatePrompt";
@@ -78,6 +78,7 @@ if (envResult.warnings.length > 0) {
 
 // Lazy load routes for code splitting
 const Compendium = lazy(() => import("./pages/Compendium"));
+const MeridianCity = lazy(() => import("./pages/compendium/MeridianCity"));
 const CompendiumDetail = lazy(
 	() => import("./pages/compendium/CompendiumDetail"),
 );
@@ -88,6 +89,7 @@ const CharacterSheet = lazy(
 const CharacterNew = lazy(() => import("./pages/CharacterNew"));
 const CharacterCompare = lazy(() => import("./pages/CharacterCompare"));
 const CompanionSheet = lazy(() => import("./pages/CompanionSheet"));
+const CompanionExtraSheet = lazy(() => import("./pages/CompanionExtraSheet"));
 const Admin = lazy(() => import("./pages/Admin"));
 const ContentAudit = lazy(() => import("./pages/admin/ContentAudit"));
 const ArtGeneration = lazy(() => import("./pages/admin/ArtGeneration"));
@@ -129,15 +131,9 @@ const PartyTracker = lazy(
 	() => import("./pages/warden-directives/PartyTracker"),
 );
 const PartyStash = lazy(() => import("./pages/PartyStash"));
-const DungeonMapGeneratorPage = lazy(
-	() => import("./pages/warden-directives/DungeonMapGenerator"),
-);
-// Map generator was merged into gate-generator
+// Map generator was merged into the Rift Generator (gate-generator)
 const ArtGeneratorWarden = lazy(
 	() => import("./pages/warden-directives/ArtGenerator"),
-);
-const AudioManagerWarden = lazy(
-	() => import("./pages/warden-directives/AudioManager"),
 );
 const DiceRoller = lazy(() => import("./pages/DiceRoller"));
 const Favorites = lazy(() => import("./pages/Favorites"));
@@ -356,7 +352,7 @@ const AppContent = () => {
 				/>
 				<Route
 					path="/player-tools/map"
-					element={<Navigate to="/ascendant-tools/map" replace />}
+					element={<Navigate to="/warden-directives/gate-generator" replace />}
 				/>
 				<Route
 					path="/player-tools/:toolId"
@@ -367,6 +363,14 @@ const AppContent = () => {
 					element={
 						<Suspense fallback={<PageLoader />}>
 							<Compendium />
+						</Suspense>
+					}
+				/>
+				<Route
+					path="/compendium/city/meridian"
+					element={
+						<Suspense fallback={<PageLoader />}>
+							<MeridianCity />
 						</Suspense>
 					}
 				/>
@@ -415,6 +419,14 @@ const AppContent = () => {
 					element={
 						<Suspense fallback={<PageLoader />}>
 							<CharacterCompare />
+						</Suspense>
+					}
+				/>
+				<Route
+					path="/characters/:characterId/companions/extra/:extraId"
+					element={
+						<Suspense fallback={<PageLoader />}>
+							<CompanionExtraSheet />
 						</Suspense>
 					}
 				/>
@@ -643,31 +655,11 @@ const AppContent = () => {
 					}
 				/>
 				<Route
-					path="/warden-directives/dungeon-map-generator"
-					element={
-						<ProtectedRoute requireWarden>
-							<Suspense fallback={<PageLoader />}>
-								<DungeonMapGeneratorPage />
-							</Suspense>
-						</ProtectedRoute>
-					}
-				/>
-				<Route
 					path="/warden-directives/art-generator"
 					element={
 						<ProtectedRoute requireWarden>
 							<Suspense fallback={<PageLoader />}>
 								<ArtGeneratorWarden />
-							</Suspense>
-						</ProtectedRoute>
-					}
-				/>
-				<Route
-					path="/warden-directives/audio-manager"
-					element={
-						<ProtectedRoute requireWarden>
-							<Suspense fallback={<PageLoader />}>
-								<AudioManagerWarden />
 							</Suspense>
 						</ProtectedRoute>
 					}
@@ -844,7 +836,7 @@ const App = () => {
 						<TooltipProvider>
 							<PerformanceProvider>
 								<AuthProvider>
-									<CosmicBackground variant="default" intensity="medium" />
+									<ZonedCosmicBackground />
 									<GlobalEffects />
 									<PerformancePreload />
 									<Toaster />

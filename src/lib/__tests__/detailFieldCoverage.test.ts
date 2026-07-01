@@ -236,6 +236,12 @@ const categories: Category[] = [
 		allow: ["anomaly_id"], // internal link id (mount→source anomaly)
 	},
 	{
+		name: "guild-base",
+		component: "GuildBaseDetail.tsx",
+		load: () => p.getGuildBase(""),
+		allow: [],
+	},
+	{
 		name: "pantheon",
 		component: "DeityDetail.tsx",
 		load: () => p.getPantheon(""),

@@ -3,9 +3,13 @@ import {
 	ArrowLeft,
 	ArrowUp,
 	Dices,
+	Download,
 	ExternalLink,
+	FileJson,
 	Plus,
 	RotateCcw,
+	ScrollText,
+	Sparkles,
 	Trash2,
 } from "lucide-react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
@@ -25,6 +29,7 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
+import { useAIEnhance } from "@/hooks/useAIEnhance";
 import { useSendCampaignMessage } from "@/hooks/useCampaignChat";
 import {
 	type Combatant as CampaignCombatantRow,
@@ -59,7 +64,55 @@ import {
 	removeCondition as removeAdvancedCondition,
 } from "@/lib/conditionSystem";
 import { rollMonsterInitiative } from "@/lib/initiative";
+import {
+	drainInitiativeAdditions,
+	type PendingCombatant,
+} from "@/lib/initiativeQueue";
+import { downloadJson, downloadMarkdown } from "@/lib/toolExport";
 import { cn } from "@/lib/utils";
+
+/** A single line in the local combat transcript (session-only, not DB-synced). */
+interface CombatLogEntry {
+	id: string;
+	round: number;
+	turn: number;
+	text: string;
+	at: string;
+}
+
+function summarizeOutcome(
+	outcome: ResolutionOutcome,
+	targetName: string,
+): string {
+	switch (outcome.kind) {
+		case "attack":
+			return outcome.hit
+				? `${targetName} ← attack HIT (${outcome.attackTotal} vs AC ${outcome.targetAC})${outcome.criticalHit ? " CRIT" : ""}${
+						typeof outcome.damageTotal === "number"
+							? `, ${outcome.damageTotal} dmg`
+							: ""
+					}`
+				: `${targetName} ← attack MISS (${outcome.attackTotal} vs AC ${outcome.targetAC})`;
+		case "save":
+			return `${targetName} ← save DC ${outcome.dc} ${
+				outcome.success ? "SUCCESS" : "FAIL"
+			} (rolled ${outcome.saveTotal})${
+				typeof outcome.damageTotal === "number"
+					? `, ${outcome.damageTotal} dmg`
+					: ""
+			}`;
+		case "healing":
+			return `${targetName} ← healed ${outcome.healingTotal}`;
+		case "damage":
+			return `${targetName} ← ${outcome.damageTotal} damage`;
+		case "effect":
+			return `${targetName} ← ${outcome.name}${
+				outcome.description ? `: ${outcome.description}` : ""
+			}`;
+		default:
+			return `${targetName} ← resolved`;
+	}
+}
 
 interface Combatant {
 	id: string;
@@ -227,6 +280,27 @@ const InitiativeTracker = () => {
 	const [combatants, setCombatants] = useState<Combatant[]>([]);
 	const [currentTurn, setCurrentTurn] = useState(0);
 	const [round, setRound] = useState(1);
+	const [combatLog, setCombatLog] = useState<CombatLogEntry[]>([]);
+	const [narration, setNarration] = useState("");
+	const { isEnhancing: isNarrating, enhance: enhanceNarration } =
+		useAIEnhance();
+
+	const logEvent = useCallback(
+		(text: string, atRound: number, atTurn: number) => {
+			setCombatLog((prev) => [
+				...prev,
+				{
+					id: `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 6)}`,
+					round: atRound,
+					turn: atTurn,
+					text,
+					at: new Date().toISOString(),
+				},
+			]);
+		},
+		[],
+	);
+
 	const [pendingResolution, setPendingResolution] =
 		useState<ActionResolutionPayload | null>(null);
 	const [resolutionOutcome, setResolutionOutcome] =
@@ -407,6 +481,37 @@ const InitiativeTracker = () => {
 		storedState.currentTurn,
 		storedState.round,
 	]);
+
+	// Drain companions queued from the combat sub-sheet ("Add to Initiative").
+	// Runs on mount and whenever the window regains focus, so a companion queued
+	// on another route appears when the user returns to this tab.
+	useEffect(() => {
+		const drainAndAppend = () => {
+			const pending = drainInitiativeAdditions();
+			if (pending.length === 0) return;
+			const mapped: Combatant[] = pending.map((p: PendingCombatant) => ({
+				id: p.id ?? crypto.randomUUID(),
+				name: p.name,
+				initiative: p.initiative ?? 0,
+				hp: p.hp,
+				maxHp: p.maxHp,
+				ac: p.ac,
+				conditions: p.conditions ?? [],
+				isHunter: p.isHunter ?? false,
+				advancedConditions: [],
+				dexMod: p.dexMod,
+			}));
+			setCombatants((prev) => [...prev, ...mapped]);
+			toast({
+				title: "Added to initiative",
+				description: `${mapped.length} companion(s) joined the tracker.`,
+			});
+		};
+
+		drainAndAppend();
+		window.addEventListener("focus", drainAndAppend);
+		return () => window.removeEventListener("focus", drainAndAppend);
+	}, [toast]);
 
 	// Persist state (best-effort)
 	useEffect(() => {
@@ -718,6 +823,7 @@ const InitiativeTracker = () => {
 				const nextRound = round + 1;
 				setRound(nextRound);
 				cleanupExpiredConditions(nextRound);
+				logEvent(`— Round ${nextRound} begins —`, nextRound, 0);
 			}
 
 			// DDB Parity: Broadcast turn change
@@ -735,7 +841,13 @@ const InitiativeTracker = () => {
 
 			return next;
 		});
-	}, [sortedCombatants, round, cleanupExpiredConditions, ascendantTools]);
+	}, [
+		sortedCombatants,
+		round,
+		cleanupExpiredConditions,
+		ascendantTools,
+		logEvent,
+	]);
 
 	const previousTurn = useCallback(() => {
 		if (sortedCombatants.length === 0) return;
@@ -806,6 +918,8 @@ const InitiativeTracker = () => {
 		setCombatants([]);
 		setCurrentTurn(0);
 		setRound(1);
+		setCombatLog([]);
+		setNarration("");
 
 		if (isSyncingCombatSession && activeCombatSession) {
 			void supabase
@@ -829,6 +943,62 @@ const InitiativeTracker = () => {
 	};
 
 	const currentCombatant = sortedCombatants[currentTurn];
+
+	const logToMarkdown = (): string => {
+		const lines: string[] = [];
+		lines.push(
+			`# Combat Log${selectedCampaign ? ` — ${selectedCampaign.name}` : ""}`,
+		);
+		lines.push("");
+		lines.push(`Rounds elapsed: ${round} · Combatants: ${combatants.length}`);
+		lines.push("");
+		if (combatLog.length === 0) {
+			lines.push("_No events recorded yet._");
+		} else {
+			for (const e of combatLog) {
+				lines.push(`- **R${e.round}** ${e.text}`);
+			}
+		}
+		if (narration.trim()) {
+			lines.push("");
+			lines.push("## After-Action Narrative");
+			lines.push(narration.trim());
+		}
+		return `${lines.join("\n")}\n`;
+	};
+
+	const exportLog = (format: "md" | "json") => {
+		const base = `combat-log${selectedCampaign ? `-${selectedCampaign.name}` : ""}`;
+		if (format === "md") {
+			downloadMarkdown(base, logToMarkdown());
+		} else {
+			downloadJson(base, {
+				campaign: selectedCampaign?.name ?? null,
+				round,
+				combatants: sortedCombatants.map((c) => ({
+					name: c.name,
+					initiative: c.initiative,
+					hp: c.hp,
+					maxHp: c.maxHp,
+				})),
+				log: combatLog,
+				narration,
+			});
+		}
+	};
+
+	const narrateCombat = async () => {
+		if (combatLog.length === 0) return;
+		const transcript = combatLog
+			.map((e) => `Round ${e.round}: ${e.text}`)
+			.join("\n");
+		const result = await enhanceNarration(
+			"combat-after-action",
+			transcript,
+			"Narrate this Rift Ascendant combat as a punchy after-action report for the Warden — concise, cinematic, and faithful to the rolls.",
+		);
+		if (result) setNarration(result);
+	};
 
 	useEffect(() => {
 		const pending = getPendingResolution();
@@ -939,6 +1109,7 @@ const InitiativeTracker = () => {
 
 		setPendingResolution(pending);
 		setResolutionOutcome(outcome);
+		logEvent(summarizeOutcome(outcome, target.name), round, currentTurn);
 
 		const pendingDamageType = pending.damage?.type;
 
@@ -1622,6 +1793,84 @@ const InitiativeTracker = () => {
 						</AscendantWindow>
 					</div>
 				</div>
+
+				<AscendantWindow title="COMBAT LOG" className="mt-6">
+					<div className="space-y-3">
+						<div className="flex flex-wrap items-center justify-between gap-2">
+							<div className="flex items-center gap-2 text-xs uppercase tracking-widest text-muted-foreground">
+								<ScrollText className="w-4 h-4 text-primary/70" />
+								{combatLog.length} event(s) · Round {round}
+							</div>
+							<div className="flex items-center gap-2">
+								<Button
+									type="button"
+									variant="outline"
+									size="sm"
+									onClick={narrateCombat}
+									disabled={combatLog.length === 0 || isNarrating}
+									className="gap-2"
+								>
+									<Sparkles className="w-3 h-3" />
+									{isNarrating ? "Narrating…" : "AI Narrate"}
+								</Button>
+								<Button
+									type="button"
+									variant="outline"
+									size="sm"
+									onClick={() => exportLog("md")}
+									disabled={combatLog.length === 0}
+									title="Export Markdown"
+								>
+									<Download className="w-3 h-3" />
+								</Button>
+								<Button
+									type="button"
+									variant="outline"
+									size="sm"
+									onClick={() => exportLog("json")}
+									disabled={combatLog.length === 0}
+									title="Export JSON"
+								>
+									<FileJson className="w-3 h-3" />
+								</Button>
+							</div>
+						</div>
+
+						<div className="max-h-[260px] overflow-y-auto rounded border border-primary/10 bg-black/40 p-3 space-y-1">
+							{combatLog.length === 0 ? (
+								<p className="text-xs text-muted-foreground italic opacity-60">
+									Resolve actions and advance rounds to build the transcript.
+								</p>
+							) : (
+								combatLog
+									.slice()
+									.reverse()
+									.map((e) => (
+										<div
+											key={e.id}
+											className="text-xs font-mono text-foreground/90 flex gap-2"
+										>
+											<span className="text-primary/60 shrink-0">
+												R{e.round}
+											</span>
+											<span>{e.text}</span>
+										</div>
+									))
+							)}
+						</div>
+
+						{narration && (
+							<div className="rounded border border-accent/20 bg-accent/5 p-3">
+								<p className="text-[11px] uppercase tracking-widest text-accent/80 font-bold mb-1">
+									After-Action Narrative
+								</p>
+								<p className="text-sm text-muted-foreground whitespace-pre-wrap leading-snug">
+									{narration}
+								</p>
+							</div>
+						)}
+					</div>
+				</AscendantWindow>
 			</div>
 		</Layout>
 	);

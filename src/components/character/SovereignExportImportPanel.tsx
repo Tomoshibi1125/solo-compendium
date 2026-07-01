@@ -220,7 +220,7 @@ export function SovereignExportImportPanel({
 					{parsed && (
 						<div className="rounded-lg border border-primary/40 bg-primary/5 p-3 space-y-2">
 							<div className="flex items-center gap-2">
-								<CheckCircle2 className="h-4 w-4 text-emerald-500" />
+								<CheckCircle2 className="h-4 w-4 text-success" />
 								<span className="font-semibold">
 									{formatRegentVernacular(parsed.name)}
 								</span>

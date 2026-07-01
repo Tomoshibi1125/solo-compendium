@@ -1,5 +1,6 @@
 import { useQueryClient } from "@tanstack/react-query";
 import {
+	Activity,
 	ArrowLeft,
 	BookOpen,
 	CalendarClock,
@@ -9,17 +10,20 @@ import {
 	MessageSquare,
 	Settings,
 	Share2,
+	Shield,
 	UserPlus,
 	Users,
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
+import { CampaignActivityPanel } from "@/components/campaign/CampaignActivityPanel";
 import { CampaignCalendarPanel } from "@/components/campaign/CampaignCalendarPanel";
 import { CampaignCharacters } from "@/components/campaign/CampaignCharacters";
 import { CampaignChat } from "@/components/campaign/CampaignChat";
 import { CampaignHandouts } from "@/components/campaign/CampaignHandouts";
 import { CampaignInviteModal } from "@/components/campaign/CampaignInviteModal";
 import { CampaignNotes } from "@/components/campaign/CampaignNotes";
+import { CampaignPresenceBadge } from "@/components/campaign/CampaignPresenceBadge";
 import { CampaignProtocolControls } from "@/components/campaign/CampaignProtocolControls";
 import { CampaignRegentOversight } from "@/components/campaign/CampaignRegentOversight";
 import { CampaignRollFeed } from "@/components/campaign/CampaignRollFeed";
@@ -62,6 +66,7 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useActivityFeed } from "@/hooks/useActivityFeed";
 import { useSendCampaignMessage } from "@/hooks/useCampaignChat";
 import {
 	type CampaignRoleMode,
@@ -76,6 +81,7 @@ import {
 	useUpdateCampaignMemberRole,
 } from "@/hooks/useCampaigns";
 import { useCharacters } from "@/hooks/useCharacters";
+import { useGuildsByCampaign } from "@/hooks/useGuilds";
 import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth/authContext";
 import { formatRegentVernacular } from "@/lib/vernacular";
@@ -122,6 +128,7 @@ const CampaignDetail = () => {
 	const { data: members = [], isLoading: loadingMembers } = useCampaignMembers(
 		id || "",
 	);
+	const { data: campaignGuilds = [] } = useGuildsByCampaign(id);
 	const { data: userRole, isLoading: loadingRole } = useCampaignRole(id || "");
 	const isPrimaryWarden =
 		!!campaign && !!user && campaign.warden_id === user.id;
@@ -137,6 +144,10 @@ const CampaignDetail = () => {
 	const linkCharacter = useLinkCampaignCharacter();
 	const updateMemberRole = useUpdateCampaignMemberRole();
 	const sendMessage = useSendCampaignMessage();
+	const campaignActivity = useActivityFeed({
+		toolKey: "campaign-activity",
+		campaignId: id || "",
+	});
 
 	const handleAttachCharacter = async () => {
 		if (!selectedCharacterToAttach || !id) return;
@@ -149,6 +160,11 @@ const CampaignDetail = () => {
 			await sendMessage.mutateAsync({
 				campaignId: id,
 				content: `**Campaign**: ${char.name} has joined the campaign.`,
+			});
+			campaignActivity.log({
+				kind: "joined",
+				label: `${char.name} linked to the campaign`,
+				category: "membership",
 			});
 		}
 		setAttachDialogOpen(false);
@@ -286,6 +302,7 @@ const CampaignDetail = () => {
 								{(!loadingRole || isPrimaryWarden) && effectiveUserRole && (
 									<RoleBadge role={effectiveUserRole} />
 								)}
+								<CampaignPresenceBadge campaignId={id || ""} />
 								{canChooseWardenMode && (
 									<div className="flex items-center gap-2 rounded-lg border border-border bg-muted/30 px-3 py-2">
 										<span className="text-[10px] font-display uppercase tracking-widest text-foreground/70">
@@ -386,6 +403,20 @@ const CampaignDetail = () => {
 							>
 								<Share2 className="w-3 h-3 sm:w-4 sm:h-4 shrink-0" />
 								<span>Characters</span>
+							</TabsTrigger>
+							<TabsTrigger
+								value="guilds"
+								className="flex-1 gap-1.5 text-xs sm:text-sm min-h-[44px] px-2"
+							>
+								<Shield className="w-3 h-3 sm:w-4 sm:h-4 shrink-0" />
+								<span>Guilds</span>
+							</TabsTrigger>
+							<TabsTrigger
+								value="activity"
+								className="flex-1 gap-1.5 text-xs sm:text-sm min-h-[44px] px-2"
+							>
+								<Activity className="w-3 h-3 sm:w-4 sm:h-4 shrink-0" />
+								<span>Activity</span>
 							</TabsTrigger>
 							{hasWardenAccess && (
 								<TabsTrigger
@@ -594,10 +625,61 @@ const CampaignDetail = () => {
 							<CampaignCharacters campaignId={id || ""} />
 						</TabsContent>
 
+						<TabsContent value="guilds" className="space-y-6">
+							<AscendantWindow title="CAMPAIGN GUILDS">
+								<div className="mb-4 flex items-center justify-between gap-2">
+									<ManaFlowText variant="rift" speed="slow" className="text-sm">
+										Ascendant guilds tied to this campaign.
+									</ManaFlowText>
+									<Button variant="outline" size="sm" asChild>
+										<Link to="/guilds">
+											<Shield className="w-4 h-4 mr-2" />
+											Manage Guilds
+										</Link>
+									</Button>
+								</div>
+								{campaignGuilds.length === 0 ? (
+									<div className="text-center py-8 space-y-3">
+										<Shield className="w-12 h-12 text-muted-foreground mx-auto opacity-50" />
+										<AscendantText className="block text-muted-foreground">
+											No guilds linked to this campaign yet. Create one from the
+											Guild Hall and select this campaign.
+										</AscendantText>
+									</div>
+								) : (
+									<div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+										{campaignGuilds.map((guild) => (
+											<Link
+												key={guild.id}
+												to={`/guilds/${guild.id}`}
+												className="rounded-lg border border-border bg-muted/30 p-3 hover:border-primary/50 transition-colors"
+											>
+												<p className="font-heading font-semibold">
+													{guild.name}
+												</p>
+												{guild.motto && (
+													<p className="text-xs italic text-muted-foreground mt-1">
+														"{guild.motto}"
+													</p>
+												)}
+											</Link>
+										))}
+									</div>
+								)}
+							</AscendantWindow>
+						</TabsContent>
+
+						<TabsContent value="activity">
+							<CampaignActivityPanel campaignId={id || ""} />
+						</TabsContent>
+
 						{hasWardenAccess && (
 							<TabsContent value="settings" className="space-y-6">
 								<CampaignSettings campaignId={id || ""} />
-								<CampaignProtocolControls campaignId={id || ""} />
+								<CampaignProtocolControls
+									campaignId={id || ""}
+									campaignName={campaign.name}
+								/>
 							</TabsContent>
 						)}
 						{hasWardenAccess && (

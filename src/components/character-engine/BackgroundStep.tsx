@@ -137,7 +137,7 @@ function BackgroundChipGroup({
 
 	return (
 		<div className="space-y-1">
-			<Label className="text-[9px] uppercase tracking-tighter text-muted-foreground">
+			<Label className="text-[11px] uppercase tracking-tighter text-muted-foreground">
 				{label}
 			</Label>
 			<div className="flex flex-wrap gap-2 mt-1">
@@ -149,8 +149,8 @@ function BackgroundChipGroup({
 							variant={variant}
 							className={
 								isDup
-									? "text-[10px] h-5 bg-amber-500/10 border-amber-400/60 text-amber-200"
-									: "text-[10px] h-5 bg-primary/10 border-primary/20"
+									? "text-[11px] h-5 bg-amber-500/10 border-amber-400/60 text-amber-200"
+									: "text-[11px] h-5 bg-primary/10 border-primary/20"
 							}
 							title={
 								isDup
@@ -190,7 +190,7 @@ function BackgroundFeatureCard({
 
 	return (
 		<div className="p-3 bg-black/40 rounded border border-primary/10 space-y-2">
-			<Label className="text-[10px] uppercase tracking-tighter text-primary/80 font-bold">
+			<Label className="text-[11px] uppercase tracking-tighter text-primary/80 font-bold">
 				{formatRegentVernacular(feature.name)}
 			</Label>
 			{feature.description && (
@@ -207,7 +207,7 @@ function BackgroundFeatureCard({
 								<Badge
 									key={`keyword-${keyword}`}
 									variant="outline"
-									className="text-[9px] border-primary/20 bg-primary/5 text-primary/80"
+									className="text-[11px] border-primary/20 bg-primary/5 text-primary/80"
 								>
 									{keyword}
 								</Badge>
@@ -216,7 +216,7 @@ function BackgroundFeatureCard({
 					)}
 
 					{mechanics.proficiencies.length > 0 && (
-						<div className="text-[10px]">
+						<div className="text-[11px]">
 							<span className="text-muted-foreground font-medium uppercase tracking-wider">
 								Grants:{" "}
 							</span>
@@ -227,7 +227,7 @@ function BackgroundFeatureCard({
 					)}
 
 					{mechanics.equipmentBundle.length > 0 && (
-						<div className="text-[10px]">
+						<div className="text-[11px]">
 							<span className="text-muted-foreground font-medium uppercase tracking-wider">
 								Equipment:{" "}
 							</span>
@@ -240,7 +240,7 @@ function BackgroundFeatureCard({
 					)}
 
 					{mechanics.downtimeHooks.length > 0 && (
-						<div className="text-[10px]">
+						<div className="text-[11px]">
 							<span className="text-muted-foreground font-medium uppercase tracking-wider">
 								Downtime:{" "}
 							</span>
@@ -311,7 +311,7 @@ export const BackgroundStep: React.FC<BackgroundStepProps> = ({
 			<AscendantWindow title="MODEL ORIGIN: BACKGROUND BINDING">
 				<div className="space-y-6">
 					<div className="space-y-3">
-						<Label className="text-[10px] uppercase tracking-widest text-primary/60">
+						<Label className="text-[11px] uppercase tracking-widest text-primary/60">
 							Select Historical Imprint Pattern
 						</Label>
 						<Select
@@ -330,7 +330,7 @@ export const BackgroundStep: React.FC<BackgroundStepProps> = ({
 										{background._homebrew && (
 											<Badge
 												variant="outline"
-												className="ml-2 text-[8px] uppercase h-4"
+												className="ml-2 text-[11px] uppercase h-4"
 											>
 												Homebrew
 											</Badge>
@@ -352,7 +352,7 @@ export const BackgroundStep: React.FC<BackgroundStepProps> = ({
 								</h4>
 								<Badge
 									variant="secondary"
-									className="text-[9px] uppercase bg-primary/10 text-primary/70 border-primary/20"
+									className="text-[11px] uppercase bg-primary/10 text-primary/70 border-primary/20"
 								>
 									{formatRegentVernacular(
 										(selectedBackgroundData as { source_book?: string | null })
@@ -386,7 +386,7 @@ export const BackgroundStep: React.FC<BackgroundStepProps> = ({
 
 								{selectedBackgroundData.starting_credits != null && (
 									<div className="space-y-1">
-										<Label className="text-[9px] uppercase tracking-tighter text-muted-foreground">
+										<Label className="text-[11px] uppercase tracking-tighter text-muted-foreground">
 											Starting Capital
 										</Label>
 										<div className="text-[11px] text-primary/80 font-semibold mt-1">
@@ -408,7 +408,7 @@ export const BackgroundStep: React.FC<BackgroundStepProps> = ({
 								<div className="md:col-span-2 space-y-3 pt-2">
 									{displayFeatures.length > 0 && (
 										<div className="space-y-3">
-											<Label className="text-[10px] font-heading font-semibold text-primary uppercase tracking-wider">
+											<Label className="text-[11px] font-heading font-semibold text-primary uppercase tracking-wider">
 												Background Features
 											</Label>
 											{displayFeatures.map((feature) => {

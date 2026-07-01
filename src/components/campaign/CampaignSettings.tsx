@@ -398,15 +398,15 @@ export function CampaignSettings({ campaignId }: CampaignSettingsProps) {
 							</a>
 							, paste the Application ID and Public Key below, point its
 							Interactions Endpoint at the{" "}
-							<code className="text-[10px] bg-muted px-1">
+							<code className="text-[11px] bg-muted px-1">
 								/discord-command?campaign={campaignId}
 							</code>{" "}
 							Supabase function, then run{" "}
-							<code className="text-[10px] bg-muted px-1">
+							<code className="text-[11px] bg-muted px-1">
 								scripts/register-discord-commands.ts
 							</code>{" "}
 							once. Operatives link with{" "}
-							<code className="text-[10px] bg-muted px-1">
+							<code className="text-[11px] bg-muted px-1">
 								/link code:&lt;share-code&gt;
 							</code>
 							.

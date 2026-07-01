@@ -1,3 +1,5 @@
+import type { RaCurrencyValue } from "@/lib/currency";
+
 export interface Relic {
 	id: string;
 	name: string;
@@ -5,6 +7,8 @@ export interface Relic {
 	type: "weapon" | "armor" | "accessory" | "wondrous" | "consumable" | "tool";
 	tier?: string;
 	rarity: string;
+	/** Structured catalog price (mirrors `Item.value`); assigned by rarity. */
+	value?: RaCurrencyValue;
 	cost?: number;
 	attunement?: boolean | { required: boolean; requirements: string };
 	mechanics: Record<string, unknown>;
@@ -44,6 +48,7 @@ export const comprehensiveRelics: Relic[] = [
 		description:
 			"A jagged shard of the First Singularity, wreathed in flickering black mana. It does not cut flesh; it deletes the spatial coordinates of whatever it touches.",
 		rarity: "legendary",
+		value: { currency: "core", amount: 800 },
 		type: "weapon",
 		weapon_type: "simple melee",
 		damage: "2d8",
@@ -248,6 +253,7 @@ export const comprehensiveRelics: Relic[] = [
 		description:
 			"A jagged black slab of iron that hums with the rhythm of a heartbeat. It does not just cut; it drinks.",
 		rarity: "very_rare",
+		value: { currency: "gate", amount: 1000 },
 		type: "weapon",
 		weapon_type: "martial melee",
 		damage: "2d8",
@@ -428,6 +434,7 @@ export const comprehensiveRelics: Relic[] = [
 		description:
 			"A rapier forged from a solidified lightning strike, vibrating with ultra-high frequency mana.",
 		rarity: "legendary",
+		value: { currency: "core", amount: 850 },
 		type: "weapon",
 		weapon_type: "martial melee",
 		damage: "2d8",
@@ -620,6 +627,7 @@ export const comprehensiveRelics: Relic[] = [
 		description:
 			"This Legendary-Rank artifact vibrates with the power to freeze reality. It allows the wielder to manifest a cryogenic field that can shatter any proximity-based dimensional distortion.",
 		rarity: "very_rare",
+		value: { currency: "gate", amount: 1100 },
 		type: "weapon",
 		weapon_type: "martial melee",
 		damage: "2d8",
@@ -812,6 +820,7 @@ export const comprehensiveRelics: Relic[] = [
 		description:
 			"The legendary gauntlet of the Umbral Regent, containing the power to command shadows and bend reality.",
 		rarity: "mythic",
+		value: { currency: "core", amount: 2000 },
 		type: "armor",
 		armor_class: 16,
 		armor_type: "heavy",
@@ -1024,6 +1033,7 @@ export const comprehensiveRelics: Relic[] = [
 		description:
 			"Armor forged in the deepest shadows, offering protection while enhancing shadow abilities.",
 		rarity: "legendary",
+		value: { currency: "core", amount: 900 },
 		type: "armor",
 		armor_class: 16,
 		armor_type: "heavy",
@@ -1194,6 +1204,7 @@ export const comprehensiveRelics: Relic[] = [
 		description:
 			"Armor crafted from the scales of an ancient anomaly, offering exceptional protection and anomaly-like abilities.",
 		rarity: "legendary",
+		value: { currency: "core", amount: 950 },
 		type: "armor",
 		armor_class: 16,
 		armor_type: "heavy",
@@ -1359,6 +1370,7 @@ export const comprehensiveRelics: Relic[] = [
 		description:
 			"An artifact that grants the bearer command over lesser shadows and the respect of all beings.",
 		rarity: "legendary",
+		value: { currency: "core", amount: 1000 },
 		type: "accessory",
 		properties: {
 			protocol_enhanced: true,
@@ -1556,6 +1568,7 @@ export const comprehensiveRelics: Relic[] = [
 		description:
 			"An amulet that enhances shadow manipulation abilities and protects against shadow corruption.",
 		rarity: "epic",
+		value: { currency: "core", amount: 300 },
 		type: "accessory",
 		properties: {
 			protocol_enhanced: true,
@@ -1721,6 +1734,7 @@ export const comprehensiveRelics: Relic[] = [
 		description:
 			"A compass that points toward dimensional disturbances and can guide through abyssal realms.",
 		rarity: "very_rare",
+		value: { currency: "gate", amount: 1200 },
 		type: "accessory",
 		properties: {
 			protocol_enhanced: true,
@@ -1898,6 +1912,7 @@ export const comprehensiveRelics: Relic[] = [
 		description:
 			"This Legendary-Rank artifact vibrates with the power to mandate reality. It allows the wielder to manifest a fundamental field that can decree any proximity-based dimensional distortion.",
 		rarity: "legendary",
+		value: { currency: "core", amount: 1050 },
 		type: "accessory",
 		properties: {
 			protocol_enhanced: true,
@@ -2080,6 +2095,7 @@ export const comprehensiveRelics: Relic[] = [
 		description:
 			"This Legendary-Rank artifact vibrates with the power to nullify reality. It allows the wielder to manifest a umbral field that can devour any proximity-based dimensional distortion.",
 		rarity: "epic",
+		value: { currency: "core", amount: 325 },
 		type: "accessory",
 		properties: {
 			protocol_enhanced: true,
@@ -2258,6 +2274,7 @@ export const comprehensiveRelics: Relic[] = [
 		description:
 			"This Legendary-Rank artifact vibrates with the power to suspend reality. It allows the wielder to manifest a recursive field that can accelerate any proximity-based dimensional distortion.",
 		rarity: "mythic",
+		value: { currency: "core", amount: 2200 },
 		type: "accessory",
 		properties: {
 			legendary_actions: true,
@@ -2464,6 +2481,7 @@ export const comprehensiveRelics: Relic[] = [
 		description:
 			"A potion containing concentrated life essence that can heal wounds and enhance abilities.",
 		rarity: "rare",
+		value: { currency: "gate", amount: 300 },
 		type: "consumable",
 		properties: {
 			protocol_enhanced: true,
@@ -2592,6 +2610,7 @@ export const comprehensiveRelics: Relic[] = [
 		description:
 			"This Legendary-Rank artifact vibrates with the power to nullify reality. It allows the wielder to manifest a umbral field that can devour any proximity-based dimensional distortion.",
 		rarity: "very_rare",
+		value: { currency: "gate", amount: 1300 },
 		type: "consumable",
 		properties: {
 			protocol_enhanced: true,
@@ -2720,6 +2739,7 @@ export const comprehensiveRelics: Relic[] = [
 		description:
 			"This Legendary-Rank artifact vibrates with the power to siphon reality. It allows the wielder to manifest a sanguine field that can clot any proximity-based dimensional distortion.",
 		rarity: "legendary",
+		value: { currency: "core", amount: 1100 },
 		type: "consumable",
 		properties: {
 			protocol_enhanced: true,
@@ -2848,6 +2868,7 @@ export const comprehensiveRelics: Relic[] = [
 		description:
 			"A protocol-enhanced lens that can see through shadows and reveal hidden things.",
 		rarity: "rare",
+		value: { currency: "gate", amount: 325 },
 		type: "tool",
 		properties: {
 			protocol_enhanced: true,
@@ -2994,6 +3015,7 @@ export const comprehensiveRelics: Relic[] = [
 		description:
 			"This Legendary-Rank artifact vibrates with the power to mandate reality. It allows the wielder to manifest a fundamental field that can decree any proximity-based dimensional distortion.",
 		rarity: "very_rare",
+		value: { currency: "gate", amount: 1400 },
 		type: "tool",
 		properties: {
 			protocol_enhanced: true,

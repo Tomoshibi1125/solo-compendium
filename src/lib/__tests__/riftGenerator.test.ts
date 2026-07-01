@@ -14,7 +14,6 @@ const buildConfig = (
 	services,
 	defaultService,
 	autoEnhancePrompts: true,
-	autoAnalyzeAudio: true,
 	autoAnalyzeImages: true,
 	contentFiltering: true,
 	maxRequestsPerHour: 999,

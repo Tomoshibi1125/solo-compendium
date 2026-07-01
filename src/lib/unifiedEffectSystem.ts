@@ -22,7 +22,6 @@ import type {
 } from "./characterEngine";
 import { parseModifiers } from "./equipmentModifiers";
 import type { FeatEffect } from "./featEffectParser";
-import type { SpellEngineEffect } from "./spellEffectPipeline";
 
 // ─── Canonical EffectTarget expansions ──────────────────────
 // Define the expanded target set that feat/spell modules produce.
@@ -126,29 +125,6 @@ export function bridgeFeatEffect(feat: FeatEffect): {
 			sourceType: "feat",
 			sourceId: feat.source,
 			sourceName: feat.source,
-		},
-	};
-}
-
-/**
- * Convert a SpellEngineEffect into a canonical Effect + EffectSource pair
- */
-export function bridgeSpellEffect(spell: SpellEngineEffect): {
-	effect: Effect;
-	source: EffectSource;
-} {
-	return {
-		effect: {
-			type: mapType(spell.type),
-			target: mapTarget(spell.target),
-			value: spell.value,
-			condition: spell.description,
-			priority: spell.priority,
-		},
-		source: {
-			sourceType: "condition", // Spell effects act like conditions in the engine
-			sourceId: spell.source,
-			sourceName: spell.source,
 		},
 	};
 }
@@ -593,13 +569,6 @@ export function bridgeTattooEffects(entry: UnifiedEffectEntry): Effect[] {
  */
 export function bridgeAllFeatEffects(feats: FeatEffect[]): Effect[] {
 	return feats.map((f) => bridgeFeatEffect(f).effect);
-}
-
-/**
- * Batch-convert all SpellEngineEffects into canonical Effects
- */
-export function bridgeAllSpellEffects(spells: SpellEngineEffect[]): Effect[] {
-	return spells.map((s) => bridgeSpellEffect(s).effect);
 }
 
 /**

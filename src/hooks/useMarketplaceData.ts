@@ -48,18 +48,6 @@ export interface MarketplaceItemRecord {
 	bundled_item_ids?: string[] | null;
 }
 
-interface MarketplaceReviewRecord {
-	id: string;
-	item_id: string;
-	user_id: string;
-	rating: number;
-	comment: string | null;
-	helpful_count: number;
-	verified_purchase: boolean;
-	created_at: string;
-	updated_at: string;
-}
-
 type MarketplaceSaveInput = {
 	id?: string;
 	title: string;
@@ -192,25 +180,6 @@ export const useMarketplaceItems = ({
 			}));
 		},
 		enabled: isSupabaseConfigured,
-	});
-};
-
-export const useMarketplaceReviews = (itemId: string | null) => {
-	return useQuery({
-		queryKey: [...KEY, "reviews", itemId ?? "none"],
-		queryFn: async (): Promise<MarketplaceReviewRecord[]> => {
-			if (!isSupabaseConfigured || !itemId) return [];
-
-			const { data, error } = await supabase
-				.from("marketplace_reviews")
-				.select("*")
-				.eq("item_id", itemId)
-				.order("created_at", { ascending: false });
-
-			if (error) throw error;
-			return (data || []) as MarketplaceReviewRecord[];
-		},
-		enabled: !!itemId && isSupabaseConfigured,
 	});
 };
 

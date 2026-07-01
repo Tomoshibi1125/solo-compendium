@@ -80,23 +80,11 @@ export function getDefaultSettings(): ResourceTrackingSettings {
 	};
 }
 
-// ── Resource State ────────────────────────────────────────────────────
-
-export interface ResourceState {
-	settings: ResourceTrackingSettings;
-	resources: TrackedResource[];
-}
-
 export interface UseResourceResult {
 	success: boolean;
 	updatedResource: TrackedResource;
 	message: string;
 	warning?: string;
-}
-
-export interface RestRecoveryResult {
-	recovered: Array<{ resource: TrackedResource; amountRecovered: number }>;
-	unchanged: TrackedResource[];
 }
 
 // ── Core Functions ────────────────────────────────────────────────────
@@ -194,101 +182,6 @@ export function addResource(
 	return { ...resource, current: newCurrent };
 }
 
-/**
- * Set a resource to a specific value.
- */
-export function setResource(
-	resource: TrackedResource,
-	value: number,
-): TrackedResource {
-	const clamped =
-		resource.max !== null
-			? Math.min(Math.max(0, value), resource.max)
-			: Math.max(0, value);
-
-	return { ...resource, current: clamped };
-}
-
-// ── Rest Recovery ─────────────────────────────────────────────────────
-
-/**
- * Recover resources based on rest type.
- * Called by restAutomation.ts after performing a rest.
- */
-export function recoverResources(
-	resources: TrackedResource[],
-	restType: "short" | "long",
-	settings: ResourceTrackingSettings,
-): RestRecoveryResult {
-	if (!settings.enabled) {
-		return { recovered: [], unchanged: resources };
-	}
-
-	const recovered: Array<{
-		resource: TrackedResource;
-		amountRecovered: number;
-	}> = [];
-	const unchanged: TrackedResource[] = [];
-
-	for (const resource of resources) {
-		const shouldRecover =
-			(restType === "short" && resource.recovery === "short-rest") ||
-			(restType === "long" &&
-				(resource.recovery === "short-rest" ||
-					resource.recovery === "long-rest"));
-
-		if (!shouldRecover || resource.max === null) {
-			unchanged.push(resource);
-			continue;
-		}
-
-		// Already at max
-		if (resource.current >= resource.max) {
-			unchanged.push(resource);
-			continue;
-		}
-
-		const recoveryAmount = resource.recoveryAmount ?? resource.max;
-		const newCurrent = Math.min(
-			resource.current + recoveryAmount,
-			resource.max,
-		);
-		const actualRecovery = newCurrent - resource.current;
-
-		if (actualRecovery > 0) {
-			recovered.push({
-				resource: { ...resource, current: newCurrent },
-				amountRecovered: actualRecovery,
-			});
-		} else {
-			unchanged.push(resource);
-		}
-	}
-
-	return { recovered, unchanged };
-}
-
-// ── Dawn Recovery ─────────────────────────────────────────────────────
-
-/**
- * Recover resources that recharge at dawn (magic items, etc.).
- */
-export function recoverDawnResources(
-	resources: TrackedResource[],
-): TrackedResource[] {
-	return resources.map((resource) => {
-		if (resource.recovery !== "dawn" || resource.max === null) {
-			return resource;
-		}
-
-		const recoveryAmount = resource.recoveryAmount ?? resource.max;
-		return {
-			...resource,
-			current: Math.min(resource.current + recoveryAmount, resource.max),
-		};
-	});
-}
-
 // ── Utility ───────────────────────────────────────────────────────────
 
 /** Check if tracking is enabled for a specific resource category */
@@ -308,41 +201,6 @@ function isTrackingEnabled(
 		default:
 			return settings.enabled;
 	}
-}
-
-/** Get all resources that are currently low or empty */
-export function getLowResources(
-	resources: TrackedResource[],
-	settings: ResourceTrackingSettings,
-): TrackedResource[] {
-	if (!settings.enabled || !settings.showLowWarnings) return [];
-
-	return resources.filter(
-		(r) =>
-			isTrackingEnabled(r.category, settings) &&
-			r.warnAtLow &&
-			r.current <= r.lowThreshold,
-	);
-}
-
-/** Get a summary of all resources by category */
-export function getResourceSummary(
-	resources: TrackedResource[],
-): Record<ResourceCategory, TrackedResource[]> {
-	const summary: Record<ResourceCategory, TrackedResource[]> = {
-		ammunition: [],
-		consumable: [],
-		"class-feature": [],
-		"spell-slot": [],
-		"rift-favor": [],
-		custom: [],
-	};
-
-	for (const resource of resources) {
-		summary[resource.category].push(resource);
-	}
-
-	return summary;
 }
 
 // ── Common Resource Templates ─────────────────────────────────────────

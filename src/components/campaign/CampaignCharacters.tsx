@@ -192,11 +192,11 @@ export function CampaignCharacters({ campaignId }: CampaignCharactersProps) {
 								>
 									<div className="min-w-0">
 										<p className="font-heading text-sm truncate">{npc.name}</p>
-										<p className="text-[10px] text-muted-foreground truncate">
+										<p className="text-[11px] text-muted-foreground truncate">
 											Lv {npc.level} · {formatRegentVernacular(npc.job ?? "")}
 										</p>
 									</div>
-									<div className="flex items-center gap-1 shrink-0 text-[10px] text-muted-foreground">
+									<div className="flex items-center gap-1 shrink-0 text-[11px] text-muted-foreground">
 										<span className="px-1.5 py-0.5 rounded bg-primary/10 text-primary">
 											HP {npc.hp_max}
 										</span>

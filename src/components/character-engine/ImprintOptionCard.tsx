@@ -1,3 +1,4 @@
+import { Check } from "lucide-react";
 import type React from "react";
 import { AutoLinkText } from "@/components/compendium/AutoLinkText";
 import { Badge } from "@/components/ui/badge";
@@ -21,6 +22,12 @@ interface ImprintOptionCardProps {
 	children?: React.ReactNode;
 }
 
+/**
+ * The canonical selectable option card for character creation and level-up.
+ * Selection state is made unmistakable (ring + check + tinted surface) and the
+ * full compendium description is shown via {@link ExpandableText} (no clamped
+ * snippets) so the choice is informed — see the "selection clarity" standard.
+ */
 export function ImprintOptionCard({
 	title,
 	description,
@@ -42,14 +49,26 @@ export function ImprintOptionCard({
 			onClick={onClick}
 			disabled={disabled}
 			className={cn(
-				"text-left p-4 rounded-lg border transition-colors",
+				"relative text-left p-4 rounded-lg border transition-all",
 				selected
-					? "border-primary bg-primary/10"
-					: "border-primary/10 bg-background/40 hover:bg-primary/5 disabled:opacity-50",
+					? "border-primary bg-primary/15 ring-2 ring-primary/60 shadow-[0_0_18px_hsl(var(--primary)/0.22)]"
+					: "border-primary/15 bg-background/40 hover:border-primary/40 hover:bg-primary/5 disabled:opacity-50",
 			)}
 		>
-			<div className="flex items-center gap-2 flex-wrap">
-				<span className="font-heading font-semibold">{title}</span>
+			{selected && (
+				<span className="absolute right-2 top-2 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-primary-foreground">
+					<Check className="h-3.5 w-3.5" />
+				</span>
+			)}
+			<div className="flex items-center gap-2 flex-wrap pr-6">
+				<span
+					className={cn(
+						"font-heading font-semibold",
+						selected && "text-primary",
+					)}
+				>
+					{title}
+				</span>
 				{badges.map((badge) => (
 					<Badge
 						key={`${badge.label}-${badge.variant ?? "default"}`}
@@ -61,7 +80,7 @@ export function ImprintOptionCard({
 				))}
 			</div>
 			{description && (
-				<p className="text-xs text-muted-foreground mt-2 line-clamp-2">
+				<p className="mt-2 text-sm leading-relaxed text-muted-foreground">
 					<AutoLinkText text={description} />
 				</p>
 			)}
@@ -71,7 +90,7 @@ export function ImprintOptionCard({
 						<Badge
 							key={`${title}-metadata-${item}`}
 							variant="outline"
-							className="text-[9px] border-primary/20 bg-black/20"
+							className="text-[11px] border-primary/20 bg-black/20"
 						>
 							{item}
 						</Badge>
@@ -79,7 +98,7 @@ export function ImprintOptionCard({
 				</div>
 			)}
 			{actionPreview && (
-				<div className="mt-2 text-[10px] text-primary/80 font-mono bg-primary/5 border border-primary/10 rounded px-2 py-1">
+				<div className="mt-2 text-xs text-primary/80 font-mono bg-primary/5 border border-primary/10 rounded px-2 py-1">
 					{actionPreview}
 				</div>
 			)}

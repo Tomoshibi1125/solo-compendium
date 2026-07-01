@@ -359,7 +359,7 @@ export function AddFeatDialog({
 														))}
 												</div>
 												{feat.description && (
-													<p className="text-xs text-muted-foreground line-clamp-2 mt-1">
+													<p className="text-sm leading-relaxed text-muted-foreground mt-1">
 														{formatRegentVernacular(feat.description)}
 													</p>
 												)}

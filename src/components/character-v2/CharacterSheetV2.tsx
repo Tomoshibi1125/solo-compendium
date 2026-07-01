@@ -40,6 +40,7 @@ import { EquipmentList } from "@/components/character/EquipmentList";
 import { ExportDialog } from "@/components/character/ExportDialog";
 import { FeatureChoicesPanel } from "@/components/character/FeatureChoicesPanel";
 import { FeaturesList } from "@/components/character/FeaturesList";
+import { GuildBenefitsDisplay } from "@/components/character/GuildBenefitsDisplay";
 import { HomebrewFeatureApplicator } from "@/components/character/HomebrewFeatureApplicator";
 import { InlineSectionNote } from "@/components/character/InlineSectionNote";
 import { JobResourcePools } from "@/components/character/JobResourcePools";
@@ -58,6 +59,7 @@ import { RollHistoryPanel } from "@/components/character/RollHistoryPanel";
 import { RunesList } from "@/components/character/RunesList";
 import { ShadowSoldiersPanel } from "@/components/character/ShadowSoldiersPanel";
 import { SheetThemeDialog } from "@/components/character/SheetThemeDialog";
+import { SovereignOverlayPanel } from "@/components/character/SovereignOverlayPanel";
 import { SpellSlotsDisplay } from "@/components/character/SpellSlotsDisplay";
 import { TattoosList } from "@/components/character/TattoosList";
 import { ToolProficienciesPanel } from "@/components/character/ToolProficienciesPanel";
@@ -647,6 +649,7 @@ export default function CharacterSheetV2() {
 				characterId={character.id}
 				onSelectDetail={(detail) => onSelectDetail(detail, "Feature", Zap)}
 			/>
+			<GuildBenefitsDisplay characterId={character.id} />
 			<InlineSectionNote
 				section="features"
 				label="Features & Traits"
@@ -754,6 +757,7 @@ export default function CharacterSheetV2() {
 				campaignId={campaignId ?? undefined}
 				onSelectDetail={(detail) => onSelectDetail(detail, "Shadow", Ghost)}
 			/>
+			<SovereignOverlayPanel characterId={character.id} />
 			<JobResourcePools characterId={character.id} />
 			<SpellSlotsDisplay
 				characterId={character.id}
@@ -814,7 +818,7 @@ export default function CharacterSheetV2() {
 													: "border-gate-e text-gate-e"
 							}`}
 						>
-							<span className="text-[7px] leading-none text-primary/40 -mb-0.5">
+							<span className="text-[11px] leading-none text-primary/60 -mb-0.5">
 								RANK
 							</span>
 							<span>
@@ -843,16 +847,16 @@ export default function CharacterSheetV2() {
 							</span>
 							{displayNames.path && (
 								<>
-									<span className="text-primary/30">/</span>
-									<span className="text-[10px] font-mono text-primary/40 uppercase tracking-widest">
+									<span className="text-primary/60">/</span>
+									<span className="text-[10px] font-mono text-primary/60 uppercase tracking-widest">
 										{displayNames.path}
 									</span>
 								</>
 							)}
 							{displayNames.background && (
 								<>
-									<span className="text-primary/30">•</span>
-									<span className="text-[10px] font-mono text-primary/40 uppercase tracking-widest">
+									<span className="text-primary/60">•</span>
+									<span className="text-[10px] font-mono text-primary/60 uppercase tracking-widest">
 										{displayNames.background}
 									</span>
 								</>
@@ -865,7 +869,7 @@ export default function CharacterSheetV2() {
 				<div className="flex-1 p-4 bg-black/20 flex flex-col justify-center">
 					<div className="flex items-center justify-between mb-2">
 						<div className="flex items-center gap-3">
-							<span className="text-xs font-mono text-primary/50 uppercase tracking-widest">
+							<span className="text-xs font-mono text-primary/70 uppercase tracking-widest">
 								{levelingType === "xp" ? "PROGRESS_LEVEL" : "MILESTONE_LEVEL"}
 							</span>
 							<span className="text-2xl font-display font-bold text-white leading-none">
@@ -873,7 +877,7 @@ export default function CharacterSheetV2() {
 							</span>
 						</div>
 						{levelingType === "xp" && (
-							<span className="text-[10px] font-mono text-primary/40 tracking-[0.2em] uppercase">
+							<span className="text-[10px] font-mono text-primary/60 tracking-[0.2em] uppercase">
 								{character.experience || 0} / {xpProgress.next} XP
 							</span>
 						)}
@@ -1037,7 +1041,7 @@ export default function CharacterSheetV2() {
 				)}
 			/>
 			<div
-				className="flex flex-col gap-6 animate-in fade-in duration-500 max-w-7xl mx-auto px-4 py-8 sheet-themed-root"
+				className="flex flex-col gap-6 animate-in fade-in duration-500 max-w-7xl mx-auto px-4 py-8 sheet-themed-root book-print-root"
 				data-sheet-theme={
 					themePreview?.sheet_theme ??
 					((character as { sheet_theme?: string | null }).sheet_theme ||

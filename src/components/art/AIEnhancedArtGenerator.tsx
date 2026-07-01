@@ -1,4 +1,4 @@
-/**
+﻿/**
  * AI-Enhanced Art Generator Component
  * Integrates AI services for intelligent art generation
  */
@@ -7,13 +7,17 @@ import {
 	AlertCircle,
 	Brain,
 	CheckCircle,
+	Download,
+	FileJson,
+	Image as ImageIcon,
 	Palette,
 	RefreshCw,
 	Sparkles,
 	Tag,
+	Trash2,
 	Zap,
 } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AIProviderSettings } from "@/components/ai/AIProviderSettings";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
@@ -21,6 +25,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
+import { useDebounce } from "@/hooks/useDebounce";
+import { useCampaignToolState, useUserToolState } from "@/hooks/useToolState";
 import type { Json } from "@/integrations/supabase/types";
 import {
 	useAIEnhancement,
@@ -32,6 +38,7 @@ import { useArtPipeline } from "@/lib/artPipeline/hooks";
 import { artPipeline } from "@/lib/artPipeline/service";
 import type { ArtAsset, GenerationResult } from "@/lib/artPipeline/types";
 import { logger } from "@/lib/logger";
+import { downloadJson } from "@/lib/toolExport";
 import { cn } from "@/lib/utils";
 
 interface AIEnhancedArtGeneratorProps {
@@ -42,7 +49,54 @@ interface AIEnhancedArtGeneratorProps {
 	onGenerationStart?: () => void;
 	onGenerationComplete?: (success: boolean) => void;
 	className?: string;
+	/** When set, the generation gallery persists to the campaign (shared). */
+	campaignId?: string | null;
 }
+
+/** One persisted entry in the generation gallery/history. */
+interface ArtGalleryEntry {
+	id: string;
+	prompt: string;
+	tags: string[];
+	mood: string;
+	style: string;
+	previewUrl?: string;
+	assetId?: string;
+	model?: string;
+	createdAt: string;
+	durationMs?: number;
+}
+
+const GALLERY_LIMIT = 24;
+
+const extractModel = (metadata?: Json): string | undefined => {
+	if (metadata && typeof metadata === "object" && !Array.isArray(metadata)) {
+		const value = (metadata as Record<string, Json>).model;
+		if (typeof value === "string") return value;
+	}
+	return undefined;
+};
+
+const downloadImage = async (url?: string, name = "rift-art") => {
+	if (!url) return;
+	const safeName =
+		name.replace(/[^a-z0-9-_]+/gi, "-").slice(0, 60) || "rift-art";
+	try {
+		const res = await fetch(url);
+		const blob = await res.blob();
+		const objectUrl = URL.createObjectURL(blob);
+		const a = document.createElement("a");
+		a.href = objectUrl;
+		a.download = `${safeName}.png`;
+		document.body.appendChild(a);
+		a.click();
+		a.remove();
+		URL.revokeObjectURL(objectUrl);
+	} catch {
+		// Cross-origin or network failure â€” fall back to opening the asset.
+		window.open(url, "_blank", "noopener,noreferrer");
+	}
+};
 
 const pickPreviewUrl = (paths?: Json): string | undefined => {
 	if (!paths) return undefined;
@@ -70,6 +124,7 @@ export function AIEnhancedArtGenerator({
 	onGenerationStart,
 	onGenerationComplete,
 	className,
+	campaignId,
 }: AIEnhancedArtGeneratorProps) {
 	const { generateArt, isAvailable: artAvailable } = useArtPipeline();
 	const {
@@ -109,6 +164,39 @@ export function AIEnhancedArtGenerator({
 	const [isGenerating, setIsGenerating] = useState(false);
 	const [generationResult, setGenerationResult] =
 		useState<GenerationResult | null>(null);
+
+	// --- Generation gallery / history (persisted; campaign-scoped when selected) ---
+	const isCampaignScoped = !!campaignId;
+	const galleryUser = useUserToolState<ArtGalleryEntry[]>("art_gallery", {
+		initialState: [],
+		enabled: !isCampaignScoped,
+	});
+	const galleryCampaign = useCampaignToolState<ArtGalleryEntry[]>(
+		campaignId ?? null,
+		"art_gallery",
+		{ initialState: [], enabled: isCampaignScoped },
+	);
+	const {
+		state: storedGallery,
+		isLoading: galleryLoading,
+		saveNow: saveGallery,
+	} = isCampaignScoped ? galleryCampaign : galleryUser;
+	const [gallery, setGallery] = useState<ArtGalleryEntry[]>([]);
+	const galleryContext = campaignId ? `campaign:${campaignId}` : "user";
+	const galleryHydratedRef = useRef<string | null>(null);
+
+	useEffect(() => {
+		if (galleryLoading) return;
+		if (galleryHydratedRef.current === galleryContext) return;
+		if (Array.isArray(storedGallery)) setGallery(storedGallery);
+		galleryHydratedRef.current = galleryContext;
+	}, [galleryLoading, storedGallery, galleryContext]);
+
+	const debouncedGallery = useDebounce(gallery, 600);
+	useEffect(() => {
+		if (galleryLoading || galleryHydratedRef.current !== galleryContext) return;
+		void saveGallery(debouncedGallery);
+	}, [debouncedGallery, galleryLoading, saveGallery, galleryContext]);
 
 	useEffect(() => {
 		if (!finalPrompt.trim() && originalPrompt.trim() && !enhancedPrompt) {
@@ -275,6 +363,19 @@ export function AIEnhancedArtGenerator({
 				if (assetId) {
 					onArtGenerated?.(assetId, previewUrl);
 				}
+				const entry: ArtGalleryEntry = {
+					id: nextResult.assetId || `art-${Date.now()}`,
+					prompt: finalPrompt.trim(),
+					tags: resolvedTags,
+					mood: selectedMood,
+					style: selectedStyle,
+					previewUrl,
+					assetId: nextResult.assetId,
+					model: extractModel(nextResult.metadata),
+					createdAt: new Date().toISOString(),
+					durationMs: nextResult.duration,
+				};
+				setGallery((prev) => [entry, ...prev].slice(0, GALLERY_LIMIT));
 			}
 		} catch (error) {
 			setGenerationResult({
@@ -292,6 +393,15 @@ export function AIEnhancedArtGenerator({
 			prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag],
 		);
 	};
+
+	const removeGalleryEntry = (id: string) =>
+		setGallery((prev) => prev.filter((entry) => entry.id !== id));
+	const exportGallery = () =>
+		downloadJson(`art-gallery${campaignId ? `-${campaignId}` : ""}`, gallery);
+
+	const resultPreviewUrl = generationResult?.success
+		? pickPreviewUrl(generationResult.paths)
+		: undefined;
 
 	return (
 		<div className={cn("space-y-6", className)}>
@@ -614,11 +724,36 @@ export function AIEnhancedArtGenerator({
 							)}
 						>
 							{generationResult.success ? (
-								<div className="flex items-center gap-2 text-green-700">
-									<CheckCircle className="w-4 h-4" />
-									<span className="font-medium">
-										AI-Enhanced Art Generated Successfully!
-									</span>
+								<div className="space-y-3">
+									<div className="flex items-center gap-2 text-green-700">
+										<CheckCircle className="w-4 h-4" />
+										<span className="font-medium">
+											AI-Enhanced Art Generated Successfully!
+										</span>
+									</div>
+									{resultPreviewUrl && (
+										<div className="space-y-2">
+											<img
+												src={resultPreviewUrl}
+												alt={finalPrompt || "Generated art"}
+												className="w-full max-w-md rounded-lg border border-primary/20"
+											/>
+											<Button
+												type="button"
+												variant="outline"
+												size="sm"
+												className="gap-1"
+												onClick={() =>
+													downloadImage(
+														resultPreviewUrl,
+														finalPrompt || "rift-art",
+													)
+												}
+											>
+												<Download className="w-4 h-4" /> Download Image
+											</Button>
+										</div>
+									)}
 								</div>
 							) : (
 								<div className="flex items-center gap-2 text-red-700">
@@ -630,6 +765,89 @@ export function AIEnhancedArtGenerator({
 					)}
 				</CardContent>
 			</Card>
+
+			{/* Generation Gallery / History */}
+			{gallery.length > 0 && (
+				<Card>
+					<CardHeader>
+						<CardTitle className="flex items-center justify-between gap-2">
+							<span className="flex items-center gap-2">
+								<ImageIcon className="w-4 h-4" />
+								Generation Gallery
+								{isCampaignScoped && (
+									<Badge variant="outline" className="text-[10px]">
+										Shared
+									</Badge>
+								)}
+							</span>
+							<Button
+								type="button"
+								variant="outline"
+								size="sm"
+								className="gap-1"
+								onClick={exportGallery}
+							>
+								<FileJson className="w-4 h-4" /> Export
+							</Button>
+						</CardTitle>
+					</CardHeader>
+					<CardContent>
+						<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+							{gallery.map((entry) => (
+								<div
+									key={entry.id}
+									className="space-y-2 rounded-lg border border-primary/15 bg-black/20 p-3"
+								>
+									{entry.previewUrl ? (
+										<img
+											src={entry.previewUrl}
+											alt={entry.prompt}
+											className="aspect-square w-full rounded-md object-cover"
+										/>
+									) : (
+										<div className="flex aspect-square w-full items-center justify-center rounded-md bg-muted/40 text-muted-foreground">
+											<ImageIcon className="h-8 w-8 opacity-50" />
+										</div>
+									)}
+									<p className="line-clamp-2 text-xs text-foreground/80">
+										{entry.prompt || "Untitled generation"}
+									</p>
+									<p className="text-[11px] text-muted-foreground">
+										{new Date(entry.createdAt).toLocaleString()}
+										{entry.model ? ` Â· ${entry.model}` : ""}
+									</p>
+									<div className="flex gap-2">
+										<Button
+											type="button"
+											variant="outline"
+											size="sm"
+											className="h-7 flex-1 gap-1 text-[11px]"
+											onClick={() =>
+												downloadImage(
+													entry.previewUrl,
+													entry.prompt || "rift-art",
+												)
+											}
+											disabled={!entry.previewUrl}
+										>
+											<Download className="h-3 w-3" /> Save
+										</Button>
+										<Button
+											type="button"
+											variant="ghost"
+											size="sm"
+											className="h-7 gap-1 text-[11px] text-muted-foreground"
+											onClick={() => removeGalleryEntry(entry.id)}
+										>
+											<Trash2 className="h-3 w-3" />
+										</Button>
+									</div>
+								</div>
+							))}
+						</div>
+					</CardContent>
+				</Card>
+			)}
 		</div>
 	);
 }

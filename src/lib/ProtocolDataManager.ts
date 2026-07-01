@@ -190,49 +190,8 @@ export function getStaticItems(): CompendiumItem[] {
 	}
 	return registry.items;
 }
-export function getStaticBackgrounds(): CompendiumBackground[] {
-	if (!registry.initialized) {
-		console.warn(
-			"getStaticBackgrounds called before ProtocolDataManager initialized",
-		);
-	}
-	return registry.backgrounds;
-}
-export function getStaticAnomalies(): CompendiumAnomaly[] {
-	return registry.anomalies;
-}
-export function getStaticSpells(): CompendiumSpell[] {
-	return registry.spells;
-}
-export function getStaticRunes(): CompendiumRune[] {
-	return registry.runes;
-}
-export function getStaticConditions(): CompendiumCondition[] {
-	return registry.conditions;
-}
-export function getStaticFeats(): CompendiumFeat[] {
-	return registry.feats;
-}
-export function getStaticLocations(): CompendiumLocation[] {
-	return registry.locations;
-}
 export function getStaticRegents(): CompendiumRegent[] {
 	return registry.regents;
-}
-export function getStaticRelics(): CompendiumRelic[] {
-	return registry.relics;
-}
-export function getStaticSigils(): CompendiumRune[] {
-	return registry.sigils;
-}
-export function getStaticSkills(): CompendiumSkill[] {
-	return registry.skills;
-}
-export function getStaticTattoos(): CompendiumTattoo[] {
-	return registry.tattoos;
-}
-export function getStaticTechniques(): CompendiumTechnique[] {
-	return registry.techniques;
 }
 export function getStaticPaths(): CompendiumPath[] {
 	return registry.paths;
@@ -244,11 +203,4 @@ export function getStaticBackgroundsAll(): CompendiumBackground[] {
 		);
 	}
 	return registry.backgroundsAll;
-}
-export function getStaticItemsAll(): CompendiumItem[] {
-	return registry.itemsAll;
-}
-
-export function isProtocolDataReady(): boolean {
-	return registry.initialized;
 }

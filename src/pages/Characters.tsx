@@ -46,6 +46,7 @@ import {
 } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 import { useCharacters, useDeleteCharacter } from "@/hooks/useCharacters";
+import { MAX_CHARACTERS_PER_USER } from "@/lib/characterLimits";
 import { cn } from "@/lib/utils";
 import { formatRegentVernacular } from "@/lib/vernacular";
 
@@ -148,41 +149,41 @@ const Characters = () => {
 		if (level >= 17)
 			return {
 				rank: "S",
-				color: "text-amber-400",
-				bg: "bg-amber-500/20",
-				border: "border-amber-500/50",
-				glow: "shadow-amber-500/30",
+				color: "text-gate-s",
+				bg: "bg-gate-s/20",
+				border: "border-gate-s/50",
+				glow: "shadow-gate-s-glow/30",
 			};
 		if (level >= 13)
 			return {
 				rank: "A",
-				color: "text-red-400",
-				bg: "bg-red-500/20",
-				border: "border-red-500/50",
-				glow: "shadow-red-500/30",
+				color: "text-gate-a",
+				bg: "bg-gate-a/20",
+				border: "border-gate-a/50",
+				glow: "shadow-gate-a-glow/30",
 			};
 		if (level >= 9)
 			return {
 				rank: "B",
-				color: "text-orange-400",
-				bg: "bg-orange-500/20",
-				border: "border-orange-500/50",
-				glow: "shadow-orange-500/30",
+				color: "text-gate-b",
+				bg: "bg-gate-b/20",
+				border: "border-gate-b/50",
+				glow: "shadow-gate-b-glow/30",
 			};
 		if (level >= 5)
 			return {
 				rank: "C",
-				color: "text-blue-400",
-				bg: "bg-blue-500/20",
-				border: "border-blue-500/50",
-				glow: "shadow-blue-500/30",
+				color: "text-gate-c",
+				bg: "bg-gate-c/20",
+				border: "border-gate-c/50",
+				glow: "shadow-gate-c-glow/30",
 			};
 		return {
 			rank: "D",
-			color: "text-green-400",
-			bg: "bg-green-500/20",
-			border: "border-green-500/50",
-			glow: "shadow-green-500/30",
+			color: "text-gate-d",
+			bg: "bg-gate-d/20",
+			border: "border-gate-d/50",
+			glow: "shadow-gate-d-glow/30",
 		};
 	};
 
@@ -207,6 +208,19 @@ const Characters = () => {
 							Manage your awakened Ascendants and prepare them for the Rift's
 							challenges.
 						</ManaFlowText>
+						<p className="text-xs text-muted-foreground mt-1">
+							<span
+								className={
+									characters.length >= MAX_CHARACTERS_PER_USER
+										? "text-destructive font-semibold"
+										: "text-foreground font-semibold"
+								}
+							>
+								{characters.length} / {MAX_CHARACTERS_PER_USER}
+							</span>{" "}
+							Ascendants awakened
+							{characters.length >= MAX_CHARACTERS_PER_USER && " — roster full"}
+						</p>
 					</div>
 					<div className="flex gap-2">
 						<Link to="/party-stash">
@@ -580,6 +594,13 @@ const Characters = () => {
 													</span>
 												</div>
 											</div>
+
+											{character.updated_at && (
+												<p className="mt-4 text-[11px] font-mono uppercase tracking-widest text-muted-foreground/70">
+													Updated{" "}
+													{new Date(character.updated_at).toLocaleDateString()}
+												</p>
+											)}
 										</Link>
 									</div>
 								);

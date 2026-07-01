@@ -114,7 +114,7 @@ export function AppSidebar() {
 										<p className="text-xs font-bold truncate">
 											{user.displayName || "Ascendant"}
 										</p>
-										<p className="text-[10px] text-muted-foreground truncate">
+										<p className="text-[11px] text-muted-foreground truncate">
 											{user.email}
 										</p>
 									</div>

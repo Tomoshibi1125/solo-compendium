@@ -112,6 +112,7 @@ import {
 import { logger } from "@/lib/logger";
 import { getStaticPaths, getStaticRegents } from "@/lib/ProtocolDataManager";
 import { getEffectiveMaxAbilityLevel } from "@/lib/pathAbilityAccess";
+import { rankToGateToken } from "@/lib/rankColors";
 import { filterRowsBySourcebookAccess } from "@/lib/sourcebookAccess";
 import { cn } from "@/lib/utils";
 import { formatRegentVernacular } from "@/lib/vernacular";
@@ -1881,11 +1882,11 @@ export const LevelUpWizardModal = ({
 
 	// Get rank for display
 	const getNewRank = () => {
-		if (newLevel >= 17) return { rank: "S", color: "text-amber-400" };
-		if (newLevel >= 13) return { rank: "A", color: "text-red-400" };
-		if (newLevel >= 9) return { rank: "B", color: "text-orange-400" };
-		if (newLevel >= 5) return { rank: "C", color: "text-blue-400" };
-		return { rank: "D", color: "text-green-400" };
+		if (newLevel >= 17) return { rank: "S", color: rankToGateToken("S") };
+		if (newLevel >= 13) return { rank: "A", color: rankToGateToken("A") };
+		if (newLevel >= 9) return { rank: "B", color: rankToGateToken("B") };
+		if (newLevel >= 5) return { rank: "C", color: rankToGateToken("C") };
+		return { rank: "D", color: rankToGateToken("D") };
 	};
 
 	const rankInfo = getNewRank();
@@ -1941,7 +1942,7 @@ export const LevelUpWizardModal = ({
 								<span
 									className={cn(
 										"font-bold",
-										isLevelDown ? "text-red-400" : rankInfo.color,
+										isLevelDown ? "text-gate-red" : rankInfo.color,
 									)}
 								>
 									LV. {newLevel}
@@ -2366,7 +2367,12 @@ export const LevelUpWizardModal = ({
 												return (
 													<div
 														key={feat.id}
-														className="flex items-center gap-3 p-2 rounded-lg bg-background/50 border border-purple-500/10"
+														className={cn(
+															"flex items-center gap-3 p-2 rounded-lg border transition-all",
+															isSelected
+																? "bg-primary/15 border-primary ring-2 ring-primary/60 shadow-[0_0_18px_hsl(var(--primary)/0.22)]"
+																: "bg-background/50 border-purple-500/10 hover:border-purple-500/30",
+														)}
 													>
 														<input
 															type="checkbox"
@@ -2405,7 +2411,7 @@ export const LevelUpWizardModal = ({
 																<span className="font-resurge text-sm text-purple-400">
 																	{formatRegentVernacular(feat.name)}
 																</span>
-																<p className="text-xs text-muted-foreground mt-1 line-clamp-2">
+																<p className="text-sm text-muted-foreground mt-1 leading-relaxed">
 																	{formatRegentVernacular(
 																		feat.description || "",
 																	)}
@@ -2441,7 +2447,12 @@ export const LevelUpWizardModal = ({
 												return (
 													<div
 														key={cantrip.id}
-														className="flex items-start gap-3 p-2 rounded-lg bg-background/50 border border-cyan-500/10"
+														className={cn(
+															"flex items-start gap-3 p-2 rounded-lg border transition-all",
+															isSelected
+																? "bg-primary/15 border-primary ring-2 ring-primary/60"
+																: "bg-background/50 border-cyan-500/10 hover:border-cyan-500/30",
+														)}
 													>
 														<input
 															type="checkbox"
@@ -2471,7 +2482,7 @@ export const LevelUpWizardModal = ({
 																{formatRegentVernacular(cantrip.name)}
 															</span>
 															{cantrip.description && (
-																<p className="text-xs text-muted-foreground mt-1 line-clamp-2">
+																<p className="text-sm text-muted-foreground mt-1 leading-relaxed">
 																	{formatRegentVernacular(cantrip.description)}
 																</p>
 															)}
@@ -2504,7 +2515,12 @@ export const LevelUpWizardModal = ({
 												return (
 													<div
 														key={spell.id}
-														className="flex items-start gap-3 p-2 rounded-lg bg-background/50 border border-blue-500/10"
+														className={cn(
+															"flex items-start gap-3 p-2 rounded-lg border transition-all",
+															isSelected
+																? "bg-primary/15 border-primary ring-2 ring-primary/60"
+																: "bg-background/50 border-blue-500/10 hover:border-blue-500/30",
+														)}
 													>
 														<input
 															type="checkbox"
@@ -2538,7 +2554,7 @@ export const LevelUpWizardModal = ({
 																</Badge>
 															</div>
 															{spell.description && (
-																<p className="text-xs text-muted-foreground mt-1 line-clamp-2">
+																<p className="text-sm text-muted-foreground mt-1 leading-relaxed">
 																	{formatRegentVernacular(spell.description)}
 																</p>
 															)}
@@ -2575,7 +2591,12 @@ export const LevelUpWizardModal = ({
 												return (
 													<div
 														key={spell.id}
-														className="flex items-start gap-3 p-2 rounded-lg bg-background/50 border border-indigo-500/10"
+														className={cn(
+															"flex items-start gap-3 p-2 rounded-lg border transition-all",
+															isSelected
+																? "bg-primary/15 border-primary ring-2 ring-primary/60"
+																: "bg-background/50 border-indigo-500/10 hover:border-indigo-500/30",
+														)}
 													>
 														<input
 															type="checkbox"
@@ -2610,7 +2631,7 @@ export const LevelUpWizardModal = ({
 																</Badge>
 															</div>
 															{spell.description && (
-																<p className="text-xs text-muted-foreground mt-1 line-clamp-2">
+																<p className="text-sm text-muted-foreground mt-1 leading-relaxed">
 																	{formatRegentVernacular(spell.description)}
 																</p>
 															)}
@@ -2643,7 +2664,12 @@ export const LevelUpWizardModal = ({
 												return (
 													<div
 														key={power.id}
-														className="flex items-start gap-3 p-2 rounded-lg bg-background/50 border border-cyan-500/10"
+														className={cn(
+															"flex items-start gap-3 p-2 rounded-lg border transition-all",
+															isSelected
+																? "bg-primary/15 border-primary ring-2 ring-primary/60"
+																: "bg-background/50 border-cyan-500/10 hover:border-cyan-500/30",
+														)}
 													>
 														<input
 															type="checkbox"
@@ -2692,7 +2718,7 @@ export const LevelUpWizardModal = ({
 																)}
 															</div>
 															{power.description && (
-																<p className="text-xs text-muted-foreground mt-1 line-clamp-2">
+																<p className="text-sm text-muted-foreground mt-1 leading-relaxed">
 																	{formatRegentVernacular(power.description)}
 																</p>
 															)}
@@ -2726,7 +2752,12 @@ export const LevelUpWizardModal = ({
 												return (
 													<div
 														key={technique.id}
-														className="flex items-start gap-3 p-2 rounded-lg bg-background/50 border border-orange-500/10"
+														className={cn(
+															"flex items-start gap-3 p-2 rounded-lg border transition-all",
+															isSelected
+																? "bg-primary/15 border-primary ring-2 ring-primary/60"
+																: "bg-background/50 border-orange-500/10 hover:border-orange-500/30",
+														)}
 													>
 														<input
 															type="checkbox"
@@ -2783,7 +2814,7 @@ export const LevelUpWizardModal = ({
 																)}
 															</div>
 															{technique.description && (
-																<p className="text-xs text-muted-foreground mt-1 line-clamp-2">
+																<p className="text-sm text-muted-foreground mt-1 leading-relaxed">
 																	{formatRegentVernacular(
 																		technique.description,
 																	)}
@@ -2820,7 +2851,12 @@ export const LevelUpWizardModal = ({
 												return (
 													<div
 														key={style.id}
-														className="flex items-start gap-3 p-2 rounded-lg bg-background/50 border border-rose-500/10"
+														className={cn(
+															"flex items-start gap-3 p-2 rounded-lg border transition-all",
+															isSelected
+																? "bg-primary/15 border-primary ring-2 ring-primary/60"
+																: "bg-background/50 border-rose-500/10 hover:border-rose-500/30",
+														)}
 													>
 														<input
 															type="checkbox"
@@ -2856,7 +2892,7 @@ export const LevelUpWizardModal = ({
 																		: "Baseline"}
 																</Badge>
 															</div>
-															<p className="text-xs text-muted-foreground mt-1 line-clamp-2">
+															<p className="text-sm text-muted-foreground mt-1 leading-relaxed">
 																{formatRegentVernacular(style.description)}
 															</p>
 														</label>
@@ -2922,7 +2958,7 @@ export const LevelUpWizardModal = ({
 																	{formatRegentVernacular(option.label)}
 																</span>
 																{option.description && (
-																	<p className="text-xs text-muted-foreground mt-1 line-clamp-2">
+																	<p className="text-sm text-muted-foreground mt-1 leading-relaxed">
 																		{formatRegentVernacular(option.description)}
 																	</p>
 																)}

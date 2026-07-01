@@ -4,11 +4,13 @@ import {
 	Crown,
 	DoorOpen,
 	Download,
+	FileImage,
 	Gem,
 	LayoutGrid,
 	Loader2,
 	Minus,
 	Plus,
+	Printer,
 	RefreshCw,
 	Sparkles,
 	Square,
@@ -30,6 +32,8 @@ import { useToast } from "@/hooks/use-toast";
 import { useAIEnhance } from "@/hooks/useAIEnhance";
 import { useDebounce } from "@/hooks/useDebounce";
 import { useUserToolState } from "@/hooks/useToolState";
+import { downloadFile } from "@/lib/export";
+import type { RiftObjective, RiftRoomKey } from "@/lib/riftGenerator";
 import { cn } from "@/lib/utils";
 import type { WardenLinkedEntry } from "@/lib/wardenGenerationContext";
 import "./DungeonMapGenerator.css";
@@ -132,6 +136,8 @@ export type DungeonMapGeneratorState = {
 	selectedCellType: CellType;
 	zoom: number;
 	options: DungeonMapOptions;
+	/** Rift packet id this map was auto-built for; prevents rebuilding over edits. */
+	builtForRiftId?: string | null;
 };
 
 // --- Serialization ---
@@ -187,6 +193,8 @@ const deserializeDungeonMap = (
 const GATE_RANKS = ["E", "D", "C", "B", "A", "S"] as const;
 
 export interface DungeonRiftContext {
+	/** Stable id of the source rift packet; drives faithful auto-build. */
+	riftId?: string;
 	rank: string;
 	theme: string;
 	biome: string;
@@ -201,6 +209,19 @@ export interface DungeonRiftContext {
 		loot?: WardenLinkedEntry[];
 		lore?: WardenLinkedEntry[];
 	};
+	/** The exact keyed rooms the map should lay out (no random fill). */
+	roomKeys?: RiftRoomKey[];
+	/** Grid sizing + room mix produced alongside the packet. */
+	mapParams?: {
+		width: number;
+		height: number;
+		roomCount: number;
+		treasureRooms: number;
+		trapRooms: number;
+		puzzleRooms: number;
+		secretRooms: number;
+	};
+	objective?: RiftObjective;
 }
 
 interface CellTypeConfig {
@@ -505,6 +526,244 @@ function generateMap(
 	return { width, height, cells, rooms, seed, options: mapOptions };
 }
 
+// --- Faithful packet-driven layout ---
+
+/** Small deterministic PRNG so a given rift always lays out the same way. */
+function mulberry32(seed: number): () => number {
+	let a = seed >>> 0;
+	return () => {
+		a |= 0;
+		a = (a + 0x6d2b79f5) | 0;
+		let t = Math.imul(a ^ (a >>> 15), 1 | a);
+		t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+		return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+	};
+}
+
+function hashString(value: string): number {
+	let h = 2166136261;
+	for (let i = 0; i < value.length; i++) {
+		h = Math.imul(h ^ value.charCodeAt(i), 16777619);
+	}
+	return h >>> 0;
+}
+
+/** RiftRoomKey.type → CellType (they align; unknown types fall back to "room"). */
+function riftRoomTypeToCell(type: string): CellType {
+	switch (type) {
+		case "entrance":
+		case "boss":
+		case "treasure":
+		case "trap":
+		case "puzzle":
+		case "secret":
+			return type;
+		default:
+			return "room";
+	}
+}
+
+/** Surface the *actual* generated detail for a keyed room (no index sampling). */
+function notesFromRoomKey(room: RiftRoomKey): RoomNotes {
+	const sourceRefs = room.linkedEntries
+		.map((entry) => ({ id: entry.id, type: entry.type, name: entry.name }))
+		.filter((ref, i, all) => all.findIndex((r) => r.id === ref.id) === i);
+	return {
+		summary: room.description,
+		encounter: room.encounter
+			? `${room.encounter.name} (CR ${room.encounter.cr}, x${room.encounter.count})`
+			: undefined,
+		hazard: room.hazard
+			? `${room.hazard.name} — DC ${room.hazard.dc}, ${room.hazard.damage}`
+			: undefined,
+		loot: room.loot.length > 0 ? room.loot.join(", ") : undefined,
+		lore: room.lore ?? undefined,
+		sourceRefs: sourceRefs.length > 0 ? sourceRefs : undefined,
+	};
+}
+
+/**
+ * Build a spatial map that places the rift packet's exact keyed rooms in order
+ * (entrance → … → boss) along a serpentine grid, connected by corridors. The
+ * layout is deterministic per rift id unless a fresh seed is supplied.
+ */
+function buildMapFromPacket(
+	context: DungeonRiftContext,
+	seedOverride?: number,
+): DungeonMap | null {
+	const roomKeys = context.roomKeys;
+	if (!roomKeys || roomKeys.length === 0) return null;
+
+	const seed =
+		seedOverride ??
+		hashString(context.riftId ?? roomKeys.map((r) => r.roomId).join());
+	const rng = mulberry32(seed);
+
+	const n = roomKeys.length;
+	const cols = Math.ceil(Math.sqrt(n));
+	const rows = Math.ceil(n / cols);
+	const width = Math.max(cols * 6, context.mapParams?.width ?? cols * 6);
+	const height = Math.max(rows * 6, context.mapParams?.height ?? rows * 6);
+	const slotW = Math.floor(width / cols);
+	const slotH = Math.floor(height / rows);
+
+	const cells = new Map<string, Cell>();
+	const rooms: Room[] = [];
+	const centers: Array<{ x: number; y: number }> = [];
+
+	const setCell = (x: number, y: number, type: CellType, label?: string) => {
+		if (x < 0 || y < 0 || x >= width || y >= height) return;
+		const key = `${x},${y}`;
+		const existing = cells.get(key);
+		// Never overwrite a room cell with a corridor.
+		if (existing && existing.type !== "corridor" && type === "corridor") return;
+		cells.set(key, {
+			type,
+			label: label ?? existing?.label,
+			connections: existing?.connections ?? new Set(),
+		});
+	};
+
+	roomKeys.forEach((roomKey, index) => {
+		const row = Math.floor(index / cols);
+		const colInRow = index % cols;
+		// Serpentine: reverse every other row so consecutive rooms stay adjacent.
+		const col = row % 2 === 0 ? colInRow : cols - 1 - colInRow;
+		const slotX = col * slotW;
+		const slotY = row * slotH;
+
+		const maxW = Math.max(3, Math.min(5, slotW - 1));
+		const maxH = Math.max(3, Math.min(5, slotH - 1));
+		const rw = 3 + Math.floor(rng() * (maxW - 3 + 1));
+		const rh = 3 + Math.floor(rng() * (maxH - 3 + 1));
+		const rx = Math.min(
+			width - rw - 1,
+			slotX + 1 + Math.floor(rng() * Math.max(1, slotW - rw - 1)),
+		);
+		const ry = Math.min(
+			height - rh - 1,
+			slotY + 1 + Math.floor(rng() * Math.max(1, slotH - rh - 1)),
+		);
+
+		const type = riftRoomTypeToCell(roomKey.type);
+		const label = roomKey.label;
+
+		for (let yy = ry; yy < ry + rh; yy++) {
+			for (let xx = rx; xx < rx + rw; xx++) {
+				setCell(xx, yy, type, xx === rx && yy === ry ? label : undefined);
+			}
+		}
+
+		rooms.push({
+			id: roomKey.roomId,
+			x: rx,
+			y: ry,
+			width: rw,
+			height: rh,
+			type,
+			label,
+			notes: notesFromRoomKey(roomKey),
+		});
+		centers.push({
+			x: rx + Math.floor(rw / 2),
+			y: ry + Math.floor(rh / 2),
+		});
+	});
+
+	// Connect consecutive rooms with L-shaped corridors (keeps a clear path).
+	for (let i = 0; i < centers.length - 1; i++) {
+		const a = centers[i];
+		const b = centers[i + 1];
+		for (let x = Math.min(a.x, b.x); x <= Math.max(a.x, b.x); x++) {
+			setCell(x, a.y, "corridor");
+		}
+		for (let y = Math.min(a.y, b.y); y <= Math.max(a.y, b.y); y++) {
+			setCell(b.x, y, "corridor");
+		}
+	}
+
+	const options: DungeonMapOptions = {
+		roomCount: n,
+		minRoomSize: 3,
+		maxRoomSize: 5,
+		treasureRooms: context.mapParams?.treasureRooms ?? 0,
+		trapRooms: context.mapParams?.trapRooms ?? 0,
+		puzzleRooms: context.mapParams?.puzzleRooms ?? 0,
+		secretRooms: context.mapParams?.secretRooms ?? 0,
+		encounterRooms: roomKeys.filter((r) => r.encounter).length,
+		branching: 25,
+	};
+
+	return { width, height, cells, rooms, seed, options };
+}
+
+// --- SVG / PNG / print export ---
+
+const CELL_HEX: Record<CellType, string> = {
+	empty: "transparent",
+	room: "#3b82f6",
+	corridor: "#6b7280",
+	entrance: "#22c55e",
+	boss: "#ef4444",
+	treasure: "#eab308",
+	trap: "#f97316",
+	puzzle: "#a855f7",
+	secret: "#6366f1",
+};
+
+function escapeXml(value: string): string {
+	return value
+		.replace(/&/g, "&amp;")
+		.replace(/</g, "&lt;")
+		.replace(/>/g, "&gt;")
+		.replace(/"/g, "&quot;");
+}
+
+/** Render the current map model to a standalone SVG string (for export/print). */
+function mapToSvg(map: DungeonMap, title: string): string {
+	const cellPx = 16;
+	const pad = 16;
+	const gridW = map.width * cellPx;
+	const gridH = map.height * cellPx;
+	const usedTypes = new Set<CellType>();
+	const rects: string[] = [];
+
+	for (const [key, cell] of map.cells) {
+		if (cell.type === "empty") continue;
+		usedTypes.add(cell.type);
+		const [cx, cy] = key.split(",").map(Number);
+		rects.push(
+			`<rect x="${pad + cx * cellPx}" y="${pad + cy * cellPx}" width="${cellPx}" height="${cellPx}" fill="${CELL_HEX[cell.type]}" fill-opacity="0.85" stroke="#000" stroke-opacity="0.25" stroke-width="0.5"/>`,
+		);
+	}
+
+	const labels = map.rooms
+		.map((room) => {
+			const tx = pad + room.x * cellPx + 2;
+			const ty = pad + room.y * cellPx + 11;
+			return `<text x="${tx}" y="${ty}" font-family="monospace" font-size="9" fill="#fff">${escapeXml(room.label)}</text>`;
+		})
+		.join("");
+
+	const legendTypes = CELL_TYPES.filter(
+		(ct) => ct.type !== "empty" && usedTypes.has(ct.type),
+	);
+	const legendY = pad + gridH + 12;
+	const legend = legendTypes
+		.map((ct, i) => {
+			const lx = pad + (i % 4) * 150;
+			const ly = legendY + Math.floor(i / 4) * 22;
+			return `<rect x="${lx}" y="${ly}" width="12" height="12" fill="${CELL_HEX[ct.type]}" fill-opacity="0.85"/><text x="${lx + 18}" y="${ly + 11}" font-family="monospace" font-size="11" fill="#cbd5e1">${escapeXml(ct.label)}</text>`;
+		})
+		.join("");
+
+	const legendRows = Math.ceil(legendTypes.length / 4);
+	const totalH = pad + gridH + 12 + legendRows * 22 + pad;
+	const totalW = Math.max(gridW + pad * 2, 4 * 150 + pad);
+
+	return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${totalW} ${totalH}" width="${totalW}" height="${totalH}"><rect width="${totalW}" height="${totalH}" fill="#0a0a0f"/><text x="${pad}" y="${pad - 4}" font-family="monospace" font-size="11" fill="#94a3b8">${escapeXml(title)}</text>${rects.join("")}${labels}${legend}</svg>`;
+}
+
 // --- Component ---
 
 export interface DungeonMapGeneratorProps {
@@ -527,6 +786,7 @@ export function DungeonMapGenerator({
 	const [options, setOptions] = useState<DungeonMapOptions>(
 		DEFAULT_DUNGEON_OPTIONS,
 	);
+	const [builtForRiftId, setBuiltForRiftId] = useState<string | null>(null);
 
 	const {
 		state: storedState,
@@ -555,6 +815,7 @@ export function DungeonMapGenerator({
 			selectedCellType: (storedState.selectedCellType as CellType) ?? "room",
 			zoom: typeof storedState.zoom === "number" ? storedState.zoom : 1,
 			options: storedState.options ?? DEFAULT_DUNGEON_OPTIONS,
+			builtForRiftId: storedState.builtForRiftId ?? null,
 		};
 	}, [storedState]);
 
@@ -567,6 +828,7 @@ export function DungeonMapGenerator({
 		setSelectedCellType(hydratedState.selectedCellType);
 		setZoom(hydratedState.zoom);
 		setOptions(hydratedState.options);
+		setBuiltForRiftId(hydratedState.builtForRiftId);
 		hasHydratedRef.current = true;
 	}, [hydratedState, isLoading, riftContext?.rank]);
 
@@ -577,6 +839,23 @@ export function DungeonMapGenerator({
 		}
 	}, [riftContext?.rank]);
 
+	// Faithfully auto-build the map the moment a (new) rift packet arrives, using
+	// its exact keyed rooms — no manual "Generate" click, no random fill. Keyed by
+	// rift id so a hand-edited map survives reloads but a regenerated rift rebuilds.
+	useEffect(() => {
+		if (isLoading || !hasHydratedRef.current) return;
+		const riftId = riftContext?.riftId;
+		if (!riftId || !riftContext?.roomKeys?.length) return;
+		if (builtForRiftId === riftId) return;
+		const built = buildMapFromPacket(riftContext);
+		if (!built) return;
+		setDungeonMap(built);
+		setMapSize({ width: built.width, height: built.height });
+		setOptions(built.options);
+		if (riftContext.rank) setSelectedRank(riftContext.rank);
+		setBuiltForRiftId(riftId);
+	}, [riftContext, builtForRiftId, isLoading]);
+
 	const savePayload = useMemo(
 		() =>
 			({
@@ -586,8 +865,17 @@ export function DungeonMapGenerator({
 				selectedCellType,
 				zoom,
 				options,
+				builtForRiftId,
 			}) satisfies DungeonMapGeneratorState,
-		[dungeonMap, mapSize, options, selectedCellType, selectedRank, zoom],
+		[
+			builtForRiftId,
+			dungeonMap,
+			mapSize,
+			options,
+			selectedCellType,
+			selectedRank,
+			zoom,
+		],
 	);
 
 	const debouncedSavePayload = useDebounce(savePayload, 500);
@@ -600,14 +888,22 @@ export function DungeonMapGenerator({
 
 	const handleGenerate = () => {
 		clearEnhanced();
-		const newMap = generateMap(
-			mapSize.width,
-			mapSize.height,
-			selectedRank,
-			options,
-			riftContext,
-		);
+		// When driven by a rift packet, re-roll the *layout* of its real keyed rooms
+		// (a fresh seed) rather than fabricating an unrelated random dungeon.
+		const newMap = riftContext?.roomKeys?.length
+			? buildMapFromPacket(riftContext, Date.now())
+			: generateMap(
+					mapSize.width,
+					mapSize.height,
+					selectedRank,
+					options,
+					riftContext,
+				);
+		if (!newMap) return;
 		setDungeonMap(newMap);
+		setMapSize({ width: newMap.width, height: newMap.height });
+		setOptions(newMap.options);
+		if (riftContext?.riftId) setBuiltForRiftId(riftContext.riftId);
 		toast({
 			title: "Map Generated!",
 			description: `Created a Rank ${selectedRank} Rift with ${newMap.rooms.length} rooms.`,
@@ -658,6 +954,73 @@ Room Layout: ${roomSummary}`;
 		a.click();
 		URL.revokeObjectURL(url);
 		toast({ title: "Exported!", description: "Map data exported as JSON." });
+	};
+
+	const mapTitle = `${selectedRank}-Rank Rift Map${riftContext?.theme ? ` — ${riftContext.theme}` : ""}`;
+
+	const handleExportSvg = () => {
+		if (!dungeonMap) return;
+		downloadFile(
+			mapToSvg(dungeonMap, mapTitle),
+			`rift-${selectedRank}-map-${Date.now()}.svg`,
+			"image/svg+xml",
+		);
+		toast({ title: "Exported!", description: "Map exported as SVG." });
+	};
+
+	const handleExportPng = () => {
+		if (!dungeonMap) return;
+		const svg = mapToSvg(dungeonMap, mapTitle);
+		const svgBlob = new Blob([svg], { type: "image/svg+xml" });
+		const url = URL.createObjectURL(svgBlob);
+		const img = new Image();
+		img.onload = () => {
+			const scale = 2; // crisper raster
+			const canvas = document.createElement("canvas");
+			canvas.width = img.width * scale;
+			canvas.height = img.height * scale;
+			const ctx = canvas.getContext("2d");
+			if (!ctx) {
+				URL.revokeObjectURL(url);
+				return;
+			}
+			ctx.fillStyle = "#0a0a0f";
+			ctx.fillRect(0, 0, canvas.width, canvas.height);
+			ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+			URL.revokeObjectURL(url);
+			canvas.toBlob((pngBlob) => {
+				if (!pngBlob) return;
+				const pngUrl = URL.createObjectURL(pngBlob);
+				const a = document.createElement("a");
+				a.href = pngUrl;
+				a.download = `rift-${selectedRank}-map-${Date.now()}.png`;
+				a.click();
+				URL.revokeObjectURL(pngUrl);
+				toast({ title: "Exported!", description: "Map exported as PNG." });
+			}, "image/png");
+		};
+		img.onerror = () => {
+			URL.revokeObjectURL(url);
+			toast({
+				title: "Export failed",
+				description: "Could not rasterize the map.",
+				variant: "destructive",
+			});
+		};
+		img.src = url;
+	};
+
+	const handlePrint = () => {
+		if (!dungeonMap) return;
+		const svg = mapToSvg(dungeonMap, mapTitle);
+		const win = window.open("", "_blank");
+		if (!win) return;
+		win.document.write(
+			`<!doctype html><html><head><title>${mapTitle}</title><style>html,body{margin:0;background:#0a0a0f}</style></head><body>${svg}</body></html>`,
+		);
+		win.document.close();
+		win.focus();
+		setTimeout(() => win.print(), 300);
 	};
 
 	const handleCopy = () => {
@@ -751,145 +1114,157 @@ Room Layout: ${roomSummary}`;
 							</div>
 						)}
 
-						<div className="grid grid-cols-2 gap-2">
-							<div>
-								<Label htmlFor="map-width">Width</Label>
-								<Input
-									id="map-width"
-									type="number"
-									value={mapSize.width}
-									onChange={(e) =>
-										setMapSize({
-											...mapSize,
-											width: Number.parseInt(e.target.value, 10) || 20,
-										})
-									}
-									className="h-9"
-									min={10}
-									max={50}
-								/>
-							</div>
-							<div>
-								<Label htmlFor="map-height">Height</Label>
-								<Input
-									id="map-height"
-									type="number"
-									value={mapSize.height}
-									onChange={(e) =>
-										setMapSize({
-											...mapSize,
-											height: Number.parseInt(e.target.value, 10) || 20,
-										})
-									}
-									className="h-9"
-									min={10}
-									max={50}
-								/>
-							</div>
-						</div>
-
-						<div className="grid grid-cols-2 gap-2">
-							<div>
-								<Label htmlFor="room-count">Rooms</Label>
-								<Input
-									id="room-count"
-									type="number"
-									value={options.roomCount}
-									onChange={(e) =>
-										updateOption(
-											"roomCount",
-											Number.parseInt(e.target.value, 10) || 2,
-										)
-									}
-									className="h-9"
-									min={2}
-									max={40}
-								/>
-							</div>
-							<div>
-								<Label htmlFor="encounter-rooms">Encounters</Label>
-								<Input
-									id="encounter-rooms"
-									type="number"
-									value={options.encounterRooms}
-									onChange={(e) =>
-										updateOption(
-											"encounterRooms",
-											Number.parseInt(e.target.value, 10) || 0,
-										)
-									}
-									className="h-9"
-									min={0}
-									max={40}
-								/>
-							</div>
-						</div>
-
-						<div className="grid grid-cols-2 gap-2">
-							<div>
-								<Label htmlFor="room-min-size">Min Room</Label>
-								<Input
-									id="room-min-size"
-									type="number"
-									value={options.minRoomSize}
-									onChange={(e) =>
-										updateOption(
-											"minRoomSize",
-											Number.parseInt(e.target.value, 10) || 2,
-										)
-									}
-									className="h-9"
-									min={2}
-									max={12}
-								/>
-							</div>
-							<div>
-								<Label htmlFor="room-max-size">Max Room</Label>
-								<Input
-									id="room-max-size"
-									type="number"
-									value={options.maxRoomSize}
-									onChange={(e) =>
-										updateOption(
-											"maxRoomSize",
-											Number.parseInt(e.target.value, 10) || 2,
-										)
-									}
-									className="h-9"
-									min={2}
-									max={12}
-								/>
-							</div>
-						</div>
-
-						<div className="grid grid-cols-2 gap-2">
-							{(
-								[
-									["treasureRooms", "Treasure"],
-									["trapRooms", "Hazards"],
-									["puzzleRooms", "Puzzles"],
-									["secretRooms", "Secrets"],
-								] as Array<[keyof DungeonMapOptions, string]>
-							).map(([key, label]) => (
-								<div key={key}>
-									<Label htmlFor={`option-${key}`}>{label}</Label>
-									<Input
-										id={`option-${key}`}
-										type="number"
-										value={options[key]}
-										onChange={(e) =>
-											updateOption(
-												key,
-												Number.parseInt(e.target.value, 10) || 0,
-											)
-										}
-										className="h-9"
-										min={0}
-										max={20}
-									/>
+						{riftContext?.roomKeys?.length ? (
+							<p className="text-[11px] leading-relaxed text-muted-foreground">
+								This map is built directly from the generated rift —{" "}
+								{riftContext.roomKeys.length} keyed rooms, placed and annotated
+								from the packet. Use{" "}
+								<span className="text-foreground">Rebuild Map Layout</span> to
+								re-roll the arrangement.
+							</p>
+						) : (
+							<>
+								<div className="grid grid-cols-2 gap-2">
+									<div>
+										<Label htmlFor="map-width">Width</Label>
+										<Input
+											id="map-width"
+											type="number"
+											value={mapSize.width}
+											onChange={(e) =>
+												setMapSize({
+													...mapSize,
+													width: Number.parseInt(e.target.value, 10) || 20,
+												})
+											}
+											className="h-9"
+											min={10}
+											max={50}
+										/>
+									</div>
+									<div>
+										<Label htmlFor="map-height">Height</Label>
+										<Input
+											id="map-height"
+											type="number"
+											value={mapSize.height}
+											onChange={(e) =>
+												setMapSize({
+													...mapSize,
+													height: Number.parseInt(e.target.value, 10) || 20,
+												})
+											}
+											className="h-9"
+											min={10}
+											max={50}
+										/>
+									</div>
 								</div>
-							))}
-						</div>
+
+								<div className="grid grid-cols-2 gap-2">
+									<div>
+										<Label htmlFor="room-count">Rooms</Label>
+										<Input
+											id="room-count"
+											type="number"
+											value={options.roomCount}
+											onChange={(e) =>
+												updateOption(
+													"roomCount",
+													Number.parseInt(e.target.value, 10) || 2,
+												)
+											}
+											className="h-9"
+											min={2}
+											max={40}
+										/>
+									</div>
+									<div>
+										<Label htmlFor="encounter-rooms">Encounters</Label>
+										<Input
+											id="encounter-rooms"
+											type="number"
+											value={options.encounterRooms}
+											onChange={(e) =>
+												updateOption(
+													"encounterRooms",
+													Number.parseInt(e.target.value, 10) || 0,
+												)
+											}
+											className="h-9"
+											min={0}
+											max={40}
+										/>
+									</div>
+								</div>
+
+								<div className="grid grid-cols-2 gap-2">
+									<div>
+										<Label htmlFor="room-min-size">Min Room</Label>
+										<Input
+											id="room-min-size"
+											type="number"
+											value={options.minRoomSize}
+											onChange={(e) =>
+												updateOption(
+													"minRoomSize",
+													Number.parseInt(e.target.value, 10) || 2,
+												)
+											}
+											className="h-9"
+											min={2}
+											max={12}
+										/>
+									</div>
+									<div>
+										<Label htmlFor="room-max-size">Max Room</Label>
+										<Input
+											id="room-max-size"
+											type="number"
+											value={options.maxRoomSize}
+											onChange={(e) =>
+												updateOption(
+													"maxRoomSize",
+													Number.parseInt(e.target.value, 10) || 2,
+												)
+											}
+											className="h-9"
+											min={2}
+											max={12}
+										/>
+									</div>
+								</div>
+
+								<div className="grid grid-cols-2 gap-2">
+									{(
+										[
+											["treasureRooms", "Treasure"],
+											["trapRooms", "Hazards"],
+											["puzzleRooms", "Puzzles"],
+											["secretRooms", "Secrets"],
+										] as Array<[keyof DungeonMapOptions, string]>
+									).map(([key, label]) => (
+										<div key={key}>
+											<Label htmlFor={`option-${key}`}>{label}</Label>
+											<Input
+												id={`option-${key}`}
+												type="number"
+												value={options[key]}
+												onChange={(e) =>
+													updateOption(
+														key,
+														Number.parseInt(e.target.value, 10) || 0,
+													)
+												}
+												className="h-9"
+												min={0}
+												max={20}
+											/>
+										</div>
+									))}
+								</div>
+							</>
+						)}
 
 						<Button
 							type="button"
@@ -898,7 +1273,9 @@ Room Layout: ${roomSummary}`;
 							size="lg"
 						>
 							<RefreshCw className="w-4 h-4" />
-							Generate Planar Grid
+							{riftContext?.roomKeys?.length
+								? "Rebuild Map Layout"
+								: "Generate Planar Grid"}
 						</Button>
 
 						{dungeonMap && (
@@ -934,7 +1311,7 @@ Room Layout: ${roomSummary}`;
 								onClick={() => setSelectedCellType(cellType.type)}
 							>
 								<div className={cn("w-3 h-3 rounded-sm", cellType.color)} />
-								<span className="text-[10px] truncate">{cellType.label}</span>
+								<span className="text-[11px] truncate">{cellType.label}</span>
 							</Button>
 						))}
 					</div>
@@ -967,7 +1344,7 @@ Room Layout: ${roomSummary}`;
 						</Button>
 					</div>
 
-					<div className="flex gap-2">
+					<div className="flex flex-wrap gap-2">
 						<Button
 							type="button"
 							variant="ghost"
@@ -977,7 +1354,40 @@ Room Layout: ${roomSummary}`;
 							className="h-8 gap-2"
 						>
 							<Copy className="w-4 h-4" />
-							Copy Summary
+							Copy
+						</Button>
+						<Button
+							type="button"
+							variant="ghost"
+							size="sm"
+							onClick={handleExportPng}
+							disabled={!dungeonMap}
+							className="h-8 gap-2"
+						>
+							<FileImage className="w-4 h-4" />
+							PNG
+						</Button>
+						<Button
+							type="button"
+							variant="ghost"
+							size="sm"
+							onClick={handleExportSvg}
+							disabled={!dungeonMap}
+							className="h-8 gap-2"
+						>
+							<Download className="w-4 h-4" />
+							SVG
+						</Button>
+						<Button
+							type="button"
+							variant="ghost"
+							size="sm"
+							onClick={handlePrint}
+							disabled={!dungeonMap}
+							className="h-8 gap-2"
+						>
+							<Printer className="w-4 h-4" />
+							Print
 						</Button>
 						<Button
 							type="button"
@@ -988,7 +1398,7 @@ Room Layout: ${roomSummary}`;
 							className="h-8 gap-2"
 						>
 							<Download className="w-4 h-4" />
-							Export Registry
+							JSON
 						</Button>
 					</div>
 				</div>
@@ -1001,7 +1411,7 @@ Room Layout: ${roomSummary}`;
 								<p className="font-heading uppercase tracking-widest text-xs">
 									Topology Lattice Offline
 								</p>
-								<p className="text-[10px] opacity-60">
+								<p className="text-[11px] opacity-60">
 									Initialize parameters to visualize Rift architecture.
 								</p>
 							</div>
@@ -1099,7 +1509,7 @@ Room Layout: ${roomSummary}`;
 
 				<Alert className="bg-primary/5 border-primary/10">
 					<Sparkles className="w-4 h-4 text-primary" />
-					<AlertDescription className="text-[10px] leading-relaxed">
+					<AlertDescription className="text-[11px] leading-relaxed">
 						Each room node can be selected for individual refinement. Use AI
 						Synthesis to generate structural lore, metabolic encounters, and
 						calculated compensation registries for the active grid.

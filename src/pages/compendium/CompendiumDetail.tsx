@@ -18,6 +18,10 @@ import { DeityDetail } from "@/components/compendium/DeityDetail";
 import { DetailLayout } from "@/components/compendium/DetailLayout";
 import { EquipmentDetail } from "@/components/compendium/EquipmentDetail";
 import { FeatDetail } from "@/components/compendium/FeatDetail";
+import {
+	type GuildBaseData,
+	GuildBaseDetail,
+} from "@/components/compendium/GuildBaseDetail";
 import { type ItemData, ItemDetail } from "@/components/compendium/ItemDetail";
 import { JobDetail } from "@/components/compendium/JobDetail";
 import { LocationDetail } from "@/components/compendium/LocationDetail";
@@ -412,6 +416,10 @@ const CompendiumDetail = () => {
 			case "crafting": {
 				const e = entry as unknown as CraftingData;
 				return <CraftingDetail data={e} />;
+			}
+			case "guild-base": {
+				const e = entry as unknown as GuildBaseData;
+				return <GuildBaseDetail data={e} />;
 			}
 			case "npcs": {
 				const e = entry as CompendiumNPC;

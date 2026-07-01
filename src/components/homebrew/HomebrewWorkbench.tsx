@@ -36,6 +36,7 @@ import {
 	useSaveHomebrewContent,
 	useSetHomebrewStatus,
 } from "@/hooks/useHomebrewContent";
+import { notifyAsync } from "@/lib/notify";
 
 type ScopeFilter = "mine" | "public" | "campaign" | "all";
 
@@ -286,13 +287,21 @@ export function HomebrewWorkbench() {
 				description: "Review imported data, then save to persist it.",
 			});
 		} catch (error) {
+			const message =
+				error instanceof Error ? error.message : "Could not parse import file.";
 			toast({
 				title: "Import failed",
-				description:
-					error instanceof Error
-						? error.message
-						: "Could not parse import file.",
+				description: message,
 				variant: "destructive",
+			});
+			// Persist a record in the bell so a failed import isn't lost when the
+			// toast disappears. Success is intentionally toast-only (the import is
+			// a transient form-load until the user saves).
+			notifyAsync({
+				type: "error",
+				title: "Homebrew import failed",
+				message,
+				category: "homebrew",
 			});
 		}
 	};

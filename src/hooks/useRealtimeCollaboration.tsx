@@ -3,7 +3,6 @@ import { useCallback, useEffect, useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth/authContext";
-import "@/styles/realtime-collaboration.css";
 
 export type CursorPosition = { x: number; y: number };
 
@@ -483,100 +482,4 @@ export function useRealtimeCollaboration(campaignId: string) {
 		broadcastCombatState,
 		updatePresence,
 	};
-}
-
-// React component for displaying active users
-export function ActiveUsersList({
-	activeUsers,
-}: {
-	activeUsers: ActiveUser[];
-}) {
-	return (
-		<div className="flex items-center space-x-2 p-2 bg-muted rounded-lg">
-			<div className="flex -space-x-2">
-				{activeUsers.map((user) => (
-					<div
-						key={user.id}
-						className="w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-xs font-medium border-2 border-background"
-						title={user.name}
-					>
-						{user.name.charAt(0).toUpperCase()}
-					</div>
-				))}
-			</div>
-			<span className="text-sm text-muted-foreground">
-				{activeUsers.length} active user{activeUsers.length !== 1 ? "s" : ""}
-			</span>
-		</div>
-	);
-}
-
-// React component for collaborative cursors
-export function CollaborativeCursors({
-	activeUsers,
-}: {
-	activeUsers: ActiveUser[];
-}) {
-	const setCursorVars = (
-		el: HTMLDivElement | null,
-		cursor: { x: number; y: number },
-		userId: string,
-	) => {
-		if (!el) return;
-		el.style.setProperty("--cursor-x", `${cursor.x}px`);
-		el.style.setProperty("--cursor-y", `${cursor.y}px`);
-		el.style.setProperty("--cursor-color", getUserColor(userId));
-	};
-
-	return (
-		<>
-			{activeUsers.map(
-				(user) =>
-					user.cursor && (
-						<div
-							key={user.id}
-							className="cursor-indicator"
-							ref={(el) =>
-								setCursorVars(
-									el,
-									user.cursor as { x: number; y: number },
-									user.id,
-								)
-							}
-						>
-							<div className="cursor-indicator-inner" />
-							<div className="cursor-indicator-info">{user.name}</div>
-						</div>
-					),
-			)}
-		</>
-	);
-}
-
-// Helper function to get consistent colors for users
-export function getUserColor(userId: string): string {
-	const colors = [
-		"#ef4444",
-		"#f97316",
-		"#eab308",
-		"#84cc16",
-		"#22c55e",
-		"#14b8a6",
-		"#06b6d4",
-		"#0ea5e9",
-		"#3b82f6",
-		"#6366f1",
-		"#8b5cf6",
-		"#a855f7",
-		"#d946ef",
-		"#ec4899",
-		"#f43f5e",
-	];
-
-	let hash = 0;
-	for (let i = 0; i < userId.length; i++) {
-		hash = userId.charCodeAt(i) + ((hash << 5) - hash);
-	}
-
-	return colors[Math.abs(hash) % colors.length];
 }

@@ -114,19 +114,3 @@ export async function setupTestAccounts() {
 		ascendantLoginResult,
 	};
 }
-
-/**
- * Clean up test users (for teardown)
- */
-export async function cleanupTestUsers() {
-	try {
-		// Sign out current user
-		await supabase.auth.signOut();
-
-		// Note: Supabase doesn't provide a direct way to delete users via client-side
-		// This would need to be done via admin API or server-side function
-		console.log("Test users cleanup completed (sign out only)");
-	} catch (error) {
-		console.error("Test users cleanup failed:", error);
-	}
-}

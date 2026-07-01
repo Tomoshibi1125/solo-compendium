@@ -1,0 +1,197 @@
+/**
+ * Book-brand print theme — turns the dark Rift Ascendant app surfaces that opt
+ * in (the character sheet, the Contract Log, and the Session Plan) into a
+ * cohesive cream / serif / platinum handout that reads like the printed
+ * sourcebooks (see `books/layout/book.css`) instead of a dark-mode screenshot.
+ *
+ * Scoped to `.book-print-root`: only a container that adds the class is printed.
+ * The Meridian visibility technique is reused (`.book-print-root *` outranks
+ * `body *`), so just that subtree reaches the page.
+ *
+ * No `!important`: to override the dark theme's Tailwind utilities (which are
+ * single-class, specificity 0,1,0) the theming rules repeat the root class
+ * (`.book-print-root.book-print-root …` → 0,2,0+), so the cascade — not
+ * `!important` — wins. Everything is inside `@media print`, so screen rendering
+ * and every other route are untouched. Palette is the cool, no-warm-gold
+ * sourcebook paper scheme (cream #f5f0e5, ink #1a1410, platinum rule #9aa0ac).
+ */
+@media print {
+	/* Print only the opted-in subtree (Meridian visibility technique). */
+	body * {
+		visibility: hidden;
+	}
+
+	.book-print-root,
+	.book-print-root * {
+		visibility: visible;
+	}
+
+	@page {
+		size: Letter;
+		margin: 0.6in 0.55in 0.7in;
+	}
+
+	/* Cream paper canvas + serif ink. */
+	.book-print-root.book-print-root {
+		position: absolute;
+		left: 0;
+		top: 0;
+		width: 100%;
+		padding: 0;
+		margin: 0;
+		background: #f5f0e5;
+		color: #1a1410;
+		font-family: Georgia, "Source Serif 4", "Times New Roman", serif;
+		font-size: 10pt;
+		line-height: 1.45;
+		-webkit-print-color-adjust: exact;
+		print-color-adjust: exact;
+	}
+
+	/* Neutralize the dark theme everywhere: paper, ink, no glow/animation.
+	   Bordered surfaces keep their box but recolor to a platinum rule, which
+	   preserves the visual grouping of cards on paper. */
+	.book-print-root.book-print-root * {
+		background: transparent;
+		background-image: none;
+		color: #1a1410;
+		border-color: #cdbf9e;
+		box-shadow: none;
+		text-shadow: none;
+		filter: none;
+		animation: none;
+		-webkit-text-fill-color: #1a1410;
+	}
+
+	/* Quieter secondary text stays legible. */
+	.book-print-root.book-print-root .text-muted-foreground,
+	.book-print-root.book-print-root .text-muted-foreground * {
+		color: #5d574d;
+		-webkit-text-fill-color: #5d574d;
+	}
+
+	/* Headings → platinum-ruled sans display, like the sourcebook. */
+	.book-print-root.book-print-root h1,
+	.book-print-root.book-print-root h2,
+	.book-print-root.book-print-root h3,
+	.book-print-root.book-print-root h4,
+	.book-print-root.book-print-root h5 {
+		font-family: "Outfit", "Segoe UI", system-ui, sans-serif;
+		color: #14101a;
+		-webkit-text-fill-color: #14101a;
+		letter-spacing: -0.01em;
+		break-after: avoid;
+	}
+
+	.book-print-root.book-print-root h1 {
+		font-size: 22pt;
+		font-weight: 800;
+	}
+
+	.book-print-root.book-print-root h2 {
+		font-size: 15pt;
+		font-weight: 700;
+		border-bottom: 1pt solid #9aa0ac;
+		padding-bottom: 0.04in;
+	}
+
+	.book-print-root.book-print-root h3 {
+		font-size: 12pt;
+		font-weight: 700;
+	}
+
+	.book-print-root.book-print-root h4 {
+		font-size: 10pt;
+		font-weight: 700;
+	}
+
+	/* Tables → book ledger styling with a slate header row. */
+	.book-print-root.book-print-root table {
+		border-collapse: collapse;
+		width: 100%;
+		break-inside: auto;
+	}
+
+	.book-print-root.book-print-root th,
+	.book-print-root.book-print-root td {
+		border: 0.5pt solid #cdbf9e;
+		padding: 0.04in 0.05in;
+	}
+
+	.book-print-root.book-print-root th {
+		background: #2a2330;
+		color: #f5f0e5;
+		-webkit-text-fill-color: #f5f0e5;
+		font-family: "Outfit", "Segoe UI", sans-serif;
+		text-transform: uppercase;
+		letter-spacing: 0.04em;
+		font-size: 8pt;
+	}
+
+	.book-print-root.book-print-root tr:nth-child(even) td {
+		background: rgba(205, 191, 158, 0.18);
+	}
+
+	/* Keep ink in images / SVG icons. */
+	.book-print-root.book-print-root img,
+	.book-print-root.book-print-root svg {
+		-webkit-print-color-adjust: exact;
+		print-color-adjust: exact;
+		max-width: 100%;
+	}
+
+	/* Editable content (Session Plan title/beats, quest config) prints as plain
+	   text so the entered values survive — strip the control chrome, don't hide. */
+	.book-print-root.book-print-root input,
+	.book-print-root.book-print-root textarea,
+	.book-print-root.book-print-root select {
+		border: none;
+		background: transparent;
+		padding: 0;
+		min-height: 0;
+		height: auto;
+		resize: none;
+		overflow: visible;
+		-webkit-appearance: none;
+		appearance: none;
+	}
+
+	/* Action buttons collapse to quiet inline text (no big touch targets); any
+	   data that happens to render inside a button still prints. */
+	.book-print-root.book-print-root button {
+		border: none;
+		background: transparent;
+		box-shadow: none;
+		min-height: 0;
+		height: auto;
+		padding: 0;
+	}
+
+	/* Hide pure chrome: tab strips, decorative overlays, and anything opted out. */
+	.book-print-root.book-print-root .no-print,
+	.book-print-root.book-print-root [role="tablist"],
+	.book-print-root.book-print-root [role="tab"],
+	.book-print-root.book-print-root .sw-scan-line,
+	.book-print-root.book-print-root .hex-grid-overlay,
+	.book-print-root.book-print-root .sw-glow-top,
+	.book-print-root.book-print-root .sw-glow-bottom {
+		display: none;
+	}
+
+	/* Page-break helpers (opt-in via class). */
+	.book-print-root.book-print-root .print-avoid-break {
+		break-inside: avoid;
+		page-break-inside: avoid;
+	}
+
+	.book-print-root.book-print-root .print-page {
+		break-before: page;
+		page-break-before: always;
+	}
+
+	.book-print-root.book-print-root p,
+	.book-print-root.book-print-root li {
+		orphans: 3;
+		widows: 3;
+	}
+}

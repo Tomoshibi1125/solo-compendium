@@ -1,4 +1,14 @@
-import { Camera, LogOut, RefreshCw, Save, Type, User } from "lucide-react";
+import {
+	Bell,
+	BellOff,
+	BellRing,
+	Camera,
+	LogOut,
+	RefreshCw,
+	Save,
+	Type,
+	User,
+} from "lucide-react";
 import { useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
@@ -8,6 +18,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
+import { usePushNotifications } from "@/hooks/usePushNotifications";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth/authContext";
 import { cn } from "@/lib/utils";
@@ -41,6 +52,40 @@ export default function Profile() {
 	const [selectedFontSize, setSelectedFontSize] = useState<string>(
 		() => localStorage.getItem(FONT_SIZE_KEY) || "text-base",
 	);
+
+	const {
+		isSupported: pushSupported,
+		permission: pushPermission,
+		requestPermission: requestPush,
+		sendNotification: sendPush,
+	} = usePushNotifications();
+	const [requestingPush, setRequestingPush] = useState(false);
+
+	const handleEnablePush = async () => {
+		setRequestingPush(true);
+		try {
+			const result = await requestPush();
+			if (result === "granted") {
+				toast({
+					title: "Notifications enabled",
+					description: "You'll get browser alerts for important events.",
+				});
+				// Confirm it works with an immediate test notification.
+				sendPush("Rift Ascendant", {
+					body: "Browser notifications are now on.",
+				});
+			} else if (result === "denied") {
+				toast({
+					title: "Notifications blocked",
+					description:
+						"Your browser denied permission. Re-enable it in your browser's site settings.",
+					variant: "destructive",
+				});
+			}
+		} finally {
+			setRequestingPush(false);
+		}
+	};
 
 	const handleSaveName = async () => {
 		if (!nameInput.trim()) return;
@@ -257,6 +302,50 @@ export default function Profile() {
 						</div>
 					</div>
 				</AscendantWindow>
+
+				{/* Notifications */}
+				{pushSupported && (
+					<AscendantWindow title="NOTIFICATIONS">
+						<div className="space-y-3">
+							<div className="flex items-center gap-2">
+								<Bell className="w-4 h-4 text-primary/80" />
+								<Label className="font-heading text-xs uppercase tracking-widest text-primary/80">
+									Browser Notifications
+								</Label>
+							</div>
+							{pushPermission === "granted" ? (
+								<div className="flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-success">
+									<BellRing className="w-4 h-4" />
+									Enabled — you'll receive browser alerts.
+								</div>
+							) : pushPermission === "denied" ? (
+								<div className="flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-muted-foreground">
+									<BellOff className="w-4 h-4" />
+									Blocked. Re-enable in your browser's site settings.
+								</div>
+							) : (
+								<Button
+									onClick={handleEnablePush}
+									disabled={requestingPush}
+									variant="outline"
+									size="sm"
+									className="gap-2 font-heading tracking-widest uppercase"
+								>
+									{requestingPush ? (
+										<RefreshCw className="w-4 h-4 animate-spin" />
+									) : (
+										<Bell className="w-4 h-4" />
+									)}
+									Enable Browser Notifications
+								</Button>
+							)}
+							<AscendantText className="block text-xs font-mono text-muted-foreground uppercase tracking-wider">
+								Alerts for level-ups, campaign invites, mentions, and sync
+								issues. In-app notifications always appear in the bell.
+							</AscendantText>
+						</div>
+					</AscendantWindow>
+				)}
 
 				{/* Account Actions */}
 				<AscendantWindow title="ACCOUNT">

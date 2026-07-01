@@ -4,40 +4,6 @@
 
 import { AppError } from "@/lib/appError";
 
-export type {
-	AttackResult,
-	DamageResult,
-	DeathSaveResult,
-	InitiativeResult,
-	SkillCheckResult,
-	SpellSaveResult,
-} from "./advancedDiceEngine";
-// Re-export advanced dice mechanics (Roll20 parity — exploding, keep, reroll, penetrating, pools)
-export {
-	applyAbilityModifier,
-	applyExpertise,
-	applyProficiencyBonus,
-	rollCompounding,
-	rollCritical,
-	rollDicePool,
-	rollExploding,
-	rollKeepHighest,
-	rollKeepLowest,
-	rollPenetrating,
-	rollWithAdvantage,
-	rollWithMinimum,
-	rollWithReroll,
-} from "./advancedDiceEngine";
-
-// Validate dice string format
-export function validateDiceString(diceString: string): boolean {
-	if (!diceString || typeof diceString !== "string") return false;
-
-	// Basic pattern: NdS+/-M where N=dice count, S=sides, M=modifier
-	const pattern = /^\d+d\d+(?:[+-]\d+)?$/;
-	return pattern.test(diceString);
-}
-
 interface DiceRoll {
 	dice: number;
 	sides: number;
@@ -153,65 +119,4 @@ export function rollCheck(
 		modifier,
 		advantage: advantage ?? "normal",
 	});
-}
-
-/**
- * Roll attack with damage
- */
-export function rollAttack(
-	attackModifier: number,
-	damageFormula: string,
-	advantage?: "advantage" | "disadvantage" | "normal",
-): { attack: RollResult; damage: RollResult; critDamage?: RollResult } {
-	const attack = rollCheck(attackModifier, advantage);
-	const damage = quickRoll(damageFormula);
-
-	// Critical hit - roll damage twice
-	if (attack.isNatural20) {
-		const critDamage = quickRoll(damageFormula);
-		return {
-			attack,
-			damage: {
-				...damage,
-				total: damage.total + critDamage.total,
-				rolls: [...damage.rolls, ...critDamage.rolls],
-			},
-			critDamage,
-		};
-	}
-
-	return { attack, damage };
-}
-
-/**
- * Roll multiple dice and sum them
- */
-export function rollMultiple(formulas: string[]): {
-	results: RollResult[];
-	grandTotal: number;
-} {
-	const results = formulas.map((f) => quickRoll(f));
-	const grandTotal = results.reduce((sum, r) => sum + r.total, 0);
-	return { results, grandTotal };
-}
-
-/**
- * Format roll result for display
- */
-export function formatRollResult(result: RollResult): string {
-	const rollsStr =
-		result.rolls.length > 1
-			? `[${result.rolls.join(" + ")}]`
-			: `[${result.rolls[0]}]`;
-
-	const modStr =
-		result.modifier !== 0
-			? ` ${result.modifier >= 0 ? "+" : ""}${result.modifier}`
-			: "";
-
-	let prefix = "";
-	if (result.isNatural20) prefix = "🎯 Critical! ";
-	if (result.isNatural1) prefix = "💀 Critical Fail! ";
-
-	return `${prefix}${result.formula}: ${rollsStr}${modStr} = **${result.total}**`;
 }

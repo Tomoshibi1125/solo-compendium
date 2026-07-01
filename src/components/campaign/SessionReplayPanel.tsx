@@ -159,7 +159,7 @@ export function SessionReplayPanel({
 						aria-label="Replay timeline"
 						data-testid="session-replay-scrubber"
 					/>
-					<div className="flex justify-between text-[10px] font-mono text-muted-foreground">
+					<div className="flex justify-between text-[11px] font-mono text-muted-foreground">
 						<span data-testid="session-replay-cursor">
 							{formatElapsed(replay.cursor)}
 						</span>
@@ -172,12 +172,12 @@ export function SessionReplayPanel({
 				</div>
 
 				{replay.isLoading && (
-					<p className="text-[10px] text-muted-foreground animate-pulse">
+					<p className="text-[11px] text-muted-foreground animate-pulse">
 						Loading Bureau archives…
 					</p>
 				)}
 				{!replay.isLoading && replay.events.length === 0 && (
-					<p className="text-[10px] text-muted-foreground">
+					<p className="text-[11px] text-muted-foreground">
 						No events recorded for this scope yet. Events stream into the
 						archive automatically once a session starts.
 					</p>

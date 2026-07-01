@@ -226,7 +226,7 @@ export function ProficiencySidebar({
 							<div className="space-y-3 px-2">
 								{defenses.resistances.length > 0 && (
 									<div className="space-y-1">
-										<span className="text-[9px] font-mono text-primary/60 uppercase">
+										<span className="text-[10px] font-mono text-primary/60 uppercase">
 											Resistances
 										</span>
 										<div className="flex flex-wrap gap-1">
@@ -243,7 +243,7 @@ export function ProficiencySidebar({
 								)}
 								{defenses.immunities.length > 0 && (
 									<div className="space-y-1">
-										<span className="text-[9px] font-mono text-emerald-400/60 uppercase">
+										<span className="text-[10px] font-mono text-emerald-400/60 uppercase">
 											Immunities
 										</span>
 										<div className="flex flex-wrap gap-1">
@@ -260,7 +260,7 @@ export function ProficiencySidebar({
 								)}
 								{defenses.vulnerabilities.length > 0 && (
 									<div className="space-y-1">
-										<span className="text-[9px] font-mono text-red-400/60 uppercase">
+										<span className="text-[10px] font-mono text-red-400/60 uppercase">
 											Vulnerabilities
 										</span>
 										<div className="flex flex-wrap gap-1">
@@ -277,7 +277,7 @@ export function ProficiencySidebar({
 								)}
 								{defenses.conditionImmunities.length > 0 && (
 									<div className="space-y-1">
-										<span className="text-[9px] font-mono text-blue-400/60 uppercase">
+										<span className="text-[10px] font-mono text-blue-400/60 uppercase">
 											Condition Immunities
 										</span>
 										<div className="flex flex-wrap gap-1">
@@ -335,13 +335,13 @@ export function ProficiencySidebar({
 												<span className="text-xs font-heading font-medium text-white/80 group-hover:text-white transition-colors">
 													{skill.name}
 												</span>
-												<span className="text-[9px] font-mono text-primary/40 uppercase">
+												<span className="text-[10px] font-mono text-primary/60 uppercase">
 													{skill.ability.substring(0, 3)}
 												</span>
 												{(s.proficient || s.expertise) && (
 													<span
 														className={cn(
-															"text-[8px] font-mono uppercase tracking-widest rounded border px-1 py-0.5",
+															"text-[10px] font-mono uppercase tracking-widest rounded border px-1 py-0.5",
 															s.expertise
 																? "text-primary border-primary/50 bg-primary/10"
 																: "text-primary/80 border-primary/30 bg-primary/5",

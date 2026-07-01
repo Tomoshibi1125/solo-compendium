@@ -41,7 +41,7 @@ export const IdentityStep: React.FC<IdentityStepProps> = ({
 						<div className="space-y-2">
 							<Label
 								htmlFor="char-name"
-								className="text-[10px] uppercase tracking-widest text-primary/60"
+								className="text-[11px] uppercase tracking-widest text-primary/60"
 							>
 								Designation / Primary Handle
 							</Label>
@@ -57,7 +57,7 @@ export const IdentityStep: React.FC<IdentityStepProps> = ({
 
 						{templates && templates.length > 0 && (
 							<div className="space-y-3">
-								<Label className="text-[10px] uppercase tracking-widest text-primary/60">
+								<Label className="text-[11px] uppercase tracking-widest text-primary/60">
 									Archetype Templates
 								</Label>
 								<div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -84,7 +84,7 @@ export const IdentityStep: React.FC<IdentityStepProps> = ({
 														<Check className="w-3 h-3 text-primary" />
 													)}
 												</div>
-												<span className="text-[10px] text-muted-foreground uppercase tracking-tighter">
+												<span className="text-[11px] text-muted-foreground uppercase tracking-tighter">
 													{template.job} • {template.background}
 												</span>
 											</Button>
@@ -98,7 +98,7 @@ export const IdentityStep: React.FC<IdentityStepProps> = ({
 							<div className="space-y-2">
 								<Label
 									htmlFor="char-appearance"
-									className="text-[10px] uppercase tracking-widest text-primary/60"
+									className="text-[11px] uppercase tracking-widest text-primary/60"
 								>
 									Visual Manifestation
 								</Label>
@@ -113,7 +113,7 @@ export const IdentityStep: React.FC<IdentityStepProps> = ({
 							<div className="space-y-2">
 								<Label
 									htmlFor="char-backstory"
-									className="text-[10px] uppercase tracking-widest text-primary/60"
+									className="text-[11px] uppercase tracking-widest text-primary/60"
 								>
 									Historical Log / Origin
 								</Label>

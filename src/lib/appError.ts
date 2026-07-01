@@ -9,6 +9,8 @@ export type AppErrorCode =
 	| "SERVICE_UNAVAILABLE"
 	| "GENERATION_FAILED"
 	| "AI_ERROR"
+	| "CHARACTER_LIMIT"
+	| "DUPLICATE_CHARACTER_NAME"
 	| "UNKNOWN";
 
 export class AppError extends Error {

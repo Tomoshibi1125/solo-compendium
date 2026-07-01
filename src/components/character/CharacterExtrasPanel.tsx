@@ -1,5 +1,6 @@
-import { Plus, RefreshCw, Shield, Trash2 } from "lucide-react";
+import { ExternalLink, Plus, RefreshCw, Shield, Trash2 } from "lucide-react";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -85,12 +86,29 @@ export function CharacterExtrasPanel({
 
 	return (
 		<div className="space-y-4">
+			{/* Section header */}
+			<div className="flex items-start justify-between gap-3">
+				<div>
+					<h3 className="font-display text-lg tracking-wide">Companions</h3>
+					<p className="text-xs text-muted-foreground max-w-prose">
+						Mounts, pets, familiars, sidekicks, and guild allies you take into
+						the field. Open a companion's sheet to equip gear and send them into
+						initiative.
+					</p>
+				</div>
+				{extras.length > 0 && (
+					<Badge variant="outline" className="text-xs shrink-0">
+						{extras.length}
+					</Badge>
+				)}
+			</div>
+
 			{/* Add New Section */}
 			{!isReadOnly && (
 				<AscendantWindow title="ADD EXTRA" compact variant="alert">
 					<div className="grid grid-cols-2 md:grid-cols-[2fr_120px_60px_60px_70px_auto] gap-2 items-end">
 						<div className="flex flex-col gap-1">
-							<span className="text-[10px] uppercase text-muted-foreground">
+							<span className="text-[11px] uppercase text-muted-foreground">
 								Name
 							</span>
 							<Input
@@ -101,7 +119,7 @@ export function CharacterExtrasPanel({
 							/>
 						</div>
 						<div className="flex flex-col gap-1">
-							<span className="text-[10px] uppercase text-muted-foreground">
+							<span className="text-[11px] uppercase text-muted-foreground">
 								Type
 							</span>
 							<Select value={draftType} onValueChange={setDraftType}>
@@ -114,11 +132,12 @@ export function CharacterExtrasPanel({
 									<SelectItem value="mount">Mount</SelectItem>
 									<SelectItem value="wildshape">Wild Shape</SelectItem>
 									<SelectItem value="sidekick">Sidekick</SelectItem>
+									<SelectItem value="ally">Guild Ally</SelectItem>
 								</SelectContent>
 							</Select>
 						</div>
 						<div className="flex flex-col gap-1">
-							<span className="text-[10px] uppercase text-muted-foreground">
+							<span className="text-[11px] uppercase text-muted-foreground">
 								HP
 							</span>
 							<Input
@@ -130,7 +149,7 @@ export function CharacterExtrasPanel({
 							/>
 						</div>
 						<div className="flex flex-col gap-1">
-							<span className="text-[10px] uppercase text-muted-foreground">
+							<span className="text-[11px] uppercase text-muted-foreground">
 								AC
 							</span>
 							<Input
@@ -142,7 +161,7 @@ export function CharacterExtrasPanel({
 							/>
 						</div>
 						<div className="flex flex-col gap-1">
-							<span className="text-[10px] uppercase text-muted-foreground">
+							<span className="text-[11px] uppercase text-muted-foreground">
 								Speed
 							</span>
 							<Input
@@ -190,7 +209,7 @@ export function CharacterExtrasPanel({
 							<div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
 								{/* Info */}
 								<div className="space-y-1">
-									<Badge variant="outline" className="text-[10px] uppercase">
+									<Badge variant="outline" className="text-[11px] uppercase">
 										{formatRegentVernacular(extra.extra_type)}
 									</Badge>
 									{extra.monster_id && (
@@ -210,7 +229,7 @@ export function CharacterExtrasPanel({
 								{/* HP Tracker */}
 								<div className="flex items-center gap-3">
 									<div className="flex flex-col items-center">
-										<span className="text-[10px] font-mono text-muted-foreground">
+										<span className="text-[11px] font-mono text-muted-foreground">
 											HP
 										</span>
 										<div className="flex items-center gap-1">
@@ -239,6 +258,21 @@ export function CharacterExtrasPanel({
 											</Button>
 										</div>
 									</div>
+
+									<Button
+										variant="outline"
+										size="sm"
+										asChild
+										className="h-8 text-xs"
+									>
+										<Link
+											to={`/characters/${characterId}/companions/extra/${extra.id}`}
+											data-testid={`open-companion-extra-${extra.id}`}
+										>
+											<ExternalLink className="w-3.5 h-3.5 mr-1" />
+											Sheet
+										</Link>
+									</Button>
 
 									{/* Actions */}
 									{!isReadOnly && (

@@ -329,7 +329,7 @@ const Admin = () => {
 						<AscendantWindow
 							title="EXAMPLE TEMPLATE"
 							variant="quest"
-							className="border-amber-500/30"
+							className="border-warning/30"
 						>
 							<AscendantText className="block text-sm text-muted-foreground mb-4 font-heading">
 								Load a sample JSON template to get started with custom content
@@ -354,7 +354,7 @@ const Admin = () => {
 									};
 									setContent(JSON.stringify(example, null, 2));
 								}}
-								className="w-full gap-2 border-amber-500/30 hover:bg-amber-500/10 hover:border-amber-500/50"
+								className="w-full gap-2 border-warning/30 hover:bg-warning/10 hover:border-warning/50"
 							>
 								<Download className="w-4 h-4" />
 								Load Example Template
@@ -370,7 +370,7 @@ const Admin = () => {
 								title="VALIDATION RESULTS"
 								className={cn(
 									validationResult.valid
-										? "border-green-500/30"
+										? "border-success/30"
 										: "border-destructive/30",
 								)}
 							>
@@ -379,15 +379,15 @@ const Admin = () => {
 										className={cn(
 											"flex items-center gap-3 p-3 rounded-lg",
 											validationResult.valid
-												? "bg-green-500/10"
+												? "bg-success/10"
 												: "bg-destructive/10",
 										)}
 									>
 										{validationResult.valid ? (
 											<>
-												<CheckCircle className="w-6 h-6 text-green-400" />
+												<CheckCircle className="w-6 h-6 text-success" />
 												<div>
-													<span className="font-resurge font-semibold text-green-400 tracking-wide">
+													<span className="font-resurge font-semibold text-success tracking-wide">
 														VALID
 													</span>
 													<AscendantText className="block text-xs text-muted-foreground">
@@ -433,14 +433,14 @@ const Admin = () => {
 
 									{validationResult.warnings.length > 0 && (
 										<div>
-											<h4 className="font-resurge font-semibold text-amber-400 mb-2 tracking-wide">
+											<h4 className="font-resurge font-semibold text-warning mb-2 tracking-wide">
 												WARNINGS ({validationResult.warnings.length})
 											</h4>
 											<div className="space-y-1 max-h-48 overflow-y-auto">
 												{validationResult.warnings.map((warning, _i) => (
 													<div
 														key={JSON.stringify(warning)}
-														className="text-sm p-2 rounded bg-amber-500/10 border border-amber-500/20"
+														className="text-sm p-2 rounded bg-warning/10 border border-warning/20"
 													>
 														<div className="font-mono text-xs text-muted-foreground">
 															{warning.path}
@@ -463,7 +463,7 @@ const Admin = () => {
 								title="IMPORT RESULTS"
 								className={cn(
 									importResult.success
-										? "border-green-500/30"
+										? "border-success/30"
 										: "border-destructive/30",
 								)}
 							>
@@ -472,15 +472,15 @@ const Admin = () => {
 										className={cn(
 											"flex items-center gap-3 p-3 rounded-lg",
 											importResult.success
-												? "bg-green-500/10"
+												? "bg-success/10"
 												: "bg-destructive/10",
 										)}
 									>
 										{importResult.success ? (
 											<>
-												<CheckCircle className="w-6 h-6 text-green-400" />
+												<CheckCircle className="w-6 h-6 text-success" />
 												<div>
-													<span className="font-resurge font-semibold text-green-400 tracking-wide">
+													<span className="font-resurge font-semibold text-success tracking-wide">
 														{dryRun ? "DRY RUN COMPLETE" : "IMPORT SUCCESSFUL"}
 													</span>
 													<AscendantText className="block text-xs text-muted-foreground">
@@ -577,14 +577,14 @@ const Admin = () => {
 
 									{importResult.warnings.length > 0 && (
 										<div>
-											<h4 className="font-resurge font-semibold text-amber-400 mb-2 tracking-wide">
+											<h4 className="font-resurge font-semibold text-warning mb-2 tracking-wide">
 												WARNINGS ({importResult.warnings.length})
 											</h4>
 											<div className="space-y-1 max-h-48 overflow-y-auto">
 												{importResult.warnings.map((warning, _i) => (
 													<div
 														key={warning}
-														className="text-sm p-2 rounded bg-amber-500/10 border border-amber-500/20 font-heading"
+														className="text-sm p-2 rounded bg-warning/10 border border-warning/20 font-heading"
 													>
 														{warning}
 													</div>

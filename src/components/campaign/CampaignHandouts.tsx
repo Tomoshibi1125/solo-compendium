@@ -63,7 +63,7 @@ export function CampaignHandouts({ campaignId }: { campaignId: string }) {
 									<Button
 										variant="outline"
 										size="sm"
-										className="w-full border-primary/40 hover:border-primary hover:bg-primary/10 gap-2 text-[10px]"
+										className="w-full border-primary/40 hover:border-primary hover:bg-primary/10 gap-2 text-[11px]"
 										onClick={() => injectSandbox()}
 										disabled={isInjecting}
 									>
@@ -104,7 +104,7 @@ export function CampaignHandouts({ campaignId }: { campaignId: string }) {
 												{!entry.visibleToPlayers && hasWardenAccess && (
 													<Badge
 														variant="outline"
-														className="text-[10px] text-amber-400 border-amber-500/30"
+														className="text-[11px] text-amber-400 border-amber-500/30"
 													>
 														Warden Only
 													</Badge>

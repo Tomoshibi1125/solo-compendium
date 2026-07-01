@@ -771,7 +771,7 @@ function ItemResultButton({
 					<p className="text-sm font-heading font-semibold truncate">
 						{formatRegentVernacular(item.name)}
 					</p>
-					<div className="flex flex-wrap gap-x-3 gap-y-1 text-[10px] text-muted-foreground">
+					<div className="flex flex-wrap gap-x-3 gap-y-1 text-[11px] text-muted-foreground">
 						{item.damage && (
 							<span>
 								Damage: {item.damage} {item.damageType || ""}
@@ -781,23 +781,23 @@ function ItemResultButton({
 						{item.chargesMax != null && <span>Charges: {item.chargesMax}</span>}
 						{item.weight != null && <span>{item.weight} lb.</span>}
 					</div>
-					<p className="text-[10px] text-muted-foreground line-clamp-1">
+					<p className="text-[11px] text-muted-foreground line-clamp-1">
 						{item.description
 							? formatRegentVernacular(item.description)
 							: item.sourceBook || sourceLabel}
 					</p>
 				</div>
 				<div className="flex flex-col items-end gap-1 shrink-0">
-					<Badge variant="outline" className="text-[10px]">
+					<Badge variant="outline" className="text-[11px]">
 						{item.type || sourceLabel}
 					</Badge>
 					{item.sourceKind === "homebrew" && (
-						<Badge variant="secondary" className="text-[10px]">
+						<Badge variant="secondary" className="text-[11px]">
 							Homebrew
 						</Badge>
 					)}
 					{item.rarity && (
-						<span className="text-[10px] text-muted-foreground">
+						<span className="text-[11px] text-muted-foreground">
 							{formatRarityLabel(item.rarity)}
 						</span>
 					)}

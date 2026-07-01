@@ -308,7 +308,7 @@ export function ArtGenerator({
 									type="button"
 									variant="ghost"
 									size="sm"
-									className="h-6 gap-1 text-[10px] text-primary"
+									className="h-6 gap-1 text-[11px] text-primary"
 									onClick={handleEnhancePrompt}
 									disabled={isEnhancing || !formData.description.trim()}
 								>
@@ -337,7 +337,7 @@ export function ArtGenerator({
 							)}
 						/>
 						{enhanceError && (
-							<p className="text-[10px] text-destructive">{enhanceError}</p>
+							<p className="text-[11px] text-destructive">{enhanceError}</p>
 						)}
 					</div>
 
@@ -347,7 +347,7 @@ export function ArtGenerator({
 							<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 								<div className="space-y-2">
 									<div className="flex items-center justify-between">
-										<Label className="text-[10px] uppercase tracking-wider">
+										<Label className="text-[11px] uppercase tracking-wider">
 											Dimensional Tags
 										</Label>
 										<Button
@@ -366,7 +366,7 @@ export function ArtGenerator({
 											<Badge
 												key={tag}
 												variant="secondary"
-												className="text-[10px] px-1.5 py-0 h-5"
+												className="text-[11px] px-1.5 py-0 h-5"
 											>
 												{tag}
 												<button
@@ -383,7 +383,7 @@ export function ArtGenerator({
 											</Badge>
 										))}
 										{selectedTags.length === 0 && (
-											<span className="text-[10px] text-muted-foreground italic">
+											<span className="text-[11px] text-muted-foreground italic">
 												No tags established.
 											</span>
 										)}
@@ -392,7 +392,7 @@ export function ArtGenerator({
 
 								<div className="space-y-2">
 									<div className="flex items-center justify-between">
-										<Label className="text-[10px] uppercase tracking-wider">
+										<Label className="text-[11px] uppercase tracking-wider">
 											Aesthetic Mood
 										</Label>
 										<Button
@@ -419,7 +419,7 @@ export function ArtGenerator({
 
 							<div className="space-y-2">
 								<div className="flex items-center justify-between">
-									<Label className="text-[10px] uppercase tracking-wider">
+									<Label className="text-[11px] uppercase tracking-wider">
 										Style Variations
 									</Label>
 									<Button
@@ -438,14 +438,14 @@ export function ArtGenerator({
 										<Badge
 											key={style}
 											variant={selectedStyle === style ? "default" : "outline"}
-											className="text-[10px] cursor-pointer hover:bg-primary/10"
+											className="text-[11px] cursor-pointer hover:bg-primary/10"
 											onClick={() => setSelectedStyle(style)}
 										>
 											{style}
 										</Badge>
 									))}
 									{styleSuggestions.length === 0 && (
-										<span className="text-[10px] text-muted-foreground italic">
+										<span className="text-[11px] text-muted-foreground italic">
 											Request style suggestions for varied aesthetics.
 										</span>
 									)}
@@ -498,7 +498,7 @@ export function ArtGenerator({
 										<p className="text-sm font-medium text-green-400">
 											Visual Record Pattern Solidified
 										</p>
-										<p className="text-[10px] text-muted-foreground">
+										<p className="text-[11px] text-muted-foreground">
 											Processing duration: {generationResult.duration}ms
 										</p>
 									</div>

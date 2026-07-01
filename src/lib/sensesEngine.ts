@@ -231,20 +231,3 @@ export function computeSenses(
 		passiveStealth,
 	};
 }
-
-/**
- * Format senses for display (e.g., "Darkvision 60 ft., Passive Perception 14")
- */
-export function formatSenses(senses: CharacterSenses): string {
-	const parts: string[] = [];
-	if (senses.darkvision > 0) parts.push(`Darkvision ${senses.darkvision} ft.`);
-	if (senses.blindsight > 0) parts.push(`Blindsight ${senses.blindsight} ft.`);
-	if (senses.tremorsense > 0)
-		parts.push(`Tremorsense ${senses.tremorsense} ft.`);
-	if (senses.truesight > 0) parts.push(`Truesight ${senses.truesight} ft.`);
-	parts.push(`Passive Perception ${senses.passivePerception}`);
-	parts.push(`Passive Investigation ${senses.passiveInvestigation}`);
-	parts.push(`Passive Insight ${senses.passiveInsight}`);
-	parts.push(`Passive Stealth ${senses.passiveStealth}`);
-	return parts.join(", ");
-}

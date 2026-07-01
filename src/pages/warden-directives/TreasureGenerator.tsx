@@ -2,6 +2,8 @@ import {
 	ArrowLeft,
 	Coins,
 	Copy,
+	FileJson,
+	FileText,
 	Gem,
 	Loader2,
 	PackagePlus,
@@ -28,6 +30,7 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
+import { GenerationHistoryPanel } from "@/components/warden-directives/GenerationHistoryPanel";
 import { WardenItemDeliveryDialog } from "@/components/warden-directives/WardenItemDeliveryDialog";
 import { useEmbedded } from "@/contexts/EmbeddedContext";
 import {
@@ -43,8 +46,116 @@ import {
 	linkedEntryToDeliverableItem,
 	type WardenDeliverableItem,
 } from "@/hooks/useWardenItemDelivery";
+import {
+	emptyHistory,
+	type GenerationHistoryState,
+	type HistoryEntry,
+	pushGeneration,
+	removeGeneration,
+	restoreGeneration,
+	togglePin,
+} from "@/lib/generationHistory";
+import { rankToGateBadge, rarityToGateBadge } from "@/lib/rankColors";
+import { downloadJson, downloadMarkdown } from "@/lib/toolExport";
 import { generateTreasure, type TreasureResult } from "@/lib/treasureGenerator";
 import { cn } from "@/lib/utils";
+import type { WardenLinkedEntry } from "@/lib/wardenGenerationContext";
+
+// --- Structured item view ---
+
+interface StructuredItem {
+	name: string;
+	type: string;
+	rarity: string;
+	attunement: boolean;
+	properties: string[];
+	weight: number | null;
+	damage: string | null;
+	description: string | null;
+	rank: string | null;
+}
+
+function toStructuredItem(linked: WardenLinkedEntry): StructuredItem {
+	const e = linked.entry;
+	const properties = Array.isArray(e.simple_properties)
+		? e.simple_properties.filter((p): p is string => typeof p === "string")
+		: Array.isArray(e.properties)
+			? (e.properties as unknown[]).filter(
+					(p): p is string => typeof p === "string",
+				)
+			: [];
+	return {
+		name: linked.name,
+		type: e.item_type || e.equipment_type || "Item",
+		rarity: linked.rarity || e.rarity || "common",
+		attunement: e.attunement === true,
+		properties,
+		weight: typeof e.weight === "number" ? e.weight : null,
+		damage: e.damage != null ? String(e.damage) : null,
+		description: linked.description,
+		rank: linked.rank,
+	};
+}
+
+function treasureToMarkdown(
+	t: TreasureResult,
+	enhanced?: string | null,
+): string {
+	const currency = [
+		`${t.tens} Gate Credits`,
+		t.hundreds > 0 ? `${t.hundreds} Core Credits` : "",
+		t.fives > 0 ? `${t.fives} Crystal Credits` : "",
+		t.ones > 0 ? `${t.ones} Mana Credits` : "",
+		t.dimes > 0 ? `${t.dimes} Mana Credit chips` : "",
+	]
+		.filter(Boolean)
+		.join(", ");
+
+	const itemMd = (linked: WardenLinkedEntry): string => {
+		const it = toStructuredItem(linked);
+		const meta = [
+			it.type,
+			it.rarity,
+			it.attunement ? "requires attunement" : null,
+			it.damage ? `damage ${it.damage}` : null,
+			it.weight != null ? `${it.weight} lb` : null,
+		]
+			.filter(Boolean)
+			.join(" · ");
+		const props =
+			it.properties.length > 0
+				? `\n  - Properties: ${it.properties.join(", ")}`
+				: "";
+		const desc = it.description ? `\n  - ${it.description}` : "";
+		return `- **${it.name}** (${meta})${props}${desc}`;
+	};
+
+	const items = t.itemEntries.map(itemMd).join("\n") || "- None";
+	const relics = t.relicEntries.map(itemMd).join("\n") || "- None";
+	const materials = t.materials.map((m) => `- ${m}`).join("\n") || "- None";
+
+	return `# Rank ${t.rank} Treasure Hoard
+
+**Currency:** ${currency}
+
+## Items
+${items}
+
+## Materials
+${materials}
+
+## Relics
+${relics}
+
+${t.description}
+${enhanced ? `\n## Warden Detail (AI)\n${enhanced}\n` : ""}`;
+}
+
+interface TreasureToolState {
+	selectedRank: string;
+	current: TreasureResult | null;
+	history: HistoryEntry<TreasureResult>[];
+}
 
 const TreasureGenerator = () => {
 	const navigate = useNavigate();
@@ -54,19 +165,16 @@ const TreasureGenerator = () => {
 		state: storedState,
 		isLoading,
 		saveNow,
-	} = useUserToolState<{
-		selectedRank: string;
-		treasure: TreasureResult | null;
-	}>("treasure_generator", {
-		initialState: {
-			selectedRank: "C",
-			treasure: null,
-		},
+	} = useUserToolState<TreasureToolState>("treasure_generator", {
+		initialState: { selectedRank: "C", current: null, history: [] },
 		storageKey: "solo-compendium.Warden-tools.treasure-generator.v1",
 	});
 
 	const [selectedRank, setSelectedRank] = useState<string>("C");
-	const [treasure, setTreasure] = useState<TreasureResult | null>(null);
+	const [histState, setHistState] = useState<
+		GenerationHistoryState<TreasureResult>
+	>(emptyHistory<TreasureResult>());
+	const treasure = histState.current;
 	const [isGenerating, setIsGenerating] = useState(false);
 	const [selectedCampaignId, setSelectedCampaignId] = useState<string>("");
 	const [deliveryItem, setDeliveryItem] =
@@ -75,24 +183,42 @@ const TreasureGenerator = () => {
 	const { data: campaigns = [] } = useMyCampaigns();
 
 	const hydrated = useMemo(() => {
-		return {
-			selectedRank: storedState.selectedRank ?? "C",
-			treasure: storedState.treasure ?? null,
+		const raw = storedState as unknown as {
+			selectedRank?: string;
+			current?: TreasureResult | null;
+			history?: HistoryEntry<TreasureResult>[];
+			treasure?: TreasureResult | null;
 		};
-	}, [storedState.selectedRank, storedState.treasure]);
+		const rank = raw.selectedRank ?? "C";
+		if (Array.isArray(raw.history)) {
+			return {
+				selectedRank: rank,
+				hist: { current: raw.current ?? null, history: raw.history },
+			};
+		}
+		// Migrate legacy latest-only shape ({ selectedRank, treasure }).
+		return {
+			selectedRank: rank,
+			hist: { current: raw.treasure ?? null, history: [] },
+		};
+	}, [storedState]);
 
 	const hydratedRef = useRef(false);
 	useEffect(() => {
 		if (isLoading) return;
 		if (hydratedRef.current) return;
 		setSelectedRank(hydrated.selectedRank);
-		setTreasure(hydrated.treasure);
+		setHistState(hydrated.hist);
 		hydratedRef.current = true;
-	}, [hydrated.selectedRank, hydrated.treasure, isLoading]);
+	}, [hydrated, isLoading]);
 
-	const savePayload = useMemo(
-		() => ({ selectedRank, treasure }),
-		[selectedRank, treasure],
+	const savePayload = useMemo<TreasureToolState>(
+		() => ({
+			selectedRank,
+			current: histState.current,
+			history: histState.history,
+		}),
+		[selectedRank, histState],
 	);
 	const debouncedPayload = useDebounce(savePayload, 350);
 
@@ -109,10 +235,13 @@ const TreasureGenerator = () => {
 		setIsGenerating(true);
 		try {
 			const result = await generateTreasure(selectedRank);
-			setTreasure(result);
-			if (!isLoading) {
-				void saveNow({ selectedRank, treasure: result });
-			}
+			setHistState((prev) =>
+				pushGeneration(
+					prev,
+					result,
+					`Rank ${result.rank} · ${result.items.length} items · ${result.relics.length} relics`,
+				),
+			);
 		} finally {
 			setIsGenerating(false);
 		}
@@ -129,125 +258,32 @@ ${treasure.hundreds > 0 ? `- Core Credits: ${treasure.hundreds}\n` : ""}${treasu
 - Materials: ${treasure.materials.join(", ") || "None"}
 - Relics: ${treasure.relics.join(", ") || "None"}
 
-Provide ALL of the following sections with full detail:
-
-1. ITEMS: Full stat blocks for each item (type, rarity, attunement, properties, damage/AC/bonuses, weight)
-2. MAGICAL PROPERTIES: Activation rules, charges, recharge conditions, side effects, cursed variants
-3. LORE: Item history, creator, previous owners, legendary status within Rift Ascendant world
-4. VALUE: Bureau Credit value, trade value, faction value for each item
-5. MATERIALS: Weight, composition, crafting uses, what can be forged from them
-6. RELICS: Full relic stat block with attunement requirements, abilities at dormant/awakened/exalted tiers
-7. DESCRIPTION: Read-aloud boxed text for when players discover this treasure hoard`;
+For each item and relic, expand on activation rules, charges, side effects, lore, and Bureau Credit value. Keep all listed names and the structured fields intact. Add read-aloud discovery text for the hoard.`;
 		await enhance("treasure", seed);
 	};
 
 	const handleCopy = () => {
 		if (!treasure) return;
-		const text = `Rift Rank ${treasure.rank} Treasure:
-Gate Credits: ${treasure.tens}
-${treasure.hundreds > 0 ? `Core Credits: ${treasure.hundreds}\n` : ""}${treasure.fives > 0 ? `Crystal Credits: ${treasure.fives}\n` : ""}${treasure.ones > 0 ? `Mana Credits: ${treasure.ones}\n` : ""}${treasure.dimes > 0 ? `Mana Credit Chips: ${treasure.dimes}\n` : ""}${treasure.items.length > 0 ? `Items: ${treasure.items.join(", ")}\n` : ""}${treasure.materials.length > 0 ? `Materials: ${treasure.materials.join(", ")}\n` : ""}${treasure.relics.length > 0 ? `Relics: ${treasure.relics.join(", ")}\n` : ""}
-${treasure.description}
-
----
-TREASURE HOARD:
-
-ITEMS:
-${
-	treasure.items
-		.map(
-			(item, i) => `${i + 1}. ${item}
-   • Type: [Weapon/Armor/Accessory/Consumable]
-   • Rarity: [Appropriate to ${treasure.rank} Rank]
-   • Attunement: [Required if magical]
-   • Properties: [Mechanical bonuses and effects]
-   • Damage/AC/Save Bonus: [+${treasure.rank === "S" ? "4" : treasure.rank === "A" ? "3" : treasure.rank === "B" ? "2" : treasure.rank === "C" ? "1" : "0"}]
-   • Weight: [Standard for item type]
-   • Value: [${treasure.rank} Rank appropriate Bureau Credits]`,
-		)
-		.join("\n\n") || "None"
-}
-
-MAGICAL PROPERTIES:
-${
-	treasure.items
-		.map(
-			(item, i) => `${i + 1}. ${item}:
-   • Activation: [Action/bonus/triggered]
-   • Charges: [If applicable]
-   • Recharge: [Recharge conditions]
-   • Duration: [Effect duration]
-   • Side Effects: [Any drawbacks or curses]
-   • Special Rules: [Unique mechanics]`,
-		)
-		.join("\n\n") || "None"
-}
-
-LORE:
-${
-	treasure.items
-		.map(
-			(item, i) => `${i + 1}. ${item}:
-   • History: [Creation story and previous owners]
-   • Creator: [Who crafted this item]
-   • Legendary Status: [Famous deeds or wielders]
-   • Rift Ascendant Connection: [How it relates to Rifts or Regents]`,
-		)
-		.join("\n\n") || "None"
-}
-
-VALUE:
-${
-	treasure.items
-		.map(
-			(item, i) => `${i + 1}. ${item}:
-   • Market Value: [${treasure.rank} Rank appropriate Bureau Credits]
-   • Trade Value: [Bartering potential]
-   • Faction Value: [Which factions value this item]`,
-		)
-		.join("\n\n") || "None"
-}
-
-MATERIALS:
-${
-	treasure.materials
-		.map(
-			(material, i) => `${i + 1}. ${material}:
-   • Weight: [Material weight per unit]
-   • Composition: [Physical and magical properties]
-   • Crafting Uses: [What can be forged from this material]
-   • Quantity: [Amount found]
-   • Value: [Per unit and total value]`,
-		)
-		.join("\n\n") || "None"
-}
-
-RELICS:
-${
-	treasure.relics
-		.map(
-			(relic, i) => `${i + 1}. ${relic}:
-   • Type: [Weapon/Armor/Accessory/Tool]
-   • Attunement Requirements: [${treasure.rank} Rank or higher]
-   • Dormant Tier: [Basic abilities]
-   • Awakened Tier: [Enhanced abilities]
-   • Exalted Tier: [Maximum power]
-   • Activation: [How to use each tier]
-   • Lore: [Connection to Regents or System origins]`,
-		)
-		.join("\n\n") || "None"
-}
-
-DESCRIPTION:
-${treasure.description}
-
-READ-ALOUD DISCOVERY:
-"[Detailed description of how the players discover this treasure hoard, including sensory details, placement, and initial impressions of the most valuable items]"`;
-
-		navigator.clipboard.writeText(text);
+		navigator.clipboard.writeText(treasureToMarkdown(treasure, enhancedText));
 		toast({
 			title: "Copied!",
-			description: "Complete treasure hoard details copied to clipboard.",
+			description: "Treasure hoard copied to clipboard as Markdown.",
 		});
+	};
+
+	const handleExportMarkdown = () => {
+		if (!treasure) return;
+		downloadMarkdown(
+			`treasure-rank-${treasure.rank}`,
+			treasureToMarkdown(treasure, enhancedText),
+		);
+		toast({ title: "Exported", description: "Treasure exported as Markdown." });
+	};
+
+	const handleExportJson = () => {
+		if (!treasure) return;
+		downloadJson(`treasure-rank-${treasure.rank}`, treasure);
+		toast({ title: "Exported", description: "Treasure exported as JSON." });
 	};
 
 	const openDelivery = (item: WardenDeliverableItem) => {
@@ -255,16 +291,78 @@ READ-ALOUD DISCOVERY:
 		setDeliveryOpen(true);
 	};
 
-	const getRankColor = (rank: string) => {
-		const colors: Record<string, string> = {
-			E: "text-green-400 border-green-400/30 bg-green-400/10",
-			D: "text-blue-400 border-blue-400/30 bg-blue-400/10",
-			C: "text-yellow-400 border-yellow-400/30 bg-yellow-400/10",
-			B: "text-orange-400 border-orange-400/30 bg-orange-400/10",
-			A: "text-red-400 border-red-400/30 bg-red-400/10",
-			S: "text-purple-400 border-purple-400/30 bg-purple-400/10",
-		};
-		return colors[rank] || colors.C;
+	const getRankColor = (rank: string) => rankToGateBadge(rank);
+
+	const renderItemCard = (
+		linked: WardenLinkedEntry,
+		accent: "primary" | "relic",
+	) => {
+		const it = toStructuredItem(linked);
+		const rarityClass = rarityToGateBadge(it.rarity);
+		return (
+			<div
+				key={`${accent}-${linked.id}`}
+				className={cn(
+					"rounded-lg border p-3 space-y-1.5",
+					accent === "relic"
+						? "border-purple-400/40 bg-purple-400/5"
+						: "border-border bg-black/20",
+				)}
+			>
+				<div className="flex items-start justify-between gap-2">
+					<span className="font-heading text-sm">{it.name}</span>
+					<div className="flex items-center gap-1 shrink-0">
+						{selectedCampaignId && (
+							<Button
+								type="button"
+								variant="ghost"
+								size="sm"
+								className="h-7 px-2"
+								onClick={() =>
+									openDelivery(linkedEntryToDeliverableItem(linked))
+								}
+							>
+								<PackagePlus className="w-3 h-3 mr-1" />
+								Deliver
+							</Button>
+						)}
+					</div>
+				</div>
+				<div className="flex flex-wrap gap-1">
+					<Badge variant="outline" className="text-[11px]">
+						{it.type}
+					</Badge>
+					<Badge variant="outline" className={cn("text-[11px]", rarityClass)}>
+						{it.rarity}
+					</Badge>
+					{it.attunement && (
+						<Badge variant="outline" className="text-[11px] text-amber-300">
+							Attunement
+						</Badge>
+					)}
+					{it.damage && (
+						<Badge variant="outline" className="text-[11px]">
+							{it.damage}
+						</Badge>
+					)}
+					{it.weight != null && (
+						<Badge variant="outline" className="text-[11px]">
+							{it.weight} lb
+						</Badge>
+					)}
+				</div>
+				{it.properties.length > 0 && (
+					<p className="text-[11px] text-muted-foreground">
+						{it.properties.join(", ")}
+					</p>
+				)}
+				{it.description && (
+					<p className="text-xs text-muted-foreground/90 line-clamp-3">
+						{it.description}
+					</p>
+				)}
+			</div>
+		);
 	};
 
 	const content = (
@@ -305,12 +403,7 @@ READ-ALOUD DISCOVERY:
 						</Label>
 						<Select
 							value={selectedRank}
-							onValueChange={(value) => {
-								setSelectedRank(value);
-								if (!isLoading) {
-									void saveNow({ selectedRank: value, treasure });
-								}
-							}}
+							onValueChange={(value) => setSelectedRank(value)}
 						>
 							<SelectTrigger id="rank">
 								<SelectValue />
@@ -394,46 +487,49 @@ READ-ALOUD DISCOVERY:
 								Rank {treasure.rank}
 							</Badge>
 							<div className="flex items-center gap-2 text-2xl font-resurge text-emerald-400">
-								<Coins className="w-6 h-6" />${treasure.tens * 10} USD
+								<Coins className="w-6 h-6" />
+								{treasure.tens} Gate Credits
 							</div>
 						</div>
 
-						{treasure.items.length > 0 && (
+						{(treasure.hundreds > 0 ||
+							treasure.fives > 0 ||
+							treasure.ones > 0 ||
+							treasure.dimes > 0) && (
+							<div className="flex flex-wrap gap-2 text-sm">
+								{treasure.hundreds > 0 && (
+									<Badge variant="secondary">
+										{treasure.hundreds} Core Credits
+									</Badge>
+								)}
+								{treasure.fives > 0 && (
+									<Badge variant="secondary">
+										{treasure.fives} Crystal Credits
+									</Badge>
+								)}
+								{treasure.ones > 0 && (
+									<Badge variant="secondary">
+										{treasure.ones} Mana Credits
+									</Badge>
+								)}
+								{treasure.dimes > 0 && (
+									<Badge variant="secondary">
+										{treasure.dimes} Mana Credit Chips
+									</Badge>
+								)}
+							</div>
+						)}
+
+						{treasure.itemEntries.length > 0 && (
 							<div>
 								<h3 className="font-heading font-semibold mb-2 flex items-center gap-2">
 									<Gem className="w-4 h-4 text-primary" />
-									Items ({treasure.items.length})
+									Items ({treasure.itemEntries.length})
 								</h3>
-								<div className="flex flex-wrap gap-2">
-									{treasure.items.map((item, index) => {
-										const linkedEntry = treasure.itemEntries[index];
-										return (
-											<div
-												key={`treasure-item-${item}`}
-												className="flex items-center gap-1"
-											>
-												<Badge variant="outline" className="text-sm">
-													{item}
-												</Badge>
-												{selectedCampaignId && linkedEntry && (
-													<Button
-														type="button"
-														variant="ghost"
-														size="sm"
-														className="h-7 px-2"
-														onClick={() =>
-															openDelivery(
-																linkedEntryToDeliverableItem(linkedEntry),
-															)
-														}
-													>
-														<PackagePlus className="w-3 h-3 mr-1" />
-														Deliver
-													</Button>
-												)}
-											</div>
-										);
-									})}
+								<div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+									{treasure.itemEntries.map((linked) =>
+										renderItemCard(linked, "primary"),
+									)}
 								</div>
 							</div>
 						)}
@@ -458,45 +554,16 @@ READ-ALOUD DISCOVERY:
 							</div>
 						)}
 
-						{treasure.relics.length > 0 && (
+						{treasure.relicEntries.length > 0 && (
 							<div>
 								<h3 className="font-heading font-semibold mb-2 flex items-center gap-2">
 									<Sparkles className="w-4 h-4 text-purple-400" />
-									Relics ({treasure.relics.length})
+									Relics ({treasure.relicEntries.length})
 								</h3>
-								<div className="flex flex-wrap gap-2">
-									{treasure.relics.map((relic, index) => {
-										const linkedEntry = treasure.relicEntries[index];
-										return (
-											<div
-												key={`treasure-relic-${relic}`}
-												className="flex items-center gap-1"
-											>
-												<Badge
-													variant="outline"
-													className="text-sm bg-purple-400/20 border-purple-400/50 text-purple-300"
-												>
-													{relic}
-												</Badge>
-												{selectedCampaignId && linkedEntry && (
-													<Button
-														type="button"
-														variant="ghost"
-														size="sm"
-														className="h-7 px-2"
-														onClick={() =>
-															openDelivery(
-																linkedEntryToDeliverableItem(linkedEntry),
-															)
-														}
-													>
-														<PackagePlus className="w-3 h-3 mr-1" />
-														Deliver
-													</Button>
-												)}
-											</div>
-										);
-									})}
+								<div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+									{treasure.relicEntries.map((linked) =>
+										renderItemCard(linked, "relic"),
+									)}
 								</div>
 							</div>
 						)}
@@ -521,24 +588,48 @@ READ-ALOUD DISCOVERY:
 							</div>
 						)}
 
-						<div className="flex gap-2 pt-2">
-							<Button onClick={handleCopy} variant="outline" className="flex-1">
-								<Copy className="w-4 h-4 mr-2" />
-								Copy Details
+						<div className="flex flex-wrap gap-2 pt-2">
+							<Button onClick={handleCopy} variant="outline" className="gap-2">
+								<Copy className="w-4 h-4" />
+								Copy
+							</Button>
+							<Button
+								onClick={handleExportMarkdown}
+								variant="outline"
+								className="gap-2"
+							>
+								<FileText className="w-4 h-4" />
+								Markdown
+							</Button>
+							<Button
+								onClick={handleExportJson}
+								variant="outline"
+								className="gap-2"
+							>
+								<FileJson className="w-4 h-4" />
+								JSON
 							</Button>
 							<Button
 								onClick={handleGenerate}
 								variant="outline"
-								className="flex-1"
+								className="gap-2 ml-auto"
 								disabled={isGenerating}
 							>
-								<RefreshCw className="w-4 h-4 mr-2" />
+								<RefreshCw className="w-4 h-4" />
 								Regenerate
 							</Button>
 						</div>
 					</div>
 				</AscendantWindow>
 			)}
+
+			<GenerationHistoryPanel
+				state={histState}
+				onRestore={(id) => setHistState((prev) => restoreGeneration(prev, id))}
+				onTogglePin={(id) => setHistState((prev) => togglePin(prev, id))}
+				onRemove={(id) => setHistState((prev) => removeGeneration(prev, id))}
+				className="mb-6"
+			/>
 
 			<AscendantWindow title="TREASURE GUIDE" variant="quest">
 				<div className="space-y-4 text-sm">

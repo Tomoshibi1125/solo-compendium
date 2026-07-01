@@ -355,7 +355,7 @@ export function AddPowerDialog({
 														<Badge
 															key={src}
 															variant={src === "Rune" ? "default" : "outline"}
-															className="text-[10px] uppercase tracking-wider"
+															className="text-[11px] uppercase tracking-wider"
 														>
 															{src}
 														</Badge>
@@ -364,7 +364,7 @@ export function AddPowerDialog({
 														.source_book && (
 														<Badge
 															variant="secondary"
-															className="text-[9px] uppercase bg-primary/10 text-primary/70 border-primary/20"
+															className="text-[11px] uppercase bg-primary/10 text-primary/80 border-primary/20"
 														>
 															{formatRegentVernacular(
 																(power as { source_book?: string | null })
@@ -374,7 +374,7 @@ export function AddPowerDialog({
 													)}
 												</div>
 												{power.description && (
-													<p className="text-xs text-muted-foreground line-clamp-2">
+													<p className="text-sm leading-relaxed text-muted-foreground">
 														{formatRegentVernacular(power.description)}
 													</p>
 												)}

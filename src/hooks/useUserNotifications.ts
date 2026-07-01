@@ -7,9 +7,9 @@
  * cache (offline-first); when offline / guest, we fall back to the
  * cache exclusively.
  *
- * Producer entry points:
- *   - `addServerNotification` calls `add_user_notification` RPC.
- *   - `markReadOnServer` calls `mark_user_notification_read` RPC.
+ * Production is centralized in the standalone `notify()` bridge
+ * (`@/lib/notify`) — this hook is now a pure consumer (inbox reader +
+ * mark-read). `markReadOnServer` calls the `mark_user_notification_read` RPC.
  *
  * Consumer entry point: returns the same shape as `useNotifications`
  * so `NotificationCenter.tsx` doesn't need to change.
@@ -99,26 +99,6 @@ async function fetchServerNotifications(): Promise<Notification[]> {
 	}
 }
 
-export interface ServerNotificationInput {
-	userId: string;
-	type:
-		| "info"
-		| "success"
-		| "warning"
-		| "error"
-		| "campaign_invite"
-		| "mention"
-		| "level_ready"
-		| "system";
-	title: string;
-	message?: string;
-	priority?: NotificationPriority;
-	category?: string;
-	link?: string;
-	payload?: Record<string, unknown>;
-	expiresAt?: string | null;
-}
-
 export function useUserNotifications() {
 	const queryClient = useQueryClient();
 
@@ -166,35 +146,6 @@ export function useUserNotifications() {
 		};
 	}, [queryClient]);
 
-	const addServerMutation = useMutation({
-		mutationFn: async (input: ServerNotificationInput) => {
-			if (!isSupabaseConfigured) {
-				throw new Error("Supabase not configured");
-			}
-			const { data, error } = await (
-				supabase.rpc as unknown as (
-					name: string,
-					params: Record<string, unknown>,
-				) => Promise<{ data: unknown; error: Error | null }>
-			)("add_user_notification", {
-				p_user_id: input.userId,
-				p_type: input.type,
-				p_title: input.title,
-				p_message: input.message ?? null,
-				p_priority: input.priority ?? "normal",
-				p_category: input.category ?? null,
-				p_payload: input.payload ?? {},
-				p_link: input.link ?? null,
-				p_expires_at: input.expiresAt ?? null,
-			});
-			if (error) throw error;
-			return data as string;
-		},
-		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: KEY });
-		},
-	});
-
 	const markReadMutation = useMutation({
 		mutationFn: async (notificationId: string) => {
 			if (!isSupabaseConfigured) return false;
@@ -220,10 +171,6 @@ export function useUserNotifications() {
 		[notifications],
 	);
 
-	const addServerNotification = useCallback(
-		(input: ServerNotificationInput) => addServerMutation.mutate(input),
-		[addServerMutation],
-	);
 	const markReadOnServer = useCallback(
 		(id: string) => markReadMutation.mutate(id),
 		[markReadMutation],
@@ -233,7 +180,6 @@ export function useUserNotifications() {
 		notifications,
 		unreadCount,
 		isLoading: query.isLoading,
-		addServerNotification,
 		markReadOnServer,
 	};
 }

@@ -4,7 +4,6 @@
  */
 
 import type { Session, User } from "@supabase/supabase-js";
-import type React from "react";
 import {
 	createContext,
 	type ReactNode,
@@ -514,31 +513,4 @@ export function useAuth() {
 		);
 	}
 	return context;
-}
-
-// Permission-based component wrapper
-export function withPermission<P extends object>(
-	permission: string,
-	Component: React.ComponentType<P>,
-) {
-	return function PermissionWrapper(props: P) {
-		const { hasPermission } = useAuth();
-
-		if (!hasPermission(permission)) {
-			return (
-				<div className="flex items-center justify-center h-64">
-					<div className="text-center">
-						<h3 className="text-lg font-medium text-gray-900 dark:text-gray-100">
-							Access Denied
-						</h3>
-						<p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
-							You don't have permission to access this feature.
-						</p>
-					</div>
-				</div>
-			);
-		}
-
-		return <Component {...props} />;
-	};
 }

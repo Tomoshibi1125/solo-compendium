@@ -239,7 +239,7 @@ export function CampaignWiki({ campaignId }: { campaignId: string }) {
 								<Badge
 									variant="outline"
 									className={cn(
-										"uppercase text-[10px]",
+										"uppercase text-[11px]",
 										selectedArticle.is_public
 											? "border-green-500/50 text-green-400"
 											: "border-amber-500/50 text-amber-400",
@@ -532,7 +532,7 @@ function WikiEditorDialog({
 								)}
 								{isPublic ? "Public Record" : "Restricted File (Warden Only)"}
 							</Label>
-							<span className="text-[10px] text-muted-foreground">
+							<span className="text-[11px] text-muted-foreground">
 								{isPublic
 									? "All Ascendants can read this article."
 									: "Hidden from players."}
@@ -543,7 +543,7 @@ function WikiEditorDialog({
 					<div className="flex-1 flex flex-col min-h-[300px] space-y-2">
 						<Label className="flex justify-between items-end">
 							<span>Main Content (Markdown)</span>
-							<span className="text-[10px] text-muted-foreground font-normal">
+							<span className="text-[11px] text-muted-foreground font-normal">
 								Link to other articles using [[Article Title]]
 							</span>
 						</Label>

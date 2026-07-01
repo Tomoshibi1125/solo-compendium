@@ -1,21 +1,43 @@
 import { describe, expect, it } from "vitest";
 import { staticDataProvider } from "@/data/compendium/providers";
+import { fieldRosterNPCs } from "@/data/compendium/recruitable-roster";
 import { sandboxRecruitableNPCs } from "@/data/compendium/sandbox-npcs";
 import { isValidEntryType, resolveRef } from "@/lib/compendiumResolver";
+
+const TOTAL_NPCS = sandboxRecruitableNPCs.length + fieldRosterNPCs.length;
 
 describe("NPC compendium wiring", () => {
 	it("registers npcs as a valid entry type", () => {
 		expect(isValidEntryType("npcs")).toBe(true);
 	});
 
-	it("getNpcs surfaces every sandbox NPC as a canon compendium entry", async () => {
+	it("getNpcs surfaces every sandbox + field-roster NPC as a canon compendium entry", async () => {
 		const entries = await staticDataProvider.getNpcs();
-		expect(entries.length).toBe(sandboxRecruitableNPCs.length);
+		expect(entries.length).toBe(TOTAL_NPCS);
 		for (const entry of entries) {
 			expect(entry.id).toBeTruthy();
 			expect(entry.name).toBeTruthy();
 			expect(entry.source_book).toBe("Rift Ascendant Canon");
 		}
+	});
+
+	it("includes the field roster (Glassline / Bureau low-ranks / independents) as recruitable", async () => {
+		const entries = await staticDataProvider.getNpcs();
+		const byId = (id: string) =>
+			entries.find((e) => e.id === id) as unknown as
+				| Record<string, unknown>
+				| undefined;
+		// Glassline crew — mundane contractor.
+		const mira = byId("npc-glx-001");
+		expect(mira?.name).toBe("Mira Voss");
+		expect(mira?.is_recruitable).toBe(true);
+		expect(mira?.kind).toBe("mundane");
+		// Bureau lower-rank field Ascendant — carries a rank.
+		const vance = byId("npc-bfr-003");
+		expect(vance?.is_recruitable).toBe(true);
+		expect(vance?.rank).toBe("D");
+		// Independent ascendant.
+		expect(byId("npc-ia-015")?.name).toBe("Vael, the Quiet Star");
 	});
 
 	it("maps a known NPC's stat block and recruitment fields", async () => {
@@ -68,7 +90,7 @@ describe("NPC compendium wiring", () => {
 	it("filters by search text", async () => {
 		const results = await staticDataProvider.getNpcs("Hollow Mother");
 		expect(results.some((e) => e.name === "The Hollow Mother")).toBe(true);
-		expect(results.length).toBeLessThan(sandboxRecruitableNPCs.length);
+		expect(results.length).toBeLessThan(TOTAL_NPCS);
 	});
 
 	it("resolveRef resolves an NPC by id", async () => {

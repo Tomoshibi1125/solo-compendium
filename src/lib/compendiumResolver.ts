@@ -3,7 +3,7 @@ import type {
 	StaticDataProvider,
 } from "@/data/compendium/providers/types";
 import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
-import type { Database, Json } from "@/integrations/supabase/types";
+import type { Database } from "@/integrations/supabase/types";
 import { AppError } from "@/lib/appError";
 import {
 	isStaticCanonicalEntryType,
@@ -64,6 +64,7 @@ export const entryTypes = [
 	"npcs",
 	"vehicles",
 	"crafting",
+	"guild-base",
 ] as const;
 
 export type EntryType = (typeof entryTypes)[number];
@@ -308,118 +309,8 @@ export function getTableName(
 }
 
 /**
- * Validate that a reference exists
- */
-export async function validateRef(
-	type: EntryType,
-	id: string,
-): Promise<boolean> {
-	const entity = await resolveRef(type, id);
-	return entity !== null;
-}
-
-/**
  * Check if a string is a valid EntryType
  */
 export function isValidEntryType(value: string): value is EntryType {
 	return entryTypes.includes(value as EntryType);
-}
-
-/**
- * Map homebrew content_type to compendium EntryType.
- */
-const homebrewTypeToEntryType: Record<string, EntryType> = {
-	job: "jobs",
-	path: "paths",
-	relic: "relics",
-	spell: "spells",
-	item: "items",
-};
-
-/**
- * Merge published homebrew content into a compendium entry list.
- * Returns combined array with homebrew entries tagged with `source: 'homebrew'`.
- *
- * @param type - The compendium entry type to merge for
- * @param userId - Current user id
- * @param campaignId - Optional campaign id
- */
-export async function mergeHomebrewEntries(
-	type: EntryType,
-	userId?: string | null,
-	campaignId?: string | null,
-): Promise<CompendiumEntity[]> {
-	if (!isSupabaseConfigured || !userId) return [];
-
-	// Map EntryType → homebrew content_type
-	const homebrewContentType = Object.keys(homebrewTypeToEntryType).find(
-		(key) => homebrewTypeToEntryType[key] === type,
-	);
-
-	if (!homebrewContentType) return [];
-
-	try {
-		// Get user's published homebrew + campaign-scoped homebrew
-		const visibilityConditions = [
-			{ visibility_scope: "public", status: "published" },
-			{ visibility_scope: "private", status: "published", user_id: userId },
-		];
-
-		if (campaignId) {
-			visibilityConditions.push({
-				visibility_scope: "campaign",
-				status: "published",
-				campaign_id: campaignId,
-			} as never);
-		}
-
-		const homebrewItems: Array<{
-			id: string;
-			name: string;
-			description: string | null;
-			data: unknown;
-			source_book: string | null;
-		}> = [];
-
-		for (const condition of visibilityConditions) {
-			const { data: items, error: _error } = await supabase
-				.from("homebrew_content")
-				.select("id, name, description, data, source_book")
-				.eq("content_type", homebrewContentType)
-				.eq("visibility_scope", condition.visibility_scope)
-				.eq("status", condition.status)
-				.eq(
-					"user_id",
-					(condition as Record<string, string>).user_id ||
-						(condition as Record<string, string>).campaign_id ||
-						"",
-				)
-				.neq("user_id", userId); // Don't include user's own content twice
-
-			if (items) {
-				homebrewItems.push(
-					...(items as Array<{
-						id: string;
-						name: string;
-						description: string | null;
-						data: Json;
-						source_book: string | null;
-					}>),
-				);
-			}
-		}
-
-		return homebrewItems.map((item) => ({
-			id: `homebrew:${item.id}`,
-			name: item.name,
-			type,
-			description: item.description || undefined,
-			source: "homebrew" as const,
-			homebrew_id: item.id,
-			...((item.data as Record<string, Json>) || {}),
-		})) as unknown as CompendiumEntity[];
-	} catch (err) {
-		logger.warn(`[mergeHomebrewEntries] Exception for ${type}:`, err);
-		return [];
-	}
 }

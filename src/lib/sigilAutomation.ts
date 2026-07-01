@@ -8,9 +8,6 @@ export interface SigilBonusResult {
 	damageBonus: string;
 	traits: string[];
 }
-
-export type EquipmentRow =
-	Database["public"]["Tables"]["character_equipment"]["Row"];
 type SigilInscriptionRow =
 	Database["public"]["Tables"]["character_sigil_inscriptions"]["Row"];
 
@@ -26,16 +23,6 @@ type SigilCompatibleEquipment = {
 type SigilCompatibleEntry = {
 	can_inscribe_on?: string[] | null;
 };
-
-export type SigilRarity =
-	| "common"
-	| "uncommon"
-	| "rare"
-	| "very_rare"
-	| "epic"
-	| "legendary"
-	| "mythic"
-	| "artifact";
 
 export function getSigilSlotBonusForRarity(
 	rarity: string | null | undefined,

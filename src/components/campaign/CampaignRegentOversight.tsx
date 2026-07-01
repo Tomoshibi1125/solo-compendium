@@ -138,7 +138,7 @@ export function CampaignRegentOversight({
 																	{unlock.regent?.name}
 																</span>
 															</div>
-															<span className="text-[10px] text-muted-foreground">
+															<span className="text-[11px] text-muted-foreground">
 																via: {unlock.quest_name}
 															</span>
 														</div>

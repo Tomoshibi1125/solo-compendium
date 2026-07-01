@@ -107,25 +107,6 @@ export function initSentry() {
 }
 
 /**
- * Set user context for Sentry
- */
-export function setSentryUser(
-	user: { id: string; email?: string; username?: string } | null,
-) {
-	if (!SENTRY_DSN) return;
-
-	Sentry.setUser(
-		user
-			? {
-					id: user.id,
-					email: user.email,
-					username: user.username,
-				}
-			: null,
-	);
-}
-
-/**
  * Capture exception manually
  */
 export function captureException(
@@ -157,13 +138,4 @@ export function captureMessage(
 			custom: context || {},
 		},
 	});
-}
-
-/**
- * Add breadcrumb
- */
-export function addBreadcrumb(breadcrumb: Sentry.Breadcrumb) {
-	if (!SENTRY_DSN) return;
-
-	Sentry.addBreadcrumb(breadcrumb);
 }

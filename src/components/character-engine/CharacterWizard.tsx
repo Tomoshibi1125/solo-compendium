@@ -33,67 +33,92 @@ export const CharacterWizard: React.FC<CharacterWizardProps> = ({
 	children,
 }) => {
 	const progressBarRef = useRef<HTMLDivElement>(null);
+	const mobileBarRef = useRef<HTMLDivElement>(null);
 
 	useEffect(() => {
+		const progress = (currentStepIndex / Math.max(1, steps.length - 1)) * 100;
 		if (progressBarRef.current) {
-			const progress = (currentStepIndex / (steps.length - 1)) * 100;
 			progressBarRef.current.style.width = `${progress}%`;
+		}
+		if (mobileBarRef.current) {
+			mobileBarRef.current.style.width = `${progress}%`;
 		}
 	}, [currentStepIndex, steps.length]);
 
 	return (
 		<div className="max-w-5xl mx-auto space-y-8">
-			{/* Progress Indicator */}
-			<div className="relative pt-4">
-				<div className="absolute top-1/2 left-0 w-full h-0.5 bg-primary/10 -translate-y-1/2" />
-				<div
-					ref={progressBarRef}
-					className="absolute top-1/2 left-0 h-0.5 bg-primary transition-all duration-500 ease-in-out -translate-y-1/2 wizard-progress-bar"
-				/>
+			{/* Progress Indicator — compact on mobile, full stepper rail on desktop */}
+			<div className="pt-4">
+				{/* Mobile: legible "Step X of N" + current step + progress bar */}
+				<div className="md:hidden space-y-2">
+					<div className="flex items-baseline justify-between gap-2">
+						<span className="ra-eyebrow text-primary">
+							Step {currentStepIndex + 1} / {steps.length}
+						</span>
+						<span className="text-sm font-heading font-semibold text-primary">
+							{steps[currentStepIndex]?.name}
+						</span>
+					</div>
+					<div className="h-1.5 w-full overflow-hidden rounded-full bg-primary/10">
+						<div
+							ref={mobileBarRef}
+							className="h-full rounded-full bg-primary transition-all duration-500 wizard-progress-bar"
+						/>
+					</div>
+				</div>
 
-				<div className="relative flex justify-between">
-					{steps.map((step, index) => {
-						const isCompleted = index < currentStepIndex;
-						const isActive = index === currentStepIndex;
+				{/* Desktop: full stepper rail */}
+				<div className="relative hidden md:block">
+					<div className="absolute top-4 left-0 w-full h-0.5 bg-primary/10" />
+					<div
+						ref={progressBarRef}
+						className="absolute top-4 left-0 h-0.5 bg-primary transition-all duration-500 ease-in-out wizard-progress-bar"
+					/>
 
-						return (
-							<div
-								key={step.id}
-								className="flex flex-col items-center gap-2 group"
-							>
+					<div className="relative flex justify-between">
+						{steps.map((step, index) => {
+							const isCompleted = index < currentStepIndex;
+							const isActive = index === currentStepIndex;
+
+							return (
 								<div
-									className={cn(
-										"w-8 h-8 rounded-full border-2 flex items-center justify-center transition-all duration-300 z-10",
-										isCompleted
-											? "bg-primary border-primary text-primary-foreground"
-											: isActive
-												? "bg-black border-primary text-primary shadow-[0_0_15px_rgba(var(--primary),0.3)]"
-												: "bg-black border-primary/20 text-primary/40",
-									)}
+									key={step.id}
+									className="flex flex-col items-center gap-2 group"
 								>
-									{isCompleted ? (
-										<ChevronRight className="w-4 h-4 translate-x-0.5" />
-									) : (
-										<span className="text-[10px] font-bold font-heading">
-											{index + 1}
-										</span>
-									)}
+									<div
+										className={cn(
+											"w-8 h-8 rounded-full border-2 flex items-center justify-center transition-all duration-300 z-10",
+											isCompleted
+												? "bg-primary border-primary text-primary-foreground"
+												: isActive
+													? "bg-black border-primary text-primary shadow-[0_0_15px_rgba(var(--primary),0.3)]"
+													: "bg-black border-primary/20 text-primary/40",
+										)}
+									>
+										{isCompleted ? (
+											<ChevronRight className="w-4 h-4 translate-x-0.5" />
+										) : (
+											<span className="text-xs font-bold font-heading">
+												{index + 1}
+											</span>
+										)}
+									</div>
+									<span
+										className={cn(
+											"text-[11px] uppercase tracking-widest font-heading transition-colors",
+											isActive
+												? "text-primary font-bold"
+												: isCompleted
+													? "text-primary/70"
+													: "text-muted-foreground/50",
+										)}
+									>
+										{step.name}
+									</span>
 								</div>
-								<span
-									className={cn(
-										"text-[9px] uppercase tracking-widest font-heading transition-colors",
-										isActive
-											? "text-primary font-bold"
-											: isCompleted
-												? "text-primary/60"
-												: "text-muted-foreground/40",
-									)}
-								>
-									{step.name}
-								</span>
-							</div>
-						);
-					})}
+							);
+						})}
+					</div>
 				</div>
 			</div>
 
@@ -109,7 +134,7 @@ export const CharacterWizard: React.FC<CharacterWizardProps> = ({
 					className="gap-2 h-11 px-6 border-primary/20 text-foreground/80 hover:bg-primary/10 hover:text-primary transition-colors disabled:opacity-30"
 				>
 					<ChevronLeft className="w-4 h-4" />
-					<span className="uppercase tracking-widest text-[10px] font-bold">
+					<span className="uppercase tracking-widest text-xs font-bold">
 						Reverse Sequence
 					</span>
 				</Button>
@@ -123,13 +148,13 @@ export const CharacterWizard: React.FC<CharacterWizardProps> = ({
 						{isSubmitting ? (
 							<>
 								<Loader2 className="w-4 h-4 animate-spin" />
-								<span className="uppercase tracking-widest text-[10px] font-bold">
+								<span className="uppercase tracking-widest text-xs font-bold">
 									Processing...
 								</span>
 							</>
 						) : (
 							<>
-								<span className="uppercase tracking-widest text-[10px] font-bold">
+								<span className="uppercase tracking-widest text-xs font-bold">
 									Advance Protocol
 								</span>
 								<ChevronRight className="w-4 h-4" />
@@ -142,7 +167,7 @@ export const CharacterWizard: React.FC<CharacterWizardProps> = ({
 						disabled={isSubmitting}
 						className="gap-2 h-11 px-8 bg-primary/20 border-primary/40 hover:bg-primary/30 text-primary transition-all animate-pulse"
 					>
-						<span className="uppercase tracking-widest text-[10px] font-bold italic">
+						<span className="uppercase tracking-widest text-xs font-bold italic">
 							Execute Awakening Protocol
 						</span>
 					</Button>

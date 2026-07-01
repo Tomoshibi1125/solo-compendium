@@ -51,10 +51,3 @@ export const registerOfflineSyncProcessor = (
 ) => {
 	syncManager.registerProcessor(type, action, processor);
 };
-
-export const unregisterOfflineSyncProcessor = (
-	type: OfflineSyncType,
-	action: OfflineSyncAction,
-) => {
-	syncManager.unregisterProcessor(type, action);
-};

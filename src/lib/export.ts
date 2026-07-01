@@ -6,11 +6,6 @@
 import { supabase } from "@/integrations/supabase/client";
 import type { Database } from "@/integrations/supabase/types";
 import { AppError } from "@/lib/appError";
-import {
-	getTableName,
-	isValidEntryType,
-	listStaticEntries,
-} from "@/lib/compendiumResolver";
 import { formatRegentVernacular } from "@/lib/vernacular";
 
 export type Character = Database["public"]["Tables"]["characters"]["Row"];
@@ -121,68 +116,6 @@ export async function exportCharacter(
 }
 
 /**
- * Export character to PDF (markdown format for now)
- */
-export function exportCharacterToMarkdown(character: Character): string {
-	const markdown = `# ${character.name}
-
-**Level ${character.level}** ${character.job}${character.path ? ` (${character.path})` : ""}
-
-## Stats
-- **HP**: ${character.hp_current}/${character.hp_max}${character.hp_temp > 0 ? ` (+${character.hp_temp} temp)` : ""}
-- **Hit Dice**: ${character.hit_dice_current}/${character.hit_dice_max}d${character.hit_dice_size}
-- **Rift Favor**: ${character.rift_favor_current}/${character.rift_favor_max} (d${character.rift_favor_die})
-- **AC**: ${character.armor_class}
-- **Speed**: ${character.speed} ft.
-- **Initiative**: ${character.initiative >= 0 ? "+" : ""}${character.initiative}
-
-## Conditions
-${
-	character.conditions && character.conditions.length > 0
-		? character.conditions.map((c) => `- ${c}`).join("\n")
-		: "None"
-}
-
-${character.notes ? `## Notes\n${character.notes}` : ""}
-`;
-	return formatRegentVernacular(markdown);
-}
-
-/**
- * Export compendium entries
- */
-export async function exportCompendiumEntries(
-	entryIds: string[],
-	entryType: string,
-): Promise<string> {
-	// Validate entry type
-	if (!isValidEntryType(entryType)) {
-		throw new AppError(`Unknown entry type: ${entryType}`, "INVALID_INPUT");
-	}
-
-	try {
-		const tableName = getTableName(entryType);
-
-		const { data: entries } = await supabase
-			.from(tableName as never)
-			.select("*")
-			.in("id", entryIds);
-
-		return JSON.stringify(entries || [], null, 2);
-	} catch (error) {
-		const typedEntryType = entryType as Parameters<typeof listStaticEntries>[0];
-		const staticEntries = await listStaticEntries(typedEntryType);
-		if (!staticEntries) {
-			throw error;
-		}
-		const filtered = staticEntries.filter((entry) =>
-			entryIds.includes(entry.id),
-		);
-		return JSON.stringify(filtered, null, 2);
-	}
-}
-
-/**
  * Download file
  */
 export function downloadFile(
@@ -263,19 +196,6 @@ export async function downloadCharacterPdfFile(
 	a.click();
 	a.remove();
 	URL.revokeObjectURL(url);
-}
-
-/**
- * Legacy markdown export (kept for callers that still want a `.md` file).
- * Prefer {@link exportCharacterPDF} for true PDF output.
- */
-export function exportCharacterMarkdown(character: Character): void {
-	const markdown = exportCharacterToMarkdown(character);
-	downloadFile(
-		markdown,
-		`${character.name.replace(/[^a-z0-9]/gi, "_")}_character.md`,
-		"text/markdown",
-	);
 }
 
 /**

@@ -82,7 +82,7 @@ export const JobStep: React.FC<JobStepProps> = ({
 			<AscendantWindow title="MODEL SELECTION: JOB ALIGNMENT">
 				<div className="space-y-6">
 					<div className="space-y-3">
-						<Label className="text-[10px] uppercase tracking-widest text-primary/60">
+						<Label className="text-xs uppercase tracking-widest text-primary/60">
 							Select Active Designation Protocol
 						</Label>
 						<Select
@@ -100,7 +100,7 @@ export const JobStep: React.FC<JobStepProps> = ({
 										{job._homebrew && (
 											<Badge
 												variant="outline"
-												className="ml-2 text-[8px] uppercase h-4"
+												className="ml-2 text-[11px] uppercase h-4"
 											>
 												Homebrew
 											</Badge>
@@ -123,13 +123,13 @@ export const JobStep: React.FC<JobStepProps> = ({
 									<div className="flex flex-col gap-1 items-end">
 										<Badge
 											variant="outline"
-											className="text-[10px] uppercase border-primary/40 text-primary/80"
+											className="text-xs uppercase border-primary/40 text-primary/80"
 										>
 											Rank 1 Protocol
 										</Badge>
 										<Badge
 											variant="secondary"
-											className="text-[9px] uppercase bg-primary/10 text-primary/70 border-primary/20"
+											className="text-[11px] uppercase bg-primary/10 text-primary/70 border-primary/20"
 										>
 											{formatRegentVernacular(
 												(jobData as { source_book?: string | null })
@@ -153,7 +153,7 @@ export const JobStep: React.FC<JobStepProps> = ({
 								{/* Primary Header Summary */}
 								<div className="grid grid-cols-2 gap-4 py-3 border-y border-primary/5">
 									<div className="space-y-1">
-										<Label className="text-[9px] uppercase tracking-tighter text-muted-foreground">
+										<Label className="text-[11px] uppercase tracking-tighter text-muted-foreground">
 											Hit Die Unit
 										</Label>
 										<div className="text-sm font-heading">
@@ -161,7 +161,7 @@ export const JobStep: React.FC<JobStepProps> = ({
 										</div>
 									</div>
 									<div className="space-y-1">
-										<Label className="text-[9px] uppercase tracking-tighter text-muted-foreground">
+										<Label className="text-[11px] uppercase tracking-tighter text-muted-foreground">
 											Primary Node Affinity
 										</Label>
 										<div className="text-xs font-heading">
@@ -183,7 +183,7 @@ export const JobStep: React.FC<JobStepProps> = ({
 											</h4>
 											<div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
 												<div className="flex flex-col gap-1">
-													<span className="font-heading font-semibold text-foreground/80 uppercase tracking-tighter text-[9px]">
+													<span className="font-heading font-semibold text-foreground/80 uppercase tracking-tighter text-[11px]">
 														Armor
 													</span>
 													<span className="text-muted-foreground">
@@ -193,7 +193,7 @@ export const JobStep: React.FC<JobStepProps> = ({
 													</span>
 												</div>
 												<div className="flex flex-col gap-1">
-													<span className="font-heading font-semibold text-foreground/80 uppercase tracking-tighter text-[9px]">
+													<span className="font-heading font-semibold text-foreground/80 uppercase tracking-tighter text-[11px]">
 														Weapons
 													</span>
 													<span className="text-muted-foreground">
@@ -203,7 +203,7 @@ export const JobStep: React.FC<JobStepProps> = ({
 													</span>
 												</div>
 												<div className="flex flex-col gap-1">
-													<span className="font-heading font-semibold text-foreground/80 uppercase tracking-tighter text-[9px]">
+													<span className="font-heading font-semibold text-foreground/80 uppercase tracking-tighter text-[11px]">
 														Tools
 													</span>
 													<span className="text-muted-foreground">
@@ -213,7 +213,7 @@ export const JobStep: React.FC<JobStepProps> = ({
 													</span>
 												</div>
 												<div className="flex flex-col gap-1">
-													<span className="font-heading font-semibold text-foreground/80 uppercase tracking-tighter text-[9px]">
+													<span className="font-heading font-semibold text-foreground/80 uppercase tracking-tighter text-[11px]">
 														Saving Throws
 													</span>
 													<span className="text-muted-foreground">
@@ -241,7 +241,7 @@ export const JobStep: React.FC<JobStepProps> = ({
 											</h4>
 											<div className="grid grid-cols-2 md:grid-cols-3 gap-y-4 gap-x-2 text-xs">
 												<div className="flex flex-col gap-1">
-													<span className="font-heading font-semibold text-foreground/80 uppercase tracking-tighter text-[9px]">
+													<span className="font-heading font-semibold text-foreground/80 uppercase tracking-tighter text-[11px]">
 														Size
 													</span>
 													<span className="text-muted-foreground capitalize">
@@ -249,7 +249,7 @@ export const JobStep: React.FC<JobStepProps> = ({
 													</span>
 												</div>
 												<div className="flex flex-col gap-1">
-													<span className="font-heading font-semibold text-foreground/80 uppercase tracking-tighter text-[9px]">
+													<span className="font-heading font-semibold text-foreground/80 uppercase tracking-tighter text-[11px]">
 														Mobility Index (Speed)
 													</span>
 													<span className="text-muted-foreground">
@@ -257,7 +257,7 @@ export const JobStep: React.FC<JobStepProps> = ({
 													</span>
 												</div>
 												<div className="flex flex-col gap-1">
-													<span className="font-heading font-semibold text-foreground/80 uppercase tracking-tighter text-[9px]">
+													<span className="font-heading font-semibold text-foreground/80 uppercase tracking-tighter text-[11px]">
 														Senses
 													</span>
 													<span className="text-muted-foreground">
@@ -267,7 +267,7 @@ export const JobStep: React.FC<JobStepProps> = ({
 													</span>
 												</div>
 												<div className="flex flex-col gap-1 md:col-span-1">
-													<span className="font-heading font-semibold text-foreground/80 uppercase tracking-tighter text-[9px]">
+													<span className="font-heading font-semibold text-foreground/80 uppercase tracking-tighter text-[11px]">
 														Ability Score Increase
 													</span>
 													<span className="text-primary/90 font-medium">
@@ -275,7 +275,7 @@ export const JobStep: React.FC<JobStepProps> = ({
 													</span>
 												</div>
 												<div className="flex flex-col gap-1 md:col-span-2">
-													<span className="font-heading font-semibold text-foreground/80 uppercase tracking-tighter text-[9px]">
+													<span className="font-heading font-semibold text-foreground/80 uppercase tracking-tighter text-[11px]">
 														Linguistic Bindings
 													</span>
 													<span className="text-muted-foreground">
@@ -288,7 +288,7 @@ export const JobStep: React.FC<JobStepProps> = ({
 											{staticJobData.racialTraits &&
 												staticJobData.racialTraits.length > 0 && (
 													<div className="mt-4 space-y-2">
-														<span className="font-heading font-semibold text-foreground/80 uppercase tracking-tighter text-[9px]">
+														<span className="font-heading font-semibold text-foreground/80 uppercase tracking-tighter text-[11px]">
 															Innate Racial Traits
 														</span>
 														<div className="space-y-3">
@@ -357,7 +357,7 @@ export const JobStep: React.FC<JobStepProps> = ({
 													<span className="h-[1px] flex-grow bg-primary/20"></span>
 												</h4>
 												<div className="text-xs text-muted-foreground">
-													<span className="font-heading font-semibold text-foreground/80 uppercase tracking-tighter text-[9px] block mb-1">
+													<span className="font-heading font-semibold text-foreground/80 uppercase tracking-tighter text-[11px] block mb-1">
 														Spellcasting Ability
 													</span>
 													<span className="text-primary/90 font-medium">
@@ -413,12 +413,12 @@ export const JobStep: React.FC<JobStepProps> = ({
 							{jobData.skill_choices && jobData.skill_choices.length > 0 && (
 								<div className="space-y-4 pt-4 border-t border-primary/10">
 									<div className="flex justify-between items-center">
-										<Label className="text-[10px] font-heading font-semibold text-primary uppercase tracking-wider">
+										<Label className="text-xs font-heading font-semibold text-primary uppercase tracking-wider">
 											Skill Imprint Protocol
 										</Label>
 										<Badge
 											variant="secondary"
-											className="text-[9px] h-5 px-2 bg-primary/10"
+											className="text-[11px] h-5 px-2 bg-primary/10"
 										>
 											{selectedSkills.length} / {totalSkillsAllowed} SELECTED
 										</Badge>
@@ -471,19 +471,19 @@ export const JobStep: React.FC<JobStepProps> = ({
 							) && (
 								<div className="space-y-4 pt-4 border-t border-primary/10">
 									<div className="flex justify-between items-center">
-										<Label className="text-[10px] font-heading font-semibold text-primary uppercase tracking-wider">
+										<Label className="text-xs font-heading font-semibold text-primary uppercase tracking-wider">
 											Additional Linguistic Binding
 										</Label>
 										<Badge
 											variant="secondary"
-											className="text-[9px] h-5 px-2 bg-primary/10 uppercase"
+											className="text-[11px] h-5 px-2 bg-primary/10 uppercase"
 										>
 											Choice Required
 										</Badge>
 									</div>
 
 									<div className="space-y-3">
-										<AscendantText className="text-[10px] text-muted-foreground">
+										<AscendantText className="text-xs text-muted-foreground">
 											Select an authorized Modern Earth language to append to
 											your neural linguistic Lattice.
 										</AscendantText>

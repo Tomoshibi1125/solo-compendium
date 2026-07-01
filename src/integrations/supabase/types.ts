@@ -2468,47 +2468,71 @@ export type Database = {
 			};
 			character_extras: {
 				Row: {
+					abilities: Json;
 					ac: number | null;
 					character_id: string;
+					conditions: Json;
 					created_at: string;
+					equipment: Json;
 					extra_type: string;
 					hp_current: number;
 					hp_max: number;
 					id: string;
+					initiative: number | null;
 					is_active: boolean;
 					monster_id: string | null;
 					name: string;
 					notes: string | null;
+					npc_data: Json | null;
+					npc_id: string | null;
+					source_guild_id: string | null;
+					source_member_id: string | null;
 					speed: number | null;
 					updated_at: string;
 				};
 				Insert: {
+					abilities?: Json;
 					ac?: number | null;
 					character_id: string;
+					conditions?: Json;
 					created_at?: string;
+					equipment?: Json;
 					extra_type: string;
 					hp_current?: number;
 					hp_max?: number;
 					id?: string;
+					initiative?: number | null;
 					is_active?: boolean;
 					monster_id?: string | null;
 					name: string;
 					notes?: string | null;
+					npc_data?: Json | null;
+					npc_id?: string | null;
+					source_guild_id?: string | null;
+					source_member_id?: string | null;
 					speed?: number | null;
 					updated_at?: string;
 				};
 				Update: {
+					abilities?: Json;
 					ac?: number | null;
 					character_id?: string;
+					conditions?: Json;
 					created_at?: string;
+					equipment?: Json;
 					extra_type?: string;
 					hp_current?: number;
 					hp_max?: number;
 					id?: string;
+					initiative?: number | null;
 					is_active?: boolean;
 					monster_id?: string | null;
 					name?: string;
 					notes?: string | null;
+					npc_data?: Json | null;
+					npc_id?: string | null;
+					source_guild_id?: string | null;
+					source_member_id?: string | null;
 					speed?: number | null;
 					updated_at?: string;
 				};
@@ -7643,6 +7667,53 @@ export type Database = {
 					},
 				];
 			};
+			guild_join_requests: {
+				Row: {
+					character_id: string | null;
+					character_name: string | null;
+					created_at: string | null;
+					guild_id: string;
+					id: string;
+					message: string | null;
+					resolved_at: string | null;
+					resolved_by: string | null;
+					status: string;
+					user_id: string;
+				};
+				Insert: {
+					character_id?: string | null;
+					character_name?: string | null;
+					created_at?: string | null;
+					guild_id: string;
+					id?: string;
+					message?: string | null;
+					resolved_at?: string | null;
+					resolved_by?: string | null;
+					status?: string;
+					user_id: string;
+				};
+				Update: {
+					character_id?: string | null;
+					character_name?: string | null;
+					created_at?: string | null;
+					guild_id?: string;
+					id?: string;
+					message?: string | null;
+					resolved_at?: string | null;
+					resolved_by?: string | null;
+					status?: string;
+					user_id?: string;
+				};
+				Relationships: [
+					{
+						foreignKeyName: "guild_join_requests_guild_id_fkey";
+						columns: ["guild_id"];
+						isOneToOne: false;
+						referencedRelation: "guilds";
+						referencedColumns: ["id"];
+					},
+				];
+			};
 			guild_members: {
 				Row: {
 					character_id: string | null;
@@ -7655,6 +7726,7 @@ export type Database = {
 					npc_leveling_mode: string | null;
 					npc_name: string | null;
 					npc_xp: number | null;
+					rank: string | null;
 					role: string;
 					user_id: string | null;
 				};
@@ -7669,6 +7741,7 @@ export type Database = {
 					npc_leveling_mode?: string | null;
 					npc_name?: string | null;
 					npc_xp?: number | null;
+					rank?: string | null;
 					role: string;
 					user_id?: string | null;
 				};
@@ -7683,6 +7756,7 @@ export type Database = {
 					npc_leveling_mode?: string | null;
 					npc_name?: string | null;
 					npc_xp?: number | null;
+					rank?: string | null;
 					role?: string;
 					user_id?: string | null;
 				};
@@ -7710,42 +7784,113 @@ export type Database = {
 					},
 				];
 			};
+			guild_quests: {
+				Row: {
+					assigned_member_ids: Json;
+					created_at: string | null;
+					guild_id: string;
+					id: string;
+					rank: string;
+					resolved_at: string | null;
+					rewards: Json;
+					source_quest_id: string | null;
+					status: string;
+					title: string;
+				};
+				Insert: {
+					assigned_member_ids?: Json;
+					created_at?: string | null;
+					guild_id: string;
+					id?: string;
+					rank?: string;
+					resolved_at?: string | null;
+					rewards?: Json;
+					source_quest_id?: string | null;
+					status?: string;
+					title: string;
+				};
+				Update: {
+					assigned_member_ids?: Json;
+					created_at?: string | null;
+					guild_id?: string;
+					id?: string;
+					rank?: string;
+					resolved_at?: string | null;
+					rewards?: Json;
+					source_quest_id?: string | null;
+					status?: string;
+					title?: string;
+				};
+				Relationships: [
+					{
+						foreignKeyName: "guild_quests_guild_id_fkey";
+						columns: ["guild_id"];
+						isOneToOne: false;
+						referencedRelation: "guilds";
+						referencedColumns: ["id"];
+					},
+				];
+			};
 			guilds: {
 				Row: {
 					campaign_id: string | null;
+					contribution: number | null;
 					created_at: string | null;
 					description: string | null;
+					base_facilities: Json | null;
+					base_property: string | null;
+					funds: Json | null;
+					guild_rank: string | null;
+					guild_skills: Json | null;
 					id: string;
 					is_active: boolean | null;
 					leader_user_id: string;
+					level: number | null;
 					motto: string | null;
 					name: string;
+					reputation: number | null;
 					settings: Json | null;
 					share_code: string;
 					updated_at: string | null;
 				};
 				Insert: {
 					campaign_id?: string | null;
+					contribution?: number | null;
 					created_at?: string | null;
 					description?: string | null;
+					base_facilities?: Json | null;
+					base_property?: string | null;
+					funds?: Json | null;
+					guild_rank?: string | null;
+					guild_skills?: Json | null;
 					id?: string;
 					is_active?: boolean | null;
 					leader_user_id: string;
+					level?: number | null;
 					motto?: string | null;
 					name: string;
+					reputation?: number | null;
 					settings?: Json | null;
 					share_code: string;
 					updated_at?: string | null;
 				};
 				Update: {
 					campaign_id?: string | null;
+					contribution?: number | null;
 					created_at?: string | null;
 					description?: string | null;
+					base_facilities?: Json | null;
+					base_property?: string | null;
+					funds?: Json | null;
+					guild_rank?: string | null;
+					guild_skills?: Json | null;
 					id?: string;
 					is_active?: boolean | null;
 					leader_user_id?: string;
+					level?: number | null;
 					motto?: string | null;
 					name?: string;
+					reputation?: number | null;
 					settings?: Json | null;
 					share_code?: string;
 					updated_at?: string | null;
@@ -8930,6 +9075,28 @@ export type Database = {
 				};
 				Returns: string;
 			};
+			approve_guild_join_request: {
+				Args: {
+					p_request_id: string;
+					p_role?: string;
+				};
+				Returns: string;
+			};
+			resolve_guild_quest: {
+				Args: {
+					p_quest_id: string;
+					p_success: boolean;
+				};
+				Returns: undefined;
+			};
+			request_to_join_guild: {
+				Args: {
+					p_character_id?: string;
+					p_message?: string;
+					p_share_code: string;
+				};
+				Returns: string;
+			};
 			add_campaign_session_log: {
 				Args: {
 					p_campaign_id: string;
@@ -9073,6 +9240,7 @@ export type Database = {
 			create_guild_with_code: {
 				Args: {
 					p_campaign_id?: string;
+					p_character_id?: string;
 					p_description: string;
 					p_leader_user_id: string;
 					p_motto: string;

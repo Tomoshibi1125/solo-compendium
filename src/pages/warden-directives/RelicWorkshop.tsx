@@ -1,8 +1,11 @@
 import {
 	ArrowLeft,
 	Copy,
+	FileJson,
+	FileText,
 	Loader2,
 	Plus,
+	RotateCcw,
 	Save,
 	Shield,
 	Sparkles,
@@ -48,6 +51,7 @@ import { useAIEnhance } from "@/hooks/useAIEnhance";
 import { useDebounce } from "@/hooks/useDebounce";
 import { useUserToolState } from "@/hooks/useToolState";
 import { formatRarityLabel } from "@/lib/labels";
+import { downloadJson, downloadMarkdown } from "@/lib/toolExport";
 import { MONARCH_LABEL } from "@/lib/vernacular";
 import { loadWardenGenerationContext } from "@/lib/wardenGenerationContext";
 
@@ -81,6 +85,39 @@ export interface Relic {
 	properties: RelicProperty[];
 	attunement: boolean;
 	rarity: RelicRarity;
+}
+
+const RELIC_VALUE: Record<string, string> = {
+	common: "100+ Gate Credits",
+	uncommon: "500+ Gate Credits",
+	rare: "2,000+ Gate Credits",
+	"very-rare": "5,000+ Gate Credits",
+	epic: "7,500+ Gate Credits",
+	legendary: "10,000+ Gate Credits",
+	mythic: "15,000+ Gate Credits",
+	artifact: "25,000+ Gate Credits",
+};
+
+function relicToMarkdown(relic: Relic, enhanced?: string | null): string {
+	return `# ${relic.name}
+
+- **Type:** ${relic.type}
+- **Rank:** ${relic.rank}
+- **Rarity:** ${formatRarityLabel(relic.rarity)}
+- **Attunement:** ${relic.attunement ? "Required" : "None"}
+- **Estimated Value:** ${RELIC_VALUE[relic.rarity] ?? "—"}
+
+${relic.description || "_No description provided._"}
+
+## Properties
+${
+	relic.properties.length > 0
+		? relic.properties
+				.map((p) => `- **${p.name}** (${p.type}): ${p.description}`)
+				.join("\n")
+		: "- None"
+}
+${enhanced ? `\n## Warden Detail (AI)\n${enhanced}\n` : ""}`;
 }
 
 const RelicWorkshop = () => {
@@ -191,117 +228,40 @@ Provide ALL of the following sections with full detail:
 
 	const handleCopy = () => {
 		if (!currentRelic.name) return;
-		const text = `RELIC: ${currentRelic.name}
-Type: ${currentRelic.type}
-Rank: ${currentRelic.rank}
-Rarity: ${currentRelic.rarity}
-Attunement: ${currentRelic.attunement ? "Required" : "None"}
-Description: ${currentRelic.description || "None provided"}
-Properties: ${currentRelic.properties.map((p) => `${p.name} (${p.type}): ${p.description}`).join("; ") || "None"}
-
----
-RELIC STAT BLOCK:
-
-STATS:
-• Type: ${currentRelic.type}
-• Rarity: ${currentRelic.rarity}
-• Attunement: ${currentRelic.attunement ? `Required by character of ${currentRelic.rank} Rank or higher` : "None required"}
-• Weight: [Standard for ${currentRelic.type} type]
-• Value: [${currentRelic.rarity === "artifact" ? "25,000+" : currentRelic.rarity === "legendary" ? "10,000+" : currentRelic.rarity === "epic" ? "7,500+" : currentRelic.rarity === "very-rare" ? "5,000+" : currentRelic.rarity === "rare" ? "2,000+" : currentRelic.rarity === "uncommon" ? "500+" : "100+"} Gate Credits]
-
-PROPERTIES:
-${
-	currentRelic.properties
-		.map(
-			(property, i) => `${i + 1}. ${property.name} (${property.type}):
-   • Effect: ${property.description}
-   • Activation: [Action type and requirements]
-   • Uses: [Per day or recharge]
-   • Duration: [Effect duration]
-   • Save DC: [If applicable]`,
-		)
-		.join("\n\n") || "None"
-}
-
-ABILITIES:
-ABILITY 1: [Primary ability name]
-• Description: [How the ability functions]
-• Activation: [Action, bonus action, or reaction]
-• Duration: [Instant, concentration, or timed]
-• Recharge: [How often it can be used]
-
-ABILITY 2: [Secondary ability name]
-• Description: [Supporting or defensive function]
-• Activation: [Usage requirements]
-• Duration: [Effect length]
-• Recharge: [Reset conditions]
-
-${
-	currentRelic.rarity === "rare" ||
-	currentRelic.rarity === "very-rare" ||
-	currentRelic.rarity === "epic" ||
-	currentRelic.rarity === "legendary" ||
-	currentRelic.rarity === "artifact"
-		? `ABILITY 3: [Advanced ability]
-• Description: [High-level function]
-• Activation: [Complex requirements]
-• Duration: [Extended effect]
-• Recharge: [Limited usage]`
-		: ""
-}
-
-${
-	currentRelic.rarity === "very-rare" ||
-	currentRelic.rarity === "epic" ||
-	currentRelic.rarity === "legendary" ||
-	currentRelic.rarity === "artifact"
-		? `ABILITY 4: [Ultimate ability]
-• Description: [Maximum power effect]
-• Activation: [Special conditions]
-• Duration: [Permanent or very long]
-• Recharge: [Once per day or week]`
-		: ""
-}
-
-CURSE/BLESSING:
-${
-	currentRelic.rarity === "rare" ||
-	currentRelic.rarity === "very-rare" ||
-	currentRelic.rarity === "epic" ||
-	currentRelic.rarity === "legendary" ||
-	currentRelic.rarity === "artifact"
-		? `• Curse: [Negative effect and removal conditions]
-• Blessing: [Positive effect and activation]`
-		: "• None"
-}
-
-LORE:
-• Creation Story: [How this relic was forged]
-• Legendary Wielders: [Famous past users]
-• Connection to Regents: [Which Regent domain influenced its creation]
-• Rift Origins: [If created from Rift materials]
-• System Significance: [Why the Rift created this item]
-
-ATTUNEMENT RITUAL:
-"[Flavor text describing the attunement process, including any special requirements, ceremonies, or personal sacrifices needed to bond with the relic]"
-
-COMBAT USE:
-• Primary Function: [How to use in combat situations]
-• Synergies: [Works best with specific jobs/paths]
-• Tactical Advantages: [Strategic benefits in battle]
-• Limitations: [Restrictions or drawbacks]
-
-DESCRIPTION:
-${currentRelic.description || "No description provided"}
-
-READ-ALOUD DISCOVERY:
-"[Detailed description of how the players discover this relic, including its appearance, any magical aura, and initial impressions of its power]"`;
-
-		navigator.clipboard.writeText(text);
+		navigator.clipboard.writeText(relicToMarkdown(currentRelic, enhancedText));
 		toast({
 			title: "Copied",
-			description: "Complete relic stat block copied to clipboard.",
+			description: "Relic stat block copied to clipboard as Markdown.",
 		});
+	};
+
+	const handleExportMarkdown = () => {
+		if (!currentRelic.name) return;
+		downloadMarkdown(
+			`relic-${currentRelic.name}`,
+			relicToMarkdown(currentRelic, enhancedText),
+		);
+		toast({ title: "Exported", description: "Relic exported as Markdown." });
+	};
+
+	const handleExportJson = () => {
+		if (!currentRelic.name) return;
+		downloadJson(`relic-${currentRelic.name}`, currentRelic);
+		toast({ title: "Exported", description: "Relic exported as JSON." });
+	};
+
+	const loadRelic = (relic: Relic) => {
+		setCurrentRelic(relic);
+		toast({
+			title: "Loaded",
+			description: `${relic.name} loaded into the workshop.`,
+		});
+	};
+
+	const deleteRelic = (id: string) => {
+		const updated = relics.filter((r) => r.id !== id);
+		setRelics(updated);
+		void saveNow(updated);
 	};
 
 	const handleSeedFromCompendium = async () => {
@@ -758,6 +718,57 @@ READ-ALOUD DISCOVERY:
 							</AscendantText>
 						)}
 					</AscendantWindow>
+
+					<AscendantWindow title="SAVED RELICS">
+						{relics.length === 0 ? (
+							<AscendantText className="block text-muted-foreground text-sm text-center py-4">
+								No saved relics yet. Save a relic to build your library.
+							</AscendantText>
+						) : (
+							<div className="space-y-1">
+								{relics.map((r) => (
+									<div
+										key={r.id}
+										className="flex items-center gap-2 px-2 py-1.5 rounded border border-border hover:bg-muted/40 transition-colors"
+									>
+										<button
+											type="button"
+											onClick={() => loadRelic(r)}
+											className="flex-1 min-w-0 text-left"
+											title="Load this relic"
+										>
+											<span className="font-heading text-sm block truncate">
+												{r.name}
+											</span>
+											<span className="text-[11px] text-muted-foreground">
+												{formatRarityLabel(r.rarity)} · Rank {r.rank} · {r.type}
+											</span>
+										</button>
+										<Button
+											type="button"
+											variant="ghost"
+											size="icon"
+											className="h-7 w-7 shrink-0"
+											onClick={() => loadRelic(r)}
+											title="Load"
+										>
+											<RotateCcw className="w-3.5 h-3.5" />
+										</Button>
+										<Button
+											type="button"
+											variant="ghost"
+											size="icon"
+											className="h-7 w-7 shrink-0"
+											onClick={() => deleteRelic(r.id)}
+											title="Delete"
+										>
+											<Trash2 className="w-3.5 h-3.5" />
+										</Button>
+									</div>
+								))}
+							</div>
+						)}
+					</AscendantWindow>
 				</div>
 			</div>
 
@@ -776,6 +787,28 @@ READ-ALOUD DISCOVERY:
 						<Copy className="w-4 h-4 mr-2" />
 						Copy Relic Stats
 					</Button>
+				)}
+				{currentRelic.name && (
+					<div className="flex gap-2">
+						<Button
+							onClick={handleExportMarkdown}
+							variant="outline"
+							className="flex-1 gap-2"
+							size="lg"
+						>
+							<FileText className="w-4 h-4" />
+							Markdown
+						</Button>
+						<Button
+							onClick={handleExportJson}
+							variant="outline"
+							className="flex-1 gap-2"
+							size="lg"
+						>
+							<FileJson className="w-4 h-4" />
+							JSON
+						</Button>
+					</div>
 				)}
 				{currentRelic.name && (
 					<Button

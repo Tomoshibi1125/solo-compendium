@@ -37,53 +37,6 @@ export interface SavedSovereign {
 	likes_count: number;
 }
 
-export function useSavedSovereigns() {
-	return useQuery({
-		queryKey: ["saved-sovereigns"],
-		queryFn: async () => {
-			const { data, error } = await supabase
-				.from("saved_sovereigns")
-				.select(`
-          *,
-          job:compendium_jobs(name),
-          path:compendium_job_paths(name),
-          regent_a:compendium_regents!saved_sovereigns_regent_a_id_fkey(name, title, theme),
-          regent_b:compendium_regents!saved_sovereigns_regent_b_id_fkey(name, title, theme)
-        `)
-				.order("created_at", { ascending: false });
-			if (error) throw error;
-			return data || [];
-		},
-		retry: false, // Don't retry on errors
-	});
-}
-
-export function useMySovereigns() {
-	return useQuery({
-		queryKey: ["my-sovereigns"],
-		queryFn: async () => {
-			const {
-				data: { user },
-			} = await supabase.auth.getUser();
-			if (!user) return []; // Return empty array if not authenticated
-
-			const { data, error } = await supabase
-				.from("saved_sovereigns")
-				.select(`
-          *,
-          job:compendium_jobs(name),
-          path:compendium_job_paths(name),
-          regent_a:compendium_regents!saved_sovereigns_regent_a_id_fkey(name, title, theme),
-          regent_b:compendium_regents!saved_sovereigns_regent_b_id_fkey(name, title, theme)
-        `)
-				.eq("created_by", user.id)
-				.order("created_at", { ascending: false });
-			if (error) throw error;
-			return data;
-		},
-	});
-}
-
 /** Returns the saved sovereign that is currently linked to a character (if any). */
 export function useCharacterSovereign(characterId: string | undefined) {
 	return useQuery({
@@ -280,30 +233,6 @@ export function useSaveSovereign() {
 				title: "Save Failed",
 				description: error.message,
 				variant: "destructive",
-			});
-		},
-	});
-}
-
-export function useDeleteSovereign() {
-	const queryClient = useQueryClient();
-	const { toast } = useToast();
-
-	return useMutation({
-		mutationFn: async (sovereignId: string) => {
-			const { error } = await supabase
-				.from("saved_sovereigns")
-				.delete()
-				.eq("id", sovereignId);
-
-			if (error) throw error;
-		},
-		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: ["saved-sovereigns"] });
-			queryClient.invalidateQueries({ queryKey: ["my-sovereigns"] });
-			toast({
-				title: "Sovereign Deleted",
-				description: "The fusion has been removed from the archive.",
 			});
 		},
 	});

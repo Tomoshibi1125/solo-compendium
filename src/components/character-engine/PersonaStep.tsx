@@ -79,11 +79,11 @@ export const PersonaStep: React.FC<PersonaStepProps> = ({
 						<div className="flex items-center justify-between gap-3">
 							<Label
 								htmlFor="protocol-alignment"
-								className="text-[10px] uppercase tracking-widest text-primary/60"
+								className="text-[11px] uppercase tracking-widest text-primary/60"
 							>
 								Protocol Alignment
 							</Label>
-							<Badge variant="outline" className="text-[9px] uppercase">
+							<Badge variant="outline" className="text-[11px] uppercase">
 								Optional
 							</Badge>
 						</div>
@@ -104,7 +104,7 @@ export const PersonaStep: React.FC<PersonaStepProps> = ({
 						<div className="space-y-3">
 							<Label
 								htmlFor="personality-signal"
-								className="text-[10px] uppercase tracking-widest text-primary/60"
+								className="text-[11px] uppercase tracking-widest text-primary/60"
 							>
 								Personality Signal
 							</Label>
@@ -127,7 +127,7 @@ export const PersonaStep: React.FC<PersonaStepProps> = ({
 						<div className="space-y-3">
 							<Label
 								htmlFor="core-drive"
-								className="text-[10px] uppercase tracking-widest text-primary/60"
+								className="text-[11px] uppercase tracking-widest text-primary/60"
 							>
 								Core Drive
 							</Label>
@@ -144,7 +144,7 @@ export const PersonaStep: React.FC<PersonaStepProps> = ({
 						<div className="space-y-3">
 							<Label
 								htmlFor="anchor-bond"
-								className="text-[10px] uppercase tracking-widest text-primary/60"
+								className="text-[11px] uppercase tracking-widest text-primary/60"
 							>
 								Anchor / Bond
 							</Label>
@@ -161,7 +161,7 @@ export const PersonaStep: React.FC<PersonaStepProps> = ({
 						<div className="space-y-3">
 							<Label
 								htmlFor="fault-line"
-								className="text-[10px] uppercase tracking-widest text-primary/60"
+								className="text-[11px] uppercase tracking-widest text-primary/60"
 							>
 								Fault Line
 							</Label>

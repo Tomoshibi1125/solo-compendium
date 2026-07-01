@@ -1,5 +1,6 @@
 import { Activity, Sparkles, User } from "lucide-react";
 import { AutoLinkText } from "@/components/compendium/AutoLinkText";
+import { SourceBookCallout } from "@/components/compendium/SourceBookCallout";
 import { SourceBookPage } from "@/components/compendium/SourceBookPage";
 import { RiftHeading } from "@/components/ui/AscendantText";
 import { paths } from "@/data/compendium/paths";
@@ -38,6 +39,19 @@ export const IntroChapter = () => {
 							before their eyes.
 						</p>
 					</div>
+					<SourceBookCallout
+						title="Warden Protocol — Surviving the Awakening"
+						systemInteraction="⟁ LATTICE EVENT // A mana core has ignited nearby. Resonance signature unstable — brace for rebind."
+					>
+						<p>
+							The first time a character Awakens, the Warden calls for a DC 15
+							Constitution save as the mana core forces open. On a success the
+							core stabilizes and the Ascendant settles into their Resonance
+							Rank; on a failure they are "rebound" — taking one level of
+							exhaustion until they next complete a long rest at a calm point in
+							the Lattice.
+						</p>
+					</SourceBookCallout>
 				</section>
 
 				<section>
@@ -81,6 +95,19 @@ export const IntroChapter = () => {
 							<AutoLinkText text={rankingText} />
 						</p>
 					</div>
+					<SourceBookCallout
+						title="Warden Protocol — Resonance Rank Caps"
+						type="table"
+						systemInteraction="⟁ RESONANCE SCAN // Core density at rank ceiling. Further growth requires anomalous resonance."
+					>
+						<p>
+							An Ascendant's Resonance Rank caps the maximum mana-core density
+							they can ever hold — in play, the ceiling on the tier of
+							Techniques and the proficiency bonus they can reach. Only the
+							Zenith Anomaly bypasses this cap, expanding resonance without
+							limit.
+						</p>
+					</SourceBookCallout>
 				</section>
 
 				<div className="h-px w-full bg-gradient-to-r from-transparent via-cyan/30 to-transparent my-12" />

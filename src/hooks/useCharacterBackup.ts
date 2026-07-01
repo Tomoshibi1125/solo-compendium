@@ -73,17 +73,6 @@ export function loadLocalBackups(characterId: string): CharacterBackup[] {
 }
 
 /**
- * Restore a character from backup
- */
-export function restoreFromBackup(
-	backup: CharacterBackup,
-): CharacterWithAbilities {
-	return JSON.parse(
-		JSON.stringify(backup.backup_data),
-	) as CharacterWithAbilities;
-}
-
-/**
  * Delete a local backup
  */
 export function deleteLocalBackup(characterId: string, backupId: string): void {

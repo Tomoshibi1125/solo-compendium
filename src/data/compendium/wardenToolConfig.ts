@@ -14,19 +14,6 @@ export type TreasureRarity =
 	| "mythic"
 	| "artifact";
 
-// Drop weights across the full ladder (sums to 1.0). Mythic, epic, and artifact
-// are rare end-game drops so the top-tier relics are actually loot-eligible.
-export const TREASURE_RARITY_CHANCES: Record<TreasureRarity, number> = {
-	common: 0.576,
-	uncommon: 0.24,
-	rare: 0.1,
-	"very-rare": 0.05,
-	epic: 0.02,
-	legendary: 0.008,
-	mythic: 0.004,
-	artifact: 0.002,
-};
-
 export interface TreasureTableConfig {
 	tenRange: [number, number];
 	hundredChance: number;

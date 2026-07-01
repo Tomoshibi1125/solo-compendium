@@ -212,19 +212,19 @@ export function VehiclesPanel({ characterId, readOnly }: VehiclesPanelProps) {
 												</span>
 												<Badge
 													variant="outline"
-													className="text-[10px] uppercase"
+													className="text-[11px] uppercase"
 												>
 													{catalogEntry.vehicle_type}
 												</Badge>
-												<Badge variant="outline" className="text-[10px]">
+												<Badge variant="outline" className="text-[11px]">
 													{catalogEntry.size}
 												</Badge>
 												{catalogEntry.rank && (
-													<Badge variant="secondary" className="text-[10px]">
+													<Badge variant="secondary" className="text-[11px]">
 														Rank {catalogEntry.rank}
 													</Badge>
 												)}
-												<Badge variant="outline" className="text-[10px]">
+												<Badge variant="outline" className="text-[11px]">
 													{row.vrp_cost_paid ?? catalogEntry.vrp_cost ?? 0} VRP
 												</Badge>
 											</div>
@@ -271,7 +271,7 @@ export function VehiclesPanel({ characterId, readOnly }: VehiclesPanelProps) {
 											)}
 											<div className="mt-3 grid gap-2 md:grid-cols-[minmax(0,180px)_1fr]">
 												<div className="space-y-1">
-													<div className="text-[10px] uppercase text-muted-foreground">
+													<div className="text-[11px] uppercase text-muted-foreground">
 														Condition
 													</div>
 													{readOnly ? (
@@ -306,13 +306,13 @@ export function VehiclesPanel({ characterId, readOnly }: VehiclesPanelProps) {
 
 												<div className="space-y-2">
 													<div className="flex flex-wrap items-center gap-2">
-														<span className="text-[10px] uppercase text-muted-foreground">
+														<span className="text-[11px] uppercase text-muted-foreground">
 															Mods
 														</span>
-														<Badge variant="outline" className="text-[10px]">
+														<Badge variant="outline" className="text-[11px]">
 															{usedCapacity} / {modCapacity} capacity
 														</Badge>
-														<Badge variant="outline" className="text-[10px]">
+														<Badge variant="outline" className="text-[11px]">
 															{remainingCapacity} remaining
 														</Badge>
 													</div>

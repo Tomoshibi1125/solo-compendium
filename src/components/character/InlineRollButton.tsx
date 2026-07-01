@@ -91,20 +91,3 @@ export function InlineRollButton({
 		</Button>
 	);
 }
-
-// Convenience components for common roll types
-export function AbilityRollButton(
-	props: Omit<InlineRollButtonProps, "rollType">,
-) {
-	return <InlineRollButton {...props} rollType="ability" />;
-}
-
-export function SaveRollButton(props: Omit<InlineRollButtonProps, "rollType">) {
-	return <InlineRollButton {...props} rollType="save" />;
-}
-
-export function SkillRollButton(
-	props: Omit<InlineRollButtonProps, "rollType">,
-) {
-	return <InlineRollButton {...props} rollType="skill" />;
-}

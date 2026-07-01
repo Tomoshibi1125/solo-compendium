@@ -1,6 +1,6 @@
 /**
  * AI Integration Types
- * AI-powered enhancements for audio and art generation
+ * AI-powered enhancements for art generation
  */
 
 import { z } from "zod";
@@ -15,7 +15,6 @@ export const AIServiceSchema = z.object({
 			z.enum([
 				"enhance-prompt",
 				"analyze-image",
-				"analyze-audio",
 				"generate-tags",
 				"detect-mood",
 				"suggest-style",
@@ -39,7 +38,6 @@ export const AIServiceSchema = z.object({
 });
 
 export type AIService = z.infer<typeof AIServiceSchema>;
-type AICapability = AIService["capabilities"][number];
 
 // AI request types
 export const AIRequestSchema = z.object({
@@ -47,7 +45,6 @@ export const AIRequestSchema = z.object({
 	type: z.enum([
 		"enhance-prompt",
 		"analyze-image",
-		"analyze-audio",
 		"generate-tags",
 		"detect-mood",
 		"suggest-style",
@@ -98,23 +95,6 @@ export const AIResponseSchema = z.discriminatedUnion("success", [
 
 export type AIResponse = z.infer<typeof AIResponseSchema>;
 
-// Audio analysis results
-export const AudioAnalysisSchema = z.object({
-	mood: z.string(),
-	energy: z.number().min(0).max(1),
-	tempo: z.number().optional(),
-	key: z.string().optional(),
-	instruments: z.array(z.string()),
-	genre: z.string(),
-	tags: z.array(z.string()),
-	description: z.string(),
-	duration: z.number(),
-	loudness: z.number().min(-60).max(0).optional(),
-	spectralCentroid: z.number().optional(),
-});
-
-export type AudioAnalysis = z.infer<typeof AudioAnalysisSchema>;
-
 // Image analysis results
 export const ImageAnalysisSchema = z.object({
 	description: z.string(),
@@ -156,122 +136,11 @@ export const PromptEnhancementSchema = z.object({
 
 export type PromptEnhancement = z.infer<typeof PromptEnhancementSchema>;
 
-// ── Audio generation (Stable Audio Open / MusicGen via HF) ──────────
-export type AudioGenerationKind = "sfx" | "ambient" | "music";
-
-export interface AudioGenerationRequest {
-	prompt: string;
-	durationSeconds: number; // 1..47
-	kind: AudioGenerationKind;
-	campaignId?: string;
-}
-
-export interface AudioGenerationSuccess {
-	success: true;
-	audioUrl: string;
-	storagePath: string;
-	mimeType: string;
-	bytes: number;
-	provider: string;
-	prompt: string;
-	kind: AudioGenerationKind;
-	durationSeconds: number;
-	createdAt: string;
-}
-
-export interface AudioGenerationModelLoading {
-	success: false;
-	status: "model_loading";
-	error: string;
-	retryAfterSeconds: number;
-}
-
-export interface AudioGenerationError {
-	success: false;
-	status?: "error";
-	error: string;
-	retryAfterSeconds?: number;
-}
-
-export type AudioGenerationResponse =
-	| AudioGenerationSuccess
-	| AudioGenerationModelLoading
-	| AudioGenerationError;
-
-/** Minimal character shape required by AI integration methods */
-export interface AICharacterInput {
-	name: string;
-	level: number;
-	job: string;
-	abilities: Record<string, number>;
-	equipment?: unknown[];
-}
-
-/** Minimal regent shape required by AI integration methods */
-export interface AIRegentInput {
-	id?: string;
-	name: string;
-	type: string;
-	description: string;
-	abilities: string[];
-	features?: unknown[];
-	spells?: unknown[];
-	requirements: { level: number; statThreshold: number };
-}
-
-/** Minimal quest shape required by AI integration methods */
-export interface AIQuestInput {
-	id: string;
-	name: string;
-	description: string;
-	requirements: { level: number };
-}
-
-/** Optimization suggestion result shape */
-export interface OptimizationSuggestions {
-	statPriorities: string[];
-	equipment: string[];
-	feats: string[];
-	abilities: string[];
-	levelUp: string[];
-}
-
-/** Regent Choice result shape */
-export interface AIRegentChoice {
-	regent: string; // regent id
-	name: string;
-	description: string;
-	compatibility: number;
-	reasoning: string;
-	statAlignment: number;
-}
-
-/** Gemini Fusion result shape */
-export interface AIGeminiFusion {
-	id: string;
-	name: string;
-	description: string;
-	fusionType: "Perfect" | "Good" | "Average";
-	abilities: string[];
-	features: Array<{ name: string; description: string; type: string }>;
-	spells: string[];
-	techniques: string[];
-	traits: Array<{
-		name: string;
-		description: string;
-		type: string;
-		benefits?: string[];
-	}>;
-	statBonuses: Record<string, number>;
-	specialAbilities: string[];
-}
-
 // AI configuration
 export interface AIConfiguration {
 	services: AIService[];
 	defaultService: string;
 	autoEnhancePrompts: boolean;
-	autoAnalyzeAudio: boolean;
 	autoAnalyzeImages: boolean;
 	contentFiltering: boolean;
 	maxRequestsPerHour: number;
@@ -287,7 +156,6 @@ export const DEFAULT_AI_SERVICES: AIService[] = [
 		capabilities: [
 			"enhance-prompt",
 			"analyze-image",
-			"analyze-audio",
 			"generate-tags",
 			"detect-mood",
 			"suggest-style",
@@ -358,7 +226,6 @@ export const DEFAULT_AI_CONFIG: AIConfiguration = {
 	services: DEFAULT_AI_SERVICES,
 	defaultService: "gemini-native",
 	autoEnhancePrompts: true,
-	autoAnalyzeAudio: true,
 	autoAnalyzeImages: true,
 	contentFiltering: true,
 	maxRequestsPerHour: parseNumberEnv(
@@ -374,36 +241,4 @@ export function getAIServiceById(
 	services: AIService[],
 ): AIService | undefined {
 	return services.find((service) => service.id === id);
-}
-
-export function getAIServiceForCapability(
-	capability: AICapability,
-	services: AIService[],
-): AIService | undefined {
-	return services.find(
-		(service) => service.enabled && service.capabilities.includes(capability),
-	);
-}
-
-export function validateAIRequest(request: AIRequest): string[] {
-	const errors: string[] = [];
-
-	if (!request.input) {
-		errors.push("Input is required");
-	}
-
-	const service = getAIServiceById(request.service, DEFAULT_AI_SERVICES);
-	if (!service) {
-		errors.push(`Unknown AI service: ${request.service}`);
-	}
-
-	if (service && !service.enabled) {
-		errors.push(`AI service is disabled: ${service.name}`);
-	}
-
-	if (service && !service.capabilities.includes(request.type)) {
-		errors.push(`Service ${service.name} doesn't support ${request.type}`);
-	}
-
-	return errors;
 }

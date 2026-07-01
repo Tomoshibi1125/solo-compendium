@@ -19,23 +19,6 @@ export function isTouchDevice(): boolean {
 }
 
 /**
- * Get viewport dimensions
- */
-export function getViewportSize(): { width: number; height: number } {
-	return {
-		width: window.innerWidth,
-		height: window.innerHeight,
-	};
-}
-
-/**
- * Check if viewport is small (mobile)
- */
-export function isSmallViewport(): boolean {
-	return window.innerWidth < 768;
-}
-
-/**
  * Prevent zoom on double tap (iOS)
  */
 let doubleTapZoomGuardEnabled = false;

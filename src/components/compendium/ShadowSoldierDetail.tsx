@@ -185,7 +185,7 @@ export const ShadowSoldierDetail = ({ data }: ShadowSoldierDetailProps) => {
 							<div className="text-2xl font-bold font-heading text-red-400">
 								{hp}
 							</div>
-							<div className="text-[10px] text-muted-foreground uppercase tracking-wider">
+							<div className="text-[11px] text-muted-foreground uppercase tracking-wider">
 								Hit Points
 							</div>
 						</div>
@@ -196,7 +196,7 @@ export const ShadowSoldierDetail = ({ data }: ShadowSoldierDetailProps) => {
 							<div className="text-2xl font-bold font-heading text-cyan">
 								{ac}
 							</div>
-							<div className="text-[10px] text-muted-foreground uppercase tracking-wider">
+							<div className="text-[11px] text-muted-foreground uppercase tracking-wider">
 								Armor Class
 							</div>
 						</div>
@@ -207,7 +207,7 @@ export const ShadowSoldierDetail = ({ data }: ShadowSoldierDetailProps) => {
 							<div className="text-2xl font-bold font-heading text-amber-400">
 								{speed} ft.
 							</div>
-							<div className="text-[10px] text-muted-foreground uppercase tracking-wider">
+							<div className="text-[11px] text-muted-foreground uppercase tracking-wider">
 								Speed
 							</div>
 						</div>
@@ -218,7 +218,7 @@ export const ShadowSoldierDetail = ({ data }: ShadowSoldierDetailProps) => {
 							<div className="text-2xl font-bold font-heading text-solar-glow">
 								CR {cr}
 							</div>
-							<div className="text-[10px] text-muted-foreground uppercase tracking-wider">
+							<div className="text-[11px] text-muted-foreground uppercase tracking-wider">
 								Challenge
 							</div>
 						</div>
@@ -235,7 +235,7 @@ export const ShadowSoldierDetail = ({ data }: ShadowSoldierDetailProps) => {
 								key={ability.label}
 								className="text-center bg-void/60 border border-border rounded-lg p-3"
 							>
-								<div className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider mb-1">
+								<div className="text-[11px] font-bold text-muted-foreground uppercase tracking-wider mb-1">
 									{ability.label}
 								</div>
 								<div className="text-xl font-bold font-heading">
@@ -426,7 +426,7 @@ export const ShadowSoldierDetail = ({ data }: ShadowSoldierDetailProps) => {
 									{action.action_type && (
 										<Badge
 											variant="outline"
-											className="text-[10px] capitalize border-muted"
+											className="text-[11px] capitalize border-muted"
 										>
 											{action.action_type}
 										</Badge>

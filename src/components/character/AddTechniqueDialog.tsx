@@ -227,7 +227,7 @@ export function AddTechniqueDialog({
 														<Badge
 															key={src}
 															variant={src === "Rune" ? "default" : "outline"}
-															className="text-[10px] uppercase tracking-wider"
+															className="text-[11px] uppercase tracking-wider"
 														>
 															{src}
 														</Badge>
@@ -236,7 +236,7 @@ export function AddTechniqueDialog({
 														.source_book && (
 														<Badge
 															variant="secondary"
-															className="text-[9px] uppercase bg-primary/10 text-primary/70 border-primary/20"
+															className="text-[11px] uppercase bg-primary/10 text-primary/80 border-primary/20"
 														>
 															{formatRegentVernacular(
 																(tech as { source_book?: string | null })
@@ -246,7 +246,7 @@ export function AddTechniqueDialog({
 													)}
 												</div>
 												{tech.description && (
-													<p className="text-xs text-muted-foreground line-clamp-2 mt-1">
+													<p className="text-sm leading-relaxed text-muted-foreground mt-1">
 														{formatRegentVernacular(tech.description)}
 													</p>
 												)}

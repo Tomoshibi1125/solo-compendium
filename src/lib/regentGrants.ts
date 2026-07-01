@@ -23,8 +23,6 @@ export const REGENT_GRANTS = {
 
 export type RegentGrantId = keyof typeof REGENT_GRANTS;
 
-export const REGENT_GRANT_IDS = Object.keys(REGENT_GRANTS) as RegentGrantId[];
-
 function normalizeRegentToken(value: string): string {
 	return value
 		.trim()

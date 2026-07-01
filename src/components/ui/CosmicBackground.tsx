@@ -10,6 +10,7 @@ import {
 } from "react";
 import { usePerformanceProfile } from "@/lib/performanceProfile";
 import { cn } from "@/lib/utils";
+import { type AppZone, useUiStore } from "@/stores/uiStore";
 import { DynamicStyle } from "./DynamicStyle";
 import { GateEnergyFlow } from "./GateEnergyFlow";
 
@@ -389,4 +390,30 @@ export const CosmicBackground = ({
 			)}
 		</div>
 	);
+};
+
+const ZONE_BACKGROUND: Record<
+	AppZone,
+	{
+		variant: CosmicBackgroundProps["variant"];
+		intensity: CosmicBackgroundProps["intensity"];
+	}
+> = {
+	default: { variant: "default", intensity: "medium" },
+	compendium: { variant: "default", intensity: "low" },
+	warden: { variant: "gate", intensity: "medium" },
+	campaign: { variant: "shadow", intensity: "medium" },
+	character: { variant: "sovereign", intensity: "medium" },
+};
+
+/**
+ * Route-zone-aware ambient background. Reads the active zone from the UI store
+ * (set by RouteEffects on navigation) and maps it to a CosmicBackground
+ * variant/intensity so the vignette shifts per app area.
+ */
+export const ZonedCosmicBackground = () => {
+	const zone = useUiStore((state) => state.zone);
+	const { variant, intensity } =
+		ZONE_BACKGROUND[zone] ?? ZONE_BACKGROUND.default;
+	return <CosmicBackground variant={variant} intensity={intensity} />;
 };

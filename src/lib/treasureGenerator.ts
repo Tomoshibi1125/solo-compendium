@@ -4,7 +4,6 @@ import {
 	type GateRank,
 	TREASURE_ITEM_RARITIES,
 	TREASURE_MATERIALS,
-	TREASURE_RARITY_CHANCES,
 	TREASURE_RELIC_RARITIES,
 	TREASURE_TABLES,
 	type TreasureRarity,
@@ -18,22 +17,6 @@ import {
 } from "@/lib/wardenGenerationContext";
 
 export { GATE_RANKS, TREASURE_TABLES };
-
-export function generateRarity(): TreasureRarity {
-	const roll = Math.random();
-	let cumulative = 0;
-
-	for (const [rarity, chance] of Object.entries(
-		TREASURE_RARITY_CHANCES,
-	) as Array<[TreasureRarity, number]>) {
-		cumulative += chance;
-		if (roll <= cumulative) {
-			return rarity;
-		}
-	}
-
-	return "common";
-}
 
 export interface TreasureResult {
 	rank: string;

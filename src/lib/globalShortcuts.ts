@@ -232,31 +232,3 @@ export function showShortcutsHelp() {
 	const helpEvent = new CustomEvent("show-shortcuts-help");
 	window.dispatchEvent(helpEvent);
 }
-
-/**
- * Get shortcuts by category
- */
-export function getShortcutsByCategory(
-	category: GlobalShortcut["category"],
-): GlobalShortcut[] {
-	return GLOBAL_SHORTCUTS.filter((s) => s.category === category);
-}
-
-/**
- * Get all global shortcuts (work everywhere)
- */
-export function getGlobalShortcuts(): GlobalShortcut[] {
-	return GLOBAL_SHORTCUTS.filter((s) => s.global === true);
-}
-
-/**
- * Format shortcut for display
- */
-export function formatShortcut(shortcut: GlobalShortcut): string {
-	const parts: string[] = [];
-	if (shortcut.ctrl || shortcut.meta) parts.push(shortcut.meta ? "⌘" : "Ctrl");
-	if (shortcut.shift) parts.push("Shift");
-	if (shortcut.alt) parts.push("Alt");
-	parts.push(shortcut.key.toUpperCase());
-	return parts.join(" + ");
-}

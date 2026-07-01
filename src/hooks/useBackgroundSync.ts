@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/lib/auth/authContext";
 import { logger } from "@/lib/logger";
+import { notifyError } from "@/lib/notify";
 import type { SyncAction, SyncItem, SyncItemType } from "@/lib/syncManager";
 import {
 	enqueueSyncItem,
@@ -44,9 +45,19 @@ export function useBackgroundSync() {
 		setState((prev) => ({ ...prev, isSyncing: true }));
 
 		try {
-			await flushSyncQueue();
+			const result = await flushSyncQueue();
 			await refreshQueue();
 			setState((prev) => ({ ...prev, lastSyncTime: new Date().toISOString() }));
+			// High-signal only: surface failures (success is reflected by the
+			// SyncStatusIndicator badge clearing, so don't spam on every autosave).
+			if (result.failed > 0) {
+				void notifyError("Sync incomplete", {
+					message: `${result.failed} change${
+						result.failed === 1 ? "" : "s"
+					} couldn't sync and will retry automatically.`,
+					category: "sync",
+				});
+			}
 		} catch (error) {
 			logger.error("Manual sync failed:", error);
 			toast({

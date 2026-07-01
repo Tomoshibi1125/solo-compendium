@@ -19,6 +19,7 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
+import { SessionPlannerBoard } from "@/components/warden-directives/SessionPlannerBoard";
 import { useJoinedCampaigns, useMyCampaigns } from "@/hooks/useCampaigns";
 import { useHydratedPreferredCampaignId } from "@/hooks/usePreferredCampaignSelection";
 
@@ -178,7 +179,13 @@ const SessionPlanner = () => {
 						</AscendantWindow>
 
 						{activeCampaignId && (
-							<CampaignSessionsPanel campaignId={activeCampaignId} canManage />
+							<>
+								<SessionPlannerBoard campaignId={activeCampaignId} />
+								<CampaignSessionsPanel
+									campaignId={activeCampaignId}
+									canManage
+								/>
+							</>
 						)}
 					</>
 				)}

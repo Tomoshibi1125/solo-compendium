@@ -13,7 +13,6 @@
  *  - Shield: +2 (or item AC)
  */
 
-import { useMemo } from "react";
 import type { AbilityScore } from "@/lib/5eRulesEngine";
 import {
 	type ACContext,
@@ -240,22 +239,4 @@ export function calculateAC(
 		formula,
 		warnings,
 	};
-}
-
-// ---------------------------------------------------------------------------
-// Hook
-// ---------------------------------------------------------------------------
-
-export function useArmorClass(
-	agiScore: number,
-	armor: EquippedArmor | null,
-	shield: EquippedShield | null,
-	otherBonuses: number = 0,
-	strScore?: number,
-	extras?: ACContextExtras,
-): ACBreakdown {
-	return useMemo(
-		() => calculateAC(agiScore, armor, shield, otherBonuses, strScore, extras),
-		[agiScore, armor, shield, otherBonuses, strScore, extras],
-	);
 }

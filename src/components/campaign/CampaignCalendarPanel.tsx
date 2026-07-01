@@ -33,7 +33,7 @@ export function CampaignCalendarPanel({
 			>
 				<div>
 					<p
-						className="font-resurge text-[10px] uppercase tracking-[0.4em] text-primary/80"
+						className="font-resurge text-[11px] uppercase tracking-[0.4em] text-primary/80"
 						id="campaign-calendar-time-label"
 					>
 						Standard Bureau Time
@@ -48,7 +48,7 @@ export function CampaignCalendarPanel({
 				</div>
 				<div>
 					<p
-						className="font-resurge text-[10px] uppercase tracking-[0.4em] text-primary/80"
+						className="font-resurge text-[11px] uppercase tracking-[0.4em] text-primary/80"
 						id="campaign-calendar-pip-label"
 					>
 						Rift Cycle

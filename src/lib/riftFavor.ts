@@ -106,21 +106,6 @@ export function getAvailableFavorOptions(level: number): RiftFavorOption[] {
 	return RIFT_FAVOR_OPTIONS.filter((opt) => level >= opt.minLevel);
 }
 
-// Aligned with unified engine: 3/4/5/6 by tier (Rift Ascendant canonical formula)
-function getRiftFavorMax(level: number): number {
-	if (level <= 4) return 3;
-	if (level <= 10) return 4;
-	if (level <= 16) return 5;
-	return 6;
-}
-
-function getRiftFavorDie(level: number): number {
-	if (level <= 4) return 4;
-	if (level <= 10) return 6;
-	if (level <= 16) return 8;
-	return 10;
-}
-
 // ── Rift Favor State Management ───────────────────────────────────────
 
 export interface RiftFavorState {
@@ -144,18 +129,6 @@ export interface SpendResult {
 	message: string;
 	option?: RiftFavorOption;
 	error?: string;
-}
-
-/** Initialize Rift Favor state from character level */
-export function initializeRiftFavor(level: number): RiftFavorState {
-	return {
-		current: getRiftFavorMax(level),
-		max: getRiftFavorMax(level),
-		dieSize: getRiftFavorDie(level),
-		level,
-		deathDefianceUsed: false,
-		criticalSurgeUsed: false,
-	};
 }
 
 /** Get options the character can currently afford */
@@ -250,51 +223,5 @@ export function spendRiftFavor(
 		updatedState,
 		message: `⚡ ${option.name}! ${option.description} (${updatedState.current}/${state.max} Rift Favor remaining)`,
 		option,
-	};
-}
-
-/** Gain Rift Favor (Warden award, roleplay bonus) */
-export function gainRiftFavor(
-	state: RiftFavorState,
-	amount: number,
-	reason?: string,
-): { updatedState: RiftFavorState; message: string } {
-	const newCurrent = Math.min(state.current + amount, state.max);
-	const actualGain = newCurrent - state.current;
-
-	return {
-		updatedState: { ...state, current: newCurrent },
-		message:
-			actualGain > 0
-				? `⚡ Gained ${actualGain} Rift Favor${reason ? ` (${reason})` : ""}. (${newCurrent}/${state.max})`
-				: `Rift Favor is already at maximum (${state.max}).`,
-	};
-}
-
-/** Reset Rift Favor on long rest (full pool + clear once-per-rest flags) */
-export function resetOnLongRest(state: RiftFavorState): RiftFavorState {
-	return {
-		...state,
-		current: state.max,
-		deathDefianceUsed: false,
-		criticalSurgeUsed: false,
-	};
-}
-
-/** Update Rift Favor state when character levels up */
-export function updateForLevel(
-	state: RiftFavorState,
-	newLevel: number,
-): RiftFavorState {
-	const newMax = getRiftFavorMax(newLevel);
-	const newDie = getRiftFavorDie(newLevel);
-	const bonusFavor = Math.max(0, newMax - state.max);
-
-	return {
-		...state,
-		level: newLevel,
-		max: newMax,
-		dieSize: newDie,
-		current: Math.min(state.current + bonusFavor, newMax),
 	};
 }

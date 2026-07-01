@@ -961,13 +961,3 @@ export function calculateTotalCombinations(
 	// Each path belongs to a specific job, so we use path count directly
 	return pathCount * regentPairs;
 }
-
-// Get fusion description for display
-export function getFusionDescription(): string {
-	return `Gemini Protocol overlays a permanent subclass using Job + Path + ${REGENT_LABEL} A + ${REGENT_LABEL} B. Any valid template can fuse, and each Sovereign is a unique, irreversible overlay with combined memories and abilities.`;
-}
-
-// Get fusion method description for display (legacy compatibility)
-export function getFusionMethodDescription(): string {
-	return getFusionDescription();
-}

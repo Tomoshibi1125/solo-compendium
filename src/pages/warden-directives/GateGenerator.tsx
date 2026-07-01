@@ -7,6 +7,7 @@ import {
 	Loader2,
 	MapIcon,
 	RefreshCw,
+	Save,
 	ScrollText,
 	Shield,
 	Sparkles,
@@ -27,13 +28,22 @@ import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
+import {
+	Select,
+	SelectContent,
+	SelectItem,
+	SelectTrigger,
+	SelectValue,
+} from "@/components/ui/select";
 import { DungeonMapGenerator } from "@/components/warden-directives/DungeonMapGenerator";
 import { useEmbedded } from "@/contexts/EmbeddedContext";
 import { WARDEN_RANKS } from "@/data/wardenGeneratorContent";
 import { useToast } from "@/hooks/use-toast";
 import { useAIEnhance } from "@/hooks/useAIEnhance";
+import { useMyCampaigns } from "@/hooks/useCampaigns";
 import { useDebounce } from "@/hooks/useDebounce";
-import { useUserToolState } from "@/hooks/useToolState";
+import { saveCampaignToolState, useUserToolState } from "@/hooks/useToolState";
+import { useAuth } from "@/lib/auth/authContext";
 import {
 	buildAISeed,
 	type GeneratedRiftPacket,
@@ -46,6 +56,8 @@ const GateGenerator = () => {
 	const navigate = useNavigate();
 	const embedded = useEmbedded();
 	const { toast } = useToast();
+	const { user } = useAuth();
+	const { data: myCampaigns = [] } = useMyCampaigns();
 	const {
 		state: storedState,
 		isLoading,
@@ -65,6 +77,8 @@ const GateGenerator = () => {
 	const [rift, setRift] = useState<GeneratedRiftPacket | null>(null);
 	const [isGenerating, setIsGenerating] = useState(false);
 	const [expandedSection, setExpandedSection] = useState<string | null>(null);
+	const [selectedCampaignId, setSelectedCampaignId] = useState<string>("");
+	const [isSavingCampaign, setIsSavingCampaign] = useState(false);
 	const userInteractedRef = useRef(false);
 
 	const hydrated = useMemo(() => {
@@ -157,6 +171,34 @@ const GateGenerator = () => {
 			title: "Copied",
 			description: "Complete Rift dossier copied to clipboard.",
 		});
+	};
+
+	const handleSaveToCampaign = async () => {
+		if (!rift || !selectedCampaignId) return;
+		setIsSavingCampaign(true);
+		try {
+			await saveCampaignToolState(
+				selectedCampaignId,
+				user?.id ?? null,
+				"gate_generator",
+				{ selectedRank, rift },
+			);
+			const name =
+				myCampaigns.find((c) => c.id === selectedCampaignId)?.name ??
+				"campaign";
+			toast({
+				title: "Saved to Campaign",
+				description: `Rift saved to ${name}.`,
+			});
+		} catch (error) {
+			toast({
+				title: "Save Failed",
+				description: error instanceof Error ? error.message : "Unknown error",
+				variant: "destructive",
+			});
+		} finally {
+			setIsSavingCampaign(false);
+		}
 	};
 
 	const toggleSection = (section: string) => {
@@ -321,6 +363,42 @@ const GateGenerator = () => {
 										Regenerate
 									</Button>
 								</div>
+								{myCampaigns.length > 0 && (
+									<div className="space-y-2 pt-2 border-t border-border">
+										<span className="text-xs font-display text-muted-foreground">
+											SAVE TO CAMPAIGN
+										</span>
+										<Select
+											value={selectedCampaignId}
+											onValueChange={setSelectedCampaignId}
+										>
+											<SelectTrigger className="h-9">
+												<SelectValue placeholder="Select a campaign" />
+											</SelectTrigger>
+											<SelectContent>
+												{myCampaigns.map((camp) => (
+													<SelectItem key={camp.id} value={camp.id}>
+														{camp.name}
+													</SelectItem>
+												))}
+											</SelectContent>
+										</Select>
+										<Button
+											variant="outline"
+											size="sm"
+											className="w-full gap-1"
+											disabled={!selectedCampaignId || isSavingCampaign}
+											onClick={handleSaveToCampaign}
+										>
+											{isSavingCampaign ? (
+												<Loader2 className="w-3 h-3 animate-spin" />
+											) : (
+												<Save className="w-3 h-3" />
+											)}
+											Save to Campaign
+										</Button>
+									</div>
+								)}
 							</div>
 						</AscendantWindow>
 					)}

@@ -2,16 +2,20 @@ import {
 	Download,
 	Edit,
 	Gift,
+	Loader2,
 	Package,
 	Package2,
 	Plus,
 	Save,
 	Search,
+	Sparkles,
 	Star,
 	Trash2,
 	Upload,
 } from "lucide-react";
 import { useMemo, useState } from "react";
+import { ActivityFeedPanel } from "@/components/shared/ActivityFeedPanel";
+import { ExportMenu } from "@/components/shared/ExportMenu";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -35,6 +39,8 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
+import { useActivityFeed } from "@/hooks/useActivityFeed";
+import { useAIEnhance } from "@/hooks/useAIEnhance";
 import {
 	type MarketplaceItemRecord,
 	type MarketplaceItemType,
@@ -47,6 +53,10 @@ import {
 	useUpsertMarketplaceReview,
 } from "@/hooks/useMarketplaceData";
 import { useAuth } from "@/lib/auth/authContext";
+import {
+	buildMarketplaceCsv,
+	buildMarketplaceMarkdown,
+} from "@/lib/communityExport";
 
 const ITEM_TYPES: MarketplaceItemType[] = [
 	"campaign",
@@ -104,6 +114,18 @@ export function MarketplaceWorkbench() {
 	const recordDownload = useRecordMarketplaceDownload();
 	const submitReview = useUpsertMarketplaceReview();
 	const giftItem = useGiftMarketplaceItem();
+	const { enhance, isEnhancing } = useAIEnhance();
+	const activity = useActivityFeed({ toolKey: "marketplace-activity" });
+
+	const handleGenerateDescription = async () => {
+		const seed = `Title: ${title || "(untitled)"}. Type: ${itemType}. Category: ${category}`;
+		const text = await enhance(
+			"marketplace listing description",
+			seed,
+			"Write a compelling 2-3 sentence marketplace listing description for a dark fantasy TTRPG content pack. Return only the prose, no preamble.",
+		);
+		if (text) setDescription(text.trim());
+	};
 
 	// F6 of May 2026 remediation plan — gift modal state.
 	const [giftItemTarget, setGiftItemTarget] =
@@ -129,6 +151,11 @@ export function MarketplaceWorkbench() {
 				message: giftMessage.trim() || undefined,
 			})
 			.then(() => {
+				activity.log({
+					kind: "gifted",
+					label: `Gifted “${giftItemTarget.title}”`,
+					category: "marketplace",
+				});
 				setGiftItemTarget(null);
 				setGiftRecipientId("");
 				setGiftMessage("");
@@ -225,6 +252,12 @@ export function MarketplaceWorkbench() {
 			isListed,
 		});
 
+		activity.log({
+			kind: editingId ? "updated" : "published",
+			label: `${editingId ? "Updated" : "Published"} “${title.trim()}”`,
+			category: "marketplace",
+		});
+
 		if (!editingId) {
 			resetForm();
 		}
@@ -239,6 +272,11 @@ export function MarketplaceWorkbench() {
 
 	const proceedDownload = async (item: MarketplaceItemRecord) => {
 		await recordDownload.mutateAsync({ itemId: item.id });
+		activity.log({
+			kind: "downloaded",
+			label: `Downloaded “${item.title}”`,
+			category: "marketplace",
+		});
 		if (item.file_url) {
 			window.open(item.file_url, "_blank", "noopener,noreferrer");
 		} else {
@@ -320,7 +358,7 @@ export function MarketplaceWorkbench() {
 		<Tabs
 			value={tab}
 			onValueChange={(value) => setTab(value as "browse" | "publish")}
-			className="space-y-4"
+			className="space-y-4 book-print-root"
 		>
 			<TabsList>
 				<TabsTrigger value="browse">Browse Marketplace</TabsTrigger>
@@ -392,6 +430,17 @@ export function MarketplaceWorkbench() {
 				</AscendantWindow>
 
 				<AscendantWindow title="LISTINGS">
+					{items.length > 0 && (
+						<div className="mb-3 flex justify-end">
+							<ExportMenu
+								baseName="marketplace-listings"
+								label="Export Listings"
+								markdown={() => buildMarketplaceMarkdown(items)}
+								json={() => items}
+								csv={() => buildMarketplaceCsv(items)}
+							/>
+						</div>
+					)}
 					{isLoading ? (
 						<p className="text-sm text-muted-foreground">
 							Loading marketplace...
@@ -616,7 +665,24 @@ export function MarketplaceWorkbench() {
 						</div>
 
 						<div className="md:col-span-2">
-							<Label htmlFor="publish-description">Description</Label>
+							<div className="flex items-center justify-between">
+								<Label htmlFor="publish-description">Description</Label>
+								<Button
+									type="button"
+									variant="ghost"
+									size="sm"
+									className="h-7 gap-1.5 text-xs"
+									onClick={handleGenerateDescription}
+									disabled={isEnhancing}
+								>
+									{isEnhancing ? (
+										<Loader2 className="w-3.5 h-3.5 animate-spin" />
+									) : (
+										<Sparkles className="w-3.5 h-3.5" />
+									)}
+									Generate
+								</Button>
+							</div>
 							<Textarea
 								id="publish-description"
 								rows={3}
@@ -749,6 +815,14 @@ export function MarketplaceWorkbench() {
 						</Button>
 					</div>
 				</AscendantWindow>
+
+				<ActivityFeedPanel
+					title="MARKETPLACE ACTIVITY"
+					events={activity.events}
+					onRemove={activity.remove}
+					onClear={activity.clear}
+					emptyLabel="No marketplace activity yet. Publish, gift, or download a listing to build a history."
+				/>
 			</TabsContent>
 			<Dialog
 				open={giftItemTarget !== null}

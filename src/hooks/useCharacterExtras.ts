@@ -1,9 +1,17 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import type { SandboxNPC } from "@/data/compendium/sandbox-npcs";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
-import type { Database } from "@/integrations/supabase/types";
+import type { Database, Json } from "@/integrations/supabase/types";
+import {
+	abilitiesFromNpc,
+	GUILD_ALLY_EXTRA_TYPE,
+	leveledCompanionHp,
+} from "@/lib/companions";
 
 type CharacterExtra = Database["public"]["Tables"]["character_extras"]["Row"];
+type CharacterExtraInsert =
+	Database["public"]["Tables"]["character_extras"]["Insert"];
 
 type CharacterExtraWithAnomaly = CharacterExtra & {
 	Anomaly?:
@@ -47,9 +55,7 @@ export function useCharacterExtras(characterId: string) {
 	});
 
 	const addExtra = useMutation({
-		mutationFn: async (
-			newExtra: Omit<CharacterExtra, "id" | "created_at" | "updated_at">,
-		) => {
+		mutationFn: async (newExtra: CharacterExtraInsert) => {
 			const { data, error } = await supabase
 				.from("character_extras")
 				.insert(newExtra)
@@ -137,4 +143,85 @@ export function useCharacterExtras(characterId: string) {
 		updateExtra: updateExtra.mutateAsync,
 		removeExtra: removeExtra.mutateAsync,
 	};
+}
+
+/**
+ * Carry a recruited guild NPC onto a character sheet as a combat-ready ally
+ * Companion. Snapshots the NPC's leveled stats + key abilities into a
+ * `character_extras` row and records provenance (npc/guild/member ids) so a
+ * future "re-sync from guild" is possible. The unique
+ * `(character_id, npc_id)` index prevents adding the same ally twice.
+ */
+export function useAddGuildAllyCompanion() {
+	const queryClient = useQueryClient();
+	const { toast } = useToast();
+
+	return useMutation({
+		mutationFn: async (params: {
+			characterId: string;
+			npc: SandboxNPC;
+			/** Current guild level of the recruit (defaults to the NPC's base level). */
+			level?: number;
+			guildId?: string;
+			memberId?: string;
+		}) => {
+			const { characterId, npc } = params;
+			const level = params.level ?? npc.level;
+			const hp = leveledCompanionHp(npc, level);
+			const note = [npc.title, npc.rank ? `Rank ${npc.rank}` : null]
+				.filter(Boolean)
+				.join(" · ");
+
+			const { data, error } = await supabase
+				.from("character_extras")
+				.insert({
+					character_id: characterId,
+					extra_type: GUILD_ALLY_EXTRA_TYPE,
+					name: npc.name,
+					hp_current: hp,
+					hp_max: hp,
+					ac: npc.ac,
+					speed: 30,
+					is_active: false,
+					monster_id: null,
+					notes: note || null,
+					npc_id: npc.id,
+					source_guild_id: params.guildId ?? null,
+					source_member_id: params.memberId ?? null,
+					npc_data: JSON.parse(JSON.stringify(npc)) as Json,
+					abilities: abilitiesFromNpc(npc) as unknown as Json,
+					equipment: [] as unknown as Json,
+					conditions: [] as unknown as Json,
+					initiative: null,
+				})
+				.select()
+				.single();
+
+			if (error) throw error;
+			return data;
+		},
+		onSuccess: (_data, variables) => {
+			queryClient.invalidateQueries({
+				queryKey: ["character_extras", variables.characterId],
+			});
+			toast({
+				title: "Ally added to sheet",
+				description: `${variables.npc.name} joined the character's Companions.`,
+			});
+		},
+		onError: (error: Error, variables) => {
+			const msg = String(error.message ?? "").toLowerCase();
+			const duplicate =
+				msg.includes("duplicate key") ||
+				msg.includes("idx_character_extras_character_npc") ||
+				msg.includes("unique");
+			toast({
+				title: "Could not add ally",
+				description: duplicate
+					? `${variables.npc.name} is already on that character's sheet.`
+					: error.message,
+				variant: "destructive",
+			});
+		},
+	});
 }

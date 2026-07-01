@@ -73,12 +73,6 @@ const FACTION_FALLBACK_IMAGE_URLS: Record<string, string> = {
 	anomaly_adjacent: "/generated/compendium/backgrounds/void-touched.webp",
 };
 
-export const SHADOW_REGENT_TOKEN_IMAGE_URL =
-	"/generated/compendium/sandbox_npcs/the-quiet-generated-1ordvee.webp";
-
-export const SHADOW_SOLDIER_TOKEN_IMAGE_URL =
-	"/generated/compendium/sandbox_npcs/the-quiet-generated-1866qac.webp";
-
 export function getSandboxNpcPortraitUrl(
 	npc: SandboxNpcAssetDescriptor,
 ): string {
@@ -88,49 +82,4 @@ export function getSandboxNpcPortraitUrl(
 		FACTION_FALLBACK_IMAGE_URLS[npc.faction] ||
 		DEFAULT_SANDBOX_NPC_IMAGE_URL
 	);
-}
-
-export function getSandboxHubNpcIds(sceneName: string): string[] {
-	const normalizedSceneName = sceneName.toLowerCase();
-
-	if (normalizedSceneName.includes("bureau domain response annex")) {
-		return ["npc-bureau-001", "npc-bureau-004", "npc-bureau-005"];
-	}
-
-	if (normalizedSceneName.includes("memory-care")) {
-		return ["npc-bureau-004", "npc-bureau-007", "npc-ind-003"];
-	}
-
-	if (normalizedSceneName.includes("vermillion outpost")) {
-		return ["npc-verm-004", "npc-verm-001", "npc-verm-003"];
-	}
-
-	if (
-		normalizedSceneName.includes("warded hamlet") ||
-		normalizedSceneName.includes("hamlet")
-	) {
-		return ["npc-ind-007", "npc-ind-001", "npc-ind-003"];
-	}
-
-	if (normalizedSceneName.includes("awoko sanctum")) {
-		return ["npc-awoko-001", "npc-awoko-004", "npc-awoko-006"];
-	}
-
-	if (normalizedSceneName.includes("bastion golemfall")) {
-		return ["npc-ind-012", "npc-bureau-003", "npc-ind-004"];
-	}
-
-	if (normalizedSceneName.includes("obsidian spire")) {
-		return ["npc-anom-002", "npc-anom-004", "npc-ind-005"];
-	}
-
-	if (normalizedSceneName.includes("drowned ledgerfen")) {
-		return ["npc-anom-005", "npc-anom-003", "npc-bureau-004"];
-	}
-
-	if (normalizedSceneName.includes("road of writs")) {
-		return ["npc-verm-008", "npc-anom-006", "npc-bureau-003"];
-	}
-
-	return ["npc-bureau-001", "npc-ind-001", "npc-verm-001"];
 }

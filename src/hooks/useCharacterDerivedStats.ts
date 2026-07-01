@@ -1,20 +1,16 @@
 import { useEffect, useMemo } from "react";
-import { type ACBreakdown, calculateAC } from "@/hooks/useArmorClass";
+import { calculateAC } from "@/hooks/useArmorClass";
 import type { CanonicalEquipmentMap } from "@/hooks/useCanonicalEquipmentMap";
 import { findCanonicalForRow } from "@/hooks/useCanonicalEquipmentMap";
 import type { CharacterWithAbilities } from "@/hooks/useCharacters";
 import type { EquipmentRow } from "@/hooks/useEquipment";
 import type { CharacterSigilInscriptionRow, SigilRow } from "@/hooks/useSigils";
 import type { CharacterTattoo } from "@/hooks/useTattoos";
-import {
-	type CalculatedStats,
-	calculateCharacterStats,
-} from "@/lib/characterCalculations";
+import { calculateCharacterStats } from "@/lib/characterCalculations";
 import { buildItemProperties } from "@/lib/characterCreation";
 import {
 	type CharacterBaseData,
 	computeEncumbrance,
-	type Effect,
 	maintainConcentration,
 } from "@/lib/characterEngine";
 import { getActiveConditionEffects } from "@/lib/conditions";
@@ -40,10 +36,7 @@ import {
 	computeGestaltSummary,
 	getRegentHpContribution,
 } from "@/lib/regentGestalt";
-import {
-	applySigilBonuses,
-	type SigilBonusResult,
-} from "@/lib/sigilAutomation";
+import { applySigilBonuses } from "@/lib/sigilAutomation";
 import {
 	calculateSkillModifier,
 	getAllSkills,
@@ -77,66 +70,6 @@ const hasSkill = (
 ): boolean => {
 	const key = normalizeSkillName(skillName);
 	return (values || []).some((value) => normalizeSkillName(value) === key);
-};
-
-interface EquipmentModifierResult {
-	armorClass: number;
-	speed: number;
-	abilityModifiers: Record<string, number>;
-	attackBonus: number;
-	damageBonus: number;
-	savingThrowBonuses: Record<string, number>;
-	skillBonuses: Record<string, number>;
-	resistances: string[];
-	immunities: string[];
-	vulnerabilities: string[];
-	conditionImmunities: string[];
-}
-
-export type DerivedStats = {
-	calculatedStats: CalculatedStats;
-	skills: Record<
-		string,
-		{
-			modifier: number;
-			passive: number;
-			ability: AbilityScore;
-			proficient: boolean;
-			expertise: boolean;
-		}
-	>;
-	encumbranceValue: number;
-	encumbranceMax: number;
-	finalAbilities: Record<AbilityScore, number>;
-	customAbilityBonuses: number;
-	allSkills: SkillDefinition[];
-	equipmentMods: EquipmentModifierResult;
-	sigilBonuses: SigilBonusResult;
-	finalSpeed: number;
-	otherSpeeds: Record<string, number>;
-	finalInitiative: number;
-	initiativeAdvantage: "normal" | "advantage" | "disadvantage";
-	baseStats: CalculatedStats;
-	finalTraits: string[];
-	// 100% Parity Data
-	senses: {
-		darkvision: number;
-		blindsight: number;
-		tremorsense: number;
-		truesight: number;
-	};
-	senseStrings: string[];
-	resistances: string[];
-	immunities: string[];
-	vulnerabilities: string[];
-	conditionImmunities: string[];
-	unifiedEffects: Effect[];
-	protocolEncumbrance: ReturnType<typeof computeEncumbrance>;
-	protocolEncumbranceDetail: ReturnType<typeof calculateEncumbrance>;
-	protocolConcentration: boolean;
-	armorClassDetail: ACBreakdown;
-	/** D&D Beyond parity: number of attacks granted per Attack action. */
-	attacksPerAction: number;
 };
 
 interface UseCharacterDerivedStatsOptions {

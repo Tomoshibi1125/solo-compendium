@@ -69,7 +69,7 @@ export function CampaignExtrasPanel({
 				<AscendantWindow title="ADD CAMPAIGN EXTRA" compact variant="alert">
 					<div className="grid grid-cols-2 md:grid-cols-[2fr_120px_60px_60px_70px_auto] gap-2 items-end">
 						<div className="flex flex-col gap-1">
-							<span className="text-[10px] uppercase text-muted-foreground">
+							<span className="text-[11px] uppercase text-muted-foreground">
 								Name
 							</span>
 							<Input
@@ -80,7 +80,7 @@ export function CampaignExtrasPanel({
 							/>
 						</div>
 						<div className="flex flex-col gap-1">
-							<span className="text-[10px] uppercase text-muted-foreground">
+							<span className="text-[11px] uppercase text-muted-foreground">
 								Type
 							</span>
 							<Select value={draftType} onValueChange={setDraftType}>
@@ -96,7 +96,7 @@ export function CampaignExtrasPanel({
 							</Select>
 						</div>
 						<div className="flex flex-col gap-1">
-							<span className="text-[10px] uppercase text-muted-foreground">
+							<span className="text-[11px] uppercase text-muted-foreground">
 								HP
 							</span>
 							<Input
@@ -108,7 +108,7 @@ export function CampaignExtrasPanel({
 							/>
 						</div>
 						<div className="flex flex-col gap-1">
-							<span className="text-[10px] uppercase text-muted-foreground">
+							<span className="text-[11px] uppercase text-muted-foreground">
 								AC
 							</span>
 							<Input
@@ -120,7 +120,7 @@ export function CampaignExtrasPanel({
 							/>
 						</div>
 						<div className="flex flex-col gap-1">
-							<span className="text-[10px] uppercase text-muted-foreground">
+							<span className="text-[11px] uppercase text-muted-foreground">
 								Speed
 							</span>
 							<Input
@@ -165,7 +165,7 @@ export function CampaignExtrasPanel({
 								<div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
 									{/* Info */}
 									<div className="space-y-1">
-										<Badge variant="outline" className="text-[10px] uppercase">
+										<Badge variant="outline" className="text-[11px] uppercase">
 											{formatRegentVernacular(extra.extra_type)}
 										</Badge>
 										<div className="flex gap-2 text-xs text-muted-foreground mt-1">
@@ -180,7 +180,7 @@ export function CampaignExtrasPanel({
 									{/* HP Tracker & Actions */}
 									<div className="flex items-center gap-3">
 										<div className="flex flex-col items-center">
-											<span className="text-[10px] font-mono text-muted-foreground">
+											<span className="text-[11px] font-mono text-muted-foreground">
 												HP
 											</span>
 											<div className="flex items-center gap-1">

@@ -237,7 +237,7 @@ export function CampaignInviteModal({
 										level="M"
 									/>
 								</div>
-								<p className="text-[10px] text-muted-foreground max-w-xs">
+								<p className="text-[11px] text-muted-foreground max-w-xs">
 									Scan with a phone camera to open the join page instantly.
 								</p>
 							</div>
@@ -355,19 +355,19 @@ export function CampaignInviteModal({
 											>
 												<div>
 													<div className="flex items-center gap-2 mb-1">
-														<Badge variant="outline" className="text-[10px]">
+														<Badge variant="outline" className="text-[11px]">
 															{invite.role === "co-warden"
 																? "Co-Warden"
 																: "Ascendant"}
 														</Badge>
 														{status === "active" ? (
-															<Badge className="bg-emerald-600 text-white text-[10px]">
+															<Badge className="bg-emerald-600 text-white text-[11px]">
 																Active
 															</Badge>
 														) : (
 															<Badge
 																variant="destructive"
-																className="text-[10px]"
+																className="text-[11px]"
 															>
 																{campaignInviteStatusLabel(status)}
 															</Badge>
@@ -379,7 +379,7 @@ export function CampaignInviteModal({
 															? `Expires ${formatDistanceToNow(new Date(invite.expires_at), { addSuffix: true })}`
 															: "Never expires"}
 													</p>
-													<p className="text-[10px] text-muted-foreground mt-1">
+													<p className="text-[11px] text-muted-foreground mt-1">
 														{campaignInviteStatusMessage(status)}
 													</p>
 												</div>

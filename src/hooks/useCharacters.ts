@@ -5,6 +5,10 @@ import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import type { Database } from "@/integrations/supabase/types";
 import { AppError } from "@/lib/appError";
 import { resolveCharacterCanonicalIds } from "@/lib/canonicalCompendium";
+import {
+	assertCharacterCreatable,
+	MAX_CHARACTERS_PER_USER,
+} from "@/lib/characterLimits";
 import { normalizeCharacterOverlayFields } from "@/lib/characterOverlayValidation";
 import { filterPersonalCharacters } from "@/lib/characterScope";
 import { isNotFoundError, logErrorWithContext } from "@/lib/errorHandling";
@@ -17,6 +21,7 @@ import {
 	updateLocalCharacter,
 } from "@/lib/guestStore";
 import { log } from "@/lib/logger";
+import { notify } from "@/lib/notify";
 import { useOptimisticMutation } from "@/lib/optimisticUpdates";
 import type { AbilityScore } from "@/types/core-rules";
 
@@ -258,6 +263,10 @@ export const useCreateCharacter = () => {
 				!isSupabaseConfigured ||
 				(guestEnabled && !hasStoredSupabaseSession())
 			) {
+				assertCharacterCreatable(
+					listLocalCharacters(),
+					dataWithCanonicalIds.name,
+				);
 				return createLocalCharacter(dataWithCanonicalIds);
 			}
 
@@ -265,7 +274,21 @@ export const useCreateCharacter = () => {
 				data: { user },
 			} = await supabase.auth.getUser();
 			if (!user) {
+				assertCharacterCreatable(
+					listLocalCharacters(),
+					dataWithCanonicalIds.name,
+				);
 				return createLocalCharacter(dataWithCanonicalIds);
+			}
+
+			// Enforce per-user limits (also enforced authoritatively by the DB
+			// trigger + unique index) up-front for a friendly error.
+			const { data: ownChars, error: ownCharsErr } = await supabase
+				.from("characters")
+				.select("name")
+				.eq("user_id", user.id);
+			if (!ownCharsErr && ownChars) {
+				assertCharacterCreatable(ownChars, dataWithCanonicalIds.name);
 			}
 
 			// `characters.user_id` has a FK to `public.profiles(id)`. Accounts
@@ -299,6 +322,26 @@ export const useCreateCharacter = () => {
 
 			if (error) {
 				logErrorWithContext(error, "useCreateCharacter");
+				// Map the DB-layer limit backstops to friendly errors (in case the
+				// up-front guard was skipped, e.g. a concurrent insert).
+				const msg = String(error.message ?? "").toLowerCase();
+				if (
+					error.code === "23505" &&
+					msg.includes("characters_unique_name_per_user")
+				) {
+					throw new AppError(
+						`You already have a character named "${(dataWithCanonicalIds.name ?? "").trim()}". Each character must have a unique name.`,
+						"DUPLICATE_CHARACTER_NAME",
+						error,
+					);
+				}
+				if (msg.includes("character limit reached")) {
+					throw new AppError(
+						`Character limit reached — you can have at most ${MAX_CHARACTERS_PER_USER} characters.`,
+						"CHARACTER_LIMIT",
+						error,
+					);
+				}
 				throw error;
 			}
 
@@ -416,6 +459,17 @@ export const useUpdateCharacter = () => {
 
 			if (error) {
 				logErrorWithContext(error, "useUpdateCharacter");
+				const msg = String(error.message ?? "").toLowerCase();
+				if (
+					error.code === "23505" &&
+					msg.includes("characters_unique_name_per_user")
+				) {
+					throw new AppError(
+						`You already have a character named "${(dataWithCanonicalIds.name ?? "").trim()}". Each character must have a unique name.`,
+						"DUPLICATE_CHARACTER_NAME",
+						error,
+					);
+				}
 				throw error;
 			}
 
@@ -440,21 +494,16 @@ export const useUpdateCharacter = () => {
 					const { getXPForLevel } = await import("@/lib/experience");
 					const threshold = getXPForLevel(nextLevel + 1);
 					if (prevXP < threshold && nextXP >= threshold) {
-						await (
-							supabase.rpc as unknown as (
-								name: string,
-								params: Record<string, unknown>,
-							) => Promise<{ data: unknown; error: Error | null }>
-						)("add_user_notification", {
-							p_user_id: user.id,
-							p_type: "level_ready",
-							p_title: `Level up ready for ${updated?.name ?? "your Ascendant"}`,
-							p_message: `Reached the XP threshold for level ${nextLevel + 1}. Open the sheet to advance.`,
-							p_priority: "high",
-							p_category: "character",
-							p_payload: { character_id: id },
-							p_link: `/characters/${id}`,
-							p_expires_at: null,
+						// Targets the current user (the character owner), so no
+						// explicit userId — notify() defaults to the signed-in user.
+						await notify({
+							type: "level_ready",
+							title: `Level up ready for ${updated?.name ?? "your Ascendant"}`,
+							message: `Reached the XP threshold for level ${nextLevel + 1}. Open the sheet to advance.`,
+							priority: "high",
+							category: "character",
+							payload: { character_id: id },
+							link: `/characters/${id}`,
 						});
 					}
 				}

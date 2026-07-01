@@ -6,6 +6,7 @@ import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import type { Json } from "@/integrations/supabase/types";
 import { useAuth } from "@/lib/auth/authContext";
 import { getLocalUserId } from "@/lib/guestStore";
+import { notify } from "@/lib/notify";
 import { enqueueSyncItem } from "@/lib/syncManager";
 
 export interface CampaignMessage {
@@ -304,22 +305,15 @@ export const useSendCampaignMessage = () => {
 						);
 						if (!recipient || seen.has(recipient.user_id)) continue;
 						seen.add(recipient.user_id);
-						await (
-							supabase.rpc as unknown as (
-								name: string,
-								params: Record<string, unknown>,
-							) => Promise<{ data: unknown; error: Error | null }>
-						)("add_user_notification", {
-							p_user_id: recipient.user_id,
-							p_type: "mention",
-							p_title: `Mentioned in campaign chat`,
-							p_message:
+						await notify({
+							userId: recipient.user_id,
+							type: "mention",
+							title: "Mentioned in campaign chat",
+							message:
 								content.length > 120 ? `${content.slice(0, 117)}…` : content,
-							p_priority: "normal",
-							p_category: "campaign",
-							p_payload: { campaign_id: campaignId },
-							p_link: `/campaigns/${campaignId}`,
-							p_expires_at: null,
+							category: "campaign",
+							payload: { campaign_id: campaignId },
+							link: `/campaigns/${campaignId}`,
 						});
 					}
 				}

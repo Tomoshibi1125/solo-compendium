@@ -47,8 +47,6 @@ const QuestRequirementSchema = z.object({
 	item_types: z.array(z.string()).optional(),
 });
 
-export type QuestRequirement = z.infer<typeof QuestRequirementSchema>;
-
 // Quest scaling types
 export const QuestScalingSchema = z.object({
 	type: z.enum(["proficiency_bonus", "character_level", "fixed"]),
@@ -134,51 +132,6 @@ interface QuestProgress {
 	completed: boolean;
 	last_updated: string;
 }
-
-// Quest assignment request
-export interface QuestAssignmentRequest {
-	character_id: string;
-	force_new?: boolean; // Override existing quests
-}
-
-// Quest completion request
-export interface QuestCompletionRequest {
-	quest_id: string;
-	character_id: string;
-	progress_updates?: Record<string, unknown>;
-}
-
-// Quest reward result
-export interface QuestRewardResult {
-	granted: QuestReward;
-	applied: boolean;
-	message: string;
-}
-
-// Daily quest summary for UI
-export interface DailyQuestSummary {
-	date_key: string;
-	total_quests: number;
-	completed_quests: number;
-	pending_quests: number;
-	expired_quests: number;
-	total_rewards: QuestReward;
-}
-
-// Quest types for filtering
-export type QuestTier = "I" | "II" | "III" | "IV";
-export type QuestCategory =
-	| "Training"
-	| "Combat"
-	| "Exploration"
-	| "Mana"
-	| "Crafting";
-export type QuestStatus =
-	| "pending"
-	| "in_progress"
-	| "completed"
-	| "failed"
-	| "expired";
 
 // Helper functions
 export function isQuestCompleted(quest: DailyQuestInstance): boolean {

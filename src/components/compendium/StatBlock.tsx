@@ -79,25 +79,6 @@ export function StatBlock({
 	);
 }
 
-export interface StatRowProps {
-	label: string;
-	value: string | number | ReactNode;
-	className?: string;
-}
-
-export function StatRow({ label, value, className }: StatRowProps) {
-	return (
-		<div
-			className={cn("flex justify-between items-start gap-4 py-1", className)}
-		>
-			<span className="font-heading font-semibold text-muted-foreground uppercase text-xs tracking-wide flex-shrink-0">
-				{label}:
-			</span>
-			<span className="text-foreground text-right font-medium">{value}</span>
-		</div>
-	);
-}
-
 interface StatSectionProps {
 	title: string;
 	children: ReactNode;

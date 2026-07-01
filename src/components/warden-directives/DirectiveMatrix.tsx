@@ -1,8 +1,10 @@
 import {
 	Clock,
 	Copy,
-	Download,
+	FileJson,
+	FileText,
 	Loader2,
+	Skull,
 	Sparkles,
 	Target,
 	Users,
@@ -20,12 +22,23 @@ import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { useAIEnhance } from "@/hooks/useAIEnhance";
 import { useDebounce } from "@/hooks/useDebounce";
-import { useUserToolState } from "@/hooks/useToolState";
+import { useCampaignToolState, useUserToolState } from "@/hooks/useToolState";
 import {
 	getRandomEquipment,
 	getRandomFeat,
 	getRandomRune,
 } from "@/lib/compendiumAutopopulate";
+import {
+	emptyHistory,
+	type GenerationHistoryState,
+	makeEntryId,
+	pushGeneration,
+	removeGeneration,
+	restoreGeneration,
+	togglePin,
+} from "@/lib/generationHistory";
+import { rankToGateBadge } from "@/lib/rankColors";
+import { downloadJson, downloadMarkdown } from "@/lib/toolExport";
 import { formatRegentVernacular } from "@/lib/vernacular";
 import { AIContentGenerator } from "../AIContentGeneratorClass";
 import { AutoLinkText } from "../compendium/AutoLinkText";
@@ -35,6 +48,7 @@ import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
+import { GenerationHistoryPanel } from "./GenerationHistoryPanel";
 
 // --- Constants ---
 
@@ -101,9 +115,31 @@ const DIRECTIVE_REWARDS = [
 	"The Absolute blessing",
 ] as const;
 
+const DIRECTIVE_STAKES: Record<string, string> = {
+	"Rift Clearance":
+		"Left uncleared, the Rift stabilizes and begins to expand past its containment perimeter.",
+	"Rescue Mission":
+		"For every hour lost, another trapped soul is claimed by the Interior.",
+	Investigation:
+		"Unresolved, the anomaly's source spreads and corrupts the surrounding district.",
+	Defense:
+		"A breach overruns the line and the Rift floods into populated ground.",
+	Extermination:
+		"The target grows stronger and begins hunting the team in turn.",
+	Retrieval: "The asset is destroyed or seized by a rival faction.",
+	Escort: "The principal is lost — and with them, the mission's purpose.",
+	Reconnaissance:
+		"Discovery alerts the enemy, who relocate and fortify before the next strike.",
+	Assassination: "The mark goes to ground and the contract is exposed.",
+	Delivery: "The cargo spoils or falls into the wrong hands.",
+};
+const DEFAULT_STAKES =
+	"Failure escalates the situation and forfeits the allocated compensation.";
+
 // --- Interfaces ---
 
 interface GeneratedDirective {
+	id: string;
 	type: string;
 	title: string;
 	rank: string;
@@ -111,14 +147,16 @@ interface GeneratedDirective {
 	description: string;
 	objectives: string[];
 	complications: string[];
+	stakes: string;
 	rewards: string[];
 	timeLimit?: string;
+	aiEnhanced?: string;
 }
 
 interface DirectiveState {
 	genMode: "quick" | "deep";
 	selectedRank: string;
-	quickDirective: GeneratedDirective | null;
+	quickHistory: GenerationHistoryState<GeneratedDirective>;
 	deepDirectiveContent: string;
 	deepForm: {
 		directiveType: string;
@@ -200,6 +238,7 @@ function generateRandomDirective(rank?: string): GeneratedDirective {
 			: undefined;
 
 	return {
+		id: makeEntryId(),
 		type,
 		title: formatRegentVernacular(title),
 		rank: selectedRank,
@@ -207,42 +246,91 @@ function generateRandomDirective(rank?: string): GeneratedDirective {
 		description: formatRegentVernacular(description),
 		objectives: objectives.slice(0, numObjectives).map(formatRegentVernacular),
 		complications: complications.map(formatRegentVernacular),
+		stakes: formatRegentVernacular(DIRECTIVE_STAKES[type] ?? DEFAULT_STAKES),
 		rewards: rewards.map(formatRegentVernacular),
 		timeLimit,
 	};
 }
 
+function directiveToMarkdown(d: GeneratedDirective): string {
+	return formatRegentVernacular(`# ${d.title}
+
+- **Type:** ${d.type}
+- **Rank:** ${d.rank}
+- **Location:** ${d.location}${d.timeLimit ? `\n- **Time Limit:** ${d.timeLimit}` : ""}
+
+${d.description}
+
+## Objectives
+${d.objectives.map((o) => `- ${o}`).join("\n")}
+${
+	d.complications.length > 0
+		? `\n## Complications\n${d.complications.map((c) => `- ${c}`).join("\n")}\n`
+		: ""
+}
+## Stakes
+${d.stakes}
+
+## Allocated Compensation
+${d.rewards.map((r) => `- ${r}`).join("\n")}
+${d.aiEnhanced ? `\n## Warden Briefing (AI)\n${d.aiEnhanced}\n` : ""}`);
+}
+
 // --- Component ---
 
-export function DirectiveLattice() {
-	const { toast } = useToast();
-	const { isEnhancing, enhancedText, enhance, clearEnhanced } = useAIEnhance();
+export interface DirectiveLatticeProps {
+	/** When set, the tool persists to the campaign (shared) instead of the user. */
+	campaignId?: string | null;
+}
 
-	// Persistence via useUserToolState
+export function DirectiveLattice({ campaignId }: DirectiveLatticeProps = {}) {
+	const { toast } = useToast();
+	const { isEnhancing, enhance, clearEnhanced } = useAIEnhance();
+
+	// Persistence: user-scoped by default; campaign-scoped (shared, round-trips
+	// to campaign_tool_states) when a campaign is selected — mirrors EncounterBuilder.
+	const isCampaignScoped = !!campaignId;
+	const persistenceContext = campaignId ? `campaign:${campaignId}` : "user";
+
+	const initialDirectiveState: DirectiveState = {
+		genMode: "quick",
+		selectedRank: "random",
+		quickHistory: emptyHistory<GeneratedDirective>(),
+		deepDirectiveContent: "",
+		deepForm: {
+			directiveType: DIRECTIVE_TYPES[0],
+			difficulty: "Medium",
+			setting: "",
+			additionalDetails: "",
+		},
+	};
+
+	const userToolState = useUserToolState<DirectiveState>("directive_Lattice", {
+		initialState: initialDirectiveState,
+		storageKey: "solo-compendium.Warden-tools.directive-Lattice.v1",
+		enabled: !isCampaignScoped,
+	});
+	const campaignToolState = useCampaignToolState<DirectiveState>(
+		campaignId ?? null,
+		"directive_Lattice",
+		{
+			initialState: initialDirectiveState,
+			storageKey: `solo-compendium.Warden-tools.directive-Lattice.v1.${campaignId ?? "none"}`,
+			enabled: isCampaignScoped,
+		},
+	);
 	const {
 		state: storedState,
 		isLoading,
 		saveNow,
-	} = useUserToolState<DirectiveState>("directive_Lattice", {
-		initialState: {
-			genMode: "quick",
-			selectedRank: "random",
-			quickDirective: null,
-			deepDirectiveContent: "",
-			deepForm: {
-				directiveType: DIRECTIVE_TYPES[0],
-				difficulty: "Medium",
-				setting: "",
-				additionalDetails: "",
-			},
-		},
-		storageKey: "solo-compendium.Warden-tools.directive-Lattice.v1",
-	});
+	} = isCampaignScoped ? campaignToolState : userToolState;
 
 	const [genMode, setGenMode] = useState<"quick" | "deep">("quick");
 	const [selectedRank, setSelectedRank] = useState<string>("random");
-	const [quickDirective, setQuickDirective] =
-		useState<GeneratedDirective | null>(null);
+	const [quickHist, setQuickHist] = useState<
+		GenerationHistoryState<GeneratedDirective>
+	>(emptyHistory<GeneratedDirective>());
+	const quickDirective = quickHist.current;
 	const [deepDirectiveContent, setDeepDirectiveContent] = useState("");
 
 	// Form states for Deep Synthesis
@@ -255,15 +343,33 @@ export function DirectiveLattice() {
 
 	const [isGeneratingDeep, setIsGeneratingDeep] = useState(false);
 
-	// Hydration
-	const hydratedRef = useRef(false);
+	// Hydration — re-runs when the persistence context (user ⇄ campaign) changes.
+	const hydratedContextRef = useRef<string | null>(null);
 	useEffect(() => {
 		if (isLoading) return;
-		if (hydratedRef.current) return;
+		if (hydratedContextRef.current === persistenceContext) return;
 
 		setGenMode(storedState.genMode);
 		setSelectedRank(storedState.selectedRank);
-		setQuickDirective(storedState.quickDirective);
+
+		const raw = storedState as unknown as {
+			quickHistory?: GenerationHistoryState<GeneratedDirective>;
+			quickDirective?: GeneratedDirective | null;
+		};
+		if (Array.isArray(raw.quickHistory?.history)) {
+			setQuickHist(raw.quickHistory);
+		} else if (raw.quickDirective) {
+			// Migrate the legacy single-directive shape.
+			setQuickHist({
+				current: {
+					...raw.quickDirective,
+					id: raw.quickDirective.id ?? makeEntryId(),
+					stakes: raw.quickDirective.stakes ?? DEFAULT_STAKES,
+				},
+				history: [],
+			});
+		}
+
 		setDeepDirectiveContent(storedState.deepDirectiveContent);
 
 		if (storedState.deepForm) {
@@ -275,15 +381,15 @@ export function DirectiveLattice() {
 			setAdditionalDetails(storedState.deepForm.additionalDetails || "");
 		}
 
-		hydratedRef.current = true;
-	}, [storedState, isLoading]);
+		hydratedContextRef.current = persistenceContext;
+	}, [storedState, isLoading, persistenceContext]);
 
 	// Auto-save logic
 	const savePayload = useMemo(
 		(): DirectiveState => ({
 			genMode,
 			selectedRank,
-			quickDirective,
+			quickHistory: quickHist,
 			deepDirectiveContent,
 			deepForm: {
 				directiveType,
@@ -295,7 +401,7 @@ export function DirectiveLattice() {
 		[
 			genMode,
 			selectedRank,
-			quickDirective,
+			quickHist,
 			deepDirectiveContent,
 			directiveType,
 			difficulty,
@@ -307,9 +413,9 @@ export function DirectiveLattice() {
 	const debouncedPayload = useDebounce(savePayload, 500);
 
 	useEffect(() => {
-		if (isLoading || !hydratedRef.current) return;
+		if (isLoading || hydratedContextRef.current !== persistenceContext) return;
 		void saveNow(debouncedPayload);
-	}, [debouncedPayload, isLoading, saveNow]);
+	}, [debouncedPayload, isLoading, saveNow, persistenceContext]);
 
 	const handleQuickGenerate = async () => {
 		clearEnhanced();
@@ -346,10 +452,31 @@ export function DirectiveLattice() {
 			console.warn("Failed to fetch real rewards", e);
 		}
 
-		setQuickDirective(baseDirective);
+		setQuickHist((prev) =>
+			pushGeneration(
+				prev,
+				baseDirective,
+				`${baseDirective.title} · Rank ${baseDirective.rank}`,
+			),
+		);
 		toast({
 			title: "Directive Synthesized",
 			description: "Operational parameters established.",
+		});
+	};
+
+	const updateCurrentDirective = (
+		updater: (current: GeneratedDirective) => GeneratedDirective,
+	) => {
+		setQuickHist((prev) => {
+			if (!prev.current) return prev;
+			const next = updater(prev.current);
+			return {
+				current: next,
+				history: prev.history.map((entry) =>
+					entry.id === next.id ? { ...entry, record: next } : entry,
+				),
+			};
 		});
 	};
 
@@ -367,7 +494,7 @@ export function DirectiveLattice() {
 		setDeepDirectiveContent("");
 		try {
 			const prompt = `Generate a detailed ${directiveType.toLowerCase()} for a Rift Ascendant campaign.
-      
+
 Directive Details:
 - Type: ${directiveType}
 - Rank/Difficulty: ${difficulty}
@@ -403,9 +530,12 @@ Please provide a complete directive structure using Rift Ascendant terminology.`
 	const handleAIEnhance = async () => {
 		if (!quickDirective) return;
 		const seed = `Generate a complete, detailed directive briefing for a Rift Ascendant TTRPG campaign based on this quick seed:
-    Title: ${quickDirective.title}, Rank: ${quickDirective.rank}, Location: ${quickDirective.location}, Objectives: ${quickDirective.objectives.join("; ")}.
+    Title: ${quickDirective.title}, Rank: ${quickDirective.rank}, Location: ${quickDirective.location}, Objectives: ${quickDirective.objectives.join("; ")}, Stakes: ${quickDirective.stakes}.
     Include: Overview, Detailed Objectives, 2-3 Encounter sketches, Complications, Rewards, and a Read-Aloud intro.`;
-		await enhance("quest", seed);
+		const result = await enhance("quest", seed);
+		if (result) {
+			updateCurrentDirective((current) => ({ ...current, aiEnhanced: result }));
+		}
 	};
 
 	const copyToClipboard = (text: string) => {
@@ -417,27 +547,7 @@ Please provide a complete directive structure using Rift Ascendant terminology.`
 		});
 	};
 
-	const exportDirective = (text: string) => {
-		const blob = new Blob([text], { type: "text/plain" });
-		const url = URL.createObjectURL(blob);
-		const a = document.createElement("a");
-		a.href = url;
-		a.download = "directive-briefing.txt";
-		a.click();
-		URL.revokeObjectURL(url);
-	};
-
-	const getRankColor = (rank: string) => {
-		const colors: Record<string, string> = {
-			E: "text-green-400 border-green-400/30 bg-green-400/10",
-			D: "text-blue-400 border-blue-400/30 bg-blue-400/10",
-			C: "text-yellow-400 border-yellow-400/30 bg-yellow-400/10",
-			B: "text-orange-400 border-orange-400/30 bg-orange-400/10",
-			A: "text-red-400 border-red-400/30 bg-red-400/10",
-			S: "text-purple-400 border-purple-400/30 bg-purple-400/10",
-		};
-		return colors[rank] || colors.C;
-	};
+	const getRankColor = (rank: string) => rankToGateBadge(rank);
 
 	return (
 		<AscendantWindow
@@ -467,7 +577,7 @@ Please provide a complete directive structure using Rift Ascendant terminology.`
 				<ManaFlowText
 					variant="rift"
 					speed="fast"
-					className="text-[10px] opacity-70 mb-2"
+					className="text-[11px] opacity-70 mb-2"
 				>
 					{genMode === "quick"
 						? "SYNT_PARAM: FAST_EXPTRAPOLATION_ACTIVE"
@@ -515,13 +625,13 @@ Please provide a complete directive structure using Rift Ascendant terminology.`
 								</div>
 
 								<div className="flex gap-2 flex-wrap">
-									<Badge variant="outline" className="text-[10px] gap-1">
+									<Badge variant="outline" className="text-[11px] gap-1">
 										<Users className="w-3 h-3" /> {quickDirective.location}
 									</Badge>
 									{quickDirective.timeLimit && (
 										<Badge
 											variant="outline"
-											className="text-[10px] gap-1 text-orange-400 border-orange-400/30"
+											className="text-[11px] gap-1 text-warning border-warning/30"
 										>
 											<Clock className="w-3 h-3" /> {quickDirective.timeLimit}
 										</Badge>
@@ -534,7 +644,7 @@ Please provide a complete directive structure using Rift Ascendant terminology.`
 
 								<div className="grid grid-cols-1 gap-3">
 									<div>
-										<Label className="text-[10px] uppercase tracking-wider text-muted-foreground">
+										<Label className="text-[11px] uppercase tracking-wider text-muted-foreground">
 											Objectives
 										</Label>
 										<ul className="list-disc list-inside text-xs space-y-1 mt-1 text-muted-foreground/80">
@@ -548,10 +658,10 @@ Please provide a complete directive structure using Rift Ascendant terminology.`
 
 									{quickDirective.complications.length > 0 && (
 										<div>
-											<Label className="text-[10px] uppercase tracking-wider text-orange-400/80">
+											<Label className="text-[11px] uppercase tracking-wider text-warning/80">
 												Complications
 											</Label>
-											<ul className="list-disc list-inside text-xs space-y-1 mt-1 text-orange-400/70">
+											<ul className="list-disc list-inside text-xs space-y-1 mt-1 text-warning/70">
 												{quickDirective.complications.map((c) => (
 													<li key={c}>
 														<AutoLinkText text={c} />
@@ -562,10 +672,19 @@ Please provide a complete directive structure using Rift Ascendant terminology.`
 									)}
 
 									<div>
-										<Label className="text-[10px] uppercase tracking-wider text-amber-500/80">
+										<Label className="text-[11px] uppercase tracking-wider text-destructive/80 flex items-center gap-1">
+											<Skull className="w-3 h-3" /> Stakes
+										</Label>
+										<div className="text-xs mt-1 text-destructive/70">
+											<AutoLinkText text={quickDirective.stakes} />
+										</div>
+									</div>
+
+									<div>
+										<Label className="text-[11px] uppercase tracking-wider text-success/80">
 											Allocated Compensation
 										</Label>
-										<ul className="list-disc list-inside text-xs space-y-1 mt-1 text-amber-500/70">
+										<ul className="list-disc list-inside text-xs space-y-1 mt-1 text-success/70">
 											{quickDirective.rewards.map((r) => (
 												<li key={r}>
 													<AutoLinkText text={r} />
@@ -575,11 +694,11 @@ Please provide a complete directive structure using Rift Ascendant terminology.`
 									</div>
 								</div>
 
-								<div className="flex gap-2 pt-2">
+								<div className="flex flex-wrap gap-2 pt-2">
 									<Button
 										variant="outline"
 										size="sm"
-										className="flex-1 h-8 gap-2"
+										className="h-8 gap-1 text-[11px]"
 										onClick={handleAIEnhance}
 										disabled={isEnhancing}
 									>
@@ -593,30 +712,65 @@ Please provide a complete directive structure using Rift Ascendant terminology.`
 									<Button
 										variant="outline"
 										size="sm"
-										className="h-8 w-8 p-0"
+										className="h-8 gap-1 text-[11px]"
 										onClick={() =>
-											copyToClipboard(
-												`${quickDirective.title}\n${quickDirective.description}`,
+											copyToClipboard(directiveToMarkdown(quickDirective))
+										}
+									>
+										<Copy className="w-3 h-3" /> Copy
+									</Button>
+									<Button
+										variant="outline"
+										size="sm"
+										className="h-8 gap-1 text-[11px]"
+										onClick={() =>
+											downloadMarkdown(
+												`directive-${quickDirective.title}`,
+												directiveToMarkdown(quickDirective),
 											)
 										}
 									>
-										<Copy className="w-3 h-3" />
+										<FileText className="w-3 h-3" /> Markdown
+									</Button>
+									<Button
+										variant="outline"
+										size="sm"
+										className="h-8 gap-1 text-[11px]"
+										onClick={() =>
+											downloadJson(
+												`directive-${quickDirective.title}`,
+												quickDirective,
+											)
+										}
+									>
+										<FileJson className="w-3 h-3" /> JSON
 									</Button>
 								</div>
 
-								{enhancedText && (
-									<div className="bg-primary/5 p-3 rounded border border-primary/20 text-xs whitespace-pre-line max-h-60 overflow-y-auto border border-primary/30">
-										<AutoLinkText text={enhancedText} />
+								{quickDirective.aiEnhanced && (
+									<div className="bg-primary/5 p-3 rounded text-xs whitespace-pre-line max-h-60 overflow-y-auto border border-primary/30">
+										<AutoLinkText text={quickDirective.aiEnhanced} />
 									</div>
 								)}
 							</div>
 						)}
+
+						<GenerationHistoryPanel
+							state={quickHist}
+							onRestore={(id) =>
+								setQuickHist((prev) => restoreGeneration(prev, id))
+							}
+							onTogglePin={(id) => setQuickHist((prev) => togglePin(prev, id))}
+							onRemove={(id) =>
+								setQuickHist((prev) => removeGeneration(prev, id))
+							}
+						/>
 					</div>
 				) : (
 					<div className="space-y-3">
 						<div className="grid grid-cols-2 gap-2">
 							<div className="space-y-1">
-								<Label className="text-[10px]">Job Priority</Label>
+								<Label className="text-[11px]">Job Priority</Label>
 								<Select value={directiveType} onValueChange={setDirectiveType}>
 									<SelectTrigger className="h-7 text-xs">
 										<SelectValue />
@@ -631,7 +785,7 @@ Please provide a complete directive structure using Rift Ascendant terminology.`
 								</Select>
 							</div>
 							<div className="space-y-1">
-								<Label className="text-[10px]">Difficulty</Label>
+								<Label className="text-[11px]">Difficulty</Label>
 								<Select value={difficulty} onValueChange={setDifficulty}>
 									<SelectTrigger className="h-7 text-xs">
 										<SelectValue />
@@ -648,7 +802,7 @@ Please provide a complete directive structure using Rift Ascendant terminology.`
 						</div>
 
 						<div className="space-y-1">
-							<Label className="text-[10px]">Setting / Location</Label>
+							<Label className="text-[11px]">Setting / Location</Label>
 							<Input
 								placeholder="The Iron Spire, Umbral Waste..."
 								value={setting}
@@ -658,7 +812,7 @@ Please provide a complete directive structure using Rift Ascendant terminology.`
 						</div>
 
 						<div className="space-y-1">
-							<Label className="text-[10px]">Additional Directives</Label>
+							<Label className="text-[11px]">Additional Directives</Label>
 							<Textarea
 								placeholder="Include specific Regents, NPCs, or items..."
 								value={additionalDetails}
@@ -692,17 +846,22 @@ Please provide a complete directive structure using Rift Ascendant terminology.`
 										variant="outline"
 										size="sm"
 										onClick={() => copyToClipboard(deepDirectiveContent)}
-										className="h-7 gap-1 text-[10px]"
+										className="h-7 gap-1 text-[11px]"
 									>
 										<Copy className="w-3 h-3" /> Copy
 									</Button>
 									<Button
 										variant="outline"
 										size="sm"
-										onClick={() => exportDirective(deepDirectiveContent)}
-										className="h-7 gap-1 text-[10px]"
+										onClick={() =>
+											downloadMarkdown(
+												"directive-briefing",
+												deepDirectiveContent,
+											)
+										}
+										className="h-7 gap-1 text-[11px]"
 									>
-										<Download className="w-3 h-3" /> Export
+										<FileText className="w-3 h-3" /> Markdown
 									</Button>
 								</div>
 								<div className="bg-muted/30 p-3 rounded-lg text-xs leading-relaxed max-h-96 overflow-y-auto border border-border/50">

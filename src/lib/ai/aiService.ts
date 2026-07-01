@@ -1,6 +1,6 @@
 /**
  * AI Service
- * Handles AI integrations for audio and art enhancement
+ * Handles AI integrations for art enhancement
  */
 
 import {
@@ -9,7 +9,6 @@ import {
 	chat as pollinationsChat,
 	configure as pollinationsConfigure,
 } from "@pollinations_ai/sdk";
-import { supabase } from "@/integrations/supabase/client";
 import { AppError } from "@/lib/appError";
 import { logger } from "@/lib/logger";
 import type {
@@ -17,9 +16,6 @@ import type {
 	AIRequest,
 	AIResponse,
 	AIService,
-	AudioAnalysis,
-	AudioGenerationRequest,
-	AudioGenerationResponse,
 	ImageAnalysis,
 	PromptEnhancement,
 } from "./types";
@@ -37,11 +33,6 @@ const REQUEST_TIMEOUT_MS = 25000;
 const OLLAMA_TAGS_TIMEOUT_MS = 2500;
 // Server-side proxy endpoint — keeps the API key off the client
 const AI_PROXY_ENDPOINT = "/api/ai";
-const AI_AUDIO_PROXY_ENDPOINT = "/api/aiAudio";
-// Stable Audio Open via HF can be slow on cold-start; allow 2 min total
-// including up to 3 polling retries when the model is loading.
-const AUDIO_GEN_TIMEOUT_MS = 120_000;
-const AUDIO_GEN_MAX_RETRIES = 3;
 const OLLAMA_MODEL_PRIORITY = [
 	"qwen2.5:14b-instruct",
 	"qwen2.5:7b-instruct",
@@ -208,164 +199,6 @@ export class AIServiceManager {
 		}
 
 		return response.data as ImageAnalysis;
-	}
-
-	/**
-	 * Analyze audio for mood and characteristics
-	 */
-	async analyzeAudio(audioFile: File): Promise<AudioAnalysis> {
-		const audioFeatures = await this.extractAudioFeatures(audioFile);
-		const moodHint = this.moodFromEnergy(audioFeatures.energy);
-		const request: AIRequest = {
-			service: this.config.defaultService,
-			type: "analyze-audio",
-			input: `Audio file "${audioFile.name}" (${audioFile.type || "unknown type"}, ${audioFile.size} bytes). Duration: ${audioFeatures.duration.toFixed(1)}s. RMS: ${audioFeatures.rms?.toFixed(4) ?? "n/a"}.`,
-			context: {
-				filename: audioFile.name,
-				mimeType: audioFile.type,
-				sizeBytes: audioFile.size,
-				mood: moodHint,
-				audioFeatures,
-			},
-			options: {
-				analysis_type: "mood_and_characteristics",
-			},
-		};
-
-		const response = await this.processRequest(request);
-
-		if (!response.success) {
-			throw new AppError("Failed to analyze audio", "AI_ERROR", response.error);
-		}
-
-		const analysis = response.data as AudioAnalysis;
-		return {
-			...analysis,
-			mood: analysis.mood || moodHint,
-			energy:
-				typeof analysis.energy === "number"
-					? analysis.energy
-					: audioFeatures.energy,
-			duration: analysis.duration || audioFeatures.duration,
-			loudness: analysis.loudness ?? audioFeatures.loudness ?? undefined,
-			instruments: analysis.instruments || [],
-			tags: analysis.tags || [],
-			description:
-				analysis.description ||
-				`Audio analysis completed for ${audioFile.name}.`,
-		};
-	}
-
-	/**
-	 * Generate audio from a text prompt via Stable Audio Open / MusicGen on
-	 * Hugging Face (routed through /api/aiAudio). Warden-only on the server;
-	 * returns the uploaded Supabase Storage public URL on success.
-	 *
-	 * Handles HF cold-start by automatically polling up to AUDIO_GEN_MAX_RETRIES
-	 * times with the retry-after interval reported by the server.
-	 */
-	async generateAudio(
-		request: AudioGenerationRequest,
-		onStatus?: (status: {
-			state: "loading" | "retrying";
-			retryAfterSeconds?: number;
-			attempt?: number;
-		}) => void,
-	): Promise<AudioGenerationResponse> {
-		// Resolve the user's Supabase access token (required by the proxy).
-		let accessToken: string | null = null;
-		try {
-			const { data } = await supabase.auth.getSession();
-			accessToken = data.session?.access_token ?? null;
-		} catch (err) {
-			logger.warn(
-				"aiService.generateAudio: failed to read Supabase session",
-				err,
-			);
-		}
-		if (!accessToken) {
-			return {
-				success: false,
-				status: "error",
-				error:
-					"Not signed in. Audio generation requires an authenticated Warden session.",
-			};
-		}
-
-		onStatus?.({ state: "loading" });
-
-		for (let attempt = 0; attempt < AUDIO_GEN_MAX_RETRIES; attempt++) {
-			const controller = new AbortController();
-			const timer = setTimeout(() => controller.abort(), AUDIO_GEN_TIMEOUT_MS);
-
-			try {
-				const response = await fetch(AI_AUDIO_PROXY_ENDPOINT, {
-					method: "POST",
-					headers: {
-						"Content-Type": "application/json",
-						Authorization: `Bearer ${accessToken}`,
-					},
-					body: JSON.stringify(request),
-					signal: controller.signal,
-				});
-
-				const data = await response
-					.json()
-					.catch(() => ({}) as Record<string, unknown>);
-
-				if (response.ok && data?.success === true) {
-					return data as AudioGenerationResponse;
-				}
-
-				// Cold-start — poll again
-				if (response.status === 503 && data?.status === "model_loading") {
-					const retryAfter = Math.min(
-						Math.max(Number(data.retryAfterSeconds) || 20, 10),
-						60,
-					);
-					onStatus?.({
-						state: "retrying",
-						retryAfterSeconds: retryAfter,
-						attempt: attempt + 1,
-					});
-					await new Promise((r) => setTimeout(r, retryAfter * 1000));
-					continue;
-				}
-
-				return {
-					success: false,
-					status: "error",
-					error:
-						(typeof data.error === "string" ? data.error : null) ||
-						`Audio generation failed (HTTP ${response.status})`,
-					retryAfterSeconds:
-						typeof data.retryAfterSeconds === "number"
-							? data.retryAfterSeconds
-							: undefined,
-				};
-			} catch (err) {
-				if (err instanceof Error && err.name === "AbortError") {
-					return {
-						success: false,
-						status: "error",
-						error: "Audio generation timed out",
-					};
-				}
-				return {
-					success: false,
-					status: "error",
-					error: err instanceof Error ? err.message : "Audio generation error",
-				};
-			} finally {
-				clearTimeout(timer);
-			}
-		}
-
-		return {
-			success: false,
-			status: "error",
-			error: `Model still warming up after ${AUDIO_GEN_MAX_RETRIES} retries. Try again in a minute.`,
-		};
 	}
 
 	/**
@@ -678,40 +511,6 @@ export class AIServiceManager {
 					},
 					suggestions: [],
 				};
-			case "analyze-audio": {
-				const features = (request.context?.audioFeatures || {}) as {
-					energy?: number;
-					mood?: string;
-					tempo?: number | null;
-					key?: string | null;
-					instruments?: string[];
-					genre?: string;
-					duration?: number;
-					loudness?: number | null;
-					spectralCentroid?: number | null;
-				};
-				const energy =
-					typeof features.energy === "number" ? features.energy : 0.5;
-				const mood =
-					typeof features.mood === "string"
-						? features.mood
-						: this.moodFromEnergy(energy);
-				return {
-					mood,
-					energy,
-					tempo: features.tempo ?? null,
-					key: features.key ?? null,
-					instruments: features.instruments ?? [],
-					genre: features.genre ?? "unknown",
-					tags: this.extractKeywords(safeText),
-					description:
-						safeText ||
-						`Audio analysis completed for ${request.context?.filename || "uploaded audio"}.`,
-					duration: features.duration ?? 0,
-					loudness: features.loudness ?? null,
-					spectralCentroid: features.spectralCentroid ?? null,
-				};
-			}
 			case "generate-tags":
 				return { tags: this.extractKeywords(safeText) };
 			case "detect-mood":
@@ -831,13 +630,6 @@ export class AIServiceManager {
 			.map(([word]) => word);
 	}
 
-	private moodFromEnergy(energy: number): string {
-		if (energy >= 0.75) return "energetic";
-		if (energy >= 0.55) return "dramatic";
-		if (energy >= 0.35) return "focused";
-		return "calm";
-	}
-
 	private detectMoodFromText(text: string): string {
 		const lower = text.toLowerCase();
 		if (/(battle|combat|fight|war|clash|attack)/.test(lower)) return "intense";
@@ -856,48 +648,6 @@ export class AIServiceManager {
 			`${baseStyle} with atmospheric haze`,
 			`${baseStyle} with sharper linework`,
 		];
-	}
-
-	private async extractAudioFeatures(file: File): Promise<{
-		duration: number;
-		energy: number;
-		loudness?: number;
-		rms?: number;
-	}> {
-		if (typeof window === "undefined" || typeof AudioContext === "undefined") {
-			return { duration: 0, energy: 0.5 };
-		}
-
-		try {
-			const buffer = await file.arrayBuffer();
-			const audioContext = new AudioContext();
-			const audioBuffer = await audioContext.decodeAudioData(buffer.slice(0));
-			const channelData = audioBuffer.getChannelData(0);
-			const step = Math.max(1, Math.floor(channelData.length / 50000));
-			let sumSquares = 0;
-			let count = 0;
-
-			for (let i = 0; i < channelData.length; i += step) {
-				const sample = channelData[i];
-				sumSquares += sample * sample;
-				count += 1;
-			}
-
-			const rms = Math.sqrt(sumSquares / Math.max(1, count));
-			const energy = Math.min(1, rms * 1.5);
-			const loudness = rms > 0 ? 20 * Math.log10(rms) : -60;
-
-			audioContext.close();
-
-			return {
-				duration: audioBuffer.duration,
-				energy,
-				loudness,
-				rms,
-			};
-		} catch {
-			return { duration: 0, energy: 0.5 };
-		}
 	}
 
 	private validateRequest(request: AIRequest): string[] {
@@ -1556,7 +1306,6 @@ export class AIServiceManager {
 		const prompts: Record<string, string> = {
 			"enhance-prompt": `${jsonInstruction}\nYou are an expert tabletop RPG and AI art prompt engineer. Enhance the given prompt for high-quality image generation in the style of Rift Ascendant manhwa-inspired fantasy. Respond with JSON: {"original":"","enhanced":"","additions":[],"improvements":[],"style":"","mood":"","technical":{"weight":"","steps":0,"cfg":0,"sampler":"","scheduler":""}}`,
 			"analyze-image": `${jsonInstruction}\nYou are an expert art analyst specializing in anime/manga style artwork, particularly Rift Ascendant. Respond with JSON: {"description":"","tags":[],"style":"","mood":"","colors":[],"composition":"","subjects":[],"quality":1,"technical":{"resolution":"","aspectRatio":"","sharpness":1,"brightness":0.5,"contrast":0.5},"suggestions":[]}`,
-			"analyze-audio": `${jsonInstruction}\nYou are an audio expert specializing in tabletop campaign music and sound effects. Respond with JSON: {"mood":"","energy":0.5,"tempo":null,"key":null,"instruments":[],"genre":"","tags":[],"description":"","duration":0,"loudness":null,"spectralCentroid":null}`,
 			"generate-tags": `${jsonInstruction}\nGenerate relevant tags for the given content in the context of a Rift Ascendant themed campaign. Respond with JSON: {"tags":[]}`,
 			"detect-mood": `${jsonInstruction}\nDetect the primary mood of the given content. Respond with JSON: {"mood":""}`,
 			"suggest-style": `${jsonInstruction}\nSuggest variations of the given style that would work for different scenarios while maintaining the core aesthetic. Respond with JSON: {"variations":[]}`,

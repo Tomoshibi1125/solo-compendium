@@ -1,16 +1,30 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMemo } from "react";
 import type { SandboxNPC } from "@/data/compendium/sandbox-npcs";
 import { useToast } from "@/hooks/use-toast";
 import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import { AppError } from "@/lib/appError";
 import { useAuth } from "@/lib/auth/authContext";
+import type { RaCurrencyId } from "@/lib/currency";
 import { getLocalUserId } from "@/lib/guestStore";
+import type {
+	GuildBasePropertyState,
+	GuildBaseState,
+	GuildSkillsState,
+} from "@/lib/guildBase";
+import {
+	type GuildCapabilities,
+	type GuildRole,
+	guildCapabilities,
+	resolveGuildRole,
+} from "@/lib/guildPermissions";
+import { applyFundsDelta, type GuildFunds } from "@/lib/guildTreasury";
 
 // ============================================================================
 // Types
 // ============================================================================
 
-interface Guild {
+export interface Guild {
 	id: string;
 	name: string;
 	description: string | null;
@@ -22,9 +36,22 @@ interface Guild {
 	settings: Record<string, unknown>;
 	created_at: string;
 	updated_at: string;
+	// Solo Leveling-style progression + treasury (added in the roles/ranks migration;
+	// optional so pre-migration local guilds still parse).
+	guild_rank?: string;
+	level?: number;
+	contribution?: number;
+	funds?: GuildFunds;
+	// Guild Base (2F): built facility tiers + unlocked guild skills (JSONB columns,
+	// optional so pre-migration local guilds still parse).
+	base_facilities?: GuildBaseState;
+	guild_skills?: GuildSkillsState;
+	// Owned base property id (one of the pre-built bases or the buildable lot);
+	// null/absent = no base acquired yet.
+	base_property?: GuildBasePropertyState;
 }
 
-interface GuildMember {
+export interface GuildMember {
 	id: string;
 	guild_id: string;
 	user_id: string | null;
@@ -32,7 +59,8 @@ interface GuildMember {
 	npc_id: string | null;
 	npc_name: string | null;
 	npc_data: SandboxNPC | null;
-	role: "leader" | "officer" | "member" | "recruit";
+	role: GuildRole;
+	rank?: string | null;
 	joined_at: string;
 	npc_level: number | null;
 	npc_xp: number | null;
@@ -58,7 +86,7 @@ const isLocalMode = (): boolean => {
 	return !isSupabaseConfigured || import.meta.env.VITE_E2E === "true";
 };
 
-const loadLocalGuilds = (): Guild[] => {
+export const loadLocalGuilds = (): Guild[] => {
 	if (typeof window === "undefined") return [];
 	const raw = window.localStorage.getItem(GUILDS_KEY);
 	if (!raw) return [];
@@ -70,12 +98,12 @@ const loadLocalGuilds = (): Guild[] => {
 	}
 };
 
-const saveLocalGuilds = (guilds: Guild[]) => {
+export const saveLocalGuilds = (guilds: Guild[]) => {
 	if (typeof window === "undefined") return;
 	window.localStorage.setItem(GUILDS_KEY, JSON.stringify(guilds));
 };
 
-const loadLocalGuildMembers = (): GuildMember[] => {
+export const loadLocalGuildMembers = (): GuildMember[] => {
 	if (typeof window === "undefined") return [];
 	const raw = window.localStorage.getItem(GUILD_MEMBERS_KEY);
 	if (!raw) return [];
@@ -87,7 +115,7 @@ const loadLocalGuildMembers = (): GuildMember[] => {
 	}
 };
 
-const saveLocalGuildMembers = (members: GuildMember[]) => {
+export const saveLocalGuildMembers = (members: GuildMember[]) => {
 	if (typeof window === "undefined") return;
 	window.localStorage.setItem(GUILD_MEMBERS_KEY, JSON.stringify(members));
 };
@@ -202,6 +230,29 @@ export const useGuild = (guildId: string) => {
 	});
 };
 
+/** Get guilds linked to a specific campaign (hybrid scoping). */
+export const useGuildsByCampaign = (campaignId: string | null | undefined) => {
+	const { user } = useAuth();
+	return useQuery({
+		queryKey: ["guilds", "campaign", campaignId ?? "none"],
+		queryFn: async (): Promise<Guild[]> => {
+			if (!campaignId) return [];
+			if (isLocalMode() || (!user && guestEnabled)) {
+				return loadLocalGuilds().filter((g) => g.campaign_id === campaignId);
+			}
+			if (!user) return [];
+			const { data, error } = await supabase
+				.from("guilds")
+				.select("*")
+				.eq("campaign_id", campaignId)
+				.order("created_at", { ascending: false });
+			if (error) throw error;
+			return (data ?? []) as Guild[];
+		},
+		enabled: !!campaignId,
+	});
+};
+
 /** Get guild members */
 export const useGuildMembers = (guildId: string) => {
 	return useQuery({
@@ -237,6 +288,8 @@ export const useCreateGuild = () => {
 			description?: string;
 			motto?: string;
 			campaignId?: string;
+			/** Founding character bound to the leader membership row (one guild per character). */
+			characterId?: string;
 		}): Promise<string> => {
 			const shareCode = createShareCode();
 
@@ -265,7 +318,7 @@ export const useCreateGuild = () => {
 					id: crypto.randomUUID(),
 					guild_id: id,
 					user_id: userId,
-					character_id: null,
+					character_id: params.characterId ?? null,
 					npc_id: null,
 					npc_name: null,
 					npc_data: null,
@@ -309,7 +362,7 @@ export const useCreateGuild = () => {
 						id: crypto.randomUUID(),
 						guild_id: id,
 						user_id: userId,
-						character_id: null,
+						character_id: params.characterId ?? null,
 						npc_id: null,
 						npc_name: null,
 						npc_data: null,
@@ -333,6 +386,7 @@ export const useCreateGuild = () => {
 				p_motto: params.motto ?? "",
 				p_leader_user_id: user.id,
 				p_campaign_id: params.campaignId,
+				p_character_id: params.characterId,
 			});
 
 			if (rpcResult.error) {
@@ -365,6 +419,7 @@ export const useCreateGuild = () => {
 				await supabase.from("guild_members").insert({
 					guild_id: id,
 					user_id: user.id,
+					character_id: params.characterId ?? null,
 					role: "leader",
 				});
 
@@ -381,9 +436,15 @@ export const useCreateGuild = () => {
 			});
 		},
 		onError: (error: Error) => {
+			const msg = String(error.message ?? "").toLowerCase();
+			const oneGuildPerCharacter =
+				msg.includes("guild_members_one_per_character") ||
+				(msg.includes("duplicate key") && msg.includes("character"));
 			toast({
 				title: "Failed to create guild",
-				description: error.message,
+				description: oneGuildPerCharacter
+					? "That character already leads or belongs to a guild. Each character may join only one guild."
+					: error.message,
 				variant: "destructive",
 			});
 		},
@@ -624,4 +685,244 @@ export const useSetNPCLevelingMode = () => {
 			});
 		},
 	});
+};
+
+// ============================================================================
+// Role-based management (Solo Leveling-style)
+// ============================================================================
+
+/** Promote or demote a member to a new guild role. */
+export const useChangeMemberRole = () => {
+	const queryClient = useQueryClient();
+	const { toast } = useToast();
+
+	return useMutation({
+		mutationFn: async (params: {
+			guildId: string;
+			memberId: string;
+			role: GuildRole;
+		}) => {
+			if (isLocalMode() || !isSupabaseConfigured) {
+				const members = loadLocalGuildMembers();
+				const idx = members.findIndex((m) => m.id === params.memberId);
+				if (idx === -1) throw new Error("Member not found");
+				members[idx] = { ...members[idx], role: params.role };
+				saveLocalGuildMembers(members);
+				return;
+			}
+			const { error } = await supabase
+				.from("guild_members")
+				.update({ role: params.role })
+				.eq("id", params.memberId);
+			if (error) throw error;
+		},
+		onSuccess: (_, variables) => {
+			queryClient.invalidateQueries({
+				queryKey: ["guilds", variables.guildId, "members"],
+			});
+			toast({ title: "Role updated", description: "Guild role changed." });
+		},
+		onError: (error: Error) => {
+			toast({
+				title: "Failed to change role",
+				description: error.message,
+				variant: "destructive",
+			});
+		},
+	});
+};
+
+/** Remove a member (player or NPC) from the guild. */
+export const useKickMember = () => {
+	const queryClient = useQueryClient();
+	const { toast } = useToast();
+
+	return useMutation({
+		mutationFn: async (params: { guildId: string; memberId: string }) => {
+			if (isLocalMode() || !isSupabaseConfigured) {
+				saveLocalGuildMembers(
+					loadLocalGuildMembers().filter((m) => m.id !== params.memberId),
+				);
+				return;
+			}
+			const { error } = await supabase
+				.from("guild_members")
+				.delete()
+				.eq("id", params.memberId);
+			if (error) throw error;
+		},
+		onSuccess: (_, variables) => {
+			queryClient.invalidateQueries({
+				queryKey: ["guilds", variables.guildId, "members"],
+			});
+			toast({
+				title: "Member removed",
+				description: "They have left the roster.",
+			});
+		},
+		onError: (error: Error) => {
+			toast({
+				title: "Failed to remove member",
+				description: error.message,
+				variant: "destructive",
+			});
+		},
+	});
+};
+
+/** Hand the Guild Master role to another member (old leader becomes Vice-Master). */
+export const useTransferLeadership = () => {
+	const queryClient = useQueryClient();
+	const { toast } = useToast();
+
+	return useMutation({
+		mutationFn: async (params: {
+			guildId: string;
+			newLeaderUserId: string;
+			currentLeaderUserId: string;
+		}) => {
+			if (isLocalMode() || !isSupabaseConfigured) {
+				const guilds = loadLocalGuilds();
+				const gIdx = guilds.findIndex((g) => g.id === params.guildId);
+				if (gIdx === -1) throw new Error("Guild not found");
+				guilds[gIdx] = {
+					...guilds[gIdx],
+					leader_user_id: params.newLeaderUserId,
+				};
+				saveLocalGuilds(guilds);
+				const members = loadLocalGuildMembers().map((m) => {
+					if (m.guild_id !== params.guildId) return m;
+					if (m.user_id === params.newLeaderUserId)
+						return { ...m, role: "leader" as GuildRole };
+					if (m.user_id === params.currentLeaderUserId)
+						return { ...m, role: "vice_master" as GuildRole };
+					return m;
+				});
+				saveLocalGuildMembers(members);
+				return;
+			}
+			// Update member rows first (while the actor is still the leader), then
+			// flip the guild's leader_user_id last.
+			const promote = await supabase
+				.from("guild_members")
+				.update({ role: "leader" })
+				.eq("guild_id", params.guildId)
+				.eq("user_id", params.newLeaderUserId);
+			if (promote.error) throw promote.error;
+			const demote = await supabase
+				.from("guild_members")
+				.update({ role: "vice_master" })
+				.eq("guild_id", params.guildId)
+				.eq("user_id", params.currentLeaderUserId);
+			if (demote.error) throw demote.error;
+			const { error } = await supabase
+				.from("guilds")
+				.update({ leader_user_id: params.newLeaderUserId })
+				.eq("id", params.guildId);
+			if (error) throw error;
+		},
+		onSuccess: (_, variables) => {
+			queryClient.invalidateQueries({ queryKey: ["guilds"] });
+			queryClient.invalidateQueries({
+				queryKey: ["guilds", variables.guildId, "members"],
+			});
+			toast({
+				title: "Leadership transferred",
+				description: "A new Guild Master now leads the guild.",
+			});
+		},
+		onError: (error: Error) => {
+			toast({
+				title: "Failed to transfer leadership",
+				description: error.message,
+				variant: "destructive",
+			});
+		},
+	});
+};
+
+/** Deposit (+) / withdraw or pay out (−) a currency in the guild treasury. */
+export const useAdjustGuildFunds = () => {
+	const queryClient = useQueryClient();
+	const { toast } = useToast();
+
+	return useMutation({
+		mutationFn: async (params: {
+			guildId: string;
+			currency: RaCurrencyId;
+			delta: number;
+			note?: string;
+		}): Promise<GuildFunds> => {
+			if (isLocalMode() || !isSupabaseConfigured) {
+				const guilds = loadLocalGuilds();
+				const idx = guilds.findIndex((g) => g.id === params.guildId);
+				if (idx === -1) throw new AppError("Guild not found", "NOT_FOUND");
+				const next = applyFundsDelta(
+					guilds[idx].funds ?? {},
+					params.currency,
+					params.delta,
+				);
+				guilds[idx] = { ...guilds[idx], funds: next };
+				saveLocalGuilds(guilds);
+				return next;
+			}
+			const { data, error: readError } = await supabase
+				.from("guilds")
+				.select("funds")
+				.eq("id", params.guildId)
+				.single();
+			if (readError) throw readError;
+			const next = applyFundsDelta(
+				(data?.funds as GuildFunds | null) ?? {},
+				params.currency,
+				params.delta,
+			);
+			const { error } = await supabase
+				.from("guilds")
+				.update({ funds: next })
+				.eq("id", params.guildId);
+			if (error) throw error;
+			return next;
+		},
+		onSuccess: (_, variables) => {
+			queryClient.invalidateQueries({
+				queryKey: ["guilds", variables.guildId],
+			});
+			queryClient.invalidateQueries({ queryKey: ["guilds"] });
+			toast({
+				title: variables.delta >= 0 ? "Funds deposited" : "Funds withdrawn",
+				description: "The guild treasury has been updated.",
+			});
+		},
+		onError: (error: Error) => {
+			toast({
+				title: "Treasury update failed",
+				description: error.message,
+				variant: "destructive",
+			});
+		},
+	});
+};
+
+export interface GuildPermissions {
+	currentUserId: string;
+	role: GuildRole | null;
+	capabilities: GuildCapabilities;
+}
+
+/** Resolve the current user's role + capabilities within a guild. */
+export const useGuildPermissions = (
+	guild: Guild | null | undefined,
+	members: GuildMember[],
+): GuildPermissions => {
+	const { user } = useAuth();
+	return useMemo(() => {
+		const currentUserId = user?.id || getLocalUserId();
+		const role = resolveGuildRole(
+			members,
+			currentUserId,
+			guild?.leader_user_id ?? null,
+		);
+		return { currentUserId, role, capabilities: guildCapabilities(role) };
+	}, [user?.id, members, guild?.leader_user_id]);
 };

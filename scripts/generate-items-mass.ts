@@ -1,6 +1,30 @@
 import fs from "node:fs";
 import path from "node:path";
 import type { Item } from "../src/data/compendium/items";
+import type { RaCurrencyValue } from "../src/lib/currency";
+
+// Structured catalog price from a Gate-Credit amount + rarity (mirrors the
+// reprice policy: cheap goods in mana/crystal, gear in gate, legendary+ in core).
+const BASE_UNITS = { core: 1000, gate: 100, crystal: 10, mana: 1 } as const;
+const RARITY_CURRENCY: Record<string, keyof typeof BASE_UNITS> = {
+	common: "crystal",
+	uncommon: "gate",
+	rare: "gate",
+	"very-rare": "gate",
+	epic: "core",
+	legendary: "core",
+	artifact: "core",
+};
+const repriceGate = (gateValue: number, rarity: string): RaCurrencyValue => {
+	const baseUnits = Math.round(gateValue * 100);
+	let currency = RARITY_CURRENCY[rarity] ?? "gate";
+	if (baseUnits >= 1_000_000) currency = "core";
+	if (currency === "crystal" && baseUnits < 10) currency = "mana";
+	return {
+		currency,
+		amount: Math.max(1, Math.round(baseUnits / BASE_UNITS[currency])),
+	};
+};
 
 // Helpers
 const randomTitle = (prefixes: string[], suffixes: string[]) =>
@@ -115,7 +139,7 @@ function generateItem(idPrefix: string, index: number): Item {
 		type: type as Item["type"],
 		image: "",
 		weight: Math.floor(Math.random() * 8) + 1,
-		value: Math.floor(Math.random() * 500) + 10,
+		value: repriceGate(Math.floor(Math.random() * 500) + 10, rarity),
 		item_type: itemType as Item["item_type"],
 		source: "Rift Ascendant Canon",
 		effects: { passive: [effect] },
@@ -158,7 +182,7 @@ const artifacts: Item[] = [
 		type: "weapon",
 		image: "",
 		weight: 2,
-		value: 50000000,
+		value: repriceGate(50000000, "legendary"),
 		item_type: "weapon",
 		weapon_type: "martial melee",
 		damage: "3d6 + 5",
@@ -183,7 +207,7 @@ const artifacts: Item[] = [
 		type: "weapon",
 		image: "",
 		weight: 15,
-		value: 80000000,
+		value: repriceGate(80000000, "legendary"),
 		item_type: "weapon",
 		weapon_type: "martial melee",
 		damage: "2d10",
@@ -208,7 +232,7 @@ const artifacts: Item[] = [
 		type: "armor",
 		image: "",
 		weight: 1,
-		value: 100000000,
+		value: repriceGate(100000000, "legendary"),
 		item_type: "armor",
 		armor_type: "Light",
 		armor_class: "15 + Dex modifier",
@@ -245,7 +269,7 @@ for (let i = 4; i <= 20; i++) {
 		type: i % 2 === 0 ? "weapon" : "armor",
 		image: "",
 		weight: Math.floor(Math.random() * 20) + 1,
-		value: 10000000,
+		value: repriceGate(10000000, "legendary"),
 		item_type: i % 2 === 0 ? "weapon" : "armor",
 		requires_attunement: true,
 		source: "Rift Ascendant Canon",

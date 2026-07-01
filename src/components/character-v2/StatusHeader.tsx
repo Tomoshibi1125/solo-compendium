@@ -181,16 +181,14 @@ export function StatusHeader({
 							className="relative group bg-obsidian-charcoal/60 border border-primary/20 rounded-[2px] p-4 flex flex-col items-center justify-center transition-all hover:bg-obsidian-charcoal/80 hover:border-primary/40 w-full"
 						>
 							<Shield className="w-5 h-5 text-blue-400 mb-2 transition-transform group-hover:scale-110" />
-							<span className="text-2xl font-display font-bold text-white">
-								{ac}
-							</span>
-							<span className="text-[10px] font-mono text-primary/50 uppercase tracking-widest mt-1">
+							<span className="ra-stat-number text-3xl text-white">{ac}</span>
+							<span className="text-[10px] font-mono text-primary/70 uppercase tracking-widest mt-1">
 								ARMOR_CLASS
 							</span>
 							<div className="absolute top-0 right-0 p-1 opacity-0 group-hover:opacity-100 transition-opacity">
 								<Badge
 									variant="outline"
-									className="text-[8px] h-3 px-1 border-primary/30"
+									className="text-[10px] h-3.5 px-1 border-primary/30"
 								>
 									DEFENSE
 								</Badge>
@@ -220,12 +218,12 @@ export function StatusHeader({
 						>
 							<Zap className="w-5 h-5 text-yellow-400 mb-2 transition-transform group-hover:scale-110" />
 							<div className="flex items-center gap-1">
-								<span className="text-2xl font-display font-bold text-white">
+								<span className="ra-stat-number text-3xl text-white">
 									{formatModifier(initiative)}
 								</span>
-								<Dice6 className="w-4 h-4 text-primary/40 group-hover:text-primary transition-colors" />
+								<Dice6 className="w-4 h-4 text-primary/60 group-hover:text-primary transition-colors" />
 							</div>
-							<span className="text-[10px] font-mono text-primary/50 uppercase tracking-widest mt-1">
+							<span className="text-[10px] font-mono text-primary/70 uppercase tracking-widest mt-1">
 								INITIATIVE
 							</span>
 						</button>
@@ -248,11 +246,11 @@ export function StatusHeader({
 					<TooltipTrigger asChild>
 						<div className="bg-obsidian-charcoal/60 border border-primary/20 rounded-[2px] p-4 flex flex-col items-center justify-center w-full">
 							<Move className="w-5 h-5 text-emerald-400 mb-2" />
-							<span className="text-2xl font-display font-bold text-white">
+							<span className="ra-stat-number text-3xl text-white">
 								{speed}{" "}
-								<span className="text-sm font-mono text-primary/40">FT</span>
+								<span className="text-sm font-mono text-primary/60">FT</span>
 							</span>
-							<span className="text-[10px] font-mono text-primary/50 uppercase tracking-widest mt-1">
+							<span className="text-[10px] font-mono text-primary/70 uppercase tracking-widest mt-1">
 								WALK_SPEED
 							</span>
 						</div>
@@ -278,10 +276,10 @@ export function StatusHeader({
 							className="bg-obsidian-charcoal/60 border border-primary/20 rounded-[2px] p-4 flex flex-col items-center justify-center w-full"
 						>
 							<Award className="w-5 h-5 text-amber-300 mb-2" />
-							<span className="text-2xl font-display font-bold text-white">
+							<span className="ra-stat-number text-3xl text-white">
 								{formatModifier(proficiencyBonus)}
 							</span>
-							<span className="text-[10px] font-mono text-primary/50 uppercase tracking-widest mt-1">
+							<span className="text-[10px] font-mono text-primary/70 uppercase tracking-widest mt-1">
 								PROF_BONUS
 							</span>
 						</div>
@@ -314,11 +312,11 @@ export function StatusHeader({
 							</span>
 						</div>
 						<div className="flex items-center gap-2">
-							<span className="text-xl font-display font-bold text-white">
+							<span className="ra-stat-number text-3xl text-white">
 								{hp.current}
 							</span>
-							<span className="text-sm text-primary/40">/</span>
-							<span className="text-sm text-primary/60 font-mono font-bold">
+							<span className="text-base text-primary/70">/</span>
+							<span className="text-base text-primary/70 font-mono font-bold">
 								{hp.max}
 							</span>
 							{hp.temp > 0 && (
@@ -347,7 +345,7 @@ export function StatusHeader({
 								aria-label="Decrease Hit Dice"
 								className="p-1 hover:bg-primary/10 rounded transition-colors"
 							>
-								<Minus className="w-3 h-3 text-primary/40" />
+								<Minus className="w-3 h-3 text-primary/60" />
 							</button>
 							<button
 								type="button"
@@ -368,13 +366,13 @@ export function StatusHeader({
 								aria-label="Increase Hit Dice"
 								className="p-1 hover:bg-primary/10 rounded transition-colors"
 							>
-								<Plus className="w-3 h-3 text-primary/40" />
+								<Plus className="w-3 h-3 text-primary/60" />
 							</button>
 						</div>
-						<span className="text-[10px] text-primary/50 uppercase">
+						<span className="text-[10px] text-primary/70 uppercase">
 							HIT_DICE
 						</span>
-						<span className="text-[9px] text-primary/40 italic">
+						<span className="text-[10px] text-primary/60 italic">
 							d{hitDice.size}
 						</span>
 					</div>
@@ -393,7 +391,7 @@ export function StatusHeader({
 								<span className="text-[10px] text-amber-500/70 uppercase mt-1 font-bold flex items-center gap-1">
 									<Sparkles className="w-2 h-2" /> SPEND FAVOR
 								</span>
-								<span className="text-[9px] text-amber-500/50 mt-0.5">
+								<span className="text-[10px] text-amber-500/50 mt-0.5">
 									d{riftFavor.die}
 								</span>
 							</button>

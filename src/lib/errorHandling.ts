@@ -65,37 +65,6 @@ export function getErrorInfo(error: unknown): ErrorInfo {
 }
 
 /**
- * Check if error is a network/connection error
- */
-export function isNetworkError(error: unknown): boolean {
-	if (error instanceof Error) {
-		return (
-			error.message.includes("network") ||
-			error.message.includes("fetch") ||
-			error.message.includes("connection") ||
-			error.message.includes("timeout")
-		);
-	}
-	return false;
-}
-
-/**
- * Check if error is an authentication error
- */
-export function isAuthError(error: unknown): boolean {
-	if (error instanceof Error) {
-		return (
-			error.message.includes("Not authenticated") ||
-			error.message.includes("JWT") ||
-			error.message.includes("token")
-		);
-	}
-
-	const pgError = error as PostgrestError;
-	return pgError?.code === "PGRST301" || pgError?.code === "42501";
-}
-
-/**
  * Check if error is a not found error
  */
 export function isNotFoundError(error: unknown): boolean {
@@ -135,32 +104,4 @@ export function logErrorWithContext(
 			...additionalInfo,
 		});
 	}
-}
-
-/**
- * Create a standardized error handler for React Query mutations
- */
-export function createMutationErrorHandler(context: string) {
-	return (error: unknown) => {
-		logErrorWithContext(error, context);
-
-		// Return user-friendly message for toast
-		return {
-			title: "Operation failed",
-			description: getErrorMessage(error),
-			variant: "destructive" as const,
-		};
-	};
-}
-
-/**
- * Create a standardized error handler for React Query queries
- */
-export function createQueryErrorHandler(context: string) {
-	return (error: unknown) => {
-		logErrorWithContext(error, context);
-
-		// For queries, we typically don't show toasts, just log
-		// Components can check error state and display appropriately
-	};
 }

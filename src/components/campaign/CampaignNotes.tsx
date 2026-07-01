@@ -298,7 +298,7 @@ export function CampaignNotes({ campaignId }: CampaignNotesProps) {
 											</Badge>
 											<Badge
 												variant="outline"
-												className="text-[10px] uppercase"
+												className="text-[11px] uppercase"
 											>
 												{secured.privacy.visibility}
 											</Badge>
@@ -346,7 +346,7 @@ export function CampaignNotes({ campaignId }: CampaignNotesProps) {
 														key={`${note.id}-${segment.id}`}
 														className="rounded-md border border-amber-500/30 bg-amber-500/10 px-3 py-2 space-y-1"
 													>
-														<p className="text-[10px] uppercase tracking-wide text-amber-300">
+														<p className="text-[11px] uppercase tracking-wide text-amber-300">
 															{segment.label || "Secret"}
 														</p>
 														<p className="text-sm whitespace-pre-wrap">

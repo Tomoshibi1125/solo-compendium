@@ -15,12 +15,6 @@ import { getConsentStatus } from "@/hooks/useAnalyticsConsent";
 import type { Json } from "@/integrations/supabase/types";
 import { logger } from "@/lib/logger";
 
-type AnalyticsEvent = {
-	name: string;
-	properties?: Record<string, Json | undefined>;
-	userId?: string;
-};
-
 type AnalyticsPageView = {
 	path: string;
 	title?: string;
@@ -34,13 +28,7 @@ type AnalyticsConfig = {
 	posthogHost: string;
 };
 
-let analyticsConfigOverride: Partial<AnalyticsConfig> | null = null;
-
-export function setAnalyticsConfigOverride(
-	override: Partial<AnalyticsConfig> | null,
-): void {
-	analyticsConfigOverride = override;
-}
+const analyticsConfigOverride: Partial<AnalyticsConfig> | null = null;
 
 function getAnalyticsConfig(): AnalyticsConfig {
 	const base: AnalyticsConfig = {
@@ -75,49 +63,6 @@ function shouldTrack(config: AnalyticsConfig): boolean {
 	// Only track if user has consented
 	const consent = getConsentStatus();
 	return consent === "accepted";
-}
-
-/**
- * Track a custom event
- */
-export function trackEvent(event: AnalyticsEvent): void {
-	const config = getAnalyticsConfig();
-	if (!shouldTrack(config)) return;
-
-	try {
-		// Log event (can be extended to send to your backend)
-		if (import.meta.env.DEV) {
-			logger.debug("[Analytics] Event:", event);
-		}
-
-		// Plausible Analytics
-		if (
-			config.plausibleDomain &&
-			typeof window !== "undefined" &&
-			window.plausible
-		) {
-			window.plausible(event.name, {
-				props: event.properties,
-			});
-		}
-
-		// PostHog
-		if (config.posthogKey && typeof window !== "undefined" && window.posthog) {
-			window.posthog.capture(event.name, event.properties);
-		}
-
-		// Custom analytics endpoint (if you have one)
-		// You can send events to your own backend here
-		// Example:
-		// fetch('/api/analytics', {
-		//   method: 'POST',
-		//   headers: { 'Content-Type': 'application/json' },
-		//   body: JSON.stringify(event),
-		// }).catch(() => {}); // Fail silently
-	} catch (error) {
-		// Fail silently - analytics should never break the app
-		logger.warn("[Analytics] Failed to track event:", error);
-	}
 }
 
 /**
@@ -156,46 +101,6 @@ export function trackPageView(page: AnalyticsPageView): void {
 		}
 	} catch (error) {
 		logger.warn("[Analytics] Failed to track page view:", error);
-	}
-}
-
-/**
- * Identify a user (only when consented)
- */
-export function identifyUser(
-	userId: string,
-	traits?: Record<string, Json | undefined>,
-): void {
-	const config = getAnalyticsConfig();
-	if (!shouldTrack(config)) return;
-
-	try {
-		// PostHog
-		if (config.posthogKey && typeof window !== "undefined" && window.posthog) {
-			window.posthog.identify(userId, traits);
-		}
-
-		// Custom analytics
-		// You can send user identification to your backend here
-	} catch (error) {
-		logger.warn("[Analytics] Failed to identify user:", error);
-	}
-}
-
-/**
- * Reset user identification (on logout)
- */
-export function resetUser(): void {
-	const config = getAnalyticsConfig();
-	if (!shouldTrack(config)) return;
-
-	try {
-		// PostHog
-		if (config.posthogKey && typeof window !== "undefined" && window.posthog) {
-			window.posthog.reset();
-		}
-	} catch (error) {
-		logger.warn("[Analytics] Failed to reset user:", error);
 	}
 }
 
@@ -253,37 +158,3 @@ export function initAnalytics(): void {
 		});
 	}
 }
-
-// Common event names for consistency
-export const AnalyticsEvents = {
-	// User actions
-	USER_SIGNED_UP: "user_signed_up",
-	USER_SIGNED_IN: "user_signed_in",
-	USER_SIGNED_OUT: "user_signed_out",
-
-	// Character actions
-	CHARACTER_CREATED: "character_created",
-	CHARACTER_UPDATED: "character_updated",
-	CHARACTER_DELETED: "character_deleted",
-	CHARACTER_LEVELED_UP: "character_leveled_up",
-	CHARACTER_EXPORTED: "character_exported",
-
-	// Compendium actions
-	COMPENDIUM_SEARCHED: "compendium_searched",
-	COMPENDIUM_ITEM_VIEWED: "compendium_item_viewed",
-	COMPENDIUM_ITEM_FAVORITED: "compendium_item_favorited",
-
-	// Campaign actions
-	CAMPAIGN_CREATED: "campaign_created",
-	CAMPAIGN_JOINED: "campaign_joined",
-
-	// Feature usage
-	DICE_ROLLED: "dice_rolled",
-	POWER_CAST: "power_cast",
-	EQUIPMENT_EQUIPPED: "equipment_equipped",
-	FEATURE_USED: "feature_used",
-
-	// UI interactions
-	COMMAND_PALETTE_OPENED: "command_palette_opened",
-	EXPORT_DIALOG_OPENED: "export_dialog_opened",
-} as const;

@@ -20,6 +20,16 @@ export interface SandboxNPC {
 		| "independent"
 		| "anomaly_adjacent";
 	level: number;
+	/**
+	 * "ascendant" = an awakened, powered individual (has a Job + a rank);
+	 * "mundane" = a non-awakened civilian (no powers; carries a trade label, not a real rank).
+	 * Defaults to "ascendant" when omitted.
+	 */
+	kind?: "ascendant" | "mundane";
+	/**
+	 * Hunter rank letter E–SS (ascendants only). Informational/display — NEVER a permission gate.
+	 */
+	rank?: string;
 	job: string;
 	hp: number;
 	ac: number;
@@ -50,8 +60,9 @@ type NPCInput = Omit<SandboxNPC, "leveling"> & {
 	levelAbilities?: Record<number, string>;
 };
 
-const makeNPC = (npc: NPCInput): SandboxNPC => ({
+export const makeNPC = (npc: NPCInput): SandboxNPC => ({
 	...npc,
+	kind: npc.kind ?? "ascendant",
 	leveling: {
 		xp: 0,
 		xpToNextLevel: Math.max(300, npc.level * 500),
@@ -1628,6 +1639,406 @@ const independents: SandboxNPC[] = [
 		location: "Bastion Golemfall",
 		questHook:
 			"The commander can open a route through the deep dark if the party restores the fallen banner.",
+	}),
+	// --- Gloamreach natives: mundane folk who survive the Quiet by craft and nerve. ---
+	makeNPC({
+		id: "npc-ind-013",
+		name: "Marrow the Cartwright",
+		title: "Hollow Way Wheelwright",
+		faction: "independent",
+		level: 2,
+		kind: "mundane",
+		job: "Cartwright",
+		hp: 14,
+		ac: 11,
+		description:
+			"A broad-shouldered wheelwright whose carts are the only ones that still hold true on roads that lengthen and turn.",
+		personality:
+			"Gruff, dependable, superstitious, and quietly proud of work that keeps strangers alive.",
+		motivation:
+			"Keep the settlement's carts rolling so no one is ever stranded on the road after dark.",
+		backstory:
+			"Marrow learned the trade from a father the road eventually kept; he builds every axle as if it were a prayer.",
+		keyAbilities: ["Wheelwright's Craft", "Road-Sense", "Mule-Handling"],
+		recruitCondition:
+			"Bring him seasoned oak from a tree the dark hasn't touched and he travels with the party as their teamster.",
+		isRecruitable: true,
+		guildAffiliation: null,
+		location: "Hollow Way wheelwright's yard",
+		questHook:
+			"Marrow's last delivery cart came back empty, with the driver's name scratched off the manifest.",
+		maxLevel: 4,
+		autoLevel: false,
+	}),
+	makeNPC({
+		id: "npc-ind-014",
+		name: "Sela Dunmore",
+		title: "The Fisher-Wife",
+		faction: "independent",
+		level: 2,
+		kind: "mundane",
+		job: "Fisherwoman",
+		hp: 10,
+		ac: 10,
+		description:
+			"A weathered fenswoman who reads the drowned hospital-fen by the way the reeds lie, and never eats a fish that looked at her.",
+		personality:
+			"Plainspoken, watchful, kind to children, and unwilling to lie about what is under the water.",
+		motivation:
+			"Feed her neighbors without feeding the fen what it asks for in return.",
+		backstory:
+			"Sela's husband went under at the fen's edge and surfaced three nights later wearing the wrong smile; she has fished alone since.",
+		keyAbilities: ["Fen-Craft", "Net & Line", "Drowned-Water Lore"],
+		recruitCondition:
+			"Recover her husband's wedding ring from the shallows and she guides the party through the fen's safe channels.",
+		isRecruitable: true,
+		guildAffiliation: null,
+		location: "Drowned hospital-fen, the reed jetties",
+		questHook:
+			"Sela has started catching fish with faces she recognizes from the missing.",
+		maxLevel: 4,
+		autoLevel: false,
+	}),
+	makeNPC({
+		id: "npc-ind-015",
+		name: "Lamplighter Cob",
+		title: "Keeper of the Tribute Road",
+		faction: "independent",
+		level: 1,
+		kind: "mundane",
+		job: "Lamplighter",
+		hp: 8,
+		ac: 10,
+		description:
+			"A stooped old man who walks the tribute road at dusk, lighting ward-lamps the Quiet hates.",
+		personality:
+			"Cheerful, fatalistic, talkative, and braver than anyone half his age.",
+		motivation:
+			"Keep one more stretch of road lit so one more traveler makes it home.",
+		backstory:
+			"Cob has lit the lamps for forty years and buried every apprentice who thought it was a safe job.",
+		keyAbilities: ["Ward-Lamp Lore", "Night-Walking", "Oil & Wick"],
+		recruitCondition:
+			"Walk his full lamp-round once without flinching and he trusts the party with his spare lamps and his routes.",
+		isRecruitable: true,
+		guildAffiliation: null,
+		location: "The tribute road, lamp-stations",
+		questHook:
+			"Three lamps on the east road keep going out at the same hour every night, and Cob is afraid to learn why.",
+		maxLevel: 3,
+		autoLevel: false,
+	}),
+	makeNPC({
+		id: "npc-ind-016",
+		name: "Penn the Scrivener",
+		title: "Writ-Hand of the Hamlet",
+		faction: "independent",
+		level: 2,
+		kind: "mundane",
+		job: "Scrivener",
+		hp: 9,
+		ac: 10,
+		description:
+			"A nervous clerk with ink-stained cuffs who copies safe-passage writs in a hand the road's law still honors.",
+		personality:
+			"Anxious, meticulous, secretly defiant, and proud that a comma in the right place has saved lives.",
+		motivation:
+			"Forge enough true-seeming writs to get the desperate past tributes they could never afford.",
+		backstory:
+			"Penn discovered the Domain's law is only as strong as the documents it trusts, and has been quietly bending it since.",
+		keyAbilities: ["Fair-Hand Copying", "Writ-Craft", "Forgery"],
+		recruitCondition:
+			"Keep his forging secret from the tithe-collectors for one full season and he travels as the party's documents-man.",
+		isRecruitable: true,
+		guildAffiliation: null,
+		location: "Writ-Bound Hamlet, the copying desk",
+		questHook:
+			"Penn copied a writ bearing a seal that does not exist yet, dated next month.",
+		maxLevel: 4,
+		autoLevel: false,
+	}),
+	makeNPC({
+		id: "npc-ind-017",
+		name: "Ferd the Ferryman",
+		title: "Poleman of the Silent Barge",
+		faction: "independent",
+		level: 2,
+		kind: "mundane",
+		job: "Ferryman",
+		hp: 11,
+		ac: 11,
+		description:
+			"A silent bargeman who poles the only craft that crosses the fen at night, and never speaks while on the water.",
+		personality:
+			"Mute by choice on the river, gentle on land, and absolutely rigid about his rules.",
+		motivation:
+			"Carry the living across, and never take aboard a passenger who casts no reflection.",
+		backstory:
+			"Ferd's father broke the silence-rule mid-crossing once; Ferd poled back alone.",
+		keyAbilities: ["Barge-Handling", "Fen-Crossing", "Silence-Keeping"],
+		recruitCondition:
+			"Honor his silence on three crossings and he ferries the party — and their secrets — anywhere the water reaches.",
+		isRecruitable: true,
+		guildAffiliation: null,
+		location: "The silent barge, fen crossings",
+		questHook:
+			"Something has begun leaving wet footprints leading away from Ferd's moored barge each dawn.",
+		maxLevel: 4,
+		autoLevel: false,
+	}),
+	makeNPC({
+		id: "npc-ind-018",
+		name: "Goodwife Tamsin",
+		title: "Salt-Stitch Seamstress",
+		faction: "independent",
+		level: 1,
+		kind: "mundane",
+		job: "Seamstress",
+		hp: 7,
+		ac: 10,
+		description:
+			"A settlement seamstress who sews salt-thread into every hem and a hidden ward into every collar.",
+		personality:
+			"Motherly, sharp-eyed, gossipy, and fiercely protective of anyone wearing her work.",
+		motivation:
+			"Make sure no child in the warrens walks out unprotected by at least one stitch of hers.",
+		backstory:
+			"Tamsin lost a daughter to the dark and has clothed the settlement's children against it ever since.",
+		keyAbilities: ["Salt-Stitching", "Tailoring", "Ward-Sewing"],
+		recruitCondition:
+			"Bring her a bolt of cloth that has never been worn by the dead and she outfits the party with warded garments.",
+		isRecruitable: true,
+		guildAffiliation: null,
+		location: "The warrens, Tamsin's sewing room",
+		questHook:
+			"Tamsin's newest commission asked for a burial shroud sized for someone still very much alive.",
+		maxLevel: 3,
+		autoLevel: false,
+	}),
+	makeNPC({
+		id: "npc-ind-019",
+		name: "Old Hob the Beekeeper",
+		title: "Keeper of the Dream-Hives",
+		faction: "independent",
+		level: 2,
+		kind: "mundane",
+		job: "Beekeeper",
+		hp: 10,
+		ac: 10,
+		description:
+			"A placid old keeper whose hives produce honey that keeps the Quiet's whispers out of a sleeper's dreams.",
+		personality:
+			"Slow-spoken, unbothered, wise, and oddly hard for the dark to notice.",
+		motivation:
+			"Keep his bees alive so the settlement can sleep one more night without dreaming the wrong dreams.",
+		backstory:
+			"Hob's bees followed him into the Gloamreach and refuse to die, which troubles him more than he admits.",
+		keyAbilities: ["Hive-Keeping", "Dream-Honey", "Bee-Sense"],
+		recruitCondition:
+			"Protect his hives through one swarming season and he travels with a jar of dream-honey for the party's worst nights.",
+		isRecruitable: true,
+		guildAffiliation: null,
+		location: "The orchard verge, Hob's apiary",
+		questHook:
+			"Hob's bees have started building comb in the shape of a face no one will name.",
+		maxLevel: 4,
+		autoLevel: false,
+	}),
+	makeNPC({
+		id: "npc-ind-020",
+		name: "Dilly the Pot-Girl",
+		title: "Tally of Empty Bowls",
+		faction: "independent",
+		level: 1,
+		kind: "mundane",
+		job: "Scullion",
+		hp: 6,
+		ac: 10,
+		description:
+			"A skinny kitchen child who counts the settlement's dead by the bowls that come back unfilled.",
+		personality:
+			"Quick, watchful, brave in small ways, and far too good at noticing who is missing.",
+		motivation:
+			"Make sure every name gets counted, because the dark wins when people are forgotten.",
+		backstory:
+			"Dilly was orphaned to the kitchens and learned to read absence the way others read words.",
+		keyAbilities: ["Bowl-Counting", "Errand-Running", "Quiet-Listening"],
+		recruitCondition:
+			"Promise to say her name aloud once a day and she attaches herself to the party as their tally-keeper.",
+		isRecruitable: true,
+		guildAffiliation: null,
+		location: "Mama Chen's shelter kitchen",
+		questHook:
+			"Dilly counted one more empty bowl than there are missing people, three nights running.",
+		maxLevel: 3,
+		autoLevel: false,
+	}),
+	// --- Gloamreach natives: awakened ascendants who stayed to protect their own. ---
+	makeNPC({
+		id: "npc-ind-021",
+		name: "Warden Ysolde Mar",
+		title: "Cordon-Warden",
+		faction: "independent",
+		level: 4,
+		rank: "D",
+		job: "Holy Knight",
+		hp: 42,
+		ac: 17,
+		description:
+			"A cordon-warden in salt-scoured plate who walks the settlement's perimeter so others can sleep.",
+		personality:
+			"Steadfast, weary, principled, and unable to leave a watch unwalked.",
+		motivation:
+			"Hold the line around one more settlement, even knowing the line always eventually moves.",
+		backstory:
+			"Ysolde was posted to the Gloamreach cordon and simply never accepted the order to fall back.",
+		keyAbilities: ["Warding Oath", "Perimeter Sense", "Shield of the Sleeping"],
+		recruitCondition:
+			"Stand a full night-watch at her side and she marches with a guild that means to protect people, not just clear gates.",
+		isRecruitable: true,
+		guildAffiliation: null,
+		location: "The settlement perimeter, Ysolde's watch-post",
+		questHook:
+			"Ysolde's perimeter is a hundred paces longer than last week, and she never moved a single stake.",
+		levelAbilities: { 6: "Bulwark Vow", 8: "Unbroken Watch" },
+	}),
+	makeNPC({
+		id: "npc-ind-022",
+		name: "Threnody",
+		title: "The Hollow-Singer",
+		faction: "independent",
+		level: 5,
+		rank: "C",
+		job: "Idol",
+		hp: 36,
+		ac: 14,
+		description:
+			"A masked singer whose voice fills the silence the Quiet leaves, so its whispers cannot get a word in.",
+		personality:
+			"Theatrical, haunted, generous, and terrified of the day her voice gives out.",
+		motivation:
+			"Keep singing over the silence so an entire settlement does not have to hear what is underneath it.",
+		backstory:
+			"Threnody learned that the Quiet works through silence, and has refused to stop singing since.",
+		keyAbilities: ["Hollow Song", "Resonant Ward", "Crowd-Heart"],
+		recruitCondition:
+			"Find her a relic that lets her rest her voice and she lends her song to the party's darkest roads.",
+		isRecruitable: true,
+		guildAffiliation: null,
+		location: "The settlement square, Threnody's stage",
+		questHook:
+			"Threnody heard her own voice singing back from an empty house she had never entered.",
+		levelAbilities: { 7: "Chorus of the Unforgotten" },
+	}),
+	makeNPC({
+		id: "npc-ind-023",
+		name: "Bask Orrin",
+		title: "The Fen-Walker",
+		faction: "independent",
+		level: 4,
+		rank: "D",
+		job: "Stalker",
+		hp: 40,
+		ac: 16,
+		description:
+			"A lean tracker who maps the drowned hospital-fen by the things that do not float.",
+		personality: "Quiet, exact, grimly funny, and allergic to comforting lies.",
+		motivation:
+			"Chart a safe path through the fen before the next family tries to cross it blind.",
+		backstory:
+			"Bask lost his sister to a channel he had marked safe, and has re-mapped the fen on his own ever since.",
+		keyAbilities: ["Fen-Tracking", "Silent Step", "Mire-Sense"],
+		recruitCondition:
+			"Survive one of his fen-crossings and admit he was right about the route, and he scouts for the party.",
+		isRecruitable: true,
+		guildAffiliation: null,
+		location: "Drowned hospital-fen, Bask's marker-trail",
+		questHook:
+			"Bask's oldest safe-channel markers were moved overnight to lead somewhere new.",
+		levelAbilities: { 6: "Pathfinder's Certainty" },
+	}),
+	makeNPC({
+		id: "npc-ind-024",
+		name: "Mistress Ophal",
+		title: "The Tallow-Witch",
+		faction: "independent",
+		level: 5,
+		rank: "C",
+		job: "Esper",
+		hp: 30,
+		ac: 13,
+		description:
+			"A hedge-witch who reads the future in dripping tallow and the past in old bone.",
+		personality:
+			"Cryptic, mercenary on the surface, soft underneath, and tired of being right about bad things.",
+		motivation:
+			"Trade true readings for the supplies her warren needs, and warn the doomed for free.",
+		backstory:
+			"Ophal's small foresight let her save a few and damned her to watch the rest; she has made peace with neither.",
+		keyAbilities: ["Tallow-Scrying", "Bone-Reading", "Lesser Foresight"],
+		recruitCondition:
+			"Heed one of her warnings instead of laughing it off and she reads the road ahead for the party.",
+		isRecruitable: true,
+		guildAffiliation: null,
+		location: "The warren's edge, Ophal's tallow-room",
+		questHook:
+			"Every reading Ophal casts this month ends with the same image: a door that should not be opened.",
+		levelAbilities: { 7: "True Sight" },
+	}),
+	makeNPC({
+		id: "npc-ind-025",
+		name: "Grell the Mudlark",
+		title: "Salvage-Tinker",
+		faction: "independent",
+		level: 2,
+		rank: "E",
+		job: "Technomancer",
+		hp: 18,
+		ac: 12,
+		description:
+			"A grubby young scavenger who rebuilds broken ward-tech from fen-mud and salvage.",
+		personality: "Eager, mouthy, loyal, and desperate to be taken seriously.",
+		motivation:
+			"Prove that a kid from the mudflats can keep a whole settlement's wards running.",
+		backstory:
+			"Grell taught himself to fix ward-engines from a manual three pages long, the rest lost to the water.",
+		keyAbilities: ["Ward-Tinkering", "Salvage-Sense", "Jury-Rig"],
+		recruitCondition:
+			"Trust him with a broken relic everyone else gave up on and he wires himself to the party for good.",
+		isRecruitable: true,
+		guildAffiliation: null,
+		location: "The mudflats, Grell's salvage lean-to",
+		questHook:
+			"Grell found a ward-engine still humming a tune nobody ever programmed into it.",
+		maxLevel: 8,
+	}),
+	makeNPC({
+		id: "npc-ind-026",
+		name: "Brother Aldous",
+		title: "The Last Candle",
+		faction: "independent",
+		level: 4,
+		rank: "D",
+		job: "Herald",
+		hp: 38,
+		ac: 13,
+		description:
+			"A gentle preacher who sits with the dying at the candle-stations so no one passes in the dark alone.",
+		personality:
+			"Compassionate, exhausted, doubting, and unwilling to let his doubt reach the people who need him.",
+		motivation:
+			"Make sure every death in the Gloamreach is witnessed by someone who cared.",
+		backstory:
+			"Aldous came to comfort the dying and found the candle-stations were being used for something else; he stayed to fight it from within.",
+		keyAbilities: ["Last Rites", "Comforting Word", "Candle-Ward"],
+		recruitCondition:
+			"Help him cleanse one candle-station of its hidden purpose and he walks with the party as their conscience and healer.",
+		isRecruitable: true,
+		guildAffiliation: null,
+		location: "The candle-stations, Aldous's vigil",
+		questHook:
+			"Aldous noticed the candles at his station burn down faster on the nights someone vanishes.",
+		levelAbilities: { 6: "Shepherd of the Lost" },
 	}),
 ];
 

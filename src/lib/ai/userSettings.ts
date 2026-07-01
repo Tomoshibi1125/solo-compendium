@@ -72,7 +72,6 @@ export function buildCustomService(settings: AIUserSettings): AIService {
 		capabilities: [
 			"enhance-prompt",
 			"analyze-image",
-			"analyze-audio",
 			"generate-tags",
 			"detect-mood",
 			"suggest-style",

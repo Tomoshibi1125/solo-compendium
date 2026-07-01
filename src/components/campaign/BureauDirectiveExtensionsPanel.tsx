@@ -246,7 +246,7 @@ export function BureauDirectiveExtensionsPanel({
 
 				<div className="space-y-1.5">
 					{rows.length === 0 && (
-						<p className="text-[10px] text-muted-foreground italic">
+						<p className="text-[11px] text-muted-foreground italic">
 							No extensions staged.
 						</p>
 					)}
@@ -262,11 +262,11 @@ export function BureauDirectiveExtensionsPanel({
 									<div className="min-w-0">
 										<p className="text-xs font-medium truncate">
 											{row.manifest.name}{" "}
-											<span className="font-mono text-[10px] text-muted-foreground">
+											<span className="font-mono text-[11px] text-muted-foreground">
 												v{row.manifest.version}
 											</span>
 										</p>
-										<p className="text-[10px] text-muted-foreground truncate">
+										<p className="text-[11px] text-muted-foreground truncate">
 											by {row.manifest.author}
 										</p>
 									</div>
@@ -291,11 +291,11 @@ export function BureauDirectiveExtensionsPanel({
 								</div>
 							</div>
 							{row.manifest.description && (
-								<p className="text-[10px] text-muted-foreground">
+								<p className="text-[11px] text-muted-foreground">
 									{row.manifest.description}
 								</p>
 							)}
-							<p className="text-[9px] text-muted-foreground">
+							<p className="text-[11px] text-muted-foreground">
 								Hooks: {row.manifest.hooks.join(", ") || "none"} · Actions:{" "}
 								{row.manifest.actions.join(", ") || "none"}
 							</p>

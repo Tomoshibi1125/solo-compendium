@@ -11,6 +11,7 @@ import {
 	isLocalCharacterId,
 } from "@/lib/guestStore";
 import { formatRegentVernacular, REGENT_LABEL_PLURAL } from "@/lib/vernacular";
+import { type AppZone, useUiStore } from "@/stores/uiStore";
 
 const BASE_TITLE = "Rift Ascendant";
 const ACTIVE_CHARACTER_STORAGE_KEY = "solo-compendium.active-character";
@@ -42,6 +43,7 @@ const COMPENDIUM_LABELS: Record<EntryType, string> = {
 	npcs: "NPCs",
 	vehicles: "Vehicles & Mounts",
 	crafting: "Crafting",
+	"guild-base": "Guild Base",
 };
 
 const ASCENDANT_TOOL_LABELS: Record<string, string> = {
@@ -79,7 +81,17 @@ const WARDEN_TOOL_LABELS: Record<string, string> = {
 	"relic-workshop": "Relic Workshop",
 	"party-tracker": "Party Tracker",
 	"art-generator": "Art Generator",
-	"audio-manager": "Audio Manager",
+};
+
+const getZone = (pathname: string): AppZone => {
+	if (pathname.startsWith("/compendium")) return "compendium";
+	if (pathname.startsWith("/warden-directives")) return "warden";
+	if (pathname.startsWith("/warden-protocols")) return "warden";
+	if (pathname.startsWith("/admin")) return "warden";
+	if (pathname.startsWith("/campaigns")) return "campaign";
+	if (pathname.startsWith("/characters")) return "character";
+	if (pathname.startsWith("/ascendant-tools")) return "character";
+	return "default";
 };
 
 const resolveTitle = (pathname: string) => {
@@ -321,6 +333,10 @@ export function RouteEffects() {
 			active = false;
 		};
 	}, [campaignMatch]);
+
+	useEffect(() => {
+		useUiStore.getState().setZone(getZone(pathname));
+	}, [pathname]);
 
 	useEffect(() => {
 		const title = dynamicTitle ?? resolveTitle(pathname);

@@ -9,11 +9,18 @@
 
 import type { RegentExtended } from "@/integrations/supabase/supabaseExtended";
 import type { Json } from "@/integrations/supabase/types";
+import {
+	type RaCurrencyValue,
+	toRaCurrencyValue,
+	valueToGate,
+} from "@/lib/currency";
+import type { GuildCapability, GuildFacilityTier } from "@/lib/guildBase";
 import { numericCrToLabel } from "@/lib/monster5eTable";
 import { getDefaultSigilSlotsBaseForEquipment } from "@/lib/sigilAutomation";
 import { deriveSpellResolution } from "@/lib/spellMechanicsDerivation";
 import { normalizeRegentSearch } from "@/lib/vernacular";
 import type { CompendiumDeity } from "@/types/compendium";
+import type { FeatureEffect } from "@/types/featureEffects";
 
 type DataLoader<T> = () => Promise<T[]>;
 
@@ -138,6 +145,7 @@ export interface StaticCompendiumEntry {
 	source?: string | null;
 	role?: string | null;
 	value?: number | null;
+	price?: RaCurrencyValue | null;
 	weight?: number | null;
 	// Anomaly detail support (static fallback)
 	size?: string | null;
@@ -403,6 +411,19 @@ export interface StaticCompendiumEntry {
 		quantity: number;
 	}> | null;
 	recipe_id?: string | null;
+	// Guild Base detail support (Base properties + Facilities + Guild Skills
+	// category). Materials fold into Crafting and reuse `rarity`/`material_type`/
+	// `source`.
+	guild_base_type?: "base" | "facility" | "skill" | null;
+	tiers?: GuildFacilityTier[] | null;
+	capability?: GuildCapability | null;
+	guild_effects?: FeatureEffect[] | null;
+	benefit?: string | null;
+	cost?: { currency: string; amount: number } | null;
+	uses?: string | null;
+	// Base-property support: the facility tiers a base installs when acquired.
+	included_facilities?: Record<string, number> | null;
+	is_lot?: boolean | null;
 }
 
 interface StaticDataProvider {
@@ -429,6 +450,7 @@ interface StaticDataProvider {
 	getShadowSoldiers: (search?: string) => Promise<StaticCompendiumEntry[]>;
 	getVehicles: (search?: string) => Promise<StaticCompendiumEntry[]>;
 	getCrafting: (search?: string) => Promise<StaticCompendiumEntry[]>;
+	getGuildBase: (search?: string) => Promise<StaticCompendiumEntry[]>;
 	getNpcs: (search?: string) => Promise<StaticCompendiumEntry[]>;
 	getFightingStyles: (search?: string) => Promise<StaticCompendiumEntry[]>;
 }
@@ -1209,8 +1231,11 @@ function transformItem(item: StaticItemSource): StaticCompendiumEntry {
 		charges: item.charges ?? null,
 		stats: item.stats,
 		effect: item.effect,
-		value: item.value,
-		cost_credits: item.value,
+		// `value`/`cost_credits` stay numeric Gate Credits for legacy math; `price`
+		// carries the structured {currency, amount} so the UI shows varied credit types.
+		value: valueToGate(item.value),
+		cost_credits: valueToGate(item.value),
+		price: toRaCurrencyValue(item.value),
 		weight: item.weight,
 		source: item.source,
 		lore: item.lore ?? null,
@@ -1998,6 +2023,7 @@ export const staticDataProvider: StaticDataProvider = {
 			description: string;
 			type?: string;
 			rarity?: string;
+			value?: RaCurrencyValue | number | null;
 			attunement?: boolean;
 			requirements?: Record<string, Json> | null;
 			properties?: Record<string, Json> | null;
@@ -2033,6 +2059,10 @@ export const staticDataProvider: StaticDataProvider = {
 			rarity: relic.rarity || "rare",
 			item_type: relic.type || "relic",
 			equipment_type: relic.type || "relic",
+			// Structured catalog price → cost badge on relic cards/detail;
+			// `value` keeps the numeric Gate amount for inventory sends.
+			value: valueToGate(relic.value),
+			price: toRaCurrencyValue(relic.value),
 			attunement: relic.attunement ?? null,
 			requirements: relic.requirements ?? null,
 			properties: relic.properties ?? null,
@@ -2731,13 +2761,16 @@ export const staticDataProvider: StaticDataProvider = {
 	// StaticCompendiumEntry bag; NpcDetail re-narrows to CompendiumNPC.
 	getCrafting: async (search?: string) => {
 		const { allCraftingEntries } = await import("@/data/compendium/crafting");
+		const { GUILD_BASE_MATERIALS } = await import(
+			"@/data/compendium/guild-base-materials"
+		);
 		type C = (typeof allCraftingEntries)[number];
 		const filtered = filterBySearch<C>(allCraftingEntries, search, [
 			"name",
 			"display_name",
 			"description",
 		]);
-		return filtered.map((entry) => {
+		const craftingEntries = filtered.map((entry) => {
 			const isRecipe = "recipe_type" in entry;
 			const isMaterial = "material_type" in entry;
 			const craftingType = isRecipe
@@ -2781,10 +2814,121 @@ export const staticDataProvider: StaticDataProvider = {
 				material_requirements: projectEntry?.material_requirements ?? null,
 			} satisfies StaticCompendiumEntry;
 		});
+
+		// Guild-base salvage materials live in the Crafting category (the forge
+		// consumes them via the standard crafting system). Mapped to the crafting
+		// "material" variant so CraftingDetail renders them like any material.
+		const guildMaterials = filterBySearch(GUILD_BASE_MATERIALS, search, [
+			"name",
+			"description",
+		]).map(
+			(material) =>
+				({
+					id: material.id,
+					name: material.name,
+					display_name: material.name,
+					description: material.description,
+					created_at: new Date().toISOString(),
+					tags: ["crafting", "material", "guild-base", material.rarity].filter(
+						Boolean,
+					) as string[],
+					source_book: material.source_book,
+					crafting_type: "material",
+					material_type: "guild-salvage",
+					rarity: material.rarity,
+					unit: "unit",
+					source: material.source,
+					uses: material.uses,
+					cost: material.value,
+				}) satisfies StaticCompendiumEntry,
+		);
+
+		return [...craftingEntries, ...guildMaterials];
+	},
+	// Guild Base — facilities + the guild-skills tree as a browsable category.
+	// RA-specific content (like Vehicles/Crafting); not subject to the 5e
+	// completeness contract. Materials are folded into Crafting (see getCrafting).
+	getGuildBase: async (search?: string) => {
+		const { GUILD_FACILITIES } = await import(
+			"@/data/compendium/guild-base-mods"
+		);
+		const { GUILD_SKILLS } = await import("@/data/compendium/guild-skills");
+		const { GUILD_BASES } = await import("@/data/compendium/guild-bases");
+
+		const bases = filterBySearch(GUILD_BASES, search, [
+			"name",
+			"summary",
+			"description",
+		]).map(
+			(base) =>
+				({
+					id: base.id,
+					name: base.name,
+					display_name: base.name,
+					description: base.description,
+					created_at: new Date().toISOString(),
+					tags: [
+						"guild-base",
+						"base",
+						...(base.isLot ? ["buildable-lot"] : []),
+					],
+					source_book: base.source_book,
+					guild_base_type: "base",
+					cost: base.cost,
+					capability: base.capability ?? null,
+					guild_effects: base.effects ?? null,
+					benefit: base.benefit ?? null,
+					included_facilities: base.includedFacilities,
+					is_lot: base.isLot ?? false,
+				}) satisfies StaticCompendiumEntry,
+		);
+
+		const facilities = filterBySearch(GUILD_FACILITIES, search, [
+			"name",
+			"summary",
+		]).map(
+			(facility) =>
+				({
+					id: facility.id,
+					name: facility.name,
+					display_name: facility.name,
+					description: facility.summary,
+					created_at: new Date().toISOString(),
+					tags: ["guild-base", "facility", facility.id],
+					source_book: facility.source_book,
+					guild_base_type: "facility",
+					tiers: facility.tiers,
+				}) satisfies StaticCompendiumEntry,
+		);
+
+		const skills = filterBySearch(GUILD_SKILLS, search, [
+			"name",
+			"description",
+		]).map(
+			(skill) =>
+				({
+					id: skill.id,
+					name: skill.name,
+					display_name: skill.name,
+					description: skill.description,
+					created_at: new Date().toISOString(),
+					tags: ["guild-base", "skill"],
+					source_book: skill.source_book,
+					guild_base_type: "skill",
+					cost: skill.cost,
+					capability: skill.capability ?? null,
+					guild_effects: skill.effects ?? null,
+					benefit: skill.benefit ?? null,
+				}) satisfies StaticCompendiumEntry,
+		);
+
+		return [...bases, ...facilities, ...skills];
 	},
 	getNpcs: async (search?: string) => {
 		const { sandboxRecruitableNPCs } = await import("../sandbox-npcs");
-		type N = (typeof sandboxRecruitableNPCs)[number];
+		const { fieldRosterNPCs } = await import("../recruitable-roster");
+		const allNpcs = [...sandboxRecruitableNPCs, ...fieldRosterNPCs];
+		type N = (typeof allNpcs)[number];
 		const factionLabels: Record<N["faction"], string> = {
 			bureau_sentinels: "Bureau Sentinels",
 			vermillion_guild: "Vermillion Guild",
@@ -2792,7 +2936,7 @@ export const staticDataProvider: StaticDataProvider = {
 			independent: "Independent",
 			anomaly_adjacent: "Anomaly-Adjacent",
 		};
-		const filtered = filterBySearch<N>(sandboxRecruitableNPCs, search, [
+		const filtered = filterBySearch<N>(allNpcs, search, [
 			"name",
 			"title",
 			"description",
@@ -2810,12 +2954,16 @@ export const staticDataProvider: StaticDataProvider = {
 					factionLabel,
 					npc.job,
 					`Level ${npc.level}`,
+					npc.rank ? `Rank ${npc.rank}` : null,
+					npc.kind === "mundane" ? "Mundane" : "Ascendant",
 					npc.isRecruitable ? "Recruitable" : "Story NPC",
 				].filter(Boolean) as string[],
 				title: npc.title,
 				faction: factionLabel,
 				job: npc.job,
 				level: npc.level,
+				rank: npc.rank ?? null,
+				kind: npc.kind ?? "ascendant",
 				hp: npc.hp,
 				ac: npc.ac,
 				// Stat-block aliases the detail view reads.
@@ -2865,9 +3013,3 @@ declare global {
 		supabaseConfigured?: boolean;
 	}
 }
-
-// Export a hook to check if we should use static data
-export const useStaticDataFallback = () => {
-	// Use static data when Supabase is not configured or fails
-	return !window.supabaseConfigured;
-};

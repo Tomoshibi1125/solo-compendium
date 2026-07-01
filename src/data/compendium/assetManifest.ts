@@ -60,39 +60,6 @@ export function getAssetUrl(
 	return DEFAULT_FALLBACKS.portrait;
 }
 
-export function getFallbackUrl(
-	assetType: keyof typeof DEFAULT_FALLBACKS,
-): string {
-	return DEFAULT_FALLBACKS[assetType] || DEFAULT_FALLBACKS.portrait;
-}
-
-// Validate asset exists (client-side check)
-export async function validateAsset(url: string): Promise<boolean> {
-	try {
-		const response = await fetch(url, { method: "HEAD" });
-		return response.ok;
-	} catch {
-		return false;
-	}
-}
-
-// Lightweight manifest stub for backward compatibility
-export interface AssetManifest {
-	mappings: Record<string, AssetMapping>;
-	globalFallbacks: {
-		portrait: string;
-		thumbnail: string;
-		icon: string;
-		banner: string;
-		token?: string;
-	};
-	statistics: {
-		totalMappings: number;
-		mappingsWithAssets: number;
-		missingAssets: string[];
-	};
-}
-
 export interface AssetMapping {
 	id: string;
 	type: string;
@@ -110,15 +77,4 @@ export interface AssetMapping {
 		banner?: string;
 		token?: string;
 	};
-}
-
-export const assetManifest: AssetManifest = {
-	mappings: {},
-	globalFallbacks: DEFAULT_FALLBACKS,
-	statistics: { totalMappings: 0, mappingsWithAssets: 0, missingAssets: [] },
-};
-
-// Legacy compatibility
-export function createAssetManifest(): AssetManifest {
-	return assetManifest;
 }

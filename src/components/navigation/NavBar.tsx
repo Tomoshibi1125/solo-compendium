@@ -1,6 +1,7 @@
 import { Menu, Search, Volume2, VolumeX, X } from "lucide-react";
 import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { SyncStatusIndicator } from "@/components/shared/SyncStatusIndicator";
 import { AscendantSigil } from "@/components/ui/AscendantSigil";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -97,6 +98,8 @@ export function NavBar() {
 							<VolumeX className="h-4 w-4" />
 						)}
 					</Button>
+
+					<SyncStatusIndicator className="hidden sm:flex" />
 
 					<NotificationCenter />
 

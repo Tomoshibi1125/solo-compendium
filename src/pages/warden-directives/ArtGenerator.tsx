@@ -91,7 +91,10 @@ const ArtGeneratorPage = () => {
 				</div>
 
 				<div className="bg-card/30 backdrop-blur-sm border border-primary/10 rounded-xl p-6 shadow-2xl">
-					<AIEnhancedArtGenerator entityType="Anomaly" />
+					<AIEnhancedArtGenerator
+						entityType="Anomaly"
+						campaignId={activeCampaignId || null}
+					/>
 				</div>
 			</div>
 		</Layout>

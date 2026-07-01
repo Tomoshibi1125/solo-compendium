@@ -208,12 +208,22 @@ const processItem = async (item: SyncItem) => {
 	}
 };
 
-export const flushSyncQueue = async () => {
-	if (typeof navigator !== "undefined" && !navigator.onLine) return;
-	if (!isSupabaseConfigured) return;
+export interface FlushResult {
+	/** Items that synced successfully and were removed from the queue. */
+	success: number;
+	/** Items that failed this pass (still queued for retry, or dropped after 3 tries). */
+	failed: number;
+	/** Items left in the queue after this pass. */
+	remaining: number;
+}
+
+export const flushSyncQueue = async (): Promise<FlushResult> => {
+	const empty: FlushResult = { success: 0, failed: 0, remaining: 0 };
+	if (typeof navigator !== "undefined" && !navigator.onLine) return empty;
+	if (!isSupabaseConfigured) return empty;
 
 	const queue = await getSyncQueue();
-	if (queue.length === 0) return;
+	if (queue.length === 0) return empty;
 
 	// Sort by priority EXPLICITLY before timestamp
 	const sortedQueue = queue.sort((a, b) => {
@@ -225,6 +235,7 @@ export const flushSyncQueue = async () => {
 
 	const remainingQueue: SyncItem[] = [];
 	let successCount = 0;
+	let failedCount = 0;
 
 	for (const item of sortedQueue) {
 		try {
@@ -232,6 +243,7 @@ export const flushSyncQueue = async () => {
 			successCount++;
 		} catch (err) {
 			logger.error(`Sync failed for ${item.type} ${item.id}`, err);
+			failedCount++;
 			const failedItem = { ...item, retryCount: item.retryCount + 1 };
 			if (failedItem.retryCount < 3) {
 				remainingQueue.push(failedItem);
@@ -243,4 +255,10 @@ export const flushSyncQueue = async () => {
 	if (successCount > 0) {
 		logger.log(`Successfully synced ${successCount} items from unified queue`);
 	}
+
+	return {
+		success: successCount,
+		failed: failedCount,
+		remaining: remainingQueue.length,
+	};
 };

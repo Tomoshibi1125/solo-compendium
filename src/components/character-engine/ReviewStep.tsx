@@ -139,14 +139,14 @@ export const ReviewStep: React.FC<ReviewStepProps> = ({
 									Biological Identity
 								</h3>
 								<div className="grid grid-cols-2 gap-y-2 text-sm">
-									<span className="text-muted-foreground uppercase tracking-tighter text-[10px]">
+									<span className="text-muted-foreground uppercase tracking-tighter text-xs">
 										Designation:
 									</span>
 									<span className="font-heading text-primary">
 										{name || "UNNAMED"}
 									</span>
 
-									<span className="text-muted-foreground uppercase tracking-tighter text-[10px]">
+									<span className="text-muted-foreground uppercase tracking-tighter text-xs">
 										Protocol (Job):
 									</span>
 									<span>
@@ -157,7 +157,7 @@ export const ReviewStep: React.FC<ReviewStepProps> = ({
 											: "None"}
 									</span>
 
-									<span className="text-muted-foreground uppercase tracking-tighter text-[10px]">
+									<span className="text-muted-foreground uppercase tracking-tighter text-xs">
 										Specialization (Path):
 									</span>
 									<span
@@ -168,7 +168,7 @@ export const ReviewStep: React.FC<ReviewStepProps> = ({
 										{selectedPathName}
 									</span>
 
-									<span className="text-muted-foreground uppercase tracking-tighter text-[10px]">
+									<span className="text-muted-foreground uppercase tracking-tighter text-xs">
 										Historical Imprint:
 									</span>
 									<span>{selectedBackgroundName}</span>
@@ -183,7 +183,7 @@ export const ReviewStep: React.FC<ReviewStepProps> = ({
 									<div className="grid grid-cols-2 gap-y-2 text-sm">
 										{alignment && (
 											<>
-												<span className="text-muted-foreground uppercase tracking-tighter text-[10px]">
+												<span className="text-muted-foreground uppercase tracking-tighter text-xs">
 													Protocol Alignment:
 												</span>
 												<span>{alignment}</span>
@@ -191,7 +191,7 @@ export const ReviewStep: React.FC<ReviewStepProps> = ({
 										)}
 										{personalityTrait && (
 											<>
-												<span className="text-muted-foreground uppercase tracking-tighter text-[10px]">
+												<span className="text-muted-foreground uppercase tracking-tighter text-xs">
 													Personality Signal:
 												</span>
 												<span>{personalityTrait}</span>
@@ -199,7 +199,7 @@ export const ReviewStep: React.FC<ReviewStepProps> = ({
 										)}
 										{ideal && (
 											<>
-												<span className="text-muted-foreground uppercase tracking-tighter text-[10px]">
+												<span className="text-muted-foreground uppercase tracking-tighter text-xs">
 													Core Drive:
 												</span>
 												<span>{ideal}</span>
@@ -207,7 +207,7 @@ export const ReviewStep: React.FC<ReviewStepProps> = ({
 										)}
 										{bond && (
 											<>
-												<span className="text-muted-foreground uppercase tracking-tighter text-[10px]">
+												<span className="text-muted-foreground uppercase tracking-tighter text-xs">
 													Anchor / Bond:
 												</span>
 												<span>{bond}</span>
@@ -215,7 +215,7 @@ export const ReviewStep: React.FC<ReviewStepProps> = ({
 										)}
 										{flaw && (
 											<>
-												<span className="text-muted-foreground uppercase tracking-tighter text-[10px]">
+												<span className="text-muted-foreground uppercase tracking-tighter text-xs">
 													Fault Line:
 												</span>
 												<span>{flaw}</span>
@@ -240,13 +240,13 @@ export const ReviewStep: React.FC<ReviewStepProps> = ({
 													key={ability}
 													className="p-2 rounded bg-primary/5 border border-primary/10 flex flex-col items-center"
 												>
-													<span className="text-[9px] uppercase tracking-tighter text-muted-foreground">
+													<span className="text-[11px] uppercase tracking-tighter text-muted-foreground">
 														{ability}
 													</span>
 													<span className="text-sm font-heading font-bold">
 														{effectiveAbilities[ability]}
 													</span>
-													<span className="text-[10px] text-primary">
+													<span className="text-xs text-primary">
 														{modifier >= 0 ? `+${modifier}` : modifier}
 													</span>
 												</div>
@@ -264,55 +264,55 @@ export const ReviewStep: React.FC<ReviewStepProps> = ({
 								</h3>
 								<div className="grid grid-cols-2 xl:grid-cols-4 gap-3">
 									<div className="p-3 rounded bg-black/40 border border-primary/10 text-center">
-										<span className="block text-[9px] uppercase tracking-tighter text-muted-foreground">
+										<span className="block text-[11px] uppercase tracking-tighter text-muted-foreground">
 											Pulse (HP)
 										</span>
 										<span className="text-xl font-heading text-primary">
 											{hpMax} / {hpMax}
 										</span>
-										<span className="block text-[9px] text-muted-foreground">
+										<span className="block text-[11px] text-muted-foreground">
 											1d{hitDieSize}{" "}
 											{formatSigned(getAbilityModifier(effectiveAbilities.VIT))}
 										</span>
 									</div>
 									<div className="p-3 rounded bg-black/40 border border-primary/10 text-center">
-										<span className="block text-[9px] uppercase tracking-tighter text-muted-foreground">
+										<span className="block text-[11px] uppercase tracking-tighter text-muted-foreground">
 											Deflection (AC)
 										</span>
 										<span className="text-xl font-heading text-primary">
 											{resolvedStats?.armorClass ?? baseAC}
 										</span>
-										<span className="block text-[9px] text-muted-foreground">
+										<span className="block text-[11px] text-muted-foreground">
 											10{" "}
 											{formatSigned(getAbilityModifier(effectiveAbilities.AGI))}
 										</span>
 									</div>
 									<div className="p-3 rounded bg-black/40 border border-primary/10 text-center">
-										<span className="block text-[9px] uppercase tracking-tighter text-muted-foreground">
+										<span className="block text-[11px] uppercase tracking-tighter text-muted-foreground">
 											Expertise (PB)
 										</span>
 										<span className="text-xl font-heading text-primary">
 											{formatSigned(proficiencyBonus)}
 										</span>
-										<span className="block text-[9px] text-muted-foreground">
+										<span className="block text-[11px] text-muted-foreground">
 											Level 1 proficiency
 										</span>
 									</div>
 									<div className="p-3 rounded bg-black/40 border border-primary/10 text-center">
-										<span className="block text-[9px] uppercase tracking-tighter text-muted-foreground">
+										<span className="block text-[11px] uppercase tracking-tighter text-muted-foreground">
 											Initiative
 										</span>
 										<span className="text-xl font-heading text-primary">
 											{formatSigned(initiative)}
 										</span>
-										<span className="block text-[9px] text-muted-foreground">
+										<span className="block text-[11px] text-muted-foreground">
 											AGI modifier
 										</span>
 									</div>
 								</div>
 								<div className="grid grid-cols-2 xl:grid-cols-4 gap-3">
 									<div className="p-3 rounded bg-black/40 border border-primary/10 text-center">
-										<span className="block text-[9px] uppercase tracking-tighter text-muted-foreground">
+										<span className="block text-[11px] uppercase tracking-tighter text-muted-foreground">
 											Speed
 										</span>
 										<span className="text-lg font-heading text-primary">
@@ -320,7 +320,7 @@ export const ReviewStep: React.FC<ReviewStepProps> = ({
 										</span>
 									</div>
 									<div className="p-3 rounded bg-black/40 border border-primary/10 text-center">
-										<span className="block text-[9px] uppercase tracking-tighter text-muted-foreground">
+										<span className="block text-[11px] uppercase tracking-tighter text-muted-foreground">
 											Rift Favor
 										</span>
 										<span className="text-lg font-heading text-primary">
@@ -328,20 +328,20 @@ export const ReviewStep: React.FC<ReviewStepProps> = ({
 										</span>
 									</div>
 									<div className="p-3 rounded bg-black/40 border border-primary/10 text-center">
-										<span className="block text-[9px] uppercase tracking-tighter text-muted-foreground">
+										<span className="block text-[11px] uppercase tracking-tighter text-muted-foreground">
 											Spell Save DC
 										</span>
 										<span className="text-lg font-heading text-primary">
 											{spellSaveDC ?? "—"}
 										</span>
 										{spellcastingAbility && (
-											<span className="block text-[9px] text-muted-foreground">
+											<span className="block text-[11px] text-muted-foreground">
 												8 + PB + {spellcastingAbility}
 											</span>
 										)}
 									</div>
 									<div className="p-3 rounded bg-black/40 border border-primary/10 text-center">
-										<span className="block text-[9px] uppercase tracking-tighter text-muted-foreground">
+										<span className="block text-[11px] uppercase tracking-tighter text-muted-foreground">
 											Spell Attack
 										</span>
 										<span className="text-lg font-heading text-primary">
@@ -350,7 +350,7 @@ export const ReviewStep: React.FC<ReviewStepProps> = ({
 												: formatSigned(spellAttackBonus)}
 										</span>
 										{spellcastingAbility && (
-											<span className="block text-[9px] text-muted-foreground">
+											<span className="block text-[11px] text-muted-foreground">
 												PB + {spellcastingAbility}
 											</span>
 										)}
@@ -358,7 +358,7 @@ export const ReviewStep: React.FC<ReviewStepProps> = ({
 								</div>
 								{savingThrows.length > 0 && (
 									<div className="space-y-2">
-										<span className="text-[9px] uppercase tracking-tighter text-muted-foreground">
+										<span className="text-[11px] uppercase tracking-tighter text-muted-foreground">
 											Saving Throws
 										</span>
 										<div className="flex flex-wrap gap-1">
@@ -366,7 +366,7 @@ export const ReviewStep: React.FC<ReviewStepProps> = ({
 												<Badge
 													key={save.ability}
 													variant={save.proficient ? "default" : "outline"}
-													className="text-[9px]"
+													className="text-[11px]"
 												>
 													{save.ability} {formatSigned(save.value)}
 												</Badge>
@@ -376,7 +376,7 @@ export const ReviewStep: React.FC<ReviewStepProps> = ({
 								)}
 								{trainedSkills.length > 0 && (
 									<div className="space-y-2">
-										<span className="text-[9px] uppercase tracking-tighter text-muted-foreground">
+										<span className="text-[11px] uppercase tracking-tighter text-muted-foreground">
 											Trained Skill Rolls
 										</span>
 										<div className="flex flex-wrap gap-1">
@@ -384,7 +384,7 @@ export const ReviewStep: React.FC<ReviewStepProps> = ({
 												<Badge
 													key={skill.id}
 													variant={skill.expertise ? "default" : "secondary"}
-													className="text-[9px]"
+													className="text-[11px]"
 												>
 													{formatRegentVernacular(skill.name)}{" "}
 													{formatSigned(skill.value)}
@@ -396,7 +396,7 @@ export const ReviewStep: React.FC<ReviewStepProps> = ({
 								)}
 								{riftFavorOptions.length > 0 && (
 									<div className="space-y-2">
-										<span className="text-[9px] uppercase tracking-tighter text-muted-foreground">
+										<span className="text-[11px] uppercase tracking-tighter text-muted-foreground">
 											Unlocked Rift Favor Options
 										</span>
 										<div className="flex flex-wrap gap-1">
@@ -404,7 +404,7 @@ export const ReviewStep: React.FC<ReviewStepProps> = ({
 												<Badge
 													key={option.id}
 													variant="outline"
-													className="text-[9px]"
+													className="text-[11px]"
 													title={option.rulesText}
 												>
 													{option.name} · Cost {option.cost}
@@ -423,7 +423,7 @@ export const ReviewStep: React.FC<ReviewStepProps> = ({
 									<div className="space-y-1 text-xs text-muted-foreground">
 										{Object.keys(jobASI).length > 0 && (
 											<div className="flex justify-between">
-												<span className="uppercase tracking-tighter text-[9px]">
+												<span className="uppercase tracking-tighter text-[11px]">
 													Node ASI:
 												</span>
 												<span>
@@ -435,13 +435,13 @@ export const ReviewStep: React.FC<ReviewStepProps> = ({
 											</div>
 										)}
 										<div className="flex justify-between">
-											<span className="uppercase tracking-tighter text-[9px]">
+											<span className="uppercase tracking-tighter text-[11px]">
 												Mobility Index:
 											</span>
 											<span>{staticJobData.speed} FT</span>
 										</div>
 										<div className="flex justify-between">
-											<span className="uppercase tracking-tighter text-[9px]">
+											<span className="uppercase tracking-tighter text-[11px]">
 												Linguistic Bindings:
 											</span>
 											<span className="truncate max-w-[120px] text-right">
@@ -454,7 +454,7 @@ export const ReviewStep: React.FC<ReviewStepProps> = ({
 											</span>
 										</div>
 										<div className="pt-2">
-											<span className="uppercase tracking-tighter text-[9px] block mb-1">
+											<span className="uppercase tracking-tighter text-[11px] block mb-1">
 												Inherent Protocol Features:
 											</span>
 											<div className="flex flex-wrap gap-1">
@@ -464,7 +464,7 @@ export const ReviewStep: React.FC<ReviewStepProps> = ({
 												].map((f) => (
 													<span
 														key={f.name}
-														className="px-1.5 py-0.5 rounded-sm bg-primary/5 border border-primary/10 text-[9px] uppercase"
+														className="px-1.5 py-0.5 rounded-sm bg-primary/5 border border-primary/10 text-[11px] uppercase"
 													>
 														{formatRegentVernacular(f.name)}
 													</span>
@@ -473,7 +473,7 @@ export const ReviewStep: React.FC<ReviewStepProps> = ({
 										</div>
 										{startingLoadout.length > 0 && (
 											<div className="pt-2 space-y-2">
-												<span className="uppercase tracking-tighter text-[9px] block">
+												<span className="uppercase tracking-tighter text-[11px] block">
 													Starting Loadout:
 												</span>
 												<div className="space-y-2">
@@ -489,7 +489,7 @@ export const ReviewStep: React.FC<ReviewStepProps> = ({
 																{item.type && (
 																	<Badge
 																		variant="outline"
-																		className="text-[8px]"
+																		className="text-[11px]"
 																	>
 																		{formatRegentVernacular(item.type)}
 																	</Badge>
@@ -510,7 +510,7 @@ export const ReviewStep: React.FC<ReviewStepProps> = ({
 																		<Badge
 																			key={`${item.name}-${line}`}
 																			variant="secondary"
-																			className="text-[8px]"
+																			className="text-[11px]"
 																		>
 																			{formatRegentVernacular(line)}
 																		</Badge>
@@ -537,10 +537,10 @@ export const ReviewStep: React.FC<ReviewStepProps> = ({
 												className="rounded bg-primary/5 border border-primary/10 p-2 space-y-2"
 											>
 												<div className="flex items-center justify-between gap-2">
-													<span className="text-[9px] uppercase tracking-tighter text-muted-foreground">
+													<span className="text-[11px] uppercase tracking-tighter text-muted-foreground">
 														{group.label}
 													</span>
-													<Badge variant="outline" className="text-[9px]">
+													<Badge variant="outline" className="text-[11px]">
 														{group.values.length}
 													</Badge>
 												</div>
@@ -549,7 +549,7 @@ export const ReviewStep: React.FC<ReviewStepProps> = ({
 														<Badge
 															key={`${group.label}:${value}`}
 															variant="secondary"
-															className="text-[9px] uppercase"
+															className="text-[11px] uppercase"
 														>
 															{formatRegentVernacular(value)}
 														</Badge>

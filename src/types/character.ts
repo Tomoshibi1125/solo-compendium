@@ -91,22 +91,6 @@ export interface Character {
 	updatedAt: string;
 }
 
-export interface CharacterStats {
-	strength: number;
-	agility: number;
-	vitality: number;
-	intelligence: number;
-	sense: number;
-	presence: number;
-}
-
-export interface CharacterCreateRequest {
-	name: string;
-	class: string;
-	level: number;
-	abilityScores: CharacterStats;
-}
-
 export type Background =
 	Database["public"]["Tables"]["compendium_backgrounds"]["Row"];
 

@@ -6,7 +6,6 @@
 import { supabase } from "@/integrations/supabase/client";
 import type { Database } from "@/integrations/supabase/types";
 import { AppError } from "@/lib/appError";
-import { listCanonicalEntries } from "@/lib/canonicalCompendium";
 import {
 	addJobAwakeningBenefitsForLevel,
 	autoUpdateFeatureUses,
@@ -16,13 +15,10 @@ import {
 	calculateTotalChoices,
 } from "@/lib/choiceCalculations";
 import {
-	addLocalEquipment,
 	deleteLocalCharacter,
 	getLocalCharacterState,
 	isLocalCharacterId,
-	listLocalEquipment,
 	updateLocalCharacter,
-	updateLocalEquipment,
 } from "@/lib/guestStore";
 import { getMinPathUnlockLevelForJob, isASILevel } from "@/lib/levelGating";
 import {
@@ -35,8 +31,6 @@ import { getStaticJobs } from "@/lib/ProtocolDataManager";
 import type { StaticJob } from "@/types/character";
 
 export type Character = Database["public"]["Tables"]["characters"]["Row"];
-export type CompendiumEquipment =
-	Database["public"]["Tables"]["compendium_equipment"]["Row"];
 type ChoiceTotals = ReturnType<typeof calculateTotalChoices>;
 type ChoiceKind = keyof ChoiceTotals;
 
@@ -226,120 +220,6 @@ export async function bulkDeleteCharacters(
 			success++;
 		} catch (error) {
 			logError(`Failed to delete character ${id}:`, error);
-			failed++;
-		}
-	}
-
-	return { success, failed };
-}
-
-/**
- * Bulk add equipment to characters
- */
-export async function bulkAddEquipment(
-	characterIds: string[],
-	equipmentId: string,
-	quantity: number = 1,
-): Promise<{ success: number; failed: number }> {
-	let success = 0;
-	let failed = 0;
-
-	const resolveEquipment = async (): Promise<CompendiumEquipment | null> => {
-		// Canonical static is the source of truth for built-in equipment.
-		const entries = await listCanonicalEntries("equipment");
-		const byId = entries.find((entry) => entry.id === equipmentId);
-		if (byId) return byId as unknown as CompendiumEquipment;
-
-		const nameKey = equipmentId.trim().toLowerCase();
-		const byName = entries.find((entry) =>
-			entry.name.toLowerCase().includes(nameKey),
-		);
-		return (byName as unknown as CompendiumEquipment | undefined) ?? null;
-	};
-
-	const equipment = await resolveEquipment();
-	const equipmentName = equipment?.name || equipmentId;
-	const itemType = equipment?.equipment_type || "gear";
-
-	for (const characterId of characterIds) {
-		try {
-			// Guest parity: route local IDs through guestStore.
-			if (isLocalCharacterId(characterId)) {
-				const existing = listLocalEquipment(characterId).find(
-					(e) => e.name === equipmentName,
-				);
-				if (existing) {
-					updateLocalEquipment(existing.id, {
-						quantity: (existing.quantity || 1) + quantity,
-					});
-				} else {
-					addLocalEquipment(characterId, {
-						item_id: equipment?.id ?? null,
-						name: equipmentName,
-						item_type: itemType,
-						description: equipment?.description || null,
-						properties: (equipment?.properties as unknown as null) || null,
-						weight: equipment?.weight || null,
-						value_credits:
-							(equipment as { cost_credits?: number | null } | null)
-								?.cost_credits ?? null,
-						quantity,
-						is_equipped: false,
-						is_attuned: false,
-						requires_attunement: false,
-						charges_current: null,
-						charges_max: null,
-						rarity: null,
-						relic_tier: null,
-					});
-				}
-				success++;
-				continue;
-			}
-
-			const { data: existing } = await supabase
-				.from("character_equipment")
-				.select("id, quantity, name")
-				.eq("character_id", characterId)
-				.eq("name", equipmentName)
-				.maybeSingle();
-
-			if (existing) {
-				// Update quantity
-				const { error } = await supabase
-					.from("character_equipment")
-					.update({ quantity: (existing.quantity || 1) + quantity })
-					.eq("id", existing.id);
-
-				if (error) throw error;
-			} else {
-				const { error } = await supabase.from("character_equipment").insert({
-					character_id: characterId,
-					item_id: equipment?.id ?? null,
-					name: equipmentName,
-					item_type: itemType,
-					description: equipment?.description || null,
-					properties: equipment?.properties || [],
-					weight: equipment?.weight || null,
-					value_credits:
-						(equipment as { cost_credits?: number | null } | null)
-							?.cost_credits ?? null,
-					quantity,
-					is_equipped: false,
-					is_attuned: false,
-					requires_attunement: false,
-					charges_current: null,
-					charges_max: null,
-					rarity: null,
-					relic_tier: null,
-				});
-
-				if (error) throw error;
-			}
-
-			success++;
-		} catch (error) {
-			logError(`Failed to add equipment to character ${characterId}:`, error);
 			failed++;
 		}
 	}

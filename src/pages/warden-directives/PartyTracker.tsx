@@ -1,11 +1,15 @@
 import {
 	ArrowLeft,
+	Coffee,
+	Download,
 	ExternalLink,
+	FileJson,
 	Heart,
 	Package,
 	Plus,
 	Shield,
 	Trash2,
+	UserPlus,
 } from "lucide-react";
 import { useMemo, useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
@@ -30,10 +34,12 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
+import { useCampaignSharedCharacters } from "@/hooks/useCampaignCharacters";
 import { useJoinedCampaigns, useMyCampaigns } from "@/hooks/useCampaigns";
 import { useAscendantTools } from "@/hooks/useGlobalDDBeyondIntegration";
 import { useHydratedPreferredCampaignId } from "@/hooks/usePreferredCampaignSelection";
 import { useCampaignToolState } from "@/hooks/useToolState";
+import { downloadJson, downloadMarkdown } from "@/lib/toolExport";
 import { cn } from "@/lib/utils";
 
 interface PartyMember {
@@ -47,8 +53,22 @@ interface PartyMember {
 	notes: string;
 }
 
+/** Shared, party-wide resources tracked alongside the roster. */
+interface SharedResources {
+	supplies: number;
+	downtimeDays: number;
+	notes: string;
+}
+
+const DEFAULT_SHARED_RESOURCES: SharedResources = {
+	supplies: 0,
+	downtimeDays: 0,
+	notes: "",
+};
+
 type PartyTrackerState = {
 	members: PartyMember[];
+	shared?: SharedResources;
 };
 
 type CampaignWithRole = {
@@ -158,15 +178,30 @@ const PartyTracker = () => {
 	);
 
 	const members = trackerState.members || [];
+	const shared = trackerState.shared ?? DEFAULT_SHARED_RESOURCES;
 	const campaignsLoading = myCampaignsLoading || joinedCampaignsLoading;
 	const selectedCampaign =
 		manageableCampaigns.find((campaign) => campaign.id === activeCampaignId) ??
 		null;
 
-	const persistMembers = (nextMembers: PartyMember[]) => {
-		const nextState = { members: nextMembers };
+	const { data: sharedCharacters = [] } =
+		useCampaignSharedCharacters(activeCampaignId);
+
+	const persistState = (next: Partial<PartyTrackerState>) => {
+		const nextState: PartyTrackerState = {
+			members: next.members ?? members,
+			shared: next.shared ?? shared,
+		};
 		setTrackerState(nextState);
 		void saveNow(nextState);
+	};
+
+	const persistMembers = (nextMembers: PartyMember[]) => {
+		persistState({ members: nextMembers });
+	};
+
+	const updateShared = (patch: Partial<SharedResources>) => {
+		persistState({ shared: { ...shared, ...patch } });
 	};
 
 	const generateMemberId = () => {
@@ -267,6 +302,85 @@ const PartyTracker = () => {
 				};
 			}),
 		);
+	};
+
+	const importFromCampaign = () => {
+		if (!activeCampaignId) return;
+		const existingNames = new Set(
+			members.map((m) => m.name.trim().toLowerCase()),
+		);
+		const imported: PartyMember[] = [];
+		for (const share of sharedCharacters) {
+			const char = share.characters;
+			if (!char?.name) continue;
+			if (existingNames.has(char.name.trim().toLowerCase())) continue;
+			existingNames.add(char.name.trim().toLowerCase());
+			imported.push({
+				id: generateMemberId(),
+				name: char.name,
+				level: char.level || 1,
+				hp: 10,
+				maxHp: 10,
+				ac: 10,
+				conditions: [],
+				notes: char.job ? `Job: ${char.job}` : "",
+			});
+		}
+		if (imported.length === 0) {
+			toast({
+				title: "Nothing to import",
+				description:
+					"No new shared characters found for this campaign (or all are already tracked). Share characters from the campaign first.",
+			});
+			return;
+		}
+		persistMembers([...members, ...imported]);
+		toast({
+			title: "Imported",
+			description: `${imported.length} member(s) imported. Set HP/AC as needed.`,
+		});
+	};
+
+	const partyLongRest = () => {
+		if (members.length === 0) return;
+		persistMembers(members.map((m) => ({ ...m, hp: m.maxHp })));
+		toast({
+			title: "Long rest",
+			description: "All party members restored to full HP.",
+		});
+	};
+
+	const partyToMarkdown = (): string => {
+		const lines: string[] = [];
+		lines.push(`# Party Roster — ${selectedCampaign?.name ?? "Vanguard"}`);
+		lines.push("");
+		lines.push(
+			`**Members:** ${members.length} · **Supplies:** ${shared.supplies} · **Downtime:** ${shared.downtimeDays} day(s)`,
+		);
+		if (shared.notes.trim()) {
+			lines.push("");
+			lines.push("## Party Notes");
+			lines.push(shared.notes.trim());
+		}
+		lines.push("");
+		lines.push("## Roster");
+		lines.push("| Member | Lvl | HP | AC | Conditions |");
+		lines.push("| --- | --- | --- | --- | --- |");
+		for (const m of members) {
+			lines.push(
+				`| ${m.name} | ${m.level} | ${m.hp}/${m.maxHp} | ${m.ac} | ${
+					m.conditions.join(", ") || "—"
+				} |`,
+			);
+		}
+		return `${lines.join("\n")}\n`;
+	};
+
+	const exportParty = (format: "md" | "json") => {
+		const base = `party-${selectedCampaign?.name ?? "roster"}`;
+		if (format === "md") downloadMarkdown(base, partyToMarkdown());
+		else
+			downloadJson(base, { campaign: selectedCampaign?.name, members, shared });
 	};
 
 	const getHpColor = (hp: number, maxHp: number) => {
@@ -381,6 +495,19 @@ const PartyTracker = () => {
 												Party Stash
 												<Package className="w-4 h-4 ml-2" />
 											</Link>
+										</Button>
+										<Button
+											variant="outline"
+											onClick={importFromCampaign}
+											disabled={sharedCharacters.length === 0}
+											title={
+												sharedCharacters.length === 0
+													? "No shared characters in this campaign yet"
+													: "Import shared characters as party members"
+											}
+										>
+											<UserPlus className="w-4 h-4 mr-2" />
+											Import Characters
 										</Button>
 									</div>
 								)}
@@ -681,6 +808,102 @@ const PartyTracker = () => {
 															.length
 													}
 												</span>
+											</div>
+											<div className="flex gap-2 pt-3 border-t border-primary/10">
+												<Button
+													variant="outline"
+													size="sm"
+													className="flex-1 gap-2"
+													onClick={partyLongRest}
+												>
+													<Coffee className="w-3 h-3" />
+													Long Rest
+												</Button>
+												<Button
+													variant="outline"
+													size="sm"
+													className="gap-2"
+													onClick={() => exportParty("md")}
+													title="Export Markdown"
+												>
+													<Download className="w-3 h-3" />
+												</Button>
+												<Button
+													variant="outline"
+													size="sm"
+													className="gap-2"
+													onClick={() => exportParty("json")}
+													title="Export JSON"
+												>
+													<FileJson className="w-3 h-3" />
+												</Button>
+											</div>
+										</div>
+									</AscendantWindow>
+								)}
+
+								{activeCampaignId && (
+									<AscendantWindow title="SHARED RESOURCES" variant="quest">
+										<div className="space-y-4">
+											<div className="grid grid-cols-2 gap-3">
+												<div className="space-y-1">
+													<Label
+														htmlFor="party-supplies"
+														className="text-[11px] uppercase tracking-widest text-muted-foreground"
+													>
+														Supplies
+													</Label>
+													<Input
+														id="party-supplies"
+														type="number"
+														min={0}
+														value={shared.supplies}
+														onChange={(e) =>
+															updateShared({
+																supplies:
+																	Number.parseInt(e.target.value, 10) || 0,
+															})
+														}
+														className="h-9"
+													/>
+												</div>
+												<div className="space-y-1">
+													<Label
+														htmlFor="party-downtime"
+														className="text-[11px] uppercase tracking-widest text-muted-foreground"
+													>
+														Downtime (days)
+													</Label>
+													<Input
+														id="party-downtime"
+														type="number"
+														min={0}
+														value={shared.downtimeDays}
+														onChange={(e) =>
+															updateShared({
+																downtimeDays:
+																	Number.parseInt(e.target.value, 10) || 0,
+															})
+														}
+														className="h-9"
+													/>
+												</div>
+											</div>
+											<div className="space-y-1">
+												<Label
+													htmlFor="party-shared-notes"
+													className="text-[11px] uppercase tracking-widest text-muted-foreground"
+												>
+													Party Notes
+												</Label>
+												<Input
+													id="party-shared-notes"
+													value={shared.notes}
+													onChange={(e) =>
+														updateShared({ notes: e.target.value })
+													}
+													placeholder="Shared objectives, supplies, downtime plans…"
+												/>
 											</div>
 										</div>
 									</AscendantWindow>

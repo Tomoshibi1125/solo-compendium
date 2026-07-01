@@ -4,7 +4,7 @@ import { CompendiumImage } from "@/components/compendium/CompendiumImage";
 import { DetailMetaFooter } from "@/components/compendium/DetailMetaFooter";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
-import { formatRaCurrencyAmount } from "@/lib/currency";
+import { formatRaCurrencyValue, type RaCurrencyValue } from "@/lib/currency";
 import { formatRegentVernacular } from "@/lib/vernacular";
 
 import type { CompendiumItem } from "@/types/compendium";
@@ -31,6 +31,7 @@ export const EquipmentDetail = ({ data }: { data: EquipmentData }) => {
 	const item = data as EquipmentData & {
 		value?: number;
 		cost_credits?: number;
+		price?: RaCurrencyValue | null;
 		simple_properties?: string[];
 	};
 	const itemTypeLower = (item.item_type || "").toLowerCase();
@@ -45,9 +46,9 @@ export const EquipmentDetail = ({ data }: { data: EquipmentData }) => {
 			!!item.weapon_type ||
 			!!item.damage);
 	const displayName = formatRegentVernacular(item.display_name || item.name);
-	// Cost lives in `value`/`cost_credits` on the provider entry (legacy `cost`
-	// kept as a fallback).
-	const costValue = item.cost ?? item.value ?? item.cost_credits;
+	// Cost: prefer the structured `price` (varied credit type); fall back to the
+	// numeric Gate `value`/`cost_credits` (legacy `cost` last).
+	const costValue = item.price ?? item.cost ?? item.value ?? item.cost_credits;
 	// 5e property tags (finesse/light/heavy/…) live in `simple_properties`; the
 	// `properties` object holds nested weapon/armor rule blocks (not for badges).
 	const propertyTags: string[] = Array.isArray(item.simple_properties)
@@ -116,7 +117,7 @@ export const EquipmentDetail = ({ data }: { data: EquipmentData }) => {
 					<div className="flex items-center gap-2">
 						<Coins className="w-5 h-5 text-yellow-400" />
 						<span className="font-display text-xl">
-							{formatRaCurrencyAmount(costValue)}
+							{formatRaCurrencyValue(costValue)}
 						</span>
 					</div>
 					<span className="text-xs text-muted-foreground">Bureau value</span>
