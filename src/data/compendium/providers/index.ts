@@ -2627,10 +2627,14 @@ export const staticDataProvider: StaticDataProvider = {
 			source_book?: string;
 			attunement?: boolean | null;
 			body_part?: string | null;
+			ink_type?: string | null;
+			active_veins?: string[] | null;
+			resonance_effect?: string | null;
 			flavor?: string | null;
 			lore?: Record<string, Json> | null;
 			effects?: Record<string, Json> | null;
 			mechanics?: Record<string, Json> | null;
+			limitations?: Record<string, Json> | null;
 			discovery_lore?: string | null;
 			theme_tags?: string[] | null;
 			tags?: string[] | null;
@@ -2653,10 +2657,14 @@ export const staticDataProvider: StaticDataProvider = {
 			price: priceForRarityTier(tattoo.rarity || "uncommon"),
 			attunement: tattoo.attunement,
 			body_part: tattoo.body_part,
+			ink_type: tattoo.ink_type ?? null,
+			active_veins: tattoo.active_veins ?? null,
+			resonance_effect: tattoo.resonance_effect ?? null,
 			flavor: tattoo.flavor ?? null,
 			lore: tattoo.lore ?? null,
 			effects: tattoo.effects ?? null,
 			mechanics: tattoo.mechanics ?? null,
+			limitations: tattoo.limitations ?? null,
 			discovery_lore: tattoo.discovery_lore ?? null,
 			theme_tags: tattoo.theme_tags ?? null,
 		}));

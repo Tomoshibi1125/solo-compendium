@@ -48,8 +48,8 @@ export const comprehensiveRelics: Relic[] = [
 		description:
 			"A jagged shard of the First Singularity, wreathed in flickering black mana. It does not cut flesh; it deletes the spatial coordinates of whatever it touches.",
 		rarity: "legendary",
-		value: { currency: "core", amount: 800 },
 		type: "weapon",
+		value: { currency: "core", amount: 800 },
 		weapon_type: "simple melee",
 		damage: "2d8",
 		damage_type: "necrotic",
@@ -59,16 +59,9 @@ export const comprehensiveRelics: Relic[] = [
 			sentient: true,
 			unique: true,
 		},
-		effects: {
-			primary: "Deals 1d8 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Fear for 1 round.",
-		},
+		effects: {},
 		attunement: true,
-		requirements: {
-			ability: "Agility",
-			score: 17,
-		},
+		requirements: { ability: "Agility", score: 17 },
 		source: "Rift Ascendant Canon",
 		lore: {
 			current_owner: "",
@@ -167,7 +160,7 @@ export const comprehensiveRelics: Relic[] = [
 				},
 			],
 			audit: {
-				fingerprint: "95792afb",
+				fingerprint: "c16b780b",
 				payload_complete: true,
 				uniqueness_seed: "regents-shadow-dagger::Regent's Shadow Dagger",
 				variant_note: "+1 to attack rolls when you have advantage.",
@@ -191,8 +184,6 @@ export const comprehensiveRelics: Relic[] = [
 				theme: "shadow",
 			},
 			passive_rules: [
-				"Deals 1d8 physical or magical damage on hit.",
-				"Target must make a standard DC saving throw or suffer Fear for 1 round.",
 				"Shadow Pierce: The dagger ignores all armor and resistance, dealing damage directly to the target's HP.",
 				"Essence Drain: On a critical hit, drain the target's life essence, gaining temporary HP equal to the damage dealt.",
 			],
@@ -218,8 +209,6 @@ export const comprehensiveRelics: Relic[] = [
 				damage_formula: "2d8 + STR or AGI modifier",
 				damage_roll: true,
 				on_hit: [
-					"Deals 1d8 physical or magical damage on hit.",
-					"Target must make a standard DC saving throw or suffer Fear for 1 round.",
 					"Shadow Pierce: The dagger ignores all armor and resistance, dealing damage directly to the target's HP.",
 					"Essence Drain: On a critical hit, drain the target's life essence, gaining temporary HP equal to the damage dealt.",
 				],
@@ -235,9 +224,7 @@ export const comprehensiveRelics: Relic[] = [
 				ra_specific_mundane: false,
 			},
 			special: "Aligned with Void resonance.",
-			stat_bonuses: {
-				Intelligence: 1,
-			},
+			stat_bonuses: { Intelligence: 1 },
 			targeting: {
 				range: "Melee",
 				area: null,
@@ -253,25 +240,15 @@ export const comprehensiveRelics: Relic[] = [
 		description:
 			"A jagged black slab of iron that hums with the rhythm of a heartbeat. It does not just cut; it drinks.",
 		rarity: "very_rare",
-		value: { currency: "gate", amount: 1000 },
 		type: "weapon",
+		value: { currency: "gate", amount: 1000 },
 		weapon_type: "martial melee",
 		damage: "2d8",
 		damage_type: "necrotic",
-		properties: {
-			cursed: true,
-			protocol_enhanced: true,
-		},
-		effects: {
-			primary: "Deals 4d10 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Lethargy for 1 round.",
-		},
+		properties: { cursed: true, protocol_enhanced: true },
+		effects: {},
 		attunement: true,
-		requirements: {
-			ability: "Strength",
-			score: 15,
-		},
+		requirements: { ability: "Strength", score: 15 },
 		source: "Rift Ascendant Canon",
 		lore: {
 			current_owner: "",
@@ -354,7 +331,7 @@ export const comprehensiveRelics: Relic[] = [
 				},
 			],
 			audit: {
-				fingerprint: "dc8a21f4",
+				fingerprint: "829b4bc8",
 				payload_complete: true,
 				uniqueness_seed: "bloodthirsty-greatsword::Bloodthirsty Greatsword",
 				variant_note: "On a critical hit, deal an additional 2d6 damage.",
@@ -378,8 +355,6 @@ export const comprehensiveRelics: Relic[] = [
 				theme: "standard",
 			},
 			passive_rules: [
-				"Deals 4d10 physical or magical damage on hit.",
-				"Target must make a standard DC saving throw or suffer Lethargy for 1 round.",
 				"Blood Frenzy: After reducing a creature to 0 HP, gain advantage on attack rolls and +2 damage for 1 minute.",
 				"Blood Healing: When you kill a creature, regain HP equal to half the damage you dealt.",
 			],
@@ -399,8 +374,6 @@ export const comprehensiveRelics: Relic[] = [
 				damage_formula: "2d8 + STR modifier",
 				damage_roll: true,
 				on_hit: [
-					"Deals 4d10 physical or magical damage on hit.",
-					"Target must make a standard DC saving throw or suffer Lethargy for 1 round.",
 					"Blood Frenzy: After reducing a creature to 0 HP, gain advantage on attack rolls and +2 damage for 1 minute.",
 					"Blood Healing: When you kill a creature, regain HP equal to half the damage you dealt.",
 				],
@@ -416,9 +389,7 @@ export const comprehensiveRelics: Relic[] = [
 				ra_specific_mundane: false,
 			},
 			special: "Aligned with Blood resonance.",
-			stat_bonuses: {
-				Strength: 1,
-			},
+			stat_bonuses: { Strength: 1 },
 			targeting: {
 				range: "Melee",
 				area: null,
@@ -434,25 +405,15 @@ export const comprehensiveRelics: Relic[] = [
 		description:
 			"A rapier forged from a solidified lightning strike, vibrating with ultra-high frequency mana.",
 		rarity: "legendary",
-		value: { currency: "core", amount: 850 },
 		type: "weapon",
+		value: { currency: "core", amount: 850 },
 		weapon_type: "martial melee",
 		damage: "2d8",
 		damage_type: "radiant",
-		properties: {
-			protocol_enhanced: true,
-			unique: true,
-		},
-		effects: {
-			primary: "Deals 1d6 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Lethargy for 1 round.",
-		},
+		properties: { protocol_enhanced: true, unique: true },
+		effects: {},
 		attunement: true,
-		requirements: {
-			ability: "Agility",
-			score: 16,
-		},
+		requirements: { ability: "Agility", score: 16 },
 		source: "Rift Ascendant Canon",
 		lore: {
 			current_owner: "",
@@ -543,7 +504,7 @@ export const comprehensiveRelics: Relic[] = [
 				},
 			],
 			audit: {
-				fingerprint: "6ceb3200",
+				fingerprint: "fdcf690e",
 				payload_complete: true,
 				uniqueness_seed: "lightning-blade::Lightning Blade",
 				variant_note: "When wielded two-handed, +1 to damage rolls.",
@@ -567,8 +528,6 @@ export const comprehensiveRelics: Relic[] = [
 				theme: "storm",
 			},
 			passive_rules: [
-				"Deals 1d6 physical or magical damage on hit.",
-				"Target must make a standard DC saving throw or suffer Lethargy for 1 round.",
 				"Lightning Strike: The sword deals extra lightning damage and can chain to nearby enemies.",
 			],
 			resistance: ["radiant"],
@@ -593,8 +552,6 @@ export const comprehensiveRelics: Relic[] = [
 				damage_formula: "2d8 + STR modifier",
 				damage_roll: true,
 				on_hit: [
-					"Deals 1d6 physical or magical damage on hit.",
-					"Target must make a standard DC saving throw or suffer Lethargy for 1 round.",
 					"Lightning Strike: The sword deals extra lightning damage and can chain to nearby enemies.",
 				],
 			},
@@ -609,9 +566,7 @@ export const comprehensiveRelics: Relic[] = [
 				ra_specific_mundane: false,
 			},
 			special: "Aligned with Solar resonance.",
-			stat_bonuses: {
-				Presence: 1,
-			},
+			stat_bonuses: { Presence: 1 },
 			targeting: {
 				range: "Melee",
 				area: null,
@@ -627,25 +582,15 @@ export const comprehensiveRelics: Relic[] = [
 		description:
 			"This Legendary-Rank artifact vibrates with the power to freeze reality. It allows the wielder to manifest a cryogenic field that can shatter any proximity-based dimensional distortion.",
 		rarity: "very_rare",
-		value: { currency: "gate", amount: 1100 },
 		type: "weapon",
+		value: { currency: "gate", amount: 1100 },
 		weapon_type: "martial melee",
 		damage: "2d8",
 		damage_type: "cold",
-		properties: {
-			protocol_enhanced: true,
-			unique: true,
-		},
-		effects: {
-			primary: "Deals 2d4 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Blindness for 1 round.",
-		},
+		properties: { protocol_enhanced: true, unique: true },
+		effects: {},
 		attunement: true,
-		requirements: {
-			ability: "Strength",
-			score: 14,
-		},
+		requirements: { ability: "Strength", score: 14 },
 		source: "Rift Ascendant Canon",
 		lore: {
 			current_owner: "",
@@ -736,7 +681,7 @@ export const comprehensiveRelics: Relic[] = [
 				},
 			],
 			audit: {
-				fingerprint: "45adeb6b",
+				fingerprint: "b37b0bc1",
 				payload_complete: true,
 				uniqueness_seed: "frost-axe::Frost Axe",
 				variant_note: "Crit on 19-20.",
@@ -760,8 +705,6 @@ export const comprehensiveRelics: Relic[] = [
 				theme: "frost",
 			},
 			passive_rules: [
-				"Deals 2d4 physical or magical damage on hit.",
-				"Target must make a standard DC saving throw or suffer Blindness for 1 round.",
 				"Ice Touch: The axe deals extra cold damage and can freeze enemies solid.",
 			],
 			resistance: ["cold"],
@@ -786,8 +729,6 @@ export const comprehensiveRelics: Relic[] = [
 				damage_formula: "2d8 + STR modifier",
 				damage_roll: true,
 				on_hit: [
-					"Deals 2d4 physical or magical damage on hit.",
-					"Target must make a standard DC saving throw or suffer Blindness for 1 round.",
 					"Ice Touch: The axe deals extra cold damage and can freeze enemies solid.",
 				],
 			},
@@ -802,9 +743,7 @@ export const comprehensiveRelics: Relic[] = [
 				ra_specific_mundane: false,
 			},
 			special: "Aligned with Glacial resonance.",
-			stat_bonuses: {
-				Vitality: 1,
-			},
+			stat_bonuses: { Vitality: 1 },
 			targeting: {
 				range: "Melee",
 				area: null,
@@ -820,8 +759,8 @@ export const comprehensiveRelics: Relic[] = [
 		description:
 			"The legendary gauntlet of the Umbral Regent, containing the power to command shadows and bend reality.",
 		rarity: "mythic",
-		value: { currency: "core", amount: 2000 },
 		type: "armor",
+		value: { currency: "core", amount: 2000 },
 		armor_class: 16,
 		armor_type: "heavy",
 		properties: {
@@ -830,15 +769,9 @@ export const comprehensiveRelics: Relic[] = [
 			sentient: true,
 			unique: true,
 		},
-		effects: {
-			primary: "Deals 3d6 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Fear for 1 round.",
-		},
+		effects: {},
 		attunement: true,
-		requirements: {
-			class: "Umbral Regent",
-		},
+		requirements: { class: "Umbral Regent" },
 		source: "Rift Ascendant Canon",
 		lore: {
 			current_owner: "",
@@ -942,7 +875,7 @@ export const comprehensiveRelics: Relic[] = [
 				},
 			],
 			audit: {
-				fingerprint: "2fe98496",
+				fingerprint: "c5abf82c",
 				payload_complete: true,
 				uniqueness_seed: "skywyrms-gauntlet::Skywyrm's Gauntlet",
 				variant_note:
@@ -967,8 +900,6 @@ export const comprehensiveRelics: Relic[] = [
 				theme: "standard",
 			},
 			passive_rules: [
-				"Deals 3d6 physical or magical damage on hit.",
-				"Target must make a standard DC saving throw or suffer Fear for 1 round.",
 				"Regent's Protection: You have resistance to all damage types and advantage on all Decree checks.",
 			],
 			resistance: ["force"],
@@ -999,8 +930,6 @@ export const comprehensiveRelics: Relic[] = [
 				damage_formula: "damage as listed by the item",
 				damage_roll: false,
 				on_hit: [
-					"Deals 3d6 physical or magical damage on hit.",
-					"Target must make a standard DC saving throw or suffer Fear for 1 round.",
 					"Regent's Protection: You have resistance to all damage types and advantage on all Decree checks.",
 				],
 			},
@@ -1015,9 +944,7 @@ export const comprehensiveRelics: Relic[] = [
 				ra_specific_mundane: false,
 			},
 			special: "Aligned with Absolute resonance.",
-			stat_bonuses: {
-				Presence: 1,
-			},
+			stat_bonuses: { Presence: 1 },
 			targeting: {
 				range: "Melee",
 				area: null,
@@ -1033,24 +960,14 @@ export const comprehensiveRelics: Relic[] = [
 		description:
 			"Armor forged in the deepest shadows, offering protection while enhancing shadow abilities.",
 		rarity: "legendary",
-		value: { currency: "core", amount: 900 },
 		type: "armor",
+		value: { currency: "core", amount: 900 },
 		armor_class: 16,
 		armor_type: "heavy",
-		properties: {
-			protocol_enhanced: true,
-			unique: true,
-		},
-		effects: {
-			primary: "Deals 2d8 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Fear for 1 round.",
-		},
+		properties: { protocol_enhanced: true, unique: true },
+		effects: {},
 		attunement: true,
-		requirements: {
-			ability: "Vitality",
-			score: 16,
-		},
+		requirements: { ability: "Vitality", score: 16 },
 		source: "Rift Ascendant Canon",
 		lore: {
 			current_owner: "",
@@ -1134,7 +1051,7 @@ export const comprehensiveRelics: Relic[] = [
 				},
 			],
 			audit: {
-				fingerprint: "12e592b3",
+				fingerprint: "4afc46ed",
 				payload_complete: true,
 				uniqueness_seed: "abyssal-plate::Abyssal Plate Armor",
 				variant_note: "Mana-stable plate. Resistance to force damage.",
@@ -1158,8 +1075,6 @@ export const comprehensiveRelics: Relic[] = [
 				theme: "void",
 			},
 			passive_rules: [
-				"Deals 2d8 physical or magical damage on hit.",
-				"Target must make a standard DC saving throw or suffer Fear for 1 round.",
 				"Darkness Aura: Magical darkness surrounds you in a 15-foot radius. You can see through this darkness.",
 			],
 			resistance: ["necrotic"],
@@ -1170,8 +1085,6 @@ export const comprehensiveRelics: Relic[] = [
 				stealth_disadvantage: false,
 				strength_requirement: null,
 				equipped_effects: [
-					"Deals 2d8 physical or magical damage on hit.",
-					"Target must make a standard DC saving throw or suffer Fear for 1 round.",
 					"Darkness Aura: Magical darkness surrounds you in a 15-foot radius. You can see through this darkness.",
 				],
 			},
@@ -1186,9 +1099,7 @@ export const comprehensiveRelics: Relic[] = [
 				ra_specific_mundane: false,
 			},
 			special: "Aligned with Void resonance.",
-			stat_bonuses: {
-				Intelligence: 1,
-			},
+			stat_bonuses: { Intelligence: 1 },
 			targeting: {
 				range: "worn or wielded",
 				area: null,
@@ -1204,24 +1115,14 @@ export const comprehensiveRelics: Relic[] = [
 		description:
 			"Armor crafted from the scales of an ancient anomaly, offering exceptional protection and anomaly-like abilities.",
 		rarity: "legendary",
-		value: { currency: "core", amount: 950 },
 		type: "armor",
+		value: { currency: "core", amount: 950 },
 		armor_class: 16,
 		armor_type: "heavy",
-		properties: {
-			protocol_enhanced: true,
-			unique: true,
-		},
-		effects: {
-			primary: "Deals 1d6 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Stunning for 1 round.",
-		},
+		properties: { protocol_enhanced: true, unique: true },
+		effects: {},
 		attunement: true,
-		requirements: {
-			ability: "Vitality",
-			score: 17,
-		},
+		requirements: { ability: "Vitality", score: 17 },
 		source: "Rift Ascendant Canon",
 		lore: {
 			current_owner: "",
@@ -1298,7 +1199,7 @@ export const comprehensiveRelics: Relic[] = [
 				},
 			],
 			audit: {
-				fingerprint: "af21bf73",
+				fingerprint: "8014ad75",
 				payload_complete: true,
 				uniqueness_seed: "lattice-scale-mail::Lattice-Scale Mail",
 				variant_note: "Reinforced medium armor with Bureau-stamped joints.",
@@ -1322,8 +1223,6 @@ export const comprehensiveRelics: Relic[] = [
 				theme: "aetheric",
 			},
 			passive_rules: [
-				"Deals 1d6 physical or magical damage on hit.",
-				"Target must make a standard DC saving throw or suffer Stunning for 1 round.",
 				"anomaly Resistance: Resistance to the damage type of the anomaly whose scales were used.",
 				"anomaly Frightful Presence: Creatures within 30 feet must make Sense check or be frightened.",
 			],
@@ -1335,8 +1234,6 @@ export const comprehensiveRelics: Relic[] = [
 				stealth_disadvantage: false,
 				strength_requirement: null,
 				equipped_effects: [
-					"Deals 1d6 physical or magical damage on hit.",
-					"Target must make a standard DC saving throw or suffer Stunning for 1 round.",
 					"anomaly Resistance: Resistance to the damage type of the anomaly whose scales were used.",
 					"anomaly Frightful Presence: Creatures within 30 feet must make Sense check or be frightened.",
 				],
@@ -1352,9 +1249,7 @@ export const comprehensiveRelics: Relic[] = [
 				ra_specific_mundane: false,
 			},
 			special: "Aligned with Absolute resonance.",
-			stat_bonuses: {
-				Presence: 1,
-			},
+			stat_bonuses: { Presence: 1 },
 			targeting: {
 				range: "worn or wielded",
 				area: null,
@@ -1370,22 +1265,12 @@ export const comprehensiveRelics: Relic[] = [
 		description:
 			"An artifact that grants the bearer command over lesser shadows and the respect of all beings.",
 		rarity: "legendary",
-		value: { currency: "core", amount: 1000 },
 		type: "accessory",
-		properties: {
-			protocol_enhanced: true,
-			sentient: true,
-		},
-		effects: {
-			primary: "Deals 3d12 + 6 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Blindness for 1 round.",
-		},
+		value: { currency: "core", amount: 1000 },
+		properties: { protocol_enhanced: true, sentient: true },
+		effects: {},
 		attunement: true,
-		requirements: {
-			ability: "Presence",
-			score: 15,
-		},
+		requirements: { ability: "Presence", score: 15 },
 		source: "Rift Ascendant Canon",
 		lore: {
 			current_owner: "",
@@ -1485,7 +1370,7 @@ export const comprehensiveRelics: Relic[] = [
 				},
 			],
 			audit: {
-				fingerprint: "aea382a2",
+				fingerprint: "1948b11e",
 				payload_complete: true,
 				uniqueness_seed: "rulers-authority::Architect's Authority",
 				variant_note: "A piece of Bureau-quartermastered field gear.",
@@ -1493,7 +1378,7 @@ export const comprehensiveRelics: Relic[] = [
 			condition: "Blindness",
 			damage_profile: "3d12 + 6",
 			formulas: {
-				effect_formula: "3d12 + 6",
+				effect_formula: "explicit non-damage item effect",
 				recharge: "long-rest",
 				save_dc: "DC 18",
 			},
@@ -1508,8 +1393,6 @@ export const comprehensiveRelics: Relic[] = [
 				theme: "standard",
 			},
 			passive_rules: [
-				"Deals 3d12 + 6 physical or magical damage on hit.",
-				"Target must make a standard DC saving throw or suffer Blindness for 1 round.",
 				"Royal Presence: All creatures except those with higher CR have disadvantage on attack rolls against you.",
 				"Inspire Loyalty: Your allies within 30 feet gain +2 to Decree checks and cannot be frightened.",
 			],
@@ -1531,10 +1414,8 @@ export const comprehensiveRelics: Relic[] = [
 					},
 				],
 				non_damage_resolution:
-					"Deals 3d12 + 6 physical or magical damage on hit.",
+					"Royal Presence: All creatures except those with higher CR have disadvantage on attack rolls against you.",
 				passive_effects: [
-					"Deals 3d12 + 6 physical or magical damage on hit.",
-					"Target must make a standard DC saving throw or suffer Blindness for 1 round.",
 					"Royal Presence: All creatures except those with higher CR have disadvantage on attack rolls against you.",
 					"Inspire Loyalty: Your allies within 30 feet gain +2 to Decree checks and cannot be frightened.",
 				],
@@ -1550,9 +1431,7 @@ export const comprehensiveRelics: Relic[] = [
 				ra_specific_mundane: false,
 			},
 			special: "Aligned with Absolute resonance.",
-			stat_bonuses: {
-				Presence: 1,
-			},
+			stat_bonuses: { Presence: 1 },
 			targeting: {
 				range: "self",
 				area: null,
@@ -1568,21 +1447,12 @@ export const comprehensiveRelics: Relic[] = [
 		description:
 			"An amulet that enhances shadow manipulation abilities and protects against shadow corruption.",
 		rarity: "epic",
-		value: { currency: "core", amount: 300 },
 		type: "accessory",
-		properties: {
-			protocol_enhanced: true,
-		},
-		effects: {
-			primary: "Deals 1d8 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Stunning for 1 round.",
-		},
+		value: { currency: "core", amount: 300 },
+		properties: { protocol_enhanced: true },
+		effects: {},
 		attunement: true,
-		requirements: {
-			ability: "Sense",
-			score: 14,
-		},
+		requirements: { ability: "Sense", score: 14 },
 		source: "Rift Ascendant Canon",
 		lore: {
 			current_owner: "",
@@ -1660,7 +1530,7 @@ export const comprehensiveRelics: Relic[] = [
 			},
 			active_rules: [],
 			audit: {
-				fingerprint: "981cd940",
+				fingerprint: "cceaf332",
 				payload_complete: true,
 				uniqueness_seed: "bloodstone-amulet::Bloodstone Amulet",
 				variant_note:
@@ -1669,7 +1539,7 @@ export const comprehensiveRelics: Relic[] = [
 			condition: "Stunning",
 			damage_profile: "1d8",
 			formulas: {
-				effect_formula: "1d8",
+				effect_formula: "1d6",
 				recharge: "continuous",
 				save_dc: null,
 			},
@@ -1684,8 +1554,6 @@ export const comprehensiveRelics: Relic[] = [
 				theme: "standard",
 			},
 			passive_rules: [
-				"Deals 1d8 physical or magical damage on hit.",
-				"Target must make a standard DC saving throw or suffer Stunning for 1 round.",
 				"Shadow Enhancement: Your shadow abilities deal +1d6 extra damage and have advantage on attack rolls.",
 				"Blood Protection: Immunity to shadow corruption and advantage on saves against shadow spells.",
 				"Essence Storage: Can store up to 10 essence points that can be used to power shadow abilities.",
@@ -1695,10 +1563,9 @@ export const comprehensiveRelics: Relic[] = [
 			resolution: {
 				type: "equipment_utility",
 				active_options: [],
-				non_damage_resolution: "Deals 1d8 physical or magical damage on hit.",
+				non_damage_resolution:
+					"Shadow Enhancement: Your shadow abilities deal +1d6 extra damage and have advantage on attack rolls.",
 				passive_effects: [
-					"Deals 1d8 physical or magical damage on hit.",
-					"Target must make a standard DC saving throw or suffer Stunning for 1 round.",
 					"Shadow Enhancement: Your shadow abilities deal +1d6 extra damage and have advantage on attack rolls.",
 					"Blood Protection: Immunity to shadow corruption and advantage on saves against shadow spells.",
 					"Essence Storage: Can store up to 10 essence points that can be used to power shadow abilities.",
@@ -1716,9 +1583,7 @@ export const comprehensiveRelics: Relic[] = [
 				ra_specific_mundane: false,
 			},
 			special: "Aligned with Blood resonance.",
-			stat_bonuses: {
-				Strength: 1,
-			},
+			stat_bonuses: { Strength: 1 },
 			targeting: {
 				range: "self",
 				area: null,
@@ -1734,17 +1599,10 @@ export const comprehensiveRelics: Relic[] = [
 		description:
 			"A compass that points toward dimensional disturbances and can guide through abyssal realms.",
 		rarity: "very_rare",
-		value: { currency: "gate", amount: 1200 },
 		type: "accessory",
-		properties: {
-			protocol_enhanced: true,
-			unique: true,
-		},
-		effects: {
-			primary: "Deals 1d12 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Stunning for 1 round.",
-		},
+		value: { currency: "gate", amount: 1200 },
+		properties: { protocol_enhanced: true, unique: true },
+		effects: {},
 		attunement: false,
 		source: "Rift Ascendant Canon",
 		lore: {
@@ -1833,7 +1691,7 @@ export const comprehensiveRelics: Relic[] = [
 				},
 			],
 			audit: {
-				fingerprint: "cadbe483",
+				fingerprint: "35dac907",
 				payload_complete: true,
 				uniqueness_seed: "dimensional-compass::Dimensional Compass",
 				variant_note:
@@ -1842,7 +1700,7 @@ export const comprehensiveRelics: Relic[] = [
 			condition: "Stunning",
 			damage_profile: "1d12",
 			formulas: {
-				effect_formula: "1d12",
+				effect_formula: "explicit non-damage item effect",
 				recharge: "once-per-day",
 				save_dc: null,
 			},
@@ -1857,8 +1715,6 @@ export const comprehensiveRelics: Relic[] = [
 				theme: "rift",
 			},
 			passive_rules: [
-				"Deals 1d12 physical or magical damage on hit.",
-				"Target must make a standard DC saving throw or suffer Stunning for 1 round.",
 				"Dimension Sense: Always points toward the nearest dimensional disturbance within 100 miles.",
 				"Shadow Navigation: Cannot get lost in abyssal realms or dimensional spaces.",
 				"Portal Detection: Vibrates when within 100 feet of a portal or dimensional rift.",
@@ -1874,10 +1730,9 @@ export const comprehensiveRelics: Relic[] = [
 						dc: null,
 					},
 				],
-				non_damage_resolution: "Deals 1d12 physical or magical damage on hit.",
+				non_damage_resolution:
+					"Dimension Sense: Always points toward the nearest dimensional disturbance within 100 miles.",
 				passive_effects: [
-					"Deals 1d12 physical or magical damage on hit.",
-					"Target must make a standard DC saving throw or suffer Stunning for 1 round.",
 					"Dimension Sense: Always points toward the nearest dimensional disturbance within 100 miles.",
 					"Shadow Navigation: Cannot get lost in abyssal realms or dimensional spaces.",
 					"Portal Detection: Vibrates when within 100 feet of a portal or dimensional rift.",
@@ -1894,9 +1749,7 @@ export const comprehensiveRelics: Relic[] = [
 				ra_specific_mundane: false,
 			},
 			special: "Aligned with Aetheric resonance.",
-			stat_bonuses: {
-				Sense: 1,
-			},
+			stat_bonuses: { Sense: 1 },
 			targeting: {
 				range: "self",
 				area: null,
@@ -1912,23 +1765,12 @@ export const comprehensiveRelics: Relic[] = [
 		description:
 			"This Legendary-Rank artifact vibrates with the power to mandate reality. It allows the wielder to manifest a fundamental field that can decree any proximity-based dimensional distortion.",
 		rarity: "legendary",
-		value: { currency: "core", amount: 1050 },
 		type: "accessory",
-		properties: {
-			protocol_enhanced: true,
-			sentient: true,
-			unique: true,
-		},
-		effects: {
-			primary: "Deals 2d6 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Paralysis for 1 round.",
-		},
+		value: { currency: "core", amount: 1050 },
+		properties: { protocol_enhanced: true, sentient: true, unique: true },
+		effects: {},
 		attunement: true,
-		requirements: {
-			ability: "Intelligence",
-			score: 18,
-		},
+		requirements: { ability: "Intelligence", score: 18 },
 		source: "Rift Ascendant Canon",
 		lore: {
 			current_owner: "",
@@ -2017,7 +1859,7 @@ export const comprehensiveRelics: Relic[] = [
 				},
 			],
 			audit: {
-				fingerprint: "ddb4be6d",
+				fingerprint: "6eeda2a0",
 				payload_complete: true,
 				uniqueness_seed: "crown-of-sense::Crown of Sense",
 				variant_note: "A piece of Bureau-quartermastered field gear.",
@@ -2025,7 +1867,7 @@ export const comprehensiveRelics: Relic[] = [
 			condition: "Paralysis",
 			damage_profile: "2d6",
 			formulas: {
-				effect_formula: "2d6",
+				effect_formula: "explicit non-damage item effect",
 				recharge: "once-per-day",
 				save_dc: null,
 			},
@@ -2040,8 +1882,6 @@ export const comprehensiveRelics: Relic[] = [
 				theme: "standard",
 			},
 			passive_rules: [
-				"Deals 2d6 physical or magical damage on hit.",
-				"Target must make a standard DC saving throw or suffer Paralysis for 1 round.",
 				"All-Knowledge: You have proficiency in all skills and can add double proficiency bonus to Intelligence checks.",
 				"True Sight: Can see through illusions and perceive the true nature of things.",
 				"Mental Fortress: Immunity to psychic damage and advantage on all mental Decree checks.",
@@ -2057,10 +1897,9 @@ export const comprehensiveRelics: Relic[] = [
 						dc: null,
 					},
 				],
-				non_damage_resolution: "Deals 2d6 physical or magical damage on hit.",
+				non_damage_resolution:
+					"All-Knowledge: You have proficiency in all skills and can add double proficiency bonus to Intelligence checks.",
 				passive_effects: [
-					"Deals 2d6 physical or magical damage on hit.",
-					"Target must make a standard DC saving throw or suffer Paralysis for 1 round.",
 					"All-Knowledge: You have proficiency in all skills and can add double proficiency bonus to Intelligence checks.",
 					"True Sight: Can see through illusions and perceive the true nature of things.",
 					"Mental Fortress: Immunity to psychic damage and advantage on all mental Decree checks.",
@@ -2077,9 +1916,7 @@ export const comprehensiveRelics: Relic[] = [
 				ra_specific_mundane: false,
 			},
 			special: "Aligned with Absolute resonance.",
-			stat_bonuses: {
-				Presence: 1,
-			},
+			stat_bonuses: { Presence: 1 },
 			targeting: {
 				range: "self",
 				area: null,
@@ -2095,22 +1932,12 @@ export const comprehensiveRelics: Relic[] = [
 		description:
 			"This Legendary-Rank artifact vibrates with the power to nullify reality. It allows the wielder to manifest a umbral field that can devour any proximity-based dimensional distortion.",
 		rarity: "epic",
-		value: { currency: "core", amount: 325 },
 		type: "accessory",
-		properties: {
-			protocol_enhanced: true,
-			unique: true,
-		},
-		effects: {
-			primary: "Deals 2d4 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Fear for 1 round.",
-		},
+		value: { currency: "core", amount: 325 },
+		properties: { protocol_enhanced: true, unique: true },
+		effects: {},
 		attunement: true,
-		requirements: {
-			ability: "Sense",
-			score: 15,
-		},
+		requirements: { ability: "Sense", score: 15 },
 		source: "Rift Ascendant Canon",
 		lore: {
 			current_owner: "",
@@ -2197,7 +2024,7 @@ export const comprehensiveRelics: Relic[] = [
 				},
 			],
 			audit: {
-				fingerprint: "65c42d65",
+				fingerprint: "6763a63f",
 				payload_complete: true,
 				uniqueness_seed: "shadow-orb::Shadow Orb",
 				variant_note:
@@ -2205,11 +2032,7 @@ export const comprehensiveRelics: Relic[] = [
 			},
 			condition: "Fear",
 			damage_profile: "2d4",
-			formulas: {
-				effect_formula: "2d4",
-				recharge: "action",
-				save_dc: null,
-			},
+			formulas: { effect_formula: "1d4", recharge: "action", save_dc: null },
 			identity: {
 				rarity: "epic",
 				archetype: "focus_caster",
@@ -2221,8 +2044,6 @@ export const comprehensiveRelics: Relic[] = [
 				theme: "shadow",
 			},
 			passive_rules: [
-				"Deals 2d4 physical or magical damage on hit.",
-				"Target must make a standard DC saving throw or suffer Fear for 1 round.",
 				"Shadow Power: The orb contains 10 shadow charges that can be used to power shadow abilities.",
 				"Shadow Renewal: The orb regains 1d4 charges at dawn.",
 			],
@@ -2237,10 +2058,9 @@ export const comprehensiveRelics: Relic[] = [
 						dc: null,
 					},
 				],
-				non_damage_resolution: "Deals 2d4 physical or magical damage on hit.",
+				non_damage_resolution:
+					"Shadow Power: The orb contains 10 shadow charges that can be used to power shadow abilities.",
 				passive_effects: [
-					"Deals 2d4 physical or magical damage on hit.",
-					"Target must make a standard DC saving throw or suffer Fear for 1 round.",
 					"Shadow Power: The orb contains 10 shadow charges that can be used to power shadow abilities.",
 					"Shadow Renewal: The orb regains 1d4 charges at dawn.",
 				],
@@ -2256,9 +2076,7 @@ export const comprehensiveRelics: Relic[] = [
 				ra_specific_mundane: false,
 			},
 			special: "Aligned with Void resonance.",
-			stat_bonuses: {
-				Intelligence: 1,
-			},
+			stat_bonuses: { Intelligence: 1 },
 			targeting: {
 				range: "self",
 				area: null,
@@ -2274,23 +2092,16 @@ export const comprehensiveRelics: Relic[] = [
 		description:
 			"This Legendary-Rank artifact vibrates with the power to suspend reality. It allows the wielder to manifest a recursive field that can accelerate any proximity-based dimensional distortion.",
 		rarity: "mythic",
-		value: { currency: "core", amount: 2200 },
 		type: "accessory",
+		value: { currency: "core", amount: 2200 },
 		properties: {
 			legendary_actions: true,
 			protocol_enhanced: true,
 			unique: true,
 		},
-		effects: {
-			primary: "Deals 2d6 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Stunning for 1 round.",
-		},
+		effects: {},
 		attunement: true,
-		requirements: {
-			ability: "Intelligence",
-			score: 20,
-		},
+		requirements: { ability: "Intelligence", score: 20 },
 		source: "Rift Ascendant Canon",
 		lore: {
 			current_owner: "",
@@ -2396,15 +2207,15 @@ export const comprehensiveRelics: Relic[] = [
 				},
 			],
 			audit: {
-				fingerprint: "84b3ba24",
+				fingerprint: "30610d47",
 				payload_complete: true,
 				uniqueness_seed: "time-turner::Time Turner",
-				variant_note: "A miscellaneous piece of standard Ascendant kit.",
+				variant_note: "A miscellaneous piece of standard Hunter kit.",
 			},
 			condition: "Stunning",
 			damage_profile: "2d6",
 			formulas: {
-				effect_formula: "2d6",
+				effect_formula: "explicit non-damage item effect",
 				recharge: "once-per-week",
 				save_dc: null,
 			},
@@ -2419,8 +2230,6 @@ export const comprehensiveRelics: Relic[] = [
 				theme: "standard",
 			},
 			passive_rules: [
-				"Deals 2d6 physical or magical damage on hit.",
-				"Target must make a standard DC saving throw or suffer Stunning for 1 round.",
 				"Precognition: Advantage on all attack rolls and Decree checks.",
 			],
 			resistance: ["force"],
@@ -2445,10 +2254,9 @@ export const comprehensiveRelics: Relic[] = [
 						dc: null,
 					},
 				],
-				non_damage_resolution: "Deals 2d6 physical or magical damage on hit.",
+				non_damage_resolution:
+					"Precognition: Advantage on all attack rolls and Decree checks.",
 				passive_effects: [
-					"Deals 2d6 physical or magical damage on hit.",
-					"Target must make a standard DC saving throw or suffer Stunning for 1 round.",
 					"Precognition: Advantage on all attack rolls and Decree checks.",
 				],
 			},
@@ -2463,9 +2271,7 @@ export const comprehensiveRelics: Relic[] = [
 				ra_specific_mundane: false,
 			},
 			special: "Aligned with Chrono resonance.",
-			stat_bonuses: {
-				Sense: 1,
-			},
+			stat_bonuses: { Sense: 1 },
 			targeting: {
 				range: "self",
 				area: null,
@@ -2481,16 +2287,10 @@ export const comprehensiveRelics: Relic[] = [
 		description:
 			"A potion containing concentrated life essence that can heal wounds and enhance abilities.",
 		rarity: "rare",
-		value: { currency: "gate", amount: 300 },
 		type: "consumable",
-		properties: {
-			protocol_enhanced: true,
-		},
-		effects: {
-			primary: "Deals 3d6 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Lethargy for 1 round.",
-		},
+		value: { currency: "gate", amount: 300 },
+		properties: { protocol_enhanced: true },
+		effects: {},
 		source: "Rift Ascendant Canon",
 		lore: {
 			current_owner: "",
@@ -2545,7 +2345,7 @@ export const comprehensiveRelics: Relic[] = [
 			},
 			active_rules: [],
 			audit: {
-				fingerprint: "9141dcd1",
+				fingerprint: "ffbe0ff9",
 				payload_complete: true,
 				uniqueness_seed: "essence-potion::Essence Potion",
 				variant_note: "Restores mana on consumption.",
@@ -2553,7 +2353,7 @@ export const comprehensiveRelics: Relic[] = [
 			condition: "Lethargy",
 			damage_profile: "3d6",
 			formulas: {
-				effect_formula: "3d6",
+				effect_formula: "explicit non-damage item effect",
 				recharge: "continuous",
 				save_dc: null,
 			},
@@ -2567,10 +2367,7 @@ export const comprehensiveRelics: Relic[] = [
 				signature: "1fe61ab7",
 				theme: "standard",
 			},
-			passive_rules: [
-				"Deals 3d6 physical or magical damage on hit.",
-				"Target must make a standard DC saving throw or suffer Lethargy for 1 round.",
-			],
+			passive_rules: [],
 			resistance: ["force"],
 			resolution: {
 				type: "consumable",
@@ -2578,8 +2375,7 @@ export const comprehensiveRelics: Relic[] = [
 				consumes_item: true,
 				damage_formula: null,
 				save: null,
-				use_rule:
-					"Deals 3d6 physical or magical damage on hit. Target must make a standard DC saving throw or suffer Lethargy for 1 round.",
+				use_rule: "",
 			},
 			rules_payload_version: "ra-item-v1",
 			source_integrity: {
@@ -2592,9 +2388,7 @@ export const comprehensiveRelics: Relic[] = [
 				ra_specific_mundane: false,
 			},
 			special: "Aligned with Absolute resonance.",
-			stat_bonuses: {
-				Presence: 1,
-			},
+			stat_bonuses: { Presence: 1 },
 			targeting: {
 				range: "self",
 				area: null,
@@ -2610,16 +2404,10 @@ export const comprehensiveRelics: Relic[] = [
 		description:
 			"This Legendary-Rank artifact vibrates with the power to nullify reality. It allows the wielder to manifest a umbral field that can devour any proximity-based dimensional distortion.",
 		rarity: "very_rare",
-		value: { currency: "gate", amount: 1300 },
 		type: "consumable",
-		properties: {
-			protocol_enhanced: true,
-		},
-		effects: {
-			primary: "Deals 4d10 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Stunning for 1 round.",
-		},
+		value: { currency: "gate", amount: 1300 },
+		properties: { protocol_enhanced: true },
+		effects: {},
 		source: "Rift Ascendant Canon",
 		lore: {
 			current_owner: "",
@@ -2673,7 +2461,7 @@ export const comprehensiveRelics: Relic[] = [
 			},
 			active_rules: [],
 			audit: {
-				fingerprint: "674499e9",
+				fingerprint: "f20d722d",
 				payload_complete: true,
 				uniqueness_seed: "shadow-elixir::Shadow Elixir",
 				variant_note:
@@ -2682,7 +2470,7 @@ export const comprehensiveRelics: Relic[] = [
 			condition: "Stunning",
 			damage_profile: "4d10",
 			formulas: {
-				effect_formula: "4d10",
+				effect_formula: "explicit non-damage item effect",
 				recharge: "continuous",
 				save_dc: null,
 			},
@@ -2696,10 +2484,7 @@ export const comprehensiveRelics: Relic[] = [
 				signature: "50077b50",
 				theme: "shadow",
 			},
-			passive_rules: [
-				"Deals 4d10 physical or magical damage on hit.",
-				"Target must make a standard DC saving throw or suffer Stunning for 1 round.",
-			],
+			passive_rules: [],
 			resistance: ["necrotic"],
 			resolution: {
 				type: "consumable",
@@ -2707,8 +2492,7 @@ export const comprehensiveRelics: Relic[] = [
 				consumes_item: true,
 				damage_formula: null,
 				save: null,
-				use_rule:
-					"Deals 4d10 physical or magical damage on hit. Target must make a standard DC saving throw or suffer Stunning for 1 round.",
+				use_rule: "",
 			},
 			rules_payload_version: "ra-item-v1",
 			source_integrity: {
@@ -2721,9 +2505,7 @@ export const comprehensiveRelics: Relic[] = [
 				ra_specific_mundane: false,
 			},
 			special: "Aligned with Void resonance.",
-			stat_bonuses: {
-				Intelligence: 1,
-			},
+			stat_bonuses: { Intelligence: 1 },
 			targeting: {
 				range: "self",
 				area: null,
@@ -2739,16 +2521,10 @@ export const comprehensiveRelics: Relic[] = [
 		description:
 			"This Legendary-Rank artifact vibrates with the power to siphon reality. It allows the wielder to manifest a sanguine field that can clot any proximity-based dimensional distortion.",
 		rarity: "legendary",
-		value: { currency: "core", amount: 1100 },
 		type: "consumable",
-		properties: {
-			protocol_enhanced: true,
-		},
-		effects: {
-			primary: "Deals 1d6 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Stunning for 1 round.",
-		},
+		value: { currency: "core", amount: 1100 },
+		properties: { protocol_enhanced: true },
+		effects: {},
 		source: "Rift Ascendant Canon",
 		lore: {
 			current_owner: "",
@@ -2803,7 +2579,7 @@ export const comprehensiveRelics: Relic[] = [
 			},
 			active_rules: [],
 			audit: {
-				fingerprint: "5a139508",
+				fingerprint: "c17cc812",
 				payload_complete: true,
 				uniqueness_seed: "anomaly-blood-potion::anomaly Blood Potion",
 				variant_note: "Restores HP on consumption.",
@@ -2811,7 +2587,7 @@ export const comprehensiveRelics: Relic[] = [
 			condition: "Stunning",
 			damage_profile: "1d6",
 			formulas: {
-				effect_formula: "1d6",
+				effect_formula: "explicit non-damage item effect",
 				recharge: "continuous",
 				save_dc: null,
 			},
@@ -2825,10 +2601,7 @@ export const comprehensiveRelics: Relic[] = [
 				signature: "773899cf",
 				theme: "standard",
 			},
-			passive_rules: [
-				"Deals 1d6 physical or magical damage on hit.",
-				"Target must make a standard DC saving throw or suffer Stunning for 1 round.",
-			],
+			passive_rules: [],
 			resistance: ["necrotic"],
 			resolution: {
 				type: "consumable",
@@ -2836,8 +2609,7 @@ export const comprehensiveRelics: Relic[] = [
 				consumes_item: true,
 				damage_formula: null,
 				save: null,
-				use_rule:
-					"Deals 1d6 physical or magical damage on hit. Target must make a standard DC saving throw or suffer Stunning for 1 round.",
+				use_rule: "",
 			},
 			rules_payload_version: "ra-item-v1",
 			source_integrity: {
@@ -2850,9 +2622,7 @@ export const comprehensiveRelics: Relic[] = [
 				ra_specific_mundane: false,
 			},
 			special: "Aligned with Blood resonance.",
-			stat_bonuses: {
-				Strength: 1,
-			},
+			stat_bonuses: { Strength: 1 },
 			targeting: {
 				range: "self",
 				area: null,
@@ -2868,17 +2638,10 @@ export const comprehensiveRelics: Relic[] = [
 		description:
 			"A protocol-enhanced lens that can see through shadows and reveal hidden things.",
 		rarity: "rare",
-		value: { currency: "gate", amount: 325 },
 		type: "tool",
-		properties: {
-			protocol_enhanced: true,
-			unique: true,
-		},
-		effects: {
-			primary: "Deals 2d8 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Lethargy for 1 round.",
-		},
+		value: { currency: "gate", amount: 325 },
+		properties: { protocol_enhanced: true, unique: true },
+		effects: {},
 		attunement: false,
 		source: "Rift Ascendant Canon",
 		lore: {
@@ -2944,15 +2707,15 @@ export const comprehensiveRelics: Relic[] = [
 			},
 			active_rules: [],
 			audit: {
-				fingerprint: "65ff4752",
+				fingerprint: "356812bd",
 				payload_complete: true,
 				uniqueness_seed: "shadow-lens::Shadow Lens",
-				variant_note: "A miscellaneous piece of standard Ascendant kit.",
+				variant_note: "A miscellaneous piece of standard Hunter kit.",
 			},
 			condition: "Lethargy",
 			damage_profile: "2d8",
 			formulas: {
-				effect_formula: "2d8",
+				effect_formula: "explicit non-damage item effect",
 				recharge: "continuous",
 				save_dc: null,
 			},
@@ -2967,8 +2730,6 @@ export const comprehensiveRelics: Relic[] = [
 				theme: "shadow",
 			},
 			passive_rules: [
-				"Deals 2d8 physical or magical damage on hit.",
-				"Target must make a standard DC saving throw or suffer Lethargy for 1 round.",
 				"Shadow Vision: Can see through shadows and protocol-enhanced darkness.",
 				"True Sight: Can see through illusions and detect invisible creatures.",
 				"Shadow Detection: Can detect shadow creatures and shadow protocol.",
@@ -2977,10 +2738,9 @@ export const comprehensiveRelics: Relic[] = [
 			resolution: {
 				type: "equipment_utility",
 				active_options: [],
-				non_damage_resolution: "Deals 2d8 physical or magical damage on hit.",
+				non_damage_resolution:
+					"Shadow Vision: Can see through shadows and protocol-enhanced darkness.",
 				passive_effects: [
-					"Deals 2d8 physical or magical damage on hit.",
-					"Target must make a standard DC saving throw or suffer Lethargy for 1 round.",
 					"Shadow Vision: Can see through shadows and protocol-enhanced darkness.",
 					"True Sight: Can see through illusions and detect invisible creatures.",
 					"Shadow Detection: Can detect shadow creatures and shadow protocol.",
@@ -2997,9 +2757,7 @@ export const comprehensiveRelics: Relic[] = [
 				ra_specific_mundane: false,
 			},
 			special: "Aligned with Void resonance.",
-			stat_bonuses: {
-				Intelligence: 1,
-			},
+			stat_bonuses: { Intelligence: 1 },
 			targeting: {
 				range: "self",
 				area: null,
@@ -3015,17 +2773,10 @@ export const comprehensiveRelics: Relic[] = [
 		description:
 			"This Legendary-Rank artifact vibrates with the power to mandate reality. It allows the wielder to manifest a fundamental field that can decree any proximity-based dimensional distortion.",
 		rarity: "very_rare",
-		value: { currency: "gate", amount: 1400 },
 		type: "tool",
-		properties: {
-			protocol_enhanced: true,
-			unique: true,
-		},
-		effects: {
-			primary: "Deals 2d8 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Stunning for 1 round.",
-		},
+		value: { currency: "gate", amount: 1400 },
+		properties: { protocol_enhanced: true, unique: true },
+		effects: {},
 		attunement: true,
 		source: "Rift Ascendant Canon",
 		lore: {
@@ -3101,7 +2852,7 @@ export const comprehensiveRelics: Relic[] = [
 				},
 			],
 			audit: {
-				fingerprint: "6b5b0477",
+				fingerprint: "01b95920",
 				payload_complete: true,
 				uniqueness_seed: "essence-collector::Essence Collector",
 				variant_note:
@@ -3110,7 +2861,7 @@ export const comprehensiveRelics: Relic[] = [
 			condition: "Stunning",
 			damage_profile: "2d8",
 			formulas: {
-				effect_formula: "2d8",
+				effect_formula: "explicit non-damage item effect",
 				recharge: "at-will",
 				save_dc: null,
 			},
@@ -3125,8 +2876,6 @@ export const comprehensiveRelics: Relic[] = [
 				theme: "standard",
 			},
 			passive_rules: [
-				"Deals 2d8 physical or magical damage on hit.",
-				"Target must make a standard DC saving throw or suffer Stunning for 1 round.",
 				"Essence Collection: Automatically collects essence from defeated enemies within 30 feet.",
 				"Essence Storage: Can store up to 20 essence points.",
 			],
@@ -3141,10 +2890,9 @@ export const comprehensiveRelics: Relic[] = [
 						dc: null,
 					},
 				],
-				non_damage_resolution: "Deals 2d8 physical or magical damage on hit.",
+				non_damage_resolution:
+					"Essence Collection: Automatically collects essence from defeated enemies within 30 feet.",
 				passive_effects: [
-					"Deals 2d8 physical or magical damage on hit.",
-					"Target must make a standard DC saving throw or suffer Stunning for 1 round.",
 					"Essence Collection: Automatically collects essence from defeated enemies within 30 feet.",
 					"Essence Storage: Can store up to 20 essence points.",
 				],
@@ -3160,9 +2908,7 @@ export const comprehensiveRelics: Relic[] = [
 				ra_specific_mundane: false,
 			},
 			special: "Aligned with Absolute resonance.",
-			stat_bonuses: {
-				Presence: 1,
-			},
+			stat_bonuses: { Presence: 1 },
 			targeting: {
 				range: "self",
 				area: null,

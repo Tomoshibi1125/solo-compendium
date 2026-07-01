@@ -1562,11 +1562,7 @@ export const baseEquipment: Item[] = [
 		simple_properties: ["light"],
 		sigil_slots_base: 0,
 		properties: {
-			weapon: {
-				damage: "1d4",
-				damage_type: "bludgeoning",
-				finesse: false,
-			},
+			weapon: { damage: "1d4", damage_type: "bludgeoning", finesse: false },
 		},
 		effects: {
 			passive: ["Simple melee weapon. Light property."],
@@ -1812,17 +1808,9 @@ export const baseEquipment: Item[] = [
 		simple_properties: ["two-handed"],
 		sigil_slots_base: 0,
 		properties: {
-			weapon: {
-				damage: "1d8",
-				damage_type: "bludgeoning",
-				finesse: false,
-			},
+			weapon: { damage: "1d8", damage_type: "bludgeoning", finesse: false },
 		},
-		effects: {
-			primary: "Deals 2d8 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Lethargy for 1 round.",
-		},
+		effects: {},
 		lore: {
 			current_owner: "",
 			curse: "",
@@ -1869,7 +1857,7 @@ export const baseEquipment: Item[] = [
 			},
 			active_rules: [],
 			audit: {
-				fingerprint: "01a8a371",
+				fingerprint: "7e2d8d4d",
 				payload_complete: true,
 				uniqueness_seed: "base-weapon-greatclub::Greatclub",
 				variant_note: "When wielded two-handed, +1 to damage rolls.",
@@ -1890,10 +1878,7 @@ export const baseEquipment: Item[] = [
 				signature: "c6fd7ffa",
 				theme: "standard",
 			},
-			passive_rules: [
-				"Deals 2d8 physical or magical damage on hit.",
-				"Target must make a standard DC saving throw or suffer Lethargy for 1 round.",
-			],
+			passive_rules: [],
 			resolution: {
 				type: "weapon_attack",
 				damage_type: "bludgeoning",
@@ -1901,10 +1886,7 @@ export const baseEquipment: Item[] = [
 				attack_roll: true,
 				damage_formula: "1d8 + STR modifier",
 				damage_roll: true,
-				on_hit: [
-					"Deals 2d8 physical or magical damage on hit.",
-					"Target must make a standard DC saving throw or suffer Lethargy for 1 round.",
-				],
+				on_hit: [],
 			},
 			rules_payload_version: "ra-item-v1",
 			source_integrity: {
@@ -1949,11 +1931,7 @@ export const baseEquipment: Item[] = [
 				finesse: false,
 			},
 		},
-		effects: {
-			primary: "Deals 3d6 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Paralysis for 1 round.",
-		},
+		effects: {},
 		lore: {
 			current_owner: "",
 			curse: "",
@@ -2000,7 +1978,7 @@ export const baseEquipment: Item[] = [
 			},
 			active_rules: [],
 			audit: {
-				fingerprint: "49ba4d06",
+				fingerprint: "9cf11e6c",
 				payload_complete: true,
 				uniqueness_seed: "base-weapon-handaxe::Handaxe",
 				variant_note: "",
@@ -2021,10 +1999,7 @@ export const baseEquipment: Item[] = [
 				signature: "2514b1d6",
 				theme: "standard",
 			},
-			passive_rules: [
-				"Deals 3d6 physical or magical damage on hit.",
-				"Target must make a standard DC saving throw or suffer Paralysis for 1 round.",
-			],
+			passive_rules: [],
 			resolution: {
 				type: "weapon_attack",
 				damage_type: "slashing",
@@ -2032,10 +2007,7 @@ export const baseEquipment: Item[] = [
 				attack_roll: true,
 				damage_formula: "1d6 + STR modifier",
 				damage_roll: true,
-				on_hit: [
-					"Deals 3d6 physical or magical damage on hit.",
-					"Target must make a standard DC saving throw or suffer Paralysis for 1 round.",
-				],
+				on_hit: [],
 			},
 			rules_payload_version: "ra-item-v1",
 			source_integrity: {
@@ -2081,11 +2053,7 @@ export const baseEquipment: Item[] = [
 				finesse: false,
 			},
 		},
-		effects: {
-			primary: "Deals 3d6 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Stunning for 1 round.",
-		},
+		effects: {},
 		lore: {
 			current_owner: "",
 			curse: "",
@@ -2132,7 +2100,7 @@ export const baseEquipment: Item[] = [
 			},
 			active_rules: [],
 			audit: {
-				fingerprint: "5460fa6d",
+				fingerprint: "e0929ff5",
 				payload_complete: true,
 				uniqueness_seed: "base-weapon-javelin::Javelin",
 				variant_note: "",
@@ -2153,10 +2121,7 @@ export const baseEquipment: Item[] = [
 				signature: "c2450a4f",
 				theme: "standard",
 			},
-			passive_rules: [
-				"Deals 3d6 physical or magical damage on hit.",
-				"Target must make a standard DC saving throw or suffer Stunning for 1 round.",
-			],
+			passive_rules: [],
 			resolution: {
 				type: "weapon_attack",
 				damage_type: "piercing",
@@ -2164,10 +2129,7 @@ export const baseEquipment: Item[] = [
 				attack_roll: true,
 				damage_formula: "1d6 + AGI modifier",
 				damage_roll: true,
-				on_hit: [
-					"Deals 3d6 physical or magical damage on hit.",
-					"Target must make a standard DC saving throw or suffer Stunning for 1 round.",
-				],
+				on_hit: [],
 			},
 			rules_payload_version: "ra-item-v1",
 			source_integrity: {
@@ -2213,11 +2175,7 @@ export const baseEquipment: Item[] = [
 				finesse: false,
 			},
 		},
-		effects: {
-			primary: "Deals 3d12 + 6 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Paralysis for 1 round.",
-		},
+		effects: {},
 		lore: {
 			current_owner: "",
 			curse: "",
@@ -2264,7 +2222,7 @@ export const baseEquipment: Item[] = [
 			},
 			active_rules: [],
 			audit: {
-				fingerprint: "4a3044c3",
+				fingerprint: "3734fde7",
 				payload_complete: true,
 				uniqueness_seed: "base-weapon-light-hammer::Light Hammer",
 				variant_note:
@@ -2286,10 +2244,7 @@ export const baseEquipment: Item[] = [
 				signature: "4f625f3b",
 				theme: "standard",
 			},
-			passive_rules: [
-				"Deals 3d12 + 6 physical or magical damage on hit.",
-				"Target must make a standard DC saving throw or suffer Paralysis for 1 round.",
-			],
+			passive_rules: [],
 			resolution: {
 				type: "weapon_attack",
 				damage_type: "bludgeoning",
@@ -2297,10 +2252,7 @@ export const baseEquipment: Item[] = [
 				attack_roll: true,
 				damage_formula: "1d4 + STR modifier",
 				damage_roll: true,
-				on_hit: [
-					"Deals 3d12 + 6 physical or magical damage on hit.",
-					"Target must make a standard DC saving throw or suffer Paralysis for 1 round.",
-				],
+				on_hit: [],
 			},
 			rules_payload_version: "ra-item-v1",
 			source_integrity: {
@@ -2337,16 +2289,9 @@ export const baseEquipment: Item[] = [
 		damage_type: "bludgeoning",
 		sigil_slots_base: 0,
 		properties: {
-			weapon: {
-				damage: "1d6",
-				damage_type: "bludgeoning",
-			},
+			weapon: { damage: "1d6", damage_type: "bludgeoning" },
 		},
-		effects: {
-			primary: "Deals 1d12 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Paralysis for 1 round.",
-		},
+		effects: {},
 		lore: {
 			current_owner: "",
 			curse: "",
@@ -2393,7 +2338,7 @@ export const baseEquipment: Item[] = [
 			},
 			active_rules: [],
 			audit: {
-				fingerprint: "f82b69f7",
+				fingerprint: "378490a7",
 				payload_complete: true,
 				uniqueness_seed: "base-weapon-mace::Mace",
 				variant_note: "",
@@ -2414,10 +2359,7 @@ export const baseEquipment: Item[] = [
 				signature: "6a47d6e8",
 				theme: "standard",
 			},
-			passive_rules: [
-				"Deals 1d12 physical or magical damage on hit.",
-				"Target must make a standard DC saving throw or suffer Paralysis for 1 round.",
-			],
+			passive_rules: [],
 			resolution: {
 				type: "weapon_attack",
 				damage_type: "bludgeoning",
@@ -2425,10 +2367,7 @@ export const baseEquipment: Item[] = [
 				attack_roll: true,
 				damage_formula: "1d6 + STR modifier",
 				damage_roll: true,
-				on_hit: [
-					"Deals 1d12 physical or magical damage on hit.",
-					"Target must make a standard DC saving throw or suffer Paralysis for 1 round.",
-				],
+				on_hit: [],
 			},
 			rules_payload_version: "ra-item-v1",
 			source_integrity: {
@@ -2466,17 +2405,9 @@ export const baseEquipment: Item[] = [
 		simple_properties: ["versatile"],
 		sigil_slots_base: 0,
 		properties: {
-			weapon: {
-				damage: "1d6",
-				damage_type: "bludgeoning",
-				finesse: false,
-			},
+			weapon: { damage: "1d6", damage_type: "bludgeoning", finesse: false },
 		},
-		effects: {
-			primary: "Deals 3d6 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Lethargy for 1 round.",
-		},
+		effects: {},
 		lore: {
 			current_owner: "",
 			curse: "",
@@ -2523,7 +2454,7 @@ export const baseEquipment: Item[] = [
 			},
 			active_rules: [],
 			audit: {
-				fingerprint: "fcfbb333",
+				fingerprint: "a7634c63",
 				payload_complete: true,
 				uniqueness_seed: "base-weapon-quarterstaff::Quarterstaff",
 				variant_note: "Doubles as an arcane focus.",
@@ -2544,10 +2475,7 @@ export const baseEquipment: Item[] = [
 				signature: "ba08ff92",
 				theme: "standard",
 			},
-			passive_rules: [
-				"Deals 3d6 physical or magical damage on hit.",
-				"Target must make a standard DC saving throw or suffer Lethargy for 1 round.",
-			],
+			passive_rules: [],
 			resolution: {
 				type: "weapon_attack",
 				damage_type: "bludgeoning",
@@ -2555,10 +2483,7 @@ export const baseEquipment: Item[] = [
 				attack_roll: true,
 				damage_formula: "1d6 + STR modifier",
 				damage_roll: true,
-				on_hit: [
-					"Deals 3d6 physical or magical damage on hit.",
-					"Target must make a standard DC saving throw or suffer Lethargy for 1 round.",
-				],
+				on_hit: [],
 			},
 			rules_payload_version: "ra-item-v1",
 			source_integrity: {
@@ -2595,17 +2520,9 @@ export const baseEquipment: Item[] = [
 		simple_properties: ["light"],
 		sigil_slots_base: 0,
 		properties: {
-			weapon: {
-				damage: "1d4",
-				damage_type: "slashing",
-				finesse: false,
-			},
+			weapon: { damage: "1d4", damage_type: "slashing", finesse: false },
 		},
-		effects: {
-			primary: "Deals 2d6 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Blindness for 1 round.",
-		},
+		effects: {},
 		lore: {
 			current_owner: "",
 			curse: "",
@@ -2652,7 +2569,7 @@ export const baseEquipment: Item[] = [
 			},
 			active_rules: [],
 			audit: {
-				fingerprint: "5eda7089",
+				fingerprint: "f1d0a215",
 				payload_complete: true,
 				uniqueness_seed: "base-weapon-sickle::Sickle",
 				variant_note: "",
@@ -2673,10 +2590,7 @@ export const baseEquipment: Item[] = [
 				signature: "12f3cf6b",
 				theme: "standard",
 			},
-			passive_rules: [
-				"Deals 2d6 physical or magical damage on hit.",
-				"Target must make a standard DC saving throw or suffer Blindness for 1 round.",
-			],
+			passive_rules: [],
 			resolution: {
 				type: "weapon_attack",
 				damage_type: "slashing",
@@ -2684,10 +2598,7 @@ export const baseEquipment: Item[] = [
 				attack_roll: true,
 				damage_formula: "1d4 + STR modifier",
 				damage_roll: true,
-				on_hit: [
-					"Deals 2d6 physical or magical damage on hit.",
-					"Target must make a standard DC saving throw or suffer Blindness for 1 round.",
-				],
+				on_hit: [],
 			},
 			rules_payload_version: "ra-item-v1",
 			source_integrity: {
@@ -2733,11 +2644,7 @@ export const baseEquipment: Item[] = [
 				finesse: false,
 			},
 		},
-		effects: {
-			primary: "Deals 1d8 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Fear for 1 round.",
-		},
+		effects: {},
 		lore: {
 			current_owner: "",
 			curse: "",
@@ -2784,7 +2691,7 @@ export const baseEquipment: Item[] = [
 			},
 			active_rules: [],
 			audit: {
-				fingerprint: "3b2f6a3c",
+				fingerprint: "9ee81988",
 				payload_complete: true,
 				uniqueness_seed: "base-weapon-spear::Spear",
 				variant_note: "Reach: melee attacks have 10 ft. range.",
@@ -2805,10 +2712,7 @@ export const baseEquipment: Item[] = [
 				signature: "3c4fbb6e",
 				theme: "standard",
 			},
-			passive_rules: [
-				"Deals 1d8 physical or magical damage on hit.",
-				"Target must make a standard DC saving throw or suffer Fear for 1 round.",
-			],
+			passive_rules: [],
 			resolution: {
 				type: "weapon_attack",
 				damage_type: "piercing",
@@ -2816,10 +2720,7 @@ export const baseEquipment: Item[] = [
 				attack_roll: true,
 				damage_formula: "1d6 + STR modifier",
 				damage_roll: true,
-				on_hit: [
-					"Deals 1d8 physical or magical damage on hit.",
-					"Target must make a standard DC saving throw or suffer Fear for 1 round.",
-				],
+				on_hit: [],
 			},
 			rules_payload_version: "ra-item-v1",
 			source_integrity: {
@@ -2865,11 +2766,7 @@ export const baseEquipment: Item[] = [
 				finesse: false,
 			},
 		},
-		effects: {
-			primary: "Deals 2d6 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Fear for 1 round.",
-		},
+		effects: {},
 		lore: {
 			current_owner: "",
 			curse: "",
@@ -2916,7 +2813,7 @@ export const baseEquipment: Item[] = [
 			},
 			active_rules: [],
 			audit: {
-				fingerprint: "7ce6cc9b",
+				fingerprint: "ab13a607",
 				payload_complete: true,
 				uniqueness_seed: "base-weapon-light-crossbow::Light Crossbow",
 				variant_note:
@@ -2938,10 +2835,7 @@ export const baseEquipment: Item[] = [
 				signature: "1ebe2e9e",
 				theme: "standard",
 			},
-			passive_rules: [
-				"Deals 2d6 physical or magical damage on hit.",
-				"Target must make a standard DC saving throw or suffer Fear for 1 round.",
-			],
+			passive_rules: [],
 			resolution: {
 				type: "weapon_attack",
 				damage_type: "piercing",
@@ -2949,10 +2843,7 @@ export const baseEquipment: Item[] = [
 				attack_roll: true,
 				damage_formula: "1d8 + AGI modifier",
 				damage_roll: true,
-				on_hit: [
-					"Deals 2d6 physical or magical damage on hit.",
-					"Target must make a standard DC saving throw or suffer Fear for 1 round.",
-				],
+				on_hit: [],
 			},
 			rules_payload_version: "ra-item-v1",
 			source_integrity: {
@@ -2998,11 +2889,7 @@ export const baseEquipment: Item[] = [
 				finesse: true,
 			},
 		},
-		effects: {
-			primary: "Deals 1d10 + 2 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Paralysis for 1 round.",
-		},
+		effects: {},
 		lore: {
 			current_owner: "",
 			curse: "",
@@ -3049,7 +2936,7 @@ export const baseEquipment: Item[] = [
 			},
 			active_rules: [],
 			audit: {
-				fingerprint: "e548dbb3",
+				fingerprint: "516d70bb",
 				payload_complete: true,
 				uniqueness_seed: "base-weapon-dart::Dart",
 				variant_note: "",
@@ -3070,10 +2957,7 @@ export const baseEquipment: Item[] = [
 				signature: "0acc35b9",
 				theme: "standard",
 			},
-			passive_rules: [
-				"Deals 1d10 + 2 physical or magical damage on hit.",
-				"Target must make a standard DC saving throw or suffer Paralysis for 1 round.",
-			],
+			passive_rules: [],
 			resolution: {
 				type: "weapon_attack",
 				damage_type: "piercing",
@@ -3081,10 +2965,7 @@ export const baseEquipment: Item[] = [
 				attack_roll: true,
 				damage_formula: "1d4 + STR or AGI modifier",
 				damage_roll: true,
-				on_hit: [
-					"Deals 1d10 + 2 physical or magical damage on hit.",
-					"Target must make a standard DC saving throw or suffer Paralysis for 1 round.",
-				],
+				on_hit: [],
 			},
 			rules_payload_version: "ra-item-v1",
 			source_integrity: {
@@ -3129,11 +3010,7 @@ export const baseEquipment: Item[] = [
 				finesse: false,
 			},
 		},
-		effects: {
-			primary: "Deals 4d10 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Stunning for 1 round.",
-		},
+		effects: {},
 		lore: {
 			current_owner: "",
 			curse: "",
@@ -3180,7 +3057,7 @@ export const baseEquipment: Item[] = [
 			},
 			active_rules: [],
 			audit: {
-				fingerprint: "14168863",
+				fingerprint: "eb402dfd",
 				payload_complete: true,
 				uniqueness_seed: "base-weapon-shortbow::Shortbow",
 				variant_note: "Silent. Doesn't reveal your position when fired.",
@@ -3201,10 +3078,7 @@ export const baseEquipment: Item[] = [
 				signature: "c282388f",
 				theme: "standard",
 			},
-			passive_rules: [
-				"Deals 4d10 physical or magical damage on hit.",
-				"Target must make a standard DC saving throw or suffer Stunning for 1 round.",
-			],
+			passive_rules: [],
 			resolution: {
 				type: "weapon_attack",
 				damage_type: "piercing",
@@ -3212,10 +3086,7 @@ export const baseEquipment: Item[] = [
 				attack_roll: true,
 				damage_formula: "1d6 + AGI modifier",
 				damage_roll: true,
-				on_hit: [
-					"Deals 4d10 physical or magical damage on hit.",
-					"Target must make a standard DC saving throw or suffer Stunning for 1 round.",
-				],
+				on_hit: [],
 			},
 			rules_payload_version: "ra-item-v1",
 			source_integrity: {
@@ -3260,11 +3131,7 @@ export const baseEquipment: Item[] = [
 				finesse: false,
 			},
 		},
-		effects: {
-			primary: "Deals 3d6 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Fear for 1 round.",
-		},
+		effects: {},
 		lore: {
 			current_owner: "",
 			curse: "",
@@ -3311,7 +3178,7 @@ export const baseEquipment: Item[] = [
 			},
 			active_rules: [],
 			audit: {
-				fingerprint: "a74d6a0d",
+				fingerprint: "b2664861",
 				payload_complete: true,
 				uniqueness_seed: "base-weapon-sling::Sling",
 				variant_note: "When wielded two-handed, +1 to damage rolls.",
@@ -3332,10 +3199,7 @@ export const baseEquipment: Item[] = [
 				signature: "d7c0a7ea",
 				theme: "standard",
 			},
-			passive_rules: [
-				"Deals 3d6 physical or magical damage on hit.",
-				"Target must make a standard DC saving throw or suffer Fear for 1 round.",
-			],
+			passive_rules: [],
 			resolution: {
 				type: "weapon_attack",
 				damage_type: "bludgeoning",
@@ -3343,10 +3207,7 @@ export const baseEquipment: Item[] = [
 				attack_roll: true,
 				damage_formula: "1d4 + AGI modifier",
 				damage_roll: true,
-				on_hit: [
-					"Deals 3d6 physical or magical damage on hit.",
-					"Target must make a standard DC saving throw or suffer Fear for 1 round.",
-				],
+				on_hit: [],
 			},
 			rules_payload_version: "ra-item-v1",
 			source_integrity: {
@@ -3384,17 +3245,9 @@ export const baseEquipment: Item[] = [
 		simple_properties: ["versatile"],
 		sigil_slots_base: 0,
 		properties: {
-			weapon: {
-				damage: "1d8",
-				damage_type: "slashing",
-				finesse: false,
-			},
+			weapon: { damage: "1d8", damage_type: "slashing", finesse: false },
 		},
-		effects: {
-			primary: "Deals 2d6 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Lethargy for 1 round.",
-		},
+		effects: {},
 		lore: {
 			current_owner: "",
 			curse: "",
@@ -3441,7 +3294,7 @@ export const baseEquipment: Item[] = [
 			},
 			active_rules: [],
 			audit: {
-				fingerprint: "d7443a6c",
+				fingerprint: "c993c7c0",
 				payload_complete: true,
 				uniqueness_seed: "base-weapon-battleaxe::Battleaxe",
 				variant_note:
@@ -3463,10 +3316,7 @@ export const baseEquipment: Item[] = [
 				signature: "1094b6bc",
 				theme: "standard",
 			},
-			passive_rules: [
-				"Deals 2d6 physical or magical damage on hit.",
-				"Target must make a standard DC saving throw or suffer Lethargy for 1 round.",
-			],
+			passive_rules: [],
 			resolution: {
 				type: "weapon_attack",
 				damage_type: "slashing",
@@ -3474,10 +3324,7 @@ export const baseEquipment: Item[] = [
 				attack_roll: true,
 				damage_formula: "1d8 + STR modifier",
 				damage_roll: true,
-				on_hit: [
-					"Deals 2d6 physical or magical damage on hit.",
-					"Target must make a standard DC saving throw or suffer Lethargy for 1 round.",
-				],
+				on_hit: [],
 			},
 			rules_payload_version: "ra-item-v1",
 			source_integrity: {
@@ -3513,16 +3360,9 @@ export const baseEquipment: Item[] = [
 		damage_type: "bludgeoning",
 		sigil_slots_base: 0,
 		properties: {
-			weapon: {
-				damage: "1d8",
-				damage_type: "bludgeoning",
-			},
+			weapon: { damage: "1d8", damage_type: "bludgeoning" },
 		},
-		effects: {
-			primary: "Deals 2d4 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Blindness for 1 round.",
-		},
+		effects: {},
 		lore: {
 			current_owner: "",
 			curse: "",
@@ -3569,7 +3409,7 @@ export const baseEquipment: Item[] = [
 			},
 			active_rules: [],
 			audit: {
-				fingerprint: "37859bcb",
+				fingerprint: "4a245637",
 				payload_complete: true,
 				uniqueness_seed: "base-weapon-flail::Flail",
 				variant_note: "Thrown 20/60. Returns to your hand on a hit.",
@@ -3590,10 +3430,7 @@ export const baseEquipment: Item[] = [
 				signature: "955f1318",
 				theme: "standard",
 			},
-			passive_rules: [
-				"Deals 2d4 physical or magical damage on hit.",
-				"Target must make a standard DC saving throw or suffer Blindness for 1 round.",
-			],
+			passive_rules: [],
 			resolution: {
 				type: "weapon_attack",
 				damage_type: "bludgeoning",
@@ -3601,10 +3438,7 @@ export const baseEquipment: Item[] = [
 				attack_roll: true,
 				damage_formula: "1d8 + STR modifier",
 				damage_roll: true,
-				on_hit: [
-					"Deals 2d4 physical or magical damage on hit.",
-					"Target must make a standard DC saving throw or suffer Blindness for 1 round.",
-				],
+				on_hit: [],
 			},
 			rules_payload_version: "ra-item-v1",
 			source_integrity: {
@@ -3641,17 +3475,9 @@ export const baseEquipment: Item[] = [
 		simple_properties: ["heavy", "reach", "two-handed"],
 		sigil_slots_base: 0,
 		properties: {
-			weapon: {
-				damage: "1d10",
-				damage_type: "slashing",
-				finesse: false,
-			},
+			weapon: { damage: "1d10", damage_type: "slashing", finesse: false },
 		},
-		effects: {
-			primary: "Deals 1d6 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Lethargy for 1 round.",
-		},
+		effects: {},
 		lore: {
 			current_owner: "",
 			curse: "",
@@ -3698,7 +3524,7 @@ export const baseEquipment: Item[] = [
 			},
 			active_rules: [],
 			audit: {
-				fingerprint: "8e998668",
+				fingerprint: "6131ffc4",
 				payload_complete: true,
 				uniqueness_seed: "base-weapon-glaive::Glaive",
 				variant_note:
@@ -3720,10 +3546,7 @@ export const baseEquipment: Item[] = [
 				signature: "145e1698",
 				theme: "standard",
 			},
-			passive_rules: [
-				"Deals 1d6 physical or magical damage on hit.",
-				"Target must make a standard DC saving throw or suffer Lethargy for 1 round.",
-			],
+			passive_rules: [],
 			resolution: {
 				type: "weapon_attack",
 				damage_type: "slashing",
@@ -3731,10 +3554,7 @@ export const baseEquipment: Item[] = [
 				attack_roll: true,
 				damage_formula: "1d10 + STR modifier",
 				damage_roll: true,
-				on_hit: [
-					"Deals 1d6 physical or magical damage on hit.",
-					"Target must make a standard DC saving throw or suffer Lethargy for 1 round.",
-				],
+				on_hit: [],
 			},
 			rules_payload_version: "ra-item-v1",
 			source_integrity: {
@@ -3772,17 +3592,9 @@ export const baseEquipment: Item[] = [
 		simple_properties: ["heavy", "two-handed"],
 		sigil_slots_base: 0,
 		properties: {
-			weapon: {
-				damage: "1d12",
-				damage_type: "slashing",
-				finesse: false,
-			},
+			weapon: { damage: "1d12", damage_type: "slashing", finesse: false },
 		},
-		effects: {
-			primary: "Deals 1d12 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Stunning for 1 round.",
-		},
+		effects: {},
 		lore: {
 			current_owner: "",
 			curse: "",
@@ -3829,7 +3641,7 @@ export const baseEquipment: Item[] = [
 			},
 			active_rules: [],
 			audit: {
-				fingerprint: "27f5efb0",
+				fingerprint: "599e86c8",
 				payload_complete: true,
 				uniqueness_seed: "base-weapon-greataxe::Greataxe",
 				variant_note:
@@ -3851,10 +3663,7 @@ export const baseEquipment: Item[] = [
 				signature: "2b1f45f0",
 				theme: "standard",
 			},
-			passive_rules: [
-				"Deals 1d12 physical or magical damage on hit.",
-				"Target must make a standard DC saving throw or suffer Stunning for 1 round.",
-			],
+			passive_rules: [],
 			resolution: {
 				type: "weapon_attack",
 				damage_type: "slashing",
@@ -3862,10 +3671,7 @@ export const baseEquipment: Item[] = [
 				attack_roll: true,
 				damage_formula: "1d12 + STR modifier",
 				damage_roll: true,
-				on_hit: [
-					"Deals 1d12 physical or magical damage on hit.",
-					"Target must make a standard DC saving throw or suffer Stunning for 1 round.",
-				],
+				on_hit: [],
 			},
 			rules_payload_version: "ra-item-v1",
 			source_integrity: {
@@ -3903,17 +3709,9 @@ export const baseEquipment: Item[] = [
 		simple_properties: ["heavy", "two-handed"],
 		sigil_slots_base: 0,
 		properties: {
-			weapon: {
-				damage: "2d6",
-				damage_type: "slashing",
-				finesse: false,
-			},
+			weapon: { damage: "2d6", damage_type: "slashing", finesse: false },
 		},
-		effects: {
-			primary: "Deals 2d6 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Paralysis for 1 round.",
-		},
+		effects: {},
 		lore: {
 			current_owner: "",
 			curse: "",
@@ -3960,7 +3758,7 @@ export const baseEquipment: Item[] = [
 			},
 			active_rules: [],
 			audit: {
-				fingerprint: "ae35573a",
+				fingerprint: "be596484",
 				payload_complete: true,
 				uniqueness_seed: "base-weapon-greatsword::Greatsword",
 				variant_note: "",
@@ -3981,10 +3779,7 @@ export const baseEquipment: Item[] = [
 				signature: "f35a97f6",
 				theme: "standard",
 			},
-			passive_rules: [
-				"Deals 2d6 physical or magical damage on hit.",
-				"Target must make a standard DC saving throw or suffer Paralysis for 1 round.",
-			],
+			passive_rules: [],
 			resolution: {
 				type: "weapon_attack",
 				damage_type: "slashing",
@@ -3992,10 +3787,7 @@ export const baseEquipment: Item[] = [
 				attack_roll: true,
 				damage_formula: "2d6 + STR modifier",
 				damage_roll: true,
-				on_hit: [
-					"Deals 2d6 physical or magical damage on hit.",
-					"Target must make a standard DC saving throw or suffer Paralysis for 1 round.",
-				],
+				on_hit: [],
 			},
 			rules_payload_version: "ra-item-v1",
 			source_integrity: {
@@ -4033,17 +3825,9 @@ export const baseEquipment: Item[] = [
 		simple_properties: ["heavy", "reach", "two-handed"],
 		sigil_slots_base: 0,
 		properties: {
-			weapon: {
-				damage: "1d10",
-				damage_type: "slashing",
-				finesse: false,
-			},
+			weapon: { damage: "1d10", damage_type: "slashing", finesse: false },
 		},
-		effects: {
-			primary: "Deals 4d10 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Lethargy for 1 round.",
-		},
+		effects: {},
 		lore: {
 			current_owner: "",
 			curse: "",
@@ -4090,7 +3874,7 @@ export const baseEquipment: Item[] = [
 			},
 			active_rules: [],
 			audit: {
-				fingerprint: "5b73bb90",
+				fingerprint: "6131ffc4",
 				payload_complete: true,
 				uniqueness_seed: "base-weapon-halberd::Halberd",
 				variant_note:
@@ -4112,10 +3896,7 @@ export const baseEquipment: Item[] = [
 				signature: "5f0f4a58",
 				theme: "standard",
 			},
-			passive_rules: [
-				"Deals 4d10 physical or magical damage on hit.",
-				"Target must make a standard DC saving throw or suffer Lethargy for 1 round.",
-			],
+			passive_rules: [],
 			resolution: {
 				type: "weapon_attack",
 				damage_type: "slashing",
@@ -4123,10 +3904,7 @@ export const baseEquipment: Item[] = [
 				attack_roll: true,
 				damage_formula: "1d10 + STR modifier",
 				damage_roll: true,
-				on_hit: [
-					"Deals 4d10 physical or magical damage on hit.",
-					"Target must make a standard DC saving throw or suffer Lethargy for 1 round.",
-				],
+				on_hit: [],
 			},
 			rules_payload_version: "ra-item-v1",
 			source_integrity: {
@@ -4163,17 +3941,9 @@ export const baseEquipment: Item[] = [
 		simple_properties: ["reach", "special"],
 		sigil_slots_base: 0,
 		properties: {
-			weapon: {
-				damage: "1d12",
-				damage_type: "piercing",
-				finesse: false,
-			},
+			weapon: { damage: "1d12", damage_type: "piercing", finesse: false },
 		},
-		effects: {
-			primary: "Deals 1d12 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Fear for 1 round.",
-		},
+		effects: {},
 		lore: {
 			current_owner: "",
 			curse: "",
@@ -4220,7 +3990,7 @@ export const baseEquipment: Item[] = [
 			},
 			active_rules: [],
 			audit: {
-				fingerprint: "7619ce68",
+				fingerprint: "1b58bf94",
 				payload_complete: true,
 				uniqueness_seed: "base-weapon-lance::Lance",
 				variant_note: "Reach: melee attacks have 10 ft. range.",
@@ -4241,10 +4011,7 @@ export const baseEquipment: Item[] = [
 				signature: "f5092e2e",
 				theme: "standard",
 			},
-			passive_rules: [
-				"Deals 1d12 physical or magical damage on hit.",
-				"Target must make a standard DC saving throw or suffer Fear for 1 round.",
-			],
+			passive_rules: [],
 			resolution: {
 				type: "weapon_attack",
 				damage_type: "piercing",
@@ -4252,10 +4019,7 @@ export const baseEquipment: Item[] = [
 				attack_roll: true,
 				damage_formula: "1d12 + STR modifier",
 				damage_roll: true,
-				on_hit: [
-					"Deals 1d12 physical or magical damage on hit.",
-					"Target must make a standard DC saving throw or suffer Fear for 1 round.",
-				],
+				on_hit: [],
 			},
 			rules_payload_version: "ra-item-v1",
 			source_integrity: {
@@ -4293,17 +4057,9 @@ export const baseEquipment: Item[] = [
 		simple_properties: ["versatile"],
 		sigil_slots_base: 0,
 		properties: {
-			weapon: {
-				damage: "1d8",
-				damage_type: "slashing",
-				finesse: false,
-			},
+			weapon: { damage: "1d8", damage_type: "slashing", finesse: false },
 		},
-		effects: {
-			primary: "Deals 2d6 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Fear for 1 round.",
-		},
+		effects: {},
 		lore: {
 			current_owner: "",
 			curse: "",
@@ -4350,7 +4106,7 @@ export const baseEquipment: Item[] = [
 			},
 			active_rules: [],
 			audit: {
-				fingerprint: "85289118",
+				fingerprint: "c993c7c0",
 				payload_complete: true,
 				uniqueness_seed: "base-weapon-longsword::Longsword",
 				variant_note:
@@ -4372,10 +4128,7 @@ export const baseEquipment: Item[] = [
 				signature: "5181507e",
 				theme: "standard",
 			},
-			passive_rules: [
-				"Deals 2d6 physical or magical damage on hit.",
-				"Target must make a standard DC saving throw or suffer Fear for 1 round.",
-			],
+			passive_rules: [],
 			resolution: {
 				type: "weapon_attack",
 				damage_type: "slashing",
@@ -4383,10 +4136,7 @@ export const baseEquipment: Item[] = [
 				attack_roll: true,
 				damage_formula: "1d8 + STR modifier",
 				damage_roll: true,
-				on_hit: [
-					"Deals 2d6 physical or magical damage on hit.",
-					"Target must make a standard DC saving throw or suffer Fear for 1 round.",
-				],
+				on_hit: [],
 			},
 			rules_payload_version: "ra-item-v1",
 			source_integrity: {
@@ -4424,17 +4174,9 @@ export const baseEquipment: Item[] = [
 		simple_properties: ["heavy", "two-handed"],
 		sigil_slots_base: 0,
 		properties: {
-			weapon: {
-				damage: "2d6",
-				damage_type: "bludgeoning",
-				finesse: false,
-			},
+			weapon: { damage: "2d6", damage_type: "bludgeoning", finesse: false },
 		},
-		effects: {
-			primary: "Deals 1d12 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Stunning for 1 round.",
-		},
+		effects: {},
 		lore: {
 			current_owner: "",
 			curse: "",
@@ -4481,7 +4223,7 @@ export const baseEquipment: Item[] = [
 			},
 			active_rules: [],
 			audit: {
-				fingerprint: "dd31afab",
+				fingerprint: "80a47119",
 				payload_complete: true,
 				uniqueness_seed: "base-weapon-maul::Maul",
 				variant_note: "Crit on 19-20. Critical hits push target 5 ft.",
@@ -4502,10 +4244,7 @@ export const baseEquipment: Item[] = [
 				signature: "5b22e1a4",
 				theme: "standard",
 			},
-			passive_rules: [
-				"Deals 1d12 physical or magical damage on hit.",
-				"Target must make a standard DC saving throw or suffer Stunning for 1 round.",
-			],
+			passive_rules: [],
 			resolution: {
 				type: "weapon_attack",
 				damage_type: "bludgeoning",
@@ -4513,10 +4252,7 @@ export const baseEquipment: Item[] = [
 				attack_roll: true,
 				damage_formula: "2d6 + STR modifier",
 				damage_roll: true,
-				on_hit: [
-					"Deals 1d12 physical or magical damage on hit.",
-					"Target must make a standard DC saving throw or suffer Stunning for 1 round.",
-				],
+				on_hit: [],
 			},
 			rules_payload_version: "ra-item-v1",
 			source_integrity: {
@@ -4552,16 +4288,9 @@ export const baseEquipment: Item[] = [
 		damage_type: "piercing",
 		sigil_slots_base: 0,
 		properties: {
-			weapon: {
-				damage: "1d8",
-				damage_type: "piercing",
-			},
+			weapon: { damage: "1d8", damage_type: "piercing" },
 		},
-		effects: {
-			primary: "Deals 1d12 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Paralysis for 1 round.",
-		},
+		effects: {},
 		lore: {
 			current_owner: "",
 			curse:
@@ -4609,7 +4338,7 @@ export const baseEquipment: Item[] = [
 			},
 			active_rules: [],
 			audit: {
-				fingerprint: "edd71d1a",
+				fingerprint: "163450ae",
 				payload_complete: true,
 				uniqueness_seed: "base-weapon-morningstar::Morningstar",
 				variant_note:
@@ -4631,10 +4360,7 @@ export const baseEquipment: Item[] = [
 				signature: "34cc7f98",
 				theme: "standard",
 			},
-			passive_rules: [
-				"Deals 1d12 physical or magical damage on hit.",
-				"Target must make a standard DC saving throw or suffer Paralysis for 1 round.",
-			],
+			passive_rules: [],
 			resolution: {
 				type: "weapon_attack",
 				damage_type: "piercing",
@@ -4642,10 +4368,7 @@ export const baseEquipment: Item[] = [
 				attack_roll: true,
 				damage_formula: "1d8 + STR modifier",
 				damage_roll: true,
-				on_hit: [
-					"Deals 1d12 physical or magical damage on hit.",
-					"Target must make a standard DC saving throw or suffer Paralysis for 1 round.",
-				],
+				on_hit: [],
 			},
 			rules_payload_version: "ra-item-v1",
 			source_integrity: {
@@ -4682,17 +4405,9 @@ export const baseEquipment: Item[] = [
 		simple_properties: ["heavy", "reach", "two-handed"],
 		sigil_slots_base: 0,
 		properties: {
-			weapon: {
-				damage: "1d10",
-				damage_type: "piercing",
-				finesse: false,
-			},
+			weapon: { damage: "1d10", damage_type: "piercing", finesse: false },
 		},
-		effects: {
-			primary: "Deals 2d4 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Paralysis for 1 round.",
-		},
+		effects: {},
 		lore: {
 			current_owner: "",
 			curse: "",
@@ -4739,7 +4454,7 @@ export const baseEquipment: Item[] = [
 			},
 			active_rules: [],
 			audit: {
-				fingerprint: "64944944",
+				fingerprint: "d94e3c2c",
 				payload_complete: true,
 				uniqueness_seed: "base-weapon-pike::Pike",
 				variant_note:
@@ -4761,10 +4476,7 @@ export const baseEquipment: Item[] = [
 				signature: "2d9b51a4",
 				theme: "standard",
 			},
-			passive_rules: [
-				"Deals 2d4 physical or magical damage on hit.",
-				"Target must make a standard DC saving throw or suffer Paralysis for 1 round.",
-			],
+			passive_rules: [],
 			resolution: {
 				type: "weapon_attack",
 				damage_type: "piercing",
@@ -4772,10 +4484,7 @@ export const baseEquipment: Item[] = [
 				attack_roll: true,
 				damage_formula: "1d10 + STR modifier",
 				damage_roll: true,
-				on_hit: [
-					"Deals 2d4 physical or magical damage on hit.",
-					"Target must make a standard DC saving throw or suffer Paralysis for 1 round.",
-				],
+				on_hit: [],
 			},
 			rules_payload_version: "ra-item-v1",
 			source_integrity: {
@@ -4813,17 +4522,9 @@ export const baseEquipment: Item[] = [
 		simple_properties: ["finesse"],
 		sigil_slots_base: 0,
 		properties: {
-			weapon: {
-				damage: "1d8",
-				damage_type: "piercing",
-				finesse: true,
-			},
+			weapon: { damage: "1d8", damage_type: "piercing", finesse: true },
 		},
-		effects: {
-			primary: "Deals 2d4 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Paralysis for 1 round.",
-		},
+		effects: {},
 		lore: {
 			current_owner: "",
 			curse: "",
@@ -4870,7 +4571,7 @@ export const baseEquipment: Item[] = [
 			},
 			active_rules: [],
 			audit: {
-				fingerprint: "c5abd9d0",
+				fingerprint: "7f4b9e9c",
 				payload_complete: true,
 				uniqueness_seed: "base-weapon-rapier::Rapier",
 				variant_note: "+1 to attack rolls when you have advantage.",
@@ -4891,10 +4592,7 @@ export const baseEquipment: Item[] = [
 				signature: "7cad07e4",
 				theme: "standard",
 			},
-			passive_rules: [
-				"Deals 2d4 physical or magical damage on hit.",
-				"Target must make a standard DC saving throw or suffer Paralysis for 1 round.",
-			],
+			passive_rules: [],
 			resolution: {
 				type: "weapon_attack",
 				damage_type: "piercing",
@@ -4902,10 +4600,7 @@ export const baseEquipment: Item[] = [
 				attack_roll: true,
 				damage_formula: "1d8 + STR or AGI modifier",
 				damage_roll: true,
-				on_hit: [
-					"Deals 2d4 physical or magical damage on hit.",
-					"Target must make a standard DC saving throw or suffer Paralysis for 1 round.",
-				],
+				on_hit: [],
 			},
 			rules_payload_version: "ra-item-v1",
 			source_integrity: {
@@ -4943,17 +4638,9 @@ export const baseEquipment: Item[] = [
 		simple_properties: ["finesse", "light"],
 		sigil_slots_base: 0,
 		properties: {
-			weapon: {
-				damage: "1d6",
-				damage_type: "slashing",
-				finesse: true,
-			},
+			weapon: { damage: "1d6", damage_type: "slashing", finesse: true },
 		},
-		effects: {
-			primary: "Deals 2d8 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Blindness for 1 round.",
-		},
+		effects: {},
 		lore: {
 			current_owner: "",
 			curse: "",
@@ -5000,7 +4687,7 @@ export const baseEquipment: Item[] = [
 			},
 			active_rules: [],
 			audit: {
-				fingerprint: "6033f2d8",
+				fingerprint: "ec98c4d0",
 				payload_complete: true,
 				uniqueness_seed: "base-weapon-scimitar::Scimitar",
 				variant_note: "When wielded two-handed, +1 to damage rolls.",
@@ -5021,10 +4708,7 @@ export const baseEquipment: Item[] = [
 				signature: "da3f7bb8",
 				theme: "standard",
 			},
-			passive_rules: [
-				"Deals 2d8 physical or magical damage on hit.",
-				"Target must make a standard DC saving throw or suffer Blindness for 1 round.",
-			],
+			passive_rules: [],
 			resolution: {
 				type: "weapon_attack",
 				damage_type: "slashing",
@@ -5032,10 +4716,7 @@ export const baseEquipment: Item[] = [
 				attack_roll: true,
 				damage_formula: "1d6 + STR or AGI modifier",
 				damage_roll: true,
-				on_hit: [
-					"Deals 2d8 physical or magical damage on hit.",
-					"Target must make a standard DC saving throw or suffer Blindness for 1 round.",
-				],
+				on_hit: [],
 			},
 			rules_payload_version: "ra-item-v1",
 			source_integrity: {
@@ -5073,17 +4754,9 @@ export const baseEquipment: Item[] = [
 		simple_properties: ["finesse", "light"],
 		sigil_slots_base: 0,
 		properties: {
-			weapon: {
-				damage: "1d6",
-				damage_type: "piercing",
-				finesse: true,
-			},
+			weapon: { damage: "1d6", damage_type: "piercing", finesse: true },
 		},
-		effects: {
-			primary: "Deals 3d12 + 6 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Stunning for 1 round.",
-		},
+		effects: {},
 		lore: {
 			current_owner: "",
 			curse: "",
@@ -5130,7 +4803,7 @@ export const baseEquipment: Item[] = [
 			},
 			active_rules: [],
 			audit: {
-				fingerprint: "751149ba",
+				fingerprint: "04de6928",
 				payload_complete: true,
 				uniqueness_seed: "base-weapon-shortsword::Shortsword",
 				variant_note:
@@ -5152,10 +4825,7 @@ export const baseEquipment: Item[] = [
 				signature: "692593e8",
 				theme: "standard",
 			},
-			passive_rules: [
-				"Deals 3d12 + 6 physical or magical damage on hit.",
-				"Target must make a standard DC saving throw or suffer Stunning for 1 round.",
-			],
+			passive_rules: [],
 			resolution: {
 				type: "weapon_attack",
 				damage_type: "piercing",
@@ -5163,10 +4833,7 @@ export const baseEquipment: Item[] = [
 				attack_roll: true,
 				damage_formula: "1d6 + STR or AGI modifier",
 				damage_roll: true,
-				on_hit: [
-					"Deals 3d12 + 6 physical or magical damage on hit.",
-					"Target must make a standard DC saving throw or suffer Stunning for 1 round.",
-				],
+				on_hit: [],
 			},
 			rules_payload_version: "ra-item-v1",
 			source_integrity: {
@@ -5211,11 +4878,7 @@ export const baseEquipment: Item[] = [
 				finesse: false,
 			},
 		},
-		effects: {
-			primary: "Deals 3d12 + 6 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Stunning for 1 round.",
-		},
+		effects: {},
 		lore: {
 			current_owner: "",
 			curse: "",
@@ -5262,7 +4925,7 @@ export const baseEquipment: Item[] = [
 			},
 			active_rules: [],
 			audit: {
-				fingerprint: "ee18c4ba",
+				fingerprint: "9ee81988",
 				payload_complete: true,
 				uniqueness_seed: "base-weapon-trident::Trident",
 				variant_note:
@@ -5284,10 +4947,7 @@ export const baseEquipment: Item[] = [
 				signature: "5bd15240",
 				theme: "standard",
 			},
-			passive_rules: [
-				"Deals 3d12 + 6 physical or magical damage on hit.",
-				"Target must make a standard DC saving throw or suffer Stunning for 1 round.",
-			],
+			passive_rules: [],
 			resolution: {
 				type: "weapon_attack",
 				damage_type: "piercing",
@@ -5295,10 +4955,7 @@ export const baseEquipment: Item[] = [
 				attack_roll: true,
 				damage_formula: "1d6 + STR modifier",
 				damage_roll: true,
-				on_hit: [
-					"Deals 3d12 + 6 physical or magical damage on hit.",
-					"Target must make a standard DC saving throw or suffer Stunning for 1 round.",
-				],
+				on_hit: [],
 			},
 			rules_payload_version: "ra-item-v1",
 			source_integrity: {
@@ -5335,16 +4992,9 @@ export const baseEquipment: Item[] = [
 		damage_type: "piercing",
 		sigil_slots_base: 0,
 		properties: {
-			weapon: {
-				damage: "1d8",
-				damage_type: "piercing",
-			},
+			weapon: { damage: "1d8", damage_type: "piercing" },
 		},
-		effects: {
-			primary: "Deals 2d4 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Fear for 1 round.",
-		},
+		effects: {},
 		lore: {
 			current_owner: "",
 			curse: "",
@@ -5391,7 +5041,7 @@ export const baseEquipment: Item[] = [
 			},
 			active_rules: [],
 			audit: {
-				fingerprint: "b97dcf94",
+				fingerprint: "3122cdc8",
 				payload_complete: true,
 				uniqueness_seed: "base-weapon-war-pick::War Pick",
 				variant_note: "When wielded two-handed, +1 to damage rolls.",
@@ -5412,10 +5062,7 @@ export const baseEquipment: Item[] = [
 				signature: "052ceac5",
 				theme: "standard",
 			},
-			passive_rules: [
-				"Deals 2d4 physical or magical damage on hit.",
-				"Target must make a standard DC saving throw or suffer Fear for 1 round.",
-			],
+			passive_rules: [],
 			resolution: {
 				type: "weapon_attack",
 				damage_type: "piercing",
@@ -5423,10 +5070,7 @@ export const baseEquipment: Item[] = [
 				attack_roll: true,
 				damage_formula: "1d8 + STR modifier",
 				damage_roll: true,
-				on_hit: [
-					"Deals 2d4 physical or magical damage on hit.",
-					"Target must make a standard DC saving throw or suffer Fear for 1 round.",
-				],
+				on_hit: [],
 			},
 			rules_payload_version: "ra-item-v1",
 			source_integrity: {
@@ -5464,17 +5108,9 @@ export const baseEquipment: Item[] = [
 		simple_properties: ["versatile"],
 		sigil_slots_base: 0,
 		properties: {
-			weapon: {
-				damage: "1d8",
-				damage_type: "bludgeoning",
-				finesse: false,
-			},
+			weapon: { damage: "1d8", damage_type: "bludgeoning", finesse: false },
 		},
-		effects: {
-			primary: "Deals 3d6 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Paralysis for 1 round.",
-		},
+		effects: {},
 		lore: {
 			current_owner: "",
 			curse: "",
@@ -5521,7 +5157,7 @@ export const baseEquipment: Item[] = [
 			},
 			active_rules: [],
 			audit: {
-				fingerprint: "bf1afdd9",
+				fingerprint: "3ce96667",
 				payload_complete: true,
 				uniqueness_seed: "base-weapon-warhammer::Warhammer",
 				variant_note:
@@ -5543,10 +5179,7 @@ export const baseEquipment: Item[] = [
 				signature: "3135c930",
 				theme: "standard",
 			},
-			passive_rules: [
-				"Deals 3d6 physical or magical damage on hit.",
-				"Target must make a standard DC saving throw or suffer Paralysis for 1 round.",
-			],
+			passive_rules: [],
 			resolution: {
 				type: "weapon_attack",
 				damage_type: "bludgeoning",
@@ -5554,10 +5187,7 @@ export const baseEquipment: Item[] = [
 				attack_roll: true,
 				damage_formula: "1d8 + STR modifier",
 				damage_roll: true,
-				on_hit: [
-					"Deals 3d6 physical or magical damage on hit.",
-					"Target must make a standard DC saving throw or suffer Paralysis for 1 round.",
-				],
+				on_hit: [],
 			},
 			rules_payload_version: "ra-item-v1",
 			source_integrity: {
@@ -5594,17 +5224,9 @@ export const baseEquipment: Item[] = [
 		simple_properties: ["finesse", "reach"],
 		sigil_slots_base: 0,
 		properties: {
-			weapon: {
-				damage: "1d4",
-				damage_type: "slashing",
-				finesse: true,
-			},
+			weapon: { damage: "1d4", damage_type: "slashing", finesse: true },
 		},
-		effects: {
-			primary: "Deals 3d12 + 6 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Paralysis for 1 round.",
-		},
+		effects: {},
 		lore: {
 			current_owner: "",
 			curse:
@@ -5652,7 +5274,7 @@ export const baseEquipment: Item[] = [
 			},
 			active_rules: [],
 			audit: {
-				fingerprint: "8036ba1e",
+				fingerprint: "30c79cb2",
 				payload_complete: true,
 				uniqueness_seed: "base-weapon-whip::Whip",
 				variant_note:
@@ -5674,10 +5296,7 @@ export const baseEquipment: Item[] = [
 				signature: "bb4bd880",
 				theme: "standard",
 			},
-			passive_rules: [
-				"Deals 3d12 + 6 physical or magical damage on hit.",
-				"Target must make a standard DC saving throw or suffer Paralysis for 1 round.",
-			],
+			passive_rules: [],
 			resolution: {
 				type: "weapon_attack",
 				damage_type: "slashing",
@@ -5685,10 +5304,7 @@ export const baseEquipment: Item[] = [
 				attack_roll: true,
 				damage_formula: "1d4 + STR or AGI modifier",
 				damage_roll: true,
-				on_hit: [
-					"Deals 3d12 + 6 physical or magical damage on hit.",
-					"Target must make a standard DC saving throw or suffer Paralysis for 1 round.",
-				],
+				on_hit: [],
 			},
 			rules_payload_version: "ra-item-v1",
 			source_integrity: {
@@ -5733,11 +5349,7 @@ export const baseEquipment: Item[] = [
 				finesse: false,
 			},
 		},
-		effects: {
-			primary: "Deals 1d12 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Paralysis for 1 round.",
-		},
+		effects: {},
 		lore: {
 			current_owner: "",
 			curse:
@@ -5785,7 +5397,7 @@ export const baseEquipment: Item[] = [
 			},
 			active_rules: [],
 			audit: {
-				fingerprint: "80d72734",
+				fingerprint: "81ccc53c",
 				payload_complete: true,
 				uniqueness_seed: "base-weapon-blowgun::Blowgun",
 				variant_note: "When wielded two-handed, +1 to damage rolls.",
@@ -5806,10 +5418,7 @@ export const baseEquipment: Item[] = [
 				signature: "f4f090bc",
 				theme: "standard",
 			},
-			passive_rules: [
-				"Deals 1d12 physical or magical damage on hit.",
-				"Target must make a standard DC saving throw or suffer Paralysis for 1 round.",
-			],
+			passive_rules: [],
 			resolution: {
 				type: "weapon_attack",
 				damage_type: "piercing",
@@ -5817,10 +5426,7 @@ export const baseEquipment: Item[] = [
 				attack_roll: true,
 				damage_formula: "1d4 + AGI modifier",
 				damage_roll: true,
-				on_hit: [
-					"Deals 1d12 physical or magical damage on hit.",
-					"Target must make a standard DC saving throw or suffer Paralysis for 1 round.",
-				],
+				on_hit: [],
 			},
 			rules_payload_version: "ra-item-v1",
 			source_integrity: {
@@ -5866,11 +5472,7 @@ export const baseEquipment: Item[] = [
 				finesse: false,
 			},
 		},
-		effects: {
-			primary: "Deals 1d12 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Fear for 1 round.",
-		},
+		effects: {},
 		lore: {
 			current_owner: "",
 			curse: "",
@@ -5917,7 +5519,7 @@ export const baseEquipment: Item[] = [
 			},
 			active_rules: [],
 			audit: {
-				fingerprint: "5e4bbab3",
+				fingerprint: "0a46770f",
 				payload_complete: true,
 				uniqueness_seed: "base-weapon-hand-crossbow::Hand Crossbow",
 				variant_note: "",
@@ -5938,10 +5540,7 @@ export const baseEquipment: Item[] = [
 				signature: "0e7c996a",
 				theme: "standard",
 			},
-			passive_rules: [
-				"Deals 1d12 physical or magical damage on hit.",
-				"Target must make a standard DC saving throw or suffer Fear for 1 round.",
-			],
+			passive_rules: [],
 			resolution: {
 				type: "weapon_attack",
 				damage_type: "piercing",
@@ -5949,10 +5548,7 @@ export const baseEquipment: Item[] = [
 				attack_roll: true,
 				damage_formula: "1d6 + AGI modifier",
 				damage_roll: true,
-				on_hit: [
-					"Deals 1d12 physical or magical damage on hit.",
-					"Target must make a standard DC saving throw or suffer Fear for 1 round.",
-				],
+				on_hit: [],
 			},
 			rules_payload_version: "ra-item-v1",
 			source_integrity: {
@@ -5997,11 +5593,7 @@ export const baseEquipment: Item[] = [
 				finesse: false,
 			},
 		},
-		effects: {
-			primary: "Deals 3d6 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Fear for 1 round.",
-		},
+		effects: {},
 		lore: {
 			current_owner: "",
 			curse: "",
@@ -6048,7 +5640,7 @@ export const baseEquipment: Item[] = [
 			},
 			active_rules: [],
 			audit: {
-				fingerprint: "cd0e99eb",
+				fingerprint: "341d5a0b",
 				payload_complete: true,
 				uniqueness_seed: "base-weapon-heavy-crossbow::Heavy Crossbow",
 				variant_note: "Heavy variant.",
@@ -6069,10 +5661,7 @@ export const baseEquipment: Item[] = [
 				signature: "36c6dd1a",
 				theme: "standard",
 			},
-			passive_rules: [
-				"Deals 3d6 physical or magical damage on hit.",
-				"Target must make a standard DC saving throw or suffer Fear for 1 round.",
-			],
+			passive_rules: [],
 			resolution: {
 				type: "weapon_attack",
 				damage_type: "piercing",
@@ -6080,10 +5669,7 @@ export const baseEquipment: Item[] = [
 				attack_roll: true,
 				damage_formula: "1d10 + AGI modifier",
 				damage_roll: true,
-				on_hit: [
-					"Deals 3d6 physical or magical damage on hit.",
-					"Target must make a standard DC saving throw or suffer Fear for 1 round.",
-				],
+				on_hit: [],
 			},
 			rules_payload_version: "ra-item-v1",
 			source_integrity: {
@@ -6128,11 +5714,7 @@ export const baseEquipment: Item[] = [
 				finesse: false,
 			},
 		},
-		effects: {
-			primary: "Deals 2d4 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Blindness for 1 round.",
-		},
+		effects: {},
 		lore: {
 			current_owner: "",
 			curse: "",
@@ -6179,7 +5761,7 @@ export const baseEquipment: Item[] = [
 			},
 			active_rules: [],
 			audit: {
-				fingerprint: "fe94082d",
+				fingerprint: "43994415",
 				payload_complete: true,
 				uniqueness_seed: "base-weapon-longbow::Longbow",
 				variant_note:
@@ -6201,10 +5783,7 @@ export const baseEquipment: Item[] = [
 				signature: "bfced9f3",
 				theme: "standard",
 			},
-			passive_rules: [
-				"Deals 2d4 physical or magical damage on hit.",
-				"Target must make a standard DC saving throw or suffer Blindness for 1 round.",
-			],
+			passive_rules: [],
 			resolution: {
 				type: "weapon_attack",
 				damage_type: "piercing",
@@ -6212,10 +5791,7 @@ export const baseEquipment: Item[] = [
 				attack_roll: true,
 				damage_formula: "1d8 + AGI modifier",
 				damage_roll: true,
-				on_hit: [
-					"Deals 2d4 physical or magical damage on hit.",
-					"Target must make a standard DC saving throw or suffer Blindness for 1 round.",
-				],
+				on_hit: [],
 			},
 			rules_payload_version: "ra-item-v1",
 			source_integrity: {
@@ -6248,11 +5824,7 @@ export const baseEquipment: Item[] = [
 		item_type: "misc",
 		sigil_slots_base: 0,
 		properties: {},
-		effects: {
-			primary: "Deals 1d10 + 2 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Fear for 1 round.",
-		},
+		effects: {},
 		lore: {
 			current_owner: "",
 			curse:
@@ -6301,13 +5873,13 @@ export const baseEquipment: Item[] = [
 			},
 			active_rules: [],
 			audit: {
-				fingerprint: "e8c87d5a",
+				fingerprint: "f6aa3d87",
 				payload_complete: true,
 				uniqueness_seed: "base-ammo-arrows-20::Arrows (20)",
-				variant_note: "A miscellaneous piece of standard Ascendant kit.",
+				variant_note: "A miscellaneous piece of standard Hunter kit.",
 			},
 			formulas: {
-				effect_formula: "1d10 + 2",
+				effect_formula: "explicit non-damage item effect",
 				recharge: "continuous",
 				save_dc: null,
 			},
@@ -6321,19 +5893,13 @@ export const baseEquipment: Item[] = [
 				signature: "a6963e7f",
 				theme: "standard",
 			},
-			passive_rules: [
-				"Deals 1d10 + 2 physical or magical damage on hit.",
-				"Target must make a standard DC saving throw or suffer Fear for 1 round.",
-			],
+			passive_rules: [],
 			resolution: {
 				type: "equipment_utility",
 				active_options: [],
 				non_damage_resolution:
-					"Deals 1d10 + 2 physical or magical damage on hit.",
-				passive_effects: [
-					"Deals 1d10 + 2 physical or magical damage on hit.",
-					"Target must make a standard DC saving throw or suffer Fear for 1 round.",
-				],
+					"Resolve the item through the listed utility effect.",
+				passive_effects: [],
 			},
 			rules_payload_version: "ra-item-v1",
 			source_integrity: {
@@ -6366,11 +5932,7 @@ export const baseEquipment: Item[] = [
 		item_type: "misc",
 		sigil_slots_base: 0,
 		properties: {},
-		effects: {
-			primary: "Deals 3d12 + 6 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Blindness for 1 round.",
-		},
+		effects: {},
 		lore: {
 			current_owner: "",
 			curse: "",
@@ -6417,7 +5979,7 @@ export const baseEquipment: Item[] = [
 			},
 			active_rules: [],
 			audit: {
-				fingerprint: "1dd5d584",
+				fingerprint: "12ed5984",
 				payload_complete: true,
 				uniqueness_seed: "base-ammo-bolts-20::Crossbow Bolts (20)",
 				variant_note: "",
@@ -6438,10 +6000,7 @@ export const baseEquipment: Item[] = [
 				signature: "a568f483",
 				theme: "standard",
 			},
-			passive_rules: [
-				"Deals 3d12 + 6 physical or magical damage on hit.",
-				"Target must make a standard DC saving throw or suffer Blindness for 1 round.",
-			],
+			passive_rules: [],
 			resolution: {
 				type: "weapon_attack",
 				damage_type: "physical",
@@ -6449,10 +6008,7 @@ export const baseEquipment: Item[] = [
 				attack_roll: true,
 				damage_formula: "damage as listed by the item",
 				damage_roll: false,
-				on_hit: [
-					"Deals 3d12 + 6 physical or magical damage on hit.",
-					"Target must make a standard DC saving throw or suffer Blindness for 1 round.",
-				],
+				on_hit: [],
 			},
 			rules_payload_version: "ra-item-v1",
 			source_integrity: {
@@ -6485,11 +6041,7 @@ export const baseEquipment: Item[] = [
 		item_type: "misc",
 		sigil_slots_base: 0,
 		properties: {},
-		effects: {
-			primary: "Deals 3d12 + 6 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Lethargy for 1 round.",
-		},
+		effects: {},
 		lore: {
 			current_owner: "",
 			curse: "",
@@ -6536,7 +6088,7 @@ export const baseEquipment: Item[] = [
 			},
 			active_rules: [],
 			audit: {
-				fingerprint: "f57f18fe",
+				fingerprint: "ae54c96e",
 				payload_complete: true,
 				uniqueness_seed: "base-ammo-darts-10::Darts (10)",
 				variant_note: "",
@@ -6557,10 +6109,7 @@ export const baseEquipment: Item[] = [
 				signature: "8b7a3a05",
 				theme: "standard",
 			},
-			passive_rules: [
-				"Deals 3d12 + 6 physical or magical damage on hit.",
-				"Target must make a standard DC saving throw or suffer Lethargy for 1 round.",
-			],
+			passive_rules: [],
 			resolution: {
 				type: "weapon_attack",
 				damage_type: "physical",
@@ -6568,10 +6117,7 @@ export const baseEquipment: Item[] = [
 				attack_roll: true,
 				damage_formula: "damage as listed by the item",
 				damage_roll: false,
-				on_hit: [
-					"Deals 3d12 + 6 physical or magical damage on hit.",
-					"Target must make a standard DC saving throw or suffer Lethargy for 1 round.",
-				],
+				on_hit: [],
 			},
 			rules_payload_version: "ra-item-v1",
 			source_integrity: {
@@ -6605,11 +6151,7 @@ export const baseEquipment: Item[] = [
 		item_type: "misc",
 		sigil_slots_base: 0,
 		properties: {},
-		effects: {
-			primary: "Deals 1d10 + 2 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Blindness for 1 round.",
-		},
+		effects: {},
 		lore: {
 			current_owner: "",
 			curse: "",
@@ -6657,13 +6199,13 @@ export const baseEquipment: Item[] = [
 			},
 			active_rules: [],
 			audit: {
-				fingerprint: "5cb257a0",
+				fingerprint: "f6aa3d87",
 				payload_complete: true,
 				uniqueness_seed: "base-gear-explorers-pack::Explorer's Pack",
-				variant_note: "A miscellaneous piece of standard Ascendant kit.",
+				variant_note: "A miscellaneous piece of standard Hunter kit.",
 			},
 			formulas: {
-				effect_formula: "1d10 + 2",
+				effect_formula: "explicit non-damage item effect",
 				recharge: "continuous",
 				save_dc: null,
 			},
@@ -6677,19 +6219,13 @@ export const baseEquipment: Item[] = [
 				signature: "de572162",
 				theme: "standard",
 			},
-			passive_rules: [
-				"Deals 1d10 + 2 physical or magical damage on hit.",
-				"Target must make a standard DC saving throw or suffer Blindness for 1 round.",
-			],
+			passive_rules: [],
 			resolution: {
 				type: "equipment_utility",
 				active_options: [],
 				non_damage_resolution:
-					"Deals 1d10 + 2 physical or magical damage on hit.",
-				passive_effects: [
-					"Deals 1d10 + 2 physical or magical damage on hit.",
-					"Target must make a standard DC saving throw or suffer Blindness for 1 round.",
-				],
+					"Resolve the item through the listed utility effect.",
+				passive_effects: [],
 			},
 			rules_payload_version: "ra-item-v1",
 			source_integrity: {
@@ -6723,11 +6259,7 @@ export const baseEquipment: Item[] = [
 		item_type: "misc",
 		sigil_slots_base: 0,
 		properties: {},
-		effects: {
-			primary: "Deals 1d6 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Fear for 1 round.",
-		},
+		effects: {},
 		lore: {
 			current_owner: "",
 			curse: "",
@@ -6775,14 +6307,14 @@ export const baseEquipment: Item[] = [
 			},
 			active_rules: [],
 			audit: {
-				fingerprint: "ec6e989e",
+				fingerprint: "f6aa3d87",
 				payload_complete: true,
 				uniqueness_seed: "base-gear-dungeoneers-pack::Dungeoneer's Pack",
 				variant_note:
 					"A field accessory. Cataloged in the Bureau quartermaster registry.",
 			},
 			formulas: {
-				effect_formula: "1d6",
+				effect_formula: "explicit non-damage item effect",
 				recharge: "continuous",
 				save_dc: null,
 			},
@@ -6796,18 +6328,13 @@ export const baseEquipment: Item[] = [
 				signature: "2c13d5ea",
 				theme: "standard",
 			},
-			passive_rules: [
-				"Deals 1d6 physical or magical damage on hit.",
-				"Target must make a standard DC saving throw or suffer Fear for 1 round.",
-			],
+			passive_rules: [],
 			resolution: {
 				type: "equipment_utility",
 				active_options: [],
-				non_damage_resolution: "Deals 1d6 physical or magical damage on hit.",
-				passive_effects: [
-					"Deals 1d6 physical or magical damage on hit.",
-					"Target must make a standard DC saving throw or suffer Fear for 1 round.",
-				],
+				non_damage_resolution:
+					"Resolve the item through the listed utility effect.",
+				passive_effects: [],
 			},
 			rules_payload_version: "ra-item-v1",
 			source_integrity: {
@@ -6841,11 +6368,7 @@ export const baseEquipment: Item[] = [
 		item_type: "misc",
 		sigil_slots_base: 0,
 		properties: {},
-		effects: {
-			primary: "Deals 1d12 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Fear for 1 round.",
-		},
+		effects: {},
 		lore: {
 			current_owner: "",
 			curse: "",
@@ -6893,13 +6416,13 @@ export const baseEquipment: Item[] = [
 			},
 			active_rules: [],
 			audit: {
-				fingerprint: "dcba1efa",
+				fingerprint: "f6aa3d87",
 				payload_complete: true,
 				uniqueness_seed: "base-gear-priests-pack::Priest's Pack",
 				variant_note: "A piece of Bureau-quartermastered field gear.",
 			},
 			formulas: {
-				effect_formula: "1d12",
+				effect_formula: "explicit non-damage item effect",
 				recharge: "continuous",
 				save_dc: null,
 			},
@@ -6913,18 +6436,13 @@ export const baseEquipment: Item[] = [
 				signature: "8639c2ee",
 				theme: "standard",
 			},
-			passive_rules: [
-				"Deals 1d12 physical or magical damage on hit.",
-				"Target must make a standard DC saving throw or suffer Fear for 1 round.",
-			],
+			passive_rules: [],
 			resolution: {
 				type: "equipment_utility",
 				active_options: [],
-				non_damage_resolution: "Deals 1d12 physical or magical damage on hit.",
-				passive_effects: [
-					"Deals 1d12 physical or magical damage on hit.",
-					"Target must make a standard DC saving throw or suffer Fear for 1 round.",
-				],
+				non_damage_resolution:
+					"Resolve the item through the listed utility effect.",
+				passive_effects: [],
 			},
 			rules_payload_version: "ra-item-v1",
 			source_integrity: {
@@ -6958,11 +6476,7 @@ export const baseEquipment: Item[] = [
 		item_type: "misc",
 		sigil_slots_base: 0,
 		properties: {},
-		effects: {
-			primary: "Deals 1d8 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Paralysis for 1 round.",
-		},
+		effects: {},
 		lore: {
 			current_owner: "",
 			curse: "",
@@ -7010,13 +6524,13 @@ export const baseEquipment: Item[] = [
 			},
 			active_rules: [],
 			audit: {
-				fingerprint: "3feb1ad4",
+				fingerprint: "f6aa3d87",
 				payload_complete: true,
 				uniqueness_seed: "base-gear-scholars-pack::Scholar's Pack",
 				variant_note: "A piece of Bureau-quartermastered field gear.",
 			},
 			formulas: {
-				effect_formula: "1d8",
+				effect_formula: "explicit non-damage item effect",
 				recharge: "continuous",
 				save_dc: null,
 			},
@@ -7030,18 +6544,13 @@ export const baseEquipment: Item[] = [
 				signature: "64515790",
 				theme: "standard",
 			},
-			passive_rules: [
-				"Deals 1d8 physical or magical damage on hit.",
-				"Target must make a standard DC saving throw or suffer Paralysis for 1 round.",
-			],
+			passive_rules: [],
 			resolution: {
 				type: "equipment_utility",
 				active_options: [],
-				non_damage_resolution: "Deals 1d8 physical or magical damage on hit.",
-				passive_effects: [
-					"Deals 1d8 physical or magical damage on hit.",
-					"Target must make a standard DC saving throw or suffer Paralysis for 1 round.",
-				],
+				non_damage_resolution:
+					"Resolve the item through the listed utility effect.",
+				passive_effects: [],
 			},
 			rules_payload_version: "ra-item-v1",
 			source_integrity: {
@@ -7075,11 +6584,7 @@ export const baseEquipment: Item[] = [
 		item_type: "misc",
 		sigil_slots_base: 0,
 		properties: {},
-		effects: {
-			primary: "Deals 1d10 + 2 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Fear for 1 round.",
-		},
+		effects: {},
 		lore: {
 			current_owner: "",
 			curse: "",
@@ -7127,13 +6632,13 @@ export const baseEquipment: Item[] = [
 			},
 			active_rules: [],
 			audit: {
-				fingerprint: "e8c87d5a",
+				fingerprint: "f6aa3d87",
 				payload_complete: true,
 				uniqueness_seed: "base-gear-burglars-pack::Burglar's Pack",
-				variant_note: "A miscellaneous piece of standard Ascendant kit.",
+				variant_note: "A miscellaneous piece of standard Hunter kit.",
 			},
 			formulas: {
-				effect_formula: "1d10 + 2",
+				effect_formula: "explicit non-damage item effect",
 				recharge: "continuous",
 				save_dc: null,
 			},
@@ -7147,19 +6652,13 @@ export const baseEquipment: Item[] = [
 				signature: "8321adaa",
 				theme: "standard",
 			},
-			passive_rules: [
-				"Deals 1d10 + 2 physical or magical damage on hit.",
-				"Target must make a standard DC saving throw or suffer Fear for 1 round.",
-			],
+			passive_rules: [],
 			resolution: {
 				type: "equipment_utility",
 				active_options: [],
 				non_damage_resolution:
-					"Deals 1d10 + 2 physical or magical damage on hit.",
-				passive_effects: [
-					"Deals 1d10 + 2 physical or magical damage on hit.",
-					"Target must make a standard DC saving throw or suffer Fear for 1 round.",
-				],
+					"Resolve the item through the listed utility effect.",
+				passive_effects: [],
 			},
 			rules_payload_version: "ra-item-v1",
 			source_integrity: {
@@ -7193,11 +6692,7 @@ export const baseEquipment: Item[] = [
 		item_type: "misc",
 		sigil_slots_base: 0,
 		properties: {},
-		effects: {
-			primary: "Deals 2d8 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Stunning for 1 round.",
-		},
+		effects: {},
 		lore: {
 			current_owner: "",
 			curse: "",
@@ -7245,13 +6740,13 @@ export const baseEquipment: Item[] = [
 			},
 			active_rules: [],
 			audit: {
-				fingerprint: "97ee7e0a",
+				fingerprint: "f6aa3d87",
 				payload_complete: true,
 				uniqueness_seed: "base-gear-diplomats-pack::Diplomat's Pack",
 				variant_note: "A piece of Bureau-quartermastered field gear.",
 			},
 			formulas: {
-				effect_formula: "2d8",
+				effect_formula: "explicit non-damage item effect",
 				recharge: "continuous",
 				save_dc: null,
 			},
@@ -7265,18 +6760,13 @@ export const baseEquipment: Item[] = [
 				signature: "55b102be",
 				theme: "standard",
 			},
-			passive_rules: [
-				"Deals 2d8 physical or magical damage on hit.",
-				"Target must make a standard DC saving throw or suffer Stunning for 1 round.",
-			],
+			passive_rules: [],
 			resolution: {
 				type: "equipment_utility",
 				active_options: [],
-				non_damage_resolution: "Deals 2d8 physical or magical damage on hit.",
-				passive_effects: [
-					"Deals 2d8 physical or magical damage on hit.",
-					"Target must make a standard DC saving throw or suffer Stunning for 1 round.",
-				],
+				non_damage_resolution:
+					"Resolve the item through the listed utility effect.",
+				passive_effects: [],
 			},
 			rules_payload_version: "ra-item-v1",
 			source_integrity: {
@@ -7310,11 +6800,7 @@ export const baseEquipment: Item[] = [
 		item_type: "misc",
 		sigil_slots_base: 0,
 		properties: {},
-		effects: {
-			primary: "Deals 2d6 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Lethargy for 1 round.",
-		},
+		effects: {},
 		lore: {
 			current_owner: "",
 			curse: "",
@@ -7362,13 +6848,13 @@ export const baseEquipment: Item[] = [
 			},
 			active_rules: [],
 			audit: {
-				fingerprint: "3a532ed6",
+				fingerprint: "f6aa3d87",
 				payload_complete: true,
 				uniqueness_seed: "base-gear-entertainers-pack::Entertainer's Pack",
-				variant_note: "A miscellaneous piece of standard Ascendant kit.",
+				variant_note: "A miscellaneous piece of standard Hunter kit.",
 			},
 			formulas: {
-				effect_formula: "2d6",
+				effect_formula: "explicit non-damage item effect",
 				recharge: "continuous",
 				save_dc: null,
 			},
@@ -7382,18 +6868,13 @@ export const baseEquipment: Item[] = [
 				signature: "698d6c4a",
 				theme: "standard",
 			},
-			passive_rules: [
-				"Deals 2d6 physical or magical damage on hit.",
-				"Target must make a standard DC saving throw or suffer Lethargy for 1 round.",
-			],
+			passive_rules: [],
 			resolution: {
 				type: "equipment_utility",
 				active_options: [],
-				non_damage_resolution: "Deals 2d6 physical or magical damage on hit.",
-				passive_effects: [
-					"Deals 2d6 physical or magical damage on hit.",
-					"Target must make a standard DC saving throw or suffer Lethargy for 1 round.",
-				],
+				non_damage_resolution:
+					"Resolve the item through the listed utility effect.",
+				passive_effects: [],
 			},
 			rules_payload_version: "ra-item-v1",
 			source_integrity: {
@@ -7404,123 +6885,6 @@ export const baseEquipment: Item[] = [
 					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
-			},
-			targeting: {
-				range: "self",
-				area: null,
-				line_of_effect: "as item description permits",
-				target: "Self, touched object, or listed utility target",
-			},
-		},
-	},
-	{
-		id: "base-focus-arcane",
-		name: "Arcane Focus",
-		source_book: "Rift Ascendant Canon",
-		description: "A crystal orb, wand, or staff used to channel arcane mana.",
-		rarity: "common",
-		type: "wondrous",
-		image: "/generated/compendium/items/item-0747.webp",
-		weight: 1,
-		value: { currency: "crystal", amount: 100 },
-		item_type: "misc",
-		sigil_slots_base: 0,
-		properties: {},
-		effects: {
-			primary: "Deals 1d12 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Blindness for 1 round.",
-		},
-		lore: {
-			current_owner: "",
-			curse: "",
-			history: "Its true history remains a protected Guild secret.",
-			origin: "Recovered from a collapsed Guild Vault.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "Power lies not in the object, but the will of its master.",
-		discovery_lore:
-			"Discovered by an E-Rank Ascendant who stumbled into an unmarked side passage during a routine dungeon clear.",
-		tags: ["equipment", "support", "stealth", "mobility", "damage"],
-		theme_tags: ["shadow-domain", "survival"],
-		activation: {
-			type: "passive",
-			consumes_item: false,
-			cost: "no action",
-			frequency: "continuous",
-			trigger: "Equipped, carried, worn, or used as described.",
-		},
-		limitations: {
-			cursed: false,
-			charges: null,
-			attunement_required: false,
-			equipment_state:
-				"must be carried, consumed, or deployed as the activation describes",
-			recharge: "as listed",
-			restrictions: [],
-		},
-		mechanics: {
-			ability_modifiers: {
-				damage: [],
-				armor_class: [],
-				attack: [],
-				notes:
-					"Utility and consumable items only call for an ability when their explicit rule names one.",
-				save_dc: [],
-			},
-			action_economy: {
-				type: "passive",
-				consumes_item: false,
-				cost: "no action",
-				frequency: "continuous",
-				trigger: "Equipped, carried, worn, or used as described.",
-			},
-			active_rules: [],
-			audit: {
-				fingerprint: "0281d6f3",
-				payload_complete: true,
-				uniqueness_seed: "base-focus-arcane::Arcane Focus",
-				variant_note:
-					"Acts as an arcane focus. Once per long rest, regain 1 spell slot of 3rd level or lower.",
-			},
-			formulas: {
-				effect_formula: "1d12",
-				recharge: "continuous",
-				save_dc: null,
-			},
-			identity: {
-				rarity: "common",
-				archetype: "focus_caster",
-				canon_basis: "RA mundane baseline",
-				distinguishing_rule:
-					"Arcane Focus keys aetheric focus caster rules through signature 6a9644c0.",
-				role: "utility",
-				signature: "6a9644c0",
-				theme: "aetheric",
-			},
-			passive_rules: [
-				"Deals 1d12 physical or magical damage on hit.",
-				"Target must make a standard DC saving throw or suffer Blindness for 1 round.",
-			],
-			resolution: {
-				type: "equipment_utility",
-				active_options: [],
-				non_damage_resolution: "Deals 1d12 physical or magical damage on hit.",
-				passive_effects: [
-					"Deals 1d12 physical or magical damage on hit.",
-					"Target must make a standard DC saving throw or suffer Blindness for 1 round.",
-				],
-			},
-			rules_payload_version: "ra-item-v1",
-			source_integrity: {
-				allows_5e_baseline: true,
-				canon_guardrails: [
-					"Use RA ability names in formulas.",
-					"Preserve gate, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
-				],
-				ra_specific_mundane: true,
 			},
 			targeting: {
 				range: "self",
@@ -7543,11 +6907,7 @@ export const baseEquipment: Item[] = [
 		item_type: "misc",
 		sigil_slots_base: 0,
 		properties: {},
-		effects: {
-			primary: "Deals 2d8 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Stunning for 1 round.",
-		},
+		effects: {},
 		lore: {
 			current_owner: "",
 			curse: "",
@@ -7595,14 +6955,14 @@ export const baseEquipment: Item[] = [
 			},
 			active_rules: [],
 			audit: {
-				fingerprint: "97ee7e0a",
+				fingerprint: "f6aa3d87",
 				payload_complete: true,
 				uniqueness_seed: "base-focus-component-pouch::Component Pouch",
 				variant_note:
 					"A field accessory. Cataloged in the Bureau quartermaster registry.",
 			},
 			formulas: {
-				effect_formula: "2d8",
+				effect_formula: "explicit non-damage item effect",
 				recharge: "continuous",
 				save_dc: null,
 			},
@@ -7616,18 +6976,13 @@ export const baseEquipment: Item[] = [
 				signature: "978d0d84",
 				theme: "standard",
 			},
-			passive_rules: [
-				"Deals 2d8 physical or magical damage on hit.",
-				"Target must make a standard DC saving throw or suffer Stunning for 1 round.",
-			],
+			passive_rules: [],
 			resolution: {
 				type: "equipment_utility",
 				active_options: [],
-				non_damage_resolution: "Deals 2d8 physical or magical damage on hit.",
-				passive_effects: [
-					"Deals 2d8 physical or magical damage on hit.",
-					"Target must make a standard DC saving throw or suffer Stunning for 1 round.",
-				],
+				non_damage_resolution:
+					"Resolve the item through the listed utility effect.",
+				passive_effects: [],
 			},
 			rules_payload_version: "ra-item-v1",
 			source_integrity: {
@@ -7638,243 +6993,6 @@ export const baseEquipment: Item[] = [
 					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
-			},
-			targeting: {
-				range: "self",
-				area: null,
-				line_of_effect: "as item description permits",
-				target: "Self, touched object, or listed utility target",
-			},
-		},
-	},
-	{
-		id: "base-focus-primal",
-		name: "Primal Focus",
-		source_book: "Rift Ascendant Canon",
-		description:
-			"A totem, staff, or sprig of mistletoe used by Summoners to channel nature mana.",
-		rarity: "common",
-		type: "wondrous",
-		image: "/generated/compendium/items/item-0606.webp",
-		weight: 1,
-		value: { currency: "crystal", amount: 50 },
-		item_type: "misc",
-		sigil_slots_base: 0,
-		properties: {},
-		effects: {
-			primary: "Deals 1d6 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Blindness for 1 round.",
-		},
-		lore: {
-			current_owner: "",
-			curse: "",
-			history: "Its true history remains a protected Guild secret.",
-			origin: "Found sealed in a hidden cache inside an S-Rank Rift.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "Some items tell stories. This one ends them.",
-		discovery_lore:
-			"Reported on a salvage manifest filed two weeks after the clear that produced it.",
-		tags: ["equipment", "necrotic", "lightning", "healing", "shadow"],
-		theme_tags: ["mana-overflow", "experimental", "regent-era"],
-		activation: {
-			type: "passive",
-			consumes_item: false,
-			cost: "no action",
-			frequency: "continuous",
-			trigger: "Equipped, carried, worn, or used as described.",
-		},
-		limitations: {
-			cursed: false,
-			charges: null,
-			attunement_required: false,
-			equipment_state:
-				"must be carried, consumed, or deployed as the activation describes",
-			recharge: "as listed",
-			restrictions: [],
-		},
-		mechanics: {
-			ability_modifiers: {
-				damage: [],
-				armor_class: [],
-				attack: [],
-				notes:
-					"Utility and consumable items only call for an ability when their explicit rule names one.",
-				save_dc: [],
-			},
-			action_economy: {
-				type: "passive",
-				consumes_item: false,
-				cost: "no action",
-				frequency: "continuous",
-				trigger: "Equipped, carried, worn, or used as described.",
-			},
-			active_rules: [],
-			audit: {
-				fingerprint: "a811176d",
-				payload_complete: true,
-				uniqueness_seed: "base-focus-primal::Primal Focus",
-				variant_note: "Acts as an arcane focus. +1 to spell attack rolls.",
-			},
-			formulas: {
-				effect_formula: "1d6",
-				recharge: "continuous",
-				save_dc: null,
-			},
-			identity: {
-				rarity: "common",
-				archetype: "focus_caster",
-				canon_basis: "RA mundane baseline",
-				distinguishing_rule:
-					"Primal Focus keys standard focus caster rules through signature efcae6f4.",
-				role: "utility",
-				signature: "efcae6f4",
-				theme: "standard",
-			},
-			passive_rules: [
-				"Deals 1d6 physical or magical damage on hit.",
-				"Target must make a standard DC saving throw or suffer Blindness for 1 round.",
-			],
-			resolution: {
-				type: "equipment_utility",
-				active_options: [],
-				non_damage_resolution: "Deals 1d6 physical or magical damage on hit.",
-				passive_effects: [
-					"Deals 1d6 physical or magical damage on hit.",
-					"Target must make a standard DC saving throw or suffer Blindness for 1 round.",
-				],
-			},
-			rules_payload_version: "ra-item-v1",
-			source_integrity: {
-				allows_5e_baseline: true,
-				canon_guardrails: [
-					"Use RA ability names in formulas.",
-					"Preserve gate, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
-				],
-				ra_specific_mundane: true,
-			},
-			targeting: {
-				range: "self",
-				area: null,
-				line_of_effect: "as item description permits",
-				target: "Self, touched object, or listed utility target",
-			},
-		},
-	},
-	{
-		id: "base-focus-system",
-		name: "Order Focus",
-		source_book: "Rift Ascendant Canon",
-		description:
-			"A holy symbol or amulet that channels the Rift's healing protocols.",
-		rarity: "common",
-		type: "wondrous",
-		image: "/generated/compendium/items/item-0370.webp",
-		weight: 1,
-		value: { currency: "crystal", amount: 50 },
-		item_type: "misc",
-		sigil_slots_base: 0,
-		properties: {},
-		effects: {
-			primary: "Deals 1d10 + 2 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Lethargy for 1 round.",
-		},
-		lore: {
-			current_owner: "",
-			curse: "",
-			history: "Its true history remains a protected Guild secret.",
-			origin: "Recovered from a collapsed Guild Vault.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor:
-			"Cheap, ubiquitous, and sometimes the only thing between you and a black bag.",
-		discovery_lore:
-			"Identified during a mid-tier auction after the Bureau cleared its provenance.",
-		tags: ["equipment", "debuff", "sustained"],
-		theme_tags: ["regent-era", "classified", "shadow-domain"],
-		activation: {
-			type: "passive",
-			consumes_item: false,
-			cost: "no action",
-			frequency: "continuous",
-			trigger: "Equipped, carried, worn, or used as described.",
-		},
-		limitations: {
-			cursed: false,
-			charges: null,
-			attunement_required: false,
-			equipment_state:
-				"must be carried, consumed, or deployed as the activation describes",
-			recharge: "as listed",
-			restrictions: [],
-		},
-		mechanics: {
-			ability_modifiers: {
-				damage: [],
-				armor_class: [],
-				attack: [],
-				notes:
-					"Utility and consumable items only call for an ability when their explicit rule names one.",
-				save_dc: [],
-			},
-			action_economy: {
-				type: "passive",
-				consumes_item: false,
-				cost: "no action",
-				frequency: "continuous",
-				trigger: "Equipped, carried, worn, or used as described.",
-			},
-			active_rules: [],
-			audit: {
-				fingerprint: "9350ed7f",
-				payload_complete: true,
-				uniqueness_seed: "base-focus-system::Order Focus",
-				variant_note:
-					"Acts as an arcane focus. Once per long rest, regain 1 spell slot of 3rd level or lower.",
-			},
-			formulas: {
-				effect_formula: "1d10 + 2",
-				recharge: "continuous",
-				save_dc: null,
-			},
-			identity: {
-				rarity: "common",
-				archetype: "focus_caster",
-				canon_basis: "RA mundane baseline",
-				distinguishing_rule:
-					"Order Focus keys standard focus caster rules through signature 83fa8d7f.",
-				role: "utility",
-				signature: "83fa8d7f",
-				theme: "standard",
-			},
-			passive_rules: [
-				"Deals 1d10 + 2 physical or magical damage on hit.",
-				"Target must make a standard DC saving throw or suffer Lethargy for 1 round.",
-			],
-			resolution: {
-				type: "equipment_utility",
-				active_options: [],
-				non_damage_resolution:
-					"Deals 1d10 + 2 physical or magical damage on hit.",
-				passive_effects: [
-					"Deals 1d10 + 2 physical or magical damage on hit.",
-					"Target must make a standard DC saving throw or suffer Lethargy for 1 round.",
-				],
-			},
-			rules_payload_version: "ra-item-v1",
-			source_integrity: {
-				allows_5e_baseline: true,
-				canon_guardrails: [
-					"Use RA ability names in formulas.",
-					"Preserve gate, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
-				],
-				ra_specific_mundane: true,
 			},
 			targeting: {
 				range: "self",
@@ -7898,11 +7016,7 @@ export const baseEquipment: Item[] = [
 		item_type: "misc",
 		sigil_slots_base: 0,
 		properties: {},
-		effects: {
-			primary: "Deals 1d6 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Stunning for 1 round.",
-		},
+		effects: {},
 		lore: {
 			current_owner: "",
 			curse:
@@ -7951,13 +7065,13 @@ export const baseEquipment: Item[] = [
 			},
 			active_rules: [],
 			audit: {
-				fingerprint: "430baeca",
+				fingerprint: "0d288cef",
 				payload_complete: true,
 				uniqueness_seed: "base-focus-grimoire::Grimoire",
 				variant_note: "Acts as a written arcane focus.",
 			},
 			formulas: {
-				effect_formula: "1d6",
+				effect_formula: "explicit non-damage item effect",
 				recharge: "continuous",
 				save_dc: null,
 			},
@@ -7971,18 +7085,13 @@ export const baseEquipment: Item[] = [
 				signature: "7e4b3bab",
 				theme: "standard",
 			},
-			passive_rules: [
-				"Deals 1d6 physical or magical damage on hit.",
-				"Target must make a standard DC saving throw or suffer Stunning for 1 round.",
-			],
+			passive_rules: [],
 			resolution: {
 				type: "equipment_utility",
 				active_options: [],
-				non_damage_resolution: "Deals 1d6 physical or magical damage on hit.",
-				passive_effects: [
-					"Deals 1d6 physical or magical damage on hit.",
-					"Target must make a standard DC saving throw or suffer Stunning for 1 round.",
-				],
+				non_damage_resolution:
+					"Resolve the item through the listed utility effect.",
+				passive_effects: [],
 			},
 			rules_payload_version: "ra-item-v1",
 			source_integrity: {
@@ -8016,11 +7125,7 @@ export const baseEquipment: Item[] = [
 		item_type: "tool",
 		sigil_slots_base: 0,
 		properties: {},
-		effects: {
-			primary: "Deals 3d6 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Stunning for 1 round.",
-		},
+		effects: {},
 		lore: {
 			current_owner: "",
 			curse: "",
@@ -8068,13 +7173,13 @@ export const baseEquipment: Item[] = [
 			},
 			active_rules: [],
 			audit: {
-				fingerprint: "23d05e3e",
+				fingerprint: "f6aa3d87",
 				payload_complete: true,
 				uniqueness_seed: "base-tool-thieves::Thieves' Tools",
-				variant_note: "A miscellaneous piece of standard Ascendant kit.",
+				variant_note: "A miscellaneous piece of standard Hunter kit.",
 			},
 			formulas: {
-				effect_formula: "3d6",
+				effect_formula: "explicit non-damage item effect",
 				recharge: "continuous",
 				save_dc: null,
 			},
@@ -8088,18 +7193,13 @@ export const baseEquipment: Item[] = [
 				signature: "4aaaf8af",
 				theme: "standard",
 			},
-			passive_rules: [
-				"Deals 3d6 physical or magical damage on hit.",
-				"Target must make a standard DC saving throw or suffer Stunning for 1 round.",
-			],
+			passive_rules: [],
 			resolution: {
 				type: "equipment_utility",
 				active_options: [],
-				non_damage_resolution: "Deals 3d6 physical or magical damage on hit.",
-				passive_effects: [
-					"Deals 3d6 physical or magical damage on hit.",
-					"Target must make a standard DC saving throw or suffer Stunning for 1 round.",
-				],
+				non_damage_resolution:
+					"Resolve the item through the listed utility effect.",
+				passive_effects: [],
 			},
 			rules_payload_version: "ra-item-v1",
 			source_integrity: {
@@ -8133,11 +7233,7 @@ export const baseEquipment: Item[] = [
 		item_type: "tool",
 		sigil_slots_base: 0,
 		properties: {},
-		effects: {
-			primary: "Deals 4d10 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Stunning for 1 round.",
-		},
+		effects: {},
 		lore: {
 			current_owner: "",
 			curse: "",
@@ -8185,14 +7281,14 @@ export const baseEquipment: Item[] = [
 			},
 			active_rules: [],
 			audit: {
-				fingerprint: "74097d46",
+				fingerprint: "f6aa3d87",
 				payload_complete: true,
 				uniqueness_seed: "base-tool-tinker::Tinker's Tools",
 				variant_note:
 					"A field accessory. Cataloged in the Bureau quartermaster registry.",
 			},
 			formulas: {
-				effect_formula: "4d10",
+				effect_formula: "explicit non-damage item effect",
 				recharge: "continuous",
 				save_dc: null,
 			},
@@ -8206,135 +7302,13 @@ export const baseEquipment: Item[] = [
 				signature: "81726d82",
 				theme: "standard",
 			},
-			passive_rules: [
-				"Deals 4d10 physical or magical damage on hit.",
-				"Target must make a standard DC saving throw or suffer Stunning for 1 round.",
-			],
+			passive_rules: [],
 			resolution: {
 				type: "equipment_utility",
 				active_options: [],
-				non_damage_resolution: "Deals 4d10 physical or magical damage on hit.",
-				passive_effects: [
-					"Deals 4d10 physical or magical damage on hit.",
-					"Target must make a standard DC saving throw or suffer Stunning for 1 round.",
-				],
-			},
-			rules_payload_version: "ra-item-v1",
-			source_integrity: {
-				allows_5e_baseline: true,
-				canon_guardrails: [
-					"Use RA ability names in formulas.",
-					"Preserve gate, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
-				],
-				ra_specific_mundane: false,
-			},
-			targeting: {
-				range: "self",
-				area: null,
-				line_of_effect: "as item description permits",
-				target: "Self, touched object, or listed utility target",
-			},
-		},
-	},
-	{
-		id: "base-tool-instrument",
-		name: "Musical Instrument",
-		source_book: "Rift Ascendant Canon",
-		description: "A lute, drum, flute, or other instrument. Idol essential.",
-		rarity: "common",
-		type: "wondrous",
-		image: "/generated/compendium/items/item-0714.webp",
-		weight: 3,
-		value: { currency: "crystal", amount: 250 },
-		item_type: "tool",
-		sigil_slots_base: 0,
-		properties: {},
-		effects: {
-			primary: "Deals 3d6 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Lethargy for 1 round.",
-		},
-		lore: {
-			current_owner: "",
-			curse: "",
-			history: "Its true history remains a protected Guild secret.",
-			origin: "An ancient artifact of the First Awakenings.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "Some items tell stories. This one ends them.",
-		discovery_lore:
-			"Emerged from a Gate Boss's dissolution cloud, hovering where the creature's heart had been.",
-		tags: ["equipment", "sustained", "single-target"],
-		theme_tags: ["system-glitch", "black-market"],
-		activation: {
-			type: "passive",
-			consumes_item: false,
-			cost: "no action",
-			frequency: "continuous",
-			trigger: "Equipped, carried, worn, or used as described.",
-		},
-		limitations: {
-			cursed: false,
-			charges: null,
-			attunement_required: false,
-			equipment_state:
-				"must be carried, consumed, or deployed as the activation describes",
-			recharge: "as listed",
-			restrictions: [],
-		},
-		mechanics: {
-			ability_modifiers: {
-				damage: [],
-				armor_class: [],
-				attack: [],
-				notes:
-					"Utility and consumable items only call for an ability when their explicit rule names one.",
-				save_dc: [],
-			},
-			action_economy: {
-				type: "passive",
-				consumes_item: false,
-				cost: "no action",
-				frequency: "continuous",
-				trigger: "Equipped, carried, worn, or used as described.",
-			},
-			active_rules: [],
-			audit: {
-				fingerprint: "3908d02e",
-				payload_complete: true,
-				uniqueness_seed: "base-tool-instrument::Musical Instrument",
-				variant_note:
-					"A field accessory. Cataloged in the Bureau quartermaster registry.",
-			},
-			formulas: {
-				effect_formula: "3d6",
-				recharge: "continuous",
-				save_dc: null,
-			},
-			identity: {
-				rarity: "common",
-				archetype: "gear_misc",
-				canon_basis: "RA mundane baseline",
-				distinguishing_rule:
-					"Musical Instrument keys standard gear misc rules through signature 20cbb87f.",
-				role: "utility",
-				signature: "20cbb87f",
-				theme: "standard",
-			},
-			passive_rules: [
-				"Deals 3d6 physical or magical damage on hit.",
-				"Target must make a standard DC saving throw or suffer Lethargy for 1 round.",
-			],
-			resolution: {
-				type: "equipment_utility",
-				active_options: [],
-				non_damage_resolution: "Deals 3d6 physical or magical damage on hit.",
-				passive_effects: [
-					"Deals 3d6 physical or magical damage on hit.",
-					"Target must make a standard DC saving throw or suffer Lethargy for 1 round.",
-				],
+				non_damage_resolution:
+					"Resolve the item through the listed utility effect.",
+				passive_effects: [],
 			},
 			rules_payload_version: "ra-item-v1",
 			source_integrity: {
@@ -8370,9 +7344,6 @@ export const baseEquipment: Item[] = [
 		properties: {},
 		effects: {
 			passive: ["+2 to Investigation", "+1 to History"],
-			primary: "Deals 1d10 + 2 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Blindness for 1 round.",
 		},
 		lore: {
 			current_owner: "",
@@ -8421,14 +7392,14 @@ export const baseEquipment: Item[] = [
 			},
 			active_rules: [],
 			audit: {
-				fingerprint: "ea796583",
+				fingerprint: "9ba37805",
 				payload_complete: true,
 				uniqueness_seed:
 					"base-tool-streaming-laptop::High-End Streaming Laptop",
 				variant_note: "A piece of Bureau-quartermastered field gear.",
 			},
 			formulas: {
-				effect_formula: "1d10 + 2",
+				effect_formula: "explicit non-damage item effect",
 				recharge: "continuous",
 				save_dc: null,
 			},
@@ -8442,22 +7413,12 @@ export const baseEquipment: Item[] = [
 				signature: "18e45ef6",
 				theme: "standard",
 			},
-			passive_rules: [
-				"+2 to Investigation",
-				"+1 to History",
-				"Deals 1d10 + 2 physical or magical damage on hit.",
-				"Target must make a standard DC saving throw or suffer Blindness for 1 round.",
-			],
+			passive_rules: ["+2 to Investigation", "+1 to History"],
 			resolution: {
 				type: "equipment_utility",
 				active_options: [],
 				non_damage_resolution: "+2 to Investigation",
-				passive_effects: [
-					"+2 to Investigation",
-					"+1 to History",
-					"Deals 1d10 + 2 physical or magical damage on hit.",
-					"Target must make a standard DC saving throw or suffer Blindness for 1 round.",
-				],
+				passive_effects: ["+2 to Investigation", "+1 to History"],
 			},
 			rules_payload_version: "ra-item-v1",
 			source_integrity: {
@@ -8493,9 +7454,6 @@ export const baseEquipment: Item[] = [
 		properties: {},
 		effects: {
 			passive: ["+2 to Performance", "+1 to Persuasion"],
-			primary: "Deals 2d6 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Paralysis for 1 round.",
 		},
 		lore: {
 			current_owner: "",
@@ -8544,14 +7502,14 @@ export const baseEquipment: Item[] = [
 			},
 			active_rules: [],
 			audit: {
-				fingerprint: "3b52cb48",
+				fingerprint: "f0a36635",
 				payload_complete: true,
 				uniqueness_seed: "base-tool-ring-light::Ring Light",
 				variant_note:
 					"While attuned, you have advantage on Stealth checks made in dim light.",
 			},
 			formulas: {
-				effect_formula: "2d6",
+				effect_formula: "explicit non-damage item effect",
 				recharge: "continuous",
 				save_dc: null,
 			},
@@ -8565,22 +7523,12 @@ export const baseEquipment: Item[] = [
 				signature: "120a9224",
 				theme: "standard",
 			},
-			passive_rules: [
-				"+2 to Performance",
-				"+1 to Persuasion",
-				"Deals 2d6 physical or magical damage on hit.",
-				"Target must make a standard DC saving throw or suffer Paralysis for 1 round.",
-			],
+			passive_rules: ["+2 to Performance", "+1 to Persuasion"],
 			resolution: {
 				type: "equipment_utility",
 				active_options: [],
 				non_damage_resolution: "+2 to Performance",
-				passive_effects: [
-					"+2 to Performance",
-					"+1 to Persuasion",
-					"Deals 2d6 physical or magical damage on hit.",
-					"Target must make a standard DC saving throw or suffer Paralysis for 1 round.",
-				],
+				passive_effects: ["+2 to Performance", "+1 to Persuasion"],
 			},
 			rules_payload_version: "ra-item-v1",
 			source_integrity: {
@@ -8616,9 +7564,6 @@ export const baseEquipment: Item[] = [
 		properties: {},
 		effects: {
 			passive: ["+2 to Investigation"],
-			primary: "Deals 3d12 + 6 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Blindness for 1 round.",
 		},
 		lore: {
 			current_owner: "",
@@ -8667,14 +7612,14 @@ export const baseEquipment: Item[] = [
 			},
 			active_rules: [],
 			audit: {
-				fingerprint: "3a322192",
+				fingerprint: "31e7e62e",
 				payload_complete: true,
 				uniqueness_seed: "base-tool-portable-camera::Portable Camera",
 				variant_note:
 					"Mana-trace scanner. Can detect spellcasting within 30 ft. as an action.",
 			},
 			formulas: {
-				effect_formula: "3d12 + 6",
+				effect_formula: "explicit non-damage item effect",
 				recharge: "continuous",
 				save_dc: null,
 			},
@@ -8688,20 +7633,12 @@ export const baseEquipment: Item[] = [
 				signature: "c2c0fe5b",
 				theme: "standard",
 			},
-			passive_rules: [
-				"+2 to Investigation",
-				"Deals 3d12 + 6 physical or magical damage on hit.",
-				"Target must make a standard DC saving throw or suffer Blindness for 1 round.",
-			],
+			passive_rules: ["+2 to Investigation"],
 			resolution: {
 				type: "equipment_utility",
 				active_options: [],
 				non_damage_resolution: "+2 to Investigation",
-				passive_effects: [
-					"+2 to Investigation",
-					"Deals 3d12 + 6 physical or magical damage on hit.",
-					"Target must make a standard DC saving throw or suffer Blindness for 1 round.",
-				],
+				passive_effects: ["+2 to Investigation"],
 			},
 			rules_payload_version: "ra-item-v1",
 			source_integrity: {
@@ -8737,9 +7674,6 @@ export const baseEquipment: Item[] = [
 		properties: {},
 		effects: {
 			passive: ["+2 to Investigation"],
-			primary: "Deals 1d12 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Blindness for 1 round.",
 		},
 		lore: {
 			current_owner: "",
@@ -8789,14 +7723,14 @@ export const baseEquipment: Item[] = [
 			},
 			active_rules: [],
 			audit: {
-				fingerprint: "7794bed8",
+				fingerprint: "9dfebdc7",
 				payload_complete: true,
 				uniqueness_seed: "base-tool-wifi-hotspot::Portable Wi-Fi Hotspot",
 				variant_note:
 					"A field accessory. Cataloged in the Bureau quartermaster registry.",
 			},
 			formulas: {
-				effect_formula: "1d12",
+				effect_formula: "explicit non-damage item effect",
 				recharge: "continuous",
 				save_dc: null,
 			},
@@ -8810,20 +7744,12 @@ export const baseEquipment: Item[] = [
 				signature: "3fc15076",
 				theme: "standard",
 			},
-			passive_rules: [
-				"+2 to Investigation",
-				"Deals 1d12 physical or magical damage on hit.",
-				"Target must make a standard DC saving throw or suffer Blindness for 1 round.",
-			],
+			passive_rules: ["+2 to Investigation"],
 			resolution: {
 				type: "equipment_utility",
 				active_options: [],
 				non_damage_resolution: "+2 to Investigation",
-				passive_effects: [
-					"+2 to Investigation",
-					"Deals 1d12 physical or magical damage on hit.",
-					"Target must make a standard DC saving throw or suffer Blindness for 1 round.",
-				],
+				passive_effects: ["+2 to Investigation"],
 			},
 			rules_payload_version: "ra-item-v1",
 			source_integrity: {
@@ -8859,9 +7785,6 @@ export const baseEquipment: Item[] = [
 		properties: {},
 		effects: {
 			passive: ["+2 to Deception"],
-			primary: "Deals 2d8 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Lethargy for 1 round.",
 		},
 		lore: {
 			current_owner: "",
@@ -8910,14 +7833,14 @@ export const baseEquipment: Item[] = [
 			},
 			active_rules: [],
 			audit: {
-				fingerprint: "1784588f",
+				fingerprint: "1e017680",
 				payload_complete: true,
 				uniqueness_seed: "base-tool-burner-phone::Burner Phone",
 				variant_note:
 					"A field accessory. Cataloged in the Bureau quartermaster registry.",
 			},
 			formulas: {
-				effect_formula: "2d8",
+				effect_formula: "explicit non-damage item effect",
 				recharge: "continuous",
 				save_dc: null,
 			},
@@ -8931,20 +7854,12 @@ export const baseEquipment: Item[] = [
 				signature: "c2e47186",
 				theme: "standard",
 			},
-			passive_rules: [
-				"+2 to Deception",
-				"Deals 2d8 physical or magical damage on hit.",
-				"Target must make a standard DC saving throw or suffer Lethargy for 1 round.",
-			],
+			passive_rules: ["+2 to Deception"],
 			resolution: {
 				type: "equipment_utility",
 				active_options: [],
 				non_damage_resolution: "+2 to Deception",
-				passive_effects: [
-					"+2 to Deception",
-					"Deals 2d8 physical or magical damage on hit.",
-					"Target must make a standard DC saving throw or suffer Lethargy for 1 round.",
-				],
+				passive_effects: ["+2 to Deception"],
 			},
 			rules_payload_version: "ra-item-v1",
 			source_integrity: {
@@ -8980,9 +7895,6 @@ export const baseEquipment: Item[] = [
 		properties: {},
 		effects: {
 			passive: ["+2 to Investigation", "+2 to Arcana"],
-			primary: "Deals 3d12 + 6 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Fear for 1 round.",
 		},
 		lore: {
 			current_owner: "",
@@ -9031,13 +7943,13 @@ export const baseEquipment: Item[] = [
 			},
 			active_rules: [],
 			audit: {
-				fingerprint: "7cd87a7d",
+				fingerprint: "49df4607",
 				payload_complete: true,
 				uniqueness_seed: "base-tool-custom-laptop::Custom-Built Laptop",
-				variant_note: "A miscellaneous piece of standard Ascendant kit.",
+				variant_note: "A miscellaneous piece of standard Hunter kit.",
 			},
 			formulas: {
-				effect_formula: "3d12 + 6",
+				effect_formula: "explicit non-damage item effect",
 				recharge: "continuous",
 				save_dc: null,
 			},
@@ -9051,22 +7963,12 @@ export const baseEquipment: Item[] = [
 				signature: "7f85d299",
 				theme: "standard",
 			},
-			passive_rules: [
-				"+2 to Investigation",
-				"+2 to Arcana",
-				"Deals 3d12 + 6 physical or magical damage on hit.",
-				"Target must make a standard DC saving throw or suffer Fear for 1 round.",
-			],
+			passive_rules: ["+2 to Investigation", "+2 to Arcana"],
 			resolution: {
 				type: "equipment_utility",
 				active_options: [],
 				non_damage_resolution: "+2 to Investigation",
-				passive_effects: [
-					"+2 to Investigation",
-					"+2 to Arcana",
-					"Deals 3d12 + 6 physical or magical damage on hit.",
-					"Target must make a standard DC saving throw or suffer Fear for 1 round.",
-				],
+				passive_effects: ["+2 to Investigation", "+2 to Arcana"],
 			},
 			rules_payload_version: "ra-item-v1",
 			source_integrity: {
@@ -9102,9 +8004,6 @@ export const baseEquipment: Item[] = [
 		properties: {},
 		effects: {
 			passive: ["+2 to Investigation", "+1 to Sleight of Hand"],
-			primary: "Deals 2d8 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Fear for 1 round.",
 		},
 		lore: {
 			current_owner: "",
@@ -9153,14 +8052,14 @@ export const baseEquipment: Item[] = [
 			},
 			active_rules: [],
 			audit: {
-				fingerprint: "26e55a90",
+				fingerprint: "29a976e1",
 				payload_complete: true,
 				uniqueness_seed: "base-tool-hacking-tools::Hacking Tools",
 				variant_note:
 					"A field accessory. Cataloged in the Bureau quartermaster registry.",
 			},
 			formulas: {
-				effect_formula: "2d8",
+				effect_formula: "explicit non-damage item effect",
 				recharge: "continuous",
 				save_dc: null,
 			},
@@ -9174,22 +8073,12 @@ export const baseEquipment: Item[] = [
 				signature: "f09226f0",
 				theme: "standard",
 			},
-			passive_rules: [
-				"+2 to Investigation",
-				"+1 to Sleight of Hand",
-				"Deals 2d8 physical or magical damage on hit.",
-				"Target must make a standard DC saving throw or suffer Fear for 1 round.",
-			],
+			passive_rules: ["+2 to Investigation", "+1 to Sleight of Hand"],
 			resolution: {
 				type: "equipment_utility",
 				active_options: [],
 				non_damage_resolution: "+2 to Investigation",
-				passive_effects: [
-					"+2 to Investigation",
-					"+1 to Sleight of Hand",
-					"Deals 2d8 physical or magical damage on hit.",
-					"Target must make a standard DC saving throw or suffer Fear for 1 round.",
-				],
+				passive_effects: ["+2 to Investigation", "+1 to Sleight of Hand"],
 			},
 			rules_payload_version: "ra-item-v1",
 			source_integrity: {
@@ -9225,9 +8114,6 @@ export const baseEquipment: Item[] = [
 		properties: {},
 		effects: {
 			passive: ["+1 to Investigation"],
-			primary: "Deals 4d10 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Fear for 1 round.",
 		},
 		lore: {
 			current_owner: "",
@@ -9276,14 +8162,14 @@ export const baseEquipment: Item[] = [
 			},
 			active_rules: [],
 			audit: {
-				fingerprint: "c8b477ee",
+				fingerprint: "44094ca2",
 				payload_complete: true,
 				uniqueness_seed: "base-tool-usb-drives::USB Drive Collection",
 				variant_note:
 					"A field accessory. Cataloged in the Bureau quartermaster registry.",
 			},
 			formulas: {
-				effect_formula: "4d10",
+				effect_formula: "explicit non-damage item effect",
 				recharge: "continuous",
 				save_dc: null,
 			},
@@ -9297,20 +8183,12 @@ export const baseEquipment: Item[] = [
 				signature: "22a13ab3",
 				theme: "standard",
 			},
-			passive_rules: [
-				"+1 to Investigation",
-				"Deals 4d10 physical or magical damage on hit.",
-				"Target must make a standard DC saving throw or suffer Fear for 1 round.",
-			],
+			passive_rules: ["+1 to Investigation"],
 			resolution: {
 				type: "equipment_utility",
 				active_options: [],
 				non_damage_resolution: "+1 to Investigation",
-				passive_effects: [
-					"+1 to Investigation",
-					"Deals 4d10 physical or magical damage on hit.",
-					"Target must make a standard DC saving throw or suffer Fear for 1 round.",
-				],
+				passive_effects: ["+1 to Investigation"],
 			},
 			rules_payload_version: "ra-item-v1",
 			source_integrity: {
@@ -9345,9 +8223,6 @@ export const baseEquipment: Item[] = [
 		properties: {},
 		effects: {
 			passive: ["+1 to Performance", "+1 to Deception"],
-			primary: "Deals 3d6 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Stunning for 1 round.",
 		},
 		lore: {
 			current_owner: "",
@@ -9396,7 +8271,7 @@ export const baseEquipment: Item[] = [
 			},
 			active_rules: [],
 			audit: {
-				fingerprint: "f9239f77",
+				fingerprint: "640719f7",
 				payload_complete: true,
 				uniqueness_seed:
 					"base-tool-smartphone-camera::Smartphone (High-End Camera)",
@@ -9404,7 +8279,7 @@ export const baseEquipment: Item[] = [
 					"+2 to Insight checks when reviewing recorded audio or video.",
 			},
 			formulas: {
-				effect_formula: "3d6",
+				effect_formula: "explicit non-damage item effect",
 				recharge: "continuous",
 				save_dc: null,
 			},
@@ -9418,21 +8293,217 @@ export const baseEquipment: Item[] = [
 				signature: "10e0f1ba",
 				theme: "standard",
 			},
-			passive_rules: [
-				"+1 to Performance",
-				"+1 to Deception",
-				"Deals 3d6 physical or magical damage on hit.",
-				"Target must make a standard DC saving throw or suffer Stunning for 1 round.",
-			],
+			passive_rules: ["+1 to Performance", "+1 to Deception"],
 			resolution: {
 				type: "equipment_utility",
 				active_options: [],
 				non_damage_resolution: "+1 to Performance",
+				passive_effects: ["+1 to Performance", "+1 to Deception"],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: true,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
+				],
+				ra_specific_mundane: false,
+			},
+			targeting: {
+				range: "self",
+				area: null,
+				line_of_effect: "as item description permits",
+				target: "Self, touched object, or listed utility target",
+			},
+		},
+	},
+	{
+		id: "base-instrument-electric-guitar",
+		name: "Electric Guitar",
+		source_book: "Rift Ascendant Canon",
+		description:
+			"A mana-wired electric guitar; an Idol shapes its amplified resonance into frequency abilities on stage or mid-clear.",
+		rarity: "common",
+		type: "wondrous",
+		image: "/generated/compendium/items/item-0344.webp",
+		weight: 6,
+		value: { currency: "crystal", amount: 350 },
+		item_type: "tool",
+		sigil_slots_base: 0,
+		properties: {},
+		effects: {
+			passive: [
+				"Serves as an Idol performance rig. While proficient with it, you use it for Performance checks and as the focus for Idol frequency abilities.",
+			],
+		},
+		activation: {
+			type: "passive",
+			consumes_item: false,
+			cost: "no action",
+			frequency: "continuous",
+			trigger: "Equipped, carried, worn, or used as described.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state:
+				"must be carried, consumed, or deployed as the activation describes",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: [],
+				attack: [],
+				notes:
+					"Utility and consumable items only call for an ability when their explicit rule names one.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "passive",
+				consumes_item: false,
+				cost: "no action",
+				frequency: "continuous",
+				trigger: "Equipped, carried, worn, or used as described.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "0fad6e27",
+				payload_complete: true,
+				uniqueness_seed: "base-instrument-electric-guitar::Electric Guitar",
+				variant_note: "A miscellaneous piece of standard Hunter kit.",
+			},
+			formulas: {
+				effect_formula: "explicit non-damage item effect",
+				recharge: "continuous",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "common",
+				archetype: "gear_misc",
+				canon_basis: "RA mundane baseline",
+				distinguishing_rule:
+					"Electric Guitar keys standard gear misc rules through signature bc4ec5a3.",
+				role: "utility",
+				signature: "bc4ec5a3",
+				theme: "standard",
+			},
+			passive_rules: [
+				"Serves as an Idol performance rig. While proficient with it, you use it for Performance checks and as the focus for Idol frequency abilities.",
+			],
+			resolution: {
+				type: "equipment_utility",
+				active_options: [],
+				non_damage_resolution:
+					"Serves as an Idol performance rig. While proficient with it, you use it for Performance checks and as the focus for Idol frequency abilities.",
 				passive_effects: [
-					"+1 to Performance",
-					"+1 to Deception",
-					"Deals 3d6 physical or magical damage on hit.",
-					"Target must make a standard DC saving throw or suffer Stunning for 1 round.",
+					"Serves as an Idol performance rig. While proficient with it, you use it for Performance checks and as the focus for Idol frequency abilities.",
+				],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: true,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
+				],
+				ra_specific_mundane: true,
+			},
+			targeting: {
+				range: "self",
+				area: null,
+				line_of_effect: "as item description permits",
+				target: "Self, touched object, or listed utility target",
+			},
+		},
+	},
+	{
+		id: "base-instrument-synthesizer",
+		name: "Synthesizer",
+		source_book: "Rift Ascendant Canon",
+		description:
+			"A programmable synth whose layered waveforms let an Idol tune crowd and combat frequencies alike.",
+		rarity: "common",
+		type: "wondrous",
+		image: "/generated/compendium/items/item-0538.webp",
+		weight: 8,
+		value: { currency: "crystal", amount: 400 },
+		item_type: "tool",
+		sigil_slots_base: 0,
+		properties: {},
+		effects: {
+			passive: [
+				"Serves as an Idol performance rig. While proficient with it, you use it for Performance checks and as the focus for Idol frequency abilities.",
+			],
+		},
+		activation: {
+			type: "passive",
+			consumes_item: false,
+			cost: "no action",
+			frequency: "continuous",
+			trigger: "Equipped, carried, worn, or used as described.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state:
+				"must be carried, consumed, or deployed as the activation describes",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: [],
+				attack: [],
+				notes:
+					"Utility and consumable items only call for an ability when their explicit rule names one.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "passive",
+				consumes_item: false,
+				cost: "no action",
+				frequency: "continuous",
+				trigger: "Equipped, carried, worn, or used as described.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "0fad6e27",
+				payload_complete: true,
+				uniqueness_seed: "base-instrument-synthesizer::Synthesizer",
+				variant_note: "A piece of Bureau-quartermastered field gear.",
+			},
+			formulas: {
+				effect_formula: "explicit non-damage item effect",
+				recharge: "continuous",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "common",
+				archetype: "gear_misc",
+				canon_basis: "RA mundane baseline",
+				distinguishing_rule:
+					"Synthesizer keys standard gear misc rules through signature 0c03fcba.",
+				role: "utility",
+				signature: "0c03fcba",
+				theme: "standard",
+			},
+			passive_rules: [
+				"Serves as an Idol performance rig. While proficient with it, you use it for Performance checks and as the focus for Idol frequency abilities.",
+			],
+			resolution: {
+				type: "equipment_utility",
+				active_options: [],
+				non_damage_resolution:
+					"Serves as an Idol performance rig. While proficient with it, you use it for Performance checks and as the focus for Idol frequency abilities.",
+				passive_effects: [
+					"Serves as an Idol performance rig. While proficient with it, you use it for Performance checks and as the focus for Idol frequency abilities.",
 				],
 			},
 			rules_payload_version: "ra-item-v1",
@@ -9444,6 +8515,1763 @@ export const baseEquipment: Item[] = [
 					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
+			},
+			targeting: {
+				range: "self",
+				area: null,
+				line_of_effect: "as item description permits",
+				target: "Self, touched object, or listed utility target",
+			},
+		},
+	},
+	{
+		id: "base-instrument-dj-controller",
+		name: "DJ Controller",
+		source_book: "Rift Ascendant Canon",
+		description:
+			"A dual-deck controller for beat-matching and drops, favored by Idols who fight to a rhythm they set themselves.",
+		rarity: "common",
+		type: "wondrous",
+		image: "/generated/compendium/items/item-0587.webp",
+		weight: 5,
+		value: { currency: "crystal", amount: 300 },
+		item_type: "tool",
+		sigil_slots_base: 0,
+		properties: {},
+		effects: {
+			passive: [
+				"Serves as an Idol performance rig. While proficient with it, you use it for Performance checks and as the focus for Idol frequency abilities.",
+			],
+		},
+		activation: {
+			type: "passive",
+			consumes_item: false,
+			cost: "no action",
+			frequency: "continuous",
+			trigger: "Equipped, carried, worn, or used as described.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state:
+				"must be carried, consumed, or deployed as the activation describes",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: [],
+				attack: [],
+				notes:
+					"Utility and consumable items only call for an ability when their explicit rule names one.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "passive",
+				consumes_item: false,
+				cost: "no action",
+				frequency: "continuous",
+				trigger: "Equipped, carried, worn, or used as described.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "0fad6e27",
+				payload_complete: true,
+				uniqueness_seed: "base-instrument-dj-controller::DJ Controller",
+				variant_note: "A miscellaneous piece of standard Hunter kit.",
+			},
+			formulas: {
+				effect_formula: "explicit non-damage item effect",
+				recharge: "continuous",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "common",
+				archetype: "gear_misc",
+				canon_basis: "RA mundane baseline",
+				distinguishing_rule:
+					"DJ Controller keys standard gear misc rules through signature bd92b33d.",
+				role: "utility",
+				signature: "bd92b33d",
+				theme: "standard",
+			},
+			passive_rules: [
+				"Serves as an Idol performance rig. While proficient with it, you use it for Performance checks and as the focus for Idol frequency abilities.",
+			],
+			resolution: {
+				type: "equipment_utility",
+				active_options: [],
+				non_damage_resolution:
+					"Serves as an Idol performance rig. While proficient with it, you use it for Performance checks and as the focus for Idol frequency abilities.",
+				passive_effects: [
+					"Serves as an Idol performance rig. While proficient with it, you use it for Performance checks and as the focus for Idol frequency abilities.",
+				],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: true,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
+				],
+				ra_specific_mundane: false,
+			},
+			targeting: {
+				range: "self",
+				area: null,
+				line_of_effect: "as item description permits",
+				target: "Self, touched object, or listed utility target",
+			},
+		},
+	},
+	{
+		id: "base-instrument-stage-mic",
+		name: "Stage Microphone",
+		source_book: "Rift Ascendant Canon",
+		description:
+			"A wireless stage mic tuned to carry an Idol's voice — and their frequency work — over any crowd or gate-roar.",
+		rarity: "common",
+		type: "wondrous",
+		image: "/generated/compendium/items/item-0720.webp",
+		weight: 1,
+		value: { currency: "crystal", amount: 120 },
+		item_type: "tool",
+		sigil_slots_base: 0,
+		properties: {},
+		effects: {
+			passive: [
+				"Serves as an Idol performance rig. While proficient with it, you use it for Performance checks and as the focus for Idol frequency abilities.",
+			],
+		},
+		activation: {
+			type: "passive",
+			consumes_item: false,
+			cost: "no action",
+			frequency: "continuous",
+			trigger: "Equipped, carried, worn, or used as described.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state:
+				"must be carried, consumed, or deployed as the activation describes",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: [],
+				attack: [],
+				notes:
+					"Utility and consumable items only call for an ability when their explicit rule names one.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "passive",
+				consumes_item: false,
+				cost: "no action",
+				frequency: "continuous",
+				trigger: "Equipped, carried, worn, or used as described.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "0fad6e27",
+				payload_complete: true,
+				uniqueness_seed: "base-instrument-stage-mic::Stage Microphone",
+				variant_note: "A piece of Bureau-quartermastered field gear.",
+			},
+			formulas: {
+				effect_formula: "explicit non-damage item effect",
+				recharge: "continuous",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "common",
+				archetype: "gear_misc",
+				canon_basis: "RA mundane baseline",
+				distinguishing_rule:
+					"Stage Microphone keys standard gear misc rules through signature 662b80ee.",
+				role: "utility",
+				signature: "662b80ee",
+				theme: "standard",
+			},
+			passive_rules: [
+				"Serves as an Idol performance rig. While proficient with it, you use it for Performance checks and as the focus for Idol frequency abilities.",
+			],
+			resolution: {
+				type: "equipment_utility",
+				active_options: [],
+				non_damage_resolution:
+					"Serves as an Idol performance rig. While proficient with it, you use it for Performance checks and as the focus for Idol frequency abilities.",
+				passive_effects: [
+					"Serves as an Idol performance rig. While proficient with it, you use it for Performance checks and as the focus for Idol frequency abilities.",
+				],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: true,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
+				],
+				ra_specific_mundane: true,
+			},
+			targeting: {
+				range: "self",
+				area: null,
+				line_of_effect: "as item description permits",
+				target: "Self, touched object, or listed utility target",
+			},
+		},
+	},
+	{
+		id: "base-instrument-drum-machine",
+		name: "Drum Machine",
+		source_book: "Rift Ascendant Canon",
+		description:
+			"A pad-based beat machine; each programmed hit lands like a metronome for an Idol's timing-based abilities.",
+		rarity: "common",
+		type: "wondrous",
+		image: "/generated/compendium/items/item-0450.webp",
+		weight: 3,
+		value: { currency: "crystal", amount: 200 },
+		item_type: "tool",
+		sigil_slots_base: 0,
+		properties: {},
+		effects: {
+			passive: [
+				"Serves as an Idol performance rig. While proficient with it, you use it for Performance checks and as the focus for Idol frequency abilities.",
+			],
+		},
+		activation: {
+			type: "passive",
+			consumes_item: false,
+			cost: "no action",
+			frequency: "continuous",
+			trigger: "Equipped, carried, worn, or used as described.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state:
+				"must be carried, consumed, or deployed as the activation describes",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: [],
+				attack: [],
+				notes:
+					"Utility and consumable items only call for an ability when their explicit rule names one.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "passive",
+				consumes_item: false,
+				cost: "no action",
+				frequency: "continuous",
+				trigger: "Equipped, carried, worn, or used as described.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "0fad6e27",
+				payload_complete: true,
+				uniqueness_seed: "base-instrument-drum-machine::Drum Machine",
+				variant_note: "A miscellaneous piece of standard Hunter kit.",
+			},
+			formulas: {
+				effect_formula: "explicit non-damage item effect",
+				recharge: "continuous",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "common",
+				archetype: "gear_misc",
+				canon_basis: "RA mundane baseline",
+				distinguishing_rule:
+					"Drum Machine keys standard gear misc rules through signature 47a5804d.",
+				role: "utility",
+				signature: "47a5804d",
+				theme: "standard",
+			},
+			passive_rules: [
+				"Serves as an Idol performance rig. While proficient with it, you use it for Performance checks and as the focus for Idol frequency abilities.",
+			],
+			resolution: {
+				type: "equipment_utility",
+				active_options: [],
+				non_damage_resolution:
+					"Serves as an Idol performance rig. While proficient with it, you use it for Performance checks and as the focus for Idol frequency abilities.",
+				passive_effects: [
+					"Serves as an Idol performance rig. While proficient with it, you use it for Performance checks and as the focus for Idol frequency abilities.",
+				],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: true,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
+				],
+				ra_specific_mundane: false,
+			},
+			targeting: {
+				range: "self",
+				area: null,
+				line_of_effect: "as item description permits",
+				target: "Self, touched object, or listed utility target",
+			},
+		},
+	},
+	{
+		id: "base-instrument-loop-pedal",
+		name: "Loop Pedal",
+		source_book: "Rift Ascendant Canon",
+		description:
+			"A foot-triggered loop station that layers an Idol's phrases into a self-sustaining wall of sound.",
+		rarity: "common",
+		type: "wondrous",
+		image: "/generated/compendium/items/item-0019.webp",
+		weight: 2,
+		value: { currency: "crystal", amount: 150 },
+		item_type: "tool",
+		sigil_slots_base: 0,
+		properties: {},
+		effects: {
+			passive: [
+				"Serves as an Idol performance rig. While proficient with it, you use it for Performance checks and as the focus for Idol frequency abilities.",
+			],
+		},
+		activation: {
+			type: "passive",
+			consumes_item: false,
+			cost: "no action",
+			frequency: "continuous",
+			trigger: "Equipped, carried, worn, or used as described.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state:
+				"must be carried, consumed, or deployed as the activation describes",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: [],
+				attack: [],
+				notes:
+					"Utility and consumable items only call for an ability when their explicit rule names one.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "passive",
+				consumes_item: false,
+				cost: "no action",
+				frequency: "continuous",
+				trigger: "Equipped, carried, worn, or used as described.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "b4b8ed01",
+				payload_complete: true,
+				uniqueness_seed: "base-instrument-loop-pedal::Loop Pedal",
+				variant_note: "+1 to a chosen saving throw while attuned.",
+			},
+			formulas: {
+				effect_formula: "explicit non-damage item effect",
+				recharge: "continuous",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "common",
+				archetype: "gear_ring",
+				canon_basis: "RA mundane baseline",
+				distinguishing_rule:
+					"Loop Pedal keys standard gear ring rules through signature c7225a2b.",
+				role: "utility",
+				signature: "c7225a2b",
+				theme: "standard",
+			},
+			passive_rules: [
+				"Serves as an Idol performance rig. While proficient with it, you use it for Performance checks and as the focus for Idol frequency abilities.",
+			],
+			resolution: {
+				type: "equipment_utility",
+				active_options: [],
+				non_damage_resolution:
+					"Serves as an Idol performance rig. While proficient with it, you use it for Performance checks and as the focus for Idol frequency abilities.",
+				passive_effects: [
+					"Serves as an Idol performance rig. While proficient with it, you use it for Performance checks and as the focus for Idol frequency abilities.",
+				],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: true,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
+				],
+				ra_specific_mundane: false,
+			},
+			targeting: {
+				range: "self",
+				area: null,
+				line_of_effect: "as item description permits",
+				target: "Self, touched object, or listed utility target",
+			},
+		},
+	},
+	{
+		id: "base-instrument-bass-guitar",
+		name: "Bass Guitar",
+		source_book: "Rift Ascendant Canon",
+		description:
+			"A low-end mana-wired bass whose sub-frequencies an Idol uses to rattle nerves and steady allies.",
+		rarity: "common",
+		type: "wondrous",
+		image: "/generated/compendium/items/item-0828.webp",
+		weight: 8,
+		value: { currency: "crystal", amount: 300 },
+		item_type: "tool",
+		sigil_slots_base: 0,
+		properties: {},
+		effects: {
+			passive: [
+				"Serves as an Idol performance rig. While proficient with it, you use it for Performance checks and as the focus for Idol frequency abilities.",
+			],
+		},
+		activation: {
+			type: "passive",
+			consumes_item: false,
+			cost: "no action",
+			frequency: "continuous",
+			trigger: "Equipped, carried, worn, or used as described.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state:
+				"must be carried, consumed, or deployed as the activation describes",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: [],
+				attack: [],
+				notes:
+					"Utility and consumable items only call for an ability when their explicit rule names one.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "passive",
+				consumes_item: false,
+				cost: "no action",
+				frequency: "continuous",
+				trigger: "Equipped, carried, worn, or used as described.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "0fad6e27",
+				payload_complete: true,
+				uniqueness_seed: "base-instrument-bass-guitar::Bass Guitar",
+				variant_note: "A piece of Bureau-quartermastered field gear.",
+			},
+			formulas: {
+				effect_formula: "explicit non-damage item effect",
+				recharge: "continuous",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "common",
+				archetype: "gear_misc",
+				canon_basis: "RA mundane baseline",
+				distinguishing_rule:
+					"Bass Guitar keys standard gear misc rules through signature 0ca94eeb.",
+				role: "utility",
+				signature: "0ca94eeb",
+				theme: "standard",
+			},
+			passive_rules: [
+				"Serves as an Idol performance rig. While proficient with it, you use it for Performance checks and as the focus for Idol frequency abilities.",
+			],
+			resolution: {
+				type: "equipment_utility",
+				active_options: [],
+				non_damage_resolution:
+					"Serves as an Idol performance rig. While proficient with it, you use it for Performance checks and as the focus for Idol frequency abilities.",
+				passive_effects: [
+					"Serves as an Idol performance rig. While proficient with it, you use it for Performance checks and as the focus for Idol frequency abilities.",
+				],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: true,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
+				],
+				ra_specific_mundane: true,
+			},
+			targeting: {
+				range: "self",
+				area: null,
+				line_of_effect: "as item description permits",
+				target: "Self, touched object, or listed utility target",
+			},
+		},
+	},
+	{
+		id: "base-instrument-portable-amp",
+		name: "Portable Amp",
+		source_book: "Rift Ascendant Canon",
+		description:
+			"A battery-run busker's amp that pushes an Idol's frequencies loud enough to fill a plaza or a gate chamber.",
+		rarity: "common",
+		type: "wondrous",
+		image: "/generated/compendium/items/item-0462.webp",
+		weight: 10,
+		value: { currency: "crystal", amount: 250 },
+		item_type: "tool",
+		sigil_slots_base: 0,
+		properties: {},
+		effects: {
+			passive: [
+				"Serves as an Idol performance rig. While proficient with it, you use it for Performance checks and as the focus for Idol frequency abilities.",
+			],
+		},
+		activation: {
+			type: "passive",
+			consumes_item: false,
+			cost: "no action",
+			frequency: "continuous",
+			trigger: "Equipped, carried, worn, or used as described.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state:
+				"must be carried, consumed, or deployed as the activation describes",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: [],
+				attack: [],
+				notes:
+					"Utility and consumable items only call for an ability when their explicit rule names one.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "passive",
+				consumes_item: false,
+				cost: "no action",
+				frequency: "continuous",
+				trigger: "Equipped, carried, worn, or used as described.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "0fad6e27",
+				payload_complete: true,
+				uniqueness_seed: "base-instrument-portable-amp::Portable Amp",
+				variant_note: "A piece of Bureau-quartermastered field gear.",
+			},
+			formulas: {
+				effect_formula: "explicit non-damage item effect",
+				recharge: "continuous",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "common",
+				archetype: "gear_misc",
+				canon_basis: "RA mundane baseline",
+				distinguishing_rule:
+					"Portable Amp keys standard gear misc rules through signature 9cf01eb5.",
+				role: "utility",
+				signature: "9cf01eb5",
+				theme: "standard",
+			},
+			passive_rules: [
+				"Serves as an Idol performance rig. While proficient with it, you use it for Performance checks and as the focus for Idol frequency abilities.",
+			],
+			resolution: {
+				type: "equipment_utility",
+				active_options: [],
+				non_damage_resolution:
+					"Serves as an Idol performance rig. While proficient with it, you use it for Performance checks and as the focus for Idol frequency abilities.",
+				passive_effects: [
+					"Serves as an Idol performance rig. While proficient with it, you use it for Performance checks and as the focus for Idol frequency abilities.",
+				],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: true,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
+				],
+				ra_specific_mundane: true,
+			},
+			targeting: {
+				range: "self",
+				area: null,
+				line_of_effect: "as item description permits",
+				target: "Self, touched object, or listed utility target",
+			},
+		},
+	},
+	{
+		id: "base-instrument-vocoder",
+		name: "Vocoder",
+		source_book: "Rift Ascendant Canon",
+		description:
+			"A hand-held vocoder that reshapes an Idol's voice into layered harmonics for precise frequency control.",
+		rarity: "common",
+		type: "wondrous",
+		image: "/generated/compendium/items/item-0940.webp",
+		weight: 2,
+		value: { currency: "crystal", amount: 220 },
+		item_type: "tool",
+		sigil_slots_base: 0,
+		properties: {},
+		effects: {
+			passive: [
+				"Serves as an Idol performance rig. While proficient with it, you use it for Performance checks and as the focus for Idol frequency abilities.",
+			],
+		},
+		activation: {
+			type: "passive",
+			consumes_item: false,
+			cost: "no action",
+			frequency: "continuous",
+			trigger: "Equipped, carried, worn, or used as described.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state:
+				"must be carried, consumed, or deployed as the activation describes",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: [],
+				attack: [],
+				notes:
+					"Utility and consumable items only call for an ability when their explicit rule names one.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "passive",
+				consumes_item: false,
+				cost: "no action",
+				frequency: "continuous",
+				trigger: "Equipped, carried, worn, or used as described.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "0fad6e27",
+				payload_complete: true,
+				uniqueness_seed: "base-instrument-vocoder::Vocoder",
+				variant_note: "A piece of Bureau-quartermastered field gear.",
+			},
+			formulas: {
+				effect_formula: "explicit non-damage item effect",
+				recharge: "continuous",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "common",
+				archetype: "gear_misc",
+				canon_basis: "RA mundane baseline",
+				distinguishing_rule:
+					"Vocoder keys standard gear misc rules through signature a35b63fe.",
+				role: "utility",
+				signature: "a35b63fe",
+				theme: "standard",
+			},
+			passive_rules: [
+				"Serves as an Idol performance rig. While proficient with it, you use it for Performance checks and as the focus for Idol frequency abilities.",
+			],
+			resolution: {
+				type: "equipment_utility",
+				active_options: [],
+				non_damage_resolution:
+					"Serves as an Idol performance rig. While proficient with it, you use it for Performance checks and as the focus for Idol frequency abilities.",
+				passive_effects: [
+					"Serves as an Idol performance rig. While proficient with it, you use it for Performance checks and as the focus for Idol frequency abilities.",
+				],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: true,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
+				],
+				ra_specific_mundane: false,
+			},
+			targeting: {
+				range: "self",
+				area: null,
+				line_of_effect: "as item description permits",
+				target: "Self, touched object, or listed utility target",
+			},
+		},
+	},
+	{
+		id: "base-instrument-sampler-pad",
+		name: "Sampler Pad",
+		source_book: "Rift Ascendant Canon",
+		description:
+			"A velocity-sensitive sampler an Idol loads with captured sounds — sirens, cheers, gate-hums — to trigger on cue.",
+		rarity: "common",
+		type: "wondrous",
+		image: "/generated/compendium/items/item-0636.webp",
+		weight: 3,
+		value: { currency: "crystal", amount: 200 },
+		item_type: "tool",
+		sigil_slots_base: 0,
+		properties: {},
+		effects: {
+			passive: [
+				"Serves as an Idol performance rig. While proficient with it, you use it for Performance checks and as the focus for Idol frequency abilities.",
+			],
+		},
+		activation: {
+			type: "passive",
+			consumes_item: false,
+			cost: "no action",
+			frequency: "continuous",
+			trigger: "Equipped, carried, worn, or used as described.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state:
+				"must be carried, consumed, or deployed as the activation describes",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: [],
+				attack: [],
+				notes:
+					"Utility and consumable items only call for an ability when their explicit rule names one.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "passive",
+				consumes_item: false,
+				cost: "no action",
+				frequency: "continuous",
+				trigger: "Equipped, carried, worn, or used as described.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "0fad6e27",
+				payload_complete: true,
+				uniqueness_seed: "base-instrument-sampler-pad::Sampler Pad",
+				variant_note:
+					"A field accessory. Cataloged in the Bureau quartermaster registry.",
+			},
+			formulas: {
+				effect_formula: "explicit non-damage item effect",
+				recharge: "continuous",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "common",
+				archetype: "gear_misc",
+				canon_basis: "RA mundane baseline",
+				distinguishing_rule:
+					"Sampler Pad keys standard gear misc rules through signature 8818fd29.",
+				role: "utility",
+				signature: "8818fd29",
+				theme: "standard",
+			},
+			passive_rules: [
+				"Serves as an Idol performance rig. While proficient with it, you use it for Performance checks and as the focus for Idol frequency abilities.",
+			],
+			resolution: {
+				type: "equipment_utility",
+				active_options: [],
+				non_damage_resolution:
+					"Serves as an Idol performance rig. While proficient with it, you use it for Performance checks and as the focus for Idol frequency abilities.",
+				passive_effects: [
+					"Serves as an Idol performance rig. While proficient with it, you use it for Performance checks and as the focus for Idol frequency abilities.",
+				],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: true,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
+				],
+				ra_specific_mundane: true,
+			},
+			targeting: {
+				range: "self",
+				area: null,
+				line_of_effect: "as item description permits",
+				target: "Self, touched object, or listed utility target",
+			},
+		},
+	},
+	{
+		id: "base-focus-arcane-crystal",
+		name: "Mana Crystal",
+		source_book: "Rift Ascendant Canon",
+		description:
+			"A faceted mana crystal cut to channel arcane current cleanly; standard issue for Bureau-trained Mages.",
+		rarity: "common",
+		type: "wondrous",
+		image: "/generated/compendium/items/item-0998.webp",
+		weight: 1,
+		value: { currency: "crystal", amount: 100 },
+		item_type: "misc",
+		sigil_slots_base: 0,
+		properties: {},
+		effects: {
+			passive: [
+				"Functions as an arcane focus; a Mage, Esper, or other arcane caster may use it in place of non-costly material components.",
+			],
+		},
+		activation: {
+			type: "passive",
+			consumes_item: false,
+			cost: "no action",
+			frequency: "continuous",
+			trigger: "Equipped, carried, worn, or used as described.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state:
+				"must be carried, consumed, or deployed as the activation describes",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: [],
+				attack: [],
+				notes:
+					"Utility and consumable items only call for an ability when their explicit rule names one.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "passive",
+				consumes_item: false,
+				cost: "no action",
+				frequency: "continuous",
+				trigger: "Equipped, carried, worn, or used as described.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "baa53438",
+				payload_complete: true,
+				uniqueness_seed: "base-focus-arcane-crystal::Mana Crystal",
+				variant_note: "A piece of Bureau-quartermastered field gear.",
+			},
+			formulas: {
+				effect_formula: "explicit non-damage item effect",
+				recharge: "continuous",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "common",
+				archetype: "gear_misc",
+				canon_basis: "RA mundane baseline",
+				distinguishing_rule:
+					"Mana Crystal keys aetheric gear misc rules through signature bb0eaecd.",
+				role: "utility",
+				signature: "bb0eaecd",
+				theme: "aetheric",
+			},
+			passive_rules: [
+				"Functions as an arcane focus; a Mage, Esper, or other arcane caster may use it in place of non-costly material components.",
+			],
+			resolution: {
+				type: "equipment_utility",
+				active_options: [],
+				non_damage_resolution:
+					"Functions as an arcane focus; a Mage, Esper, or other arcane caster may use it in place of non-costly material components.",
+				passive_effects: [
+					"Functions as an arcane focus; a Mage, Esper, or other arcane caster may use it in place of non-costly material components.",
+				],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: true,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
+				],
+				ra_specific_mundane: true,
+			},
+			targeting: {
+				range: "self",
+				area: null,
+				line_of_effect: "as item description permits",
+				target: "Self, touched object, or listed utility target",
+			},
+		},
+	},
+	{
+		id: "base-focus-arcane-orb",
+		name: "Lattice Orb",
+		source_book: "Rift Ascendant Canon",
+		description:
+			"A polished orb threaded with lattice-glass filaments that gather raw mana into a caster's intent.",
+		rarity: "common",
+		type: "wondrous",
+		image: "/generated/compendium/items/item-0323.webp",
+		weight: 3,
+		value: { currency: "crystal", amount: 120 },
+		item_type: "misc",
+		sigil_slots_base: 0,
+		properties: {},
+		effects: {
+			passive: [
+				"Functions as an arcane focus; a Mage, Esper, or other arcane caster may use it in place of non-costly material components.",
+			],
+		},
+		activation: {
+			type: "passive",
+			consumes_item: false,
+			cost: "no action",
+			frequency: "continuous",
+			trigger: "Equipped, carried, worn, or used as described.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state:
+				"must be carried, consumed, or deployed as the activation describes",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: [],
+				attack: [],
+				notes:
+					"Utility and consumable items only call for an ability when their explicit rule names one.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "passive",
+				consumes_item: false,
+				cost: "no action",
+				frequency: "continuous",
+				trigger: "Equipped, carried, worn, or used as described.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "b2dedb59",
+				payload_complete: true,
+				uniqueness_seed: "base-focus-arcane-orb::Lattice Orb",
+				variant_note: "Acts as an arcane focus. +1 to spell attack rolls.",
+			},
+			formulas: {
+				effect_formula: "explicit non-damage item effect",
+				recharge: "continuous",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "common",
+				archetype: "focus_caster",
+				canon_basis: "RA mundane baseline",
+				distinguishing_rule:
+					"Lattice Orb keys aetheric focus caster rules through signature c1fb2369.",
+				role: "utility",
+				signature: "c1fb2369",
+				theme: "aetheric",
+			},
+			passive_rules: [
+				"Functions as an arcane focus; a Mage, Esper, or other arcane caster may use it in place of non-costly material components.",
+			],
+			resolution: {
+				type: "equipment_utility",
+				active_options: [],
+				non_damage_resolution:
+					"Functions as an arcane focus; a Mage, Esper, or other arcane caster may use it in place of non-costly material components.",
+				passive_effects: [
+					"Functions as an arcane focus; a Mage, Esper, or other arcane caster may use it in place of non-costly material components.",
+				],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: true,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
+				],
+				ra_specific_mundane: true,
+			},
+			targeting: {
+				range: "self",
+				area: null,
+				line_of_effect: "as item description permits",
+				target: "Self, touched object, or listed utility target",
+			},
+		},
+	},
+	{
+		id: "base-focus-arcane-coil",
+		name: "Resonance Coil",
+		source_book: "Rift Ascendant Canon",
+		description:
+			"A palm-sized coil of conductive filament that hums to a caster's mana, tightening loose workings into shape.",
+		rarity: "common",
+		type: "wondrous",
+		image: "/generated/compendium/items/item-1011.webp",
+		weight: 1,
+		value: { currency: "crystal", amount: 100 },
+		item_type: "misc",
+		sigil_slots_base: 0,
+		properties: {},
+		effects: {
+			passive: [
+				"Functions as an arcane focus; a Mage, Esper, or other arcane caster may use it in place of non-costly material components.",
+			],
+		},
+		activation: {
+			type: "passive",
+			consumes_item: false,
+			cost: "no action",
+			frequency: "continuous",
+			trigger: "Equipped, carried, worn, or used as described.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state:
+				"must be carried, consumed, or deployed as the activation describes",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: [],
+				attack: [],
+				notes:
+					"Utility and consumable items only call for an ability when their explicit rule names one.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "passive",
+				consumes_item: false,
+				cost: "no action",
+				frequency: "continuous",
+				trigger: "Equipped, carried, worn, or used as described.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "d55eee7c",
+				payload_complete: true,
+				uniqueness_seed: "base-focus-arcane-coil::Resonance Coil",
+				variant_note: "A miscellaneous piece of standard Hunter kit.",
+			},
+			formulas: {
+				effect_formula: "explicit non-damage item effect",
+				recharge: "continuous",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "common",
+				archetype: "gear_misc",
+				canon_basis: "RA mundane baseline",
+				distinguishing_rule:
+					"Resonance Coil keys standard gear misc rules through signature af590bda.",
+				role: "utility",
+				signature: "af590bda",
+				theme: "standard",
+			},
+			passive_rules: [
+				"Functions as an arcane focus; a Mage, Esper, or other arcane caster may use it in place of non-costly material components.",
+			],
+			resolution: {
+				type: "equipment_utility",
+				active_options: [],
+				non_damage_resolution:
+					"Functions as an arcane focus; a Mage, Esper, or other arcane caster may use it in place of non-costly material components.",
+				passive_effects: [
+					"Functions as an arcane focus; a Mage, Esper, or other arcane caster may use it in place of non-costly material components.",
+				],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: true,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
+				],
+				ra_specific_mundane: true,
+			},
+			targeting: {
+				range: "self",
+				area: null,
+				line_of_effect: "as item description permits",
+				target: "Self, touched object, or listed utility target",
+			},
+		},
+	},
+	{
+		id: "base-focus-primal-fang",
+		name: "Gate-Beast Fang",
+		source_book: "Rift Ascendant Canon",
+		description:
+			"A fang pulled from a tamed gate-beast, still warm with its instincts; a Summoner channels the wild through it.",
+		rarity: "common",
+		type: "wondrous",
+		image: "/generated/compendium/items/item-0147.webp",
+		weight: 1,
+		value: { currency: "crystal", amount: 50 },
+		item_type: "misc",
+		sigil_slots_base: 0,
+		properties: {},
+		effects: {
+			passive: [
+				"Functions as a primal focus; a Summoner may use it in place of non-costly material components when calling gate-born creatures.",
+			],
+		},
+		activation: {
+			type: "passive",
+			consumes_item: false,
+			cost: "no action",
+			frequency: "continuous",
+			trigger: "Equipped, carried, worn, or used as described.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state:
+				"must be carried, consumed, or deployed as the activation describes",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: [],
+				attack: [],
+				notes:
+					"Utility and consumable items only call for an ability when their explicit rule names one.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "passive",
+				consumes_item: false,
+				cost: "no action",
+				frequency: "continuous",
+				trigger: "Equipped, carried, worn, or used as described.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "d68e7ecc",
+				payload_complete: true,
+				uniqueness_seed: "base-focus-primal-fang::Gate-Beast Fang",
+				variant_note: "A piece of Bureau-quartermastered field gear.",
+			},
+			formulas: {
+				effect_formula: "explicit non-damage item effect",
+				recharge: "continuous",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "common",
+				archetype: "gear_misc",
+				canon_basis: "RA mundane baseline",
+				distinguishing_rule:
+					"Gate-Beast Fang keys standard gear misc rules through signature efd1fa68.",
+				role: "utility",
+				signature: "efd1fa68",
+				theme: "standard",
+			},
+			passive_rules: [
+				"Functions as a primal focus; a Summoner may use it in place of non-costly material components when calling gate-born creatures.",
+			],
+			resolution: {
+				type: "equipment_utility",
+				active_options: [],
+				non_damage_resolution:
+					"Functions as a primal focus; a Summoner may use it in place of non-costly material components when calling gate-born creatures.",
+				passive_effects: [
+					"Functions as a primal focus; a Summoner may use it in place of non-costly material components when calling gate-born creatures.",
+				],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: true,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
+				],
+				ra_specific_mundane: true,
+			},
+			targeting: {
+				range: "self",
+				area: null,
+				line_of_effect: "as item description permits",
+				target: "Self, touched object, or listed utility target",
+			},
+		},
+	},
+	{
+		id: "base-focus-primal-core-shard",
+		name: "Anomaly Core Shard",
+		source_book: "Rift Ascendant Canon",
+		description:
+			"A shard of a cleared anomaly's core that a Summoner uses to call and command gate-born creatures.",
+		rarity: "common",
+		type: "wondrous",
+		image: "/generated/compendium/items/item-0943.webp",
+		weight: 1,
+		value: { currency: "crystal", amount: 60 },
+		item_type: "misc",
+		sigil_slots_base: 0,
+		properties: {},
+		effects: {
+			passive: [
+				"Functions as a primal focus; a Summoner may use it in place of non-costly material components when calling gate-born creatures.",
+			],
+		},
+		activation: {
+			type: "passive",
+			consumes_item: false,
+			cost: "no action",
+			frequency: "continuous",
+			trigger: "Equipped, carried, worn, or used as described.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state:
+				"must be carried, consumed, or deployed as the activation describes",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: [],
+				attack: [],
+				notes:
+					"Utility and consumable items only call for an ability when their explicit rule names one.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "passive",
+				consumes_item: false,
+				cost: "no action",
+				frequency: "continuous",
+				trigger: "Equipped, carried, worn, or used as described.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "d68e7ecc",
+				payload_complete: true,
+				uniqueness_seed: "base-focus-primal-core-shard::Anomaly Core Shard",
+				variant_note:
+					"A field accessory. Cataloged in the Bureau quartermaster registry.",
+			},
+			formulas: {
+				effect_formula: "explicit non-damage item effect",
+				recharge: "continuous",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "common",
+				archetype: "gear_misc",
+				canon_basis: "RA mundane baseline",
+				distinguishing_rule:
+					"Anomaly Core Shard keys standard gear misc rules through signature 94a01b7f.",
+				role: "utility",
+				signature: "94a01b7f",
+				theme: "standard",
+			},
+			passive_rules: [
+				"Functions as a primal focus; a Summoner may use it in place of non-costly material components when calling gate-born creatures.",
+			],
+			resolution: {
+				type: "equipment_utility",
+				active_options: [],
+				non_damage_resolution:
+					"Functions as a primal focus; a Summoner may use it in place of non-costly material components when calling gate-born creatures.",
+				passive_effects: [
+					"Functions as a primal focus; a Summoner may use it in place of non-costly material components when calling gate-born creatures.",
+				],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: true,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
+				],
+				ra_specific_mundane: true,
+			},
+			targeting: {
+				range: "self",
+				area: null,
+				line_of_effect: "as item description permits",
+				target: "Self, touched object, or listed utility target",
+			},
+		},
+	},
+	{
+		id: "base-focus-primal-collar",
+		name: "Bonded Tamer's Collar",
+		source_book: "Rift Ascendant Canon",
+		description:
+			"A worn field collar keyed to a Summoner's bonded companions, humming with the pack's shared mana.",
+		rarity: "common",
+		type: "wondrous",
+		image: "/generated/compendium/items/item-0818.webp",
+		weight: 1,
+		value: { currency: "crystal", amount: 50 },
+		item_type: "misc",
+		sigil_slots_base: 0,
+		properties: {},
+		effects: {
+			passive: [
+				"Functions as a primal focus; a Summoner may use it in place of non-costly material components when calling gate-born creatures.",
+			],
+		},
+		activation: {
+			type: "passive",
+			consumes_item: false,
+			cost: "no action",
+			frequency: "continuous",
+			trigger: "Equipped, carried, worn, or used as described.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state:
+				"must be carried, consumed, or deployed as the activation describes",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: [],
+				attack: [],
+				notes:
+					"Utility and consumable items only call for an ability when their explicit rule names one.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "passive",
+				consumes_item: false,
+				cost: "no action",
+				frequency: "continuous",
+				trigger: "Equipped, carried, worn, or used as described.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "d68e7ecc",
+				payload_complete: true,
+				uniqueness_seed: "base-focus-primal-collar::Bonded Tamer's Collar",
+				variant_note:
+					"A field accessory. Cataloged in the Bureau quartermaster registry.",
+			},
+			formulas: {
+				effect_formula: "explicit non-damage item effect",
+				recharge: "continuous",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "common",
+				archetype: "gear_misc",
+				canon_basis: "RA mundane baseline",
+				distinguishing_rule:
+					"Bonded Tamer's Collar keys standard gear misc rules through signature b7c736e4.",
+				role: "utility",
+				signature: "b7c736e4",
+				theme: "standard",
+			},
+			passive_rules: [
+				"Functions as a primal focus; a Summoner may use it in place of non-costly material components when calling gate-born creatures.",
+			],
+			resolution: {
+				type: "equipment_utility",
+				active_options: [],
+				non_damage_resolution:
+					"Functions as a primal focus; a Summoner may use it in place of non-costly material components when calling gate-born creatures.",
+				passive_effects: [
+					"Functions as a primal focus; a Summoner may use it in place of non-costly material components when calling gate-born creatures.",
+				],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: true,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
+				],
+				ra_specific_mundane: true,
+			},
+			targeting: {
+				range: "self",
+				area: null,
+				line_of_effect: "as item description permits",
+				target: "Self, touched object, or listed utility target",
+			},
+		},
+	},
+	{
+		id: "base-focus-order-emblem",
+		name: "Bureau Emblem",
+		source_book: "Rift Ascendant Canon",
+		description:
+			"A cast-metal emblem of a Herald's chartered order, worn openly as a mark of sanctioned authority.",
+		rarity: "common",
+		type: "wondrous",
+		image: "/generated/compendium/items/item-0986.webp",
+		weight: 1,
+		value: { currency: "crystal", amount: 50 },
+		item_type: "misc",
+		sigil_slots_base: 0,
+		properties: {},
+		effects: {
+			passive: [
+				"Functions as an order focus; a Herald must hold or visibly wear it to channel the Rift's protocols in place of non-costly material components.",
+			],
+		},
+		activation: {
+			type: "passive",
+			consumes_item: false,
+			cost: "no action",
+			frequency: "continuous",
+			trigger: "Equipped, carried, worn, or used as described.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state:
+				"must be carried, consumed, or deployed as the activation describes",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: [],
+				attack: [],
+				notes:
+					"Utility and consumable items only call for an ability when their explicit rule names one.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "passive",
+				consumes_item: false,
+				cost: "no action",
+				frequency: "continuous",
+				trigger: "Equipped, carried, worn, or used as described.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "b611f03a",
+				payload_complete: true,
+				uniqueness_seed: "base-focus-order-emblem::Bureau Emblem",
+				variant_note:
+					"Bureau-recognized ID. Grants access to controlled facilities and Hunter-only districts.",
+			},
+			formulas: {
+				effect_formula: "explicit non-damage item effect",
+				recharge: "continuous",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "common",
+				archetype: "gear_credential",
+				canon_basis: "RA mundane baseline",
+				distinguishing_rule:
+					"Bureau Emblem keys standard gear credential rules through signature 8a133b4d.",
+				role: "utility",
+				signature: "8a133b4d",
+				theme: "standard",
+			},
+			passive_rules: [
+				"Functions as an order focus; a Herald must hold or visibly wear it to channel the Rift's protocols in place of non-costly material components.",
+			],
+			resolution: {
+				type: "equipment_utility",
+				active_options: [],
+				non_damage_resolution:
+					"Functions as an order focus; a Herald must hold or visibly wear it to channel the Rift's protocols in place of non-costly material components.",
+				passive_effects: [
+					"Functions as an order focus; a Herald must hold or visibly wear it to channel the Rift's protocols in place of non-costly material components.",
+				],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: true,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
+				],
+				ra_specific_mundane: true,
+			},
+			targeting: {
+				range: "self",
+				area: null,
+				line_of_effect: "as item description permits",
+				target: "Self, touched object, or listed utility target",
+			},
+		},
+	},
+	{
+		id: "base-focus-order-insignia",
+		name: "Herald's Insignia",
+		source_book: "Rift Ascendant Canon",
+		description:
+			"A field insignia stamped with a Herald's oath-sigil — the focus through which they run the Rift's healing protocols.",
+		rarity: "common",
+		type: "wondrous",
+		image: "/generated/compendium/items/item-0088.webp",
+		weight: 1,
+		value: { currency: "crystal", amount: 50 },
+		item_type: "misc",
+		sigil_slots_base: 0,
+		properties: {},
+		effects: {
+			passive: [
+				"Functions as an order focus; a Herald must hold or visibly wear it to channel the Rift's protocols in place of non-costly material components.",
+			],
+		},
+		activation: {
+			type: "passive",
+			consumes_item: false,
+			cost: "no action",
+			frequency: "continuous",
+			trigger: "Equipped, carried, worn, or used as described.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state:
+				"must be carried, consumed, or deployed as the activation describes",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: [],
+				attack: [],
+				notes:
+					"Utility and consumable items only call for an ability when their explicit rule names one.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "passive",
+				consumes_item: false,
+				cost: "no action",
+				frequency: "continuous",
+				trigger: "Equipped, carried, worn, or used as described.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "b611f03a",
+				payload_complete: true,
+				uniqueness_seed: "base-focus-order-insignia::Herald's Insignia",
+				variant_note:
+					"Bureau-recognized ID. +1 to social checks made with Bureau personnel.",
+			},
+			formulas: {
+				effect_formula: "explicit non-damage item effect",
+				recharge: "continuous",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "common",
+				archetype: "gear_credential",
+				canon_basis: "RA mundane baseline",
+				distinguishing_rule:
+					"Herald's Insignia keys standard gear credential rules through signature e8af528f.",
+				role: "utility",
+				signature: "e8af528f",
+				theme: "standard",
+			},
+			passive_rules: [
+				"Functions as an order focus; a Herald must hold or visibly wear it to channel the Rift's protocols in place of non-costly material components.",
+			],
+			resolution: {
+				type: "equipment_utility",
+				active_options: [],
+				non_damage_resolution:
+					"Functions as an order focus; a Herald must hold or visibly wear it to channel the Rift's protocols in place of non-costly material components.",
+				passive_effects: [
+					"Functions as an order focus; a Herald must hold or visibly wear it to channel the Rift's protocols in place of non-costly material components.",
+				],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: true,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
+				],
+				ra_specific_mundane: true,
+			},
+			targeting: {
+				range: "self",
+				area: null,
+				line_of_effect: "as item description permits",
+				target: "Self, touched object, or listed utility target",
+			},
+		},
+	},
+	{
+		id: "base-focus-order-core",
+		name: "Sanctified Core",
+		source_book: "Rift Ascendant Canon",
+		description:
+			"A cleared anomaly core consecrated in a Rift-purging rite, cool and quietly luminous in a Herald's hand.",
+		rarity: "common",
+		type: "wondrous",
+		image: "/generated/compendium/items/item-0353.webp",
+		weight: 1,
+		value: { currency: "crystal", amount: 60 },
+		item_type: "misc",
+		sigil_slots_base: 0,
+		properties: {},
+		effects: {
+			passive: [
+				"Functions as an order focus; a Herald must hold or visibly wear it to channel the Rift's protocols in place of non-costly material components.",
+			],
+		},
+		activation: {
+			type: "passive",
+			consumes_item: false,
+			cost: "no action",
+			frequency: "continuous",
+			trigger: "Equipped, carried, worn, or used as described.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state:
+				"must be carried, consumed, or deployed as the activation describes",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: [],
+				attack: [],
+				notes:
+					"Utility and consumable items only call for an ability when their explicit rule names one.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "passive",
+				consumes_item: false,
+				cost: "no action",
+				frequency: "continuous",
+				trigger: "Equipped, carried, worn, or used as described.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "e7c50e22",
+				payload_complete: true,
+				uniqueness_seed: "base-focus-order-core::Sanctified Core",
+				variant_note:
+					"A field accessory. Cataloged in the Bureau quartermaster registry.",
+			},
+			formulas: {
+				effect_formula: "explicit non-damage item effect",
+				recharge: "continuous",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "common",
+				archetype: "gear_misc",
+				canon_basis: "RA mundane baseline",
+				distinguishing_rule:
+					"Sanctified Core keys holy gear misc rules through signature 0e1b7bc4.",
+				role: "utility",
+				signature: "0e1b7bc4",
+				theme: "holy",
+			},
+			passive_rules: [
+				"Functions as an order focus; a Herald must hold or visibly wear it to channel the Rift's protocols in place of non-costly material components.",
+			],
+			resolution: {
+				type: "equipment_utility",
+				active_options: [],
+				non_damage_resolution:
+					"Functions as an order focus; a Herald must hold or visibly wear it to channel the Rift's protocols in place of non-costly material components.",
+				passive_effects: [
+					"Functions as an order focus; a Herald must hold or visibly wear it to channel the Rift's protocols in place of non-costly material components.",
+				],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: true,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
+				],
+				ra_specific_mundane: true,
 			},
 			targeting: {
 				range: "self",

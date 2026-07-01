@@ -271,6 +271,40 @@ const ATTACK_NAME_TOKENS =
 const DAMAGE_TYPE_PROFILE_REGEX =
 	/\b(fire|cold|lightning|thunder|necrotic|radiant|psychic|force|acid|poison|slashing|piercing|bludgeoning)\b/i;
 
+// Exact `scripts/item-forge.ts` combat-injection signatures. These phrases were
+// stamped onto EVERY item (mundane tools and named weapons alike) with a random
+// die + crowd-control rider; they must never appear in a shipped item.
+const INJECTED_ITEM_TEMPLATE_PATTERNS: RegExp[] = [
+	/Deals\s+.+\s+physical or magical damage on hit/i,
+	/Target must make a standard DC saving throw or suffer .+ for 1 round/i,
+];
+
+// Datasets whose entries are item records carrying an `ra-item-v1` payload and
+// therefore participate in the item coherence audits.
+const itemCoherenceDatasets = new Set([
+	"items",
+	"equipment",
+	"relics",
+	"artifacts",
+]);
+
+// Bare 5e-category placeholder names. 5e ships concrete specifics (a Lute, a
+// Crystal), never a generic "Musical Instrument" / "Arcane Focus". An item
+// named exactly as one of these is a vague catch-all and must be expanded.
+const VAGUE_CATCHALL_NAMES = new Set(
+	[
+		"Musical Instrument",
+		"Arcane Focus",
+		"Druidic Focus",
+		"Primal Focus",
+		"Order Focus",
+		"Holy Symbol",
+		"Gaming Set",
+		"Artisan's Tools",
+		"Trade Goods",
+	].map((name) => name.toLowerCase()),
+);
+
 const isRecord = (value: unknown): value is Record<string, Json> =>
 	!!value && typeof value === "object" && !Array.isArray(value);
 
@@ -1103,6 +1137,114 @@ function auditItemPayloadUniqueness(
 }
 
 // ──────────────────────────────────────────────────────────────────────
+// Item coherence audits (Phase 0). These gate the `scripts/item-forge.ts`
+// combat-injection defect and its downstream contradictions.
+// ──────────────────────────────────────────────────────────────────────
+
+function auditItemInjectedTemplate(
+	dataset: string,
+	entry: AuditEntry,
+	issues: CompendiumAuditIssue[],
+) {
+	const text = collectTextFragments([entry.effects, entry.mechanics]).join(
+		"\n",
+	);
+	const matched = INJECTED_ITEM_TEMPLATE_PATTERNS.find((pattern) =>
+		pattern.test(text),
+	);
+	if (matched) {
+		addIssue(issues, {
+			severity: "error",
+			dataset,
+			code: "item_injected_template",
+			message:
+				"Item carries item-forge injected combat boilerplate (random 'Deals Xd6 … damage on hit' + save rider).",
+			entryId: entry.id,
+			entryName: entry.name,
+		});
+	}
+}
+
+function auditVagueCatchallName(
+	dataset: string,
+	entry: AuditEntry,
+	issues: CompendiumAuditIssue[],
+) {
+	const name = getString(entry.name);
+	if (name && VAGUE_CATCHALL_NAMES.has(name.trim().toLowerCase())) {
+		addIssue(issues, {
+			severity: "error",
+			dataset,
+			code: "vague_catchall_name",
+			message: `Item name "${name}" is a bare 5e category — expand into concrete specifics (e.g. Lute, Drum, Flute).`,
+			entryId: entry.id,
+			entryName: entry.name,
+		});
+	}
+}
+
+function auditTattooFieldContradiction(
+	dataset: string,
+	entry: AuditEntry,
+	issues: CompendiumAuditIssue[],
+) {
+	const bodyPart = getString((entry as { body_part?: unknown }).body_part);
+	const ink = getString((entry as { ink_type?: unknown }).ink_type);
+	const mechanics = isRecord(entry.mechanics) ? entry.mechanics : null;
+	const limitations = isRecord((entry as { limitations?: unknown }).limitations)
+		? (entry as { limitations: Record<string, Json> }).limitations
+		: null;
+
+	// Placement: every slot/attunement rule must name the tattoo's body_part.
+	if (bodyPart) {
+		const bp = bodyPart.toLowerCase();
+		const slotStrings = [
+			...collectTextFragments(mechanics?.restrictions),
+			...collectTextFragments(limitations?.conditions),
+		].filter((line) => /tattoo slot|attunement slot/i.test(line));
+		const mismatch = slotStrings.find(
+			(line) => !line.toLowerCase().includes(bp),
+		);
+		if (mismatch) {
+			addIssue(issues, {
+				severity: "error",
+				dataset,
+				code: "tattoo_field_contradiction",
+				message: `Placement "${bodyPart}" contradicts slot rule "${mismatch}".`,
+				entryId: entry.id,
+				entryName: entry.name,
+			});
+			return;
+		}
+	}
+
+	// Material: every inscription/resonance rule must name the tattoo's ink_type.
+	if (ink) {
+		const inkLower = ink.toLowerCase();
+		const materialStrings = [
+			getString(mechanics?.lattice_interaction),
+			...collectTextFragments(mechanics?.special_abilities),
+		].filter(
+			(line): line is string =>
+				!!line && /resonates|inscription requires/i.test(line),
+		);
+		const mismatch = materialStrings.find(
+			(line) => !line.toLowerCase().includes(inkLower),
+		);
+		if (mismatch) {
+			addIssue(issues, {
+				severity: "error",
+				dataset,
+				code: "tattoo_field_contradiction",
+				message: `Ink "${ink}" contradicts material rule "${mismatch}".`,
+				entryId: entry.id,
+				entryName: entry.name,
+			});
+		}
+	}
+}
+
+// ──────────────────────────────────────────────────────────────────────
 // Category-specific completeness audits (Pass 2).
 //
 // Each function asserts that an entry of a given dataset carries the
@@ -1650,6 +1792,13 @@ export async function runCompendiumAudit(
 			}
 			if (itemRulePayloadDatasets.has(dataset)) {
 				auditItemRulesPayload(dataset, entry, issues);
+			}
+			if (itemCoherenceDatasets.has(dataset)) {
+				auditItemInjectedTemplate(dataset, entry, issues);
+				auditVagueCatchallName(dataset, entry, issues);
+			}
+			if (dataset === "tattoos") {
+				auditTattooFieldContradiction(dataset, entry, issues);
 			}
 			if (dataset === "vehicles") {
 				auditVehicleCompleteness(dataset, entry, issues);

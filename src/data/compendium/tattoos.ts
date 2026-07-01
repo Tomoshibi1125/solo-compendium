@@ -39,9 +39,9 @@ export const tattoos: CompendiumTattoo[] = [
 			ability: "Vitality",
 			damage_profile: "N/A (utility/defensive)",
 			lattice_interaction:
-				"Starfall Residue resonates with the bearer's mana lattice through dermal contact",
+				"Crimson Boss Ichor resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
-				"Occupies shoulders tattoo slot",
+				"Occupies neck tattoo slot",
 				"Tattoo attunement is separate from equipment attunement",
 			],
 			condition: "Lethargy",
@@ -61,7 +61,7 @@ export const tattoos: CompendiumTattoo[] = [
 			},
 			stat_bonuses: {},
 			special_abilities: [
-				"Inscription requires: Starfall Residue, DC 16 tattooing check, 4 hours of uninterrupted work",
+				"Inscription requires: Crimson Boss Ichor, DC 16 tattooing check, 4 hours of uninterrupted work",
 			],
 		},
 		effects: {
@@ -98,7 +98,7 @@ export const tattoos: CompendiumTattoo[] = [
 			recharge: "Short rest",
 			requires_attunement: true,
 			conditions: [
-				"Requires tattoo attunement slot (shoulders)",
+				"Requires tattoo attunement slot (neck)",
 				"Tattoo attunement is independent from equipment attunement",
 				"Max tattoos = Proficiency Bonus",
 			],
@@ -149,9 +149,9 @@ export const tattoos: CompendiumTattoo[] = [
 			ability: "Presence",
 			damage_profile: "N/A (utility/defensive)",
 			lattice_interaction:
-				"Phoenix Ash Emulsion resonates with the bearer's mana lattice through dermal contact",
+				"anomaly Bone Dust resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
-				"Occupies neck tattoo slot",
+				"Occupies spine tattoo slot",
 				"Tattoo attunement is separate from equipment attunement",
 			],
 			condition: "Fear",
@@ -171,7 +171,7 @@ export const tattoos: CompendiumTattoo[] = [
 			},
 			stat_bonuses: {},
 			special_abilities: [
-				"Inscription requires: Phoenix Ash Emulsion, DC 11 tattooing check, 4 hours of uninterrupted work",
+				"Inscription requires: anomaly Bone Dust, DC 11 tattooing check, 4 hours of uninterrupted work",
 			],
 		},
 		effects: {
@@ -203,7 +203,7 @@ export const tattoos: CompendiumTattoo[] = [
 			recharge: "Short rest",
 			requires_attunement: true,
 			conditions: [
-				"Requires tattoo attunement slot (neck)",
+				"Requires tattoo attunement slot (spine)",
 				"Tattoo attunement is independent from equipment attunement",
 				"Max tattoos = Proficiency Bonus",
 			],
@@ -254,9 +254,9 @@ export const tattoos: CompendiumTattoo[] = [
 			ability: "Presence",
 			damage_profile: "N/A (utility/defensive)",
 			lattice_interaction:
-				"Mana-Crystal Pigment resonates with the bearer's mana lattice through dermal contact",
+				"Silvered Mercury resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
-				"Occupies back tattoo slot",
+				"Occupies temple tattoo slot",
 				"Tattoo attunement is separate from equipment attunement",
 			],
 			condition: "Fear",
@@ -276,7 +276,7 @@ export const tattoos: CompendiumTattoo[] = [
 			},
 			stat_bonuses: {},
 			special_abilities: [
-				"Inscription requires: Mana-Crystal Pigment, DC 16 tattooing check, 4 hours of uninterrupted work",
+				"Inscription requires: Silvered Mercury, DC 16 tattooing check, 4 hours of uninterrupted work",
 			],
 		},
 		effects: {
@@ -309,7 +309,7 @@ export const tattoos: CompendiumTattoo[] = [
 			recharge: "Short rest",
 			requires_attunement: true,
 			conditions: [
-				"Requires tattoo attunement slot (back)",
+				"Requires tattoo attunement slot (temple)",
 				"Tattoo attunement is independent from equipment attunement",
 				"Max tattoos = Proficiency Bonus",
 			],
@@ -362,9 +362,9 @@ export const tattoos: CompendiumTattoo[] = [
 			ability: "Vitality",
 			damage_profile: "N/A (utility/defensive)",
 			lattice_interaction:
-				"Void Ink resonates with the bearer's mana lattice through dermal contact",
+				"Earth Golem Core resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
-				"Occupies hands tattoo slot",
+				"Occupies chest tattoo slot",
 				"Tattoo attunement is separate from equipment attunement",
 			],
 			condition: "Blindness",
@@ -384,7 +384,7 @@ export const tattoos: CompendiumTattoo[] = [
 			},
 			stat_bonuses: {},
 			special_abilities: [
-				"Inscription requires: Void Ink, DC 14 tattooing check, 4 hours of uninterrupted work",
+				"Inscription requires: Earth Golem Core, DC 14 tattooing check, 4 hours of uninterrupted work",
 			],
 		},
 		effects: {
@@ -417,7 +417,7 @@ export const tattoos: CompendiumTattoo[] = [
 			recharge: "Long rest",
 			requires_attunement: true,
 			conditions: [
-				"Requires tattoo attunement slot (hands)",
+				"Requires tattoo attunement slot (chest)",
 				"Tattoo attunement is independent from equipment attunement",
 				"Max tattoos = Proficiency Bonus",
 			],
@@ -469,9 +469,9 @@ export const tattoos: CompendiumTattoo[] = [
 			ability: "Vitality",
 			damage_profile: "utility",
 			lattice_interaction:
-				"Phoenix Ash Emulsion resonates with the bearer's mana lattice through dermal contact",
+				"Crushed Garnet resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
-				"Occupies right leg tattoo slot",
+				"Occupies left forearm tattoo slot",
 				"Tattoo attunement is separate from equipment attunement",
 			],
 			condition: "Lethargy",
@@ -491,7 +491,7 @@ export const tattoos: CompendiumTattoo[] = [
 			},
 			stat_bonuses: {},
 			special_abilities: [
-				"Inscription requires: Phoenix Ash Emulsion, DC 10 tattooing check, 4 hours of uninterrupted work",
+				"Inscription requires: Crushed Garnet, DC 10 tattooing check, 4 hours of uninterrupted work",
 			],
 		},
 		effects: {
@@ -524,7 +524,7 @@ export const tattoos: CompendiumTattoo[] = [
 			recharge: "Dawn",
 			requires_attunement: true,
 			conditions: [
-				"Requires tattoo attunement slot (right leg)",
+				"Requires tattoo attunement slot (left forearm)",
 				"Tattoo attunement is independent from equipment attunement",
 				"Max tattoos = Proficiency Bonus",
 			],
@@ -575,9 +575,9 @@ export const tattoos: CompendiumTattoo[] = [
 			ability: "Presence",
 			damage_profile: "utility",
 			lattice_interaction:
-				"Storm Essence Distillate resonates with the bearer's mana lattice through dermal contact",
+				"Anomaly Eye Fluid resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
-				"Occupies left arm tattoo slot",
+				"Occupies around eyes tattoo slot",
 				"Tattoo attunement is separate from equipment attunement",
 			],
 			condition: "Stunning",
@@ -597,7 +597,7 @@ export const tattoos: CompendiumTattoo[] = [
 			},
 			stat_bonuses: {},
 			special_abilities: [
-				"Inscription requires: Storm Essence Distillate, DC 18 tattooing check, 4 hours of uninterrupted work",
+				"Inscription requires: Anomaly Eye Fluid, DC 18 tattooing check, 4 hours of uninterrupted work",
 			],
 		},
 		effects: {
@@ -629,7 +629,7 @@ export const tattoos: CompendiumTattoo[] = [
 			recharge: "Short rest",
 			requires_attunement: true,
 			conditions: [
-				"Requires tattoo attunement slot (left arm)",
+				"Requires tattoo attunement slot (around eyes)",
 				"Tattoo attunement is independent from equipment attunement",
 				"Max tattoos = Proficiency Bonus",
 			],
@@ -682,9 +682,9 @@ export const tattoos: CompendiumTattoo[] = [
 			ability: "Intelligence",
 			damage_profile: "N/A (utility/defensive)",
 			lattice_interaction:
-				"Abyssal Ichor resonates with the bearer's mana lattice through dermal contact",
+				"Salamander Extract resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
-				"Occupies hands tattoo slot",
+				"Occupies ribs tattoo slot",
 				"Tattoo attunement is separate from equipment attunement",
 			],
 			condition: "Blindness",
@@ -704,7 +704,7 @@ export const tattoos: CompendiumTattoo[] = [
 			},
 			stat_bonuses: {},
 			special_abilities: [
-				"Inscription requires: Abyssal Ichor, DC 17 tattooing check, 4 hours of uninterrupted work",
+				"Inscription requires: Salamander Extract, DC 17 tattooing check, 4 hours of uninterrupted work",
 			],
 		},
 		effects: {
@@ -741,7 +741,7 @@ export const tattoos: CompendiumTattoo[] = [
 			recharge: "Short rest",
 			requires_attunement: true,
 			conditions: [
-				"Requires tattoo attunement slot (hands)",
+				"Requires tattoo attunement slot (ribs)",
 				"Tattoo attunement is independent from equipment attunement",
 				"Max tattoos = Proficiency Bonus",
 			],
@@ -792,9 +792,9 @@ export const tattoos: CompendiumTattoo[] = [
 			ability: "Intelligence",
 			damage_profile: "utility",
 			lattice_interaction:
-				"Storm Essence Distillate resonates with the bearer's mana lattice through dermal contact",
+				"Griffon Feather Ink resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
-				"Occupies left leg tattoo slot",
+				"Occupies legs tattoo slot",
 				"Tattoo attunement is separate from equipment attunement",
 			],
 			condition: "Lethargy",
@@ -814,7 +814,7 @@ export const tattoos: CompendiumTattoo[] = [
 			},
 			stat_bonuses: {},
 			special_abilities: [
-				"Inscription requires: Storm Essence Distillate, DC 13 tattooing check, 4 hours of uninterrupted work",
+				"Inscription requires: Griffon Feather Ink, DC 13 tattooing check, 4 hours of uninterrupted work",
 			],
 		},
 		effects: {
@@ -850,7 +850,7 @@ export const tattoos: CompendiumTattoo[] = [
 			recharge: "Short rest",
 			requires_attunement: true,
 			conditions: [
-				"Requires tattoo attunement slot (left leg)",
+				"Requires tattoo attunement slot (legs)",
 				"Tattoo attunement is independent from equipment attunement",
 				"Max tattoos = Proficiency Bonus",
 			],
@@ -901,9 +901,9 @@ export const tattoos: CompendiumTattoo[] = [
 			ability: "Vitality",
 			damage_profile: "N/A (utility/defensive)",
 			lattice_interaction:
-				"Titan Marrow Blend resonates with the bearer's mana lattice through dermal contact",
+				"Vampire Lord Dust resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
-				"Occupies left arm tattoo slot",
+				"Occupies heart tattoo slot",
 				"Tattoo attunement is separate from equipment attunement",
 			],
 			condition: "Stunning",
@@ -923,7 +923,7 @@ export const tattoos: CompendiumTattoo[] = [
 			},
 			stat_bonuses: {},
 			special_abilities: [
-				"Inscription requires: Titan Marrow Blend, DC 18 tattooing check, 4 hours of uninterrupted work",
+				"Inscription requires: Vampire Lord Dust, DC 18 tattooing check, 4 hours of uninterrupted work",
 			],
 		},
 		effects: {
@@ -956,7 +956,7 @@ export const tattoos: CompendiumTattoo[] = [
 			recharge: "Short rest",
 			requires_attunement: true,
 			conditions: [
-				"Requires tattoo attunement slot (left arm)",
+				"Requires tattoo attunement slot (heart)",
 				"Tattoo attunement is independent from equipment attunement",
 				"Max tattoos = Proficiency Bonus",
 			],
@@ -1007,9 +1007,9 @@ export const tattoos: CompendiumTattoo[] = [
 			ability: "Vitality",
 			damage_profile: "utility",
 			lattice_interaction:
-				"Phoenix Ash Emulsion resonates with the bearer's mana lattice through dermal contact",
+				"Ghoul Extract resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
-				"Occupies right arm tattoo slot",
+				"Occupies forehead tattoo slot",
 				"Tattoo attunement is separate from equipment attunement",
 			],
 			condition: "Lethargy",
@@ -1029,7 +1029,7 @@ export const tattoos: CompendiumTattoo[] = [
 			},
 			stat_bonuses: {},
 			special_abilities: [
-				"Inscription requires: Phoenix Ash Emulsion, DC 21 tattooing check, 4 hours of uninterrupted work",
+				"Inscription requires: Ghoul Extract, DC 21 tattooing check, 4 hours of uninterrupted work",
 			],
 		},
 		effects: {
@@ -1061,7 +1061,7 @@ export const tattoos: CompendiumTattoo[] = [
 			recharge: "Long rest",
 			requires_attunement: true,
 			conditions: [
-				"Requires tattoo attunement slot (right arm)",
+				"Requires tattoo attunement slot (forehead)",
 				"Tattoo attunement is independent from equipment attunement",
 				"Max tattoos = Proficiency Bonus",
 			],
@@ -1112,9 +1112,9 @@ export const tattoos: CompendiumTattoo[] = [
 			ability: "Presence",
 			damage_profile: "utility",
 			lattice_interaction:
-				"Shadowblood Tincture resonates with the bearer's mana lattice through dermal contact",
+				"Blind Cave Crawler Core resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
-				"Occupies back tattoo slot",
+				"Occupies throat tattoo slot",
 				"Tattoo attunement is separate from equipment attunement",
 			],
 			condition: "Blindness",
@@ -1134,7 +1134,7 @@ export const tattoos: CompendiumTattoo[] = [
 			},
 			stat_bonuses: {},
 			special_abilities: [
-				"Inscription requires: Shadowblood Tincture, DC 20 tattooing check, 4 hours of uninterrupted work",
+				"Inscription requires: Blind Cave Crawler Core, DC 20 tattooing check, 4 hours of uninterrupted work",
 			],
 		},
 		effects: {
@@ -1166,7 +1166,7 @@ export const tattoos: CompendiumTattoo[] = [
 			recharge: "Short rest",
 			requires_attunement: true,
 			conditions: [
-				"Requires tattoo attunement slot (back)",
+				"Requires tattoo attunement slot (throat)",
 				"Tattoo attunement is independent from equipment attunement",
 				"Max tattoos = Proficiency Bonus",
 			],
@@ -1219,9 +1219,9 @@ export const tattoos: CompendiumTattoo[] = [
 			ability: "Presence",
 			damage_profile: "utility",
 			lattice_interaction:
-				"Starfall Residue resonates with the bearer's mana lattice through dermal contact",
+				"Ooze Core resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
-				"Occupies chest tattoo slot",
+				"Occupies palms tattoo slot",
 				"Tattoo attunement is separate from equipment attunement",
 			],
 			condition: "Fear",
@@ -1241,7 +1241,7 @@ export const tattoos: CompendiumTattoo[] = [
 			},
 			stat_bonuses: {},
 			special_abilities: [
-				"Inscription requires: Starfall Residue, DC 21 tattooing check, 4 hours of uninterrupted work",
+				"Inscription requires: Ooze Core, DC 21 tattooing check, 4 hours of uninterrupted work",
 			],
 		},
 		effects: {
@@ -1274,7 +1274,7 @@ export const tattoos: CompendiumTattoo[] = [
 			recharge: "Long rest",
 			requires_attunement: true,
 			conditions: [
-				"Requires tattoo attunement slot (chest)",
+				"Requires tattoo attunement slot (palms)",
 				"Tattoo attunement is independent from equipment attunement",
 				"Max tattoos = Proficiency Bonus",
 			],
@@ -1327,9 +1327,9 @@ export const tattoos: CompendiumTattoo[] = [
 			ability: "Intelligence",
 			damage_profile: "N/A (utility/defensive)",
 			lattice_interaction:
-				"Rift Essence Suspension resonates with the bearer's mana lattice through dermal contact",
+				"Hellhound Ash resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
-				"Occupies left arm tattoo slot",
+				"Occupies stomach tattoo slot",
 				"Tattoo attunement is separate from equipment attunement",
 			],
 			condition: "Paralysis",
@@ -1349,7 +1349,7 @@ export const tattoos: CompendiumTattoo[] = [
 			},
 			stat_bonuses: {},
 			special_abilities: [
-				"Inscription requires: Rift Essence Suspension, DC 20 tattooing check, 4 hours of uninterrupted work",
+				"Inscription requires: Hellhound Ash, DC 20 tattooing check, 4 hours of uninterrupted work",
 			],
 		},
 		effects: {
@@ -1382,7 +1382,7 @@ export const tattoos: CompendiumTattoo[] = [
 			recharge: "Long rest",
 			requires_attunement: true,
 			conditions: [
-				"Requires tattoo attunement slot (left arm)",
+				"Requires tattoo attunement slot (stomach)",
 				"Tattoo attunement is independent from equipment attunement",
 				"Max tattoos = Proficiency Bonus",
 			],
@@ -1435,9 +1435,9 @@ export const tattoos: CompendiumTattoo[] = [
 			ability: "Presence",
 			damage_profile: "N/A (utility/defensive)",
 			lattice_interaction:
-				"Storm Essence Distillate resonates with the bearer's mana lattice through dermal contact",
+				"Wind Elemental Core resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
-				"Occupies shoulders tattoo slot",
+				"Occupies feet tattoo slot",
 				"Tattoo attunement is separate from equipment attunement",
 			],
 			condition: "Blindness",
@@ -1457,7 +1457,7 @@ export const tattoos: CompendiumTattoo[] = [
 			},
 			stat_bonuses: {},
 			special_abilities: [
-				"Inscription requires: Storm Essence Distillate, DC 11 tattooing check, 4 hours of uninterrupted work",
+				"Inscription requires: Wind Elemental Core, DC 11 tattooing check, 4 hours of uninterrupted work",
 			],
 		},
 		effects: {
@@ -1490,7 +1490,7 @@ export const tattoos: CompendiumTattoo[] = [
 			recharge: "Short rest",
 			requires_attunement: true,
 			conditions: [
-				"Requires tattoo attunement slot (shoulders)",
+				"Requires tattoo attunement slot (feet)",
 				"Tattoo attunement is independent from equipment attunement",
 				"Max tattoos = Proficiency Bonus",
 			],
@@ -1542,9 +1542,9 @@ export const tattoos: CompendiumTattoo[] = [
 			ability: "Intelligence",
 			damage_profile: "N/A (utility/defensive)",
 			lattice_interaction:
-				"Starfall Residue resonates with the bearer's mana lattice through dermal contact",
+				"Doppelganger Tissue resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
-				"Occupies hands tattoo slot",
+				"Occupies throat tattoo slot",
 				"Tattoo attunement is separate from equipment attunement",
 			],
 			condition: "Blindness",
@@ -1564,7 +1564,7 @@ export const tattoos: CompendiumTattoo[] = [
 			},
 			stat_bonuses: {},
 			special_abilities: [
-				"Inscription requires: Starfall Residue, DC 19 tattooing check, 4 hours of uninterrupted work",
+				"Inscription requires: Doppelganger Tissue, DC 19 tattooing check, 4 hours of uninterrupted work",
 			],
 		},
 		effects: {
@@ -1601,7 +1601,7 @@ export const tattoos: CompendiumTattoo[] = [
 			recharge: "Long rest",
 			requires_attunement: true,
 			conditions: [
-				"Requires tattoo attunement slot (hands)",
+				"Requires tattoo attunement slot (throat)",
 				"Tattoo attunement is independent from equipment attunement",
 				"Max tattoos = Proficiency Bonus",
 			],
@@ -1653,9 +1653,9 @@ export const tattoos: CompendiumTattoo[] = [
 			ability: "Intelligence",
 			damage_profile: "utility",
 			lattice_interaction:
-				"Starfall Residue resonates with the bearer's mana lattice through dermal contact",
+				"Ogre Boss Blood resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
-				"Occupies back tattoo slot",
+				"Occupies biceps tattoo slot",
 				"Tattoo attunement is separate from equipment attunement",
 			],
 			condition: "Stunning",
@@ -1675,7 +1675,7 @@ export const tattoos: CompendiumTattoo[] = [
 			},
 			stat_bonuses: {},
 			special_abilities: [
-				"Inscription requires: Starfall Residue, DC 18 tattooing check, 4 hours of uninterrupted work",
+				"Inscription requires: Ogre Boss Blood, DC 18 tattooing check, 4 hours of uninterrupted work",
 			],
 		},
 		effects: {
@@ -1708,7 +1708,7 @@ export const tattoos: CompendiumTattoo[] = [
 			recharge: "Short rest",
 			requires_attunement: true,
 			conditions: [
-				"Requires tattoo attunement slot (back)",
+				"Requires tattoo attunement slot (biceps)",
 				"Tattoo attunement is independent from equipment attunement",
 				"Max tattoos = Proficiency Bonus",
 			],
@@ -1761,9 +1761,9 @@ export const tattoos: CompendiumTattoo[] = [
 			ability: "Presence",
 			damage_profile: "utility",
 			lattice_interaction:
-				"Mana-Crystal Pigment resonates with the bearer's mana lattice through dermal contact",
+				"Wraith Ectoplasm resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
-				"Occupies spine tattoo slot",
+				"Occupies shoulders tattoo slot",
 				"Tattoo attunement is separate from equipment attunement",
 			],
 			condition: "Lethargy",
@@ -1783,7 +1783,7 @@ export const tattoos: CompendiumTattoo[] = [
 			},
 			stat_bonuses: {},
 			special_abilities: [
-				"Inscription requires: Mana-Crystal Pigment, DC 12 tattooing check, 4 hours of uninterrupted work",
+				"Inscription requires: Wraith Ectoplasm, DC 12 tattooing check, 4 hours of uninterrupted work",
 			],
 		},
 		effects: {
@@ -1818,7 +1818,7 @@ export const tattoos: CompendiumTattoo[] = [
 			recharge: "Short rest",
 			requires_attunement: true,
 			conditions: [
-				"Requires tattoo attunement slot (spine)",
+				"Requires tattoo attunement slot (shoulders)",
 				"Tattoo attunement is independent from equipment attunement",
 				"Max tattoos = Proficiency Bonus",
 			],
@@ -1871,9 +1871,9 @@ export const tattoos: CompendiumTattoo[] = [
 			ability: "Intelligence",
 			damage_profile: "N/A (utility/defensive)",
 			lattice_interaction:
-				"Rift Essence Suspension resonates with the bearer's mana lattice through dermal contact",
+				"Mimic Ichor resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
-				"Occupies ribs tattoo slot",
+				"Occupies full back tattoo slot",
 				"Tattoo attunement is separate from equipment attunement",
 			],
 			condition: "Lethargy",
@@ -1893,7 +1893,7 @@ export const tattoos: CompendiumTattoo[] = [
 			},
 			stat_bonuses: {},
 			special_abilities: [
-				"Inscription requires: Rift Essence Suspension, DC 14 tattooing check, 4 hours of uninterrupted work",
+				"Inscription requires: Mimic Ichor, DC 14 tattooing check, 4 hours of uninterrupted work",
 			],
 		},
 		effects: {
@@ -1926,7 +1926,7 @@ export const tattoos: CompendiumTattoo[] = [
 			recharge: "Short rest",
 			requires_attunement: true,
 			conditions: [
-				"Requires tattoo attunement slot (ribs)",
+				"Requires tattoo attunement slot (full back)",
 				"Tattoo attunement is independent from equipment attunement",
 				"Max tattoos = Proficiency Bonus",
 			],
@@ -1979,9 +1979,9 @@ export const tattoos: CompendiumTattoo[] = [
 			ability: "Intelligence",
 			damage_profile: "N/A (utility/defensive)",
 			lattice_interaction:
-				"Abyssal Ichor resonates with the bearer's mana lattice through dermal contact",
+				"Kraken Ink resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
-				"Occupies left arm tattoo slot",
+				"Occupies neck tattoo slot",
 				"Tattoo attunement is separate from equipment attunement",
 			],
 			condition: "Paralysis",
@@ -2001,7 +2001,7 @@ export const tattoos: CompendiumTattoo[] = [
 			},
 			stat_bonuses: {},
 			special_abilities: [
-				"Inscription requires: Abyssal Ichor, DC 20 tattooing check, 4 hours of uninterrupted work",
+				"Inscription requires: Kraken Ink, DC 20 tattooing check, 4 hours of uninterrupted work",
 			],
 		},
 		effects: {
@@ -2033,7 +2033,7 @@ export const tattoos: CompendiumTattoo[] = [
 			recharge: "Short rest",
 			requires_attunement: true,
 			conditions: [
-				"Requires tattoo attunement slot (left arm)",
+				"Requires tattoo attunement slot (neck)",
 				"Tattoo attunement is independent from equipment attunement",
 				"Max tattoos = Proficiency Bonus",
 			],
@@ -2086,9 +2086,9 @@ export const tattoos: CompendiumTattoo[] = [
 			ability: "Intelligence",
 			damage_profile: "N/A (utility/defensive)",
 			lattice_interaction:
-				"Luminite Extract resonates with the bearer's mana lattice through dermal contact",
+				"Thunderbird Spark resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
-				"Occupies hands tattoo slot",
+				"Occupies chest tattoo slot",
 				"Tattoo attunement is separate from equipment attunement",
 			],
 			condition: "Stunning",
@@ -2108,7 +2108,7 @@ export const tattoos: CompendiumTattoo[] = [
 			},
 			stat_bonuses: {},
 			special_abilities: [
-				"Inscription requires: Luminite Extract, DC 21 tattooing check, 4 hours of uninterrupted work",
+				"Inscription requires: Thunderbird Spark, DC 21 tattooing check, 4 hours of uninterrupted work",
 			],
 		},
 		effects: {
@@ -2141,7 +2141,7 @@ export const tattoos: CompendiumTattoo[] = [
 			recharge: "Dawn",
 			requires_attunement: true,
 			conditions: [
-				"Requires tattoo attunement slot (hands)",
+				"Requires tattoo attunement slot (chest)",
 				"Tattoo attunement is independent from equipment attunement",
 				"Max tattoos = Proficiency Bonus",
 			],
@@ -2194,9 +2194,9 @@ export const tattoos: CompendiumTattoo[] = [
 			ability: "Intelligence",
 			damage_profile: "utility",
 			lattice_interaction:
-				"Abyssal Ichor resonates with the bearer's mana lattice through dermal contact",
+				"Void Gate Dust resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
-				"Occupies ribs tattoo slot",
+				"Occupies feet tattoo slot",
 				"Tattoo attunement is separate from equipment attunement",
 			],
 			condition: "Blindness",
@@ -2216,7 +2216,7 @@ export const tattoos: CompendiumTattoo[] = [
 			},
 			stat_bonuses: {},
 			special_abilities: [
-				"Inscription requires: Abyssal Ichor, DC 18 tattooing check, 4 hours of uninterrupted work",
+				"Inscription requires: Void Gate Dust, DC 18 tattooing check, 4 hours of uninterrupted work",
 			],
 		},
 		effects: {
@@ -2249,7 +2249,7 @@ export const tattoos: CompendiumTattoo[] = [
 			recharge: "Long rest",
 			requires_attunement: true,
 			conditions: [
-				"Requires tattoo attunement slot (ribs)",
+				"Requires tattoo attunement slot (feet)",
 				"Tattoo attunement is independent from equipment attunement",
 				"Max tattoos = Proficiency Bonus",
 			],
@@ -2300,9 +2300,9 @@ export const tattoos: CompendiumTattoo[] = [
 			ability: "Presence",
 			damage_profile: "N/A (utility/defensive)",
 			lattice_interaction:
-				"Storm Essence Distillate resonates with the bearer's mana lattice through dermal contact",
+				"Harpy Queen Marrow resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
-				"Occupies shoulders tattoo slot",
+				"Occupies collarbone tattoo slot",
 				"Tattoo attunement is separate from equipment attunement",
 			],
 			condition: "Paralysis",
@@ -2322,7 +2322,7 @@ export const tattoos: CompendiumTattoo[] = [
 			},
 			stat_bonuses: {},
 			special_abilities: [
-				"Inscription requires: Storm Essence Distillate, DC 15 tattooing check, 4 hours of uninterrupted work",
+				"Inscription requires: Harpy Queen Marrow, DC 15 tattooing check, 4 hours of uninterrupted work",
 			],
 		},
 		effects: {
@@ -2355,7 +2355,7 @@ export const tattoos: CompendiumTattoo[] = [
 			recharge: "Short rest",
 			requires_attunement: true,
 			conditions: [
-				"Requires tattoo attunement slot (shoulders)",
+				"Requires tattoo attunement slot (collarbone)",
 				"Tattoo attunement is independent from equipment attunement",
 				"Max tattoos = Proficiency Bonus",
 			],
@@ -2406,9 +2406,9 @@ export const tattoos: CompendiumTattoo[] = [
 			ability: "Vitality",
 			damage_profile: "N/A (utility/defensive)",
 			lattice_interaction:
-				"Shadowblood Tincture resonates with the bearer's mana lattice through dermal contact",
+				"Blast-Jelly resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
-				"Occupies left arm tattoo slot",
+				"Occupies shoulders tattoo slot",
 				"Tattoo attunement is separate from equipment attunement",
 			],
 			condition: "Paralysis",
@@ -2428,7 +2428,7 @@ export const tattoos: CompendiumTattoo[] = [
 			},
 			stat_bonuses: {},
 			special_abilities: [
-				"Inscription requires: Shadowblood Tincture, DC 16 tattooing check, 4 hours of uninterrupted work",
+				"Inscription requires: Blast-Jelly, DC 16 tattooing check, 4 hours of uninterrupted work",
 			],
 		},
 		effects: {
@@ -2464,7 +2464,7 @@ export const tattoos: CompendiumTattoo[] = [
 			recharge: "Dawn",
 			requires_attunement: true,
 			conditions: [
-				"Requires tattoo attunement slot (left arm)",
+				"Requires tattoo attunement slot (shoulders)",
 				"Tattoo attunement is independent from equipment attunement",
 				"Max tattoos = Proficiency Bonus",
 			],
@@ -2481,8 +2481,8 @@ export const tattoos: CompendiumTattoo[] = [
 	},
 	{
 		id: "tattoo_24",
-		name: "anomaly's Breath",
-		display_name: "anomaly's Breath",
+		name: "Anomaly's Breath",
+		display_name: "Anomaly's Breath",
 		description:
 			"Breathe out a cloud of choking, magical exhaust. This ink weaves directly into the subject's soul, imbuing their physical form with the essence of slain dungeon beasts.",
 		rarity: "rare",
@@ -2517,9 +2517,9 @@ export const tattoos: CompendiumTattoo[] = [
 			ability: "Intelligence",
 			damage_profile: "N/A (utility/defensive)",
 			lattice_interaction:
-				"Storm Essence Distillate resonates with the bearer's mana lattice through dermal contact",
+				"Green anomaly Bile resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
-				"Occupies hands tattoo slot",
+				"Occupies lungs tattoo slot",
 				"Tattoo attunement is separate from equipment attunement",
 			],
 			condition: "Stunning",
@@ -2539,7 +2539,7 @@ export const tattoos: CompendiumTattoo[] = [
 			},
 			stat_bonuses: {},
 			special_abilities: [
-				"Inscription requires: Storm Essence Distillate, DC 12 tattooing check, 4 hours of uninterrupted work",
+				"Inscription requires: Green anomaly Bile, DC 12 tattooing check, 4 hours of uninterrupted work",
 			],
 		},
 		effects: {
@@ -2576,7 +2576,7 @@ export const tattoos: CompendiumTattoo[] = [
 			recharge: "Long rest",
 			requires_attunement: true,
 			conditions: [
-				"Requires tattoo attunement slot (hands)",
+				"Requires tattoo attunement slot (lungs)",
 				"Tattoo attunement is independent from equipment attunement",
 				"Max tattoos = Proficiency Bonus",
 			],
@@ -2629,9 +2629,9 @@ export const tattoos: CompendiumTattoo[] = [
 			ability: "Intelligence",
 			damage_profile: "utility",
 			lattice_interaction:
-				"Rift Essence Suspension resonates with the bearer's mana lattice through dermal contact",
+				"Time-Weaver Sand resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
-				"Occupies chest tattoo slot",
+				"Occupies temple tattoo slot",
 				"Tattoo attunement is separate from equipment attunement",
 			],
 			condition: "Paralysis",
@@ -2651,7 +2651,7 @@ export const tattoos: CompendiumTattoo[] = [
 			},
 			stat_bonuses: {},
 			special_abilities: [
-				"Inscription requires: Rift Essence Suspension, DC 14 tattooing check, 4 hours of uninterrupted work",
+				"Inscription requires: Time-Weaver Sand, DC 14 tattooing check, 4 hours of uninterrupted work",
 			],
 		},
 		effects: {
@@ -2684,7 +2684,7 @@ export const tattoos: CompendiumTattoo[] = [
 			recharge: "Dawn",
 			requires_attunement: true,
 			conditions: [
-				"Requires tattoo attunement slot (chest)",
+				"Requires tattoo attunement slot (temple)",
 				"Tattoo attunement is independent from equipment attunement",
 				"Max tattoos = Proficiency Bonus",
 			],
@@ -2735,9 +2735,9 @@ export const tattoos: CompendiumTattoo[] = [
 			ability: "Presence",
 			damage_profile: "utility",
 			lattice_interaction:
-				"Phoenix Ash Emulsion resonates with the bearer's mana lattice through dermal contact",
+				"Umbral Anomaly Essence resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
-				"Occupies left arm tattoo slot",
+				"Occupies heart tattoo slot",
 				"Tattoo attunement is separate from equipment attunement",
 			],
 			condition: "Blindness",
@@ -2757,7 +2757,7 @@ export const tattoos: CompendiumTattoo[] = [
 			},
 			stat_bonuses: {},
 			special_abilities: [
-				"Inscription requires: Phoenix Ash Emulsion, DC 12 tattooing check, 4 hours of uninterrupted work",
+				"Inscription requires: Umbral Anomaly Essence, DC 12 tattooing check, 4 hours of uninterrupted work",
 			],
 		},
 		effects: {
@@ -2790,7 +2790,7 @@ export const tattoos: CompendiumTattoo[] = [
 			recharge: "Long rest",
 			requires_attunement: true,
 			conditions: [
-				"Requires tattoo attunement slot (left arm)",
+				"Requires tattoo attunement slot (heart)",
 				"Tattoo attunement is independent from equipment attunement",
 				"Max tattoos = Proficiency Bonus",
 			],
@@ -2843,9 +2843,9 @@ export const tattoos: CompendiumTattoo[] = [
 			ability: "Presence",
 			damage_profile: "utility",
 			lattice_interaction:
-				"Luminite Extract resonates with the bearer's mana lattice through dermal contact",
+				"Mind-Eater Fluid resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
-				"Occupies face tattoo slot",
+				"Occupies forehead tattoo slot",
 				"Tattoo attunement is separate from equipment attunement",
 			],
 			condition: "Fear",
@@ -2865,7 +2865,7 @@ export const tattoos: CompendiumTattoo[] = [
 			},
 			stat_bonuses: {},
 			special_abilities: [
-				"Inscription requires: Luminite Extract, DC 21 tattooing check, 4 hours of uninterrupted work",
+				"Inscription requires: Mind-Eater Fluid, DC 21 tattooing check, 4 hours of uninterrupted work",
 			],
 		},
 		effects: {
@@ -2897,7 +2897,7 @@ export const tattoos: CompendiumTattoo[] = [
 			recharge: "Dawn",
 			requires_attunement: true,
 			conditions: [
-				"Requires tattoo attunement slot (face)",
+				"Requires tattoo attunement slot (forehead)",
 				"Tattoo attunement is independent from equipment attunement",
 				"Max tattoos = Proficiency Bonus",
 			],
@@ -2950,9 +2950,9 @@ export const tattoos: CompendiumTattoo[] = [
 			ability: "Presence",
 			damage_profile: "utility",
 			lattice_interaction:
-				"Shadowblood Tincture resonates with the bearer's mana lattice through dermal contact",
+				"Manticore Venom resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
-				"Occupies shoulders tattoo slot",
+				"Occupies wrists tattoo slot",
 				"Tattoo attunement is separate from equipment attunement",
 			],
 			condition: "Stunning",
@@ -2972,7 +2972,7 @@ export const tattoos: CompendiumTattoo[] = [
 			},
 			stat_bonuses: {},
 			special_abilities: [
-				"Inscription requires: Shadowblood Tincture, DC 14 tattooing check, 4 hours of uninterrupted work",
+				"Inscription requires: Manticore Venom, DC 14 tattooing check, 4 hours of uninterrupted work",
 			],
 		},
 		effects: {
@@ -3004,7 +3004,7 @@ export const tattoos: CompendiumTattoo[] = [
 			recharge: "Dawn",
 			requires_attunement: true,
 			conditions: [
-				"Requires tattoo attunement slot (shoulders)",
+				"Requires tattoo attunement slot (wrists)",
 				"Tattoo attunement is independent from equipment attunement",
 				"Max tattoos = Proficiency Bonus",
 			],
@@ -3057,9 +3057,9 @@ export const tattoos: CompendiumTattoo[] = [
 			ability: "Intelligence",
 			damage_profile: "N/A (utility/defensive)",
 			lattice_interaction:
-				"Mana-Crystal Pigment resonates with the bearer's mana lattice through dermal contact",
+				"Beholder-Class Eye Dust resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
-				"Occupies hands tattoo slot",
+				"Occupies palms tattoo slot",
 				"Tattoo attunement is separate from equipment attunement",
 			],
 			condition: "Fear",
@@ -3079,7 +3079,7 @@ export const tattoos: CompendiumTattoo[] = [
 			},
 			stat_bonuses: {},
 			special_abilities: [
-				"Inscription requires: Mana-Crystal Pigment, DC 11 tattooing check, 4 hours of uninterrupted work",
+				"Inscription requires: Beholder-Class Eye Dust, DC 11 tattooing check, 4 hours of uninterrupted work",
 			],
 		},
 		effects: {
@@ -3112,7 +3112,7 @@ export const tattoos: CompendiumTattoo[] = [
 			recharge: "Dawn",
 			requires_attunement: true,
 			conditions: [
-				"Requires tattoo attunement slot (hands)",
+				"Requires tattoo attunement slot (palms)",
 				"Tattoo attunement is independent from equipment attunement",
 				"Max tattoos = Proficiency Bonus",
 			],
@@ -3163,9 +3163,9 @@ export const tattoos: CompendiumTattoo[] = [
 			ability: "Vitality",
 			damage_profile: "N/A (utility/defensive)",
 			lattice_interaction:
-				"Mana-Crystal Pigment resonates with the bearer's mana lattice through dermal contact",
+				"Troll Boss Blood resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
-				"Occupies back tattoo slot",
+				"Occupies chest tattoo slot",
 				"Tattoo attunement is separate from equipment attunement",
 			],
 			condition: "Paralysis",
@@ -3185,7 +3185,7 @@ export const tattoos: CompendiumTattoo[] = [
 			},
 			stat_bonuses: {},
 			special_abilities: [
-				"Inscription requires: Mana-Crystal Pigment, DC 19 tattooing check, 4 hours of uninterrupted work",
+				"Inscription requires: Troll Boss Blood, DC 19 tattooing check, 4 hours of uninterrupted work",
 			],
 		},
 		effects: {
@@ -3218,7 +3218,7 @@ export const tattoos: CompendiumTattoo[] = [
 			recharge: "Dawn",
 			requires_attunement: true,
 			conditions: [
-				"Requires tattoo attunement slot (back)",
+				"Requires tattoo attunement slot (chest)",
 				"Tattoo attunement is independent from equipment attunement",
 				"Max tattoos = Proficiency Bonus",
 			],
@@ -3272,9 +3272,9 @@ export const tattoos: CompendiumTattoo[] = [
 			ability: "Intelligence",
 			damage_profile: "utility",
 			lattice_interaction:
-				"Rift Essence Suspension resonates with the bearer's mana lattice through dermal contact",
+				"Frost-Giant Bone Marrow resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
-				"Occupies left arm tattoo slot",
+				"Occupies spine tattoo slot",
 				"Tattoo attunement is separate from equipment attunement",
 			],
 			condition: "Lethargy",
@@ -3294,7 +3294,7 @@ export const tattoos: CompendiumTattoo[] = [
 			},
 			stat_bonuses: {},
 			special_abilities: [
-				"Inscription requires: Rift Essence Suspension, DC 20 tattooing check, 4 hours of uninterrupted work",
+				"Inscription requires: Frost-Giant Bone Marrow, DC 20 tattooing check, 4 hours of uninterrupted work",
 			],
 		},
 		effects: {
@@ -3326,7 +3326,7 @@ export const tattoos: CompendiumTattoo[] = [
 			recharge: "Short rest",
 			requires_attunement: true,
 			conditions: [
-				"Requires tattoo attunement slot (left arm)",
+				"Requires tattoo attunement slot (spine)",
 				"Tattoo attunement is independent from equipment attunement",
 				"Max tattoos = Proficiency Bonus",
 			],
@@ -3379,9 +3379,9 @@ export const tattoos: CompendiumTattoo[] = [
 			ability: "Vitality",
 			damage_profile: "N/A (utility/defensive)",
 			lattice_interaction:
-				"Void Ink resonates with the bearer's mana lattice through dermal contact",
+				"Phoenix Ash resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
-				"Occupies back tattoo slot",
+				"Occupies full torso tattoo slot",
 				"Tattoo attunement is separate from equipment attunement",
 			],
 			condition: "Blindness",
@@ -3401,7 +3401,7 @@ export const tattoos: CompendiumTattoo[] = [
 			},
 			stat_bonuses: {},
 			special_abilities: [
-				"Inscription requires: Void Ink, DC 19 tattooing check, 4 hours of uninterrupted work",
+				"Inscription requires: Phoenix Ash, DC 19 tattooing check, 4 hours of uninterrupted work",
 			],
 		},
 		effects: {
@@ -3434,7 +3434,7 @@ export const tattoos: CompendiumTattoo[] = [
 			recharge: "Dawn",
 			requires_attunement: true,
 			conditions: [
-				"Requires tattoo attunement slot (back)",
+				"Requires tattoo attunement slot (full torso)",
 				"Tattoo attunement is independent from equipment attunement",
 				"Max tattoos = Proficiency Bonus",
 			],
@@ -3485,9 +3485,9 @@ export const tattoos: CompendiumTattoo[] = [
 			ability: "Vitality",
 			damage_profile: "utility",
 			lattice_interaction:
-				"Storm Essence Distillate resonates with the bearer's mana lattice through dermal contact",
+				"Vampire Lord Ash resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
-				"Occupies right arm tattoo slot",
+				"Occupies forearms tattoo slot",
 				"Tattoo attunement is separate from equipment attunement",
 			],
 			condition: "Lethargy",
@@ -3507,7 +3507,7 @@ export const tattoos: CompendiumTattoo[] = [
 			},
 			stat_bonuses: {},
 			special_abilities: [
-				"Inscription requires: Storm Essence Distillate, DC 19 tattooing check, 4 hours of uninterrupted work",
+				"Inscription requires: Vampire Lord Ash, DC 19 tattooing check, 4 hours of uninterrupted work",
 			],
 		},
 		effects: {
@@ -3539,7 +3539,7 @@ export const tattoos: CompendiumTattoo[] = [
 			recharge: "Dawn",
 			requires_attunement: true,
 			conditions: [
-				"Requires tattoo attunement slot (right arm)",
+				"Requires tattoo attunement slot (forearms)",
 				"Tattoo attunement is independent from equipment attunement",
 				"Max tattoos = Proficiency Bonus",
 			],
@@ -3593,9 +3593,9 @@ export const tattoos: CompendiumTattoo[] = [
 			ability: "Intelligence",
 			damage_profile: "N/A (utility/defensive)",
 			lattice_interaction:
-				"Mana-Crystal Pigment resonates with the bearer's mana lattice through dermal contact",
+				"Poltergeist Essence resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
-				"Occupies shoulders tattoo slot",
+				"Occupies knuckles tattoo slot",
 				"Tattoo attunement is separate from equipment attunement",
 			],
 			condition: "Paralysis",
@@ -3615,7 +3615,7 @@ export const tattoos: CompendiumTattoo[] = [
 			},
 			stat_bonuses: {},
 			special_abilities: [
-				"Inscription requires: Mana-Crystal Pigment, DC 20 tattooing check, 4 hours of uninterrupted work",
+				"Inscription requires: Poltergeist Essence, DC 20 tattooing check, 4 hours of uninterrupted work",
 			],
 		},
 		effects: {
@@ -3647,7 +3647,7 @@ export const tattoos: CompendiumTattoo[] = [
 			recharge: "Long rest",
 			requires_attunement: true,
 			conditions: [
-				"Requires tattoo attunement slot (shoulders)",
+				"Requires tattoo attunement slot (knuckles)",
 				"Tattoo attunement is independent from equipment attunement",
 				"Max tattoos = Proficiency Bonus",
 			],
@@ -3700,9 +3700,9 @@ export const tattoos: CompendiumTattoo[] = [
 			ability: "Presence",
 			damage_profile: "utility",
 			lattice_interaction:
-				"Rift Essence Suspension resonates with the bearer's mana lattice through dermal contact",
+				"Shadow Lord Dust resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
-				"Occupies ribs tattoo slot",
+				"Occupies back tattoo slot",
 				"Tattoo attunement is separate from equipment attunement",
 			],
 			condition: "Lethargy",
@@ -3722,7 +3722,7 @@ export const tattoos: CompendiumTattoo[] = [
 			},
 			stat_bonuses: {},
 			special_abilities: [
-				"Inscription requires: Rift Essence Suspension, DC 17 tattooing check, 4 hours of uninterrupted work",
+				"Inscription requires: Shadow Lord Dust, DC 17 tattooing check, 4 hours of uninterrupted work",
 			],
 		},
 		effects: {
@@ -3759,7 +3759,7 @@ export const tattoos: CompendiumTattoo[] = [
 			recharge: "Long rest",
 			requires_attunement: true,
 			conditions: [
-				"Requires tattoo attunement slot (ribs)",
+				"Requires tattoo attunement slot (back)",
 				"Tattoo attunement is independent from equipment attunement",
 				"Max tattoos = Proficiency Bonus",
 			],
@@ -3810,9 +3810,9 @@ export const tattoos: CompendiumTattoo[] = [
 			ability: "Presence",
 			damage_profile: "utility",
 			lattice_interaction:
-				"Starfall Residue resonates with the bearer's mana lattice through dermal contact",
+				"Gate-Weaver Thread resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
-				"Occupies back tattoo slot",
+				"Occupies thigh tattoo slot",
 				"Tattoo attunement is separate from equipment attunement",
 			],
 			condition: "Fear",
@@ -3832,7 +3832,7 @@ export const tattoos: CompendiumTattoo[] = [
 			},
 			stat_bonuses: {},
 			special_abilities: [
-				"Inscription requires: Starfall Residue, DC 12 tattooing check, 4 hours of uninterrupted work",
+				"Inscription requires: Gate-Weaver Thread, DC 12 tattooing check, 4 hours of uninterrupted work",
 			],
 		},
 		effects: {
@@ -3863,7 +3863,7 @@ export const tattoos: CompendiumTattoo[] = [
 			recharge: "Dawn",
 			requires_attunement: true,
 			conditions: [
-				"Requires tattoo attunement slot (back)",
+				"Requires tattoo attunement slot (thigh)",
 				"Tattoo attunement is independent from equipment attunement",
 				"Max tattoos = Proficiency Bonus",
 			],
@@ -3914,7 +3914,7 @@ export const tattoos: CompendiumTattoo[] = [
 			ability: "Presence",
 			damage_profile: "N/A (utility/defensive)",
 			lattice_interaction:
-				"Shadowblood Tincture resonates with the bearer's mana lattice through dermal contact",
+				"Beholder-Class Central Eye resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
 				"Occupies chest tattoo slot",
 				"Tattoo attunement is separate from equipment attunement",
@@ -3936,7 +3936,7 @@ export const tattoos: CompendiumTattoo[] = [
 			},
 			stat_bonuses: {},
 			special_abilities: [
-				"Inscription requires: Shadowblood Tincture, DC 14 tattooing check, 4 hours of uninterrupted work",
+				"Inscription requires: Beholder-Class Central Eye, DC 14 tattooing check, 4 hours of uninterrupted work",
 			],
 		},
 		effects: {
@@ -4022,9 +4022,9 @@ export const tattoos: CompendiumTattoo[] = [
 			ability: "Intelligence",
 			damage_profile: "utility",
 			lattice_interaction:
-				"Shadowblood Tincture resonates with the bearer's mana lattice through dermal contact",
+				"Displacer Beast Blood resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
-				"Occupies ribs tattoo slot",
+				"Occupies calves tattoo slot",
 				"Tattoo attunement is separate from equipment attunement",
 			],
 			condition: "Fear",
@@ -4044,7 +4044,7 @@ export const tattoos: CompendiumTattoo[] = [
 			},
 			stat_bonuses: {},
 			special_abilities: [
-				"Inscription requires: Shadowblood Tincture, DC 10 tattooing check, 4 hours of uninterrupted work",
+				"Inscription requires: Displacer Beast Blood, DC 10 tattooing check, 4 hours of uninterrupted work",
 			],
 		},
 		effects: {
@@ -4077,7 +4077,7 @@ export const tattoos: CompendiumTattoo[] = [
 			recharge: "Short rest",
 			requires_attunement: true,
 			conditions: [
-				"Requires tattoo attunement slot (ribs)",
+				"Requires tattoo attunement slot (calves)",
 				"Tattoo attunement is independent from equipment attunement",
 				"Max tattoos = Proficiency Bonus",
 			],
@@ -4130,9 +4130,9 @@ export const tattoos: CompendiumTattoo[] = [
 			ability: "Presence",
 			damage_profile: "N/A (utility/defensive)",
 			lattice_interaction:
-				"Titan Marrow Blend resonates with the bearer's mana lattice through dermal contact",
+				"Dungeon Iron resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
-				"Occupies neck tattoo slot",
+				"Occupies full body tattoo slot",
 				"Tattoo attunement is separate from equipment attunement",
 			],
 			condition: "Fear",
@@ -4152,7 +4152,7 @@ export const tattoos: CompendiumTattoo[] = [
 			},
 			stat_bonuses: {},
 			special_abilities: [
-				"Inscription requires: Titan Marrow Blend, DC 10 tattooing check, 4 hours of uninterrupted work",
+				"Inscription requires: Dungeon Iron, DC 10 tattooing check, 4 hours of uninterrupted work",
 			],
 		},
 		effects: {
@@ -4189,7 +4189,7 @@ export const tattoos: CompendiumTattoo[] = [
 			recharge: "Long rest",
 			requires_attunement: true,
 			conditions: [
-				"Requires tattoo attunement slot (neck)",
+				"Requires tattoo attunement slot (full body)",
 				"Tattoo attunement is independent from equipment attunement",
 				"Max tattoos = Proficiency Bonus",
 			],
@@ -4240,9 +4240,9 @@ export const tattoos: CompendiumTattoo[] = [
 			ability: "Intelligence",
 			damage_profile: "utility",
 			lattice_interaction:
-				"Rift Essence Suspension resonates with the bearer's mana lattice through dermal contact",
+				"Astral Dreadnought Scale resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
-				"Occupies hands tattoo slot",
+				"Occupies palms tattoo slot",
 				"Tattoo attunement is separate from equipment attunement",
 			],
 			condition: "Stunning",
@@ -4262,7 +4262,7 @@ export const tattoos: CompendiumTattoo[] = [
 			},
 			stat_bonuses: {},
 			special_abilities: [
-				"Inscription requires: Rift Essence Suspension, DC 19 tattooing check, 4 hours of uninterrupted work",
+				"Inscription requires: Astral Dreadnought Scale, DC 19 tattooing check, 4 hours of uninterrupted work",
 			],
 		},
 		effects: {
@@ -4295,7 +4295,7 @@ export const tattoos: CompendiumTattoo[] = [
 			recharge: "Short rest",
 			requires_attunement: true,
 			conditions: [
-				"Requires tattoo attunement slot (hands)",
+				"Requires tattoo attunement slot (palms)",
 				"Tattoo attunement is independent from equipment attunement",
 				"Max tattoos = Proficiency Bonus",
 			],
@@ -4349,9 +4349,9 @@ export const tattoos: CompendiumTattoo[] = [
 			ability: "Presence",
 			damage_profile: "utility",
 			lattice_interaction:
-				"Phoenix Ash Emulsion resonates with the bearer's mana lattice through dermal contact",
+				"Reaper Scythe Dust resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
-				"Occupies spine tattoo slot",
+				"Occupies right arm tattoo slot",
 				"Tattoo attunement is separate from equipment attunement",
 			],
 			condition: "Fear",
@@ -4371,7 +4371,7 @@ export const tattoos: CompendiumTattoo[] = [
 			},
 			stat_bonuses: {},
 			special_abilities: [
-				"Inscription requires: Phoenix Ash Emulsion, DC 16 tattooing check, 4 hours of uninterrupted work",
+				"Inscription requires: Reaper Scythe Dust, DC 16 tattooing check, 4 hours of uninterrupted work",
 			],
 		},
 		effects: {
@@ -4403,7 +4403,7 @@ export const tattoos: CompendiumTattoo[] = [
 			recharge: "Long rest",
 			requires_attunement: true,
 			conditions: [
-				"Requires tattoo attunement slot (spine)",
+				"Requires tattoo attunement slot (right arm)",
 				"Tattoo attunement is independent from equipment attunement",
 				"Max tattoos = Proficiency Bonus",
 			],
@@ -4420,8 +4420,8 @@ export const tattoos: CompendiumTattoo[] = [
 	},
 	{
 		id: "tattoo_42",
-		name: "anomaly's Ascendancy",
-		display_name: "anomaly's Ascendancy",
+		name: "Anomaly's Ascendancy",
+		display_name: "Anomaly's Ascendancy",
 		description:
 			"Sprout ethereal anomaly wings of pure mana. This ink weaves directly into the subject's soul, imbuing their physical form with the essence of slain dungeon beasts.",
 		rarity: "legendary",
@@ -4456,9 +4456,9 @@ export const tattoos: CompendiumTattoo[] = [
 			ability: "Intelligence",
 			damage_profile: "utility",
 			lattice_interaction:
-				"Starfall Residue resonates with the bearer's mana lattice through dermal contact",
+				"Ancient anomaly Blood resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
-				"Occupies shoulders tattoo slot",
+				"Occupies shoulder blades tattoo slot",
 				"Tattoo attunement is separate from equipment attunement",
 			],
 			condition: "Fear",
@@ -4478,7 +4478,7 @@ export const tattoos: CompendiumTattoo[] = [
 			},
 			stat_bonuses: {},
 			special_abilities: [
-				"Inscription requires: Starfall Residue, DC 18 tattooing check, 4 hours of uninterrupted work",
+				"Inscription requires: Ancient anomaly Blood, DC 18 tattooing check, 4 hours of uninterrupted work",
 			],
 		},
 		effects: {
@@ -4514,7 +4514,7 @@ export const tattoos: CompendiumTattoo[] = [
 			recharge: "Short rest",
 			requires_attunement: true,
 			conditions: [
-				"Requires tattoo attunement slot (shoulders)",
+				"Requires tattoo attunement slot (shoulder blades)",
 				"Tattoo attunement is independent from equipment attunement",
 				"Max tattoos = Proficiency Bonus",
 			],
@@ -4567,7 +4567,7 @@ export const tattoos: CompendiumTattoo[] = [
 			ability: "Vitality",
 			damage_profile: "utility",
 			lattice_interaction:
-				"Shadowblood Tincture resonates with the bearer's mana lattice through dermal contact",
+				"Leviathan Scale resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
 				"Occupies chest tattoo slot",
 				"Tattoo attunement is separate from equipment attunement",
@@ -4589,7 +4589,7 @@ export const tattoos: CompendiumTattoo[] = [
 			},
 			stat_bonuses: {},
 			special_abilities: [
-				"Inscription requires: Shadowblood Tincture, DC 12 tattooing check, 4 hours of uninterrupted work",
+				"Inscription requires: Leviathan Scale, DC 12 tattooing check, 4 hours of uninterrupted work",
 			],
 		},
 		effects: {
@@ -4672,9 +4672,9 @@ export const tattoos: CompendiumTattoo[] = [
 			ability: "Presence",
 			damage_profile: "utility",
 			lattice_interaction:
-				"Abyssal Ichor resonates with the bearer's mana lattice through dermal contact",
+				"Tarrasque-Class Bone Dust resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
-				"Occupies shoulders tattoo slot",
+				"Occupies legs tattoo slot",
 				"Tattoo attunement is separate from equipment attunement",
 			],
 			condition: "Fear",
@@ -4694,7 +4694,7 @@ export const tattoos: CompendiumTattoo[] = [
 			},
 			stat_bonuses: {},
 			special_abilities: [
-				"Inscription requires: Abyssal Ichor, DC 18 tattooing check, 4 hours of uninterrupted work",
+				"Inscription requires: Tarrasque-Class Bone Dust, DC 18 tattooing check, 4 hours of uninterrupted work",
 			],
 		},
 		effects: {
@@ -4727,7 +4727,7 @@ export const tattoos: CompendiumTattoo[] = [
 			recharge: "Long rest",
 			requires_attunement: true,
 			conditions: [
-				"Requires tattoo attunement slot (shoulders)",
+				"Requires tattoo attunement slot (legs)",
 				"Tattoo attunement is independent from equipment attunement",
 				"Max tattoos = Proficiency Bonus",
 			],
@@ -4778,9 +4778,9 @@ export const tattoos: CompendiumTattoo[] = [
 			ability: "Intelligence",
 			damage_profile: "utility",
 			lattice_interaction:
-				"Mana-Crystal Pigment resonates with the bearer's mana lattice through dermal contact",
+				"Angel-Class Anomaly Essence resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
-				"Occupies ribs tattoo slot",
+				"Occupies heart tattoo slot",
 				"Tattoo attunement is separate from equipment attunement",
 			],
 			condition: "Blindness",
@@ -4800,7 +4800,7 @@ export const tattoos: CompendiumTattoo[] = [
 			},
 			stat_bonuses: {},
 			special_abilities: [
-				"Inscription requires: Mana-Crystal Pigment, DC 20 tattooing check, 4 hours of uninterrupted work",
+				"Inscription requires: Angel-Class Anomaly Essence, DC 20 tattooing check, 4 hours of uninterrupted work",
 			],
 		},
 		effects: {
@@ -4833,7 +4833,7 @@ export const tattoos: CompendiumTattoo[] = [
 			recharge: "Dawn",
 			requires_attunement: true,
 			conditions: [
-				"Requires tattoo attunement slot (ribs)",
+				"Requires tattoo attunement slot (heart)",
 				"Tattoo attunement is independent from equipment attunement",
 				"Max tattoos = Proficiency Bonus",
 			],
@@ -4886,9 +4886,9 @@ export const tattoos: CompendiumTattoo[] = [
 			ability: "Presence",
 			damage_profile: "N/A (utility/defensive)",
 			lattice_interaction:
-				"Titan Marrow Blend resonates with the bearer's mana lattice through dermal contact",
+				"Balor Blood resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
-				"Occupies shoulders tattoo slot",
+				"Occupies face tattoo slot",
 				"Tattoo attunement is separate from equipment attunement",
 			],
 			condition: "Stunning",
@@ -4908,7 +4908,7 @@ export const tattoos: CompendiumTattoo[] = [
 			},
 			stat_bonuses: {},
 			special_abilities: [
-				"Inscription requires: Titan Marrow Blend, DC 14 tattooing check, 4 hours of uninterrupted work",
+				"Inscription requires: Balor Blood, DC 14 tattooing check, 4 hours of uninterrupted work",
 			],
 		},
 		effects: {
@@ -4940,7 +4940,7 @@ export const tattoos: CompendiumTattoo[] = [
 			recharge: "Short rest",
 			requires_attunement: true,
 			conditions: [
-				"Requires tattoo attunement slot (shoulders)",
+				"Requires tattoo attunement slot (face)",
 				"Tattoo attunement is independent from equipment attunement",
 				"Max tattoos = Proficiency Bonus",
 			],
@@ -4993,9 +4993,9 @@ export const tattoos: CompendiumTattoo[] = [
 			ability: "Vitality",
 			damage_profile: "utility",
 			lattice_interaction:
-				"Rift Essence Suspension resonates with the bearer's mana lattice through dermal contact",
+				"Lich King Dust resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
-				"Occupies left leg tattoo slot",
+				"Occupies forehead tattoo slot",
 				"Tattoo attunement is separate from equipment attunement",
 			],
 			condition: "Paralysis",
@@ -5015,7 +5015,7 @@ export const tattoos: CompendiumTattoo[] = [
 			},
 			stat_bonuses: {},
 			special_abilities: [
-				"Inscription requires: Rift Essence Suspension, DC 19 tattooing check, 4 hours of uninterrupted work",
+				"Inscription requires: Lich King Dust, DC 19 tattooing check, 4 hours of uninterrupted work",
 			],
 		},
 		effects: {
@@ -5048,7 +5048,7 @@ export const tattoos: CompendiumTattoo[] = [
 			recharge: "Long rest",
 			requires_attunement: true,
 			conditions: [
-				"Requires tattoo attunement slot (left leg)",
+				"Requires tattoo attunement slot (forehead)",
 				"Tattoo attunement is independent from equipment attunement",
 				"Max tattoos = Proficiency Bonus",
 			],
@@ -5101,9 +5101,9 @@ export const tattoos: CompendiumTattoo[] = [
 			ability: "Presence",
 			damage_profile: "N/A (utility/defensive)",
 			lattice_interaction:
-				"Phoenix Ash Emulsion resonates with the bearer's mana lattice through dermal contact",
+				"Yggdrasil-Class Sap resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
-				"Occupies right arm tattoo slot",
+				"Occupies spine tattoo slot",
 				"Tattoo attunement is separate from equipment attunement",
 			],
 			condition: "Stunning",
@@ -5123,7 +5123,7 @@ export const tattoos: CompendiumTattoo[] = [
 			},
 			stat_bonuses: {},
 			special_abilities: [
-				"Inscription requires: Phoenix Ash Emulsion, DC 21 tattooing check, 4 hours of uninterrupted work",
+				"Inscription requires: Yggdrasil-Class Sap, DC 21 tattooing check, 4 hours of uninterrupted work",
 			],
 		},
 		effects: {
@@ -5156,7 +5156,7 @@ export const tattoos: CompendiumTattoo[] = [
 			recharge: "Long rest",
 			requires_attunement: true,
 			conditions: [
-				"Requires tattoo attunement slot (right arm)",
+				"Requires tattoo attunement slot (spine)",
 				"Tattoo attunement is independent from equipment attunement",
 				"Max tattoos = Proficiency Bonus",
 			],
@@ -5209,9 +5209,9 @@ export const tattoos: CompendiumTattoo[] = [
 			ability: "Presence",
 			damage_profile: "utility",
 			lattice_interaction:
-				"Mana-Crystal Pigment resonates with the bearer's mana lattice through dermal contact",
+				"Astral Diamond Dust resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
-				"Occupies back tattoo slot",
+				"Occupies third eye tattoo slot",
 				"Tattoo attunement is separate from equipment attunement",
 			],
 			condition: "Fear",
@@ -5231,7 +5231,7 @@ export const tattoos: CompendiumTattoo[] = [
 			},
 			stat_bonuses: {},
 			special_abilities: [
-				"Inscription requires: Mana-Crystal Pigment, DC 12 tattooing check, 4 hours of uninterrupted work",
+				"Inscription requires: Astral Diamond Dust, DC 12 tattooing check, 4 hours of uninterrupted work",
 			],
 		},
 		effects: {
@@ -5264,7 +5264,7 @@ export const tattoos: CompendiumTattoo[] = [
 			recharge: "Short rest",
 			requires_attunement: true,
 			conditions: [
-				"Requires tattoo attunement slot (back)",
+				"Requires tattoo attunement slot (third eye)",
 				"Tattoo attunement is independent from equipment attunement",
 				"Max tattoos = Proficiency Bonus",
 			],
@@ -5314,9 +5314,9 @@ export const tattoos: CompendiumTattoo[] = [
 			ability: "Vitality",
 			damage_profile: "utility",
 			lattice_interaction:
-				"Starfall Residue resonates with the bearer's mana lattice through dermal contact",
+				"Primordial Chrono-dust resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
-				"Occupies neck tattoo slot",
+				"Occupies chest tattoo slot",
 				"Tattoo attunement is separate from equipment attunement",
 			],
 			condition: "Paralysis",
@@ -5336,7 +5336,7 @@ export const tattoos: CompendiumTattoo[] = [
 			},
 			stat_bonuses: {},
 			special_abilities: [
-				"Inscription requires: Starfall Residue, DC 17 tattooing check, 4 hours of uninterrupted work",
+				"Inscription requires: Primordial Chrono-dust, DC 17 tattooing check, 4 hours of uninterrupted work",
 			],
 		},
 		effects: {
@@ -5369,7 +5369,7 @@ export const tattoos: CompendiumTattoo[] = [
 			recharge: "Long rest",
 			requires_attunement: true,
 			conditions: [
-				"Requires tattoo attunement slot (neck)",
+				"Requires tattoo attunement slot (chest)",
 				"Tattoo attunement is independent from equipment attunement",
 				"Max tattoos = Proficiency Bonus",
 			],
@@ -5420,9 +5420,9 @@ export const tattoos: CompendiumTattoo[] = [
 			ability: "Presence",
 			damage_profile: "utility",
 			lattice_interaction:
-				"Rift Essence Suspension resonates with the bearer's mana lattice through dermal contact",
+				"Regent Essence resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
-				"Occupies right arm tattoo slot",
+				"Occupies neck tattoo slot",
 				"Tattoo attunement is separate from equipment attunement",
 			],
 			condition: "Paralysis",
@@ -5442,7 +5442,7 @@ export const tattoos: CompendiumTattoo[] = [
 			},
 			stat_bonuses: {},
 			special_abilities: [
-				"Inscription requires: Rift Essence Suspension, DC 16 tattooing check, 4 hours of uninterrupted work",
+				"Inscription requires: Regent Essence, DC 16 tattooing check, 4 hours of uninterrupted work",
 			],
 		},
 		effects: {
@@ -5475,7 +5475,7 @@ export const tattoos: CompendiumTattoo[] = [
 			recharge: "Short rest",
 			requires_attunement: true,
 			conditions: [
-				"Requires tattoo attunement slot (right arm)",
+				"Requires tattoo attunement slot (neck)",
 				"Tattoo attunement is independent from equipment attunement",
 				"Max tattoos = Proficiency Bonus",
 			],
@@ -5526,7 +5526,7 @@ export const tattoos: CompendiumTattoo[] = [
 			ability: "Intelligence",
 			damage_profile: "utility",
 			lattice_interaction:
-				"Rift Essence Suspension resonates with the bearer's mana lattice through dermal contact",
+				"Oracle Thread resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
 				"Occupies right arm tattoo slot",
 				"Tattoo attunement is separate from equipment attunement",
@@ -5548,7 +5548,7 @@ export const tattoos: CompendiumTattoo[] = [
 			},
 			stat_bonuses: {},
 			special_abilities: [
-				"Inscription requires: Rift Essence Suspension, DC 21 tattooing check, 4 hours of uninterrupted work",
+				"Inscription requires: Oracle Thread, DC 21 tattooing check, 4 hours of uninterrupted work",
 			],
 		},
 		effects: {

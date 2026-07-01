@@ -475,8 +475,8 @@ function buildSourceIntegrity(item, rarity, archetype) {
 			),
 		canon_guardrails: [
 			"Use RA ability names in formulas.",
-			"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-			"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+			"Preserve gate, mana lattice, and anomaly terminology.",
+			"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 		],
 	};
 }

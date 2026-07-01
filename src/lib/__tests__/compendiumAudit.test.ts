@@ -242,6 +242,11 @@ describe("compendium audit (provider-backed)", () => {
 			"missing_can_inscribe_on",
 			"missing_tattoo_mechanics",
 			"missing_tags",
+			"tattoo_field_contradiction",
+			// item coherence (Phase 0)
+			"item_injected_template",
+			// de-vague (Phase 1)
+			"vague_catchall_name",
 			// fighting styles
 			"malformed_fighting_style_prerequisites",
 			// shadow soldiers

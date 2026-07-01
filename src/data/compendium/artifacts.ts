@@ -4,8 +4,8 @@ export const artifacts: Item[] = [
 	{
 		id: "artifact_1",
 		name: "Kamish's Wrath",
-		source_book: "Rift Ascendant Canon",
 		display_name: "Kamish's Wrath",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A pair of twin daggers forged from the fang of humanity's greatest calamity. The blades vibrate with regent-tier malice.",
 		rarity: "legendary",
@@ -25,9 +25,6 @@ export const artifacts: Item[] = [
 				"Attacks ignore resistance to slashing damage.",
 				"On critical hit, inflicts a bleeding condition that deals 1d6 damage per turn.",
 			],
-			primary: "Deals 1d10 + 2 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Fear for 1 round.",
 		},
 		source: "Rift Ascendant Canon",
 		lore: {
@@ -120,7 +117,7 @@ export const artifacts: Item[] = [
 				ra_specific_mundane: false,
 			},
 			targeting: {
-				range: "Melee",
+				range: "Thrown (20/60)",
 				area: null,
 				line_of_effect: "standard weapon targeting",
 				target: "One creature or object",
@@ -130,8 +127,8 @@ export const artifacts: Item[] = [
 	{
 		id: "artifact_2",
 		name: "Regent of Dread's Longsword",
-		source_book: "Rift Ascendant Canon",
 		display_name: "Regent of Dread's Longsword",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A colossal dark blade that crackles with white lightning. Belonged to the regent of white flames.",
 		rarity: "legendary",
@@ -150,9 +147,6 @@ export const artifacts: Item[] = [
 				"Deals an additional 2d6 lightning damage.",
 				"Grants resistance to fire and lightning damage.",
 			],
-			primary: "Deals 1d6 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Blindness for 1 round.",
 		},
 		source: "Rift Ascendant Canon",
 		lore: {
@@ -255,8 +249,8 @@ export const artifacts: Item[] = [
 	{
 		id: "artifact_3",
 		name: "Shadow Regent's Mantle",
-		source_book: "Rift Ascendant Canon",
 		display_name: "Shadow Regent's Mantle",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"Woven from pure abyssal mana, this pitch-black cloak billows silently even when there is no wind.",
 		rarity: "legendary",
@@ -273,9 +267,6 @@ export const artifacts: Item[] = [
 				"Grants immunity to necrotic damage.",
 				"Advantage on stealth checks in dim light or darkness.",
 			],
-			primary: "Deals 3d12 + 6 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Stunning for 1 round.",
 		},
 		source: "Rift Ascendant Canon",
 		lore: {
@@ -376,8 +367,8 @@ export const artifacts: Item[] = [
 	{
 		id: "artifact_4",
 		name: "World-Ender Reliquary",
-		source_book: "Rift Ascendant Canon",
 		display_name: "Mythic Rank S Item",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"An artifact recovered from an S-Rank gate. Its power is beyond conventional measurement.",
 		rarity: "legendary",
@@ -392,9 +383,6 @@ export const artifacts: Item[] = [
 		requires_attunement: true,
 		effects: {
 			passive: ["Grants extraordinary supernatural abilities."],
-			primary: "Deals 1d8 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Blindness for 1 round.",
 		},
 		source: "Rift Ascendant Canon",
 		lore: {
@@ -491,8 +479,8 @@ export const artifacts: Item[] = [
 	{
 		id: "artifact_5",
 		name: "Sovereign Edge",
-		source_book: "Rift Ascendant Canon",
 		display_name: "Mythic Rank S Item",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"An artifact recovered from an S-Rank gate. Its power is beyond conventional measurement.",
 		rarity: "legendary",
@@ -506,9 +494,6 @@ export const artifacts: Item[] = [
 		requires_attunement: true,
 		effects: {
 			passive: ["Grants extraordinary supernatural abilities."],
-			primary: "Deals 2d8 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Paralysis for 1 round.",
 		},
 		source: "Rift Ascendant Canon",
 		lore: {
@@ -607,8 +592,8 @@ export const artifacts: Item[] = [
 	{
 		id: "artifact_6",
 		name: "Origin Reliquary",
-		source_book: "Rift Ascendant Canon",
 		display_name: "Mythic Rank S Item",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"An artifact recovered from an S-Rank gate. Its power is beyond conventional measurement.",
 		rarity: "legendary",
@@ -623,9 +608,6 @@ export const artifacts: Item[] = [
 		requires_attunement: true,
 		effects: {
 			passive: ["Grants extraordinary supernatural abilities."],
-			primary: "Deals 1d8 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Fear for 1 round.",
 		},
 		source: "Rift Ascendant Canon",
 		lore: {
@@ -722,8 +704,8 @@ export const artifacts: Item[] = [
 	{
 		id: "artifact_7",
 		name: "Abyssal Reliquary",
-		source_book: "Rift Ascendant Canon",
 		display_name: "Mythic Rank S Item",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"An artifact recovered from an S-Rank gate. Its power is beyond conventional measurement.",
 		rarity: "legendary",
@@ -737,9 +719,6 @@ export const artifacts: Item[] = [
 		requires_attunement: true,
 		effects: {
 			passive: ["Grants extraordinary supernatural abilities."],
-			primary: "Deals 1d8 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Paralysis for 1 round.",
 		},
 		source: "Rift Ascendant Canon",
 		lore: {
@@ -837,8 +816,8 @@ export const artifacts: Item[] = [
 	{
 		id: "artifact_8",
 		name: "Sovereign Reliquary",
-		source_book: "Rift Ascendant Canon",
 		display_name: "Mythic Rank S Item",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"An artifact recovered from an S-Rank gate. Its power is beyond conventional measurement.",
 		rarity: "legendary",
@@ -853,9 +832,6 @@ export const artifacts: Item[] = [
 		requires_attunement: true,
 		effects: {
 			passive: ["Grants extraordinary supernatural abilities."],
-			primary: "Deals 2d4 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Paralysis for 1 round.",
 		},
 		source: "Rift Ascendant Canon",
 		lore: {
@@ -952,8 +928,8 @@ export const artifacts: Item[] = [
 	{
 		id: "artifact_9",
 		name: "Calamity Core",
-		source_book: "Rift Ascendant Canon",
 		display_name: "Mythic Rank S Item",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"An artifact recovered from an S-Rank gate. Its power is beyond conventional measurement.",
 		rarity: "legendary",
@@ -967,9 +943,6 @@ export const artifacts: Item[] = [
 		requires_attunement: true,
 		effects: {
 			passive: ["Grants extraordinary supernatural abilities."],
-			primary: "Deals 1d12 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Paralysis for 1 round.",
 		},
 		source: "Rift Ascendant Canon",
 		lore: {
@@ -1067,8 +1040,8 @@ export const artifacts: Item[] = [
 	{
 		id: "artifact_10",
 		name: "Calamity Aegis",
-		source_book: "Rift Ascendant Canon",
 		display_name: "Mythic Rank S Item",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"An artifact recovered from an S-Rank gate. Its power is beyond conventional measurement.",
 		rarity: "legendary",
@@ -1083,9 +1056,6 @@ export const artifacts: Item[] = [
 		requires_attunement: true,
 		effects: {
 			passive: ["Grants extraordinary supernatural abilities."],
-			primary: "Deals 1d8 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Stunning for 1 round.",
 		},
 		source: "Rift Ascendant Canon",
 		lore: {
@@ -1183,8 +1153,8 @@ export const artifacts: Item[] = [
 	{
 		id: "artifact_11",
 		name: "Origin Aegis",
-		source_book: "Rift Ascendant Canon",
 		display_name: "Mythic Rank S Item",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"An artifact recovered from an S-Rank gate. Its power is beyond conventional measurement.",
 		rarity: "legendary",
@@ -1198,9 +1168,6 @@ export const artifacts: Item[] = [
 		requires_attunement: true,
 		effects: {
 			passive: ["Grants extraordinary supernatural abilities."],
-			primary: "Deals 2d6 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Blindness for 1 round.",
 		},
 		source: "Rift Ascendant Canon",
 		lore: {
@@ -1298,8 +1265,8 @@ export const artifacts: Item[] = [
 	{
 		id: "artifact_13",
 		name: "Origin Edge",
-		source_book: "Rift Ascendant Canon",
 		display_name: "Mythic Rank S Item",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"An artifact recovered from an S-Rank gate. Its power is beyond conventional measurement.",
 		rarity: "legendary",
@@ -1313,9 +1280,6 @@ export const artifacts: Item[] = [
 		requires_attunement: true,
 		effects: {
 			passive: ["Grants extraordinary supernatural abilities."],
-			primary: "Deals 1d10 + 2 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Blindness for 1 round.",
 		},
 		source: "Rift Ascendant Canon",
 		lore: {
@@ -1413,8 +1377,8 @@ export const artifacts: Item[] = [
 	{
 		id: "artifact_14",
 		name: "Calamity Edge",
-		source_book: "Rift Ascendant Canon",
 		display_name: "Mythic Rank S Item",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"An artifact recovered from an S-Rank gate. Its power is beyond conventional measurement.",
 		rarity: "legendary",
@@ -1429,9 +1393,6 @@ export const artifacts: Item[] = [
 		requires_attunement: true,
 		effects: {
 			passive: ["Grants extraordinary supernatural abilities."],
-			primary: "Deals 1d12 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Lethargy for 1 round.",
 		},
 		source: "Rift Ascendant Canon",
 		lore: {
@@ -1529,8 +1490,8 @@ export const artifacts: Item[] = [
 	{
 		id: "artifact_15",
 		name: "Sovereign Aegis",
-		source_book: "Rift Ascendant Canon",
 		display_name: "Mythic Rank S Item",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"An artifact recovered from an S-Rank gate. Its power is beyond conventional measurement.",
 		rarity: "legendary",
@@ -1544,9 +1505,6 @@ export const artifacts: Item[] = [
 		requires_attunement: true,
 		effects: {
 			passive: ["Grants extraordinary supernatural abilities."],
-			primary: "Deals 4d10 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Stunning for 1 round.",
 		},
 		source: "Rift Ascendant Canon",
 		lore: {
@@ -1643,8 +1601,8 @@ export const artifacts: Item[] = [
 	{
 		id: "artifact_16",
 		name: "World-Ender Crown",
-		source_book: "Rift Ascendant Canon",
 		display_name: "Mythic Rank S Item",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"An artifact recovered from an S-Rank gate. Its power is beyond conventional measurement.",
 		rarity: "legendary",
@@ -1659,9 +1617,6 @@ export const artifacts: Item[] = [
 		requires_attunement: true,
 		effects: {
 			passive: ["Grants extraordinary supernatural abilities."],
-			primary: "Deals 2d8 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Blindness for 1 round.",
 		},
 		source: "Rift Ascendant Canon",
 		lore: {
@@ -1759,8 +1714,8 @@ export const artifacts: Item[] = [
 	{
 		id: "artifact_18",
 		name: "Regent's Edge",
-		source_book: "Rift Ascendant Canon",
 		display_name: "Mythic Rank S Item",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"An artifact recovered from an S-Rank gate. Its power is beyond conventional measurement.",
 		rarity: "legendary",
@@ -1775,9 +1730,6 @@ export const artifacts: Item[] = [
 		requires_attunement: true,
 		effects: {
 			passive: ["Grants extraordinary supernatural abilities."],
-			primary: "Deals 3d6 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Fear for 1 round.",
 		},
 		source: "Rift Ascendant Canon",
 		lore: {
@@ -1874,8 +1826,8 @@ export const artifacts: Item[] = [
 	{
 		id: "artifact_19",
 		name: "Sovereign Crown",
-		source_book: "Rift Ascendant Canon",
 		display_name: "Mythic Rank S Item",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"An artifact recovered from an S-Rank gate. Its power is beyond conventional measurement.",
 		rarity: "legendary",
@@ -1889,9 +1841,6 @@ export const artifacts: Item[] = [
 		requires_attunement: true,
 		effects: {
 			passive: ["Grants extraordinary supernatural abilities."],
-			primary: "Deals 4d10 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Paralysis for 1 round.",
 		},
 		source: "Rift Ascendant Canon",
 		lore: {

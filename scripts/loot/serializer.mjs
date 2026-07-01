@@ -5,6 +5,7 @@ const FIELD_ORDER = [
 	"id",
 	"name",
 	"display_name",
+	"source_book",
 	"description",
 	"rarity",
 	"type",
@@ -43,6 +44,9 @@ const FIELD_ORDER = [
 	"discovery_lore",
 	"tags",
 	"theme_tags",
+	// nested `value` keys — keep currency before amount to match hand-authored order
+	"currency",
+	"amount",
 ];
 
 function compareKeys(a, b) {
@@ -102,14 +106,28 @@ function serializeObject(obj, level) {
 		.filter((k) => obj[k] !== undefined)
 		.sort(compareKeys);
 	if (keys.length === 0) return "{}";
+	const safeKey = (k) => (/^[A-Za-z_][A-Za-z0-9_]*$/.test(k) ? k : `"${k}"`);
+	// Inline short, all-primitive objects (e.g. `value: { amount, currency }`,
+	// weapon stat blocks) so they read as one line — matching the hand-authored
+	// style and keeping regeneration diffs small. Biome preserves the inline
+	// state we emit.
+	const allPrim = keys.every((k) => {
+		const v = obj[k];
+		return v === null || ["string", "number", "boolean"].includes(typeof v);
+	});
+	if (allPrim) {
+		const inline = `{ ${keys
+			.map((k) => `${safeKey(k)}: ${serializeValue(obj[k], level)}`)
+			.join(", ")} }`;
+		if (inline.length <= 72) return inline;
+	}
 	const inner = indent(level + 1);
 	const close = indent(level);
 	const parts = keys.map((k) => {
 		const v = obj[k];
 		const serialized = serializeValue(v, level + 1);
 		// Use shorthand identifier keys (no quotes) — valid TS object literal syntax for these names.
-		const safeKey = /^[A-Za-z_][A-Za-z0-9_]*$/.test(k) ? k : `"${k}"`;
-		return `${inner}${safeKey}: ${serialized}`;
+		return `${inner}${safeKey(k)}: ${serialized}`;
 	});
 	return `{\n${parts.join(",\n")},\n${close}}`;
 }
