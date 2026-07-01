@@ -1,0 +1,643 @@
+{
+	"version": "5.1",
+	"description": "SRD 5.1 equipment completeness manifest. Maps every SRD 5.1 equipment slot to its Rift Ascendant analog name (RA-native, modern setting — never generic medieval fantasy). The compendiumAudit `srd_completeness` gate requires every requirement whose status is `present` or `authored` to resolve to a real item name in the equipment/items corpus. `omitted` requirements are documented but not gated: adventuring-gear commodities, mounts, and trade goods are covered by the loot pool's field-issue variants and/or the vehicles compendium, or are non-mechanical medieval flavor out of RA's modern scope.",
+	"requirements": [
+		{
+			"category": "weapon_simple_melee",
+			"srd": "Club",
+			"ra": "Club",
+			"status": "present"
+		},
+		{
+			"category": "weapon_simple_melee",
+			"srd": "Dagger",
+			"ra": "Dagger",
+			"status": "present"
+		},
+		{
+			"category": "weapon_simple_melee",
+			"srd": "Greatclub",
+			"ra": "Greatclub",
+			"status": "present"
+		},
+		{
+			"category": "weapon_simple_melee",
+			"srd": "Handaxe",
+			"ra": "Handaxe",
+			"status": "present"
+		},
+		{
+			"category": "weapon_simple_melee",
+			"srd": "Javelin",
+			"ra": "Javelin",
+			"status": "present"
+		},
+		{
+			"category": "weapon_simple_melee",
+			"srd": "Light Hammer",
+			"ra": "Light Hammer",
+			"status": "present"
+		},
+		{
+			"category": "weapon_simple_melee",
+			"srd": "Mace",
+			"ra": "Mace",
+			"status": "present"
+		},
+		{
+			"category": "weapon_simple_melee",
+			"srd": "Quarterstaff",
+			"ra": "Quarterstaff",
+			"status": "present"
+		},
+		{
+			"category": "weapon_simple_melee",
+			"srd": "Sickle",
+			"ra": "Sickle",
+			"status": "present"
+		},
+		{
+			"category": "weapon_simple_melee",
+			"srd": "Spear",
+			"ra": "Spear",
+			"status": "present"
+		},
+
+		{
+			"category": "weapon_simple_ranged",
+			"srd": "Light Crossbow",
+			"ra": "Light Crossbow",
+			"status": "present"
+		},
+		{
+			"category": "weapon_simple_ranged",
+			"srd": "Dart",
+			"ra": "Dart",
+			"status": "present"
+		},
+		{
+			"category": "weapon_simple_ranged",
+			"srd": "Shortbow",
+			"ra": "Shortbow",
+			"status": "present"
+		},
+		{
+			"category": "weapon_simple_ranged",
+			"srd": "Sling",
+			"ra": "Sling",
+			"status": "present"
+		},
+
+		{
+			"category": "weapon_martial_melee",
+			"srd": "Battleaxe",
+			"ra": "Battleaxe",
+			"status": "present"
+		},
+		{
+			"category": "weapon_martial_melee",
+			"srd": "Flail",
+			"ra": "Flail",
+			"status": "present"
+		},
+		{
+			"category": "weapon_martial_melee",
+			"srd": "Glaive",
+			"ra": "Glaive",
+			"status": "present"
+		},
+		{
+			"category": "weapon_martial_melee",
+			"srd": "Greataxe",
+			"ra": "Greataxe",
+			"status": "present"
+		},
+		{
+			"category": "weapon_martial_melee",
+			"srd": "Greatsword",
+			"ra": "Greatsword",
+			"status": "present"
+		},
+		{
+			"category": "weapon_martial_melee",
+			"srd": "Halberd",
+			"ra": "Halberd",
+			"status": "present"
+		},
+		{
+			"category": "weapon_martial_melee",
+			"srd": "Lance",
+			"ra": "Lance",
+			"status": "present"
+		},
+		{
+			"category": "weapon_martial_melee",
+			"srd": "Longsword",
+			"ra": "Longsword",
+			"status": "present"
+		},
+		{
+			"category": "weapon_martial_melee",
+			"srd": "Maul",
+			"ra": "Maul",
+			"status": "present"
+		},
+		{
+			"category": "weapon_martial_melee",
+			"srd": "Morningstar",
+			"ra": "Morningstar",
+			"status": "present"
+		},
+		{
+			"category": "weapon_martial_melee",
+			"srd": "Pike",
+			"ra": "Pike",
+			"status": "present"
+		},
+		{
+			"category": "weapon_martial_melee",
+			"srd": "Rapier",
+			"ra": "Rapier",
+			"status": "present"
+		},
+		{
+			"category": "weapon_martial_melee",
+			"srd": "Scimitar",
+			"ra": "Scimitar",
+			"status": "present"
+		},
+		{
+			"category": "weapon_martial_melee",
+			"srd": "Shortsword",
+			"ra": "Shortsword",
+			"status": "present"
+		},
+		{
+			"category": "weapon_martial_melee",
+			"srd": "Trident",
+			"ra": "Trident",
+			"status": "present"
+		},
+		{
+			"category": "weapon_martial_melee",
+			"srd": "War Pick",
+			"ra": "War Pick",
+			"status": "present"
+		},
+		{
+			"category": "weapon_martial_melee",
+			"srd": "Warhammer",
+			"ra": "Warhammer",
+			"status": "present"
+		},
+		{
+			"category": "weapon_martial_melee",
+			"srd": "Whip",
+			"ra": "Whip",
+			"status": "present"
+		},
+
+		{
+			"category": "weapon_martial_ranged",
+			"srd": "Blowgun",
+			"ra": "Blowgun",
+			"status": "present"
+		},
+		{
+			"category": "weapon_martial_ranged",
+			"srd": "Hand Crossbow",
+			"ra": "Hand Crossbow",
+			"status": "present"
+		},
+		{
+			"category": "weapon_martial_ranged",
+			"srd": "Heavy Crossbow",
+			"ra": "Heavy Crossbow",
+			"status": "present"
+		},
+		{
+			"category": "weapon_martial_ranged",
+			"srd": "Longbow",
+			"ra": "Longbow",
+			"status": "present"
+		},
+		{
+			"category": "weapon_martial_ranged",
+			"srd": "Net",
+			"ra": "Capture Net",
+			"status": "authored",
+			"note": "RA models the Net as a utility capture tool (restrain, no damage), not a damaging weapon."
+		},
+
+		{
+			"category": "armor_light",
+			"srd": "Padded",
+			"ra": "Padded Armor",
+			"status": "present"
+		},
+		{
+			"category": "armor_light",
+			"srd": "Leather",
+			"ra": "Leather Armor",
+			"status": "present"
+		},
+		{
+			"category": "armor_light",
+			"srd": "Studded Leather",
+			"ra": "Studded Leather Armor",
+			"status": "present"
+		},
+		{
+			"category": "armor_medium",
+			"srd": "Hide",
+			"ra": "Hide Armor",
+			"status": "present"
+		},
+		{
+			"category": "armor_medium",
+			"srd": "Chain Shirt",
+			"ra": "Chain Shirt",
+			"status": "present"
+		},
+		{
+			"category": "armor_medium",
+			"srd": "Scale Mail",
+			"ra": "Scale Mail",
+			"status": "present"
+		},
+		{
+			"category": "armor_medium",
+			"srd": "Breastplate",
+			"ra": "Breastplate",
+			"status": "present"
+		},
+		{
+			"category": "armor_medium",
+			"srd": "Half Plate",
+			"ra": "Half Plate",
+			"status": "present"
+		},
+		{
+			"category": "armor_heavy",
+			"srd": "Ring Mail",
+			"ra": "Ring Mail",
+			"status": "present"
+		},
+		{
+			"category": "armor_heavy",
+			"srd": "Chain Mail",
+			"ra": "Chain Mail",
+			"status": "present"
+		},
+		{
+			"category": "armor_heavy",
+			"srd": "Splint",
+			"ra": "Splint Armor",
+			"status": "present"
+		},
+		{
+			"category": "armor_heavy",
+			"srd": "Plate",
+			"ra": "Plate Armor",
+			"status": "present"
+		},
+		{
+			"category": "armor_shield",
+			"srd": "Shield",
+			"ra": "Shield",
+			"status": "present"
+		},
+
+		{
+			"category": "ammunition",
+			"srd": "Arrows (20)",
+			"ra": "Arrows (20)",
+			"status": "present"
+		},
+		{
+			"category": "ammunition",
+			"srd": "Crossbow Bolts (20)",
+			"ra": "Crossbow Bolts (20)",
+			"status": "present"
+		},
+		{
+			"category": "ammunition",
+			"srd": "Darts",
+			"ra": "Darts (10)",
+			"status": "present"
+		},
+		{
+			"category": "ammunition",
+			"srd": "Blowgun Needles (50)",
+			"ra": "Blowgun Needles (50)",
+			"status": "authored"
+		},
+		{
+			"category": "ammunition",
+			"srd": "Sling Bullets (20)",
+			"ra": "Sling Bullets (20)",
+			"status": "authored"
+		},
+
+		{
+			"category": "equipment_pack",
+			"srd": "Burglar's Pack",
+			"ra": "Burglar's Pack",
+			"status": "present"
+		},
+		{
+			"category": "equipment_pack",
+			"srd": "Diplomat's Pack",
+			"ra": "Diplomat's Pack",
+			"status": "present"
+		},
+		{
+			"category": "equipment_pack",
+			"srd": "Dungeoneer's Pack",
+			"ra": "Dungeoneer's Pack",
+			"status": "present"
+		},
+		{
+			"category": "equipment_pack",
+			"srd": "Entertainer's Pack",
+			"ra": "Entertainer's Pack",
+			"status": "present"
+		},
+		{
+			"category": "equipment_pack",
+			"srd": "Explorer's Pack",
+			"ra": "Explorer's Pack",
+			"status": "present"
+		},
+		{
+			"category": "equipment_pack",
+			"srd": "Priest's Pack",
+			"ra": "Priest's Pack",
+			"status": "present"
+		},
+		{
+			"category": "equipment_pack",
+			"srd": "Scholar's Pack",
+			"ra": "Scholar's Pack",
+			"status": "present"
+		},
+
+		{
+			"category": "focus",
+			"srd": "Arcane Focus",
+			"ra": "Mana Crystal",
+			"status": "present",
+			"note": "RA arcane foci (Mage/Esper): Mana Crystal, Lattice Orb, Resonance Coil."
+		},
+		{
+			"category": "focus",
+			"srd": "Druidic Focus",
+			"ra": "Gate-Beast Fang",
+			"status": "present",
+			"note": "RA primal foci (Summoner): Gate-Beast Fang, Anomaly Core Shard, Bonded Tamer's Collar."
+		},
+		{
+			"category": "focus",
+			"srd": "Holy Symbol",
+			"ra": "Bureau Emblem",
+			"status": "present",
+			"note": "RA order foci (Herald): Bureau Emblem, Herald's Insignia, Sanctified Core."
+		},
+		{
+			"category": "focus",
+			"srd": "Spellcasting Focus (component pouch)",
+			"ra": "Component Pouch",
+			"status": "present"
+		},
+		{
+			"category": "focus",
+			"srd": "Spellbook",
+			"ra": "Grimoire",
+			"status": "present"
+		},
+
+		{
+			"category": "musical_instrument",
+			"srd": "Musical Instrument",
+			"ra": "Electric Guitar",
+			"status": "present",
+			"note": "RA Idol instruments (modern performance rigs): Electric Guitar, Synthesizer, DJ Controller, Stage Microphone, Drum Machine, Loop Pedal, Bass Guitar, Portable Amp, Vocoder, Sampler Pad."
+		},
+
+		{
+			"category": "artisan_tools",
+			"srd": "Alchemist's Supplies",
+			"ra": "Alchemist's Supplies",
+			"status": "authored"
+		},
+		{
+			"category": "artisan_tools",
+			"srd": "Brewer's Supplies",
+			"ra": "Brewer's Supplies",
+			"status": "authored"
+		},
+		{
+			"category": "artisan_tools",
+			"srd": "Calligrapher's Supplies",
+			"ra": "Calligrapher's Supplies",
+			"status": "authored"
+		},
+		{
+			"category": "artisan_tools",
+			"srd": "Carpenter's Tools",
+			"ra": "Carpenter's Tools",
+			"status": "authored"
+		},
+		{
+			"category": "artisan_tools",
+			"srd": "Cartographer's Tools",
+			"ra": "Cartographer's Tools",
+			"status": "authored"
+		},
+		{
+			"category": "artisan_tools",
+			"srd": "Cobbler's Tools",
+			"ra": "Cobbler's Tools",
+			"status": "authored"
+		},
+		{
+			"category": "artisan_tools",
+			"srd": "Cook's Utensils",
+			"ra": "Cook's Utensils",
+			"status": "authored"
+		},
+		{
+			"category": "artisan_tools",
+			"srd": "Glassblower's Tools",
+			"ra": "Glassblower's Tools",
+			"status": "authored"
+		},
+		{
+			"category": "artisan_tools",
+			"srd": "Jeweler's Tools",
+			"ra": "Jeweler's Tools",
+			"status": "authored"
+		},
+		{
+			"category": "artisan_tools",
+			"srd": "Leatherworker's Tools",
+			"ra": "Leatherworker's Tools",
+			"status": "authored"
+		},
+		{
+			"category": "artisan_tools",
+			"srd": "Mason's Tools",
+			"ra": "Mason's Tools",
+			"status": "authored"
+		},
+		{
+			"category": "artisan_tools",
+			"srd": "Painter's Supplies",
+			"ra": "Painter's Supplies",
+			"status": "authored"
+		},
+		{
+			"category": "artisan_tools",
+			"srd": "Potter's Tools",
+			"ra": "Potter's Tools",
+			"status": "authored"
+		},
+		{
+			"category": "artisan_tools",
+			"srd": "Smith's Tools",
+			"ra": "Smith's Tools",
+			"status": "authored"
+		},
+		{
+			"category": "artisan_tools",
+			"srd": "Weaver's Tools",
+			"ra": "Weaver's Tools",
+			"status": "authored"
+		},
+		{
+			"category": "artisan_tools",
+			"srd": "Woodcarver's Tools",
+			"ra": "Woodcarver's Tools",
+			"status": "authored"
+		},
+		{
+			"category": "artisan_tools",
+			"srd": "Tinker's Tools",
+			"ra": "Tinker's Tools",
+			"status": "present"
+		},
+
+		{
+			"category": "gaming_set",
+			"srd": "Dice Set",
+			"ra": "Dice Set",
+			"status": "authored"
+		},
+		{
+			"category": "gaming_set",
+			"srd": "Playing Card Set",
+			"ra": "Playing Card Deck",
+			"status": "authored"
+		},
+		{
+			"category": "gaming_set",
+			"srd": "Dragonchess Set",
+			"ra": "Handheld Game Console",
+			"status": "authored",
+			"note": "RA modern gaming replaces the medieval Dragonchess set."
+		},
+		{
+			"category": "gaming_set",
+			"srd": "Three-Dragon Ante Set",
+			"ra": "Strategy Board Set",
+			"status": "authored",
+			"note": "RA modern gaming replaces the medieval Three-Dragon Ante set."
+		},
+
+		{
+			"category": "other_tools",
+			"srd": "Disguise Kit",
+			"ra": "Disguise Kit",
+			"status": "authored"
+		},
+		{
+			"category": "other_tools",
+			"srd": "Forgery Kit",
+			"ra": "Forgery Kit",
+			"status": "authored"
+		},
+		{
+			"category": "other_tools",
+			"srd": "Herbalism Kit",
+			"ra": "Herbalism Kit",
+			"status": "authored"
+		},
+		{
+			"category": "other_tools",
+			"srd": "Navigator's Tools",
+			"ra": "Gate Navigator's Kit",
+			"status": "authored",
+			"note": "RA rift-navigation kit replaces sea/land navigator's tools."
+		},
+		{
+			"category": "other_tools",
+			"srd": "Poisoner's Kit",
+			"ra": "Poisoner's Kit",
+			"status": "authored"
+		},
+		{
+			"category": "other_tools",
+			"srd": "Thieves' Tools",
+			"ra": "Thieves' Tools",
+			"status": "present"
+		},
+
+		{
+			"category": "kit",
+			"srd": "Healer's Kit",
+			"ra": "Field Medkit",
+			"status": "authored",
+			"note": "RA modern trauma kit; 10 uses, stabilize without a check."
+		},
+		{
+			"category": "kit",
+			"srd": "Climber's Kit",
+			"ra": "Climber's Kit",
+			"status": "authored"
+		},
+		{
+			"category": "kit",
+			"srd": "Grappling Hook",
+			"ra": "Grappling Hook",
+			"status": "authored"
+		},
+		{
+			"category": "kit",
+			"srd": "Antitoxin",
+			"ra": "Antitoxin Injector",
+			"status": "authored"
+		},
+
+		{
+			"category": "adventuring_gear",
+			"srd": "Backpack / rope / bedroll / rations / waterskin / torch / lantern / tinderbox / crowbar / manacles / mirror / spyglass / piton / ball bearings / caltrops / tent / oil / etc.",
+			"ra": null,
+			"status": "omitted",
+			"note": "Baseline mundane gear is covered by the loot pool's RA field-issue variants (e.g. Field-Issue Rope, Tactical Flashlight Baton, Service-Grade Ration, Reinforced Crowbar, Service Manacles, Field-Issue Spyglass, Refit Bedroll, Patrol Piton Set) and/or deferred to the Phase 2 gear pass. Not gated so the check stays stable while Phase 2 reshapes the loot pool."
+		},
+		{
+			"category": "mounts_vehicles",
+			"srd": "Mounts, drawn vehicles, waterborne vehicles",
+			"ra": null,
+			"status": "omitted",
+			"note": "RA is a modern setting; mounts/vehicles are handled by the separate vehicles compendium, not the item catalog."
+		},
+		{
+			"category": "trade_goods",
+			"srd": "Trade goods (grain, livestock, metals, cloth, spices, etc.)",
+			"ra": null,
+			"status": "omitted",
+			"note": "Price-table commodities, not distinct RA items; medieval trade goods are out of RA's modern scope."
+		}
+	]
+}

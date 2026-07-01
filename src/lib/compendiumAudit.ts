@@ -1,3 +1,4 @@
+import srdItemManifest from "@/data/srd-item-manifest.json";
 import type { Json } from "@/integrations/supabase/types";
 import {
 	type ContractIssue,
@@ -8,6 +9,17 @@ import {
 	validateSpellComponents,
 	validateWeapon5e,
 } from "@/lib/compendium5eContract";
+
+// One SRD 5.1 equipment requirement mapped to its Rift Ascendant analog.
+// `present`/`authored` are gated (the RA name must resolve); `omitted` is
+// documented but not gated. See src/data/srd-item-manifest.json.
+interface SrdRequirement {
+	category: string;
+	srd: string;
+	ra: string | null;
+	status: "present" | "authored" | "omitted";
+	note?: string;
+}
 
 // Keep aligned with `equipmentItemTypes` in @/lib/canonicalCompendium.
 const equipmentItemTypes = new Set([
@@ -1766,6 +1778,45 @@ function runContract(
 	}
 }
 
+// SRD 5.1 completeness (Phase 1b). Every requirement in the manifest whose
+// status is `present` or `authored` must resolve to a real item name in the
+// equipment/items corpus; `omitted` requirements are documented but not gated.
+function auditSrdCompleteness(
+	datasets: Record<string, AuditEntry[]>,
+	issues: CompendiumAuditIssue[],
+) {
+	const names = new Set<string>();
+	for (const dataset of ["equipment", "items"]) {
+		for (const entry of datasets[dataset] ?? []) {
+			const name = getString(entry.name);
+			if (name) names.add(name.trim().toLowerCase());
+		}
+	}
+
+	for (const req of srdItemManifest.requirements as SrdRequirement[]) {
+		if (req.status === "omitted") continue;
+		const ra = req.ra?.trim();
+		if (!ra) {
+			addIssue(issues, {
+				severity: "error",
+				dataset: "items",
+				code: "srd_completeness",
+				message: `SRD "${req.srd}" (${req.category}) is marked ${req.status} but has no RA analog name.`,
+			});
+			continue;
+		}
+		if (!names.has(ra.toLowerCase())) {
+			addIssue(issues, {
+				severity: "error",
+				dataset: "items",
+				code: "srd_completeness",
+				message: `SRD "${req.srd}" (${req.category}) has no RA analog "${ra}" in the compendium.`,
+				entryName: ra,
+			});
+		}
+	}
+}
+
 export async function runCompendiumAudit(
 	provider: AuditProvider,
 ): Promise<CompendiumAuditSummary> {
@@ -1852,6 +1903,7 @@ export async function runCompendiumAudit(
 		}
 	}
 	auditItemPayloadUniqueness(datasets, issues);
+	auditSrdCompleteness(datasets, issues);
 	auditVehicleBondedReferences(
 		datasets.vehicles ?? [],
 		datasets.anomalies ?? [],

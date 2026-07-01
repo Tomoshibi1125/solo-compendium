@@ -10281,4 +10281,3311 @@ export const baseEquipment: Item[] = [
 			},
 		},
 	},
+	{
+		id: "base-srd-net-capture",
+		name: "Capture Net",
+		source_book: "Rift Ascendant Canon",
+		description:
+			"A weighted mana-mesh net a Hunter throws to entangle a gate-beast before it can close the distance.",
+		rarity: "common",
+		type: "wondrous",
+		image: "/generated/compendium/items/item-0324.webp",
+		weight: 3,
+		value: { currency: "crystal", amount: 100 },
+		item_type: "misc",
+		sigil_slots_base: 0,
+		properties: {},
+		effects: {
+			passive: [
+				"A Large or smaller creature you hit with a ranged attack (range 5/15) is restrained until it uses an action to make a DC 10 Strength check to free itself, or until the net (AC 10, 5 HP) is destroyed.",
+			],
+		},
+		activation: {
+			type: "passive",
+			consumes_item: false,
+			cost: "no action",
+			frequency: "continuous",
+			trigger: "Equipped, carried, worn, or used as described.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state:
+				"must be carried, consumed, or deployed as the activation describes",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: [],
+				attack: [],
+				notes:
+					"Utility and consumable items only call for an ability when their explicit rule names one.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "passive",
+				consumes_item: false,
+				cost: "no action",
+				frequency: "continuous",
+				trigger: "Equipped, carried, worn, or used as described.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "450afd6e",
+				payload_complete: true,
+				uniqueness_seed: "base-srd-net-capture::Capture Net",
+				variant_note: "A piece of Bureau-quartermastered field gear.",
+			},
+			formulas: {
+				effect_formula: "AC 10",
+				recharge: "continuous",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "common",
+				archetype: "gear_misc",
+				canon_basis: "RA mundane baseline",
+				distinguishing_rule:
+					"Capture Net keys standard gear misc rules through signature dcfc7fc1.",
+				role: "utility",
+				signature: "dcfc7fc1",
+				theme: "standard",
+			},
+			passive_rules: [
+				"A Large or smaller creature you hit with a ranged attack (range 5/15) is restrained until it uses an action to make a DC 10 Strength check to free itself, or until the net (AC 10, 5 HP) is destroyed.",
+			],
+			resolution: {
+				type: "equipment_utility",
+				active_options: [],
+				non_damage_resolution:
+					"A Large or smaller creature you hit with a ranged attack (range 5/15) is restrained until it uses an action to make a DC 10 Strength check to free itself, or until the net (AC 10, 5 HP) is destroyed.",
+				passive_effects: [
+					"A Large or smaller creature you hit with a ranged attack (range 5/15) is restrained until it uses an action to make a DC 10 Strength check to free itself, or until the net (AC 10, 5 HP) is destroyed.",
+				],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: true,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
+				],
+				ra_specific_mundane: true,
+			},
+			targeting: {
+				range: "self",
+				area: null,
+				line_of_effect: "as item description permits",
+				target: "Self, touched object, or listed utility target",
+			},
+		},
+	},
+	{
+		id: "base-srd-ammo-blowgun-needles",
+		name: "Blowgun Needles (50)",
+		source_book: "Rift Ascendant Canon",
+		description:
+			"A slim tin of fifty lacquered blowgun needles, each balanced for a clean, silent shot.",
+		rarity: "common",
+		type: "wondrous",
+		image: "/generated/compendium/items/item-0842.webp",
+		weight: 1,
+		value: { currency: "crystal", amount: 10 },
+		item_type: "misc",
+		sigil_slots_base: 0,
+		properties: {},
+		effects: {
+			passive: [
+				"Ammunition for a blowgun. Needles recovered after a fight can be reused.",
+			],
+		},
+		activation: {
+			type: "passive",
+			consumes_item: false,
+			cost: "no action",
+			frequency: "continuous",
+			trigger: "Equipped, carried, worn, or used as described.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state:
+				"must be carried, consumed, or deployed as the activation describes",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: [],
+				attack: [],
+				notes:
+					"Utility and consumable items only call for an ability when their explicit rule names one.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "passive",
+				consumes_item: false,
+				cost: "no action",
+				frequency: "continuous",
+				trigger: "Equipped, carried, worn, or used as described.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "bbccfc6f",
+				payload_complete: true,
+				uniqueness_seed: "base-srd-ammo-blowgun-needles::Blowgun Needles (50)",
+				variant_note: "A piece of Bureau-quartermastered field gear.",
+			},
+			formulas: {
+				effect_formula: "explicit non-damage item effect",
+				recharge: "continuous",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "common",
+				archetype: "gear_misc",
+				canon_basis: "RA mundane baseline",
+				distinguishing_rule:
+					"Blowgun Needles (50) keys standard gear misc rules through signature d3fba908.",
+				role: "utility",
+				signature: "d3fba908",
+				theme: "standard",
+			},
+			passive_rules: [
+				"Ammunition for a blowgun. Needles recovered after a fight can be reused.",
+			],
+			resolution: {
+				type: "equipment_utility",
+				active_options: [],
+				non_damage_resolution:
+					"Ammunition for a blowgun. Needles recovered after a fight can be reused.",
+				passive_effects: [
+					"Ammunition for a blowgun. Needles recovered after a fight can be reused.",
+				],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: true,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
+				],
+				ra_specific_mundane: false,
+			},
+			targeting: {
+				range: "self",
+				area: null,
+				line_of_effect: "as item description permits",
+				target: "Self, touched object, or listed utility target",
+			},
+		},
+	},
+	{
+		id: "base-srd-ammo-sling-bullets",
+		name: "Sling Bullets (20)",
+		source_book: "Rift Ascendant Canon",
+		description:
+			"A pouch of twenty cast-lead sling bullets, uniform and dense for consistent range.",
+		rarity: "common",
+		type: "wondrous",
+		image: "/generated/compendium/items/item-0968.webp",
+		weight: 2,
+		value: { currency: "crystal", amount: 4 },
+		item_type: "misc",
+		sigil_slots_base: 0,
+		properties: {},
+		effects: {
+			passive: [
+				"Ammunition for a sling. Bullets recovered after a fight can be reused.",
+			],
+		},
+		activation: {
+			type: "passive",
+			consumes_item: false,
+			cost: "no action",
+			frequency: "continuous",
+			trigger: "Equipped, carried, worn, or used as described.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state:
+				"must be carried, consumed, or deployed as the activation describes",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: [],
+				attack: [],
+				notes:
+					"Utility and consumable items only call for an ability when their explicit rule names one.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "passive",
+				consumes_item: false,
+				cost: "no action",
+				frequency: "continuous",
+				trigger: "Equipped, carried, worn, or used as described.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "621049c7",
+				payload_complete: true,
+				uniqueness_seed: "base-srd-ammo-sling-bullets::Sling Bullets (20)",
+				variant_note:
+					"A field accessory. Cataloged in the Bureau quartermaster registry.",
+			},
+			formulas: {
+				effect_formula: "explicit non-damage item effect",
+				recharge: "continuous",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "common",
+				archetype: "gear_misc",
+				canon_basis: "RA mundane baseline",
+				distinguishing_rule:
+					"Sling Bullets (20) keys standard gear misc rules through signature 24bb01c3.",
+				role: "utility",
+				signature: "24bb01c3",
+				theme: "standard",
+			},
+			passive_rules: [
+				"Ammunition for a sling. Bullets recovered after a fight can be reused.",
+			],
+			resolution: {
+				type: "equipment_utility",
+				active_options: [],
+				non_damage_resolution:
+					"Ammunition for a sling. Bullets recovered after a fight can be reused.",
+				passive_effects: [
+					"Ammunition for a sling. Bullets recovered after a fight can be reused.",
+				],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: true,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
+				],
+				ra_specific_mundane: false,
+			},
+			targeting: {
+				range: "self",
+				area: null,
+				line_of_effect: "as item description permits",
+				target: "Self, touched object, or listed utility target",
+			},
+		},
+	},
+	{
+		id: "base-srd-tool-alchemist",
+		name: "Alchemist's Supplies",
+		source_book: "Rift Ascendant Canon",
+		description:
+			"A modern chemistry case of retorts, reagents, and mana-stable solvents for brewing field compounds.",
+		rarity: "common",
+		type: "wondrous",
+		image: "/generated/compendium/items/item-0107.webp",
+		weight: 8,
+		value: { currency: "crystal", amount: 500 },
+		item_type: "tool",
+		sigil_slots_base: 0,
+		properties: {},
+		effects: {
+			passive: [
+				"While proficient with these tools, add your proficiency bonus to ability checks you make to identify substances or craft alchemical items.",
+			],
+		},
+		activation: {
+			type: "passive",
+			consumes_item: false,
+			cost: "no action",
+			frequency: "continuous",
+			trigger: "Equipped, carried, worn, or used as described.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state:
+				"must be carried, consumed, or deployed as the activation describes",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: [],
+				attack: [],
+				notes:
+					"Utility and consumable items only call for an ability when their explicit rule names one.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "passive",
+				consumes_item: false,
+				cost: "no action",
+				frequency: "continuous",
+				trigger: "Equipped, carried, worn, or used as described.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "0bc70e48",
+				payload_complete: true,
+				uniqueness_seed: "base-srd-tool-alchemist::Alchemist's Supplies",
+				variant_note: "A piece of Bureau-quartermastered field gear.",
+			},
+			formulas: {
+				effect_formula: "explicit non-damage item effect",
+				recharge: "continuous",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "common",
+				archetype: "gear_misc",
+				canon_basis: "RA mundane baseline",
+				distinguishing_rule:
+					"Alchemist's Supplies keys standard gear misc rules through signature b439d894.",
+				role: "utility",
+				signature: "b439d894",
+				theme: "standard",
+			},
+			passive_rules: [
+				"While proficient with these tools, add your proficiency bonus to ability checks you make to identify substances or craft alchemical items.",
+			],
+			resolution: {
+				type: "equipment_utility",
+				active_options: [],
+				non_damage_resolution:
+					"While proficient with these tools, add your proficiency bonus to ability checks you make to identify substances or craft alchemical items.",
+				passive_effects: [
+					"While proficient with these tools, add your proficiency bonus to ability checks you make to identify substances or craft alchemical items.",
+				],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: true,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
+				],
+				ra_specific_mundane: true,
+			},
+			targeting: {
+				range: "self",
+				area: null,
+				line_of_effect: "as item description permits",
+				target: "Self, touched object, or listed utility target",
+			},
+		},
+	},
+	{
+		id: "base-srd-tool-brewer",
+		name: "Brewer's Supplies",
+		source_book: "Rift Ascendant Canon",
+		description:
+			"Portable fermenting gear and mana-purified yeasts for brewing drinkable — and sometimes potent — batches.",
+		rarity: "common",
+		type: "wondrous",
+		image: "/generated/compendium/items/item-0510.webp",
+		weight: 9,
+		value: { currency: "crystal", amount: 200 },
+		item_type: "tool",
+		sigil_slots_base: 0,
+		properties: {},
+		effects: {
+			passive: [
+				"While proficient with these tools, add your proficiency bonus to ability checks you make to brew batches and purify tainted water.",
+			],
+		},
+		activation: {
+			type: "passive",
+			consumes_item: false,
+			cost: "no action",
+			frequency: "continuous",
+			trigger: "Equipped, carried, worn, or used as described.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state:
+				"must be carried, consumed, or deployed as the activation describes",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: [],
+				attack: [],
+				notes:
+					"Utility and consumable items only call for an ability when their explicit rule names one.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "passive",
+				consumes_item: false,
+				cost: "no action",
+				frequency: "continuous",
+				trigger: "Equipped, carried, worn, or used as described.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "9ead507f",
+				payload_complete: true,
+				uniqueness_seed: "base-srd-tool-brewer::Brewer's Supplies",
+				variant_note: "A miscellaneous piece of standard Hunter kit.",
+			},
+			formulas: {
+				effect_formula: "explicit non-damage item effect",
+				recharge: "continuous",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "common",
+				archetype: "gear_misc",
+				canon_basis: "RA mundane baseline",
+				distinguishing_rule:
+					"Brewer's Supplies keys standard gear misc rules through signature 784b20c4.",
+				role: "utility",
+				signature: "784b20c4",
+				theme: "standard",
+			},
+			passive_rules: [
+				"While proficient with these tools, add your proficiency bonus to ability checks you make to brew batches and purify tainted water.",
+			],
+			resolution: {
+				type: "equipment_utility",
+				active_options: [],
+				non_damage_resolution:
+					"While proficient with these tools, add your proficiency bonus to ability checks you make to brew batches and purify tainted water.",
+				passive_effects: [
+					"While proficient with these tools, add your proficiency bonus to ability checks you make to brew batches and purify tainted water.",
+				],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: true,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
+				],
+				ra_specific_mundane: true,
+			},
+			targeting: {
+				range: "self",
+				area: null,
+				line_of_effect: "as item description permits",
+				target: "Self, touched object, or listed utility target",
+			},
+		},
+	},
+	{
+		id: "base-srd-tool-calligrapher",
+		name: "Calligrapher's Supplies",
+		source_book: "Rift Ascendant Canon",
+		description:
+			"Precision pens, inks, and stencils for clean official script and forgery-resistant Bureau seals.",
+		rarity: "common",
+		type: "wondrous",
+		image: "/generated/compendium/items/item-0121.webp",
+		weight: 5,
+		value: { currency: "crystal", amount: 100 },
+		item_type: "tool",
+		sigil_slots_base: 0,
+		properties: {},
+		effects: {
+			passive: [
+				"While proficient with these tools, add your proficiency bonus to ability checks you make to produce clean script and spot forged documents.",
+			],
+		},
+		activation: {
+			type: "passive",
+			consumes_item: false,
+			cost: "no action",
+			frequency: "continuous",
+			trigger: "Equipped, carried, worn, or used as described.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state:
+				"must be carried, consumed, or deployed as the activation describes",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: [],
+				attack: [],
+				notes:
+					"Utility and consumable items only call for an ability when their explicit rule names one.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "passive",
+				consumes_item: false,
+				cost: "no action",
+				frequency: "continuous",
+				trigger: "Equipped, carried, worn, or used as described.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "125d47cf",
+				payload_complete: true,
+				uniqueness_seed: "base-srd-tool-calligrapher::Calligrapher's Supplies",
+				variant_note:
+					"A field accessory. Cataloged in the Bureau quartermaster registry.",
+			},
+			formulas: {
+				effect_formula: "explicit non-damage item effect",
+				recharge: "continuous",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "common",
+				archetype: "gear_misc",
+				canon_basis: "RA mundane baseline",
+				distinguishing_rule:
+					"Calligrapher's Supplies keys standard gear misc rules through signature 88358770.",
+				role: "utility",
+				signature: "88358770",
+				theme: "standard",
+			},
+			passive_rules: [
+				"While proficient with these tools, add your proficiency bonus to ability checks you make to produce clean script and spot forged documents.",
+			],
+			resolution: {
+				type: "equipment_utility",
+				active_options: [],
+				non_damage_resolution:
+					"While proficient with these tools, add your proficiency bonus to ability checks you make to produce clean script and spot forged documents.",
+				passive_effects: [
+					"While proficient with these tools, add your proficiency bonus to ability checks you make to produce clean script and spot forged documents.",
+				],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: true,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
+				],
+				ra_specific_mundane: true,
+			},
+			targeting: {
+				range: "self",
+				area: null,
+				line_of_effect: "as item description permits",
+				target: "Self, touched object, or listed utility target",
+			},
+		},
+	},
+	{
+		id: "base-srd-tool-carpenter",
+		name: "Carpenter's Tools",
+		source_book: "Rift Ascendant Canon",
+		description:
+			"A powered kit of saws, drivers, and clamps for framing shelters and barricading gate approaches.",
+		rarity: "common",
+		type: "wondrous",
+		image: "/generated/compendium/items/item-0799.webp",
+		weight: 6,
+		value: { currency: "crystal", amount: 80 },
+		item_type: "tool",
+		sigil_slots_base: 0,
+		properties: {},
+		effects: {
+			passive: [
+				"While proficient with these tools, add your proficiency bonus to ability checks you make to build, brace, or breach wooden structures.",
+			],
+		},
+		activation: {
+			type: "passive",
+			consumes_item: false,
+			cost: "no action",
+			frequency: "continuous",
+			trigger: "Equipped, carried, worn, or used as described.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state:
+				"must be carried, consumed, or deployed as the activation describes",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: [],
+				attack: [],
+				notes:
+					"Utility and consumable items only call for an ability when their explicit rule names one.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "passive",
+				consumes_item: false,
+				cost: "no action",
+				frequency: "continuous",
+				trigger: "Equipped, carried, worn, or used as described.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "681e34dc",
+				payload_complete: true,
+				uniqueness_seed: "base-srd-tool-carpenter::Carpenter's Tools",
+				variant_note: "A miscellaneous piece of standard Hunter kit.",
+			},
+			formulas: {
+				effect_formula: "explicit non-damage item effect",
+				recharge: "continuous",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "common",
+				archetype: "gear_misc",
+				canon_basis: "RA mundane baseline",
+				distinguishing_rule:
+					"Carpenter's Tools keys standard gear misc rules through signature c163522c.",
+				role: "utility",
+				signature: "c163522c",
+				theme: "standard",
+			},
+			passive_rules: [
+				"While proficient with these tools, add your proficiency bonus to ability checks you make to build, brace, or breach wooden structures.",
+			],
+			resolution: {
+				type: "equipment_utility",
+				active_options: [],
+				non_damage_resolution:
+					"While proficient with these tools, add your proficiency bonus to ability checks you make to build, brace, or breach wooden structures.",
+				passive_effects: [
+					"While proficient with these tools, add your proficiency bonus to ability checks you make to build, brace, or breach wooden structures.",
+				],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: true,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
+				],
+				ra_specific_mundane: true,
+			},
+			targeting: {
+				range: "self",
+				area: null,
+				line_of_effect: "as item description permits",
+				target: "Self, touched object, or listed utility target",
+			},
+		},
+	},
+	{
+		id: "base-srd-tool-cartographer",
+		name: "Cartographer's Tools",
+		source_book: "Rift Ascendant Canon",
+		description:
+			"Drafting instruments and a rangefinder for charting gate interiors and shifting terrain.",
+		rarity: "common",
+		type: "wondrous",
+		image: "/generated/compendium/items/item-0225.webp",
+		weight: 6,
+		value: { currency: "crystal", amount: 150 },
+		item_type: "tool",
+		sigil_slots_base: 0,
+		properties: {},
+		effects: {
+			passive: [
+				"While proficient with these tools, add your proficiency bonus to ability checks you make to chart terrain and read maps.",
+			],
+		},
+		activation: {
+			type: "passive",
+			consumes_item: false,
+			cost: "no action",
+			frequency: "continuous",
+			trigger: "Equipped, carried, worn, or used as described.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state:
+				"must be carried, consumed, or deployed as the activation describes",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: [],
+				attack: [],
+				notes:
+					"Utility and consumable items only call for an ability when their explicit rule names one.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "passive",
+				consumes_item: false,
+				cost: "no action",
+				frequency: "continuous",
+				trigger: "Equipped, carried, worn, or used as described.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "3d97fe70",
+				payload_complete: true,
+				uniqueness_seed: "base-srd-tool-cartographer::Cartographer's Tools",
+				variant_note: "A piece of Bureau-quartermastered field gear.",
+			},
+			formulas: {
+				effect_formula: "explicit non-damage item effect",
+				recharge: "continuous",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "common",
+				archetype: "gear_misc",
+				canon_basis: "RA mundane baseline",
+				distinguishing_rule:
+					"Cartographer's Tools keys standard gear misc rules through signature 3f394c88.",
+				role: "utility",
+				signature: "3f394c88",
+				theme: "standard",
+			},
+			passive_rules: [
+				"While proficient with these tools, add your proficiency bonus to ability checks you make to chart terrain and read maps.",
+			],
+			resolution: {
+				type: "equipment_utility",
+				active_options: [],
+				non_damage_resolution:
+					"While proficient with these tools, add your proficiency bonus to ability checks you make to chart terrain and read maps.",
+				passive_effects: [
+					"While proficient with these tools, add your proficiency bonus to ability checks you make to chart terrain and read maps.",
+				],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: true,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
+				],
+				ra_specific_mundane: true,
+			},
+			targeting: {
+				range: "self",
+				area: null,
+				line_of_effect: "as item description permits",
+				target: "Self, touched object, or listed utility target",
+			},
+		},
+	},
+	{
+		id: "base-srd-tool-cobbler",
+		name: "Cobbler's Tools",
+		source_book: "Rift Ascendant Canon",
+		description:
+			"Lasts, cutters, and mana-cured adhesives for repairing and reinforcing field footwear.",
+		rarity: "common",
+		type: "wondrous",
+		image: "/generated/compendium/items/item-0180.webp",
+		weight: 5,
+		value: { currency: "crystal", amount: 50 },
+		item_type: "tool",
+		sigil_slots_base: 0,
+		properties: {},
+		effects: {
+			passive: [
+				"While proficient with these tools, add your proficiency bonus to ability checks you make to repair and reinforce footwear.",
+			],
+		},
+		activation: {
+			type: "passive",
+			consumes_item: false,
+			cost: "no action",
+			frequency: "continuous",
+			trigger: "Equipped, carried, worn, or used as described.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state:
+				"must be carried, consumed, or deployed as the activation describes",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: [],
+				attack: [],
+				notes:
+					"Utility and consumable items only call for an ability when their explicit rule names one.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "passive",
+				consumes_item: false,
+				cost: "no action",
+				frequency: "continuous",
+				trigger: "Equipped, carried, worn, or used as described.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "f67565dd",
+				payload_complete: true,
+				uniqueness_seed: "base-srd-tool-cobbler::Cobbler's Tools",
+				variant_note: "A miscellaneous piece of standard Hunter kit.",
+			},
+			formulas: {
+				effect_formula: "explicit non-damage item effect",
+				recharge: "continuous",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "common",
+				archetype: "gear_misc",
+				canon_basis: "RA mundane baseline",
+				distinguishing_rule:
+					"Cobbler's Tools keys standard gear misc rules through signature ab4727b2.",
+				role: "utility",
+				signature: "ab4727b2",
+				theme: "standard",
+			},
+			passive_rules: [
+				"While proficient with these tools, add your proficiency bonus to ability checks you make to repair and reinforce footwear.",
+			],
+			resolution: {
+				type: "equipment_utility",
+				active_options: [],
+				non_damage_resolution:
+					"While proficient with these tools, add your proficiency bonus to ability checks you make to repair and reinforce footwear.",
+				passive_effects: [
+					"While proficient with these tools, add your proficiency bonus to ability checks you make to repair and reinforce footwear.",
+				],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: true,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
+				],
+				ra_specific_mundane: true,
+			},
+			targeting: {
+				range: "self",
+				area: null,
+				line_of_effect: "as item description permits",
+				target: "Self, touched object, or listed utility target",
+			},
+		},
+	},
+	{
+		id: "base-srd-tool-cook",
+		name: "Cook's Utensils",
+		source_book: "Rift Ascendant Canon",
+		description:
+			"A compact field kitchen; a good meal keeps a clear team steady between fights.",
+		rarity: "common",
+		type: "wondrous",
+		image: "/generated/compendium/items/item-0715.webp",
+		weight: 8,
+		value: { currency: "crystal", amount: 30 },
+		item_type: "tool",
+		sigil_slots_base: 0,
+		properties: {},
+		effects: {
+			passive: [
+				"While proficient with these tools, add your proficiency bonus to ability checks you make to prepare meals that aid a short rest's recovery.",
+			],
+		},
+		activation: {
+			type: "passive",
+			consumes_item: false,
+			cost: "no action",
+			frequency: "continuous",
+			trigger: "Equipped, carried, worn, or used as described.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state:
+				"must be carried, consumed, or deployed as the activation describes",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: [],
+				attack: [],
+				notes:
+					"Utility and consumable items only call for an ability when their explicit rule names one.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "passive",
+				consumes_item: false,
+				cost: "no action",
+				frequency: "continuous",
+				trigger: "Equipped, carried, worn, or used as described.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "52102a49",
+				payload_complete: true,
+				uniqueness_seed: "base-srd-tool-cook::Cook's Utensils",
+				variant_note:
+					"A field accessory. Cataloged in the Bureau quartermaster registry.",
+			},
+			formulas: {
+				effect_formula: "explicit non-damage item effect",
+				recharge: "continuous",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "common",
+				archetype: "gear_misc",
+				canon_basis: "RA mundane baseline",
+				distinguishing_rule:
+					"Cook's Utensils keys standard gear misc rules through signature 4df3d05c.",
+				role: "utility",
+				signature: "4df3d05c",
+				theme: "standard",
+			},
+			passive_rules: [
+				"While proficient with these tools, add your proficiency bonus to ability checks you make to prepare meals that aid a short rest's recovery.",
+			],
+			resolution: {
+				type: "equipment_utility",
+				active_options: [],
+				non_damage_resolution:
+					"While proficient with these tools, add your proficiency bonus to ability checks you make to prepare meals that aid a short rest's recovery.",
+				passive_effects: [
+					"While proficient with these tools, add your proficiency bonus to ability checks you make to prepare meals that aid a short rest's recovery.",
+				],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: true,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
+				],
+				ra_specific_mundane: false,
+			},
+			targeting: {
+				range: "self",
+				area: null,
+				line_of_effect: "as item description permits",
+				target: "Self, touched object, or listed utility target",
+			},
+		},
+	},
+	{
+		id: "base-srd-tool-glassblower",
+		name: "Glassblower's Tools",
+		source_book: "Rift Ascendant Canon",
+		description:
+			"A torch, blowpipe, and shaping jacks for forming lenses, vials, and mana-glass focuses.",
+		rarity: "common",
+		type: "wondrous",
+		image: "/generated/compendium/items/item-0290.webp",
+		weight: 5,
+		value: { currency: "crystal", amount: 300 },
+		item_type: "tool",
+		sigil_slots_base: 0,
+		properties: {},
+		effects: {
+			passive: [
+				"While proficient with these tools, add your proficiency bonus to ability checks you make to shape glass lenses, vials, and focuses.",
+			],
+		},
+		activation: {
+			type: "passive",
+			consumes_item: false,
+			cost: "no action",
+			frequency: "continuous",
+			trigger: "Equipped, carried, worn, or used as described.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state:
+				"must be carried, consumed, or deployed as the activation describes",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: [],
+				attack: [],
+				notes:
+					"Utility and consumable items only call for an ability when their explicit rule names one.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "passive",
+				consumes_item: false,
+				cost: "no action",
+				frequency: "continuous",
+				trigger: "Equipped, carried, worn, or used as described.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "42b3c77c",
+				payload_complete: true,
+				uniqueness_seed: "base-srd-tool-glassblower::Glassblower's Tools",
+				variant_note: "A piece of Bureau-quartermastered field gear.",
+			},
+			formulas: {
+				effect_formula: "explicit non-damage item effect",
+				recharge: "continuous",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "common",
+				archetype: "gear_misc",
+				canon_basis: "RA mundane baseline",
+				distinguishing_rule:
+					"Glassblower's Tools keys standard gear misc rules through signature 04660b9e.",
+				role: "utility",
+				signature: "04660b9e",
+				theme: "standard",
+			},
+			passive_rules: [
+				"While proficient with these tools, add your proficiency bonus to ability checks you make to shape glass lenses, vials, and focuses.",
+			],
+			resolution: {
+				type: "equipment_utility",
+				active_options: [],
+				non_damage_resolution:
+					"While proficient with these tools, add your proficiency bonus to ability checks you make to shape glass lenses, vials, and focuses.",
+				passive_effects: [
+					"While proficient with these tools, add your proficiency bonus to ability checks you make to shape glass lenses, vials, and focuses.",
+				],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: true,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
+				],
+				ra_specific_mundane: true,
+			},
+			targeting: {
+				range: "self",
+				area: null,
+				line_of_effect: "as item description permits",
+				target: "Self, touched object, or listed utility target",
+			},
+		},
+	},
+	{
+		id: "base-srd-tool-jeweler",
+		name: "Jeweler's Tools",
+		source_book: "Rift Ascendant Canon",
+		description:
+			"Loupes, files, and setting tools for cutting gemstones and mounting mana crystals.",
+		rarity: "common",
+		type: "wondrous",
+		image: "/generated/compendium/items/item-0015.webp",
+		weight: 2,
+		value: { currency: "crystal", amount: 400 },
+		item_type: "tool",
+		sigil_slots_base: 0,
+		properties: {},
+		effects: {
+			passive: [
+				"While proficient with these tools, add your proficiency bonus to ability checks you make to appraise gemstones and mount mana crystals.",
+			],
+		},
+		activation: {
+			type: "passive",
+			consumes_item: false,
+			cost: "no action",
+			frequency: "continuous",
+			trigger: "Equipped, carried, worn, or used as described.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state:
+				"must be carried, consumed, or deployed as the activation describes",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: [],
+				attack: [],
+				notes:
+					"Utility and consumable items only call for an ability when their explicit rule names one.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "passive",
+				consumes_item: false,
+				cost: "no action",
+				frequency: "continuous",
+				trigger: "Equipped, carried, worn, or used as described.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "7c795e63",
+				payload_complete: true,
+				uniqueness_seed: "base-srd-tool-jeweler::Jeweler's Tools",
+				variant_note:
+					"A field accessory. Cataloged in the Bureau quartermaster registry.",
+			},
+			formulas: {
+				effect_formula: "explicit non-damage item effect",
+				recharge: "continuous",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "common",
+				archetype: "gear_misc",
+				canon_basis: "RA mundane baseline",
+				distinguishing_rule:
+					"Jeweler's Tools keys standard gear misc rules through signature eed45e04.",
+				role: "utility",
+				signature: "eed45e04",
+				theme: "standard",
+			},
+			passive_rules: [
+				"While proficient with these tools, add your proficiency bonus to ability checks you make to appraise gemstones and mount mana crystals.",
+			],
+			resolution: {
+				type: "equipment_utility",
+				active_options: [],
+				non_damage_resolution:
+					"While proficient with these tools, add your proficiency bonus to ability checks you make to appraise gemstones and mount mana crystals.",
+				passive_effects: [
+					"While proficient with these tools, add your proficiency bonus to ability checks you make to appraise gemstones and mount mana crystals.",
+				],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: true,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
+				],
+				ra_specific_mundane: true,
+			},
+			targeting: {
+				range: "self",
+				area: null,
+				line_of_effect: "as item description permits",
+				target: "Self, touched object, or listed utility target",
+			},
+		},
+	},
+	{
+		id: "base-srd-tool-leatherworker",
+		name: "Leatherworker's Tools",
+		source_book: "Rift Ascendant Canon",
+		description:
+			"Punches, needles, and dyes for cutting and fitting armor leathers and harnesses.",
+		rarity: "common",
+		type: "wondrous",
+		image: "/generated/compendium/items/item-0718.webp",
+		weight: 5,
+		value: { currency: "crystal", amount: 50 },
+		item_type: "tool",
+		sigil_slots_base: 0,
+		properties: {},
+		effects: {
+			passive: [
+				"While proficient with these tools, add your proficiency bonus to ability checks you make to craft and repair leather goods and harnesses.",
+			],
+		},
+		activation: {
+			type: "passive",
+			consumes_item: false,
+			cost: "no action",
+			frequency: "continuous",
+			trigger: "Equipped, carried, worn, or used as described.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state:
+				"must be carried, consumed, or deployed as the activation describes",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: [],
+				attack: [],
+				notes:
+					"Utility and consumable items only call for an ability when their explicit rule names one.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "passive",
+				consumes_item: false,
+				cost: "no action",
+				frequency: "continuous",
+				trigger: "Equipped, carried, worn, or used as described.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "13bc2077",
+				payload_complete: true,
+				uniqueness_seed: "base-srd-tool-leatherworker::Leatherworker's Tools",
+				variant_note:
+					"A field accessory. Cataloged in the Bureau quartermaster registry.",
+			},
+			formulas: {
+				effect_formula: "explicit non-damage item effect",
+				recharge: "continuous",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "common",
+				archetype: "gear_misc",
+				canon_basis: "RA mundane baseline",
+				distinguishing_rule:
+					"Leatherworker's Tools keys standard gear misc rules through signature 5846d742.",
+				role: "utility",
+				signature: "5846d742",
+				theme: "standard",
+			},
+			passive_rules: [
+				"While proficient with these tools, add your proficiency bonus to ability checks you make to craft and repair leather goods and harnesses.",
+			],
+			resolution: {
+				type: "equipment_utility",
+				active_options: [],
+				non_damage_resolution:
+					"While proficient with these tools, add your proficiency bonus to ability checks you make to craft and repair leather goods and harnesses.",
+				passive_effects: [
+					"While proficient with these tools, add your proficiency bonus to ability checks you make to craft and repair leather goods and harnesses.",
+				],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: true,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
+				],
+				ra_specific_mundane: false,
+			},
+			targeting: {
+				range: "self",
+				area: null,
+				line_of_effect: "as item description permits",
+				target: "Self, touched object, or listed utility target",
+			},
+		},
+	},
+	{
+		id: "base-srd-tool-mason",
+		name: "Mason's Tools",
+		source_book: "Rift Ascendant Canon",
+		description:
+			"Trowels, chisels, and a mana-set mortar for raising or breaching stonework.",
+		rarity: "common",
+		type: "wondrous",
+		image: "/generated/compendium/items/item-0853.webp",
+		weight: 8,
+		value: { currency: "crystal", amount: 80 },
+		item_type: "tool",
+		sigil_slots_base: 0,
+		properties: {},
+		effects: {
+			passive: [
+				"While proficient with these tools, add your proficiency bonus to ability checks you make to raise or breach stonework.",
+			],
+		},
+		activation: {
+			type: "passive",
+			consumes_item: false,
+			cost: "no action",
+			frequency: "continuous",
+			trigger: "Equipped, carried, worn, or used as described.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state:
+				"must be carried, consumed, or deployed as the activation describes",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: [],
+				attack: [],
+				notes:
+					"Utility and consumable items only call for an ability when their explicit rule names one.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "passive",
+				consumes_item: false,
+				cost: "no action",
+				frequency: "continuous",
+				trigger: "Equipped, carried, worn, or used as described.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "b3f67be3",
+				payload_complete: true,
+				uniqueness_seed: "base-srd-tool-mason::Mason's Tools",
+				variant_note: "A piece of Bureau-quartermastered field gear.",
+			},
+			formulas: {
+				effect_formula: "explicit non-damage item effect",
+				recharge: "continuous",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "common",
+				archetype: "gear_misc",
+				canon_basis: "RA mundane baseline",
+				distinguishing_rule:
+					"Mason's Tools keys standard gear misc rules through signature e5be1af0.",
+				role: "utility",
+				signature: "e5be1af0",
+				theme: "standard",
+			},
+			passive_rules: [
+				"While proficient with these tools, add your proficiency bonus to ability checks you make to raise or breach stonework.",
+			],
+			resolution: {
+				type: "equipment_utility",
+				active_options: [],
+				non_damage_resolution:
+					"While proficient with these tools, add your proficiency bonus to ability checks you make to raise or breach stonework.",
+				passive_effects: [
+					"While proficient with these tools, add your proficiency bonus to ability checks you make to raise or breach stonework.",
+				],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: true,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
+				],
+				ra_specific_mundane: true,
+			},
+			targeting: {
+				range: "self",
+				area: null,
+				line_of_effect: "as item description permits",
+				target: "Self, touched object, or listed utility target",
+			},
+		},
+	},
+	{
+		id: "base-srd-tool-painter",
+		name: "Painter's Supplies",
+		source_book: "Rift Ascendant Canon",
+		description:
+			"Brushes, pigments, and sealants — for canvases, camouflage, or marking cleared zones.",
+		rarity: "common",
+		type: "wondrous",
+		image: "/generated/compendium/items/item-0002.webp",
+		weight: 5,
+		value: { currency: "crystal", amount: 100 },
+		item_type: "tool",
+		sigil_slots_base: 0,
+		properties: {},
+		effects: {
+			passive: [
+				"While proficient with these tools, add your proficiency bonus to ability checks you make to paint, camouflage, or mark surfaces.",
+			],
+		},
+		activation: {
+			type: "passive",
+			consumes_item: false,
+			cost: "no action",
+			frequency: "continuous",
+			trigger: "Equipped, carried, worn, or used as described.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state:
+				"must be carried, consumed, or deployed as the activation describes",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: [],
+				attack: [],
+				notes:
+					"Utility and consumable items only call for an ability when their explicit rule names one.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "passive",
+				consumes_item: false,
+				cost: "no action",
+				frequency: "continuous",
+				trigger: "Equipped, carried, worn, or used as described.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "d9c2cebb",
+				payload_complete: true,
+				uniqueness_seed: "base-srd-tool-painter::Painter's Supplies",
+				variant_note: "A miscellaneous piece of standard Hunter kit.",
+			},
+			formulas: {
+				effect_formula: "explicit non-damage item effect",
+				recharge: "continuous",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "common",
+				archetype: "gear_misc",
+				canon_basis: "RA mundane baseline",
+				distinguishing_rule:
+					"Painter's Supplies keys standard gear misc rules through signature 40e4ecc6.",
+				role: "utility",
+				signature: "40e4ecc6",
+				theme: "standard",
+			},
+			passive_rules: [
+				"While proficient with these tools, add your proficiency bonus to ability checks you make to paint, camouflage, or mark surfaces.",
+			],
+			resolution: {
+				type: "equipment_utility",
+				active_options: [],
+				non_damage_resolution:
+					"While proficient with these tools, add your proficiency bonus to ability checks you make to paint, camouflage, or mark surfaces.",
+				passive_effects: [
+					"While proficient with these tools, add your proficiency bonus to ability checks you make to paint, camouflage, or mark surfaces.",
+				],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: true,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
+				],
+				ra_specific_mundane: false,
+			},
+			targeting: {
+				range: "self",
+				area: null,
+				line_of_effect: "as item description permits",
+				target: "Self, touched object, or listed utility target",
+			},
+		},
+	},
+	{
+		id: "base-srd-tool-potter",
+		name: "Potter's Tools",
+		source_book: "Rift Ascendant Canon",
+		description:
+			"A wheel kit and shaping ribs for forming vessels and ceramic mana-cores.",
+		rarity: "common",
+		type: "wondrous",
+		image: "/generated/compendium/items/item-0765.webp",
+		weight: 3,
+		value: { currency: "crystal", amount: 100 },
+		item_type: "tool",
+		sigil_slots_base: 0,
+		properties: {},
+		effects: {
+			passive: [
+				"While proficient with these tools, add your proficiency bonus to ability checks you make to form ceramics and mana-core vessels.",
+			],
+		},
+		activation: {
+			type: "passive",
+			consumes_item: false,
+			cost: "no action",
+			frequency: "continuous",
+			trigger: "Equipped, carried, worn, or used as described.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state:
+				"must be carried, consumed, or deployed as the activation describes",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: [],
+				attack: [],
+				notes:
+					"Utility and consumable items only call for an ability when their explicit rule names one.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "passive",
+				consumes_item: false,
+				cost: "no action",
+				frequency: "continuous",
+				trigger: "Equipped, carried, worn, or used as described.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "9e2d7d09",
+				payload_complete: true,
+				uniqueness_seed: "base-srd-tool-potter::Potter's Tools",
+				variant_note: "A piece of Bureau-quartermastered field gear.",
+			},
+			formulas: {
+				effect_formula: "explicit non-damage item effect",
+				recharge: "continuous",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "common",
+				archetype: "gear_misc",
+				canon_basis: "RA mundane baseline",
+				distinguishing_rule:
+					"Potter's Tools keys standard gear misc rules through signature 6bf7cb58.",
+				role: "utility",
+				signature: "6bf7cb58",
+				theme: "standard",
+			},
+			passive_rules: [
+				"While proficient with these tools, add your proficiency bonus to ability checks you make to form ceramics and mana-core vessels.",
+			],
+			resolution: {
+				type: "equipment_utility",
+				active_options: [],
+				non_damage_resolution:
+					"While proficient with these tools, add your proficiency bonus to ability checks you make to form ceramics and mana-core vessels.",
+				passive_effects: [
+					"While proficient with these tools, add your proficiency bonus to ability checks you make to form ceramics and mana-core vessels.",
+				],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: true,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
+				],
+				ra_specific_mundane: true,
+			},
+			targeting: {
+				range: "self",
+				area: null,
+				line_of_effect: "as item description permits",
+				target: "Self, touched object, or listed utility target",
+			},
+		},
+	},
+	{
+		id: "base-srd-tool-smith",
+		name: "Smith's Tools",
+		source_book: "Rift Ascendant Canon",
+		description:
+			"A portable forge kit for shaping and repairing mana-reactive alloy gear.",
+		rarity: "common",
+		type: "wondrous",
+		image: "/generated/compendium/items/item-0054.webp",
+		weight: 8,
+		value: { currency: "crystal", amount: 200 },
+		item_type: "tool",
+		sigil_slots_base: 0,
+		properties: {},
+		effects: {
+			passive: [
+				"While proficient with these tools, add your proficiency bonus to ability checks you make to forge and repair metal gear.",
+			],
+		},
+		activation: {
+			type: "passive",
+			consumes_item: false,
+			cost: "no action",
+			frequency: "continuous",
+			trigger: "Equipped, carried, worn, or used as described.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state:
+				"must be carried, consumed, or deployed as the activation describes",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: [],
+				attack: [],
+				notes:
+					"Utility and consumable items only call for an ability when their explicit rule names one.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "passive",
+				consumes_item: false,
+				cost: "no action",
+				frequency: "continuous",
+				trigger: "Equipped, carried, worn, or used as described.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "7ba1aca0",
+				payload_complete: true,
+				uniqueness_seed: "base-srd-tool-smith::Smith's Tools",
+				variant_note: "A piece of Bureau-quartermastered field gear.",
+			},
+			formulas: {
+				effect_formula: "explicit non-damage item effect",
+				recharge: "continuous",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "common",
+				archetype: "gear_misc",
+				canon_basis: "RA mundane baseline",
+				distinguishing_rule:
+					"Smith's Tools keys standard gear misc rules through signature 5b25b97a.",
+				role: "utility",
+				signature: "5b25b97a",
+				theme: "standard",
+			},
+			passive_rules: [
+				"While proficient with these tools, add your proficiency bonus to ability checks you make to forge and repair metal gear.",
+			],
+			resolution: {
+				type: "equipment_utility",
+				active_options: [],
+				non_damage_resolution:
+					"While proficient with these tools, add your proficiency bonus to ability checks you make to forge and repair metal gear.",
+				passive_effects: [
+					"While proficient with these tools, add your proficiency bonus to ability checks you make to forge and repair metal gear.",
+				],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: true,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
+				],
+				ra_specific_mundane: true,
+			},
+			targeting: {
+				range: "self",
+				area: null,
+				line_of_effect: "as item description permits",
+				target: "Self, touched object, or listed utility target",
+			},
+		},
+	},
+	{
+		id: "base-srd-tool-weaver",
+		name: "Weaver's Tools",
+		source_book: "Rift Ascendant Canon",
+		description:
+			"A loom kit and mana-fibre spools for weaving cloth, netting, and ward-lined garments.",
+		rarity: "common",
+		type: "wondrous",
+		image: "/generated/compendium/items/item-0551.webp",
+		weight: 5,
+		value: { currency: "crystal", amount: 10 },
+		item_type: "tool",
+		sigil_slots_base: 0,
+		properties: {},
+		effects: {
+			passive: [
+				"While proficient with these tools, add your proficiency bonus to ability checks you make to weave cloth, netting, and ward-lined garments.",
+			],
+		},
+		activation: {
+			type: "passive",
+			consumes_item: false,
+			cost: "no action",
+			frequency: "continuous",
+			trigger: "Equipped, carried, worn, or used as described.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state:
+				"must be carried, consumed, or deployed as the activation describes",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: [],
+				attack: [],
+				notes:
+					"Utility and consumable items only call for an ability when their explicit rule names one.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "passive",
+				consumes_item: false,
+				cost: "no action",
+				frequency: "continuous",
+				trigger: "Equipped, carried, worn, or used as described.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "329da91b",
+				payload_complete: true,
+				uniqueness_seed: "base-srd-tool-weaver::Weaver's Tools",
+				variant_note: "A piece of Bureau-quartermastered field gear.",
+			},
+			formulas: {
+				effect_formula: "explicit non-damage item effect",
+				recharge: "continuous",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "common",
+				archetype: "gear_misc",
+				canon_basis: "RA mundane baseline",
+				distinguishing_rule:
+					"Weaver's Tools keys standard gear misc rules through signature eea57694.",
+				role: "utility",
+				signature: "eea57694",
+				theme: "standard",
+			},
+			passive_rules: [
+				"While proficient with these tools, add your proficiency bonus to ability checks you make to weave cloth, netting, and ward-lined garments.",
+			],
+			resolution: {
+				type: "equipment_utility",
+				active_options: [],
+				non_damage_resolution:
+					"While proficient with these tools, add your proficiency bonus to ability checks you make to weave cloth, netting, and ward-lined garments.",
+				passive_effects: [
+					"While proficient with these tools, add your proficiency bonus to ability checks you make to weave cloth, netting, and ward-lined garments.",
+				],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: true,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
+				],
+				ra_specific_mundane: true,
+			},
+			targeting: {
+				range: "self",
+				area: null,
+				line_of_effect: "as item description permits",
+				target: "Self, touched object, or listed utility target",
+			},
+		},
+	},
+	{
+		id: "base-srd-tool-woodcarver",
+		name: "Woodcarver's Tools",
+		source_book: "Rift Ascendant Canon",
+		description:
+			"Knives and gouges for carving hafts, stocks, and sigil-etched fetishes.",
+		rarity: "common",
+		type: "wondrous",
+		image: "/generated/compendium/items/item-0745.webp",
+		weight: 5,
+		value: { currency: "crystal", amount: 10 },
+		item_type: "tool",
+		sigil_slots_base: 0,
+		properties: {},
+		effects: {
+			passive: [
+				"While proficient with these tools, add your proficiency bonus to ability checks you make to carve hafts, stocks, and fetishes.",
+			],
+		},
+		activation: {
+			type: "passive",
+			consumes_item: false,
+			cost: "no action",
+			frequency: "continuous",
+			trigger: "Equipped, carried, worn, or used as described.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state:
+				"must be carried, consumed, or deployed as the activation describes",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: [],
+				attack: [],
+				notes:
+					"Utility and consumable items only call for an ability when their explicit rule names one.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "passive",
+				consumes_item: false,
+				cost: "no action",
+				frequency: "continuous",
+				trigger: "Equipped, carried, worn, or used as described.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "c1439105",
+				payload_complete: true,
+				uniqueness_seed: "base-srd-tool-woodcarver::Woodcarver's Tools",
+				variant_note:
+					"A field accessory. Cataloged in the Bureau quartermaster registry.",
+			},
+			formulas: {
+				effect_formula: "explicit non-damage item effect",
+				recharge: "continuous",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "common",
+				archetype: "gear_misc",
+				canon_basis: "RA mundane baseline",
+				distinguishing_rule:
+					"Woodcarver's Tools keys standard gear misc rules through signature 0e6abf2c.",
+				role: "utility",
+				signature: "0e6abf2c",
+				theme: "standard",
+			},
+			passive_rules: [
+				"While proficient with these tools, add your proficiency bonus to ability checks you make to carve hafts, stocks, and fetishes.",
+			],
+			resolution: {
+				type: "equipment_utility",
+				active_options: [],
+				non_damage_resolution:
+					"While proficient with these tools, add your proficiency bonus to ability checks you make to carve hafts, stocks, and fetishes.",
+				passive_effects: [
+					"While proficient with these tools, add your proficiency bonus to ability checks you make to carve hafts, stocks, and fetishes.",
+				],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: true,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
+				],
+				ra_specific_mundane: false,
+			},
+			targeting: {
+				range: "self",
+				area: null,
+				line_of_effect: "as item description permits",
+				target: "Self, touched object, or listed utility target",
+			},
+		},
+	},
+	{
+		id: "base-srd-game-dice",
+		name: "Dice Set",
+		source_book: "Rift Ascendant Canon",
+		description:
+			"A set of weighted casino dice in a felt cup — a Hunter's favorite off-duty vice.",
+		rarity: "common",
+		type: "wondrous",
+		image: "/generated/compendium/items/item-0290.webp",
+		weight: 0,
+		value: { currency: "crystal", amount: 10 },
+		item_type: "tool",
+		sigil_slots_base: 0,
+		properties: {},
+		effects: {
+			passive: [
+				"While proficient with this gaming set, add your proficiency bonus to ability checks you make to play it.",
+			],
+		},
+		activation: {
+			type: "passive",
+			consumes_item: false,
+			cost: "no action",
+			frequency: "continuous",
+			trigger: "Equipped, carried, worn, or used as described.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state:
+				"must be carried, consumed, or deployed as the activation describes",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: [],
+				attack: [],
+				notes:
+					"Utility and consumable items only call for an ability when their explicit rule names one.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "passive",
+				consumes_item: false,
+				cost: "no action",
+				frequency: "continuous",
+				trigger: "Equipped, carried, worn, or used as described.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "e932e137",
+				payload_complete: true,
+				uniqueness_seed: "base-srd-game-dice::Dice Set",
+				variant_note: "A piece of Bureau-quartermastered field gear.",
+			},
+			formulas: {
+				effect_formula: "explicit non-damage item effect",
+				recharge: "continuous",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "common",
+				archetype: "gear_misc",
+				canon_basis: "RA mundane baseline",
+				distinguishing_rule:
+					"Dice Set keys standard gear misc rules through signature 40674123.",
+				role: "utility",
+				signature: "40674123",
+				theme: "standard",
+			},
+			passive_rules: [
+				"While proficient with this gaming set, add your proficiency bonus to ability checks you make to play it.",
+			],
+			resolution: {
+				type: "equipment_utility",
+				active_options: [],
+				non_damage_resolution:
+					"While proficient with this gaming set, add your proficiency bonus to ability checks you make to play it.",
+				passive_effects: [
+					"While proficient with this gaming set, add your proficiency bonus to ability checks you make to play it.",
+				],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: true,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
+				],
+				ra_specific_mundane: true,
+			},
+			targeting: {
+				range: "self",
+				area: null,
+				line_of_effect: "as item description permits",
+				target: "Self, touched object, or listed utility target",
+			},
+		},
+	},
+	{
+		id: "base-srd-game-cards",
+		name: "Playing Card Deck",
+		source_book: "Rift Ascendant Canon",
+		description:
+			"A slick plastic-coated card deck, equally at home in a barracks game or a downtown con.",
+		rarity: "common",
+		type: "wondrous",
+		image: "/generated/compendium/items/item-0578.webp",
+		weight: 0,
+		value: { currency: "crystal", amount: 10 },
+		item_type: "tool",
+		sigil_slots_base: 0,
+		properties: {},
+		effects: {
+			passive: [
+				"While proficient with this gaming set, add your proficiency bonus to ability checks you make to play it.",
+			],
+		},
+		activation: {
+			type: "passive",
+			consumes_item: false,
+			cost: "no action",
+			frequency: "continuous",
+			trigger: "Equipped, carried, worn, or used as described.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state:
+				"must be carried, consumed, or deployed as the activation describes",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: [],
+				attack: [],
+				notes:
+					"Utility and consumable items only call for an ability when their explicit rule names one.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "passive",
+				consumes_item: false,
+				cost: "no action",
+				frequency: "continuous",
+				trigger: "Equipped, carried, worn, or used as described.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "e932e137",
+				payload_complete: true,
+				uniqueness_seed: "base-srd-game-cards::Playing Card Deck",
+				variant_note: "A miscellaneous piece of standard Hunter kit.",
+			},
+			formulas: {
+				effect_formula: "explicit non-damage item effect",
+				recharge: "continuous",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "common",
+				archetype: "gear_misc",
+				canon_basis: "RA mundane baseline",
+				distinguishing_rule:
+					"Playing Card Deck keys standard gear misc rules through signature fc3bfc0f.",
+				role: "utility",
+				signature: "fc3bfc0f",
+				theme: "standard",
+			},
+			passive_rules: [
+				"While proficient with this gaming set, add your proficiency bonus to ability checks you make to play it.",
+			],
+			resolution: {
+				type: "equipment_utility",
+				active_options: [],
+				non_damage_resolution:
+					"While proficient with this gaming set, add your proficiency bonus to ability checks you make to play it.",
+				passive_effects: [
+					"While proficient with this gaming set, add your proficiency bonus to ability checks you make to play it.",
+				],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: true,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
+				],
+				ra_specific_mundane: false,
+			},
+			targeting: {
+				range: "self",
+				area: null,
+				line_of_effect: "as item description permits",
+				target: "Self, touched object, or listed utility target",
+			},
+		},
+	},
+	{
+		id: "base-srd-game-console",
+		name: "Handheld Game Console",
+		source_book: "Rift Ascendant Canon",
+		description:
+			"A pocket console loaded with the season's hits — and a few underground titles.",
+		rarity: "common",
+		type: "wondrous",
+		image: "/generated/compendium/items/item-0276.webp",
+		weight: 1,
+		value: { currency: "crystal", amount: 250 },
+		item_type: "tool",
+		sigil_slots_base: 0,
+		properties: {},
+		effects: {
+			passive: [
+				"While proficient with this gaming set, add your proficiency bonus to ability checks you make to play it.",
+			],
+		},
+		activation: {
+			type: "passive",
+			consumes_item: false,
+			cost: "no action",
+			frequency: "continuous",
+			trigger: "Equipped, carried, worn, or used as described.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state:
+				"must be carried, consumed, or deployed as the activation describes",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: [],
+				attack: [],
+				notes:
+					"Utility and consumable items only call for an ability when their explicit rule names one.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "passive",
+				consumes_item: false,
+				cost: "no action",
+				frequency: "continuous",
+				trigger: "Equipped, carried, worn, or used as described.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "e932e137",
+				payload_complete: true,
+				uniqueness_seed: "base-srd-game-console::Handheld Game Console",
+				variant_note: "A miscellaneous piece of standard Hunter kit.",
+			},
+			formulas: {
+				effect_formula: "explicit non-damage item effect",
+				recharge: "continuous",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "common",
+				archetype: "gear_misc",
+				canon_basis: "RA mundane baseline",
+				distinguishing_rule:
+					"Handheld Game Console keys standard gear misc rules through signature 7a045b3d.",
+				role: "utility",
+				signature: "7a045b3d",
+				theme: "standard",
+			},
+			passive_rules: [
+				"While proficient with this gaming set, add your proficiency bonus to ability checks you make to play it.",
+			],
+			resolution: {
+				type: "equipment_utility",
+				active_options: [],
+				non_damage_resolution:
+					"While proficient with this gaming set, add your proficiency bonus to ability checks you make to play it.",
+				passive_effects: [
+					"While proficient with this gaming set, add your proficiency bonus to ability checks you make to play it.",
+				],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: true,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
+				],
+				ra_specific_mundane: false,
+			},
+			targeting: {
+				range: "self",
+				area: null,
+				line_of_effect: "as item description permits",
+				target: "Self, touched object, or listed utility target",
+			},
+		},
+	},
+	{
+		id: "base-srd-game-board",
+		name: "Strategy Board Set",
+		source_book: "Rift Ascendant Canon",
+		description:
+			"A modern tactics board game of gates and monarchs, popular in Bureau break rooms.",
+		rarity: "common",
+		type: "wondrous",
+		image: "/generated/compendium/items/item-0599.webp",
+		weight: 3,
+		value: { currency: "crystal", amount: 80 },
+		item_type: "tool",
+		sigil_slots_base: 0,
+		properties: {},
+		effects: {
+			passive: [
+				"While proficient with this gaming set, add your proficiency bonus to ability checks you make to play it.",
+			],
+		},
+		activation: {
+			type: "passive",
+			consumes_item: false,
+			cost: "no action",
+			frequency: "continuous",
+			trigger: "Equipped, carried, worn, or used as described.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state:
+				"must be carried, consumed, or deployed as the activation describes",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: [],
+				attack: [],
+				notes:
+					"Utility and consumable items only call for an ability when their explicit rule names one.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "passive",
+				consumes_item: false,
+				cost: "no action",
+				frequency: "continuous",
+				trigger: "Equipped, carried, worn, or used as described.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "e932e137",
+				payload_complete: true,
+				uniqueness_seed: "base-srd-game-board::Strategy Board Set",
+				variant_note: "A piece of Bureau-quartermastered field gear.",
+			},
+			formulas: {
+				effect_formula: "explicit non-damage item effect",
+				recharge: "continuous",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "common",
+				archetype: "gear_misc",
+				canon_basis: "RA mundane baseline",
+				distinguishing_rule:
+					"Strategy Board Set keys standard gear misc rules through signature 0b126b60.",
+				role: "utility",
+				signature: "0b126b60",
+				theme: "standard",
+			},
+			passive_rules: [
+				"While proficient with this gaming set, add your proficiency bonus to ability checks you make to play it.",
+			],
+			resolution: {
+				type: "equipment_utility",
+				active_options: [],
+				non_damage_resolution:
+					"While proficient with this gaming set, add your proficiency bonus to ability checks you make to play it.",
+				passive_effects: [
+					"While proficient with this gaming set, add your proficiency bonus to ability checks you make to play it.",
+				],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: true,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
+				],
+				ra_specific_mundane: true,
+			},
+			targeting: {
+				range: "self",
+				area: null,
+				line_of_effect: "as item description permits",
+				target: "Self, touched object, or listed utility target",
+			},
+		},
+	},
+	{
+		id: "base-srd-tool-disguise",
+		name: "Disguise Kit",
+		source_book: "Rift Ascendant Canon",
+		description:
+			"Cosmetics, prosthetics, and quick-change pieces for passing unnoticed.",
+		rarity: "common",
+		type: "wondrous",
+		image: "/generated/compendium/items/item-0130.webp",
+		weight: 3,
+		value: { currency: "crystal", amount: 250 },
+		item_type: "tool",
+		sigil_slots_base: 0,
+		properties: {},
+		effects: {
+			passive: [
+				"While proficient with these tools, add your proficiency bonus to ability checks you make to create or see through a disguise.",
+			],
+		},
+		activation: {
+			type: "passive",
+			consumes_item: false,
+			cost: "no action",
+			frequency: "continuous",
+			trigger: "Equipped, carried, worn, or used as described.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state:
+				"must be carried, consumed, or deployed as the activation describes",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: [],
+				attack: [],
+				notes:
+					"Utility and consumable items only call for an ability when their explicit rule names one.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "passive",
+				consumes_item: false,
+				cost: "no action",
+				frequency: "continuous",
+				trigger: "Equipped, carried, worn, or used as described.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "9b5c48a2",
+				payload_complete: true,
+				uniqueness_seed: "base-srd-tool-disguise::Disguise Kit",
+				variant_note: "A piece of Bureau-quartermastered field gear.",
+			},
+			formulas: {
+				effect_formula: "explicit non-damage item effect",
+				recharge: "continuous",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "common",
+				archetype: "gear_misc",
+				canon_basis: "RA mundane baseline",
+				distinguishing_rule:
+					"Disguise Kit keys standard gear misc rules through signature 7e63f8cb.",
+				role: "utility",
+				signature: "7e63f8cb",
+				theme: "standard",
+			},
+			passive_rules: [
+				"While proficient with these tools, add your proficiency bonus to ability checks you make to create or see through a disguise.",
+			],
+			resolution: {
+				type: "equipment_utility",
+				active_options: [],
+				non_damage_resolution:
+					"While proficient with these tools, add your proficiency bonus to ability checks you make to create or see through a disguise.",
+				passive_effects: [
+					"While proficient with these tools, add your proficiency bonus to ability checks you make to create or see through a disguise.",
+				],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: true,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
+				],
+				ra_specific_mundane: false,
+			},
+			targeting: {
+				range: "self",
+				area: null,
+				line_of_effect: "as item description permits",
+				target: "Self, touched object, or listed utility target",
+			},
+		},
+	},
+	{
+		id: "base-srd-tool-forgery",
+		name: "Forgery Kit",
+		source_book: "Rift Ascendant Canon",
+		description:
+			"Papers, seals, and inks for producing convincing documents and credentials.",
+		rarity: "common",
+		type: "wondrous",
+		image: "/generated/compendium/items/item-0897.webp",
+		weight: 5,
+		value: { currency: "crystal", amount: 150 },
+		item_type: "tool",
+		sigil_slots_base: 0,
+		properties: {},
+		effects: {
+			passive: [
+				"While proficient with these tools, add your proficiency bonus to ability checks you make to forge documents and credentials.",
+			],
+		},
+		activation: {
+			type: "passive",
+			consumes_item: false,
+			cost: "no action",
+			frequency: "continuous",
+			trigger: "Equipped, carried, worn, or used as described.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state:
+				"must be carried, consumed, or deployed as the activation describes",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: [],
+				attack: [],
+				notes:
+					"Utility and consumable items only call for an ability when their explicit rule names one.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "passive",
+				consumes_item: false,
+				cost: "no action",
+				frequency: "continuous",
+				trigger: "Equipped, carried, worn, or used as described.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "8e0a3587",
+				payload_complete: true,
+				uniqueness_seed: "base-srd-tool-forgery::Forgery Kit",
+				variant_note:
+					"A field accessory. Cataloged in the Bureau quartermaster registry.",
+			},
+			formulas: {
+				effect_formula: "explicit non-damage item effect",
+				recharge: "continuous",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "common",
+				archetype: "gear_misc",
+				canon_basis: "RA mundane baseline",
+				distinguishing_rule:
+					"Forgery Kit keys standard gear misc rules through signature 0e27dd2f.",
+				role: "utility",
+				signature: "0e27dd2f",
+				theme: "standard",
+			},
+			passive_rules: [
+				"While proficient with these tools, add your proficiency bonus to ability checks you make to forge documents and credentials.",
+			],
+			resolution: {
+				type: "equipment_utility",
+				active_options: [],
+				non_damage_resolution:
+					"While proficient with these tools, add your proficiency bonus to ability checks you make to forge documents and credentials.",
+				passive_effects: [
+					"While proficient with these tools, add your proficiency bonus to ability checks you make to forge documents and credentials.",
+				],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: true,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
+				],
+				ra_specific_mundane: false,
+			},
+			targeting: {
+				range: "self",
+				area: null,
+				line_of_effect: "as item description permits",
+				target: "Self, touched object, or listed utility target",
+			},
+		},
+	},
+	{
+		id: "base-srd-tool-herbalism",
+		name: "Herbalism Kit",
+		source_book: "Rift Ascendant Canon",
+		description:
+			"Pouches, shears, and a press for harvesting gate-flora and preparing remedies.",
+		rarity: "common",
+		type: "wondrous",
+		image: "/generated/compendium/items/item-0868.webp",
+		weight: 3,
+		value: { currency: "crystal", amount: 50 },
+		item_type: "tool",
+		sigil_slots_base: 0,
+		properties: {},
+		effects: {
+			passive: [
+				"While proficient with this kit, add your proficiency bonus to checks made to identify or apply herbs, and you can craft antitoxin and healing salves.",
+			],
+		},
+		activation: {
+			type: "passive",
+			consumes_item: false,
+			cost: "no action",
+			frequency: "continuous",
+			trigger: "Equipped, carried, worn, or used as described.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state:
+				"must be carried, consumed, or deployed as the activation describes",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: [],
+				attack: [],
+				notes:
+					"Utility and consumable items only call for an ability when their explicit rule names one.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "passive",
+				consumes_item: false,
+				cost: "no action",
+				frequency: "continuous",
+				trigger: "Equipped, carried, worn, or used as described.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "ad3256fd",
+				payload_complete: true,
+				uniqueness_seed: "base-srd-tool-herbalism::Herbalism Kit",
+				variant_note: "A miscellaneous piece of standard Hunter kit.",
+			},
+			formulas: {
+				effect_formula: "explicit non-damage item effect",
+				recharge: "continuous",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "common",
+				archetype: "gear_misc",
+				canon_basis: "RA mundane baseline",
+				distinguishing_rule:
+					"Herbalism Kit keys standard gear misc rules through signature 128bef21.",
+				role: "utility",
+				signature: "128bef21",
+				theme: "standard",
+			},
+			passive_rules: [
+				"While proficient with this kit, add your proficiency bonus to checks made to identify or apply herbs, and you can craft antitoxin and healing salves.",
+			],
+			resolution: {
+				type: "equipment_utility",
+				active_options: [],
+				non_damage_resolution:
+					"While proficient with this kit, add your proficiency bonus to checks made to identify or apply herbs, and you can craft antitoxin and healing salves.",
+				passive_effects: [
+					"While proficient with this kit, add your proficiency bonus to checks made to identify or apply herbs, and you can craft antitoxin and healing salves.",
+				],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: true,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
+				],
+				ra_specific_mundane: true,
+			},
+			targeting: {
+				range: "self",
+				area: null,
+				line_of_effect: "as item description permits",
+				target: "Self, touched object, or listed utility target",
+			},
+		},
+	},
+	{
+		id: "base-srd-tool-navigator",
+		name: "Gate Navigator's Kit",
+		source_book: "Rift Ascendant Canon",
+		description:
+			"Charts, a rift-compass, and a depth gauge for holding a bearing inside a shifting gate.",
+		rarity: "common",
+		type: "wondrous",
+		image: "/generated/compendium/items/item-0636.webp",
+		weight: 2,
+		value: { currency: "crystal", amount: 25 },
+		item_type: "tool",
+		sigil_slots_base: 0,
+		properties: {},
+		effects: {
+			passive: [
+				"While proficient with this kit, add your proficiency bonus to checks made to navigate and to avoid getting lost.",
+			],
+		},
+		activation: {
+			type: "passive",
+			consumes_item: false,
+			cost: "no action",
+			frequency: "continuous",
+			trigger: "Equipped, carried, worn, or used as described.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state:
+				"must be carried, consumed, or deployed as the activation describes",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: [],
+				attack: [],
+				notes:
+					"Utility and consumable items only call for an ability when their explicit rule names one.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "passive",
+				consumes_item: false,
+				cost: "no action",
+				frequency: "continuous",
+				trigger: "Equipped, carried, worn, or used as described.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "329351cd",
+				payload_complete: true,
+				uniqueness_seed: "base-srd-tool-navigator::Gate Navigator's Kit",
+				variant_note: "A piece of Bureau-quartermastered field gear.",
+			},
+			formulas: {
+				effect_formula: "explicit non-damage item effect",
+				recharge: "continuous",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "common",
+				archetype: "gear_misc",
+				canon_basis: "RA mundane baseline",
+				distinguishing_rule:
+					"Gate Navigator's Kit keys standard gear misc rules through signature c98c4f00.",
+				role: "utility",
+				signature: "c98c4f00",
+				theme: "standard",
+			},
+			passive_rules: [
+				"While proficient with this kit, add your proficiency bonus to checks made to navigate and to avoid getting lost.",
+			],
+			resolution: {
+				type: "equipment_utility",
+				active_options: [],
+				non_damage_resolution:
+					"While proficient with this kit, add your proficiency bonus to checks made to navigate and to avoid getting lost.",
+				passive_effects: [
+					"While proficient with this kit, add your proficiency bonus to checks made to navigate and to avoid getting lost.",
+				],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: true,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
+				],
+				ra_specific_mundane: true,
+			},
+			targeting: {
+				range: "self",
+				area: null,
+				line_of_effect: "as item description permits",
+				target: "Self, touched object, or listed utility target",
+			},
+		},
+	},
+	{
+		id: "base-srd-tool-poisoner",
+		name: "Poisoner's Kit",
+		source_book: "Rift Ascendant Canon",
+		description:
+			"Vials, filters, and antivenin stock for extracting and applying toxins safely.",
+		rarity: "common",
+		type: "wondrous",
+		image: "/generated/compendium/items/item-0518.webp",
+		weight: 2,
+		value: { currency: "crystal", amount: 50 },
+		item_type: "tool",
+		sigil_slots_base: 0,
+		properties: {},
+		effects: {
+			passive: [
+				"While proficient with these tools, add your proficiency bonus to ability checks you make to craft and apply poisons.",
+			],
+		},
+		activation: {
+			type: "passive",
+			consumes_item: false,
+			cost: "no action",
+			frequency: "continuous",
+			trigger: "Equipped, carried, worn, or used as described.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state:
+				"must be carried, consumed, or deployed as the activation describes",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: [],
+				attack: [],
+				notes:
+					"Utility and consumable items only call for an ability when their explicit rule names one.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "passive",
+				consumes_item: false,
+				cost: "no action",
+				frequency: "continuous",
+				trigger: "Equipped, carried, worn, or used as described.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "e97785b3",
+				payload_complete: true,
+				uniqueness_seed: "base-srd-tool-poisoner::Poisoner's Kit",
+				variant_note:
+					"A field accessory. Cataloged in the Bureau quartermaster registry.",
+			},
+			formulas: {
+				effect_formula: "explicit non-damage item effect",
+				recharge: "continuous",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "common",
+				archetype: "gear_misc",
+				canon_basis: "RA mundane baseline",
+				distinguishing_rule:
+					"Poisoner's Kit keys standard gear misc rules through signature f245ae15.",
+				role: "utility",
+				signature: "f245ae15",
+				theme: "standard",
+			},
+			passive_rules: [
+				"While proficient with these tools, add your proficiency bonus to ability checks you make to craft and apply poisons.",
+			],
+			resolution: {
+				type: "equipment_utility",
+				active_options: [],
+				non_damage_resolution:
+					"While proficient with these tools, add your proficiency bonus to ability checks you make to craft and apply poisons.",
+				passive_effects: [
+					"While proficient with these tools, add your proficiency bonus to ability checks you make to craft and apply poisons.",
+				],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: true,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
+				],
+				ra_specific_mundane: false,
+			},
+			targeting: {
+				range: "self",
+				area: null,
+				line_of_effect: "as item description permits",
+				target: "Self, touched object, or listed utility target",
+			},
+		},
+	},
+	{
+		id: "base-srd-gear-medkit",
+		name: "Field Medkit",
+		source_book: "Rift Ascendant Canon",
+		description:
+			"A modern trauma kit of tourniquets, sealant, and mana-stimulants — standard on every clear team.",
+		rarity: "common",
+		type: "wondrous",
+		image: "/generated/compendium/items/item-0020.webp",
+		weight: 3,
+		value: { currency: "crystal", amount: 50 },
+		item_type: "misc",
+		sigil_slots_base: 0,
+		properties: {},
+		effects: {
+			passive: [
+				"Has ten uses. As an action, expend one use to stabilize a creature at 0 hit points without needing a Medicine check.",
+			],
+		},
+		activation: {
+			type: "passive",
+			consumes_item: false,
+			cost: "no action",
+			frequency: "continuous",
+			trigger: "Equipped, carried, worn, or used as described.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state:
+				"must be carried, consumed, or deployed as the activation describes",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: [],
+				attack: [],
+				notes:
+					"Utility and consumable items only call for an ability when their explicit rule names one.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "passive",
+				consumes_item: false,
+				cost: "no action",
+				frequency: "continuous",
+				trigger: "Equipped, carried, worn, or used as described.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "2fa57b76",
+				payload_complete: true,
+				uniqueness_seed: "base-srd-gear-medkit::Field Medkit",
+				variant_note:
+					"A field accessory. Cataloged in the Bureau quartermaster registry.",
+			},
+			formulas: {
+				effect_formula: "explicit non-damage item effect",
+				recharge: "continuous",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "common",
+				archetype: "gear_misc",
+				canon_basis: "RA mundane baseline",
+				distinguishing_rule:
+					"Field Medkit keys standard gear misc rules through signature 0158e7ea.",
+				role: "utility",
+				signature: "0158e7ea",
+				theme: "standard",
+			},
+			passive_rules: [
+				"Has ten uses. As an action, expend one use to stabilize a creature at 0 hit points without needing a Medicine check.",
+			],
+			resolution: {
+				type: "equipment_utility",
+				active_options: [],
+				non_damage_resolution:
+					"Has ten uses. As an action, expend one use to stabilize a creature at 0 hit points without needing a Medicine check.",
+				passive_effects: [
+					"Has ten uses. As an action, expend one use to stabilize a creature at 0 hit points without needing a Medicine check.",
+				],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: true,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
+				],
+				ra_specific_mundane: true,
+			},
+			targeting: {
+				range: "self",
+				area: null,
+				line_of_effect: "as item description permits",
+				target: "Self, touched object, or listed utility target",
+			},
+		},
+	},
+	{
+		id: "base-srd-gear-climbers-kit",
+		name: "Climber's Kit",
+		source_book: "Rift Ascendant Canon",
+		description:
+			"Pitons, boot tips, gloves, and a harness for scaling the sheer walls a gate throws up.",
+		rarity: "common",
+		type: "wondrous",
+		image: "/generated/compendium/items/item-0688.webp",
+		weight: 12,
+		value: { currency: "crystal", amount: 25 },
+		item_type: "misc",
+		sigil_slots_base: 0,
+		properties: {},
+		effects: {
+			passive: [
+				"As an action, anchor yourself with the kit; while anchored you cannot fall more than 25 feet and cannot move more than 25 feet from the anchor without undoing it.",
+			],
+		},
+		activation: {
+			type: "passive",
+			consumes_item: false,
+			cost: "no action",
+			frequency: "continuous",
+			trigger: "Equipped, carried, worn, or used as described.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state:
+				"must be carried, consumed, or deployed as the activation describes",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: [],
+				attack: [],
+				notes:
+					"Utility and consumable items only call for an ability when their explicit rule names one.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "passive",
+				consumes_item: false,
+				cost: "no action",
+				frequency: "continuous",
+				trigger: "Equipped, carried, worn, or used as described.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "b7ea54b0",
+				payload_complete: true,
+				uniqueness_seed: "base-srd-gear-climbers-kit::Climber's Kit",
+				variant_note: "A miscellaneous piece of standard Hunter kit.",
+			},
+			formulas: {
+				effect_formula: "explicit non-damage item effect",
+				recharge: "continuous",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "common",
+				archetype: "gear_misc",
+				canon_basis: "RA mundane baseline",
+				distinguishing_rule:
+					"Climber's Kit keys standard gear misc rules through signature 2705606e.",
+				role: "utility",
+				signature: "2705606e",
+				theme: "standard",
+			},
+			passive_rules: [
+				"As an action, anchor yourself with the kit; while anchored you cannot fall more than 25 feet and cannot move more than 25 feet from the anchor without undoing it.",
+			],
+			resolution: {
+				type: "equipment_utility",
+				active_options: [],
+				non_damage_resolution:
+					"As an action, anchor yourself with the kit; while anchored you cannot fall more than 25 feet and cannot move more than 25 feet from the anchor without undoing it.",
+				passive_effects: [
+					"As an action, anchor yourself with the kit; while anchored you cannot fall more than 25 feet and cannot move more than 25 feet from the anchor without undoing it.",
+				],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: true,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
+				],
+				ra_specific_mundane: true,
+			},
+			targeting: {
+				range: "self",
+				area: null,
+				line_of_effect: "as item description permits",
+				target: "Self, touched object, or listed utility target",
+			},
+		},
+	},
+	{
+		id: "base-srd-gear-grappling-hook",
+		name: "Grappling Hook",
+		source_book: "Rift Ascendant Canon",
+		description:
+			"A forged three-prong hook rated for a Hunter's line and body weight.",
+		rarity: "common",
+		type: "wondrous",
+		image: "/generated/compendium/items/item-0762.webp",
+		weight: 4,
+		value: { currency: "crystal", amount: 5 },
+		item_type: "misc",
+		sigil_slots_base: 0,
+		properties: {},
+		effects: {
+			passive: [
+				"Attach it to a rope to secure a climb or catch and pull an object within reach.",
+			],
+		},
+		activation: {
+			type: "passive",
+			consumes_item: false,
+			cost: "no action",
+			frequency: "continuous",
+			trigger: "Equipped, carried, worn, or used as described.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state:
+				"must be carried, consumed, or deployed as the activation describes",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: [],
+				attack: [],
+				notes:
+					"Utility and consumable items only call for an ability when their explicit rule names one.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "passive",
+				consumes_item: false,
+				cost: "no action",
+				frequency: "continuous",
+				trigger: "Equipped, carried, worn, or used as described.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "e6ee4c93",
+				payload_complete: true,
+				uniqueness_seed: "base-srd-gear-grappling-hook::Grappling Hook",
+				variant_note:
+					"Tactical climbing rig. +2 to Athletics checks involving climbing or rappelling.",
+			},
+			formulas: {
+				effect_formula: "explicit non-damage item effect",
+				recharge: "continuous",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "common",
+				archetype: "gear_utility",
+				canon_basis: "RA mundane baseline",
+				distinguishing_rule:
+					"Grappling Hook keys standard gear utility rules through signature 1c3bf76f.",
+				role: "utility",
+				signature: "1c3bf76f",
+				theme: "standard",
+			},
+			passive_rules: [
+				"Attach it to a rope to secure a climb or catch and pull an object within reach.",
+			],
+			resolution: {
+				type: "equipment_utility",
+				active_options: [],
+				non_damage_resolution:
+					"Attach it to a rope to secure a climb or catch and pull an object within reach.",
+				passive_effects: [
+					"Attach it to a rope to secure a climb or catch and pull an object within reach.",
+				],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: true,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
+				],
+				ra_specific_mundane: true,
+			},
+			targeting: {
+				range: "self",
+				area: null,
+				line_of_effect: "as item description permits",
+				target: "Self, touched object, or listed utility target",
+			},
+		},
+	},
+	{
+		id: "base-srd-gear-antitoxin-injector",
+		name: "Antitoxin Injector",
+		source_book: "Rift Ascendant Canon",
+		description:
+			"A single-dose auto-injector of broad-spectrum antitoxin, keyed to common gate-venoms.",
+		rarity: "common",
+		type: "wondrous",
+		image: "/generated/compendium/items/item-0955.webp",
+		weight: 0,
+		value: { currency: "crystal", amount: 50 },
+		item_type: "misc",
+		sigil_slots_base: 0,
+		properties: {},
+		effects: {
+			passive: [
+				"When you inject a dose, you have advantage on saving throws against poison for 1 hour. It confers no benefit to undead or constructs.",
+			],
+		},
+		activation: {
+			type: "passive",
+			consumes_item: false,
+			cost: "no action",
+			frequency: "continuous",
+			trigger: "Equipped, carried, worn, or used as described.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state:
+				"must be carried, consumed, or deployed as the activation describes",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: [],
+				attack: [],
+				notes:
+					"Utility and consumable items only call for an ability when their explicit rule names one.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "passive",
+				consumes_item: false,
+				cost: "no action",
+				frequency: "continuous",
+				trigger: "Equipped, carried, worn, or used as described.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "9e655868",
+				payload_complete: true,
+				uniqueness_seed: "base-srd-gear-antitoxin-injector::Antitoxin Injector",
+				variant_note:
+					"Grants resistance to non-magical bludgeoning, piercing, and slashing for 1 minute.",
+			},
+			formulas: {
+				effect_formula: "explicit non-damage item effect",
+				recharge: "continuous",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "common",
+				archetype: "consumable_stim",
+				canon_basis: "RA mundane baseline",
+				distinguishing_rule:
+					"Antitoxin Injector keys standard consumable stim rules through signature ba1cb06e.",
+				role: "consumable",
+				signature: "ba1cb06e",
+				theme: "standard",
+			},
+			passive_rules: [
+				"When you inject a dose, you have advantage on saving throws against poison for 1 hour. It confers no benefit to undead or constructs.",
+			],
+			resolution: {
+				type: "consumable",
+				damage_type: null,
+				consumes_item: true,
+				damage_formula: null,
+				save: null,
+				use_rule:
+					"When you inject a dose, you have advantage on saving throws against poison for 1 hour. It confers no benefit to undead or constructs.",
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: false,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
+				],
+				ra_specific_mundane: true,
+			},
+			targeting: {
+				range: "self",
+				area: null,
+				line_of_effect: "as item description permits",
+				target: "Self, touched object, or listed utility target",
+			},
+		},
+	},
 ];

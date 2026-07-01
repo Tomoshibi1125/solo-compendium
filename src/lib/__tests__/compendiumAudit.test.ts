@@ -247,6 +247,8 @@ describe("compendium audit (provider-backed)", () => {
 			"item_injected_template",
 			// de-vague (Phase 1)
 			"vague_catchall_name",
+			// SRD 5.1 completeness (Phase 1b)
+			"srd_completeness",
 			// fighting styles
 			"malformed_fighting_style_prerequisites",
 			// shadow soldiers
