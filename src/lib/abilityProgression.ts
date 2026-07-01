@@ -23,8 +23,10 @@ export function getSpellProgressionForAbilityJob(
 	const fullCasters = ["mage", "herald", "esper", "summoner", "idol"];
 	if (fullCasters.includes(normalized)) return "full";
 
-	// Revenant is a half-caster (drain-tank rework): caps both spells and
-	// martial powers at 5th level via the half progression below.
+	// Revenant is a half-caster (drain-tank rework): this half progression caps
+	// SPELL tiers at 5th level. It does NOT govern martial power tiers — powers
+	// are martial abilities and use the martial curve (see
+	// getMaxAbilityLevelForJobAtLevel below), so they are learnable from level 1.
 	const halfCasters = ["holy knight", "stalker", "technomancer", "revenant"];
 	if (halfCasters.includes(normalized)) return "half";
 
@@ -79,7 +81,12 @@ export function getMaxAbilityLevelForJobAtLevel(
 
 	if (kind === "power") {
 		if (!jobCanLearnPowers(jobName)) return 0;
-		if (progression === "none") return getMaxLevelForProgression("full", level);
+		// Powers are MARTIAL abilities: every power-capable job — pure martial or
+		// hybrid half-caster — accesses power tiers on the martial curve, so tier-1
+		// powers are learnable from level 1. Only SPELL tiers follow the job's
+		// (half/pact/full) spellcasting progression; a half-caster's spellcasting
+		// still comes online at level 2 via its Ledger/Covenant feature.
+		return getMaxLevelForProgression("full", level);
 	}
 
 	return getMaxLevelForProgression(progression, level);

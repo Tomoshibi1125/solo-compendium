@@ -313,6 +313,34 @@ describe("spell/power level gating", () => {
 		expect(getMaxAccessibleAbilityLevel("Destroyer", 20, "spell")).toBe(0);
 	});
 
+	it("half-casters learn POWERS on the martial curve (tier-1 from level 1)", () => {
+		// Powers are martial abilities: a half-caster's power tier follows the
+		// martial ("full") curve, so tier-1 powers are learnable at level 1. This
+		// is what unblocks Revenant/Holy Knight/Stalker/Technomancer creation.
+		for (const job of ["Revenant", "Holy Knight", "Stalker", "Technomancer"]) {
+			expect(getMaxAccessibleAbilityLevel(job, 1, "power")).toBe(1);
+			expect(getMaxAccessibleAbilityLevel(job, 3, "power")).toBe(2);
+			expect(getMaxAccessibleAbilityLevel(job, 5, "power")).toBe(3);
+			expect(getMaxAccessibleAbilityLevel(job, 17, "power")).toBe(9);
+		}
+	});
+
+	it("half-casters gain SPELLCASTING on the half curve (nothing at level 1)", () => {
+		// Spells still follow the delayed half-caster curve — spellcasting comes
+		// online at level 2 via the job's Ledger/Covenant feature.
+		for (const job of ["Revenant", "Holy Knight", "Stalker", "Technomancer"]) {
+			expect(getMaxAccessibleAbilityLevel(job, 1, "spell")).toBe(0);
+			expect(getMaxAccessibleAbilityLevel(job, 2, "spell")).toBe(1);
+			expect(getMaxAccessibleAbilityLevel(job, 17, "spell")).toBe(5);
+		}
+	});
+
+	it("pure casters cannot learn powers regardless of level", () => {
+		expect(getMaxAccessibleAbilityLevel("Mage", 1, "power")).toBe(0);
+		expect(getMaxAccessibleAbilityLevel("Mage", 20, "power")).toBe(0);
+		expect(getMaxAccessibleAbilityLevel("Contractor", 20, "power")).toBe(0);
+	});
+
 	it("full caster progression matches SRD", () => {
 		expect(getMaxAccessiblePowerLevel("Mage", 1)).toBe(1);
 		expect(getMaxAccessiblePowerLevel("Mage", 3)).toBe(2);
