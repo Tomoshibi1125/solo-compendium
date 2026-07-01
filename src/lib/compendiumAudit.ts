@@ -1800,7 +1800,7 @@ const BOILERPLATE_CORPUS_DATASETS = [
 	"artifacts",
 ];
 const BOILERPLATE_MAX_SHARE = 2;
-const boilerplateEnforcedDatasets = new Set<string>(["relics"]);
+const boilerplateEnforcedDatasets = new Set<string>(["relics", "artifacts"]);
 
 const boilerplateNarrativeFields: Record<string, (e: AuditEntry) => unknown> = {
 	description: (e) => e.description,

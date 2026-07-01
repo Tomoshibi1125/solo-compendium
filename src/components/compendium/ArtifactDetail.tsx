@@ -25,6 +25,7 @@ export interface ArtifactData {
 	name: string;
 	display_name?: string | null;
 	description?: string | null;
+	flavor?: string | null;
 	artifact_type?: string | null;
 	rarity?: string | null;
 	attunement?: boolean | null;
@@ -203,6 +204,11 @@ export const ArtifactDetail = ({ data }: { data: ArtifactData }) => {
 							</Badge>
 						)}
 					</div>
+					{artifact.flavor && (
+						<p className="text-sm italic text-cyan/70 mb-3 border-l-2 border-cyan/30 pl-3 py-1 bg-cyan/5">
+							<AutoLinkText text={artifact.flavor} />
+						</p>
+					)}
 					{artifact.description && (
 						<p className="text-muted-foreground leading-relaxed">
 							<AutoLinkText text={artifact.description || ""} />

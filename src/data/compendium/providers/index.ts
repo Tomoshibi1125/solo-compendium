@@ -2483,6 +2483,7 @@ export const staticDataProvider: StaticDataProvider = {
 			abilities?: Record<string, Json> | null;
 			lore?: Record<string, Json> | null;
 			mechanics?: Record<string, Json> | null;
+			flavor?: string | null;
 		}>("artifacts");
 		const filtered = filterBySearch(artifacts, search, [
 			"name",
@@ -2511,7 +2512,13 @@ export const staticDataProvider: StaticDataProvider = {
 			lore: artifact.lore || null,
 			mechanics: artifact.mechanics || null,
 			source: artifact.source,
-			flavor: (artifact.lore as { description?: string })?.description || null,
+			// Pass the artifact's authored `flavor` through so it reaches detail
+			// views and the audit's boilerplate gate; fall back to the legacy
+			// lore-derived value only when an artifact has no explicit flavor.
+			flavor:
+				(typeof artifact.flavor === "string" && artifact.flavor) ||
+				(artifact.lore as { description?: string })?.description ||
+				null,
 			power_level:
 				artifact.rarity === "divine"
 					? 10

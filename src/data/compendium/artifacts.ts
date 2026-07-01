@@ -7,7 +7,7 @@ export const artifacts: Item[] = [
 		display_name: "Kamish's Wrath",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"A pair of twin daggers forged from the fang of humanity's greatest calamity. The blades vibrate with regent-tier malice.",
+			"Twin daggers ground from a fang of Kamish, the calamity-class anomaly whose First Awakening leveled a coastal district. The blades hum at a frequency that loosens flesh, weeping thin threads of red mana along the edge.",
 		rarity: "legendary",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0348.webp",
@@ -30,12 +30,14 @@ export const artifacts: Item[] = [
 		lore: {
 			current_owner: "",
 			curse: "Slowly drains ambient stamina from the wielder.",
-			history: "Its true history remains a protected Guild secret.",
-			origin: "Recovered from a collapsed Guild Vault.",
+			history:
+				"The A-Rank duelist Sera Voss carried them through the Harbor Clears until a rival guild had her killed for them; the daggers were pried from her hands still bleeding a target that had died an hour earlier.",
+			origin:
+				"Cut and hafted by a Bureau reclamation crew from the single intact fang left after Kamish was put down, the rest of the corpse having already dissolved into raw essence.",
 			personality: "",
 			prior_owners: [],
 		},
-		flavor: "Built to hit. Built to keep working.",
+		flavor: "Two cuts. The first opens you. The second never stops.",
 		activation: {
 			type: "action",
 			consumes_item: false,
@@ -130,7 +132,7 @@ export const artifacts: Item[] = [
 		display_name: "Regent of Dread's Longsword",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"A colossal dark blade that crackles with white lightning. Belonged to the regent of white flames.",
+			"An oversized dark blade veined with white lightning that arcs to the ground when swung. It belonged to the Regent of White Flames, and still carries the cold at the center of that fire.",
 		rarity: "legendary",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0299.webp",
@@ -152,12 +154,14 @@ export const artifacts: Item[] = [
 		lore: {
 			current_owner: "",
 			curse: "Slowly drains ambient stamina from the wielder.",
-			history: "Its true history remains a protected Guild secret.",
-			origin: "Found sealed in a hidden cache inside an S-Rank Rift.",
+			history:
+				"Three Bureau extraction teams died reaching it before the fourth learned the blade would not release from the stone until every hostile in the chamber had stopped moving.",
+			origin:
+				"Left embedded in the floor of a collapsed S-Rank throne-space after its Regent was slain, the surrounding stone fused to glass by the strike that ended the fight.",
 			personality: "",
 			prior_owners: [],
 		},
-		flavor: "Built to hit. Built to keep working.",
+		flavor: "The storm answered to him. Now it only tolerates you.",
 		activation: {
 			type: "action",
 			consumes_item: false,
@@ -252,7 +256,7 @@ export const artifacts: Item[] = [
 		display_name: "Shadow Regent's Mantle",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"Woven from pure abyssal mana, this pitch-black cloak billows silently even when there is no wind.",
+			"A pitch-black cloak spun from condensed abyssal mana, so light it registers no weight and so dark it swallows the shadows it stands in. It drifts as though caught in a wind that does not exist.",
 		rarity: "legendary",
 		type: "armor",
 		image: "/generated/compendium/items/item-0658.webp",
@@ -272,12 +276,14 @@ export const artifacts: Item[] = [
 		lore: {
 			current_owner: "",
 			curse: "Slowly drains ambient stamina from the wielder.",
-			history: "Its true history remains a protected Guild secret.",
-			origin: "Forged by the Bureau's most elite Technomancer.",
+			history:
+				"It cloaked a lone infiltrator who walked out of a Shadow Legion muster-ground with the Legion's own deployment ledgers, seen by no one and recorded on no feed.",
+			origin:
+				"Woven strand by strand over eleven months by the Bureau's lead Technomancer, who drew the material directly from the event horizon of a stabilized Threshold.",
 			personality: "",
 			prior_owners: [],
 		},
-		flavor: "It won't make you faster. It'll just make sure you walk out.",
+		flavor: "You won't hear it coming. Neither will they.",
 		activation: {
 			type: "passive",
 			consumes_item: false,
@@ -367,33 +373,35 @@ export const artifacts: Item[] = [
 	{
 		id: "artifact_4",
 		name: "World-Ender Reliquary",
-		display_name: "Mythic Rank S Item",
+		display_name: "World-Ender Reliquary",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"An artifact recovered from an S-Rank gate. Its power is beyond conventional measurement.",
+			"A fist-sized reliquary of blackened alloy, its seams weeping motes of collapsed light. Cracking it open unspools a fragment of the ending that ends everything, borrowed for exactly one minute at a time.",
 		rarity: "legendary",
-		type: "weapon",
+		type: "wondrous",
 		image: "/generated/compendium/items/item-0097.webp",
 		weight: 13,
 		value: { currency: "core", amount: 1000000 },
-		item_type: "weapon",
-		weapon_type: "martial melee",
-		damage: "3d8",
-		damage_type: "force",
+		item_type: "misc",
 		requires_attunement: true,
 		effects: {
-			passive: ["Grants extraordinary supernatural abilities."],
+			passive: [
+				"While attuned, whenever a creature within 30 ft of you drops to 0 hit points, you gain 10 temporary hit points and your next attack before the end of your next turn deals an extra 2d10 force damage.",
+				"Once per long rest, as an action, unseal the reliquary for 1 minute. Each enemy that starts its turn within 20 ft takes 4d10 force damage (Vitality save DC 18 halves) and cannot regain hit points until the start of your next turn. At the end of the minute, you gain one level of exhaustion.",
+			],
 		},
 		source: "Rift Ascendant Canon",
 		lore: {
 			current_owner: "",
 			curse: "Slowly drains ambient stamina from the wielder.",
-			history: "Its true history remains a protected Guild secret.",
-			origin: "Found sealed in a hidden cache inside an S-Rank Rift.",
+			history:
+				"The Bureau logged it, sealed it, and reclassified the vault around it as a containment site after a junior archivist opened it once and erased a wing of the archive.",
+			origin:
+				"Retrieved from the dead center of an S-Rank gate that had already consumed two full guild raids, found sitting in the one square meter the anomaly had left untouched.",
 			personality: "",
 			prior_owners: [],
 		},
-		flavor: "Tread carefully; magic like this has a cost.",
+		flavor: "It doesn't destroy. It finishes.",
 		activation: {
 			type: "action",
 			consumes_item: false,
@@ -410,6 +418,10 @@ export const artifacts: Item[] = [
 			restrictions: [],
 		},
 		mechanics: {
+			special: [
+				"While attuned, whenever a creature within 30 ft of you drops to 0 hit points, you gain 10 temporary hit points and your next attack before the end of your next turn deals an extra 2d10 force damage.",
+				"Once per long rest, as an action, unseal the reliquary for 1 minute. Each enemy that starts its turn within 20 ft takes 4d10 force damage (Vitality save DC 18 halves) and cannot regain hit points until the start of your next turn. At the end of the minute, you gain one level of exhaustion.",
+			],
 			ability_modifiers: {
 				damage: ["STR"],
 				armor_class: [],
@@ -448,7 +460,10 @@ export const artifacts: Item[] = [
 				signature: "dd016b53",
 				theme: "standard",
 			},
-			passive_rules: ["Grants extraordinary supernatural abilities."],
+			passive_rules: [
+				"While attuned, whenever a creature within 30 ft of you drops to 0 hit points, you gain 10 temporary hit points and your next attack before the end of your next turn deals an extra 2d10 force damage.",
+				"Once per long rest, as an action, unseal the reliquary for 1 minute. Each enemy that starts its turn within 20 ft takes 4d10 force damage (Vitality save DC 18 halves) and cannot regain hit points until the start of your next turn. At the end of the minute, you gain one level of exhaustion.",
+			],
 			resolution: {
 				type: "weapon_attack",
 				damage_type: "force",
@@ -456,7 +471,10 @@ export const artifacts: Item[] = [
 				attack_roll: true,
 				damage_formula: "3d8 + STR modifier",
 				damage_roll: true,
-				on_hit: ["Grants extraordinary supernatural abilities."],
+				on_hit: [
+					"While attuned, whenever a creature within 30 ft of you drops to 0 hit points, you gain 10 temporary hit points and your next attack before the end of your next turn deals an extra 2d10 force damage.",
+					"Once per long rest, as an action, unseal the reliquary for 1 minute. Each enemy that starts its turn within 20 ft takes 4d10 force damage (Vitality save DC 18 halves) and cannot regain hit points until the start of your next turn. At the end of the minute, you gain one level of exhaustion.",
+				],
 			},
 			rules_payload_version: "ra-item-v1",
 			source_integrity: {
@@ -479,33 +497,38 @@ export const artifacts: Item[] = [
 	{
 		id: "artifact_5",
 		name: "Sovereign Edge",
-		display_name: "Mythic Rank S Item",
+		display_name: "Sovereign Edge",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"An artifact recovered from an S-Rank gate. Its power is beyond conventional measurement.",
+			"A long, hookless saber of frozen shadow that trails a second, slower blade of darkness a half-beat behind every swing. What it kills does not stay dead so long as you hold it.",
 		rarity: "legendary",
-		type: "armor",
+		type: "weapon",
+		damage_type: "necrotic",
+		damage: "2d10",
+		weapon_type: "martial melee",
 		image: "/generated/compendium/items/item-0040.webp",
 		weight: 14,
 		value: { currency: "core", amount: 1000000 },
-		item_type: "armor",
-		armor_class: "20",
-		armor_type: "Heavy",
+		item_type: "weapon",
 		requires_attunement: true,
 		effects: {
-			passive: ["Grants extraordinary supernatural abilities."],
+			passive: [
+				"Enemies you reduce to 0 hit points rise for 1 minute as a shadow-thrall under your command (as a swarm of hostile shadow, max one at a time); a new kill replaces the old thrall.",
+				"You cannot be frightened while wielding this blade.",
+			],
 		},
 		source: "Rift Ascendant Canon",
 		lore: {
 			current_owner: "",
 			curse: "Slowly drains ambient stamina from the wielder.",
-			history: "Its true history remains a protected Guild secret.",
-			origin: "An ancient artifact of the First Awakenings.",
+			history:
+				"A guildmaster who claimed it walked into an A-Rank gate alone and walked out with a retinue of eleven shadows that had entered as monsters an hour before.",
+			origin:
+				"Condensed out of the command-shadow that a fallen Umbral Regent shed at the moment of death, hardened into an edge by the pressure of the S-Rank gate collapsing around it.",
 			personality: "",
 			prior_owners: [],
 		},
-		flavor:
-			"What's left of you after it's done its job is what you started with.",
+		flavor: "Every corpse it makes, it keeps.",
 		activation: {
 			type: "passive",
 			consumes_item: false,
@@ -522,6 +545,10 @@ export const artifacts: Item[] = [
 			restrictions: [],
 		},
 		mechanics: {
+			special: [
+				"Enemies you reduce to 0 hit points rise for 1 minute as a shadow-thrall under your command (as a swarm of hostile shadow, max one at a time); a new kill replaces the old thrall.",
+				"You cannot be frightened while wielding this blade.",
+			],
 			ability_modifiers: {
 				damage: [],
 				armor_class: [],
@@ -562,14 +589,20 @@ export const artifacts: Item[] = [
 				signature: "f335a97d",
 				theme: "standard",
 			},
-			passive_rules: ["Grants extraordinary supernatural abilities."],
+			passive_rules: [
+				"Enemies you reduce to 0 hit points rise for 1 minute as a shadow-thrall under your command (as a swarm of hostile shadow, max one at a time); a new kill replaces the old thrall.",
+				"You cannot be frightened while wielding this blade.",
+			],
 			resolution: {
 				type: "armor_class",
 				armor_class: "20",
 				armor_type: "Heavy",
 				stealth_disadvantage: false,
 				strength_requirement: null,
-				equipped_effects: ["Grants extraordinary supernatural abilities."],
+				equipped_effects: [
+					"Enemies you reduce to 0 hit points rise for 1 minute as a shadow-thrall under your command (as a swarm of hostile shadow, max one at a time); a new kill replaces the old thrall.",
+					"You cannot be frightened while wielding this blade.",
+				],
 			},
 			rules_payload_version: "ra-item-v1",
 			source_integrity: {
@@ -592,33 +625,36 @@ export const artifacts: Item[] = [
 	{
 		id: "artifact_6",
 		name: "Origin Reliquary",
-		display_name: "Mythic Rank S Item",
+		display_name: "Origin Reliquary",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"An artifact recovered from an S-Rank gate. Its power is beyond conventional measurement.",
+			"A palm-sized sphere of clear quartz holding a single suspended spark, the recorded instant the world first cracked open. It grows fractionally warmer as you approach an active Threshold.",
 		rarity: "legendary",
-		type: "weapon",
+		type: "wondrous",
 		image: "/generated/compendium/items/item-0807.webp",
 		weight: 4,
 		value: { currency: "core", amount: 1000000 },
-		item_type: "weapon",
-		weapon_type: "martial melee",
-		damage: "3d8",
-		damage_type: "force",
+		item_type: "misc",
 		requires_attunement: true,
 		effects: {
-			passive: ["Grants extraordinary supernatural abilities."],
+			passive: [
+				"While attuned, you have advantage on saving throws against being charmed, frightened, or having your form altered, and you know your exact distance from the nearest active Rift.",
+				"Once per short rest, as a bonus action, spend a mote of the First Awakening: choose one creature you can see within 60 ft. Until the end of your next turn, its resistances are ignored and it has vulnerability to the first damage type it takes from you.",
+			],
 		},
 		source: "Rift Ascendant Canon",
 		lore: {
 			current_owner: "",
 			curse: "Slowly drains ambient stamina from the wielder.",
-			history: "Its true history remains a protected Guild secret.",
-			origin: "Found sealed in a hidden cache inside an S-Rank Rift.",
+			history:
+				"It passed through four research divisions before anyone realized the spark inside was not a flaw in the quartz but a preserved fraction of the genesis event, at which point all four divisions were absorbed and sealed.",
+			origin:
+				"Extracted from the oldest known Threshold on record, a dormant scar predating the Bureau itself, its spark carbon-dated to within a day of the First Awakening.",
 			personality: "",
 			prior_owners: [],
 		},
-		flavor: "Tread carefully; magic like this has a cost.",
+		flavor:
+			"It remembers the moment everything changed. It will show it to your enemies.",
 		activation: {
 			type: "action",
 			consumes_item: false,
@@ -635,6 +671,10 @@ export const artifacts: Item[] = [
 			restrictions: [],
 		},
 		mechanics: {
+			special: [
+				"While attuned, you have advantage on saving throws against being charmed, frightened, or having your form altered, and you know your exact distance from the nearest active Rift.",
+				"Once per short rest, as a bonus action, spend a mote of the First Awakening: choose one creature you can see within 60 ft. Until the end of your next turn, its resistances are ignored and it has vulnerability to the first damage type it takes from you.",
+			],
 			ability_modifiers: {
 				damage: ["STR"],
 				armor_class: [],
@@ -673,7 +713,10 @@ export const artifacts: Item[] = [
 				signature: "f9cd7574",
 				theme: "standard",
 			},
-			passive_rules: ["Grants extraordinary supernatural abilities."],
+			passive_rules: [
+				"While attuned, you have advantage on saving throws against being charmed, frightened, or having your form altered, and you know your exact distance from the nearest active Rift.",
+				"Once per short rest, as a bonus action, spend a mote of the First Awakening: choose one creature you can see within 60 ft. Until the end of your next turn, its resistances are ignored and it has vulnerability to the first damage type it takes from you.",
+			],
 			resolution: {
 				type: "weapon_attack",
 				damage_type: "force",
@@ -681,7 +724,10 @@ export const artifacts: Item[] = [
 				attack_roll: true,
 				damage_formula: "3d8 + STR modifier",
 				damage_roll: true,
-				on_hit: ["Grants extraordinary supernatural abilities."],
+				on_hit: [
+					"While attuned, you have advantage on saving throws against being charmed, frightened, or having your form altered, and you know your exact distance from the nearest active Rift.",
+					"Once per short rest, as a bonus action, spend a mote of the First Awakening: choose one creature you can see within 60 ft. Until the end of your next turn, its resistances are ignored and it has vulnerability to the first damage type it takes from you.",
+				],
 			},
 			rules_payload_version: "ra-item-v1",
 			source_integrity: {
@@ -704,32 +750,35 @@ export const artifacts: Item[] = [
 	{
 		id: "artifact_7",
 		name: "Abyssal Reliquary",
-		display_name: "Mythic Rank S Item",
+		display_name: "Abyssal Reliquary",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"An artifact recovered from an S-Rank gate. Its power is beyond conventional measurement.",
+			"A hinged casket of nightglass that holds nothing a light can find. Opened, it pours the deep dark of the between-places into the world and lets only its bearer see through it.",
 		rarity: "legendary",
-		type: "armor",
+		type: "wondrous",
 		image: "/generated/compendium/items/item-0238.webp",
 		weight: 3,
 		value: { currency: "core", amount: 1000000 },
-		item_type: "armor",
-		armor_class: "20",
-		armor_type: "Heavy",
+		item_type: "misc",
 		requires_attunement: true,
 		effects: {
-			passive: ["Grants extraordinary supernatural abilities."],
+			passive: [
+				"While attuned, you have resistance to psychic damage and can see normally in magical darkness. You never suffer disadvantage from being unable to see your target.",
+				"Once per long rest, as an action, open the reliquary onto a 20-ft-radius sphere of absolute void within 60 ft for 1 minute. The area is heavily obscured to everyone but you; enemies inside are blinded and take 3d8 psychic damage at the start of each of their turns (Sense save DC 17 to end the effect on themselves).",
+			],
 		},
 		source: "Rift Ascendant Canon",
 		lore: {
 			current_owner: "",
 			curse: "Slowly drains ambient stamina from the wielder.",
-			history: "Its true history remains a protected Guild secret.",
-			origin: "Found sealed in a hidden cache inside an S-Rank Rift.",
+			history:
+				"It spent two years mislabeled as inert containment glass in a Guild Vault before an appraiser opened it and lost the sight in both eyes for a week, after which its true classification was restored.",
+			origin:
+				"Pulled from the abyssal shelf of a drowned S-Rank gate whose interior had inverted into open void, recovered by a diver who reported the casket was the only object down there casting no reflection.",
 			personality: "",
 			prior_owners: [],
 		},
-		flavor: "Some items tell stories. This one ends them.",
+		flavor: "Some items tell you what waits in the dark. This one is the dark.",
 		activation: {
 			type: "passive",
 			consumes_item: false,
@@ -746,6 +795,10 @@ export const artifacts: Item[] = [
 			restrictions: [],
 		},
 		mechanics: {
+			special: [
+				"While attuned, you have resistance to psychic damage and can see normally in magical darkness. You never suffer disadvantage from being unable to see your target.",
+				"Once per long rest, as an action, open the reliquary onto a 20-ft-radius sphere of absolute void within 60 ft for 1 minute. The area is heavily obscured to everyone but you; enemies inside are blinded and take 3d8 psychic damage at the start of each of their turns (Sense save DC 17 to end the effect on themselves).",
+			],
 			ability_modifiers: {
 				damage: [],
 				armor_class: [],
@@ -786,14 +839,20 @@ export const artifacts: Item[] = [
 				signature: "863f49a3",
 				theme: "void",
 			},
-			passive_rules: ["Grants extraordinary supernatural abilities."],
+			passive_rules: [
+				"While attuned, you have resistance to psychic damage and can see normally in magical darkness. You never suffer disadvantage from being unable to see your target.",
+				"Once per long rest, as an action, open the reliquary onto a 20-ft-radius sphere of absolute void within 60 ft for 1 minute. The area is heavily obscured to everyone but you; enemies inside are blinded and take 3d8 psychic damage at the start of each of their turns (Sense save DC 17 to end the effect on themselves).",
+			],
 			resolution: {
 				type: "armor_class",
 				armor_class: "20",
 				armor_type: "Heavy",
 				stealth_disadvantage: false,
 				strength_requirement: null,
-				equipped_effects: ["Grants extraordinary supernatural abilities."],
+				equipped_effects: [
+					"While attuned, you have resistance to psychic damage and can see normally in magical darkness. You never suffer disadvantage from being unable to see your target.",
+					"Once per long rest, as an action, open the reliquary onto a 20-ft-radius sphere of absolute void within 60 ft for 1 minute. The area is heavily obscured to everyone but you; enemies inside are blinded and take 3d8 psychic damage at the start of each of their turns (Sense save DC 17 to end the effect on themselves).",
+				],
 			},
 			rules_payload_version: "ra-item-v1",
 			source_integrity: {
@@ -816,33 +875,35 @@ export const artifacts: Item[] = [
 	{
 		id: "artifact_8",
 		name: "Sovereign Reliquary",
-		display_name: "Mythic Rank S Item",
+		display_name: "Sovereign Reliquary",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"An artifact recovered from an S-Rank gate. Its power is beyond conventional measurement.",
+			"A hand-mirror of black bronze with no glass, its empty frame filled instead by a still pool of command-shadow that answers when you speak into it. Through it, lesser darkness bends the knee.",
 		rarity: "legendary",
-		type: "weapon",
+		type: "wondrous",
 		image: "/generated/compendium/items/item-0573.webp",
 		weight: 3,
 		value: { currency: "core", amount: 1000000 },
-		item_type: "weapon",
-		weapon_type: "martial melee",
-		damage: "3d8",
-		damage_type: "force",
+		item_type: "misc",
 		requires_attunement: true,
 		effects: {
-			passive: ["Grants extraordinary supernatural abilities."],
+			passive: [
+				"While attuned, allies within 30 ft of you have advantage on saving throws against being frightened, and you can communicate simple commands telepathically with any shadow-thralls or summoned shadows you control.",
+				"Once per long rest, as an action, assert dominion: choose up to three hostile creatures of CR 5 or lower within 30 ft. Each must succeed on a Presence save (DC 18) or be charmed by you and fight on your behalf for 1 minute. Regents, sovereigns, and legendary creatures are immune.",
+			],
 		},
 		source: "Rift Ascendant Canon",
 		lore: {
 			current_owner: "",
 			curse: "Slowly drains ambient stamina from the wielder.",
-			history: "Its true history remains a protected Guild secret.",
-			origin: "Smuggled out of the Shadow Legion's armory.",
+			history:
+				"A guild used it to turn an entire A-Rank monster horde against its own gate-boss, an exploit the Bureau banned from sanctioned Clears within the month.",
+			origin:
+				"Lifted from the personal effects of a Shadow Legion field-commander during a raid on the Legion's armory, still logged in the Legion's own manifest as a Regent's requisition awaiting collection.",
 			personality: "",
 			prior_owners: [],
 		},
-		flavor: "Power lies not in the object, but the will of its master.",
+		flavor: "It does not fight for you. It makes others fight for you.",
 		activation: {
 			type: "action",
 			consumes_item: false,
@@ -859,6 +920,10 @@ export const artifacts: Item[] = [
 			restrictions: [],
 		},
 		mechanics: {
+			special: [
+				"While attuned, allies within 30 ft of you have advantage on saving throws against being frightened, and you can communicate simple commands telepathically with any shadow-thralls or summoned shadows you control.",
+				"Once per long rest, as an action, assert dominion: choose up to three hostile creatures of CR 5 or lower within 30 ft. Each must succeed on a Presence save (DC 18) or be charmed by you and fight on your behalf for 1 minute. Regents, sovereigns, and legendary creatures are immune.",
+			],
 			ability_modifiers: {
 				damage: ["STR"],
 				armor_class: [],
@@ -897,7 +962,10 @@ export const artifacts: Item[] = [
 				signature: "b9eb9de4",
 				theme: "standard",
 			},
-			passive_rules: ["Grants extraordinary supernatural abilities."],
+			passive_rules: [
+				"While attuned, allies within 30 ft of you have advantage on saving throws against being frightened, and you can communicate simple commands telepathically with any shadow-thralls or summoned shadows you control.",
+				"Once per long rest, as an action, assert dominion: choose up to three hostile creatures of CR 5 or lower within 30 ft. Each must succeed on a Presence save (DC 18) or be charmed by you and fight on your behalf for 1 minute. Regents, sovereigns, and legendary creatures are immune.",
+			],
 			resolution: {
 				type: "weapon_attack",
 				damage_type: "force",
@@ -905,7 +973,10 @@ export const artifacts: Item[] = [
 				attack_roll: true,
 				damage_formula: "3d8 + STR modifier",
 				damage_roll: true,
-				on_hit: ["Grants extraordinary supernatural abilities."],
+				on_hit: [
+					"While attuned, allies within 30 ft of you have advantage on saving throws against being frightened, and you can communicate simple commands telepathically with any shadow-thralls or summoned shadows you control.",
+					"Once per long rest, as an action, assert dominion: choose up to three hostile creatures of CR 5 or lower within 30 ft. Each must succeed on a Presence save (DC 18) or be charmed by you and fight on your behalf for 1 minute. Regents, sovereigns, and legendary creatures are immune.",
+				],
 			},
 			rules_payload_version: "ra-item-v1",
 			source_integrity: {
@@ -928,32 +999,36 @@ export const artifacts: Item[] = [
 	{
 		id: "artifact_9",
 		name: "Calamity Core",
-		display_name: "Mythic Rank S Item",
+		display_name: "Calamity Core",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"An artifact recovered from an S-Rank gate. Its power is beyond conventional measurement.",
+			"A dense, palm-heavy sphere of humming alloy shot through with hairline fractures that leak pressure like a held breath. It stores the moment before a catastrophe and gives it back when you would have fallen.",
 		rarity: "legendary",
-		type: "armor",
+		type: "wondrous",
 		image: "/generated/compendium/items/item-0460.webp",
 		weight: 17,
 		value: { currency: "core", amount: 1000000 },
-		item_type: "armor",
-		armor_class: "20",
-		armor_type: "Heavy",
+		item_type: "misc",
 		requires_attunement: true,
 		effects: {
-			passive: ["Grants extraordinary supernatural abilities."],
+			passive: [
+				"While attuned, when you take damage from a source within 15 ft, that source takes force damage equal to half the damage dealt to you (rounded down).",
+				"You are immune to being moved against your will and cannot be knocked prone.",
+				"Once per long rest, as a reaction when you take damage that would reduce you to 0 hit points, the core overloads: you drop to 1 hit point instead and every creature within 15 ft takes 6d6 force damage (Agility save DC 18 halves) as the stored disaster discharges.",
+			],
 		},
 		source: "Rift Ascendant Canon",
 		lore: {
 			current_owner: "",
 			curse: "Slowly drains ambient stamina from the wielder.",
-			history: "Its true history remains a protected Guild secret.",
-			origin: "Forged by the Bureau's most elite Technomancer.",
+			history:
+				"During a containment breach it discharged unbidden and flattened the reinforced test chamber around it, killing nothing and destroying everything, after which it was rated too stable to destroy and too dangerous to store.",
+			origin:
+				"Machined by the Bureau's lead Technomancer from the compressed heart of a contained calamity-class anomaly, sealed under pressure that would flatten unshielded steel.",
 			personality: "",
 			prior_owners: [],
 		},
-		flavor: "Tread carefully; magic like this has a cost.",
+		flavor: "It keeps a disaster on a leash. The leash is you.",
 		activation: {
 			type: "passive",
 			consumes_item: false,
@@ -970,6 +1045,11 @@ export const artifacts: Item[] = [
 			restrictions: [],
 		},
 		mechanics: {
+			special: [
+				"While attuned, when you take damage from a source within 15 ft, that source takes force damage equal to half the damage dealt to you (rounded down).",
+				"You are immune to being moved against your will and cannot be knocked prone.",
+				"Once per long rest, as a reaction when you take damage that would reduce you to 0 hit points, the core overloads: you drop to 1 hit point instead and every creature within 15 ft takes 6d6 force damage (Agility save DC 18 halves) as the stored disaster discharges.",
+			],
 			ability_modifiers: {
 				damage: [],
 				armor_class: [],
@@ -1010,14 +1090,22 @@ export const artifacts: Item[] = [
 				signature: "26d881eb",
 				theme: "standard",
 			},
-			passive_rules: ["Grants extraordinary supernatural abilities."],
+			passive_rules: [
+				"While attuned, when you take damage from a source within 15 ft, that source takes force damage equal to half the damage dealt to you (rounded down).",
+				"You are immune to being moved against your will and cannot be knocked prone.",
+				"Once per long rest, as a reaction when you take damage that would reduce you to 0 hit points, the core overloads: you drop to 1 hit point instead and every creature within 15 ft takes 6d6 force damage (Agility save DC 18 halves) as the stored disaster discharges.",
+			],
 			resolution: {
 				type: "armor_class",
 				armor_class: "20",
 				armor_type: "Heavy",
 				stealth_disadvantage: false,
 				strength_requirement: null,
-				equipped_effects: ["Grants extraordinary supernatural abilities."],
+				equipped_effects: [
+					"While attuned, when you take damage from a source within 15 ft, that source takes force damage equal to half the damage dealt to you (rounded down).",
+					"You are immune to being moved against your will and cannot be knocked prone.",
+					"Once per long rest, as a reaction when you take damage that would reduce you to 0 hit points, the core overloads: you drop to 1 hit point instead and every creature within 15 ft takes 6d6 force damage (Agility save DC 18 halves) as the stored disaster discharges.",
+				],
 			},
 			rules_payload_version: "ra-item-v1",
 			source_integrity: {
@@ -1040,33 +1128,37 @@ export const artifacts: Item[] = [
 	{
 		id: "artifact_10",
 		name: "Calamity Aegis",
-		display_name: "Mythic Rank S Item",
+		display_name: "Calamity Aegis",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"An artifact recovered from an S-Rank gate. Its power is beyond conventional measurement.",
+			"A broad tower-bulwark of layered anomaly-plate that recolors itself to match the last force that struck it, learning each disaster as it meets it. Braced behind it, an ally is simply harder to kill.",
 		rarity: "legendary",
-		type: "weapon",
+		type: "armor",
+		armor_class: "21",
+		armor_type: "shield",
 		image: "/generated/compendium/items/item-0298.webp",
 		weight: 9,
 		value: { currency: "core", amount: 1000000 },
-		item_type: "weapon",
-		weapon_type: "martial melee",
-		damage: "3d8",
-		damage_type: "force",
+		item_type: "armor",
 		requires_attunement: true,
 		effects: {
-			passive: ["Grants extraordinary supernatural abilities."],
+			passive: [
+				"While this shield is equipped, you have resistance to the last damage type that dealt you 10 or more damage, until you take that much damage from a different type.",
+				"When an adjacent ally would take damage, you can use your reaction to interpose the shield and take that damage instead, reduced by 10.",
+			],
 		},
 		source: "Rift Ascendant Canon",
 		lore: {
 			current_owner: "",
 			curse: "Slowly drains ambient stamina from the wielder.",
-			history: "Its true history remains a protected Guild secret.",
-			origin: "Smuggled out of the Shadow Legion's armory.",
+			history:
+				"Recovered from a Shadow Legion armory raid where it had been mounted as a trophy, its inner face still scored with the killing blows of the guild raid it had outlasted.",
+			origin:
+				"Cut from the shed carapace of a calamity-class anomaly that had grown immune to its own environment, the plating still adapting to threats months after the creature that grew it was slain.",
 			personality: "",
 			prior_owners: [],
 		},
-		flavor: "Power lies not in the object, but the will of its master.",
+		flavor: "It has already survived worse than whatever you're facing.",
 		activation: {
 			type: "passive",
 			consumes_item: false,
@@ -1083,6 +1175,10 @@ export const artifacts: Item[] = [
 			restrictions: [],
 		},
 		mechanics: {
+			special: [
+				"While this shield is equipped, you have resistance to the last damage type that dealt you 10 or more damage, until you take that much damage from a different type.",
+				"When an adjacent ally would take damage, you can use your reaction to interpose the shield and take that damage instead, reduced by 10.",
+			],
 			ability_modifiers: {
 				damage: [],
 				armor_class: [],
@@ -1123,14 +1219,20 @@ export const artifacts: Item[] = [
 				signature: "5cdf8a24",
 				theme: "standard",
 			},
-			passive_rules: ["Grants extraordinary supernatural abilities."],
+			passive_rules: [
+				"While this shield is equipped, you have resistance to the last damage type that dealt you 10 or more damage, until you take that much damage from a different type.",
+				"When an adjacent ally would take damage, you can use your reaction to interpose the shield and take that damage instead, reduced by 10.",
+			],
 			resolution: {
 				type: "armor_class",
 				armor_class: null,
 				armor_type: null,
 				stealth_disadvantage: false,
 				strength_requirement: null,
-				equipped_effects: ["Grants extraordinary supernatural abilities."],
+				equipped_effects: [
+					"While this shield is equipped, you have resistance to the last damage type that dealt you 10 or more damage, until you take that much damage from a different type.",
+					"When an adjacent ally would take damage, you can use your reaction to interpose the shield and take that damage instead, reduced by 10.",
+				],
 			},
 			rules_payload_version: "ra-item-v1",
 			source_integrity: {
@@ -1153,32 +1255,37 @@ export const artifacts: Item[] = [
 	{
 		id: "artifact_11",
 		name: "Origin Aegis",
-		display_name: "Mythic Rank S Item",
+		display_name: "Origin Aegis",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"An artifact recovered from an S-Rank gate. Its power is beyond conventional measurement.",
+			"A round shield of pale seamless material that predates the alloys used to imitate it, its face bearing a single spiral mark from the first hand that ever raised a guard against a Rift. It refuses the world's worst outcomes on your behalf.",
 		rarity: "legendary",
 		type: "armor",
 		image: "/generated/compendium/items/item-0491.webp",
 		weight: 5,
 		value: { currency: "core", amount: 1000000 },
 		item_type: "armor",
-		armor_class: "20",
-		armor_type: "Heavy",
+		armor_class: "21",
+		armor_type: "shield",
 		requires_attunement: true,
 		effects: {
-			passive: ["Grants extraordinary supernatural abilities."],
+			passive: [
+				"While this shield is equipped, the first time each turn you would fail a saving throw, you can choose to succeed instead if you have not done so since your last short rest.",
+				"You have advantage on saving throws against effects originating from a Rift, Gate, or anomaly.",
+			],
 		},
 		source: "Rift Ascendant Canon",
 		lore: {
 			current_owner: "",
 			curse: "Slowly drains ambient stamina from the wielder.",
-			history: "Its true history remains a protected Guild secret.",
-			origin: "An ancient artifact of the First Awakenings.",
+			history:
+				"It shielded the last survivor of the founding expedition long enough for them to seal the breach by hand, and was found still strapped to a skeleton whose posture had never broken from a guard.",
+			origin:
+				"Unearthed intact from the ruin of humanity's first mustering-point against the Rifts, older than any surviving Bureau record and matching no known manufacturing process.",
 			personality: "",
 			prior_owners: [],
 		},
-		flavor: "Tread carefully; magic like this has a cost.",
+		flavor: "The first defense ever raised. It still holds.",
 		activation: {
 			type: "passive",
 			consumes_item: false,
@@ -1195,6 +1302,10 @@ export const artifacts: Item[] = [
 			restrictions: [],
 		},
 		mechanics: {
+			special: [
+				"While this shield is equipped, the first time each turn you would fail a saving throw, you can choose to succeed instead if you have not done so since your last short rest.",
+				"You have advantage on saving throws against effects originating from a Rift, Gate, or anomaly.",
+			],
 			ability_modifiers: {
 				damage: [],
 				armor_class: [],
@@ -1235,14 +1346,20 @@ export const artifacts: Item[] = [
 				signature: "990414ed",
 				theme: "standard",
 			},
-			passive_rules: ["Grants extraordinary supernatural abilities."],
+			passive_rules: [
+				"While this shield is equipped, the first time each turn you would fail a saving throw, you can choose to succeed instead if you have not done so since your last short rest.",
+				"You have advantage on saving throws against effects originating from a Rift, Gate, or anomaly.",
+			],
 			resolution: {
 				type: "armor_class",
 				armor_class: "20",
 				armor_type: "Heavy",
 				stealth_disadvantage: false,
 				strength_requirement: null,
-				equipped_effects: ["Grants extraordinary supernatural abilities."],
+				equipped_effects: [
+					"While this shield is equipped, the first time each turn you would fail a saving throw, you can choose to succeed instead if you have not done so since your last short rest.",
+					"You have advantage on saving throws against effects originating from a Rift, Gate, or anomaly.",
+				],
 			},
 			rules_payload_version: "ra-item-v1",
 			source_integrity: {
@@ -1265,32 +1382,38 @@ export const artifacts: Item[] = [
 	{
 		id: "artifact_13",
 		name: "Origin Edge",
-		display_name: "Mythic Rank S Item",
+		display_name: "Origin Edge",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"An artifact recovered from an S-Rank gate. Its power is beyond conventional measurement.",
+			"A slim, mirror-bright blade that carries a sliver of the light released when the world first split open. Anything it cuts is marked by that first radiance and can no longer hide inside the dark.",
 		rarity: "legendary",
-		type: "armor",
+		type: "weapon",
+		damage_type: "radiant",
+		damage: "2d10",
+		weapon_type: "martial melee",
 		image: "/generated/compendium/items/item-0757.webp",
 		weight: 19,
 		value: { currency: "core", amount: 1000000 },
-		item_type: "armor",
-		armor_class: "20",
-		armor_type: "Heavy",
+		item_type: "weapon",
 		requires_attunement: true,
 		effects: {
-			passive: ["Grants extraordinary supernatural abilities."],
+			passive: [
+				"On a hit, the target sheds bright light in a 10-ft radius and cannot benefit from invisibility or magical concealment until the start of your next turn.",
+				"Your attacks with this weapon score a critical hit on a roll of 19 or 20 against creatures native to a Rift.",
+			],
 		},
 		source: "Rift Ascendant Canon",
 		lore: {
 			current_owner: "",
 			curse: "Slowly drains ambient stamina from the wielder.",
-			history: "Its true history remains a protected Guild secret.",
-			origin: "Forged by the Bureau's most elite Technomancer.",
+			history:
+				"It was carried into the deepest recorded A-Rank descent by a scout who used its light to map a labyrinth that had swallowed three prior teams, all of whom had relied on lamps the dark simply ate.",
+			origin:
+				"Reforged by the Bureau's lead Technomancer around a captured filament of genesis-radiance, drawn off the oldest active Threshold before it could disperse.",
 			personality: "",
 			prior_owners: [],
 		},
-		flavor: "Tread carefully; magic like this has a cost.",
+		flavor: "The oldest light in the world, honed to an edge.",
 		activation: {
 			type: "passive",
 			consumes_item: false,
@@ -1307,6 +1430,10 @@ export const artifacts: Item[] = [
 			restrictions: [],
 		},
 		mechanics: {
+			special: [
+				"On a hit, the target sheds bright light in a 10-ft radius and cannot benefit from invisibility or magical concealment until the start of your next turn.",
+				"Your attacks with this weapon score a critical hit on a roll of 19 or 20 against creatures native to a Rift.",
+			],
 			ability_modifiers: {
 				damage: [],
 				armor_class: [],
@@ -1347,14 +1474,20 @@ export const artifacts: Item[] = [
 				signature: "ebd08988",
 				theme: "standard",
 			},
-			passive_rules: ["Grants extraordinary supernatural abilities."],
+			passive_rules: [
+				"On a hit, the target sheds bright light in a 10-ft radius and cannot benefit from invisibility or magical concealment until the start of your next turn.",
+				"Your attacks with this weapon score a critical hit on a roll of 19 or 20 against creatures native to a Rift.",
+			],
 			resolution: {
 				type: "armor_class",
 				armor_class: "20",
 				armor_type: "Heavy",
 				stealth_disadvantage: false,
 				strength_requirement: null,
-				equipped_effects: ["Grants extraordinary supernatural abilities."],
+				equipped_effects: [
+					"On a hit, the target sheds bright light in a 10-ft radius and cannot benefit from invisibility or magical concealment until the start of your next turn.",
+					"Your attacks with this weapon score a critical hit on a roll of 19 or 20 against creatures native to a Rift.",
+				],
 			},
 			rules_payload_version: "ra-item-v1",
 			source_integrity: {
@@ -1377,10 +1510,10 @@ export const artifacts: Item[] = [
 	{
 		id: "artifact_14",
 		name: "Calamity Edge",
-		display_name: "Mythic Rank S Item",
+		display_name: "Calamity Edge",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"An artifact recovered from an S-Rank gate. Its power is beyond conventional measurement.",
+			"A jagged greatblade reforged from the still-hot slag of a Regent's remains, cracks along its length glowing like a cooling wound. Every solid hit lands like a small disaster arriving early.",
 		rarity: "legendary",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0526.webp",
@@ -1392,18 +1525,23 @@ export const artifacts: Item[] = [
 		damage_type: "force",
 		requires_attunement: true,
 		effects: {
-			passive: ["Grants extraordinary supernatural abilities."],
+			passive: [
+				"On a critical hit, the strike detonates: each creature other than the target within 10 ft takes 2d8 force damage and is knocked prone (Strength save DC 17 negates the prone).",
+				"Whenever you reduce a creature to 0 hit points, your next attack roll before the end of your next turn has advantage.",
+			],
 		},
 		source: "Rift Ascendant Canon",
 		lore: {
 			current_owner: "",
 			curse: "Slowly drains ambient stamina from the wielder.",
-			history: "Its true history remains a protected Guild secret.",
-			origin: "Found sealed in a hidden cache inside an S-Rank Rift.",
+			history:
+				"Its first wielder cleared a collapsing B-Rank gate by cutting a path through the horde faster than the gate could close, then sold the blade the same night, unwilling to sleep near it.",
+			origin:
+				"Beaten back into shape by a guild smith from the molten residue a slain Regent left when its body failed to fully dissolve, the metal never fully cooling since.",
 			personality: "",
 			prior_owners: [],
 		},
-		flavor: "Reforged from the ashes of a fallen Regent.",
+		flavor: "Reforged from a Regent's ashes. It kept the temper.",
 		activation: {
 			type: "action",
 			consumes_item: false,
@@ -1420,6 +1558,10 @@ export const artifacts: Item[] = [
 			restrictions: [],
 		},
 		mechanics: {
+			special: [
+				"On a critical hit, the strike detonates: each creature other than the target within 10 ft takes 2d8 force damage and is knocked prone (Strength save DC 17 negates the prone).",
+				"Whenever you reduce a creature to 0 hit points, your next attack roll before the end of your next turn has advantage.",
+			],
 			ability_modifiers: {
 				damage: ["STR"],
 				armor_class: [],
@@ -1459,7 +1601,10 @@ export const artifacts: Item[] = [
 				signature: "19b5c392",
 				theme: "standard",
 			},
-			passive_rules: ["Grants extraordinary supernatural abilities."],
+			passive_rules: [
+				"On a critical hit, the strike detonates: each creature other than the target within 10 ft takes 2d8 force damage and is knocked prone (Strength save DC 17 negates the prone).",
+				"Whenever you reduce a creature to 0 hit points, your next attack roll before the end of your next turn has advantage.",
+			],
 			resolution: {
 				type: "weapon_attack",
 				damage_type: "force",
@@ -1467,7 +1612,10 @@ export const artifacts: Item[] = [
 				attack_roll: true,
 				damage_formula: "3d8 + STR modifier",
 				damage_roll: true,
-				on_hit: ["Grants extraordinary supernatural abilities."],
+				on_hit: [
+					"On a critical hit, the strike detonates: each creature other than the target within 10 ft takes 2d8 force damage and is knocked prone (Strength save DC 17 negates the prone).",
+					"Whenever you reduce a creature to 0 hit points, your next attack roll before the end of your next turn has advantage.",
+				],
 			},
 			rules_payload_version: "ra-item-v1",
 			source_integrity: {
@@ -1490,32 +1638,37 @@ export const artifacts: Item[] = [
 	{
 		id: "artifact_15",
 		name: "Sovereign Aegis",
-		display_name: "Mythic Rank S Item",
+		display_name: "Sovereign Aegis",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"An artifact recovered from an S-Rank gate. Its power is beyond conventional measurement.",
+			"A commanding kite-bulwark bearing a sovereign's sigil that seems to watch the battlefield with you. Those who stand in its shadow stand under your authority, and the enemy feels compelled to answer to it.",
 		rarity: "legendary",
 		type: "armor",
 		image: "/generated/compendium/items/item-0815.webp",
 		weight: 11,
 		value: { currency: "core", amount: 1000000 },
 		item_type: "armor",
-		armor_class: "20",
-		armor_type: "Heavy",
+		armor_class: "21",
+		armor_type: "shield",
 		requires_attunement: true,
 		effects: {
-			passive: ["Grants extraordinary supernatural abilities."],
+			passive: [
+				"While this shield is equipped, allies within 10 ft of you gain a +2 bonus to AC and cannot be flanked.",
+				"As a reaction when an enemy within 10 ft targets an ally, you can command it to target you instead (Sense save DC 17 negates).",
+			],
 		},
 		source: "Rift Ascendant Canon",
 		lore: {
 			current_owner: "",
 			curse: "Slowly drains ambient stamina from the wielder.",
-			history: "Its true history remains a protected Guild secret.",
-			origin: "An ancient artifact of the First Awakenings.",
+			history:
+				"It anchored a guild's last defensive line at the mouth of an S-Rank gate for six hours, the bearer never taking a step back, until the relief column arrived to find the front rank still standing exactly where the shield had told them to hold.",
+			origin:
+				"Struck from the personal panoply of an Umbral Regent during the First Awakening, its sigil still holding the compulsion that once made armies form up behind it.",
 			personality: "",
 			prior_owners: [],
 		},
-		flavor: "Power lies not in the object, but the will of its master.",
+		flavor: "Where it stands is your ground. They fight on it by your leave.",
 		activation: {
 			type: "passive",
 			consumes_item: false,
@@ -1532,6 +1685,10 @@ export const artifacts: Item[] = [
 			restrictions: [],
 		},
 		mechanics: {
+			special: [
+				"While this shield is equipped, allies within 10 ft of you gain a +2 bonus to AC and cannot be flanked.",
+				"As a reaction when an enemy within 10 ft targets an ally, you can command it to target you instead (Sense save DC 17 negates).",
+			],
 			ability_modifiers: {
 				damage: [],
 				armor_class: [],
@@ -1571,14 +1728,20 @@ export const artifacts: Item[] = [
 				signature: "19e99927",
 				theme: "standard",
 			},
-			passive_rules: ["Grants extraordinary supernatural abilities."],
+			passive_rules: [
+				"While this shield is equipped, allies within 10 ft of you gain a +2 bonus to AC and cannot be flanked.",
+				"As a reaction when an enemy within 10 ft targets an ally, you can command it to target you instead (Sense save DC 17 negates).",
+			],
 			resolution: {
 				type: "armor_class",
 				armor_class: "20",
 				armor_type: "Heavy",
 				stealth_disadvantage: false,
 				strength_requirement: null,
-				equipped_effects: ["Grants extraordinary supernatural abilities."],
+				equipped_effects: [
+					"While this shield is equipped, allies within 10 ft of you gain a +2 bonus to AC and cannot be flanked.",
+					"As a reaction when an enemy within 10 ft targets an ally, you can command it to target you instead (Sense save DC 17 negates).",
+				],
 			},
 			rules_payload_version: "ra-item-v1",
 			source_integrity: {
@@ -1601,33 +1764,35 @@ export const artifacts: Item[] = [
 	{
 		id: "artifact_16",
 		name: "World-Ender Crown",
-		display_name: "Mythic Rank S Item",
+		display_name: "World-Ender Crown",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"An artifact recovered from an S-Rank gate. Its power is beyond conventional measurement.",
+			"A jagged circlet of fused black metal that presses a faint, constant dread into the minds of anything nearby, as though the end of the world were quietly listening through it. To wear it is to be feared before you are seen.",
 		rarity: "legendary",
-		type: "weapon",
+		type: "accessory",
 		image: "/generated/compendium/items/item-0128.webp",
 		weight: 3,
 		value: { currency: "core", amount: 1000000 },
-		item_type: "weapon",
-		weapon_type: "martial melee",
-		damage: "3d8",
-		damage_type: "force",
+		item_type: "misc",
 		requires_attunement: true,
 		effects: {
-			passive: ["Grants extraordinary supernatural abilities."],
+			passive: [
+				"While attuned, once per turn when you deal damage to a creature, you can force it to make a Sense save (DC 18); on a failure it perceives every one of its allies as an enemy until the end of its next turn.",
+				"Creatures of CR 4 or lower are frightened while within 15 ft of you unless they succeed on a Sense save at the start of their turn.",
+			],
 		},
 		source: "Rift Ascendant Canon",
 		lore: {
 			current_owner: "",
 			curse: "Slowly drains ambient stamina from the wielder.",
-			history: "Its true history remains a protected Guild secret.",
-			origin: "An ancient artifact of the First Awakenings.",
+			history:
+				"The first Bureau agent to don it reported the strike team's monsters turning on each other within seconds, then removed the crown and refused to touch it again, calling it a weapon aimed at whoever wore it too long.",
+			origin:
+				"Recovered from an S-Rank throne-space where it sat upon a chair grown from the gate's own substance, radiating a dread that had emptied the surrounding chambers of even the anomaly's own spawn.",
 			personality: "",
 			prior_owners: [],
 		},
-		flavor: "Heavy in the hand. Heavier in consequence.",
+		flavor: "You won't rule them. You'll unmake how they think.",
 		activation: {
 			type: "action",
 			consumes_item: false,
@@ -1644,6 +1809,10 @@ export const artifacts: Item[] = [
 			restrictions: [],
 		},
 		mechanics: {
+			special: [
+				"While attuned, once per turn when you deal damage to a creature, you can force it to make a Sense save (DC 18); on a failure it perceives every one of its allies as an enemy until the end of its next turn.",
+				"Creatures of CR 4 or lower are frightened while within 15 ft of you unless they succeed on a Sense save at the start of their turn.",
+			],
 			ability_modifiers: {
 				damage: ["STR"],
 				armor_class: [],
@@ -1683,7 +1852,10 @@ export const artifacts: Item[] = [
 				signature: "10896953",
 				theme: "standard",
 			},
-			passive_rules: ["Grants extraordinary supernatural abilities."],
+			passive_rules: [
+				"While attuned, once per turn when you deal damage to a creature, you can force it to make a Sense save (DC 18); on a failure it perceives every one of its allies as an enemy until the end of its next turn.",
+				"Creatures of CR 4 or lower are frightened while within 15 ft of you unless they succeed on a Sense save at the start of their turn.",
+			],
 			resolution: {
 				type: "weapon_attack",
 				damage_type: "force",
@@ -1691,7 +1863,10 @@ export const artifacts: Item[] = [
 				attack_roll: true,
 				damage_formula: "3d8 + STR modifier",
 				damage_roll: true,
-				on_hit: ["Grants extraordinary supernatural abilities."],
+				on_hit: [
+					"While attuned, once per turn when you deal damage to a creature, you can force it to make a Sense save (DC 18); on a failure it perceives every one of its allies as an enemy until the end of its next turn.",
+					"Creatures of CR 4 or lower are frightened while within 15 ft of you unless they succeed on a Sense save at the start of their turn.",
+				],
 			},
 			rules_payload_version: "ra-item-v1",
 			source_integrity: {
@@ -1714,10 +1889,10 @@ export const artifacts: Item[] = [
 	{
 		id: "artifact_18",
 		name: "Regent's Edge",
-		display_name: "Mythic Rank S Item",
+		display_name: "Regent's Edge",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"An artifact recovered from an S-Rank gate. Its power is beyond conventional measurement.",
+			"A single-edged executioner's blade stamped at the ricasso with the personal signet of the Regent who once owned it. The shadows that serve that Regent still recognize the mark and flinch from its edge.",
 		rarity: "legendary",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0114.webp",
@@ -1725,22 +1900,27 @@ export const artifacts: Item[] = [
 		value: { currency: "core", amount: 1000000 },
 		item_type: "weapon",
 		weapon_type: "martial melee",
-		damage: "3d8",
-		damage_type: "force",
+		damage: "2d12",
+		damage_type: "necrotic",
 		requires_attunement: true,
 		effects: {
-			passive: ["Grants extraordinary supernatural abilities."],
+			passive: [
+				"This blade bears a specific Regent's signet; while attuned, shadow-creatures and Shadow Legion units have disadvantage on attack rolls against you.",
+				"On a hit against a creature below its hit point maximum, this weapon deals an extra 1d12 necrotic damage.",
+			],
 		},
 		source: "Rift Ascendant Canon",
 		lore: {
 			current_owner: "",
 			curse: "Slowly drains ambient stamina from the wielder.",
-			history: "Its true history remains a protected Guild secret.",
-			origin: "Forged by the Bureau's most elite Technomancer.",
+			history:
+				"A defector wielded it to walk unopposed through a Shadow Legion checkpoint, the sentries reading the signet and standing aside before they understood the hand holding it was no longer their master's.",
+			origin:
+				"Forged by the Bureau's lead Technomancer as a reproduction of a slain Regent's signature weapon, then rendered authentic when the Regent's residual essence recognized the signet and bonded to the steel.",
 			personality: "",
 			prior_owners: [],
 		},
-		flavor: "Power lies not in the object, but the will of its master.",
+		flavor: "It still answers to its old master's name. Learn to use that.",
 		activation: {
 			type: "action",
 			consumes_item: false,
@@ -1757,6 +1937,10 @@ export const artifacts: Item[] = [
 			restrictions: [],
 		},
 		mechanics: {
+			special: [
+				"This blade bears a specific Regent's signet; while attuned, shadow-creatures and Shadow Legion units have disadvantage on attack rolls against you.",
+				"On a hit against a creature below its hit point maximum, this weapon deals an extra 1d12 necrotic damage.",
+			],
 			ability_modifiers: {
 				damage: ["STR"],
 				armor_class: [],
@@ -1795,7 +1979,10 @@ export const artifacts: Item[] = [
 				signature: "06e590c7",
 				theme: "standard",
 			},
-			passive_rules: ["Grants extraordinary supernatural abilities."],
+			passive_rules: [
+				"This blade bears a specific Regent's signet; while attuned, shadow-creatures and Shadow Legion units have disadvantage on attack rolls against you.",
+				"On a hit against a creature below its hit point maximum, this weapon deals an extra 1d12 necrotic damage.",
+			],
 			resolution: {
 				type: "weapon_attack",
 				damage_type: "force",
@@ -1803,7 +1990,10 @@ export const artifacts: Item[] = [
 				attack_roll: true,
 				damage_formula: "3d8 + STR modifier",
 				damage_roll: true,
-				on_hit: ["Grants extraordinary supernatural abilities."],
+				on_hit: [
+					"This blade bears a specific Regent's signet; while attuned, shadow-creatures and Shadow Legion units have disadvantage on attack rolls against you.",
+					"On a hit against a creature below its hit point maximum, this weapon deals an extra 1d12 necrotic damage.",
+				],
 			},
 			rules_payload_version: "ra-item-v1",
 			source_integrity: {
@@ -1826,32 +2016,36 @@ export const artifacts: Item[] = [
 	{
 		id: "artifact_19",
 		name: "Sovereign Crown",
-		display_name: "Mythic Rank S Item",
+		display_name: "Sovereign Crown",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"An artifact recovered from an S-Rank gate. Its power is beyond conventional measurement.",
+			"A low diadem of woven shadow that rests weightless on the brow and casts a second, kneeling silhouette on the ground behind its wearer. It is the mark of command over the dark, worn rather than earned.",
 		rarity: "legendary",
-		type: "armor",
+		type: "accessory",
 		image: "/generated/compendium/items/item-0059.webp",
 		weight: 14,
 		value: { currency: "core", amount: 1000000 },
-		item_type: "armor",
-		armor_class: "20",
-		armor_type: "Heavy",
+		item_type: "misc",
 		requires_attunement: true,
 		effects: {
-			passive: ["Grants extraordinary supernatural abilities."],
+			passive: [
+				"While attuned, you can command any single shadow-thrall, summoned shadow, or shadow-companion you control to take the Attack, Dash, or Dodge action as a bonus action on your turn.",
+				"You have advantage on Presence checks made to intimidate or command creatures native to a Rift.",
+				"Once per long rest, as an action, raise a shadow-sentinel from your own shadow: it acts as a hostile shade under your control (uses your spell/technique save DC for its effects) for 10 minutes or until destroyed.",
+			],
 		},
 		source: "Rift Ascendant Canon",
 		lore: {
 			current_owner: "",
 			curse: "Slowly drains ambient stamina from the wielder.",
-			history: "Its true history remains a protected Guild secret.",
-			origin: "Smuggled out of the Shadow Legion's armory.",
+			history:
+				"It changed hands twice in a single night during a Guild Vault heist, each thief killed by the shadow the previous one had raised, until the third simply left it where it lay and walked out empty-handed.",
+			origin:
+				"Smuggled out of the Shadow Legion's armory where it had been kept as a regalia piece, its inner band still bearing the ash-mark of the fallen Regent from whose remains it was rewoven.",
 			personality: "",
 			prior_owners: [],
 		},
-		flavor: "Reforged from the ashes of a fallen Regent.",
+		flavor: "Put it on, and the dark starts taking orders.",
 		activation: {
 			type: "passive",
 			consumes_item: false,
@@ -1868,6 +2062,11 @@ export const artifacts: Item[] = [
 			restrictions: [],
 		},
 		mechanics: {
+			special: [
+				"While attuned, you can command any single shadow-thrall, summoned shadow, or shadow-companion you control to take the Attack, Dash, or Dodge action as a bonus action on your turn.",
+				"You have advantage on Presence checks made to intimidate or command creatures native to a Rift.",
+				"Once per long rest, as an action, raise a shadow-sentinel from your own shadow: it acts as a hostile shade under your control (uses your spell/technique save DC for its effects) for 10 minutes or until destroyed.",
+			],
 			ability_modifiers: {
 				damage: [],
 				armor_class: [],
@@ -1907,14 +2106,22 @@ export const artifacts: Item[] = [
 				signature: "dacdf832",
 				theme: "standard",
 			},
-			passive_rules: ["Grants extraordinary supernatural abilities."],
+			passive_rules: [
+				"While attuned, you can command any single shadow-thrall, summoned shadow, or shadow-companion you control to take the Attack, Dash, or Dodge action as a bonus action on your turn.",
+				"You have advantage on Presence checks made to intimidate or command creatures native to a Rift.",
+				"Once per long rest, as an action, raise a shadow-sentinel from your own shadow: it acts as a hostile shade under your control (uses your spell/technique save DC for its effects) for 10 minutes or until destroyed.",
+			],
 			resolution: {
 				type: "armor_class",
 				armor_class: "20",
 				armor_type: "Heavy",
 				stealth_disadvantage: false,
 				strength_requirement: null,
-				equipped_effects: ["Grants extraordinary supernatural abilities."],
+				equipped_effects: [
+					"While attuned, you can command any single shadow-thrall, summoned shadow, or shadow-companion you control to take the Attack, Dash, or Dodge action as a bonus action on your turn.",
+					"You have advantage on Presence checks made to intimidate or command creatures native to a Rift.",
+					"Once per long rest, as an action, raise a shadow-sentinel from your own shadow: it acts as a hostile shade under your control (uses your spell/technique save DC for its effects) for 10 minutes or until destroyed.",
+				],
 			},
 			rules_payload_version: "ra-item-v1",
 			source_integrity: {
