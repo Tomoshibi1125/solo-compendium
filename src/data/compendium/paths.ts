@@ -3605,7 +3605,7 @@ export const paths: Path[] = [
 			{
 				name: "Absolute Thrall",
 				description:
-					"Subjugated a incapacitated entity to your will indefinitely. You maintain a permanent telepathic link regardless of distance.",
+					"Subjugated an incapacitated entity to your will indefinitely. You maintain a permanent telepathic link regardless of distance.",
 				level: 14,
 			},
 		],

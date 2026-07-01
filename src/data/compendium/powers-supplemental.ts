@@ -2735,7 +2735,7 @@ export const powers_supplemental: CompendiumPower[] = [
 		name: "Crusader's Judgment",
 		display_name: "Crusader's Judgment",
 		description:
-			"Channel your oath into a devastating melee strike. On your next hit, deal weapon damage plus 5d8 radiant damage. If the target is anomaly or a anomaly, the extra damage is 6d8 and it must make a DC 16 Presence save or be banished to its native plane for 1 minute.",
+			"Channel your oath into a devastating melee strike. On your next hit, deal weapon damage plus 5d8 radiant damage. If the target is anomaly or an anomaly, the extra damage is 6d8 and it must make a DC 16 Presence save or be banished to its native plane for 1 minute.",
 		lore: {
 			origin:
 				"Three confirmed banishments on record. All three targets returned after 1 minute. All three were immediately engaged again.",

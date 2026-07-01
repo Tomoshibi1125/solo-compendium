@@ -50,7 +50,7 @@ export const NPC_SECRETS = [
 	"Working for a Regent",
 	"Has a cursed relic",
 	"Knows about the reset",
-	"Is actually a Anomaly",
+	"Is actually an Anomaly",
 	"Has System favor debt",
 	"Betrayed their ascendant team",
 	"Seeking forbidden knowledge",

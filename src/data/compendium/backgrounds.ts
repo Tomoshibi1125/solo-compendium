@@ -191,7 +191,7 @@ export const backgrounds: StaticBackground[] = [
 		type: "background",
 		rank: "S",
 		description:
-			"You are the founder or inherited leader of a Ascendant Guild. Whether it's a massive corporate entity or a struggling indie startup, you are responsible for managing contracts, paying out shares, and leading raids.",
+			"You are the founder or inherited leader of an Ascendant Guild. Whether it's a massive corporate entity or a struggling indie startup, you are responsible for managing contracts, paying out shares, and leading raids.",
 		skill_proficiencies: ["Persuasion", "Insight"],
 		tool_proficiencies: ["Forgery Kit"],
 		languages: ["One additional language"],
@@ -295,7 +295,7 @@ export const backgrounds: StaticBackground[] = [
 			"I owe my career to a mentor who didn't make it back from a scouting run.",
 			"My maps are my legacy; I fiercely protect my digital archives.",
 			"I am trying to find a gate that swallowed my hometown.",
-			"I have a strange, sympathetic bond with a anomaly I watched for days.",
+			"I have a strange, sympathetic bond with an anomaly I watched for days.",
 			"I work to pay for my sibling's expensive medical care.",
 		],
 		flaws: [
@@ -475,7 +475,7 @@ export const backgrounds: StaticBackground[] = [
 		],
 		bonds: [
 			"I am the last survivor of my original unit.",
-			"I owe my life to a Ascendant who saved my squad.",
+			"I owe my life to an Ascendant who saved my squad.",
 			"I carry the dog tags of my commanding officer.",
 			"My military pension was cut, so I hunt to survive.",
 			"I am fiercely protective of my new raid team, treating them like my old squad.",
@@ -635,12 +635,12 @@ export const backgrounds: StaticBackground[] = [
 		starting_credits: 1500,
 		feature_name: "Boss-Sense",
 		feature_description:
-			"By observing a anomaly for 1 minute, you can deduce its relative threat level, its primary damage type, and its most obvious vulnerability or resistance.",
+			"By observing an anomaly for 1 minute, you can deduce its relative threat level, its primary damage type, and its most obvious vulnerability or resistance.",
 		features: [
 			{
 				name: "Boss-Sense",
 				description:
-					"By observing a anomaly for 1 minute, you can deduce its relative threat level, its primary damage type, and its most obvious vulnerability or resistance.",
+					"By observing an anomaly for 1 minute, you can deduce its relative threat level, its primary damage type, and its most obvious vulnerability or resistance.",
 			},
 		],
 		personality_traits: [
@@ -851,7 +851,7 @@ export const backgrounds: StaticBackground[] = [
 			"I am secretly leaking Association data to a whistle-blowing journalist.",
 			"I am fiercely loyal to the current Chairman of the Association.",
 			"I have a stack of rejected compensation claims from victims I want to help.",
-			"I lost my desk job because of a Ascendant's mistake, and now I'm forced to dive.",
+			"I lost my desk job because of an Ascendant's mistake, and now I'm forced to dive.",
 		],
 		flaws: [
 			"I am paralyzed by indecision if there isn't a protocol for the situation.",
@@ -1032,7 +1032,7 @@ export const backgrounds: StaticBackground[] = [
 			"Efficiency. Why use magic when a bullet works fine? (Any)",
 		],
 		bonds: [
-			"My PMC squad was wiped out by a Assassin S-Rank Ascendant; I seek revenge.",
+			"My PMC squad was wiped out by an Assassin S-Rank Ascendant; I seek revenge.",
 			"I am secretly acting as a bodyguard for someone who doesn't know it.",
 			"I am fiercely loyal to my former commanding officer, now a Guild Master.",
 			"I carry a bullet that was surgically removed from my chest.",
@@ -1179,7 +1179,7 @@ export const backgrounds: StaticBackground[] = [
 		type: "background",
 		rank: "B",
 		description:
-			"When a Ascendant murders someone inside a gate, the normal police can't do anything. You are a specialized detective working for the government or the Association, tasked with solving crimes committed by gods among men.",
+			"When an Ascendant murders someone inside a gate, the normal police can't do anything. You are a specialized detective working for the government or the Association, tasked with solving crimes committed by gods among men.",
 		skill_proficiencies: ["Investigation", "Insight"],
 		tool_proficiencies: ["Disguise Kit", "Forgery Kit"],
 		languages: ["One additional language"],
@@ -1193,12 +1193,12 @@ export const backgrounds: StaticBackground[] = [
 		starting_credits: 1000,
 		feature_name: "Jurisdiction",
 		feature_description:
-			"You have the legal authority to enter crime scenes, demand cooperation from local police, and request access to a Ascendant's public dungeon-dive records from the Association.",
+			"You have the legal authority to enter crime scenes, demand cooperation from local police, and request access to an Ascendant's public dungeon-dive records from the Association.",
 		features: [
 			{
 				name: "Jurisdiction",
 				description:
-					"You have the legal authority to enter crime scenes, demand cooperation from local police, and request access to a Ascendant's public dungeon-dive records from the Association.",
+					"You have the legal authority to enter crime scenes, demand cooperation from local police, and request access to an Ascendant's public dungeon-dive records from the Association.",
 			},
 		],
 		personality_traits: [
@@ -1657,7 +1657,7 @@ export const backgrounds: StaticBackground[] = [
 			"I am fiercely protective of my company's proprietary technology.",
 			"I owe a massive debt to a shadowy cabal of investors.",
 			"I want to secure a monopoly on S-Rank mana crystals.",
-			"I am secretly funding a Assassin research lab.",
+			"I am secretly funding an Assassin research lab.",
 			"I am trying to groom my disappointing child to take over the company.",
 		],
 		flaws: [

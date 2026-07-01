@@ -17,19 +17,6 @@ export const items_part1: Item[] = [
 			passive: ["+1 to Medicine checks when worn"],
 		},
 		source: "Rift Ascendant Canon",
-		lore: {
-			current_owner: "",
-			curse: "",
-			history:
-				"Paramedic uniforms became standard Ascendant Bureau gear after the First Gate Surge. Every team needs a medic.",
-			origin:
-				"Standard Bureau-issued emergency response gear, distributed to medical personnel attached to gate-clearing teams.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "Run toward the chaos. That's the job.",
-		discovery_lore:
-			"Available from Ascendant Bureau medical supply depots. Unglamorous but essential.",
 		tags: ["equipment", "area", "offensive", "single-target", "debuff"],
 		theme_tags: ["black-market", "experimental", "elite-tier"],
 		activation: {
@@ -128,19 +115,6 @@ export const items_part1: Item[] = [
 			passive: ["+2 to Medicine checks to stabilize a creature"],
 		},
 		source: "Rift Ascendant Canon",
-		lore: {
-			current_owner: "",
-			curse: "",
-			history:
-				"Upgraded with aetheric stabilization crystals after it was discovered that standard hemostatic agents are less effective on wounds from anomaly attacks.",
-			origin:
-				"Professional-grade trauma gear standard-issued to Ascendant Bureau medical teams after the First Gate Surge.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "15 uses. Make them count.",
-		discovery_lore:
-			"Available at Ascendant Bureau supply depots. Required kit for any certified medic on a gate team.",
 		tags: ["equipment", "stealth", "control", "support"],
 		theme_tags: ["mana-overflow", "guild-ops", "ancient-power"],
 		activation: {
@@ -240,19 +214,6 @@ export const items_part1: Item[] = [
 			],
 		},
 		source: "Rift Ascendant Canon",
-		lore: {
-			current_owner: "",
-			curse: "",
-			history:
-				"This was the subject of a bidding war between three S-Rank Guilds that nearly escalated to armed conflict.",
-			origin:
-				"Emerged from the Ascendant Bureau's classified Project: Lattice Break experiments.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "Belongs in the bottom of every Ascendant's go-bag.",
-		discovery_lore:
-			"Found washed ashore near a coastal Gate, wrapped in fabric that dissolved upon touch.",
 		tags: ["equipment", "psychic", "single-target"],
 		theme_tags: ["modern-warfare", "dimensional-bleed"],
 		activation: {
@@ -355,20 +316,6 @@ export const items_part1: Item[] = [
 			passive: ["+1 to Investigation checks involving data analysis"],
 		},
 		source: "Rift Ascendant Canon",
-		lore: {
-			current_owner: "",
-			curse: "",
-			history:
-				"Originally developed as a countermeasure against Regent-class entities during the Regent Wars.",
-			origin:
-				"Stolen from a Guild vault during the Three-Day War between rival Korean Ascendant factions.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor:
-			"Cheap, ubiquitous, and sometimes the only thing between you and a black bag.",
-		discovery_lore:
-			"Appeared in a Ascendant's inventory after a Order notification that no one else could see.",
 		tags: ["equipment", "lightning", "necrotic", "defensive"],
 		theme_tags: ["guild-ops", "ancient-power", "urban-combat"],
 		activation: {
@@ -464,19 +411,6 @@ export const items_part1: Item[] = [
 		value: { currency: "crystal", amount: 10 },
 		item_type: "misc",
 		source: "Rift Ascendant Canon",
-		lore: {
-			current_owner: "",
-			curse: "",
-			history:
-				"Multiple Guilds have attempted to replicate this; all reproductions have proven inferior to the original.",
-			origin:
-				"Born from a Order glitch that briefly merged two overlapping Gate instances.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "Standard kit for those who plan to come back.",
-		discovery_lore:
-			"Emerged from a Gate Boss's dissolution cloud, hovering where the creature's heart had been.",
 		tags: ["equipment", "shadow", "control", "void"],
 		theme_tags: ["ancient-power", "elite-tier", "survival"],
 		activation: {
@@ -576,19 +510,6 @@ export const items_part1: Item[] = [
 			passive: ["+1 to Persuasion checks in formal settings"],
 		},
 		source: "Rift Ascendant Canon",
-		lore: {
-			current_owner: "",
-			curse: "",
-			history:
-				"The American Ascendant Bureau's Project: Starfall attempted to weaponize this before the program was defunded.",
-			origin:
-				"Translated from forbidden shadow-language inscriptions found in a Regent's throne room.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "Belongs in the bottom of every Ascendant's go-bag.",
-		discovery_lore:
-			"Reported on a salvage manifest filed two weeks after the clear that produced it.",
 		tags: ["equipment", "debuff", "buff", "necrotic"],
 		theme_tags: ["rift-energy", "survival"],
 		activation: {
@@ -686,19 +607,6 @@ export const items_part1: Item[] = [
 		armor_class: "11 + AGI modifier",
 		armor_type: "Light",
 		source: "Rift Ascendant Canon",
-		lore: {
-			current_owner: "",
-			curse: "",
-			history:
-				"Intelligence reports link this to the Shadow Regent's army, though the connection remains unconfirmed.",
-			origin:
-				"Pulled from the dreams of a comatose S-Rank Ascendant by a team of psychic-type Awakened.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "Built by Bureau Technomancer who've patched real wounds.",
-		discovery_lore:
-			"Pulled out of a B-rank gate's last-room loot pile by a recovery team.",
 		tags: ["equipment", "debuff", "utility", "psychic", "healing"],
 		theme_tags: ["ancient-power", "mana-overflow", "rift-energy"],
 		activation: {
@@ -800,19 +708,6 @@ export const items_part1: Item[] = [
 			passive: ["Advantage on saves against falling debris and cave-ins"],
 		},
 		source: "Rift Ascendant Canon",
-		lore: {
-			current_owner: "",
-			curse: "",
-			history:
-				"This was one of twelve artifacts recovered from the infamous Kamish Raid that changed modern Ascendant warfare.",
-			origin:
-				"Excavated from a pocket dimension that existed for exactly one hour before collapsing.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "Belongs in the bottom of every Ascendant's go-bag.",
-		discovery_lore:
-			"Pulled out of a B-rank gate's last-room loot pile by a recovery team.",
 		tags: ["equipment", "debuff", "shadow", "single-target"],
 		theme_tags: ["ancient-power", "dungeon-core", "ascendant-bureau"],
 		activation: {
@@ -914,19 +809,6 @@ export const items_part1: Item[] = [
 			passive: ["+1 to checks involving improvised repairs"],
 		},
 		source: "Rift Ascendant Canon",
-		lore: {
-			current_owner: "",
-			curse: "",
-			history:
-				"Records indicate this was used by the original Clearing Party that neutralized the first S-Rank Gate on Korean soil.",
-			origin:
-				"Manifested spontaneously during a double-dungeon event in the American Midwest.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "Belongs in the bottom of every Ascendant's go-bag.",
-		discovery_lore:
-			"Sold by a mysterious merchant who appears only during full moons near active Gate sites.",
 		tags: ["equipment", "support", "damage", "stealth"],
 		theme_tags: ["classified", "survival"],
 		activation: {
@@ -1027,20 +909,6 @@ export const items_part1: Item[] = [
 			],
 		},
 		source: "Rift Ascendant Canon",
-		lore: {
-			current_owner: "",
-			curse: "",
-			history:
-				"A-Rank appraiser Guild Master Ryker personally verified its authenticity before it entered general circulation.",
-			origin:
-				"Decoded from ancient sigil-stones found beneath the ruins of a pre-Awakening temple in Kyoto.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor:
-			"Cheap, ubiquitous, and sometimes the only thing between you and a black bag.",
-		discovery_lore:
-			"Surfaced when a Guild quartermaster did a five-year locker audit.",
 		tags: ["equipment", "burst", "single-target"],
 		theme_tags: ["experimental", "elite-tier"],
 		activation: {
@@ -1144,19 +1012,6 @@ export const items_part1: Item[] = [
 			passive: ["+1 to Investigation checks involving interviews"],
 		},
 		source: "Rift Ascendant Canon",
-		lore: {
-			current_owner: "",
-			curse: "",
-			history:
-				"Originally developed as a countermeasure against Regent-class entities during the Regent Wars.",
-			origin:
-				"Found clutched in the hand of a petrified E-Rank Ascendant who had been missing for three years.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "Belongs in the bottom of every Ascendant's go-bag.",
-		discovery_lore:
-			"Emerged from a Gate Boss's dissolution cloud, hovering where the creature's heart had been.",
 		tags: ["equipment", "healing", "stealth", "damage"],
 		theme_tags: ["experimental", "rift-energy"],
 		activation: {
@@ -1258,20 +1113,6 @@ export const items_part1: Item[] = [
 			],
 		},
 		source: "Rift Ascendant Canon",
-		lore: {
-			current_owner: "",
-			curse: "",
-			history:
-				"The first recorded use caused a localized reality fracture that took a specialized team forty hours to repair.",
-			origin:
-				"Distilled from the ambient mana of a Red Gate that refused to close for seventeen days.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor:
-			"Binds the fabric of reality. A testament to what Ascendants have become.",
-		discovery_lore:
-			"Identified during a mid-tier auction after the Bureau cleared its provenance.",
 		tags: ["equipment", "single-target", "stealth"],
 		theme_tags: ["classified", "guild-ops"],
 		activation: {
@@ -1372,20 +1213,6 @@ export const items_part1: Item[] = [
 		value: { currency: "crystal", amount: 200 },
 		item_type: "misc",
 		source: "Rift Ascendant Canon",
-		lore: {
-			current_owner: "",
-			curse: "",
-			history:
-				"Multiple Guilds have attempted to replicate this; all reproductions have proven inferior to the original.",
-			origin:
-				"Emerged from the Ascendant Bureau's classified Project: Lattice Break experiments.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor:
-			"Commands the remnants of a dead world. Proof that some things cannot be survived.",
-		discovery_lore:
-			"Found washed ashore near a coastal Gate, wrapped in fabric that dissolved upon touch.",
 		tags: ["equipment", "damage", "lightning"],
 		theme_tags: ["gate-zone", "black-market", "shadow-domain"],
 		activation: {
@@ -1487,20 +1314,6 @@ export const items_part1: Item[] = [
 			],
 		},
 		source: "Rift Ascendant Canon",
-		lore: {
-			current_owner: "",
-			curse: "",
-			history:
-				"A-Rank appraiser Guild Master Ryker personally verified its authenticity before it entered general circulation.",
-			origin:
-				"Created by an unnamed Awakened blacksmith who fed their own life force into the forge.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor:
-			"Crushes the remnants of a dead world. A whisper from the edge of oblivion.",
-		discovery_lore:
-			"Identified during a mid-tier auction after the Bureau cleared its provenance.",
 		tags: ["equipment", "healing", "sustained"],
 		theme_tags: ["classified", "post-awakening", "system-glitch"],
 		activation: {
@@ -1605,20 +1418,6 @@ export const items_part1: Item[] = [
 			],
 		},
 		source: "Rift Ascendant Canon",
-		lore: {
-			current_owner: "",
-			curse: "",
-			history:
-				"Field reports indicate prolonged exposure causes minor spatial distortions in a three-meter radius.",
-			origin:
-				"Unearthed by a mining Guild operating in the mana-saturated quarries of the Australian Outback.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor:
-			"Ignites the fabric of reality. A testament to what Ascendants have become.",
-		discovery_lore:
-			"Appeared in a Ascendant's inventory after a Order notification that no one else could see.",
 		tags: ["equipment", "control", "mobility", "defensive", "support"],
 		theme_tags: ["dimensional-bleed", "elite-tier"],
 		activation: {
@@ -1721,19 +1520,6 @@ export const items_part1: Item[] = [
 		armor_class: "12 + AGI modifier",
 		armor_type: "Light",
 		source: "Rift Ascendant Canon",
-		lore: {
-			current_owner: "",
-			curse: "",
-			history:
-				"This was the subject of a bidding war between three S-Rank Guilds that nearly escalated to armed conflict.",
-			origin:
-				"Decoded from ancient sigil-stones found beneath the ruins of a pre-Awakening temple in Kyoto.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "Standard kit for those who plan to come back.",
-		discovery_lore:
-			"Traded by a nomadic Awakened who claimed to have no memory of acquiring it.",
 		tags: ["equipment", "single-target", "defensive"],
 		theme_tags: ["system-glitch", "black-market"],
 		activation: {
@@ -1837,19 +1623,6 @@ export const items_part1: Item[] = [
 			passive: ["Provides 60 ft bright light, 120 ft dim light"],
 		},
 		source: "Rift Ascendant Canon",
-		lore: {
-			current_owner: "",
-			curse: "",
-			history:
-				"The American Ascendant Bureau's Project: Starfall attempted to weaponize this before the program was defunded.",
-			origin:
-				"Pulled from the dreams of a comatose S-Rank Ascendant by a team of psychic-type Awakened.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "Bureau-issue. Inventoried. Forgotten.",
-		discovery_lore:
-			"Recovered from a time-locked chest that required three different elemental keys to open.",
 		tags: ["equipment", "sustained", "mobility", "psychic", "buff"],
 		theme_tags: ["elite-tier", "gate-zone"],
 		activation: {
@@ -1951,20 +1724,6 @@ export const items_part1: Item[] = [
 			passive: ["Can monitor guild and emergency frequencies within 5 miles"],
 		},
 		source: "Rift Ascendant Canon",
-		lore: {
-			current_owner: "",
-			curse: "",
-			history:
-				"The Japanese Ascendant Bureau attempted to classify this as a national treasure to prevent export.",
-			origin:
-				"Stolen from a Guild vault during the Three-Day War between rival Korean Ascendant factions.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor:
-			"Binds the architect's design. Proof that some things cannot be survived.",
-		discovery_lore:
-			"Sold by a mysterious merchant who appears only during full moons near active Gate sites.",
 		tags: ["equipment", "defensive", "psychic"],
 		theme_tags: ["mana-overflow", "system-glitch"],
 		activation: {
@@ -2065,20 +1824,6 @@ export const items_part1: Item[] = [
 		value: { currency: "crystal", amount: 100 },
 		item_type: "misc",
 		source: "Rift Ascendant Canon",
-		lore: {
-			current_owner: "",
-			curse: "",
-			history:
-				"First documented during the Second Awakening Wave, when Ascendants worldwide reported spontaneous power surges.",
-			origin:
-				"Salvaged from the corpse of an S-Rank anomaly that breached containment in the European Dead Zone.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor:
-			"Cheap, ubiquitous, and sometimes the only thing between you and a black bag.",
-		discovery_lore:
-			"Discovered by an E-Rank Ascendant who stumbled into an unmarked side passage during a routine dungeon clear.",
 		tags: ["equipment", "sustained", "defensive", "utility", "offensive"],
 		theme_tags: ["survival", "regent-era", "rift-energy"],
 		activation: {
@@ -2181,20 +1926,6 @@ export const items_part1: Item[] = [
 			],
 		},
 		source: "Rift Ascendant Canon",
-		lore: {
-			current_owner: "",
-			curse: "",
-			history:
-				"Multiple Guilds have attempted to replicate this; all reproductions have proven inferior to the original.",
-			origin:
-				"Recovered from the personal vault of a National-Level Ascendant who vanished during the First Calamity.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor:
-			"Overrides the last defense of the unprepared. Evolution compressed into a single, violent instant.",
-		discovery_lore:
-			"Logged at a Bureau weigh-station after a routine post-clear inventory.",
 		tags: ["equipment", "ice", "support", "lightning"],
 		theme_tags: ["modern-warfare", "survival"],
 		activation: {
@@ -2302,20 +2033,6 @@ export const items_part1: Item[] = [
 			],
 		},
 		source: "Rift Ascendant Canon",
-		lore: {
-			current_owner: "",
-			curse: "",
-			history:
-				"The first recorded use caused a localized reality fracture that took a specialized team forty hours to repair.",
-			origin:
-				"Unearthed by a mining Guild operating in the mana-saturated quarries of the Australian Outback.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor:
-			"Cheap, ubiquitous, and sometimes the only thing between you and a black bag.",
-		discovery_lore:
-			"Reported on a salvage manifest filed two weeks after the clear that produced it.",
 		tags: ["equipment", "void", "radiant", "sustained", "buff"],
 		theme_tags: ["post-awakening", "gate-zone", "modern-warfare"],
 		activation: {
@@ -2423,19 +2140,6 @@ export const items_part1: Item[] = [
 			],
 		},
 		source: "Rift Ascendant Canon",
-		lore: {
-			current_owner: "",
-			curse: "",
-			history:
-				"A-Rank appraiser Guild Master Ryker personally verified its authenticity before it entered general circulation.",
-			origin:
-				"Found clutched in the hand of a petrified E-Rank Ascendant who had been missing for three years.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "Worn down at the seams. That's how you know it works.",
-		discovery_lore:
-			"Pulled out of a B-rank gate's last-room loot pile by a recovery team.",
 		tags: ["equipment", "mobility", "psychic"],
 		theme_tags: ["dimensional-bleed", "mana-overflow"],
 		activation: {
@@ -2535,20 +2239,6 @@ export const items_part1: Item[] = [
 		value: { currency: "crystal", amount: 5 },
 		item_type: "misc",
 		source: "Rift Ascendant Canon",
-		lore: {
-			current_owner: "",
-			curse: "",
-			history:
-				"First documented during the Second Awakening Wave, when Ascendants worldwide reported spontaneous power surges.",
-			origin:
-				"Pulled from the dreams of a comatose S-Rank Ascendant by a team of psychic-type Awakened.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor:
-			"Unravels the dimensional barrier. Proof that some things cannot be survived.",
-		discovery_lore:
-			"Surfaced when a Guild quartermaster did a five-year locker audit.",
 		tags: ["equipment", "burst", "radiant", "perception"],
 		theme_tags: ["dungeon-core", "rift-energy"],
 		activation: {
@@ -2647,19 +2337,6 @@ export const items_part1: Item[] = [
 			passive: ["+1 to Dimensional Lore checks involving pre-gate events"],
 		},
 		source: "Rift Ascendant Canon",
-		lore: {
-			current_owner: "",
-			curse: "",
-			history:
-				"Originally thought to be a failed experiment, it was rediscovered when a junior researcher noticed anomalous readings.",
-			origin:
-				"Recovered from the personal vault of a National-Level Ascendant who vanished during the First Calamity.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "Belongs in the bottom of every Ascendant's go-bag.",
-		discovery_lore:
-			"Sold by a mysterious merchant who appears only during full moons near active Gate sites.",
 		tags: ["equipment", "lightning", "shadow"],
 		theme_tags: ["mana-overflow", "survival", "dimensional-bleed"],
 		activation: {
@@ -2762,20 +2439,6 @@ export const items_part1: Item[] = [
 			passive: ["Resistance to acid damage from mechanical fluids"],
 		},
 		source: "Rift Ascendant Canon",
-		lore: {
-			current_owner: "",
-			curse: "",
-			history:
-				"First documented during the Second Awakening Wave, when Ascendants worldwide reported spontaneous power surges.",
-			origin:
-				"Reverse-engineered from Architect combat data recovered by the Ascendant Bureau's R&D division.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor:
-			"Silences the remnants of a dead world. Evolution compressed into a single, violent instant.",
-		discovery_lore:
-			"Sold by a mysterious merchant who appears only during full moons near active Gate sites.",
 		tags: ["equipment", "support", "utility", "healing"],
 		theme_tags: ["mana-overflow", "experimental"],
 		activation: {
@@ -2877,19 +2540,6 @@ export const items_part1: Item[] = [
 			],
 		},
 		source: "Rift Ascendant Canon",
-		lore: {
-			current_owner: "",
-			curse: "",
-			history:
-				"Originally developed as a countermeasure against Regent-class entities during the Regent Wars.",
-			origin:
-				"Formed naturally in a mana vein so dense that reality itself began to crystallize around it.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "Bureau-issue. Inventoried. Forgotten.",
-		discovery_lore:
-			"Logged at a Bureau weigh-station after a routine post-clear inventory.",
 		tags: ["equipment", "sustained", "defensive", "healing"],
 		theme_tags: ["forbidden", "mana-overflow"],
 		activation: {
@@ -2995,20 +2645,6 @@ export const items_part1: Item[] = [
 			],
 		},
 		source: "Rift Ascendant Canon",
-		lore: {
-			current_owner: "",
-			curse: "",
-			history:
-				"The American Ascendant Bureau's Project: Starfall attempted to weaponize this before the program was defunded.",
-			origin:
-				"Reconstructed from fragments scattered across seven different C-Rank dungeons.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor:
-			"Cheap, ubiquitous, and sometimes the only thing between you and a black bag.",
-		discovery_lore:
-			"Emerged from a Gate Boss's dissolution cloud, hovering where the creature's heart had been.",
 		tags: ["equipment", "support", "utility"],
 		theme_tags: ["dimensional-bleed", "dungeon-core"],
 		activation: {
@@ -3116,19 +2752,6 @@ export const items_part1: Item[] = [
 			passive: ["Resistance to fire damage from non-magical sources"],
 		},
 		source: "Rift Ascendant Canon",
-		lore: {
-			current_owner: "",
-			curse: "",
-			history:
-				"This technique was banned by the International Guild Association for eighteen months before being reclassified.",
-			origin:
-				"Discovered embedded in the spine of a petrified World Tree fragment found in Scandinavia.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "Built by Bureau Technomancer who've patched real wounds.",
-		discovery_lore:
-			"Sold by a mysterious merchant who appears only during full moons near active Gate sites.",
 		tags: ["equipment", "stealth", "damage", "debuff", "support"],
 		theme_tags: ["gate-zone", "shadow-domain"],
 		activation: {
@@ -3238,20 +2861,6 @@ export const items_part1: Item[] = [
 			],
 		},
 		source: "Rift Ascendant Canon",
-		lore: {
-			current_owner: "",
-			curse:
-				"The user becomes unable to dream, replaced by visions of the void between Gates.",
-			history:
-				"Originally thought to be a failed experiment, it was rediscovered when a junior researcher noticed anomalous readings.",
-			origin:
-				"Unearthed by a mining Guild operating in the mana-saturated quarries of the Australian Outback.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "Built to hit. Built to keep working.",
-		discovery_lore:
-			"Logged at a Bureau weigh-station after a routine post-clear inventory.",
 		tags: ["equipment", "debuff", "control", "psychic"],
 		theme_tags: ["post-awakening", "regent-era", "gate-zone"],
 		activation: {
@@ -3356,19 +2965,6 @@ export const items_part1: Item[] = [
 			passive: ["Communication range: 3 miles (1 mile in gate zones)"],
 		},
 		source: "Rift Ascendant Canon",
-		lore: {
-			current_owner: "",
-			curse: "",
-			history:
-				"The Japanese Ascendant Bureau attempted to classify this as a national treasure to prevent export.",
-			origin:
-				"Leaked through a micro-rift that appeared inside the International Ascendant Conference hall.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "Standard kit for those who plan to come back.",
-		discovery_lore:
-			"Recovered from a time-locked chest that required three different elemental keys to open.",
 		tags: ["equipment", "shadow", "area", "debuff"],
 		theme_tags: ["modern-warfare", "dimensional-bleed", "dungeon-core"],
 		activation: {
@@ -3469,20 +3065,6 @@ export const items_part1: Item[] = [
 			passive: ["+1 to Insight checks when reviewing documents or records"],
 		},
 		source: "Rift Ascendant Canon",
-		lore: {
-			current_owner: "",
-			curse:
-				"Prolonged use causes the wielder's shadow to move independently, whispering in dead languages.",
-			history:
-				"This was one of twelve artifacts recovered from the infamous Kamish Raid that changed modern Ascendant warfare.",
-			origin:
-				"Decoded from ancient sigil-stones found beneath the ruins of a pre-Awakening temple in Kyoto.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "Belongs in the bottom of every Ascendant's go-bag.",
-		discovery_lore:
-			"Appeared in a Ascendant's inventory after a Order notification that no one else could see.",
 		tags: ["equipment", "control", "buff", "burst"],
 		theme_tags: ["forbidden", "elite-tier", "experimental"],
 		activation: {
@@ -3588,19 +3170,6 @@ export const items_part1: Item[] = [
 			],
 		},
 		source: "Rift Ascendant Canon",
-		lore: {
-			current_owner: "",
-			curse: "",
-			history:
-				"The Ascendant Bureau classified this as a Level-4 threat vector before it was repurposed for field operations.",
-			origin:
-				"Recovered from the personal vault of a National-Level Ascendant who vanished during the First Calamity.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "Standard kit for those who plan to come back.",
-		discovery_lore:
-			"Sold by a mysterious merchant who appears only during full moons near active Gate sites.",
 		tags: ["equipment", "single-target", "support"],
 		theme_tags: ["guild-ops", "gate-zone"],
 		activation: {
@@ -3704,19 +3273,6 @@ export const items_part1: Item[] = [
 			passive: ["+1 to Persuasion checks to calm frightened or hostile NPCs"],
 		},
 		source: "Rift Ascendant Canon",
-		lore: {
-			current_owner: "",
-			curse: "",
-			history:
-				"Intelligence reports link this to the Shadow Regent's army, though the connection remains unconfirmed.",
-			origin:
-				"Gifted by a dying Regent as payment for a debt that predates human civilization.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "Bureau-issue. Inventoried. Forgotten.",
-		discovery_lore:
-			"Surfaced when a Guild quartermaster did a five-year locker audit.",
 		tags: ["equipment", "defensive", "damage", "perception", "debuff"],
 		theme_tags: ["black-market", "elite-tier", "regent-era"],
 		activation: {
@@ -3818,20 +3374,6 @@ export const items_part1: Item[] = [
 		armor_class: "14 + AGI modifier (max 2)",
 		armor_type: "Medium",
 		source: "Rift Ascendant Canon",
-		lore: {
-			current_owner: "",
-			curse: "",
-			history:
-				"The Japanese Ascendant Bureau attempted to classify this as a national treasure to prevent export.",
-			origin:
-				"Confiscated from a black-market dealer operating in the shadow districts of Manila.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor:
-			"What's left of you after it's done its job is what you started with.",
-		discovery_lore:
-			"Logged at a Bureau weigh-station after a routine post-clear inventory.",
 		tags: ["equipment", "psychic", "offensive", "single-target", "radiant"],
 		theme_tags: ["survival", "elite-tier", "mana-overflow"],
 		activation: {
@@ -3936,19 +3478,6 @@ export const items_part1: Item[] = [
 			],
 		},
 		source: "Rift Ascendant Canon",
-		lore: {
-			current_owner: "",
-			curse: "",
-			history:
-				"Combat logs from the Busan Incident show this was used to hold a Gate breach for forty-seven minutes.",
-			origin:
-				"Emerged from the Ascendant Bureau's classified Project: Lattice Break experiments.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "Standard kit for those who plan to come back.",
-		discovery_lore:
-			"Logged at a Bureau weigh-station after a routine post-clear inventory.",
 		tags: ["equipment", "burst", "control", "ice", "necrotic"],
 		theme_tags: ["experimental", "dimensional-bleed", "rift-energy"],
 		activation: {
@@ -4057,19 +3586,6 @@ export const items_part1: Item[] = [
 			],
 		},
 		source: "Rift Ascendant Canon",
-		lore: {
-			current_owner: "",
-			curse: "",
-			history:
-				"Multiple Guilds have attempted to replicate this; all reproductions have proven inferior to the original.",
-			origin:
-				"Leaked through a micro-rift that appeared inside the International Ascendant Conference hall.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "Standard kit for those who plan to come back.",
-		discovery_lore:
-			"Reported on a salvage manifest filed two weeks after the clear that produced it.",
 		tags: ["equipment", "control", "buff", "mobility", "necrotic"],
 		theme_tags: ["survival", "post-awakening", "system-glitch"],
 		activation: {

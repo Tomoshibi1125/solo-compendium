@@ -6,7 +6,7 @@ export const items_part5: Item[] = [
 		name: "Obsidian Gauntlets",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"Field-issued combat gauntlets for Striker-class Ascendants and tactical brawlers.",
+			"Field-issued combat gauntlets for Striker-class Ascendants and tactical brawlers. On the requisition manifest it reads simply: Obsidian Gauntlets.",
 		rarity: "uncommon",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0164.webp",
@@ -18,10 +18,7 @@ export const items_part5: Item[] = [
 		damage_type: "necrotic",
 		simple_properties: ["light", "striker"],
 		properties: {
-			weapon: {
-				damage: "1d6",
-				damage_type: "necrotic",
-			},
+			weapon: { damage: "1d6", damage_type: "necrotic" },
 		},
 		effects: {
 			passive: [
@@ -31,20 +28,6 @@ export const items_part5: Item[] = [
 			],
 		},
 		source: "Rift Ascendant Canon",
-		lore: {
-			current_owner: "",
-			curse: "",
-			history:
-				"Came up in a Bureau audit and survived the resulting paperwork.",
-			origin:
-				"Issued from the Bureau's mid-tier Ascendant requisition channel after standard certification.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor:
-			"Carried by people who know the difference between a kill and a survival.",
-		discovery_lore:
-			"Recovered during the post-clear sweep of a B-rank facility seal.",
 		tags: [
 			"equipment",
 			"psychic",
@@ -162,11 +145,7 @@ export const items_part5: Item[] = [
 		damage_type: "necrotic",
 		simple_properties: ["finesse", "reach"],
 		properties: {
-			weapon: {
-				damage: "1d4",
-				damage_type: "necrotic",
-				finesse: true,
-			},
+			weapon: { damage: "1d4", damage_type: "necrotic", finesse: true },
 		},
 		effects: {
 			passive: [
@@ -176,18 +155,6 @@ export const items_part5: Item[] = [
 			],
 		},
 		source: "Rift Ascendant Canon",
-		lore: {
-			current_owner: "",
-			curse: "",
-			history:
-				"Logged in over a hundred E-to-C clears before being adopted as a quartermaster default.",
-			origin: "Recovered from a Bureau-cleared safehouse during a Guild raid.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "Tested in the dark, blooded in the bright.",
-		discovery_lore:
-			"Pulled out of a B-rank gate's last-room loot pile by a recovery team.",
 		tags: ["equipment", "debuff", "support", "melee"],
 		theme_tags: ["dungeon-core", "rift-energy"],
 		activation: {
@@ -285,7 +252,7 @@ export const items_part5: Item[] = [
 		name: "Unstable Liquid Shadow",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"A pocket-sized recovery potion. Standard kit for any Ascendant on assignment.",
+			"A pocket-sized recovery potion. Standard kit for any Ascendant on assignment. Stamped and logged as the Unstable Liquid Shadow.",
 		rarity: "common",
 		type: "consumable",
 		image: "/generated/compendium/items/item-0690.webp",
@@ -309,19 +276,6 @@ export const items_part5: Item[] = [
 			],
 		},
 		source: "Rift Ascendant Canon",
-		lore: {
-			current_owner: "",
-			curse: "",
-			history:
-				"Shifted between three Bureau quartermaster depots over a five-year period.",
-			origin:
-				"Issued to a B-rank Ascendant on first deployment and never replaced.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "The Bureau's standard answer to 'how are we still alive?'",
-		discovery_lore:
-			"Reported on a salvage manifest filed two weeks after the clear that produced it.",
 		tags: ["equipment", "buff", "offensive", "consumable"],
 		theme_tags: ["experimental", "mana-overflow", "gate-zone"],
 		activation: {
@@ -373,11 +327,7 @@ export const items_part5: Item[] = [
 				variant_note:
 					"Grants 1d4 temporary HP and advantage on the next Vitality save within 1 minute.",
 			},
-			formulas: {
-				effect_formula: "1d4",
-				recharge: "at-will",
-				save_dc: null,
-			},
+			formulas: { effect_formula: "1d4", recharge: "at-will", save_dc: null },
 			identity: {
 				rarity: "common",
 				archetype: "consumable_potion",
@@ -424,7 +374,7 @@ export const items_part5: Item[] = [
 		name: "Mana-Infused Whip",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"A control-class weapon for Ascendants who prefer winning fights without finishing them.",
+			"A control-class weapon for Ascendants who prefer winning fights without finishing them. Bureau quartermasters catalog it as the Mana-Infused Whip.",
 		rarity: "uncommon",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0019.webp",
@@ -436,11 +386,7 @@ export const items_part5: Item[] = [
 		damage_type: "force",
 		simple_properties: ["finesse", "reach"],
 		properties: {
-			weapon: {
-				damage: "1d4",
-				damage_type: "force",
-				finesse: true,
-			},
+			weapon: { damage: "1d4", damage_type: "force", finesse: true },
 		},
 		effects: {
 			passive: [
@@ -450,19 +396,6 @@ export const items_part5: Item[] = [
 			],
 		},
 		source: "Rift Ascendant Canon",
-		lore: {
-			current_owner: "",
-			curse: "",
-			history:
-				"Briefly classified for export until the Guild Inspectors lifted the embargo.",
-			origin:
-				"Recovered from a sealed Guild Vault after a Bureau audit ordered the doors opened.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "Tested in the dark, blooded in the bright.",
-		discovery_lore:
-			"Brought to Bureau attention by a freelance Ascendant's anonymous tip.",
 		tags: ["equipment", "burst", "damage", "melee"],
 		theme_tags: ["system-glitch", "guild-ops", "regent-era"],
 		activation: {
@@ -560,7 +493,7 @@ export const items_part5: Item[] = [
 		name: "Aetheric Gauntlets",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"A reinforced gauntlet that turns unarmed strikes into solid kinetic blows.",
+			"A reinforced gauntlet that turns unarmed strikes into solid kinetic blows. Stamped and logged as the Aetheric Gauntlets.",
 		rarity: "uncommon",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0752.webp",
@@ -572,10 +505,7 @@ export const items_part5: Item[] = [
 		damage_type: "force",
 		simple_properties: ["light", "striker"],
 		properties: {
-			weapon: {
-				damage: "1d6",
-				damage_type: "force",
-			},
+			weapon: { damage: "1d6", damage_type: "force" },
 		},
 		effects: {
 			passive: [
@@ -585,19 +515,6 @@ export const items_part5: Item[] = [
 			],
 		},
 		source: "Rift Ascendant Canon",
-		lore: {
-			current_owner: "",
-			curse: "",
-			history:
-				"Marked for retirement twice; pulled back into rotation by quartermaster discretion.",
-			origin:
-				"Looted from a mid-rank Anomaly nest cleared by Strike Team Echo.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "Tested in the dark, blooded in the bright.",
-		discovery_lore:
-			"Was set aside by a Guild quartermaster who 'meant to do something with it.'",
 		tags: ["equipment", "defensive", "fire", "lightning", "utility", "melee"],
 		theme_tags: ["rift-energy", "system-glitch"],
 		activation: {
@@ -696,7 +613,7 @@ export const items_part5: Item[] = [
 		name: "Starlight Gauntlets",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"A pair of impact gauntlets shaped for clinch fighting inside cramped gate corridors.",
+			"A pair of impact gauntlets shaped for clinch fighting inside cramped gate corridors. Field teams know this pattern as the Starlight Gauntlets.",
 		rarity: "uncommon",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0481.webp",
@@ -708,10 +625,7 @@ export const items_part5: Item[] = [
 		damage_type: "radiant",
 		simple_properties: ["light", "striker", "arcane focus"],
 		properties: {
-			weapon: {
-				damage: "1d4",
-				damage_type: "radiant",
-			},
+			weapon: { damage: "1d4", damage_type: "radiant" },
 		},
 		effects: {
 			passive: [
@@ -721,19 +635,6 @@ export const items_part5: Item[] = [
 			],
 		},
 		source: "Rift Ascendant Canon",
-		lore: {
-			current_owner: "",
-			curse: "",
-			history:
-				"Came up in a Bureau audit and survived the resulting paperwork.",
-			origin:
-				"Pulled from a foreign Guild's stockpile after a cooperation agreement was signed.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "Honest steel. The kind that never apologizes.",
-		discovery_lore:
-			"Logged in a Ascendant's after-action report as 'recovered with the rest of the load.'",
 		tags: ["equipment", "sustained", "burst", "support", "melee"],
 		theme_tags: ["guild-ops", "survival", "experimental"],
 		activation: {
@@ -831,7 +732,8 @@ export const items_part5: Item[] = [
 		id: "item_p5_6",
 		name: "Purified Stamina Stim",
 		source_book: "Rift Ascendant Canon",
-		description: "A Bureau-stamped emergency injector. Last-resort kit.",
+		description:
+			"A Bureau-stamped emergency injector. Last-resort kit. Stamped and logged as the Purified Stamina Stim.",
 		rarity: "common",
 		type: "consumable",
 		image: "/generated/compendium/items/item-0254.webp",
@@ -854,19 +756,6 @@ export const items_part5: Item[] = [
 			],
 		},
 		source: "Rift Ascendant Canon",
-		lore: {
-			current_owner: "",
-			curse: "",
-			history:
-				"Marked for retirement twice; pulled back into rotation by quartermaster discretion.",
-			origin:
-				"Logged into the Ascendant Bureau's master inventory the day it was first sold.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "Triage in a glass. Don't waste it.",
-		discovery_lore:
-			"Found in the back of a Guild's recovered-effects locker during inheritance review.",
 		tags: [
 			"equipment",
 			"control",
@@ -975,7 +864,7 @@ export const items_part5: Item[] = [
 		name: "Aegis Trench Coat",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"A multi-layer combat coat woven from impact-resistant fabric.",
+			"A multi-layer combat coat woven from impact-resistant fabric. The Aegis Trench Coat, in Bureau parlance.",
 		rarity: "uncommon",
 		type: "armor",
 		image: "/generated/compendium/items/item-0767.webp",
@@ -993,19 +882,6 @@ export const items_part5: Item[] = [
 			],
 		},
 		source: "Rift Ascendant Canon",
-		lore: {
-			current_owner: "",
-			curse: "",
-			history:
-				"Used in a controlled recovery operation that became the Bureau's textbook example.",
-			origin:
-				"Hand-finished by a Bureau master artificer working out of the Seoul Forge District.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "Dents tell stories. Read them before you trust the wearer.",
-		discovery_lore:
-			"Showed up on a Bureau auction list after the original owner's contract lapsed.",
 		tags: [
 			"equipment",
 			"perception",
@@ -1110,7 +986,8 @@ export const items_part5: Item[] = [
 		id: "item_p5_8",
 		name: "Shadow Combat Vest",
 		source_book: "Rift Ascendant Canon",
-		description: "A Stalker-class light armor sized for extended gate sweeps.",
+		description:
+			"A Stalker-class light armor sized for extended gate sweeps. Stamped and logged as the Shadow Combat Vest.",
 		rarity: "uncommon",
 		type: "armor",
 		image: "/generated/compendium/items/item-0708.webp",
@@ -1129,19 +1006,6 @@ export const items_part5: Item[] = [
 			],
 		},
 		source: "Rift Ascendant Canon",
-		lore: {
-			current_owner: "",
-			curse: "",
-			history:
-				"Earned a footnote in the Ascendant Bureau's quarterly equipment audit.",
-			origin:
-				"Drew the eye of the Bureau quartermaster after surviving three consecutive gate clears.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "Dents tell stories. Read them before you trust the wearer.",
-		discovery_lore:
-			"Logged at a Bureau weigh-station after a routine post-clear inventory.",
 		tags: ["equipment", "mobility", "offensive", "armor"],
 		theme_tags: ["survival", "gate-zone", "elite-tier"],
 		activation: {
@@ -1241,7 +1105,7 @@ export const items_part5: Item[] = [
 		name: "Guild-Standard Aetheric Antidote",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"A purifier vial labeled with the Bureau's medical-clearance stamp.",
+			"A purifier vial labeled with the Bureau's medical-clearance stamp. Field teams know this pattern as the Guild-Standard Aetheric Antidote.",
 		rarity: "common",
 		type: "consumable",
 		image: "/generated/compendium/items/item-0565.webp",
@@ -1262,19 +1126,6 @@ export const items_part5: Item[] = [
 			passive: ["Cures one of: charmed, frightened, poisoned, weakened."],
 		},
 		source: "Rift Ascendant Canon",
-		lore: {
-			current_owner: "",
-			curse: "",
-			history:
-				"Was once misattributed in a post-clear report; the correction is still in the record.",
-			origin:
-				"Recovered from a Guild's deep-storage archive after a leadership audit.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "Calm hands, steady draw, full vial. Pick at least two.",
-		discovery_lore:
-			"Pulled out of a sealed cache during a Guild succession dispute.",
 		tags: [
 			"equipment",
 			"debuff",
@@ -1380,7 +1231,7 @@ export const items_part5: Item[] = [
 		name: "Greater Mana Elixir",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"A clear-glass restorative phial sealed with a Bureau quartermaster stamp.",
+			"A clear-glass restorative phial sealed with a Bureau quartermaster stamp. Bureau quartermasters catalog it as the Greater Mana Elixir.",
 		rarity: "common",
 		type: "consumable",
 		image: "/generated/compendium/items/item-0085.webp",
@@ -1400,19 +1251,6 @@ export const items_part5: Item[] = [
 			passive: ["On drink, restore 2d4 mana."],
 		},
 		source: "Rift Ascendant Canon",
-		lore: {
-			current_owner: "",
-			curse: "",
-			history:
-				"Quietly stockpiled by the Ascendant Bureau after an A-rank cascade exposed gaps in standard kit.",
-			origin:
-				"Recovered from the Bureau Vault-7 evidence locker after the Jeju Outbreak.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "One dose. Make it count.",
-		discovery_lore:
-			"Showed up on a Bureau auction list after the original owner's contract lapsed.",
 		tags: ["equipment", "damage", "defensive", "consumable"],
 		theme_tags: ["rift-energy", "ancient-power"],
 		activation: {
@@ -1463,11 +1301,7 @@ export const items_part5: Item[] = [
 				variant_note:
 					"Grants 1d4 temporary HP and advantage on the next Vitality save within 1 minute.",
 			},
-			formulas: {
-				effect_formula: "2d4",
-				recharge: "at-will",
-				save_dc: null,
-			},
+			formulas: { effect_formula: "2d4", recharge: "at-will", save_dc: null },
 			identity: {
 				rarity: "common",
 				archetype: "consumable_potion",
@@ -1510,7 +1344,7 @@ export const items_part5: Item[] = [
 		name: "Aegis Bracers",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"A wrist-worn focus and protective plate combined into one piece.",
+			"A wrist-worn focus and protective plate combined into one piece. On the requisition manifest it reads simply: Aegis Bracers.",
 		rarity: "uncommon",
 		type: "wondrous",
 		image: "/generated/compendium/items/item-0228.webp",
@@ -1525,19 +1359,6 @@ export const items_part5: Item[] = [
 			],
 		},
 		source: "Rift Ascendant Canon",
-		lore: {
-			current_owner: "",
-			curse: "",
-			history:
-				"Used in a controlled recovery operation that became the Bureau's textbook example.",
-			origin:
-				"Bought at auction by a private guild and re-issued to a Ascendant strike team.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "Boring kit. Boring kit comes home.",
-		discovery_lore:
-			"Surfaced from a private collection following the owner's retirement.",
 		tags: [
 			"equipment",
 			"radiant",
@@ -1639,7 +1460,8 @@ export const items_part5: Item[] = [
 		id: "item_p5_12",
 		name: "Phantom Tactical Helmet",
 		source_book: "Rift Ascendant Canon",
-		description: "A combat helm with optional Bureau communication insert.",
+		description:
+			"A combat helm with optional Bureau communication insert. Bureau quartermasters catalog it as the Phantom Tactical Helmet.",
 		rarity: "uncommon",
 		type: "armor",
 		image: "/generated/compendium/items/item-0859.webp",
@@ -1658,18 +1480,6 @@ export const items_part5: Item[] = [
 			],
 		},
 		source: "Rift Ascendant Canon",
-		lore: {
-			current_owner: "",
-			curse: "",
-			history:
-				"Used in a controlled recovery operation that became the Bureau's textbook example.",
-			origin: "Recovered from a Bureau-cleared safehouse during a Guild raid.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "It's been hit so you don't have to be.",
-		discovery_lore:
-			"Walked out of the gate in the bottom of a Ascendant's pack, mostly forgotten.",
 		tags: [
 			"equipment",
 			"debuff",
@@ -1776,7 +1586,8 @@ export const items_part5: Item[] = [
 		id: "item_p5_13",
 		name: "Gate-Forged Tactical Helmet",
 		source_book: "Rift Ascendant Canon",
-		description: "Reinforced headgear with mana-treated impact lining.",
+		description:
+			"Reinforced headgear with mana-treated impact lining. Stamped and logged as the Gate-Forged Tactical Helmet.",
 		rarity: "uncommon",
 		type: "armor",
 		image: "/generated/compendium/items/item-0754.webp",
@@ -1794,19 +1605,6 @@ export const items_part5: Item[] = [
 			],
 		},
 		source: "Rift Ascendant Canon",
-		lore: {
-			current_owner: "",
-			curse: "",
-			history:
-				"Showed up in pawn shops across three districts before the Bureau issued a recall.",
-			origin:
-				"Brokered to a Ascendant Bureau quartermaster by a vetted second-hand seller.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "Not glamorous. Still alive.",
-		discovery_lore:
-			"Found by a B-rank Ascendant on a bounty assignment in a half-cleared gate annex.",
 		tags: ["equipment", "burst", "radiant", "armor"],
 		theme_tags: ["mana-overflow", "shadow-domain"],
 		activation: {
@@ -1904,7 +1702,8 @@ export const items_part5: Item[] = [
 		id: "item_p5_14",
 		name: "Greater Health Potion",
 		source_book: "Rift Ascendant Canon",
-		description: "A Bureau-licensed restorative draught.",
+		description:
+			"A Bureau-licensed restorative draught. Field teams know this pattern as the Greater Health Potion.",
 		rarity: "common",
 		type: "consumable",
 		image: "/generated/compendium/items/item-0545.webp",
@@ -1927,19 +1726,6 @@ export const items_part5: Item[] = [
 			],
 		},
 		source: "Rift Ascendant Canon",
-		lore: {
-			current_owner: "",
-			curse: "",
-			history:
-				"Was once misattributed in a post-clear report; the correction is still in the record.",
-			origin:
-				"Forged in Bureau Forge Bay 12 from ichor-grade alloys harvested mid-clear.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "Read the label. Then drink anyway.",
-		discovery_lore:
-			"Pulled out of a sealed cache during a Guild succession dispute.",
 		tags: ["equipment", "area", "shadow", "stealth", "consumable"],
 		theme_tags: ["classified", "modern-warfare", "regent-era"],
 		activation: {
@@ -1991,11 +1777,7 @@ export const items_part5: Item[] = [
 				variant_note:
 					"Grants 1d4 temporary HP and advantage on the next Vitality save within 1 minute.",
 			},
-			formulas: {
-				effect_formula: "1d4",
-				recharge: "at-will",
-				save_dc: null,
-			},
+			formulas: { effect_formula: "1d4", recharge: "at-will", save_dc: null },
 			identity: {
 				rarity: "common",
 				archetype: "consumable_potion",
@@ -2041,7 +1823,7 @@ export const items_part5: Item[] = [
 		name: "Crimson Gauntlets",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"A pair of impact gauntlets shaped for clinch fighting inside cramped gate corridors.",
+			"A pair of impact gauntlets shaped for clinch fighting inside cramped gate corridors. Stamped and logged as the Crimson Gauntlets.",
 		rarity: "uncommon",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0816.webp",
@@ -2053,10 +1835,7 @@ export const items_part5: Item[] = [
 		damage_type: "slashing",
 		simple_properties: ["light", "striker", "arcane focus"],
 		properties: {
-			weapon: {
-				damage: "1d4",
-				damage_type: "slashing",
-			},
+			weapon: { damage: "1d4", damage_type: "slashing" },
 		},
 		effects: {
 			passive: [
@@ -2066,19 +1845,6 @@ export const items_part5: Item[] = [
 			],
 		},
 		source: "Rift Ascendant Canon",
-		lore: {
-			current_owner: "",
-			curse: "",
-			history:
-				"Catalogued in the Ascendant Bureau's standard equipment registry after a six-month field trial.",
-			origin:
-				"Acquired from a Bureau-stamped supplier under a long-term contract.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "Quiet, until it isn't.",
-		discovery_lore:
-			"Found in the back of a Guild's recovered-effects locker during inheritance review.",
 		tags: ["equipment", "support", "single-target", "control", "melee"],
 		theme_tags: ["black-market", "modern-warfare"],
 		activation: {
@@ -2176,7 +1942,8 @@ export const items_part5: Item[] = [
 		id: "item_p5_16",
 		name: "Shattered Dagger",
 		source_book: "Rift Ascendant Canon",
-		description: "A precision-balanced knife with a mana-treated edge.",
+		description:
+			"A precision-balanced knife with a mana-treated edge. The Shattered Dagger, in Bureau parlance.",
 		rarity: "uncommon",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0831.webp",
@@ -2188,11 +1955,7 @@ export const items_part5: Item[] = [
 		damage_type: "piercing",
 		simple_properties: ["light", "finesse"],
 		properties: {
-			weapon: {
-				damage: "1d6",
-				damage_type: "piercing",
-				finesse: true,
-			},
+			weapon: { damage: "1d6", damage_type: "piercing", finesse: true },
 		},
 		effects: {
 			passive: [
@@ -2201,19 +1964,6 @@ export const items_part5: Item[] = [
 			],
 		},
 		source: "Rift Ascendant Canon",
-		lore: {
-			current_owner: "",
-			curse: "",
-			history:
-				"Featured in a Bureau training video as an example of safe field maintenance.",
-			origin:
-				"Reverse-engineered by Bureau artificers from materials harvested in a lattice-bleed event.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "It rewards the steady, punishes the loud.",
-		discovery_lore:
-			"Pulled out of a B-rank gate's last-room loot pile by a recovery team.",
 		tags: ["equipment", "single-target", "sustained", "melee"],
 		theme_tags: ["guild-ops", "elite-tier", "dimensional-bleed"],
 		activation: {
@@ -2308,7 +2058,8 @@ export const items_part5: Item[] = [
 		id: "item_p5_17",
 		name: "Guild-Standard Beast Repellent",
 		source_book: "Rift Ascendant Canon",
-		description: "A field-issued potion. Bitter, fast-acting, reliable.",
+		description:
+			"A field-issued potion. Bitter, fast-acting, reliable. On the requisition manifest it reads simply: Guild-Standard Beast Repellent.",
 		rarity: "common",
 		type: "consumable",
 		image: "/generated/compendium/items/item-0294.webp",
@@ -2331,19 +2082,6 @@ export const items_part5: Item[] = [
 			],
 		},
 		source: "Rift Ascendant Canon",
-		lore: {
-			current_owner: "",
-			curse: "",
-			history:
-				"Was once misattributed in a post-clear report; the correction is still in the record.",
-			origin:
-				"Constructed in Bureau-affiliated ateliers from gate-recovered raw materials.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "Calm hands, steady draw, full vial. Pick at least two.",
-		discovery_lore:
-			"Found in the back of a Guild's recovered-effects locker during inheritance review.",
 		tags: ["equipment", "void", "defensive", "shadow", "damage", "consumable"],
 		theme_tags: ["modern-warfare", "classified", "urban-combat"],
 		activation: {
@@ -2445,7 +2183,7 @@ export const items_part5: Item[] = [
 		name: "Aetheric Warhammer",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"A reinforced sledge — for when an obstacle needs to stop being one.",
+			"A reinforced sledge — for when an obstacle needs to stop being one. Bureau quartermasters catalog it as the Aetheric Warhammer.",
 		rarity: "uncommon",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0629.webp",
@@ -2457,10 +2195,7 @@ export const items_part5: Item[] = [
 		damage_type: "force",
 		simple_properties: ["heavy", "two-handed"],
 		properties: {
-			weapon: {
-				damage: "1d10",
-				damage_type: "force",
-			},
+			weapon: { damage: "1d10", damage_type: "force" },
 		},
 		effects: {
 			passive: [
@@ -2470,19 +2205,6 @@ export const items_part5: Item[] = [
 			],
 		},
 		source: "Rift Ascendant Canon",
-		lore: {
-			current_owner: "",
-			curse: "",
-			history:
-				"Catalogued in the Ascendant Bureau's standard equipment registry after a six-month field trial.",
-			origin:
-				"Manufactured by a Bureau-licensed artificer cell operating under contract.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "It rewards the steady, punishes the loud.",
-		discovery_lore:
-			"Logged in a Ascendant's after-action report as 'recovered with the rest of the load.'",
 		tags: ["equipment", "damage", "psychic", "shadow", "stealth", "melee"],
 		theme_tags: ["rift-energy", "mana-overflow", "ascendant-bureau"],
 		activation: {
@@ -2580,7 +2302,8 @@ export const items_part5: Item[] = [
 		id: "item_p5_19",
 		name: "Aetheric Dagger",
 		source_book: "Rift Ascendant Canon",
-		description: "A precision-balanced knife with a mana-treated edge.",
+		description:
+			"A precision-balanced knife with a mana-treated edge. Stamped and logged as the Aetheric Dagger.",
 		rarity: "rare",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0532.webp",
@@ -2593,11 +2316,7 @@ export const items_part5: Item[] = [
 		simple_properties: ["light", "finesse"],
 		requires_attunement: true,
 		properties: {
-			weapon: {
-				damage: "1d6",
-				damage_type: "force",
-				finesse: true,
-			},
+			weapon: { damage: "1d6", damage_type: "force", finesse: true },
 		},
 		effects: {
 			active: [
@@ -2621,15 +2340,16 @@ export const items_part5: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Mentioned in the post-mortem on the Cheongdam cascade event as critical to two Ascendants' survival.",
+				"Mentioned in the post-mortem on the Cheongdam cascade event as critical to two Ascendants' survival. The Aetheric Dagger carried the story forward.",
 			origin:
-				"Pulled from the gear locker of a mid-rank Ascendant declared MIA during a C-rank sweep.",
+				"Pulled from the gear locker of a mid-rank Ascendant declared MIA during a C-rank sweep. Bureau provenance files log it as the Aetheric Dagger.",
 			personality: "",
 			prior_owners: [],
 		},
-		flavor: "Honest steel. The kind that never apologizes.",
+		flavor:
+			"Honest steel. The kind that never apologizes. That's the Aetheric Dagger.",
 		discovery_lore:
-			"Logged at a Bureau weigh-station after a routine post-clear inventory.",
+			"Logged at a Bureau weigh-station after a routine post-clear inventory. Logged on arrival as the Aetheric Dagger.",
 		tags: ["equipment", "sustained", "necrotic", "melee"],
 		theme_tags: ["mana-overflow", "black-market", "rift-energy"],
 		activation: {
@@ -2742,7 +2462,8 @@ export const items_part5: Item[] = [
 		id: "item_p5_20",
 		name: "Abyssal Whip",
 		source_book: "Rift Ascendant Canon",
-		description: "A weighted whip for trip, disarm, and grappling work.",
+		description:
+			"A weighted whip for trip, disarm, and grappling work. On the requisition manifest it reads simply: Abyssal Whip.",
 		rarity: "uncommon",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0324.webp",
@@ -2754,11 +2475,7 @@ export const items_part5: Item[] = [
 		damage_type: "necrotic",
 		simple_properties: ["finesse", "reach"],
 		properties: {
-			weapon: {
-				damage: "1d4",
-				damage_type: "necrotic",
-				finesse: true,
-			},
+			weapon: { damage: "1d4", damage_type: "necrotic", finesse: true },
 		},
 		effects: {
 			passive: [
@@ -2768,20 +2485,6 @@ export const items_part5: Item[] = [
 			],
 		},
 		source: "Rift Ascendant Canon",
-		lore: {
-			current_owner: "",
-			curse: "",
-			history:
-				"Cited in two Bureau accident reports as 'performed within tolerance.'",
-			origin:
-				"Drew the eye of the Bureau quartermaster after surviving three consecutive gate clears.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor:
-			"Sized for the wielder who finishes fights, not the one who starts them.",
-		discovery_lore:
-			"Identified during a mid-tier auction after the Bureau cleared its provenance.",
 		tags: ["equipment", "buff", "mobility", "control", "melee"],
 		theme_tags: ["guild-ops", "modern-warfare"],
 		activation: {
@@ -2878,7 +2581,8 @@ export const items_part5: Item[] = [
 		id: "item_p5_21",
 		name: "Shadow Tactical Helmet",
 		source_book: "Rift Ascendant Canon",
-		description: "Reinforced headgear with mana-treated impact lining.",
+		description:
+			"Reinforced headgear with mana-treated impact lining. Bureau quartermasters catalog it as the Shadow Tactical Helmet.",
 		rarity: "uncommon",
 		type: "armor",
 		image: "/generated/compendium/items/item-0181.webp",
@@ -2897,19 +2601,6 @@ export const items_part5: Item[] = [
 			],
 		},
 		source: "Rift Ascendant Canon",
-		lore: {
-			current_owner: "",
-			curse: "",
-			history:
-				"Shifted between three Bureau quartermaster depots over a five-year period.",
-			origin:
-				"Reverse-engineered by Bureau artificers from materials harvested in a lattice-bleed event.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "It won't make you faster. It'll just make sure you walk out.",
-		discovery_lore:
-			"Brought to Bureau attention by a freelance Ascendant's anonymous tip.",
 		tags: ["equipment", "debuff", "utility", "armor"],
 		theme_tags: ["ascendant-bureau", "rift-energy", "guild-ops"],
 		activation: {
@@ -3010,7 +2701,7 @@ export const items_part5: Item[] = [
 		name: "Crimson Sniper Rifle",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"A long-barrel rifle stamped to Bureau specifications. Designed for stand-off engagements at gate perimeters.",
+			"A long-barrel rifle stamped to Bureau specifications. Designed for stand-off engagements at gate perimeters. Stamped and logged as the Crimson Sniper Rifle.",
 		rarity: "uncommon",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0850.webp",
@@ -3023,11 +2714,7 @@ export const items_part5: Item[] = [
 		simple_properties: ["ammunition", "two-handed", "burst-fire"],
 		range: "Ranged (60/180)",
 		properties: {
-			weapon: {
-				damage: "1d8",
-				damage_type: "slashing",
-				range: 60,
-			},
+			weapon: { damage: "1d8", damage_type: "slashing", range: 60 },
 		},
 		effects: {
 			passive: [
@@ -3037,19 +2724,6 @@ export const items_part5: Item[] = [
 			],
 		},
 		source: "Rift Ascendant Canon",
-		lore: {
-			current_owner: "",
-			curse: "",
-			history:
-				"Saw use in two named clears and one unnamed one no one talks about.",
-			origin:
-				"Issued from the Bureau's mid-tier Ascendant requisition channel after standard certification.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "Honest steel. The kind that never apologizes.",
-		discovery_lore:
-			"Reported on a salvage manifest filed two weeks after the clear that produced it.",
 		tags: ["equipment", "single-target", "ice", "necrotic", "firearm"],
 		theme_tags: ["modern-warfare", "rift-energy"],
 		activation: {
@@ -3147,7 +2821,7 @@ export const items_part5: Item[] = [
 		name: "Nano-Weave Spaulders",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"Heavy Bureau-stamped plate. Designed to be hit. Designed to keep working when it is.",
+			"Heavy Bureau-stamped plate. Designed to be hit. Designed to keep working when it is. Field teams know this pattern as the Nano-Weave Spaulders.",
 		rarity: "uncommon",
 		type: "armor",
 		image: "/generated/compendium/items/item-0955.webp",
@@ -3167,19 +2841,6 @@ export const items_part5: Item[] = [
 			],
 		},
 		source: "Rift Ascendant Canon",
-		lore: {
-			current_owner: "",
-			curse: "",
-			history:
-				"Mentioned in the post-mortem on the Cheongdam cascade event as critical to two Ascendants' survival.",
-			origin:
-				"Recovered from a black-market shipment intercepted by Bureau agents.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "Dents tell stories. Read them before you trust the wearer.",
-		discovery_lore:
-			"Pulled out of a sealed cache during a Guild succession dispute.",
 		tags: ["equipment", "single-target", "stealth", "armor"],
 		theme_tags: ["classified", "mana-overflow"],
 		activation: {
@@ -3289,11 +2950,7 @@ export const items_part5: Item[] = [
 		damage_type: "necrotic",
 		simple_properties: ["finesse", "reach"],
 		properties: {
-			weapon: {
-				damage: "1d6",
-				damage_type: "necrotic",
-				finesse: true,
-			},
+			weapon: { damage: "1d6", damage_type: "necrotic", finesse: true },
 		},
 		effects: {
 			passive: [
@@ -3303,19 +2960,6 @@ export const items_part5: Item[] = [
 			],
 		},
 		source: "Rift Ascendant Canon",
-		lore: {
-			current_owner: "",
-			curse: "",
-			history:
-				"Came up in a Bureau audit and survived the resulting paperwork.",
-			origin:
-				"Pulled from the gear locker of a mid-rank Ascendant declared MIA during a C-rank sweep.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "Honest steel. The kind that never apologizes.",
-		discovery_lore:
-			"Was set aside by a Guild quartermaster who 'meant to do something with it.'",
 		tags: ["equipment", "shadow", "lightning", "melee"],
 		theme_tags: ["classified", "regent-era"],
 		activation: {
@@ -3413,7 +3057,8 @@ export const items_part5: Item[] = [
 		id: "item_p5_25",
 		name: "Nano-Weave Combat Vest",
 		source_book: "Rift Ascendant Canon",
-		description: "A Stalker-class light armor sized for extended gate sweeps.",
+		description:
+			"A Stalker-class light armor sized for extended gate sweeps. The Nano-Weave Combat Vest, in Bureau parlance.",
 		rarity: "uncommon",
 		type: "armor",
 		image: "/generated/compendium/items/item-0625.webp",
@@ -3431,19 +3076,6 @@ export const items_part5: Item[] = [
 			],
 		},
 		source: "Rift Ascendant Canon",
-		lore: {
-			current_owner: "",
-			curse: "",
-			history:
-				"Shifted between three Bureau quartermaster depots over a five-year period.",
-			origin:
-				"Manufactured by a Bureau-licensed artificer cell operating under contract.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "Built by Bureau artificers who've patched real wounds.",
-		discovery_lore:
-			"Tagged at the gate seal during the Bureau's standard cataloging sweep.",
 		tags: ["equipment", "support", "perception", "armor"],
 		theme_tags: ["black-market", "urban-combat", "dungeon-core"],
 		activation: {
@@ -3542,7 +3174,7 @@ export const items_part5: Item[] = [
 		name: "Vanguard Exo-Suit",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"A compact tactical layer designed for fast movers operating inside C-rank gates.",
+			"A compact tactical layer designed for fast movers operating inside C-rank gates. On the requisition manifest it reads simply: Vanguard Exo-Suit.",
 		rarity: "uncommon",
 		type: "armor",
 		image: "/generated/compendium/items/item-0398.webp",
@@ -3560,19 +3192,6 @@ export const items_part5: Item[] = [
 			],
 		},
 		source: "Rift Ascendant Canon",
-		lore: {
-			current_owner: "",
-			curse: "",
-			history:
-				"Was the subject of a dismissed bidding war between two mid-tier Guilds.",
-			origin:
-				"Pulled from the gear locker of a mid-rank Ascendant declared MIA during a C-rank sweep.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "Built by Bureau artificers who've patched real wounds.",
-		discovery_lore:
-			"Recovered during the post-clear sweep of a B-rank facility seal.",
 		tags: ["equipment", "stealth", "ice", "burst", "armor"],
 		theme_tags: ["regent-era", "rift-energy"],
 		activation: {
@@ -3670,7 +3289,7 @@ export const items_part5: Item[] = [
 		name: "Nano-Weave Breastplate",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"A full-coverage heavy carapace built for vanguard tanks holding gate breaches.",
+			"A full-coverage heavy carapace built for vanguard tanks holding gate breaches. The Nano-Weave Breastplate, in Bureau parlance.",
 		rarity: "uncommon",
 		type: "armor",
 		image: "/generated/compendium/items/item-0911.webp",
@@ -3690,19 +3309,6 @@ export const items_part5: Item[] = [
 			],
 		},
 		source: "Rift Ascendant Canon",
-		lore: {
-			current_owner: "",
-			curse: "",
-			history:
-				"Briefly classified for export until the Guild Inspectors lifted the embargo.",
-			origin:
-				"Pulled from a foreign Guild's stockpile after a cooperation agreement was signed.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "It's been hit so you don't have to be.",
-		discovery_lore:
-			"Tagged at the gate seal during the Bureau's standard cataloging sweep.",
 		tags: ["equipment", "stealth", "fire", "armor"],
 		theme_tags: ["urban-combat", "elite-tier"],
 		activation: {
@@ -3800,7 +3406,7 @@ export const items_part5: Item[] = [
 		name: "Shattered Longsword",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"A reliable mid-weight blade — the kind every Ascendant learns on, and many never replace.",
+			"A reliable mid-weight blade — the kind every Ascendant learns on, and many never replace. Issued under the Shattered Longsword designation.",
 		rarity: "uncommon",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0812.webp",
@@ -3812,11 +3418,7 @@ export const items_part5: Item[] = [
 		damage_type: "slashing",
 		simple_properties: ["versatile (1d12)", "two-handed-bonus"],
 		properties: {
-			weapon: {
-				damage: "1d10",
-				damage_type: "slashing",
-				versatile: "1d12",
-			},
+			weapon: { damage: "1d10", damage_type: "slashing", versatile: "1d12" },
 		},
 		effects: {
 			passive: [
@@ -3825,19 +3427,6 @@ export const items_part5: Item[] = [
 			],
 		},
 		source: "Rift Ascendant Canon",
-		lore: {
-			current_owner: "",
-			curse: "",
-			history:
-				"Was once misattributed in a post-clear report; the correction is still in the record.",
-			origin:
-				"Bought at auction by a private guild and re-issued to a Ascendant strike team.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "What survives a Ascendant's tour usually outlives the Ascendant.",
-		discovery_lore:
-			"Reported on a salvage manifest filed two weeks after the clear that produced it.",
 		tags: ["equipment", "control", "defensive", "radiant", "utility", "melee"],
 		theme_tags: ["dungeon-core", "rift-energy"],
 		activation: {
@@ -3933,7 +3522,7 @@ export const items_part5: Item[] = [
 		name: "Lesser Health Potion",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"A regulated alchemical compound. Restores hit points on consumption.",
+			"A regulated alchemical compound. Restores hit points on consumption. Field teams know this pattern as the Lesser Health Potion.",
 		rarity: "common",
 		type: "consumable",
 		image: "/generated/compendium/items/item-0669.webp",
@@ -3956,19 +3545,6 @@ export const items_part5: Item[] = [
 			],
 		},
 		source: "Rift Ascendant Canon",
-		lore: {
-			current_owner: "",
-			curse: "",
-			history:
-				"Figured in a debriefing hearing after a clear went sideways in an unstable Gate.",
-			origin:
-				"Recovered from a black-market shipment intercepted by Bureau agents.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "Triage in a glass. Don't waste it.",
-		discovery_lore:
-			"Walked out of the gate in the bottom of a Ascendant's pack, mostly forgotten.",
 		tags: ["equipment", "shadow", "necrotic", "burst", "consumable"],
 		theme_tags: ["guild-ops", "elite-tier", "dungeon-core"],
 		activation: {
@@ -4070,7 +3646,7 @@ export const items_part5: Item[] = [
 		name: "Aether-Plated Combat Vest",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"Modern light armor laced with mana-reactive alloys for enhanced protection.",
+			"Modern light armor laced with mana-reactive alloys for enhanced protection. Field teams know this pattern as the Aether-Plated Combat Vest.",
 		rarity: "uncommon",
 		type: "armor",
 		image: "/generated/compendium/items/item-0007.webp",
@@ -4089,19 +3665,6 @@ export const items_part5: Item[] = [
 			],
 		},
 		source: "Rift Ascendant Canon",
-		lore: {
-			current_owner: "",
-			curse: "",
-			history:
-				"Made a brief appearance in a guild quartermaster's leaving inventory dispute.",
-			origin:
-				"Salvaged from a partially-collapsed gate during a recovery sweep.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "Worn down at the seams. That's how you know it works.",
-		discovery_lore:
-			"Tagged at the gate seal during the Bureau's standard cataloging sweep.",
 		tags: ["equipment", "single-target", "void", "sustained", "armor"],
 		theme_tags: ["experimental", "gate-zone"],
 		activation: {
@@ -4201,7 +3764,8 @@ export const items_part5: Item[] = [
 		id: "item_p5_31",
 		name: "Lesser Mana Elixir",
 		source_book: "Rift Ascendant Canon",
-		description: "A Bureau-licensed restorative draught.",
+		description:
+			"A Bureau-licensed restorative draught. On the requisition manifest it reads simply: Lesser Mana Elixir.",
 		rarity: "common",
 		type: "consumable",
 		image: "/generated/compendium/items/item-0270.webp",
@@ -4221,19 +3785,6 @@ export const items_part5: Item[] = [
 			passive: ["On drink, restore 2d4 mana."],
 		},
 		source: "Rift Ascendant Canon",
-		lore: {
-			current_owner: "",
-			curse: "",
-			history:
-				"Recommissioned three times across its service life. Inspected at every reissue.",
-			origin:
-				"Issued from the Bureau's mid-tier Ascendant requisition channel after standard certification.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "You'll know it worked. You'll know if it didn't.",
-		discovery_lore:
-			"Found by a B-rank Ascendant on a bounty assignment in a half-cleared gate annex.",
 		tags: ["equipment", "damage", "void", "consumable"],
 		theme_tags: ["regent-era", "urban-combat"],
 		activation: {
@@ -4283,11 +3834,7 @@ export const items_part5: Item[] = [
 				uniqueness_seed: "item_p5_31::Lesser Mana Elixir",
 				variant_note: "Grants 5 + Vitality temporary HP for 10 minutes.",
 			},
-			formulas: {
-				effect_formula: "2d4",
-				recharge: "at-will",
-				save_dc: null,
-			},
+			formulas: { effect_formula: "2d4", recharge: "at-will", save_dc: null },
 			identity: {
 				rarity: "common",
 				archetype: "consumable_potion",
@@ -4330,7 +3877,7 @@ export const items_part5: Item[] = [
 		name: "Shattered Halberd",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"A balanced spear with a reinforced shaft and mana-conductive head.",
+			"A balanced spear with a reinforced shaft and mana-conductive head. Bureau quartermasters catalog it as the Shattered Halberd.",
 		rarity: "uncommon",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0481.webp",
@@ -4342,10 +3889,7 @@ export const items_part5: Item[] = [
 		damage_type: "piercing",
 		simple_properties: ["heavy", "reach", "two-handed"],
 		properties: {
-			weapon: {
-				damage: "1d10",
-				damage_type: "piercing",
-			},
+			weapon: { damage: "1d10", damage_type: "piercing" },
 		},
 		effects: {
 			passive: [
@@ -4354,19 +3898,6 @@ export const items_part5: Item[] = [
 			],
 		},
 		source: "Rift Ascendant Canon",
-		lore: {
-			current_owner: "",
-			curse: "",
-			history:
-				"Briefly classified for export until the Guild Inspectors lifted the embargo.",
-			origin:
-				"Hand-built in a clandestine Daejeon workshop and sold through the gray market.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "It's killed before. It will again.",
-		discovery_lore:
-			"Tagged at the gate seal during the Bureau's standard cataloging sweep.",
 		tags: ["equipment", "psychic", "stealth", "burst", "utility", "melee"],
 		theme_tags: ["guild-ops", "shadow-domain", "mana-overflow"],
 		activation: {
@@ -4462,7 +3993,7 @@ export const items_part5: Item[] = [
 		name: "Nano-Weave Spaulders",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"A heavy armor system with sectional plating and a mana-conductive backing layer.",
+			"A heavy armor system with sectional plating and a mana-conductive backing layer. Stamped and logged as the Nano-Weave Spaulders.",
 		rarity: "uncommon",
 		type: "armor",
 		image: "/generated/compendium/items/item-0776.webp",
@@ -4482,19 +4013,6 @@ export const items_part5: Item[] = [
 			],
 		},
 		source: "Rift Ascendant Canon",
-		lore: {
-			current_owner: "",
-			curse: "",
-			history:
-				"Marked for retirement twice; pulled back into rotation by quartermaster discretion.",
-			origin:
-				"Brokered to a Ascendant Bureau quartermaster by a vetted second-hand seller.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "You don't notice it until you do. Then it's already saved you.",
-		discovery_lore:
-			"Found in the back of a Guild's recovered-effects locker during inheritance review.",
 		tags: ["equipment", "healing", "buff", "psychic", "armor"],
 		theme_tags: ["regent-era", "rift-energy", "mana-overflow"],
 		activation: {
@@ -4592,7 +4110,7 @@ export const items_part5: Item[] = [
 		name: "Obsidian Dagger",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"A short blade with a fluted spine, weighted for offhand throws.",
+			"A short blade with a fluted spine, weighted for offhand throws. Bureau quartermasters catalog it as the Obsidian Dagger.",
 		rarity: "rare",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0035.webp",
@@ -4605,11 +4123,7 @@ export const items_part5: Item[] = [
 		simple_properties: ["light", "finesse"],
 		requires_attunement: true,
 		properties: {
-			weapon: {
-				damage: "1d6",
-				damage_type: "necrotic",
-				finesse: true,
-			},
+			weapon: { damage: "1d6", damage_type: "necrotic", finesse: true },
 		},
 		effects: {
 			active: [
@@ -4632,15 +4146,16 @@ export const items_part5: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Catalogued in the Ascendant Bureau's standard equipment registry after a six-month field trial.",
+				"Catalogued in the Ascendant Bureau's standard equipment registry after a six-month field trial. The Obsidian Dagger's service record notes as much.",
 			origin:
-				"Manufactured by a Bureau-licensed artificer cell operating under contract.",
+				"Manufactured by a Bureau-licensed artificer cell operating under contract. The Obsidian Dagger entered service from there.",
 			personality: "",
 			prior_owners: [],
 		},
-		flavor: "Honest steel. The kind that never apologizes.",
+		flavor:
+			"Honest steel. The kind that never apologizes. They call it the Obsidian Dagger for a reason.",
 		discovery_lore:
-			"Walked out of the gate in the bottom of a Ascendant's pack, mostly forgotten.",
+			"Walked out of the gate in the bottom of an Ascendant's pack, mostly forgotten. Logged on arrival as the Obsidian Dagger.",
 		tags: ["equipment", "buff", "psychic", "sustained", "melee"],
 		theme_tags: ["mana-overflow", "guild-ops"],
 		activation: {
@@ -4753,7 +4268,8 @@ export const items_part5: Item[] = [
 		id: "item_p5_35",
 		name: "Nano-Weave Tactical Helmet",
 		source_book: "Rift Ascendant Canon",
-		description: "Bureau-issued head protection, lightweight and fitted.",
+		description:
+			"Bureau-issued head protection, lightweight and fitted. Stamped and logged as the Nano-Weave Tactical Helmet.",
 		rarity: "rare",
 		type: "armor",
 		image: "/generated/compendium/items/item-0970.webp",
@@ -4785,15 +4301,16 @@ export const items_part5: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Logged in over a hundred E-to-C clears before being adopted as a quartermaster default.",
+				"Logged in over a hundred E-to-C clears before being adopted as a quartermaster default. That much survives in the Nano-Weave Tactical Helmet's field history.",
 			origin:
-				"Issued from the Bureau's mid-tier Ascendant requisition channel after standard certification.",
+				"Issued from the Bureau's mid-tier Ascendant requisition channel after standard certification. Archived under the Nano-Weave Tactical Helmet designation.",
 			personality: "",
 			prior_owners: [],
 		},
-		flavor: "It's been hit so you don't have to be.",
+		flavor:
+			"The Nano-Weave Tactical Helmet: it's been hit so you don't have to be.",
 		discovery_lore:
-			"Found by a B-rank Ascendant on a bounty assignment in a half-cleared gate annex.",
+			"Found by a B-rank Ascendant on a bounty assignment in a half-cleared gate annex. Intake tagged it the Nano-Weave Tactical Helmet.",
 		tags: ["equipment", "debuff", "void", "defensive", "armor"],
 		theme_tags: ["guild-ops", "elite-tier"],
 		activation: {
@@ -4900,7 +4417,8 @@ export const items_part5: Item[] = [
 		id: "item_p5_36",
 		name: "Abyssal Spear",
 		source_book: "Rift Ascendant Canon",
-		description: "A reach weapon used by Bureau gate-line teams.",
+		description:
+			"A reach weapon used by Bureau gate-line teams. Bureau quartermasters catalog it as the Abyssal Spear.",
 		rarity: "uncommon",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0037.webp",
@@ -4912,10 +4430,7 @@ export const items_part5: Item[] = [
 		damage_type: "necrotic",
 		simple_properties: ["reach", "two-handed", "thrown"],
 		properties: {
-			weapon: {
-				damage: "2d4",
-				damage_type: "necrotic",
-			},
+			weapon: { damage: "2d4", damage_type: "necrotic" },
 		},
 		effects: {
 			passive: [
@@ -4925,19 +4440,6 @@ export const items_part5: Item[] = [
 			],
 		},
 		source: "Rift Ascendant Canon",
-		lore: {
-			current_owner: "",
-			curse: "",
-			history:
-				"Showed up in pawn shops across three districts before the Bureau issued a recall.",
-			origin:
-				"Manufactured by a Bureau-licensed artificer cell operating under contract.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "You don't carry it to be seen. You carry it to come back.",
-		discovery_lore:
-			"Pulled out of a B-rank gate's last-room loot pile by a recovery team.",
 		tags: ["equipment", "radiant", "void", "debuff", "melee"],
 		theme_tags: ["dungeon-core", "ancient-power"],
 		activation: {
@@ -5036,7 +4538,7 @@ export const items_part5: Item[] = [
 		name: "Lattice-Scale Exo-Suit",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"A flexible mana-weave layer that beads ichor and shrugs off minor concussive impacts.",
+			"A flexible mana-weave layer that beads ichor and shrugs off minor concussive impacts. Stamped and logged as the Lattice-Scale Exo-Suit.",
 		rarity: "uncommon",
 		type: "armor",
 		image: "/generated/compendium/items/item-0180.webp",
@@ -5055,19 +4557,6 @@ export const items_part5: Item[] = [
 			],
 		},
 		source: "Rift Ascendant Canon",
-		lore: {
-			current_owner: "",
-			curse: "",
-			history:
-				"Used in a controlled recovery operation that became the Bureau's textbook example.",
-			origin:
-				"Acquired from a Bureau-stamped supplier under a long-term contract.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "It won't make you faster. It'll just make sure you walk out.",
-		discovery_lore:
-			"Surfaced from a private collection following the owner's retirement.",
 		tags: ["equipment", "stealth", "lightning", "defensive", "armor"],
 		theme_tags: ["experimental", "system-glitch"],
 		activation: {
@@ -5168,7 +4657,7 @@ export const items_part5: Item[] = [
 		name: "Unstable Beast Repellent",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"A Bureau-graded medicinal draught. Effective when applied promptly.",
+			"A Bureau-graded medicinal draught. Effective when applied promptly. The Unstable Beast Repellent, in Bureau parlance.",
 		rarity: "common",
 		type: "consumable",
 		image: "/generated/compendium/items/item-0295.webp",
@@ -5188,19 +4677,6 @@ export const items_part5: Item[] = [
 			passive: ["On drink, restore 2d4 + 2 hit points."],
 		},
 		source: "Rift Ascendant Canon",
-		lore: {
-			current_owner: "",
-			curse: "",
-			history:
-				"Featured in a Bureau training video as an example of safe field maintenance.",
-			origin:
-				"Stamped at a Bureau forge in Incheon and field-tested in a B-rank clear.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "Shelf life is a guideline. Trust the cap, not the date.",
-		discovery_lore:
-			"Showed up on a Bureau auction list after the original owner's contract lapsed.",
 		tags: ["equipment", "void", "defensive", "consumable"],
 		theme_tags: ["dungeon-core", "post-awakening", "elite-tier"],
 		activation: {
@@ -5297,7 +4773,7 @@ export const items_part5: Item[] = [
 		name: "Phantom Breastplate",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"A full-coverage heavy carapace built for vanguard tanks holding gate breaches.",
+			"A full-coverage heavy carapace built for vanguard tanks holding gate breaches. On the requisition manifest it reads simply: Phantom Breastplate.",
 		rarity: "uncommon",
 		type: "armor",
 		image: "/generated/compendium/items/item-0814.webp",
@@ -5318,19 +4794,6 @@ export const items_part5: Item[] = [
 			],
 		},
 		source: "Rift Ascendant Canon",
-		lore: {
-			current_owner: "",
-			curse: "",
-			history:
-				"Saw use in two named clears and one unnamed one no one talks about.",
-			origin:
-				"Logged into the Ascendant Bureau's master inventory the day it was first sold.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "Built by Bureau artificers who've patched real wounds.",
-		discovery_lore:
-			"Surfaced from a private collection following the owner's retirement.",
 		tags: [
 			"equipment",
 			"single-target",
@@ -5437,7 +4900,7 @@ export const items_part5: Item[] = [
 		name: "Ceramic Shin Guards",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"A reinforced kevlar-and-mana-weave layer. Cheap, common, effective.",
+			"A reinforced kevlar-and-mana-weave layer. Cheap, common, effective. On the requisition manifest it reads simply: Ceramic Shin Guards.",
 		rarity: "uncommon",
 		type: "armor",
 		image: "/generated/compendium/items/item-0350.webp",
@@ -5455,19 +4918,6 @@ export const items_part5: Item[] = [
 			],
 		},
 		source: "Rift Ascendant Canon",
-		lore: {
-			current_owner: "",
-			curse: "",
-			history:
-				"Noted in the official record as 'standard issue' for second-line Bureau auxiliaries.",
-			origin:
-				"Constructed in Bureau-affiliated ateliers from gate-recovered raw materials.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "You don't notice it until you do. Then it's already saved you.",
-		discovery_lore:
-			"Was set aside by a Guild quartermaster who 'meant to do something with it.'",
 		tags: ["equipment", "ice", "stealth", "debuff", "armor"],
 		theme_tags: ["forbidden", "shadow-domain", "survival"],
 		activation: {
@@ -5564,7 +5014,8 @@ export const items_part5: Item[] = [
 		id: "item_p5_41",
 		name: "Greater Stamina Stim",
 		source_book: "Rift Ascendant Canon",
-		description: "A pre-measured combat stim with Bureau-coded markings.",
+		description:
+			"A pre-measured combat stim with Bureau-coded markings. Field teams know this pattern as the Greater Stamina Stim.",
 		rarity: "common",
 		type: "consumable",
 		image: "/generated/compendium/items/item-0087.webp",
@@ -5587,19 +5038,6 @@ export const items_part5: Item[] = [
 			],
 		},
 		source: "Rift Ascendant Canon",
-		lore: {
-			current_owner: "",
-			curse: "",
-			history:
-				"Saw heavy rotation among second-strike teams during the Busan Incident.",
-			origin:
-				"Crafted by a defector ex-Guild forgewright operating out of a Manila workshop.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "For the part of the fight that comes after the fight.",
-		discovery_lore:
-			"Showed up on a Bureau auction list after the original owner's contract lapsed.",
 		tags: ["equipment", "perception", "burst", "control", "consumable"],
 		theme_tags: ["dimensional-bleed", "rift-energy", "dungeon-core"],
 		activation: {
@@ -5701,7 +5139,7 @@ export const items_part5: Item[] = [
 		name: "Lesser Liquid Shadow",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"A regulated alchemical compound. Restores hit points on consumption.",
+			"A regulated alchemical compound. Restores hit points on consumption. Issued under the Lesser Liquid Shadow designation.",
 		rarity: "common",
 		type: "consumable",
 		image: "/generated/compendium/items/item-0872.webp",
@@ -5725,19 +5163,6 @@ export const items_part5: Item[] = [
 			],
 		},
 		source: "Rift Ascendant Canon",
-		lore: {
-			current_owner: "",
-			curse: "",
-			history:
-				"Was once misattributed in a post-clear report; the correction is still in the record.",
-			origin:
-				"Logged into the Ascendant Bureau's master inventory the day it was first sold.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "The Bureau's standard answer to 'how are we still alive?'",
-		discovery_lore:
-			"Identified during a mid-tier auction after the Bureau cleared its provenance.",
 		tags: ["equipment", "stealth", "support", "consumable"],
 		theme_tags: ["urban-combat", "survival", "post-awakening"],
 		activation: {
@@ -5850,10 +5275,7 @@ export const items_part5: Item[] = [
 		damage_type: "force",
 		simple_properties: ["heavy", "two-handed"],
 		properties: {
-			weapon: {
-				damage: "1d12",
-				damage_type: "force",
-			},
+			weapon: { damage: "1d12", damage_type: "force" },
 		},
 		effects: {
 			passive: [
@@ -5863,19 +5285,6 @@ export const items_part5: Item[] = [
 			],
 		},
 		source: "Rift Ascendant Canon",
-		lore: {
-			current_owner: "",
-			curse: "",
-			history:
-				"Noted in the official record as 'standard issue' for second-line Bureau auxiliaries.",
-			origin:
-				"Pulled from a foreign Guild's stockpile after a cooperation agreement was signed.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "Quiet, until it isn't.",
-		discovery_lore:
-			"Brought to Bureau attention by a freelance Ascendant's anonymous tip.",
 		tags: ["equipment", "perception", "sustained", "melee"],
 		theme_tags: ["elite-tier", "forbidden"],
 		activation: {
@@ -5973,7 +5382,7 @@ export const items_part5: Item[] = [
 		name: "Aetheric Warhammer",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"A massive impact weapon balanced for sweeping strikes and structural breaks.",
+			"A massive impact weapon balanced for sweeping strikes and structural breaks. Issued under the Aetheric Warhammer designation.",
 		rarity: "uncommon",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0810.webp",
@@ -5985,10 +5394,7 @@ export const items_part5: Item[] = [
 		damage_type: "force",
 		simple_properties: ["heavy", "two-handed", "loading"],
 		properties: {
-			weapon: {
-				damage: "2d6",
-				damage_type: "force",
-			},
+			weapon: { damage: "2d6", damage_type: "force" },
 		},
 		effects: {
 			passive: [
@@ -5998,19 +5404,6 @@ export const items_part5: Item[] = [
 			],
 		},
 		source: "Rift Ascendant Canon",
-		lore: {
-			current_owner: "",
-			curse: "",
-			history:
-				"Cited in two Bureau accident reports as 'performed within tolerance.'",
-			origin:
-				"Looted from a mid-rank Anomaly nest cleared by Strike Team Echo.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "It's killed before. It will again.",
-		discovery_lore:
-			"Reported on a salvage manifest filed two weeks after the clear that produced it.",
 		tags: ["equipment", "offensive", "area", "lightning", "debuff", "melee"],
 		theme_tags: ["forbidden", "modern-warfare", "shadow-domain"],
 		activation: {
@@ -6109,7 +5502,7 @@ export const items_part5: Item[] = [
 		name: "Starlight Warhammer",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"A massive impact weapon balanced for sweeping strikes and structural breaks.",
+			"A massive impact weapon balanced for sweeping strikes and structural breaks. Bureau quartermasters catalog it as the Starlight Warhammer.",
 		rarity: "uncommon",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0139.webp",
@@ -6121,10 +5514,7 @@ export const items_part5: Item[] = [
 		damage_type: "radiant",
 		simple_properties: ["heavy", "two-handed"],
 		properties: {
-			weapon: {
-				damage: "1d10",
-				damage_type: "radiant",
-			},
+			weapon: { damage: "1d10", damage_type: "radiant" },
 		},
 		effects: {
 			passive: [
@@ -6134,19 +5524,6 @@ export const items_part5: Item[] = [
 			],
 		},
 		source: "Rift Ascendant Canon",
-		lore: {
-			current_owner: "",
-			curse: "",
-			history:
-				"Catalogued in the Ascendant Bureau's standard equipment registry after a six-month field trial.",
-			origin:
-				"Stamped at a Bureau forge in Incheon and field-tested in a B-rank clear.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "Not pretty. Not elegant. Effective.",
-		discovery_lore:
-			"Showed up on a Bureau auction list after the original owner's contract lapsed.",
 		tags: [
 			"equipment",
 			"single-target",
@@ -6264,11 +5641,7 @@ export const items_part5: Item[] = [
 		damage_type: "slashing",
 		simple_properties: ["versatile (1d12)", "two-handed-bonus"],
 		properties: {
-			weapon: {
-				damage: "1d10",
-				damage_type: "slashing",
-				versatile: "1d12",
-			},
+			weapon: { damage: "1d10", damage_type: "slashing", versatile: "1d12" },
 		},
 		effects: {
 			passive: [
@@ -6277,19 +5650,6 @@ export const items_part5: Item[] = [
 			],
 		},
 		source: "Rift Ascendant Canon",
-		lore: {
-			current_owner: "",
-			curse: "",
-			history:
-				"Marked for retirement twice; pulled back into rotation by quartermaster discretion.",
-			origin:
-				"Found embedded in a rift-touched alley wall in the post-gate Seoul reclamation zone.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "It's killed before. It will again.",
-		discovery_lore:
-			"Surfaced from a private collection following the owner's retirement.",
 		tags: ["equipment", "psychic", "healing", "melee"],
 		theme_tags: ["ascendant-bureau", "modern-warfare", "rift-energy"],
 		activation: {
@@ -6385,7 +5745,7 @@ export const items_part5: Item[] = [
 		name: "Shadow Bracers",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"A Bureau-issued forearm guard for Ascendants operating melee-forward.",
+			"A Bureau-issued forearm guard for Ascendants operating melee-forward. The Shadow Bracers, in Bureau parlance.",
 		rarity: "uncommon",
 		type: "wondrous",
 		image: "/generated/compendium/items/item-0141.webp",
@@ -6401,19 +5761,6 @@ export const items_part5: Item[] = [
 			],
 		},
 		source: "Rift Ascendant Canon",
-		lore: {
-			current_owner: "",
-			curse: "",
-			history:
-				"Quietly stockpiled by the Ascendant Bureau after an A-rank cascade exposed gaps in standard kit.",
-			origin:
-				"Manufactured by a Bureau-licensed artificer cell operating under contract.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "Small enough to forget. Big enough to matter when it counts.",
-		discovery_lore:
-			"Logged in a Ascendant's after-action report as 'recovered with the rest of the load.'",
 		tags: ["equipment", "necrotic", "stealth", "gear"],
 		theme_tags: ["black-market", "mana-overflow"],
 		activation: {
@@ -6510,7 +5857,7 @@ export const items_part5: Item[] = [
 		name: "Aegis Trench Coat",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"A compact tactical layer designed for fast movers operating inside C-rank gates.",
+			"A compact tactical layer designed for fast movers operating inside C-rank gates. Issued under the Aegis Trench Coat designation.",
 		rarity: "uncommon",
 		type: "armor",
 		image: "/generated/compendium/items/item-0062.webp",
@@ -6528,19 +5875,6 @@ export const items_part5: Item[] = [
 			],
 		},
 		source: "Rift Ascendant Canon",
-		lore: {
-			current_owner: "",
-			curse: "",
-			history:
-				"Used in a controlled recovery operation that became the Bureau's textbook example.",
-			origin:
-				"Acquired from a Bureau-stamped supplier under a long-term contract.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "Dents tell stories. Read them before you trust the wearer.",
-		discovery_lore:
-			"Recovered during the post-clear sweep of a B-rank facility seal.",
 		tags: ["equipment", "fire", "healing", "necrotic", "armor"],
 		theme_tags: ["ancient-power", "forbidden", "dimensional-bleed"],
 		activation: {
@@ -6638,7 +5972,7 @@ export const items_part5: Item[] = [
 		name: "Starlight Longsword",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"A balanced blade with a fuller groove that channels excess kinetic mana.",
+			"A balanced blade with a fuller groove that channels excess kinetic mana. Bureau quartermasters catalog it as the Starlight Longsword.",
 		rarity: "uncommon",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0575.webp",
@@ -6650,11 +5984,7 @@ export const items_part5: Item[] = [
 		damage_type: "radiant",
 		simple_properties: ["versatile (1d10)"],
 		properties: {
-			weapon: {
-				damage: "1d8",
-				damage_type: "radiant",
-				versatile: "1d10",
-			},
+			weapon: { damage: "1d8", damage_type: "radiant", versatile: "1d10" },
 		},
 		effects: {
 			passive: [
@@ -6664,18 +5994,6 @@ export const items_part5: Item[] = [
 			],
 		},
 		source: "Rift Ascendant Canon",
-		lore: {
-			current_owner: "",
-			curse: "",
-			history:
-				"Saw heavy rotation among second-strike teams during the Busan Incident.",
-			origin: "Recovered from a Bureau-cleared safehouse during a Guild raid.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "Reliable. Honest. Mean when it has to be.",
-		discovery_lore:
-			"Brought to Bureau attention by a freelance Ascendant's anonymous tip.",
 		tags: ["equipment", "void", "support", "damage", "radiant", "melee"],
 		theme_tags: ["survival", "regent-era"],
 		activation: {

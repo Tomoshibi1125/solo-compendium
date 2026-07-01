@@ -248,7 +248,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Born from a Order glitch that briefly merged two overlapping Gate instances.",
+				"Born from an Order glitch that briefly merged two overlapping Gate instances.",
 			history:
 				"The Japanese Ascendant Bureau attempted to classify this as a national treasure to prevent export.",
 			curse: "",
@@ -945,7 +945,7 @@ export const locations: CompendiumLocation[] = [
 		type: "Castle",
 		rank: "B",
 		description:
-			"A fortress that was once the seat of a umbral regent's power, now split across seven different dimensions. B-rank ascendants must navigate through versions of the same castle that exist simultaneously, each with different dangers and secrets.",
+			"A fortress that was once the seat of an umbral regent's power, now split across seven different dimensions. B-rank ascendants must navigate through versions of the same castle that exist simultaneously, each with different dangers and secrets.",
 		encounters: ["Shadow anomaly", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
@@ -3016,7 +3016,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Born from a Order glitch that briefly merged two overlapping Gate instances.",
+				"Born from an Order glitch that briefly merged two overlapping Gate instances.",
 			history:
 				"This was one of twelve artifacts recovered from the infamous Kamish Raid that changed modern Ascendant warfare.",
 			curse: "",
@@ -11593,7 +11593,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Born from a Order glitch that briefly merged two overlapping Gate instances.",
+				"Born from an Order glitch that briefly merged two overlapping Gate instances.",
 			history:
 				"The Japanese Ascendant Bureau attempted to classify this as a national treasure to prevent export.",
 			curse: "",
@@ -11709,7 +11709,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Born from a Order glitch that briefly merged two overlapping Gate instances.",
+				"Born from an Order glitch that briefly merged two overlapping Gate instances.",
 			history:
 				"The Japanese Ascendant Bureau attempted to classify this as a national treasure to prevent export.",
 			curse: "",
@@ -22424,7 +22424,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Born from a Order glitch that briefly merged two overlapping Gate instances.",
+				"Born from an Order glitch that briefly merged two overlapping Gate instances.",
 			history:
 				"A-Rank appraiser Guild Master Ryker personally verified its authenticity before it entered general circulation.",
 			curse: "",
@@ -25298,7 +25298,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Born from a Order glitch that briefly merged two overlapping Gate instances.",
+				"Born from an Order glitch that briefly merged two overlapping Gate instances.",
 			history:
 				"Originally developed as a countermeasure against Regent-class entities during the Regent Wars.",
 			curse: "",
@@ -27572,7 +27572,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Born from a Order glitch that briefly merged two overlapping Gate instances.",
+				"Born from an Order glitch that briefly merged two overlapping Gate instances.",
 			history:
 				"Originally developed as a countermeasure against Regent-class entities during the Regent Wars.",
 			curse: "",

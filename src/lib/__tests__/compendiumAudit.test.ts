@@ -317,3 +317,134 @@ describe("compendium audit (provider-backed)", () => {
 		).toHaveLength(0);
 	});
 });
+
+// Guards against a silent false-green: if `items`/`equipment` are ever dropped
+// from `boilerplateEnforcedDatasets`, these synthetic pooled/shallow entries
+// stop being flagged and the test fails. (Negative-probe made permanent.)
+describe("de-boilerplate enforcement covers items + equipment", () => {
+	type Entry = Record<string, unknown> & { id: string; name: string };
+	const allGetters = [
+		"getAnomalies",
+		"getArtifacts",
+		"getBackgrounds",
+		"getConditions",
+		"getFeats",
+		"getFightingStyles",
+		"getItems",
+		"getJobs",
+		"getLocations",
+		"getPantheon",
+		"getPaths",
+		"getPowers",
+		"getRegents",
+		"getRelics",
+		"getRunes",
+		"getShadowSoldiers",
+		"getSigils",
+		"getSkills",
+		"getSpells",
+		"getTattoos",
+		"getTechniques",
+		"getVehicles",
+	] as const;
+
+	const makeProvider = (
+		overrides: Partial<
+			Record<(typeof allGetters)[number], () => Promise<Entry[]>>
+		>,
+	) => {
+		const provider: Record<string, (search?: string) => Promise<Entry[]>> = {};
+		for (const key of allGetters) provider[key] = async () => [];
+		for (const [key, fn] of Object.entries(overrides))
+			provider[key] = fn as () => Promise<Entry[]>;
+		return provider as unknown as Parameters<typeof runCompendiumAudit>[0];
+	};
+
+	// item_type "misc" -> items dataset; "weapon" -> equipment dataset.
+	const base = (over: Partial<Entry>): Entry => ({
+		id: `synthetic-${Math.random().toString(36).slice(2)}`,
+		name: `Synthetic ${Math.random().toString(36).slice(2)}`,
+		source_book: "Rift Ascendant Canon",
+		rarity: "uncommon",
+		...over,
+	});
+
+	it("flags pooled narrative under both items and equipment", async () => {
+		const pooledDesc = "Deliberately pooled narrative shared by three entries.";
+		const pooledFlavor = "A deliberately pooled flavor line shared three ways.";
+		const items: Entry[] = [
+			// 3 items-dataset entries sharing a description -> boilerplate on items.
+			...[0, 1, 2].map(() =>
+				base({ item_type: "misc", description: pooledDesc }),
+			),
+			// 3 equipment-dataset entries sharing a flavor -> boilerplate on equipment.
+			...[0, 1, 2].map((i) =>
+				base({
+					item_type: "weapon",
+					description: `Unique weapon description ${i}.`,
+					flavor: pooledFlavor,
+				}),
+			),
+		];
+		const summary = await runCompendiumAudit(
+			makeProvider({ getItems: async () => items }),
+		);
+		const boiler = summary.issues.filter(
+			(x) => x.code === "boilerplate_repetition",
+		);
+		expect(boiler.some((x) => x.dataset === "items")).toBe(true);
+		expect(boiler.some((x) => x.dataset === "equipment")).toBe(true);
+	});
+
+	it("flags a flat +N-only effect under both items and equipment", async () => {
+		const items: Entry[] = [
+			base({
+				item_type: "misc",
+				description: "A unique misc description for the shallow probe.",
+				effects: { passive: ["+2 to a chosen check."] },
+			}),
+			base({
+				item_type: "weapon",
+				description: "A unique weapon description for the shallow probe.",
+				effects: { passive: ["+2 luck."] },
+			}),
+		];
+		const summary = await runCompendiumAudit(
+			makeProvider({ getItems: async () => items }),
+		);
+		const shallow = summary.issues.filter(
+			(x) => x.code === "shallow_magic_effect",
+		);
+		expect(shallow.some((x) => x.dataset === "items")).toBe(true);
+		expect(shallow.some((x) => x.dataset === "equipment")).toBe(true);
+	});
+
+	it("flags pooled narrative under sigils and tattoos", async () => {
+		const pooledHistory = "A deliberately pooled sigil/tattoo history line.";
+		const sigils: Entry[] = [0, 1, 2].map((i) =>
+			base({
+				name: `Synthetic Sigil ${i}`,
+				description: `Unique sigil description ${i}.`,
+				lore: { history: pooledHistory },
+			}),
+		);
+		const tattoos: Entry[] = [0, 1, 2].map((i) =>
+			base({
+				name: `Synthetic Tattoo ${i}`,
+				description: `Unique tattoo description ${i}.`,
+				lore: { history: pooledHistory },
+			}),
+		);
+		const summary = await runCompendiumAudit(
+			makeProvider({
+				getSigils: async () => sigils,
+				getTattoos: async () => tattoos,
+			}),
+		);
+		const boiler = summary.issues.filter(
+			(x) => x.code === "boilerplate_repetition",
+		);
+		expect(boiler.some((x) => x.dataset === "sigils")).toBe(true);
+		expect(boiler.some((x) => x.dataset === "tattoos")).toBe(true);
+	});
+});

@@ -22,18 +22,6 @@ export const baseEquipment: Item[] = [
 				"Provides AC 11 + AGI modifier. Stealth checks made with disadvantage.",
 			],
 		},
-		lore: {
-			current_owner: "",
-			curse: "",
-			history:
-				"Cheap, available, and passable for low-rank gates. Most ascendants upgrade quickly, but some keep a set around.",
-			origin:
-				"Standard-issue field armor distributed by Ascendant Bureaus worldwide after the First Awakening.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "Not glamorous. Still alive.",
-		discovery_lore: "Standard Bureau procurement. Nothing exotic.",
 		tags: ["equipment", "offensive", "ice", "defensive", "debuff"],
 		theme_tags: ["dimensional-bleed", "regent-era"],
 		activation: {
@@ -141,18 +129,6 @@ export const baseEquipment: Item[] = [
 		effects: {
 			passive: ["Provides AC 11 + AGI modifier."],
 		},
-		lore: {
-			current_owner: "",
-			curse: "",
-			history:
-				"A reliable entry-tier armor that new Ascendants save up for before their first real gate.",
-			origin:
-				"Forged by Bureau-contracted Technomancer from ascendant-grade hides sourced inside cleared gates.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "Power lies not in the object, but the will of its master.",
-		discovery_lore: "Available at any licensed Ascendant Bureau outfitter.",
 		tags: ["equipment", "fire", "shadow"],
 		theme_tags: ["ancient-power", "survival", "regent-era"],
 		activation: {
@@ -256,20 +232,6 @@ export const baseEquipment: Item[] = [
 		effects: {
 			passive: ["Provides AC 12 + AGI modifier."],
 		},
-		lore: {
-			current_owner: "",
-			curse: "",
-			history:
-				"Favored by Strikers and Assassins who need protection without sacrificing speed.",
-			origin:
-				"Tough leather reinforced with gate-forged steel rivets, designed for mobile combat in urban gate zones.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor:
-			"Some items tell stories. This one keeps you alive long enough to make one.",
-		discovery_lore:
-			"Standard stock at Ascendant Bureau armories across Neo-Seoul, Tokyo, and Chicago.",
 		tags: ["equipment", "utility", "perception"],
 		theme_tags: ["urban-combat", "black-market"],
 		activation: {
@@ -373,18 +335,6 @@ export const baseEquipment: Item[] = [
 		effects: {
 			passive: ["Provides AC 12 + AGI modifier (max 2)."],
 		},
-		lore: {
-			current_owner: "",
-			curse: "",
-			history: "Crude but effective. The smell never fully goes away.",
-			origin:
-				"Stitched together from the thick hides of gate beasts by ascendants who couldn't afford proper armor.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "Tread carefully. The beast that wore this skin didn't.",
-		discovery_lore:
-			"Crafted by ascendants in the field. Sometimes the gate gives you what you need.",
 		tags: ["equipment", "perception", "healing", "debuff", "single-target"],
 		theme_tags: ["post-awakening", "modern-warfare", "regent-era"],
 		activation: {
@@ -491,20 +441,6 @@ export const baseEquipment: Item[] = [
 				"Provides AC 13 + AGI modifier (max 2). Does not impose stealth disadvantage.",
 			],
 		},
-		lore: {
-			current_owner: "",
-			curse: "",
-			history:
-				"A Bureau favorite for undercover assignments in city gate zones where visible armor draws attention.",
-			origin:
-				"Interlocking rings of mana-tempered steel, designed to be worn discreetly under civilian clothing.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor:
-			"You'd never know they were wearing it. Until they didn't need to hide it anymore.",
-		discovery_lore:
-			"Issued to Bureau plainclothes operatives. Not for public sale.",
 		tags: ["equipment", "defensive", "mobility", "utility"],
 		theme_tags: ["dungeon-core", "shadow-domain", "experimental"],
 		activation: {
@@ -614,19 +550,6 @@ export const baseEquipment: Item[] = [
 				"Provides AC 14 + AGI modifier (max 2). Stealth checks made with disadvantage.",
 			],
 		},
-		lore: {
-			current_owner: "",
-			curse: "",
-			history:
-				"Noisy but reliable. Bureau veterans joke that the clanking keeps anomalies from sneaking up on you.",
-			origin:
-				"Overlapping metal scales mounted on a leather backing. Standard Bureau field-agent deployment armor.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "It rattles. The anomalies still die.",
-		discovery_lore:
-			"Found washed ashore near a coastal Gate, wrapped in fabric that dissolved upon touch.",
 		tags: ["equipment", "buff", "void"],
 		theme_tags: ["guild-ops", "urban-combat", "dungeon-core"],
 		activation: {
@@ -733,19 +656,6 @@ export const baseEquipment: Item[] = [
 		effects: {
 			passive: ["Provides AC 14 + AGI modifier (max 2)."],
 		},
-		lore: {
-			current_owner: "",
-			curse: "",
-			history:
-				"The breastplate became the de facto armor standard for B-rank Ascendant teams after the Second Gate Surge.",
-			origin:
-				"A fitted metal chest plate backed by flexible mana-threaded leather. Preferred by mid-rank field leaders.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "It won't stop an S-rank. Nothing will. But it buys you a second.",
-		discovery_lore:
-			"Sold by a mysterious merchant who appears only during full moons near active Gate sites.",
 		tags: ["equipment", "buff", "lightning"],
 		theme_tags: ["dungeon-core", "rift-energy"],
 		activation: {
@@ -852,19 +762,6 @@ export const baseEquipment: Item[] = [
 				"Provides AC 15 + AGI modifier (max 2). Stealth checks made with disadvantage.",
 			],
 		},
-		lore: {
-			current_owner: "",
-			curse: "",
-			history:
-				"Loud and heavy, but the protection is undeniable. Not for scouts.",
-			origin:
-				"Shaped metal plates covering most of the body. Issued to heavy-strike teams in high-density gate zones.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "Tread carefully. You can't exactly sprint in this.",
-		discovery_lore:
-			"Purchased from a black-market auction in the underground district of Neo-Seoul for an undisclosed sum.",
 		tags: ["equipment", "buff", "stealth"],
 		theme_tags: ["survival", "rift-energy"],
 		activation: {
@@ -973,19 +870,6 @@ export const baseEquipment: Item[] = [
 		effects: {
 			passive: ["Provides AC 14. Stealth checks made with disadvantage."],
 		},
-		lore: {
-			current_owner: "",
-			curse: "",
-			history:
-				"Ring mail fell out of favor after gate-forged chain mail became more accessible, but budget ascendants still use it.",
-			origin:
-				"Leather armor with heavy rings sewn into it. A budget heavy option for ascendants who can't yet afford proper plate.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "It jingles. The anomalies know you're coming. So what.",
-		discovery_lore:
-			"Gifted by the System itself as a reward for completing a hidden quest chain.",
 		tags: ["equipment", "control", "area", "radiant"],
 		theme_tags: ["experimental", "dungeon-core", "urban-combat"],
 		activation: {
@@ -1090,19 +974,6 @@ export const baseEquipment: Item[] = [
 		effects: {
 			passive: ["Provides AC 16. Stealth checks made with disadvantage."],
 		},
-		lore: {
-			current_owner: "",
-			curse: "",
-			history:
-				"Distributed to A-rank and above field teams during major gate incursions. Each suit is registered to a ascendant.",
-			origin:
-				"Full suit of interlocking mana-tempered steel rings. Standard Ascendant Bureau heavy-strike field issue.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "Power lies not in the object, but the will of its master.",
-		discovery_lore:
-			"Pulled out of a B-rank gate's last-room loot pile by a recovery team.",
 		tags: ["equipment", "defensive", "damage", "necrotic"],
 		theme_tags: ["dimensional-bleed", "shadow-domain", "regent-era"],
 		activation: {
@@ -1209,19 +1080,6 @@ export const baseEquipment: Item[] = [
 		effects: {
 			passive: ["Provides AC 17. Stealth checks made with disadvantage."],
 		},
-		lore: {
-			current_owner: "",
-			curse: "",
-			history:
-				"The preferred armor of Destroyer-class ascendants who don't mind the weight and need the protection.",
-			origin:
-				"Vertical strips of gate-forged metal riveted to reinforced leather. Heavy-duty gate armor for front-line anchors.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "A masterpiece of defensive intent.",
-		discovery_lore:
-			"Emerged from a Gate Boss's dissolution cloud, hovering where the creature's heart had been.",
 		tags: ["equipment", "single-target", "offensive", "fire"],
 		theme_tags: ["guild-ops", "gate-zone"],
 		activation: {
@@ -1329,19 +1187,6 @@ export const baseEquipment: Item[] = [
 		effects: {
 			passive: ["Provides AC 18. Stealth checks made with disadvantage."],
 		},
-		lore: {
-			current_owner: "",
-			curse: "",
-			history:
-				"Rare outside of national-level ascendant teams. Each set is individually fitted and blessed by Bureau Technomancer.",
-			origin:
-				"Full articulated plate from head to toe. The pinnacle of pre-relic Ascendant Bureau deployment gear.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "You don't wear plate armor. Plate armor wears you.",
-		discovery_lore:
-			"Reported on a salvage manifest filed two weeks after the clear that produced it.",
 		tags: ["equipment", "damage", "control"],
 		theme_tags: ["mana-overflow", "system-glitch", "shadow-domain"],
 		activation: {
@@ -1447,19 +1292,6 @@ export const baseEquipment: Item[] = [
 		effects: {
 			passive: ["+2 AC when wielded."],
 		},
-		lore: {
-			current_owner: "",
-			curse: "",
-			history:
-				"Shields went back into fashion after ascendants discovered that gate anomalies don't care about coolness.",
-			origin:
-				"A wooden or mana-reinforced metal shield, strapped to the forearm. Simple and highly effective.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "Tread carefully; the enemies hit harder than they look.",
-		discovery_lore:
-			"Walked out of the gate in the bottom of a Ascendant's pack, mostly forgotten.",
 		tags: ["equipment", "area", "utility", "stealth", "single-target"],
 		theme_tags: ["urban-combat", "elite-tier"],
 		activation: {
@@ -1567,18 +1399,6 @@ export const baseEquipment: Item[] = [
 		effects: {
 			passive: ["Simple melee weapon. Light property."],
 		},
-		lore: {
-			current_owner: "",
-			curse: "",
-			history:
-				"Every Ascendant Bureau has a rack of these in the training yard. Nobody brags about using one. Nobody stops using one either.",
-			origin: "Heavy stick. Even Awakened ascendants sometimes start simple.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "It is what it is.",
-		discovery_lore:
-			"Recovered from a time-locked chest that required three different elemental keys to open.",
 		tags: ["equipment", "shadow", "void", "debuff", "fire"],
 		theme_tags: ["ascendant-bureau", "ancient-power", "mana-overflow"],
 		activation: {
@@ -1692,20 +1512,6 @@ export const baseEquipment: Item[] = [
 		effects: {
 			passive: ["Simple melee weapon. Finesse, Light, Thrown (20/60)."],
 		},
-		lore: {
-			current_owner: "",
-			curse: "",
-			history:
-				"Every ascendant carries one even after they've unlocked abilities. It fits anywhere and never runs out of uses.",
-			origin:
-				"A small blade favored by Assassins for its versatility and concealability.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor:
-			"Tread carefully; the gap between alive and dead is 1d4 piercing damage.",
-		discovery_lore:
-			"Walked out of the gate in the bottom of a Ascendant's pack, mostly forgotten.",
 		tags: ["equipment", "single-target", "defensive"],
 		theme_tags: ["dimensional-bleed", "experimental", "gate-zone"],
 		activation: {
@@ -1811,17 +1617,6 @@ export const baseEquipment: Item[] = [
 			weapon: { damage: "1d8", damage_type: "bludgeoning", finesse: false },
 		},
 		effects: {},
-		lore: {
-			current_owner: "",
-			curse: "",
-			history: "Its true history remains a protected Guild secret.",
-			origin: "Recovered from a collapsed Guild Vault.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "Some items tell stories. This one ends them.",
-		discovery_lore:
-			"Logged at a Bureau weigh-station after a routine post-clear inventory.",
 		tags: ["equipment", "psychic", "radiant", "mobility"],
 		theme_tags: ["regent-era", "classified"],
 		activation: {
@@ -1932,17 +1727,6 @@ export const baseEquipment: Item[] = [
 			},
 		},
 		effects: {},
-		lore: {
-			current_owner: "",
-			curse: "",
-			history: "Its true history remains a protected Guild secret.",
-			origin: "Found sealed in a hidden cache inside an S-Rank Rift.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "Tread carefully; magic like this has a cost.",
-		discovery_lore:
-			"Logged at a Bureau weigh-station after a routine post-clear inventory.",
 		tags: ["equipment", "mobility", "support", "radiant"],
 		theme_tags: ["ascendant-bureau", "elite-tier", "gate-zone"],
 		activation: {
@@ -2054,17 +1838,6 @@ export const baseEquipment: Item[] = [
 			},
 		},
 		effects: {},
-		lore: {
-			current_owner: "",
-			curse: "",
-			history: "Its true history remains a protected Guild secret.",
-			origin: "Forged by the Bureau's most elite Technomancer.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "Some items tell stories. This one ends them.",
-		discovery_lore:
-			"Reported on a salvage manifest filed two weeks after the clear that produced it.",
 		tags: ["equipment", "debuff", "buff", "lightning"],
 		theme_tags: ["modern-warfare", "system-glitch", "gate-zone"],
 		activation: {
@@ -2176,17 +1949,6 @@ export const baseEquipment: Item[] = [
 			},
 		},
 		effects: {},
-		lore: {
-			current_owner: "",
-			curse: "",
-			history: "Its true history remains a protected Guild secret.",
-			origin: "Found sealed in a hidden cache inside an S-Rank Rift.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "Some items tell stories. This one ends them.",
-		discovery_lore:
-			"Purchased from a black-market auction in the underground district of Neo-Seoul for an undisclosed sum.",
 		tags: ["equipment", "control", "void", "damage", "psychic"],
 		theme_tags: ["forbidden", "survival", "rift-energy"],
 		activation: {
@@ -2292,17 +2054,6 @@ export const baseEquipment: Item[] = [
 			weapon: { damage: "1d6", damage_type: "bludgeoning" },
 		},
 		effects: {},
-		lore: {
-			current_owner: "",
-			curse: "",
-			history: "Its true history remains a protected Guild secret.",
-			origin: "Smuggled out of the Shadow Legion's armory.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "Tread carefully; magic like this has a cost.",
-		discovery_lore:
-			"Purchased from a black-market auction in the underground district of Neo-Seoul for an undisclosed sum.",
 		tags: ["equipment", "utility", "support", "stealth"],
 		theme_tags: ["guild-ops", "urban-combat"],
 		activation: {
@@ -2408,17 +2159,6 @@ export const baseEquipment: Item[] = [
 			weapon: { damage: "1d6", damage_type: "bludgeoning", finesse: false },
 		},
 		effects: {},
-		lore: {
-			current_owner: "",
-			curse: "",
-			history: "Its true history remains a protected Guild secret.",
-			origin: "Recovered from a collapsed Guild Vault.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "Power lies not in the object, but the will of its master.",
-		discovery_lore:
-			"Discovered by an E-Rank Ascendant who stumbled into an unmarked side passage during a routine dungeon clear.",
 		tags: ["equipment", "sustained", "fire", "area", "buff"],
 		theme_tags: ["shadow-domain", "rift-energy"],
 		activation: {
@@ -2523,17 +2263,6 @@ export const baseEquipment: Item[] = [
 			weapon: { damage: "1d4", damage_type: "slashing", finesse: false },
 		},
 		effects: {},
-		lore: {
-			current_owner: "",
-			curse: "",
-			history: "Its true history remains a protected Guild secret.",
-			origin: "Recovered from a collapsed Guild Vault.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "Reforged from the ashes of a fallen Regent.",
-		discovery_lore:
-			"Emerged from a Gate Boss's dissolution cloud, hovering where the creature's heart had been.",
 		tags: ["equipment", "necrotic", "perception", "stealth"],
 		theme_tags: ["rift-energy", "gate-zone", "post-awakening"],
 		activation: {
@@ -2645,17 +2374,6 @@ export const baseEquipment: Item[] = [
 			},
 		},
 		effects: {},
-		lore: {
-			current_owner: "",
-			curse: "",
-			history: "Its true history remains a protected Guild secret.",
-			origin: "Found sealed in a hidden cache inside an S-Rank Rift.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "Power lies not in the object, but the will of its master.",
-		discovery_lore:
-			"Discovered by an E-Rank Ascendant who stumbled into an unmarked side passage during a routine dungeon clear.",
 		tags: ["equipment", "shadow", "necrotic", "fire"],
 		theme_tags: ["black-market", "classified", "ancient-power"],
 		activation: {
@@ -2767,17 +2485,6 @@ export const baseEquipment: Item[] = [
 			},
 		},
 		effects: {},
-		lore: {
-			current_owner: "",
-			curse: "",
-			history: "Its true history remains a protected Guild secret.",
-			origin: "Smuggled out of the Shadow Legion's armory.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "Reforged from the ashes of a fallen Regent.",
-		discovery_lore:
-			"Logged by the Bureau's issue-desk after a scheduled handover.",
 		tags: ["equipment", "stealth", "radiant"],
 		theme_tags: ["forbidden", "modern-warfare", "urban-combat"],
 		activation: {
@@ -2890,17 +2597,6 @@ export const baseEquipment: Item[] = [
 			},
 		},
 		effects: {},
-		lore: {
-			current_owner: "",
-			curse: "",
-			history: "Its true history remains a protected Guild secret.",
-			origin: "An ancient artifact of the First Awakenings.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "Some items tell stories. This one ends them.",
-		discovery_lore:
-			"Found washed ashore near a coastal Gate, wrapped in fabric that dissolved upon touch.",
 		tags: ["equipment", "control", "single-target", "utility", "defensive"],
 		theme_tags: ["elite-tier", "dimensional-bleed", "post-awakening"],
 		activation: {
@@ -3011,17 +2707,6 @@ export const baseEquipment: Item[] = [
 			},
 		},
 		effects: {},
-		lore: {
-			current_owner: "",
-			curse: "",
-			history: "Its true history remains a protected Guild secret.",
-			origin: "An ancient artifact of the First Awakenings.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "Tread carefully; magic like this has a cost.",
-		discovery_lore:
-			"Logged by the Bureau's issue-desk after a scheduled handover.",
 		tags: ["equipment", "sustained", "healing", "defensive", "mobility"],
 		theme_tags: ["system-glitch", "classified"],
 		activation: {
@@ -3132,17 +2817,6 @@ export const baseEquipment: Item[] = [
 			},
 		},
 		effects: {},
-		lore: {
-			current_owner: "",
-			curse: "",
-			history: "Its true history remains a protected Guild secret.",
-			origin: "Found sealed in a hidden cache inside an S-Rank Rift.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "Tread carefully; magic like this has a cost.",
-		discovery_lore:
-			"Sold by a mysterious merchant who appears only during full moons near active Gate sites.",
 		tags: ["equipment", "shadow", "fire", "buff", "ice"],
 		theme_tags: ["shadow-domain", "rift-energy", "forbidden"],
 		activation: {
@@ -3248,17 +2922,6 @@ export const baseEquipment: Item[] = [
 			weapon: { damage: "1d8", damage_type: "slashing", finesse: false },
 		},
 		effects: {},
-		lore: {
-			current_owner: "",
-			curse: "",
-			history: "Its true history remains a protected Guild secret.",
-			origin: "Recovered from a collapsed Guild Vault.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "Tread carefully; magic like this has a cost.",
-		discovery_lore:
-			"Walked out of the gate in the bottom of a Ascendant's pack, mostly forgotten.",
 		tags: ["equipment", "lightning", "support", "void", "defensive"],
 		theme_tags: ["modern-warfare", "shadow-domain", "ancient-power"],
 		activation: {
@@ -3363,17 +3026,6 @@ export const baseEquipment: Item[] = [
 			weapon: { damage: "1d8", damage_type: "bludgeoning" },
 		},
 		effects: {},
-		lore: {
-			current_owner: "",
-			curse: "",
-			history: "Its true history remains a protected Guild secret.",
-			origin: "Forged by the Bureau's most elite Technomancer.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "You don't carry it to be seen. You carry it to come back.",
-		discovery_lore:
-			"Walked out of the gate in the bottom of a Ascendant's pack, mostly forgotten.",
 		tags: ["equipment", "damage", "sustained", "single-target", "buff"],
 		theme_tags: ["survival", "ancient-power"],
 		activation: {
@@ -3478,17 +3130,6 @@ export const baseEquipment: Item[] = [
 			weapon: { damage: "1d10", damage_type: "slashing", finesse: false },
 		},
 		effects: {},
-		lore: {
-			current_owner: "",
-			curse: "",
-			history: "Its true history remains a protected Guild secret.",
-			origin: "Found sealed in a hidden cache inside an S-Rank Rift.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "Power lies not in the object, but the will of its master.",
-		discovery_lore:
-			"Traded by a nomadic Awakened who claimed to have no memory of acquiring it.",
 		tags: ["equipment", "necrotic", "burst", "sustained", "shadow"],
 		theme_tags: ["classified", "urban-combat", "shadow-domain"],
 		activation: {
@@ -3595,17 +3236,6 @@ export const baseEquipment: Item[] = [
 			weapon: { damage: "1d12", damage_type: "slashing", finesse: false },
 		},
 		effects: {},
-		lore: {
-			current_owner: "",
-			curse: "",
-			history: "Its true history remains a protected Guild secret.",
-			origin: "Found sealed in a hidden cache inside an S-Rank Rift.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "You don't carry it to be seen. You carry it to come back.",
-		discovery_lore:
-			"Recorded in the Ascendant's inventory during their last resupply.",
 		tags: ["equipment", "mobility", "control", "fire", "healing"],
 		theme_tags: ["ancient-power", "rift-energy"],
 		activation: {
@@ -3712,17 +3342,6 @@ export const baseEquipment: Item[] = [
 			weapon: { damage: "2d6", damage_type: "slashing", finesse: false },
 		},
 		effects: {},
-		lore: {
-			current_owner: "",
-			curse: "",
-			history: "Its true history remains a protected Guild secret.",
-			origin: "An ancient artifact of the First Awakenings.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "Not pretty. Not elegant. Effective.",
-		discovery_lore:
-			"Discovered by an E-Rank Ascendant who stumbled into an unmarked side passage during a routine dungeon clear.",
 		tags: ["equipment", "burst", "support", "single-target", "radiant"],
 		theme_tags: ["survival", "elite-tier"],
 		activation: {
@@ -3828,17 +3447,6 @@ export const baseEquipment: Item[] = [
 			weapon: { damage: "1d10", damage_type: "slashing", finesse: false },
 		},
 		effects: {},
-		lore: {
-			current_owner: "",
-			curse: "",
-			history: "Its true history remains a protected Guild secret.",
-			origin: "Smuggled out of the Shadow Legion's armory.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "Built to hit. Built to keep working.",
-		discovery_lore:
-			"Sold by a mysterious merchant who appears only during full moons near active Gate sites.",
 		tags: ["equipment", "burst", "ice", "shadow", "mobility"],
 		theme_tags: ["ancient-power", "post-awakening"],
 		activation: {
@@ -3944,17 +3552,6 @@ export const baseEquipment: Item[] = [
 			weapon: { damage: "1d12", damage_type: "piercing", finesse: false },
 		},
 		effects: {},
-		lore: {
-			current_owner: "",
-			curse: "",
-			history: "Its true history remains a protected Guild secret.",
-			origin: "Found sealed in a hidden cache inside an S-Rank Rift.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "Reforged from the ashes of a fallen Regent.",
-		discovery_lore:
-			"Found washed ashore near a coastal Gate, wrapped in fabric that dissolved upon touch.",
 		tags: ["equipment", "area", "burst", "perception", "lightning"],
 		theme_tags: ["guild-ops", "ancient-power"],
 		activation: {
@@ -4060,17 +3657,6 @@ export const baseEquipment: Item[] = [
 			weapon: { damage: "1d8", damage_type: "slashing", finesse: false },
 		},
 		effects: {},
-		lore: {
-			current_owner: "",
-			curse: "",
-			history: "Its true history remains a protected Guild secret.",
-			origin: "Recovered from a collapsed Guild Vault.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "Reforged from the ashes of a fallen Regent.",
-		discovery_lore:
-			"Traded by a nomadic Awakened who claimed to have no memory of acquiring it.",
 		tags: ["equipment", "radiant", "ice", "shadow", "fire"],
 		theme_tags: ["urban-combat", "system-glitch"],
 		activation: {
@@ -4177,17 +3763,6 @@ export const baseEquipment: Item[] = [
 			weapon: { damage: "2d6", damage_type: "bludgeoning", finesse: false },
 		},
 		effects: {},
-		lore: {
-			current_owner: "",
-			curse: "",
-			history: "Its true history remains a protected Guild secret.",
-			origin: "An ancient artifact of the First Awakenings.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "Tread carefully; magic like this has a cost.",
-		discovery_lore:
-			"Purchased from a black-market auction in the underground district of Neo-Seoul for an undisclosed sum.",
 		tags: ["equipment", "single-target", "damage", "radiant", "sustained"],
 		theme_tags: ["post-awakening", "black-market"],
 		activation: {
@@ -4291,18 +3866,6 @@ export const baseEquipment: Item[] = [
 			weapon: { damage: "1d8", damage_type: "piercing" },
 		},
 		effects: {},
-		lore: {
-			current_owner: "",
-			curse:
-				"Prolonged use causes the wielder's shadow to move independently, whispering in dead languages.",
-			history: "Its true history remains a protected Guild secret.",
-			origin: "An ancient artifact of the First Awakenings.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "Reforged from the ashes of a fallen Regent.",
-		discovery_lore:
-			"Traded by a nomadic Awakened who claimed to have no memory of acquiring it.",
 		tags: ["equipment", "debuff", "control"],
 		theme_tags: ["gate-zone", "modern-warfare", "survival"],
 		activation: {
@@ -4408,17 +3971,6 @@ export const baseEquipment: Item[] = [
 			weapon: { damage: "1d10", damage_type: "piercing", finesse: false },
 		},
 		effects: {},
-		lore: {
-			current_owner: "",
-			curse: "",
-			history: "Its true history remains a protected Guild secret.",
-			origin: "Smuggled out of the Shadow Legion's armory.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "Power lies not in the object, but the will of its master.",
-		discovery_lore:
-			"Purchased from a black-market auction in the underground district of Neo-Seoul for an undisclosed sum.",
 		tags: ["equipment", "burst", "support"],
 		theme_tags: ["survival", "ancient-power"],
 		activation: {
@@ -4525,17 +4077,6 @@ export const baseEquipment: Item[] = [
 			weapon: { damage: "1d8", damage_type: "piercing", finesse: true },
 		},
 		effects: {},
-		lore: {
-			current_owner: "",
-			curse: "",
-			history: "Its true history remains a protected Guild secret.",
-			origin: "Recovered from a collapsed Guild Vault.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "Some items tell stories. This one ends them.",
-		discovery_lore:
-			"Identified during a mid-tier auction after the Bureau cleared its provenance.",
 		tags: ["equipment", "ice", "buff", "offensive", "control"],
 		theme_tags: ["urban-combat", "dimensional-bleed", "rift-energy"],
 		activation: {
@@ -4641,17 +4182,6 @@ export const baseEquipment: Item[] = [
 			weapon: { damage: "1d6", damage_type: "slashing", finesse: true },
 		},
 		effects: {},
-		lore: {
-			current_owner: "",
-			curse: "",
-			history: "Its true history remains a protected Guild secret.",
-			origin: "Recovered from a collapsed Guild Vault.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "Reforged from the ashes of a fallen Regent.",
-		discovery_lore:
-			"Recorded in the Ascendant's inventory during their last resupply.",
 		tags: ["equipment", "burst", "area", "damage", "offensive"],
 		theme_tags: ["experimental", "post-awakening", "guild-ops"],
 		activation: {
@@ -4757,17 +4287,6 @@ export const baseEquipment: Item[] = [
 			weapon: { damage: "1d6", damage_type: "piercing", finesse: true },
 		},
 		effects: {},
-		lore: {
-			current_owner: "",
-			curse: "",
-			history: "Its true history remains a protected Guild secret.",
-			origin: "Found sealed in a hidden cache inside an S-Rank Rift.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "Some items tell stories. This one ends them.",
-		discovery_lore:
-			"Reported on a salvage manifest filed two weeks after the clear that produced it.",
 		tags: ["equipment", "buff", "void"],
 		theme_tags: ["urban-combat", "classified", "regent-era"],
 		activation: {
@@ -4879,17 +4398,6 @@ export const baseEquipment: Item[] = [
 			},
 		},
 		effects: {},
-		lore: {
-			current_owner: "",
-			curse: "",
-			history: "Its true history remains a protected Guild secret.",
-			origin: "Recovered from a collapsed Guild Vault.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "Some items tell stories. This one ends them.",
-		discovery_lore:
-			"Purchased from a black-market auction in the underground district of Neo-Seoul for an undisclosed sum.",
 		tags: ["equipment", "burst", "lightning", "single-target"],
 		theme_tags: ["ancient-power", "black-market", "system-glitch"],
 		activation: {
@@ -4995,17 +4503,6 @@ export const baseEquipment: Item[] = [
 			weapon: { damage: "1d8", damage_type: "piercing" },
 		},
 		effects: {},
-		lore: {
-			current_owner: "",
-			curse: "",
-			history: "Its true history remains a protected Guild secret.",
-			origin: "Found sealed in a hidden cache inside an S-Rank Rift.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "Tread carefully; magic like this has a cost.",
-		discovery_lore:
-			"Traded by a nomadic Awakened who claimed to have no memory of acquiring it.",
 		tags: ["equipment", "necrotic", "offensive", "perception"],
 		theme_tags: ["rift-energy", "elite-tier"],
 		activation: {
@@ -5111,17 +4608,6 @@ export const baseEquipment: Item[] = [
 			weapon: { damage: "1d8", damage_type: "bludgeoning", finesse: false },
 		},
 		effects: {},
-		lore: {
-			current_owner: "",
-			curse: "",
-			history: "Its true history remains a protected Guild secret.",
-			origin: "Found sealed in a hidden cache inside an S-Rank Rift.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "Not pretty. Not elegant. Effective.",
-		discovery_lore:
-			"Sold by a mysterious merchant who appears only during full moons near active Gate sites.",
 		tags: ["equipment", "damage", "defensive", "area"],
 		theme_tags: ["survival", "elite-tier", "ancient-power"],
 		activation: {
@@ -5227,18 +4713,6 @@ export const baseEquipment: Item[] = [
 			weapon: { damage: "1d4", damage_type: "slashing", finesse: true },
 		},
 		effects: {},
-		lore: {
-			current_owner: "",
-			curse:
-				"The user's blood turns slightly luminescent, making stealth in darkness progressively more difficult.",
-			history: "Its true history remains a protected Guild secret.",
-			origin: "Smuggled out of the Shadow Legion's armory.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "Built to hit. Built to keep working.",
-		discovery_lore:
-			"Surfaced when a Guild quartermaster did a five-year locker audit.",
 		tags: ["equipment", "defensive", "damage"],
 		theme_tags: ["post-awakening", "black-market"],
 		activation: {
@@ -5350,18 +4824,6 @@ export const baseEquipment: Item[] = [
 			},
 		},
 		effects: {},
-		lore: {
-			current_owner: "",
-			curse:
-				"The user becomes unable to dream, replaced by visions of the void between Gates.",
-			history: "Its true history remains a protected Guild secret.",
-			origin: "An ancient artifact of the First Awakenings.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "It's killed before. It will again.",
-		discovery_lore:
-			"Found washed ashore near a coastal Gate, wrapped in fabric that dissolved upon touch.",
 		tags: ["equipment", "sustained", "mobility", "fire", "buff"],
 		theme_tags: ["rift-energy", "system-glitch"],
 		activation: {
@@ -5473,17 +4935,6 @@ export const baseEquipment: Item[] = [
 			},
 		},
 		effects: {},
-		lore: {
-			current_owner: "",
-			curse: "",
-			history: "Its true history remains a protected Guild secret.",
-			origin: "Found sealed in a hidden cache inside an S-Rank Rift.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "Power lies not in the object, but the will of its master.",
-		discovery_lore:
-			"Emerged from a Gate Boss's dissolution cloud, hovering where the creature's heart had been.",
 		tags: ["equipment", "offensive", "buff"],
 		theme_tags: ["forbidden", "system-glitch"],
 		activation: {
@@ -5594,17 +5045,6 @@ export const baseEquipment: Item[] = [
 			},
 		},
 		effects: {},
-		lore: {
-			current_owner: "",
-			curse: "",
-			history: "Its true history remains a protected Guild secret.",
-			origin: "An ancient artifact of the First Awakenings.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "Reforged from the ashes of a fallen Regent.",
-		discovery_lore:
-			"Emerged from a Gate Boss's dissolution cloud, hovering where the creature's heart had been.",
 		tags: ["equipment", "sustained", "stealth"],
 		theme_tags: ["ancient-power", "survival", "shadow-domain"],
 		activation: {
@@ -5715,17 +5155,6 @@ export const baseEquipment: Item[] = [
 			},
 		},
 		effects: {},
-		lore: {
-			current_owner: "",
-			curse: "",
-			history: "Its true history remains a protected Guild secret.",
-			origin: "An ancient artifact of the First Awakenings.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "Some items tell stories. This one ends them.",
-		discovery_lore:
-			"Pulled out of a B-rank gate's last-room loot pile by a recovery team.",
 		tags: ["equipment", "control", "single-target", "healing", "burst"],
 		theme_tags: ["guild-ops", "classified"],
 		activation: {
@@ -5825,18 +5254,6 @@ export const baseEquipment: Item[] = [
 		sigil_slots_base: 0,
 		properties: {},
 		effects: {},
-		lore: {
-			current_owner: "",
-			curse:
-				"Corrupts nearby healing magic by 10%, causing heals to occasionally deal damage instead.",
-			history: "Its true history remains a protected Guild secret.",
-			origin: "Forged by the Bureau's most elite Technomancer.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "Power lies not in the object, but the will of its master.",
-		discovery_lore:
-			"Gifted by the System itself as a reward for completing a hidden quest chain.",
 		tags: ["equipment", "control", "radiant"],
 		theme_tags: ["survival", "black-market", "rift-energy"],
 		activation: {
@@ -5933,17 +5350,6 @@ export const baseEquipment: Item[] = [
 		sigil_slots_base: 0,
 		properties: {},
 		effects: {},
-		lore: {
-			current_owner: "",
-			curse: "",
-			history: "Its true history remains a protected Guild secret.",
-			origin: "Forged by the Bureau's most elite Technomancer.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "Reforged from the ashes of a fallen Regent.",
-		discovery_lore:
-			"Reported on a salvage manifest filed two weeks after the clear that produced it.",
 		tags: ["equipment", "burst", "fire"],
 		theme_tags: ["guild-ops", "experimental", "ascendant-bureau"],
 		activation: {
@@ -6042,17 +5448,6 @@ export const baseEquipment: Item[] = [
 		sigil_slots_base: 0,
 		properties: {},
 		effects: {},
-		lore: {
-			current_owner: "",
-			curse: "",
-			history: "Its true history remains a protected Guild secret.",
-			origin: "Found sealed in a hidden cache inside an S-Rank Rift.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "Tread carefully; magic like this has a cost.",
-		discovery_lore:
-			"Discovered by an E-Rank Ascendant who stumbled into an unmarked side passage during a routine dungeon clear.",
 		tags: ["equipment", "radiant", "lightning", "healing"],
 		theme_tags: ["ascendant-bureau", "modern-warfare"],
 		activation: {
@@ -6152,17 +5547,6 @@ export const baseEquipment: Item[] = [
 		sigil_slots_base: 0,
 		properties: {},
 		effects: {},
-		lore: {
-			current_owner: "",
-			curse: "",
-			history: "Its true history remains a protected Guild secret.",
-			origin: "An ancient artifact of the First Awakenings.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "Some items tell stories. This one ends them.",
-		discovery_lore:
-			"Discovered by an E-Rank Ascendant who stumbled into an unmarked side passage during a routine dungeon clear.",
 		tags: ["equipment", "perception", "healing"],
 		theme_tags: ["elite-tier", "survival", "gate-zone"],
 		activation: {
@@ -6260,17 +5644,6 @@ export const baseEquipment: Item[] = [
 		sigil_slots_base: 0,
 		properties: {},
 		effects: {},
-		lore: {
-			current_owner: "",
-			curse: "",
-			history: "Its true history remains a protected Guild secret.",
-			origin: "Smuggled out of the Shadow Legion's armory.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "Tread carefully; magic like this has a cost.",
-		discovery_lore:
-			"Transferred to the Ascendant's kit by routine Bureau allotment.",
 		tags: ["equipment", "buff", "sustained"],
 		theme_tags: ["dimensional-bleed", "urban-combat"],
 		activation: {
@@ -6369,17 +5742,6 @@ export const baseEquipment: Item[] = [
 		sigil_slots_base: 0,
 		properties: {},
 		effects: {},
-		lore: {
-			current_owner: "",
-			curse: "",
-			history: "Its true history remains a protected Guild secret.",
-			origin: "Found sealed in a hidden cache inside an S-Rank Rift.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "Tread carefully; magic like this has a cost.",
-		discovery_lore:
-			"Recovered from a time-locked chest that required three different elemental keys to open.",
 		tags: ["equipment", "support", "control", "necrotic", "stealth"],
 		theme_tags: ["classified", "regent-era", "shadow-domain"],
 		activation: {
@@ -6477,17 +5839,6 @@ export const baseEquipment: Item[] = [
 		sigil_slots_base: 0,
 		properties: {},
 		effects: {},
-		lore: {
-			current_owner: "",
-			curse: "",
-			history: "Its true history remains a protected Guild secret.",
-			origin: "Found sealed in a hidden cache inside an S-Rank Rift.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "Reforged from the ashes of a fallen Regent.",
-		discovery_lore:
-			"Found washed ashore near a coastal Gate, wrapped in fabric that dissolved upon touch.",
 		tags: ["equipment", "sustained", "damage"],
 		theme_tags: ["ancient-power", "post-awakening", "dungeon-core"],
 		activation: {
@@ -6585,17 +5936,6 @@ export const baseEquipment: Item[] = [
 		sigil_slots_base: 0,
 		properties: {},
 		effects: {},
-		lore: {
-			current_owner: "",
-			curse: "",
-			history: "Its true history remains a protected Guild secret.",
-			origin: "Found sealed in a hidden cache inside an S-Rank Rift.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "Standard kit for those who plan to come back.",
-		discovery_lore:
-			"Recovered from a time-locked chest that required three different elemental keys to open.",
 		tags: ["equipment", "stealth", "ice"],
 		theme_tags: ["gate-zone", "survival", "dungeon-core"],
 		activation: {
@@ -6693,17 +6033,6 @@ export const baseEquipment: Item[] = [
 		sigil_slots_base: 0,
 		properties: {},
 		effects: {},
-		lore: {
-			current_owner: "",
-			curse: "",
-			history: "Its true history remains a protected Guild secret.",
-			origin: "An ancient artifact of the First Awakenings.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "Tread carefully; magic like this has a cost.",
-		discovery_lore:
-			"Purchased from a black-market auction in the underground district of Neo-Seoul for an undisclosed sum.",
 		tags: ["equipment", "lightning", "debuff"],
 		theme_tags: ["post-awakening", "dimensional-bleed", "forbidden"],
 		activation: {
@@ -6801,17 +6130,6 @@ export const baseEquipment: Item[] = [
 		sigil_slots_base: 0,
 		properties: {},
 		effects: {},
-		lore: {
-			current_owner: "",
-			curse: "",
-			history: "Its true history remains a protected Guild secret.",
-			origin: "An ancient artifact of the First Awakenings.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "Some items tell stories. This one ends them.",
-		discovery_lore:
-			"Reported on a salvage manifest filed two weeks after the clear that produced it.",
 		tags: ["equipment", "psychic", "void", "control", "mobility"],
 		theme_tags: ["ancient-power", "mana-overflow"],
 		activation: {
@@ -6908,17 +6226,6 @@ export const baseEquipment: Item[] = [
 		sigil_slots_base: 0,
 		properties: {},
 		effects: {},
-		lore: {
-			current_owner: "",
-			curse: "",
-			history: "Its true history remains a protected Guild secret.",
-			origin: "Found sealed in a hidden cache inside an S-Rank Rift.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "Power lies not in the object, but the will of its master.",
-		discovery_lore:
-			"Emerged from a Gate Boss's dissolution cloud, hovering where the creature's heart had been.",
 		tags: ["equipment", "lightning", "support"],
 		theme_tags: ["classified", "guild-ops", "regent-era"],
 		activation: {
@@ -7017,18 +6324,6 @@ export const baseEquipment: Item[] = [
 		sigil_slots_base: 0,
 		properties: {},
 		effects: {},
-		lore: {
-			current_owner: "",
-			curse:
-				"Leaves a faint mark on the soul visible to Regents and entities of comparable power.",
-			history: "Its true history remains a protected Guild secret.",
-			origin: "An ancient artifact of the First Awakenings.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "Bureau-issue. Inventoried. Forgotten.",
-		discovery_lore:
-			"Recovered from a time-locked chest that required three different elemental keys to open.",
 		tags: ["equipment", "healing", "defensive"],
 		theme_tags: ["gate-zone", "dimensional-bleed", "urban-combat"],
 		activation: {
@@ -7126,17 +6421,6 @@ export const baseEquipment: Item[] = [
 		sigil_slots_base: 0,
 		properties: {},
 		effects: {},
-		lore: {
-			current_owner: "",
-			curse: "",
-			history: "Its true history remains a protected Guild secret.",
-			origin: "An ancient artifact of the First Awakenings.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "Some items tell stories. This one ends them.",
-		discovery_lore:
-			"Gifted by the System itself as a reward for completing a hidden quest chain.",
 		tags: ["equipment", "support", "stealth", "single-target"],
 		theme_tags: ["black-market", "regent-era"],
 		activation: {
@@ -7234,17 +6518,6 @@ export const baseEquipment: Item[] = [
 		sigil_slots_base: 0,
 		properties: {},
 		effects: {},
-		lore: {
-			current_owner: "",
-			curse: "",
-			history: "Its true history remains a protected Guild secret.",
-			origin: "Recovered from a collapsed Guild Vault.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "Power lies not in the object, but the will of its master.",
-		discovery_lore:
-			"Discovered by an E-Rank Ascendant who stumbled into an unmarked side passage during a routine dungeon clear.",
 		tags: ["equipment", "control", "fire"],
 		theme_tags: ["dungeon-core", "ancient-power", "system-glitch"],
 		activation: {
@@ -7345,17 +6618,6 @@ export const baseEquipment: Item[] = [
 		effects: {
 			passive: ["+2 to Investigation", "+1 to History"],
 		},
-		lore: {
-			current_owner: "",
-			curse: "",
-			history: "Its true history remains a protected Guild secret.",
-			origin: "An ancient artifact of the First Awakenings.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "Reforged from the ashes of a fallen Regent.",
-		discovery_lore:
-			"Reported on a salvage manifest filed two weeks after the clear that produced it.",
 		tags: ["equipment", "support", "perception", "utility", "necrotic"],
 		theme_tags: ["shadow-domain", "gate-zone"],
 		activation: {
@@ -7455,17 +6717,6 @@ export const baseEquipment: Item[] = [
 		effects: {
 			passive: ["+2 to Performance", "+1 to Persuasion"],
 		},
-		lore: {
-			current_owner: "",
-			curse: "",
-			history: "Its true history remains a protected Guild secret.",
-			origin: "Forged by the Bureau's most elite Technomancer.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "Tread carefully; magic like this has a cost.",
-		discovery_lore:
-			"Logged at a Bureau weigh-station after a routine post-clear inventory.",
 		tags: ["equipment", "support", "perception", "void", "offensive"],
 		theme_tags: ["gate-zone", "system-glitch", "black-market"],
 		activation: {
@@ -7565,17 +6816,6 @@ export const baseEquipment: Item[] = [
 		effects: {
 			passive: ["+2 to Investigation"],
 		},
-		lore: {
-			current_owner: "",
-			curse: "",
-			history: "Its true history remains a protected Guild secret.",
-			origin: "Found sealed in a hidden cache inside an S-Rank Rift.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "Reforged from the ashes of a fallen Regent.",
-		discovery_lore:
-			"Logged at a Bureau weigh-station after a routine post-clear inventory.",
 		tags: ["equipment", "mobility", "perception"],
 		theme_tags: ["ancient-power", "post-awakening"],
 		activation: {
@@ -7675,18 +6915,6 @@ export const baseEquipment: Item[] = [
 		effects: {
 			passive: ["+2 to Investigation"],
 		},
-		lore: {
-			current_owner: "",
-			curse:
-				"Prolonged wielders report hearing a second heartbeat that doesn't match their own.",
-			history: "Its true history remains a protected Guild secret.",
-			origin: "An ancient artifact of the First Awakenings.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "Tread carefully; magic like this has a cost.",
-		discovery_lore:
-			"Reported on a salvage manifest filed two weeks after the clear that produced it.",
 		tags: ["equipment", "ice", "healing"],
 		theme_tags: ["ascendant-bureau", "regent-era"],
 		activation: {
@@ -7786,17 +7014,6 @@ export const baseEquipment: Item[] = [
 		effects: {
 			passive: ["+2 to Deception"],
 		},
-		lore: {
-			current_owner: "",
-			curse: "",
-			history: "Its true history remains a protected Guild secret.",
-			origin: "An ancient artifact of the First Awakenings.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "Tread carefully; magic like this has a cost.",
-		discovery_lore:
-			"Emerged from a Gate Boss's dissolution cloud, hovering where the creature's heart had been.",
 		tags: ["equipment", "stealth", "sustained", "debuff", "area"],
 		theme_tags: ["ascendant-bureau", "survival", "forbidden"],
 		activation: {
@@ -7896,17 +7113,6 @@ export const baseEquipment: Item[] = [
 		effects: {
 			passive: ["+2 to Investigation", "+2 to Arcana"],
 		},
-		lore: {
-			current_owner: "",
-			curse: "",
-			history: "Its true history remains a protected Guild secret.",
-			origin: "Recovered from a collapsed Guild Vault.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "Tread carefully; magic like this has a cost.",
-		discovery_lore:
-			"Surfaced when a Guild quartermaster did a five-year locker audit.",
 		tags: ["equipment", "stealth", "buff"],
 		theme_tags: ["dimensional-bleed", "experimental"],
 		activation: {
@@ -8005,17 +7211,6 @@ export const baseEquipment: Item[] = [
 		effects: {
 			passive: ["+2 to Investigation", "+1 to Sleight of Hand"],
 		},
-		lore: {
-			current_owner: "",
-			curse: "",
-			history: "Its true history remains a protected Guild secret.",
-			origin: "Found sealed in a hidden cache inside an S-Rank Rift.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "Tread carefully; magic like this has a cost.",
-		discovery_lore:
-			"Purchased from a black-market auction in the underground district of Neo-Seoul for an undisclosed sum.",
 		tags: ["equipment", "sustained", "single-target", "lightning"],
 		theme_tags: ["guild-ops", "dungeon-core", "black-market"],
 		activation: {
@@ -8115,17 +7310,6 @@ export const baseEquipment: Item[] = [
 		effects: {
 			passive: ["+1 to Investigation"],
 		},
-		lore: {
-			current_owner: "",
-			curse: "",
-			history: "Its true history remains a protected Guild secret.",
-			origin: "Forged by the Bureau's most elite Technomancer.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "Belongs in the bottom of every Ascendant's go-bag.",
-		discovery_lore:
-			"Walked out of the gate in the bottom of a Ascendant's pack, mostly forgotten.",
 		tags: ["equipment", "shadow", "burst"],
 		theme_tags: ["modern-warfare", "rift-energy", "black-market"],
 		activation: {
@@ -8224,17 +7408,6 @@ export const baseEquipment: Item[] = [
 		effects: {
 			passive: ["+1 to Performance", "+1 to Deception"],
 		},
-		lore: {
-			current_owner: "",
-			curse: "",
-			history: "Its true history remains a protected Guild secret.",
-			origin: "Forged by the Bureau's most elite Technomancer.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor: "Tread carefully; magic like this has a cost.",
-		discovery_lore:
-			"Traded by a nomadic Awakened who claimed to have no memory of acquiring it.",
 		tags: ["equipment", "void", "shadow", "sustained", "offensive"],
 		theme_tags: ["ascendant-bureau", "urban-combat"],
 		activation: {
