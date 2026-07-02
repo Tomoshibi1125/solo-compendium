@@ -182,15 +182,23 @@ export const CosmicBackground = ({
 		let active = true;
 		(async () => {
 			try {
-				const [{ initParticlesEngine, Particles }, { loadSlim }] =
+				const [{ Particles, ParticlesProvider }, { loadSlim }] =
 					await Promise.all([
 						import("@tsparticles/react"),
 						import("@tsparticles/slim"),
 					]);
-				await initParticlesEngine(async (engine) => {
-					await loadSlim(engine);
-				});
-				if (active) setParticlesComponent(() => Particles);
+				// tsparticles v4: engine init moved from initParticlesEngine() to a
+				// ParticlesProvider wrapper that runs the registrar on mount.
+				const ProvidedParticles: ComponentType<IParticlesProps> = (props) => (
+					<ParticlesProvider
+						init={async (engine) => {
+							await loadSlim(engine);
+						}}
+					>
+						<Particles {...props} />
+					</ParticlesProvider>
+				);
+				if (active) setParticlesComponent(() => ProvidedParticles);
 			} catch {
 				if (active) setParticlesComponent(null);
 			}
