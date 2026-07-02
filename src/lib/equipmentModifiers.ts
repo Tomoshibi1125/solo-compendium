@@ -106,6 +106,60 @@ function parseDelimitedList(value: string): string[] {
 		.filter(Boolean);
 }
 
+// Effect prose flows through parseModifiers verbatim (buildItemProperties folds
+// `effects.passive` into properties), so free-text matches must be anchored to
+// closed vocabularies — a bare \d+ regex would turn "deals 1d6 damage per turn"
+// or "DC 15 Strength saving throw" into phantom flat bonuses.
+const DAMAGE_TYPES = [
+	"acid",
+	"bludgeoning",
+	"cold",
+	"fire",
+	"force",
+	"lightning",
+	"necrotic",
+	"piercing",
+	"poison",
+	"psychic",
+	"radiant",
+	"slashing",
+	"thunder",
+	"void",
+];
+
+const CONDITIONS = [
+	"blinded",
+	"charmed",
+	"deafened",
+	"frightened",
+	"grappled",
+	"incapacitated",
+	"paralyzed",
+	"petrified",
+	"poisoned",
+	"prone",
+	"restrained",
+	"stunned",
+	"unconscious",
+];
+
+const DAMAGE_TYPE_ALT = DAMAGE_TYPES.join("|");
+// "fire", "fire and lightning", "fire, cold, and lightning" — known types only,
+// so conditional wording ("the last damage type…") can never bind.
+const DAMAGE_TYPE_LIST = `((?:${DAMAGE_TYPE_ALT})(?:(?:,\\s*(?:and\\s+)?|\\s+and\\s+)(?:${DAMAGE_TYPE_ALT}))*)`;
+const PROSE_RESISTANCE_RE = new RegExp(
+	`(?:grants?|gains?|you have|you gain)\\s+resistance\\s+to\\s+${DAMAGE_TYPE_LIST}\\s+damage`,
+	"i",
+);
+const PROSE_IMMUNITY_RE = new RegExp(
+	`(?:(?:grants?|gains?|you have|you gain)\\s+immunity|(?:you are\\s+)?immune)\\s+to\\s+${DAMAGE_TYPE_LIST}\\s+damage`,
+	"i",
+);
+const PROSE_CONDITION_IMMUNITY_RE = new RegExp(
+	`(?:(?:cannot|can't)\\s+be\\s+(?:knocked\\s+)?|immune\\s+to\\s+(?:the\\s+)?)(${CONDITIONS.join("|")})\\b`,
+	"i",
+);
+
 /**
  * Parse equipment properties into modifiers
  */
@@ -117,31 +171,30 @@ export function parseModifiers(properties: string[]): EquipmentModifiers {
 	properties.forEach((prop) => {
 		const lowerProp = prop.toLowerCase();
 
-		// AC modifiers: "AC 15", "+2 AC", "AC +2"
-		const acMatch = lowerProp.match(
-			/(?:ac\s+(\d+)|(\+?\d+)\s+ac|ac\s+(\+?\d+))/i,
-		);
-		if (acMatch) {
-			const value = parseInt(acMatch[1] || acMatch[2] || acMatch[3] || "0", 10);
-			if (lowerProp.includes("ac") && !lowerProp.includes("+")) {
-				modifiers.ac = value; // Set AC (e.g., "AC 15")
-			} else {
-				modifiers.ac = (modifiers.ac || 0) + value; // Add to AC
-			}
+		// Additive AC requires an explicit sign ("+2 AC", "AC +2"); a bare
+		// number after "AC" ("AC 15") is an armor base-AC declaration.
+		const acAddMatch = lowerProp.match(/(\+\d+)\s+ac\b|\bac\s+(\+\d+)/i);
+		const acSetMatch = lowerProp.match(/\bac\s+(\d+)/i);
+		if (acAddMatch) {
+			const value = parseInt(acAddMatch[1] || acAddMatch[2] || "0", 10);
+			modifiers.ac = (modifiers.ac || 0) + value;
+		} else if (acSetMatch) {
+			modifiers.ac = parseInt(acSetMatch[1] || "0", 10);
 		}
 
-		// Attack modifiers: "+1 to attack", "+2 attack bonus"
+		// Attack modifiers: "+1 to attack", "+2 attack bonus" (sign required)
 		const attackMatch = lowerProp.match(
-			/(\+?\d+)\s+to\s+attack|(\+?\d+)\s+attack/i,
+			/(\+\d+)\s+to\s+attack|(\+\d+)\s+attack\b/i,
 		);
 		if (attackMatch) {
 			const value = parseInt(attackMatch[1] || attackMatch[2] || "0", 10);
 			modifiers.attack = (modifiers.attack || 0) + value;
 		}
 
-		// Damage modifiers: "+1 to damage", "+2 damage"
+		// Damage modifiers: "+1 to damage", "+2 damage" (sign required so
+		// dice riders like "deals 1d6 damage per turn" stay narrative)
 		const damageMatch = lowerProp.match(
-			/(\+?\d+)\s+to\s+damage|(\+?\d+)\s+damage/i,
+			/(\+\d+)\s+to\s+damage|(\+\d+)\s+damage\b/i,
 		);
 		if (damageMatch) {
 			const value = parseInt(damageMatch[1] || damageMatch[2] || "0", 10);
@@ -186,6 +239,33 @@ export function parseModifiers(properties: string[]): EquipmentModifiers {
 			];
 		}
 
+		// Canonical 5e prose from effects.passive: "Grants resistance to fire
+		// and lightning damage.", "You cannot be frightened…". Matched against
+		// the closed type/condition lists above.
+		const proseResistance = prop.match(PROSE_RESISTANCE_RE);
+		if (proseResistance?.[1]) {
+			modifiers.resistances = [
+				...(modifiers.resistances || []),
+				...parseDelimitedList(proseResistance[1].toLowerCase()),
+			];
+		}
+
+		const proseImmunity = prop.match(PROSE_IMMUNITY_RE);
+		if (proseImmunity?.[1]) {
+			modifiers.immunities = [
+				...(modifiers.immunities || []),
+				...parseDelimitedList(proseImmunity[1].toLowerCase()),
+			];
+		}
+
+		const proseConditionImmunity = prop.match(PROSE_CONDITION_IMMUNITY_RE);
+		if (proseConditionImmunity?.[1]) {
+			modifiers.conditionImmunities = [
+				...(modifiers.conditionImmunities || []),
+				proseConditionImmunity[1].toLowerCase(),
+			];
+		}
+
 		// Ability score modifiers: "+2 Strength", "+1 to STR"
 		const abilityMap: Record<
 			string,
@@ -208,9 +288,11 @@ export function parseModifiers(properties: string[]): EquipmentModifiers {
 			pre: "pre",
 		};
 
+		// Ability score modifiers require a sign + word boundary — "DC 15
+		// Strength save" and "+3 to Intimidation" must not read as +STR/+INT.
 		for (const [key, ability] of Object.entries(abilityMap)) {
 			const abilityMatch = lowerProp.match(
-				new RegExp(`(\\+?\\d+)\\s+(?:to\\s+)?${key}`, "i"),
+				new RegExp(`(\\+\\d+)\\s+(?:to\\s+)?${key}\\b`, "i"),
 			);
 			if (abilityMatch) {
 				const value = parseInt(abilityMatch[1] || "0", 10);
@@ -219,8 +301,9 @@ export function parseModifiers(properties: string[]): EquipmentModifiers {
 			}
 		}
 
-		// Speed modifiers: "+10 speed", "+5 ft speed"
-		const speedMatch = lowerProp.match(/(\+?\d+)\s*(?:ft\s*)?speed/i);
+		// Speed modifiers: "+10 speed", "+5 ft speed" (sign required so summon
+		// statblock text like "40 ft speed" stays narrative)
+		const speedMatch = lowerProp.match(/(\+\d+)\s*(?:ft\s*)?speed\b/i);
 		if (speedMatch) {
 			const value = parseInt(speedMatch[1] || "0", 10);
 			modifiers.speed = (modifiers.speed || 0) + value;
@@ -228,7 +311,7 @@ export function parseModifiers(properties: string[]): EquipmentModifiers {
 
 		// Saving throw modifiers: "+1 to saving throws", "+2 to all saves"
 		const saveMatch = lowerProp.match(
-			/(\+?\d+)\s+to\s+(?:all\s+)?(?:saving\s+)?throws?/i,
+			/(\+\d+)\s+to\s+(?:all\s+)?(?:saving\s+)?throws?/i,
 		);
 		if (saveMatch) {
 			const value = parseInt(saveMatch[1] || "0", 10);
@@ -267,7 +350,7 @@ export function parseModifiers(properties: string[]): EquipmentModifiers {
 		];
 		for (const [alias, key] of saveAliases) {
 			const re = new RegExp(
-				`(\\+?\\d+)\\s+to\\s+${alias}\\s+(?:saving\\s+)?throws?`,
+				`(\\+\\d+)\\s+to\\s+${alias}\\s+(?:saving\\s+)?throws?`,
 				"i",
 			);
 			const m = lowerProp.match(re);
@@ -280,7 +363,7 @@ export function parseModifiers(properties: string[]): EquipmentModifiers {
 		}
 
 		// Skill modifiers: "+2 to Stealth", "+1 to all skills"
-		const skillMatch = lowerProp.match(/(\+?\d+)\s+to\s+(?:all\s+)?skills?/i);
+		const skillMatch = lowerProp.match(/(\+\d+)\s+to\s+(?:all\s+)?skills?/i);
 		if (skillMatch) {
 			const value = parseInt(skillMatch[1] || "0", 10);
 			if (!modifiers.skills) modifiers.skills = {};
@@ -316,7 +399,7 @@ export function parseModifiers(properties: string[]): EquipmentModifiers {
 		// Per-skill modifiers: "+2 to Investigation", "+1 to Sleight of Hand", "+2 in Investigation"
 		// We store exact canonical skill name keys (title-cased) and consume them in CharacterSheet.
 		const specificSkillMatch = lowerProp.match(
-			/(\+?\d+)\s+(?:to|in)\s+([a-z][a-z\s']+)/i,
+			/(\+\d+)\s+(?:to|in)\s+([a-z][a-z\s']+)/i,
 		);
 		if (specificSkillMatch?.[1] && specificSkillMatch?.[2]) {
 			const value = parseInt(specificSkillMatch[1] || "0", 10);
