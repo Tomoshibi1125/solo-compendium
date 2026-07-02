@@ -193,7 +193,12 @@
       "Bash(git -C /c/Users/jjcal/Documents/solo-compendium branch -a --no-merged)",
       "Bash(git -C /c/Users/jjcal/Documents/solo-compendium diff --stat)",
       "Bash(git -C /c/Users/jjcal/Documents/solo-compendium log --oneline -8)",
-      "Bash(git -C /c/Users/jjcal/Documents/solo-compendium diff src/App.tsx src/pages/Login.tsx src/components/navigation/navigationConfig.ts)"
+      "Bash(git -C /c/Users/jjcal/Documents/solo-compendium diff src/App.tsx src/pages/Login.tsx src/components/navigation/navigationConfig.ts)",
+      "PowerShell(\\(Get-Content src\\\\index.css | Measure-Object -Line\\).Lines; \\(Get-Content src\\\\styles\\\\ra-theme.css | Measure-Object -Line\\).Lines; Get-ChildItem src\\\\styles | Select-Object Name, Length)",
+      "PowerShell(Get-ChildItem public -File | Select-Object Name, @{N='KB';E={[math]::Round\\($_.Length/1KB\\)}})",
+      "PowerShell(npx tsc --noEmit 2>&1 | Select-Object -First 20; Write-Output \"EXIT=$LASTEXITCODE\")",
+      "Bash(git -C /c/Users/jjcal/Documents/solo-compendium log --oneline -3)",
+      "Bash(git -C /c/Users/jjcal/Documents/solo-compendium diff --stat .claude/settings.local.json)"
     ]
   }
 }
