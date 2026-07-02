@@ -339,9 +339,14 @@ export function getGestaltSpellSlots(
 			characterLevel,
 		);
 	}
-	if (combined <= 0) return empty;
+	if (combined <= 0 || characterLevel < 1) return empty;
 
-	const row = MULTICLASS_SLOT_TABLE[Math.min(combined, 20) - 1];
+	// Gestalt is best-of, not stacked: both progressions advance on the SAME
+	// character levels, and the cited PHB p.164 method never yields a combined
+	// caster level above character level. Without this clamp a caster job +
+	// caster regent (level + level) would reach 9th-level slots by level 10.
+	const effective = Math.min(combined, characterLevel, 20);
+	const row = MULTICLASS_SLOT_TABLE[effective - 1];
 	const slots: Record<number, number> = { ...empty };
 	for (let i = 0; i < 9; i++) slots[i + 1] = row[i];
 	return slots;

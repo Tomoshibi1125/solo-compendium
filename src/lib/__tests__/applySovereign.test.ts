@@ -9,6 +9,7 @@ import {
 	buildSovereignGeminiState,
 	geminiOverlayFromState,
 	isActionableActionType,
+	isSovereignAbilityUnlocked,
 	isSovereignFeatureSource,
 	SOVEREIGN_FEATURE_SOURCE_PREFIX,
 	sovereignAbilitiesToFeatureRows,
@@ -128,5 +129,24 @@ describe("isSovereignFeatureSource", () => {
 		expect(isSovereignFeatureSource("Sovereign: Frostvoid")).toBe(true);
 		expect(isSovereignFeatureSource("Job: Destroyer")).toBe(false);
 		expect(isSovereignFeatureSource(null)).toBe(false);
+	});
+});
+
+describe("isSovereignAbilityUnlocked", () => {
+	it("gates fusion abilities by the character's level", () => {
+		// A level-3 character who locks in a Sovereign holds all 8 feature rows,
+		// but only the L1/L3 abilities are online — the L14 burst and L17/L20
+		// capstones wait for their levels.
+		expect(isSovereignAbilityUnlocked(1, 3)).toBe(true);
+		expect(isSovereignAbilityUnlocked(3, 3)).toBe(true);
+		expect(isSovereignAbilityUnlocked(5, 3)).toBe(false);
+		expect(isSovereignAbilityUnlocked(14, 3)).toBe(false);
+		expect(isSovereignAbilityUnlocked(20, 19)).toBe(false);
+		expect(isSovereignAbilityUnlocked(20, 20)).toBe(true);
+	});
+
+	it("treats a missing level as level 1 (always unlocked)", () => {
+		expect(isSovereignAbilityUnlocked(null, 1)).toBe(true);
+		expect(isSovereignAbilityUnlocked(undefined, 1)).toBe(true);
 	});
 });

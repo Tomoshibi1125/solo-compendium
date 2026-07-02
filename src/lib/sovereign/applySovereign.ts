@@ -160,3 +160,17 @@ export function isActionableActionType(
 	const a = actionType.toLowerCase();
 	return a.includes("action") || a.includes("bonus") || a.includes("reaction");
 }
+
+/**
+ * A fusion ability only comes online once the character reaches its level.
+ * All 8 rows persist from lock-in (so the sheet can show the full ladder with
+ * level badges), but the L14/L17/L20 abilities must not be usable actions on
+ * a low-level Sovereign. Derived at read time, so leveling up unlocks them
+ * without any re-apply step.
+ */
+export function isSovereignAbilityUnlocked(
+	levelAcquired: number | null | undefined,
+	characterLevel: number,
+): boolean {
+	return (levelAcquired ?? 1) <= characterLevel;
+}

@@ -23,6 +23,7 @@ import {
 } from "@/lib/powerActionFormulas";
 import {
 	isActionableActionType,
+	isSovereignAbilityUnlocked,
 	isSovereignFeatureSource,
 } from "@/lib/sovereign/applySovereign";
 import { resolveSpellActionFormula } from "@/lib/spellActionFormulas";
@@ -748,6 +749,10 @@ export const useCombatActions = (characterId: string) => {
 			if (!feat.is_active) continue;
 			if (!isSovereignFeatureSource(feat.source)) continue;
 			if (!isActionableActionType(feat.action_type)) continue;
+			// All 8 fusion rows persist from lock-in; only the ones the
+			// character has grown into are usable actions.
+			if (!isSovereignAbilityUnlocked(feat.level_acquired, character.level))
+				continue;
 			result.push({
 				id: `sovereign-feat-${feat.id}`,
 				name: feat.name,

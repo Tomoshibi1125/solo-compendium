@@ -136,14 +136,39 @@ describe("regentGestalt — spellcasting merge (Job + Regent only)", () => {
 		expect(fullJob[4]).toBe(0);
 	});
 
-	it("a spellcasting regent adds full caster levels to the merge", () => {
+	it("a caster regent upgrades a half-caster job to full-caster slots at level", () => {
 		const caster = CANONICAL_REGENTS.find((r) => r.spellcasting);
 		if (!caster) return; // dataset may have none; guarded
 		expect(getRegentCasterFraction(caster)).toBe("full");
-		// half-caster job (lvl 10 → 5) + full regent (lvl 10 → 10) = 15 combined
+		// half-caster job (lvl 10 → 5) + full regent (lvl 10 → 10) — gestalt is
+		// best-of, so the combined caster level clamps to the character level
+		// (10), matching the cited PHB p.164 method. Row 10 = 4/3/3/3/2.
 		const slots = getGestaltSpellSlots("half", [caster], 10);
-		// combined caster level 15 → 7th-level slots exist
-		expect(slots[7]).toBeGreaterThan(0);
+		expect(slots[5]).toBe(2);
+		expect(slots[6]).toBe(0);
+		expect(slots[7]).toBe(0);
+	});
+
+	it("caster job + caster regent never exceeds the character's own caster level", () => {
+		const caster = CANONICAL_REGENTS.find((r) => r.spellcasting);
+		if (!caster) return;
+		// Full job (10) + full regent (10) would sum to 20 — clamped to 10 so a
+		// level-10 character can never hold 9th-level slots.
+		const slots = getGestaltSpellSlots("full", [caster], 10);
+		expect(slots[5]).toBe(2);
+		expect(slots[9]).toBe(0);
+		// At level 20 the clamp is a no-op: row 20 of the multiclass table.
+		const capped = getGestaltSpellSlots("full", [caster], 20);
+		expect(capped[9]).toBe(1);
+	});
+
+	it("a caster regent gives a martial job full-caster slots at level", () => {
+		const caster = CANONICAL_REGENTS.find((r) => r.spellcasting);
+		if (!caster) return;
+		const slots = getGestaltSpellSlots("none", [caster], 10);
+		expect(slots[1]).toBe(4);
+		expect(slots[5]).toBe(2);
+		expect(slots[6]).toBe(0);
 	});
 });
 

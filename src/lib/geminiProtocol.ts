@@ -543,7 +543,7 @@ const abilityTemplates: Record<string, AbilityTemplate> = {
 	// LEVEL 3: Class Integration - Job synergizes with fusion
 	classIntegration: {
 		name: "{job} Fusion Art: {fusionName}",
-		desc: "[CLASS MERGE] Your {job} training has been permanently altered by the Gemini Protocol. When using {job} class features, they manifest with {fusionTheme} enhancement. Damage becomes [{damageA}+{damageB}], skills gain +{profMod} bonus. This is not two classes--it is one new class that never existed before.",
+		desc: "[CLASS MERGE] Your {job} training has been permanently altered by the Gemini Protocol. When using {job} class features, they manifest with {fusionTheme} enhancement. Damage becomes [{damageA}+{damageB}], and fusion-touched skill checks gain a bonus equal to your proficiency bonus. This is not two classes--it is one new class that never existed before.",
 		action: "Passive",
 	},
 
@@ -674,7 +674,6 @@ export function generateSovereign(
 		path: formatRegentVernacular(path.name.replace("Path of the ", "")),
 		regentA: formatRegentVernacular(regentA.name),
 		regentB: formatRegentVernacular(regentB.name),
-		profMod: "2",
 	};
 
 	const abilities: FusionAbility[] = [];
