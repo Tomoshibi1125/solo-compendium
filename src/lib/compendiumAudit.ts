@@ -756,7 +756,7 @@ function auditNamingCase(
 	issues: CompendiumAuditIssue[],
 ) {
 	const name = getString(entry.name);
-	if (!name || !name.includes(" ")) return;
+	if (!name?.includes(" ")) return;
 	const parts = name.split(/\s+/);
 	for (let i = 1; i < parts.length; i += 1) {
 		const word = parts[i];

@@ -116,7 +116,7 @@ const Admin = () => {
 	};
 
 	const handleImport = async () => {
-		if (!validationResult || !validationResult.valid) {
+		if (!validationResult?.valid) {
 			toast({
 				title: "Validation required",
 				description: "Please validate the content first.",

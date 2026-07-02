@@ -1536,7 +1536,7 @@ function processFile(filePath, enrichFn, label) {
 	let count = 0;
 	for (let i = 0; i < data.length; i++) {
 		const item = data[i];
-		if (!item || !item.id) continue;
+		if (!item?.id) continue;
 		const r = makeRand(item.id);
 		enrichFn(item, r, i);
 		count++;

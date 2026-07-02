@@ -119,7 +119,7 @@ export const approveJoinRequestLocal = (params: {
 	const role = params.role ?? "member";
 	const requests = loadLocalJoinRequests();
 	const req = requests.find((r) => r.id === params.requestId);
-	if (!req || req.status !== "pending")
+	if (req?.status !== "pending")
 		throw new AppError(
 			"Join request not found or already resolved",
 			"NOT_FOUND",

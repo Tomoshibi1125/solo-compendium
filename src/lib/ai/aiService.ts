@@ -3,14 +3,14 @@
  * Handles AI integrations for art enhancement
  */
 
-import {
-	type ChatResponseExt,
-	type Message as PollinationsMessage,
-	chat as pollinationsChat,
-	configure as pollinationsConfigure,
-} from "@pollinations_ai/sdk";
 import { AppError } from "@/lib/appError";
 import { logger } from "@/lib/logger";
+import {
+	type ChatResponseExt,
+	type PollinationsMessage,
+	chat as pollinationsChat,
+	configure as pollinationsConfigure,
+} from "./pollinationsClient";
 import { buildRaSystemPrompt } from "./raCanonPrompt";
 import type {
 	AIConfiguration,
@@ -1090,7 +1090,7 @@ export class AIServiceManager {
 					}
 
 					const text = await response.text();
-					if (!text || !text.trim()) {
+					if (!text?.trim()) {
 						errors.push(`${model}:empty response`);
 						continue;
 					}

@@ -9,7 +9,8 @@
 import type { CustomModifier } from "@/lib/customModifiers";
 
 import type { Database, Json } from "./types";
-export type { Json, CustomModifier };
+
+export type { CustomModifier, Json };
 
 // ─── Base Row Aliases ───────────────────────────────────────────────────────────
 

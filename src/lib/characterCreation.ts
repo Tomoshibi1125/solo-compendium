@@ -49,6 +49,7 @@ import type {
 	CompendiumJob as CompendiumJobType,
 	CompendiumItem as StaticItem,
 } from "@/types/compendium";
+
 export type { StaticBackground, StaticJob };
 
 import { getProficiencyBonus } from "@/types/core-rules";

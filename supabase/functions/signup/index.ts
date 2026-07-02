@@ -67,7 +67,7 @@ Deno.serve(async (req) => {
 	const displayName = asString(body.displayName)?.trim() ?? "";
 	const role = normalizeRole(body.role);
 
-	if (!email || !email.includes("@")) {
+	if (!email?.includes("@")) {
 		return json(400, { error: "A valid email address is required" }, origin);
 	}
 

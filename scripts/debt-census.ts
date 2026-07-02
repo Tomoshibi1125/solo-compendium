@@ -85,7 +85,7 @@ function namingCaseMismatches(entries: DatasetEntry[]): string[] {
 	const messages: string[] = [];
 	for (const { dataset, entry } of entries) {
 		const name = (entry.name ?? "").trim();
-		if (!name || !name.includes(" ")) continue;
+		if (!name?.includes(" ")) continue;
 		const parts = name.split(/\s+/);
 		for (let i = 1; i < parts.length; i += 1) {
 			const word = parts[i];

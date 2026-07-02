@@ -39,7 +39,7 @@ export const ProtocolBroadcastButton: React.FC<
 				const { data, error } = await supabase
 					.from("campaigns")
 					.select("id, name")
-					.eq("gamemaster_id", user.id);
+					.eq("warden_id", user.id);
 
 				if (error) throw error;
 

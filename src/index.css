@@ -288,8 +288,8 @@ img {
    ============================================================ */
 
 input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not(
-		[type="color"]
-	):not([type="file"]),
+	[type="color"]
+):not([type="file"]),
 select,
 textarea {
 	background: rgba(0, 0, 0, 0.4);
@@ -303,8 +303,8 @@ textarea {
 @supports (backdrop-filter: blur(12px)) or
 	(-webkit-backdrop-filter: blur(12px)) {
 	input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not(
-			[type="color"]
-		):not([type="file"]),
+		[type="color"]
+	):not([type="file"]),
 	select,
 	textarea {
 		-webkit-backdrop-filter: blur(12px);
@@ -314,15 +314,15 @@ textarea {
 }
 
 input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not(
-		[type="color"]
-	):not([type="file"])::placeholder,
+	[type="color"]
+):not([type="file"])::placeholder,
 textarea::placeholder {
 	color: hsl(var(--foreground) / 0.5);
 }
 
 input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not(
-		[type="color"]
-	):not([type="file"]):focus,
+	[type="color"]
+):not([type="file"]):focus,
 select:focus,
 textarea:focus {
 	border-color: hsl(var(--primary) / 0.6);

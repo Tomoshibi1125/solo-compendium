@@ -521,7 +521,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 				}
 			}
 
-			const dbUpdates: Record<string, unknown> = {
+			const dbUpdates: { updated_at: string; role?: string } = {
 				updated_at: new Date().toISOString(),
 			};
 			if (updates.role) {

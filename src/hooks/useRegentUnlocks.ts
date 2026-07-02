@@ -226,9 +226,16 @@ export function useRegentUnlocks(characterId: string) {
 			unlockId: string;
 			updates: Partial<RegentUnlock>;
 		}) => {
+			// `regent`/`character` are client-side joins, not columns — the typed
+			// client rejects them as excess properties on update.
+			const {
+				regent: _regent,
+				character: _character,
+				...columnUpdates
+			} = updates;
 			const { data, error } = await supabase
 				.from("character_regent_unlocks")
-				.update(updates)
+				.update(columnUpdates)
 				.eq("id", unlockId)
 				.select()
 				.single();

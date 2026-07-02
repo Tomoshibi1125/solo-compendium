@@ -156,7 +156,7 @@ export function validatePrereq(
 export function parsePrerequisiteText(
 	text: string | null | undefined,
 ): PrerequisiteSpec | null {
-	if (!text || !text.trim()) return null;
+	if (!text?.trim()) return null;
 	const spec: PrerequisiteSpec = {};
 	const ABILITY_NAMES: Array<[RegExp, AbilityScore]> = [
 		[/strength|\bSTR\b/i, "STR"],

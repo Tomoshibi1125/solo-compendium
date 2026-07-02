@@ -103,7 +103,7 @@ const CompendiumDetail = () => {
 	const { toast } = useToast();
 
 	const entryTagsKey = useMemo(() => {
-		if (!entry || !entry.tags) return "";
+		if (!entry?.tags) return "";
 		return entry.tags
 			.map((tag) => tag.toLowerCase())
 			.sort()

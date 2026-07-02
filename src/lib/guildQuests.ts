@@ -124,7 +124,7 @@ export const resolveGuildQuestLocal = (params: {
 }): void => {
 	const quests = loadLocalGuildQuests();
 	const q = quests.find((x) => x.id === params.questId);
-	if (!q || q.status !== "active")
+	if (q?.status !== "active")
 		throw new AppError("Quest not found or already resolved", "NOT_FOUND");
 
 	if (params.success) {

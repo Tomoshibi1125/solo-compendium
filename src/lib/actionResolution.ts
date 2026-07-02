@@ -96,7 +96,7 @@ export function getPendingResolution(): ActionResolutionPayload | null {
 	if (!raw) return null;
 	try {
 		const parsed = JSON.parse(raw) as ActionResolutionPayload;
-		if (!parsed || parsed.version !== 1) return null;
+		if (parsed?.version !== 1) return null;
 		return parsed;
 	} catch {
 		return null;

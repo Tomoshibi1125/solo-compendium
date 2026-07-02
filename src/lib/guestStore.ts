@@ -148,7 +148,7 @@ function loadGuestState(): GuestStateV1 {
 		const raw = window.localStorage.getItem(STORAGE_KEY);
 		if (!raw) return empty;
 		const parsed = JSON.parse(raw) as Partial<GuestStateV1> | null;
-		if (!parsed || parsed.version !== 1 || !parsed.characters) return empty;
+		if (parsed?.version !== 1 || !parsed.characters) return empty;
 		return {
 			version: 1,
 			updatedAt:

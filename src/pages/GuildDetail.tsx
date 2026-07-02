@@ -401,7 +401,7 @@ const GuildDetail = () => {
 
 	const handleAddAlly = (characterId: string) => {
 		const member = allyForMember;
-		if (!member || !member.npc_data) return;
+		if (!member?.npc_data) return;
 		addAlly.mutate(
 			{
 				characterId,

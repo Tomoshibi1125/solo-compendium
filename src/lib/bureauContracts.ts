@@ -79,7 +79,7 @@ export const acceptBureauContractLocal = (params: {
 }): void => {
 	const contracts = loadLocalBureauContracts();
 	const contract = contracts.find((c) => c.id === params.contractId);
-	if (!contract || contract.kind !== "contract") {
+	if (contract?.kind !== "contract") {
 		throw new AppError("Contract not found", "NOT_FOUND");
 	}
 	if (contract.status !== "published") {

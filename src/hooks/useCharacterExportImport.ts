@@ -1226,7 +1226,7 @@ export function useCharacterExport() {
 				const data = JSON.parse(text);
 
 				// Validate structure
-				if (!data.character || !data.character.name) {
+				if (!data.character?.name) {
 					throw new Error("Invalid character file format");
 				}
 
