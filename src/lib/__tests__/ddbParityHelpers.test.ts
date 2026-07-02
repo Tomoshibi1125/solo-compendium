@@ -40,8 +40,8 @@ describe("P0.1 — Canonical AC (acFormulas.getArmorClass)", () => {
 			job: "Berserker",
 		});
 		// Unarmored: 10 + AGI(2) = 12
-		// Berserker UD: 10 + AGI(2) + VIT(3) = 15
-		expect(result.ac).toBe(15);
+		// Berserker UD: 10 + STR(3) + VIT(3) = 16 (AGI plays no part)
+		expect(result.ac).toBe(16);
 		expect(result.selectedFormula.id).toBe("berserker_ud");
 	});
 
@@ -56,7 +56,7 @@ describe("P0.1 — Canonical AC (acFormulas.getArmorClass)", () => {
 				magicBonus: 0,
 			},
 		});
-		expect(result.ac).toBe(17); // 15 + 2 shield
+		expect(result.ac).toBe(18); // 16 + 2 shield
 		expect(result.shieldApplied).toBe(true);
 	});
 

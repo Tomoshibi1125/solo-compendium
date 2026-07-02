@@ -5,7 +5,7 @@
  *
  * Standard formulas:
  * - Unarmored: 10 + AGI_mod
- * - Berserker Unarmored Defense: 10 + AGI_mod + VIT_mod (no armor)
+ * - Berserker Unarmored Defense: 10 + STR_mod + VIT_mod (no armor)
  * - Striker Unarmored Defense: 10 + AGI_mod + SENSE_mod (no armor)
  * - Revenant Unarmored Requiem: 10 + INT_mod + VIT_mod (no armor)
  * - Light Armor: armor_base + AGI_mod
@@ -15,7 +15,7 @@
  * - Mage Armor (spell): 13 + AGI_mod (no armor)
  *
  * Rift Ascendant Job mapping:
- * - Berserker → Barbarian Unarmored Defense (10 + AGI + VIT)
+ * - Berserker → Barbarian-analog Unarmored Defense (10 + STR + VIT — raw muscle, no AGI)
  * - Striker → Monk Unarmored Defense (10 + AGI + SENSE)
  * - Revenant → Unarmored Requiem (10 + INT + VIT), the entropy-sheathed drain tank
  */
@@ -86,13 +86,13 @@ const BERSERKER_UNARMORED: ACFormula = {
 	id: "berserker_ud",
 	name: "Berserker Unarmored Defense",
 	source: "job:berserker",
-	description: "10 + AGI modifier + VIT modifier (no armor)",
+	description: "10 + STR modifier + VIT modifier (no armor)",
 	calculate: (ctx) => {
 		if (ctx.equippedArmor) return null;
 		if (ctx.job.toLowerCase() !== "berserker") return null;
 		return (
 			10 +
-			getAbilityModifier(ctx.abilities.AGI) +
+			getAbilityModifier(ctx.abilities.STR) +
 			getAbilityModifier(ctx.abilities.VIT)
 		);
 	},

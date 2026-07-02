@@ -10,12 +10,13 @@ describe("Unarmored Defense", () => {
 		expect(ac).toBe(15);
 	});
 
-	test("Berserker uses 10 + AGI mod + VIT mod", () => {
+	test("Berserker uses 10 + STR mod + VIT mod (ignores AGI)", () => {
 		const ac = getUnarmoredDefenseBaseAC("Berserker", {
-			AGI: 14, // +2
+			STR: 16, // +3
+			AGI: 18, // +4 — must be ignored; only Striker keys off AGI
 			VIT: 18, // +4
 		});
-		expect(ac).toBe(16);
+		expect(ac).toBe(17);
 	});
 
 	test("Revenant uses 10 + INT mod + VIT mod (ignores AGI)", () => {

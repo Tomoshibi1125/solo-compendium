@@ -5,14 +5,23 @@ export function getUnarmoredDefenseBaseAC(
 	abilities: Record<string, number>,
 ): number | null {
 	const normalized = (jobName || "").trim().toLowerCase();
-	const base = 10 + getAbilityModifier(abilities.AGI ?? 10);
 
 	if (normalized === "striker") {
-		return base + getAbilityModifier(abilities.SENSE ?? 10);
+		// Striker is the only UD job that keys off AGI: 10 + AGI + SENSE.
+		return (
+			10 +
+			getAbilityModifier(abilities.AGI ?? 10) +
+			getAbilityModifier(abilities.SENSE ?? 10)
+		);
 	}
 
 	if (normalized === "berserker") {
-		return base + getAbilityModifier(abilities.VIT ?? 10);
+		// 10 + STR + VIT, no AGI (raw muscle and mass, not finesse).
+		return (
+			10 +
+			getAbilityModifier(abilities.STR ?? 10) +
+			getAbilityModifier(abilities.VIT ?? 10)
+		);
 	}
 
 	if (normalized === "revenant") {
