@@ -187,7 +187,13 @@
       "PowerShell(npx vitest run --pool=vmThreads 2>&1)",
       "PowerShell(npm run lint:check 2>&1)",
       "PowerShell(npx knip 2>&1)",
-      "PowerShell(Select-String -Path src/data/compendium/jobs.ts -Pattern '^\\\\t\\\\tname: \"\\([^\"]+\\)\",$' | ForEach-Object { $_.Matches[0].Groups[1].Value }; \"---BACKGROUNDS---\"; Select-String -Path src/data/compendium/backgrounds.ts -Pattern '^\\\\t\\\\tname: \"\\([^\"]+\\)\",$' | ForEach-Object { $_.Matches[0].Groups[1].Value })"
+      "PowerShell(Select-String -Path src/data/compendium/jobs.ts -Pattern '^\\\\t\\\\tname: \"\\([^\"]+\\)\",$' | ForEach-Object { $_.Matches[0].Groups[1].Value }; \"---BACKGROUNDS---\"; Select-String -Path src/data/compendium/backgrounds.ts -Pattern '^\\\\t\\\\tname: \"\\([^\"]+\\)\",$' | ForEach-Object { $_.Matches[0].Groups[1].Value })",
+      "Bash(git -C /c/Users/jjcal/Documents/solo-compendium status --short)",
+      "Bash(git -C /c/Users/jjcal/Documents/solo-compendium stash list)",
+      "Bash(git -C /c/Users/jjcal/Documents/solo-compendium branch -a --no-merged)",
+      "Bash(git -C /c/Users/jjcal/Documents/solo-compendium diff --stat)",
+      "Bash(git -C /c/Users/jjcal/Documents/solo-compendium log --oneline -8)",
+      "Bash(git -C /c/Users/jjcal/Documents/solo-compendium diff src/App.tsx src/pages/Login.tsx src/components/navigation/navigationConfig.ts)"
     ]
   }
 }
