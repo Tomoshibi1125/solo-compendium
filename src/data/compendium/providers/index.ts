@@ -2484,6 +2484,7 @@ export const staticDataProvider: StaticDataProvider = {
 			lore?: Record<string, Json> | null;
 			mechanics?: Record<string, Json> | null;
 			flavor?: string | null;
+			value?: RaCurrencyValue | number | null;
 		}>("artifacts");
 		const filtered = filterBySearch(artifacts, search, [
 			"name",
@@ -2504,6 +2505,9 @@ export const staticDataProvider: StaticDataProvider = {
 			) as string[],
 			source_book: artifact.source || "Rift Ascendant Canon",
 			image_url: artifact.image,
+			// Structured catalog price → cost badge on artifact cards/detail
+			// (artifacts trade in Core Credits).
+			price: toRaCurrencyValue(artifact.value),
 			artifact_type: artifact.type || "artifact",
 			attunement: artifact.attunement,
 			requirements: artifact.requirements || null,

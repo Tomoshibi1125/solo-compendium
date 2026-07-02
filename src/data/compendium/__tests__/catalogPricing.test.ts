@@ -81,4 +81,37 @@ describe("catalog pricing — surfaced prices are varied + tier-correct", () => 
 			expect(price?.amount ?? 0).toBeGreaterThan(0);
 		}
 	});
+
+	it("relics carry a structured price in the top denominations (gate/core)", async () => {
+		const entries = await staticDataProvider.getRelics("");
+		expect(entries.length).toBeGreaterThan(0);
+		for (const entry of entries) {
+			const price = (
+				entry as { price?: { currency?: string; amount?: number } }
+			).price;
+			expect(price, `${entry.id} missing price`).toBeTruthy();
+			// Relics are rare+ tier: never priced in the small denominations.
+			expect(["gate", "core"]).toContain(price?.currency);
+			expect(price?.amount ?? 0).toBeGreaterThan(0);
+		}
+	});
+
+	it("artifacts carry varied core prices (no flat placeholder values)", async () => {
+		const entries = await staticDataProvider.getArtifacts("");
+		expect(entries.length).toBeGreaterThan(0);
+		const amounts = new Set<number>();
+		for (const entry of entries) {
+			const price = (
+				entry as { price?: { currency?: string; amount?: number } }
+			).price;
+			expect(price, `${entry.id} missing price`).toBeTruthy();
+			// World-unique pieces trade only in Core Credits.
+			expect(price?.currency).toBe("core");
+			expect(price?.amount ?? 0).toBeGreaterThan(0);
+			amounts.add(price?.amount ?? 0);
+		}
+		// The old placeholder set 14/17 artifacts to a flat 1,000,000 — prices
+		// must stay differentiated by mythos weight.
+		expect(amounts.size).toBeGreaterThanOrEqual(10);
+	});
 });

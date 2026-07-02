@@ -1,4 +1,4 @@
-import { Crown, Shield, Sparkles, Swords } from "lucide-react";
+import { Coins, Crown, Shield, Sparkles, Swords } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { AutoLinkText } from "@/components/compendium/AutoLinkText";
 import { CompendiumImage } from "@/components/compendium/CompendiumImage";
@@ -10,6 +10,7 @@ import {
 	type ActionResolutionPayload,
 	setPendingResolution,
 } from "@/lib/actionResolution";
+import { formatRaCurrencyValue, type RaCurrencyValue } from "@/lib/currency";
 import { formatRegentVernacular } from "@/lib/vernacular";
 
 interface ArtifactAbility {
@@ -70,6 +71,8 @@ export interface ArtifactData {
 	source_book?: string | null;
 	image_url?: string | null;
 	image?: string | null;
+	/** Structured catalog price (artifacts trade in Core Credits). */
+	price?: RaCurrencyValue | null;
 }
 
 const rarityStyles: Record<string, string> = {
@@ -216,6 +219,17 @@ export const ArtifactDetail = ({ data }: { data: ArtifactData }) => {
 					)}
 				</div>
 			</AscendantWindow>
+
+			{artifact.price != null && (
+				<AscendantWindow title="VALUE" compact>
+					<div className="flex items-center gap-2">
+						<Coins className="w-5 h-5 text-yellow-400" />
+						<span className="font-heading">
+							{formatRaCurrencyValue(artifact.price)}
+						</span>
+					</div>
+				</AscendantWindow>
+			)}
 
 			{artifact.requirements && (
 				<AscendantWindow title="REQUIREMENTS">
