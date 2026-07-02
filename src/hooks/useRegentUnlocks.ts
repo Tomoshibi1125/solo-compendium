@@ -1,7 +1,8 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+﻿import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import { clientChannelName } from "@/lib/realtimeChannel";
 import { REGENT_LABEL } from "@/lib/vernacular";
 
 export interface RegentUnlock {
@@ -30,7 +31,7 @@ export interface RegentUnlock {
 
 /**
  * Bridge the canonical unlock (`character_regent_unlocks.regent_id`, e.g.
- * "umbral_regent") into `characters.regent_overlays` — the field the level-up
+ * "umbral_regent") into `characters.regent_overlays` â€” the field the level-up
  * wizard's regent choice sources + ability grants and the Add* dialogs read.
  * Without this, a Warden-granted unlock would never surface regent picks.
  */
@@ -107,7 +108,7 @@ export function useRegentUnlocks(characterId: string) {
 	useEffect(() => {
 		if (!characterId) return;
 		const channel = supabase
-			.channel(`regent-unlocks-${characterId}`)
+			.channel(clientChannelName(`regent-unlocks-${characterId}`))
 			.on(
 				"postgres_changes",
 				{
@@ -226,7 +227,7 @@ export function useRegentUnlocks(characterId: string) {
 			unlockId: string;
 			updates: Partial<RegentUnlock>;
 		}) => {
-			// `regent`/`character` are client-side joins, not columns — the typed
+			// `regent`/`character` are client-side joins, not columns â€” the typed
 			// client rejects them as excess properties on update.
 			const {
 				regent: _regent,
@@ -264,7 +265,7 @@ export function useRegentUnlocks(characterId: string) {
 
 	// Player spends a Warden-granted opportunity: pick a Regent (from three
 	// stat-ranked candidates), create the unlock, bridge the overlay, and mark
-	// the grant consumed. The grant credit is what gates this — players cannot
+	// the grant consumed. The grant credit is what gates this â€” players cannot
 	// self-unlock without one (enforced by RLS on the grants table too).
 	const consumeGrantMutation = useMutation({
 		mutationFn: async ({
@@ -455,7 +456,7 @@ export function useRegentUnlockGrants(characterId: string) {
 	useEffect(() => {
 		if (!characterId) return;
 		const channel = supabase
-			.channel(`regent-unlock-grants-${characterId}`)
+			.channel(clientChannelName(`regent-unlock-grants-${characterId}`))
 			.on(
 				"postgres_changes",
 				{

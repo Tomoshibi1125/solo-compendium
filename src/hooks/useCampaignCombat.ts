@@ -1,10 +1,11 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+﻿import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import type { Database, Json } from "@/integrations/supabase/types";
 import { AppError } from "@/lib/appError";
 import { enqueueOfflineSync } from "@/lib/offlineSync";
+import { clientChannelName } from "@/lib/realtimeChannel";
 
 const guestEnabled = import.meta.env.VITE_GUEST_ENABLED !== "false";
 
@@ -73,7 +74,7 @@ export const useCampaignCombatSession = (
 		if (!campaignId || !isSupabaseConfigured) return;
 
 		const channel = supabase
-			.channel(`combat-sync-${campaignId}`)
+			.channel(clientChannelName(`combat-sync-${campaignId}`))
 			.on(
 				"postgres_changes",
 				{

@@ -1,4 +1,4 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+﻿import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
@@ -6,6 +6,7 @@ import type { Database } from "@/integrations/supabase/types";
 import { AppError, type AppErrorCode } from "@/lib/appError";
 import { useAuth } from "@/lib/auth/authContext";
 import { getLocalUserId, listLocalCharacters } from "@/lib/guestStore";
+import { clientChannelName } from "@/lib/realtimeChannel";
 
 export interface Campaign {
 	id: string;
@@ -18,18 +19,18 @@ export interface Campaign {
 	updated_at: string;
 	settings: Record<string, unknown>;
 	/**
-	 * Misty Pearl E3 — optional Discord webhook URL for cross-channel
+	 * Misty Pearl E3 â€” optional Discord webhook URL for cross-channel
 	 * notifications. Warden-only-editable via the campaign settings UI;
 	 * relayed by the `notify-discord` edge function. NULL = disabled.
 	 */
 	discord_webhook_url?: string | null;
 	/**
-	 * Misty Pearl G2 — Discord Application id for the two-way bot
+	 * Misty Pearl G2 â€” Discord Application id for the two-way bot
 	 * (slash commands). NULL = bot disabled.
 	 */
 	discord_app_id?: string | null;
 	/**
-	 * Misty Pearl G2 — Discord Application public key (hex). Used to
+	 * Misty Pearl G2 â€” Discord Application public key (hex). Used to
 	 * Ed25519-verify incoming interaction webhooks. NULL = bot disabled.
 	 */
 	discord_public_key?: string | null;
@@ -49,9 +50,9 @@ type CampaignUpdate = {
 	description?: string | null;
 	is_active?: boolean;
 	settings?: Record<string, unknown>;
-	/** Misty Pearl E3 — Discord webhook bridge. Null clears the value. */
+	/** Misty Pearl E3 â€” Discord webhook bridge. Null clears the value. */
 	discord_webhook_url?: string | null;
-	/** Misty Pearl G2 — Discord two-way bot. */
+	/** Misty Pearl G2 â€” Discord two-way bot. */
 	discord_app_id?: string | null;
 	discord_public_key?: string | null;
 };
@@ -174,7 +175,7 @@ export const useMyCampaigns = () => {
 			if (error) throw error;
 			const supabaseCampaigns = (data || []) as Campaign[];
 
-			// Merge with local cache to cover RLS propagation delays —
+			// Merge with local cache to cover RLS propagation delays â€”
 			// newly-created campaigns may not appear in Supabase yet
 			const localCampaigns = loadLocalCampaigns().filter(
 				(lc) => lc.warden_id === user.id,
@@ -275,7 +276,7 @@ export const useJoinedCampaigns = () => {
 					member_role: member.role,
 				})) as (Campaign & { member_role: string })[];
 
-			// Merge with local cache to cover RLS propagation delays —
+			// Merge with local cache to cover RLS propagation delays â€”
 			// freshly-joined campaigns may not appear in Supabase yet
 			const localCampaigns = loadLocalCampaigns();
 			const localMembers = loadLocalMembers().filter(
@@ -426,7 +427,7 @@ export const useCampaignByShareCode = (shareCode: string) => {
 				(campaign) => campaign.share_code === upperCode,
 			);
 
-			// Always attempt the RPC — it is SECURITY DEFINER with row_security=off
+			// Always attempt the RPC â€” it is SECURITY DEFINER with row_security=off
 			// and is granted to both authenticated AND anon roles, so it works for
 			// unauthenticated visitors looking up a campaign to join.
 			const rpcResult = await supabase.rpc("get_campaign_by_share_code", {
@@ -440,7 +441,7 @@ export const useCampaignByShareCode = (shareCode: string) => {
 
 				if (!isRpcMissing) throw rpcResult.error;
 
-				// RPC doesn't exist — return local cache match if available.
+				// RPC doesn't exist â€” return local cache match if available.
 				// A direct SELECT on campaigns table would fail for non-members
 				// due to RLS, so we do NOT attempt it.
 				return localMatch || null;
@@ -467,7 +468,7 @@ export const useCampaignMembers = (campaignId: string) => {
 	useEffect(() => {
 		if (!campaignId || isLocalMode() || !isSupabaseConfigured) return;
 		const channel = supabase
-			.channel(`campaign-members-${campaignId}`)
+			.channel(clientChannelName(`campaign-members-${campaignId}`))
 			.on(
 				"postgres_changes",
 				{
@@ -719,7 +720,7 @@ export const useCreateCampaign = () => {
 				saveLocalCampaigns([resolvedCampaign, ...filtered]);
 			} else {
 				// Optimistic local save if DB read fails (e.g., RLS propagation delay)
-				// Always use the generated shareCode — never a placeholder
+				// Always use the generated shareCode â€” never a placeholder
 				const now = new Date().toISOString();
 				resolvedCampaign = {
 					id: campaignId,
@@ -818,7 +819,7 @@ export const useUpdateCampaign = () => {
 				throw new AppError("Not authenticated", "AUTH_REQUIRED");
 			}
 
-			// Misty Pearl E3 — Discord webhook bridge: the column exists per
+			// Misty Pearl E3 â€” Discord webhook bridge: the column exists per
 			// migration `20260528000000_add_campaign_discord_webhook.sql` but
 			// the Supabase types haven't been regenerated yet, so we widen the
 			// update payload via cast for that one field.

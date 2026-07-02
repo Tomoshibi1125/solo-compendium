@@ -1,4 +1,4 @@
-import { useQueryClient } from "@tanstack/react-query";
+﻿import { useQueryClient } from "@tanstack/react-query";
 import {
 	Activity,
 	ArrowLeft,
@@ -84,6 +84,7 @@ import { useCharacters } from "@/hooks/useCharacters";
 import { useGuildsByCampaign } from "@/hooks/useGuilds";
 import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth/authContext";
+import { clientChannelName } from "@/lib/realtimeChannel";
 import { formatRegentVernacular } from "@/lib/vernacular";
 
 type ManagedCampaignRole = "ascendant" | "co-warden";
@@ -206,7 +207,7 @@ const CampaignDetail = () => {
 			return;
 
 		const channel = supabase
-			.channel(`campaign:${id}:members`)
+			.channel(clientChannelName(`campaign:${id}:members`))
 			.on(
 				"postgres_changes",
 				{
@@ -597,12 +598,12 @@ const CampaignDetail = () => {
 								campaignId={id || ""}
 								canManage={hasWardenAccess}
 							/>
-							{/* Misty Pearl H5 — In-world calendar */}
+							{/* Misty Pearl H5 â€” In-world calendar */}
 							<CampaignCalendarPanel
 								campaignId={id || ""}
 								canManage={hasWardenAccess}
 							/>
-							{/* Misty Pearl H4 — Bureau Field Recorder */}
+							{/* Misty Pearl H4 â€” Bureau Field Recorder */}
 							<SessionReplayPanel
 								campaignId={id || ""}
 								canManage={hasWardenAccess}

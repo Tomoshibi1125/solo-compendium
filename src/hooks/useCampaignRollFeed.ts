@@ -1,8 +1,9 @@
-import type { RealtimeChannel } from "@supabase/supabase-js";
+﻿import type { RealtimeChannel } from "@supabase/supabase-js";
 import { useCallback, useEffect, useState } from "react";
 import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import type { Database } from "@/integrations/supabase/types";
 import { useAuth } from "@/lib/auth/authContext";
+import { clientChannelName } from "@/lib/realtimeChannel";
 
 type CampaignRollEvent =
 	Database["public"]["Tables"]["campaign_roll_events"]["Row"];
@@ -80,7 +81,7 @@ export function useCampaignRollFeed(campaignId: string) {
 
 		const subscribe = () => {
 			channel = supabase
-				.channel(`campaign-rolls:${campaignId}`)
+				.channel(clientChannelName(`campaign-rolls:${campaignId}`))
 				.on(
 					"postgres_changes",
 					{

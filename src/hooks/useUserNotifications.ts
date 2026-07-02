@@ -1,5 +1,5 @@
-/**
- * useUserNotifications — server-backed in-app notification inbox.
+﻿/**
+ * useUserNotifications â€” server-backed in-app notification inbox.
  *
  * R6 of Round 2 remediation. Layered on top of the existing local-cache
  * `useNotifications` hook so the UI stays the same. When authenticated,
@@ -8,7 +8,7 @@
  * cache exclusively.
  *
  * Production is centralized in the standalone `notify()` bridge
- * (`@/lib/notify`) — this hook is now a pure consumer (inbox reader +
+ * (`@/lib/notify`) â€” this hook is now a pure consumer (inbox reader +
  * mark-read). `markReadOnServer` calls the `mark_user_notification_read` RPC.
  *
  * Consumer entry point: returns the same shape as `useNotifications`
@@ -25,6 +25,7 @@ import {
 } from "@/hooks/useNotifications";
 import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import { logger } from "@/lib/logger";
+import { clientChannelName } from "@/lib/realtimeChannel";
 
 const KEY = ["user_notifications"] as const;
 
@@ -125,7 +126,7 @@ export function useUserNotifications() {
 			const uid = data?.user?.id;
 			if (!uid || cancelled) return;
 			channel = supabase
-				.channel(`user_notifications:${uid}`)
+				.channel(clientChannelName(`user_notifications:${uid}`))
 				.on(
 					"postgres_changes" as never,
 					{

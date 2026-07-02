@@ -1,5 +1,6 @@
+﻿import { clientChannelName } from "@/lib/realtimeChannel";
 /**
- * useVehicles — character-owned + campaign-owned vehicle hooks.
+ * useVehicles â€” character-owned + campaign-owned vehicle hooks.
  *
  * Q7 of Round 3. Mirrors `useShadowSoldiers.ts` shape: list, add, HP,
  * conditions, notes. Vehicle stats hydrate from the canonical
@@ -186,7 +187,7 @@ export function useCharacterVehicles(characterId: string | undefined) {
 	useEffect(() => {
 		if (!characterId || !isSupabaseConfigured) return;
 		const channel = supabase
-			.channel(`character-vehicles-${characterId}`)
+			.channel(clientChannelName(`character-vehicles-${characterId}`))
 			.on(
 				"postgres_changes",
 				{
@@ -232,7 +233,9 @@ export function useCharacterRequisitionProfile(
 	useEffect(() => {
 		if (!characterId || !isSupabaseConfigured) return;
 		const channel = supabase
-			.channel(`character-requisition-profile-${characterId}`)
+			.channel(
+				clientChannelName(`character-requisition-profile-${characterId}`),
+			)
 			.on(
 				"postgres_changes",
 				{

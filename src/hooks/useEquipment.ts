@@ -1,4 +1,4 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+﻿import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
@@ -26,6 +26,7 @@ import {
 	removeLocalEquipment,
 	updateLocalEquipment,
 } from "@/lib/guestStore";
+import { clientChannelName } from "@/lib/realtimeChannel";
 import {
 	filterRowsBySourcebookAccess,
 	getCharacterCampaignId,
@@ -77,7 +78,7 @@ export const useEquipment = (characterId: string) => {
 		}
 
 		const channel = supabase
-			.channel(`character-equipment-${characterId}`)
+			.channel(clientChannelName(`character-equipment-${characterId}`))
 			.on(
 				"postgres_changes",
 				{
@@ -332,7 +333,7 @@ export const useEquipment = (characterId: string) => {
 		}) => {
 			// D&D Beyond parity: validate attunement transitions before they hit
 			// the DB. Catches both "exceeded slot cap" and "item doesn't require
-			// attunement" — and lets us emit the item:attune domain event with
+			// attunement" â€” and lets us emit the item:attune domain event with
 			// accurate before/after slot counts.
 			const beforeRow = equipment.find((row) => row.id === id);
 			const isAttuneFlip =

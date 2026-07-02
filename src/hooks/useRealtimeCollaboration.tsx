@@ -1,8 +1,8 @@
 import type { RealtimeChannel } from "@supabase/supabase-js";
 import { useCallback, useEffect, useState } from "react";
 import { useToast } from "@/hooks/use-toast";
-import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth/authContext";
+import { freshSharedChannel } from "@/lib/realtimeChannel";
 
 export type CursorPosition = { x: number; y: number };
 
@@ -259,8 +259,10 @@ export function useRealtimeCollaboration(campaignId: string) {
 	useEffect(() => {
 		if (!campaignId) return;
 
-		const newChannel = supabase
-			.channel(`campaign_${campaignId}`)
+		// Shared broadcast/presence topic — tear down any stale same-name
+		// instance first (StrictMode remounts; supabase-js 2.110 throws on
+		// .on() after subscribe()).
+		const newChannel = freshSharedChannel(`campaign_${campaignId}`)
 			.on("broadcast", { event: "collaboration" }, (payload) => {
 				const event = payload.payload;
 				if (isCollaborationEvent(event)) {

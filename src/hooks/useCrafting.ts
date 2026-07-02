@@ -1,9 +1,10 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+﻿import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import type { Json } from "@/integrations/supabase/types";
 import { AppError } from "@/lib/appError";
+import { clientChannelName } from "@/lib/realtimeChannel";
 
 export type CraftingProjectStatus =
 	| "active"
@@ -132,7 +133,7 @@ export function useCrafting(characterId: string | undefined) {
 	useEffect(() => {
 		if (!characterId || !isSupabaseConfigured) return;
 		const channel = supabase
-			.channel(`character-crafting-${characterId}`)
+			.channel(clientChannelName(`character-crafting-${characterId}`))
 			.on(
 				"postgres_changes",
 				{

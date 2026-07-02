@@ -1,4 +1,4 @@
-import type { RealtimeChannel } from "@supabase/supabase-js";
+﻿import type { RealtimeChannel } from "@supabase/supabase-js";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useRef } from "react";
 import { useToast } from "@/hooks/use-toast";
@@ -7,6 +7,7 @@ import type { Json } from "@/integrations/supabase/types";
 import { useAuth } from "@/lib/auth/authContext";
 import { getLocalUserId } from "@/lib/guestStore";
 import { notify } from "@/lib/notify";
+import { clientChannelName } from "@/lib/realtimeChannel";
 import { enqueueSyncItem } from "@/lib/syncManager";
 
 export interface CampaignMessage {
@@ -153,7 +154,7 @@ export const useCampaignMessagesRealtime = (
 		}
 
 		const channel = supabase
-			.channel(`campaign-messages-${campaignId}`)
+			.channel(clientChannelName(`campaign-messages-${campaignId}`))
 			.on(
 				"postgres_changes",
 				{
@@ -279,7 +280,7 @@ export const useSendCampaignMessage = () => {
 
 			if (error) throw error;
 
-			// R6 of Round 2 — fan out chat mentions to the user_notifications
+			// R6 of Round 2 â€” fan out chat mentions to the user_notifications
 			// inbox. Scan content for `@<member-name>` tokens and produce a
 			// `mention` notification for each recipient. Best-effort: failures
 			// must not block the chat send.
@@ -310,7 +311,7 @@ export const useSendCampaignMessage = () => {
 							type: "mention",
 							title: "Mentioned in campaign chat",
 							message:
-								content.length > 120 ? `${content.slice(0, 117)}…` : content,
+								content.length > 120 ? `${content.slice(0, 117)}â€¦` : content,
 							category: "campaign",
 							payload: { campaign_id: campaignId },
 							link: `/campaigns/${campaignId}`,
@@ -318,7 +319,7 @@ export const useSendCampaignMessage = () => {
 					}
 				}
 			} catch (mentionErr) {
-				// Logged but never bubbles — chat must keep working.
+				// Logged but never bubbles â€” chat must keep working.
 				if (typeof console !== "undefined") {
 					console.warn("Mention notification fan-out failed", mentionErr);
 				}
