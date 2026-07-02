@@ -50,6 +50,21 @@ export function ActionsList({
 		}
 	};
 
+	// DDB parity: each attack with an ammunition weapon spends 1 from the
+	// matched ammo row (never below 0 — the card shows a red ×0 instead).
+	const handleAmmoSpend = async (actionId: string) => {
+		const action = actions.find((a) => a.id === actionId);
+		if (!action?.ammo || action.ammo.remaining <= 0) return;
+		try {
+			await updateEquipment({
+				id: action.ammo.equipmentId,
+				updates: { quantity: action.ammo.remaining - 1 },
+			});
+		} catch (error) {
+			console.error("Failed to spend ammunition:", error);
+		}
+	};
+
 	if (isLoading) {
 		return <div className="p-4 text-center">Loading actions...</div>;
 	}
@@ -139,6 +154,17 @@ export function ActionsList({
 											max: action.resourceMax,
 										}
 									: undefined
+							}
+							ammo={
+								action.ammo
+									? {
+											name: action.ammo.name,
+											remaining: action.ammo.remaining,
+										}
+									: undefined
+							}
+							onAttackExecuted={
+								action.ammo ? () => handleAmmoSpend(action.id) : undefined
 							}
 							onUse={() => handleUseAction(action.id, action.equipmentId)}
 							characterId={characterId}

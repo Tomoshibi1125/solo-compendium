@@ -19,6 +19,8 @@ interface InlineRollButtonProps {
 	size?: "sm" | "lg" | "default" | "icon";
 	variant?: "default" | "outline" | "ghost";
 	className?: string;
+	/** Fires after the roll executes — resource hooks (e.g. ammo spend). */
+	onRolled?: () => void;
 }
 
 export function InlineRollButton({
@@ -33,6 +35,7 @@ export function InlineRollButton({
 	size = "sm",
 	variant = "outline",
 	className,
+	onRolled,
 }: InlineRollButtonProps) {
 	const { user } = useAuth();
 	const { roll } = useCharacterSheetEnhancements(characterId);
@@ -55,6 +58,7 @@ export function InlineRollButton({
 			);
 
 			// The roll result will be displayed via toast from the hooks
+			onRolled?.();
 			return result;
 		} catch (error) {
 			console.error("Roll error:", error);

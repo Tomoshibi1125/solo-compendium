@@ -45,9 +45,13 @@ interface ActionCardProps {
 	attackRoll?: string;
 	uses?: { current: number; max: number };
 	recharge?: string;
+	/** Ammunition drawn per attack (DDB parity); shown as a count badge. */
+	ammo?: { name: string; remaining: number };
 	onRoll?: (
 		rollType: "attack" | "damage" | "check" | "save" | "effect",
 	) => void;
+	/** Fires after an internal attack roll executes (hit or miss) — ammo spend hook. */
+	onAttackExecuted?: () => void;
 
 	onUse?: () => void;
 	characterId?: string;
@@ -98,7 +102,9 @@ function ActionCardComponent({
 	attackRoll,
 	uses,
 	recharge,
+	ammo,
 	onRoll,
+	onAttackExecuted,
 	onUse,
 	characterId,
 	campaignId,
@@ -158,6 +164,7 @@ function ActionCardComponent({
 								}`;
 							}
 							formula = payload.attack.roll;
+							onAttackExecuted?.();
 						}
 					} else if (rollType === "save" && payload.save) {
 						const outcome = resolveSave(payload);
@@ -229,6 +236,7 @@ function ActionCardComponent({
 				message = rollData
 					? `${displayName} Attack: ${formatRollResult(rollData)}`
 					: `${displayName} Attack: ${formula}`;
+				onAttackExecuted?.();
 			} else if (rollType === "damage" && damage) {
 				formula = damage;
 				rollData = tryRollDiceString(formula) ?? undefined;
@@ -305,6 +313,14 @@ function ActionCardComponent({
 							Use
 						</Button>
 					)}
+					{ammo && (
+						<Badge
+							variant={ammo.remaining > 0 ? "outline" : "destructive"}
+							className="text-xs"
+						>
+							Ammo: {formatRegentVernacular(ammo.name)} ×{ammo.remaining}
+						</Badge>
+					)}
 					{displayRecharge && (
 						<Badge variant="outline" className="text-xs">
 							Recharge: {displayRecharge}
@@ -376,6 +392,7 @@ function ActionCardComponent({
 								modifier={attackBonus}
 								campaignId={campaignId}
 								className="w-full"
+								onRolled={onAttackExecuted}
 							/>
 						</div>
 					)}

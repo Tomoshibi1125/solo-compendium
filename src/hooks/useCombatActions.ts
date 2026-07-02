@@ -28,6 +28,11 @@ import {
 } from "@/lib/sovereign/applySovereign";
 import { resolveSpellActionFormula } from "@/lib/spellActionFormulas";
 import { resolveWeaponActionFormula } from "@/lib/weaponActionFormulas";
+import {
+	findAmmunitionRow,
+	getVersatileDamageDice,
+	weaponRequiresAmmunition,
+} from "@/lib/weaponAutomation";
 import type { CompendiumPower, CompendiumTechnique } from "@/types/compendium";
 import type { AbilityScore } from "@/types/core-rules";
 import {
@@ -94,6 +99,8 @@ export interface CombatAction {
 	resourceCost?: string;
 	resourceCurrent?: number;
 	resourceMax?: number;
+	/** Ammunition drawn per attack (DDB parity) — 1 spent per attack roll. */
+	ammo?: { equipmentId: string; name: string; remaining: number };
 	equipmentId?: string;
 	inscriptionId?: string;
 	payload: ActionResolutionPayload;
@@ -332,6 +339,19 @@ export const useCombatActions = (characterId: string) => {
 					: null;
 			const range = canonicalRange ?? parseRange(w);
 
+			// DDB parity: ammunition-property weapons draw from a matching ammo
+			// inventory row; each attack roll spends 1 (see ActionsList).
+			const ammoMatch = weaponRequiresAmmunition(props)
+				? findAmmunitionRow(w.name, equipment || [])
+				: null;
+			const ammo = ammoMatch
+				? {
+						equipmentId: ammoMatch.id,
+						name: ammoMatch.name,
+						remaining: ammoMatch.remaining,
+					}
+				: undefined;
+
 			result.push({
 				id: `weapon-${w.id}`,
 				name: w.name,
@@ -346,6 +366,7 @@ export const useCombatActions = (characterId: string) => {
 				formulaAbility: formula.ability,
 				formulaAbilityModifier: formula.abilityModifier,
 				attackRoll: formula.attackRoll,
+				ammo,
 				equipmentId: w.id,
 				payload: {
 					version: 1,
@@ -361,6 +382,52 @@ export const useCombatActions = (characterId: string) => {
 				},
 				sourceId: w.id,
 			});
+
+			// DDB parity: versatile weapons expose a two-handed damage variant
+			// (bare "versatile" property in the catalog → standard die step-up).
+			const versatileDice = getVersatileDamageDice(props, damageDice);
+			if (versatileDice && !isRanged) {
+				const twoHanded = resolveWeaponActionFormula({
+					abilities: derivedStats.finalAbilities,
+					proficiencyBonus: profBonus,
+					proficient: hasProf,
+					isRanged,
+					isFinesse,
+					damageDice: versatileDice,
+					attackBonus: totalAttackBonus,
+					damageBonus: totalDamageBonus,
+				});
+				result.push({
+					id: `weapon-${w.id}-2h`,
+					name: `${w.name} (Two-Handed)`,
+					type: "weapon",
+					description:
+						`${w.description || ""}\nWielded in both hands (versatile).`.trim(),
+					activation: "1 action",
+					range,
+					target: "One creature",
+					attackBonus: twoHanded.attackBonus,
+					damageRoll: twoHanded.damageRoll,
+					damageType,
+					formulaAbility: twoHanded.ability,
+					formulaAbilityModifier: twoHanded.abilityModifier,
+					attackRoll: twoHanded.attackRoll,
+					equipmentId: w.id,
+					payload: {
+						version: 1,
+						id: `weapon-${w.id}-2h`,
+						name: `${w.name} (Two-Handed)`,
+						source: { type: "item", entryId: w.id },
+						kind: "attack",
+						attack: {
+							roll: twoHanded.attackRoll,
+							...(brutalCritDice > 0 ? { critExtraDice: brutalCritDice } : {}),
+						},
+						damage: { roll: twoHanded.damageRoll, type: damageType },
+					},
+					sourceId: w.id,
+				});
+			}
 		});
 
 		// Sheet-level custom modifiers that apply to every spell/power action.
