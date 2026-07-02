@@ -255,10 +255,9 @@ export const jobs: Job[] = [
 		],
 		startingEquipment: [
 			["Chain Mail", "Leather Armor"],
-			["Longsword", "Battleaxe"],
+			["Longsword", "Battleaxe", "Warhammer", "Greatsword"],
 			["Shield"],
-			["Light Crossbow"],
-			["Crossbow Bolts (20)"],
+			["Light Crossbow and Crossbow Bolts (20)", "Javelin"],
 			["Dungeoneer's Pack", "Explorer's Pack"],
 		],
 		hitPointsAtFirstLevel: "10 + your Vitality modifier",
@@ -301,6 +300,12 @@ export const jobs: Job[] = [
 				name: "Ability Score Improvement",
 				description:
 					"You gain this at 4th, 6th, 8th, 12th, 14th, 16th, and 19th level.",
+			},
+			{
+				level: 5,
+				name: "Extra Attack",
+				description:
+					"Your combat processing splits cleanly across two intents. You can attack twice, instead of once, whenever you take the Attack action on your turn.",
 			},
 			{
 				level: 5,
@@ -503,7 +508,7 @@ export const jobs: Job[] = [
 		darkvision: 60,
 		damage_resistances: ["poison"],
 		startingEquipment: [
-			["Greataxe", "Battleaxe"],
+			["Greataxe", "Battleaxe", "Maul"],
 			["Handaxe"],
 			["Handaxe"],
 			["Explorer's Pack"],
@@ -545,6 +550,12 @@ export const jobs: Job[] = [
 				level: 4,
 				name: "Ability Score Improvement",
 				description: "You gain this at 4th, 8th, 12th, 16th, and 19th level.",
+			},
+			{
+				level: 5,
+				name: "Extra Attack",
+				description:
+					"Your overloaded musculature resets faster than a normal body allows. You can attack twice, instead of once, whenever you take the Attack action on your turn.",
 			},
 			{
 				level: 5,
@@ -769,8 +780,10 @@ export const jobs: Job[] = [
 		condition_immunities: ["magical sleep"],
 		startingEquipment: [
 			["Rapier", "Shortsword"],
-			["Shortbow"],
-			["Arrows (20)"],
+			[
+				"Shortbow and Quiver of 20 Arrows",
+				"Hand Crossbow and Crossbow Bolts (20)",
+			],
 			["Burglar's Pack", "Dungeoneer's Pack", "Explorer's Pack"],
 			["Leather Armor"],
 			["Dagger"],
@@ -957,7 +970,7 @@ export const jobs: Job[] = [
 		armorProficiencies: [],
 		weaponProficiencies: ["Simple weapons", "Shortswords"],
 		weaponChoices: [
-			["Shortsword", "Handaxe"],
+			["Shortsword", "Handaxe", "Impact Knuckles"],
 			["Darts (10)", "Sling"],
 		],
 		tool_proficiencies: [],
@@ -1020,9 +1033,9 @@ export const jobs: Job[] = [
 		languages: ["English", "Japanese"],
 		darkvision: 60,
 		startingEquipment: [
-			["Shortsword", "Handaxe"],
+			["Shortsword", "Handaxe", "Impact Knuckles"],
 			["Dungeoneer's Pack", "Explorer's Pack"],
-			["Darts (10)"],
+			["Darts (10)", "Sling and Sling Bullets (20)"],
 		],
 		hitPointsAtFirstLevel: "8 + your Vitality modifier",
 		hitPointsAtHigherLevels:
@@ -1283,7 +1296,7 @@ export const jobs: Job[] = [
 		damage_resistances: ["psychic"],
 		startingEquipment: [
 			["Quarterstaff", "Dagger"],
-			["Component Pouch", "Arcane Focus"],
+			["Component Pouch", "Mana Crystal", "Lattice Orb", "Resonance Coil"],
 			["Scholar's Pack", "Explorer's Pack"],
 			["Grimoire"],
 		],
@@ -1510,9 +1523,9 @@ export const jobs: Job[] = [
 		],
 		damage_resistances: ["force"],
 		startingEquipment: [
-			["Light Crossbow", "Dagger"],
-			["Crossbow Bolts (20)"],
-			["Component Pouch", "Arcane Focus"],
+			["Light Crossbow and Crossbow Bolts (20)", "Dagger"],
+			["Quarterstaff"],
+			["Component Pouch", "Mana Crystal", "Lattice Orb", "Resonance Coil"],
 			["Dungeoneer's Pack", "Explorer's Pack"],
 			["Dagger"],
 			["Dagger"],
@@ -1704,10 +1717,12 @@ export const jobs: Job[] = [
 			"Slings",
 			"Quarterstaffs",
 			"Light crossbows",
+			"Sickles",
+			"Scythes",
 		],
 		weaponChoices: [
 			["Quarterstaff", "Dagger"],
-			["Sickle", "Light Crossbow"],
+			["Sickle", "Light Crossbow", "Scythe"],
 		],
 		tool_proficiencies: [],
 		awakeningFeatures: [
@@ -1760,7 +1775,8 @@ export const jobs: Job[] = [
 		condition_immunities: ["frightened", "disease"],
 		startingEquipment: [
 			["Quarterstaff", "Dagger"],
-			["Component Pouch", "Arcane Focus"],
+			["Sickle", "Light Crossbow and Crossbow Bolts (20)", "Scythe"],
+			["Component Pouch", "Mana Crystal", "Lattice Orb", "Resonance Coil"],
 			["Scholar's Pack", "Explorer's Pack"],
 			["Grimoire"],
 		],
@@ -2005,10 +2021,10 @@ export const jobs: Job[] = [
 		damage_resistances: ["poison"],
 		startingEquipment: [
 			["Shield", "Spear"],
-			["Scimitar", "Mace"],
+			["Scimitar", "Mace", "Quarterstaff"],
 			["Leather Armor"],
 			["Explorer's Pack"],
-			["Primal Focus"],
+			["Gate-Beast Fang", "Anomaly Core Shard", "Bonded Tamer's Collar"],
 		],
 		hitPointsAtFirstLevel: "8 + your Vitality modifier",
 		hitPointsAtHigherLevels:
@@ -2235,16 +2251,16 @@ export const jobs: Job[] = [
 		],
 		damage_resistances: ["radiant"],
 		startingEquipment: [
-			["Longsword", "Battleaxe"],
+			["Longsword", "Battleaxe", "Warhammer"],
 			["Shield"],
-			["Javelin"],
+			["Javelin", "Light Crossbow and Crossbow Bolts (20)"],
 			["Javelin"],
 			["Javelin"],
 			["Javelin"],
 			["Javelin"],
 			["Priest's Pack", "Explorer's Pack"],
 			["Chain Mail"],
-			["Absolute Focus"],
+			["Bureau Emblem", "Herald's Insignia", "Sanctified Core"],
 		],
 		hitPointsAtFirstLevel: "10 + your Vitality modifier",
 		hitPointsAtHigherLevels:
@@ -2834,9 +2850,9 @@ export const jobs: Job[] = [
 		startingEquipment: [
 			["Rapier", "Longsword", "Dagger"],
 			["Diplomat's Pack", "Entertainer's Pack"],
-			["Musical Instrument"],
+			["Electric Guitar", "Synthesizer", "DJ Controller"],
 			["Leather Armor"],
-			["Dagger"],
+			["Dagger", "Hand Crossbow and Crossbow Bolts (20)"],
 		],
 		hitPointsAtFirstLevel: "8 + your Vitality modifier",
 		hitPointsAtHigherLevels:
@@ -3146,7 +3162,7 @@ export const jobs: Job[] = [
 			["Light Crossbow and 20 bolts", "Any simple weapon"],
 			["Priest's Pack", "Explorer's Pack"],
 			["Shield"],
-			["Absolute Focus"],
+			["Bureau Emblem", "Herald's Insignia", "Sanctified Core"],
 		],
 		hitPointsAtFirstLevel: "8 + your Vitality modifier",
 		hitPointsAtHigherLevels:
@@ -3414,7 +3430,7 @@ export const jobs: Job[] = [
 		damage_resistances: ["fire"],
 		startingEquipment: [
 			["Light Crossbow and 20 bolts", "Any simple weapon"],
-			["Component Pouch", "Pact Focus"],
+			["Component Pouch", "Mana Crystal", "Lattice Orb", "Resonance Coil"],
 			["Scholar's Pack", "Dungeoneer's Pack"],
 			["Leather Armor"],
 			["Any simple weapon"],
@@ -3750,7 +3766,7 @@ export const jobs: Job[] = [
 			["Scale Mail", "Leather Armor"],
 			["Two Shortswords", "Two Simple Melee Weapons"],
 			["Dungeoneer's Pack", "Explorer's Pack"],
-			["Longbow and Quiver of 20 Arrows"],
+			["Longbow and Quiver of 20 Arrows", "Shortbow and Quiver of 20 Arrows"],
 		],
 		hitPointsAtFirstLevel: "10 + your Vitality modifier",
 		hitPointsAtHigherLevels:

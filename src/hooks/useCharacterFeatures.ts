@@ -255,7 +255,10 @@ export function featureModifiersToCustomModifiers(
 ): CustomModifier[] {
 	const result: CustomModifier[] = [];
 	for (const feature of features) {
-		if (!feature.is_active || !feature.modifiers) continue;
+		// `modifiers` is a Json column: fighting styles and rune grants store
+		// object-shaped payloads (handled by featEffectParser / rune promotion),
+		// so only array-shaped entries belong to this flat-modifier path.
+		if (!feature.is_active || !Array.isArray(feature.modifiers)) continue;
 		for (const mod of feature.modifiers) {
 			result.push({
 				id: `${feature.id}-${mod.type}-${mod.target || "all"}`,
@@ -304,9 +307,9 @@ export function featureEffectsToCustomModifiers(
 
 		// Skip preset HP if the feature already authored an hp-max modifier
 		// (avoid double counting).
-		const hasAuthoredHpMod = (feature.modifiers ?? []).some(
-			(m) => m.type === "hp-max" || m.type === "hp_max",
-		);
+		const hasAuthoredHpMod = (
+			Array.isArray(feature.modifiers) ? feature.modifiers : []
+		).some((m) => m.type === "hp-max" || m.type === "hp_max");
 
 		for (const effect of structured) {
 			switch (effect.kind) {

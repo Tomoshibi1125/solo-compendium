@@ -43,7 +43,7 @@ const DEFAULT_TEMPLATES: CharacterTemplate[] = [
 		background: "Scholar",
 		abilities: { STR: 8, AGI: 12, VIT: 10, INT: 15, SENSE: 13, PRE: 14 },
 		skills: ["Mana Flow", "Dimensional Lore"],
-		equipment: { 0: "Quarterstaff", 1: "Arcane Focus", 2: "Scholar Pack" },
+		equipment: { 0: "Quarterstaff", 1: "Mana Crystal", 2: "Scholar Pack" },
 	},
 ];
 

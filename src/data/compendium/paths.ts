@@ -146,6 +146,12 @@ export const paths: Path[] = [
 					"Roll initiative with 0 tactical dice â†’ regain 1. The Absolute never stops observing.",
 				level: 15,
 			},
+			{
+				name: "Perfected Tactical Dice",
+				description:
+					"Tactical dice upgrade to d12. Your reads are so far ahead of the fight that opponents feel scripted.",
+				level: 18,
+			},
 		],
 		abilities: [
 			{

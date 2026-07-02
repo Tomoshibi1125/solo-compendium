@@ -10,7 +10,9 @@
 import { describe, expect, it } from "vitest";
 import {
 	findAmmunitionRow,
+	getStrikerMartialArtsDie,
 	getVersatileDamageDice,
+	pickLargerDamageDice,
 	weaponRequiresAmmunition,
 } from "@/lib/weaponAutomation";
 
@@ -81,5 +83,36 @@ describe("getVersatileDamageDice", () => {
 		expect(getVersatileDamageDice(["finesse"], "1d8")).toBeNull();
 		expect(getVersatileDamageDice(["versatile"], "1d12")).toBeNull();
 		expect(getVersatileDamageDice(["versatile"], null)).toBeNull();
+	});
+});
+
+describe("getStrikerMartialArtsDie (Monk progression parity)", () => {
+	it("follows the Striker unarmed-damage table: d4, d6@5, d8@11, d10@17", () => {
+		expect(getStrikerMartialArtsDie(1)).toBe("1d4");
+		expect(getStrikerMartialArtsDie(4)).toBe("1d4");
+		expect(getStrikerMartialArtsDie(5)).toBe("1d6");
+		expect(getStrikerMartialArtsDie(10)).toBe("1d6");
+		expect(getStrikerMartialArtsDie(11)).toBe("1d8");
+		expect(getStrikerMartialArtsDie(16)).toBe("1d8");
+		expect(getStrikerMartialArtsDie(17)).toBe("1d10");
+		expect(getStrikerMartialArtsDie(20)).toBe("1d10");
+	});
+});
+
+describe("pickLargerDamageDice (monk weapon rule)", () => {
+	it("keeps the weapon die when it beats the martial-arts die", () => {
+		expect(pickLargerDamageDice("1d6", "1d4")).toBe("1d6");
+		expect(pickLargerDamageDice("2d6", "1d10")).toBe("2d6");
+	});
+
+	it("swaps in the martial-arts die when it is higher", () => {
+		expect(pickLargerDamageDice("1d4", "1d8")).toBe("1d8");
+		expect(pickLargerDamageDice("1d6", "1d10")).toBe("1d10");
+	});
+
+	it("prefers the weapon die on ties and falls back on missing dice", () => {
+		expect(pickLargerDamageDice("1d6", "1d6")).toBe("1d6");
+		expect(pickLargerDamageDice(null, "1d8")).toBe("1d8");
+		expect(pickLargerDamageDice(undefined, "1d4")).toBe("1d4");
 	});
 });

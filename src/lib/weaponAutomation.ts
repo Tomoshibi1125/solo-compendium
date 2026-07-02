@@ -81,6 +81,41 @@ export function findAmmunitionRow(
 	};
 }
 
+/**
+ * Monk-style martial-arts die for the Striker job (RA Monk analog). Striker
+ * unarmed strikes and `striker`-property weapons scale with this die; the
+ * Striker Stance fighting style does NOT — its written 1d4/1d6 stays flat.
+ */
+export function getStrikerMartialArtsDie(level: number): string {
+	if (level >= 17) return "1d10";
+	if (level >= 11) return "1d8";
+	if (level >= 5) return "1d6";
+	return "1d4";
+}
+
+const diceAverage = (dice: string): number => {
+	const parsed = dice.match(/^(\d+)d(\d+)$/i);
+	if (!parsed) return 0;
+	const count = parseInt(parsed[1], 10);
+	const size = parseInt(parsed[2], 10);
+	return (count * (size + 1)) / 2;
+};
+
+/**
+ * The better of a weapon's own damage dice and a scaling die (monk weapon
+ * rule: use the martial-arts die in place of the weapon's damage when it is
+ * higher). Falls back to whichever side parses when the other does not.
+ */
+export function pickLargerDamageDice(
+	weaponDice: string | null | undefined,
+	scalingDice: string,
+): string {
+	if (!weaponDice) return scalingDice;
+	return diceAverage(weaponDice) >= diceAverage(scalingDice)
+		? weaponDice
+		: scalingDice;
+}
+
 const VERSATILE_DIE_STEP: Record<string, string> = {
 	d4: "d6",
 	d6: "d8",

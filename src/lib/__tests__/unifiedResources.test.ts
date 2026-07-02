@@ -274,4 +274,32 @@ describe("pack quantities (DDB parity: Arrows (20) = 20 arrows)", () => {
 			{ name: "Explorer's Pack", quantity: 1 },
 		]);
 	});
+
+	it("maps bare ammo counts onto the canonical ammo items", () => {
+		expect(expandEquipmentGrant("Light Crossbow and 20 bolts")).toEqual([
+			{ name: "Light Crossbow", quantity: 1 },
+			{ name: "Crossbow Bolts (20)", quantity: 20 },
+		]);
+		expect(expandEquipmentGrant("20 arrows")).toEqual([
+			{ name: "Arrows (20)", quantity: 20 },
+		]);
+	});
+
+	it("expands word-number multiples into counted singular grants", () => {
+		expect(expandEquipmentGrant("Two Daggers")).toEqual([
+			{ name: "Dagger", quantity: 2 },
+		]);
+		expect(expandEquipmentGrant("Two Shortswords")).toEqual([
+			{ name: "Shortsword", quantity: 2 },
+		]);
+	});
+
+	it("never expands choice-of-any category placeholders", () => {
+		expect(expandEquipmentGrant("Two Simple Melee Weapons")).toEqual([
+			{ name: "Two Simple Melee Weapons", quantity: 1 },
+		]);
+		expect(expandEquipmentGrant("Any simple weapon")).toEqual([
+			{ name: "Any simple weapon", quantity: 1 },
+		]);
+	});
 });

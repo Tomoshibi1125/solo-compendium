@@ -350,12 +350,15 @@ export async function autoUpdateFeatureUses(
 	if (!features) return;
 
 	for (const feature of features) {
-		// Use type-safe property extraction from JSON field
-		const modifiers = feature.modifiers as Array<{
-			type: string;
-			target: string;
-			value: string | number | boolean;
-		}> | null;
+		// `modifiers` is a Json column; fighting styles and rune grants store
+		// object-shaped payloads, so only array-shaped values carry uses formulas.
+		const modifiers = Array.isArray(feature.modifiers)
+			? (feature.modifiers as Array<{
+					type: string;
+					target: string;
+					value: string | number | boolean;
+				}>)
+			: null;
 		const usesFormula = modifiers?.find(
 			(m) => m.type === "resource" && m.target === "uses_formula",
 		)?.value as string | undefined;
@@ -4091,10 +4094,18 @@ export async function addStartingEquipment(
 			const itemName = equipmentChoices?.[groupIndex] ?? equipmentGroup[0];
 			if (!itemName) continue;
 
-			// Direct compendium names win; only unresolved names are expanded
-			// ("Longbow and Quiver of 20 Arrows" â†’ Longbow + Arrows (20)). Pack
+			// Exact compendium names win; everything else is expanded ("Longbow
+			// and Quiver of 20 Arrows" â†’ Longbow + Arrows (20)). Only an EXACT
+			// name match may short-circuit expansion: the fuzzy contains-lookup
+			// would swallow compound options whole ("Light Crossbow and Crossbow
+			// Bolts (20)" contains "Light Crossbow") and drop the ammo. Pack
 			// names carry their real quantity â€” "Arrows (20)" is 20 arrows, not 1.
-			const grants = findStaticItemByName(itemName)
+			const directMatch = findStaticItemByName(itemName);
+			const isExactMatch =
+				!!directMatch &&
+				normalizeItemLookupName(directMatch.name) ===
+					normalizeItemLookupName(itemName);
+			const grants = isExactMatch
 				? [parsePackQuantity(itemName)]
 				: expandEquipmentGrant(itemName);
 
@@ -4174,7 +4185,34 @@ export async function addStartingEquipment(
 
 		for (const itemName of equipmentItems) {
 			const item = findStaticItemByName(itemName);
-			if (!item) continue;
+			if (!item) {
+				// DDB parity: background flavor gear with no compendium entry ("A
+				// token of someone you lost") still lands in the inventory as a
+				// plain gear row instead of silently vanishing.
+				const grant = parsePackQuantity(itemName);
+				if (preexistingEquipmentNames.has(grant.name)) continue;
+				const flavorRow = {
+					item_id: null,
+					name: grant.name,
+					item_type: "gear",
+					quantity: grant.quantity,
+					is_equipped: false,
+					sigil_slots_base: 0,
+				};
+				if (isLocalCharacterId(characterId)) {
+					addLocalEquipment(characterId, flavorRow);
+				} else {
+					const { error: flavorErr } = await supabase
+						.from("character_equipment")
+						.insert({ character_id: characterId, ...flavorRow });
+					if (flavorErr)
+						console.warn(
+							"addStartingEquipment: bg flavor equipment insert failed",
+							flavorErr,
+						);
+				}
+				continue;
+			}
 
 			// Respect sourcebook entitlements for the canonical item.
 			if (!(await isSourcebookAccessible(item.source_book, { campaignId }))) {

@@ -19,6 +19,8 @@ import { buildItemProperties } from "@/lib/characterCreation";
 import { sumCustomModifiers } from "@/lib/customModifiers";
 import {
 	appendAbilityModifierToDamageFormula,
+	buildAttackRollFormula,
+	formatSignedNumber,
 	resolvePowerActionFormula,
 } from "@/lib/powerActionFormulas";
 import {
@@ -30,11 +32,13 @@ import { resolveSpellActionFormula } from "@/lib/spellActionFormulas";
 import { resolveWeaponActionFormula } from "@/lib/weaponActionFormulas";
 import {
 	findAmmunitionRow,
+	getStrikerMartialArtsDie,
 	getVersatileDamageDice,
+	pickLargerDamageDice,
 	weaponRequiresAmmunition,
 } from "@/lib/weaponAutomation";
 import type { CompendiumPower, CompendiumTechnique } from "@/types/compendium";
-import type { AbilityScore } from "@/types/core-rules";
+import { type AbilityScore, getAbilityModifier } from "@/types/core-rules";
 import {
 	findCanonicalForRow,
 	useCanonicalEquipmentMap,
@@ -277,6 +281,17 @@ export const useCombatActions = (characterId: string) => {
 			character.level ?? 1,
 		);
 
+		// Monk parity: the Striker job scales unarmed strikes and
+		// `striker`-property weapons with a martial-arts die; the Striker Stance
+		// fighting style only grants its written flat 1d4/1d6 + finesse
+		// treatment, never the scaling.
+		const isStrikerJob =
+			(character.job ?? "").trim().toLowerCase() === "striker";
+		const martialArtsDie = getStrikerMartialArtsDie(character.level ?? 1);
+		const hasStrikerStance = charFeatures.some((f) =>
+			(f.name ?? "").toLowerCase().includes("striker stance"),
+		);
+
 		weapons.forEach((w) => {
 			const canonical = findCanonicalForRow(canonicalEquipmentMap, w.name);
 			const canonicalProps = canonical
@@ -288,7 +303,12 @@ export const useCombatActions = (characterId: string) => {
 			const props = [...rowProps, ...canonicalProps].map((p) =>
 				p.toLowerCase(),
 			);
-			const isFinesse = props.includes("finesse");
+			// `striker`-property weapons count as finesse for the Striker job and
+			// Striker Stance holders; only the Striker job scales their die.
+			const isStrikerWeapon = props.includes("striker");
+			const isFinesse =
+				props.includes("finesse") ||
+				(isStrikerWeapon && (isStrikerJob || hasStrikerStance));
 			const weaponType = canonical?.weapon_type?.toLowerCase() ?? "";
 			const isRanged =
 				props.some((p) => p.includes("ranged")) ||
@@ -304,10 +324,16 @@ export const useCombatActions = (characterId: string) => {
 					: typeof canonical?.damage === "number"
 						? String(canonical.damage)
 						: null;
-			const damageDice =
+			const baseDamageDice =
 				canonicalDamage?.match(/(\d+d\d+)/)?.[1] ??
 				w.description?.match(/(\d+d\d+)/)?.[1] ??
 				null;
+			// Monk weapon rule: a Striker swaps in the martial-arts die when it
+			// beats the weapon's own die.
+			const damageDice =
+				isStrikerJob && isStrikerWeapon
+					? pickLargerDamageDice(baseDamageDice, martialArtsDie)
+					: baseDamageDice;
 			// `sigilBonuses` is seeded from `equipmentMods` upstream, so it already
 			// folds equipment + sigil contributions. Custom-modifier attack/damage
 			// bonuses are added here so sheet-level adjustments reach weapon rolls.
@@ -429,6 +455,97 @@ export const useCombatActions = (characterId: string) => {
 				});
 			}
 		});
+
+		// DDB parity: every character always has an Unarmed Strike attack.
+		// 5e RAW: proficient, STR-based, flat 1 + STR bludgeoning. The Striker
+		// job upgrades it to the scaling martial-arts die on the better of
+		// STR/AGI; Striker Stance holders get the style's written flat die
+		// (1d4, or 1d6 with no weapon or shield in hand) on AGI or VIT.
+		// Equipment/sigil weapon bonuses deliberately do not reach bare fists;
+		// sheet-level custom attack/damage modifiers do.
+		{
+			const shieldEquipped = (equipment || []).some(
+				(e) =>
+					e.is_equipped &&
+					((e.item_type ?? "").toLowerCase() === "shield" ||
+						e.name.toLowerCase().includes("shield")),
+			);
+			const handsFree = weapons.length === 0 && !shieldEquipped;
+
+			let unarmedAbility: AbilityScore;
+			let unarmedAbilityModifier: number;
+			let unarmedDamageRoll: string;
+			let unarmedNote: string;
+
+			if (isStrikerJob) {
+				const formula = resolveWeaponActionFormula({
+					abilities: derivedStats.finalAbilities,
+					proficiencyBonus: profBonus,
+					proficient: true,
+					isRanged: false,
+					isFinesse: true,
+					damageDice: martialArtsDie,
+					attackBonus: customWeaponAttackBonus,
+					damageBonus: customWeaponDamageBonus,
+				});
+				unarmedAbility = formula.ability;
+				unarmedAbilityModifier = formula.abilityModifier;
+				unarmedDamageRoll = formula.damageRoll;
+				unarmedNote = `Martial-arts die (${martialArtsDie}) scales with Striker level.`;
+			} else if (hasStrikerStance) {
+				const agi = getAbilityModifier(derivedStats.finalAbilities.AGI);
+				const vit = getAbilityModifier(derivedStats.finalAbilities.VIT);
+				unarmedAbility = vit > agi ? "VIT" : "AGI";
+				unarmedAbilityModifier = Math.max(agi, vit);
+				unarmedDamageRoll = `${handsFree ? "1d6" : "1d4"}${formatSignedNumber(
+					unarmedAbilityModifier + customWeaponDamageBonus,
+				)}`;
+				unarmedNote =
+					"Striker Stance: AGI or VIT; 1d4 (1d6 with no weapon or shield in hand).";
+			} else {
+				const str = getAbilityModifier(derivedStats.finalAbilities.STR);
+				unarmedAbility = "STR";
+				unarmedAbilityModifier = str;
+				unarmedDamageRoll = String(
+					Math.max(0, 1 + str + customWeaponDamageBonus),
+				);
+				unarmedNote = "1 + STR bludgeoning.";
+			}
+
+			const unarmedAttackBonus =
+				unarmedAbilityModifier + profBonus + customWeaponAttackBonus;
+			const unarmedAttackRoll = buildAttackRollFormula(unarmedAttackBonus);
+			// Force-Laced Strikes (Striker L6): unarmed strikes count as magical
+			// and deal force damage instead of bludgeoning.
+			const unarmedDamageType =
+				isStrikerJob && (character.level ?? 1) >= 6 ? "force" : "bludgeoning";
+
+			result.push({
+				id: "unarmed-strike",
+				name: "Unarmed Strike",
+				type: "weapon",
+				description: `A punch, kick, elbow, or knee. ${unarmedNote}`,
+				activation: "1 action",
+				range: "5 ft",
+				target: "One creature",
+				attackBonus: unarmedAttackBonus,
+				damageRoll: unarmedDamageRoll,
+				damageType: unarmedDamageType,
+				formulaAbility: unarmedAbility,
+				formulaAbilityModifier: unarmedAbilityModifier,
+				attackRoll: unarmedAttackRoll,
+				payload: {
+					version: 1,
+					id: "unarmed-strike",
+					name: "Unarmed Strike",
+					source: { type: "item", entryId: "unarmed-strike" },
+					kind: "attack",
+					attack: { roll: unarmedAttackRoll },
+					damage: { roll: unarmedDamageRoll, type: unarmedDamageType },
+				},
+				sourceId: "unarmed-strike",
+			});
+		}
 
 		// Sheet-level custom modifiers that apply to every spell/power action.
 		const customPowerAttackBonus =

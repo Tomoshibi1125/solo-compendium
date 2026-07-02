@@ -52,6 +52,34 @@ describe("awakening + feat modifier wiring", () => {
 		expect(sumCustomModifiers(custom, "hp-max")).toBe(5);
 	});
 
+	it("skips object-shaped modifiers (fighting styles, rune grants) without throwing", () => {
+		// Fighting styles store `modifiers` as an object payload for the
+		// featEffectParser path; rune grants do the same for promotion state.
+		// The flat-modifier converter must skip them, not crash the sheet.
+		const features: CharacterFeature[] = [
+			buildFeature({
+				id: "f-style",
+				character_id: "c1",
+				name: "Fighting Style: Defense",
+				is_active: true,
+				modifiers: {
+					acBonusInArmor: 1,
+				} as unknown as CharacterFeature["modifiers"],
+			}),
+			buildFeature({
+				id: "f-array",
+				character_id: "c1",
+				name: "Tough",
+				is_active: true,
+				modifiers: [{ type: "hp-max", value: 5, source: "Tough" }],
+			}),
+		];
+
+		const custom = featureModifiersToCustomModifiers(features);
+		expect(custom).toHaveLength(1);
+		expect(sumCustomModifiers(custom, "hp-max")).toBe(5);
+	});
+
 	it("applies advantage modifiers to the global roll resolver", () => {
 		const modifiers: FeatureModifier[] = [
 			{

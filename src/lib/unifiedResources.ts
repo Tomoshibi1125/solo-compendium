@@ -398,6 +398,17 @@ export interface EquipmentGrant {
 const PACK_SUFFIX_RE = /\((\d+)\)\s*$/;
 const OF_N_RE = /\bof\s+(\d+)\s+\w+/i;
 const QUIVER_OF_ARROWS_RE = /^quiver of (\d+) arrows$/i;
+const NUMERIC_AMMO_RE = /^(\d+)\s+(bolts?|arrows?)$/i;
+const WORD_COUNT_RE = /^(two|three|four|five)\s+(.+)$/i;
+const WORD_COUNTS: Record<string, number> = {
+	two: 2,
+	three: 3,
+	four: 4,
+	five: 5,
+};
+// Choice-of-any placeholders ("Two Simple Melee Weapons", "Any simple weapon")
+// name a category, not an item — never expand them into counted grants.
+const CATEGORY_PLACEHOLDER_RE = /\b(any|simple|martial)\b.*weapons?$/i;
 
 /**
  * Real quantity for a pack-named item. "Arrows (20)" → 20 (name kept — it is
@@ -414,10 +425,11 @@ export function parsePackQuantity(name: string): EquipmentGrant {
 
 /**
  * Expand a starting-equipment grant string into concrete item grants.
- * Handles "A and B" compounds and maps "Quiver of N Arrows" onto the
- * canonical "Arrows (N)" item (the quiver is part of that item — see its
- * compendium description). Callers should only expand names that did not
- * resolve directly in the compendium.
+ * Handles "A and B" compounds, maps "Quiver of N Arrows" onto the canonical
+ * "Arrows (N)" item (the quiver is part of that item — see its compendium
+ * description), bare ammo counts ("20 bolts" → "Crossbow Bolts (20)"), and
+ * word-number multiples ("Two Daggers" → Dagger ×2). Callers should only
+ * expand names that did not resolve directly in the compendium.
  */
 export function expandEquipmentGrant(raw: string): EquipmentGrant[] {
 	const parts = raw
@@ -431,6 +443,21 @@ export function expandEquipmentGrant(raw: string): EquipmentGrant[] {
 			return {
 				name: `Arrows (${quiver[1]})`,
 				quantity: parseInt(quiver[1], 10),
+			};
+		}
+		const ammo = part.match(NUMERIC_AMMO_RE);
+		if (ammo) {
+			const isBolt = /^bolt/i.test(ammo[2]);
+			return {
+				name: `${isBolt ? "Crossbow Bolts" : "Arrows"} (${ammo[1]})`,
+				quantity: parseInt(ammo[1], 10),
+			};
+		}
+		const counted = part.match(WORD_COUNT_RE);
+		if (counted && !CATEGORY_PLACEHOLDER_RE.test(part)) {
+			return {
+				name: counted[2].replace(/s$/i, ""),
+				quantity: WORD_COUNTS[counted[1].toLowerCase()] ?? 1,
 			};
 		}
 		return parsePackQuantity(part);
