@@ -1,28 +1,18 @@
 # Rift Image Replacement Plan
 
-Generated: 2026-07-01T22:38:57.949Z
+Generated: 2026-07-02T03:22:00.097Z
 
 ## Overview
 
-- Audited image references: 1340
-- Likely placeholders: 510
-- High-priority replacements: 1
+- Audited image references: 1339
+- Likely placeholders: 509
+- High-priority replacements: 0
 - Medium-priority replacements: 523
-- Prompt records: 1132
+- Prompt records: 1131
 
 The audit uses repo lore first. Global tone comes from `docs/rift-ascendant-world-lore.md`; Gloamreach prompts use current Run Silent / The Quiet sandbox text where present.
 
 ## High Priority
-
-### Resonance Coil
-
-- Source: `/generated/compendium/items/item-1011.webp`
-- Type: item
-- Exists: no
-- Reason: Referenced image is missing on disk.
-- Mode: txt2img
-- Recommended size: 1024x1024
-- Apply target: `/generated/compendium/items/item-item-resonance-coil-14hltb.webp`
 
 ## Medium Priority
 

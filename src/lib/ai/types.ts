@@ -168,7 +168,8 @@ export const DEFAULT_AI_SERVICES: AIService[] = [
 			"generate-optimizations",
 		],
 		endpoint: "",
-		model: "gemini-2.5-flash",
+		// Display label only — the proxy's server-side ladder picks the model.
+		model: "gemini-3.5-flash",
 		maxTokens: 4096,
 		temperature: 0.8,
 		enabled: true,

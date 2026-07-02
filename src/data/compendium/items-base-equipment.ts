@@ -8736,7 +8736,9 @@ export const baseEquipment: Item[] = [
 			"A palm-sized coil of conductive filament that hums to a caster's mana, tightening loose workings into shape.",
 		rarity: "common",
 		type: "wondrous",
-		image: "/generated/compendium/items/item-1011.webp",
+		// item-1011 was never generated; share the arcane-focus art until a
+		// bespoke coil render lands (tracked by the asset audit's placeholder pool).
+		image: "/generated/compendium/items/item-0998.webp",
 		weight: 1,
 		value: { currency: "crystal", amount: 100 },
 		item_type: "misc",

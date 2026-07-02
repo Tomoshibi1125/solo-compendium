@@ -2,29 +2,6 @@
 
 Generated candidates start as pending. Edit candidate sidecar JSON after review to apply a replacement.
 
-## Resonance Coil
-
-- Prompt ID: `item-item-resonance-coil-aqglzn`
-- Original: `/generated/compendium/items/item-1011.webp`
-- Candidate: pending
-- Apply target: `/generated/compendium/items/item-item-resonance-coil-aqglzn.webp`
-- Type: item
-- Category: image-item
-- Source category: item
-- Priority: high
-- Checkpoint: stabilityai/stable-diffusion-xl-base-1.0
-- Seed: 3241677482
-- Recommended replacement: pending
-- Notes: _pending review_
-
-<details><summary>Prompt</summary>
-
-Rift Ascendant inventory asset, one single centered complete Resonance Coil object only, isolated object render on a simple dark neutral background, no person, no hands, no creature, no character, no landscape, no multiple views, no parts sheet, one complete object only, the object itself is the only subject, no living figure, no creature body, not a product sheet, Resonance Coil. Rift Ascendant is modern supernatural urban fantasy in the early normalized Rift Age; the material world is functional, commercial, Bureau-regulated, and media-aware. A palm-sized coil of conductive filament that hums to a caster's mana, tightening loose workings into shape. aetheric, polished tabletop RPG inventory art, Korean action webtoon-inspired dark fantasy rendering, painterly realism, crisp ink-like edges, cinematic rim lighting, black deep blue violet silver palette with rift-white highlights, original design, high readability for app card UI, powerful object recovered from or shaped by Rift forces, Essence-infused materials, modern dark fantasy item design, clear object silhouette, centered composition, polished inventory art, no text, no logo
-
-Negative: person, people, humanoid, owner, adventurer, warrior, hands, person holding object, gun, rifle, firearm, weapon, armor, helmet, character portrait, human face, open case, visible contents, loose tools, accessories, baked letters, caption, multiple objects, many variants, product sheet, parts sheet, exploded view, multiple camera angles, living creature, animal, monster, bird wings, tree, plant, roots, landscape-only image, generic sword, generic potion, random jewelry, stock icon, cluttered background, unreadable small details, bad perspective, blurry, low resolution, text, watermark, logo, direct imitation of a named franchise, copyrighted character, official logo, trademarked symbol, celebrity likeness
-
-</details>
-
 ## Lattice Stable Pendant
 
 - Prompt ID: `item-item-lattice-stable-pendant-vmfm63`
@@ -4597,6 +4574,29 @@ Negative: multiple weapons, duplicate weapon, secondary weapons, many variants, 
 <details><summary>Prompt</summary>
 
 Rift Ascendant inventory asset, one single centered complete Titanium Trench Coat object only, isolated object render on a simple dark neutral background, no person, no hands, no creature, no character, no landscape, no multiple views, no parts sheet, one complete object only, the object itself is the only subject, no living figure, no creature body, not a product sheet, Titanium Trench Coat. Rift Ascendant is modern supernatural urban fantasy in the early normalized Rift Age; the material world is functional, commercial, Bureau-regulated, and media-aware. A reinforced kevlar-and-mana-weave layer. Cheap, common, effective. On the requisition manifest it reads simply: Titanium Trench Coat. standard, polished tabletop RPG inventory art, Korean action webtoon-inspired dark fantasy rendering, painterly realism, crisp ink-like edges, cinematic rim lighting, black deep blue violet silver palette with rift-white highlights, original design, high readability for app card UI, powerful object recovered from or shaped by Rift forces, Essence-infused materials, modern dark fantasy item design, clear object silhouette, centered composition, polished inventory art, no text, no logo
+
+Negative: person, people, humanoid, owner, adventurer, warrior, hands, person holding object, gun, rifle, firearm, weapon, armor, helmet, character portrait, human face, open case, visible contents, loose tools, accessories, baked letters, caption, multiple objects, many variants, product sheet, parts sheet, exploded view, multiple camera angles, living creature, animal, monster, bird wings, tree, plant, roots, landscape-only image, generic sword, generic potion, random jewelry, stock icon, cluttered background, unreadable small details, bad perspective, blurry, low resolution, text, watermark, logo, direct imitation of a named franchise, copyrighted character, official logo, trademarked symbol, celebrity likeness
+
+</details>
+
+## Mana Treated Cord Charm
+
+- Prompt ID: `item-item-mana-treated-cord-charm-yg4bsw`
+- Original: `/generated/compendium/items/item-0188.webp`
+- Candidate: pending
+- Apply target: `/generated/compendium/items/item-item-mana-treated-cord-charm-yg4bsw.webp`
+- Type: item
+- Category: image-item
+- Source category: item
+- Priority: medium
+- Checkpoint: stabilityai/stable-diffusion-xl-base-1.0
+- Seed: 2752309835
+- Recommended replacement: pending
+- Notes: _pending review_
+
+<details><summary>Prompt</summary>
+
+Rift Ascendant inventory asset, one single centered complete Mana Treated Cord Charm object only, isolated object render on a simple dark neutral background, no person, no hands, no creature, no character, no landscape, no multiple views, no parts sheet, one complete object only, the object itself is the only subject, no living figure, no creature body, not a product sheet, Mana Treated Cord Charm. Rift Ascendant is modern supernatural urban fantasy in the early normalized Rift Age; the material world is functional, commercial, Bureau-regulated, and media-aware. A neck-worn focus that resonates lightly with the bearer's mana. Stamped and logged as the Mana-Treated Cord Charm. standard, polished tabletop RPG inventory art, Korean action webtoon-inspired dark fantasy rendering, painterly realism, crisp ink-like edges, cinematic rim lighting, black deep blue violet silver palette with rift-white highlights, original design, high readability for app card UI, powerful object recovered from or shaped by Rift forces, Essence-infused materials, modern dark fantasy item design, clear object silhouette, centered composition, polished inventory art, no text, no logo
 
 Negative: person, people, humanoid, owner, adventurer, warrior, hands, person holding object, gun, rifle, firearm, weapon, armor, helmet, character portrait, human face, open case, visible contents, loose tools, accessories, baked letters, caption, multiple objects, many variants, product sheet, parts sheet, exploded view, multiple camera angles, living creature, animal, monster, bird wings, tree, plant, roots, landscape-only image, generic sword, generic potion, random jewelry, stock icon, cluttered background, unreadable small details, bad perspective, blurry, low resolution, text, watermark, logo, direct imitation of a named franchise, copyrighted character, official logo, trademarked symbol, celebrity likeness
 
