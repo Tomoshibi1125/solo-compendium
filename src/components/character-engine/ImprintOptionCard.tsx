@@ -1,4 +1,4 @@
-import { Check } from "lucide-react";
+import { Check, Info } from "lucide-react";
 import type React from "react";
 import { AutoLinkText } from "@/components/compendium/AutoLinkText";
 import { Badge } from "@/components/ui/badge";
@@ -17,6 +17,12 @@ interface ImprintOptionCardProps {
 	actionPreview?: string;
 	selected: boolean;
 	disabled?: boolean;
+	/**
+	 * Why the card can't be picked right now (e.g. "max reached"). Shown
+	 * inline on the disabled card and as the hover tooltip, so the block is
+	 * explained instead of silently greyed out.
+	 */
+	disabledReason?: string;
 	testId?: string;
 	onClick: () => void;
 	children?: React.ReactNode;
@@ -36,10 +42,12 @@ export function ImprintOptionCard({
 	actionPreview,
 	selected,
 	disabled = false,
+	disabledReason,
 	testId,
 	onClick,
 	children,
 }: ImprintOptionCardProps) {
+	const showDisabledReason = disabled && !selected && Boolean(disabledReason);
 	return (
 		<button
 			type="button"
@@ -48,6 +56,7 @@ export function ImprintOptionCard({
 			aria-pressed={selected}
 			onClick={onClick}
 			disabled={disabled}
+			title={showDisabledReason ? disabledReason : undefined}
 			className={cn(
 				"relative text-left p-4 rounded-lg border transition-all",
 				selected
@@ -100,6 +109,15 @@ export function ImprintOptionCard({
 			{actionPreview && (
 				<div className="mt-2 text-xs text-primary/80 font-mono bg-primary/5 border border-primary/10 rounded px-2 py-1">
 					{actionPreview}
+				</div>
+			)}
+			{showDisabledReason && (
+				<div
+					data-testid="imprint-disabled-reason"
+					className="mt-2 flex items-center gap-1.5 text-xs text-warning"
+				>
+					<Info className="h-3.5 w-3.5 shrink-0" />
+					{disabledReason}
 				</div>
 			)}
 			{children}

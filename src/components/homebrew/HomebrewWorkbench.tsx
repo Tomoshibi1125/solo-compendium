@@ -5,6 +5,7 @@ import {
 	Plus,
 	Save,
 	Share2,
+	Sparkles,
 	Trash2,
 	Upload,
 } from "lucide-react";
@@ -35,6 +36,7 @@ import {
 	useSaveHomebrewContent,
 	useSetHomebrewStatus,
 } from "@/hooks/useHomebrewContent";
+import { aiService } from "@/lib/ai/aiService";
 import { homebrewRecordToMarkdown } from "@/lib/contentExport";
 import { notifyAsync } from "@/lib/notify";
 
@@ -236,6 +238,58 @@ export function HomebrewWorkbench() {
 		}
 	};
 
+	const [aiDrafting, setAiDrafting] = useState(false);
+
+	// AI-draft the description from the name/type/tags. The prompt inherits
+	// the RA canon system prompt via generate-content, so output stays
+	// setting-native (modern Meridian, mana, gates — no medieval defaults).
+	const handleAiDraftDescription = async () => {
+		if (!name.trim()) {
+			toast({
+				title: "Name the content first",
+				description: "The AI drafts from the name, type, and tags.",
+				variant: "destructive",
+			});
+			return;
+		}
+		setAiDrafting(true);
+		try {
+			const tags = parseTags(tagsText);
+			const response = await aiService.processRequest({
+				service: aiService.getConfiguration().defaultService,
+				type: "generate-content",
+				input: `Write a 2-3 sentence compendium description for a homebrew ${contentType} named "${name.trim()}"${tags.length > 0 ? ` (themes: ${tags.join(", ")})` : ""}. Rules-neutral flavor prose only — no stat blocks.`,
+				context: {
+					contentType: "homebrew-description",
+					tone: "epic",
+					length: "short",
+					universe: "Rift Ascendant",
+				},
+			});
+			if (!response.success) {
+				throw new Error(response.error || "Generation failed.");
+			}
+			let text = typeof response.data === "string" ? response.data : "";
+			const dataObj = response.data as { content?: string; output?: string };
+			if (!text && typeof dataObj?.content === "string") text = dataObj.content;
+			if (!text && typeof dataObj?.output === "string") text = dataObj.output;
+			if (!text) throw new Error("Received empty response from AI.");
+			setDescription(text.trim());
+			toast({
+				title: "Description drafted",
+				description: "Feel free to edit the result before saving.",
+			});
+		} catch (error) {
+			toast({
+				title: "AI draft failed",
+				description: error instanceof Error ? error.message : String(error),
+				variant: "destructive",
+			});
+		} finally {
+			setAiDrafting(false);
+		}
+	};
+
 	const exportMenuFor = (record: HomebrewRecord, className?: string) => (
 		<ExportMenu
 			baseName={`homebrew-${record.name}`}
@@ -401,7 +455,20 @@ export function HomebrewWorkbench() {
 							/>
 						</div>
 						<div className="md:col-span-2">
-							<Label htmlFor="homebrew-description">Description</Label>
+							<div className="flex items-center justify-between">
+								<Label htmlFor="homebrew-description">Description</Label>
+								<Button
+									type="button"
+									variant="ghost"
+									size="sm"
+									className="h-7 gap-1 text-xs"
+									onClick={handleAiDraftDescription}
+									disabled={aiDrafting}
+								>
+									<Sparkles className="w-3.5 h-3.5" />
+									{aiDrafting ? "Drafting..." : "AI Draft"}
+								</Button>
+							</div>
 							<Textarea
 								id="homebrew-description"
 								rows={3}

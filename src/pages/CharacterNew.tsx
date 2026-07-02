@@ -2443,6 +2443,7 @@ const CharacterNew = () => {
 																selectedCantripIds.length >=
 																	requiredCantripChoices
 															}
+															disabledReason={`Maximum ${requiredCantripChoices} cantrip${requiredCantripChoices === 1 ? "" : "s"} selected — deselect one to swap.`}
 														/>
 													);
 												})}
@@ -2503,6 +2504,7 @@ const CharacterNew = () => {
 																!isSelected &&
 																selectedSpellIds.length >= requiredSpellChoices
 															}
+															disabledReason={`Maximum ${requiredSpellChoices} spell${requiredSpellChoices === 1 ? "" : "s"} selected — deselect one to swap.`}
 														/>
 													);
 												})}
@@ -2567,6 +2569,7 @@ const CharacterNew = () => {
 																selectedSpellbookIds.length >=
 																	requiredSpellbookInscriptions
 															}
+															disabledReason={`Maximum ${requiredSpellbookInscriptions} inscription${requiredSpellbookInscriptions === 1 ? "" : "s"} selected — deselect one to swap.`}
 														/>
 													);
 												})}
@@ -2627,6 +2630,7 @@ const CharacterNew = () => {
 																!isSelected &&
 																selectedPowerIds.length >= requiredPowerChoices
 															}
+															disabledReason={`Maximum ${requiredPowerChoices} power${requiredPowerChoices === 1 ? "" : "s"} selected — deselect one to swap.`}
 														/>
 													);
 												})}
@@ -2697,6 +2701,7 @@ const CharacterNew = () => {
 																selectedTechniqueIds.length >=
 																	requiredTechniqueChoices
 															}
+															disabledReason={`Maximum ${requiredTechniqueChoices} technique${requiredTechniqueChoices === 1 ? "" : "s"} selected — deselect one to swap.`}
 														/>
 													);
 												})}
@@ -2746,6 +2751,7 @@ const CharacterNew = () => {
 															selectedFightingStyleIds.length >=
 																requiredFightingStyleChoices
 														}
+														disabledReason={`Maximum ${requiredFightingStyleChoices} fighting style${requiredFightingStyleChoices === 1 ? "" : "s"} selected — deselect one to swap.`}
 													/>
 												);
 											})}
@@ -2795,6 +2801,7 @@ const CharacterNew = () => {
 																selectedSpecialistTraining.length >=
 																	requiredSpecialistTrainingChoices
 															}
+															disabledReason={`Maximum ${requiredSpecialistTrainingChoices} selection${requiredSpecialistTrainingChoices === 1 ? "" : "s"} made — deselect one to swap.`}
 														/>
 													);
 												})}
@@ -2833,6 +2840,7 @@ const CharacterNew = () => {
 															selectedFavoredTerrains.length >=
 																requiredFavoredTerrainChoices
 														}
+														disabledReason={`Maximum ${requiredFavoredTerrainChoices} terrain${requiredFavoredTerrainChoices === 1 ? "" : "s"} selected — deselect one to swap.`}
 													/>
 												);
 											})}
