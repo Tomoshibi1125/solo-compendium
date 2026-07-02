@@ -53,6 +53,7 @@ const Login = lazy(() => import("./pages/Login"));
 const ForgotPassword = lazy(() => import("./pages/ForgotPassword"));
 const ResetPassword = lazy(() => import("./pages/ResetPassword"));
 const AscendantTools = lazy(() => import("./pages/AscendantTools"));
+const Legal = lazy(() => import("./pages/Legal"));
 const TestUserSetup = lazy(() => import("./pages/TestUserSetup"));
 
 // Validate environment variables on app startup (non-blocking; setup mode is supported)
@@ -329,6 +330,14 @@ const AppContent = () => {
 					element={
 						<Suspense fallback={<PageLoader />}>
 							<Landing />
+						</Suspense>
+					}
+				/>
+				<Route
+					path="/legal"
+					element={
+						<Suspense fallback={<PageLoader />}>
+							<Legal />
 						</Suspense>
 					}
 				/>

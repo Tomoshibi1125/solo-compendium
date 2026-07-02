@@ -407,6 +407,12 @@ export default function Login() {
 					<AscendantText className="block mt-1 text-muted-foreground/60">
 						Enter the shadows, become the ultimate ascendant
 					</AscendantText>
+					<Link
+						to="/legal"
+						className="mt-2 inline-block text-xs text-muted-foreground/60 underline underline-offset-2 hover:text-primary"
+					>
+						Licenses &amp; Attribution
+					</Link>
 				</div>
 			</div>
 		</div>

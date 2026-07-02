@@ -12,6 +12,7 @@ import {
 	Landmark,
 	MapPin,
 	Package,
+	Scale,
 	ScrollText,
 	Shield,
 	Skull,
@@ -268,6 +269,17 @@ export const navigationConfig: NavItemConfig[] = [
 				href: "/marketplace",
 				description: "Get new assets and modules.",
 				icon: Store,
+			},
+		],
+	},
+	{
+		title: "System",
+		items: [
+			{
+				title: "Licenses & Attribution",
+				href: "/legal",
+				description: "SRD 5.1 attribution and open-source licenses.",
+				icon: Scale,
 			},
 		],
 	},
