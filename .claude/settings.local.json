@@ -168,7 +168,25 @@
       "Bash(awk '/character_powers: \\\\{/,/character_spells: \\\\{|character_techniques: \\\\{|character_stats: \\\\{/' src/integrations/supabase/types.ts)",
       "Bash(awk '/character_techniques: \\\\{/,/character_[a-z]+: \\\\{/' src/integrations/supabase/types.ts)",
       "Bash(awk '/character_spells: \\\\{/,/character_[a-z]+: \\\\{/' src/integrations/supabase/types.ts)",
-      "Bash(grep -nE \"split|\\\\\\\\+|mod|proficiency|pb|parseInt|Number|reduce|token\")"
+      "Bash(grep -nE \"split|\\\\\\\\+|mod|proficiency|pb|parseInt|Number|reduce|token\")",
+      "Bash(sed -E 's/^[0-9]+:\\\\t\\\\t//')",
+      "Bash(sed -E 's/^[0-9]+:[[:space:]]+//')",
+      "Bash(awk -F'\"' '{print $2}')",
+      "Bash(ls -la \"C:/Users/jjcal/.claude/plans/\" 2>/dev/null | head -50; echo \"---GIT STATUS---\"; cd \"C:/Users/jjcal/Documents/solo-compendium\" && git status --short; echo \"---RECENT COMMITS---\"; git log --oneline -15)",
+      "Bash(python \"C:/Users/jjcal/AppData/Local/Temp/claude/C--Users-jjcal-Documents-solo-compendium/df57394d-24d3-4773-8cad-e46ead6a2b25/scratchpad/relic_dup.py\")",
+      "PowerShell(Get-ChildItem src/pages -Recurse -File | Select-Object -ExpandProperty FullName | ForEach-Object { $_.Replace\\('C:\\\\Users\\\\jjcal\\\\Documents\\\\solo-compendium\\\\', ''\\) })",
+      "PowerShell(npm run -s typecheck; Write-Output \"TYPECHECK_EXIT=$LASTEXITCODE\")",
+      "PowerShell(npm run -s test:run 2>&1 | Select-Object -Last 25; Write-Output \"TEST_EXIT=$LASTEXITCODE\")",
+      "PowerShell(npm run -s audit:compendium 2>&1 | Select-Object -Last 40; Write-Output \"AUDIT_EXIT=$LASTEXITCODE\")",
+      "PowerShell(Get-ChildItem \"$env:USERPROFILE\\\\.claude\\\\plans\" -File | ForEach-Object { $hit = Select-String -Path $_.FullName -Pattern 'Bureau hub|2G' -List; if \\($hit\\) { $_.Name } })",
+      "PowerShell(Select-String -Path \"$env:USERPROFILE\\\\.claude\\\\plans\\\\check-how-much-of-shiny-gray.md\" -Pattern 'Bureau' -Context 3,8 | Select-Object -First 4 | ForEach-Object { $_.Context.PreContext; $_.Line; $_.Context.PostContext; '---' })",
+      "PowerShell(npx knip 2>&1 | Select-Object -First 40; Write-Output \"KNIP_EXIT=$LASTEXITCODE\")",
+      "PowerShell(npm run -s build 2>&1 | Select-Object -Last 15; Write-Output \"BUILD_EXIT=$LASTEXITCODE\")",
+      "PowerShell(npm run -s lint:check 2>&1 | Select-Object -Last 6; Write-Output \"LINT_EXIT=$LASTEXITCODE\"; npm run -s check:deno 2>&1 | Select-Object -Last 4; Write-Output \"DENO_EXIT=$LASTEXITCODE\")",
+      "PowerShell(npm run typecheck)",
+      "PowerShell(npx vitest run --pool=vmThreads 2>&1)",
+      "PowerShell(npm run lint:check 2>&1)",
+      "PowerShell(npx knip 2>&1)"
     ]
   }
 }
