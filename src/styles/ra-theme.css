@@ -1,15 +1,15 @@
 ﻿/* ============================================================
-   Rift Ascendant â€” Global Dungeon Ascendant Aesthetic v2
-   Glassmorphism Â· Neon Glows Â· Angular Frames Â· Holographic HUD
+   Rift Ascendant — Global Dungeon Ascendant Aesthetic v2
+   Glassmorphism · Neon Glows · Angular Frames · Holographic HUD
    ============================================================
    Zones:
-     [data-ra-zone="character"]  â€” Purple/violet ascendant profile
-     [data-ra-zone="warden"]         â€” Red/orange warden command center
-     [data-ra-zone="campaign"]   â€” Blue/teal campaign hall
-     [data-ra-zone="compendium"] â€” Gold/amber knowledge archive
-     [data-ra-zone="player"]     â€” Cyan/green ascendant toolkit
-     [data-ra-zone="auth"]       â€” Deep purple gate awakening
-     (default)                   â€” Base purple RA theme
+     [data-ra-zone="character"]  — Purple/violet ascendant profile
+     [data-ra-zone="warden"]         — Red/orange warden command center
+     [data-ra-zone="campaign"]   — Blue/teal campaign hall
+     [data-ra-zone="compendium"] — Gold/amber knowledge archive
+     [data-ra-zone="player"]     — Cyan/green ascendant toolkit
+     [data-ra-zone="auth"]       — Deep purple gate awakening
+     (default)                   — Base purple RA theme
    ============================================================ */
 
 /* --- Zone Accent Variables --- */
@@ -152,7 +152,7 @@
 }
 
 /* ============================================================
-   RA Card â€” Glassmorphic floating panel
+   RA Card — Glassmorphic floating panel
    ============================================================ */
 .ra-card {
 	background: rgba(10, 6, 25, 0.75); /* Fallback for no backdrop-filter */
@@ -217,7 +217,7 @@
 }
 
 /* ============================================================
-   RA Panel â€” Zone-aware glassmorphic rift window
+   RA Panel — Zone-aware glassmorphic rift window
    ============================================================ */
 .ra-panel {
 	background: rgba(7, 4, 18, 0.85); /* Fallback */
@@ -252,7 +252,7 @@
 }
 
 /* ============================================================
-   RA Page Header â€” Cinematic hero bar with angled corners
+   RA Page Header — Cinematic hero bar with angled corners
    ============================================================ */
 .ra-page-header {
 	position: relative;
@@ -319,7 +319,7 @@
 }
 
 /* ============================================================
-   RA Section Title â€” Small neon label
+   RA Section Title — Small neon label
    ============================================================ */
 .ra-section-title {
 	font-size: 0.68rem;
@@ -331,7 +331,7 @@
 }
 
 /* ============================================================
-   RA Stat Display â€” Holographic number readout
+   RA Stat Display — Holographic number readout
    ============================================================ */
 .ra-stat {
 	font-family: var(--font-display, ui-monospace, monospace);
@@ -343,7 +343,7 @@
 }
 
 /* ============================================================
-   RA Badge â€” Angled rank/rarity chip
+   RA Badge — Angled rank/rarity chip
    ============================================================ */
 .ra-badge {
 	display: inline-flex;
@@ -366,7 +366,7 @@
 }
 
 /* ============================================================
-   RA Button Glow â€” Pulsing interactive element glow
+   RA Button Glow — Pulsing interactive element glow
    ============================================================ */
 .ra-btn-glow {
 	transition:
@@ -390,7 +390,7 @@
 }
 
 /* ============================================================
-   RA Tab Bar â€” Rift interface tab strip
+   RA Tab Bar — Rift interface tab strip
    ============================================================ */
 .ra-tabs [role="tablist"] {
 	background: rgba(7, 4, 18, 0.8); /* Fallback */
@@ -414,7 +414,7 @@
 }
 
 /* ============================================================
-   RA Input â€” Neon focus ring
+   RA Input — Neon focus ring
    ============================================================ */
 .ra-input:focus {
 	border-color: rgba(var(--ra-accent-rgb), 0.55);
@@ -425,7 +425,7 @@
 }
 
 /* ============================================================
-   RA Progress Bar â€” Animated energy fill
+   RA Progress Bar — Animated energy fill
    ============================================================ */
 .ra-progress {
 	width: 100%;
@@ -477,7 +477,7 @@
 }
 
 /* ============================================================
-   RA Divider â€” Neon separator line
+   RA Divider — Neon separator line
    ============================================================ */
 .ra-divider {
 	height: 1px;
@@ -507,7 +507,7 @@
 }
 
 /* ============================================================
-   RA Glow Text â€” Neon text with layered shadow
+   RA Glow Text — Neon text with layered shadow
    ============================================================ */
 .ra-glow-text {
 	color: rgba(var(--ra-accent-rgb), 1);
@@ -532,7 +532,7 @@
 }
 
 /* ============================================================
-   RA Grid Overlay â€” Faint grid overlay for panels
+   RA Grid Overlay — Faint grid overlay for panels
    ============================================================ */
 .ra-holo-grid {
 	position: relative;
@@ -559,7 +559,7 @@
 }
 
 /* ============================================================
-   RA Corner Bracket â€” Geometric corner accent (use with relative pos)
+   RA Corner Bracket — Geometric corner accent (use with relative pos)
    ============================================================ */
 .ra-corner-brackets {
 	position: relative;

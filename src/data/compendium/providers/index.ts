@@ -701,7 +701,7 @@ type StaticSpellSource = {
 };
 
 // ---------------------------------------------------------------------------
-// Spell normalization helpers â€” derive missing 5e fields from existing data
+// Spell normalization helpers — derive missing 5e fields from existing data
 // ---------------------------------------------------------------------------
 const SCHOOL_KEYWORDS: [RegExp, string][] = [
 	[/shadow|necrot|death|anomaly|wither|drain|blight|curse|soul/i, "Necromancy"],

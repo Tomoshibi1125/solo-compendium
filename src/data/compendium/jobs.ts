@@ -199,13 +199,13 @@ export const jobs: Job[] = [
 			{
 				name: "Reinforced Frame",
 				description:
-					"Your Awakening hardened your skeleton with crystallized mana â€” X-rays show bones denser than titanium. When reduced to 0 HP but not killed outright, drop to 1 HP instead. Once per long rest.",
+					"Your Awakening hardened your skeleton with crystallized mana — X-rays show bones denser than titanium. When reduced to 0 HP but not killed outright, drop to 1 HP instead. Once per long rest.",
 				level: 1,
 			},
 			{
 				name: "Aetheric-Sight Resonance",
 				description:
-					"Your vision resonates with the mana-signatures of the world, perceiving combat flow as an innate sense. You sense hostile intent within 30 ft â€” even through walls and around corners â€” and cannot be surprised while conscious. On a crit, roll one additional weapon damage die.",
+					"Your vision resonates with the mana-signatures of the world, perceiving combat flow as an innate sense. You sense hostile intent within 30 ft — even through walls and around corners — and cannot be surprised while conscious. On a crit, roll one additional weapon damage die.",
 				level: 1,
 			},
 			{
@@ -217,7 +217,7 @@ export const jobs: Job[] = [
 			{
 				name: "Weapon Essence Bond",
 				description:
-					"Your preferred weapons register to your soul-signature like a spiritual lock â€” only you can wield them at full potential. +1 to attack and damage with all proficient weapons; you cannot be disarmed. (+2 at 17th level).",
+					"Your preferred weapons register to your soul-signature like a spiritual lock — only you can wield them at full potential. +1 to attack and damage with all proficient weapons; you cannot be disarmed. (+2 at 17th level).",
 				level: 11,
 			},
 		],
@@ -225,7 +225,7 @@ export const jobs: Job[] = [
 			{
 				name: "Gate Breaker",
 				description:
-					"You can punch through reinforced concrete and tear apart gate-crystal formations. Deal double damage to objects and structures. Advantage on saves against fear from gate-born anomaliesâ€”your resonance is hardened against absolute chaos.",
+					"You can punch through reinforced concrete and tear apart gate-crystal formations. Deal double damage to objects and structures. Advantage on saves against fear from gate-born anomalies—your resonance is hardened against absolute chaos.",
 				type: "resistance",
 			},
 			{
@@ -343,7 +343,7 @@ export const jobs: Job[] = [
 				level: 20,
 				name: "Zenith Mandate",
 				description:
-					"Your status as an Ascendant is recognized globally at the Zenith Rank: [RANK: S â€” APEX ABSOLUTE POTENTIAL]. Your Aetheric Mark bonus becomes +1d8. Essence Harvest triggers on every kill (no rest limit). Unfettered Release lasts 2 rounds. Ascendant Bureau databases flag you as a national strategic asset.",
+					"Your status as an Ascendant is recognized globally at the Zenith Rank: [RANK: S — APEX ABSOLUTE POTENTIAL]. Your Aetheric Mark bonus becomes +1d8. Essence Harvest triggers on every kill (no rest limit). Unfettered Release lasts 2 rounds. Ascendant Bureau databases flag you as a national strategic asset.",
 			},
 		],
 		racialTraits: [
@@ -429,7 +429,7 @@ export const jobs: Job[] = [
 		type: "Job",
 		rank: "C",
 		description:
-			"The Berserker is an Awakened identity that specializes in the Overload Tank and Unstable Resonance mandate. As an Ascendant of this lineage, their core is defined by an unstable connection to the Absolute, flooding their physiology with raw energy under stress. In the modern world, Berserkers are walking spectacles of powerâ€”visible mana veins flare across their skin as their muscles swell with crystallized essence. The Ascendant Bureau classifies them as high-risk but indispensable assets who specialized in the controlled demolition of high-rank gates.",
+			"The Berserker is an Awakened identity that specializes in the Overload Tank and Unstable Resonance mandate. As an Ascendant of this lineage, their core is defined by an unstable connection to the Absolute, flooding their physiology with raw energy under stress. In the modern world, Berserkers are walking spectacles of power—visible mana veins flare across their skin as their muscles swell with crystallized essence. The Ascendant Bureau classifies them as high-risk but indispensable assets who specialized in the controlled demolition of high-rank gates.",
 		hitDie: "1d12",
 		primaryAbility: "Strength",
 		saving_throws: ["Strength", "Vitality"],
@@ -452,31 +452,31 @@ export const jobs: Job[] = [
 			{
 				name: "Mana-Dense Physiology",
 				description:
-					"Your cells are saturated with raw mana â€” hospital scales read 50% heavier than your frame should weigh. HP maximum increases by 1 per Berserker level. Normal chairs break under you.",
+					"Your cells are saturated with raw mana — hospital scales read 50% heavier than your frame should weigh. HP maximum increases by 1 per Berserker level. Normal chairs break under you.",
 				level: 1,
 			},
 			{
 				name: "Toxin Purge",
 				description:
-					"Your overcharged metabolism burns through foreign substances in minutes â€” anesthesia barely works, alcohol has no effect, and you metabolize medications before they kick in. Advantage on saves against poison; resistance to poison damage.",
+					"Your overcharged metabolism burns through foreign substances in minutes — anesthesia barely works, alcohol has no effect, and you metabolize medications before they kick in. Advantage on saves against poison; resistance to poison damage.",
 				level: 1,
 			},
 			{
 				name: "Feedback Frenzy",
 				description:
-					"In Overload, the mana feedback loop doubles your damage bonus but your higher brain functions shut down â€” you can't read, operate electronics, or have coherent conversations. Disadvantage on ability checks.",
+					"In Overload, the mana feedback loop doubles your damage bonus but your higher brain functions shut down — you can't read, operate electronics, or have coherent conversations. Disadvantage on ability checks.",
 				level: 3,
 			},
 			{
 				name: "Mana Saturation",
 				description:
-					"In Overload, mana crystallizes under your skin like subdermal kevlar â€” bullets flatten on impact, blades bounce off. Resistance to all damage except psychic. You cannot be knocked unconscious while in Overload with 1+ HP.",
+					"In Overload, mana crystallizes under your skin like subdermal kevlar — bullets flatten on impact, blades bounce off. Resistance to all damage except psychic. You cannot be knocked unconscious while in Overload with 1+ HP.",
 				level: 7,
 			},
 			{
 				name: "Unstable Discharge",
 				description:
-					"In Overload, your weapon strikes arc with visible mana discharge â€” nearby electronics short out, phones reboot, and street lights flicker. Weapon attacks count as magical and deal extra 1d6 force damage.",
+					"In Overload, your weapon strikes arc with visible mana discharge — nearby electronics short out, phones reboot, and street lights flicker. Weapon attacks count as magical and deal extra 1d6 force damage.",
 				level: 14,
 			},
 		],
@@ -484,19 +484,19 @@ export const jobs: Job[] = [
 			{
 				name: "Threat Reflex",
 				description:
-					"Your unstable Absolute resonance gives you split-second precognition â€” you flinch before a gun fires and dodge before a car crashes. Advantage on Agility saves against effects you can see while not blinded/deafened/incapacitated.",
+					"Your unstable Absolute resonance gives you split-second precognition — you flinch before a gun fires and dodge before a car crashes. Advantage on Agility saves against effects you can see while not blinded/deafened/incapacitated.",
 				type: "passive",
 			},
 			{
 				name: "Predator Instinct",
 				description:
-					"You react before conscious thought â€” security footage shows you moving before the threat appears on camera. Advantage on initiative. If surprised, your Overload triggers automatically and you act normally on the first turn.",
+					"You react before conscious thought — security footage shows you moving before the threat appears on camera. Advantage on initiative. If surprised, your Overload triggers automatically and you act normally on the first turn.",
 				type: "passive",
 			},
 			{
 				name: "Mana Intimidation",
 				description:
-					"Your visible mana veins flare with threat â€” bystanders back away, animals flee, and smartphone cameras auto-focus on you. Frighten a creature within 30 ft (Sense save). Prof bonus uses per long rest.",
+					"Your visible mana veins flare with threat — bystanders back away, animals flee, and smartphone cameras auto-focus on you. Frighten a creature within 30 ft (Sense save). Prof bonus uses per long rest.",
 				type: "active",
 				frequency: "long-rest",
 			},
@@ -526,19 +526,19 @@ export const jobs: Job[] = [
 				name: "Overload State",
 				uses: { formula: "2", recharge: "long-rest" },
 				description:
-					"Bonus action: trigger an Absolute Surge â€” your veins glow, your muscles visibly swell, and nearby electronics emit static. Melee damage bonus = STR mod, resistance to bludgeoning/piercing/slashing, and HP temporarily increases by Berserker level (lost when Overload ends). 2/long rest, scaling to unlimited at 20th.",
+					"Bonus action: trigger an Absolute Surge — your veins glow, your muscles visibly swell, and nearby electronics emit static. Melee damage bonus = STR mod, resistance to bludgeoning/piercing/slashing, and HP temporarily increases by Berserker level (lost when Overload ends). 2/long rest, scaling to unlimited at 20th.",
 			},
 			{
 				level: 1,
 				name: "Mana-Hardened Body",
 				description:
-					"Crystallized mana reinforces your skin like built-in body armor â€” doctors describe your dermis as 'closer to carbon fiber than human tissue.' Without armor: AC = 10 + Agility mod + Vitality mod. Can use a shield.",
+					"Crystallized mana reinforces your skin like built-in body armor — doctors describe your dermis as 'closer to carbon fiber than human tissue.' Without armor: AC = 10 + Strength mod + Vitality mod. Can use a shield.",
 			},
 			{
 				level: 2,
 				name: "Damage Conversion",
 				description:
-					"When you take damage in Overload, your mana loop converts pain into stored kinetic energy â€” your body visibly vibrates with accumulated force. Store it as Feedback (max = your level). On your next melee hit, release all stored Feedback as bonus force damage, then reset to 0.",
+					"When you take damage in Overload, your mana loop converts pain into stored kinetic energy — your body visibly vibrates with accumulated force. Store it as Feedback (max = your level). On your next melee hit, release all stored Feedback as bonus force damage, then reset to 0.",
 			},
 			{
 				level: 3,
@@ -561,13 +561,13 @@ export const jobs: Job[] = [
 				level: 5,
 				name: "Cascading Strikes",
 				description:
-					"Your mana-dense muscles generate chain reactions on impact â€” one devastating hit flows into the next. When you score a critical hit, immediately make one additional weapon attack against the same or a different target within reach.",
+					"Your mana-dense muscles generate chain reactions on impact — one devastating hit flows into the next. When you score a critical hit, immediately make one additional weapon attack against the same or a different target within reach.",
 			},
 			{
 				level: 5,
 				name: "Surge Momentum",
 				description:
-					"+10 ft speed while not in heavy armor. Your mana-dense legs crack pavement with each stride â€” CCTV footage shows you outrunning motorcycles in short bursts.",
+					"+10 ft speed while not in heavy armor. Your mana-dense legs crack pavement with each stride — CCTV footage shows you outrunning motorcycles in short bursts.",
 			},
 			{
 				level: 6,
@@ -584,7 +584,7 @@ export const jobs: Job[] = [
 				level: 9,
 				name: "Mana Shockwave",
 				description:
-					"Your hits generate concussive shockwaves â€” windows shatter, car alarms trigger, and bystanders feel the impact in their chest. Once per turn on melee hit, all creatures within 5 ft of target (other than you) take force damage = STR mod.",
+					"Your hits generate concussive shockwaves — windows shatter, car alarms trigger, and bystanders feel the impact in their chest. Once per turn on melee hit, all creatures within 5 ft of target (other than you) take force damage = STR mod.",
 			},
 			{
 				level: 10,
@@ -595,7 +595,7 @@ export const jobs: Job[] = [
 				level: 11,
 				name: "Death Defiance",
 				description:
-					"At 0 HP in Overload, your mana loop fires one last emergency pulse â€” paramedics have documented Berserkers' hearts restarting mid-flatline. VIT save DC 10 (+5 each use) to drop to 1 HP instead.",
+					"At 0 HP in Overload, your mana loop fires one last emergency pulse — paramedics have documented Berserkers' hearts restarting mid-flatline. VIT save DC 10 (+5 each use) to drop to 1 HP instead.",
 			},
 			{
 				level: 14,
@@ -606,7 +606,7 @@ export const jobs: Job[] = [
 				level: 15,
 				name: "Sustained Overload",
 				description:
-					"Overload only ends when you fall unconscious or choose to end it. The mana feedback loop is self-sustaining â€” some Berserkers have maintained it for days, never sleeping, never eating, just fighting.",
+					"Overload only ends when you fall unconscious or choose to end it. The mana feedback loop is self-sustaining — some Berserkers have maintained it for days, never sleeping, never eating, just fighting.",
 			},
 			{
 				level: 18,
@@ -618,7 +618,7 @@ export const jobs: Job[] = [
 				level: 20,
 				name: "Zenith Singularity",
 				description:
-					"Your status as an Ascendant is recognized globally at the Zenith Rank: [RANK: S â€” ABSOLUTE SINGULARITY]. STR and VIT increase by 4 (max 24). Overload grants resistance to ALL damage. Mana Shockwave extends to 10 ft. The Ascendant Bureau classifies you as an extinction-level asset.",
+					"Your status as an Ascendant is recognized globally at the Zenith Rank: [RANK: S — ABSOLUTE SINGULARITY]. STR and VIT increase by 4 (max 24). Overload grants resistance to ALL damage. Mana Shockwave extends to 10 ft. The Ascendant Bureau classifies you as an extinction-level asset.",
 			},
 		],
 		racialTraits: [
@@ -726,25 +726,25 @@ export const jobs: Job[] = [
 			{
 				name: "Phase-Shifted Mind",
 				description:
-					"Your consciousness partially exists between dimensions â€” brain scans show activity in regions that shouldn't exist. Lie detectors, interrogation drugs, and telepathy all fail. Advantage on saves against being charmed. Magic cannot put you to sleep.",
+					"Your consciousness partially exists between dimensions — brain scans show activity in regions that shouldn't exist. Lie detectors, interrogation drugs, and telepathy all fail. Advantage on saves against being charmed. Magic cannot put you to sleep.",
 				level: 1,
 			},
 			{
 				name: "Umbral Phase",
 				description:
-					"Step sideways through the dimensional membrane â€” security cameras capture you vanishing from one spot and appearing 30 ft away in a single frame. Teleport to dim light/darkness. Advantage on next melee attack after phasing. Prof bonus uses per long rest.",
+					"Step sideways through the dimensional membrane — security cameras capture you vanishing from one spot and appearing 30 ft away in a single frame. Teleport to dim light/darkness. Advantage on next melee attack after phasing. Prof bonus uses per long rest.",
 				level: 3,
 			},
 			{
 				name: "Lethal Geometry",
 				description:
-					"You see kill-angles that don't exist in normal three-dimensional space â€” your strikes arrive from directions that are physically impossible. When you Exploit Weakness with advantage, deal extra 1d6 damage (2d6 at 13th).",
+					"You see kill-angles that don't exist in normal three-dimensional space — your strikes arrive from directions that are physically impossible. When you Exploit Weakness with advantage, deal extra 1d6 damage (2d6 at 13th).",
 				level: 7,
 			},
 			{
 				name: "Kill Designation",
 				description:
-					"Bonus action: your Aetheric-Sight identifies your quarry: [RANK: S â€” LETHAL MANDATE AUTHORIZED]. Crits on 19-20 against it for 1 minute. Once per long rest.",
+					"Bonus action: your Aetheric-Sight identifies your quarry: [RANK: S — LETHAL MANDATE AUTHORIZED]. Crits on 19-20 against it for 1 minute. Once per long rest.",
 				level: 14,
 			},
 		],
@@ -752,20 +752,20 @@ export const jobs: Job[] = [
 			{
 				name: "Dimensional Sight",
 				description:
-					"Your phase-shifted eyes see through walls, around corners, and into dark rooms â€” optometrists can't explain the extra pupil layer. See in dim light as bright within 60 ft. Advantage on hearing-based Perception. Superior darkvision 120 ft.",
+					"Your phase-shifted eyes see through walls, around corners, and into dark rooms — optometrists can't explain the extra pupil layer. See in dim light as bright within 60 ft. Advantage on hearing-based Perception. Superior darkvision 120 ft.",
 				type: "passive",
 			},
 			{
 				name: "Phase Dodge",
 				description:
-					"Reaction: your body flickers out of sync with reality for a split second â€” bullets pass through where you were. Halve attack damage from an attacker you can see. Agility mod uses per long rest.",
+					"Reaction: your body flickers out of sync with reality for a split second — bullets pass through where you were. Halve attack damage from an attacker you can see. Agility mod uses per long rest.",
 				type: "active",
 				frequency: "long-rest",
 			},
 			{
 				name: "Ghost Walk",
 				description:
-					"You leave no footprints, trigger no motion sensors, and make no sound â€” even on gravel or broken glass. Security systems and guard dogs can't detect you. Advantage on Stealth in all conditions.",
+					"You leave no footprints, trigger no motion sensors, and make no sound — even on gravel or broken glass. Security systems and guard dogs can't detect you. Advantage on Stealth in all conditions.",
 				type: "passive",
 			},
 		],
@@ -798,7 +798,7 @@ export const jobs: Job[] = [
 				level: 1,
 				name: "Specialist Training",
 				description:
-					"Your Awakening accelerates your learning in chosen fields â€” you master lockpicking, hacking, forgery, or surveillance in weeks instead of years. Double proficiency on two skill/tool proficiencies. Two more at 6th level.",
+					"Your Awakening accelerates your learning in chosen fields — you master lockpicking, hacking, forgery, or surveillance in weeks instead of years. Double proficiency on two skill/tool proficiencies. Two more at 6th level.",
 			},
 			{
 				level: 1,
@@ -810,7 +810,7 @@ export const jobs: Job[] = [
 				level: 1,
 				name: "Umbral Cant",
 				description:
-					"A coded language used by ascendants in the umbral trade â€” encrypted dead drops, dark web forums, burner phone rites, and anonymous gate intelligence networks. You recognize the signs in any city.",
+					"A coded language used by ascendants in the umbral trade — encrypted dead drops, dark web forums, burner phone rites, and anonymous gate intelligence networks. You recognize the signs in any city.",
 			},
 			{
 				level: 2,
@@ -834,13 +834,13 @@ export const jobs: Job[] = [
 				level: 5,
 				name: "Reflex Burst",
 				description:
-					"Reaction when hit: your body partially phases out of this dimension â€” the bullet/blade passes through what looks like a hologram. Halve the damage. If the attacker can't see you, negate it entirely.",
+					"Reaction when hit: your body partially phases out of this dimension — the bullet/blade passes through what looks like a hologram. Halve the damage. If the attacker can't see you, negate it entirely.",
 			},
 			{
 				level: 7,
 				name: "Dimensional Slip",
 				description:
-					"When caught in an explosion or area effect, you step sideways through the membrane â€” the blast passes through empty space where you stood. No damage on successful AGI save, half on failure.",
+					"When caught in an explosion or area effect, you step sideways through the membrane — the blast passes through empty space where you stood. No damage on successful AGI save, half on failure.",
 			},
 			{
 				level: 9,
@@ -851,7 +851,7 @@ export const jobs: Job[] = [
 				level: 11,
 				name: "Absolute Precision",
 				description:
-					"Your internal resonance auto-corrects every micro-movement â€” you never fumble a lock pick, miss a keystroke, or misjudge a jump. Any proficient ability check: treat d20 rolls of 9 or lower as 10.",
+					"Your internal resonance auto-corrects every micro-movement — you never fumble a lock pick, miss a keystroke, or misjudge a jump. Any proficient ability check: treat d20 rolls of 9 or lower as 10.",
 			},
 			{
 				level: 13,
@@ -862,13 +862,13 @@ export const jobs: Job[] = [
 				level: 14,
 				name: "Dimensional Tremorsense",
 				description:
-					"You feel disturbances in the dimensional membrane like a spider feels its web vibrate â€” cloaked enemies, hidden snipers, and invisible gate creatures within 10 ft cannot hide from you.",
+					"You feel disturbances in the dimensional membrane like a spider feels its web vibrate — cloaked enemies, hidden snipers, and invisible gate creatures within 10 ft cannot hide from you.",
 			},
 			{
 				level: 15,
 				name: "Warded Mind",
 				description:
-					"Your consciousness exists partially outside normal reality â€” psychic attacks, interrogation magic, and mind-reading all bounce off. Gain proficiency in Sense saving throws.",
+					"Your consciousness exists partially outside normal reality — psychic attacks, interrogation magic, and mind-reading all bounce off. Gain proficiency in Sense saving throws.",
 			},
 			{
 				level: 17,
@@ -879,13 +879,13 @@ export const jobs: Job[] = [
 				level: 18,
 				name: "Phantom Presence",
 				description:
-					"Your body constantly flickers between dimensions â€” even standing still, you appear slightly transparent, like bad reception on a TV. No attack has advantage against you while you aren't incapacitated.",
+					"Your body constantly flickers between dimensions — even standing still, you appear slightly transparent, like bad reception on a TV. No attack has advantage against you while you aren't incapacitated.",
 			},
 			{
 				level: 20,
 				name: "Zenith Strike",
 				description:
-					"Once per short rest: the Aetheric-Weave bends probability around your strikes â€” your Aetheric-Sight displays [OUTCOME: GUARANTEED]. Turn any missed attack into a hit, or treat any failed check as a natural 20. Classified ascendants have used this to bypass bank vaults, dodge point-blank gunfire, and land impossible shots.",
+					"Once per short rest: the Aetheric-Weave bends probability around your strikes — your Aetheric-Sight displays [OUTCOME: GUARANTEED]. Turn any missed attack into a hit, or treat any failed check as a natural 20. Classified ascendants have used this to bypass bank vaults, dodge point-blank gunfire, and land impossible shots.",
 			},
 		],
 		racialTraits: [
@@ -978,31 +978,31 @@ export const jobs: Job[] = [
 			{
 				name: "Aetheric Overclock",
 				description:
-					"Your restructured nervous system auto-corrects physical errors faster than conscious thought â€” lab tests show your reaction time at 3 milliseconds, faster than any recorded human. When you roll a 1, you can reroll and must use the new result.",
+					"Your restructured nervous system auto-corrects physical errors faster than conscious thought — lab tests show your reaction time at 3 milliseconds, faster than any recorded human. When you roll a 1, you can reroll and must use the new result.",
 				level: 1,
 			},
 			{
 				name: "Fluid Physiology",
 				description:
-					"Your joints and muscles restructured for impossible flexibility â€” you can fold through car windows, slide under closing garage doors, and bend in ways that make physical therapists cry. Move through the space of any creature one size larger. Cannot be knocked prone.",
+					"Your joints and muscles restructured for impossible flexibility — you can fold through car windows, slide under closing garage doors, and bend in ways that make physical therapists cry. Move through the space of any creature one size larger. Cannot be knocked prone.",
 				level: 1,
 			},
 			{
 				name: "Impulse Sense",
 				description:
-					"You detect the bioelectric fields of living things like a walking EKG machine â€” sense creatures within 120 ft through walls, behind cars, and underground. See invisible creatures by their nerve-impulse trail.",
+					"You detect the bioelectric fields of living things like a walking EKG machine — sense creatures within 120 ft through walls, behind cars, and underground. See invisible creatures by their nerve-impulse trail.",
 				level: 1,
 			},
 			{
 				name: "Autonomic Mastery",
 				description:
-					"Total control over your body's involuntary functions â€” you can stop your own heart to fool medical scanners, regulate your temperature in a blizzard, and suppress pain entirely. Walk on any surface including liquids while moving.",
+					"Total control over your body's involuntary functions — you can stop your own heart to fool medical scanners, regulate your temperature in a blizzard, and suppress pain entirely. Walk on any surface including liquids while moving.",
 				level: 3,
 			},
 			{
 				name: "Force Channeling",
 				description:
-					"Convert raw mana into elemental force through your nerve gates â€” your fists can heat to 500Â°C, discharge like a taser, generate concussive blasts, or emit healing vibrations. Smartphone thermal cameras show your hands glowing.",
+					"Convert raw mana into elemental force through your nerve gates — your fists can heat to 500°C, discharge like a taser, generate concussive blasts, or emit healing vibrations. Smartphone thermal cameras show your hands glowing.",
 				level: 7,
 			},
 		],
@@ -1010,19 +1010,19 @@ export const jobs: Job[] = [
 			{
 				name: "Impulse Sense",
 				description:
-					"Perceive bioelectric auras like a living MRI â€” read emotional states, detect injuries, and sense other awakened ascendants within 120 ft. Detect invisible creatures by their nerve-impulse trail.",
+					"Perceive bioelectric auras like a living MRI — read emotional states, detect injuries, and sense other awakened ascendants within 120 ft. Detect invisible creatures by their nerve-impulse trail.",
 				type: "passive",
 			},
 			{
 				name: "Gyroscopic Core",
 				description:
-					"Your rewired vestibular system grants perfect balance â€” you can fight on a moving train, run across telephone wires, and stand still in a hurricane. Cannot be knocked prone. Walk on any surface including liquids while moving.",
+					"Your rewired vestibular system grants perfect balance — you can fight on a moving train, run across telephone wires, and stand still in a hurricane. Cannot be knocked prone. Walk on any surface including liquids while moving.",
 				type: "resistance",
 			},
 			{
 				name: "Kinetic Deflection",
 				description:
-					"Reaction: intercept incoming projectiles â€” bullets, arrows, thrown objects â€” with your bare hands. Reduce damage by 1d10+AGI mod+level. If reduced to 0, catch it and throw it back. Viral videos of Strikers catching bullets have billions of views.",
+					"Reaction: intercept incoming projectiles — bullets, arrows, thrown objects — with your bare hands. Reduce damage by 1d10+AGI mod+level. If reduced to 0, catch it and throw it back. Viral videos of Strikers catching bullets have billions of views.",
 				type: "active",
 				frequency: "at-will",
 			},
@@ -1045,7 +1045,7 @@ export const jobs: Job[] = [
 				level: 1,
 				name: "Kinetic Barrier",
 				description:
-					"Your nerve network generates a passive mana field visible as a faint shimmer in bright light â€” airport metal detectors go haywire when you walk through. Without armor or shield: AC = 10 + Agility mod + Sense mod.",
+					"Your nerve network generates a passive mana field visible as a faint shimmer in bright light — airport metal detectors go haywire when you walk through. Without armor or shield: AC = 10 + Agility mod + Sense mod.",
 			},
 			{
 				level: 1,
@@ -1058,13 +1058,13 @@ export const jobs: Job[] = [
 				name: "Impulse Rites",
 				uses: { formula: "level", recharge: "short-rest" },
 				description:
-					"Impulse points = Striker level, short rest recharge. Activate specific nerve clusters through precise internal Rites â€” your eyes flash briefly when a gate opens. Rite of Speed (Dash/Disengage), Rite of Force (2 bonus strikes), Rite of Iron (Dodge). 1 impulse point each.",
+					"Impulse points = Striker level, short rest recharge. Activate specific nerve clusters through precise internal Rites — your eyes flash briefly when a gate opens. Rite of Speed (Dash/Disengage), Rite of Force (2 bonus strikes), Rite of Iron (Dodge). 1 impulse point each.",
 			},
 			{
 				level: 2,
 				name: "Impulse Acceleration",
 				description:
-					"+10 ft speed without armor (+15 at 6th, +20 at 10th, +25 at 14th, +30 at 18th). Speed-camera footage shows you as a blur. At 9th: run on walls and across water â€” your internal resonance generates micro-adhesion fields.",
+					"+10 ft speed without armor (+15 at 6th, +20 at 10th, +25 at 14th, +30 at 18th). Speed-camera footage shows you as a blur. At 9th: run on walls and across water — your internal resonance generates micro-adhesion fields.",
 			},
 			{
 				level: 3,
@@ -1076,7 +1076,7 @@ export const jobs: Job[] = [
 				level: 3,
 				name: "Kinetic Deflection",
 				description:
-					"Reaction: snatch an incoming projectile from the air â€” even bullets at point-blank range. Reduce damage by 1d10+AGI mod+level. If reduced to 0, catch and hurl it back (1 impulse point, your attack bonus).",
+					"Reaction: snatch an incoming projectile from the air — even bullets at point-blank range. Reduce damage by 1d10+AGI mod+level. If reduced to 0, catch and hurl it back (1 impulse point, your attack bonus).",
 			},
 			{
 				level: 4,
@@ -1087,73 +1087,73 @@ export const jobs: Job[] = [
 				level: 4,
 				name: "Impact Dampening",
 				description:
-					"Your nerve network absorbs kinetic shock â€” you can jump off buildings and land in a crouch. Reaction: reduce fall damage by 5 Ã— Striker level.",
+					"Your nerve network absorbs kinetic shock — you can jump off buildings and land in a crouch. Reaction: reduce fall damage by 5 × Striker level.",
 			},
 			{
 				level: 5,
 				name: "Velocity Chain",
 				description:
-					"Attack twice per Attack action. When both hits connect, your accumulated velocity converts to force â€” deal bonus force damage = movement speed Ã· 10. The faster you move, the harder you hit. Fight analysts call it 'the Bullet Train combo.'",
+					"Attack twice per Attack action. When both hits connect, your accumulated velocity converts to force — deal bonus force damage = movement speed ÷ 10. The faster you move, the harder you hit. Fight analysts call it 'the Bullet Train combo.'",
 			},
 			{
 				level: 5,
 				name: "Nerve Strike",
 				description:
-					"On melee hit, spend 1 impulse point to discharge aetheric energy directly into the target's mana-channels â€” like a biological overload. VIT save or stunned until end of your next turn.",
+					"On melee hit, spend 1 impulse point to discharge aetheric energy directly into the target's mana-channels — like a biological overload. VIT save or stunned until end of your next turn.",
 			},
 			{
 				level: 6,
 				name: "Force-Laced Strikes",
 				description:
-					"Your fists crackle with visible mana discharge â€” sparking like arc welders on impact. Unarmed strikes count as magical and deal force damage instead of bludgeoning.",
+					"Your fists crackle with visible mana discharge — sparking like arc welders on impact. Unarmed strikes count as magical and deal force damage instead of bludgeoning.",
 			},
 			{
 				level: 7,
 				name: "Accelerated Dodge",
 				description:
-					"Your processing speed lets you dodge explosions â€” high-speed cameras show you clearing the blast radius between frames. AGI save for half: no damage on success, half on failure.",
+					"Your processing speed lets you dodge explosions — high-speed cameras show you clearing the blast radius between frames. AGI save for half: no damage on success, half on failure.",
 			},
 			{
 				level: 7,
 				name: "Soul-Sanctum Ward",
 				description:
-					"Action: isolate and purge a mental intrusion through an Autonomic Rite â€” your internal resonance re-aligns your mana-flow circuits. End one charmed or frightened effect on yourself.",
+					"Action: isolate and purge a mental intrusion through an Autonomic Rite — your internal resonance re-aligns your mana-flow circuits. End one charmed or frightened effect on yourself.",
 			},
 			{
 				level: 10,
 				name: "Aetheric-Purified Body",
 				description:
-					"Your mana network has purged all biological weakness â€” bloodwork comes back perfectly clean, no pathogens can survive in your system. Immune to disease and poison.",
+					"Your mana network has purged all biological weakness — bloodwork comes back perfectly clean, no pathogens can survive in your system. Immune to disease and poison.",
 			},
 			{
 				level: 13,
 				name: "Universal Resonance",
 				description:
-					"Your aetheric network decodes all language patterns in real-time â€” you walk into any country and speak like a native within seconds. Understand all spoken languages; any creature that knows a language understands you.",
+					"Your aetheric network decodes all language patterns in real-time — you walk into any country and speak like a native within seconds. Understand all spoken languages; any creature that knows a language understands you.",
 			},
 			{
 				level: 14,
 				name: "Impulse Perfection",
 				description:
-					"Your aetheric network compensates for any failure â€” your body dodges poison, resists psychic intrusion, and shrugs off magic as automatically as breathing. Proficiency in all saves. Spend 1 impulse to reroll a failed save.",
+					"Your aetheric network compensates for any failure — your body dodges poison, resists psychic intrusion, and shrugs off magic as automatically as breathing. Proficiency in all saves. Spend 1 impulse to reroll a failed save.",
 			},
 			{
 				level: 15,
 				name: "Suspended Aging",
 				description:
-					"Your mana network sustains your cells indefinitely â€” dermatologists and gerontologists can't explain why you haven't aged in years. No aging, can't be magically aged, no need for food or water.",
+					"Your mana network sustains your cells indefinitely — dermatologists and gerontologists can't explain why you haven't aged in years. No aging, can't be magically aged, no need for food or water.",
 			},
 			{
 				level: 18,
 				name: "Void State",
 				description:
-					"Open all impulse gates simultaneously â€” your body vibrates at a frequency that renders you invisible to the naked eye and most detection equipment. 4 points: invisible 1 min + resistance to all except force. 8 points: project consciousness to the Astral Plane.",
+					"Open all impulse gates simultaneously — your body vibrates at a frequency that renders you invisible to the naked eye and most detection equipment. 4 points: invisible 1 min + resistance to all except force. 8 points: project consciousness to the Astral Plane.",
 			},
 			{
 				level: 20,
 				name: "Zenith Ascension",
 				description:
-					"Your status as an Ascendant is recognized globally at the Zenith Rank: [RANK: S â€” PERFECTED ABSOLUTE BIOLOGY]. Roll initiative with 0 impulse â†’ regain 4. Velocity Chain adds full speed Ã· 5. The Ascendant Bureau ensures your secrets stay guarded from the reach of pharmaceutical giants.",
+					"Your status as an Ascendant is recognized globally at the Zenith Rank: [RANK: S — PERFECTED ABSOLUTE BIOLOGY]. Roll initiative with 0 impulse â†’ regain 4. Velocity Chain adds full speed ÷ 5. The Ascendant Bureau ensures your secrets stay guarded from the reach of pharmaceutical giants.",
 			},
 		],
 		racialTraits: [
@@ -1219,7 +1219,7 @@ export const jobs: Job[] = [
 		type: "Job",
 		rank: "C",
 		description:
-			"The Mage is an Awakened identity that specializes in the Arcane Custodian and Aetheric Scholar mandate. As an Ascendant of this lineage, their Awakening provides a direct attunement to the Aetheric-Weaveâ€”the fundamental tapestry of absolute magical phenomena. In the modern world, Mages treat magic with the analytical rigor of higher mathematics, optimizing their rites with a precision that defines the modern era of aetheric research.",
+			"The Mage is an Awakened identity that specializes in the Arcane Custodian and Aetheric Scholar mandate. As an Ascendant of this lineage, their Awakening provides a direct attunement to the Aetheric-Weave—the fundamental tapestry of absolute magical phenomena. In the modern world, Mages treat magic with the analytical rigor of higher mathematics, optimizing their rites with a precision that defines the modern era of aetheric research.",
 		hitDie: "1d6",
 		primaryAbility: "Intelligence",
 		saving_throws: ["Intelligence", "Sense"],
@@ -1245,7 +1245,7 @@ export const jobs: Job[] = [
 			{
 				name: "Mana-Shielded Cortex",
 				description:
-					"Your brain restructured to process the raw flow of the Aetheric-Weave â€” EEGs show neural activity patterns that don't match any known brain architecture. Advantage on INT, Sense, and Presence saves against spells and magical effects.",
+					"Your brain restructured to process the raw flow of the Aetheric-Weave — EEGs show neural activity patterns that don't match any known brain architecture. Advantage on INT, Sense, and Presence saves against spells and magical effects.",
 				level: 1,
 			},
 			{
@@ -1257,13 +1257,13 @@ export const jobs: Job[] = [
 			{
 				name: "Parallel Processing",
 				description:
-					"Your mind runs multiple spell compilations simultaneously like a multi-core processor â€” Global Aetheric research divisions have clocked your cognitive throughput at 47x baseline human. Weave spell effects together and amplify power through sustained focus.",
+					"Your mind runs multiple spell compilations simultaneously like a multi-core processor — Global Aetheric research divisions have clocked your cognitive throughput at 47x baseline human. Weave spell effects together and amplify power through sustained focus.",
 				level: 3,
 			},
 			{
 				name: "Aetheric-Parsing",
 				description:
-					"Analyze enemy spells as they're cast â€” your vision identifies structural flaws in an enemy's spellcraft as it manifests. Create counter-rites on the fly: instant-cast defenses and live resonance analysis.",
+					"Analyze enemy spells as they're cast — your vision identifies structural flaws in an enemy's spellcraft as it manifests. Create counter-rites on the fly: instant-cast defenses and live resonance analysis.",
 				level: 11,
 			},
 		],
@@ -1283,7 +1283,7 @@ export const jobs: Job[] = [
 			{
 				name: "Optimized Rites",
 				description:
-					"Optimize a prepared rite through precise mental compilation â€” amplify damage, extend duration, or fork to additional targets. Your colleagues at the Bureau probably argue about whose resonance theories are superior. INT mod uses per long rest.",
+					"Optimize a prepared rite through precise mental compilation — amplify damage, extend duration, or fork to additional targets. Your colleagues at the Bureau probably argue about whose resonance theories are superior. INT mod uses per long rest.",
 				type: "active",
 				frequency: "long-rest",
 			},
@@ -1316,13 +1316,13 @@ export const jobs: Job[] = [
 				level: 1,
 				name: "Resonance Alignment",
 				description:
-					"Prepare Mage spells using Intelligence â€” you align spell rites from your digital grimoire each morning like a specialist loading a configuration. You can modify one prepared spell per long rest: swap its damage type to any other you've catalogued.",
+					"Prepare Mage spells using Intelligence — you align spell rites from your digital grimoire each morning like a specialist loading a configuration. You can modify one prepared spell per long rest: swap its damage type to any other you've catalogued.",
 			},
 			{
 				level: 1,
 				name: "Resonance Deconstruction",
 				description:
-					"When you observe a spell cast â€” even by a gate boss â€” you can attempt to deconstruct its resonance. Intelligence check DC 10 + spell level: success lets you add it to your grimoire during your next rest (normal copying cost). Short rest: recover one spell slot â‰¤ half Mage level. Once per day.",
+					"When you observe a spell cast — even by a gate boss — you can attempt to deconstruct its resonance. Intelligence check DC 10 + spell level: success lets you add it to your grimoire during your next rest (normal copying cost). Short rest: recover one spell slot â‰¤ half Mage level. Once per day.",
 			},
 			{
 				level: 2,
@@ -1344,7 +1344,7 @@ export const jobs: Job[] = [
 				level: 8,
 				name: "Spell Layering",
 				description:
-					"Your multi-threaded mind can run two concentration spells simultaneously â€” like dual-screening but with reality-altering magic. Maintain a second concentration spell of 3rd level or lower. If you take damage, make a separate concentration check for each.",
+					"Your multi-threaded mind can run two concentration spells simultaneously — like dual-screening but with reality-altering magic. Maintain a second concentration spell of 3rd level or lower. If you take damage, make a separate concentration check for each.",
 			},
 			{
 				level: 10,
@@ -1360,13 +1360,13 @@ export const jobs: Job[] = [
 				level: 18,
 				name: "Permanent Tuning",
 				description:
-					"Choose one 1st-level and one 2nd-level spell. These are permanently attuned to your soul resonance â€” cast them without a slot, at will. They exist as ambient flows within your consciousness.",
+					"Choose one 1st-level and one 2nd-level spell. These are permanently attuned to your soul resonance — cast them without a slot, at will. They exist as ambient flows within your consciousness.",
 			},
 			{
 				level: 20,
 				name: "Zenith Ascension",
 				description:
-					"Your status as an Ascendant is recognized globally at the Zenith Rank: [RANK: S â€” ABSOLUTE AUTHORITY]. Two 3rd-level spells are always prepared; cast each once without a slot per short rest. Once per long rest, cast any spell in your grimoire without expending a slot (max 7th level). Universities and academies globally seek your patronage.",
+					"Your status as an Ascendant is recognized globally at the Zenith Rank: [RANK: S — ABSOLUTE AUTHORITY]. Two 3rd-level spells are always prepared; cast each once without a slot per short rest. Once per long rest, cast any spell in your grimoire without expending a slot (max 7th level). Universities and academies globally seek your patronage.",
 			},
 		],
 		racialTraits: [
@@ -1444,7 +1444,7 @@ export const jobs: Job[] = [
 		type: "Job",
 		rank: "B",
 		description:
-			"The Esper is an Awakened identity that specializes in the Reality Distorter and Unfiltered Vessel mandate. As the SA version of an Esper, their connection to the Aetheric-Weave is raw and volatileâ€”mana bleeds from their body like radiation, reshaping reality through sheer willpower. In modern society, Espers are celebrities and pariahs in equal measure; their aetheric flares reshape the tapestry of existence with absolute authority.",
+			"The Esper is an Awakened identity that specializes in the Reality Distorter and Unfiltered Vessel mandate. As the SA version of an Esper, their connection to the Aetheric-Weave is raw and volatile—mana bleeds from their body like radiation, reshaping reality through sheer willpower. In modern society, Espers are celebrities and pariahs in equal measure; their aetheric flares reshape the tapestry of existence with absolute authority.",
 		hitDie: "1d6",
 		primaryAbility: "Presence",
 		saving_throws: ["Vitality", "Presence"],
@@ -1470,25 +1470,25 @@ export const jobs: Job[] = [
 			{
 				name: "Mana-Saturated Body",
 				description:
-					"Your cells leak ambient magic â€” Geiger counters spike near you, compasses spin, and your skin faintly glows in dark rooms. HP maximum increases by 1 per Esper level.",
+					"Your cells leak ambient magic — Geiger counters spike near you, compasses spin, and your skin faintly glows in dark rooms. HP maximum increases by 1 per Esper level.",
 				level: 1,
 			},
 			{
 				name: "Unstable Reactor",
 				description:
-					"Your mana output is volatile â€” you've accidentally set off car alarms, shattered windows, and crashed Wi-Fi networks just by sneezing. After casting a 1st+ spell, roll d20; on a 1, a random mana surge erupts from your body.",
+					"Your mana output is volatile — you've accidentally set off car alarms, shattered windows, and crashed Wi-Fi networks just by sneezing. After casting a 1st+ spell, roll d20; on a 1, a random mana surge erupts from your body.",
 				level: 1,
 			},
 			{
 				name: "Willpower Amplifier",
 				description:
-					"When you spend flux to reshape a spell, the excess mana bleeds through as raw force â€” bystanders feel a pressure wave and phones display static. Add Presence mod as bonus damage to one target.",
+					"When you spend flux to reshape a spell, the excess mana bleeds through as raw force — bystanders feel a pressure wave and phones display static. Add Presence mod as bonus damage to one target.",
 				level: 6,
 			},
 			{
 				name: "Reality Distortion",
 				description:
-					"Your mana field warps probability in a 10-ft radius â€” coins land on edge, dice roll sixes, and weather changes when you're emotional. Reroll all damage dice for a spell and take the higher result per die. Once per long rest.",
+					"Your mana field warps probability in a 10-ft radius — coins land on edge, dice roll sixes, and weather changes when you're emotional. Reroll all damage dice for a spell and take the higher result per die. Once per long rest.",
 				level: 14,
 			},
 		],
@@ -1496,19 +1496,19 @@ export const jobs: Job[] = [
 			{
 				name: "Mana Sensitivity",
 				description:
-					"Your open mana pathways work like a passive radar â€” enchanted objects hum when you walk by, hidden gates tingle at the back of your skull, and you can tell if someone's an awakened ascendant from across a crowded subway car. Sense magical effects within 30 ft. Identify any observed spell's school.",
+					"Your open mana pathways work like a passive radar — enchanted objects hum when you walk by, hidden gates tingle at the back of your skull, and you can tell if someone's an awakened ascendant from across a crowded subway car. Sense magical effects within 30 ft. Identify any observed spell's school.",
 				type: "passive",
 			},
 			{
 				name: "Anomalous Resistance",
 				description:
-					"Your mind is so saturated with raw mana that external influence slides off like water on oil â€” hypnotists, marketing algorithms, and charm spells all fail. Advantage on saves vs charm; magic cannot put you to sleep.",
+					"Your mind is so saturated with raw mana that external influence slides off like water on oil — hypnotists, marketing algorithms, and charm spells all fail. Advantage on saves vs charm; magic cannot put you to sleep.",
 				type: "resistance",
 			},
 			{
 				name: "Focused Discharge",
 				description:
-					"Spend 1 flux when casting to spike your mana output â€” the air crackles, hair stands on end, and the target's defenses overload. Force disadvantage on the first save against your spell.",
+					"Spend 1 flux when casting to spike your mana output — the air crackles, hair stands on end, and the target's defenses overload. Force disadvantage on the first save against your spell.",
 				type: "active",
 				frequency: "at-will",
 			},
@@ -1549,7 +1549,7 @@ export const jobs: Job[] = [
 				level: 1,
 				name: "Innate Channeling",
 				description:
-					"Cast Esper spells using Presence â€” you never studied magic; it just happens when you want it to, like flexing a muscle you didn't know you had. When you cast a damage spell, you may change its type to force â€” your raw mana overwrites the spell's elemental code.",
+					"Cast Esper spells using Presence — you never studied magic; it just happens when you want it to, like flexing a muscle you didn't know you had. When you cast a damage spell, you may change its type to force — your raw mana overwrites the spell's elemental code.",
 			},
 			{
 				level: 1,
@@ -1562,13 +1562,13 @@ export const jobs: Job[] = [
 				name: "Flux Pool",
 				uses: { formula: "level", recharge: "short-rest" },
 				description:
-					"Flux points = Esper level â€” your internal mana reactor cycles between states like a nuclear power plant. Overcharge (add 1d6 per flux to spell damage, max 3), Absorb (convert a slot into flux = slot level), or Manifest (create a slot by spending flux = slot level +1).",
+					"Flux points = Esper level — your internal mana reactor cycles between states like a nuclear power plant. Overcharge (add 1d6 per flux to spell damage, max 3), Absorb (convert a slot into flux = slot level), or Manifest (create a slot by spending flux = slot level +1).",
 			},
 			{
 				level: 3,
 				name: "Reality Sculpting",
 				description:
-					"Choose 2 sculpting techniques â€” you reshape spells mid-cast like a potter shaping clay, except the clay is reality. Warp: reshape area (coneâ†’sphereâ†’line). Bend: cast around corners, ignoring cover. Fork: split a single-target spell to hit two targets at half damage. More at 10th and 17th.",
+					"Choose 2 sculpting techniques — you reshape spells mid-cast like a potter shaping clay, except the clay is reality. Warp: reshape area (coneâ†’sphereâ†’line). Bend: cast around corners, ignoring cover. Fork: split a single-target spell to hit two targets at half damage. More at 10th and 17th.",
 			},
 			{
 				level: 4,
@@ -1584,7 +1584,7 @@ export const jobs: Job[] = [
 				level: 10,
 				name: "Mana Feedback Loop",
 				description:
-					"When a creature resists your spell, the rejected mana bounces back into your reactor â€” like regenerative braking on an electric car. Regain 1 flux point on each successful enemy save.",
+					"When a creature resists your spell, the rejected mana bounces back into your reactor — like regenerative braking on an electric car. Regain 1 flux point on each successful enemy save.",
 			},
 			{
 				level: 14,
@@ -1600,7 +1600,7 @@ export const jobs: Job[] = [
 				level: 20,
 				name: "Zenith Awakening",
 				description:
-					"Your status as an Ascendant is recognized globally at the Zenith Rank: [RANK: S â€” ABSOLUTE SINGULARITY]. Regain 4 flux on short rest. Once per long rest, Overcharge with no flux limit â€” spend any amount, adding 1d6 per point. Satellite imagery of the Ascendant Bureau captures the visible mana-flare when you go all-out. Government agencies maintain deep files on your potential.",
+					"Your status as an Ascendant is recognized globally at the Zenith Rank: [RANK: S — ABSOLUTE SINGULARITY]. Regain 4 flux on short rest. Once per long rest, Overcharge with no flux limit — spend any amount, adding 1d6 per point. Satellite imagery of the Ascendant Bureau captures the visible mana-flare when you go all-out. Government agencies maintain deep files on your potential.",
 			},
 		],
 		racialTraits: [
@@ -1967,13 +1967,13 @@ export const jobs: Job[] = [
 			{
 				name: "Biome Attunement",
 				description:
-					"Your body adapted to gate ecosystems â€” you can breathe gate atmosphere that would kill normal humans, and your immune system shrugs off alien pathogens. Advantage on saves vs poison/disease. Resistance to poison damage.",
+					"Your body adapted to gate ecosystems — you can breathe gate atmosphere that would kill normal humans, and your immune system shrugs off alien pathogens. Advantage on saves vs poison/disease. Resistance to poison damage.",
 				level: 1,
 			},
 			{
 				name: "Gate Ecology Sense",
 				description:
-					"Communicate with beasts and plant creatures â€” stray dogs follow you, pigeons land on your shoulder, and houseplants lean toward you. Sense gate openings within 1 mile by reading ecosystem stress patterns the way a meteorologist reads weather radar.",
+					"Communicate with beasts and plant creatures — stray dogs follow you, pigeons land on your shoulder, and houseplants lean toward you. Sense gate openings within 1 mile by reading ecosystem stress patterns the way a meteorologist reads weather radar.",
 				level: 1,
 			},
 			{
@@ -1993,7 +1993,7 @@ export const jobs: Job[] = [
 			{
 				name: "Biome Link",
 				description:
-					"You speak the primal language of gate ecosystems â€” zoo animals calm when you enter, feral gate creatures hesitate, and plants in your apartment thrive suspiciously well. Communicate with beasts and plants at all times.",
+					"You speak the primal language of gate ecosystems — zoo animals calm when you enter, feral gate creatures hesitate, and plants in your apartment thrive suspiciously well. Communicate with beasts and plants at all times.",
 				type: "passive",
 			},
 			{
@@ -2042,7 +2042,7 @@ export const jobs: Job[] = [
 				level: 1,
 				name: "Gate Speak",
 				description:
-					"Know the primal language shared across gate ecosystems â€” you read gate biome markers the way a tracker reads footprints. Leave and spot hidden biological signals. Sense the rank and type of any gate within 1 mile â€” the Ascendant Bureau's Ecology Division relies on Summoners for gate classification.",
+					"Know the primal language shared across gate ecosystems — you read gate biome markers the way a tracker reads footprints. Leave and spot hidden biological signals. Sense the rank and type of any gate within 1 mile — the Ascendant Bureau's Ecology Division relies on Summoners for gate classification.",
 			},
 			{
 				level: 1,
@@ -2054,13 +2054,13 @@ export const jobs: Job[] = [
 				level: 2,
 				name: "Entity Shift",
 				description:
-					"Absorb biome data from gate creatures you've studied â€” field researchers document each form in your growing catalogue. Assume their form 2/short rest. Max CR 1/4 at 2nd (1/2 swim at 4th, CR 1 fly at 8th). You permanently retain one sensory ability from each form (e.g., wolf scent enhances your nose even in human form). Biologists are fascinated.",
+					"Absorb biome data from gate creatures you've studied — field researchers document each form in your growing catalogue. Assume their form 2/short rest. Max CR 1/4 at 2nd (1/2 swim at 4th, CR 1 fly at 8th). You permanently retain one sensory ability from each form (e.g., wolf scent enhances your nose even in human form). Biologists are fascinated.",
 			},
 			{
 				level: 2,
 				name: "Affinity Circle",
 				description:
-					"Choose a primal affinity â€” your connection to a specific gate biome type. Features at 2nd, 6th, 10th, and 14th level.",
+					"Choose a primal affinity — your connection to a specific gate biome type. Features at 2nd, 6th, 10th, and 14th level.",
 			},
 			{
 				level: 4,
@@ -2076,7 +2076,7 @@ export const jobs: Job[] = [
 				level: 8,
 				name: "Biome Command",
 				description:
-					"Once per long rest, reshape the local environment in a 60-ft radius â€” concrete cracks as roots erupt, temperature shifts 40 degrees in seconds, fog rolls in from nowhere. Create difficult terrain, change temperature (1d6 cold/fire per turn), create concealment, or purify the area. At 14th level, use twice per long rest.",
+					"Once per long rest, reshape the local environment in a 60-ft radius — concrete cracks as roots erupt, temperature shifts 40 degrees in seconds, fog rolls in from nowhere. Create difficult terrain, change temperature (1d6 cold/fire per turn), create concealment, or purify the area. At 14th level, use twice per long rest.",
 			},
 			{
 				level: 10,
@@ -2092,7 +2092,7 @@ export const jobs: Job[] = [
 				level: 18,
 				name: "Hybrid Casting",
 				description:
-					"Cast spells while in Entity Shift form. Your shifted body integrates spell components into its biology â€” no V/S/M components needed (except costly materials).",
+					"Cast spells while in Entity Shift form. Your shifted body integrates spell components into its biology — no V/S/M components needed (except costly materials).",
 			},
 			{
 				level: 18,
@@ -2104,7 +2104,7 @@ export const jobs: Job[] = [
 				level: 20,
 				name: "Zenith Archon of the Swarm",
 				description:
-					"Your status as an Ascendant is recognized globally at the Zenith Rank: [RANK: S â€” RADIANT NEXUS OF THE HIVE]. Unlimited Entity Shift uses. Forms can be any creature you've encountered (max CR = half level). Biome Command becomes at-will. Global environmental agencies and the UN consult you on gate ecosystem policy. Your bond with the gate biomes is absolute.",
+					"Your status as an Ascendant is recognized globally at the Zenith Rank: [RANK: S — RADIANT NEXUS OF THE HIVE]. Unlimited Entity Shift uses. Forms can be any creature you've encountered (max CR = half level). Biome Command becomes at-will. Global environmental agencies and the UN consult you on gate ecosystem policy. Your bond with the gate biomes is absolute.",
 			},
 		],
 		racialTraits: [
@@ -2175,7 +2175,7 @@ export const jobs: Job[] = [
 		type: "Job",
 		rank: "A",
 		description:
-			"The Holy Knight is an Awakened identity that specializes in the Oath-Bound Enforcer and Absolute Covenant mandate. As an Ascendant of this lineage, they serve as the ultimate guardians of modern society, their power fueled by a binding oath to the Absolute itselfâ€”a literal covenant inscribed into their mana pathways. They work as guild leaders, Ascendant Bureau enforcement officers, and public defenders against gate threats. The oath grants devastating combat power, but break its tenets and the power is revoked painfully. They channel radiant Absolute energy through weapons, heal allies, and project protective auras.",
+			"The Holy Knight is an Awakened identity that specializes in the Oath-Bound Enforcer and Absolute Covenant mandate. As an Ascendant of this lineage, they serve as the ultimate guardians of modern society, their power fueled by a binding oath to the Absolute itself—a literal covenant inscribed into their mana pathways. They work as guild leaders, Ascendant Bureau enforcement officers, and public defenders against gate threats. The oath grants devastating combat power, but break its tenets and the power is revoked painfully. They channel radiant Absolute energy through weapons, heal allies, and project protective auras.",
 		hitDie: "1d10",
 		primaryAbility: "Presence",
 		saving_throws: ["Sense", "Presence"],
@@ -2198,25 +2198,25 @@ export const jobs: Job[] = [
 			{
 				name: "Covenant Bond",
 				description:
-					"Your oath links you to nearby allies like a supernatural resonant bond â€” paramedics have documented Holy Knight teammates' vitals stabilizing in sync. When you or an ally within 10 ft succeeds on a death save, they regain 1 HP.",
+					"Your oath links you to nearby allies like a supernatural resonant bond — paramedics have documented Holy Knight teammates' vitals stabilizing in sync. When you or an ally within 10 ft succeeds on a death save, they regain 1 HP.",
 				level: 1,
 			},
 			{
 				name: "Oath Sense",
 				description:
-					"Your covenant pings threats to the Absolute's order like a sensory alert â€” your phone buzzes with [HOSTILE ENTITY DETECTED] when anomaly, celestials, or anomaly are within 60 ft. Know type and location. 1 + Presence mod uses per long rest.",
+					"Your covenant pings threats to the Absolute's order like a sensory alert — your phone buzzes with [HOSTILE ENTITY DETECTED] when anomaly, celestials, or anomaly are within 60 ft. Know type and location. 1 + Presence mod uses per long rest.",
 				level: 1,
 			},
 			{
 				name: "Aura of Resolve",
 				description:
-					"Your covenant radiates courage â€” panicking civilians calm down near you, and teammates report feeling 'invincible' in your presence. You and allies within 10 ft can't be frightened while you're conscious. 30 ft at 18th.",
+					"Your covenant radiates courage — panicking civilians calm down near you, and teammates report feeling 'invincible' in your presence. You and allies within 10 ft can't be frightened while you're conscious. 30 ft at 18th.",
 				level: 10,
 			},
 			{
 				name: "Purification Touch",
 				description:
-					"Channel the Absolute to purge hostile magic as the divine decree overwrites the resonance of the afflictionâ€”curses, hexes, and magical diseases dissolve under your hands. End one spell on a willing creature you touch. Presence mod uses per long rest.",
+					"Channel the Absolute to purge hostile magic as the divine decree overwrites the resonance of the affliction—curses, hexes, and magical diseases dissolve under your hands. End one spell on a willing creature you touch. Presence mod uses per long rest.",
 				level: 14,
 			},
 		],
@@ -2224,7 +2224,7 @@ export const jobs: Job[] = [
 			{
 				name: "Covenant's Mercy",
 				description:
-					"You carry a reservoir of Absolute healing energy = 5 Ã— Holy Knight level â€” your touch glows golden and field hospitals prioritize your patients. Restore HP by touch or purge disease/poison (5 HP per purge).",
+					"You carry a reservoir of Absolute healing energy = 5 × Holy Knight level — your touch glows golden and field hospitals prioritize your patients. Restore HP by touch or purge disease/poison (5 HP per purge).",
 				type: "active",
 				frequency: "long-rest",
 			},
@@ -2237,7 +2237,7 @@ export const jobs: Job[] = [
 			{
 				name: "Covenant Immunity",
 				description:
-					"Your oath purifies your biology â€” you haven't been sick since your awakening, and pandemic-era contact tracers flagged you as a statistical anomaly. Immune to disease.",
+					"Your oath purifies your biology — you haven't been sick since your awakening, and pandemic-era contact tracers flagged you as a statistical anomaly. Immune to disease.",
 				type: "immunity",
 			},
 		],
@@ -2283,7 +2283,7 @@ export const jobs: Job[] = [
 				name: "Covenant's Mercy",
 				uses: { formula: "5 * level", recharge: "long-rest" },
 				description:
-					"You carry a reservoir of Absolute healing energy = 5 Ã— Holy Knight level. Touch a creature to transfer HP from the pool. Spend 5 HP from the pool to cure one disease or neutralize one poison.",
+					"You carry a reservoir of Absolute healing energy = 5 × Holy Knight level. Touch a creature to transfer HP from the pool. Spend 5 HP from the pool to cure one disease or neutralize one poison.",
 			},
 			{
 				level: 2,
@@ -2301,7 +2301,7 @@ export const jobs: Job[] = [
 				level: 2,
 				name: "Covenant Strike",
 				description:
-					"On melee hit, channel your oath's power through the weapon â€” it flares with golden light visible from blocks away. Expend a slot: 2d8 radiant + 1d8 per slot above 1st (max 5d8). +1d8 vs anomaly/anomaly. Target's speed reduced by 10 ft until your next turn. Gate-raid streamers' audiences go wild for Covenant Strike clips.",
+					"On melee hit, channel your oath's power through the weapon — it flares with golden light visible from blocks away. Expend a slot: 2d8 radiant + 1d8 per slot above 1st (max 5d8). +1d8 vs anomaly/anomaly. Target's speed reduced by 10 ft until your next turn. Gate-raid streamers' audiences go wild for Covenant Strike clips.",
 			},
 			{
 				level: 3,
@@ -2364,7 +2364,7 @@ export const jobs: Job[] = [
 				level: 20,
 				name: "Zenith Sacred Avatar",
 				description:
-					"Your status as an Ascendant is recognized globally at the Zenith Rank: [RANK: S â€” SACRED AVATAR]. Transform into a radiant avatar of your oath for 1 min: 30 ft fly speed, resistance to all damage, Oath Ward extends to 60 ft. Once per long rest. You are a living monument to the Absolute's authority; your manifestations are global events broadcast across every screen on Earth.",
+					"Your status as an Ascendant is recognized globally at the Zenith Rank: [RANK: S — SACRED AVATAR]. Transform into a radiant avatar of your oath for 1 min: 30 ft fly speed, resistance to all damage, Oath Ward extends to 60 ft. Once per long rest. You are a living monument to the Absolute's authority; your manifestations are global events broadcast across every screen on Earth.",
 			},
 		],
 		racialTraits: [
@@ -2456,7 +2456,7 @@ export const jobs: Job[] = [
 		type: "Job",
 		rank: "B",
 		description:
-			"The Technomancer is an Awakened identity that specializes in the Absolute Architect and Aetheric Design mandate. As an Ascendant of this lineage, their Awakening provides architectural access to the Weave-Resonance layerâ€”the fundamental interface between magic and physical matter. In the modern world, Technomancers are the most commercially valuable ascendants, turning Silicon Valley and Shenzhen into hubs of Aetheric innovation. They build devices that redefine reality: mana-powered drones, self-repairing gear, and resonance-enabled technologies.",
+			"The Technomancer is an Awakened identity that specializes in the Absolute Architect and Aetheric Design mandate. As an Ascendant of this lineage, their Awakening provides architectural access to the Weave-Resonance layer—the fundamental interface between magic and physical matter. In the modern world, Technomancers are the most commercially valuable ascendants, turning Silicon Valley and Shenzhen into hubs of Aetheric innovation. They build devices that redefine reality: mana-powered drones, self-repairing gear, and resonance-enabled technologies.",
 		hitDie: "1d8",
 		primaryAbility: "Intelligence",
 		saving_throws: ["Vitality", "Intelligence"],
@@ -2481,7 +2481,7 @@ export const jobs: Job[] = [
 			{
 				name: "Mandate Vision",
 				description:
-					"You see the Absolute's construction resonance overlaid on objects like a permanent AR schematic display â€” pick up any gadget and you instantly see its internal wiring, stress points, and upgrade paths. Double proficiency on INT checks related to magic items, tech, or Absolute constructs.",
+					"You see the Absolute's construction resonance overlaid on objects like a permanent AR schematic display — pick up any gadget and you instantly see its internal wiring, stress points, and upgrade paths. Double proficiency on INT checks related to magic items, tech, or Absolute constructs.",
 				level: 1,
 			},
 			{
@@ -2493,7 +2493,7 @@ export const jobs: Job[] = [
 			{
 				name: "Aetheric-Mandate Access",
 				description:
-					"Interface with any Absolute construct or divine device like touching an intuitive schematic â€” read functions, bypass security, and rewrite resonance behavior. You've unraveled gate artifacts that global research labs couldn't crack. Advantage on checks to analyze magical technology.",
+					"Interface with any Absolute construct or divine device like touching an intuitive schematic — read functions, bypass security, and rewrite resonance behavior. You've unraveled gate artifacts that global research labs couldn't crack. Advantage on checks to analyze magical technology.",
 				level: 1,
 			},
 			{
@@ -2505,7 +2505,7 @@ export const jobs: Job[] = [
 			{
 				name: "Construct Reinforcement",
 				description:
-					"Constructs you build are fortified with extra Absolute data. They gain extra HP = 2 Ã— Technomancer level and advantage on saves vs being banished or dispelled.",
+					"Constructs you build are fortified with extra Absolute data. They gain extra HP = 2 × Technomancer level and advantage on saves vs being banished or dispelled.",
 				level: 10,
 			},
 		],
@@ -2513,20 +2513,20 @@ export const jobs: Job[] = [
 			{
 				name: "Mandate Tinkering",
 				description:
-					"Imbue tiny objects with Absolute-powered effects â€” turn a pen into a flashlight, a coin into a voice recorder, or a business card into a GPS tracker. Up to INT mod objects at once. Your apartment is full of enchanted household items.",
+					"Imbue tiny objects with Absolute-powered effects — turn a pen into a flashlight, a coin into a voice recorder, or a business card into a GPS tracker. Up to INT mod objects at once. Your apartment is full of enchanted household items.",
 				type: "active",
 				frequency: "at-will",
 			},
 			{
 				name: "Tool Mastery",
 				description:
-					"Your neural interface optimizes every tool interaction â€” you use a soldering iron like a surgeon uses a scalpel, and your 3D prints come out flawless every time. Double proficiency with all tools you're proficient with.",
+					"Your neural interface optimizes every tool interaction — you use a soldering iron like a surgeon uses a scalpel, and your 3D prints come out flawless every time. Double proficiency with all tools you're proficient with.",
 				type: "passive",
 			},
 			{
 				name: "Absolute Assist",
 				description:
-					"Reaction: feed real-time Absolute telemetry to a nearby ally through their earpiece, HUD, or phone â€” like having a mission control in your head. Add INT mod to a creature's check or save within 30 ft. INT mod uses per long rest.",
+					"Reaction: feed real-time Absolute telemetry to a nearby ally through their earpiece, HUD, or phone — like having a mission control in your head. Add INT mod to a creature's check or save within 30 ft. INT mod uses per long rest.",
 				type: "active",
 				frequency: "long-rest",
 			},
@@ -2572,19 +2572,19 @@ export const jobs: Job[] = [
 				level: 1,
 				name: "Mandate Tinkering",
 				description:
-					"Imbue tiny objects with Absolute-powered properties â€” enchant your keys to glow, your wallet to play a sound when lost, or a sticky note to display a holographic message. Up to INT mod objects simultaneously.",
+					"Imbue tiny objects with Absolute-powered properties — enchant your keys to glow, your wallet to play a sound when lost, or a sticky note to display a holographic message. Up to INT mod objects simultaneously.",
 			},
 			{
 				level: 1,
 				name: "Technical Casting",
 				description:
-					"Cast Technomancer spells using Intelligence. Prepare spells using tools as focus â€” you physically build the spell effect into a device, then trigger it.",
+					"Cast Technomancer spells using Intelligence. Prepare spells using tools as focus — you physically build the spell effect into a device, then trigger it.",
 			},
 			{
 				level: 2,
 				name: "Absolute Infusion",
 				description:
-					"Write Absolute data into nonmagical items, granting them magical properties. Choose from a list of infusion designs. Active infusions scale with level. Unique: you can infuse an item with a cantrip you know â€” the item can cast it INT mod times per day (anyone holding it).",
+					"Write Absolute data into nonmagical items, granting them magical properties. Choose from a list of infusion designs. Active infusions scale with level. Unique: you can infuse an item with a cantrip you know — the item can cast it INT mod times per day (anyone holding it).",
 			},
 			{
 				level: 3,
@@ -2596,7 +2596,7 @@ export const jobs: Job[] = [
 				level: 3,
 				name: "Adaptive Fabrication",
 				description:
-					"Spend 1 hour to fabricate any toolset or simple weapon from raw materials â€” you've built functional equipment from junkyard scraps and hardware store supplies. At 10th level, fabricate uncommon magic items during a long rest (materials required).",
+					"Spend 1 hour to fabricate any toolset or simple weapon from raw materials — you've built functional equipment from junkyard scraps and hardware store supplies. At 10th level, fabricate uncommon magic items during a long rest (materials required).",
 			},
 			{
 				level: 4,
@@ -2635,7 +2635,7 @@ export const jobs: Job[] = [
 				level: 11,
 				name: "Spell Capacitor",
 				description:
-					"Store a 1st or 2nd-level spell in a constructed device. Any creature holding it can discharge the spell using your save DC and spell attack bonus. 2 Ã— INT mod charges, recharges on long rest.",
+					"Store a 1st or 2nd-level spell in a constructed device. Any creature holding it can discharge the spell using your save DC and spell attack bonus. 2 × INT mod charges, recharges on long rest.",
 			},
 			{
 				level: 14,
@@ -2658,7 +2658,7 @@ export const jobs: Job[] = [
 				level: 20,
 				name: "Zenith Architect of the Weave",
 				description:
-					"Your status as an Ascendant is recognized globally at the Zenith Rank: [RANK: S â€” ARCHITECT OF THE ABSOLUTE]. +1 to all saves per attuned item. When reduced to 0 HP, sacrifice one attunement to drop to 1 HP and release a 20-ft mana EMP dealing 3d10 force. Global defense contractors and tech titans compete for your divine designs.",
+					"Your status as an Ascendant is recognized globally at the Zenith Rank: [RANK: S — ARCHITECT OF THE ABSOLUTE]. +1 to all saves per attuned item. When reduced to 0 HP, sacrifice one attunement to drop to 1 HP and release a 20-ft mana EMP dealing 3d10 force. Global defense contractors and tech titans compete for your divine designs.",
 			},
 		],
 		racialTraits: [
@@ -2749,7 +2749,7 @@ export const jobs: Job[] = [
 		type: "Job",
 		rank: "B",
 		description:
-			"The Idol is an Awakened identity that specializes in the Frequency Manipulator and Resonance Caster mandate. As an Ascendant of this lineage, their power is attuned to the Absolute's harmonic frequencies, allowing them to broadcast buffs and hype with absolute presence. In modern society, Idols are the most publicly visible ascendants â€” they have millions of followers, record albums infused with mana, headline gate-clearance livestreams, and their Hype abilities make them the ultimate party buffers.",
+			"The Idol is an Awakened identity that specializes in the Frequency Manipulator and Resonance Caster mandate. As an Ascendant of this lineage, their power is attuned to the Absolute's harmonic frequencies, allowing them to broadcast buffs and hype with absolute presence. In modern society, Idols are the most publicly visible ascendants — they have millions of followers, record albums infused with mana, headline gate-clearance livestreams, and their Hype abilities make them the ultimate party buffers.",
 		hitDie: "1d8",
 		primaryAbility: "Presence",
 		saving_throws: ["Agility", "Presence"],
@@ -2790,19 +2790,19 @@ export const jobs: Job[] = [
 			{
 				name: "Broad-Spectrum Awakening",
 				description:
-					"Your frequency attunement grants intuitive understanding of many disciplines â€” you pick up new skills the way most people pick up slang, absorbing competence from the Absolute's resonance flows. Gain proficiency in two additional skills of your choice.",
+					"Your frequency attunement grants intuitive understanding of many disciplines — you pick up new skills the way most people pick up slang, absorbing competence from the Absolute's resonance flows. Gain proficiency in two additional skills of your choice.",
 				level: 1,
 			},
 			{
 				name: "Resonance Shield",
 				description:
-					"Your personal frequency repels external manipulation â€” advertisers, con artists, cult recruiters, and charm spells all bounce off your natural broadcast interference. Advantage on saves vs charm. Magic cannot put you to sleep.",
+					"Your personal frequency repels external manipulation — advertisers, con artists, cult recruiters, and charm spells all bounce off your natural broadcast interference. Advantage on saves vs charm. Magic cannot put you to sleep.",
 				level: 1,
 			},
 			{
 				name: "Amplified Hype",
 				description:
-					"When you grant a Hype die, the recipient also gains temp HP = Presence mod â€” they literally feel stronger, more confident, like their favorite song just came on during a workout. Your resonance reinforces their resolve.",
+					"When you grant a Hype die, the recipient also gains temp HP = Presence mod — they literally feel stronger, more confident, like their favorite song just came on during a workout. Your resonance reinforces their resolve.",
 				level: 1,
 			},
 			{
@@ -2822,13 +2822,13 @@ export const jobs: Job[] = [
 			{
 				name: "Absolute Versatility",
 				description:
-					"The Absolute's ambient frequencies feed you data about everything â€” you're the person who's weirdly good at trivia, can fix a flat tire, knows first aid, and speaks conversational Japanese despite never studying it. Add half prof bonus to unproficient checks.",
+					"The Absolute's ambient frequencies feed you data about everything — you're the person who's weirdly good at trivia, can fix a flat tire, knows first aid, and speaks conversational Japanese despite never studying it. Add half prof bonus to unproficient checks.",
 				type: "passive",
 			},
 			{
 				name: "Frequency Restoration",
 				description:
-					"During short rest, emit restorative harmonics â€” it sounds like ambient music that makes everyone feel better. Teammates' wounds close faster, stress melts away. Presence mod creatures each regain extra 1d6 HP.",
+					"During short rest, emit restorative harmonics — it sounds like ambient music that makes everyone feel better. Teammates' wounds close faster, stress melts away. Presence mod creatures each regain extra 1d6 HP.",
 				type: "active",
 				frequency: "short-rest",
 			},
@@ -2874,14 +2874,14 @@ export const jobs: Job[] = [
 				level: 1,
 				name: "Frequency Casting",
 				description:
-					"Cast Idol spells using Presence. Known caster â€” spells manifest as harmonic frequency manipulation. When you cast a spell that targets only one creature, you can emit a secondary harmonic: one other creature within 10 ft of the target has disadvantage on its next save before the end of your next turn.",
+					"Cast Idol spells using Presence. Known caster — spells manifest as harmonic frequency manipulation. When you cast a spell that targets only one creature, you can emit a secondary harmonic: one other creature within 10 ft of the target has disadvantage on its next save before the end of your next turn.",
 			},
 			{
 				level: 1,
 				name: "Hype",
 				uses: { formula: "PRE mod", recharge: "long-rest" },
 				description:
-					"Bonus action: broadcast an amplifying frequency â€” a shout, a riff, a motivational one-liner that literally makes your teammate better at what they're doing. Grant a Hype die (d6â†’d8â†’d10â†’d12 at 5th/10th/15th). Add to one attack/check/save within 10 min. On success, you gain temp HP = die roll (the crowd's energy feeds you back). PRE mod uses per long rest (short rest at 5th).",
+					"Bonus action: broadcast an amplifying frequency — a shout, a riff, a motivational one-liner that literally makes your teammate better at what they're doing. Grant a Hype die (d6â†’d8â†’d10â†’d12 at 5th/10th/15th). Add to one attack/check/save within 10 min. On success, you gain temp HP = die roll (the crowd's energy feeds you back). PRE mod uses per long rest (short rest at 5th).",
 			},
 			{
 				level: 2,
@@ -2916,13 +2916,13 @@ export const jobs: Job[] = [
 				level: 5,
 				name: "Sustained Resonance",
 				description:
-					"Hype dice recharge on short rest â€” your energy is self-sustaining, like a hit song stuck in everyone's head. When you grant a Hype die, optionally emit a Dissonance pulse: one hostile creature within 30 ft subtracts 1d4 from its next attack. Fans call it 'the anti-vibe.'",
+					"Hype dice recharge on short rest — your energy is self-sustaining, like a hit song stuck in everyone's head. When you grant a Hype die, optionally emit a Dissonance pulse: one hostile creature within 30 ft subtracts 1d4 from its next attack. Fans call it 'the anti-vibe.'",
 			},
 			{
 				level: 6,
 				name: "Dissonance Shield",
 				description:
-					"Action: emit a counter-frequency that scrambles hostile psychic influence â€” it sounds like feedback from a blown speaker to enemies but feels like noise-canceling headphones to allies. Advantage on saves vs frightened/charmed. Hostile casters: PRE save or lose concentration.",
+					"Action: emit a counter-frequency that scrambles hostile psychic influence — it sounds like feedback from a blown speaker to enemies but feels like noise-canceling headphones to allies. Advantage on saves vs frightened/charmed. Hostile casters: PRE save or lose concentration.",
 			},
 			{
 				level: 6,
@@ -2933,7 +2933,7 @@ export const jobs: Job[] = [
 				level: 10,
 				name: "Cross-Frequency Access",
 				description:
-					"Tap into other jobs' frequency bands like changing radio stations â€” learn healing spells from Heralds, attack spells from Mages, whatever fits your setlist. Learn 2 spells from any list (count as Idol spells). Swap one each level up. More at 14th and 18th.",
+					"Tap into other jobs' frequency bands like changing radio stations — learn healing spells from Heralds, attack spells from Mages, whatever fits your setlist. Learn 2 spells from any list (count as Idol spells). Swap one each level up. More at 14th and 18th.",
 			},
 			{
 				level: 14,
@@ -2944,7 +2944,7 @@ export const jobs: Job[] = [
 				level: 20,
 				name: "Zenith Idol of the Decree",
 				description:
-					"Your status as an Ascendant is recognized globally at the Zenith Rank: [RANK: S â€” SUPREME RESONANCE CONDUCTOR]. Roll initiative with 0 Hype dice â†’ regain 1. Once per long rest, you can broadcast an Anthem of Ascendance: for 1 minute, all allies within 60 ft add your Presence mod to their attack rolls and saving throws. Your performances are global mandates.",
+					"Your status as an Ascendant is recognized globally at the Zenith Rank: [RANK: S — SUPREME RESONANCE CONDUCTOR]. Roll initiative with 0 Hype dice â†’ regain 1. Once per long rest, you can broadcast an Anthem of Ascendance: for 1 minute, all allies within 60 ft add your Presence mod to their attack rolls and saving throws. Your performances are global mandates.",
 			},
 		],
 		racialTraits: [

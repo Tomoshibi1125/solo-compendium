@@ -3000,7 +3000,7 @@ export const items_gap_fill: Item[] = [
 			],
 			passive: [
 				"While attuned, you have advantage on saves against being Charmed.",
-				"Immunity to environmental cold below 0Â°C.",
+				"Immunity to environmental cold below 0°C.",
 				"+1d4 damage against creatures of the Anomaly tag.",
 			],
 		},
@@ -3087,7 +3087,7 @@ export const items_gap_fill: Item[] = [
 			},
 			passive_rules: [
 				"While attuned, you have advantage on saves against being Charmed.",
-				"Immunity to environmental cold below 0Â°C.",
+				"Immunity to environmental cold below 0°C.",
 				"+1d4 damage against creatures of the Anomaly tag.",
 			],
 			resolution: {
@@ -3104,7 +3104,7 @@ export const items_gap_fill: Item[] = [
 					"While attuned, you have advantage on saves against being Charmed.",
 				passive_effects: [
 					"While attuned, you have advantage on saves against being Charmed.",
-					"Immunity to environmental cold below 0Â°C.",
+					"Immunity to environmental cold below 0°C.",
 					"+1d4 damage against creatures of the Anomaly tag.",
 				],
 			},
@@ -19405,7 +19405,7 @@ export const items_gap_fill: Item[] = [
 			],
 			passive: [
 				"Once per long rest, you may misty-step up to 30 ft. as a bonus action.",
-				"Immunity to environmental cold below 0Â°C.",
+				"Immunity to environmental cold below 0°C.",
 				"+1d4 damage against creatures with the Construct or Anomaly tag.",
 			],
 		},
@@ -19488,7 +19488,7 @@ export const items_gap_fill: Item[] = [
 			},
 			passive_rules: [
 				"Once per long rest, you may misty-step up to 30 ft. as a bonus action.",
-				"Immunity to environmental cold below 0Â°C.",
+				"Immunity to environmental cold below 0°C.",
 				"+1d4 damage against creatures with the Construct or Anomaly tag.",
 			],
 			resolution: {
@@ -19505,7 +19505,7 @@ export const items_gap_fill: Item[] = [
 					"Once per long rest, you may misty-step up to 30 ft. as a bonus action.",
 				passive_effects: [
 					"Once per long rest, you may misty-step up to 30 ft. as a bonus action.",
-					"Immunity to environmental cold below 0Â°C.",
+					"Immunity to environmental cold below 0°C.",
 					"+1d4 damage against creatures with the Construct or Anomaly tag.",
 				],
 			},
@@ -27461,7 +27461,7 @@ export const items_gap_fill: Item[] = [
 			],
 			passive: [
 				"While worn, your unarmed strikes deal 1d4 bludgeoning damage.",
-				"Immunity to environmental cold below 0Â°C.",
+				"Immunity to environmental cold below 0°C.",
 				"While attuned, gain +1 to one ability score (max 20).",
 			],
 		},
@@ -27544,7 +27544,7 @@ export const items_gap_fill: Item[] = [
 			},
 			passive_rules: [
 				"While worn, your unarmed strikes deal 1d4 bludgeoning damage.",
-				"Immunity to environmental cold below 0Â°C.",
+				"Immunity to environmental cold below 0°C.",
 				"While attuned, gain +1 to one ability score (max 20).",
 			],
 			resolution: {
@@ -27561,7 +27561,7 @@ export const items_gap_fill: Item[] = [
 					"While worn, your unarmed strikes deal 1d4 bludgeoning damage.",
 				passive_effects: [
 					"While worn, your unarmed strikes deal 1d4 bludgeoning damage.",
-					"Immunity to environmental cold below 0Â°C.",
+					"Immunity to environmental cold below 0°C.",
 					"While attuned, gain +1 to one ability score (max 20).",
 				],
 			},
@@ -33272,7 +33272,7 @@ export const items_gap_fill: Item[] = [
 			],
 			passive: [
 				"Medical kit. +2 to Medicine checks; can be used to stabilize a creature without expending a Hit Die.",
-				"Immunity to environmental cold below 0Â°C.",
+				"Immunity to environmental cold below 0°C.",
 				"Once per long rest, gain advantage on all attacks for 1 round as a bonus action.",
 			],
 		},
@@ -33359,7 +33359,7 @@ export const items_gap_fill: Item[] = [
 			},
 			passive_rules: [
 				"Medical kit. +2 to Medicine checks; can be used to stabilize a creature without expending a Hit Die.",
-				"Immunity to environmental cold below 0Â°C.",
+				"Immunity to environmental cold below 0°C.",
 				"Once per long rest, gain advantage on all attacks for 1 round as a bonus action.",
 			],
 			resolution: {
@@ -33376,7 +33376,7 @@ export const items_gap_fill: Item[] = [
 					"Medical kit. +2 to Medicine checks; can be used to stabilize a creature without expending a Hit Die.",
 				passive_effects: [
 					"Medical kit. +2 to Medicine checks; can be used to stabilize a creature without expending a Hit Die.",
-					"Immunity to environmental cold below 0Â°C.",
+					"Immunity to environmental cold below 0°C.",
 					"Once per long rest, gain advantage on all attacks for 1 round as a bonus action.",
 				],
 			},
@@ -59446,7 +59446,7 @@ export const items_gap_fill: Item[] = [
 			],
 			passive: [
 				"Acts as an arcane focus. +1 to spell attack rolls.",
-				"Immunity to environmental cold below 0Â°C.",
+				"Immunity to environmental cold below 0°C.",
 				"Once per short rest, treat a roll of 1-9 on an attack as a 10.",
 			],
 		},
@@ -59532,7 +59532,7 @@ export const items_gap_fill: Item[] = [
 			},
 			passive_rules: [
 				"Acts as an arcane focus. +1 to spell attack rolls.",
-				"Immunity to environmental cold below 0Â°C.",
+				"Immunity to environmental cold below 0°C.",
 				"Once per short rest, treat a roll of 1-9 on an attack as a 10.",
 			],
 			resolution: {
@@ -59549,7 +59549,7 @@ export const items_gap_fill: Item[] = [
 					"Acts as an arcane focus. +1 to spell attack rolls.",
 				passive_effects: [
 					"Acts as an arcane focus. +1 to spell attack rolls.",
-					"Immunity to environmental cold below 0Â°C.",
+					"Immunity to environmental cold below 0°C.",
 					"Once per short rest, treat a roll of 1-9 on an attack as a 10.",
 				],
 			},
@@ -72986,7 +72986,7 @@ export const items_gap_fill: Item[] = [
 		name: "Reclaimed Zweihander",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"A reinforced two-handed blade â€” chosen by tanks who hit before they get hit.",
+			"A reinforced two-handed blade — chosen by tanks who hit before they get hit.",
 		rarity: "uncommon",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0169.webp",
@@ -74989,7 +74989,7 @@ export const items_gap_fill: Item[] = [
 		name: "Regent's Two-Hander",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"A reinforced two-handed blade â€” chosen by tanks who hit before they get hit.",
+			"A reinforced two-handed blade — chosen by tanks who hit before they get hit.",
 		rarity: "legendary",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0863.webp",
@@ -76263,7 +76263,7 @@ export const items_gap_fill: Item[] = [
 		name: "Wraithtouched Katana",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"A reliable mid-weight blade â€” the kind every Ascendant learns on, and many never replace. Issued under the Wraithtouched Katana designation.",
+			"A reliable mid-weight blade — the kind every Ascendant learns on, and many never replace. Issued under the Wraithtouched Katana designation.",
 		rarity: "rare",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0556.webp",
@@ -77840,7 +77840,7 @@ export const items_gap_fill: Item[] = [
 		name: "Toxic Combat Knife",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"A reliable mid-weight blade â€” the kind every Ascendant learns on, and many never replace. Bureau quartermasters catalog it as the Toxic Combat Knife.",
+			"A reliable mid-weight blade — the kind every Ascendant learns on, and many never replace. Bureau quartermasters catalog it as the Toxic Combat Knife.",
 		rarity: "rare",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0583.webp",
@@ -79098,7 +79098,7 @@ export const items_gap_fill: Item[] = [
 		name: "Refit Reach Spear",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"A two-handed reach weapon â€” good against fast, low-ground anomalies.",
+			"A two-handed reach weapon — good against fast, low-ground anomalies.",
 		rarity: "uncommon",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0162.webp",
@@ -82680,7 +82680,7 @@ export const items_gap_fill: Item[] = [
 		name: "Adept's Bludgeon",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"A reliable mid-weight blade â€” the kind every Ascendant learns on, and many never replace. The Adept's Bludgeon, in Bureau parlance.",
+			"A reliable mid-weight blade — the kind every Ascendant learns on, and many never replace. The Adept's Bludgeon, in Bureau parlance.",
 		rarity: "uncommon",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0661.webp",
@@ -83071,7 +83071,7 @@ export const items_gap_fill: Item[] = [
 		name: "Voidtouched Greatmaul",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"A reliable mid-weight blade â€” the kind every Ascendant learns on, and many never replace. Bureau quartermasters catalog it as the Voidtouched Greatmaul.",
+			"A reliable mid-weight blade — the kind every Ascendant learns on, and many never replace. Bureau quartermasters catalog it as the Voidtouched Greatmaul.",
 		rarity: "rare",
 		type: "weapon",
 		image:
@@ -89172,7 +89172,7 @@ export const items_gap_fill: Item[] = [
 		name: "Dawnbringer's Greataxe",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"A reliable mid-weight blade â€” the kind every Ascendant learns on, and many never replace. Bureau quartermasters catalog it as the Dawnbringer's Greataxe.",
+			"A reliable mid-weight blade — the kind every Ascendant learns on, and many never replace. Bureau quartermasters catalog it as the Dawnbringer's Greataxe.",
 		rarity: "legendary",
 		type: "weapon",
 		image:
@@ -90965,7 +90965,7 @@ export const items_gap_fill: Item[] = [
 		name: "Wraithtouched Kusarigama",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"A finesse reach weapon â€” surprising on first contact, devastating with practice.",
+			"A finesse reach weapon — surprising on first contact, devastating with practice.",
 		rarity: "rare",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0042.webp",
@@ -91122,7 +91122,7 @@ export const items_gap_fill: Item[] = [
 		name: "Ember Combat Whip",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"A finesse reach weapon â€” surprising on first contact, devastating with practice.",
+			"A finesse reach weapon — surprising on first contact, devastating with practice.",
 		rarity: "rare",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0123.webp",
@@ -94576,7 +94576,7 @@ export const items_gap_fill: Item[] = [
 			passive: [
 				"Provides AC 15 + AGI (max +2).",
 				"Reinforced medium armor with Bureau-stamped joints.",
-				"Immunity to environmental cold below 0Â°C.",
+				"Immunity to environmental cold below 0°C.",
 				"Once per short rest, treat a roll of 1-9 on an attack as a 10.",
 			],
 		},
@@ -94664,7 +94664,7 @@ export const items_gap_fill: Item[] = [
 			passive_rules: [
 				"Provides AC 15 + AGI (max +2).",
 				"Reinforced medium armor with Bureau-stamped joints.",
-				"Immunity to environmental cold below 0Â°C.",
+				"Immunity to environmental cold below 0°C.",
 				"Once per short rest, treat a roll of 1-9 on an attack as a 10.",
 			],
 			resolution: {
@@ -94676,7 +94676,7 @@ export const items_gap_fill: Item[] = [
 				equipped_effects: [
 					"Provides AC 15 + AGI (max +2).",
 					"Reinforced medium armor with Bureau-stamped joints.",
-					"Immunity to environmental cold below 0Â°C.",
+					"Immunity to environmental cold below 0°C.",
 					"Once per short rest, treat a roll of 1-9 on an attack as a 10.",
 				],
 			},
@@ -102393,7 +102393,7 @@ export const items_gap_fill: Item[] = [
 		name: "Service Magnum",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"A reliable mid-weight blade â€” the kind every Ascendant learns on, and many never replace. Field teams know this pattern as the Service Magnum.",
+			"A reliable mid-weight blade — the kind every Ascendant learns on, and many never replace. Field teams know this pattern as the Service Magnum.",
 		rarity: "common",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0333.webp",
@@ -105270,7 +105270,7 @@ export const items_gap_fill: Item[] = [
 		name: "Frontier Bullpup",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"A versatile blade â€” single-handed for speed, two-handed for finishing strokes. The Frontier Bullpup, in Bureau parlance.",
+			"A versatile blade — single-handed for speed, two-handed for finishing strokes. The Frontier Bullpup, in Bureau parlance.",
 		rarity: "uncommon",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0235.webp",
@@ -106737,7 +106737,7 @@ export const items_gap_fill: Item[] = [
 		name: "Reinforced Sawed-Off",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"A versatile blade â€” single-handed for speed, two-handed for finishing strokes. The Reinforced Sawed-Off, in Bureau parlance.",
+			"A versatile blade — single-handed for speed, two-handed for finishing strokes. The Reinforced Sawed-Off, in Bureau parlance.",
 		rarity: "common",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0697.webp",
@@ -107922,7 +107922,7 @@ export const items_gap_fill: Item[] = [
 		name: "Hexbound Sawed-Off",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"A versatile blade â€” single-handed for speed, two-handed for finishing strokes. The Hexbound Sawed-Off, in Bureau parlance.",
+			"A versatile blade — single-handed for speed, two-handed for finishing strokes. The Hexbound Sawed-Off, in Bureau parlance.",
 		rarity: "rare",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0727.webp",
@@ -108237,7 +108237,7 @@ export const items_gap_fill: Item[] = [
 		name: "Holy Pump-Action",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"A versatile blade â€” single-handed for speed, two-handed for finishing strokes. Field teams know this pattern as the Holy Pump-Action.",
+			"A versatile blade — single-handed for speed, two-handed for finishing strokes. Field teams know this pattern as the Holy Pump-Action.",
 		rarity: "epic",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0273.webp",
@@ -109777,7 +109777,7 @@ export const items_gap_fill: Item[] = [
 		name: "Worldbreaker's PDW",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"A reliable mid-weight blade â€” the kind every Ascendant learns on, and many never replace. On the requisition manifest it reads simply: Worldbreaker's PDW.",
+			"A reliable mid-weight blade — the kind every Ascendant learns on, and many never replace. On the requisition manifest it reads simply: Worldbreaker's PDW.",
 		rarity: "epic",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0714.webp",

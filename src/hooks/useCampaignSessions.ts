@@ -64,7 +64,7 @@ type UpsertSessionInput = {
 	status?: CampaignSessionStatus | null;
 	location?: string | null;
 	/**
-	 * R5 of Round 2 â€” RFC-5545-subset recurrence rule string (e.g.
+	 * R5 of Round 2 — RFC-5545-subset recurrence rule string (e.g.
 	 * "FREQ=weekly;COUNT=8"). Set on the seed row of a recurring series.
 	 * Parsed by src/lib/sessionRecurrence.ts. Persisted via the
 	 * `p_recurrence_rule` param added in migration
@@ -72,7 +72,7 @@ type UpsertSessionInput = {
 	 */
 	recurrenceRule?: string | null;
 	/**
-	 * R5 of Round 2 â€” parent session ID linking generated occurrences
+	 * R5 of Round 2 — parent session ID linking generated occurrences
 	 * back to the seed. Set on child rows; null on the seed.
 	 */
 	recurrenceParentId?: string | null;

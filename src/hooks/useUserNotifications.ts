@@ -1,5 +1,5 @@
 ﻿/**
- * useUserNotifications â€” server-backed in-app notification inbox.
+ * useUserNotifications — server-backed in-app notification inbox.
  *
  * R6 of Round 2 remediation. Layered on top of the existing local-cache
  * `useNotifications` hook so the UI stays the same. When authenticated,
@@ -8,7 +8,7 @@
  * cache exclusively.
  *
  * Production is centralized in the standalone `notify()` bridge
- * (`@/lib/notify`) â€” this hook is now a pure consumer (inbox reader +
+ * (`@/lib/notify`) — this hook is now a pure consumer (inbox reader +
  * mark-read). `markReadOnServer` calls the `mark_user_notification_read` RPC.
  *
  * Consumer entry point: returns the same shape as `useNotifications`

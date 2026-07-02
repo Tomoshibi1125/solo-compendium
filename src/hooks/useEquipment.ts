@@ -333,7 +333,7 @@ export const useEquipment = (characterId: string) => {
 		}) => {
 			// D&D Beyond parity: validate attunement transitions before they hit
 			// the DB. Catches both "exceeded slot cap" and "item doesn't require
-			// attunement" â€” and lets us emit the item:attune domain event with
+			// attunement" — and lets us emit the item:attune domain event with
 			// accurate before/after slot counts.
 			const beforeRow = equipment.find((row) => row.id === id);
 			const isAttuneFlip =

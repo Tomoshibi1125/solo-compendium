@@ -598,12 +598,12 @@ const CampaignDetail = () => {
 								campaignId={id || ""}
 								canManage={hasWardenAccess}
 							/>
-							{/* Misty Pearl H5 â€” In-world calendar */}
+							{/* Misty Pearl H5 — In-world calendar */}
 							<CampaignCalendarPanel
 								campaignId={id || ""}
 								canManage={hasWardenAccess}
 							/>
-							{/* Misty Pearl H4 â€” Bureau Field Recorder */}
+							{/* Misty Pearl H4 — Bureau Field Recorder */}
 							<SessionReplayPanel
 								campaignId={id || ""}
 								canManage={hasWardenAccess}

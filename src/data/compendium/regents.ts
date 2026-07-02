@@ -2175,7 +2175,7 @@ export const regents: Regent[] = [
 				level: 1,
 				name: "Ice Age Decree",
 				description:
-					"Create a 5-mile radius supernatural ice storm for 8 hours (1/long rest). The temperature drops to -100Â°C instantly, freezing all water and making fire damage impossible. This mirrors the Regent of Frost's climate-shattering power.",
+					"Create a 5-mile radius supernatural ice storm for 8 hours (1/long rest). The temperature drops to -100°C instantly, freezing all water and making fire damage impossible. This mirrors the Regent of Frost's climate-shattering power.",
 				type: "action",
 				frequency: "long-rest",
 			},
@@ -2190,7 +2190,7 @@ export const regents: Regent[] = [
 				level: 2,
 				name: "Absolute Zero Touch",
 				description:
-					"As a touch attack, channel the boundary of absolute zero. Target takes 10d10 cold damage and must make a VIT save or be paralyzed. On kill, they become a permanent ice statue at -273.15Â°C.",
+					"As a touch attack, channel the boundary of absolute zero. Target takes 10d10 cold damage and must make a VIT save or be paralyzed. On kill, they become a permanent ice statue at -273.15°C.",
 				type: "action",
 				frequency: "short-rest",
 			},
@@ -3625,7 +3625,7 @@ export const regents: Regent[] = [
 		title: "Mimic Regent Ascendant Class",
 		theme: "Infinite Forms",
 		description:
-			"Embodiment of infinite forms. Copy anything â€” creatures, objects, concepts. No detection possible. The Ascendant Bureau has contradictory records on you because you appear as a different person in every database. DNA tests return different results each time. Your awakening unlocked the ability to become ANYTHING you observe, perfectly and undetectably, making you the ultimate infiltrator, spy, and adaptive combatant.",
+			"Embodiment of infinite forms. Copy anything — creatures, objects, concepts. No detection possible. The Ascendant Bureau has contradictory records on you because you appear as a different person in every database. DNA tests return different results each time. Your awakening unlocked the ability to become ANYTHING you observe, perfectly and undetectably, making you the ultimate infiltrator, spy, and adaptive combatant.",
 		rank: "S",
 		image: getRegentPortraitUrl("mimic_regent"),
 		type: "ascendant-class-overlay",

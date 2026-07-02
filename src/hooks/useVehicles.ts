@@ -1,6 +1,6 @@
 ﻿import { clientChannelName } from "@/lib/realtimeChannel";
 /**
- * useVehicles â€” character-owned + campaign-owned vehicle hooks.
+ * useVehicles — character-owned + campaign-owned vehicle hooks.
  *
  * Q7 of Round 3. Mirrors `useShadowSoldiers.ts` shape: list, add, HP,
  * conditions, notes. Vehicle stats hydrate from the canonical

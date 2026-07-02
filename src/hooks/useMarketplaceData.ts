@@ -42,7 +42,7 @@ export interface MarketplaceItemRecord {
 	created_at: string;
 	updated_at: string;
 	has_access?: boolean;
-	/** F6: bundle composite item â€” entitlement fan-outs to children. */
+	/** F6: bundle composite item — entitlement fan-outs to children. */
 	is_bundle?: boolean;
 	/** F6: child item IDs when is_bundle is true. */
 	bundled_item_ids?: string[] | null;
@@ -391,7 +391,7 @@ export const useRecordMarketplaceDownload = () => {
 };
 
 /**
- * F6 of May 2026 remediation plan â€” gift a marketplace item to another
+ * F6 of May 2026 remediation plan — gift a marketplace item to another
  * user. Calls the `gift_marketplace_item` RPC defined in
  * `supabase/migrations/20260525122000_add_marketplace_gifting_and_bundles.sql`.
  * Caller must already be entitled to the item.

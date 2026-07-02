@@ -280,7 +280,7 @@ export const useSendCampaignMessage = () => {
 
 			if (error) throw error;
 
-			// R6 of Round 2 â€” fan out chat mentions to the user_notifications
+			// R6 of Round 2 — fan out chat mentions to the user_notifications
 			// inbox. Scan content for `@<member-name>` tokens and produce a
 			// `mention` notification for each recipient. Best-effort: failures
 			// must not block the chat send.
@@ -311,7 +311,7 @@ export const useSendCampaignMessage = () => {
 							type: "mention",
 							title: "Mentioned in campaign chat",
 							message:
-								content.length > 120 ? `${content.slice(0, 117)}â€¦` : content,
+								content.length > 120 ? `${content.slice(0, 117)}…` : content,
 							category: "campaign",
 							payload: { campaign_id: campaignId },
 							link: `/campaigns/${campaignId}`,
@@ -319,7 +319,7 @@ export const useSendCampaignMessage = () => {
 					}
 				}
 			} catch (mentionErr) {
-				// Logged but never bubbles â€” chat must keep working.
+				// Logged but never bubbles — chat must keep working.
 				if (typeof console !== "undefined") {
 					console.warn("Mention notification fan-out failed", mentionErr);
 				}

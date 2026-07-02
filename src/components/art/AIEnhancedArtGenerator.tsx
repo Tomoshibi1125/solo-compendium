@@ -93,7 +93,7 @@ const downloadImage = async (url?: string, name = "rift-art") => {
 		a.remove();
 		URL.revokeObjectURL(objectUrl);
 	} catch {
-		// Cross-origin or network failure â€” fall back to opening the asset.
+		// Cross-origin or network failure — fall back to opening the asset.
 		window.open(url, "_blank", "noopener,noreferrer");
 	}
 };
@@ -814,7 +814,7 @@ export function AIEnhancedArtGenerator({
 									</p>
 									<p className="text-[11px] text-muted-foreground">
 										{new Date(entry.createdAt).toLocaleString()}
-										{entry.model ? ` Â· ${entry.model}` : ""}
+										{entry.model ? ` · ${entry.model}` : ""}
 									</p>
 									<div className="flex gap-2">
 										<Button

@@ -42,7 +42,7 @@ import {
 	mergeAndSortEffects,
 	resolveEffectConflicts,
 } from "./unifiedEffectSystem";
-// Effect types (inlined from effectsEngine.ts â€” that module is now deleted)
+// Effect types (inlined from effectsEngine.ts — that module is now deleted)
 export type EffectType =
 	| "modifier" // Modifies a stat (AC, speed, ability, etc.)
 	| "resource" // Modifies a resource (HP max, slots, uses, etc.)
@@ -342,7 +342,7 @@ interface ComputedCharacterStats {
 		savingThrows: RollModifierSummary;
 	};
 
-	// Senses (DDB/Foundry parity â€” darkvision, blindsight, tremorsense, passives)
+	// Senses (DDB/Foundry parity — darkvision, blindsight, tremorsense, passives)
 	senses?: CharacterSenses;
 
 	// Attacks per action (Extra Attack from Job/Regent)
@@ -692,7 +692,7 @@ export function parseRegentFeatureEffects(
 	// Damage bonuses (e.g., "+4d6 fire damage", "take 6d8 radiant/round")
 	const damageBonus = desc.match(/(\d+d\d+)\s*([a-z]+)\s*damage/i);
 	if (damageBonus) {
-		// Combat damage dice effect â€” store as a damage_bonus modifier
+		// Combat damage dice effect — store as a damage_bonus modifier
 		// The dice expression is tracked for display; numeric estimate used for modifier
 		const diceExpr = damageBonus[1]; // e.g., "4d6"
 		const diceCount = parseInt(diceExpr.split("d")[0], 10) || 1;
@@ -994,7 +994,7 @@ export function aggregateEffects(base: CharacterBaseData): Effect[] {
 		}
 	}
 
-	// Feat & Fighting Style effects (Priority: 200 â€” Foundry Active Effects parity)
+	// Feat & Fighting Style effects (Priority: 200 — Foundry Active Effects parity)
 	// Parse character feats and fighting styles into mechanical bonuses
 	const featNames = base.features
 		.filter((f) => f.sourceType === "feat")
@@ -1593,7 +1593,7 @@ export function computeCharacterStats(
 	// 16. Build computed effects summary for UI display
 	const activeEffects = buildEffectsSummary(effects, base);
 
-	// 17. Compute senses (DDB/Foundry parity â€” darkvision, blindsight, tremorsense, passives)
+	// 17. Compute senses (DDB/Foundry parity — darkvision, blindsight, tremorsense, passives)
 	const regentIds = base.jobs
 		.filter((j) => Boolean(j.regent))
 		.map((j) => j.regent as string);
@@ -1601,8 +1601,8 @@ export function computeCharacterStats(
 		base.jobs[0]?.job ?? null,
 		base.jobs[0]?.path ?? null,
 		regentIds,
-		extractEquipmentSenses(base.equippedItems), // equipmentSenses â€” extracted from equipped items
-		extractSpellSenses(base.activeSpells), // spellSenses â€” extracted from active spell effects
+		extractEquipmentSenses(base.equippedItems), // equipmentSenses — extracted from equipped items
+		extractSpellSenses(base.activeSpells), // spellSenses — extracted from active spell effects
 		abilityModifiers.SENSE,
 		abilityModifiers.INT,
 		proficiencyBonus,
@@ -1616,7 +1616,7 @@ export function computeCharacterStats(
 		base.skillExpertise.includes("stealth"),
 	);
 
-	// 18. Compute attacks per action (Extra Attack from Job/Regent â€” Foundry parity)
+	// 18. Compute attacks per action (Extra Attack from Job/Regent — Foundry parity)
 	const attacksPerAction = computeAttacksPerAction(
 		base.jobs[0]?.job ?? null,
 		base.level,

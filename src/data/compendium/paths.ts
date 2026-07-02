@@ -1,5 +1,5 @@
 // Job Paths Compendium - Ascendant Compendium (84 Paths)
-// 14 Jobs Ã— 6 Paths each, unique SA identities with 5e-compatible mechanical backbone
+// 14 Jobs × 6 Paths each, unique SA identities with 5e-compatible mechanical backbone
 
 interface Path {
 	id: string;
@@ -51,7 +51,7 @@ export const paths: Path[] = [
 			skills: ["Athletics"],
 		},
 		description:
-			"The Apex Predator is the ultimate physical mandate of the Destroyer lineage â€” a recursive refinement of the Awakenedâ€™s biological vessel into a tool of absolute lethality. In the modern era of Absolute containment, they are the supreme front-line anchors of high-rank guilds, their every movement a masterclass in optimized destructive intent. To walk this path is to accept that your muscles are no longer purely biological, but a perfected conductor for the Absolute's force.",
+			"The Apex Predator is the ultimate physical mandate of the Destroyer lineage — a recursive refinement of the Awakened's biological vessel into a tool of absolute lethality. In the modern era of Absolute containment, they are the supreme front-line anchors of high-rank guilds, their every movement a masterclass in optimized destructive intent. To walk this path is to accept that your muscles are no longer purely biological, but a perfected conductor for the Absolute's force.",
 		features: [
 			{
 				name: "Absolute Lethality",
@@ -291,7 +291,7 @@ export const paths: Path[] = [
 			{
 				name: "Fortress Mode",
 				description:
-					"Anchor yourself â€” become immovable until you move. Advantage on STR checks/saves, can't be moved by any force.",
+					"Anchor yourself — become immovable until you move. Advantage on STR checks/saves, can't be moved by any force.",
 				recharge: 1,
 				cost: "Bonus action",
 			},
@@ -382,7 +382,7 @@ export const paths: Path[] = [
 			skills: ["Athletics", "Mana Flow"],
 		},
 		description:
-			"The Path of the Aftershock is held by those whose strikes resonate with such intensity that the Absolute generates residual force iterations â€” temporal echoes of their movements from adjacent reflections. In the field, it manifests as multiple strikes resolving simultaneously from ghostly iterations. Footage of Aftershock Destroyers highlights the sheer visual overload of doubled impacts tearing through gate entities with absolute recursive power.",
+			"The Path of the Aftershock is held by those whose strikes resonate with such intensity that the Absolute generates residual force iterations — temporal echoes of their movements from adjacent reflections. In the field, it manifests as multiple strikes resolving simultaneously from ghostly iterations. Footage of Aftershock Destroyers highlights the sheer visual overload of doubled impacts tearing through gate entities with absolute recursive power.",
 		features: [
 			{
 				name: "Residual Strike",
@@ -393,7 +393,7 @@ export const paths: Path[] = [
 			{
 				name: "Recursive Strike",
 				description:
-					"On Attack action, one extra melee attack resolves from the iteration's position â€” the Absolute repeats your movement. VIT mod uses/long rest.",
+					"On Attack action, one extra melee attack resolves from the iteration's position — the Absolute repeats your movement. VIT mod uses/long rest.",
 				level: 3,
 			},
 			{
@@ -452,7 +452,7 @@ export const paths: Path[] = [
 			skills: ["Athletics", "Intimidation"],
 		},
 		description:
-			"The Path of the Escalating Resonance is walked by those whose spirits vibrate with the most unstable aetheric frequencies. In the modern world, they are the high-octane headliners of underground fight clubs and elite gate-clearance units, where pain is not an obstacle but a catalyst. Each drop of blood spilled acts as a conductor for their internal mana, fueling a recursive cycle of violence that ends only when the enemyâ€”or the Ascendant themselvesâ€”is thoroughly spent. They are living batteries of escalating fury, held together only by the Absolute's merciless mandate.",
+			"The Path of the Escalating Resonance is walked by those whose spirits vibrate with the most unstable aetheric frequencies. In the modern world, they are the high-octane headliners of underground fight clubs and elite gate-clearance units, where pain is not an obstacle but a catalyst. Each drop of blood spilled acts as a conductor for their internal mana, fueling a recursive cycle of violence that ends only when the enemy—or the Ascendant themselves—is thoroughly spent. They are living batteries of escalating fury, held together only by the Absolute's merciless mandate.",
 		features: [
 			{
 				name: "Escalating Harmony",
@@ -463,13 +463,13 @@ export const paths: Path[] = [
 			{
 				name: "Aetheric Static",
 				description:
-					"In Overload, the mana static in your body disruptions all external manipulationâ€”psychic influences and supernatural charms can't penetrate the noise of your inner storm. Can't be charmed or frightened; existing effects suspended.",
+					"In Overload, the mana static in your body disruptions all external manipulation—psychic influences and supernatural charms can't penetrate the noise of your inner storm. Can't be charmed or frightened; existing effects suspended.",
 				level: 6,
 			},
 			{
 				name: "Aetheric Pressure",
 				description:
-					"Action: your mana field pulses outward like a gravity wellâ€”bystanders describe a weight that threatens to crush their souls. Frighten one creature within 30 ft (SENSE save 8+prof+STR). Extend each turn with action.",
+					"Action: your mana field pulses outward like a gravity well—bystanders describe a weight that threatens to crush their souls. Frighten one creature within 30 ft (SENSE save 8+prof+STR). Extend each turn with action.",
 				level: 10,
 			},
 			{
@@ -585,7 +585,7 @@ export const paths: Path[] = [
 			{
 				name: "Primal Recall",
 				description:
-					"Your scars record every aetheric disturbance you've survived. Cast Clairvoyance as ritualâ€”your scars resonate with the local weave to anchor environmental echoes from prior engagements.",
+					"Your scars record every aetheric disturbance you've survived. Cast Clairvoyance as ritual—your scars resonate with the local weave to anchor environmental echoes from prior engagements.",
 				level: 10,
 			},
 			{
@@ -626,12 +626,12 @@ export const paths: Path[] = [
 			skills: ["Athletics", "Gate Topology"],
 		},
 		description:
-			"The Rift Storm represents an Ascendant who has survived the epicenter of a catastrophic gate-collapse and emerged saturated with raw, elemental mana. When they enter Overload, their internal energy vents as pure environmental turbulenceâ€”fire, lightning, or freezing cold radiating from their very pores. They are volatile assets, often deployed by elite containment units as a 'scorched earth' deterrent against massive gate-swarms where collateral damage is a secondary concern to survival.",
+			"The Rift Storm represents an Ascendant who has survived the epicenter of a catastrophic gate-collapse and emerged saturated with raw, elemental mana. When they enter Overload, their internal energy vents as pure environmental turbulence—fire, lightning, or freezing cold radiating from their very pores. They are volatile assets, often deployed by elite containment units as a 'scorched earth' deterrent against massive gate-swarms where collateral damage is a secondary concern to survival.",
 		features: [
 			{
 				name: "Aetheric Vent",
 				description:
-					"In Overload, your body vents primordial energyâ€”car paint blisters near Inferno types, Tempest types trip circuit breakers, and Glacial types frost over nearby windows. 10-ft aura. Inferno: 2 fire/turn (scales). Tempest: bonus action 1d6 lightning, AGI half. Glacial: 2 temp HP/turn (scales).",
+					"In Overload, your body vents primordial energy—car paint blisters near Inferno types, Tempest types trip circuit breakers, and Glacial types frost over nearby windows. 10-ft aura. Inferno: 2 fire/turn (scales). Tempest: bonus action 1d6 lightning, AGI half. Glacial: 2 temp HP/turn (scales).",
 				level: 3,
 			},
 			{
@@ -812,7 +812,7 @@ export const paths: Path[] = [
 			skills: ["Stealth", "Sleight of Hand"],
 		},
 		description:
-			"A Gate Runner is an Ascendant whose essence has been tuned to the phase-spaces between the physical world and the Gates. They possess a fluidity of movement that allows them to slip through barriersâ€”both physical and aethericâ€”as if they were nothing more than mist. In the modern world, they are the specialized assets recruited for high-stakes recovery operations and urgent scouting, moving through hostile territory with a grace that defies the Absolute's own laws of permanence.",
+			"A Gate Runner is an Ascendant whose essence has been tuned to the phase-spaces between the physical world and the Gates. They possess a fluidity of movement that allows them to slip through barriers—both physical and aetheric—as if they were nothing more than mist. In the modern world, they are the specialized assets recruited for high-stakes recovery operations and urgent scouting, moving through hostile territory with a grace that defies the Absolute's own laws of permanence.",
 		features: [
 			{
 				name: "Aetheric Phase",
@@ -893,7 +893,7 @@ export const paths: Path[] = [
 			{
 				name: "Identity Weave",
 				description:
-					"Spend 7 days to create a false resonanceâ€”a fabricated identity recognized by the Absolute's weave, complete with documented history.",
+					"Spend 7 days to create a false resonance—a fabricated identity recognized by the Absolute's weave, complete with documented history.",
 				level: 9,
 			},
 			{
@@ -913,7 +913,7 @@ export const paths: Path[] = [
 			{
 				name: "Phase Termination",
 				description:
-					"After a successful strike, phase into the aetherâ€”become invisible until the end of your next turn or until you attack. Once/short rest.",
+					"After a successful strike, phase into the aether—become invisible until the end of your next turn or until you attack. Once/short rest.",
 				recharge: 1,
 				cost: "Free",
 			},
@@ -1132,7 +1132,7 @@ export const paths: Path[] = [
 			skills: ["Stealth", "Survival"],
 		},
 		description:
-			"The Vanguard Outrider is the advance resonance of the mandateâ€”the first to enter a Gate and the last to leave. They have mastered aetheric recon, using phase-shifted sonar to map hostile terrain and relay vital intel through the weave. In the modern world of gate containment, they are the indispensable scouts whose ability to survive behind enemy resonances ensures the success of every mission.",
+			"The Vanguard Outrider is the advance resonance of the mandate—the first to enter a Gate and the last to leave. They have mastered aetheric recon, using phase-shifted sonar to map hostile terrain and relay vital intel through the weave. In the modern world of gate containment, they are the indispensable scouts whose ability to survive behind enemy resonances ensures the success of every mission.",
 		features: [
 			{
 				name: "Aetheric Skirmish",
@@ -1207,7 +1207,7 @@ export const paths: Path[] = [
 			{
 				name: "Harmonic Repair",
 				description:
-					"Action: channel aetheric energy inward to realign your physical vessel. Regain HP = 3 Ã— Striker level. Once/long rest.",
+					"Action: channel aetheric energy inward to realign your physical vessel. Regain HP = 3 × Striker level. Once/long rest.",
 				level: 6,
 			},
 			{
@@ -1254,7 +1254,7 @@ export const paths: Path[] = [
 			skills: ["Stealth", "Acrobatics"],
 		},
 		description:
-			"The Phantom Step mandate allows an Ascendant to route their physical existence through the low-frequency shadows of the local aether. They are the spectral legends of the gate-warsâ€”flickers in a dark alley followed by the absolute collapse of a high-tier entity. They move not with speed, but with a displacement of reality, stepping through the darkness as if it were a physical gateway.",
+			"The Phantom Step mandate allows an Ascendant to route their physical existence through the low-frequency shadows of the local aether. They are the spectral legends of the gate-wars—flickers in a dark alley followed by the absolute collapse of a high-tier entity. They move not with speed, but with a displacement of reality, stepping through the darkness as if it were a physical gateway.",
 		features: [
 			{
 				name: "Shadow Resonance",
@@ -1312,7 +1312,7 @@ export const paths: Path[] = [
 			skills: ["Acrobatics", "Gate Topology"],
 		},
 		description:
-			"The Aetheric Channeler mandate transforms an Ascendant into a living environmental conductor. They do not just strike; they convert ambient aetheric energy into fundamental elemental forcesâ€”concussive gravity, thermal discharges, or high-intensity lightning. In the containment of a high-tier gate, they are the ultimate multi-role assets, capable of adapting their physical strikes to the specific weaknesses of any anomaly.",
+			"The Aetheric Channeler mandate transforms an Ascendant into a living environmental conductor. They do not just strike; they convert ambient aetheric energy into fundamental elemental forces—concussive gravity, thermal discharges, or high-intensity lightning. In the containment of a high-tier gate, they are the ultimate multi-role assets, capable of adapting their physical strikes to the specific weaknesses of any anomaly.",
 		features: [
 			{
 				name: "Elemental Conversion",
@@ -1370,7 +1370,7 @@ export const paths: Path[] = [
 			skills: ["Acrobatics", "Performance"],
 		},
 		description:
-			"The Entropic Flow is walked by those whose internal aetheric gates fire in seemingly chaotic, unpredictable patterns. They do not fight with discipline, but with a fluidity that disregards the Absolute's logic. To an observer, they appear to be stumbling, tripping, and swaying through combatâ€”yet every movement somehow lands a devastating blow or evades an impossible strike. They are the living embodiment of the 'unlucky' hit that always finds its mark.",
+			"The Entropic Flow is walked by those whose internal aetheric gates fire in seemingly chaotic, unpredictable patterns. They do not fight with discipline, but with a fluidity that disregards the Absolute's logic. To an observer, they appear to be stumbling, tripping, and swaying through combat—yet every movement somehow lands a devastating blow or evades an impossible strike. They are the living embodiment of the 'unlucky' hit that always finds its mark.",
 		features: [
 			{
 				name: "Erratic Resonance",
@@ -1502,7 +1502,7 @@ export const paths: Path[] = [
 			{
 				name: "Essence Shutdown",
 				description:
-					"During Rapid Barrage hit: spend 1 spirit point to deal extra necrotic damage = 1 Spirit Combat die + SENSE mod. Target's motor pathways seizeâ€”poisoned until the end of your next turn.",
+					"During Rapid Barrage hit: spend 1 spirit point to deal extra necrotic damage = 1 Spirit Combat die + SENSE mod. Target's motor pathways seize—poisoned until the end of your next turn.",
 				level: 3,
 			},
 			{
@@ -1613,12 +1613,12 @@ export const paths: Path[] = [
 			skills: ["Mana Flow"],
 		},
 		description:
-			"The Shield Architect mandate is for those who view the weave of the Absolute as a protective barrier to be reinforced. They generate persistent aetheric shields that absorb damage and reject hostile manifestations. In a world where a single error can mean total annihilation, the Architect is the foundation of any successful suppression missionâ€”the one whose continuous protection harmonics ensure the survival of the party.",
+			"The Shield Architect mandate is for those who view the weave of the Absolute as a protective barrier to be reinforced. They generate persistent aetheric shields that absorb damage and reject hostile manifestations. In a world where a single error can mean total annihilation, the Architect is the foundation of any successful suppression mission—the one whose continuous protection harmonics ensure the survival of the party.",
 		features: [
 			{
 				name: "Aetheric Barrier",
 				description:
-					"When you manifest a protective spell of 1st+, generate a barrier with HP = 2Ã—Mage level+INT mod. Damage to you hits the barrier first. Protective spells restore 2Ã—spell level HP to the barrier.",
+					"When you manifest a protective spell of 1st+, generate a barrier with HP = 2×Mage level+INT mod. Damage to you hits the barrier first. Protective spells restore 2×spell level HP to the barrier.",
 				level: 2,
 			},
 			{
@@ -1752,7 +1752,7 @@ export const paths: Path[] = [
 			{
 				name: "Reality Anchoring",
 				description:
-					"When you manifest a 1st+ illusion, choose one inanimate object within itâ€”it becomes genuinely real for 1 minute as the Absolute accepts the aetheric reflection.",
+					"When you manifest a 1st+ illusion, choose one inanimate object within it—it becomes genuinely real for 1 minute as the Absolute accepts the aetheric reflection.",
 				level: 14,
 			},
 		],
@@ -1903,7 +1903,7 @@ export const paths: Path[] = [
 			skills: ["Mana Flow"],
 		},
 		description:
-			"The Aetheric Dragon mandate awakens in those whose anomalous resonance carries the signature of the primordial gate dragonsâ€”ancient masters of the Absolute who predated even the current cycle of Gates. Their spirit manifests as elemental fury, their very cells crystallizing into regent-tier mana-scales that hum with the power of a dying star. They are not merely casters; they are living manifestations of the Absolute's primal rage.",
+			"The Aetheric Dragon mandate awakens in those whose anomalous resonance carries the signature of the primordial gate dragons—ancient masters of the Absolute who predated even the current cycle of Gates. Their spirit manifests as elemental fury, their very cells crystallizing into regent-tier mana-scales that hum with the power of a dying star. They are not merely casters; they are living manifestations of the Absolute's primal rage.",
 		features: [
 			{
 				name: "regent-tier Resonance",
@@ -2031,12 +2031,12 @@ export const paths: Path[] = [
 			skills: ["Stealth", "Mana Flow"],
 		},
 		description:
-			"Espers who draw power from the empty space between gate dimensions â€” the void that separates realities. They tend to be quiet, withdrawn individuals whose internal resonance focuses on the silence behind the Absolute's weave. Environmental fluctuations are common when they pass, and the shadows around them often seem to detach from their physical anchors. They command absolute darkness, summon void-born entities, and can dissolve their physical form into pure shadow-resonance.",
+			"Espers who draw power from the empty space between gate dimensions — the void that separates realities. They tend to be quiet, withdrawn individuals whose internal resonance focuses on the silence behind the Absolute's weave. Environmental fluctuations are common when they pass, and the shadows around them often seem to detach from their physical anchors. They command absolute darkness, summon void-born entities, and can dissolve their physical form into pure shadow-resonance.",
 		features: [
 			{
 				name: "Void Sight",
 				description:
-					"Darkvision 120 ft. At 3rd level, cast Darkness for 2 flux and you can see through it â€” your eyes resonate with the void frequency.",
+					"Darkvision 120 ft. At 3rd level, cast Darkness for 2 flux and you can see through it — your eyes resonate with the void frequency.",
 				level: 1,
 			},
 			{
@@ -2106,7 +2106,7 @@ export const paths: Path[] = [
 			{
 				name: "Storm Discharge",
 				description:
-					"Before or after casting a 1st+ spell, your flux discharges as wind â€” bonus action to fly 10 ft without provoking OAs.",
+					"Before or after casting a 1st+ spell, your flux discharges as wind — bonus action to fly 10 ft without provoking OAs.",
 				level: 1,
 			},
 			{
@@ -2165,7 +2165,7 @@ export const paths: Path[] = [
 			skills: ["Mana Flow", "Cosmic Lore"],
 		},
 		description:
-			"Espers who carry a fragment of the Absolute's core energy â€” not mere gate mana, but the fundamental force itself. Often individuals whose innate empathy resonated with the restorative layers of the Absolute during their awakening, they access both destructive Esper resonance-flux and Herald restorative transmissions. They are the rarest anomaly type, serving as the ultimate stabilizers for high-tier containment missions.",
+			"Espers who carry a fragment of the Absolute's core energy — not mere gate mana, but the fundamental force itself. Often individuals whose innate empathy resonated with the restorative layers of the Absolute during their awakening, they access both destructive Esper resonance-flux and Herald restorative transmissions. They are the rarest anomaly type, serving as the ultimate stabilizers for high-tier containment missions.",
 		features: [
 			{
 				name: "Dual Manifestation Access",
@@ -2229,7 +2229,7 @@ export const paths: Path[] = [
 			skills: ["Mana Flow", "Insight"],
 		},
 		description:
-			"Espers touched by entities from beyond the known gate network â€” alien intelligences whose psionic imprint rewired their resonance during awakening. These Ascendants often perceive the Absolute not as a network of laws, but as a collective of interconnected consciousnesses that exist outside of traditional time. They cast with thought alone, their minds becoming an impenetrably alien echo of the Absolute's deepest layers.",
+			"Espers touched by entities from beyond the known gate network — alien intelligences whose psionic imprint rewired their resonance during awakening. These Ascendants often perceive the Absolute not as a network of laws, but as a collective of interconnected consciousnesses that exist outside of traditional time. They cast with thought alone, their minds becoming an impenetrably alien echo of the Absolute's deepest layers.",
 		features: [
 			{
 				name: "Psionic Imprint Spells",
@@ -2246,7 +2246,7 @@ export const paths: Path[] = [
 			{
 				name: "Psionic Casting",
 				description:
-					"Cast a psionic spell by spending flux = spell level instead of a slot. No verbal or somatic components â€” pure thought casting.",
+					"Cast a psionic spell by spending flux = spell level instead of a slot. No verbal or somatic components — pure thought casting.",
 				level: 6,
 			},
 			{
@@ -2258,7 +2258,7 @@ export const paths: Path[] = [
 			{
 				name: "Psionic Metamorphosis",
 				description:
-					"1+ flux, bonus action: reshape your body for 10 min. 1 pt: see invisible 60 ft. 1 pt: hover fly speed = walk. 1 pt: swim 2Ã— walk + breathe water. 1 pt: compress body through 1-inch gaps.",
+					"1+ flux, bonus action: reshape your body for 10 min. 1 pt: see invisible 60 ft. 1 pt: hover fly speed = walk. 1 pt: swim 2× walk + breathe water. 1 pt: compress body through 1-inch gaps.",
 				level: 14,
 			},
 			{
@@ -2815,7 +2815,7 @@ export const paths: Path[] = [
 			skills: ["Gate Topology", "Insight"],
 		},
 		description:
-			"The Dream Weaver mandate designates those who have forged a connection with the Lush-resonanceâ€”the restorative, semi-material reflections that drift along the boundaries of certain gates. They do not just heal; they manifest localized patches of aetheric stability that promote rapid biological repair. In the modern world, the Weaver is the emotional and physical anchor of any raid team, transforming a nightmare gate-break into a temporary sanctuary.",
+			"The Dream Weaver mandate designates those who have forged a connection with the Lush-resonance—the restorative, semi-material reflections that drift along the boundaries of certain gates. They do not just heal; they manifest localized patches of aetheric stability that promote rapid biological repair. In the modern world, the Weaver is the emotional and physical anchor of any raid team, transforming a nightmare gate-break into a temporary sanctuary.",
 		features: [
 			{
 				name: "Balm of the Absolute",
@@ -2947,7 +2947,7 @@ export const paths: Path[] = [
 			{
 				name: "Host Fusion",
 				description:
-					"Expend Entity Shift to fuse with your colony. Gain temp HP = 4 Ã— Summoner level. While fused, spore damage is absolute and strikes deal extra poison.",
+					"Expend Entity Shift to fuse with your colony. Gain temp HP = 4 × Summoner level. While fused, spore damage is absolute and strikes deal extra poison.",
 				level: 2,
 			},
 			{
@@ -3080,7 +3080,7 @@ export const paths: Path[] = [
 			{
 				name: "Absolute Resonance: Preserve Life",
 				description:
-					"Action: distribute HP = 5Ã— Herald level among creatures within 30 ft. You stabilize their local resonance.",
+					"Action: distribute HP = 5× Herald level among creatures within 30 ft. You stabilize their local resonance.",
 				level: 2,
 			},
 			{
@@ -3149,7 +3149,7 @@ export const paths: Path[] = [
 			{
 				name: "Absolute Resonance: Radiance",
 				description:
-					"Action: 30-ft radius â€” cleanse magical darkness, hostile entities take 2d10+Herald level radiant damage.",
+					"Action: 30-ft radius — cleanse magical darkness, hostile entities take 2d10+Herald level radiant damage.",
 				level: 2,
 			},
 			{
@@ -3426,7 +3426,7 @@ export const paths: Path[] = [
 			{
 				name: "Realignment Intervention",
 				description:
-					"Reaction: when an ally suffers an absolute strike (crit), the Absolute intervenes â€” downgrade it to a normal strike. SENSE uses/long rest.",
+					"Reaction: when an ally suffers an absolute strike (crit), the Absolute intervenes — downgrade it to a normal strike. SENSE uses/long rest.",
 				level: 6,
 			},
 			{
@@ -3646,7 +3646,7 @@ export const paths: Path[] = [
 			skills: ["Mana Flow", "Cosmic Lore"],
 		},
 		description:
-			"The Radiant Vessel bargain is forged with the luminous entities of the Zenith lineage â€” beings of pure restorative and destructive light. They are the rarest of all Contractors, their physical vessel a conduit for aetheric energy that heals and incinerates with equal intensity. In the modern world, they are often seen as modern saints or supreme gate-raid anchors.",
+			"The Radiant Vessel bargain is forged with the luminous entities of the Zenith lineage — beings of pure restorative and destructive light. They are the rarest of all Contractors, their physical vessel a conduit for aetheric energy that heals and incinerates with equal intensity. In the modern world, they are often seen as modern saints or supreme gate-raid anchors.",
 		features: [
 			{
 				name: "Absolute Light",
@@ -4342,7 +4342,7 @@ export const paths: Path[] = [
 			skills: ["Gate Topology", "Cosmic Lore"],
 		},
 		description:
-			"Those who walk the Path of the Verdant Mandate swear to protect the Absoluteâ€™s original intent against the encroaching resonance corruption of the gates. Their covenant is a primal pact with the world's original life-resonance, anchoring themselves to threatened gate biomes to serve as the ultimate custodians of aetheric diversity. In the modern world, they are the bulwark against total ecological collapse, their presence stabilizing the very fabric of reality.",
+			"Those who walk the Path of the Verdant Mandate swear to protect the Absolute's original intent against the encroaching resonance corruption of the gates. Their covenant is a primal pact with the world's original life-resonance, anchoring themselves to threatened gate biomes to serve as the ultimate custodians of aetheric diversity. In the modern world, they are the bulwark against total ecological collapse, their presence stabilizing the very fabric of reality.",
 		features: [
 			{
 				name: "Absolute Resonance: Verdant Snare",
@@ -4371,7 +4371,7 @@ export const paths: Path[] = [
 			{
 				name: "Ancient Mandate Champion",
 				description:
-					"Action: transform for 1 min â€” regain 10 HP at start of each turn, cast Holy Knight mantras as bonus action, enemies within 10 ft have disadvantage on saves vs your mantras and Resonance. Once/long rest.",
+					"Action: transform for 1 min — regain 10 HP at start of each turn, cast Holy Knight mantras as bonus action, enemies within 10 ft have disadvantage on saves vs your mantras and Resonance. Once/long rest.",
 				level: 20,
 			},
 		],
@@ -4941,7 +4941,7 @@ export const paths: Path[] = [
 			skills: ["Mana Flow", "Investigation"],
 		},
 		description:
-			"The Aetheric Breacher designs are for those who interface directly with the Absolute's core resonance. They treat reality like a malleable sequence â€” finding vulnerabilities, suppressing enemy manifestations, and realigning the laws of local aetheric flow. In the modern world, the Breacher is the supreme infiltration specialist, their ability to bypass any defensive mandate making them the ultimate asset for high-rank gate raids.",
+			"The Aetheric Breacher designs are for those who interface directly with the Absolute's core resonance. They treat reality like a malleable sequence — finding vulnerabilities, suppressing enemy manifestations, and realigning the laws of local aetheric flow. In the modern world, the Breacher is the supreme infiltration specialist, their ability to bypass any defensive mandate making them the ultimate asset for high-rank gate raids.",
 		features: [
 			{
 				name: "Breacher Architect Mastery",
@@ -5124,7 +5124,7 @@ export const paths: Path[] = [
 			{
 				name: "Mantle of Awe",
 				description:
-					"Bonus action: expend one Hype die. Up to PRE mod creatures within 60 ft gain temp HP = 2Ã— Hype die roll + Idol level and can use reaction to move up to their speed without provoking OAs.",
+					"Bonus action: expend one Hype die. Up to PRE mod creatures within 60 ft gain temp HP = 2× Hype die roll + Idol level and can use reaction to move up to their speed without provoking OAs.",
 				level: 3,
 			},
 			{
@@ -5257,7 +5257,7 @@ export const paths: Path[] = [
 			{
 				name: "Mantle of Whispers",
 				description:
-					"Reaction when a living vesselâ€™s cycle ends within 30 ft: capture its shadow. As an action, take on its appearance for 1 hour (or until dismissed). You gain access to its general knowledge and memories. Deception checks to pass as it have +5. Once per short rest.",
+					"Reaction when a living vessel's cycle ends within 30 ft: capture its shadow. As an action, take on its appearance for 1 hour (or until dismissed). You gain access to its general knowledge and memories. Deception checks to pass as it have +5. Once per short rest.",
 				level: 6,
 			},
 			{
@@ -5298,7 +5298,7 @@ export const paths: Path[] = [
 			skills: ["Mana Flow", "Performance"],
 		},
 		description:
-			"The Path of the Genesis Resonance designates an Idol who taps into the Absolute's foundational harmonicâ€”the vibration that structures matter itself. They do not just imagine; they manifest, fabricating physical items and animating objects from raw mana as a physical manifestation of their art. In the modern world, they are the supreme architects of the material weave, their presence turning any location into a factory of absolute creation.",
+			"The Path of the Genesis Resonance designates an Idol who taps into the Absolute's foundational harmonic—the vibration that structures matter itself. They do not just imagine; they manifest, fabricating physical items and animating objects from raw mana as a physical manifestation of their art. In the modern world, they are the supreme architects of the material weave, their presence turning any location into a factory of absolute creation.",
 		features: [
 			{
 				name: "Mote of Potential",
@@ -5309,19 +5309,19 @@ export const paths: Path[] = [
 			{
 				name: "Resonance of Creation",
 				description:
-					"Action: create one nonmagical item (Medium or smaller, worth â‰¤ 20Ã— Idol level gp). Lasts for hours = prof bonus. One at a time. Once per long rest.",
+					"Action: create one nonmagical item (Medium or smaller, worth â‰¤ 20× Idol level gp). Lasts for hours = prof bonus. One at a time. Once per long rest.",
 				level: 3,
 			},
 			{
 				name: "Animating Rite",
 				description:
-					"Action: animate a Large or smaller nonmagical item within 30 ft. It becomes a construct (HP = 10+5Ã— Idol level, AC = 16, +prof to attack, 1d10+PRE force slam, 30 ft speed). Bonus action to command. Lasts 1 hour. Once per long rest.",
+					"Action: animate a Large or smaller nonmagical item within 30 ft. It becomes a construct (HP = 10+5× Idol level, AC = 16, +prof to attack, 1d10+PRE force slam, 30 ft speed). Bonus action to command. Lasts 1 hour. Once per long rest.",
 				level: 6,
 			},
 			{
 				name: "Absolute Resonance Crescendo",
 				description:
-					"Resonance of Creation: create a number of items = PRE mod simultaneously. One can be Large, and any can be worth more (up to 200Ã— Idol level gp). None require concentration or have the duration limit.",
+					"Resonance of Creation: create a number of items = PRE mod simultaneously. One can be Large, and any can be worth more (up to 200× Idol level gp). None require concentration or have the duration limit.",
 				level: 14,
 			},
 		],
