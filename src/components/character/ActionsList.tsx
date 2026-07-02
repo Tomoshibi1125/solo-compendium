@@ -2,13 +2,13 @@ import { Plus } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useCharacterSheetState } from "@/hooks/useCharacterSheetState";
 import { useCombatActions } from "@/hooks/useCombatActions";
 import { useEquipment } from "@/hooks/useEquipment";
-import { useTrackedResources } from "@/hooks/useTrackedResources";
 import type { DetailData } from "@/types/character";
 import { ActionCard } from "./ActionCard";
 import { AddTechniqueDialog } from "./AddTechniqueDialog";
-import { TrackedResourcesList } from "./TrackedResourcesList";
+import { UnifiedResourcePanel } from "./UnifiedResourcePanel";
 
 export function ActionsList({
 	characterId,
@@ -25,7 +25,10 @@ export function ActionsList({
 	const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
 	const { actions, isLoading } = useCombatActions(characterId);
 	const { updateEquipment } = useEquipment(characterId);
-	const { resources, setResources } = useTrackedResources(characterId);
+	// Ammo tracking defaults to manual — attacks only auto-spend when the
+	// character's opt-in toggle (Resources section) is on.
+	const { state: sheetState } = useCharacterSheetState(characterId);
+	const autoSpendAmmo = sheetState.resources.tracking.autoSpendAmmo;
 
 	const handleUseAction = async (actionId: string, equipmentId?: string) => {
 		if (!equipmentId) return;
@@ -101,7 +104,7 @@ export function ActionsList({
 				</div>
 			)}
 
-			<TrackedResourcesList resources={resources} onChange={setResources} />
+			<UnifiedResourcePanel characterId={characterId} compact />
 
 			<Tabs defaultValue="all" className="w-full">
 				<div className="flex items-center justify-between gap-4 mt-8 pt-4 border-t border-primary/10">
@@ -164,6 +167,11 @@ export function ActionsList({
 									: undefined
 							}
 							onAttackExecuted={
+								action.ammo && autoSpendAmmo
+									? () => handleAmmoSpend(action.id)
+									: undefined
+							}
+							onAmmoSpend={
 								action.ammo ? () => handleAmmoSpend(action.id) : undefined
 							}
 							onUse={() => handleUseAction(action.id, action.equipmentId)}
@@ -208,6 +216,22 @@ export function ActionsList({
 												max: action.resourceMax,
 											}
 										: undefined
+								}
+								ammo={
+									action.ammo
+										? {
+												name: action.ammo.name,
+												remaining: action.ammo.remaining,
+											}
+										: undefined
+								}
+								onAttackExecuted={
+									action.ammo && autoSpendAmmo
+										? () => handleAmmoSpend(action.id)
+										: undefined
+								}
+								onAmmoSpend={
+									action.ammo ? () => handleAmmoSpend(action.id) : undefined
 								}
 								onUse={() => handleUseAction(action.id, action.equipmentId)}
 								characterId={characterId}

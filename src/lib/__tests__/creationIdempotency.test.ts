@@ -15,6 +15,7 @@ import {
 	addBackgroundFeatures,
 	addLevel1Features,
 	addStartingEquipment,
+	getStartingCreditsForJob,
 } from "@/lib/characterCreation";
 import {
 	createLocalCharacter,
@@ -121,6 +122,52 @@ describe("creation setup idempotency", () => {
 		const equipment = listLocalEquipment(row.id).map((e) => e.name);
 		expect(equipment.filter((n) => n === "Test Blade")).toHaveLength(1);
 		expect(equipment.filter((n) => n === "Test Buckler")).toHaveLength(1);
+	});
+
+	it("starting ammo lands with its real pack quantity (DDB parity)", async () => {
+		const row = createLocalCharacter({ name: "Qty A", job: "Qty Job" });
+		const job = {
+			id: "qty-job",
+			name: "Qty Job",
+			awakeningFeatures: [],
+			startingEquipment: [["Shortbow"], ["Arrows (20)"]],
+		} as unknown as StaticJob;
+
+		await addStartingEquipment(row.id, job, fixtureBackground(), [], {}, null);
+
+		const equipment = listLocalEquipment(row.id);
+		// "Arrows (20)" is 20 arrows, not one item named that.
+		expect(equipment.find((e) => e.name === "Arrows (20)")?.quantity).toBe(20);
+		expect(equipment.find((e) => e.name === "Shortbow")?.quantity).toBe(1);
+	});
+
+	it("expands compound grants into weapon + ammo with quantities", async () => {
+		const row = createLocalCharacter({ name: "Qty B", job: "Compound Job" });
+		const job = {
+			id: "compound-job",
+			name: "Compound Job",
+			awakeningFeatures: [],
+			// Stalker-style single-string grant (jobs.ts): must not land as one
+			// unusable gear row named the whole sentence.
+			startingEquipment: [["Longbow and Quiver of 20 Arrows"]],
+		} as unknown as StaticJob;
+
+		await addStartingEquipment(row.id, job, fixtureBackground(), [], {}, null);
+
+		const equipment = listLocalEquipment(row.id);
+		expect(equipment.find((e) => e.name === "Longbow")).toBeTruthy();
+		expect(equipment.find((e) => e.name === "Arrows (20)")?.quantity).toBe(20);
+		expect(
+			equipment.find((e) => e.name === "Longbow and Quiver of 20 Arrows"),
+		).toBeUndefined();
+	});
+
+	it("starting-wealth alternative scales with the job's hit die", () => {
+		expect(getStartingCreditsForJob({ hitDie: "1d10" })).toBe(125);
+		expect(getStartingCreditsForJob({ hitDie: "1d12" })).toBe(125);
+		expect(getStartingCreditsForJob({ hitDie: "1d8" })).toBe(100);
+		expect(getStartingCreditsForJob({ hitDie: "1d6" })).toBe(75);
+		expect(getStartingCreditsForJob(null)).toBe(100);
 	});
 
 	it("preserves legitimate duplicate items granted within a single first-run pass", async () => {

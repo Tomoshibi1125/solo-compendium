@@ -40,6 +40,10 @@ import {
 	getCharacterCampaignId,
 	isSourcebookAccessible,
 } from "@/lib/sourcebookAccess";
+import {
+	expandEquipmentGrant,
+	parsePackQuantity,
+} from "@/lib/unifiedResources";
 import type {
 	Job as DbJob,
 	StaticBackground,
@@ -199,7 +203,7 @@ export function buildItemProperties(item: StaticItem): string[] {
 		if (item.armor_type === "Shield") {
 			pushProperty("+2 AC");
 		} else {
-			// e.g. "16" from "16", or "14 + Dex modifier (max 2)" → extract leading number
+			// e.g. "16" from "16", or "14 + Dex modifier (max 2)" â†’ extract leading number
 			const acNum = parseInt(String(item.armor_class), 10);
 			if (!Number.isNaN(acNum) && acNum > 10) {
 				pushProperty(`AC ${acNum}`);
@@ -509,7 +513,7 @@ export function getSpellProgressionForJob(job: JobReference): SpellProgression {
 	const fullCasters = ["mage", "herald", "esper", "summoner", "idol"];
 	if (fullCasters.includes(normalized)) return "full";
 
-	// Half casters (Revenant reclassified full→half in the drain-tank rework)
+	// Half casters (Revenant reclassified fullâ†’half in the drain-tank rework)
 	const halfCasters = ["holy knight", "stalker", "technomancer", "revenant"];
 	if (halfCasters.includes(normalized)) return "half";
 
@@ -632,7 +636,7 @@ export function getRacialTraitModifiers(
 	const job = jobName.trim().toLowerCase();
 	const trait = traitName.trim().toLowerCase();
 
-	// 1. DESTROYER — crystalline gate-frame lineage (Fighter analog).
+	// 1. DESTROYER â€” crystalline gate-frame lineage (Fighter analog).
 	if (job === "destroyer") {
 		if (trait === "crystalline bone density") {
 			return [
@@ -662,7 +666,7 @@ export function getRacialTraitModifiers(
 		}
 	}
 
-	// 2. BERSERKER — thermal-vent mana physiology (Barbarian analog).
+	// 2. BERSERKER â€” thermal-vent mana physiology (Barbarian analog).
 	if (job === "berserker") {
 		if (trait === "thermal venting") {
 			return [
@@ -697,7 +701,7 @@ export function getRacialTraitModifiers(
 		}
 	}
 
-	// 3. ASSASSIN — partial-dimensional umbral lineage (Rogue analog).
+	// 3. ASSASSIN â€” partial-dimensional umbral lineage (Rogue analog).
 	if (job === "assassin") {
 		if (trait === "partial dimensional existence") {
 			return [
@@ -723,7 +727,7 @@ export function getRacialTraitModifiers(
 		}
 	}
 
-	// 4. STRIKER — hyper-twitch kinetic lineage (Monk analog).
+	// 4. STRIKER â€” hyper-twitch kinetic lineage (Monk analog).
 	if (job === "striker") {
 		if (trait === "hyper-twitch fibers") {
 			return [
@@ -754,7 +758,7 @@ export function getRacialTraitModifiers(
 		}
 	}
 
-	// 5. MAGE — aetheric-cortex lineage (Wizard analog).
+	// 5. MAGE â€” aetheric-cortex lineage (Wizard analog).
 	if (job === "mage") {
 		if (trait === "mana-bleed dependency") {
 			return [
@@ -795,7 +799,7 @@ export function getRacialTraitModifiers(
 		}
 	}
 
-	// 6. ESPER — neural-overclock psionic lineage (Sorcerer analog).
+	// 6. ESPER â€” neural-overclock psionic lineage (Sorcerer analog).
 	if (job === "esper") {
 		if (trait === "neural overclocking") {
 			return [
@@ -816,7 +820,7 @@ export function getRacialTraitModifiers(
 		}
 	}
 
-	// 7. REVENANT — death-scarred undying lineage (Necromancer analog).
+	// 7. REVENANT â€” death-scarred undying lineage (Necromancer analog).
 	if (job === "revenant") {
 		if (trait === "death-scarred physiology") {
 			return [
@@ -837,7 +841,7 @@ export function getRacialTraitModifiers(
 		}
 	}
 
-	// 8. SUMMONER — biome-bonded anchor lineage (Druid analog).
+	// 8. SUMMONER â€” biome-bonded anchor lineage (Druid analog).
 	if (job === "summoner") {
 		if (trait === "aetheric anchor") {
 			return [
@@ -861,7 +865,7 @@ export function getRacialTraitModifiers(
 		}
 	}
 
-	// 9. HERALD — signal-receiver sanctified antenna (Cleric analog).
+	// 9. HERALD â€” signal-receiver sanctified antenna (Cleric analog).
 	if (job === "herald") {
 		if (trait === "mandate-receptive cortex") {
 			return [
@@ -887,7 +891,7 @@ export function getRacialTraitModifiers(
 		}
 	}
 
-	// 10. CONTRACTOR — pact-branded rift-vessel lineage (Warlock analog).
+	// 10. CONTRACTOR â€” pact-branded rift-vessel lineage (Warlock analog).
 	if (job === "contractor") {
 		if (trait === "pact brand physiology") {
 			return [
@@ -907,7 +911,7 @@ export function getRacialTraitModifiers(
 		}
 	}
 
-	// 11. STALKER — predator-optimized rift-tracker lineage (Ranger analog).
+	// 11. STALKER â€” predator-optimized rift-tracker lineage (Ranger analog).
 	if (job === "stalker") {
 		if (trait === "predator-optimized physiology") {
 			return [
@@ -938,7 +942,7 @@ export function getRacialTraitModifiers(
 		}
 	}
 
-	// 12. HOLY KNIGHT — radiant-scaled covenant lineage (Paladin analog).
+	// 12. HOLY KNIGHT â€” radiant-scaled covenant lineage (Paladin analog).
 	if (job === "holy-knight" || job === "holy knight") {
 		if (trait === "radiant scales") {
 			return [
@@ -974,7 +978,7 @@ export function getRacialTraitModifiers(
 		}
 	}
 
-	// 13. TECHNOMANCER — cyber-mana alloyed lineage (Artificer analog).
+	// 13. TECHNOMANCER â€” cyber-mana alloyed lineage (Artificer analog).
 	if (job === "technomancer") {
 		if (trait === "cyber-mana integration") {
 			return [
@@ -1004,7 +1008,7 @@ export function getRacialTraitModifiers(
 		}
 	}
 
-	// 14. IDOL — harmonic-frequency resonance lineage (Bard analog).
+	// 14. IDOL â€” harmonic-frequency resonance lineage (Bard analog).
 	if (job === "idol") {
 		if (trait === "harmonic frequency physiology") {
 			return [
@@ -3109,7 +3113,7 @@ export function getRegentFeatureModifiers(
 /**
  * Apply a job's innate "awakening traits" to the character row.
  *
- * In Rift Ascendant, Jobs function as both race and class — so the racial-equivalent
+ * In Rift Ascendant, Jobs function as both race and class â€” so the racial-equivalent
  * data (senses, damage resistances, damage/condition immunities, vulnerabilities,
  * languages) lives on the Job and must be merged onto the character at creation.
  * Without this step, a Revenant never gains Darkvision 120 ft and an Oracle never
@@ -3200,7 +3204,7 @@ export async function applyJobAwakeningTraitsToCharacter(
 	// in whatever shape local storage supports.
 	const mergedLanguages = dedupe(job.languages, selectedLanguages);
 
-	// Compute ASI delta (idempotent — applied once per character-job pair via
+	// Compute ASI delta (idempotent â€” applied once per character-job pair via
 	// a hidden marker feature).
 	const jobName = job.name;
 	const asiApplyKey = `Racial ASI: ${jobName}`;
@@ -3644,7 +3648,7 @@ export async function addJobAwakeningBenefitsForLevel(
 			});
 		}
 
-		// Racial traits — the "race" half of the race+class fused job.
+		// Racial traits â€” the "race" half of the race+class fused job.
 		// Each becomes a character feature at level 1 with engine modifiers.
 		for (const trait of job.racialTraits || []) {
 			if (existingNames.has(trait.name)) continue;
@@ -3683,7 +3687,7 @@ export async function addJobAwakeningBenefitsForLevel(
 			});
 		}
 
-		// Natural armor (Metallic Dermis — base AC 13 + INT mod, etc.).
+		// Natural armor (Metallic Dermis â€” base AC 13 + INT mod, etc.).
 		if (job.naturalArmor) {
 			const featureName = `Natural Armor`;
 			if (!existingNames.has(featureName)) {
@@ -3734,7 +3738,7 @@ export async function addJobAwakeningBenefitsForLevel(
 			}
 		}
 
-		// Bonus HP per level (Destroyer crystalline frame — +1 HP per level).
+		// Bonus HP per level (Destroyer crystalline frame â€” +1 HP per level).
 		if (typeof job.bonusHpPerLevel === "number" && job.bonusHpPerLevel > 0) {
 			const featureName = `Reinforced Constitution`;
 			if (!existingNames.has(featureName)) {
@@ -4021,6 +4025,22 @@ function mapToDbRarity(
 	return "common";
 }
 
+/**
+ * DDB parity (5e 2014 "starting wealth"): a new character may take flat
+ * starting funds instead of the job's equipment package. Amounts mirror the
+ * 5e class starting-wealth averages by hit die (heavier classes carry a
+ * bigger gear budget), denominated in Gate Credits (the gp analog).
+ */
+export function getStartingCreditsForJob(
+	job: { hitDie?: string | null } | null | undefined,
+): number {
+	const die = (job?.hitDie ?? "").trim().toLowerCase();
+	if (die.endsWith("d12") || die.endsWith("d10")) return 125;
+	if (die.endsWith("d8")) return 100;
+	if (die.endsWith("d6")) return 75;
+	return 100;
+}
+
 export async function addStartingEquipment(
 	character_id: string,
 	job: JobReference, // Standardized
@@ -4071,61 +4091,74 @@ export async function addStartingEquipment(
 			const itemName = equipmentChoices?.[groupIndex] ?? equipmentGroup[0];
 			if (!itemName) continue;
 
-			// Look up item in static compendium for proper metadata
-			const compendiumItem = findStaticItemByName(itemName);
-			const normalizedItem = compendiumItem
-				? normalizeToStaticItem(compendiumItem)
-				: null;
-			const itemType = normalizedItem ? deriveItemType(normalizedItem) : "gear";
-			// Auto-equip armor, shields, and weapons so new characters start ready
-			const shouldAutoEquip = ["armor", "shield", "weapon"].includes(itemType);
-			const equipData = normalizedItem
-				? {
-						item_id: normalizedItem.id ?? null,
-						name: normalizedItem.name,
-						item_type: itemType,
-						weight:
-							typeof normalizedItem.weight === "string"
-								? parseFloat(normalizedItem.weight) || 0
-								: (normalizedItem.weight ?? null),
-						description: normalizedItem.description ?? null,
-						properties: buildItemProperties(normalizedItem),
-						rarity: mapToDbRarity(normalizedItem.rarity),
-						quantity: 1,
-						is_equipped: shouldAutoEquip,
-						sigil_slots_base: normalizedItem
-							? getDefaultSigilSlotsBaseForEquipment({
-									item_type: itemType,
-									properties: buildItemProperties(normalizedItem),
-									name: normalizedItem.name,
-									rarity: mapToDbRarity(normalizedItem.rarity),
-								})
-							: 0,
-					}
-				: {
-						item_id: null,
-						name: itemName,
-						item_type: "gear",
-						quantity: 1,
-						is_equipped: false,
-						sigil_slots_base: 0,
-					};
+			// Direct compendium names win; only unresolved names are expanded
+			// ("Longbow and Quiver of 20 Arrows" â†’ Longbow + Arrows (20)). Pack
+			// names carry their real quantity â€” "Arrows (20)" is 20 arrows, not 1.
+			const grants = findStaticItemByName(itemName)
+				? [parsePackQuantity(itemName)]
+				: expandEquipmentGrant(itemName);
 
-			if (preexistingEquipmentNames.has(equipData.name)) continue;
-			if (isLocalCharacterId(characterId)) {
-				addLocalEquipment(characterId, equipData);
-			} else {
-				const { error: eqErr } = await supabase
-					.from("character_equipment")
-					.insert({
-						character_id: characterId,
-						...equipData,
-					});
-				if (eqErr)
-					console.warn(
-						"addStartingEquipment: job equipment insert failed",
-						eqErr,
-					);
+			for (const grant of grants) {
+				// Look up item in static compendium for proper metadata
+				const compendiumItem = findStaticItemByName(grant.name);
+				const normalizedItem = compendiumItem
+					? normalizeToStaticItem(compendiumItem)
+					: null;
+				const itemType = normalizedItem
+					? deriveItemType(normalizedItem)
+					: "gear";
+				// Auto-equip armor, shields, and weapons so new characters start ready
+				const shouldAutoEquip = ["armor", "shield", "weapon"].includes(
+					itemType,
+				);
+				const equipData = normalizedItem
+					? {
+							item_id: normalizedItem.id ?? null,
+							name: normalizedItem.name,
+							item_type: itemType,
+							weight:
+								typeof normalizedItem.weight === "string"
+									? parseFloat(normalizedItem.weight) || 0
+									: (normalizedItem.weight ?? null),
+							description: normalizedItem.description ?? null,
+							properties: buildItemProperties(normalizedItem),
+							rarity: mapToDbRarity(normalizedItem.rarity),
+							quantity: grant.quantity,
+							is_equipped: shouldAutoEquip,
+							sigil_slots_base: normalizedItem
+								? getDefaultSigilSlotsBaseForEquipment({
+										item_type: itemType,
+										properties: buildItemProperties(normalizedItem),
+										name: normalizedItem.name,
+										rarity: mapToDbRarity(normalizedItem.rarity),
+									})
+								: 0,
+						}
+					: {
+							item_id: null,
+							name: grant.name,
+							item_type: "gear",
+							quantity: grant.quantity,
+							is_equipped: false,
+							sigil_slots_base: 0,
+						};
+
+				if (preexistingEquipmentNames.has(equipData.name)) continue;
+				if (isLocalCharacterId(characterId)) {
+					addLocalEquipment(characterId, equipData);
+				} else {
+					const { error: eqErr } = await supabase
+						.from("character_equipment")
+						.insert({
+							character_id: characterId,
+							...equipData,
+						});
+					if (eqErr)
+						console.warn(
+							"addStartingEquipment: job equipment insert failed",
+							eqErr,
+						);
+				}
 			}
 		}
 	}
@@ -4150,6 +4183,8 @@ export async function addStartingEquipment(
 
 			const normalizedItem = normalizeToStaticItem(item);
 			if (preexistingEquipmentNames.has(normalizedItem.name)) continue;
+			// Pack-named items ("Rations (5)") land with their real quantity.
+			const grantQuantity = parsePackQuantity(normalizedItem.name).quantity;
 			const itemProps = buildItemProperties(normalizedItem);
 			const itemType = deriveItemType(normalizedItem);
 			const weightValue =
@@ -4165,7 +4200,7 @@ export async function addStartingEquipment(
 					description: normalizedItem.description || null,
 					properties: itemProps,
 					weight: weightValue,
-					quantity: 1,
+					quantity: grantQuantity,
 					is_equipped: false,
 					sigil_slots_base: getDefaultSigilSlotsBaseForEquipment({
 						item_type: itemType,
@@ -4185,7 +4220,7 @@ export async function addStartingEquipment(
 						description: normalizedItem.description || null,
 						properties: itemProps,
 						weight: weightValue,
-						quantity: 1,
+						quantity: grantQuantity,
 						is_equipped: false,
 						sigil_slots_base: getDefaultSigilSlotsBaseForEquipment({
 							item_type: itemType,

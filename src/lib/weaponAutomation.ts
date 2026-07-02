@@ -42,8 +42,10 @@ const AMMO_KIND_MATCHERS: Array<{
 	},
 ];
 
-/** Any inventory row that reads as ammunition, for the generic fallback. */
-const GENERIC_AMMO_RE =
+/** Any inventory row that reads as ammunition, for the generic fallback.
+ * Exported so the unified resource tracker classifies exactly the rows that
+ * attacks can draw from. */
+export const GENERIC_AMMO_RE =
 	/arrow|bolt|needle|bullet|round|cell|shell|magazine|cartridge|ammo/i;
 
 export function weaponRequiresAmmunition(properties: string[]): boolean {

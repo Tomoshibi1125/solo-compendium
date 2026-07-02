@@ -1,4 +1,4 @@
-import { Trash2 } from "lucide-react";
+import { Minus, Plus, Trash2 } from "lucide-react";
 import { memo } from "react";
 import { AutoLinkText } from "@/components/compendium/AutoLinkText";
 import { Badge } from "@/components/ui/badge";
@@ -17,6 +17,7 @@ import type { Database } from "@/integrations/supabase/types";
 import { formatModifier } from "@/lib/characterCalculations";
 import { cn } from "@/lib/utils";
 import { formatRegentVernacular } from "@/lib/vernacular";
+import { GENERIC_AMMO_RE } from "@/lib/weaponAutomation";
 
 type Equipment = Database["public"]["Tables"]["character_equipment"]["Row"];
 
@@ -42,6 +43,10 @@ interface EquipmentItemProps {
 	containers?: Equipment[];
 	onChangeContainer?: (item: Equipment, containerId: string | null) => void;
 	onToggleActive?: (item: Equipment) => void;
+	/** DDB parity: quantity steppers for stackables (ammo, consumables, packs). */
+	onAdjustQuantity?: (item: Equipment, delta: number) => void;
+	/** DDB parity: adjust item charges from the inventory row. */
+	onAdjustCharges?: (item: Equipment, delta: number) => void;
 	sigilControl?: React.ReactNode;
 	computedAction?: CombatAction | null;
 	onSelect?: () => void;
@@ -58,6 +63,8 @@ function EquipmentItemComponent({
 	containers,
 	onChangeContainer,
 	onToggleActive,
+	onAdjustQuantity,
+	onAdjustCharges,
 	sigilControl,
 	computedAction,
 	onSelect,
@@ -103,6 +110,13 @@ function EquipmentItemComponent({
 		item.charges_current ?? computedAction?.resourceCurrent;
 	const itemChargesMax = item.charges_max ?? computedAction?.resourceMax;
 	const hasCharges = itemChargesCurrent != null || itemChargesMax != null;
+	// Stackables get quantity steppers; unique gear (a sword, a cloak) stays
+	// clean unless it already carries a stack.
+	const isStackable =
+		item.quantity > 1 ||
+		item.item_type === "consumable" ||
+		(!["weapon", "armor", "shield"].includes(item.item_type) &&
+			GENERIC_AMMO_RE.test(item.name));
 	const computedAbilityFormula =
 		computedAction?.formulaAbility &&
 		computedAction.formulaAbilityModifier !== undefined
@@ -175,9 +189,67 @@ function EquipmentItemComponent({
 							</Badge>
 						)}
 						{hasCharges && (
-							<Badge variant="outline" className="text-xs">
-								Charges {itemChargesCurrent ?? "—"}/{itemChargesMax ?? "—"}
-							</Badge>
+							<span className="inline-flex items-center gap-0.5">
+								{onAdjustCharges && item.charges_max != null && (
+									<button
+										type="button"
+										className="p-0.5 rounded hover:bg-muted text-muted-foreground disabled:opacity-40"
+										onClick={() => onAdjustCharges(item, -1)}
+										disabled={(item.charges_current ?? 0) <= 0}
+										aria-label={`Spend a charge of ${displayName}`}
+									>
+										<Minus className="w-3 h-3" />
+									</button>
+								)}
+								<Badge variant="outline" className="text-xs">
+									Charges {itemChargesCurrent ?? "—"}/{itemChargesMax ?? "—"}
+								</Badge>
+								{onAdjustCharges && item.charges_max != null && (
+									<button
+										type="button"
+										className="p-0.5 rounded hover:bg-muted text-muted-foreground disabled:opacity-40"
+										onClick={() => onAdjustCharges(item, 1)}
+										disabled={
+											(item.charges_current ?? item.charges_max) >=
+											item.charges_max
+										}
+										aria-label={`Regain a charge of ${displayName}`}
+									>
+										<Plus className="w-3 h-3" />
+									</button>
+								)}
+							</span>
+						)}
+						{isStackable && (
+							<span className="inline-flex items-center gap-0.5">
+								{onAdjustQuantity && (
+									<button
+										type="button"
+										className="p-0.5 rounded hover:bg-muted text-muted-foreground disabled:opacity-40"
+										onClick={() => onAdjustQuantity(item, -1)}
+										disabled={item.quantity <= 0}
+										aria-label={`Remove one ${displayName}`}
+									>
+										<Minus className="w-3 h-3" />
+									</button>
+								)}
+								<Badge
+									variant={item.quantity > 0 ? "outline" : "destructive"}
+									className="text-xs"
+								>
+									×{item.quantity}
+								</Badge>
+								{onAdjustQuantity && (
+									<button
+										type="button"
+										className="p-0.5 rounded hover:bg-muted text-muted-foreground"
+										onClick={() => onAdjustQuantity(item, 1)}
+										aria-label={`Add one ${displayName}`}
+									>
+										<Plus className="w-3 h-3" />
+									</button>
+								)}
+							</span>
 						)}
 					</div>
 					{(computedAction?.damageRoll ||
@@ -267,6 +339,8 @@ function EquipmentItemComponent({
 									canAttune={canAttune}
 									onChangeContainer={onChangeContainer}
 									onToggleActive={onToggleActive}
+									onAdjustQuantity={onAdjustQuantity}
+									onAdjustCharges={onAdjustCharges}
 									containers={containers?.filter((c) => c.id !== nestedItem.id)}
 									computedAction={null}
 									onSelect={
@@ -347,6 +421,9 @@ export const EquipmentItem = memo(
 			prevProps.item.id === nextProps.item.id &&
 			prevProps.item.is_attuned === nextProps.item.is_attuned &&
 			prevProps.item.is_active === nextProps.item.is_active &&
+			prevProps.item.is_equipped === nextProps.item.is_equipped &&
+			prevProps.item.quantity === nextProps.item.quantity &&
+			prevProps.item.charges_current === nextProps.item.charges_current &&
 			prevProps.item.container_id === nextProps.item.container_id &&
 			prevProps.canAttune === nextProps.canAttune &&
 			prevProps.onSelect === nextProps.onSelect &&

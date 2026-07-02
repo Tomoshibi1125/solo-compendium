@@ -26,8 +26,10 @@ import {
 } from "@/components/ui/tooltip";
 import { useToast } from "@/hooks/use-toast";
 import { useCampaignDice } from "@/hooks/useCampaignDice";
+import { useCharacterResources } from "@/hooks/useCharacterSheetState";
 import { useRecordRoll } from "@/hooks/useRollHistory";
 import { formatModifier } from "@/lib/characterCalculations";
+import { applyInspiration, gainInspiration } from "@/lib/characterResources";
 import {
 	getAffordableOptions,
 	getAvailableFavorOptions,
@@ -100,6 +102,26 @@ export function StatusHeader({
 	const { toast } = useToast();
 	const recordRoll = useRecordRoll();
 	const { rollInCampaign } = useCampaignDice();
+	// DDB parity: inspiration lives on the sheet header, not just the HUD badge.
+	const [sheetResources, saveSheetResources] =
+		useCharacterResources(characterId);
+	const inspirationPoints = sheetResources.inspiration.inspiration_points;
+
+	const handleInspiration = (delta: number) => {
+		if (delta > 0) {
+			void saveSheetResources(gainInspiration(sheetResources));
+			toast({
+				title: "Inspiration gained",
+				description: "The Warden smiles upon you.",
+			});
+		} else if (inspirationPoints > 0) {
+			void saveSheetResources(applyInspiration(sheetResources));
+			toast({
+				title: "Inspiration spent",
+				description: "Advantage on one roll of your choice.",
+			});
+		}
+	};
 
 	const riftFavorState: RiftFavorState = {
 		current: riftFavor.current,
@@ -332,8 +354,8 @@ export function StatusHeader({
 					/>
 				</button>
 
-				{/* Resources (Hit Dice & Rift Favor) */}
-				<div className="grid grid-cols-2 gap-2 h-full">
+				{/* Resources (Hit Dice, Rift Favor & Inspiration) */}
+				<div className="grid grid-cols-3 gap-2 h-full">
 					<div className="bg-obsidian-charcoal/60 border border-primary/20 rounded-[2px] p-2 flex flex-col items-center justify-center relative group">
 						<div className="flex items-center gap-1.5">
 							<button
@@ -422,6 +444,36 @@ export function StatusHeader({
 							})}
 						</DropdownMenuContent>
 					</DropdownMenu>
+
+					<div className="bg-obsidian-charcoal/60 border border-primary/20 rounded-[2px] p-2 flex flex-col items-center justify-center relative group">
+						<div className="flex items-center gap-1.5">
+							<button
+								type="button"
+								onClick={() => handleInspiration(-1)}
+								disabled={inspirationPoints <= 0}
+								aria-label="Spend Inspiration"
+								className="p-1 hover:bg-primary/10 rounded transition-colors disabled:opacity-40"
+							>
+								<Minus className="w-3 h-3 text-primary/60" />
+							</button>
+							<span
+								className={`text-sm font-bold ${inspirationPoints > 0 ? "text-yellow-400" : "text-white"}`}
+							>
+								{inspirationPoints}
+							</span>
+							<button
+								type="button"
+								onClick={() => handleInspiration(1)}
+								aria-label="Gain Inspiration"
+								className="p-1 hover:bg-primary/10 rounded transition-colors"
+							>
+								<Plus className="w-3 h-3 text-primary/60" />
+							</button>
+						</div>
+						<span className="text-[10px] text-primary/70 uppercase flex items-center gap-1">
+							<Award className="w-2 h-2" /> INSPIRATION
+						</span>
+					</div>
 				</div>
 
 				{hp.current === 0 && (

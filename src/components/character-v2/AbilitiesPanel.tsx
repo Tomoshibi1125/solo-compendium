@@ -19,6 +19,7 @@ import { PowersList } from "@/components/character/PowersList";
 import { SpellSlotsDisplay } from "@/components/character/SpellSlotsDisplay";
 import { SpellsList } from "@/components/character/SpellsList";
 import { TechniquesList } from "@/components/character/TechniquesList";
+import { UnifiedResourcePanel } from "@/components/character/UnifiedResourcePanel";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useCharacter } from "@/hooks/useCharacters";
@@ -125,6 +126,9 @@ export function AbilitiesPanel({
 							abilities={character?.abilities ?? undefined}
 						/>
 					)}
+					{/* Auto-populated: job pools, ammunition, consumables, charged
+					    items, and custom trackers — spending is manual. */}
+					<UnifiedResourcePanel characterId={characterId} />
 					{/* Interactive trackers for features that carry structured uses. */}
 					<LimitedUseTracker characterId={characterId} />
 					{/* Auto-derived limited-use features from job/path/regent data. */}

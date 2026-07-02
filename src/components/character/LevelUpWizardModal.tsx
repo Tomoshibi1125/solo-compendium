@@ -89,6 +89,9 @@ import {
 	listLocalPowers,
 	listLocalSpells,
 	listLocalTechniques,
+	removeLocalPower,
+	removeLocalSpell,
+	removeLocalTechnique,
 } from "@/lib/guestStore";
 import {
 	filterPublishedHomebrewRecords,
@@ -111,6 +114,7 @@ import {
 	calculateRiftFavorDie,
 	calculateRiftFavorMax,
 } from "@/lib/levelUpCalculations";
+import { getSwappableKinds, type SwapKind } from "@/lib/levelUpSwap";
 import { logger } from "@/lib/logger";
 import { getStaticPaths, getStaticRegents } from "@/lib/ProtocolDataManager";
 import { getEffectiveMaxAbilityLevel } from "@/lib/pathAbilityAccess";
@@ -313,6 +317,11 @@ export const LevelUpWizardModal = ({
 	const [selectedLedgerOptions, setSelectedLedgerOptions] = useState<
 		Record<string, string[]>
 	>({});
+	// DDB parity: optional retrain — known-repertoire jobs may swap ONE known
+	// spell/power/technique for another legal pick when they gain a level.
+	const [swapKind, setSwapKind] = useState<"none" | SwapKind>("none");
+	const [swapOutId, setSwapOutId] = useState<string>("");
+	const [swapInId, setSwapInId] = useState<string>("");
 	const { data: staticJobs, isLoading: jobsLoading } = useStaticJobs();
 	const { data: publishedHomebrew = [] } = usePublishedHomebrew(
 		["job", "path", "spell"],
@@ -761,6 +770,136 @@ export const LevelUpWizardModal = ({
 		enabled: !!character?.job && requiredSpellbookInscriptions > 0,
 	});
 
+	// Retrain (swap) support — which ability kinds this job may swap, the
+	// character's current known rows for the picked kind, and the legal
+	// replacements (same learnability gating as new picks).
+	const swapKindOptions = useMemo(
+		() => getSwappableKinds(character?.job, newLevel),
+		[character?.job, newLevel],
+	);
+
+	const { data: swapOutOptions = [] } = useQuery<
+		Array<{ id: string; name: string; refId: string | null }>
+	>({
+		queryKey: ["level-up-swap-known", characterId, swapKind],
+		queryFn: async () => {
+			if (!character || swapKind === "none") return [];
+			if (swapKind === "technique") {
+				const canonical = await listCanonicalEntries("techniques", undefined, {
+					campaignId,
+				});
+				const nameById = new Map(canonical.map((t) => [t.id, t.name]));
+				if (isLocalCharacterId(character.id)) {
+					return listLocalTechniques(character.id).map((row) => ({
+						id: row.id,
+						name: nameById.get(row.technique_id) ?? row.technique_id,
+						refId: row.technique_id ?? null,
+					}));
+				}
+				const { data } = await supabase
+					.from("character_techniques")
+					.select("id, technique_id")
+					.eq("character_id", character.id);
+				return (data ?? []).map((row) => ({
+					id: row.id,
+					name: nameById.get(row.technique_id) ?? row.technique_id,
+					refId: row.technique_id,
+				}));
+			}
+			if (swapKind === "power") {
+				if (isLocalCharacterId(character.id)) {
+					return listLocalPowers(character.id)
+						.filter((row) => (row.power_level ?? 0) > 0)
+						.map((row) => ({
+							id: row.id,
+							name: row.name,
+							refId: row.power_id ?? null,
+						}));
+				}
+				const { data } = await supabase
+					.from("character_powers")
+					.select("id, name, power_id, power_level")
+					.eq("character_id", character.id);
+				return (data ?? [])
+					.filter((row) => (row.power_level ?? 0) > 0)
+					.map((row) => ({ id: row.id, name: row.name, refId: row.power_id }));
+			}
+			// Spells — cantrips are never swapped (5e rule).
+			if (isLocalCharacterId(character.id)) {
+				return listLocalSpells(character.id)
+					.filter((row) => (row.spell_level ?? 0) > 0)
+					.map((row) => ({
+						id: row.id,
+						name: row.name,
+						refId: row.spell_id ?? null,
+					}));
+			}
+			const { data } = await supabase
+				.from("character_spells")
+				.select("id, name, spell_id, spell_level")
+				.eq("character_id", character.id);
+			return (data ?? [])
+				.filter((row) => (row.spell_level ?? 0) > 0)
+				.map((row) => ({ id: row.id, name: row.name, refId: row.spell_id }));
+		},
+		enabled: !!character && swapKind !== "none",
+	});
+
+	const knownSwapRefIds = useMemo(
+		() =>
+			new Set(
+				swapOutOptions
+					.map((row) => row.refId)
+					.filter((id): id is string => !!id),
+			),
+		[swapOutOptions],
+	);
+
+	const { data: swapInOptions = [] } = useQuery<
+		Array<CanonicalCastableEntry | StaticCompendiumEntry>
+	>({
+		queryKey: [
+			"level-up-swap-candidates",
+			character?.job,
+			effectivePathName,
+			swapKind,
+			newLevel,
+			campaignId,
+			characterRegentNames.join(","),
+		],
+		queryFn: async () => {
+			if (!character?.job || swapKind === "none") return [];
+			if (swapKind === "spell") {
+				const spells = await listLearnableSpells({
+					accessContext: { campaignId },
+					jobName: character.job,
+					pathName: effectivePathName,
+					characterLevel: newLevel,
+					regentNames: characterRegentNames,
+				});
+				return spells.filter((spell) => spell.power_level > 0);
+			}
+			if (swapKind === "power") {
+				return listLearnablePowers({
+					accessContext: { campaignId },
+					jobName: character.job,
+					pathName: effectivePathName,
+					characterLevel: newLevel,
+					regentNames: characterRegentNames,
+				});
+			}
+			return listLearnableTechniques({
+				accessContext: { campaignId },
+				jobName: character.job,
+				pathName: effectivePathName,
+				characterLevel: newLevel,
+				regentNames: characterRegentNames,
+				maxLevel: newLevel,
+			});
+		},
+		enabled: !!character?.job && swapKind !== "none",
+	});
+
 	const availableFightingStyles = useMemo(() => {
 		const armorProficiencies =
 			jobObj?.armorProficiencies ?? jobObj?.armor_proficiencies;
@@ -1044,6 +1183,15 @@ export const LevelUpWizardModal = ({
 			setNewLevel(Math.min(character.level + 1, 20));
 		}
 	}, [character]);
+
+	// Reset the retrain picks whenever the modal opens for a fresh level-up.
+	useEffect(() => {
+		if (isOpen) {
+			setSwapKind("none");
+			setSwapOutId("");
+			setSwapInId("");
+		}
+	}, [isOpen]);
 
 	useEffect(() => {
 		setSelectedPowerIds((current) => {
@@ -1660,6 +1808,117 @@ export const LevelUpWizardModal = ({
 					character_id: character.id,
 					...spellPayload,
 				});
+			}
+
+			// DDB parity: optional retrain — swap ONE known entry for a new legal
+			// pick. Validate/insert the new entry mirrors the learn path above;
+			// the old row is only removed once the replacement passes its gates.
+			if (swapKind !== "none" && swapOutId && swapInId) {
+				const swapOutRow = swapOutOptions.find((row) => row.id === swapOutId);
+				const swapInEntry = swapInOptions.find(
+					(entry) => entry.id === swapInId,
+				);
+				if (swapOutRow && swapInEntry && !knownSwapRefIds.has(swapInEntry.id)) {
+					if (swapKind === "spell") {
+						const entry = swapInEntry as CanonicalCastableEntry;
+						assertCanonicalSpellLearnable(entry, levelUpAbilityContext);
+						const payload = {
+							spell_id: entry.id,
+							name: entry.name,
+							spell_level: entry.power_level,
+							source: `Level ${newLevel} Retrain`,
+							casting_time: entry.casting_time || null,
+							range: entry.range || null,
+							duration: entry.duration || null,
+							concentration: entry.concentration || false,
+							ritual: entry.ritual || false,
+							description: entry.description || null,
+							higher_levels: entry.higher_levels || null,
+							is_prepared: false,
+							is_known: true,
+							counts_against_limit: true,
+						};
+						if (isLocalCharacterId(character.id)) {
+							removeLocalSpell(swapOutId);
+							addLocalSpell(character.id, payload);
+						} else {
+							await supabase
+								.from("character_spells")
+								.delete()
+								.eq("id", swapOutId)
+								.eq("character_id", character.id);
+							await supabase
+								.from("character_spells")
+								.insert({ character_id: character.id, ...payload });
+						}
+					} else if (swapKind === "power") {
+						const entry = swapInEntry as CanonicalCastableEntry;
+						assertCanonicalPowerLearnable(entry, levelUpAbilityContext);
+						const useFields = await getAbilityUseFields(character.id, {
+							kind: "power",
+							powerLevel: entry.power_level,
+							atWill: (entry as { atWill?: boolean | null }).atWill ?? null,
+						});
+						const payload = {
+							power_id: entry.id,
+							name: entry.name,
+							power_level: entry.power_level,
+							source: `Level ${newLevel} Retrain`,
+							casting_time: entry.casting_time || null,
+							range: entry.range || null,
+							duration: entry.duration || null,
+							concentration: entry.concentration || false,
+							description: entry.description || null,
+							higher_levels: entry.higher_levels || null,
+							is_prepared: false,
+							is_known: true,
+							...useFields,
+						};
+						if (isLocalCharacterId(character.id)) {
+							removeLocalPower(swapOutId);
+							addLocalPower(character.id, payload);
+						} else {
+							await supabase
+								.from("character_powers")
+								.delete()
+								.eq("id", swapOutId)
+								.eq("character_id", character.id);
+							await supabase
+								.from("character_powers")
+								.insert({ character_id: character.id, ...payload });
+						}
+					} else {
+						const entry = swapInEntry as StaticCompendiumEntry;
+						assertCanonicalTechniqueLearnable(entry, levelUpAbilityContext);
+						const useFields = await getAbilityUseFields(character.id, {
+							kind: "technique",
+							levelRequirement:
+								(entry as { level_requirement?: number | null })
+									.level_requirement ?? null,
+							atWill: (entry as { atWill?: boolean | null }).atWill ?? null,
+						});
+						if (isLocalCharacterId(character.id)) {
+							removeLocalTechnique(swapOutId);
+							addLocalTechnique(character.id, {
+								technique_id: entry.id,
+								source: `Level ${newLevel} Retrain`,
+								...useFields,
+							});
+						} else {
+							await supabase
+								.from("character_techniques")
+								.delete()
+								.eq("id", swapOutId)
+								.eq("character_id", character.id);
+							await supabase.from("character_techniques").insert({
+								character_id: character.id,
+								technique_id: entry.id,
+								source: `Level ${newLevel} Retrain`,
+								...useFields,
+							});
+						}
+					}
+				}
 			}
 
 			const selectedFightingStyles = availableFightingStyles.filter((style) =>
@@ -2893,6 +3152,74 @@ export const LevelUpWizardModal = ({
 											Selected: {selectedTechniqueIds.length}/
 											{requiredTechniqueChoices}
 										</p>
+									</div>
+								)}
+
+								{swapKindOptions.length > 0 && (
+									<div className="p-4 rounded-lg bg-gradient-to-r from-cyan-500/10 to-transparent border border-cyan-500/20">
+										<Label className="font-resurge text-cyan-400 tracking-wide flex items-center gap-2 mb-2">
+											<Sparkles className="w-4 h-4" />
+											RETRAIN (OPTIONAL)
+										</Label>
+										<p className="text-sm text-muted-foreground mb-3 font-heading">
+											Gaining a level lets you swap one known{" "}
+											{swapKindOptions
+												.map((option) => option.label.toLowerCase())
+												.join(" / ")}{" "}
+											for another you could learn.
+										</p>
+										<div className="grid gap-3 sm:grid-cols-3">
+											<Select
+												value={swapKind}
+												onValueChange={(value) => {
+													setSwapKind(value as "none" | SwapKind);
+													setSwapOutId("");
+													setSwapInId("");
+												}}
+											>
+												<SelectTrigger>
+													<SelectValue placeholder="No swap" />
+												</SelectTrigger>
+												<SelectContent>
+													<SelectItem value="none">No swap</SelectItem>
+													{swapKindOptions.map((option) => (
+														<SelectItem key={option.kind} value={option.kind}>
+															Swap a {option.label}
+														</SelectItem>
+													))}
+												</SelectContent>
+											</Select>
+											{swapKind !== "none" && (
+												<Select value={swapOutId} onValueChange={setSwapOutId}>
+													<SelectTrigger>
+														<SelectValue placeholder="Forget..." />
+													</SelectTrigger>
+													<SelectContent>
+														{swapOutOptions.map((row) => (
+															<SelectItem key={row.id} value={row.id}>
+																{formatRegentVernacular(row.name)}
+															</SelectItem>
+														))}
+													</SelectContent>
+												</Select>
+											)}
+											{swapKind !== "none" && swapOutId && (
+												<Select value={swapInId} onValueChange={setSwapInId}>
+													<SelectTrigger>
+														<SelectValue placeholder="Learn instead..." />
+													</SelectTrigger>
+													<SelectContent>
+														{swapInOptions
+															.filter((entry) => !knownSwapRefIds.has(entry.id))
+															.map((entry) => (
+																<SelectItem key={entry.id} value={entry.id}>
+																	{formatRegentVernacular(entry.name)}
+																</SelectItem>
+															))}
+													</SelectContent>
+												</Select>
+											)}
+										</div>
 									</div>
 								)}
 

@@ -50,8 +50,12 @@ interface ActionCardProps {
 	onRoll?: (
 		rollType: "attack" | "damage" | "check" | "save" | "effect",
 	) => void;
-	/** Fires after an internal attack roll executes (hit or miss) — ammo spend hook. */
+	/** Fires after an internal attack roll executes (hit or miss) — only wired
+	 * when the character's opt-in auto-spend-ammo toggle is on. */
 	onAttackExecuted?: () => void;
+	/** Manual ammo spend (−1 on the badge) — always available; ammo tracking
+	 * defaults to manual since not every Warden enforces it. */
+	onAmmoSpend?: () => void;
 
 	onUse?: () => void;
 	characterId?: string;
@@ -105,6 +109,7 @@ function ActionCardComponent({
 	ammo,
 	onRoll,
 	onAttackExecuted,
+	onAmmoSpend,
 	onUse,
 	characterId,
 	campaignId,
@@ -314,12 +319,29 @@ function ActionCardComponent({
 						</Button>
 					)}
 					{ammo && (
-						<Badge
-							variant={ammo.remaining > 0 ? "outline" : "destructive"}
-							className="text-xs"
-						>
-							Ammo: {formatRegentVernacular(ammo.name)} ×{ammo.remaining}
-						</Badge>
+						<span className="inline-flex items-center gap-1">
+							<Badge
+								variant={ammo.remaining > 0 ? "outline" : "destructive"}
+								className="text-xs"
+							>
+								Ammo: {formatRegentVernacular(ammo.name)} ×{ammo.remaining}
+							</Badge>
+							{onAmmoSpend && (
+								<Button
+									variant="ghost"
+									size="sm"
+									className="h-5 px-1.5 text-[10px] text-muted-foreground hover:text-destructive"
+									disabled={ammo.remaining <= 0}
+									onClick={(e) => {
+										e.stopPropagation();
+										onAmmoSpend();
+									}}
+									aria-label={`Spend one ${formatRegentVernacular(ammo.name)}`}
+								>
+									−1
+								</Button>
+							)}
+						</span>
 					)}
 					{displayRecharge && (
 						<Badge variant="outline" className="text-xs">

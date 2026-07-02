@@ -20,6 +20,11 @@ interface EquipmentStepProps {
 	) => void;
 	/** Fixed gear granted by the character's background (no choice required). */
 	backgroundEquipment?: string[] | null;
+	/** DDB parity (5e starting wealth): take flat credits instead of gear. */
+	takeCredits?: boolean;
+	setTakeCredits?: (value: boolean) => void;
+	/** Gate Credits granted when taking funds instead of equipment. */
+	creditsAmount?: number;
 }
 
 const normalizeEquipmentLookup = (value: string) =>
@@ -146,6 +151,9 @@ export const EquipmentStep: React.FC<EquipmentStepProps> = ({
 	equipmentChoices,
 	setEquipmentChoices,
 	backgroundEquipment,
+	takeCredits = false,
+	setTakeCredits,
+	creditsAmount = 0,
 }) => {
 	const [showAllStats, setShowAllStats] = useState(false);
 	// DDB-style weapon-loadout picks, keyed by weaponChoices group index. Kept
@@ -240,164 +248,238 @@ export const EquipmentStep: React.FC<EquipmentStepProps> = ({
 						configuration in each array is staged as default.
 					</AscendantText>
 
-					{backgroundEquipment && backgroundEquipment.length > 0 && (
-						<div className="p-4 rounded-lg border border-primary/10 bg-black/20 space-y-2">
-							<p className="text-[11px] uppercase tracking-widest text-primary/70 font-bold">
-								Background Equipment — Standard Issue
-							</p>
-							{backgroundEquipment.map((item) => (
-								<div key={item} className="flex items-center gap-3">
-									<div className="w-1.5 h-1.5 rounded-full bg-primary/40" />
-									<span className="font-heading text-sm text-primary/70">
-										{item}
-									</span>
-									<CanonicalEquipmentDetails
-										matches={getCanonicalMatches(
-											item,
-											canonicalEntries,
-											canonicalByName,
-										)}
-										showAllStats={showAllStats}
-									/>
+					{setTakeCredits && creditsAmount > 0 && (
+						<div
+							className={cn(
+								"p-4 rounded-lg border space-y-2 transition-colors",
+								takeCredits
+									? "border-yellow-500/40 bg-yellow-500/5"
+									: "border-primary/10 bg-black/20",
+							)}
+						>
+							<div className="flex items-center justify-between gap-3">
+								<div>
+									<p className="text-[11px] uppercase tracking-widest text-yellow-500/80 font-bold">
+										Bureau Provisioning Stipend
+									</p>
+									<p className="text-xs text-muted-foreground mt-1">
+										Forgo the standard loadout and background issue — draw{" "}
+										<span className="text-yellow-400 font-bold">
+											{creditsAmount} Gate Credits
+										</span>{" "}
+										to outfit yourself at the Gate Market instead.
+									</p>
 								</div>
-							))}
+								<Button
+									type="button"
+									variant={takeCredits ? "default" : "outline"}
+									size="sm"
+									onClick={() => setTakeCredits(!takeCredits)}
+									className="text-[11px] uppercase tracking-widest whitespace-nowrap"
+								>
+									{takeCredits ? "Taking Credits" : "Take Credits"}
+								</Button>
+							</div>
 						</div>
 					)}
-					<div className="flex justify-end">
-						<Button
-							type="button"
-							variant="outline"
-							size="sm"
-							onClick={() => setShowAllStats((current) => !current)}
-							className="text-[11px] uppercase tracking-widest"
-						>
-							{showAllStats ? "Show summary" : "Show all stats"}
-						</Button>
-					</div>
 
-					<div className="space-y-4">
-						{staticJobData.startingEquipment.map(
-							(group: string[], groupIndex: number) => {
-								const chosen = equipmentChoices[groupIndex] ?? group[0];
-								const chosenCanonicalMatches = getCanonicalMatches(
-									chosen,
-									canonicalEntries,
-									canonicalByName,
-								);
-
-								return (
-									<div
-										key={`eq-group-${group.join("-").replace(/\s/g, "")}`}
-										className="p-4 rounded-lg border border-primary/10 bg-black/40 space-y-3"
-									>
-										{group.length === 1 ? (
-											<div className="flex items-center justify-between">
-												<div className="flex items-center gap-3">
-													<div className="w-1.5 h-1.5 rounded-full bg-primary" />
-													<span className="font-heading font-semibold text-sm text-primary/80">
-														{group[0]}
-													</span>
-													<CanonicalEquipmentDetails
-														matches={chosenCanonicalMatches}
-														showAllStats={showAllStats}
-													/>
-												</div>
-												<Badge
-													variant="secondary"
-													className="text-[11px] uppercase tracking-tighter bg-primary/10 border-primary/20"
-												>
-													Standard Issue
-												</Badge>
-											</div>
-										) : (
-											<div className="space-y-3">
-												<div className="flex justify-between items-center mb-1">
-													<Label className="text-[11px] uppercase tracking-widest text-primary/70 font-bold">
-														Package Selection Required
-													</Label>
-													<Badge
-														variant="outline"
-														className="text-[11px] uppercase tracking-tighter border-primary/20"
-													>
-														Select One
-													</Badge>
-												</div>
-
-												<div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-													{group.map((option) => {
-														const canonicalMatches = getCanonicalMatches(
-															option,
-															canonicalEntries,
-															canonicalByName,
-														);
-														return (
-															<button
-																key={option}
-																type="button"
-																onClick={() =>
-																	setEquipmentChoices((prev) => ({
-																		...prev,
-																		[groupIndex]: option,
-																	}))
-																}
-																className={cn(
-																	"text-left p-3 rounded border transition-all flex items-start gap-3",
-																	chosen === option
-																		? "border-primary/60 bg-primary/10 text-primary-foreground"
-																		: "border-primary/5 bg-black/40 text-muted-foreground hover:border-primary/20 hover:bg-black/60",
-																)}
-															>
-																<div
-																	className={cn(
-																		"w-3 h-3 rounded-full border flex-shrink-0 transition-all mt-0.5",
-																		chosen === option
-																			? "border-primary bg-primary scale-110 shadow-[0_0_8px_rgba(var(--primary),0.5)]"
-																			: "border-primary/20 bg-transparent",
-																	)}
-																/>
-																<div className="min-w-0">
-																	<span className="font-heading text-xs tracking-tight">
-																		{option}
-																	</span>
-																	<CanonicalEquipmentDetails
-																		matches={canonicalMatches}
-																		showAllStats={showAllStats}
-																	/>
-																</div>
-															</button>
-														);
-													})}
-												</div>
-											</div>
-										)}
-									</div>
-								);
-							},
-						)}
-					</div>
-
-					<div className="p-4 rounded-lg bg-primary/5 border border-primary/10 mt-6">
-						<div className="flex items-center gap-2 mb-3">
-							<div className="w-1 h-3 bg-primary" />
-							<p className="text-[11px] font-heading font-semibold text-primary uppercase tracking-widest">
-								Current Staged Loadout
+					{takeCredits && (
+						<div className="text-center py-8 text-muted-foreground border border-dashed border-yellow-500/20 rounded-lg">
+							<p className="font-heading text-sm uppercase tracking-widest text-yellow-500/70">
+								Equipment package waived
+							</p>
+							<p className="text-[11px] mt-2 italic">
+								{creditsAmount} Gate Credits will be deposited on activation.
 							</p>
 						</div>
-						<ul className="space-y-2 pl-1">
-							{staticJobData.startingEquipment.map(
-								(group: string[], i: number) => {
-									const chosen = equipmentChoices[i] ?? group[0];
-									return (
+					)}
+
+					{!takeCredits && (
+						<>
+							{backgroundEquipment && backgroundEquipment.length > 0 && (
+								<div className="p-4 rounded-lg border border-primary/10 bg-black/20 space-y-2">
+									<p className="text-[11px] uppercase tracking-widest text-primary/70 font-bold">
+										Background Equipment — Standard Issue
+									</p>
+									{backgroundEquipment.map((item) => (
+										<div key={item} className="flex items-center gap-3">
+											<div className="w-1.5 h-1.5 rounded-full bg-primary/40" />
+											<span className="font-heading text-sm text-primary/70">
+												{item}
+											</span>
+											<CanonicalEquipmentDetails
+												matches={getCanonicalMatches(
+													item,
+													canonicalEntries,
+													canonicalByName,
+												)}
+												showAllStats={showAllStats}
+											/>
+										</div>
+									))}
+								</div>
+							)}
+							<div className="flex justify-end">
+								<Button
+									type="button"
+									variant="outline"
+									size="sm"
+									onClick={() => setShowAllStats((current) => !current)}
+									className="text-[11px] uppercase tracking-widest"
+								>
+									{showAllStats ? "Show summary" : "Show all stats"}
+								</Button>
+							</div>
+
+							<div className="space-y-4">
+								{staticJobData.startingEquipment.map(
+									(group: string[], groupIndex: number) => {
+										const chosen = equipmentChoices[groupIndex] ?? group[0];
+										const chosenCanonicalMatches = getCanonicalMatches(
+											chosen,
+											canonicalEntries,
+											canonicalByName,
+										);
+
+										return (
+											<div
+												key={`eq-group-${group.join("-").replace(/\s/g, "")}`}
+												className="p-4 rounded-lg border border-primary/10 bg-black/40 space-y-3"
+											>
+												{group.length === 1 ? (
+													<div className="flex items-center justify-between">
+														<div className="flex items-center gap-3">
+															<div className="w-1.5 h-1.5 rounded-full bg-primary" />
+															<span className="font-heading font-semibold text-sm text-primary/80">
+																{group[0]}
+															</span>
+															<CanonicalEquipmentDetails
+																matches={chosenCanonicalMatches}
+																showAllStats={showAllStats}
+															/>
+														</div>
+														<Badge
+															variant="secondary"
+															className="text-[11px] uppercase tracking-tighter bg-primary/10 border-primary/20"
+														>
+															Standard Issue
+														</Badge>
+													</div>
+												) : (
+													<div className="space-y-3">
+														<div className="flex justify-between items-center mb-1">
+															<Label className="text-[11px] uppercase tracking-widest text-primary/70 font-bold">
+																Package Selection Required
+															</Label>
+															<Badge
+																variant="outline"
+																className="text-[11px] uppercase tracking-tighter border-primary/20"
+															>
+																Select One
+															</Badge>
+														</div>
+
+														<div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+															{group.map((option) => {
+																const canonicalMatches = getCanonicalMatches(
+																	option,
+																	canonicalEntries,
+																	canonicalByName,
+																);
+																return (
+																	<button
+																		key={option}
+																		type="button"
+																		onClick={() =>
+																			setEquipmentChoices((prev) => ({
+																				...prev,
+																				[groupIndex]: option,
+																			}))
+																		}
+																		className={cn(
+																			"text-left p-3 rounded border transition-all flex items-start gap-3",
+																			chosen === option
+																				? "border-primary/60 bg-primary/10 text-primary-foreground"
+																				: "border-primary/5 bg-black/40 text-muted-foreground hover:border-primary/20 hover:bg-black/60",
+																		)}
+																	>
+																		<div
+																			className={cn(
+																				"w-3 h-3 rounded-full border flex-shrink-0 transition-all mt-0.5",
+																				chosen === option
+																					? "border-primary bg-primary scale-110 shadow-[0_0_8px_rgba(var(--primary),0.5)]"
+																					: "border-primary/20 bg-transparent",
+																			)}
+																		/>
+																		<div className="min-w-0">
+																			<span className="font-heading text-xs tracking-tight">
+																				{option}
+																			</span>
+																			<CanonicalEquipmentDetails
+																				matches={canonicalMatches}
+																				showAllStats={showAllStats}
+																			/>
+																		</div>
+																	</button>
+																);
+															})}
+														</div>
+													</div>
+												)}
+											</div>
+										);
+									},
+								)}
+							</div>
+
+							<div className="p-4 rounded-lg bg-primary/5 border border-primary/10 mt-6">
+								<div className="flex items-center gap-2 mb-3">
+									<div className="w-1 h-3 bg-primary" />
+									<p className="text-[11px] font-heading font-semibold text-primary uppercase tracking-widest">
+										Current Staged Loadout
+									</p>
+								</div>
+								<ul className="space-y-2 pl-1">
+									{staticJobData.startingEquipment.map(
+										(group: string[], i: number) => {
+											const chosen = equipmentChoices[i] ?? group[0];
+											return (
+												<li
+													key={`summary-${group.join("|")}-${chosen.replace(/\s/g, "")}`}
+													className="text-xs flex items-center gap-3 text-muted-foreground/80"
+												>
+													<Check className="w-3 h-3 text-primary/60 flex-shrink-0" />
+													<div className="min-w-0">
+														<div>{chosen}</div>
+														<CanonicalEquipmentDetails
+															matches={getCanonicalMatches(
+																chosen,
+																canonicalEntries,
+																canonicalByName,
+															)}
+															showAllStats={showAllStats}
+														/>
+													</div>
+												</li>
+											);
+										},
+									)}
+									{(backgroundEquipment ?? []).map((item) => (
 										<li
-											key={`summary-${group.join("|")}-${chosen.replace(/\s/g, "")}`}
-											className="text-xs flex items-center gap-3 text-muted-foreground/80"
+											key={`bg-summary-${item.replace(/\s/g, "")}`}
+											className="text-xs flex items-center gap-3 text-muted-foreground/60"
 										>
-											<Check className="w-3 h-3 text-primary/60 flex-shrink-0" />
+											<Check className="w-3 h-3 text-primary/70 flex-shrink-0" />
 											<div className="min-w-0">
-												<div>{chosen}</div>
+												<div>
+													{item}{" "}
+													<span className="text-[11px] uppercase tracking-tighter text-primary/70 ml-1">
+														Background
+													</span>
+												</div>
 												<CanonicalEquipmentDetails
 													matches={getCanonicalMatches(
-														chosen,
+														item,
 														canonicalEntries,
 														canonicalByName,
 													)}
@@ -405,40 +487,17 @@ export const EquipmentStep: React.FC<EquipmentStepProps> = ({
 												/>
 											</div>
 										</li>
-									);
-								},
-							)}
-							{(backgroundEquipment ?? []).map((item) => (
-								<li
-									key={`bg-summary-${item.replace(/\s/g, "")}`}
-									className="text-xs flex items-center gap-3 text-muted-foreground/60"
-								>
-									<Check className="w-3 h-3 text-primary/70 flex-shrink-0" />
-									<div className="min-w-0">
-										<div>
-											{item}{" "}
-											<span className="text-[11px] uppercase tracking-tighter text-primary/70 ml-1">
-												Background
-											</span>
-										</div>
-										<CanonicalEquipmentDetails
-											matches={getCanonicalMatches(
-												item,
-												canonicalEntries,
-												canonicalByName,
-											)}
-											showAllStats={showAllStats}
-										/>
-									</div>
-								</li>
-							))}
-						</ul>
-					</div>
+									))}
+								</ul>
+							</div>
+						</>
+					)}
 				</div>
 			</AscendantWindow>
 
 			{/* Weapon Loadout — DDB-style canon weapon choices for this job */}
-			{staticJobData.weaponChoices &&
+			{!takeCredits &&
+				staticJobData.weaponChoices &&
 				staticJobData.weaponChoices.length > 0 && (
 					<AscendantWindow title="MODEL ARMAMENT: WEAPON LOADOUT">
 						<AscendantText className="block text-sm text-muted-foreground italic pl-3 border-l-2 border-primary/30 mb-4">

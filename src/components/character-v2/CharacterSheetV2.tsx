@@ -43,7 +43,6 @@ import { FeaturesList } from "@/components/character/FeaturesList";
 import { GuildBenefitsDisplay } from "@/components/character/GuildBenefitsDisplay";
 import { HomebrewFeatureApplicator } from "@/components/character/HomebrewFeatureApplicator";
 import { InlineSectionNote } from "@/components/character/InlineSectionNote";
-import { JobResourcePools } from "@/components/character/JobResourcePools";
 import { JournalPanel } from "@/components/character/JournalPanel";
 import { LanguagesPanel } from "@/components/character/LanguagesPanel";
 import { LevelUpWizardModal } from "@/components/character/LevelUpWizardModal";
@@ -60,7 +59,6 @@ import { RunesList } from "@/components/character/RunesList";
 import { ShadowSoldiersPanel } from "@/components/character/ShadowSoldiersPanel";
 import { SheetThemeDialog } from "@/components/character/SheetThemeDialog";
 import { SovereignOverlayPanel } from "@/components/character/SovereignOverlayPanel";
-import { SpellSlotsDisplay } from "@/components/character/SpellSlotsDisplay";
 import { TattoosList } from "@/components/character/TattoosList";
 import { ToolProficienciesPanel } from "@/components/character/ToolProficienciesPanel";
 import { VehiclesPanel } from "@/components/character/VehiclesPanel";
@@ -758,13 +756,6 @@ export default function CharacterSheetV2() {
 				onSelectDetail={(detail) => onSelectDetail(detail, "Shadow", Ghost)}
 			/>
 			<SovereignOverlayPanel characterId={character.id} />
-			<JobResourcePools characterId={character.id} />
-			<SpellSlotsDisplay
-				characterId={character.id}
-				job={character.job}
-				level={character.level}
-				abilities={character.abilities}
-			/>
 		</>
 	);
 

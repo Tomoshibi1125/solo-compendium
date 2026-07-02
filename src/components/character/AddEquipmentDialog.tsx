@@ -34,6 +34,7 @@ import {
 } from "@/lib/homebrewRuntime";
 import { getDefaultSigilSlotsBaseForEquipment } from "@/lib/sigilAutomation";
 import { getCharacterCampaignId } from "@/lib/sourcebookAccess";
+import { parsePackQuantity } from "@/lib/unifiedResources";
 import { formatRegentVernacular } from "@/lib/vernacular";
 import { AddCustomItemDialog } from "./AddCustomItemDialog";
 import { AddDialogDetailPanel } from "./AddDialogDetailPanel";
@@ -78,6 +79,8 @@ export function AddEquipmentDialog({
 	characterId: string;
 }) {
 	const [searchQuery, setSearchQuery] = useState("");
+	// Blank = auto (pack size from the item name); a number overrides.
+	const [quantityInput, setQuantityInput] = useState("");
 	const [customItemOpen, setCustomItemOpen] = useState(false);
 	const { addEquipment } = useEquipment(characterId);
 	const { data: character } = useCharacter(characterId);
@@ -210,6 +213,13 @@ export function AddEquipmentDialog({
 		const inventoryType = mapCompendiumEquipmentTypeToInventoryType(
 			item.equipment_type,
 		);
+		// Explicit Qty wins; otherwise pack names carry their real count
+		// ("Arrows (20)" lands as 20 — DDB parity).
+		const explicitQty = Number.parseInt(quantityInput, 10);
+		const quantity =
+			Number.isFinite(explicitQty) && explicitQty > 0
+				? explicitQty
+				: parsePackQuantity(item.name).quantity;
 		try {
 			await ascendantTools.trackCustomFeatureUsage(
 				characterId,
@@ -224,7 +234,7 @@ export function AddEquipmentDialog({
 				description: item.description || null,
 				properties: item.properties || [],
 				weight: item.weight || null,
-				quantity: 1,
+				quantity,
 				sigil_slots_base: getDefaultSigilSlotsBaseForEquipment({
 					item_type: inventoryType,
 					properties: item.properties || [],
@@ -256,6 +266,7 @@ export function AddEquipmentDialog({
 
 			onOpenChange(false);
 			setSearchQuery("");
+			setQuantityInput("");
 		} catch {
 			toast({
 				title: "Error",
@@ -286,6 +297,15 @@ export function AddEquipmentDialog({
 								className="pl-10"
 							/>
 						</div>
+						<Input
+							type="number"
+							min={1}
+							placeholder="Qty"
+							title="Quantity to add (blank = pack size, e.g. Arrows (20) → 20)"
+							value={quantityInput}
+							onChange={(e) => setQuantityInput(e.target.value)}
+							className="w-20"
+						/>
 						<Button variant="outline" onClick={() => setCustomItemOpen(true)}>
 							Create Custom Item
 						</Button>

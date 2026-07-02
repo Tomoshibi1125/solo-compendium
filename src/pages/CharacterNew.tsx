@@ -64,6 +64,7 @@ import {
 	addStartingEquipment,
 	applyJobAwakeningTraitsToCharacter,
 	getJobASI,
+	getStartingCreditsForJob,
 	insertCharacterFeature,
 } from "@/lib/characterCreation";
 import { MAX_CHARACTERS_PER_USER } from "@/lib/characterLimits";
@@ -72,12 +73,14 @@ import {
 	calculateTotalChoices,
 	type LedgerChoice,
 } from "@/lib/choiceCalculations";
+import { buildRaCurrencyItemDescription } from "@/lib/currency";
 import {
 	getErrorInfo,
 	getErrorMessage,
 	logErrorWithContext,
 } from "@/lib/errorHandling";
 import {
+	addLocalEquipment,
 	addLocalPower,
 	addLocalSpell,
 	addLocalTechnique,
@@ -408,6 +411,9 @@ const CharacterNew = () => {
 	const [equipmentChoices, setEquipmentChoices] = useState<
 		Record<number, string>
 	>({});
+	// DDB parity (5e starting wealth): take flat Gate Credits instead of the
+	// job/background equipment packages.
+	const [takeStartingCredits, setTakeStartingCredits] = useState(false);
 	const [selectedPowerIds, setSelectedPowerIds] = useState<string[]>([]);
 	const [selectedTechniqueIds, setSelectedTechniqueIds] = useState<string[]>(
 		[],
@@ -1438,14 +1444,37 @@ const CharacterNew = () => {
 						`Homebrew Path: ${selectedHomebrewPath.name}`,
 					);
 				}
-				await addStartingEquipment(
-					character.id,
-					job,
-					bgData,
-					selectedSkills,
-					equipmentChoices,
-					null,
-				);
+				if (takeStartingCredits) {
+					// 5e starting wealth: flat Gate Credits instead of gear packages.
+					// Same row shape CurrencyManager creates, so the wallet picks it up.
+					const currencyRow = {
+						name: "Gate Credits",
+						item_type: "currency",
+						quantity: getStartingCreditsForJob(staticJobData),
+						weight: 0.02,
+						description: buildRaCurrencyItemDescription("gate"),
+						is_equipped: false,
+						sigil_slots_base: 0,
+					};
+					if (isLocalCharacterId(character.id)) {
+						addLocalEquipment(character.id, currencyRow);
+					} else {
+						const { error: creditErr } = await supabase
+							.from("character_equipment")
+							.insert({ character_id: character.id, ...currencyRow });
+						if (creditErr)
+							logErrorWithContext(creditErr, "CharacterNew: starting credits");
+					}
+				} else {
+					await addStartingEquipment(
+						character.id,
+						job,
+						bgData,
+						selectedSkills,
+						equipmentChoices,
+						null,
+					);
+				}
 			} catch (automationErr) {
 				logErrorWithContext(
 					automationErr,
@@ -2344,6 +2373,9 @@ const CharacterNew = () => {
 									?.equipment ??
 								null
 							}
+							takeCredits={takeStartingCredits}
+							setTakeCredits={setTakeStartingCredits}
+							creditsAmount={getStartingCreditsForJob(staticJobData)}
 						/>
 					)}
 

@@ -199,6 +199,42 @@ export function EquipmentList({
 		}
 	};
 
+	// DDB parity: quantity/charge adjustments straight from the inventory row —
+	// the same equipment columns the unified resource tracker and attack ammo
+	// spend write to, so all views stay in lockstep.
+	const handleAdjustQuantity = async (item: Equipment, delta: number) => {
+		const next = Math.max(0, item.quantity + delta);
+		if (next === item.quantity) return;
+		try {
+			await updateEquipment({ id: item.id, updates: { quantity: next } });
+		} catch {
+			toast({
+				title: "Error",
+				description: "Failed to update quantity.",
+				variant: "destructive",
+			});
+		}
+	};
+
+	const handleAdjustCharges = async (item: Equipment, delta: number) => {
+		if (item.charges_max == null) return;
+		const current = item.charges_current ?? item.charges_max;
+		const next = Math.max(0, Math.min(item.charges_max, current + delta));
+		if (next === current) return;
+		try {
+			await updateEquipment({
+				id: item.id,
+				updates: { charges_current: next },
+			});
+		} catch {
+			toast({
+				title: "Error",
+				description: "Failed to update charges.",
+				variant: "destructive",
+			});
+		}
+	};
+
 	const handleToggleEquipped = async (item: Equipment) => {
 		const displayName = formatRegentVernacular(item.name);
 		try {
@@ -395,6 +431,8 @@ export function EquipmentList({
 												onToggleAttuned={handleToggleAttuned}
 												onRemove={handleRemove}
 												onChangeContainer={handleChangeContainer}
+												onAdjustQuantity={handleAdjustQuantity}
+												onAdjustCharges={handleAdjustCharges}
 												containers={containers.filter((c) => c.id !== item.id)}
 												canAttune={canAttune}
 												nestedItems={equipmentByContainer[item.id] || []}
@@ -473,6 +511,8 @@ export function EquipmentList({
 															onToggleAttuned={handleToggleAttuned}
 															onRemove={handleRemove}
 															onChangeContainer={handleChangeContainer}
+															onAdjustQuantity={handleAdjustQuantity}
+															onAdjustCharges={handleAdjustCharges}
 															containers={containers.filter(
 																(c) => c.id !== item.id,
 															)}
@@ -551,6 +591,8 @@ export function EquipmentList({
 															onToggleAttuned={handleToggleAttuned}
 															onRemove={handleRemove}
 															onChangeContainer={handleChangeContainer}
+															onAdjustQuantity={handleAdjustQuantity}
+															onAdjustCharges={handleAdjustCharges}
 															containers={containers.filter(
 																(c) => c.id !== item.id,
 															)}

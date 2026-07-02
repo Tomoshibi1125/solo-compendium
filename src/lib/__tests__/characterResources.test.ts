@@ -91,6 +91,35 @@ describe("normalizeCharacterResources", () => {
 		expect(r.custom_resources[0].name).toBe("Ok");
 	});
 
+	it("preserves origin and sourceKey on custom resources", () => {
+		const r = normalizeCharacterResources({
+			custom_resources: [
+				{
+					id: "pool",
+					name: "Flux Pool",
+					current: 2,
+					max: 5,
+					recharge: "long-rest",
+					origin: "job-pool",
+					sourceKey: "job-pool:flux-pool",
+				} satisfies CustomResource,
+			],
+		});
+		expect(r.custom_resources[0].origin).toBe("job-pool");
+		expect(r.custom_resources[0].sourceKey).toBe("job-pool:flux-pool");
+	});
+
+	it("tracking.autoSpendAmmo defaults to false and survives normalize", () => {
+		expect(normalizeCharacterResources({}).tracking.autoSpendAmmo).toBe(false);
+		expect(normalizeCharacterResources(null).tracking.autoSpendAmmo).toBe(
+			false,
+		);
+		const on = normalizeCharacterResources({
+			tracking: { autoSpendAmmo: true },
+		});
+		expect(on.tracking.autoSpendAmmo).toBe(true);
+	});
+
 	it("preserves conditions array", () => {
 		const r = normalizeCharacterResources({
 			conditions: [

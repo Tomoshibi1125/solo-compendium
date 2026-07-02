@@ -21,6 +21,10 @@ export type ResourceRecharge =
 	| "daily"
 	| "none";
 
+/** Where a tracker row came from — auto-seeded pools reconcile against
+ * `sourceKey`; user-created rows stay untouched by reconciliation. */
+export type CustomResourceOrigin = "job-pool" | "migrated" | "manual";
+
 export interface CustomResource {
 	id: string;
 	name: string;
@@ -29,6 +33,16 @@ export interface CustomResource {
 	dieSize?: number;
 	recharge?: ResourceRecharge;
 	notes?: string;
+	origin?: CustomResourceOrigin;
+	/** Stable identity for auto-seeded rows (e.g. "job-pool:flux-pool"). */
+	sourceKey?: string;
+}
+
+/** Per-character tracking preferences (Warden tables differ on ammo rules). */
+export interface ResourceTrackingPrefs {
+	/** When true, each attack with an ammunition weapon auto-spends 1 ammo.
+	 * Default false — spending is manual unless the table opts in. */
+	autoSpendAmmo: boolean;
 }
 
 export interface CharacterResources {
@@ -51,6 +65,9 @@ export interface CharacterResources {
 
 	// Character conditions (migrated to resources for state persistence)
 	conditions: ConditionEntry[];
+
+	// Tracking preferences (e.g. opt-in ammo auto-spend)
+	tracking: ResourceTrackingPrefs;
 }
 
 // Initialize character resources
@@ -68,6 +85,7 @@ export function initializeCharacterResources(): CharacterResources {
 		temp_hp_sources: [],
 		custom_resources: [],
 		conditions: [],
+		tracking: { autoSpendAmmo: false },
 	};
 }
 
@@ -147,6 +165,12 @@ export function normalizeCharacterResources(
 		temp_hp_sources: tempSources,
 		custom_resources: customResources,
 		conditions,
+		tracking: {
+			autoSpendAmmo: Boolean(
+				(resources.tracking as Partial<ResourceTrackingPrefs> | undefined)
+					?.autoSpendAmmo,
+			),
+		},
 	};
 }
 
