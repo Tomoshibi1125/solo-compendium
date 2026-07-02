@@ -411,7 +411,7 @@ const CampaignBookView = () => {
 								Search Results ({searchResults.length})
 							</h3>
 							{searchResults.length === 0 ? (
-								<p className="px-2 py-2 text-[10px] text-slate-600">
+								<p className="px-2 py-2 text-xs text-slate-600">
 									Nothing matches that search.
 								</p>
 							) : (

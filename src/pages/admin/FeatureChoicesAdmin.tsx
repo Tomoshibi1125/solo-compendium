@@ -726,7 +726,7 @@ export default function FeatureChoicesAdmin() {
 																				{formatRegentVernacular(o.description)}
 																			</div>
 																		)}
-																		<div className="text-[10px] text-muted-foreground mt-2 font-mono break-all">
+																		<div className="text-xs text-muted-foreground mt-2 font-mono break-all">
 																			{JSON.stringify(o.grants)}
 																		</div>
 																	</div>

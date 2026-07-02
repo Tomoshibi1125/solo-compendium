@@ -317,7 +317,7 @@ export default function CompanionExtraSheet() {
 									</span>
 								</div>
 								{acBonus !== 0 && (
-									<div className="text-[10px] text-muted-foreground mt-1">
+									<div className="text-xs text-muted-foreground mt-1">
 										(base {baseAc})
 									</div>
 								)}

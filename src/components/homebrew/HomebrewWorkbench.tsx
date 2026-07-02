@@ -1,8 +1,6 @@
 import {
 	Archive,
-	Download,
 	Eye,
-	FileJson,
 	FileUp,
 	Plus,
 	Save,
@@ -11,6 +9,7 @@ import {
 	Upload,
 } from "lucide-react";
 import { useMemo, useRef, useState } from "react";
+import { ExportMenu } from "@/components/shared/ExportMenu";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -36,6 +35,7 @@ import {
 	useSaveHomebrewContent,
 	useSetHomebrewStatus,
 } from "@/hooks/useHomebrewContent";
+import { homebrewRecordToMarkdown } from "@/lib/contentExport";
 import { notifyAsync } from "@/lib/notify";
 
 type ScopeFilter = "mine" | "public" | "campaign" | "all";
@@ -57,20 +57,6 @@ const VISIBILITY_OPTIONS: HomebrewVisibilityScope[] = [
 	"campaign",
 	"public",
 ];
-
-const downloadJson = (payload: unknown, filename: string) => {
-	const blob = new Blob([JSON.stringify(payload, null, 2)], {
-		type: "application/json",
-	});
-	const href = URL.createObjectURL(blob);
-	const link = document.createElement("a");
-	link.href = href;
-	link.download = filename;
-	document.body.appendChild(link);
-	link.click();
-	link.remove();
-	URL.revokeObjectURL(href);
-};
 
 const parseTags = (raw: string): string[] =>
 	raw
@@ -250,12 +236,15 @@ export function HomebrewWorkbench() {
 		}
 	};
 
-	const handleExport = (record: HomebrewRecord) => {
-		downloadJson(
-			record,
-			`homebrew-${record.name.replace(/\s+/g, "-").toLowerCase()}.json`,
-		);
-	};
+	const exportMenuFor = (record: HomebrewRecord, className?: string) => (
+		<ExportMenu
+			baseName={`homebrew-${record.name}`}
+			markdown={() => homebrewRecordToMarkdown(record)}
+			json={record}
+			print={{ selector: '[data-testid="homebrew-workbench"]' }}
+			className={className}
+		/>
+	);
 
 	const handleImport = async (event: React.ChangeEvent<HTMLInputElement>) => {
 		const file = event.target.files?.[0];
@@ -371,15 +360,7 @@ export function HomebrewWorkbench() {
 							title="Import homebrew JSON file"
 							onChange={handleImport}
 						/>
-						{selectedRecord && (
-							<Button
-								variant="outline"
-								onClick={() => handleExport(selectedRecord)}
-							>
-								<Download className="w-4 h-4 mr-2" />
-								Export Selected
-							</Button>
-						)}
+						{selectedRecord && exportMenuFor(selectedRecord)}
 					</div>
 				</div>
 
@@ -597,14 +578,7 @@ export function HomebrewWorkbench() {
 									Updated {new Date(selectedRecord.updated_at).toLocaleString()}
 								</p>
 								<div className="flex flex-wrap gap-2 pt-2">
-									<Button
-										variant="outline"
-										size="sm"
-										onClick={() => handleExport(selectedRecord)}
-									>
-										<FileJson className="w-4 h-4 mr-2" />
-										Export
-									</Button>
+									{exportMenuFor(selectedRecord)}
 									<Button
 										variant="outline"
 										size="sm"

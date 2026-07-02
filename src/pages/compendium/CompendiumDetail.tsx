@@ -43,6 +43,7 @@ import { TattooDetail } from "@/components/compendium/TattooDetail";
 import { TechniqueDetail } from "@/components/compendium/TechniqueDetail";
 import { VehicleDetail } from "@/components/compendium/VehicleDetail";
 import { Layout } from "@/components/layout/Layout";
+import { ExportMenu } from "@/components/shared/ExportMenu";
 import { AscendantText } from "@/components/ui/AscendantText";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Button } from "@/components/ui/button";
@@ -57,7 +58,12 @@ import {
 	listStaticEntries,
 	resolveRef,
 } from "@/lib/compendiumResolver";
+import {
+	compendiumEntryToMarkdown,
+	vernacularizeEntry,
+} from "@/lib/contentExport";
 import { error as logError } from "@/lib/logger";
+import { downloadJson } from "@/lib/toolExport";
 import { formatRegentVernacular, REGENT_LABEL_PLURAL } from "@/lib/vernacular";
 import type {
 	CompendiumAnomaly,
@@ -516,17 +522,10 @@ const CompendiumDetail = () => {
 			});
 	};
 
+	const exportBaseName = `${entryDisplayName}-${type}-${id}`;
+
 	const handleExport = () => {
-		const dataStr = formatRegentVernacular(JSON.stringify(entry, null, 2));
-		const dataBlob = new Blob([dataStr], { type: "application/json" });
-		const url = URL.createObjectURL(dataBlob);
-		const link = document.createElement("a");
-		link.href = url;
-		link.download = `${entryDisplayName}-${type}-${id}.json`;
-		document.body.appendChild(link);
-		link.click();
-		document.body.removeChild(link);
-		URL.revokeObjectURL(url);
+		downloadJson(exportBaseName, vernacularizeEntry(entry));
 		toast({
 			title: "Export complete",
 			description: `${entryDisplayName} exported successfully.`,
@@ -564,7 +563,7 @@ const CompendiumDetail = () => {
 	return (
 		<Layout>
 			<div className="container mx-auto px-4 py-8">
-				<div className="mb-4">
+				<div className="mb-4 flex items-center justify-between gap-2">
 					<Button
 						variant="ghost"
 						onClick={() => navigate("/compendium")}
@@ -573,6 +572,17 @@ const CompendiumDetail = () => {
 						<ArrowLeft className="mr-2 h-4 w-4" />
 						Back to Compendium
 					</Button>
+					<ExportMenu
+						baseName={exportBaseName}
+						markdown={() =>
+							compendiumEntryToMarkdown(
+								formatRegentVernacular(categoryLabels[type] || type),
+								entryData as unknown as Record<string, unknown>,
+							)
+						}
+						json={() => vernacularizeEntry(entryData)}
+						print={{ selector: "#compendium-detail-print" }}
+					/>
 				</div>
 				{/* Breadcrumbs */}
 				<Breadcrumbs
@@ -588,36 +598,38 @@ const CompendiumDetail = () => {
 
 				<span id="entry-header" className="scroll-mt-4" />
 
-				<DetailLayout
-					main={detailNode}
-					sidebar={
-						<>
-							<QuickReference
-								entry={{
-									id: id || "",
-									name: (entryData as { name: string }).name,
-									type: (entryData as { type: string })
-										.type as CompendiumEntry["type"],
-									description:
-										(entryData as { description?: string | null })
-											.description ?? null,
-									isFavorite: isFavorite,
-								}}
-								isFavorite={isFavorite}
-								onToggleFavorite={handleToggleFavorite}
-								onShare={handleShare}
-								onExport={handleExport}
-							/>
-							{tocItems.length > 2 && <TableOfContents items={tocItems} />}
-							{relatedEntries.length > 0 && (
-								<RelatedContent
-									title="Related Content"
-									entries={relatedEntries}
+				<div id="compendium-detail-print">
+					<DetailLayout
+						main={detailNode}
+						sidebar={
+							<>
+								<QuickReference
+									entry={{
+										id: id || "",
+										name: (entryData as { name: string }).name,
+										type: (entryData as { type: string })
+											.type as CompendiumEntry["type"],
+										description:
+											(entryData as { description?: string | null })
+												.description ?? null,
+										isFavorite: isFavorite,
+									}}
+									isFavorite={isFavorite}
+									onToggleFavorite={handleToggleFavorite}
+									onShare={handleShare}
+									onExport={handleExport}
 								/>
-							)}
-						</>
-					}
-				/>
+								{tocItems.length > 2 && <TableOfContents items={tocItems} />}
+								{relatedEntries.length > 0 && (
+									<RelatedContent
+										title="Related Content"
+										entries={relatedEntries}
+									/>
+								)}
+							</>
+						}
+					/>
+				</div>
 			</div>
 		</Layout>
 	);

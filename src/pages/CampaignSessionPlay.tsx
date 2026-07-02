@@ -307,7 +307,7 @@ const CampaignSessionPlay = () => {
 												<span className="font-heading text-sm">
 													Manage Engagement
 												</span>
-												<span className="text-[10px] text-foreground/70">
+												<span className="text-xs text-foreground/70">
 													Add/Remove Entities
 												</span>
 											</Link>
@@ -324,7 +324,7 @@ const CampaignSessionPlay = () => {
 											<span className="font-heading text-sm">
 												Award Rewards
 											</span>
-											<span className="text-[10px] text-foreground/70">
+											<span className="text-xs text-foreground/70">
 												Distribute XP & Loot
 											</span>
 										</Button>

@@ -548,7 +548,7 @@ const Campaigns = () => {
 										<Sparkles className="w-3.5 h-3.5 text-resurge" />
 										IMPORT "THE SHADOW OF THE REGENT"
 									</Label>
-									<p className="text-[10px] text-muted-foreground font-mono">
+									<p className="text-xs text-muted-foreground font-mono">
 										Pre-populate with full lore, maps, and encounters.
 									</p>
 								</div>

@@ -26,6 +26,7 @@ import {
 } from "react";
 import { DICE_THEMES, type DiceTheme } from "@/components/dice/diceThemes";
 import { Layout } from "@/components/layout/Layout";
+import { ExportMenu } from "@/components/shared/ExportMenu";
 import {
 	AscendantText,
 	ManaFlowText,
@@ -55,6 +56,11 @@ import {
 	resolveHealing,
 	resolveSave,
 } from "@/lib/actionResolution";
+import {
+	DICE_SESSION_CSV_COLUMNS,
+	diceSessionMarkdown,
+	diceSessionRows,
+} from "@/lib/contentExport";
 import { logger } from "@/lib/logger";
 import { cn } from "@/lib/utils";
 
@@ -993,7 +999,23 @@ const DiceRoller = () => {
 							variant="regent"
 							className="sticky top-24"
 						>
-							<div className="space-y-2 max-h-[60vh] overflow-y-auto">
+							<div className="mb-3 flex justify-end">
+								<ExportMenu
+									baseName={`dice-session-${new Date().toISOString().slice(0, 10)}`}
+									disabled={rollHistory.length === 0}
+									markdown={() => diceSessionMarkdown(rollHistory)}
+									json={() => diceSessionRows(rollHistory)}
+									csv={() => ({
+										rows: diceSessionRows(rollHistory),
+										columns: DICE_SESSION_CSV_COLUMNS,
+									})}
+									print={{ selector: "#dice-roll-history" }}
+								/>
+							</div>
+							<div
+								id="dice-roll-history"
+								className="space-y-2 max-h-[60vh] overflow-y-auto"
+							>
 								{rollHistory.length === 0 ? (
 									<AscendantText className="block text-center text-muted-foreground py-8 font-heading">
 										No rolls yet
