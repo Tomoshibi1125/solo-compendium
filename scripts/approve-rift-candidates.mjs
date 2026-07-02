@@ -16,12 +16,8 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const ROOT = resolve(__dirname, "..");
 const PROMPTS_FILE = join(ROOT, "data", "rift-image-prompts.json");
-const CANDIDATE_DIR = join(
-	ROOT,
-	"public",
-	"generated",
-	"rift-ascendant-candidates",
-);
+// Candidates live outside public/ (see art-archive/ in .gitignore).
+const CANDIDATE_DIR = join(ROOT, "art-archive", "rift-ascendant-candidates");
 
 function parseArgs(argv) {
 	const args = {

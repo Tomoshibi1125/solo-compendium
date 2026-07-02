@@ -198,7 +198,9 @@
       "PowerShell(Get-ChildItem public -File | Select-Object Name, @{N='KB';E={[math]::Round\\($_.Length/1KB\\)}})",
       "PowerShell(npx tsc --noEmit 2>&1 | Select-Object -First 20; Write-Output \"EXIT=$LASTEXITCODE\")",
       "Bash(git -C /c/Users/jjcal/Documents/solo-compendium log --oneline -3)",
-      "Bash(git -C /c/Users/jjcal/Documents/solo-compendium diff --stat .claude/settings.local.json)"
+      "Bash(git -C /c/Users/jjcal/Documents/solo-compendium diff --stat .claude/settings.local.json)",
+      "Bash(awk '{printf \"%.1fMB %s\\\\n\", $5/1048576, $NF}')",
+      "Bash(awk '{printf \"%.2fMB %s\\\\n\", $5/1048576, $NF}')"
     ]
   }
 }

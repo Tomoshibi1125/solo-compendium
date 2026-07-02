@@ -34,12 +34,11 @@ const ROOT = resolve(__dirname, "..");
 const PUBLIC_DIR = join(ROOT, "public");
 const PROMPTS_FILE = join(ROOT, "data", "rift-image-prompts.json");
 const PLAN_FILE = join(ROOT, "data", "rift-image-replacement-plan.json");
-const CANDIDATE_DIR = join(
-	PUBLIC_DIR,
-	"generated",
-	"rift-ascendant-candidates",
-);
-const BACKUP_ROOT = join(PUBLIC_DIR, "generated", "original-backups");
+// Candidates and backups live OUTSIDE public/ so they never ship in deploys;
+// the apply step copies approved art into public/generated/.
+const ART_ARCHIVE_DIR = join(ROOT, "art-archive");
+const CANDIDATE_DIR = join(ART_ARCHIVE_DIR, "rift-ascendant-candidates");
+const BACKUP_ROOT = join(ART_ARCHIVE_DIR, "original-backups");
 const DOCS_DIR = join(ROOT, "docs");
 const COMFY_EXAMPLE_WORKFLOW = join(
 	ROOT,

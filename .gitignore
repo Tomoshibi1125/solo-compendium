@@ -132,5 +132,13 @@ sourcebook-payload.zip
 # Book build workspace - never tracked (PDFs, renders, assets, renderer cache)
 books/
 
+# Bundle-analysis and audit output (ANALYZE=1 npm run build)
+audit-artifacts/
+
+# AI-art working area (candidates, pre-replacement backups, retired map packs).
+# Nothing in here is served by the app; the approve/apply pipeline copies
+# selected art into public/generated/.
+art-archive/
+
 # Stray timestamped dist backups (e.g. dist_old_1712345678/) - build artifacts
 dist_old_*/

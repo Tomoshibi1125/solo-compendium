@@ -7,7 +7,7 @@ param(
 $ErrorActionPreference = "Stop"
 Set-Location $Root
 
-$logDir = Join-Path $Root "public/generated/rift-ascendant-candidates/logs"
+$logDir = Join-Path $Root "art-archive/rift-ascendant-candidates/logs"
 New-Item -ItemType Directory -Force -Path $logDir | Out-Null
 
 $outLog = Join-Path $logDir "rift-assets-comfy-background.out.log"

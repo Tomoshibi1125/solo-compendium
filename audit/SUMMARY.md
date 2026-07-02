@@ -1,6 +1,6 @@
 # Asset Audit Summary
 
-Generated: 2026-07-02T21:45:04.173Z
+Generated: 2026-07-02T22:54:11.911Z
 
 - **Unique asset paths referenced**: 1342
 - **Image paths referenced**: 1342

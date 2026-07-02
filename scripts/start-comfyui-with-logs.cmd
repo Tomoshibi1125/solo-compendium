@@ -4,7 +4,7 @@ setlocal
 set "COMFY_ROOT=C:\Users\jjcal\OneDrive\Desktop\ComfyUI"
 set "COMFY_PY=%COMFY_ROOT%\venv\Scripts\python.exe"
 set "REPO_ROOT=%~dp0.."
-set "LOG_DIR=%REPO_ROOT%\public\generated\rift-ascendant-candidates\logs"
+set "LOG_DIR=%REPO_ROOT%\art-archive\rift-ascendant-candidates\logs"
 
 if not exist "%LOG_DIR%" mkdir "%LOG_DIR%"
 

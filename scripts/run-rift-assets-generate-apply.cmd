@@ -2,7 +2,7 @@
 setlocal
 cd /d "%~dp0.."
 
-set "LOGDIR=public\generated\rift-ascendant-candidates\logs"
+set "LOGDIR=art-archive\rift-ascendant-candidates\logs"
 if not exist "%LOGDIR%" mkdir "%LOGDIR%"
 
 set "OUT=%LOGDIR%\rift-assets-generate-apply.out.log"
