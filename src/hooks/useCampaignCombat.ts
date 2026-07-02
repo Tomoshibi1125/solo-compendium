@@ -4,8 +4,8 @@ import { useToast } from "@/hooks/use-toast";
 import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import type { Database, Json } from "@/integrations/supabase/types";
 import { AppError } from "@/lib/appError";
-import { enqueueOfflineSync } from "@/lib/offlineSync";
 import { clientChannelName } from "@/lib/realtimeChannel";
+import { enqueueSyncItem } from "@/lib/syncManager";
 
 const guestEnabled = import.meta.env.VITE_GUEST_ENABLED !== "false";
 
@@ -200,7 +200,7 @@ export const useUpdateCombatSession = () => {
 					throw error;
 				}
 
-				enqueueOfflineSync("campaign_combat", "update", {
+				void enqueueSyncItem("campaign_combat", "update", {
 					mode: "session",
 					campaign_id: campaignId,
 					session_id: sessionId,
@@ -304,7 +304,7 @@ export const useUpsertCombatants = () => {
 					throw error;
 				}
 
-				enqueueOfflineSync("campaign_combat", "update", {
+				void enqueueSyncItem("campaign_combat", "update", {
 					mode: "combatants",
 					campaign_id: campaignId,
 					session_id: sessionId,

@@ -1,51 +1,58 @@
-import { useEffect, useState } from "react";
-import { logger } from "@/lib/logger";
-import {
-	getOfflineSyncSnapshot,
-	processOfflineSyncQueue,
-	subscribeOfflineSync,
-} from "@/lib/offlineSync";
-import { ensureOfflineSyncProcessors } from "@/lib/offlineSyncProcessors";
+import { useCallback, useEffect, useState } from "react";
+import { getSyncQueue } from "@/lib/syncManager";
 
+/**
+ * Passive reader of the unified offline-sync queue (lib/syncManager) for the
+ * app-level offline banner. Flushing is owned by useBackgroundSync (online
+ * events + post-enqueue), so this hook only observes: it re-reads the queue
+ * length on mount, connectivity changes, and a slow heartbeat while anything
+ * is pending.
+ */
 export function useOfflineSyncStatus() {
 	const [isOnline, setIsOnline] = useState(
 		typeof navigator !== "undefined" ? navigator.onLine : true,
 	);
-	const [snapshot, setSnapshot] = useState(() => getOfflineSyncSnapshot());
+	const [queueLength, setQueueLength] = useState(0);
 
-	useEffect(() => {
-		ensureOfflineSyncProcessors();
-		return subscribeOfflineSync((nextSnapshot) => {
-			setSnapshot(nextSnapshot);
-		});
+	const refresh = useCallback(async () => {
+		const queue = await getSyncQueue();
+		setQueueLength(queue.length);
 	}, []);
 
 	useEffect(() => {
 		if (typeof window === "undefined") return;
 
-		const handleOnline = () => setIsOnline(true);
-		const handleOffline = () => setIsOnline(false);
+		const handleOnline = () => {
+			setIsOnline(true);
+			void refresh();
+		};
+		const handleOffline = () => {
+			setIsOnline(false);
+			void refresh();
+		};
 
 		window.addEventListener("online", handleOnline);
 		window.addEventListener("offline", handleOffline);
+		void refresh();
 
 		return () => {
 			window.removeEventListener("online", handleOnline);
 			window.removeEventListener("offline", handleOffline);
 		};
-	}, []);
+	}, [refresh]);
 
+	// Heartbeat only while something is pending or we're offline — the queue
+	// empties via useBackgroundSync's flush, which this picks up.
 	useEffect(() => {
-		if (!isOnline || snapshot.queueLength === 0) return;
-
-		void processOfflineSyncQueue().catch((error) => {
-			logger.warn("[OfflineSync] Queue processing failed:", error);
-		});
-	}, [isOnline, snapshot.queueLength]);
+		if (isOnline && queueLength === 0) return;
+		const timer = window.setInterval(() => {
+			void refresh();
+		}, 15_000);
+		return () => window.clearInterval(timer);
+	}, [isOnline, queueLength, refresh]);
 
 	return {
 		isOnline,
-		queueLength: snapshot.queueLength,
-		isSyncing: snapshot.isProcessing,
+		queueLength,
 	};
 }

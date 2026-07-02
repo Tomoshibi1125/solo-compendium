@@ -1,9 +1,9 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+﻿import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useToast } from "@/hooks/use-toast";
 import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import type { Database, Json } from "@/integrations/supabase/types";
 import { AppError } from "@/lib/appError";
-import { enqueueOfflineSync } from "@/lib/offlineSync";
+import { enqueueSyncItem } from "@/lib/syncManager";
 
 export type HomebrewContentType =
 	| "job"
@@ -224,7 +224,7 @@ export const useSaveHomebrewContent = () => {
 					throw error;
 				}
 
-				enqueueOfflineSync(
+				void enqueueSyncItem(
 					input.id ? "homebrew" : "homebrew",
 					input.id ? "update" : "create",
 					{
@@ -286,7 +286,7 @@ export const useDeleteHomebrewContent = () => {
 					throw error;
 				}
 
-				enqueueOfflineSync("homebrew", "delete", { id });
+				void enqueueSyncItem("homebrew", "delete", { id });
 				return { queued: true };
 			}
 		},
@@ -426,7 +426,7 @@ export const useSetHomebrewStatus = () => {
 					throw error;
 				}
 
-				enqueueOfflineSync("homebrew", "update", {
+				void enqueueSyncItem("homebrew", "update", {
 					id,
 					status,
 					visibility_scope: visibilityScope,

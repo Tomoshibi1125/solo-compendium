@@ -1,9 +1,9 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+﻿import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useToast } from "@/hooks/use-toast";
 import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import type { Database } from "@/integrations/supabase/types";
 import { AppError } from "@/lib/appError";
-import { enqueueOfflineSync } from "@/lib/offlineSync";
+import { enqueueSyncItem } from "@/lib/syncManager";
 
 export type MarketplaceItemType =
 	| "campaign"
@@ -42,7 +42,7 @@ export interface MarketplaceItemRecord {
 	created_at: string;
 	updated_at: string;
 	has_access?: boolean;
-	/** F6: bundle composite item — entitlement fan-outs to children. */
+	/** F6: bundle composite item â€” entitlement fan-outs to children. */
 	is_bundle?: boolean;
 	/** F6: child item IDs when is_bundle is true. */
 	bundled_item_ids?: string[] | null;
@@ -260,7 +260,7 @@ export const useSaveMarketplaceItem = () => {
 					throw error;
 				}
 
-				enqueueOfflineSync("marketplace", input.id ? "update" : "create", {
+				void enqueueSyncItem("marketplace", input.id ? "update" : "create", {
 					id: input.id,
 					author_id: userId,
 					...payload,
@@ -314,7 +314,7 @@ export const useDeleteMarketplaceItem = () => {
 				if (!isOfflineError(error)) {
 					throw error;
 				}
-				enqueueOfflineSync("marketplace", "delete", { id });
+				void enqueueSyncItem("marketplace", "delete", { id });
 				return { queued: true };
 			}
 		},
@@ -363,7 +363,7 @@ export const useRecordMarketplaceDownload = () => {
 					throw error;
 				}
 
-				enqueueOfflineSync("marketplace", "update", {
+				void enqueueSyncItem("marketplace", "update", {
 					mode: "download",
 					item_id: itemId,
 					user_id: userId,
@@ -391,7 +391,7 @@ export const useRecordMarketplaceDownload = () => {
 };
 
 /**
- * F6 of May 2026 remediation plan — gift a marketplace item to another
+ * F6 of May 2026 remediation plan â€” gift a marketplace item to another
  * user. Calls the `gift_marketplace_item` RPC defined in
  * `supabase/migrations/20260525122000_add_marketplace_gifting_and_bundles.sql`.
  * Caller must already be entitled to the item.
@@ -480,7 +480,7 @@ export const useUpsertMarketplaceReview = () => {
 					throw error;
 				}
 
-				enqueueOfflineSync("marketplace", "update", {
+				void enqueueSyncItem("marketplace", "update", {
 					mode: "review",
 					item_id: itemId,
 					rating,
