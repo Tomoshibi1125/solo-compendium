@@ -14,6 +14,7 @@ import {
 	warn as logWarn,
 } from "./lib/logger";
 import { enableTouchOptimizations } from "./lib/mobile";
+import { registerPwa } from "./lib/pwa";
 import { initSentry } from "./lib/sentry";
 
 const logger = createLogger({ mode: "production" });
@@ -31,6 +32,10 @@ async function initApp() {
 	initializeProtocolData().catch((err) => {
 		logError("Failed to pre-load protocol data:", err);
 	});
+
+	// Register the PWA service worker (prod only; enables offline app shell,
+	// installability, and push — usePushNotifications awaits serviceWorker.ready).
+	registerPwa();
 
 	if (!rootElement) {
 		logError(
