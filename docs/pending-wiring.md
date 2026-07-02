@@ -1,6 +1,6 @@
 # Pending-Wiring Backlog (Knip-flagged, kept deliberately)
 
-_Last updated: 2026-06-29_
+_Last updated: 2026-07-02_
 
 ## Program status — AFA best-in-class rebuild (2026-06-29)
 
@@ -27,10 +27,10 @@ The app is being taken to best-in-class as the in-world **AFA (Ascendant Field A
   enrichment. Shared scaffolding added: `lib/generationHistory.ts`,
   `components/warden-directives/GenerationHistoryPanel.tsx`, `lib/toolExport.ts`.
 
-**In progress (per plan `find-out-where-this-eager-storm.md`):** Wave B (EncounterBuilder,
-PartyTracker, InitiativeTracker), Wave C (SessionPlanner, ArtGenerator, Marketplace, ContentAudit,
-QuestLog export) + **Regent Status** page, catalog prune (Essences/Achievements/RiftConsole tiles),
-and a DDB-caliber RA visual overhaul. `useLiveEncounterScaler` (below) is consumed by Wave B.
+**Complete (2026-06-29):** Wave B (EncounterBuilder, PartyTracker, InitiativeTracker), Wave C
+(SessionPlanner, ArtGenerator, Marketplace, ContentAudit, QuestLog export), the **Regent Status**
+page, the catalog prune, and the RA visual overhaul (semantic palette sweep + book-brand print) all
+shipped. The AFA best-in-class program is closed; `useLiveEncounterScaler` is consumed by Wave B.
 
 ---
 

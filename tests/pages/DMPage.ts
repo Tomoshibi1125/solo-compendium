@@ -3,35 +3,15 @@ import { expect, type Page } from "@playwright/test";
 /**
  * Page Object Model for DM-specific flows:
  *   – Campaign creation on /campaigns
- *   – Homebrew content creation on /homebrew
+ *   – Session and combat orchestration
  *   – Campaign detail inspection
  *
  * Selector strategy:
- *   1. #id selectors for form fields (campaign-name, homebrew-name, etc.)
+ *   1. #id selectors for form fields (campaign-name, etc.)
  *   2. role + name for buttons ("Create Guild", "Establish Guild", etc.)
- *   3. CSS class fallback for share code extraction
  */
 export class DMPage {
 	constructor(public page: Page) {}
-
-	/** Dismiss the analytics consent banner if it overlays interactive elements. */
-	private async dismissAnalyticsBanner() {
-		await this.page.evaluate(() => {
-			localStorage.setItem(
-				"solo-compendium-analytics-consent",
-				JSON.stringify({
-					status: "rejected",
-					version: 1,
-					timestamp: Date.now(),
-				}),
-			);
-		});
-		const bannerBtn = this.page.locator(".fixed.bottom-0 button").first();
-		if (await bannerBtn.isVisible({ timeout: 2_000 }).catch(() => false)) {
-			await bannerBtn.click({ force: true });
-			await this.page.waitForTimeout(300);
-		}
-	}
 
 	// ─── Campaign creation ───────────────────────────────────────────
 
@@ -68,21 +48,6 @@ export class DMPage {
 		const campaignId = url.pathname.split("/").pop() ?? "";
 		expect(campaignId).toBeTruthy();
 		return campaignId;
-	}
-
-	/**
-	 * Extract the 6-character share code from the campaign detail page.
-	 * Must be called while on /campaigns/:id.
-	 */
-	async getShareCode(): Promise<string> {
-		// The share code is rendered as a bold mono span with specific classes
-		const shareCodeEl = this.page
-			.locator(".font-mono.font-bold.text-lg.text-primary")
-			.first();
-		await expect(shareCodeEl).toBeVisible({ timeout: 10_000 });
-		const code = (await shareCodeEl.textContent())?.trim() ?? "";
-		expect(code).toHaveLength(6);
-		return code;
 	}
 
 	// ─── Enhanced campaign creation ─────────────────────────────────
@@ -248,7 +213,7 @@ export class DMPage {
 			await sessionCreateBtn.click();
 		} else {
 			// Fallback: assume we're already on session creation page or use direct navigation
-			await this.page.goto("/dm-tools/session-planner");
+			await this.page.goto("/warden-directives/session-planner");
 		}
 
 		// Fill session name
@@ -809,57 +774,6 @@ export class DMPage {
 			await saveBtn.click();
 		}
 	}
-	async createHomebrewContent(opts: {
-		name: string;
-		description: string;
-		type?: string; // 'job' | 'path' | 'relic' | 'spell' | 'item'
-		jsonPayload?: Record<string, unknown>;
-	}) {
-		await this.page.goto("/homebrew");
-
-		await this.dismissAnalyticsBanner();
-
-		// Wait for the workbench to load
-		await this.page
-			.getByTestId("homebrew-workbench")
-			.waitFor({ state: "visible", timeout: 15_000 });
-
-		// Select content type if specified
-		if (opts.type) {
-			await this.page.locator("#homebrew-type").click();
-			await this.page
-				.getByRole("option", { name: new RegExp(opts.type, "i") })
-				.click();
-		}
-
-		// Fill name and description
-		await this.page.fill("#homebrew-name", opts.name);
-		await this.page.fill("#homebrew-description", opts.description);
-
-		// Fill JSON payload
-		if (opts.jsonPayload) {
-			await this.page.fill(
-				"#homebrew-json",
-				JSON.stringify(opts.jsonPayload, null, 2),
-			);
-		}
-
-		// Save (button text is "Create Draft" for new, "Update Draft" for existing)
-		await this.dismissAnalyticsBanner();
-		const saveBtn = this.page
-			.getByRole("button", { name: /Create Draft|Update Draft/i })
-			.first();
-		await saveBtn.click({ force: true });
-
-		// Wait for success toast — use the toast container's title element to avoid strict-mode violation
-		// (multiple elements can match the text; the toast title is inside a div with specific classes)
-		await this.page
-			.locator('[data-state="open"]')
-			.filter({ hasText: /Homebrew saved|Saved offline/i })
-			.first()
-			.waitFor({ state: "visible", timeout: 15_000 });
-	}
-
 	// ─── Campaign detail inspection ──────────────────────────────────
 
 	/** Navigate to a campaign detail page and wait for it to load. */

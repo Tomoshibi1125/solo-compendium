@@ -33,8 +33,8 @@ export default defineConfig({
 		/* Base URL to use in actions like `await page.goto('/')`. */
 		baseURL: "http://localhost:8080",
 
-		/* Headed mode so the run is watchable */
-		headless: false,
+		/* Headed locally so the run is watchable; CI=1 or PW_HEADLESS=1 forces headless. */
+		headless: !!(process.env.CI || process.env.PW_HEADLESS),
 		viewport: { width: 1280, height: 800 },
 		actionTimeout: 15_000, // Reduced from 20s
 

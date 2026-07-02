@@ -97,6 +97,16 @@ test("manual smoke (headed): crit, upcast, PDF, level-up — Mage L1", async ({
 
 	// ─── T2 — Upcast picker (Spells tab) ─────────────────────────────────
 	await test.step("T2 — Upcast picker visibility on Spells tab", async () => {
+		// The Spells list lives in a sub-tab of the ABILITIES panel, which only
+		// mounts once the sheet's main "Abilities" tab is active (the sheet
+		// defaults to "Actions").
+		const abilitiesTab = page
+			.getByRole("tab", { name: /^Abilities$/i })
+			.first();
+		if (await abilitiesTab.isVisible({ timeout: 5_000 }).catch(() => false)) {
+			await abilitiesTab.click();
+			await dwell(page, 800);
+		}
 		const spellsTab = page.getByRole("tab", { name: /Spells/i }).first();
 		if (await spellsTab.isVisible({ timeout: 5_000 }).catch(() => false)) {
 			await spellsTab.click();

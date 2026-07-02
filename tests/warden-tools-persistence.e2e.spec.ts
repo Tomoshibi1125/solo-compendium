@@ -188,14 +188,14 @@ test.describe
 
 			// UI should show the generated details.
 			await expect(
-				dmPage.getByRole("button", { name: /Copy Details/i }),
+				dmPage.getByRole("button", { name: /Copy Dossier/i }),
 			).toBeVisible({ timeout: 15_000 });
 		});
 
 		test("treasure generator: selected rank + last treasure persist after reload", async () => {
 			await dmPage.goto("/warden-directives/treasure-generator");
 			await expect(
-				dmPage.getByText("TREASURE GENERATOR", { exact: false }).first(),
+				dmPage.getByText("Material Requisition", { exact: false }).first(),
 			).toBeVisible({ timeout: 15_000 });
 
 			// Wait for initial tool-state hydration to settle.
@@ -231,7 +231,9 @@ test.describe
 			await expect(generateBtn).toBeVisible({ timeout: 10_000 });
 			await generateBtn.click();
 
-			// Wait for local mirror to capture selected rank + treasure.
+			// Wait for local mirror to capture selected rank + treasure. The
+			// TreasureToolState stores the result under `current` with credit
+			// denominations (hundreds/tens/…), not gold.
 			await expect
 				.poll(async () => {
 					return await dmPage.evaluate(() => {
@@ -242,7 +244,7 @@ test.describe
 						try {
 							return JSON.parse(raw) as {
 								selectedRank?: string;
-								treasure?: unknown;
+								current?: unknown;
 							};
 						} catch {
 							return null;
@@ -260,9 +262,9 @@ test.describe
 						if (!raw) return false;
 						try {
 							const parsed = JSON.parse(raw) as {
-								treasure?: { gold?: number } | null;
+								current?: { rank?: string; hundreds?: number } | null;
 							};
-							return typeof parsed.treasure?.gold === "number";
+							return typeof parsed.current?.hundreds === "number";
 						} catch {
 							return false;
 						}
@@ -272,12 +274,12 @@ test.describe
 
 			await dmPage.reload();
 			await expect(
-				dmPage.getByText("TREASURE GENERATOR", { exact: false }).first(),
+				dmPage.getByText("Material Requisition", { exact: false }).first(),
 			).toBeVisible({ timeout: 15_000 });
 
 			// UI should show a generated treasure and copy button.
 			await expect(
-				dmPage.getByRole("button", { name: /Copy Details/i }),
+				dmPage.getByRole("button", { name: "Copy", exact: true }),
 			).toBeVisible({ timeout: 15_000 });
 		});
 	});

@@ -40,21 +40,30 @@ export class SharedPage {
 		return url.pathname.split("/").pop() ?? "";
 	}
 
+	/**
+	 * Read the campaign share code. It lives inside the CampaignInviteModal,
+	 * opened from CAMPAIGN INFO's "Invite Ascendants" button — the modal is
+	 * left open so {@link copyShareLink} can use its copy buttons.
+	 */
 	async getShareCode() {
-		const shareCodeEl = this.page
-			.locator(".font-mono.font-bold.text-lg.text-primary")
-			.first();
+		await this.page
+			.getByRole("button", { name: /Invite Ascendants/i })
+			.first()
+			.click();
+		const shareCodeEl = this.page.getByTestId("campaign-share-code");
 		await expect(shareCodeEl).toBeVisible({ timeout: 10_000 });
 		return (await shareCodeEl.textContent())?.trim() ?? "";
 	}
 
+	/** Click "Copy Join URL" in the invite modal, then close the modal. */
 	async copyShareLink() {
 		const copyBtn = this.page
-			.getByRole("button", { name: /Copy Link/i })
+			.getByRole("button", { name: /Copy Join URL/i })
 			.first();
 		if (await copyBtn.isVisible()) {
 			await copyBtn.click();
 		}
+		await this.page.keyboard.press("Escape");
 	}
 
 	async gotoCharacters() {
@@ -65,20 +74,29 @@ export class SharedPage {
 	async verifyCharactersLoads() {
 		await expect(
 			this.page
-				.getByText(/ASCENDANT REGISTRY|MY ASCENDANTS|CHARACTERS/i)
+				.getByText(
+					/Ascendant Roster|ASCENDANT REGISTRY|MY ASCENDANTS|CHARACTERS/i,
+				)
 				.first(),
 		).toBeVisible({ timeout: 15_000 });
 	}
 
 	async verifyCharacterListActions() {
+		// Roster header actions (Characters.tsx): "Awaken Ascendant" (labelled
+		// "Create" on mobile), "Import", and "Party Stash". There is no
+		// Compare button — compare lives at /characters/compare via ?ids=.
 		const createBtn = this.page
-			.getByRole("button", { name: /Awaken New|Create/i })
+			.getByRole("button", { name: /Awaken Ascendant|Create/i })
 			.first();
 		await expect(createBtn).toBeVisible();
-		const compareBtn = this.page
-			.getByRole("button", { name: /Compare/i })
+		const importBtn = this.page
+			.getByRole("button", { name: /Import/i })
 			.first();
-		await expect(compareBtn).toBeVisible();
+		await expect(importBtn).toBeVisible();
+		const stashBtn = this.page
+			.getByRole("button", { name: /Party Stash/i })
+			.first();
+		await expect(stashBtn).toBeVisible();
 	}
 
 	async gotoFavorites() {
@@ -144,7 +162,17 @@ export class SharedPage {
 	}
 
 	async exerciseCampaignDetailTabs(isDm: boolean) {
-		const tabs = ["Overview", "VTT", "Sessions", "Chat", "Notes", "Characters"];
+		const tabs = [
+			"Overview",
+			"Wiki",
+			"Sessions",
+			"Chat",
+			"Notes",
+			"Handouts",
+			"Characters",
+			"Guilds",
+			"Activity",
+		];
 		if (isDm) tabs.push("Settings");
 
 		for (const tab of tabs) {

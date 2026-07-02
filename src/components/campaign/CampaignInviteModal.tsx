@@ -212,7 +212,10 @@ export function CampaignInviteModal({
 							<h3 className="font-heading text-lg font-semibold text-primary">
 								Permanent Share Code
 							</h3>
-							<p className="font-mono text-4xl tracking-[0.25em] font-bold">
+							<p
+								className="font-mono text-4xl tracking-[0.25em] font-bold"
+								data-testid="campaign-share-code"
+							>
 								{campaign.share_code}
 							</p>
 							<AscendantText className="block text-sm text-muted-foreground max-w-md mx-auto">

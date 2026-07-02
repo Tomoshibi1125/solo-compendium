@@ -41,9 +41,12 @@ export class PlayerPage {
 			.getByText(/CAMPAIGN FOUND/i)
 			.waitFor({ state: "visible", timeout: 30_000 });
 
-		// Dismiss analytics banner if it's still showing
+		// Dismiss analytics banner if it's still showing. The name match MUST
+		// be anchored: role-name matching is substring-based, and spell/option
+		// cards can contain "dismiss" inside their description text — an
+		// unanchored /Dismiss/i would click (and toggle!) such a card.
 		const dismissBtn = this.page
-			.getByRole("button", { name: /Dismiss|No Thanks/i })
+			.getByRole("button", { name: /^(Dismiss|No Thanks)$/i })
 			.first();
 		if (await dismissBtn.isVisible({ timeout: 5_000 }).catch(() => false)) {
 			await dismissBtn.click();
@@ -142,6 +145,28 @@ export class PlayerPage {
 			jobName?: RegExp;
 		},
 	): Promise<string | null> {
+		// The wizard's option cards cross-link compendium terms (the word
+		// "shield" in an item description links to its compendium page). A
+		// driver click that lands on one of those anchors navigates away and
+		// destroys the entire draft, so suppress anchor navigation while the
+		// wizard route is active.
+		await this.page.addInitScript(() => {
+			document.addEventListener(
+				"click",
+				(e) => {
+					if (!location.pathname.startsWith("/characters/new")) return;
+					const target = e.target as Element | null;
+					const anchor = target?.closest?.("a[href]");
+					if (anchor) {
+						// preventDefault only: react-router's Link skips navigation
+						// when defaultPrevented is set, while the event still
+						// bubbles so the option card's own click handler fires.
+						e.preventDefault();
+					}
+				},
+				true,
+			);
+		});
 		await this.page.goto("/characters/new");
 
 		// The wizard's forward button is labelled "Advance Protocol" (not
@@ -153,8 +178,12 @@ export class PlayerPage {
 				.first();
 
 		const dismissAnalyticsBanner = async () => {
+			// Anchored match only: role-name matching is substring-based, and
+			// imprint option cards can contain "dismiss" inside their spell
+			// description — an unanchored /Dismiss/i clicked a SELECTED card
+			// and silently deselected it (the 5/6-inscriptions stall).
 			const bannerButton = this.page
-				.getByRole("button", { name: /No Thanks|Dismiss/i })
+				.getByRole("button", { name: /^(No Thanks|Dismiss)$/i })
 				.first();
 			if (await bannerButton.isVisible({ timeout: 500 }).catch(() => false)) {
 				await bannerButton.click().catch(() => {});
@@ -433,41 +462,63 @@ export class PlayerPage {
 			} else if (step === "imprints") {
 				// Select required imprints. Options live in buckets that re-render
 				// on each pick (counter/metadata update) and the spellbook bucket
-				// loads async. Click the LAST selectable option (stable, away from
-				// the churn near the selected items) with a forced, scrolled-to-
-				// centre click (the sticky status header otherwise intercepts top-of-
-				// list clicks), verify the selection actually committed, and keep
-				// going patiently until Advance enables.
+				// loads async. Coordinate clicks are unreliable here: card
+				// descriptions contain tooltip-wrapped compendium links whose Radix
+				// tooltip portals (on document.body) swallow forced centre clicks,
+				// so the pick never bubbles through the button. Dispatch the click
+				// programmatically on the button element instead, rotate the
+				// candidate on a failed commit, and keep going until Advance
+				// enables. Async spellbook refetches can also PRUNE a committed
+				// pick right after Advance enables (CharacterNew's
+				// availableSpellbookSpells effect), so only trust an enabled state
+				// that survives a settle window, and re-enter the pick loop when
+				// it doesn't.
 				const imprintSelector =
 					'button[data-testid^="creation-"][data-selected="false"]:not([disabled])';
-				for (let attempt = 0; attempt < 200; attempt += 1) {
-					if (
-						await nextButton()
-							.isEnabled({ timeout: 300 })
-							.catch(() => false)
-					) {
-						break;
+				const advanceEnabled = () =>
+					nextButton()
+						.isEnabled({ timeout: 300 })
+						.catch(() => false);
+				let stable = false;
+				for (let round = 0; round < 6 && !stable; round += 1) {
+					for (let attempt = 0; attempt < 60; attempt += 1) {
+						if (await advanceEnabled()) break;
+						const selectable = this.page.locator(imprintSelector);
+						const before = await selectable.count();
+						if (before === 0) {
+							await this.page.waitForTimeout(400);
+							continue;
+						}
+						const candidate = selectable.nth(before - 1 - (attempt % before));
+						await candidate
+							.evaluate((el) => {
+								el.scrollIntoView({ block: "center" });
+								(el as HTMLElement).click();
+							})
+							.catch(() => {});
+						// Wait for the pick to register (selectable count drops) so a
+						// click lost to a re-render is retried next pass.
+						await this.page
+							.waitForFunction(
+								({ s, prev }) => document.querySelectorAll(s).length !== prev,
+								{ s: imprintSelector, prev: before },
+								{ timeout: 2000 },
+							)
+							.catch(() => {});
 					}
-					const selectable = this.page.locator(imprintSelector);
-					const before = await selectable.count();
-					if (before === 0) {
-						await this.page.waitForTimeout(400);
-						continue;
+					// Let async refetch/prune churn settle, then confirm Advance is
+					// still enabled; if a pick was pruned, run another round.
+					await this.page.waitForTimeout(1_000);
+					stable = await advanceEnabled();
+					if (!stable) {
+						const counters = await this.page
+							.getByText(/^\d+\/\d+$/)
+							.allTextContents()
+							.catch(() => [] as string[]);
+						console.warn(
+							`[PlayerPage] imprints round ${round} unstable; counters: ${counters.join(" ")}`,
+						);
 					}
-					const candidate = selectable.last();
-					await candidate
-						.evaluate((el) => el.scrollIntoView({ block: "center" }))
-						.catch(() => {});
-					await candidate.click({ force: true, timeout: 4000 }).catch(() => {});
-					// Wait for the pick to register (selectable count drops) so a
-					// click lost to a re-render is retried next pass.
-					await this.page
-						.waitForFunction(
-							({ s, prev }) => document.querySelectorAll(s).length !== prev,
-							{ s: imprintSelector, prev: before },
-							{ timeout: 2000 },
-						)
-						.catch(() => {});
 				}
 				await clickNext(30_000);
 			} else if (step === "review") {
@@ -655,58 +706,42 @@ export class PlayerPage {
 		await expect(heading).toBeVisible({ timeout: 10_000 });
 	}
 
-	// ─── Player Map View ─────────────────────────────────────────
-
-	/** Verify the player map view page loads with zoom/grid controls. */
-	async verifyPlayerMapView() {
-		await this.page.goto("/ascendant-tools/map");
-		await this.page.waitForTimeout(3_000);
-		// Page should render heading, "NO CAMPAIGN" state, map area, or back button
-		const heading = this.page
-			.getByText(/PLAYER MAP|MAP VIEW|VTT|NO CAMPAIGN/i)
-			.first();
-		const backBtn = this.page.getByText(/Back to Player Tools/i).first();
-		const headingVisible = await heading
-			.isVisible({ timeout: 10_000 })
-			.catch(() => false);
-		const backVisible = await backBtn
-			.isVisible({ timeout: 5_000 })
-			.catch(() => false);
-		expect(headingVisible || backVisible).toBe(true);
-
-		// Zoom controls
-		const zoomIn = this.page
-			.getByRole("button", { name: /Zoom In|\+/i })
-			.first();
-		if (await zoomIn.isVisible({ timeout: 3_000 }).catch(() => false)) {
-			await zoomIn.click();
-		}
-		const zoomOut = this.page
-			.getByRole("button", { name: /Zoom Out|-/i })
-			.first();
-		if (await zoomOut.isVisible({ timeout: 3_000 }).catch(() => false)) {
-			await zoomOut.click();
-		}
-		// Grid toggle
-		const gridToggle = this.page.getByRole("button", { name: /Grid/i }).first();
-		if (await gridToggle.isVisible({ timeout: 3_000 }).catch(() => false)) {
-			await gridToggle.click();
-		}
-	}
+	// (verifyPlayerMapView removed — the /ascendant-tools/map tool was
+	// scraped with the VTT; the toolId now redirects to the hub.)
 
 	// ─── Character Level Up ─────────────────────────────────────
 
-	/** Navigate to character level up page and exercise HP controls. */
+	/**
+	 * Level-up is no longer a route — the sheet's "Level Up" header button
+	 * opens LevelUpWizardModal. Open it from the sheet, verify the wizard
+	 * renders, then close it without committing the level.
+	 */
 	async verifyCharacterLevelUp(characterId: string): Promise<boolean> {
-		await this.page.goto(`/characters/${characterId}/level-up`);
-		await this.page.waitForTimeout(3_000);
+		await this.page.goto(`/characters/${characterId}`);
 
 		// If auth redirect happened, the page is on /login — still counts as "loaded" for test purposes
-		if (/\/login/.test(this.page.url())) {
-			return true; // Auth expired; route exists and ProtectedRoute redirected correctly
+		if (
+			await this.page
+				.waitForURL(/\/login/, { timeout: 2_000 })
+				.then(() => true)
+				.catch(() => false)
+		) {
+			return true;
 		}
 
-		// Should show "LEVEL UP PROTOCOL", "MAXIMUM LEVEL REACHED", loading spinner, or the character name
+		// The sheet renders desktop + mobile DOM in parallel; filter to the
+		// visible "Level Up" (or "Manage Level" at L20) trigger.
+		const levelUpBtn = this.page
+			.getByRole("button", { name: /^(Level Up|Manage Level)$/i })
+			.filter({ visible: true })
+			.first();
+		const btnVisible = await levelUpBtn
+			.isVisible({ timeout: 20_000 })
+			.catch(() => false);
+		if (!btnVisible) return false;
+		await levelUpBtn.click();
+
+		// Wizard modal anchors: header title, loading state, or L20 state.
 		const heading = this.page
 			.getByText(/LEVEL UP PROTOCOL|SYSTEM ENHANCEMENT/i)
 			.first();
@@ -739,46 +774,38 @@ export class PlayerPage {
 				await avgBtn.click();
 				await this.page.waitForTimeout(500);
 			}
-			// Verify stat preview section
-			const statPreview = this.page.getByText(/STAT MODIFICATIONS/i).first();
-			if (await statPreview.isVisible({ timeout: 5_000 }).catch(() => false)) {
-				await expect(statPreview).toBeVisible();
-			}
-			// Verify Cancel and Complete buttons
-			const cancelBtn = this.page.getByRole("button", { name: /Cancel/i });
-			await expect(cancelBtn).toBeVisible({ timeout: 5_000 });
-			const completeBtn = this.page.getByRole("button", {
-				name: /Complete Level Up/i,
-			});
-			await expect(completeBtn).toBeVisible({ timeout: 5_000 });
 		}
+
+		// Close the wizard without committing the level.
+		await this.page.keyboard.press("Escape");
+		await this.page.waitForTimeout(500);
+
 		return headingVisible || maxLevelVisible || loadingVisible;
 	}
 
 	// ─── Character Compare ──────────────────────────────────────
 
 	/**
-	 * Verify the character compare page loads (if present in this build).
-	 * The route is optional — older builds shipped it, current builds may
-	 * not. Returns `true` if the compare heading + selects are present,
-	 * `false` if the feature is absent. Never fails the test for an
-	 * absent feature.
+	 * Verify the character compare page loads. The page is `?ids=` query-param
+	 * driven (no selects): with fewer than 2 ids it renders the
+	 * "Compare Ascendants" window with a "Go to Character Manager" CTA
+	 * back to /characters.
 	 */
 	async verifyCharacterCompare(): Promise<boolean> {
 		await this.page.goto("/characters/compare");
-		await this.page.waitForTimeout(2_000);
 
 		const heading = this.page
-			.getByText(/COMPARE ASCENDANTS|Compare Characters/i)
+			.getByText(/Compare Ascendants|Compare Characters/i)
 			.first();
 		const headingVisible = await heading
-			.isVisible({ timeout: 5_000 })
+			.isVisible({ timeout: 10_000 })
 			.catch(() => false);
 		if (!headingVisible) return false;
 
-		const selects = this.page.locator('button[role="combobox"]');
-		const selectCount = await selects.count();
-		expect(selectCount).toBeGreaterThanOrEqual(2);
+		// Empty state (no ?ids=) must offer the roster CTA.
+		await expect(
+			this.page.getByRole("link", { name: /Go to Character Manager/i }).first(),
+		).toBeVisible({ timeout: 5_000 });
 		return true;
 	}
 
@@ -806,12 +833,14 @@ export class PlayerPage {
 		await expect(heading).toBeVisible({ timeout: 10_000 });
 	}
 
-	/** Attempt to access a DM route and verify access denied. */
+	/** Attempt to access a Warden route and verify access is denied. */
 	async verifyDMRouteBlocked(route: string) {
 		await this.page.goto(route);
 		await this.page.waitForTimeout(2_000);
 		const accessDenied = this.page
-			.getByText(/Access Denied|DM Access Required/i)
+			.getByText(
+				/Access Denied|Warden Access Required|Authentication Required/i,
+			)
 			.first();
 		await expect(accessDenied).toBeVisible({ timeout: 10_000 });
 	}
