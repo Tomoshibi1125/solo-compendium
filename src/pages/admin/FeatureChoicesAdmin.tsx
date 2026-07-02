@@ -1,7 +1,15 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { Layers, Loader2, Plus, Search, Settings2 } from "lucide-react";
-import { useMemo, useState } from "react";
+import {
+	Layers,
+	Loader2,
+	Plus,
+	Search,
+	Settings2,
+	Trash2,
+	Upload,
+} from "lucide-react";
+import { useMemo, useRef, useState } from "react";
 import { Layout } from "@/components/layout/Layout";
 import { ManaFlowText, RiftHeading } from "@/components/ui/AscendantText";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
@@ -9,10 +17,26 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import {
+	Select,
+	SelectContent,
+	SelectItem,
+	SelectTrigger,
+	SelectValue,
+} from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import type { Database, Json } from "@/integrations/supabase/types";
+import {
+	buildGrants,
+	csvRowsToChoiceOptions,
+	emptyGrantDraft,
+	GRANT_ABILITIES,
+	type GrantDraft,
+	type GrantDraftType,
+} from "@/lib/featureChoiceGrants";
+import { parseCsv } from "@/lib/toolExport";
 import { cn } from "@/lib/utils";
 import {
 	formatRegentVernacular,
@@ -88,9 +112,11 @@ export default function FeatureChoicesAdmin() {
 	const [newOptionKey, setNewOptionKey] = useState("");
 	const [newOptionName, setNewOptionName] = useState("");
 	const [newOptionDescription, setNewOptionDescription] = useState("");
-	const [newOptionGrants, setNewOptionGrants] = useState(
-		'[{"type":"feature","name":"","description":""}]',
-	);
+	const [grantDrafts, setGrantDrafts] = useState<GrantDraft[]>([
+		emptyGrantDraft(),
+	]);
+	const [csvImporting, setCsvImporting] = useState(false);
+	const csvInputRef = useRef<HTMLInputElement | null>(null);
 
 	const canonicalQuery = useMemo(
 		() => normalizeRegentSearch(search.trim()),
@@ -402,11 +428,13 @@ export default function FeatureChoicesAdmin() {
 			return;
 		}
 
-		let grants: Json;
-		try {
-			grants = JSON.parse(newOptionGrants);
-		} catch {
-			toast({ title: "Invalid grants JSON", variant: "destructive" });
+		const built = buildGrants(grantDrafts);
+		if (built.error || built.grants === undefined) {
+			toast({
+				title: "Grants incomplete",
+				description: built.error,
+				variant: "destructive",
+			});
 			return;
 		}
 
@@ -416,13 +444,13 @@ export default function FeatureChoicesAdmin() {
 				option_key: optionKey,
 				name,
 				description: newOptionDescription.trim() || null,
-				grants,
+				grants: built.grants,
 			});
 
 			setNewOptionKey("");
 			setNewOptionName("");
 			setNewOptionDescription("");
-			setNewOptionGrants('[{"type":"feature","name":"","description":""}]');
+			setGrantDrafts([emptyGrantDraft()]);
 
 			queryClient.invalidateQueries({
 				queryKey: ["admin-choice-options", selectedGroupId],
@@ -438,6 +466,72 @@ export default function FeatureChoicesAdmin() {
 				description: error instanceof Error ? error.message : "Unknown error",
 				variant: "destructive",
 			});
+		}
+	};
+
+	const updateGrantDraft = (index: number, patch: Partial<GrantDraft>) => {
+		setGrantDrafts((drafts) =>
+			drafts.map((draft, i) => (i === index ? { ...draft, ...patch } : draft)),
+		);
+	};
+
+	const handleCsvImport = async (
+		event: React.ChangeEvent<HTMLInputElement>,
+	) => {
+		const file = event.target.files?.[0];
+		event.target.value = "";
+		if (!file || !selectedGroupId) return;
+
+		setCsvImporting(true);
+		try {
+			const text = await file.text();
+			const { options: parsedOptions, errors } = csvRowsToChoiceOptions(
+				parseCsv(text),
+			);
+
+			const existingKeys = new Set(options.map((o) => o.option_key));
+			const fresh = parsedOptions.filter(
+				(option) => !existingKeys.has(option.option_key),
+			);
+			const skipped = parsedOptions.length - fresh.length;
+
+			if (fresh.length > 0) {
+				const rows = fresh.map((option) => ({
+					group_id: selectedGroupId,
+					...option,
+				}));
+				const chunkSize = 100;
+				for (let i = 0; i < rows.length; i += chunkSize) {
+					const { error } = await supabaseExtended
+						.from("compendium_feature_choice_options")
+						.insert(rows.slice(i, i + chunkSize) as never);
+					if (error) throw error;
+				}
+				queryClient.invalidateQueries({
+					queryKey: ["admin-choice-options", selectedGroupId],
+				});
+			}
+
+			toast({
+				title: `Imported ${fresh.length} option${fresh.length === 1 ? "" : "s"}`,
+				description: [
+					skipped > 0 ? `${skipped} skipped (option_key exists).` : null,
+					errors.length > 0
+						? `${errors.length} row error(s): ${errors[0]}`
+						: null,
+				]
+					.filter(Boolean)
+					.join(" "),
+				variant: errors.length > 0 ? "destructive" : undefined,
+			});
+		} catch (error) {
+			toast({
+				title: "CSV import failed",
+				description: error instanceof Error ? error.message : "Unknown error",
+				variant: "destructive",
+			});
+		} finally {
+			setCsvImporting(false);
 		}
 	};
 
@@ -685,18 +779,176 @@ export default function FeatureChoicesAdmin() {
 												placeholder="Option description (optional)"
 												className="min-h-[80px]"
 											/>
-											<Textarea
-												value={newOptionGrants}
-												onChange={(e) => setNewOptionGrants(e.target.value)}
-												placeholder='Grants JSON (e.g. [{"type":"feature","name":"..."}])'
-												className="min-h-[120px] font-mono text-xs"
-											/>
-											<div className="flex justify-end">
+
+											{/* Guarded grants builder — no free-form JSON */}
+											<div className="space-y-2 rounded-lg border border-border bg-muted/20 p-3">
+												<Label className="font-heading text-xs uppercase tracking-wider">
+													Grants
+												</Label>
+												{grantDrafts.map((draft, index) => (
+													<div
+														key={`grant-${
+															// biome-ignore lint/suspicious/noArrayIndexKey: drafts are positional form rows
+															index
+														}`}
+														className="flex flex-wrap items-center gap-2"
+													>
+														<Select
+															value={draft.type}
+															onValueChange={(value) =>
+																updateGrantDraft(index, {
+																	type: value as GrantDraftType,
+																})
+															}
+														>
+															<SelectTrigger className="w-40 h-9">
+																<SelectValue />
+															</SelectTrigger>
+															<SelectContent>
+																<SelectItem value="feature">Feature</SelectItem>
+																<SelectItem value="feat">Feat</SelectItem>
+																<SelectItem value="ability_increase">
+																	Ability Increase
+																</SelectItem>
+															</SelectContent>
+														</Select>
+														{draft.type === "ability_increase" ? (
+															<>
+																<Select
+																	value={draft.ability}
+																	onValueChange={(value) =>
+																		updateGrantDraft(index, {
+																			ability: value as GrantDraft["ability"],
+																		})
+																	}
+																>
+																	<SelectTrigger className="w-28 h-9">
+																		<SelectValue />
+																	</SelectTrigger>
+																	<SelectContent>
+																		{GRANT_ABILITIES.map((ability) => (
+																			<SelectItem key={ability} value={ability}>
+																				{ability}
+																			</SelectItem>
+																		))}
+																	</SelectContent>
+																</Select>
+																<Select
+																	value={String(draft.amount)}
+																	onValueChange={(value) =>
+																		updateGrantDraft(index, {
+																			amount: Number(value),
+																		})
+																	}
+																>
+																	<SelectTrigger className="w-20 h-9">
+																		<SelectValue />
+																	</SelectTrigger>
+																	<SelectContent>
+																		{[1, 2, 3].map((amount) => (
+																			<SelectItem
+																				key={amount}
+																				value={String(amount)}
+																			>
+																				+{amount}
+																			</SelectItem>
+																		))}
+																	</SelectContent>
+																</Select>
+															</>
+														) : (
+															<>
+																<Input
+																	value={draft.name}
+																	onChange={(e) =>
+																		updateGrantDraft(index, {
+																			name: e.target.value,
+																		})
+																	}
+																	placeholder={
+																		draft.type === "feat"
+																			? "Feat name"
+																			: "Feature name"
+																	}
+																	className="h-9 flex-1 min-w-40"
+																/>
+																{draft.type === "feature" && (
+																	<Input
+																		value={draft.description}
+																		onChange={(e) =>
+																			updateGrantDraft(index, {
+																				description: e.target.value,
+																			})
+																		}
+																		placeholder="Rules text (optional)"
+																		className="h-9 flex-1 min-w-40"
+																	/>
+																)}
+															</>
+														)}
+														<Button
+															variant="ghost"
+															size="icon"
+															className="h-9 w-9 shrink-0"
+															aria-label={`Remove grant ${index + 1}`}
+															disabled={grantDrafts.length === 1}
+															onClick={() =>
+																setGrantDrafts((drafts) =>
+																	drafts.filter((_, i) => i !== index),
+																)
+															}
+														>
+															<Trash2 className="w-4 h-4" />
+														</Button>
+													</div>
+												))}
+												<Button
+													variant="outline"
+													size="sm"
+													className="gap-1"
+													onClick={() =>
+														setGrantDrafts((drafts) => [
+															...drafts,
+															emptyGrantDraft(),
+														])
+													}
+												>
+													<Plus className="w-3.5 h-3.5" />
+													Add Grant
+												</Button>
+											</div>
+
+											<div className="flex flex-wrap justify-end gap-2">
+												<input
+													ref={csvInputRef}
+													type="file"
+													accept=".csv,text/csv"
+													className="hidden"
+													aria-label="Import choice options from CSV"
+													onChange={handleCsvImport}
+												/>
+												<Button
+													variant="outline"
+													className="gap-2"
+													disabled={csvImporting}
+													onClick={() => csvInputRef.current?.click()}
+												>
+													{csvImporting ? (
+														<Loader2 className="w-4 h-4 animate-spin" />
+													) : (
+														<Upload className="w-4 h-4" />
+													)}
+													Bulk Import CSV
+												</Button>
 												<Button onClick={handleCreateOption} className="gap-2">
 													<Plus className="w-4 h-4" />
 													Add Option
 												</Button>
 											</div>
+											<p className="text-xs text-muted-foreground">
+												CSV columns: option_key, name, description, grants (JSON
+												array). Existing option keys are skipped.
+											</p>
 
 											<div className="space-y-2">
 												<Label className="font-heading">Options</Label>

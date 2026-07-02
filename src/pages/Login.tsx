@@ -29,8 +29,12 @@ export default function Login() {
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState("");
 	const [notice, setNotice] = useState("");
+	const [awaitingConfirmation, setAwaitingConfirmation] = useState(false);
+	const [resendState, setResendState] = useState<"idle" | "sending" | "sent">(
+		"idle",
+	);
 
-	const { signIn, signUp } = useAuth();
+	const { signIn, signUp, resendConfirmationEmail } = useAuth();
 	const { isLoading: oauthLoading, signInWithProvider } = useOAuth();
 	const navigate = useNavigate();
 	const [searchParams] = useSearchParams();
@@ -69,6 +73,8 @@ export default function Login() {
 				setError(result.error);
 			} else if (result.needsEmailConfirmation) {
 				setNotice("Check your email to confirm your account, then sign in.");
+				setAwaitingConfirmation(true);
+				setResendState("idle");
 			} else {
 				if (typeof window !== "undefined") {
 					localStorage.removeItem("pending-auth-next");
@@ -282,6 +288,16 @@ export default function Login() {
 									)}
 								</button>
 							</div>
+							{!isSignUp && (
+								<div className="mt-2 text-right">
+									<Link
+										to="/forgot-password"
+										className="text-xs text-muted-foreground hover:text-primary transition-colors font-heading tracking-wider uppercase"
+									>
+										Forgot password?
+									</Link>
+								</div>
+							)}
 						</div>
 
 						{/* Error Message */}
@@ -295,6 +311,29 @@ export default function Login() {
 						{notice && (
 							<div className="bg-success/20 border border-success/50 text-success-foreground px-4 py-3 rounded-[2px] font-heading text-sm">
 								{notice}
+								{awaitingConfirmation && (
+									<button
+										type="button"
+										disabled={resendState !== "idle"}
+										onClick={async () => {
+											setResendState("sending");
+											const result = await resendConfirmationEmail(email);
+											if (result.error) {
+												setError(result.error);
+												setResendState("idle");
+											} else {
+												setResendState("sent");
+											}
+										}}
+										className="block mt-2 text-primary hover:text-primary/80 font-heading tracking-wider disabled:opacity-60"
+									>
+										{resendState === "sent"
+											? "Confirmation email resent"
+											: resendState === "sending"
+												? "Resending..."
+												: "Resend confirmation email"}
+									</button>
+								)}
 							</div>
 						)}
 

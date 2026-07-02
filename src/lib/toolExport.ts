@@ -62,6 +62,59 @@ export function downloadCsv(
 }
 
 /**
+ * Parse CSV text (RFC-4180-ish: quoted fields, doubled-quote escapes, \r\n or
+ * \n) into row objects keyed by the header line. Inverse of {@link toCsv}.
+ */
+export function parseCsv(text: string): Array<Record<string, string>> {
+	const records: string[][] = [];
+	let field = "";
+	let record: string[] = [];
+	let inQuotes = false;
+
+	const pushField = () => {
+		record.push(field);
+		field = "";
+	};
+	const pushRecord = () => {
+		pushField();
+		// Skip fully empty lines (e.g. trailing newline).
+		if (record.length > 1 || record[0] !== "") records.push(record);
+		record = [];
+	};
+
+	for (let i = 0; i < text.length; i++) {
+		const char = text[i];
+		if (inQuotes) {
+			if (char === '"') {
+				if (text[i + 1] === '"') {
+					field += '"';
+					i++;
+				} else {
+					inQuotes = false;
+				}
+			} else {
+				field += char;
+			}
+		} else if (char === '"') {
+			inQuotes = true;
+		} else if (char === ",") {
+			pushField();
+		} else if (char === "\n") {
+			pushRecord();
+		} else if (char !== "\r") {
+			field += char;
+		}
+	}
+	if (field !== "" || record.length > 0) pushRecord();
+
+	const [header, ...rows] = records;
+	if (!header) return [];
+	return rows.map((cells) =>
+		Object.fromEntries(header.map((col, i) => [col.trim(), cells[i] ?? ""])),
+	);
+}
+
+/**
  * Apply the book-brand print stylesheet to a target element and open the
  * browser's print dialog (Save-as-PDF). `selector` defaults to `<body>`.
  * The `.book-print-root` class is removed again on `afterprint` (with a

@@ -2,7 +2,9 @@ import { describe, expect, it } from "vitest";
 import {
 	AUTH_CALLBACK_PATH,
 	buildAuthCallbackUrl,
+	buildPasswordResetRedirectUrl,
 	CANONICAL_PUBLIC_SITE_URL,
+	PASSWORD_RESET_PATH,
 } from "@/lib/authRedirect";
 
 describe("auth redirect URL construction", () => {
@@ -58,5 +60,27 @@ describe("auth redirect URL construction", () => {
 				origin: null,
 			}),
 		).toBe(`${CANONICAL_PUBLIC_SITE_URL}/auth/callback`);
+	});
+});
+
+describe("password reset redirect URL", () => {
+	it("lands recovery emails on /reset-password with the same site-URL precedence", () => {
+		expect(
+			buildPasswordResetRedirectUrl({
+				publicSiteUrl: "https://riftascendant.vercel.app/",
+				origin: "https://dead-preview.example",
+			}),
+		).toBe(`https://riftascendant.vercel.app${PASSWORD_RESET_PATH}`);
+
+		expect(
+			buildPasswordResetRedirectUrl({
+				publicSiteUrl: "",
+				origin: "https://preview-riftascendant.vercel.app",
+			}),
+		).toBe("https://preview-riftascendant.vercel.app/reset-password");
+
+		expect(
+			buildPasswordResetRedirectUrl({ publicSiteUrl: null, origin: null }),
+		).toBe(`${CANONICAL_PUBLIC_SITE_URL}/reset-password`);
 	});
 });

@@ -1,5 +1,6 @@
 import {
 	AlertCircle,
+	Ban,
 	BarChart3,
 	CheckCircle,
 	Database,
@@ -7,9 +8,12 @@ import {
 	FileText,
 	Image,
 	Loader2,
+	ScrollText,
 	Shield,
 	Sparkles,
+	Undo2,
 	Upload,
+	Users,
 } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
@@ -24,8 +28,23 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
+import {
+	Select,
+	SelectContent,
+	SelectItem,
+	SelectTrigger,
+	SelectValue,
+} from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
+import {
+	useAdminAuditLog,
+	useAdminUsers,
+	useSetUserBan,
+	useSetUserRole,
+} from "@/hooks/useAdminUsers";
+import { isSupabaseConfigured } from "@/integrations/supabase/client";
+import { useAuth } from "@/lib/auth/authContext";
 import {
 	type ImportResult,
 	importContentBundle,
@@ -37,8 +56,19 @@ import {
 } from "@/lib/contentValidator";
 import { cn } from "@/lib/utils";
 
+const AUDIT_ACTION_LABELS: Record<string, string> = {
+	set_role: "Role changed",
+	ban_user: "Account suspended",
+	unban_user: "Account reinstated",
+};
+
 const Admin = () => {
 	const { toast } = useToast();
+	const { user: currentUser } = useAuth();
+	const { data: users = [], isLoading: usersLoading } = useAdminUsers();
+	const { data: auditLog = [] } = useAdminAuditLog();
+	const setUserRole = useSetUserRole();
+	const setUserBan = useSetUserBan();
 	const [content, setContent] = useState("");
 	const [validationResult, setValidationResult] =
 		useState<ValidationResult | null>(null);
@@ -611,6 +641,154 @@ const Admin = () => {
 							</AscendantWindow>
 						)}
 					</div>
+				</div>
+
+				{/* User management + audit trail (Supabase-backed only) */}
+				<div className="mt-6 grid grid-cols-1 xl:grid-cols-3 gap-6">
+					<AscendantWindow
+						title="USER REGISTRY"
+						className="border-resurge/30 xl:col-span-2"
+					>
+						{!isSupabaseConfigured ? (
+							<AscendantText className="block text-sm text-muted-foreground font-heading py-6 text-center">
+								User management requires the Supabase backend. Guest-mode data
+								lives only in this browser.
+							</AscendantText>
+						) : usersLoading ? (
+							<div className="flex items-center justify-center py-8">
+								<Loader2 className="w-6 h-6 animate-spin text-resurge" />
+							</div>
+						) : users.length === 0 ? (
+							<AscendantText className="block text-sm text-muted-foreground font-heading py-6 text-center">
+								No registered accounts visible. Only wardens can view the
+								registry.
+							</AscendantText>
+						) : (
+							<div className="space-y-2 max-h-[420px] overflow-y-auto pr-1">
+								{users.map((account) => {
+									const isSelf = account.id === currentUser?.id;
+									const banned = Boolean(account.banned_at);
+									return (
+										<div
+											key={account.id}
+											className="flex flex-wrap items-center gap-3 rounded border border-border bg-muted/30 p-3"
+										>
+											<Users className="w-4 h-4 text-resurge shrink-0" />
+											<div className="min-w-0 flex-1">
+												<p className="font-heading font-semibold truncate">
+													{account.display_name || account.email}
+													{isSelf && (
+														<span className="ml-2 text-xs text-muted-foreground">
+															(you)
+														</span>
+													)}
+												</p>
+												<p className="text-xs text-muted-foreground truncate">
+													{account.email} · joined{" "}
+													{new Date(account.created_at).toLocaleDateString()}
+												</p>
+											</div>
+											{banned && (
+												<Badge variant="destructive" className="uppercase">
+													Suspended
+												</Badge>
+											)}
+											<Select
+												value={account.role}
+												onValueChange={(value) =>
+													setUserRole.mutate({ userId: account.id, value })
+												}
+												disabled={isSelf || setUserRole.isPending}
+											>
+												<SelectTrigger className="w-32 h-8">
+													<SelectValue />
+												</SelectTrigger>
+												<SelectContent>
+													<SelectItem value="warden">Warden</SelectItem>
+													<SelectItem value="ascendant">Ascendant</SelectItem>
+												</SelectContent>
+											</Select>
+											<Button
+												variant={banned ? "outline" : "destructive"}
+												size="sm"
+												className="gap-1"
+												disabled={isSelf || setUserBan.isPending}
+												onClick={() =>
+													setUserBan.mutate({
+														userId: account.id,
+														value: !banned,
+													})
+												}
+											>
+												{banned ? (
+													<>
+														<Undo2 className="w-3.5 h-3.5" />
+														Reinstate
+													</>
+												) : (
+													<>
+														<Ban className="w-3.5 h-3.5" />
+														Suspend
+													</>
+												)}
+											</Button>
+										</div>
+									);
+								})}
+							</div>
+						)}
+					</AscendantWindow>
+
+					<AscendantWindow
+						title="ADMIN AUDIT LOG"
+						className="border-resurge/30"
+					>
+						{!isSupabaseConfigured ? (
+							<AscendantText className="block text-sm text-muted-foreground font-heading py-6 text-center">
+								Audit history requires the Supabase backend.
+							</AscendantText>
+						) : auditLog.length === 0 ? (
+							<div className="text-center py-8">
+								<ScrollText className="w-10 h-10 mx-auto text-muted-foreground/30 mb-2" />
+								<AscendantText className="block text-sm text-muted-foreground font-heading">
+									No admin actions recorded yet.
+								</AscendantText>
+							</div>
+						) : (
+							<div className="space-y-2 max-h-[420px] overflow-y-auto pr-1">
+								{auditLog.map((entry) => {
+									const target = users.find(
+										(account) => account.id === entry.target_user_id,
+									);
+									const details = entry.details as {
+										from?: string;
+										to?: string;
+									} | null;
+									return (
+										<div
+											key={entry.id}
+											className="rounded border border-border bg-muted/30 p-2 text-xs"
+										>
+											<p className="font-heading font-semibold">
+												{AUDIT_ACTION_LABELS[entry.action] ?? entry.action}
+												{details?.to ? ` → ${details.to}` : ""}
+											</p>
+											<p className="text-muted-foreground">
+												{target
+													? (target.display_name ?? target.email)
+													: (entry.target_user_id ?? "—")}
+											</p>
+											<p className="text-muted-foreground">
+												{entry.created_at
+													? new Date(entry.created_at).toLocaleString()
+													: ""}
+											</p>
+										</div>
+									);
+								})}
+							</div>
+						)}
+					</AscendantWindow>
 				</div>
 			</div>
 		</Layout>

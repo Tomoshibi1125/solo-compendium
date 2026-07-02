@@ -147,6 +147,33 @@ export type Database = {
 				};
 				Relationships: [];
 			};
+			admin_audit_log: {
+				Row: {
+					action: string;
+					actor_user_id: string;
+					created_at: string | null;
+					details: Json;
+					id: string;
+					target_user_id: string | null;
+				};
+				Insert: {
+					action: string;
+					actor_user_id: string;
+					created_at?: string | null;
+					details?: Json;
+					id?: string;
+					target_user_id?: string | null;
+				};
+				Update: {
+					action?: string;
+					actor_user_id?: string;
+					created_at?: string | null;
+					details?: Json;
+					id?: string;
+					target_user_id?: string | null;
+				};
+				Relationships: [];
+			};
 			art_assets: {
 				Row: {
 					created_at: string | null;
@@ -8311,6 +8338,7 @@ export type Database = {
 			};
 			profiles: {
 				Row: {
+					banned_at: string | null;
 					created_at: string;
 					display_name: string | null;
 					email: string;
@@ -8319,6 +8347,7 @@ export type Database = {
 					updated_at: string;
 				};
 				Insert: {
+					banned_at?: string | null;
 					created_at?: string;
 					display_name?: string | null;
 					email: string;
@@ -8327,6 +8356,7 @@ export type Database = {
 					updated_at?: string;
 				};
 				Update: {
+					banned_at?: string | null;
 					created_at?: string;
 					display_name?: string | null;
 					email?: string;
@@ -9178,6 +9208,20 @@ export type Database = {
 					p_role?: string;
 				};
 				Returns: string;
+			};
+			admin_set_user_role: {
+				Args: {
+					p_target: string;
+					p_role: string;
+				};
+				Returns: undefined;
+			};
+			admin_set_user_ban: {
+				Args: {
+					p_target: string;
+					p_banned: boolean;
+				};
+				Returns: undefined;
 			};
 			accept_bureau_contract: {
 				Args: {

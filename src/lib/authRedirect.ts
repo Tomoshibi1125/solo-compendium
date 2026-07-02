@@ -27,6 +27,14 @@ const getRuntimeOrigin = (): string | null => {
 	return window.location.origin;
 };
 
+const resolveBaseUrl = (
+	publicSiteUrl?: string | null,
+	origin?: string | null,
+): string =>
+	normalizePublicSiteUrl(publicSiteUrl) ??
+	normalizePublicSiteUrl(origin) ??
+	CANONICAL_PUBLIC_SITE_URL;
+
 export const buildAuthCallbackUrl = ({
 	publicSiteUrl = import.meta.env.VITE_PUBLIC_SITE_URL,
 	origin = getRuntimeOrigin(),
@@ -36,11 +44,10 @@ export const buildAuthCallbackUrl = ({
 	origin?: string | null;
 	next?: string | null;
 } = {}): string => {
-	const baseUrl =
-		normalizePublicSiteUrl(publicSiteUrl) ??
-		normalizePublicSiteUrl(origin) ??
-		CANONICAL_PUBLIC_SITE_URL;
-	const url = new URL(AUTH_CALLBACK_PATH, `${baseUrl}/`);
+	const url = new URL(
+		AUTH_CALLBACK_PATH,
+		`${resolveBaseUrl(publicSiteUrl, origin)}/`,
+	);
 
 	if (isSafeNextPath(next)) {
 		url.searchParams.set("next", next);
@@ -48,3 +55,22 @@ export const buildAuthCallbackUrl = ({
 
 	return url.toString();
 };
+
+export const PASSWORD_RESET_PATH = "/reset-password";
+
+/**
+ * Where the Supabase recovery email should land the user: the app's
+ * reset-password page, resolved with the same site-URL precedence as the
+ * OAuth/email-confirmation callback.
+ */
+export const buildPasswordResetRedirectUrl = ({
+	publicSiteUrl = import.meta.env.VITE_PUBLIC_SITE_URL,
+	origin = getRuntimeOrigin(),
+}: {
+	publicSiteUrl?: string | null;
+	origin?: string | null;
+} = {}): string =>
+	new URL(
+		PASSWORD_RESET_PATH,
+		`${resolveBaseUrl(publicSiteUrl, origin)}/`,
+	).toString();

@@ -50,6 +50,8 @@ import { getRuntimeEnvValue, normalizeBasePath } from "@/lib/runtimeEnv";
 import { isSetupRouteEnabled } from "@/lib/setupAccess";
 
 const Login = lazy(() => import("./pages/Login"));
+const ForgotPassword = lazy(() => import("./pages/ForgotPassword"));
+const ResetPassword = lazy(() => import("./pages/ResetPassword"));
 const AscendantTools = lazy(() => import("./pages/AscendantTools"));
 const TestUserSetup = lazy(() => import("./pages/TestUserSetup"));
 
@@ -295,6 +297,22 @@ const AppContent = () => {
 					element={
 						<Suspense fallback={<PageLoader />}>
 							<Login />
+						</Suspense>
+					}
+				/>
+				<Route
+					path="/forgot-password"
+					element={
+						<Suspense fallback={<PageLoader />}>
+							<ForgotPassword />
+						</Suspense>
+					}
+				/>
+				<Route
+					path="/reset-password"
+					element={
+						<Suspense fallback={<PageLoader />}>
+							<ResetPassword />
 						</Suspense>
 					}
 				/>

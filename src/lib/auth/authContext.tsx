@@ -13,7 +13,10 @@ import {
 } from "react";
 import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import { AppError } from "@/lib/appError";
-import { buildAuthCallbackUrl } from "@/lib/authRedirect";
+import {
+	buildAuthCallbackUrl,
+	buildPasswordResetRedirectUrl,
+} from "@/lib/authRedirect";
 import { error as logError } from "@/lib/logger";
 import { useAuthStore } from "@/stores/authStore";
 
@@ -51,6 +54,8 @@ interface AuthContextType {
 		role: UserRole,
 	) => Promise<AuthResult>;
 	signOut: () => Promise<void>;
+	requestPasswordReset: (email: string) => Promise<AuthResult>;
+	resendConfirmationEmail: (email: string) => Promise<AuthResult>;
 	updateProfile: (
 		updates: Partial<AuthUser>,
 	) => Promise<{ error?: string; success?: boolean }>;
@@ -323,6 +328,20 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 			}
 
 			if (data.user) {
+				// App-level suspension (admin_set_user_ban): banned accounts are
+				// bounced before any role/profile writes happen.
+				const { data: profileRow } = await supabase
+					.from("profiles")
+					.select("banned_at")
+					.eq("id", data.user.id)
+					.maybeSingle();
+				if (profileRow?.banned_at) {
+					await supabase.auth.signOut();
+					return {
+						error: "This account has been suspended. Contact your Warden.",
+					};
+				}
+
 				// Existing users logging in already have a profile due to the handle_new_user trigger.
 				// We use .update() instead of .upsert() to avoid strict INSERT RLS check violations for existing rows.
 				const { error: upsertError } = await supabase
@@ -433,6 +452,56 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 		useAuthStore.getState().setSession(null);
 	};
 
+	const requestPasswordReset = async (email: string): Promise<AuthResult> => {
+		if (!isSupabaseConfigured) {
+			return {
+				error:
+					"Backend is not configured. Please check your Supabase environment variables.",
+			};
+		}
+
+		try {
+			const { error } = await supabase.auth.resetPasswordForEmail(email, {
+				redirectTo: buildPasswordResetRedirectUrl(),
+			});
+			if (error) return { error: error.message };
+			return { success: true };
+		} catch {
+			return { error: "An unexpected error occurred" };
+		}
+	};
+
+	const resendConfirmationEmail = async (
+		email: string,
+	): Promise<AuthResult> => {
+		if (!isSupabaseConfigured) {
+			return {
+				error:
+					"Backend is not configured. Please check your Supabase environment variables.",
+			};
+		}
+
+		try {
+			const { error } = await supabase.auth.resend({
+				type: "signup",
+				email,
+				options: { emailRedirectTo: buildAuthCallbackUrl() },
+			});
+			if (error) {
+				if (isEmailRateLimitError(error)) {
+					return {
+						error:
+							"Emails are temporarily rate limited. Please try again in a few minutes.",
+					};
+				}
+				return { error: error.message };
+			}
+			return { success: true };
+		} catch {
+			return { error: "An unexpected error occurred" };
+		}
+	};
+
 	const updateProfile = async (updates: Partial<AuthUser>) => {
 		if (!user) return { error: "No user logged in" };
 
@@ -495,6 +564,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 		signIn,
 		signUp,
 		signOut,
+		requestPasswordReset,
+		resendConfirmationEmail,
 		updateProfile,
 		hasPermission,
 		isWarden,
