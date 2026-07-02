@@ -54,18 +54,66 @@ type DevAIResult = {
 	model: string;
 	usage?: Record<string, unknown>;
 };
+type DevAIImage = { mimeType: string; data: string };
 type DevAIArgs = {
 	prompt: string;
 	systemPrompt?: string;
 	maxTokens?: number;
 	model?: string;
+	images?: DevAIImage[];
 };
+
+// Mirror of api/ai.js normalizeImages: data-URLs or {mimeType,data} pairs;
+// only the Gemini leg is vision-capable, so image requests skip other legs.
+const DEV_MAX_IMAGES = 4;
+const DEV_MAX_IMAGE_BASE64_CHARS = 6_000_000;
+
+function devNormalizeImages(raw: unknown): {
+	images?: DevAIImage[];
+	error?: string;
+} {
+	if (raw === undefined || raw === null) return { images: [] };
+	if (!Array.isArray(raw)) return { error: "images must be an array" };
+	if (raw.length > DEV_MAX_IMAGES) {
+		return { error: `At most ${DEV_MAX_IMAGES} images per request` };
+	}
+	const images: DevAIImage[] = [];
+	for (const entry of raw) {
+		let mimeType: unknown;
+		let data: unknown;
+		if (typeof entry === "string") {
+			const match = /^data:(image\/[\w.+-]+);base64,(.+)$/s.exec(entry);
+			if (!match) {
+				return { error: "Image strings must be base64 image data-URLs" };
+			}
+			mimeType = match[1];
+			data = match[2];
+		} else if (entry && typeof entry === "object") {
+			mimeType = (entry as { mimeType?: unknown }).mimeType;
+			data = (entry as { data?: unknown }).data;
+		}
+		if (
+			typeof mimeType !== "string" ||
+			!mimeType.startsWith("image/") ||
+			typeof data !== "string" ||
+			!data
+		) {
+			return { error: "Each image needs an image/* mimeType and base64 data" };
+		}
+		if (data.length > DEV_MAX_IMAGE_BASE64_CHARS) {
+			return { error: "Image too large (max ~4.5MB each)" };
+		}
+		images.push({ mimeType, data });
+	}
+	return { images };
+}
 
 async function devCallGemini({
 	prompt,
 	systemPrompt,
 	maxTokens,
 	model: modelOverride,
+	images = [],
 }: DevAIArgs): Promise<DevAIResult> {
 	const apiKey = process.env.GEMINI_API_KEY;
 	if (!apiKey) throw new Error("GEMINI_API_KEY not set");
@@ -75,6 +123,20 @@ async function devCallGemini({
 		DEV_GEMINI_MODELS,
 	);
 	const ai = new GoogleGenAI({ apiKey });
+	const contents =
+		images.length > 0
+			? [
+					{
+						role: "user",
+						parts: [
+							{ text: prompt },
+							...images.map(({ mimeType, data }) => ({
+								inlineData: { mimeType, data },
+							})),
+						],
+					},
+				]
+			: prompt;
 	const errors: string[] = [];
 	for (const model of models) {
 		const controller = new AbortController();
@@ -82,7 +144,7 @@ async function devCallGemini({
 		try {
 			const response = await ai.models.generateContent({
 				model,
-				contents: prompt,
+				contents,
 				config: {
 					systemInstruction: systemPrompt,
 					maxOutputTokens: Math.min(maxTokens || 4096, 4096),
@@ -269,12 +331,14 @@ function devAIProxy(): Plugin {
 					maxTokens,
 					provider: preferredProvider,
 					model: preferredModel,
+					images: rawImages,
 				} = body as {
 					prompt?: string;
 					systemPrompt?: string;
 					maxTokens?: number;
 					provider?: string;
 					model?: string;
+					images?: unknown;
 				};
 
 				if (!prompt || typeof prompt !== "string") {
@@ -282,6 +346,14 @@ function devAIProxy(): Plugin {
 					res.end(JSON.stringify({ error: "Missing required field: prompt" }));
 					return;
 				}
+
+				const normalizedImages = devNormalizeImages(rawImages);
+				if (normalizedImages.error) {
+					res.statusCode = 400;
+					res.end(JSON.stringify({ error: normalizedImages.error }));
+					return;
+				}
+				const images = normalizedImages.images ?? [];
 
 				// Honor a user-selected provider/model (first), still falling back
 				// across the free chain if it's rate-limited or blocked. The keyless
@@ -298,12 +370,15 @@ function devAIProxy(): Plugin {
 				const errors: string[] = [];
 				for (const name of order) {
 					if (!devProviderAvailable(name)) continue;
+					// Vision requests only run on the vision-capable Gemini leg.
+					if (images.length > 0 && name !== "gemini") continue;
 					try {
 						const result = await DEV_AI_PROVIDERS[name]({
 							prompt,
 							systemPrompt,
 							maxTokens: maxTokens as number | undefined,
 							model: name === normalizedPreferred ? requestedModel : undefined,
+							images,
 						});
 						res.statusCode = 200;
 						res.setHeader("Content-Type", "application/json");
@@ -330,7 +405,9 @@ function devAIProxy(): Plugin {
 						error:
 							errors.length > 0
 								? `All free AI providers failed. ${errors.join(" | ")}`
-								: "No free AI provider configured.",
+								: images.length > 0
+									? "Image analysis needs the Gemini leg (set GEMINI_API_KEY)."
+									: "No free AI provider configured.",
 						available: false,
 					}),
 				);

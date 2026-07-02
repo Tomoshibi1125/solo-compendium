@@ -789,6 +789,26 @@ export class AIServiceManager {
 		return Boolean(envApiKey?.trim());
 	}
 
+	/** Resolve an image URL (or pass through a data-URL) to a base64 data-URL. */
+	private async imageInputToDataUrl(input: string): Promise<string | null> {
+		if (input.startsWith("data:image/")) return input;
+		try {
+			const response = await fetch(input);
+			if (!response.ok) return null;
+			const blob = await response.blob();
+			const mimeType = blob.type.startsWith("image/") ? blob.type : "image/png";
+			const bytes = new Uint8Array(await blob.arrayBuffer());
+			let binary = "";
+			const chunkSize = 0x8000;
+			for (let i = 0; i < bytes.length; i += chunkSize) {
+				binary += String.fromCharCode(...bytes.subarray(i, i + chunkSize));
+			}
+			return `data:${mimeType};base64,${btoa(binary)}`;
+		} catch {
+			return null;
+		}
+	}
+
 	private async callGeminiNative(
 		service: AIService,
 		request: AIRequest,
@@ -800,7 +820,23 @@ export class AIServiceManager {
 				request.type,
 				request.context as Record<string, unknown> | undefined,
 			);
-			const prompt = this.formatInput(request);
+			let prompt = this.formatInput(request);
+
+			// analyze-image: the input is an image URL — attach it as multimodal
+			// data (the proxy routes vision requests down the Gemini leg).
+			let images: string[] | undefined;
+			if (request.type === "analyze-image") {
+				const dataUrl = await this.imageInputToDataUrl(String(request.input));
+				if (!dataUrl) {
+					return {
+						success: false,
+						error: "Could not load the image for analysis",
+					};
+				}
+				images = [dataUrl];
+				prompt =
+					"Analyze the attached image following the system instructions.";
+			}
 
 			// Honor the user's free-model choice. "auto" lets the server pick the
 			// best free model and fall back automatically; a specific choice is
@@ -828,6 +864,7 @@ export class AIServiceManager {
 						maxTokens: service.maxTokens ?? 4096,
 						...(preferredProvider ? { provider: preferredProvider } : {}),
 						...(preferredModelId ? { model: preferredModelId } : {}),
+						...(images ? { images } : {}),
 					}),
 				},
 				REQUEST_TIMEOUT_MS,

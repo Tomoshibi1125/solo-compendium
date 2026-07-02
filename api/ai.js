@@ -15,7 +15,9 @@
  * Hermes 3 405B for creative work); Pollinations is the keyless zero-config
  * fallback. (Groq intentionally excluded.)
  *
- * Request:  { prompt, systemPrompt?, maxTokens? }
+ * Request:  { prompt, systemPrompt?, maxTokens?, provider?, model?, images? }
+ *   images: optional base64 image data-URLs (or { mimeType, data } pairs) for
+ *   multimodal analysis — routed to the vision-capable Gemini leg only.
  * Response: { success: true, text, model, usage } | { error, available }
  */
 
@@ -38,6 +40,50 @@ const DEFAULT_OPENROUTER_MODELS = [
 	"openai/gpt-oss-120b:free",
 	"meta-llama/llama-3.3-70b-instruct:free",
 ];
+
+// ── Optional multimodal input ───────────────────────────────────────────────
+// `images` accepts base64 image data-URLs ("data:image/png;base64,…") or
+// { mimeType, data } pairs. Only the Gemini leg is vision-capable on the free
+// tier, so requests carrying images skip non-vision providers.
+const MAX_IMAGES = 4;
+const MAX_IMAGE_BASE64_CHARS = 6_000_000; // ≈4.5MB binary per image
+
+function normalizeImages(raw) {
+	if (raw === undefined || raw === null) return { images: [] };
+	if (!Array.isArray(raw)) return { error: "images must be an array" };
+	if (raw.length > MAX_IMAGES) {
+		return { error: `At most ${MAX_IMAGES} images per request` };
+	}
+	const images = [];
+	for (const entry of raw) {
+		let mimeType;
+		let data;
+		if (typeof entry === "string") {
+			const match = /^data:(image\/[\w.+-]+);base64,(.+)$/s.exec(entry);
+			if (!match) {
+				return { error: "Image strings must be base64 image data-URLs" };
+			}
+			mimeType = match[1];
+			data = match[2];
+		} else if (entry && typeof entry === "object") {
+			mimeType = entry.mimeType;
+			data = entry.data;
+		}
+		if (
+			typeof mimeType !== "string" ||
+			!mimeType.startsWith("image/") ||
+			typeof data !== "string" ||
+			!data
+		) {
+			return { error: "Each image needs an image/* mimeType and base64 data" };
+		}
+		if (data.length > MAX_IMAGE_BASE64_CHARS) {
+			return { error: "Image too large (max ~4.5MB each)" };
+		}
+		images.push({ mimeType, data });
+	}
+	return { images };
+}
 
 /** Ordered, deduped model attempt list: override → env → defaults. */
 function buildModelAttempts(override, envModel, defaults) {
@@ -89,7 +135,12 @@ function fetchWithTimeout(url, options, timeoutMs = REQUEST_TIMEOUT_MS) {
 // keyless, so it is always available.
 
 /** OpenRouter free models — OpenAI-compatible. Best-in-class free quality. */
-async function callOpenRouter({ prompt, systemPrompt, maxTokens, model: modelOverride }) {
+async function callOpenRouter({
+	prompt,
+	systemPrompt,
+	maxTokens,
+	model: modelOverride,
+}) {
 	const apiKey = process.env.OPENROUTER_API_KEY;
 	const models = buildModelAttempts(
 		modelOverride,
@@ -153,8 +204,14 @@ async function callOpenRouter({ prompt, systemPrompt, maxTokens, model: modelOve
 }
 callOpenRouter.available = () => Boolean(process.env.OPENROUTER_API_KEY);
 
-/** Google Gemini free tier (generous, strong). */
-async function callGemini({ prompt, systemPrompt, maxTokens, model: modelOverride }) {
+/** Google Gemini free tier (generous, strong). Vision-capable. */
+async function callGemini({
+	prompt,
+	systemPrompt,
+	maxTokens,
+	model: modelOverride,
+	images = [],
+}) {
 	const apiKey = process.env.GEMINI_API_KEY;
 	const models = buildModelAttempts(
 		modelOverride,
@@ -162,21 +219,37 @@ async function callGemini({ prompt, systemPrompt, maxTokens, model: modelOverrid
 		DEFAULT_GEMINI_MODELS,
 	);
 
+	const parts = [
+		{ text: prompt },
+		...images.map(({ mimeType, data }) => ({
+			inlineData: { mimeType, data },
+		})),
+	];
 	const geminiBody = {
-		contents: [{ role: "user", parts: [{ text: prompt }] }],
+		contents: [{ role: "user", parts }],
 		generationConfig: {
-			maxOutputTokens: Math.min(maxTokens || MAX_OUTPUT_TOKENS, MAX_OUTPUT_TOKENS),
+			maxOutputTokens: Math.min(
+				maxTokens || MAX_OUTPUT_TOKENS,
+				MAX_OUTPUT_TOKENS,
+			),
 			temperature: 0.8,
 		},
 		// Relaxed for TTRPG fantasy combat content.
 		safetySettings: [
 			{ category: "HARM_CATEGORY_HARASSMENT", threshold: "BLOCK_ONLY_HIGH" },
 			{ category: "HARM_CATEGORY_HATE_SPEECH", threshold: "BLOCK_ONLY_HIGH" },
-			{ category: "HARM_CATEGORY_SEXUALLY_EXPLICIT", threshold: "BLOCK_MEDIUM_AND_ABOVE" },
-			{ category: "HARM_CATEGORY_DANGEROUS_CONTENT", threshold: "BLOCK_ONLY_HIGH" },
+			{
+				category: "HARM_CATEGORY_SEXUALLY_EXPLICIT",
+				threshold: "BLOCK_MEDIUM_AND_ABOVE",
+			},
+			{
+				category: "HARM_CATEGORY_DANGEROUS_CONTENT",
+				threshold: "BLOCK_ONLY_HIGH",
+			},
 		],
 	};
-	if (systemPrompt) geminiBody.systemInstruction = { parts: [{ text: systemPrompt }] };
+	if (systemPrompt)
+		geminiBody.systemInstruction = { parts: [{ text: systemPrompt }] };
 
 	const errors = [];
 	for (const model of models) {
@@ -189,7 +262,9 @@ async function callGemini({ prompt, systemPrompt, maxTokens, model: modelOverrid
 			});
 			if (!response.ok) {
 				const err = await response.json().catch(() => ({}));
-				throw new Error(err?.error?.message || `Gemini error ${response.status}`);
+				throw new Error(
+					err?.error?.message || `Gemini error ${response.status}`,
+				);
 			}
 			const data = await response.json();
 			const text = data?.candidates?.[0]?.content?.parts?.[0]?.text || "";
@@ -211,19 +286,27 @@ async function callGemini({ prompt, systemPrompt, maxTokens, model: modelOverrid
 	throw new Error(errors.join(" | ") || "Gemini: no models attempted");
 }
 callGemini.available = () => Boolean(process.env.GEMINI_API_KEY);
+callGemini.supportsImages = true;
 
 /** Pollinations — keyless and free. Always-on last-resort fallback. */
-async function callPollinations({ prompt, systemPrompt, model: modelOverride }) {
+async function callPollinations({
+	prompt,
+	systemPrompt,
+	model: modelOverride,
+}) {
 	const model = modelOverride || process.env.POLLINATIONS_MODEL || "openai";
 	const messages = [];
 	if (systemPrompt) messages.push({ role: "system", content: systemPrompt });
 	messages.push({ role: "user", content: prompt });
 
-	const response = await fetchWithTimeout("https://text.pollinations.ai/openai", {
-		method: "POST",
-		headers: { "Content-Type": "application/json" },
-		body: JSON.stringify({ model, messages }),
-	});
+	const response = await fetchWithTimeout(
+		"https://text.pollinations.ai/openai",
+		{
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify({ model, messages }),
+		},
+	);
 	if (!response.ok) {
 		throw new Error(`Pollinations error ${response.status}`);
 	}
@@ -236,7 +319,8 @@ async function callPollinations({ prompt, systemPrompt, model: modelOverride }) 
 	} catch {
 		// plain text body — use as-is
 	}
-	if (!text || !text.trim()) throw new Error("Pollinations returned empty response");
+	if (!text || !text.trim())
+		throw new Error("Pollinations returned empty response");
 	return { text, model: `pollinations:${model}`, usage: {} };
 }
 callPollinations.available = () => true;
@@ -282,7 +366,8 @@ export default async function handler(req, res) {
 	const sharedSecret = process.env.AI_PROXY_SECRET || null;
 	let userId = null;
 	if (sharedSecret) {
-		if (bearer !== sharedSecret) return res.status(401).json({ error: "Unauthorized" });
+		if (bearer !== sharedSecret)
+			return res.status(401).json({ error: "Unauthorized" });
 	} else if (bearer) {
 		userId = bearer;
 	}
@@ -310,6 +395,7 @@ export default async function handler(req, res) {
 		maxTokens,
 		provider: preferredProvider,
 		model: preferredModel,
+		images: rawImages,
 	} = body;
 	if (!prompt || typeof prompt !== "string") {
 		return res.status(400).json({ error: "Missing required field: prompt" });
@@ -317,6 +403,12 @@ export default async function handler(req, res) {
 	if (prompt.length > 8000) {
 		return res.status(400).json({ error: "Prompt too long" });
 	}
+
+	const normalizedImages = normalizeImages(rawImages);
+	if (normalizedImages.error) {
+		return res.status(400).json({ error: normalizedImages.error });
+	}
+	const images = normalizedImages.images;
 
 	// Optional user-selected provider/model (e.g. when one is rate-limited).
 	const normalizedPreferred =
@@ -333,10 +425,18 @@ export default async function handler(req, res) {
 	for (const name of order) {
 		const provider = PROVIDERS[name];
 		if (!provider.available()) continue;
+		// Vision requests only run on vision-capable legs (Gemini).
+		if (images.length > 0 && !provider.supportsImages) continue;
 		try {
 			// The model override applies only to the provider the user chose.
 			const model = name === normalizedPreferred ? requestedModel : undefined;
-			const result = await provider({ prompt, systemPrompt, maxTokens, model });
+			const result = await provider({
+				prompt,
+				systemPrompt,
+				maxTokens,
+				model,
+				images,
+			});
 			return res.status(200).json({
 				success: true,
 				text: result.text,
@@ -355,7 +455,9 @@ export default async function handler(req, res) {
 		error:
 			errors.length > 0
 				? `All free AI providers failed. ${errors.join(" | ")}`
-				: "No free AI provider is configured.",
+				: images.length > 0
+					? "Image analysis needs the Gemini leg (set GEMINI_API_KEY)."
+					: "No free AI provider is configured.",
 		available: false,
 	});
 }

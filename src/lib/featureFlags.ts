@@ -1,12 +1,11 @@
 /**
  * Feature flags system for safely toggling new functionality.
  *
- * AI option points now ship ON by default: they run on the 100% FREE provider
- * chain (api/ai.js: Gemini 2.5 Flash → OpenRouter free → keyless Pollinations)
- * or the free Pollinations image backend (artPipeline). The one exception is
- * `aiAnalysisEnabled` (image/audio analysis), which needs the proxy to accept
- * multimodal input — kept off until that's wired. Override any flag via its
- * `VITE_FEATURE_*` env var.
+ * AI option points ship ON by default: they run on the 100% FREE provider
+ * chain (api/ai.js: Gemini 3.5 Flash ladder → OpenRouter free → keyless
+ * Pollinations) or the free Pollinations image backend (artPipeline). Image
+ * analysis rides the multimodal Gemini leg (`images` field on /api/ai).
+ * Override any flag via its `VITE_FEATURE_*` env var.
  */
 
 interface FeatureFlags {
@@ -26,7 +25,7 @@ const DEFAULT_FLAGS: FeatureFlags = {
 	dailyQuestEnabled: true,
 	artGenerationEnabled: true,
 	aiEnhancementEnabled: true,
-	aiAnalysisEnabled: false, // image/audio analysis — needs multimodal proxy (follow-up)
+	aiAnalysisEnabled: true, // image analysis via the multimodal /api/ai Gemini leg
 	aiTagsEnabled: true,
 	aiMoodDetectionEnabled: true,
 	aiStyleSuggestionsEnabled: true,

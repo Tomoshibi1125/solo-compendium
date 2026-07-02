@@ -117,6 +117,74 @@ describe("/api/ai free provider chain", () => {
 		});
 	});
 
+	it("routes vision requests down the Gemini leg with inlineData parts", async () => {
+		const fetchMock = vi
+			.fn<typeof fetch>()
+			.mockResolvedValueOnce(geminiSuccess("vision-success"));
+		vi.stubGlobal("fetch", fetchMock);
+
+		const res = makeRes();
+		await handler(
+			makeReq(
+				{
+					prompt: "Describe the artwork",
+					images: ["data:image/png;base64,aGVsbG8="],
+				},
+				"203.0.113.13",
+			),
+			res,
+		);
+
+		expect(res.statusCode).toBe(200);
+		expect(res.payload).toMatchObject({ success: true, provider: "gemini" });
+
+		const [, init] = fetchMock.mock.calls[0];
+		const body = JSON.parse(String(init?.body)) as {
+			contents: Array<{ parts: Array<Record<string, unknown>> }>;
+		};
+		expect(body.contents[0].parts).toEqual([
+			{ text: "Describe the artwork" },
+			{ inlineData: { mimeType: "image/png", data: "aGVsbG8=" } },
+		]);
+	});
+
+	it("never sends images to non-vision legs: no Gemini key → 502, not pollinations", async () => {
+		vi.stubEnv("GEMINI_API_KEY", "");
+		const fetchMock = vi.fn<typeof fetch>();
+		vi.stubGlobal("fetch", fetchMock);
+
+		const res = makeRes();
+		await handler(
+			makeReq(
+				{ prompt: "Describe", images: ["data:image/png;base64,aGVsbG8="] },
+				"203.0.113.14",
+			),
+			res,
+		);
+
+		expect(res.statusCode).toBe(502);
+		expect(String((res.payload as { error?: string }).error)).toContain(
+			"Gemini leg",
+		);
+		expect(fetchMock).not.toHaveBeenCalled();
+	});
+
+	it("rejects malformed image payloads with 400", async () => {
+		const fetchMock = vi.fn<typeof fetch>();
+		vi.stubGlobal("fetch", fetchMock);
+
+		for (const images of [
+			["not-a-data-url"],
+			[{ mimeType: "text/plain", data: "aGVsbG8=" }],
+			"data:image/png;base64,aGVsbG8=", // not an array
+		]) {
+			const res = makeRes();
+			await handler(makeReq({ prompt: "x", images }, "203.0.113.15"), res);
+			expect(res.statusCode).toBe(400);
+		}
+		expect(fetchMock).not.toHaveBeenCalled();
+	});
+
 	it("user-pinned openrouter model is tried before the default ladder", async () => {
 		vi.stubEnv("OPENROUTER_API_KEY", "test-or-key");
 		const fetchMock = vi
