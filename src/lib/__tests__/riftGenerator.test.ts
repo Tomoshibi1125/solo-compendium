@@ -177,11 +177,11 @@ describe("AI Custom System Prompt Passthrough", () => {
 		// The request should have been made — verify fetch was called
 		expect(fetchMock).toHaveBeenCalled();
 		// Pollinations uses POST with a JSON body containing messages
-		// The custom system prompt should appear in the "rift" role message
+		// The custom system prompt should appear in the "system" role message
 		const callInit = fetchMock.mock.calls[0][1] as RequestInit;
 		const body = JSON.parse(callInit.body as string);
 		const systemMessage = body.messages?.find(
-			(m: { role: string }) => m.role === "rift",
+			(m: { role: string }) => m.role === "system",
 		);
 		expect(systemMessage).toBeDefined();
 		expect(systemMessage.content).toBe(customPrompt);

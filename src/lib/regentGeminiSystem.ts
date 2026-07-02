@@ -294,7 +294,7 @@ export class RegentGeminiSystem {
 			const highestStat = RegentGeminiSystem.getHighestStat(abilities);
 
 			const response = await aiService.processRequest({
-				service: "gemini-native",
+				service: aiService.getConfiguration().defaultService,
 				type: "generate-regents",
 				input: {
 					character: {
@@ -444,7 +444,7 @@ export class RegentGeminiSystem {
 	}> {
 		try {
 			const response = await aiService.processRequest({
-				service: "gemini-native",
+				service: aiService.getConfiguration().defaultService,
 				type: "generate-fusion",
 				input: {
 					character: {
@@ -679,7 +679,7 @@ export class RegentQuestManager {
 
 		try {
 			const response = await aiService.processRequest({
-				service: "gemini-native",
+				service: aiService.getConfiguration().defaultService,
 				type: "generate-quests",
 				input: {
 					character: {

@@ -32,7 +32,7 @@ interface AIProviderSettingsProps {
 
 const FREE_PROVIDER_LABEL = "Best Free AI (Integrated, 100% free)";
 const FREE_PROVIDER_ENDPOINT = "Integrated Server-side Proxy";
-const FREE_PROVIDER_MODEL = "gemini-2.5-flash";
+const FREE_PROVIDER_MODEL = "gemini-3.5-flash";
 const FREE_FALLBACK_LABEL = "OpenRouter free models, then keyless Pollinations";
 
 const FREE_MODEL_OPTIONS: {
@@ -47,13 +47,13 @@ const FREE_MODEL_OPTIONS: {
 	},
 	{
 		value: "gemini",
-		label: "Google Gemini 2.5 Flash",
-		hint: "Best overall free model — ~1,500 requests/day, no card.",
+		label: "Google Gemini 3.5 Flash",
+		hint: "Best overall free model — generous daily quota, no card.",
 	},
 	{
 		value: "openrouter",
 		label: "OpenRouter (free models)",
-		hint: "DeepSeek / Llama / Qwen free models — stricter limits, lots of variety.",
+		hint: "Nemotron 3 Ultra / Hermes 3 405B / GPT-OSS free models — stricter limits, strong variety.",
 	},
 	{
 		value: "pollinations",
@@ -108,7 +108,7 @@ export function AIProviderSettings({ className }: AIProviderSettingsProps) {
 					Default AI: {FREE_PROVIDER_LABEL} ({FREE_PROVIDER_ENDPOINT})
 					<br />
 					Best-in-class free chain:{" "}
-					<code className="text-xs">{FREE_PROVIDER_MODEL}</code> (Gemini 2.5
+					<code className="text-xs">{FREE_PROVIDER_MODEL}</code> (Gemini 3.5
 					Flash) → {FREE_FALLBACK_LABEL}.
 					<br />
 					No setup or API key needed — it just works, on every device.

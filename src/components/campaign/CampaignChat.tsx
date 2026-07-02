@@ -43,7 +43,23 @@ export function CampaignChat({ campaignId }: CampaignChatProps) {
 			if (isNarratingMsg) return;
 			try {
 				setIsNarratingMsg(msg.id);
-				const narration = await narrateCombatEvent(msg.content);
+				const characterNames = [
+					...new Set(
+						messages
+							.slice(-10)
+							.map((m) => m.character_name)
+							.filter((name): name is string => Boolean(name)),
+					),
+				];
+				const recentContext = messages
+					.filter((m) => m.id !== msg.id)
+					.slice(-3)
+					.map((m) => m.content)
+					.join(" | ");
+				const narration = await narrateCombatEvent(msg.content, {
+					characterNames,
+					recentContext,
+				});
 
 				await sendMessage.mutateAsync({
 					campaignId,
@@ -56,7 +72,7 @@ export function CampaignChat({ campaignId }: CampaignChatProps) {
 				setIsNarratingMsg(null);
 			}
 		},
-		[isNarratingMsg, sendMessage, campaignId],
+		[isNarratingMsg, sendMessage, campaignId, messages],
 	);
 
 	// Get current user ID

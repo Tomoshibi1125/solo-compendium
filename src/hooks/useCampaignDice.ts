@@ -2,7 +2,7 @@ import { useCallback } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import type { Database, Json } from "@/integrations/supabase/types";
-import { AIServiceManager } from "@/lib/ai/aiService";
+import { aiService } from "@/lib/ai/aiService";
 import { useAuth } from "@/lib/auth/authContext";
 import { enqueueSyncItem } from "@/lib/syncManager";
 
@@ -116,14 +116,13 @@ export function useCampaignDice() {
 						// Fire and forget the AI narrative generation
 						(async () => {
 							try {
-								const aiManager = new AIServiceManager();
 								const prompt = `A character just performed an attack roll.
 Context: ${rollData.context || "Standard Attack"}
 Roll Result: ${rollData.result} (Formula: ${rollData.dice_formula})
 Generate a brief (1-2 sentences), hyper-flavorful, cinematic description of this attack occurring in the dark-fantasy Rift Ascendant universe. Do not include mechanical numbers in the narrative.`;
 
-								const response = await aiManager.processRequest({
-									service: "gemini-native",
+								const response = await aiService.processRequest({
+									service: aiService.getConfiguration().defaultService,
 									type: "generate-content",
 									input: prompt,
 								});

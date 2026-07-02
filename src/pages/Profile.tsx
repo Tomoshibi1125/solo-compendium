@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import { useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { AIProviderSettings } from "@/components/ai/AIProviderSettings";
 import { Layout } from "@/components/layout/Layout";
 import { AscendantText, RiftHeading } from "@/components/ui/AscendantText";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
@@ -346,6 +347,9 @@ export default function Profile() {
 						</div>
 					</AscendantWindow>
 				)}
+
+				{/* Embedded AI provider */}
+				<AIProviderSettings />
 
 				{/* Account Actions */}
 				<AscendantWindow title="ACCOUNT">

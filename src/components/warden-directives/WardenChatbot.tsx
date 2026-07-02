@@ -13,7 +13,8 @@ import {
 } from "@/components/ui/sheet";
 import { useToast } from "@/hooks/use-toast";
 import { useUserToolState } from "@/hooks/useToolState";
-import { AIServiceManager } from "@/lib/ai/aiService";
+import { aiService } from "@/lib/ai/aiService";
+import { buildRaSystemPrompt } from "@/lib/ai/raCanonPrompt";
 
 interface ChatMessage {
 	id: string;
@@ -34,8 +35,6 @@ export function WardenChatbot() {
 		initialState: { npc: null },
 		storageKey: "solo-compendium.Warden-tools.npc-generator.v1",
 	});
-
-	const aiManager = useRef(new AIServiceManager());
 
 	useEffect(() => {
 		if (scrollRef.current) {
@@ -66,11 +65,12 @@ export function WardenChatbot() {
 				)
 				.join("\n");
 
-			const fullPrompt = `You are "The Warden", an omnipresent, dark-fantasy AI assistant for a Warden running a game in the "Rift Ascendant" universe.
-If the Warden asks for stats, provide them as a valid JSON block enclosed in \`\`\`json ... \`\`\`. The JSON should match this interface:
+			const systemPrompt = buildRaSystemPrompt(
+				"warden-chat",
+				`If the Warden asks for NPC stats, provide them as a valid JSON block enclosed in \`\`\`json ... \`\`\`. The JSON should match this interface:
 {
   "name": "String",
-  "rank": "E, D, C, B, A, or S",
+  "rank": "E, D, C, B, A, S, or SS",
   "role": "String",
   "personality": "String",
   "motivation": "String",
@@ -78,16 +78,19 @@ If the Warden asks for stats, provide them as a valid JSON block enclosed in \`\
   "quirk": "String",
   "description": "String"
 }
-Otherwise, answer their questions with flavorful, concise advice.
-Recent history:
+Otherwise, answer questions with flavorful, concise advice. Markdown is allowed.`,
+			);
+
+			const fullPrompt = `Recent history:
 ${promptContext}
 
 Warden: ${userMessage.content}`;
 
-			const response = await aiManager.current.processRequest({
-				service: "gemini-proxy",
+			const response = await aiService.processRequest({
+				service: aiService.getConfiguration().defaultService,
 				type: "generate-content",
 				input: fullPrompt,
+				context: { customSystemPrompt: systemPrompt },
 			});
 
 			if (response.success && typeof response.data === "string") {

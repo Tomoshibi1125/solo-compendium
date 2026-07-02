@@ -194,6 +194,79 @@ describe("AIServiceManager free-first integration", () => {
 		expect(urls.some((url) => url.endsWith("/api/generate"))).toBe(true);
 	});
 
+	it("sends the system prompt with role 'system' on the pollinations legacy path", async () => {
+		const pollinationsService: AIService = {
+			id: "pollinations",
+			name: "Pollinations",
+			type: "pollinations",
+			capabilities: ["generate-content"],
+			endpoint: "https://text.pollinations.ai",
+			model: "model-a",
+			maxTokens: 256,
+			temperature: 0.3,
+			enabled: true,
+		};
+
+		const manager = new AIServiceManager(
+			buildConfig([pollinationsService], "pollinations"),
+		);
+		const fetchMock = vi
+			.fn<typeof fetch>()
+			.mockResolvedValueOnce(textResponse("ok", 200));
+		vi.stubGlobal("fetch", fetchMock);
+
+		await manager.processRequest({
+			service: "pollinations",
+			type: "generate-content",
+			input: "Flavor text",
+		});
+
+		const body = JSON.parse(String(fetchMock.mock.calls[0][1]?.body)) as {
+			messages: Array<{ role: string }>;
+		};
+		// Regression guard: a find-replace once turned this into role "rift",
+		// which OpenAI-compatible endpoints reject or ignore.
+		expect(body.messages[0].role).toBe("system");
+		expect(body.messages[1].role).toBe("user");
+	});
+
+	it("sends the system prompt with role 'system' on the custom OpenAI-compatible path", async () => {
+		const customService: AIService = {
+			id: "user-custom",
+			name: "User API (OpenAI-Compatible)",
+			type: "custom",
+			capabilities: ["generate-content"],
+			apiKey: "test-key",
+			endpoint: "https://api.openai.com/v1",
+			model: "gpt-4o-mini",
+			maxTokens: 512,
+			temperature: 0.4,
+			enabled: true,
+		};
+
+		const manager = new AIServiceManager(
+			buildConfig([customService], customService.id),
+		);
+		const fetchMock = vi.fn<typeof fetch>().mockResolvedValueOnce(
+			jsonResponse({
+				choices: [{ message: { content: "ok" } }],
+			}),
+		);
+		vi.stubGlobal("fetch", fetchMock);
+
+		await manager.processRequest({
+			service: customService.id,
+			type: "generate-content",
+			input: "Flavor text",
+		});
+
+		const body = JSON.parse(String(fetchMock.mock.calls[0][1]?.body)) as {
+			messages: Array<{ role: string }>;
+		};
+		expect(body.messages[0].role).toBe("system");
+		expect(body.messages[1].role).toBe("user");
+	});
+
 	it("uses timeout-aware fetch for custom provider requests", async () => {
 		const customService: AIService = {
 			id: "user-custom",

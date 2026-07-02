@@ -44,7 +44,7 @@ const AI_CONTENT_PROMPTS = {
 	location:
 		"Describe a detailed location within the world of Rift Ascendant (e.g., Neon District, Umbral Forest, Rift Interior). Include atmosphere, features, secrets, and interactive elements.",
 	quest:
-		"Design a Directive (Quest) for Ascendants. Include title, rank (E through S), objectives, NPCs involved, complications, and rewards. Align with Warden terminology.",
+		"Design a Directive (Quest) for Ascendants. Include title, rank (E through SS), objectives, NPCs involved, complications, and rewards. Align with Warden terminology.",
 	dialogue:
 		"Write dialogue between Ascendants or with the Rift interface. Include personality, emotion, and plot advancement aligned with the high-stakes setting.",
 	item: "Create a System-grade item (Equipment, Rune, or Relic) with description, properties, history, and game mechanics.",
@@ -60,9 +60,8 @@ export class AIContentGenerator {
 		const enhancedPrompt = this.buildEnhancedPrompt(prompt, options);
 
 		try {
-			// Enforce Gemini 2.0 authoritative pipeline
 			const response = await aiService.processRequest({
-				service: "gemini-native",
+				service: aiService.getConfiguration().defaultService,
 				type: "generate-content",
 				input: enhancedPrompt,
 				context: {

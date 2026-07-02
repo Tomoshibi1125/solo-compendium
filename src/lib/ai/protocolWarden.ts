@@ -1,4 +1,5 @@
 import { aiService } from "@/lib/ai/aiService";
+import { buildRaSystemPrompt } from "@/lib/ai/raCanonPrompt";
 import { AppError } from "@/lib/appError";
 
 interface ProtocolWardenContext {
@@ -17,20 +18,12 @@ export async function narrateCombatEvent(
 ): Promise<string> {
 	const config = aiService.getConfiguration();
 
-	const prompt = `You are the AI Warden of a Rift Ascendant campaign. 
-Your role is to translate mechanical game actions into evocative, concise narrative descriptions.
-
-MECHANICAL EVENT:
+	const prompt = `MECHANICAL EVENT:
 "${mechanicalText}"
 
+${context?.campaignName ? `CAMPAIGN: ${context.campaignName}` : ""}
 ${context?.characterNames?.length ? `CHARACTERS PRESENT: ${context.characterNames.join(", ")}` : ""}
 ${context?.recentContext ? `RECENT CONTEXT: ${context.recentContext}` : ""}
-
-INSTRUCTIONS:
-1. Briefly narrate the outcome of this action in 1 to 2 short sentences.
-2. Keep the tone dramatic, slightly sci-fantasy / litRPG ('Rift Ascendant' thematic).
-3. Do not include mechanics (numbers, dice, stats) in your response — only the purely narrative translation.
-4. If the player misses, describe how the enemy deflected or dodged. If a hit, describe the impact.
 
 Output ONLY the flavor text.`;
 
@@ -42,6 +35,7 @@ Output ONLY the flavor text.`;
 			context: {
 				contentType: "narration",
 				universe: "Rift Ascendant",
+				customSystemPrompt: buildRaSystemPrompt("narrator"),
 			},
 		});
 

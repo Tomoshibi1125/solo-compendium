@@ -15,12 +15,39 @@ dotenvConfig();
  */
 // Dev mirror of the production /api/ai free provider chain (api/ai.js), so local
 // dev gets the same best-in-class free model AND works with zero config via the
-// keyless Pollinations fallback.
-const DEV_GEMINI_MODEL = process.env.GEMINI_MODEL || "gemini-2.5-flash";
-const DEV_OPENROUTER_MODEL =
-	process.env.OPENROUTER_MODEL || "deepseek/deepseek-chat-v3-0324:free";
+// keyless Pollinations fallback. Model ladders mirror api/ai.js (July 2026):
+// each leg tries its models in order and falls through on any per-model error.
+const DEV_GEMINI_MODELS = [
+	"gemini-3.5-flash",
+	"gemini-3-flash-preview",
+	"gemini-2.5-flash",
+];
+const DEV_OPENROUTER_MODELS = [
+	"nvidia/nemotron-3-ultra-550b-a55b:free",
+	"nousresearch/hermes-3-llama-3.1-405b:free",
+	"nvidia/nemotron-3-super-120b-a12b:free",
+	"openai/gpt-oss-120b:free",
+	"meta-llama/llama-3.3-70b-instruct:free",
+];
 const DEV_POLLINATIONS_MODEL = process.env.POLLINATIONS_MODEL || "openai";
 const DEV_AI_TIMEOUT_MS = 30_000;
+
+/** Ordered, deduped model attempt list: override → env → defaults. */
+function devBuildModelAttempts(
+	override: string | undefined,
+	envModel: string | undefined,
+	defaults: string[],
+): string[] {
+	const seen = new Set<string>();
+	const out: string[] = [];
+	for (const model of [override, envModel, ...defaults]) {
+		const trimmed = typeof model === "string" ? model.trim() : "";
+		if (!trimmed || seen.has(trimmed)) continue;
+		seen.add(trimmed);
+		out.push(trimmed);
+	}
+	return out;
+}
 
 type DevAIResult = {
 	text: string;
@@ -42,35 +69,46 @@ async function devCallGemini({
 }: DevAIArgs): Promise<DevAIResult> {
 	const apiKey = process.env.GEMINI_API_KEY;
 	if (!apiKey) throw new Error("GEMINI_API_KEY not set");
-	const model = modelOverride || DEV_GEMINI_MODEL;
+	const models = devBuildModelAttempts(
+		modelOverride,
+		process.env.GEMINI_MODEL,
+		DEV_GEMINI_MODELS,
+	);
 	const ai = new GoogleGenAI({ apiKey });
-	const controller = new AbortController();
-	const timer = setTimeout(() => controller.abort(), DEV_AI_TIMEOUT_MS);
-	try {
-		const response = await ai.models.generateContent({
-			model,
-			contents: prompt,
-			config: {
-				systemInstruction: systemPrompt,
-				maxOutputTokens: Math.min(maxTokens || 4096, 4096),
-				temperature: 0.8,
-				abortSignal: controller.signal,
-			},
-		});
-		const text = response.text || "";
-		if (!text.trim()) throw new Error("Gemini empty response");
-		return {
-			text,
-			model,
-			usage: {
-				promptTokens: response.usageMetadata?.promptTokenCount,
-				completionTokens: response.usageMetadata?.candidatesTokenCount,
-				totalTokens: response.usageMetadata?.totalTokenCount,
-			},
-		};
-	} finally {
-		clearTimeout(timer);
+	const errors: string[] = [];
+	for (const model of models) {
+		const controller = new AbortController();
+		const timer = setTimeout(() => controller.abort(), DEV_AI_TIMEOUT_MS);
+		try {
+			const response = await ai.models.generateContent({
+				model,
+				contents: prompt,
+				config: {
+					systemInstruction: systemPrompt,
+					maxOutputTokens: Math.min(maxTokens || 4096, 4096),
+					temperature: 0.8,
+					abortSignal: controller.signal,
+				},
+			});
+			const text = response.text || "";
+			if (!text.trim()) throw new Error("Gemini empty response");
+			return {
+				text,
+				model,
+				usage: {
+					promptTokens: response.usageMetadata?.promptTokenCount,
+					completionTokens: response.usageMetadata?.candidatesTokenCount,
+					totalTokens: response.usageMetadata?.totalTokenCount,
+				},
+			};
+		} catch (err) {
+			errors.push(`${model}: ${err instanceof Error ? err.message : "error"}`);
+			// fall through to the next free model
+		} finally {
+			clearTimeout(timer);
+		}
 	}
+	throw new Error(errors.join(" | ") || "Gemini: no models attempted");
 }
 
 async function devCallOpenRouter({
@@ -81,35 +119,48 @@ async function devCallOpenRouter({
 }: DevAIArgs): Promise<DevAIResult> {
 	const apiKey = process.env.OPENROUTER_API_KEY;
 	if (!apiKey) throw new Error("OPENROUTER_API_KEY not set");
-	const model = modelOverride || DEV_OPENROUTER_MODEL;
+	const models = devBuildModelAttempts(
+		modelOverride,
+		process.env.OPENROUTER_MODEL,
+		DEV_OPENROUTER_MODELS,
+	);
 	const messages: Array<{ role: string; content: string }> = [];
 	if (systemPrompt) messages.push({ role: "system", content: systemPrompt });
 	messages.push({ role: "user", content: prompt });
-	const response = await fetch(
-		"https://openrouter.ai/api/v1/chat/completions",
-		{
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-				Authorization: `Bearer ${apiKey}`,
-				"X-Title": "Rift Ascendant",
-			},
-			body: JSON.stringify({
-				model,
-				messages,
-				max_tokens: Math.min(maxTokens || 4096, 4096),
-				temperature: 0.8,
-			}),
-		},
-	);
-	if (!response.ok) throw new Error(`OpenRouter error ${response.status}`);
-	const data = (await response.json()) as {
-		model?: string;
-		choices?: Array<{ message?: { content?: string } }>;
-	};
-	const text = data?.choices?.[0]?.message?.content || "";
-	if (!text.trim()) throw new Error("OpenRouter empty response");
-	return { text, model: data?.model || model };
+	const errors: string[] = [];
+	for (const model of models) {
+		try {
+			const response = await fetch(
+				"https://openrouter.ai/api/v1/chat/completions",
+				{
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json",
+						Authorization: `Bearer ${apiKey}`,
+						"X-Title": "Rift Ascendant",
+					},
+					body: JSON.stringify({
+						model,
+						messages,
+						max_tokens: Math.min(maxTokens || 4096, 4096),
+						temperature: 0.8,
+					}),
+				},
+			);
+			if (!response.ok) throw new Error(`OpenRouter error ${response.status}`);
+			const data = (await response.json()) as {
+				model?: string;
+				choices?: Array<{ message?: { content?: string } }>;
+			};
+			const text = data?.choices?.[0]?.message?.content || "";
+			if (!text.trim()) throw new Error("OpenRouter empty response");
+			return { text, model: data?.model || model };
+		} catch (err) {
+			errors.push(`${model}: ${err instanceof Error ? err.message : "error"}`);
+			// fall through to the next free model
+		}
+	}
+	throw new Error(errors.join(" | ") || "OpenRouter: no models attempted");
 }
 
 async function devCallPollinations({

@@ -9,10 +9,11 @@
  * Order is configurable via AI_PROVIDER_ORDER (comma-separated). Default favours
  * the best-in-class free model first, then alternatives, then a keyless fallback:
  *     gemini, openrouter, pollinations
- * Gemini 2.5 Flash leads: independently rated the most capable zero-cost model
- * in 2026 (well-rounded quality, native JSON-schema output, ~1.5k req/day free,
- * 1M context, no card). OpenRouter adds free model variety; Pollinations is the
- * keyless zero-config fallback. (Groq intentionally excluded.)
+ * Gemini 3.5 Flash leads (Google's free-tier flagship since May 2026; JSON-schema
+ * output, 1M context, no card), with older Flash models as in-leg fallbacks.
+ * OpenRouter adds the strongest current :free models (Nemotron 3 Ultra 550B,
+ * Hermes 3 405B for creative work); Pollinations is the keyless zero-config
+ * fallback. (Groq intentionally excluded.)
  *
  * Request:  { prompt, systemPrompt?, maxTokens? }
  * Response: { success: true, text, model, usage } | { error, available }
@@ -20,6 +21,36 @@
 
 const MAX_OUTPUT_TOKENS = 4096;
 const REQUEST_TIMEOUT_MS = 30000;
+
+// ── Best-in-class FREE model ladders (verified July 2026) ───────────────────
+// Each leg tries its models in order and falls through on any per-model error
+// (404 model-not-found, rate limit, empty response), so accounts without the
+// newest model still work. GEMINI_MODEL / OPENROUTER_MODEL env vars prepend.
+const DEFAULT_GEMINI_MODELS = [
+	"gemini-3.5-flash", // Google's free-tier flagship (May 2026)
+	"gemini-3-flash-preview",
+	"gemini-2.5-flash",
+];
+const DEFAULT_OPENROUTER_MODELS = [
+	"nvidia/nemotron-3-ultra-550b-a55b:free", // strongest free general model
+	"nousresearch/hermes-3-llama-3.1-405b:free", // best free creative/roleplay
+	"nvidia/nemotron-3-super-120b-a12b:free",
+	"openai/gpt-oss-120b:free",
+	"meta-llama/llama-3.3-70b-instruct:free",
+];
+
+/** Ordered, deduped model attempt list: override → env → defaults. */
+function buildModelAttempts(override, envModel, defaults) {
+	const seen = new Set();
+	const out = [];
+	for (const model of [override, envModel, ...defaults]) {
+		const trimmed = typeof model === "string" ? model.trim() : "";
+		if (!trimmed || seen.has(trimmed)) continue;
+		seen.add(trimmed);
+		out.push(trimmed);
+	}
+	return out;
+}
 
 // ── Rate limiting (per Vercel cold-start instance) ──────────────────────────
 const rateBuckets = new Map();
@@ -60,58 +91,76 @@ function fetchWithTimeout(url, options, timeoutMs = REQUEST_TIMEOUT_MS) {
 /** OpenRouter free models — OpenAI-compatible. Best-in-class free quality. */
 async function callOpenRouter({ prompt, systemPrompt, maxTokens, model: modelOverride }) {
 	const apiKey = process.env.OPENROUTER_API_KEY;
-	const model =
-		modelOverride ||
-		process.env.OPENROUTER_MODEL ||
-		"deepseek/deepseek-chat-v3-0324:free";
+	const models = buildModelAttempts(
+		modelOverride,
+		process.env.OPENROUTER_MODEL,
+		DEFAULT_OPENROUTER_MODELS,
+	);
 	const messages = [];
 	if (systemPrompt) messages.push({ role: "system", content: systemPrompt });
 	messages.push({ role: "user", content: prompt });
 
-	const response = await fetchWithTimeout(
-		"https://openrouter.ai/api/v1/chat/completions",
-		{
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-				Authorization: `Bearer ${apiKey}`,
-				// Optional attribution headers (recommended by OpenRouter).
-				"HTTP-Referer": process.env.PUBLIC_SITE_URL || "https://rift-ascendant.app",
-				"X-Title": "Rift Ascendant",
-			},
-			body: JSON.stringify({
-				model,
-				messages,
-				max_tokens: Math.min(maxTokens || MAX_OUTPUT_TOKENS, MAX_OUTPUT_TOKENS),
-				temperature: 0.8,
-			}),
-		},
-	);
-	if (!response.ok) {
-		const err = await response.json().catch(() => ({}));
-		throw new Error(err?.error?.message || `OpenRouter error ${response.status}`);
+	const errors = [];
+	for (const model of models) {
+		try {
+			const response = await fetchWithTimeout(
+				"https://openrouter.ai/api/v1/chat/completions",
+				{
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json",
+						Authorization: `Bearer ${apiKey}`,
+						// Optional attribution headers (recommended by OpenRouter).
+						"HTTP-Referer":
+							process.env.PUBLIC_SITE_URL || "https://rift-ascendant.app",
+						"X-Title": "Rift Ascendant",
+					},
+					body: JSON.stringify({
+						model,
+						messages,
+						max_tokens: Math.min(
+							maxTokens || MAX_OUTPUT_TOKENS,
+							MAX_OUTPUT_TOKENS,
+						),
+						temperature: 0.8,
+					}),
+				},
+			);
+			if (!response.ok) {
+				const err = await response.json().catch(() => ({}));
+				throw new Error(
+					err?.error?.message || `OpenRouter error ${response.status}`,
+				);
+			}
+			const data = await response.json();
+			const text = data?.choices?.[0]?.message?.content || "";
+			if (!text.trim()) throw new Error("OpenRouter returned empty response");
+			return {
+				text,
+				model: data?.model || model,
+				usage: {
+					promptTokens: data?.usage?.prompt_tokens,
+					completionTokens: data?.usage?.completion_tokens,
+					totalTokens: data?.usage?.total_tokens,
+				},
+			};
+		} catch (err) {
+			errors.push(`${model}: ${err?.message || "error"}`);
+			// fall through to the next free model
+		}
 	}
-	const data = await response.json();
-	const text = data?.choices?.[0]?.message?.content || "";
-	if (!text.trim()) throw new Error("OpenRouter returned empty response");
-	return {
-		text,
-		model: data?.model || model,
-		usage: {
-			promptTokens: data?.usage?.prompt_tokens,
-			completionTokens: data?.usage?.completion_tokens,
-			totalTokens: data?.usage?.total_tokens,
-		},
-	};
+	throw new Error(errors.join(" | ") || "OpenRouter: no models attempted");
 }
 callOpenRouter.available = () => Boolean(process.env.OPENROUTER_API_KEY);
 
 /** Google Gemini free tier (generous, strong). */
 async function callGemini({ prompt, systemPrompt, maxTokens, model: modelOverride }) {
 	const apiKey = process.env.GEMINI_API_KEY;
-	// Best-in-class free model (2026). Override via GEMINI_MODEL or per-request.
-	const model = modelOverride || process.env.GEMINI_MODEL || "gemini-2.5-flash";
-	const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`;
+	const models = buildModelAttempts(
+		modelOverride,
+		process.env.GEMINI_MODEL,
+		DEFAULT_GEMINI_MODELS,
+	);
 
 	const geminiBody = {
 		contents: [{ role: "user", parts: [{ text: prompt }] }],
@@ -129,27 +178,37 @@ async function callGemini({ prompt, systemPrompt, maxTokens, model: modelOverrid
 	};
 	if (systemPrompt) geminiBody.systemInstruction = { parts: [{ text: systemPrompt }] };
 
-	const response = await fetchWithTimeout(`${endpoint}?key=${apiKey}`, {
-		method: "POST",
-		headers: { "Content-Type": "application/json" },
-		body: JSON.stringify(geminiBody),
-	});
-	if (!response.ok) {
-		const err = await response.json().catch(() => ({}));
-		throw new Error(err?.error?.message || `Gemini error ${response.status}`);
+	const errors = [];
+	for (const model of models) {
+		const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`;
+		try {
+			const response = await fetchWithTimeout(`${endpoint}?key=${apiKey}`, {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify(geminiBody),
+			});
+			if (!response.ok) {
+				const err = await response.json().catch(() => ({}));
+				throw new Error(err?.error?.message || `Gemini error ${response.status}`);
+			}
+			const data = await response.json();
+			const text = data?.candidates?.[0]?.content?.parts?.[0]?.text || "";
+			if (!text.trim()) throw new Error("Gemini returned empty response");
+			return {
+				text,
+				model,
+				usage: {
+					promptTokens: data?.usageMetadata?.promptTokenCount,
+					completionTokens: data?.usageMetadata?.candidatesTokenCount,
+					totalTokens: data?.usageMetadata?.totalTokenCount,
+				},
+			};
+		} catch (err) {
+			errors.push(`${model}: ${err?.message || "error"}`);
+			// fall through to the next free model
+		}
 	}
-	const data = await response.json();
-	const text = data?.candidates?.[0]?.content?.parts?.[0]?.text || "";
-	if (!text.trim()) throw new Error("Gemini returned empty response");
-	return {
-		text,
-		model,
-		usage: {
-			promptTokens: data?.usageMetadata?.promptTokenCount,
-			completionTokens: data?.usageMetadata?.candidatesTokenCount,
-			totalTokens: data?.usageMetadata?.totalTokenCount,
-		},
-	};
+	throw new Error(errors.join(" | ") || "Gemini: no models attempted");
 }
 callGemini.available = () => Boolean(process.env.GEMINI_API_KEY);
 

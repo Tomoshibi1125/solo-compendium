@@ -151,7 +151,7 @@ export interface AIConfiguration {
 export const DEFAULT_AI_SERVICES: AIService[] = [
 	{
 		id: "gemini-native",
-		name: "Free AI — Gemini 2.5 Flash + free fallbacks",
+		name: "Free AI — Gemini 3.5 Flash + free fallbacks",
 		type: "gemini-native",
 		capabilities: [
 			"enhance-prompt",
