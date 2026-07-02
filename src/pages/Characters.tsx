@@ -47,6 +47,7 @@ import {
 import { useToast } from "@/hooks/use-toast";
 import { useCharacters, useDeleteCharacter } from "@/hooks/useCharacters";
 import { MAX_CHARACTERS_PER_USER } from "@/lib/characterLimits";
+import { hunterRankStyleForLevel } from "@/lib/hunterRank";
 import { cn } from "@/lib/utils";
 import { formatRegentVernacular } from "@/lib/vernacular";
 
@@ -144,48 +145,8 @@ const Characters = () => {
 		}
 	};
 
-	// Get ascendant rank based on level
-	const getHunterRank = (level: number) => {
-		if (level >= 17)
-			return {
-				rank: "S",
-				color: "text-gate-s",
-				bg: "bg-gate-s/20",
-				border: "border-gate-s/50",
-				glow: "shadow-gate-s-glow/30",
-			};
-		if (level >= 13)
-			return {
-				rank: "A",
-				color: "text-gate-a",
-				bg: "bg-gate-a/20",
-				border: "border-gate-a/50",
-				glow: "shadow-gate-a-glow/30",
-			};
-		if (level >= 9)
-			return {
-				rank: "B",
-				color: "text-gate-b",
-				bg: "bg-gate-b/20",
-				border: "border-gate-b/50",
-				glow: "shadow-gate-b-glow/30",
-			};
-		if (level >= 5)
-			return {
-				rank: "C",
-				color: "text-gate-c",
-				bg: "bg-gate-c/20",
-				border: "border-gate-c/50",
-				glow: "shadow-gate-c-glow/30",
-			};
-		return {
-			rank: "D",
-			color: "text-gate-d",
-			bg: "bg-gate-d/20",
-			border: "border-gate-d/50",
-			glow: "shadow-gate-d-glow/30",
-		};
-	};
+	// Get ascendant rank based on level (canonical ladder in lib/hunterRank)
+	const getHunterRank = hunterRankStyleForLevel;
 
 	return (
 		<Layout>

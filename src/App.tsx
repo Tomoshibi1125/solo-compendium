@@ -82,6 +82,7 @@ const MeridianCity = lazy(() => import("./pages/compendium/MeridianCity"));
 const CompendiumDetail = lazy(
 	() => import("./pages/compendium/CompendiumDetail"),
 );
+const Bureau = lazy(() => import("./pages/Bureau"));
 const Characters = lazy(() => import("./pages/Characters"));
 const CharacterSheet = lazy(
 	() => import("./components/character-v2/CharacterSheetV2"),
@@ -753,6 +754,15 @@ const AppContent = () => {
 					element={
 						<Suspense fallback={<PageLoader />}>
 							<FieldRoster />
+						</Suspense>
+					}
+				/>
+				{/* Bureau hub */}
+				<Route
+					path="/bureau"
+					element={
+						<Suspense fallback={<PageLoader />}>
+							<Bureau />
 						</Suspense>
 					}
 				/>

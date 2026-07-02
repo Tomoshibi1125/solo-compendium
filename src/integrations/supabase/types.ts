@@ -327,6 +327,56 @@ export type Database = {
 				};
 				Relationships: [];
 			};
+			bureau_contracts: {
+				Row: {
+					accepted_at: string | null;
+					accepted_by_guild_id: string | null;
+					created_at: string | null;
+					id: string;
+					kind: string;
+					publisher_user_id: string;
+					rank: string;
+					source_quest_id: string | null;
+					status: string;
+					summary: string | null;
+					title: string;
+				};
+				Insert: {
+					accepted_at?: string | null;
+					accepted_by_guild_id?: string | null;
+					created_at?: string | null;
+					id?: string;
+					kind?: string;
+					publisher_user_id: string;
+					rank?: string;
+					source_quest_id?: string | null;
+					status?: string;
+					summary?: string | null;
+					title: string;
+				};
+				Update: {
+					accepted_at?: string | null;
+					accepted_by_guild_id?: string | null;
+					created_at?: string | null;
+					id?: string;
+					kind?: string;
+					publisher_user_id?: string;
+					rank?: string;
+					source_quest_id?: string | null;
+					status?: string;
+					summary?: string | null;
+					title?: string;
+				};
+				Relationships: [
+					{
+						foreignKeyName: "bureau_contracts_accepted_by_guild_id_fkey";
+						columns: ["accepted_by_guild_id"];
+						isOneToOne: false;
+						referencedRelation: "guilds";
+						referencedColumns: ["id"];
+					},
+				];
+			};
 			campaign_character_shares: {
 				Row: {
 					campaign_id: string;
@@ -9128,6 +9178,23 @@ export type Database = {
 					p_role?: string;
 				};
 				Returns: string;
+			};
+			accept_bureau_contract: {
+				Args: {
+					p_contract_id: string;
+					p_guild_id: string;
+				};
+				Returns: string;
+			};
+			bureau_guild_leaderboard: {
+				Args: Record<PropertyKey, never>;
+				Returns: {
+					id: string;
+					name: string;
+					guild_rank: string | null;
+					contribution: number;
+					member_count: number;
+				}[];
 			};
 			resolve_guild_quest: {
 				Args: {
