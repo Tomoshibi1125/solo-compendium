@@ -12871,6 +12871,1352 @@ export const baseEquipment: Item[] = [
 		},
 	},
 	{
+		id: "base-srd-gear-common-clothes",
+		name: "Common Clothes",
+		source_book: "Rift Ascendant Canon",
+		description:
+			"Street-cut trousers, tee, and jacket in gate-district gray - the anonymous uniform of half the city.",
+		rarity: "common",
+		type: "wondrous",
+		image: "/generated/compendium/items/item-0101.webp",
+		weight: 3,
+		value: { currency: "crystal", amount: 5 },
+		item_type: "misc",
+		sigil_slots_base: 0,
+		properties: {},
+		effects: {
+			passive: [
+				"A full set of everyday wear. While wearing it you pass as an ordinary civilian rather than an on-duty Ascendant.",
+			],
+		},
+		activation: {
+			type: "passive",
+			consumes_item: false,
+			cost: "no action",
+			frequency: "continuous",
+			trigger: "Equipped, carried, worn, or used as described.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state:
+				"must be carried, consumed, or deployed as the activation describes",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: [],
+				attack: [],
+				notes:
+					"Utility and consumable items only call for an ability when their explicit rule names one.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "passive",
+				consumes_item: false,
+				cost: "no action",
+				frequency: "continuous",
+				trigger: "Equipped, carried, worn, or used as described.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "5c49bd56",
+				payload_complete: true,
+				uniqueness_seed: "base-srd-gear-common-clothes::Common Clothes",
+				variant_note: "Everyday civilian wear from any district outfitter.",
+			},
+			formulas: {
+				effect_formula: "explicit non-damage item effect",
+				recharge: "continuous",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "common",
+				archetype: "gear_misc",
+				canon_basis: "RA mundane baseline",
+				distinguishing_rule:
+					"Common Clothes keys standard gear misc rules through signature 5ff86f34.",
+				role: "utility",
+				signature: "5ff86f34",
+				theme: "standard",
+			},
+			passive_rules: [
+				"A full set of everyday wear. While wearing it you pass as an ordinary civilian rather than an on-duty Ascendant.",
+			],
+			resolution: {
+				type: "equipment_utility",
+				active_options: [],
+				non_damage_resolution:
+					"A full set of everyday wear. While wearing it you pass as an ordinary civilian rather than an on-duty Ascendant.",
+				passive_effects: [
+					"A full set of everyday wear. While wearing it you pass as an ordinary civilian rather than an on-duty Ascendant.",
+				],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: true,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
+				],
+				ra_specific_mundane: true,
+			},
+			targeting: {
+				range: "self",
+				area: null,
+				line_of_effect: "as item description permits",
+				target: "Self, touched object, or listed utility target",
+			},
+		},
+	},
+	{
+		id: "base-srd-gear-fine-clothes",
+		name: "Fine Clothes",
+		source_book: "Rift Ascendant Canon",
+		description:
+			"Tailored slacks, pressed shirt, and a fitted blazer good enough for a guild gala or a Bureau press briefing.",
+		rarity: "common",
+		type: "wondrous",
+		image: "/generated/compendium/items/item-0102.webp",
+		weight: 4,
+		value: { currency: "crystal", amount: 75 },
+		item_type: "misc",
+		sigil_slots_base: 0,
+		properties: {},
+		effects: {
+			passive: [
+				"A full set of formal wear. While wearing it you present as money or authority at galas, briefings, and guild functions.",
+			],
+		},
+		activation: {
+			type: "passive",
+			consumes_item: false,
+			cost: "no action",
+			frequency: "continuous",
+			trigger: "Equipped, carried, worn, or used as described.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state:
+				"must be carried, consumed, or deployed as the activation describes",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: [],
+				attack: [],
+				notes:
+					"Utility and consumable items only call for an ability when their explicit rule names one.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "passive",
+				consumes_item: false,
+				cost: "no action",
+				frequency: "continuous",
+				trigger: "Equipped, carried, worn, or used as described.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "b1e59aae",
+				payload_complete: true,
+				uniqueness_seed: "base-srd-gear-fine-clothes::Fine Clothes",
+				variant_note: "Formal wear cut for guild society.",
+			},
+			formulas: {
+				effect_formula: "explicit non-damage item effect",
+				recharge: "continuous",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "common",
+				archetype: "gear_misc",
+				canon_basis: "RA mundane baseline",
+				distinguishing_rule:
+					"Fine Clothes keys standard gear misc rules through signature 59dde160.",
+				role: "utility",
+				signature: "59dde160",
+				theme: "standard",
+			},
+			passive_rules: [
+				"A full set of formal wear. While wearing it you present as money or authority at galas, briefings, and guild functions.",
+			],
+			resolution: {
+				type: "equipment_utility",
+				active_options: [],
+				non_damage_resolution:
+					"A full set of formal wear. While wearing it you present as money or authority at galas, briefings, and guild functions.",
+				passive_effects: [
+					"A full set of formal wear. While wearing it you present as money or authority at galas, briefings, and guild functions.",
+				],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: true,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
+				],
+				ra_specific_mundane: true,
+			},
+			targeting: {
+				range: "self",
+				area: null,
+				line_of_effect: "as item description permits",
+				target: "Self, touched object, or listed utility target",
+			},
+		},
+	},
+	{
+		id: "base-srd-gear-trench-coat",
+		name: "Trench Coat",
+		source_book: "Rift Ascendant Canon",
+		description:
+			"A long weatherproof coat with deep pockets - the standard silhouette of investigators working the gate districts at night.",
+		rarity: "common",
+		type: "wondrous",
+		image: "/generated/compendium/items/item-0103.webp",
+		weight: 4,
+		value: { currency: "crystal", amount: 20 },
+		item_type: "misc",
+		sigil_slots_base: 0,
+		properties: {},
+		effects: {
+			passive: [
+				"Keeps rain and wind off and conceals what you carry; objects of dagger size or smaller stowed in its pockets are hidden from casual observation.",
+			],
+		},
+		activation: {
+			type: "passive",
+			consumes_item: false,
+			cost: "no action",
+			frequency: "continuous",
+			trigger: "Equipped, carried, worn, or used as described.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state:
+				"must be carried, consumed, or deployed as the activation describes",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: [],
+				attack: [],
+				notes:
+					"Utility and consumable items only call for an ability when their explicit rule names one.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "passive",
+				consumes_item: false,
+				cost: "no action",
+				frequency: "continuous",
+				trigger: "Equipped, carried, worn, or used as described.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "b751afd5",
+				payload_complete: true,
+				uniqueness_seed: "base-srd-gear-trench-coat::Trench Coat",
+				variant_note: "Weatherproof outerwear favored by field investigators.",
+			},
+			formulas: {
+				effect_formula: "explicit non-damage item effect",
+				recharge: "continuous",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "common",
+				archetype: "gear_misc",
+				canon_basis: "RA mundane baseline",
+				distinguishing_rule:
+					"Trench Coat keys standard gear misc rules through signature ea868f6e.",
+				role: "utility",
+				signature: "ea868f6e",
+				theme: "standard",
+			},
+			passive_rules: [
+				"Keeps rain and wind off and conceals what you carry; objects of dagger size or smaller stowed in its pockets are hidden from casual observation.",
+			],
+			resolution: {
+				type: "equipment_utility",
+				active_options: [],
+				non_damage_resolution:
+					"Keeps rain and wind off and conceals what you carry; objects of dagger size or smaller stowed in its pockets are hidden from casual observation.",
+				passive_effects: [
+					"Keeps rain and wind off and conceals what you carry; objects of dagger size or smaller stowed in its pockets are hidden from casual observation.",
+				],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: true,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
+				],
+				ra_specific_mundane: true,
+			},
+			targeting: {
+				range: "self",
+				area: null,
+				line_of_effect: "as item description permits",
+				target: "Self, touched object, or listed utility target",
+			},
+		},
+	},
+	{
+		id: "base-srd-gear-flashlight",
+		name: "Flashlight",
+		source_book: "Rift Ascendant Canon",
+		description:
+			"A rugged LED torch with a spare battery pack rattling in the grip.",
+		rarity: "common",
+		type: "wondrous",
+		image: "/generated/compendium/items/item-0104.webp",
+		weight: 1,
+		value: { currency: "crystal", amount: 10 },
+		item_type: "misc",
+		sigil_slots_base: 0,
+		properties: {},
+		effects: {
+			passive: [
+				"Casts bright light in a 20-foot cone and dim light for 20 feet beyond it. A battery pack runs for 24 hours.",
+			],
+		},
+		activation: {
+			type: "passive",
+			consumes_item: false,
+			cost: "no action",
+			frequency: "continuous",
+			trigger: "Equipped, carried, worn, or used as described.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state:
+				"must be carried, consumed, or deployed as the activation describes",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: [],
+				attack: [],
+				notes:
+					"Utility and consumable items only call for an ability when their explicit rule names one.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "passive",
+				consumes_item: false,
+				cost: "no action",
+				frequency: "continuous",
+				trigger: "Equipped, carried, worn, or used as described.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "d8330502",
+				payload_complete: true,
+				uniqueness_seed: "base-srd-gear-flashlight::Flashlight",
+				variant_note:
+					"Standard field illumination. Cataloged in the Bureau quartermaster registry.",
+			},
+			formulas: {
+				effect_formula: "explicit non-damage item effect",
+				recharge: "continuous",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "common",
+				archetype: "gear_utility",
+				canon_basis: "RA mundane baseline",
+				distinguishing_rule:
+					"Flashlight keys standard gear utility rules through signature e40c7eb7.",
+				role: "utility",
+				signature: "e40c7eb7",
+				theme: "standard",
+			},
+			passive_rules: [
+				"Casts bright light in a 20-foot cone and dim light for 20 feet beyond it. A battery pack runs for 24 hours.",
+			],
+			resolution: {
+				type: "equipment_utility",
+				active_options: [],
+				non_damage_resolution:
+					"Casts bright light in a 20-foot cone and dim light for 20 feet beyond it. A battery pack runs for 24 hours.",
+				passive_effects: [
+					"Casts bright light in a 20-foot cone and dim light for 20 feet beyond it. A battery pack runs for 24 hours.",
+				],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: true,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
+				],
+				ra_specific_mundane: true,
+			},
+			targeting: {
+				range: "self",
+				area: null,
+				line_of_effect: "as item description permits",
+				target: "Self, touched object, or listed utility target",
+			},
+		},
+	},
+	{
+		id: "base-srd-gear-smartphone",
+		name: "Smartphone",
+		source_book: "Rift Ascendant Canon",
+		description:
+			"A current-generation handset running the Association net - gate alerts, maps, camera, and mana-signature feeds.",
+		rarity: "common",
+		type: "wondrous",
+		image: "/generated/compendium/items/item-0105.webp",
+		weight: 1,
+		value: { currency: "crystal", amount: 100 },
+		item_type: "misc",
+		sigil_slots_base: 0,
+		properties: {},
+		effects: {
+			passive: [
+				"Grants network access where signal reaches: calls, maps, camera, and the public Association gate-alert feed.",
+			],
+		},
+		activation: {
+			type: "passive",
+			consumes_item: false,
+			cost: "no action",
+			frequency: "continuous",
+			trigger: "Equipped, carried, worn, or used as described.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state:
+				"must be carried, consumed, or deployed as the activation describes",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: [],
+				attack: [],
+				notes:
+					"Utility and consumable items only call for an ability when their explicit rule names one.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "passive",
+				consumes_item: false,
+				cost: "no action",
+				frequency: "continuous",
+				trigger: "Equipped, carried, worn, or used as described.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "06fa627a",
+				payload_complete: true,
+				uniqueness_seed: "base-srd-gear-smartphone::Smartphone",
+				variant_note:
+					"Association-net handset carried by nearly every Ascendant.",
+			},
+			formulas: {
+				effect_formula: "explicit non-damage item effect",
+				recharge: "continuous",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "common",
+				archetype: "gear_utility",
+				canon_basis: "RA mundane baseline",
+				distinguishing_rule:
+					"Smartphone keys standard gear utility rules through signature 6178f6b0.",
+				role: "utility",
+				signature: "6178f6b0",
+				theme: "standard",
+			},
+			passive_rules: [
+				"Grants network access where signal reaches: calls, maps, camera, and the public Association gate-alert feed.",
+			],
+			resolution: {
+				type: "equipment_utility",
+				active_options: [],
+				non_damage_resolution:
+					"Grants network access where signal reaches: calls, maps, camera, and the public Association gate-alert feed.",
+				passive_effects: [
+					"Grants network access where signal reaches: calls, maps, camera, and the public Association gate-alert feed.",
+				],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: true,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
+				],
+				ra_specific_mundane: true,
+			},
+			targeting: {
+				range: "self",
+				area: null,
+				line_of_effect: "as item description permits",
+				target: "Self, touched object, or listed utility target",
+			},
+		},
+	},
+	{
+		id: "base-srd-gear-backpack",
+		name: "Backpack",
+		source_book: "Rift Ascendant Canon",
+		description:
+			"A reinforced daypack with padded straps, rated for a Hunter's field load.",
+		rarity: "common",
+		type: "wondrous",
+		image: "/generated/compendium/items/item-0106.webp",
+		weight: 5,
+		value: { currency: "crystal", amount: 10 },
+		item_type: "misc",
+		sigil_slots_base: 0,
+		properties: {},
+		effects: {
+			passive: [
+				"Holds up to 30 pounds of gear (1 cubic foot) and keeps both hands free.",
+			],
+		},
+		activation: {
+			type: "passive",
+			consumes_item: false,
+			cost: "no action",
+			frequency: "continuous",
+			trigger: "Equipped, carried, worn, or used as described.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state:
+				"must be carried, consumed, or deployed as the activation describes",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: [],
+				attack: [],
+				notes:
+					"Utility and consumable items only call for an ability when their explicit rule names one.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "passive",
+				consumes_item: false,
+				cost: "no action",
+				frequency: "continuous",
+				trigger: "Equipped, carried, worn, or used as described.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "161f1d01",
+				payload_complete: true,
+				uniqueness_seed: "base-srd-gear-backpack::Backpack",
+				variant_note:
+					"A field accessory. Cataloged in the Bureau quartermaster registry.",
+			},
+			formulas: {
+				effect_formula: "explicit non-damage item effect",
+				recharge: "continuous",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "common",
+				archetype: "gear_misc",
+				canon_basis: "RA mundane baseline",
+				distinguishing_rule:
+					"Backpack keys standard gear misc rules through signature 08a6a406.",
+				role: "utility",
+				signature: "08a6a406",
+				theme: "standard",
+			},
+			passive_rules: [
+				"Holds up to 30 pounds of gear (1 cubic foot) and keeps both hands free.",
+			],
+			resolution: {
+				type: "equipment_utility",
+				active_options: [],
+				non_damage_resolution:
+					"Holds up to 30 pounds of gear (1 cubic foot) and keeps both hands free.",
+				passive_effects: [
+					"Holds up to 30 pounds of gear (1 cubic foot) and keeps both hands free.",
+				],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: true,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
+				],
+				ra_specific_mundane: true,
+			},
+			targeting: {
+				range: "self",
+				area: null,
+				line_of_effect: "as item description permits",
+				target: "Self, touched object, or listed utility target",
+			},
+		},
+	},
+	{
+		id: "base-srd-gear-gas-mask",
+		name: "Gas Mask",
+		source_book: "Rift Ascendant Canon",
+		description:
+			"A sealed respirator with replaceable filters, standard issue for smoke-flooded or spore-choked gate interiors.",
+		rarity: "common",
+		type: "wondrous",
+		image: "/generated/compendium/items/item-0107.webp",
+		weight: 2,
+		value: { currency: "crystal", amount: 35 },
+		item_type: "misc",
+		sigil_slots_base: 0,
+		properties: {},
+		effects: {
+			passive: [
+				"While worn, you have advantage on saving throws against inhaled gases, spores, and airborne toxins. A filter lasts 8 hours.",
+			],
+		},
+		activation: {
+			type: "passive",
+			consumes_item: false,
+			cost: "no action",
+			frequency: "continuous",
+			trigger: "Equipped, carried, worn, or used as described.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state:
+				"must be carried, consumed, or deployed as the activation describes",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: [],
+				attack: [],
+				notes:
+					"Utility and consumable items only call for an ability when their explicit rule names one.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "passive",
+				consumes_item: false,
+				cost: "no action",
+				frequency: "continuous",
+				trigger: "Equipped, carried, worn, or used as described.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "8cbb5f9d",
+				payload_complete: true,
+				uniqueness_seed: "base-srd-gear-gas-mask::Gas Mask",
+				variant_note:
+					"Sealed-filter respirator issued for hazardous gate interiors.",
+			},
+			formulas: {
+				effect_formula: "explicit non-damage item effect",
+				recharge: "continuous",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "common",
+				archetype: "gear_misc",
+				canon_basis: "RA mundane baseline",
+				distinguishing_rule:
+					"Gas Mask keys standard gear misc rules through signature 1b3a05eb.",
+				role: "utility",
+				signature: "1b3a05eb",
+				theme: "standard",
+			},
+			passive_rules: [
+				"While worn, you have advantage on saving throws against inhaled gases, spores, and airborne toxins. A filter lasts 8 hours.",
+			],
+			resolution: {
+				type: "equipment_utility",
+				active_options: [],
+				non_damage_resolution:
+					"While worn, you have advantage on saving throws against inhaled gases, spores, and airborne toxins. A filter lasts 8 hours.",
+				passive_effects: [
+					"While worn, you have advantage on saving throws against inhaled gases, spores, and airborne toxins. A filter lasts 8 hours.",
+				],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: true,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
+				],
+				ra_specific_mundane: true,
+			},
+			targeting: {
+				range: "self",
+				area: null,
+				line_of_effect: "as item description permits",
+				target: "Self, touched object, or listed utility target",
+			},
+		},
+	},
+	{
+		id: "base-srd-gear-night-vision-goggles",
+		name: "Night-Vision Goggles",
+		source_book: "Rift Ascendant Canon",
+		description:
+			"Light-amplification optics on an adjustable head strap - the unawakened answer to darkvision.",
+		rarity: "common",
+		type: "wondrous",
+		image: "/generated/compendium/items/item-0108.webp",
+		weight: 2,
+		value: { currency: "crystal", amount: 150 },
+		item_type: "misc",
+		sigil_slots_base: 0,
+		properties: {},
+		effects: {
+			passive: [
+				"While worn, you have darkvision out to 60 feet in areas with any ambient light. They do not function in complete darkness or magical darkness.",
+			],
+		},
+		activation: {
+			type: "passive",
+			consumes_item: false,
+			cost: "no action",
+			frequency: "continuous",
+			trigger: "Equipped, carried, worn, or used as described.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state:
+				"must be carried, consumed, or deployed as the activation describes",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: [],
+				attack: [],
+				notes:
+					"Utility and consumable items only call for an ability when their explicit rule names one.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "passive",
+				consumes_item: false,
+				cost: "no action",
+				frequency: "continuous",
+				trigger: "Equipped, carried, worn, or used as described.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "25d8940d",
+				payload_complete: true,
+				uniqueness_seed:
+					"base-srd-gear-night-vision-goggles::Night-Vision Goggles",
+				variant_note:
+					"Light-amplification optics for dark-zone reconnaissance.",
+			},
+			formulas: {
+				effect_formula: "explicit non-damage item effect",
+				recharge: "continuous",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "common",
+				archetype: "gear_misc",
+				canon_basis: "RA mundane baseline",
+				distinguishing_rule:
+					"Night-Vision Goggles keys standard gear misc rules through signature 918c7024.",
+				role: "utility",
+				signature: "918c7024",
+				theme: "standard",
+			},
+			passive_rules: [
+				"While worn, you have darkvision out to 60 feet in areas with any ambient light. They do not function in complete darkness or magical darkness.",
+			],
+			resolution: {
+				type: "equipment_utility",
+				active_options: [],
+				non_damage_resolution:
+					"While worn, you have darkvision out to 60 feet in areas with any ambient light. They do not function in complete darkness or magical darkness.",
+				passive_effects: [
+					"While worn, you have darkvision out to 60 feet in areas with any ambient light. They do not function in complete darkness or magical darkness.",
+				],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: true,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
+				],
+				ra_specific_mundane: true,
+			},
+			targeting: {
+				range: "self",
+				area: null,
+				line_of_effect: "as item description permits",
+				target: "Self, touched object, or listed utility target",
+			},
+		},
+	},
+	{
+		id: "base-srd-gear-tablet",
+		name: "Tablet",
+		source_book: "Rift Ascendant Canon",
+		description:
+			"A hardened slate computer with a stylus, favored for field reports, rune drafting, and gate telemetry.",
+		rarity: "common",
+		type: "wondrous",
+		image: "/generated/compendium/items/item-0109.webp",
+		weight: 2,
+		value: { currency: "crystal", amount: 120 },
+		item_type: "misc",
+		sigil_slots_base: 0,
+		properties: {},
+		effects: {
+			passive: [
+				"Grants network access where signal reaches and local storage for maps, records, and telemetry; a charge lasts 12 hours.",
+			],
+		},
+		activation: {
+			type: "passive",
+			consumes_item: false,
+			cost: "no action",
+			frequency: "continuous",
+			trigger: "Equipped, carried, worn, or used as described.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state:
+				"must be carried, consumed, or deployed as the activation describes",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: [],
+				attack: [],
+				notes:
+					"Utility and consumable items only call for an ability when their explicit rule names one.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "passive",
+				consumes_item: false,
+				cost: "no action",
+				frequency: "continuous",
+				trigger: "Equipped, carried, worn, or used as described.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "be6f2f0f",
+				payload_complete: true,
+				uniqueness_seed: "base-srd-gear-tablet::Tablet",
+				variant_note: "Hardened slate computer for field data work.",
+			},
+			formulas: {
+				effect_formula: "explicit non-damage item effect",
+				recharge: "continuous",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "common",
+				archetype: "gear_utility",
+				canon_basis: "RA mundane baseline",
+				distinguishing_rule:
+					"Tablet keys standard gear utility rules through signature 3f22853c.",
+				role: "utility",
+				signature: "3f22853c",
+				theme: "standard",
+			},
+			passive_rules: [
+				"Grants network access where signal reaches and local storage for maps, records, and telemetry; a charge lasts 12 hours.",
+			],
+			resolution: {
+				type: "equipment_utility",
+				active_options: [],
+				non_damage_resolution:
+					"Grants network access where signal reaches and local storage for maps, records, and telemetry; a charge lasts 12 hours.",
+				passive_effects: [
+					"Grants network access where signal reaches and local storage for maps, records, and telemetry; a charge lasts 12 hours.",
+				],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: true,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
+				],
+				ra_specific_mundane: true,
+			},
+			targeting: {
+				range: "self",
+				area: null,
+				line_of_effect: "as item description permits",
+				target: "Self, touched object, or listed utility target",
+			},
+		},
+	},
+	{
+		id: "base-srd-gear-safety-goggles",
+		name: "Safety Goggles",
+		source_book: "Rift Ascendant Canon",
+		description:
+			"Impact-rated eye protection with an anti-fog coating, standard at inscription benches and dissection tables.",
+		rarity: "common",
+		type: "wondrous",
+		image: "/generated/compendium/items/item-0110.webp",
+		weight: 1,
+		value: { currency: "crystal", amount: 10 },
+		item_type: "misc",
+		sigil_slots_base: 0,
+		properties: {},
+		effects: {
+			passive: [
+				"While worn, your eyes are protected from sprays, shards, and fumes; you have advantage on saving throws against effects that would blind you with debris or splash.",
+			],
+		},
+		activation: {
+			type: "passive",
+			consumes_item: false,
+			cost: "no action",
+			frequency: "continuous",
+			trigger: "Equipped, carried, worn, or used as described.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state:
+				"must be carried, consumed, or deployed as the activation describes",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: [],
+				attack: [],
+				notes:
+					"Utility and consumable items only call for an ability when their explicit rule names one.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "passive",
+				consumes_item: false,
+				cost: "no action",
+				frequency: "continuous",
+				trigger: "Equipped, carried, worn, or used as described.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "15945c3e",
+				payload_complete: true,
+				uniqueness_seed: "base-srd-gear-safety-goggles::Safety Goggles",
+				variant_note: "Impact-rated eye protection for bench and field work.",
+			},
+			formulas: {
+				effect_formula: "explicit non-damage item effect",
+				recharge: "continuous",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "common",
+				archetype: "gear_misc",
+				canon_basis: "RA mundane baseline",
+				distinguishing_rule:
+					"Safety Goggles keys standard gear misc rules through signature 2a7d4afc.",
+				role: "utility",
+				signature: "2a7d4afc",
+				theme: "standard",
+			},
+			passive_rules: [
+				"While worn, your eyes are protected from sprays, shards, and fumes; you have advantage on saving throws against effects that would blind you with debris or splash.",
+			],
+			resolution: {
+				type: "equipment_utility",
+				active_options: [],
+				non_damage_resolution:
+					"While worn, your eyes are protected from sprays, shards, and fumes; you have advantage on saving throws against effects that would blind you with debris or splash.",
+				passive_effects: [
+					"While worn, your eyes are protected from sprays, shards, and fumes; you have advantage on saving throws against effects that would blind you with debris or splash.",
+				],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: true,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
+				],
+				ra_specific_mundane: true,
+			},
+			targeting: {
+				range: "self",
+				area: null,
+				line_of_effect: "as item description permits",
+				target: "Self, touched object, or listed utility target",
+			},
+		},
+	},
+	{
+		id: "base-srd-gear-crowbar",
+		name: "Crowbar",
+		source_book: "Rift Ascendant Canon",
+		description:
+			"A cold-forged pry bar with a nail-puller head - the scavenger's master key.",
+		rarity: "common",
+		type: "wondrous",
+		image: "/generated/compendium/items/item-0111.webp",
+		weight: 5,
+		value: { currency: "crystal", amount: 5 },
+		item_type: "misc",
+		sigil_slots_base: 0,
+		properties: {},
+		effects: {
+			passive: [
+				"Using the crowbar grants advantage on Strength checks where its leverage can be applied.",
+			],
+		},
+		activation: {
+			type: "passive",
+			consumes_item: false,
+			cost: "no action",
+			frequency: "continuous",
+			trigger: "Equipped, carried, worn, or used as described.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state:
+				"must be carried, consumed, or deployed as the activation describes",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: [],
+				attack: [],
+				notes:
+					"Utility and consumable items only call for an ability when their explicit rule names one.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "passive",
+				consumes_item: false,
+				cost: "no action",
+				frequency: "continuous",
+				trigger: "Equipped, carried, worn, or used as described.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "92c20ff1",
+				payload_complete: true,
+				uniqueness_seed: "base-srd-gear-crowbar::Crowbar",
+				variant_note: "A miscellaneous piece of standard Hunter kit.",
+			},
+			formulas: {
+				effect_formula: "explicit non-damage item effect",
+				recharge: "continuous",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "common",
+				archetype: "gear_utility",
+				canon_basis: "RA mundane baseline",
+				distinguishing_rule:
+					"Crowbar keys standard gear utility rules through signature 14e59df7.",
+				role: "utility",
+				signature: "14e59df7",
+				theme: "standard",
+			},
+			passive_rules: [
+				"Using the crowbar grants advantage on Strength checks where its leverage can be applied.",
+			],
+			resolution: {
+				type: "equipment_utility",
+				active_options: [],
+				non_damage_resolution:
+					"Using the crowbar grants advantage on Strength checks where its leverage can be applied.",
+				passive_effects: [
+					"Using the crowbar grants advantage on Strength checks where its leverage can be applied.",
+				],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: true,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
+				],
+				ra_specific_mundane: true,
+			},
+			targeting: {
+				range: "self",
+				area: null,
+				line_of_effect: "as item description permits",
+				target: "Self, touched object, or listed utility target",
+			},
+		},
+	},
+	{
+		id: "base-srd-gear-rope-50-ft",
+		name: "Rope (50 ft)",
+		source_book: "Rift Ascendant Canon",
+		description:
+			"Fifty feet of high-tensile synthetic line, rated far beyond a Hunter's body weight.",
+		rarity: "common",
+		type: "wondrous",
+		image: "/generated/compendium/items/item-0112.webp",
+		weight: 5,
+		value: { currency: "crystal", amount: 10 },
+		item_type: "misc",
+		sigil_slots_base: 0,
+		properties: {},
+		effects: {
+			passive: [
+				"Has 2 hit points and can be burst with a DC 17 Strength check. Fifty feet of line for climbing, binding, and hauling.",
+			],
+		},
+		activation: {
+			type: "passive",
+			consumes_item: false,
+			cost: "no action",
+			frequency: "continuous",
+			trigger: "Equipped, carried, worn, or used as described.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state:
+				"must be carried, consumed, or deployed as the activation describes",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: [],
+				attack: [],
+				notes:
+					"Utility and consumable items only call for an ability when their explicit rule names one.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "passive",
+				consumes_item: false,
+				cost: "no action",
+				frequency: "continuous",
+				trigger: "Equipped, carried, worn, or used as described.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "29ad2971",
+				payload_complete: true,
+				uniqueness_seed: "base-srd-gear-rope-50-ft::Rope (50 ft)",
+				variant_note:
+					"High-tensile synthetic line from the quartermaster registry.",
+			},
+			formulas: {
+				effect_formula: "explicit non-damage item effect",
+				recharge: "continuous",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "common",
+				archetype: "gear_utility",
+				canon_basis: "RA mundane baseline",
+				distinguishing_rule:
+					"Rope (50 ft) keys standard gear utility rules through signature 3fb1d2e1.",
+				role: "utility",
+				signature: "3fb1d2e1",
+				theme: "standard",
+			},
+			passive_rules: [
+				"Has 2 hit points and can be burst with a DC 17 Strength check. Fifty feet of line for climbing, binding, and hauling.",
+			],
+			resolution: {
+				type: "equipment_utility",
+				active_options: [],
+				non_damage_resolution:
+					"Has 2 hit points and can be burst with a DC 17 Strength check. Fifty feet of line for climbing, binding, and hauling.",
+				passive_effects: [
+					"Has 2 hit points and can be burst with a DC 17 Strength check. Fifty feet of line for climbing, binding, and hauling.",
+				],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: true,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
+				],
+				ra_specific_mundane: true,
+			},
+			targeting: {
+				range: "self",
+				area: null,
+				line_of_effect: "as item description permits",
+				target: "Self, touched object, or listed utility target",
+			},
+		},
+	},
+	{
+		id: "base-srd-gear-survival-rations",
+		name: "Survival Rations",
+		source_book: "Rift Ascendant Canon",
+		description:
+			"Vacuum-sealed field meals and electrolyte tabs - a day of calories that survives a gate collapse.",
+		rarity: "common",
+		type: "wondrous",
+		image: "/generated/compendium/items/item-0113.webp",
+		weight: 2,
+		value: { currency: "crystal", amount: 5 },
+		item_type: "misc",
+		sigil_slots_base: 0,
+		properties: {},
+		effects: {
+			passive: [
+				"One pack sustains one person for a day; the sealed portions keep for years.",
+			],
+		},
+		activation: {
+			type: "passive",
+			consumes_item: false,
+			cost: "no action",
+			frequency: "continuous",
+			trigger: "Equipped, carried, worn, or used as described.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state:
+				"must be carried, consumed, or deployed as the activation describes",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: [],
+				attack: [],
+				notes:
+					"Utility and consumable items only call for an ability when their explicit rule names one.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "passive",
+				consumes_item: false,
+				cost: "no action",
+				frequency: "continuous",
+				trigger: "Equipped, carried, worn, or used as described.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "41fb7e2f",
+				payload_complete: true,
+				uniqueness_seed: "base-srd-gear-survival-rations::Survival Rations",
+				variant_note: "Sealed field meals rated for long storage.",
+			},
+			formulas: {
+				effect_formula: "explicit non-damage item effect",
+				recharge: "continuous",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "common",
+				archetype: "gear_misc",
+				canon_basis: "RA mundane baseline",
+				distinguishing_rule:
+					"Survival Rations keys standard gear misc rules through signature cf5e725e.",
+				role: "utility",
+				signature: "cf5e725e",
+				theme: "standard",
+			},
+			passive_rules: [
+				"One pack sustains one person for a day; the sealed portions keep for years.",
+			],
+			resolution: {
+				type: "equipment_utility",
+				active_options: [],
+				non_damage_resolution:
+					"One pack sustains one person for a day; the sealed portions keep for years.",
+				passive_effects: [
+					"One pack sustains one person for a day; the sealed portions keep for years.",
+				],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: true,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
+				],
+				ra_specific_mundane: true,
+			},
+			targeting: {
+				range: "self",
+				area: null,
+				line_of_effect: "as item description permits",
+				target: "Self, touched object, or listed utility target",
+			},
+		},
+	},
+	{
 		id: "base-srd-gear-antitoxin-injector",
 		name: "Antitoxin Injector",
 		source_book: "Rift Ascendant Canon",

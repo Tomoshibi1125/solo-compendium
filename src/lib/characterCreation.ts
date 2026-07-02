@@ -72,6 +72,18 @@ export function normalizeItemLookupName(value: string): string {
 		.toLowerCase();
 }
 
+/**
+ * Whole-word-phrase containment with plural tolerance: "a pouch of mana
+ * crystals" contains "mana crystal", but "sunglasses" does not contain
+ * "sling". Both inputs must already be normalized (lowercased).
+ */
+function containsItemPhrase(haystack: string, phrase: string): boolean {
+	const escaped = phrase.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+	return new RegExp(`(?<![a-z0-9])${escaped}(?:e?s)?(?![a-z0-9])`).test(
+		haystack,
+	);
+}
+
 export function findStaticItemByName(itemName: string): StaticItem | null {
 	const staticItems = getStaticItems();
 	const normalized = normalizeItemLookupName(itemName);
@@ -82,13 +94,25 @@ export function findStaticItemByName(itemName: string): StaticItem | null {
 		null;
 	if (exact) return exact;
 
-	// Fuzzy fallback: background equipment strings often include adjectives ("portable", "high-end", etc.)
-	// so we do a conservative contains check.
+	// Fuzzy fallback: background equipment strings often include adjectives
+	// ("portable", "high-end", etc.), so accept a grant string that contains
+	// the item's full name as a whole phrase — the author named the item.
+	const grantMentionsItem =
+		staticItems.find((i) =>
+			containsItemPhrase(normalized, normalizeItemLookupName(i.name)),
+		) ?? null;
+	if (grantMentionsItem) return grantMentionsItem;
+
+	// The reverse direction (item name contains the grant string, e.g.
+	// "crowbar" -> "Reinforced Crowbar") only bridges to mundane gear:
+	// without the rarity gate, "a trench coat" resolves to uncommon combat
+	// armor like "Aegis Trench Coat" — a free loot grant at creation.
 	return (
-		staticItems.find((i) => {
-			const n = normalizeItemLookupName(i.name);
-			return normalized.includes(n) || n.includes(normalized);
-		}) ?? null
+		staticItems.find(
+			(i) =>
+				(i.rarity ?? "common").toLowerCase() === "common" &&
+				containsItemPhrase(normalizeItemLookupName(i.name), normalized),
+		) ?? null
 	);
 }
 

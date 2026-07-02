@@ -255,10 +255,27 @@ export function featureModifiersToCustomModifiers(
 ): CustomModifier[] {
 	const result: CustomModifier[] = [];
 	for (const feature of features) {
+		if (!feature.is_active || !feature.modifiers) continue;
 		// `modifiers` is a Json column: fighting styles and rune grants store
-		// object-shaped payloads (handled by featEffectParser / rune promotion),
-		// so only array-shaped entries belong to this flat-modifier path.
-		if (!feature.is_active || !Array.isArray(feature.modifiers)) continue;
+		// object-shaped payloads. Rune payloads are handled by the rune
+		// promotion path; the one stat-bearing fighting-style key is
+		// translated here so it reaches the AC pipeline.
+		if (!Array.isArray(feature.modifiers)) {
+			const acInArmor = (feature.modifiers as { acBonusInArmor?: unknown })
+				.acBonusInArmor;
+			if (typeof acInArmor === "number" && acInArmor !== 0) {
+				result.push({
+					id: `${feature.id}-ac_bonus_in_armor`,
+					type: "ac_bonus_in_armor",
+					target: null,
+					value: acInArmor,
+					source: feature.name,
+					condition: "while wearing armor",
+					enabled: true,
+				});
+			}
+			continue;
+		}
 		for (const mod of feature.modifiers) {
 			result.push({
 				id: `${feature.id}-${mod.type}-${mod.target || "all"}`,

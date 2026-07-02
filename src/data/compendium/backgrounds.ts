@@ -13,8 +13,8 @@ export const backgrounds: StaticBackground[] = [
 		languages: ["One additional language of your choice"],
 		equipment: [
 			"Reinforced uniform",
-			"50 ft rope",
-			"Survival ration pack",
+			"Rope (50 ft)",
+			"A pack of survival rations",
 			"A set of dark common clothes",
 			"A sturdy backpack",
 		],
@@ -443,7 +443,7 @@ export const backgrounds: StaticBackground[] = [
 		equipment: [
 			"A piece of battered military armor",
 			"Dog tags of your fallen squad",
-			"A tactical medkit",
+			"A tactical field medkit",
 			"A military-issue radio",
 		],
 		starting_credits: 700,
@@ -1002,7 +1002,7 @@ export const backgrounds: StaticBackground[] = [
 			"A high-end earpiece",
 			"A military ID",
 			"A pair of dark sunglasses",
-			"A combat knife",
+			"A combat knife (dagger)",
 		],
 		starting_credits: 1200,
 		feature_name: "Corporate Security Clearance",
@@ -1682,7 +1682,7 @@ export const backgrounds: StaticBackground[] = [
 		languages: ["Machine Code (or one exotic language)"],
 		equipment: [
 			"A heavily modified laptop",
-			"A set of lockpicks",
+			"A set of thieves' tools (lockpicks)",
 			"A burner phone",
 			"A flash drive with encrypted blackmail",
 			"A dark hoodie",

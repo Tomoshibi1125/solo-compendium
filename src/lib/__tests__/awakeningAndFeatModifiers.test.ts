@@ -1,3 +1,5 @@
+import { readFileSync } from "node:fs";
+import { resolve } from "node:path";
 import { describe, expect, it } from "vitest";
 import type {
 	CharacterFeature,
@@ -52,10 +54,11 @@ describe("awakening + feat modifier wiring", () => {
 		expect(sumCustomModifiers(custom, "hp-max")).toBe(5);
 	});
 
-	it("skips object-shaped modifiers (fighting styles, rune grants) without throwing", () => {
-		// Fighting styles store `modifiers` as an object payload for the
-		// featEffectParser path; rune grants do the same for promotion state.
-		// The flat-modifier converter must skip them, not crash the sheet.
+	it("translates the Defense acBonusInArmor payload, skips other object shapes", () => {
+		// Fighting styles and rune grants store `modifiers` as object payloads.
+		// Rune promotion state must still be skipped without throwing, but the
+		// one stat-bearing fighting-style key (Defense's acBonusInArmor) is
+		// translated into an armor-conditional custom modifier.
 		const features: CharacterFeature[] = [
 			buildFeature({
 				id: "f-style",
@@ -64,6 +67,15 @@ describe("awakening + feat modifier wiring", () => {
 				is_active: true,
 				modifiers: {
 					acBonusInArmor: 1,
+				} as unknown as CharacterFeature["modifiers"],
+			}),
+			buildFeature({
+				id: "f-rune",
+				character_id: "c1",
+				name: "Rune: Borrowed Thunder",
+				is_active: true,
+				modifiers: {
+					runeGrant: { abilityId: "thunder-step", promoted: true },
 				} as unknown as CharacterFeature["modifiers"],
 			}),
 			buildFeature({
@@ -76,8 +88,12 @@ describe("awakening + feat modifier wiring", () => {
 		];
 
 		const custom = featureModifiersToCustomModifiers(features);
-		expect(custom).toHaveLength(1);
+		expect(custom).toHaveLength(2);
 		expect(sumCustomModifiers(custom, "hp-max")).toBe(5);
+		expect(sumCustomModifiers(custom, "ac_bonus_in_armor")).toBe(1);
+		const defense = custom.find((m) => m.type === "ac_bonus_in_armor");
+		expect(defense?.source).toBe("Fighting Style: Defense");
+		expect(defense?.condition).toBe("while wearing armor");
 	});
 
 	it("applies advantage modifiers to the global roll resolver", () => {
@@ -111,5 +127,39 @@ describe("awakening + feat modifier wiring", () => {
 		});
 
 		expect(state).toBe("advantage");
+	});
+});
+
+describe("Defense AC structural guard", () => {
+	// The derived-stats hook has no render harness, so guard the consumption
+	// wiring the same way uiTruthParity guards D1/D2: read the source and
+	// assert ac_bonus_in_armor is summed behind the armorItem gate.
+	it("useCharacterDerivedStats sums ac_bonus_in_armor only while armor is equipped", () => {
+		const s = readFileSync(
+			resolve(__dirname, "../../hooks/useCharacterDerivedStats.ts"),
+			"utf8",
+		);
+		const sumCall = 'sumCustomModifiers(customModifiers, "ac_bonus_in_armor")';
+		const idx = s.indexOf(sumCall);
+		expect(idx).toBeGreaterThan(-1);
+		const gate = s.slice(Math.max(0, idx - 120), idx);
+		expect(gate.includes("armorItem")).toBe(true);
+	});
+
+	// The sigil AC delta must be measured against the value applySigilBonuses
+	// was seeded with (equipmentMods.armorClass); measuring against the
+	// unarmored baseStats.armorClass leaks the armor's own AC into the misc
+	// bonus (chain mail 16 vs base 11 → phantom +5 on the sheet).
+	it("sigilACDelta baselines against equipmentMods.armorClass, not baseStats", () => {
+		const s = readFileSync(
+			resolve(__dirname, "../../hooks/useCharacterDerivedStats.ts"),
+			"utf8",
+		);
+		// Whitespace-collapsed so formatter line wrapping can't break the guard.
+		const flat = s.replace(/\s+/g, "");
+		expect(
+			flat.includes("Math.max(0,sigilBonuses.ac-equipmentMods.armorClass"),
+		).toBe(true);
+		expect(flat.includes("sigilBonuses.ac-baseStats.armorClass")).toBe(false);
 	});
 });

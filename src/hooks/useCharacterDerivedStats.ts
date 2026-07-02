@@ -502,6 +502,7 @@ export function useCharacterDerivedStats(
 		const extractMagicBonus = (
 			item: EquipmentRow | undefined,
 			canonical?: ReturnType<typeof findCanonicalForRow> | null,
+			options?: { ignoreProperties?: boolean },
 		): number => {
 			if (!item) return 0;
 			// Explicit canonical field wins when available.
@@ -512,7 +513,10 @@ export function useCharacterDerivedStats(
 			// Parse "+N" from the name (e.g. "Plate Armor +2", "Shield +1").
 			const fromName = item.name?.match(/\+(\d+)/)?.[1];
 			if (fromName) return parseInt(fromName, 10);
-			// Parse "+N" from any property string.
+			// Parse "+N" from any property string — except for shields, whose
+			// rows carry a baseline "+2 AC" property written at creation; that
+			// baseline is already the shield's acBonus, not an enhancement.
+			if (options?.ignoreProperties) return 0;
 			const fromProps = getEquipmentProperties(item)
 				.map((p) => p.match(/\+(\d+)/)?.[1])
 				.find(Boolean);
@@ -551,10 +555,21 @@ export function useCharacterDerivedStats(
 		// Protection +1) + sigil delta over baseline. Routed in as
 		// otherBonuses so the canonical AC engine takes "highest of all
 		// valid formulas + flat bonuses" — matching DDB's behavior.
-		const sigilACDelta = Math.max(0, sigilBonuses.ac - baseStats.armorClass);
+		// Sigil AC delta over the exact value applySigilBonuses was seeded
+		// with (equipmentMods.armorClass). Measuring against the unarmored
+		// baseStats.armorClass instead would leak the armor's own AC into the
+		// misc bonus (chain mail 16 vs base 11 → phantom +5).
+		const sigilACDelta = Math.max(
+			0,
+			sigilBonuses.ac - equipmentMods.armorClass,
+		);
 		const miscACBonusForCanonical =
 			armorClassStack.customAcBonus +
 			armorClassStack.featureACBonus +
+			// Defense fighting style: +N AC only while wearing armor.
+			(armorItem
+				? sumCustomModifiers(customModifiers, "ac_bonus_in_armor")
+				: 0) +
 			sigilACDelta;
 
 		const armorClassDetail = calculateAC(
@@ -575,7 +590,9 @@ export function useCharacterDerivedStats(
 			shieldItem
 				? {
 						name: shieldItem.name,
-						// A3: base +2 plus any magical shield enhancement.
+						// A3: base +2 plus any magical shield enhancement (from the
+						// name or canonical magic_bonus; the row's own "+2 AC"
+						// property is the baseline, not an enhancement).
 						acBonus:
 							2 +
 							extractMagicBonus(
@@ -583,6 +600,7 @@ export function useCharacterDerivedStats(
 								canonicalEquipmentMap
 									? findCanonicalForRow(canonicalEquipmentMap, shieldItem.name)
 									: null,
+								{ ignoreProperties: true },
 							),
 					}
 				: null,

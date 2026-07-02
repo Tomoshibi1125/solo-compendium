@@ -27,6 +27,9 @@ export const CUSTOM_MODIFIER_TYPES = [
 	"hp_max",
 	"speed_bonus",
 	"ac_base",
+	// +N AC only while wearing armor (Defense fighting style); summed into
+	// the AC misc bonus by the derived-stats hook only when armor is equipped.
+	"ac_bonus_in_armor",
 ] as const;
 
 export type CustomModifierType = (typeof CUSTOM_MODIFIER_TYPES)[number];

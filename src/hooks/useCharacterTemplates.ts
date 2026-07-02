@@ -14,36 +14,44 @@ export interface CharacterTemplate {
 	flavor?: string;
 }
 
-const DEFAULT_TEMPLATES: CharacterTemplate[] = [
+// Every job/background/skill/equipment value below must exist in the canonical
+// compendium data — the wizard looks jobs and backgrounds up by exact name and
+// equipment choices by exact option string per startingEquipment group, so a
+// dangling reference silently no-ops. Guarded by characterTemplates.test.ts.
+export const DEFAULT_TEMPLATES: CharacterTemplate[] = [
 	{
 		id: "warrior-basic",
 		name: "Wandering Mercenary",
-		description: "A tough front-line fighter who has seen many battles.",
-		job: "Warrior",
-		background: "Mercenary",
+		description: "A tough front-line fighter who has seen many gate breaks.",
+		job: "Destroyer",
+		background: "Private Military Operator (PMC)",
 		abilities: { STR: 15, AGI: 13, VIT: 14, INT: 10, SENSE: 12, PRE: 8 },
 		skills: ["Athletics", "Intimidation"],
-		equipment: { 0: "Longsword", 1: "Chain Mail", 2: "Adventuring Gear" },
+		equipment: { 0: "Chain Mail", 1: "Longsword", 4: "Explorer's Pack" },
 	},
 	{
 		id: "rogue-basic",
 		name: "Street Thief",
 		description: "Agile and observant, relying on stealth and wit to survive.",
-		job: "Rogue",
-		background: "Urchin",
+		job: "Assassin",
+		background: "Awakened Delinquent",
 		abilities: { STR: 8, AGI: 15, VIT: 12, INT: 13, SENSE: 14, PRE: 10 },
 		skills: ["Stealth", "Sleight of Hand"],
-		equipment: { 0: "Daggers (x2)", 1: "Leather Armor", 2: "Thieves Tools" },
+		equipment: {
+			0: "Shortsword",
+			1: "Hand Crossbow and Crossbow Bolts (20)",
+			2: "Burglar's Pack",
+		},
 	},
 	{
 		id: "mage-basic",
 		name: "Apprentice Arcanist",
-		description: "A scholar of the arcane arts, seeking lost knowledge.",
+		description: "A scholar of the mana lattice, seeking lost knowledge.",
 		job: "Mage",
-		background: "Scholar",
+		background: "Ascendant Academy Graduate",
 		abilities: { STR: 8, AGI: 12, VIT: 10, INT: 15, SENSE: 13, PRE: 14 },
 		skills: ["Mana Flow", "Dimensional Lore"],
-		equipment: { 0: "Quarterstaff", 1: "Mana Crystal", 2: "Scholar Pack" },
+		equipment: { 0: "Quarterstaff", 1: "Mana Crystal", 2: "Scholar's Pack" },
 	},
 ];
 
