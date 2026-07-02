@@ -2,6 +2,7 @@ import path from "node:path";
 import { GoogleGenAI } from "@google/genai";
 import react from "@vitejs/plugin-react-swc";
 import { config as dotenvConfig } from "dotenv";
+import { visualizer } from "rollup-plugin-visualizer";
 import { defineConfig, type Plugin } from "vite";
 import { VitePWA } from "vite-plugin-pwa";
 import wasm from "vite-plugin-wasm";
@@ -520,6 +521,18 @@ export default defineConfig(({ mode: _mode }) => {
 			},
 		}),
 	];
+
+	// Bundle analysis: ANALYZE=1 npm run build → audit-artifacts/bundle-stats.html
+	if (process.env.ANALYZE) {
+		plugins.push(
+			visualizer({
+				filename: "audit-artifacts/bundle-stats.html",
+				gzipSize: true,
+				brotliSize: true,
+				template: "treemap",
+			}) as Plugin,
+		);
+	}
 
 	const normalizeId = (id: string) => id.replace(/\\/g, "/");
 
