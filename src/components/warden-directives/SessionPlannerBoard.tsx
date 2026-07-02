@@ -46,7 +46,7 @@ const BEAT_BADGE: Record<BeatType, string> = {
 	scene: "text-primary border-primary/40",
 	encounter: "text-red-400 border-red-400/40",
 	rift: "text-resurge-violet border-resurge-violet/40",
-	reward: "text-amber-400 border-amber-400/40",
+	reward: "text-gate-s border-gate-s/40",
 	transition: "text-muted-foreground border-border",
 };
 

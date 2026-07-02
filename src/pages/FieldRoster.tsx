@@ -1,9 +1,9 @@
 import { Compass, Users } from "lucide-react";
 import { Link } from "react-router-dom";
-import { AscendantText } from "@/components/ui/AscendantText";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { PageHeader } from "@/components/ui/PageHeader";
 import { useFieldRoster } from "@/hooks/useFieldRoster";
 
 /**
@@ -21,19 +21,11 @@ export default function FieldRoster() {
 
 	return (
 		<div className="container mx-auto max-w-5xl px-4 py-6 space-y-6">
-			<header className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3">
-				<div>
-					<h1 className="font-resurge text-2xl tracking-wide flex items-center gap-2">
-						<Compass className="w-6 h-6 text-primary" />
-						BUREAU FIELD ROSTER
-					</h1>
-					<AscendantText className="block mt-2 text-sm text-muted-foreground max-w-2xl">
-						Active Rift parties seeking Ascendants. Wardens publish their open
-						seats here; joining still requires the Warden's approval through
-						their share code.
-					</AscendantText>
-				</div>
-			</header>
+			<PageHeader
+				leading={<Compass className="w-8 h-8 text-primary" />}
+				title="BUREAU FIELD ROSTER"
+				description="Active Rift parties seeking Ascendants. Wardens publish their open seats here; joining still requires the Warden's approval through their share code."
+			/>
 
 			{isLoading && (
 				<p className="text-sm text-muted-foreground animate-pulse">

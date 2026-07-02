@@ -841,13 +841,13 @@ Negative: person wearing armor, humanoid body, full character portrait, human mo
 - Source category: item
 - Priority: medium
 - Checkpoint: stabilityai/stable-diffusion-xl-base-1.0
-- Seed: 25177872
+- Seed: 2602559376
 - Recommended replacement: pending
 - Notes: _pending review_
 
 <details><summary>Prompt</summary>
 
-Rift Ascendant inventory icon, one matched pair of protective boots or greaves only, empty wearable gear, no full character, one single complete Renegade Marching Boots equipment object only, isolated detached gear render on a simple dark neutral background, no person, no body, no model, no mannequin, no wearer, no multiple variants, not a design sheet, lore-accurate protective gear asset, Renegade Marching Boots. Rift Ascendant is modern supernatural urban fantasy in the early normalized Rift Age; the material world is functional, commercial, Bureau-regulated, and media-aware. Field-grade boots reinforced at the ankle and instep for sustained gate work. Field teams know this pattern as the Renegade Marching Boots. standard, polished tabletop RPG inventory art, Korean action webtoon-inspired dark fantasy rendering, painterly realism, crisp ink-like edges, cinematic rim lighting, black deep blue violet silver palette with rift-white highlights, original design, high readability for app card UI, modern supernatural urban fantasy equipment, Rift Age tactical material design, Essence-threaded or anomaly-touched details, clear wearable silhouette, centered inventory composition, polished game gear art, no full character portrait, no text, no logo
+Rift Ascendant inventory icon, one matched pair of protective boots or greaves only, empty wearable gear, no full character, one single complete Renegade Marching Boots equipment object only, isolated detached gear render on a simple dark neutral background, no person, no body, no model, no mannequin, no wearer, no multiple variants, not a design sheet, lore-accurate protective gear asset, Renegade Marching Boots. Rift Ascendant is modern supernatural urban fantasy in the early normalized Rift Age; the material world is functional, commercial, Bureau-regulated, and media-aware. Field-grade boots reinforced at the ankle and instep for sustained Rift work. Field teams know this pattern as the Renegade Marching Boots. standard, polished tabletop RPG inventory art, Korean action webtoon-inspired dark fantasy rendering, painterly realism, crisp ink-like edges, cinematic rim lighting, black deep blue violet silver palette with rift-white highlights, original design, high readability for app card UI, modern supernatural urban fantasy equipment, Rift Age tactical material design, Essence-threaded or anomaly-touched details, clear wearable silhouette, centered inventory composition, polished game gear art, no full character portrait, no text, no logo
 
 Negative: person wearing armor, humanoid body, full character portrait, human model, mannequin, mannequin face focus, human model face, multiple armor variants, product sheet, design sheet, orthographic views, front side back views, comparison sheet, full costume sheet, generic fantasy armor, medieval-only costume, weapon-only image, random jewelry, cluttered background, unreadable silhouette, bad perspective, blurry, low resolution, text, watermark, logo, direct imitation of a named franchise, copyrighted character, official logo, trademarked symbol, celebrity likeness
 
@@ -1209,13 +1209,13 @@ Negative: multiple weapons, duplicate weapon, secondary weapons, many variants, 
 - Source category: item
 - Priority: medium
 - Checkpoint: stabilityai/stable-diffusion-xl-base-1.0
-- Seed: 1710534825
+- Seed: 1489554873
 - Recommended replacement: pending
 - Notes: _pending review_
 
 <details><summary>Prompt</summary>
 
-Rift Ascendant inventory icon, one matched pair of gloves or gauntlets only, empty wearable gear, no full character, one single complete Bureau Stamped Battle Gauntlets equipment object only, isolated detached gear render on a simple dark neutral background, no person, no body, no model, no mannequin, no wearer, no multiple variants, not a design sheet, lore-accurate protective gear asset, Bureau Stamped Battle Gauntlets. Rift Ascendant is modern supernatural urban fantasy in the early normalized Rift Age; the material world is functional, commercial, Bureau-regulated, and media-aware. A pair of impact gauntlets shaped for clinch fighting inside cramped gate corridors. On the requisition manifest it reads simply: Bureau-Stamped Battle Gauntlets. standard, polished tabletop RPG inventory art, Korean action webtoon-inspired dark fantasy rendering, painterly realism, crisp ink-like edges, cinematic rim lighting, black deep blue violet silver palette with rift-white highlights, original design, high readability for app card UI, modern supernatural urban fantasy equipment, Rift Age tactical material design, Essence-threaded or anomaly-touched details, clear wearable silhouette, centered inventory composition, polished game gear art, no full character portrait, no text, no logo
+Rift Ascendant inventory icon, one matched pair of gloves or gauntlets only, empty wearable gear, no full character, one single complete Bureau Stamped Battle Gauntlets equipment object only, isolated detached gear render on a simple dark neutral background, no person, no body, no model, no mannequin, no wearer, no multiple variants, not a design sheet, lore-accurate protective gear asset, Bureau Stamped Battle Gauntlets. Rift Ascendant is modern supernatural urban fantasy in the early normalized Rift Age; the material world is functional, commercial, Bureau-regulated, and media-aware. A pair of impact gauntlets shaped for clinch fighting inside cramped Rift corridors. On the requisition manifest it reads simply: Bureau-Stamped Battle Gauntlets. standard, polished tabletop RPG inventory art, Korean action webtoon-inspired dark fantasy rendering, painterly realism, crisp ink-like edges, cinematic rim lighting, black deep blue violet silver palette with rift-white highlights, original design, high readability for app card UI, modern supernatural urban fantasy equipment, Rift Age tactical material design, Essence-threaded or anomaly-touched details, clear wearable silhouette, centered inventory composition, polished game gear art, no full character portrait, no text, no logo
 
 Negative: person wearing armor, humanoid body, full character portrait, human model, mannequin, mannequin face focus, human model face, multiple armor variants, product sheet, design sheet, orthographic views, front side back views, comparison sheet, full costume sheet, generic fantasy armor, medieval-only costume, weapon-only image, random jewelry, cluttered background, unreadable silhouette, bad perspective, blurry, low resolution, text, watermark, logo, direct imitation of a named franchise, copyrighted character, official logo, trademarked symbol, celebrity likeness
 
@@ -1439,13 +1439,13 @@ Negative: person, people, humanoid, owner, adventurer, warrior, hands, person ho
 - Source category: item
 - Priority: medium
 - Checkpoint: stabilityai/stable-diffusion-xl-base-1.0
-- Seed: 4161349190
+- Seed: 1462881266
 - Recommended replacement: pending
 - Notes: _pending review_
 
 <details><summary>Prompt</summary>
 
-Rift Ascendant inventory icon, one matched pair of gloves or gauntlets only, empty wearable gear, no full character, one single complete Reclaimed Knuckles equipment object only, isolated detached gear render on a simple dark neutral background, no person, no body, no model, no mannequin, no wearer, no multiple variants, not a design sheet, lore-accurate protective gear asset, Reclaimed Knuckles. Rift Ascendant is modern supernatural urban fantasy in the early normalized Rift Age; the material world is functional, commercial, Bureau-regulated, and media-aware. A pair of impact gauntlets shaped for clinch fighting inside cramped gate corridors. Stamped and logged as the Reclaimed Knuckles. standard, polished tabletop RPG inventory art, Korean action webtoon-inspired dark fantasy rendering, painterly realism, crisp ink-like edges, cinematic rim lighting, black deep blue violet silver palette with rift-white highlights, original design, high readability for app card UI, modern supernatural urban fantasy equipment, Rift Age tactical material design, Essence-threaded or anomaly-touched details, clear wearable silhouette, centered inventory composition, polished game gear art, no full character portrait, no text, no logo
+Rift Ascendant inventory icon, one matched pair of gloves or gauntlets only, empty wearable gear, no full character, one single complete Reclaimed Knuckles equipment object only, isolated detached gear render on a simple dark neutral background, no person, no body, no model, no mannequin, no wearer, no multiple variants, not a design sheet, lore-accurate protective gear asset, Reclaimed Knuckles. Rift Ascendant is modern supernatural urban fantasy in the early normalized Rift Age; the material world is functional, commercial, Bureau-regulated, and media-aware. A pair of impact gauntlets shaped for clinch fighting inside cramped Rift corridors. Stamped and logged as the Reclaimed Knuckles. standard, polished tabletop RPG inventory art, Korean action webtoon-inspired dark fantasy rendering, painterly realism, crisp ink-like edges, cinematic rim lighting, black deep blue violet silver palette with rift-white highlights, original design, high readability for app card UI, modern supernatural urban fantasy equipment, Rift Age tactical material design, Essence-threaded or anomaly-touched details, clear wearable silhouette, centered inventory composition, polished game gear art, no full character portrait, no text, no logo
 
 Negative: person wearing armor, humanoid body, full character portrait, human model, mannequin, mannequin face focus, human model face, multiple armor variants, product sheet, design sheet, orthographic views, front side back views, comparison sheet, full costume sheet, generic fantasy armor, medieval-only costume, weapon-only image, random jewelry, cluttered background, unreadable silhouette, bad perspective, blurry, low resolution, text, watermark, logo, direct imitation of a named franchise, copyrighted character, official logo, trademarked symbol, celebrity likeness
 
@@ -1508,13 +1508,13 @@ Negative: multiple weapons, duplicate weapon, secondary weapons, many variants, 
 - Source category: item
 - Priority: medium
 - Checkpoint: stabilityai/stable-diffusion-xl-base-1.0
-- Seed: 2644939179
+- Seed: 395684899
 - Recommended replacement: pending
 - Notes: _pending review_
 
 <details><summary>Prompt</summary>
 
-Rift Ascendant inventory icon, single compact revolver side-view render, exactly one complete handgun only, visible rotating cylinder, short barrel, one grip, one trigger, no duplicate views, no second gun, not a cannon, exactly one single complete Guild Issue Revolver weapon only, one continuous connected object, full weapon visible, one large weapon fills most of the frame, centered composition on a simple dark neutral background, no person, no hands, no secondary weapons, no duplicates, no multiple variants, not a design sheet, not a parchment page, lore-accurate weapon asset, Guild Issue Revolver. Rift Ascendant is modern supernatural urban fantasy in the early normalized Rift Age; the material world is functional, commercial, Bureau-regulated, and media-aware. A Bureau-spec sidearm tuned for close-quarters work inside collapsed gates. On the requisition manifest it reads simply: Guild-Issue Revolver. crimson, polished tabletop RPG inventory art, Korean action webtoon-inspired dark fantasy rendering, painterly realism, crisp ink-like edges, cinematic rim lighting, black deep blue violet silver palette with rift-white highlights, original design, high readability for app card UI, modern supernatural urban fantasy equipment, Rift Age material design, Essence-infused details, clear complete weapon silhouette, polished game weapon art, no character holding it, no text, no logo
+Rift Ascendant inventory icon, single compact revolver side-view render, exactly one complete handgun only, visible rotating cylinder, short barrel, one grip, one trigger, no duplicate views, no second gun, not a cannon, exactly one single complete Guild Issue Revolver weapon only, one continuous connected object, full weapon visible, one large weapon fills most of the frame, centered composition on a simple dark neutral background, no person, no hands, no secondary weapons, no duplicates, no multiple variants, not a design sheet, not a parchment page, lore-accurate weapon asset, Guild Issue Revolver. Rift Ascendant is modern supernatural urban fantasy in the early normalized Rift Age; the material world is functional, commercial, Bureau-regulated, and media-aware. A Bureau-spec sidearm tuned for close-quarters work inside collapsed Rifts. On the requisition manifest it reads simply: Guild-Issue Revolver. crimson, polished tabletop RPG inventory art, Korean action webtoon-inspired dark fantasy rendering, painterly realism, crisp ink-like edges, cinematic rim lighting, black deep blue violet silver palette with rift-white highlights, original design, high readability for app card UI, modern supernatural urban fantasy equipment, Rift Age material design, Essence-infused details, clear complete weapon silhouette, polished game weapon art, no character holding it, no text, no logo
 
 Negative: multiple weapons, duplicate weapon, secondary weapons, many variants, multiple guns, duplicate gun, three guns, multiple spearheads, spearhead collection, weapon head collection, product sheet, design sheet, parts sheet, exploded view, orthographic views, multiple camera angles, comparison sheet, collage, parchment page, diagram, labels, text block, circular emblems, side icons, unrelated orbs, generic sword unless the subject is a sword, generic gun unless the subject is a firearm, random jewelry, character holding the weapon, hands, full character portrait, cluttered background, unreadable silhouette, bad perspective, blurry, low resolution, text, watermark, logo, multiple guns, duplicate firearms, weapon comparison sheet, three-view gun render, cannon, oversized barrel, shotgun body, direct imitation of a named franchise, copyrighted character, official logo, trademarked symbol, celebrity likeness
 
@@ -1761,13 +1761,13 @@ Negative: person, people, humanoid, owner, adventurer, warrior, hands, person ho
 - Source category: item
 - Priority: medium
 - Checkpoint: stabilityai/stable-diffusion-xl-base-1.0
-- Seed: 2750303113
+- Seed: 116661753
 - Recommended replacement: pending
 - Notes: _pending review_
 
 <details><summary>Prompt</summary>
 
-Rift Ascendant inventory icon, detached torso protection vest object only, empty wearable shell on a simple stand, no head, no arms, no sleeves, no legs, no full suit, no wearer, one single complete Aegis Trench Coat equipment object only, isolated detached gear render on a simple dark neutral background, no person, no body, no model, no mannequin, no wearer, no multiple variants, not a design sheet, lore-accurate protective gear asset, Aegis Trench Coat. Rift Ascendant is modern supernatural urban fantasy in the early normalized Rift Age; the material world is functional, commercial, Bureau-regulated, and media-aware. A compact tactical layer designed for fast movers operating inside C-rank gates. Issued under the Aegis Trench Coat designation. shadow, polished tabletop RPG inventory art, Korean action webtoon-inspired dark fantasy rendering, painterly realism, crisp ink-like edges, cinematic rim lighting, black deep blue violet silver palette with rift-white highlights, original design, high readability for app card UI, modern supernatural urban fantasy equipment, Rift Age tactical material design, Essence-threaded or anomaly-touched details, clear wearable silhouette, centered inventory composition, polished game gear art, no full character portrait, no text, no logo
+Rift Ascendant inventory icon, detached torso protection vest object only, empty wearable shell on a simple stand, no head, no arms, no sleeves, no legs, no full suit, no wearer, one single complete Aegis Trench Coat equipment object only, isolated detached gear render on a simple dark neutral background, no person, no body, no model, no mannequin, no wearer, no multiple variants, not a design sheet, lore-accurate protective gear asset, Aegis Trench Coat. Rift Ascendant is modern supernatural urban fantasy in the early normalized Rift Age; the material world is functional, commercial, Bureau-regulated, and media-aware. A compact tactical layer designed for fast movers operating inside C-rank Rifts. Issued under the Aegis Trench Coat designation. shadow, polished tabletop RPG inventory art, Korean action webtoon-inspired dark fantasy rendering, painterly realism, crisp ink-like edges, cinematic rim lighting, black deep blue violet silver palette with rift-white highlights, original design, high readability for app card UI, modern supernatural urban fantasy equipment, Rift Age tactical material design, Essence-threaded or anomaly-touched details, clear wearable silhouette, centered inventory composition, polished game gear art, no full character portrait, no text, no logo
 
 Negative: person wearing armor, humanoid body, full character portrait, human model, mannequin, mannequin face focus, human model face, multiple armor variants, product sheet, design sheet, orthographic views, front side back views, comparison sheet, full costume sheet, generic fantasy armor, medieval-only costume, weapon-only image, random jewelry, cluttered background, unreadable silhouette, bad perspective, blurry, low resolution, text, watermark, logo, helmet, arms, sleeves, legs, pants, full bodysuit, person wearing armor, costume sheet, direct imitation of a named franchise, copyrighted character, official logo, trademarked symbol, celebrity likeness
 
@@ -1819,24 +1819,24 @@ Negative: person wearing armor, humanoid body, full character portrait, human mo
 
 </details>
 
-## Gate Forged Bracers
+## Rift Forged Bracers
 
-- Prompt ID: `armor-armor-gate-forged-bracers-1g329o`
+- Prompt ID: `armor-armor-rift-forged-bracers-1g329o`
 - Original: `/generated/compendium/items/item-0067.webp`
 - Candidate: pending
-- Apply target: `/generated/compendium/armor/armor-armor-gate-forged-bracers-1g329o.webp`
+- Apply target: `/generated/compendium/armor/armor-armor-rift-forged-bracers-1g329o.webp`
 - Type: armor
 - Category: image-item
 - Source category: item
 - Priority: medium
 - Checkpoint: stabilityai/stable-diffusion-xl-base-1.0
-- Seed: 4017855457
+- Seed: 503578341
 - Recommended replacement: pending
 - Notes: _pending review_
 
 <details><summary>Prompt</summary>
 
-Rift Ascendant inventory icon, detached single forearm bracer prop only, one hollow wrist cuff with protective plate, tabletop inventory object, no human arm, no sleeve, no glove, no torso, no full suit, one single complete Gate Forged Bracers equipment object only, isolated detached gear render on a simple dark neutral background, no person, no body, no model, no mannequin, no wearer, no multiple variants, not a design sheet, lore-accurate protective gear asset, Gate Forged Bracers. Rift Ascendant is modern supernatural urban fantasy in the early normalized Rift Age; the material world is functional, commercial, Bureau-regulated, and media-aware. A Bureau-issued forearm guard for Ascendants operating melee-forward. On the requisition manifest it reads simply: Gate-Forged Bracers. shadow, polished tabletop RPG inventory art, Korean action webtoon-inspired dark fantasy rendering, painterly realism, crisp ink-like edges, cinematic rim lighting, black deep blue violet silver palette with rift-white highlights, original design, high readability for app card UI, modern supernatural urban fantasy equipment, Rift Age tactical material design, Essence-threaded or anomaly-touched details, clear wearable silhouette, centered inventory composition, polished game gear art, no full character portrait, no text, no logo
+Rift Ascendant inventory icon, detached single forearm bracer prop only, one hollow wrist cuff with protective plate, tabletop inventory object, no human arm, no sleeve, no glove, no torso, no full suit, one single complete Rift Forged Bracers equipment object only, isolated detached gear render on a simple dark neutral background, no person, no body, no model, no mannequin, no wearer, no multiple variants, not a design sheet, lore-accurate protective gear asset, Rift Forged Bracers. Rift Ascendant is modern supernatural urban fantasy in the early normalized Rift Age; the material world is functional, commercial, Bureau-regulated, and media-aware. A Bureau-issued forearm guard for Ascendants operating melee-forward. On the requisition manifest it reads simply: Rift-Forged Bracers. shadow, polished tabletop RPG inventory art, Korean action webtoon-inspired dark fantasy rendering, painterly realism, crisp ink-like edges, cinematic rim lighting, black deep blue violet silver palette with rift-white highlights, original design, high readability for app card UI, modern supernatural urban fantasy equipment, Rift Age tactical material design, Essence-threaded or anomaly-touched details, clear wearable silhouette, centered inventory composition, polished game gear art, no full character portrait, no text, no logo
 
 Negative: person wearing armor, humanoid body, full character portrait, human model, mannequin, mannequin face focus, human model face, multiple armor variants, product sheet, design sheet, orthographic views, front side back views, comparison sheet, full costume sheet, generic fantasy armor, medieval-only costume, weapon-only image, random jewelry, cluttered background, unreadable silhouette, bad perspective, blurry, low resolution, text, watermark, logo, human arm, sleeve, glove, torso armor, shirt, coat, chestplate, combat vest, full suit, helmet, boots, whole body, direct imitation of a named franchise, copyrighted character, official logo, trademarked symbol, celebrity likeness
 
@@ -1968,36 +1968,36 @@ Negative: multiple weapons, duplicate weapon, secondary weapons, many variants, 
 - Source category: item
 - Priority: medium
 - Checkpoint: stabilityai/stable-diffusion-xl-base-1.0
-- Seed: 2489772151
+- Seed: 951522223
 - Recommended replacement: pending
 - Notes: _pending review_
 
 <details><summary>Prompt</summary>
 
-Rift Ascendant inventory icon, single firearm side-view render, exactly one complete gun only, one barrel, one grip, one trigger, no duplicate views, no second gun, exactly one single complete Custom Forged Service Pistol weapon only, one continuous connected object, full weapon visible, one large weapon fills most of the frame, centered composition on a simple dark neutral background, no person, no hands, no secondary weapons, no duplicates, no multiple variants, not a design sheet, not a parchment page, lore-accurate weapon asset, Custom Forged Service Pistol. Rift Ascendant is modern supernatural urban fantasy in the early normalized Rift Age; the material world is functional, commercial, Bureau-regulated, and media-aware. A Bureau-spec sidearm tuned for close-quarters work inside collapsed gates. On the requisition manifest it reads simply: Custom-Forged Service Pistol. aetheric, polished tabletop RPG inventory art, Korean action webtoon-inspired dark fantasy rendering, painterly realism, crisp ink-like edges, cinematic rim lighting, black deep blue violet silver palette with rift-white highlights, original design, high readability for app card UI, modern supernatural urban fantasy equipment, Rift Age material design, Essence-infused details, clear complete weapon silhouette, polished game weapon art, no character holding it, no text, no logo
+Rift Ascendant inventory icon, single firearm side-view render, exactly one complete gun only, one barrel, one grip, one trigger, no duplicate views, no second gun, exactly one single complete Custom Forged Service Pistol weapon only, one continuous connected object, full weapon visible, one large weapon fills most of the frame, centered composition on a simple dark neutral background, no person, no hands, no secondary weapons, no duplicates, no multiple variants, not a design sheet, not a parchment page, lore-accurate weapon asset, Custom Forged Service Pistol. Rift Ascendant is modern supernatural urban fantasy in the early normalized Rift Age; the material world is functional, commercial, Bureau-regulated, and media-aware. A Bureau-spec sidearm tuned for close-quarters work inside collapsed Rifts. On the requisition manifest it reads simply: Custom-Forged Service Pistol. aetheric, polished tabletop RPG inventory art, Korean action webtoon-inspired dark fantasy rendering, painterly realism, crisp ink-like edges, cinematic rim lighting, black deep blue violet silver palette with rift-white highlights, original design, high readability for app card UI, modern supernatural urban fantasy equipment, Rift Age material design, Essence-infused details, clear complete weapon silhouette, polished game weapon art, no character holding it, no text, no logo
 
 Negative: multiple weapons, duplicate weapon, secondary weapons, many variants, multiple guns, duplicate gun, three guns, multiple spearheads, spearhead collection, weapon head collection, product sheet, design sheet, parts sheet, exploded view, orthographic views, multiple camera angles, comparison sheet, collage, parchment page, diagram, labels, text block, circular emblems, side icons, unrelated orbs, generic sword unless the subject is a sword, generic gun unless the subject is a firearm, random jewelry, character holding the weapon, hands, full character portrait, cluttered background, unreadable silhouette, bad perspective, blurry, low resolution, text, watermark, logo, multiple guns, duplicate firearms, weapon comparison sheet, three-view gun render, cannon, oversized barrel, shotgun body, direct imitation of a named franchise, copyrighted character, official logo, trademarked symbol, celebrity likeness
 
 </details>
 
-## Gate Forged Spaulders
+## Rift Forged Spaulders
 
-- Prompt ID: `armor-armor-gate-forged-spaulders-1ovlq1`
+- Prompt ID: `armor-armor-rift-forged-spaulders-1ovlq1`
 - Original: `/generated/compendium/items/item-0084.webp`
 - Candidate: pending
-- Apply target: `/generated/compendium/armor/armor-armor-gate-forged-spaulders-1ovlq1.webp`
+- Apply target: `/generated/compendium/armor/armor-armor-rift-forged-spaulders-1ovlq1.webp`
 - Type: armor
 - Category: image-item
 - Source category: item
 - Priority: medium
 - Checkpoint: stabilityai/stable-diffusion-xl-base-1.0
-- Seed: 1364510841
+- Seed: 2629660553
 - Recommended replacement: pending
 - Notes: _pending review_
 
 <details><summary>Prompt</summary>
 
-Rift Ascendant inventory icon, single empty wearable armor object only, not worn by anyone, no full-body suit sheet, one single complete Gate Forged Spaulders equipment object only, isolated detached gear render on a simple dark neutral background, no person, no body, no model, no mannequin, no wearer, no multiple variants, not a design sheet, lore-accurate protective gear asset, Gate Forged Spaulders. Rift Ascendant is modern supernatural urban fantasy in the early normalized Rift Age; the material world is functional, commercial, Bureau-regulated, and media-aware. Heavy carapace plating; favored by S-rank tanks and Holy Knights. The Gate-Forged Spaulders, in Bureau parlance. crimson, polished tabletop RPG inventory art, Korean action webtoon-inspired dark fantasy rendering, painterly realism, crisp ink-like edges, cinematic rim lighting, black deep blue violet silver palette with rift-white highlights, original design, high readability for app card UI, modern supernatural urban fantasy equipment, Rift Age tactical material design, Essence-threaded or anomaly-touched details, clear wearable silhouette, centered inventory composition, polished game gear art, no full character portrait, no text, no logo
+Rift Ascendant inventory icon, single empty wearable armor object only, not worn by anyone, no full-body suit sheet, one single complete Rift Forged Spaulders equipment object only, isolated detached gear render on a simple dark neutral background, no person, no body, no model, no mannequin, no wearer, no multiple variants, not a design sheet, lore-accurate protective gear asset, Rift Forged Spaulders. Rift Ascendant is modern supernatural urban fantasy in the early normalized Rift Age; the material world is functional, commercial, Bureau-regulated, and media-aware. Heavy carapace plating; favored by S-rank tanks and Holy Knights. The Rift-Forged Spaulders, in Bureau parlance. crimson, polished tabletop RPG inventory art, Korean action webtoon-inspired dark fantasy rendering, painterly realism, crisp ink-like edges, cinematic rim lighting, black deep blue violet silver palette with rift-white highlights, original design, high readability for app card UI, modern supernatural urban fantasy equipment, Rift Age tactical material design, Essence-threaded or anomaly-touched details, clear wearable silhouette, centered inventory composition, polished game gear art, no full character portrait, no text, no logo
 
 Negative: person wearing armor, humanoid body, full character portrait, human model, mannequin, mannequin face focus, human model face, multiple armor variants, product sheet, design sheet, orthographic views, front side back views, comparison sheet, full costume sheet, generic fantasy armor, medieval-only costume, weapon-only image, random jewelry, cluttered background, unreadable silhouette, bad perspective, blurry, low resolution, text, watermark, logo, direct imitation of a named franchise, copyrighted character, official logo, trademarked symbol, celebrity likeness
 
@@ -2578,6 +2578,29 @@ Negative: multiple weapons, duplicate weapon, secondary weapons, many variants, 
 
 </details>
 
+## Common Clothes
+
+- Prompt ID: `item-item-common-clothes-6csq1y`
+- Original: `/generated/compendium/items/item-0101.webp`
+- Candidate: pending
+- Apply target: `/generated/compendium/items/item-item-common-clothes-6csq1y.webp`
+- Type: item
+- Category: image-item
+- Source category: item
+- Priority: medium
+- Checkpoint: stabilityai/stable-diffusion-xl-base-1.0
+- Seed: 3780756219
+- Recommended replacement: pending
+- Notes: _pending review_
+
+<details><summary>Prompt</summary>
+
+Rift Ascendant inventory asset, one single centered complete Common Clothes object only, isolated object render on a simple dark neutral background, no person, no hands, no creature, no character, no landscape, no multiple views, no parts sheet, one complete object only, the object itself is the only subject, no living figure, no creature body, not a product sheet, Common Clothes. Rift Ascendant is modern supernatural urban fantasy in the early normalized Rift Age; the material world is functional, commercial, Bureau-regulated, and media-aware. Street-cut trousers, tee, and jacket in gate-district gray - the anonymous uniform of half the city. standard, polished tabletop RPG inventory art, Korean action webtoon-inspired dark fantasy rendering, painterly realism, crisp ink-like edges, cinematic rim lighting, black deep blue violet silver palette with rift-white highlights, original design, high readability for app card UI, powerful object recovered from or shaped by Rift forces, Essence-infused materials, modern dark fantasy item design, clear object silhouette, centered composition, polished inventory art, no text, no logo
+
+Negative: person, people, humanoid, owner, adventurer, warrior, hands, person holding object, gun, rifle, firearm, weapon, armor, helmet, character portrait, human face, open case, visible contents, loose tools, accessories, baked letters, caption, multiple objects, many variants, product sheet, parts sheet, exploded view, multiple camera angles, living creature, animal, monster, bird wings, tree, plant, roots, landscape-only image, generic sword, generic potion, random jewelry, stock icon, cluttered background, unreadable small details, bad perspective, blurry, low resolution, text, watermark, logo, direct imitation of a named franchise, copyrighted character, official logo, trademarked symbol, celebrity likeness
+
+</details>
+
 ## Dawnbringer's Ceremonial Robe
 
 - Prompt ID: `armor-armor-dawnbringer-s-ceremonial-robe-1bl0rq`
@@ -2598,6 +2621,98 @@ Negative: multiple weapons, duplicate weapon, secondary weapons, many variants, 
 Rift Ascendant inventory icon, one empty cloak or robe garment only, hanging wearable object, no face, no model, no full character, one single complete Ceremonial Robe equipment object only, isolated detached gear render on a simple dark neutral background, no person, no body, no model, no mannequin, no wearer, no multiple variants, not a design sheet, lore-accurate protective gear asset, Ceremonial Robe. Rift Ascendant is modern supernatural urban fantasy in the early normalized Rift Age; the material world is functional, commercial, Bureau-regulated, and media-aware. Small enough to forget. Big enough to matter when it counts. They call it the Ceremonial Robe for a reason. storm, polished tabletop RPG inventory art, Korean action webtoon-inspired dark fantasy rendering, painterly realism, crisp ink-like edges, cinematic rim lighting, black deep blue violet silver palette with rift-white highlights, original design, high readability for app card UI, modern supernatural urban fantasy equipment, Rift Age tactical material design, Essence-threaded or anomaly-touched details, clear wearable silhouette, centered inventory composition, polished game gear art, no full character portrait, no text, no logo
 
 Negative: person wearing armor, humanoid body, full character portrait, human model, mannequin, mannequin face focus, human model face, multiple armor variants, product sheet, design sheet, orthographic views, front side back views, comparison sheet, full costume sheet, generic fantasy armor, medieval-only costume, weapon-only image, random jewelry, cluttered background, unreadable silhouette, bad perspective, blurry, low resolution, text, watermark, logo, direct imitation of a named franchise, copyrighted character, official logo, trademarked symbol, celebrity likeness
+
+</details>
+
+## Trench Coat
+
+- Prompt ID: `item-item-trench-coat-1pkppo`
+- Original: `/generated/compendium/items/item-0103.webp`
+- Candidate: pending
+- Apply target: `/generated/compendium/items/item-item-trench-coat-1pkppo.webp`
+- Type: item
+- Category: image-item
+- Source category: item
+- Priority: medium
+- Checkpoint: stabilityai/stable-diffusion-xl-base-1.0
+- Seed: 3461766290
+- Recommended replacement: pending
+- Notes: _pending review_
+
+<details><summary>Prompt</summary>
+
+Rift Ascendant inventory asset, one single centered complete Trench Coat object only, isolated object render on a simple dark neutral background, no person, no hands, no creature, no character, no landscape, no multiple views, no parts sheet, one complete object only, the object itself is the only subject, no living figure, no creature body, not a product sheet, Trench Coat. Rift Ascendant is modern supernatural urban fantasy in the early normalized Rift Age; the material world is functional, commercial, Bureau-regulated, and media-aware. A long weatherproof coat with deep pockets - the standard silhouette of investigators working the Rift districts at night. standard, polished tabletop RPG inventory art, Korean action webtoon-inspired dark fantasy rendering, painterly realism, crisp ink-like edges, cinematic rim lighting, black deep blue violet silver palette with rift-white highlights, original design, high readability for app card UI, powerful object recovered from or shaped by Rift forces, Essence-infused materials, modern dark fantasy item design, clear object silhouette, centered composition, polished inventory art, no text, no logo
+
+Negative: person, people, humanoid, owner, adventurer, warrior, hands, person holding object, gun, rifle, firearm, weapon, armor, helmet, character portrait, human face, open case, visible contents, loose tools, accessories, baked letters, caption, multiple objects, many variants, product sheet, parts sheet, exploded view, multiple camera angles, living creature, animal, monster, bird wings, tree, plant, roots, landscape-only image, generic sword, generic potion, random jewelry, stock icon, cluttered background, unreadable small details, bad perspective, blurry, low resolution, text, watermark, logo, direct imitation of a named franchise, copyrighted character, official logo, trademarked symbol, celebrity likeness
+
+</details>
+
+## Doom Forged Ward Scroll
+
+- Prompt ID: `item-item-doom-forged-ward-scroll-td71gz`
+- Original: `/generated/compendium/items/item-0103.webp`
+- Candidate: pending
+- Apply target: `/generated/compendium/items/item-item-doom-forged-ward-scroll-td71gz.webp`
+- Type: item
+- Category: image-item
+- Source category: item
+- Priority: medium
+- Checkpoint: stabilityai/stable-diffusion-xl-base-1.0
+- Seed: 3784779774
+- Recommended replacement: pending
+- Notes: _pending review_
+
+<details><summary>Prompt</summary>
+
+Rift Ascendant inventory asset, one single centered complete Doom Forged Ward Scroll object only, isolated object render on a simple dark neutral background, no person, no hands, no creature, no character, no landscape, no multiple views, no parts sheet, one complete object only, the object itself is the only subject, no living figure, no creature body, not a product sheet, Doom Forged Ward Scroll. Rift Ascendant is modern supernatural urban fantasy in the early normalized Rift Age; the material world is functional, commercial, Bureau-regulated, and media-aware. Cast the inscribed spell. The scroll is consumed. Shelf life is a guideline. Trust the cap, not the date. — the Doom-Forged Ward Scroll. standard, polished tabletop RPG inventory art, Korean action webtoon-inspired dark fantasy rendering, painterly realism, crisp ink-like edges, cinematic rim lighting, black deep blue violet silver palette with rift-white highlights, original design, high readability for app card UI, powerful object recovered from or shaped by Rift forces, Essence-infused materials, modern dark fantasy item design, clear object silhouette, centered composition, polished inventory art, no text, no logo
+
+Negative: person, people, humanoid, owner, adventurer, warrior, hands, person holding object, gun, rifle, firearm, weapon, armor, helmet, character portrait, human face, open case, visible contents, loose tools, accessories, baked letters, caption, multiple objects, many variants, product sheet, parts sheet, exploded view, multiple camera angles, living creature, animal, monster, bird wings, tree, plant, roots, landscape-only image, generic sword, generic potion, random jewelry, stock icon, cluttered background, unreadable small details, bad perspective, blurry, low resolution, text, watermark, logo, direct imitation of a named franchise, copyrighted character, official logo, trademarked symbol, celebrity likeness
+
+</details>
+
+## Provisional Elixir
+
+- Prompt ID: `item-item-provisional-elixir-8e9y8b`
+- Original: `/generated/compendium/items/item-0103.webp`
+- Candidate: pending
+- Apply target: `/generated/compendium/items/item-item-provisional-elixir-8e9y8b.webp`
+- Type: item
+- Category: image-item
+- Source category: item
+- Priority: medium
+- Checkpoint: stabilityai/stable-diffusion-xl-base-1.0
+- Seed: 3800969717
+- Recommended replacement: pending
+- Notes: _pending review_
+
+<details><summary>Prompt</summary>
+
+Rift Ascendant inventory asset, one single centered complete Provisional Elixir object only, isolated object render on a simple dark neutral background, no person, no hands, no creature, no character, no landscape, no multiple views, no parts sheet, one sealed medical vial or injector only, clear glass and metal cap, luminous Essence fluid inside, Provisional Elixir. Rift Ascendant is modern supernatural urban fantasy in the early normalized Rift Age; the material world is functional, commercial, Bureau-regulated, and media-aware. Drink the potion. standard, polished tabletop RPG inventory art, Korean action webtoon-inspired dark fantasy rendering, painterly realism, crisp ink-like edges, cinematic rim lighting, black deep blue violet silver palette with rift-white highlights, original design, high readability for app card UI, powerful object recovered from or shaped by Rift forces, Essence-infused materials, modern dark fantasy item design, clear object silhouette, centered composition, polished inventory art, no text, no logo
+
+Negative: person, people, humanoid, owner, adventurer, warrior, hands, person holding object, gun, rifle, firearm, weapon, armor, helmet, character portrait, human face, open case, visible contents, loose tools, accessories, baked letters, caption, multiple objects, many variants, product sheet, parts sheet, exploded view, multiple camera angles, living creature, animal, monster, bird wings, tree, plant, roots, landscape-only image, generic sword, generic potion, random jewelry, stock icon, cluttered background, unreadable small details, bad perspective, blurry, low resolution, text, watermark, logo, direct imitation of a named franchise, copyrighted character, official logo, trademarked symbol, celebrity likeness
+
+</details>
+
+## Smartphone
+
+- Prompt ID: `item-item-smartphone-16ul35`
+- Original: `/generated/compendium/items/item-0105.webp`
+- Candidate: pending
+- Apply target: `/generated/compendium/items/item-item-smartphone-16ul35.webp`
+- Type: item
+- Category: image-item
+- Source category: item
+- Priority: medium
+- Checkpoint: stabilityai/stable-diffusion-xl-base-1.0
+- Seed: 1507455236
+- Recommended replacement: pending
+- Notes: _pending review_
+
+<details><summary>Prompt</summary>
+
+Rift Ascendant inventory asset, one single centered complete Smartphone object only, isolated object render on a simple dark neutral background, no person, no hands, no creature, no character, no landscape, no multiple views, no parts sheet, one complete object only, the object itself is the only subject, no living figure, no creature body, not a product sheet, Smartphone. Rift Ascendant is modern supernatural urban fantasy in the early normalized Rift Age; the material world is functional, commercial, Bureau-regulated, and media-aware. A current-generation handset running the Bureau net - Rift alerts, maps, camera, and mana-signature feeds. standard, polished tabletop RPG inventory art, Korean action webtoon-inspired dark fantasy rendering, painterly realism, crisp ink-like edges, cinematic rim lighting, black deep blue violet silver palette with rift-white highlights, original design, high readability for app card UI, powerful object recovered from or shaped by Rift forces, Essence-infused materials, modern dark fantasy item design, clear object silhouette, centered composition, polished inventory art, no text, no logo
+
+Negative: person, people, humanoid, owner, adventurer, warrior, hands, person holding object, gun, rifle, firearm, weapon, armor, helmet, character portrait, human face, open case, visible contents, loose tools, accessories, baked letters, caption, multiple objects, many variants, product sheet, parts sheet, exploded view, multiple camera angles, living creature, animal, monster, bird wings, tree, plant, roots, landscape-only image, generic sword, generic potion, random jewelry, stock icon, cluttered background, unreadable small details, bad perspective, blurry, low resolution, text, watermark, logo, direct imitation of a named franchise, copyrighted character, official logo, trademarked symbol, celebrity likeness
 
 </details>
 
@@ -2644,6 +2759,29 @@ Negative: person, people, humanoid, owner, adventurer, warrior, hands, person ho
 Rift Ascendant inventory icon, single complete weapon object only, one continuous connected weapon, no alternate variants, exactly one single complete Sanguine Twin Sickles weapon only, one continuous connected object, full weapon visible, one large weapon fills most of the frame, centered composition on a simple dark neutral background, no person, no hands, no secondary weapons, no duplicates, no multiple variants, not a design sheet, not a parchment page, lore-accurate weapon asset, Sanguine Twin Sickles. Rift Ascendant is modern supernatural urban fantasy in the early normalized Rift Age; the material world is functional, commercial, Bureau-regulated, and media-aware. It owes nothing to luck. It is what it costs. They call it the Sanguine Twin Sickles for a reason. standard, polished tabletop RPG inventory art, Korean action webtoon-inspired dark fantasy rendering, painterly realism, crisp ink-like edges, cinematic rim lighting, black deep blue violet silver palette with rift-white highlights, original design, high readability for app card UI, modern supernatural urban fantasy equipment, Rift Age material design, Essence-infused details, clear complete weapon silhouette, polished game weapon art, no character holding it, no text, no logo
 
 Negative: multiple weapons, duplicate weapon, secondary weapons, many variants, multiple guns, duplicate gun, three guns, multiple spearheads, spearhead collection, weapon head collection, product sheet, design sheet, parts sheet, exploded view, orthographic views, multiple camera angles, comparison sheet, collage, parchment page, diagram, labels, text block, circular emblems, side icons, unrelated orbs, generic sword unless the subject is a sword, generic gun unless the subject is a firearm, random jewelry, character holding the weapon, hands, full character portrait, cluttered background, unreadable silhouette, bad perspective, blurry, low resolution, text, watermark, logo, direct imitation of a named franchise, copyrighted character, official logo, trademarked symbol, celebrity likeness
+
+</details>
+
+## Backpack
+
+- Prompt ID: `item-item-backpack-1i4fzs`
+- Original: `/generated/compendium/items/item-0106.webp`
+- Candidate: pending
+- Apply target: `/generated/compendium/items/item-item-backpack-1i4fzs.webp`
+- Type: item
+- Category: image-item
+- Source category: item
+- Priority: medium
+- Checkpoint: stabilityai/stable-diffusion-xl-base-1.0
+- Seed: 662400324
+- Recommended replacement: pending
+- Notes: _pending review_
+
+<details><summary>Prompt</summary>
+
+Rift Ascendant inventory asset, one single centered complete Backpack object only, isolated object render on a simple dark neutral background, no person, no hands, no creature, no character, no landscape, no multiple views, no parts sheet, one complete object only, the object itself is the only subject, no living figure, no creature body, not a product sheet, Backpack. Rift Ascendant is modern supernatural urban fantasy in the early normalized Rift Age; the material world is functional, commercial, Bureau-regulated, and media-aware. A reinforced daypack with padded straps, rated for a Hunter's field load. standard, polished tabletop RPG inventory art, Korean action webtoon-inspired dark fantasy rendering, painterly realism, crisp ink-like edges, cinematic rim lighting, black deep blue violet silver palette with rift-white highlights, original design, high readability for app card UI, powerful object recovered from or shaped by Rift forces, Essence-infused materials, modern dark fantasy item design, clear object silhouette, centered composition, polished inventory art, no text, no logo
+
+Negative: person, people, humanoid, owner, adventurer, warrior, hands, person holding object, gun, rifle, firearm, weapon, armor, helmet, character portrait, human face, open case, visible contents, loose tools, accessories, baked letters, caption, multiple objects, many variants, product sheet, parts sheet, exploded view, multiple camera angles, living creature, animal, monster, bird wings, tree, plant, roots, landscape-only image, generic sword, generic potion, random jewelry, stock icon, cluttered background, unreadable small details, bad perspective, blurry, low resolution, text, watermark, logo, direct imitation of a named franchise, copyrighted character, official logo, trademarked symbol, celebrity likeness
 
 </details>
 
@@ -2711,6 +2849,98 @@ Negative: multiple weapons, duplicate weapon, secondary weapons, many variants, 
 <details><summary>Prompt</summary>
 
 Rift Ascendant inventory asset, one single centered complete Greater Aetheric Antidote object only, isolated object render on a simple dark neutral background, no person, no hands, no creature, no character, no landscape, no multiple views, no parts sheet, one sealed medical vial or injector only, clear glass and metal cap, luminous Essence fluid inside, Greater Aetheric Antidote. Rift Ascendant is modern supernatural urban fantasy in the early normalized Rift Age; the material world is functional, commercial, Bureau-regulated, and media-aware. Cures one of: charmed, frightened, poisoned, weakened. void, polished tabletop RPG inventory art, Korean action webtoon-inspired dark fantasy rendering, painterly realism, crisp ink-like edges, cinematic rim lighting, black deep blue violet silver palette with rift-white highlights, original design, high readability for app card UI, powerful object recovered from or shaped by Rift forces, Essence-infused materials, modern dark fantasy item design, clear object silhouette, centered composition, polished inventory art, no text, no logo
+
+Negative: person, people, humanoid, owner, adventurer, warrior, hands, person holding object, gun, rifle, firearm, weapon, armor, helmet, character portrait, human face, open case, visible contents, loose tools, accessories, baked letters, caption, multiple objects, many variants, product sheet, parts sheet, exploded view, multiple camera angles, living creature, animal, monster, bird wings, tree, plant, roots, landscape-only image, generic sword, generic potion, random jewelry, stock icon, cluttered background, unreadable small details, bad perspective, blurry, low resolution, text, watermark, logo, direct imitation of a named franchise, copyrighted character, official logo, trademarked symbol, celebrity likeness
+
+</details>
+
+## Alchemist's Supplies
+
+- Prompt ID: `item-item-alchemist-s-supplies-jeq3p7`
+- Original: `/generated/compendium/items/item-0107.webp`
+- Candidate: pending
+- Apply target: `/generated/compendium/items/item-item-alchemist-s-supplies-jeq3p7.webp`
+- Type: item
+- Category: image-item
+- Source category: item
+- Priority: medium
+- Checkpoint: stabilityai/stable-diffusion-xl-base-1.0
+- Seed: 4287844993
+- Recommended replacement: pending
+- Notes: _pending review_
+
+<details><summary>Prompt</summary>
+
+Rift Ascendant inventory asset, one single centered complete Supplies object only, isolated object render on a simple dark neutral background, no person, no hands, no creature, no character, no landscape, no multiple views, no parts sheet, one complete object only, the object itself is the only subject, no living figure, no creature body, not a product sheet, Supplies. Rift Ascendant is modern supernatural urban fantasy in the early normalized Rift Age; the material world is functional, commercial, Bureau-regulated, and media-aware. A modern chemistry case of retorts, reagents, and mana-stable solvents for brewing field compounds. standard, polished tabletop RPG inventory art, Korean action webtoon-inspired dark fantasy rendering, painterly realism, crisp ink-like edges, cinematic rim lighting, black deep blue violet silver palette with rift-white highlights, original design, high readability for app card UI, powerful object recovered from or shaped by Rift forces, Essence-infused materials, modern dark fantasy item design, clear object silhouette, centered composition, polished inventory art, no text, no logo
+
+Negative: person, people, humanoid, owner, adventurer, warrior, hands, person holding object, gun, rifle, firearm, weapon, armor, helmet, character portrait, human face, open case, visible contents, loose tools, accessories, baked letters, caption, multiple objects, many variants, product sheet, parts sheet, exploded view, multiple camera angles, living creature, animal, monster, bird wings, tree, plant, roots, landscape-only image, generic sword, generic potion, random jewelry, stock icon, cluttered background, unreadable small details, bad perspective, blurry, low resolution, text, watermark, logo, direct imitation of a named franchise, copyrighted character, official logo, trademarked symbol, celebrity likeness
+
+</details>
+
+## Gas Mask
+
+- Prompt ID: `item-item-gas-mask-1yz5tb`
+- Original: `/generated/compendium/items/item-0107.webp`
+- Candidate: pending
+- Apply target: `/generated/compendium/items/item-item-gas-mask-1yz5tb.webp`
+- Type: item
+- Category: image-item
+- Source category: item
+- Priority: medium
+- Checkpoint: stabilityai/stable-diffusion-xl-base-1.0
+- Seed: 170376780
+- Recommended replacement: pending
+- Notes: _pending review_
+
+<details><summary>Prompt</summary>
+
+Rift Ascendant inventory asset, one single centered complete Gas Mask object only, isolated object render on a simple dark neutral background, no person, no hands, no creature, no character, no landscape, no multiple views, no parts sheet, one complete object only, the object itself is the only subject, no living figure, no creature body, not a product sheet, Gas Mask. Rift Ascendant is modern supernatural urban fantasy in the early normalized Rift Age; the material world is functional, commercial, Bureau-regulated, and media-aware. A sealed respirator with replaceable filters, standard issue for smoke-flooded or spore-choked Rift interiors. standard, polished tabletop RPG inventory art, Korean action webtoon-inspired dark fantasy rendering, painterly realism, crisp ink-like edges, cinematic rim lighting, black deep blue violet silver palette with rift-white highlights, original design, high readability for app card UI, powerful object recovered from or shaped by Rift forces, Essence-infused materials, modern dark fantasy item design, clear object silhouette, centered composition, polished inventory art, no text, no logo
+
+Negative: person, people, humanoid, owner, adventurer, warrior, hands, person holding object, gun, rifle, firearm, weapon, armor, helmet, character portrait, human face, open case, visible contents, loose tools, accessories, baked letters, caption, multiple objects, many variants, product sheet, parts sheet, exploded view, multiple camera angles, living creature, animal, monster, bird wings, tree, plant, roots, landscape-only image, generic sword, generic potion, random jewelry, stock icon, cluttered background, unreadable small details, bad perspective, blurry, low resolution, text, watermark, logo, direct imitation of a named franchise, copyrighted character, official logo, trademarked symbol, celebrity likeness
+
+</details>
+
+## Toxic Inscription
+
+- Prompt ID: `item-item-toxic-inscription-t4l8wn`
+- Original: `/generated/compendium/items/item-0107.webp`
+- Candidate: pending
+- Apply target: `/generated/compendium/items/item-item-toxic-inscription-t4l8wn.webp`
+- Type: item
+- Category: image-item
+- Source category: item
+- Priority: medium
+- Checkpoint: stabilityai/stable-diffusion-xl-base-1.0
+- Seed: 2961828503
+- Recommended replacement: pending
+- Notes: _pending review_
+
+<details><summary>Prompt</summary>
+
+Rift Ascendant inventory asset, one single centered complete Toxic Inscription object only, isolated object render on a simple dark neutral background, no person, no hands, no creature, no character, no landscape, no multiple views, no parts sheet, one complete object only, the object itself is the only subject, no living figure, no creature body, not a product sheet, Toxic Inscription. Rift Ascendant is modern supernatural urban fantasy in the early normalized Rift Age; the material world is functional, commercial, Bureau-regulated, and media-aware. Cast the inscribed spell. The scroll is consumed. Half pharmacology, half hope. — the Toxic Inscription. aetheric, polished tabletop RPG inventory art, Korean action webtoon-inspired dark fantasy rendering, painterly realism, crisp ink-like edges, cinematic rim lighting, black deep blue violet silver palette with rift-white highlights, original design, high readability for app card UI, powerful object recovered from or shaped by Rift forces, Essence-infused materials, modern dark fantasy item design, clear object silhouette, centered composition, polished inventory art, no text, no logo
+
+Negative: person, people, humanoid, owner, adventurer, warrior, hands, person holding object, gun, rifle, firearm, weapon, armor, helmet, character portrait, human face, open case, visible contents, loose tools, accessories, baked letters, caption, multiple objects, many variants, product sheet, parts sheet, exploded view, multiple camera angles, living creature, animal, monster, bird wings, tree, plant, roots, landscape-only image, generic sword, generic potion, random jewelry, stock icon, cluttered background, unreadable small details, bad perspective, blurry, low resolution, text, watermark, logo, direct imitation of a named franchise, copyrighted character, official logo, trademarked symbol, celebrity likeness
+
+</details>
+
+## Safety Goggles
+
+- Prompt ID: `item-item-safety-goggles-1ygopy`
+- Original: `/generated/compendium/items/item-0110.webp`
+- Candidate: pending
+- Apply target: `/generated/compendium/items/item-item-safety-goggles-1ygopy.webp`
+- Type: item
+- Category: image-item
+- Source category: item
+- Priority: medium
+- Checkpoint: stabilityai/stable-diffusion-xl-base-1.0
+- Seed: 1928439104
+- Recommended replacement: pending
+- Notes: _pending review_
+
+<details><summary>Prompt</summary>
+
+Rift Ascendant inventory asset, one single centered complete Safety Goggles object only, isolated object render on a simple dark neutral background, no person, no hands, no creature, no character, no landscape, no multiple views, no parts sheet, one complete object only, the object itself is the only subject, no living figure, no creature body, not a product sheet, Safety Goggles. Rift Ascendant is modern supernatural urban fantasy in the early normalized Rift Age; the material world is functional, commercial, Bureau-regulated, and media-aware. Impact-rated eye protection with an anti-fog coating, standard at inscription benches and dissection tables. standard, polished tabletop RPG inventory art, Korean action webtoon-inspired dark fantasy rendering, painterly realism, crisp ink-like edges, cinematic rim lighting, black deep blue violet silver palette with rift-white highlights, original design, high readability for app card UI, powerful object recovered from or shaped by Rift forces, Essence-infused materials, modern dark fantasy item design, clear object silhouette, centered composition, polished inventory art, no text, no logo
 
 Negative: person, people, humanoid, owner, adventurer, warrior, hands, person holding object, gun, rifle, firearm, weapon, armor, helmet, character portrait, human face, open case, visible contents, loose tools, accessories, baked letters, caption, multiple objects, many variants, product sheet, parts sheet, exploded view, multiple camera angles, living creature, animal, monster, bird wings, tree, plant, roots, landscape-only image, generic sword, generic potion, random jewelry, stock icon, cluttered background, unreadable small details, bad perspective, blurry, low resolution, text, watermark, logo, direct imitation of a named franchise, copyrighted character, official logo, trademarked symbol, celebrity likeness
 
@@ -2854,24 +3084,24 @@ Negative: multiple weapons, duplicate weapon, secondary weapons, many variants, 
 
 </details>
 
-## Gate Forged Combat Vest
+## Rift Forged Combat Vest
 
-- Prompt ID: `armor-armor-gate-forged-combat-vest-xb9r8s`
+- Prompt ID: `armor-armor-rift-forged-combat-vest-xb9r8s`
 - Original: `/generated/compendium/items/item-0116.webp`
 - Candidate: pending
-- Apply target: `/generated/compendium/armor/armor-armor-gate-forged-combat-vest-xb9r8s.webp`
+- Apply target: `/generated/compendium/armor/armor-armor-rift-forged-combat-vest-xb9r8s.webp`
 - Type: armor
 - Category: image-item
 - Source category: item
 - Priority: medium
 - Checkpoint: stabilityai/stable-diffusion-xl-base-1.0
-- Seed: 588964311
+- Seed: 728182183
 - Recommended replacement: pending
 - Notes: _pending review_
 
 <details><summary>Prompt</summary>
 
-Rift Ascendant inventory icon, detached torso protection vest object only, empty wearable shell on a simple stand, no head, no arms, no sleeves, no legs, no full suit, no wearer, one single complete Gate Forged Combat Vest equipment object only, isolated detached gear render on a simple dark neutral background, no person, no body, no model, no mannequin, no wearer, no multiple variants, not a design sheet, lore-accurate protective gear asset, Gate Forged Combat Vest. Rift Ascendant is modern supernatural urban fantasy in the early normalized Rift Age; the material world is functional, commercial, Bureau-regulated, and media-aware. Modern light armor laced with mana-reactive alloys for enhanced protection. On the requisition manifest it reads simply: Gate-Forged Combat Vest. aetheric, polished tabletop RPG inventory art, Korean action webtoon-inspired dark fantasy rendering, painterly realism, crisp ink-like edges, cinematic rim lighting, black deep blue violet silver palette with rift-white highlights, original design, high readability for app card UI, modern supernatural urban fantasy equipment, Rift Age tactical material design, Essence-threaded or anomaly-touched details, clear wearable silhouette, centered inventory composition, polished game gear art, no full character portrait, no text, no logo
+Rift Ascendant inventory icon, detached torso protection vest object only, empty wearable shell on a simple stand, no head, no arms, no sleeves, no legs, no full suit, no wearer, one single complete Rift Forged Combat Vest equipment object only, isolated detached gear render on a simple dark neutral background, no person, no body, no model, no mannequin, no wearer, no multiple variants, not a design sheet, lore-accurate protective gear asset, Rift Forged Combat Vest. Rift Ascendant is modern supernatural urban fantasy in the early normalized Rift Age; the material world is functional, commercial, Bureau-regulated, and media-aware. Modern light armor laced with mana-reactive alloys for enhanced protection. On the requisition manifest it reads simply: Rift-Forged Combat Vest. aetheric, polished tabletop RPG inventory art, Korean action webtoon-inspired dark fantasy rendering, painterly realism, crisp ink-like edges, cinematic rim lighting, black deep blue violet silver palette with rift-white highlights, original design, high readability for app card UI, modern supernatural urban fantasy equipment, Rift Age tactical material design, Essence-threaded or anomaly-touched details, clear wearable silhouette, centered inventory composition, polished game gear art, no full character portrait, no text, no logo
 
 Negative: person wearing armor, humanoid body, full character portrait, human model, mannequin, mannequin face focus, human model face, multiple armor variants, product sheet, design sheet, orthographic views, front side back views, comparison sheet, full costume sheet, generic fantasy armor, medieval-only costume, weapon-only image, random jewelry, cluttered background, unreadable silhouette, bad perspective, blurry, low resolution, text, watermark, logo, helmet, arms, sleeves, legs, pants, full bodysuit, person wearing armor, costume sheet, direct imitation of a named franchise, copyrighted character, official logo, trademarked symbol, celebrity likeness
 
@@ -3544,24 +3774,24 @@ Negative: multiple weapons, duplicate weapon, secondary weapons, many variants, 
 
 </details>
 
-## Gate Beast Fang
+## Rift Beast Fang
 
-- Prompt ID: `item-item-gate-beast-fang-1kcvck`
+- Prompt ID: `item-item-rift-beast-fang-1kcvck`
 - Original: `/generated/compendium/items/item-0147.webp`
 - Candidate: pending
-- Apply target: `/generated/compendium/items/item-item-gate-beast-fang-1kcvck.webp`
+- Apply target: `/generated/compendium/items/item-item-rift-beast-fang-1kcvck.webp`
 - Type: item
 - Category: image-item
 - Source category: item
 - Priority: medium
 - Checkpoint: stabilityai/stable-diffusion-xl-base-1.0
-- Seed: 185363267
+- Seed: 1350815087
 - Recommended replacement: pending
 - Notes: _pending review_
 
 <details><summary>Prompt</summary>
 
-Rift Ascendant inventory asset, one single centered complete Gate Beast Fang object only, isolated object render on a simple dark neutral background, no person, no hands, no creature, no character, no landscape, no multiple views, no parts sheet, one complete object only, the object itself is the only subject, no living figure, no creature body, not a product sheet, Gate Beast Fang. Rift Ascendant is modern supernatural urban fantasy in the early normalized Rift Age; the material world is functional, commercial, Bureau-regulated, and media-aware. A fang pulled from a tamed gate-beast, still warm with its instincts; a Summoner channels the wild through it. standard, polished tabletop RPG inventory art, Korean action webtoon-inspired dark fantasy rendering, painterly realism, crisp ink-like edges, cinematic rim lighting, black deep blue violet silver palette with rift-white highlights, original design, high readability for app card UI, powerful object recovered from or shaped by Rift forces, Essence-infused materials, modern dark fantasy item design, clear object silhouette, centered composition, polished inventory art, no text, no logo
+Rift Ascendant inventory asset, one single centered complete Rift Beast Fang object only, isolated object render on a simple dark neutral background, no person, no hands, no creature, no character, no landscape, no multiple views, no parts sheet, one complete object only, the object itself is the only subject, no living figure, no creature body, not a product sheet, Rift Beast Fang. Rift Ascendant is modern supernatural urban fantasy in the early normalized Rift Age; the material world is functional, commercial, Bureau-regulated, and media-aware. A fang pulled from a tamed gate-beast, still warm with its instincts; a Summoner channels the wild through it. standard, polished tabletop RPG inventory art, Korean action webtoon-inspired dark fantasy rendering, painterly realism, crisp ink-like edges, cinematic rim lighting, black deep blue violet silver palette with rift-white highlights, original design, high readability for app card UI, powerful object recovered from or shaped by Rift forces, Essence-infused materials, modern dark fantasy item design, clear object silhouette, centered composition, polished inventory art, no text, no logo
 
 Negative: person, people, humanoid, owner, adventurer, warrior, hands, person holding object, gun, rifle, firearm, weapon, armor, helmet, character portrait, human face, open case, visible contents, loose tools, accessories, baked letters, caption, multiple objects, many variants, product sheet, parts sheet, exploded view, multiple camera angles, living creature, animal, monster, bird wings, tree, plant, roots, landscape-only image, generic sword, generic potion, random jewelry, stock icon, cluttered background, unreadable small details, bad perspective, blurry, low resolution, text, watermark, logo, direct imitation of a named franchise, copyrighted character, official logo, trademarked symbol, celebrity likeness
 
@@ -3624,13 +3854,13 @@ Negative: person wearing armor, humanoid body, full character portrait, human mo
 - Source category: item
 - Priority: medium
 - Checkpoint: stabilityai/stable-diffusion-xl-base-1.0
-- Seed: 3299102897
+- Seed: 1658224785
 - Recommended replacement: pending
 - Notes: _pending review_
 
 <details><summary>Prompt</summary>
 
-Rift Ascendant inventory icon, single compact revolver side-view render, exactly one complete handgun only, visible rotating cylinder, short barrel, one grip, one trigger, no duplicate views, no second gun, not a cannon, exactly one single complete Void Revolver weapon only, one continuous connected object, full weapon visible, one large weapon fills most of the frame, centered composition on a simple dark neutral background, no person, no hands, no secondary weapons, no duplicates, no multiple variants, not a design sheet, not a parchment page, lore-accurate weapon asset, Void Revolver. Rift Ascendant is modern supernatural urban fantasy in the early normalized Rift Age; the material world is functional, commercial, Bureau-regulated, and media-aware. A Bureau-spec sidearm tuned for close-quarters work inside collapsed gates. On the requisition manifest it reads simply: Void Revolver., polished tabletop RPG inventory art, Korean action webtoon-inspired dark fantasy rendering, painterly realism, crisp ink-like edges, cinematic rim lighting, black deep blue violet silver palette with rift-white highlights, original design, high readability for app card UI, modern supernatural urban fantasy equipment, Rift Age material design, Essence-infused details, clear complete weapon silhouette, polished game weapon art, no character holding it, no text, no logo
+Rift Ascendant inventory icon, single compact revolver side-view render, exactly one complete handgun only, visible rotating cylinder, short barrel, one grip, one trigger, no duplicate views, no second gun, not a cannon, exactly one single complete Void Revolver weapon only, one continuous connected object, full weapon visible, one large weapon fills most of the frame, centered composition on a simple dark neutral background, no person, no hands, no secondary weapons, no duplicates, no multiple variants, not a design sheet, not a parchment page, lore-accurate weapon asset, Void Revolver. Rift Ascendant is modern supernatural urban fantasy in the early normalized Rift Age; the material world is functional, commercial, Bureau-regulated, and media-aware. A Bureau-spec sidearm tuned for close-quarters work inside collapsed Rifts. On the requisition manifest it reads simply: Void Revolver., polished tabletop RPG inventory art, Korean action webtoon-inspired dark fantasy rendering, painterly realism, crisp ink-like edges, cinematic rim lighting, black deep blue violet silver palette with rift-white highlights, original design, high readability for app card UI, modern supernatural urban fantasy equipment, Rift Age material design, Essence-infused details, clear complete weapon silhouette, polished game weapon art, no character holding it, no text, no logo
 
 Negative: multiple weapons, duplicate weapon, secondary weapons, many variants, multiple guns, duplicate gun, three guns, multiple spearheads, spearhead collection, weapon head collection, product sheet, design sheet, parts sheet, exploded view, orthographic views, multiple camera angles, comparison sheet, collage, parchment page, diagram, labels, text block, circular emblems, side icons, unrelated orbs, generic sword unless the subject is a sword, generic gun unless the subject is a firearm, random jewelry, character holding the weapon, hands, full character portrait, cluttered background, unreadable silhouette, bad perspective, blurry, low resolution, text, watermark, logo, multiple guns, duplicate firearms, weapon comparison sheet, three-view gun render, cannon, oversized barrel, shotgun body, direct imitation of a named franchise, copyrighted character, official logo, trademarked symbol, celebrity likeness
 
@@ -3647,13 +3877,13 @@ Negative: multiple weapons, duplicate weapon, secondary weapons, many variants, 
 - Source category: item
 - Priority: medium
 - Checkpoint: stabilityai/stable-diffusion-xl-base-1.0
-- Seed: 425205894
+- Seed: 4154003858
 - Recommended replacement: pending
 - Notes: _pending review_
 
 <details><summary>Prompt</summary>
 
-Rift Ascendant inventory icon, one matched pair of gloves or gauntlets only, empty wearable gear, no full character, one single complete Aetheric Gauntlets equipment object only, isolated detached gear render on a simple dark neutral background, no person, no body, no model, no mannequin, no wearer, no multiple variants, not a design sheet, lore-accurate protective gear asset, Aetheric Gauntlets. Rift Ascendant is modern supernatural urban fantasy in the early normalized Rift Age; the material world is functional, commercial, Bureau-regulated, and media-aware. A pair of impact gauntlets shaped for clinch fighting inside cramped gate corridors. Issued under the Aetheric Gauntlets designation. standard, polished tabletop RPG inventory art, Korean action webtoon-inspired dark fantasy rendering, painterly realism, crisp ink-like edges, cinematic rim lighting, black deep blue violet silver palette with rift-white highlights, original design, high readability for app card UI, modern supernatural urban fantasy equipment, Rift Age tactical material design, Essence-threaded or anomaly-touched details, clear wearable silhouette, centered inventory composition, polished game gear art, no full character portrait, no text, no logo
+Rift Ascendant inventory icon, one matched pair of gloves or gauntlets only, empty wearable gear, no full character, one single complete Aetheric Gauntlets equipment object only, isolated detached gear render on a simple dark neutral background, no person, no body, no model, no mannequin, no wearer, no multiple variants, not a design sheet, lore-accurate protective gear asset, Aetheric Gauntlets. Rift Ascendant is modern supernatural urban fantasy in the early normalized Rift Age; the material world is functional, commercial, Bureau-regulated, and media-aware. A pair of impact gauntlets shaped for clinch fighting inside cramped Rift corridors. Issued under the Aetheric Gauntlets designation. standard, polished tabletop RPG inventory art, Korean action webtoon-inspired dark fantasy rendering, painterly realism, crisp ink-like edges, cinematic rim lighting, black deep blue violet silver palette with rift-white highlights, original design, high readability for app card UI, modern supernatural urban fantasy equipment, Rift Age tactical material design, Essence-threaded or anomaly-touched details, clear wearable silhouette, centered inventory composition, polished game gear art, no full character portrait, no text, no logo
 
 Negative: person wearing armor, humanoid body, full character portrait, human model, mannequin, mannequin face focus, human model face, multiple armor variants, product sheet, design sheet, orthographic views, front side back views, comparison sheet, full costume sheet, generic fantasy armor, medieval-only costume, weapon-only image, random jewelry, cluttered background, unreadable silhouette, bad perspective, blurry, low resolution, text, watermark, logo, direct imitation of a named franchise, copyrighted character, official logo, trademarked symbol, celebrity likeness
 
@@ -3693,13 +3923,13 @@ Negative: multiple weapons, duplicate weapon, secondary weapons, many variants, 
 - Source category: item
 - Priority: medium
 - Checkpoint: stabilityai/stable-diffusion-xl-base-1.0
-- Seed: 2586572576
+- Seed: 1310909343
 - Recommended replacement: pending
 - Notes: _pending review_
 
 <details><summary>Prompt</summary>
 
-Rift Ascendant inventory asset, one single centered complete Digital Voice Recorder object only, isolated object render on a simple dark neutral background, no person, no hands, no creature, no character, no landscape, no multiple views, no parts sheet, one complete object only, the object itself is the only subject, no living figure, no creature body, not a product sheet, Digital Voice Recorder. Rift Ascendant is modern supernatural urban fantasy in the early normalized Rift Age; the material world is functional, commercial, Bureau-regulated, and media-aware. A professional digital voice recorder with hours of gate-break interviews, eyewitness accounts, and field notes. The batteries last seemingly forever, and it picks up aetheric interference patterns. standard, polished tabletop RPG inventory art, Korean action webtoon-inspired dark fantasy rendering, painterly realism, crisp ink-like edges, cinematic rim lighting, black deep blue violet silver palette with rift-white highlights, original design, high readability for app card UI, powerful object recovered from or shaped by Rift forces, Essence-infused materials, modern dark fantasy item design, clear object silhouette, centered composition, polished inventory art, no text, no logo
+Rift Ascendant inventory asset, one single centered complete Digital Voice Recorder object only, isolated object render on a simple dark neutral background, no person, no hands, no creature, no character, no landscape, no multiple views, no parts sheet, one complete object only, the object itself is the only subject, no living figure, no creature body, not a product sheet, Digital Voice Recorder. Rift Ascendant is modern supernatural urban fantasy in the early normalized Rift Age; the material world is functional, commercial, Bureau-regulated, and media-aware. A professional digital voice recorder with hours of Rift Break interviews, eyewitness accounts, and field notes. The batteries last seemingly forever, and it picks up aetheric interference patterns. standard, polished tabletop RPG inventory art, Korean action webtoon-inspired dark fantasy rendering, painterly realism, crisp ink-like edges, cinematic rim lighting, black deep blue violet silver palette with rift-white highlights, original design, high readability for app card UI, powerful object recovered from or shaped by Rift forces, Essence-infused materials, modern dark fantasy item design, clear object silhouette, centered composition, polished inventory art, no text, no logo
 
 Negative: person, people, humanoid, owner, adventurer, warrior, hands, person holding object, gun, rifle, firearm, weapon, armor, helmet, character portrait, human face, open case, visible contents, loose tools, accessories, baked letters, caption, multiple objects, many variants, product sheet, parts sheet, exploded view, multiple camera angles, living creature, animal, monster, bird wings, tree, plant, roots, landscape-only image, generic sword, generic potion, random jewelry, stock icon, cluttered background, unreadable small details, bad perspective, blurry, low resolution, text, watermark, logo, direct imitation of a named franchise, copyrighted character, official logo, trademarked symbol, celebrity likeness
 
@@ -3923,13 +4153,13 @@ Negative: person, people, humanoid, owner, adventurer, warrior, hands, person ho
 - Source category: item
 - Priority: medium
 - Checkpoint: stabilityai/stable-diffusion-xl-base-1.0
-- Seed: 3041726915
+- Seed: 3180034800
 - Recommended replacement: pending
 - Notes: _pending review_
 
 <details><summary>Prompt</summary>
 
-Rift Ascendant inventory icon, single full-length pole weapon, one shaft with one connected head, entire weapon visible, no extra spearheads, exactly one single complete Refit Reach Spear weapon only, one continuous connected object, full weapon visible, one large weapon fills most of the frame, centered composition on a simple dark neutral background, no person, no hands, no secondary weapons, no duplicates, no multiple variants, not a design sheet, not a parchment page, lore-accurate weapon asset, Refit Reach Spear. Rift Ascendant is modern supernatural urban fantasy in the early normalized Rift Age; the material world is functional, commercial, Bureau-regulated, and media-aware. A two-handed reach weapon â€” good against fast, low-ground anomalies. standard, polished tabletop RPG inventory art, Korean action webtoon-inspired dark fantasy rendering, painterly realism, crisp ink-like edges, cinematic rim lighting, black deep blue violet silver palette with rift-white highlights, original design, high readability for app card UI, modern supernatural urban fantasy equipment, Rift Age material design, Essence-infused details, clear complete weapon silhouette, polished game weapon art, no character holding it, no text, no logo
+Rift Ascendant inventory icon, single full-length pole weapon, one shaft with one connected head, entire weapon visible, no extra spearheads, exactly one single complete Refit Reach Spear weapon only, one continuous connected object, full weapon visible, one large weapon fills most of the frame, centered composition on a simple dark neutral background, no person, no hands, no secondary weapons, no duplicates, no multiple variants, not a design sheet, not a parchment page, lore-accurate weapon asset, Refit Reach Spear. Rift Ascendant is modern supernatural urban fantasy in the early normalized Rift Age; the material world is functional, commercial, Bureau-regulated, and media-aware. A two-handed reach weapon — good against fast, low-ground anomalies. standard, polished tabletop RPG inventory art, Korean action webtoon-inspired dark fantasy rendering, painterly realism, crisp ink-like edges, cinematic rim lighting, black deep blue violet silver palette with rift-white highlights, original design, high readability for app card UI, modern supernatural urban fantasy equipment, Rift Age material design, Essence-infused details, clear complete weapon silhouette, polished game weapon art, no character holding it, no text, no logo
 
 Negative: multiple weapons, duplicate weapon, secondary weapons, many variants, multiple guns, duplicate gun, three guns, multiple spearheads, spearhead collection, weapon head collection, product sheet, design sheet, parts sheet, exploded view, orthographic views, multiple camera angles, comparison sheet, collage, parchment page, diagram, labels, text block, circular emblems, side icons, unrelated orbs, generic sword unless the subject is a sword, generic gun unless the subject is a firearm, random jewelry, character holding the weapon, hands, full character portrait, cluttered background, unreadable silhouette, bad perspective, blurry, low resolution, text, watermark, logo, extra spearheads, spearhead collection, broken weapon parts, multiple polearms, direct imitation of a named franchise, copyrighted character, official logo, trademarked symbol, celebrity likeness
 
@@ -4107,13 +4337,13 @@ Negative: multiple weapons, duplicate weapon, secondary weapons, many variants, 
 - Source category: item
 - Priority: medium
 - Checkpoint: stabilityai/stable-diffusion-xl-base-1.0
-- Seed: 408911660
+- Seed: 1641325183
 - Recommended replacement: pending
 - Notes: _pending review_
 
 <details><summary>Prompt</summary>
 
-Rift Ascendant inventory icon, single bladed weapon, one handle and one blade, entire weapon visible, no duplicate blade variants, exactly one single complete Reclaimed Zweihander weapon only, one continuous connected object, full weapon visible, one large weapon fills most of the frame, centered composition on a simple dark neutral background, no person, no hands, no secondary weapons, no duplicates, no multiple variants, not a design sheet, not a parchment page, lore-accurate weapon asset, Reclaimed Zweihander. Rift Ascendant is modern supernatural urban fantasy in the early normalized Rift Age; the material world is functional, commercial, Bureau-regulated, and media-aware. A reinforced two-handed blade â€” chosen by tanks who hit before they get hit. aetheric, polished tabletop RPG inventory art, Korean action webtoon-inspired dark fantasy rendering, painterly realism, crisp ink-like edges, cinematic rim lighting, black deep blue violet silver palette with rift-white highlights, original design, high readability for app card UI, modern supernatural urban fantasy equipment, Rift Age material design, Essence-infused details, clear complete weapon silhouette, polished game weapon art, no character holding it, no text, no logo
+Rift Ascendant inventory icon, single bladed weapon, one handle and one blade, entire weapon visible, no duplicate blade variants, exactly one single complete Reclaimed Zweihander weapon only, one continuous connected object, full weapon visible, one large weapon fills most of the frame, centered composition on a simple dark neutral background, no person, no hands, no secondary weapons, no duplicates, no multiple variants, not a design sheet, not a parchment page, lore-accurate weapon asset, Reclaimed Zweihander. Rift Ascendant is modern supernatural urban fantasy in the early normalized Rift Age; the material world is functional, commercial, Bureau-regulated, and media-aware. A reinforced two-handed blade — chosen by tanks who hit before they get hit. aetheric, polished tabletop RPG inventory art, Korean action webtoon-inspired dark fantasy rendering, painterly realism, crisp ink-like edges, cinematic rim lighting, black deep blue violet silver palette with rift-white highlights, original design, high readability for app card UI, modern supernatural urban fantasy equipment, Rift Age material design, Essence-infused details, clear complete weapon silhouette, polished game weapon art, no character holding it, no text, no logo
 
 Negative: multiple weapons, duplicate weapon, secondary weapons, many variants, multiple guns, duplicate gun, three guns, multiple spearheads, spearhead collection, weapon head collection, product sheet, design sheet, parts sheet, exploded view, orthographic views, multiple camera angles, comparison sheet, collage, parchment page, diagram, labels, text block, circular emblems, side icons, unrelated orbs, generic sword unless the subject is a sword, generic gun unless the subject is a firearm, random jewelry, character holding the weapon, hands, full character portrait, cluttered background, unreadable silhouette, bad perspective, blurry, low resolution, text, watermark, logo, direct imitation of a named franchise, copyrighted character, official logo, trademarked symbol, celebrity likeness
 
@@ -4367,236 +4597,6 @@ Negative: multiple weapons, duplicate weapon, secondary weapons, many variants, 
 <details><summary>Prompt</summary>
 
 Rift Ascendant inventory asset, one single centered complete Bureau Approved Band object only, isolated object render on a simple dark neutral background, no person, no hands, no creature, no character, no landscape, no multiple views, no parts sheet, single jewelry object, centered relic-like accessory, readable small silhouette, Bureau Approved Band. Rift Ascendant is modern supernatural urban fantasy in the early normalized Rift Age; the material world is functional, commercial, Bureau-regulated, and media-aware. A bound ring with a sigil etched along the inner band. The Bureau-Approved Band, in Bureau parlance. standard, polished tabletop RPG inventory art, Korean action webtoon-inspired dark fantasy rendering, painterly realism, crisp ink-like edges, cinematic rim lighting, black deep blue violet silver palette with rift-white highlights, original design, high readability for app card UI, powerful object recovered from or shaped by Rift forces, Essence-infused materials, modern dark fantasy item design, clear object silhouette, centered composition, polished inventory art, no text, no logo
-
-Negative: person, people, humanoid, owner, adventurer, warrior, hands, person holding object, gun, rifle, firearm, weapon, armor, helmet, character portrait, human face, open case, visible contents, loose tools, accessories, baked letters, caption, multiple objects, many variants, product sheet, parts sheet, exploded view, multiple camera angles, living creature, animal, monster, bird wings, tree, plant, roots, landscape-only image, generic sword, generic potion, random jewelry, stock icon, cluttered background, unreadable small details, bad perspective, blurry, low resolution, text, watermark, logo, direct imitation of a named franchise, copyrighted character, official logo, trademarked symbol, celebrity likeness
-
-</details>
-
-## Phantom Pager
-
-- Prompt ID: `item-item-phantom-pager-1sr12p`
-- Original: `/generated/compendium/items/item-0177.webp`
-- Candidate: pending
-- Apply target: `/generated/compendium/items/item-item-phantom-pager-1sr12p.webp`
-- Type: item
-- Category: image-item
-- Source category: item
-- Priority: medium
-- Checkpoint: stabilityai/stable-diffusion-xl-base-1.0
-- Seed: 2922720109
-- Recommended replacement: pending
-- Notes: _pending review_
-
-<details><summary>Prompt</summary>
-
-Rift Ascendant inventory asset, one single centered complete Phantom Pager object only, isolated object render on a simple dark neutral background, no person, no hands, no creature, no character, no landscape, no multiple views, no parts sheet, one complete object only, the object itself is the only subject, no living figure, no creature body, not a product sheet, Phantom Pager. Rift Ascendant is modern supernatural urban fantasy in the early normalized Rift Age; the material world is functional, commercial, Bureau-regulated, and media-aware. A pre-gate-era pager that still buzzes with phantom alerts. Sometimes it picks up frequencies from nearby rifts, providing a few seconds' warning before dimensional instability spikes. Old paramedics swear by them. standard, polished tabletop RPG inventory art, Korean action webtoon-inspired dark fantasy rendering, painterly realism, crisp ink-like edges, cinematic rim lighting, black deep blue violet silver palette with rift-white highlights, original design, high readability for app card UI, powerful object recovered from or shaped by Rift forces, Essence-infused materials, modern dark fantasy item design, clear object silhouette, centered composition, polished inventory art, no text, no logo
-
-Negative: person, people, humanoid, owner, adventurer, warrior, hands, person holding object, gun, rifle, firearm, weapon, armor, helmet, character portrait, human face, open case, visible contents, loose tools, accessories, baked letters, caption, multiple objects, many variants, product sheet, parts sheet, exploded view, multiple camera angles, living creature, animal, monster, bird wings, tree, plant, roots, landscape-only image, generic sword, generic potion, random jewelry, stock icon, cluttered background, unreadable small details, bad perspective, blurry, low resolution, text, watermark, logo, direct imitation of a named franchise, copyrighted character, official logo, trademarked symbol, celebrity likeness
-
-</details>
-
-## Cobbler's Tools
-
-- Prompt ID: `vehicle-vehicle-cobbler-s-tools-1pk8to`
-- Original: `/generated/compendium/items/item-0180.webp`
-- Candidate: pending
-- Apply target: `/generated/compendium/vehicles/vehicle-vehicle-cobbler-s-tools-1pk8to.webp`
-- Type: vehicle
-- Category: image-item
-- Source category: item
-- Priority: medium
-- Checkpoint: stabilityai/stable-diffusion-xl-base-1.0
-- Seed: 650226266
-- Recommended replacement: pending
-- Notes: _pending review_
-
-<details><summary>Prompt</summary>
-
-Rift Ascendant app asset, Tools, one single complete vehicle only, lore-accurate vehicle asset for Cobbler's Tools, Tools. Rift Ascendant is modern supernatural urban fantasy in the early normalized Rift Age; the material world is functional, commercial, Bureau-regulated, and media-aware. Lasts, cutters, and mana-cured adhesives for repairing and reinforcing field footwear. standard, high-detail tabletop fantasy RPG key art, Korean action webtoon-inspired dark fantasy rendering, dynamic composition, crisp ink-like edges, painterly realism, cinematic contrast, dramatic rim lighting, polished game illustration, black deep blue violet silver palette with rift-white highlights, original design, high readability for app card UI, modern supernatural urban fantasy infrastructure, early normalized Rift Age, Bureau or guild practical design where appropriate, vehicle is the dominant subject, readable three-quarter view, strong silhouette, subtle Essence or Rift modifications only if supported by lore, polished game vehicle concept art, simple background, no text, no logo
-
-Negative: empty road, landscape-only image, unrelated sci-fi spaceship, cyberpunk overload, medieval cart unless lore requires it, tiny distant vehicle, cluttered street, unreadable silhouette, blurry, low resolution, text, watermark, logo, direct imitation of a named franchise, copyrighted character, official logo, trademarked symbol, celebrity likeness
-
-</details>
-
-## Lattice Scale Exo Suit
-
-- Prompt ID: `item-item-lattice-scale-exo-suit-1ekv4p`
-- Original: `/generated/compendium/items/item-0180.webp`
-- Candidate: pending
-- Apply target: `/generated/compendium/items/item-item-lattice-scale-exo-suit-1ekv4p.webp`
-- Type: item
-- Category: image-item
-- Source category: item
-- Priority: medium
-- Checkpoint: stabilityai/stable-diffusion-xl-base-1.0
-- Seed: 4254885230
-- Recommended replacement: pending
-- Notes: _pending review_
-
-<details><summary>Prompt</summary>
-
-Rift Ascendant inventory asset, one single centered complete Lattice Scale Exo Suit object only, isolated object render on a simple dark neutral background, no person, no hands, no creature, no character, no landscape, no multiple views, no parts sheet, one complete object only, the object itself is the only subject, no living figure, no creature body, not a product sheet, Lattice Scale Exo Suit. Rift Ascendant is modern supernatural urban fantasy in the early normalized Rift Age; the material world is functional, commercial, Bureau-regulated, and media-aware. A flexible mana-weave layer that beads ichor and shrugs off minor concussive impacts. Stamped and logged as the Lattice-Scale Exo-Suit. void, polished tabletop RPG inventory art, Korean action webtoon-inspired dark fantasy rendering, painterly realism, crisp ink-like edges, cinematic rim lighting, black deep blue violet silver palette with rift-white highlights, original design, high readability for app card UI, powerful object recovered from or shaped by Rift forces, Essence-infused materials, modern dark fantasy item design, clear object silhouette, centered composition, polished inventory art, no text, no logo
-
-Negative: person, people, humanoid, owner, adventurer, warrior, hands, person holding object, gun, rifle, firearm, weapon, armor, helmet, character portrait, human face, open case, visible contents, loose tools, accessories, baked letters, caption, multiple objects, many variants, product sheet, parts sheet, exploded view, multiple camera angles, living creature, animal, monster, bird wings, tree, plant, roots, landscape-only image, generic sword, generic potion, random jewelry, stock icon, cluttered background, unreadable small details, bad perspective, blurry, low resolution, text, watermark, logo, direct imitation of a named franchise, copyrighted character, official logo, trademarked symbol, celebrity likeness
-
-</details>
-
-## Heavy Crossbow
-
-- Prompt ID: `weapon-weapon-heavy-crossbow-1g2icr`
-- Original: `/generated/compendium/items/item-0181.webp`
-- Candidate: pending
-- Apply target: `/generated/compendium/weapons/weapon-weapon-heavy-crossbow-1g2icr.webp`
-- Type: weapon
-- Category: image-item
-- Source category: item
-- Priority: medium
-- Checkpoint: stabilityai/stable-diffusion-xl-base-1.0
-- Seed: 1936600753
-- Recommended replacement: pending
-- Notes: _pending review_
-
-<details><summary>Prompt</summary>
-
-Rift Ascendant inventory icon, single bow or crossbow weapon only, one complete ranged weapon, no arrow bundle, no second view, exactly one single complete Heavy Crossbow weapon only, one continuous connected object, full weapon visible, one large weapon fills most of the frame, centered composition on a simple dark neutral background, no person, no hands, no secondary weapons, no duplicates, no multiple variants, not a design sheet, not a parchment page, lore-accurate weapon asset, Heavy Crossbow. Rift Ascendant is modern supernatural urban fantasy in the early normalized Rift Age; the material world is functional, commercial, Bureau-regulated, and media-aware. A powerful crossbow requiring both hands and time to reload. standard, polished tabletop RPG inventory art, Korean action webtoon-inspired dark fantasy rendering, painterly realism, crisp ink-like edges, cinematic rim lighting, black deep blue violet silver palette with rift-white highlights, original design, high readability for app card UI, modern supernatural urban fantasy equipment, Rift Age material design, Essence-infused details, clear complete weapon silhouette, polished game weapon art, no character holding it, no text, no logo
-
-Negative: multiple weapons, duplicate weapon, secondary weapons, many variants, multiple guns, duplicate gun, three guns, multiple spearheads, spearhead collection, weapon head collection, product sheet, design sheet, parts sheet, exploded view, orthographic views, multiple camera angles, comparison sheet, collage, parchment page, diagram, labels, text block, circular emblems, side icons, unrelated orbs, generic sword unless the subject is a sword, generic gun unless the subject is a firearm, random jewelry, character holding the weapon, hands, full character portrait, cluttered background, unreadable silhouette, bad perspective, blurry, low resolution, text, watermark, logo, direct imitation of a named franchise, copyrighted character, official logo, trademarked symbol, celebrity likeness
-
-</details>
-
-## Lesser Liquid Shadow
-
-- Prompt ID: `item-item-lesser-liquid-shadow-140hra`
-- Original: `/generated/compendium/items/item-0181.webp`
-- Candidate: pending
-- Apply target: `/generated/compendium/items/item-item-lesser-liquid-shadow-140hra.webp`
-- Type: item
-- Category: image-item
-- Source category: item
-- Priority: medium
-- Checkpoint: stabilityai/stable-diffusion-xl-base-1.0
-- Seed: 3085628229
-- Recommended replacement: pending
-- Notes: _pending review_
-
-<details><summary>Prompt</summary>
-
-Rift Ascendant inventory asset, one single centered complete Lesser Liquid Shadow object only, isolated object render on a simple dark neutral background, no person, no hands, no creature, no character, no landscape, no multiple views, no parts sheet, one complete object only, the object itself is the only subject, no living figure, no creature body, not a product sheet, Lesser Liquid Shadow. Rift Ascendant is modern supernatural urban fantasy in the early normalized Rift Age; the material world is functional, commercial, Bureau-regulated, and media-aware. Restores mana on consumption. standard, polished tabletop RPG inventory art, Korean action webtoon-inspired dark fantasy rendering, painterly realism, crisp ink-like edges, cinematic rim lighting, black deep blue violet silver palette with rift-white highlights, original design, high readability for app card UI, powerful object recovered from or shaped by Rift forces, Essence-infused materials, modern dark fantasy item design, clear object silhouette, centered composition, polished inventory art, no text, no logo
-
-Negative: person, people, humanoid, owner, adventurer, warrior, hands, person holding object, gun, rifle, firearm, weapon, armor, helmet, character portrait, human face, open case, visible contents, loose tools, accessories, baked letters, caption, multiple objects, many variants, product sheet, parts sheet, exploded view, multiple camera angles, living creature, animal, monster, bird wings, tree, plant, roots, landscape-only image, generic sword, generic potion, random jewelry, stock icon, cluttered background, unreadable small details, bad perspective, blurry, low resolution, text, watermark, logo, direct imitation of a named franchise, copyrighted character, official logo, trademarked symbol, celebrity likeness
-
-</details>
-
-## Shadow Tactical Helmet
-
-- Prompt ID: `armor-armor-shadow-tactical-helmet-bbssar`
-- Original: `/generated/compendium/items/item-0181.webp`
-- Candidate: pending
-- Apply target: `/generated/compendium/armor/armor-armor-shadow-tactical-helmet-bbssar.webp`
-- Type: armor
-- Category: image-item
-- Source category: item
-- Priority: medium
-- Checkpoint: stabilityai/stable-diffusion-xl-base-1.0
-- Seed: 2609093648
-- Recommended replacement: pending
-- Notes: _pending review_
-
-<details><summary>Prompt</summary>
-
-Rift Ascendant inventory icon, detached helmet or headgear object only, empty wearable shell, no face, no body, no shoulders, no full suit, one single complete Shadow Tactical Helmet equipment object only, isolated detached gear render on a simple dark neutral background, no person, no body, no model, no mannequin, no wearer, no multiple variants, not a design sheet, lore-accurate protective gear asset, Shadow Tactical Helmet. Rift Ascendant is modern supernatural urban fantasy in the early normalized Rift Age; the material world is functional, commercial, Bureau-regulated, and media-aware. Reinforced headgear with mana-treated impact lining. Bureau quartermasters catalog it as the Shadow Tactical Helmet. void, polished tabletop RPG inventory art, Korean action webtoon-inspired dark fantasy rendering, painterly realism, crisp ink-like edges, cinematic rim lighting, black deep blue violet silver palette with rift-white highlights, original design, high readability for app card UI, modern supernatural urban fantasy equipment, Rift Age tactical material design, Essence-threaded or anomaly-touched details, clear wearable silhouette, centered inventory composition, polished game gear art, no full character portrait, no text, no logo
-
-Negative: person wearing armor, humanoid body, full character portrait, human model, mannequin, mannequin face focus, human model face, multiple armor variants, product sheet, design sheet, orthographic views, front side back views, comparison sheet, full costume sheet, generic fantasy armor, medieval-only costume, weapon-only image, random jewelry, cluttered background, unreadable silhouette, bad perspective, blurry, low resolution, text, watermark, logo, full armor suit, torso, shoulders, person wearing helmet, face, direct imitation of a named franchise, copyrighted character, official logo, trademarked symbol, celebrity likeness
-
-</details>
-
-## Mana Treated Reaver Sword
-
-- Prompt ID: `weapon-weapon-mana-treated-reaver-sword-4uq3b9`
-- Original: `/generated/compendium/items/item-0184.webp`
-- Candidate: pending
-- Apply target: `/generated/compendium/weapons/weapon-weapon-mana-treated-reaver-sword-4uq3b9.webp`
-- Type: weapon
-- Category: image-item
-- Source category: item
-- Priority: medium
-- Checkpoint: stabilityai/stable-diffusion-xl-base-1.0
-- Seed: 152389812
-- Recommended replacement: pending
-- Notes: _pending review_
-
-<details><summary>Prompt</summary>
-
-Rift Ascendant inventory icon, single bladed weapon, one handle and one blade, entire weapon visible, no duplicate blade variants, exactly one single complete Mana Treated Reaver Sword weapon only, one continuous connected object, full weapon visible, one large weapon fills most of the frame, centered composition on a simple dark neutral background, no person, no hands, no secondary weapons, no duplicates, no multiple variants, not a design sheet, not a parchment page, lore-accurate weapon asset, Mana Treated Reaver Sword. Rift Ascendant is modern supernatural urban fantasy in the early normalized Rift Age; the material world is functional, commercial, Bureau-regulated, and media-aware. A mid-weight longsword with a Bureau-stamped pommel and reinforced grip. On the requisition manifest it reads simply: Mana-Treated Reaver Sword. standard, polished tabletop RPG inventory art, Korean action webtoon-inspired dark fantasy rendering, painterly realism, crisp ink-like edges, cinematic rim lighting, black deep blue violet silver palette with rift-white highlights, original design, high readability for app card UI, modern supernatural urban fantasy equipment, Rift Age material design, Essence-infused details, clear complete weapon silhouette, polished game weapon art, no character holding it, no text, no logo
-
-Negative: multiple weapons, duplicate weapon, secondary weapons, many variants, multiple guns, duplicate gun, three guns, multiple spearheads, spearhead collection, weapon head collection, product sheet, design sheet, parts sheet, exploded view, orthographic views, multiple camera angles, comparison sheet, collage, parchment page, diagram, labels, text block, circular emblems, side icons, unrelated orbs, generic sword unless the subject is a sword, generic gun unless the subject is a firearm, random jewelry, character holding the weapon, hands, full character portrait, cluttered background, unreadable silhouette, bad perspective, blurry, low resolution, text, watermark, logo, direct imitation of a named franchise, copyrighted character, official logo, trademarked symbol, celebrity likeness
-
-</details>
-
-## Worldbreaker's Greatsword
-
-- Prompt ID: `weapon-weapon-worldbreaker-s-greatsword-2ny9q0`
-- Original: `/generated/compendium/items/item-0185.webp`
-- Candidate: pending
-- Apply target: `/generated/compendium/weapons/weapon-weapon-worldbreaker-s-greatsword-2ny9q0.webp`
-- Type: weapon
-- Category: image-item
-- Source category: item
-- Priority: medium
-- Checkpoint: stabilityai/stable-diffusion-xl-base-1.0
-- Seed: 362416692
-- Recommended replacement: pending
-- Notes: _pending review_
-
-<details><summary>Prompt</summary>
-
-Rift Ascendant inventory icon, single bladed weapon, one handle and one blade, entire weapon visible, no duplicate blade variants, exactly one single complete Greatsword weapon only, one continuous connected object, full weapon visible, one large weapon fills most of the frame, centered composition on a simple dark neutral background, no person, no hands, no secondary weapons, no duplicates, no multiple variants, not a design sheet, not a parchment page, lore-accurate weapon asset, Greatsword. Rift Ascendant is modern supernatural urban fantasy in the early normalized Rift Age; the material world is functional, commercial, Bureau-regulated, and media-aware. Don't trust a weapon you can't put down. They call it the Greatsword for a reason. standard, polished tabletop RPG inventory art, Korean action webtoon-inspired dark fantasy rendering, painterly realism, crisp ink-like edges, cinematic rim lighting, black deep blue violet silver palette with rift-white highlights, original design, high readability for app card UI, modern supernatural urban fantasy equipment, Rift Age material design, Essence-infused details, clear complete weapon silhouette, polished game weapon art, no character holding it, no text, no logo
-
-Negative: multiple weapons, duplicate weapon, secondary weapons, many variants, multiple guns, duplicate gun, three guns, multiple spearheads, spearhead collection, weapon head collection, product sheet, design sheet, parts sheet, exploded view, orthographic views, multiple camera angles, comparison sheet, collage, parchment page, diagram, labels, text block, circular emblems, side icons, unrelated orbs, generic sword unless the subject is a sword, generic gun unless the subject is a firearm, random jewelry, character holding the weapon, hands, full character portrait, cluttered background, unreadable silhouette, bad perspective, blurry, low resolution, text, watermark, logo, direct imitation of a named franchise, copyrighted character, official logo, trademarked symbol, celebrity likeness
-
-</details>
-
-## Titanium Trench Coat
-
-- Prompt ID: `item-item-titanium-trench-coat-1ijum7`
-- Original: `/generated/compendium/items/item-0185.webp`
-- Candidate: pending
-- Apply target: `/generated/compendium/items/item-item-titanium-trench-coat-1ijum7.webp`
-- Type: item
-- Category: image-item
-- Source category: item
-- Priority: medium
-- Checkpoint: stabilityai/stable-diffusion-xl-base-1.0
-- Seed: 3914698173
-- Recommended replacement: pending
-- Notes: _pending review_
-
-<details><summary>Prompt</summary>
-
-Rift Ascendant inventory asset, one single centered complete Titanium Trench Coat object only, isolated object render on a simple dark neutral background, no person, no hands, no creature, no character, no landscape, no multiple views, no parts sheet, one complete object only, the object itself is the only subject, no living figure, no creature body, not a product sheet, Titanium Trench Coat. Rift Ascendant is modern supernatural urban fantasy in the early normalized Rift Age; the material world is functional, commercial, Bureau-regulated, and media-aware. A reinforced kevlar-and-mana-weave layer. Cheap, common, effective. On the requisition manifest it reads simply: Titanium Trench Coat. standard, polished tabletop RPG inventory art, Korean action webtoon-inspired dark fantasy rendering, painterly realism, crisp ink-like edges, cinematic rim lighting, black deep blue violet silver palette with rift-white highlights, original design, high readability for app card UI, powerful object recovered from or shaped by Rift forces, Essence-infused materials, modern dark fantasy item design, clear object silhouette, centered composition, polished inventory art, no text, no logo
-
-Negative: person, people, humanoid, owner, adventurer, warrior, hands, person holding object, gun, rifle, firearm, weapon, armor, helmet, character portrait, human face, open case, visible contents, loose tools, accessories, baked letters, caption, multiple objects, many variants, product sheet, parts sheet, exploded view, multiple camera angles, living creature, animal, monster, bird wings, tree, plant, roots, landscape-only image, generic sword, generic potion, random jewelry, stock icon, cluttered background, unreadable small details, bad perspective, blurry, low resolution, text, watermark, logo, direct imitation of a named franchise, copyrighted character, official logo, trademarked symbol, celebrity likeness
-
-</details>
-
-## Mana Treated Cord Charm
-
-- Prompt ID: `item-item-mana-treated-cord-charm-yg4bsw`
-- Original: `/generated/compendium/items/item-0188.webp`
-- Candidate: pending
-- Apply target: `/generated/compendium/items/item-item-mana-treated-cord-charm-yg4bsw.webp`
-- Type: item
-- Category: image-item
-- Source category: item
-- Priority: medium
-- Checkpoint: stabilityai/stable-diffusion-xl-base-1.0
-- Seed: 2752309835
-- Recommended replacement: pending
-- Notes: _pending review_
-
-<details><summary>Prompt</summary>
-
-Rift Ascendant inventory asset, one single centered complete Mana Treated Cord Charm object only, isolated object render on a simple dark neutral background, no person, no hands, no creature, no character, no landscape, no multiple views, no parts sheet, one complete object only, the object itself is the only subject, no living figure, no creature body, not a product sheet, Mana Treated Cord Charm. Rift Ascendant is modern supernatural urban fantasy in the early normalized Rift Age; the material world is functional, commercial, Bureau-regulated, and media-aware. A neck-worn focus that resonates lightly with the bearer's mana. Stamped and logged as the Mana-Treated Cord Charm. standard, polished tabletop RPG inventory art, Korean action webtoon-inspired dark fantasy rendering, painterly realism, crisp ink-like edges, cinematic rim lighting, black deep blue violet silver palette with rift-white highlights, original design, high readability for app card UI, powerful object recovered from or shaped by Rift forces, Essence-infused materials, modern dark fantasy item design, clear object silhouette, centered composition, polished inventory art, no text, no logo
 
 Negative: person, people, humanoid, owner, adventurer, warrior, hands, person holding object, gun, rifle, firearm, weapon, armor, helmet, character portrait, human face, open case, visible contents, loose tools, accessories, baked letters, caption, multiple objects, many variants, product sheet, parts sheet, exploded view, multiple camera angles, living creature, animal, monster, bird wings, tree, plant, roots, landscape-only image, generic sword, generic potion, random jewelry, stock icon, cluttered background, unreadable small details, bad perspective, blurry, low resolution, text, watermark, logo, direct imitation of a named franchise, copyrighted character, official logo, trademarked symbol, celebrity likeness
 

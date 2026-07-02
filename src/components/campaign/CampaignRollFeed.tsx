@@ -39,7 +39,7 @@ function rollTypeColor(rollType: string | null): string {
 		case "attack":
 			return "text-red-400";
 		case "damage":
-			return "text-orange-400";
+			return "text-gate-a";
 		case "check":
 			return "text-blue-400";
 		case "save":

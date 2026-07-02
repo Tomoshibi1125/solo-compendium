@@ -174,7 +174,7 @@ export const jobs: Job[] = [
 		type: "Job",
 		rank: "C",
 		description:
-			"The Destroyer is an Awakened identity that specializes in the Living Siege Engine mandate. As an Ascendant of this lineage, their physiology is fundamentally restructured with crystallized mana, granting them bone density and combat instincts that surpass the human limit. They possess an innate Aetheric-Sight that perceives the structural weaknesses of enemies and gates alike. In the modern world, the Destroyer is the premier frontline asset of the Ascendant Bureau, their presence stabilizing the absolute order during gate eruptions.",
+			"The Destroyer is an Awakened identity that specializes in the Living Siege Engine mandate. As an Ascendant of this lineage, their physiology is fundamentally restructured with crystallized mana, granting them bone density and combat instincts that surpass the human limit. They possess an innate Aetheric-Sight that perceives the structural weaknesses of enemies and Rifts alike. In the modern world, the Destroyer is the premier frontline asset of the Ascendant Bureau, their presence stabilizing the absolute order during Rift eruptions.",
 		hitDie: "1d10",
 		primaryAbility: "Strength",
 		saving_throws: ["Strength", "Vitality"],
@@ -223,7 +223,7 @@ export const jobs: Job[] = [
 		],
 		jobTraits: [
 			{
-				name: "Gate Breaker",
+				name: "Rift Breaker",
 				description:
 					"You can punch through reinforced concrete and tear apart gate-crystal formations. Deal double damage to objects and structures. Advantage on saves against fear from gate-born anomalies—your resonance is hardened against absolute chaos.",
 				type: "resistance",
@@ -245,7 +245,7 @@ export const jobs: Job[] = [
 		abilityScoreImprovements: { strength: 2, vitality: 1 },
 		size: "medium",
 		speed: 30,
-		languages: ["English", "Korean"],
+		languages: ["English", "Accordan"],
 		darkvision: 60,
 		specialSenses: [
 			"Structural Weakness Sight (passively perceive HP percentage and AC of structures and objects within 30 ft)",
@@ -350,7 +350,7 @@ export const jobs: Job[] = [
 			{
 				name: "Crystalline Bone Density",
 				description:
-					"Lineage trait. Your skeleton is reinforced with gate-crystal deposits. You count as one size larger when determining carrying capacity. Your unarmed strikes deal double damage to inanimate objects and gate structures. You have advantage on Strength saving throws against being knocked prone.",
+					"Lineage trait. Your skeleton is reinforced with gate-crystal deposits. You count as one size larger when determining carrying capacity. Your unarmed strikes deal double damage to inanimate objects and Rift structures. You have advantage on Strength saving throws against being knocked prone.",
 				type: "physiology",
 			},
 			{
@@ -362,17 +362,17 @@ export const jobs: Job[] = [
 			{
 				name: "Bureau Classification: Strategic Asset",
 				description:
-					"Social lineage trait. You have federal clearance to enter active gate zones. Civilian law enforcement cannot detain you without Ascendant Bureau authorization.",
+					"Social lineage trait. You have federal clearance to enter active Rift zones. Civilian law enforcement cannot detain you without Ascendant Bureau authorization.",
 				type: "social",
 			},
 		],
 		naturalWeapons: [
 			{
-				name: "Gate-Crystal Fists",
+				name: "Rift-Crystal Fists",
 				damage: "1d4",
 				damage_type: "bludgeoning",
 				description:
-					"Crystalline deposits in your bones let your unarmed strikes shatter stone — 1d4 bludgeoning, doubled against inanimate objects and gate structures.",
+					"Crystalline deposits in your bones let your unarmed strikes shatter stone — 1d4 bludgeoning, doubled against inanimate objects and Rift structures.",
 			},
 		],
 		bonusHpPerLevel: 1,
@@ -429,7 +429,7 @@ export const jobs: Job[] = [
 		type: "Job",
 		rank: "C",
 		description:
-			"The Berserker is an Awakened identity that specializes in the Overload Tank and Unstable Resonance mandate. As an Ascendant of this lineage, their core is defined by an unstable connection to the Absolute, flooding their physiology with raw energy under stress. In the modern world, Berserkers are walking spectacles of power—visible mana veins flare across their skin as their muscles swell with crystallized essence. The Ascendant Bureau classifies them as high-risk but indispensable assets who specialized in the controlled demolition of high-rank gates.",
+			"The Berserker is an Awakened identity that specializes in the Overload Tank and Unstable Resonance mandate. As an Ascendant of this lineage, their core is defined by an unstable connection to the Absolute, flooding their physiology with raw energy under stress. In the modern world, Berserkers are walking spectacles of power—visible mana veins flare across their skin as their muscles swell with crystallized essence. The Ascendant Bureau classifies them as high-risk but indispensable assets who specialized in the controlled demolition of high-rank Rifts.",
 		hitDie: "1d12",
 		primaryAbility: "Strength",
 		saving_throws: ["Strength", "Vitality"],
@@ -437,7 +437,7 @@ export const jobs: Job[] = [
 			"Beast Taming",
 			"Athletics",
 			"Intimidation",
-			"Gate Topology",
+			"Rift Topology",
 			"Perception",
 			"Survival",
 		],
@@ -691,7 +691,7 @@ export const jobs: Job[] = [
 		type: "Job",
 		rank: "B",
 		description:
-			"The Assassin is an Awakened identity that specializes in the Dimensional Phase Operative and Umbral Walker mandate. As an Ascendant of this lineage, their consciousness partially exists between realities, granting them the ability to phase through the physical world and strike from impossible angles. In the modern era, the Assassin is the supreme specialist in surgical rift-clearing and high-value target extraction within high-rank gates.",
+			"The Assassin is an Awakened identity that specializes in the Dimensional Phase Operative and Umbral Walker mandate. As an Ascendant of this lineage, their consciousness partially exists between realities, granting them the ability to phase through the physical world and strike from impossible angles. In the modern era, the Assassin is the supreme specialist in surgical rift-clearing and high-value target extraction within high-rank Rifts.",
 		hitDie: "1d8",
 		primaryAbility: "Agility",
 		saving_throws: ["Agility", "Intelligence"],
@@ -810,7 +810,7 @@ export const jobs: Job[] = [
 				level: 1,
 				name: "Umbral Cant",
 				description:
-					"A coded language used by ascendants in the umbral trade — encrypted dead drops, dark web forums, burner phone rites, and anonymous gate intelligence networks. You recognize the signs in any city.",
+					"A coded language used by ascendants in the umbral trade — encrypted dead drops, dark web forums, burner phone rites, and anonymous Rift intelligence networks. You recognize the signs in any city.",
 			},
 			{
 				level: 2,
@@ -862,7 +862,7 @@ export const jobs: Job[] = [
 				level: 14,
 				name: "Dimensional Tremorsense",
 				description:
-					"You feel disturbances in the dimensional membrane like a spider feels its web vibrate — cloaked enemies, hidden snipers, and invisible gate creatures within 10 ft cannot hide from you.",
+					"You feel disturbances in the dimensional membrane like a spider feels its web vibrate — cloaked enemies, hidden snipers, and invisible Rift creatures within 10 ft cannot hide from you.",
 			},
 			{
 				level: 15,
@@ -955,7 +955,7 @@ export const jobs: Job[] = [
 		type: "Job",
 		rank: "A",
 		description:
-			"The Striker is an Awakened identity that specializes in the Neural Overdrive and Impulse Channeling mandate. As an Ascendant of this lineage, their entire nervous system was rewired into a mana-conductive network, allowing them to channel kinetic force through their limbs like living railguns. In modern society, Strikers are the premier rapid-response assets for urban gate eruptions, utilizing their impossible speed to neutralize threats with absolute precision.",
+			"The Striker is an Awakened identity that specializes in the Neural Overdrive and Impulse Channeling mandate. As an Ascendant of this lineage, their entire nervous system was rewired into a mana-conductive network, allowing them to channel kinetic force through their limbs like living railguns. In modern society, Strikers are the premier rapid-response assets for urban Rift eruptions, utilizing their impossible speed to neutralize threats with absolute precision.",
 		hitDie: "1d8",
 		primaryAbility: "Agility",
 		saving_throws: ["Strength", "Agility"],
@@ -1002,7 +1002,7 @@ export const jobs: Job[] = [
 			{
 				name: "Force Channeling",
 				description:
-					"Convert raw mana into elemental force through your nerve gates — your fists can heat to 500°C, discharge like a taser, generate concussive blasts, or emit healing vibrations. Smartphone thermal cameras show your hands glowing.",
+					"Convert raw mana into elemental force through your nerve Rifts — your fists can heat to 500°C, discharge like a taser, generate concussive blasts, or emit healing vibrations. Smartphone thermal cameras show your hands glowing.",
 				level: 7,
 			},
 		],
@@ -1058,7 +1058,7 @@ export const jobs: Job[] = [
 				name: "Impulse Rites",
 				uses: { formula: "level", recharge: "short-rest" },
 				description:
-					"Impulse points = Striker level, short rest recharge. Activate specific nerve clusters through precise internal Rites — your eyes flash briefly when a gate opens. Rite of Speed (Dash/Disengage), Rite of Force (2 bonus strikes), Rite of Iron (Dodge). 1 impulse point each.",
+					"Impulse points = Striker level, short rest recharge. Activate specific nerve clusters through precise internal Rites — your eyes flash briefly when a Rift opens. Rite of Speed (Dash/Disengage), Rite of Force (2 bonus strikes), Rite of Iron (Dodge). 1 impulse point each.",
 			},
 			{
 				level: 2,
@@ -1147,7 +1147,7 @@ export const jobs: Job[] = [
 				level: 18,
 				name: "Void State",
 				description:
-					"Open all impulse gates simultaneously — your body vibrates at a frequency that renders you invisible to the naked eye and most detection equipment. 4 points: invisible 1 min + resistance to all except force. 8 points: project consciousness to the Astral Plane.",
+					"Open all impulse Rifts simultaneously — your body vibrates at a frequency that renders you invisible to the naked eye and most detection equipment. 4 points: invisible 1 min + resistance to all except force. 8 points: project consciousness to the Astral Plane.",
 			},
 			{
 				level: 20,
@@ -1188,7 +1188,7 @@ export const jobs: Job[] = [
 		abilities: [
 			"Kinetic Barrier",
 			"Impulse Combat",
-			"Impulse Gates",
+			"Impulse Rifts",
 			"Velocity Chain",
 			"Combat Doctrine",
 			"Nerve Strike",
@@ -1322,7 +1322,7 @@ export const jobs: Job[] = [
 				level: 1,
 				name: "Resonance Deconstruction",
 				description:
-					"When you observe a spell cast — even by a gate boss — you can attempt to deconstruct its resonance. Intelligence check DC 10 + spell level: success lets you add it to your grimoire during your next rest (normal copying cost). Short rest: recover one spell slot â‰¤ half Mage level. Once per day.",
+					"When you observe a spell cast — even by a Rift boss — you can attempt to deconstruct its resonance. Intelligence check DC 10 + spell level: success lets you add it to your grimoire during your next rest (normal copying cost). Short rest: recover one spell slot â‰¤ half Mage level. Once per day.",
 			},
 			{
 				level: 2,
@@ -1496,7 +1496,7 @@ export const jobs: Job[] = [
 			{
 				name: "Mana Sensitivity",
 				description:
-					"Your open mana pathways work like a passive radar — enchanted objects hum when you walk by, hidden gates tingle at the back of your skull, and you can tell if someone's an awakened ascendant from across a crowded subway car. Sense magical effects within 30 ft. Identify any observed spell's school.",
+					"Your open mana pathways work like a passive radar — enchanted objects hum when you walk by, hidden Rifts tingle at the back of your skull, and you can tell if someone's an awakened ascendant from across a crowded subway car. Sense magical effects within 30 ft. Identify any observed spell's school.",
 				type: "passive",
 			},
 			{
@@ -1698,7 +1698,7 @@ export const jobs: Job[] = [
 		type: "Job",
 		rank: "A",
 		description:
-			"The Revenant is an Awakened identity bound to the End-Cycle mandate of Marthos, the Dragon-King of Void and Harbinger of Annihilation. As an Ascendant of this lineage, their body no longer runs on life - it runs on death. Sustained by the Void-Breath and by Remnants (fragments of severed life-essence reclaimed at the instant a creature dies), the Revenant is an unarmored drain tank that holds the line by feeding on the dying around it. They wear no armor and need none; entropy itself sheathes them, and the wounds that would fell others only deepen the harvest. The Ascendant Bureau deploys Revenants as immovable anchors at the worst gate breaks - the figure who walks into annihilation and walks back out, fuller than before.",
+			"The Revenant is an Awakened identity bound to the End-Cycle mandate of Marthos, the Dragon-King of Void and Harbinger of Annihilation. As an Ascendant of this lineage, their body no longer runs on life - it runs on death. Sustained by the Void-Breath and by Remnants (fragments of severed life-essence reclaimed at the instant a creature dies), the Revenant is an unarmored drain tank that holds the line by feeding on the dying around it. They wear no armor and need none; entropy itself sheathes them, and the wounds that would fell others only deepen the harvest. The Ascendant Bureau deploys Revenants as immovable anchors at the worst Rift breaks - the figure who walks into annihilation and walks back out, fuller than before.",
 		hitDie: "1d8",
 		primaryAbility: "Intelligence",
 		saving_throws: ["Intelligence", "Vitality"],
@@ -1762,7 +1762,7 @@ export const jobs: Job[] = [
 			{
 				name: "Carrion Anchor",
 				description:
-					"Low-intelligence gate anomalies read your mana-signature as part of the dead environment and ignore you unless you attack them first or harvest a Remnant within their sight.",
+					"Low-intelligence Rift anomalies read your mana-signature as part of the dead environment and ignore you unless you attack them first or harvest a Remnant within their sight.",
 				type: "passive",
 			},
 		],
@@ -1875,7 +1875,7 @@ export const jobs: Job[] = [
 			{
 				name: "Aura of the Grave",
 				description:
-					"Sense trait. Low-intelligence gate anomalies and anomaly ignore you unless you attack them first, perceiving your mana signature as part of the environment.",
+					"Sense trait. Low-intelligence Rift anomalies and anomaly ignore you unless you attack them first, perceiving your mana signature as part of the environment.",
 				type: "sense",
 			},
 		],
@@ -1931,7 +1931,7 @@ export const jobs: Job[] = [
 		type: "Job",
 		rank: "B",
 		description:
-			"The Summoner is an Awakened identity granted the mandate of the Hive-Mother. As an Ascendant of this lineage, their mana is harmonized with the extraterrestrial ecosystems that bleed through the gates. They do not merely fight; they command the very flora and fauna of the dungeon dimensions. In modern society, Summoners are the premier ecologists of the Ascendant Bureau, serving as the bridge between human civilization and the rapidly evolving lifeforms of the Gate-Era. They shapeshift into gate creatures, command gate environments, and are the only ascendants who can predict boss spawns by reading resonance markers.",
+			"The Summoner is an Awakened identity granted the mandate of the Hive-Mother. As an Ascendant of this lineage, their mana is harmonized with the extraterrestrial ecosystems that bleed through the Rifts. They do not merely fight; they command the very flora and fauna of the Rift dimensions. In modern society, Summoners are the premier ecologists of the Ascendant Bureau, serving as the bridge between human civilization and the rapidly evolving lifeforms of the Rift-Era. They shapeshift into Rift creatures, command Rift environments, and are the only ascendants who can predict boss spawns by reading resonance markers.",
 		hitDie: "1d8",
 		primaryAbility: "Sense",
 		saving_throws: ["Intelligence", "Sense"],
@@ -1940,7 +1940,7 @@ export const jobs: Job[] = [
 			"Beast Taming",
 			"Insight",
 			"Medicine",
-			"Gate Topology",
+			"Rift Topology",
 			"Perception",
 			"Cosmic Lore",
 			"Survival",
@@ -1967,13 +1967,13 @@ export const jobs: Job[] = [
 			{
 				name: "Biome Attunement",
 				description:
-					"Your body adapted to gate ecosystems — you can breathe gate atmosphere that would kill normal humans, and your immune system shrugs off alien pathogens. Advantage on saves vs poison/disease. Resistance to poison damage.",
+					"Your body adapted to Rift ecosystems — you can breathe Rift atmosphere that would kill normal humans, and your immune system shrugs off alien pathogens. Advantage on saves vs poison/disease. Resistance to poison damage.",
 				level: 1,
 			},
 			{
-				name: "Gate Ecology Sense",
+				name: "Rift Ecology Sense",
 				description:
-					"Communicate with beasts and plant creatures — stray dogs follow you, pigeons land on your shoulder, and houseplants lean toward you. Sense gate openings within 1 mile by reading ecosystem stress patterns the way a meteorologist reads weather radar.",
+					"Communicate with beasts and plant creatures — stray dogs follow you, pigeons land on your shoulder, and houseplants lean toward you. Sense Rift openings within 1 mile by reading ecosystem stress patterns the way a meteorologist reads weather radar.",
 				level: 1,
 			},
 			{
@@ -1985,7 +1985,7 @@ export const jobs: Job[] = [
 			{
 				name: "Reinforced Summons",
 				description:
-					"Creatures you conjure from gate spaces are reinforced with your mana. They gain extra HP = prof bonus and deal extra 1d4 force damage.",
+					"Creatures you conjure from Rift spaces are reinforced with your mana. They gain extra HP = prof bonus and deal extra 1d4 force damage.",
 				level: 10,
 			},
 		],
@@ -1993,7 +1993,7 @@ export const jobs: Job[] = [
 			{
 				name: "Biome Link",
 				description:
-					"You speak the primal language of gate ecosystems — zoo animals calm when you enter, feral gate creatures hesitate, and plants in your apartment thrive suspiciously well. Communicate with beasts and plants at all times.",
+					"You speak the primal language of Rift ecosystems — zoo animals calm when you enter, feral Rift creatures hesitate, and plants in your apartment thrive suspiciously well. Communicate with beasts and plants at all times.",
 				type: "passive",
 			},
 			{
@@ -2016,7 +2016,7 @@ export const jobs: Job[] = [
 		languages: ["English", "Gate Speak"],
 		darkvision: 60,
 		specialSenses: [
-			"Gate Resonance (sense the location of open gates and anomaly concentrations within 1 mile)",
+			"Rift Resonance (sense the location of open Rifts and anomaly concentrations within 1 mile)",
 		],
 		damage_resistances: ["poison"],
 		startingEquipment: [
@@ -2024,7 +2024,7 @@ export const jobs: Job[] = [
 			["Scimitar", "Mace", "Quarterstaff"],
 			["Leather Armor"],
 			["Explorer's Pack"],
-			["Gate-Beast Fang", "Anomaly Core Shard", "Bonded Tamer's Collar"],
+			["Rift-Beast Fang", "Anomaly Core Shard", "Bonded Tamer's Collar"],
 		],
 		hitPointsAtFirstLevel: "8 + your Vitality modifier",
 		hitPointsAtHigherLevels:
@@ -2040,9 +2040,9 @@ export const jobs: Job[] = [
 		classFeatures: [
 			{
 				level: 1,
-				name: "Gate Speak",
+				name: "Rift Speak",
 				description:
-					"Know the primal language shared across gate ecosystems — you read gate biome markers the way a tracker reads footprints. Leave and spot hidden biological signals. Sense the rank and type of any gate within 1 mile — the Ascendant Bureau's Ecology Division relies on Summoners for gate classification.",
+					"Know the primal language shared across Rift ecosystems — you read Rift biome markers the way a tracker reads footprints. Leave and spot hidden biological signals. Sense the rank and type of any Rift within 1 mile — the Ascendant Bureau's Ecology Division relies on Summoners for Rift classification.",
 			},
 			{
 				level: 1,
@@ -2054,13 +2054,13 @@ export const jobs: Job[] = [
 				level: 2,
 				name: "Entity Shift",
 				description:
-					"Absorb biome data from gate creatures you've studied — field researchers document each form in your growing catalogue. Assume their form 2/short rest. Max CR 1/4 at 2nd (1/2 swim at 4th, CR 1 fly at 8th). You permanently retain one sensory ability from each form (e.g., wolf scent enhances your nose even in human form). Biologists are fascinated.",
+					"Absorb biome data from Rift creatures you've studied — field researchers document each form in your growing catalogue. Assume their form 2/short rest. Max CR 1/4 at 2nd (1/2 swim at 4th, CR 1 fly at 8th). You permanently retain one sensory ability from each form (e.g., wolf scent enhances your nose even in human form). Biologists are fascinated.",
 			},
 			{
 				level: 2,
 				name: "Affinity Circle",
 				description:
-					"Choose a primal affinity — your connection to a specific gate biome type. Features at 2nd, 6th, 10th, and 14th level.",
+					"Choose a primal affinity — your connection to a specific Rift biome type. Features at 2nd, 6th, 10th, and 14th level.",
 			},
 			{
 				level: 4,
@@ -2104,7 +2104,7 @@ export const jobs: Job[] = [
 				level: 20,
 				name: "Zenith Archon of the Swarm",
 				description:
-					"Your status as an Ascendant is recognized globally at the Zenith Rank: [RANK: S — RADIANT NEXUS OF THE HIVE]. Unlimited Entity Shift uses. Forms can be any creature you've encountered (max CR = half level). Biome Command becomes at-will. Global environmental agencies and the UN consult you on gate ecosystem policy. Your bond with the gate biomes is absolute.",
+					"Your status as an Ascendant is recognized globally at the Zenith Rank: [RANK: S — RADIANT NEXUS OF THE HIVE]. Unlimited Entity Shift uses. Forms can be any creature you've encountered (max CR = half level). Biome Command becomes at-will. Global environmental agencies and the UN consult you on Rift ecosystem policy. Your bond with the Rift biomes is absolute.",
 			},
 		],
 		racialTraits: [
@@ -2142,7 +2142,7 @@ export const jobs: Job[] = [
 		},
 		abilities: [
 			"Biome Attunement",
-			"Gate Ecology Sense",
+			"Rift Ecology Sense",
 			"Entity Shift",
 			"Biome Command",
 			"Affinity Circle",
@@ -2175,7 +2175,7 @@ export const jobs: Job[] = [
 		type: "Job",
 		rank: "A",
 		description:
-			"The Holy Knight is an Awakened identity that specializes in the Oath-Bound Enforcer and Absolute Covenant mandate. As an Ascendant of this lineage, they serve as the ultimate guardians of modern society, their power fueled by a binding oath to the Absolute itself—a literal covenant inscribed into their mana pathways. They work as guild leaders, Ascendant Bureau enforcement officers, and public defenders against gate threats. The oath grants devastating combat power, but break its tenets and the power is revoked painfully. They channel radiant Absolute energy through weapons, heal allies, and project protective auras.",
+			"The Holy Knight is an Awakened identity that specializes in the Oath-Bound Enforcer and Absolute Covenant mandate. As an Ascendant of this lineage, they serve as the ultimate guardians of modern society, their power fueled by a binding oath to the Absolute itself—a literal covenant inscribed into their mana pathways. They work as guild leaders, Ascendant Bureau enforcement officers, and public defenders against Rift threats. The oath grants devastating combat power, but break its tenets and the power is revoked painfully. They channel radiant Absolute energy through weapons, heal allies, and project protective auras.",
 		hitDie: "1d10",
 		primaryAbility: "Presence",
 		saving_throws: ["Sense", "Presence"],
@@ -2301,7 +2301,7 @@ export const jobs: Job[] = [
 				level: 2,
 				name: "Covenant Strike",
 				description:
-					"On melee hit, channel your oath's power through the weapon — it flares with golden light visible from blocks away. Expend a slot: 2d8 radiant + 1d8 per slot above 1st (max 5d8). +1d8 vs anomaly/anomaly. Target's speed reduced by 10 ft until your next turn. Gate-raid streamers' audiences go wild for Covenant Strike clips.",
+					"On melee hit, channel your oath's power through the weapon — it flares with golden light visible from blocks away. Expend a slot: 2d8 radiant + 1d8 per slot above 1st (max 5d8). +1d8 vs anomaly/anomaly. Target's speed reduced by 10 ft until your next turn. Rift-raid streamers' audiences go wild for Covenant Strike clips.",
 			},
 			{
 				level: 3,
@@ -2465,7 +2465,7 @@ export const jobs: Job[] = [
 			"Dimensional Lore",
 			"Investigation",
 			"Medicine",
-			"Gate Topology",
+			"Rift Topology",
 			"Perception",
 			"Sleight of Hand",
 		],
@@ -2493,7 +2493,7 @@ export const jobs: Job[] = [
 			{
 				name: "Aetheric-Mandate Access",
 				description:
-					"Interface with any Absolute construct or divine device like touching an intuitive schematic — read functions, bypass security, and rewrite resonance behavior. You've unraveled gate artifacts that global research labs couldn't crack. Advantage on checks to analyze magical technology.",
+					"Interface with any Absolute construct or divine device like touching an intuitive schematic — read functions, bypass security, and rewrite resonance behavior. You've unraveled Rift artifacts that global research labs couldn't crack. Advantage on checks to analyze magical technology.",
 				level: 1,
 			},
 			{
@@ -2764,7 +2764,7 @@ export const jobs: Job[] = [
 			"Intimidation",
 			"Investigation",
 			"Medicine",
-			"Gate Topology",
+			"Rift Topology",
 			"Perception",
 			"Performance",
 			"Persuasion",
@@ -2963,7 +2963,7 @@ export const jobs: Job[] = [
 			{
 				name: "Bureau Classification: Resonance Conductor",
 				description:
-					"Social lineage trait. Idols are the Bureau's most effective public-relations and morale assets. Your Bureau certification grants you diplomatic immunity equivalent to a cultural attaché in any country with a Bureau agreement, press credentials at any gate-break site, and the legal authority to broadcast emergency morale transmissions over civilian networks during gate events. You are simultaneously a strategic asset and a celebrity.",
+					"Social lineage trait. Idols are the Bureau's most effective public-relations and morale assets. Your Bureau certification grants you diplomatic immunity equivalent to a cultural attaché in any country with a Bureau agreement, press credentials at any Rift Break site, and the legal authority to broadcast emergency morale transmissions over civilian networks during Rift events. You are simultaneously a strategic asset and a celebrity.",
 				type: "social",
 			},
 			{
@@ -3290,7 +3290,7 @@ export const jobs: Job[] = [
 			{
 				name: "Bureau Classification: Broadcast Asset",
 				description:
-					"Social lineage trait. Heralds are legally authorized to issue Absolute-stamped directives that civilian networks mirror during gate events. You hold standing emergency-broadcast credentials, and your mantras are admissible as legal evidence in Bureau tribunals. Religious institutions across Earth extend hospitality automatically.",
+					"Social lineage trait. Heralds are legally authorized to issue Absolute-stamped directives that civilian networks mirror during Rift events. You hold standing emergency-broadcast credentials, and your mantras are admissible as legal evidence in Bureau tribunals. Religious institutions across Earth extend hospitality automatically.",
 				type: "social",
 			},
 		],
@@ -3368,7 +3368,7 @@ export const jobs: Job[] = [
 			"Dimensional Lore",
 			"Intimidation",
 			"Investigation",
-			"Gate Topology",
+			"Rift Topology",
 			"Cosmic Lore",
 		],
 		armorProficiencies: ["Light armor"],
@@ -3696,7 +3696,7 @@ export const jobs: Job[] = [
 			"Athletics",
 			"Insight",
 			"Investigation",
-			"Gate Topology",
+			"Rift Topology",
 			"Perception",
 			"Stealth",
 			"Survival",
@@ -3716,9 +3716,9 @@ export const jobs: Job[] = [
 				level: 1,
 			},
 			{
-				name: "Gate Navigator",
+				name: "Rift Navigator",
 				description:
-					"Your body remembers gate terrain after a single exposure. After spending 1 hour in a gate biome, you gain it as a Favored Terrain: advantage on Wisdom (Perception) and Wisdom (Survival) checks there, and difficult terrain of that type doesn't slow you.",
+					"Your body remembers Rift terrain after a single exposure. After spending 1 hour in a Rift biome, you gain it as a Favored Terrain: advantage on Wisdom (Perception) and Wisdom (Survival) checks there, and difficult terrain of that type doesn't slow you.",
 				level: 1,
 			},
 			{
@@ -3748,9 +3748,9 @@ export const jobs: Job[] = [
 				type: "passive",
 			},
 			{
-				name: "Gate Predator",
+				name: "Rift Predator",
 				description:
-					"Creatures native to a gate biome have disadvantage on attack rolls against you while you are in that biome. You have advantage on saving throws against their innate abilities.",
+					"Creatures native to a Rift biome have disadvantage on attack rolls against you while you are in that biome. You have advantage on saving throws against their innate abilities.",
 				type: "resistance",
 			},
 		],
@@ -3760,7 +3760,7 @@ export const jobs: Job[] = [
 		languages: ["English"],
 		darkvision: 60,
 		specialSenses: [
-			"Rift Resonance (detect active gates within 1 mile and identify their rank and approximate type)",
+			"Rift Resonance (detect active Rifts within 1 mile and identify their rank and approximate type)",
 		],
 		startingEquipment: [
 			["Scale Mail", "Leather Armor"],
@@ -3787,7 +3787,7 @@ export const jobs: Job[] = [
 				level: 1,
 				name: "Favored Terrain",
 				description:
-					"Choose one gate biome as your starting favored terrain. Additional favored terrains at 6th and 10th level.",
+					"Choose one Rift biome as your starting favored terrain. Additional favored terrains at 6th and 10th level.",
 			},
 			{
 				level: 2,
@@ -3895,7 +3895,7 @@ export const jobs: Job[] = [
 			{
 				name: "Rift Resonance Sense",
 				description:
-					"Lineage trait. Your aetheric sense is tuned to dimensional anomalies — you detect active gates within 1 mile by the dimensional pressure they create, and you feel gate-creature mana signatures the way a dog smells a trail. You know the rank and approximate type of any gate within detection range. This sense cannot be jammed or suppressed by environmental factors.",
+					"Lineage trait. Your aetheric sense is tuned to dimensional anomalies — you detect active Rifts within 1 mile by the dimensional pressure they create, and you feel gate-creature mana signatures the way a dog smells a trail. You know the rank and approximate type of any Rift within detection range. This sense cannot be jammed or suppressed by environmental factors.",
 				type: "sense",
 			},
 			{
@@ -3913,13 +3913,13 @@ export const jobs: Job[] = [
 			{
 				name: "Terrain Imprinting",
 				description:
-					"Physiology trait. Your body permanently adapts to gate terrain types you spend extended time in. For each Gate Terrain type designated as a favored terrain, you also gain: you cannot be slowed by natural difficult terrain of that type, environmental damage of that terrain type is reduced by your proficiency bonus, and your camouflage in that terrain is automatic (no roll required to hide when stationary).",
+					"Physiology trait. Your body permanently adapts to Rift terrain types you spend extended time in. For each Rift Terrain type designated as a favored terrain, you also gain: you cannot be slowed by natural difficult terrain of that type, environmental damage of that terrain type is reduced by your proficiency bonus, and your camouflage in that terrain is automatic (no roll required to hide when stationary).",
 				type: "physiology",
 			},
 		],
 		abilities: [
 			"Prey Lock",
-			"Gate Navigator",
+			"Rift Navigator",
 			"Primal Tracking",
 			"Ambush Tactics",
 			"Pursuit Strike",

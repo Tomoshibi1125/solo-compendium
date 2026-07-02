@@ -19,7 +19,6 @@ import {
 import { useMemo, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
-import { AscendantSigil } from "@/components/ui/AscendantSigil";
 import { ManaFlowText, RiftHeading } from "@/components/ui/AscendantText";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
@@ -32,6 +31,8 @@ import {
 	CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { PageHeader } from "@/components/ui/PageHeader";
+import { RaLogo } from "@/components/ui/RaLogo";
 import {
 	Select,
 	SelectContent,
@@ -90,53 +91,47 @@ const WardenProtocols = () => {
 			>
 				{/* Ascendant UI Background Effects */}
 				<div className="absolute inset-0 hex-grid-overlay opacity-20 pointer-events-none" />
-				<div className="absolute inset-0 bg-gradient-to-b from-amethyst-purple/5 via-transparent to-obsidian-deep pointer-events-none" />
+				<div className="absolute inset-0 bg-gradient-to-b from-amethyst-purple/5 via-transparent to-shadow-dark pointer-events-none" />
 
 				{/* Header */}
 				<div className="warden-directives-header relative z-10">
-					<div className="flex items-center justify-between">
-						<div className="flex items-center gap-4">
-							<AscendantSigil size="lg" className="flex-shrink-0" />
-							<div>
-								<RiftHeading
-									level={1}
-									variant="gate"
-									dimensional
-									className="warden-protocols-title ascendant-text-glow"
-								>
-									Warden Protocols
-								</RiftHeading>
-								<ManaFlowText
-									variant="rift"
-									speed="slow"
-									className="warden-directives-subtitle block"
-								>
-									Divine protocols granted to guide Ascendants through the
-									Rifts. In this post-reset world, the Rift's will shapes
-									reality.
-								</ManaFlowText>
-							</div>
-						</div>
-
-						<div className="flex items-center gap-2">
-							<Button
-								variant="outline"
-								size="sm"
-								onClick={() => navigate("/compendium")}
+					<PageHeader
+						variant="gate"
+						leading={
+							<RaLogo variant="mark" size="lg" className="flex-shrink-0" />
+						}
+						title="Warden Protocols"
+						description={
+							<ManaFlowText
+								variant="rift"
+								speed="slow"
+								className="warden-directives-subtitle block"
 							>
-								<HelpCircle className="w-4 h-4 mr-2" />
-								Help
-							</Button>
-							<Button
-								variant="outline"
-								size="sm"
-								onClick={() => navigate("/warden-directives/rift-console")}
-							>
-								<Settings className="w-4 h-4 mr-2" />
-								Settings
-							</Button>
-						</div>
-					</div>
+								Divine protocols granted to guide Ascendants through the Rifts.
+								In this post-reset world, the Rift's will shapes reality.
+							</ManaFlowText>
+						}
+						actions={
+							<>
+								<Button
+									variant="outline"
+									size="sm"
+									onClick={() => navigate("/compendium")}
+								>
+									<HelpCircle className="w-4 h-4 mr-2" />
+									Help
+								</Button>
+								<Button
+									variant="outline"
+									size="sm"
+									onClick={() => navigate("/warden-directives/rift-console")}
+								>
+									<Settings className="w-4 h-4 mr-2" />
+									Settings
+								</Button>
+							</>
+						}
+					/>
 				</div>
 
 				{/* Eternal Loop */}
@@ -490,8 +485,8 @@ const WardenToolCard = ({
 					size="sm"
 					className={cn(
 						"font-heading tracking-widest uppercase gap-1",
-						tool.color.includes("amber")
-							? "bg-amber-500/20 text-amber-400 hover:bg-amber-500/40 border border-amber-500/50"
+						tool.color.includes("gate-s")
+							? "bg-gate-s/20 text-gate-s hover:bg-gate-s/40 border border-gate-s/50"
 							: tool.color.includes("red")
 								? "bg-red-500/20 text-red-400 hover:bg-red-500/40 border border-red-500/50"
 								: "bg-primary/20 text-primary hover:bg-primary/40 border border-primary/50",

@@ -266,7 +266,7 @@ export function AIProviderSettings({ className }: AIProviderSettingsProps) {
 					<Button type="button" variant="outline" onClick={handleUseFree}>
 						Use hosted free provider
 					</Button>
-					{saved && <span className="text-xs text-emerald-600">Saved.</span>}
+					{saved && <span className="text-xs text-system-green">Saved.</span>}
 				</div>
 			</CardContent>
 		</Card>

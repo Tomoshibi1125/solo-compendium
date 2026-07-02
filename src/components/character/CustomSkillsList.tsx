@@ -159,7 +159,7 @@ export function CustomSkillsList({
 
 	return (
 		<section className="space-y-2 mt-4">
-			<h3 className="text-[10px] font-mono text-fuchsia-300 font-bold uppercase tracking-[0.2em] px-2 mb-2 border-l-2 border-fuchsia-300">
+			<h3 className="text-[10px] font-mono text-resurge-violet font-bold uppercase tracking-[0.2em] px-2 mb-2 border-l-2 border-resurge-violet">
 				CUSTOM_SKILLS
 			</h3>
 			<div className="flex flex-col gap-1">
@@ -168,7 +168,7 @@ export function CustomSkillsList({
 					return (
 						<div
 							key={skill.id}
-							className="group flex items-center justify-between px-2 py-1.5 rounded-[2px] border border-fuchsia-300/20 bg-black/20"
+							className="group flex items-center justify-between px-2 py-1.5 rounded-[2px] border border-resurge-violet/20 bg-black/20"
 							data-testid={`custom-skill-row-${skill.id}`}
 						>
 							<button
@@ -180,11 +180,11 @@ export function CustomSkillsList({
 								<span className="text-xs font-heading font-medium truncate text-white/80">
 									{skill.name}
 								</span>
-								<span className="text-[9px] font-mono text-fuchsia-300/60 uppercase">
+								<span className="text-[9px] font-mono text-resurge-violet/60 uppercase">
 									{skill.ability.substring(0, 3)}
 								</span>
 								{(skill.proficient || skill.expertise) && (
-									<span className="text-[8px] font-mono uppercase tracking-widest rounded border px-1 py-0.5 text-fuchsia-300/80 border-fuchsia-300/30 bg-fuchsia-300/5">
+									<span className="text-[8px] font-mono uppercase tracking-widest rounded border px-1 py-0.5 text-resurge-violet/80 border-resurge-violet/30 bg-resurge-violet/5">
 										{skill.expertise ? "EXP" : "PROF"}
 									</span>
 								)}
@@ -222,7 +222,7 @@ export function CustomSkillsList({
 						variant="ghost"
 						size="sm"
 						onClick={openAdd}
-						className="mt-1 h-7 gap-1.5 text-xs text-fuchsia-300 hover:text-fuchsia-200 hover:bg-fuchsia-300/10"
+						className="mt-1 h-7 gap-1.5 text-xs text-resurge-violet hover:text-resurge-violet hover:bg-resurge-violet/10"
 						data-testid="custom-skill-add-btn"
 					>
 						<Plus className="w-3 h-3" />

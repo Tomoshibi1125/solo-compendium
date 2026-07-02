@@ -570,7 +570,7 @@ export function PowersList({
 				</div>
 
 				{concentrationPower && (
-					<div className="p-2 rounded-lg bg-amber-500/10 border border-amber-500/20">
+					<div className="p-2 rounded-lg bg-gate-s/10 border border-gate-s/20">
 						<div className="flex items-center gap-2 text-sm">
 							<Badge variant="destructive">Concentrating</Badge>
 							<span>{formatRegentVernacular(concentrationPower.name)}</span>

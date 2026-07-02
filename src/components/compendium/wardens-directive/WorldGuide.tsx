@@ -18,7 +18,7 @@ export const WorldGuide = () => {
 			<section className="text-center mb-16">
 				<RiftHeading
 					level={1}
-					className="text-5xl text-emerald-400 mb-6 font-display uppercase tracking-widest"
+					className="text-5xl text-system-green mb-6 font-display uppercase tracking-widest"
 				>
 					World Directory
 				</RiftHeading>
@@ -35,16 +35,16 @@ export const WorldGuide = () => {
 
 				return (
 					<section key={rank} className="mb-24">
-						<header className="border-b border-emerald-500/30 pb-4 mb-10 flex items-end justify-between">
+						<header className="border-b border-system-green/30 pb-4 mb-10 flex items-end justify-between">
 							<h2 className="text-4xl font-display font-bold text-white uppercase tracking-widest flex items-center gap-4">
 								<span
 									className={`text-2xl font-bold px-4 py-1 rounded shadow-lg ${
 										rank === "S"
 											? "bg-red-500/20 text-red-500 border border-red-500/30"
 											: rank === "A"
-												? "bg-orange-500/20 text-orange-500 border border-orange-500/30"
+												? "bg-gate-a/20 text-gate-a border border-gate-a/30"
 												: rank === "B"
-													? "bg-yellow-500/20 text-yellow-500 border border-yellow-500/30"
+													? "bg-gate-s/20 text-gate-s border border-gate-s/30"
 													: rank === "C"
 														? "bg-blue-500/20 text-blue-500 border border-blue-500/30"
 														: "bg-slate-500/20 text-slate-400 border border-slate-500/30"
@@ -60,9 +60,9 @@ export const WorldGuide = () => {
 							{sites.map((site) => (
 								<article
 									key={site.id}
-									className="bg-glass/20 border border-emerald-900/40 rounded-xl overflow-hidden shadow-2xl group hover:border-emerald-500/40 transition-colors"
+									className="bg-glass/20 border border-system-green/40 rounded-xl overflow-hidden shadow-2xl group hover:border-system-green/40 transition-colors"
 								>
-									<div className="h-48 w-full relative overflow-hidden bg-void/80 border-b border-emerald-900/50">
+									<div className="h-48 w-full relative overflow-hidden bg-void/80 border-b border-system-green/40">
 										<div className="absolute inset-0 bg-gradient-to-t from-void to-transparent z-10" />
 										<img
 											src={site.image || ""}
@@ -74,7 +74,7 @@ export const WorldGuide = () => {
 												{site.name}
 											</h3>
 											<div className="flex gap-2 mt-1">
-												<span className="text-[10px] font-mono bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 px-2 py-0.5 rounded uppercase flex items-center gap-1">
+												<span className="text-[10px] font-mono bg-system-green/20 text-system-green border border-system-green/30 px-2 py-0.5 rounded uppercase flex items-center gap-1">
 													<MapPin className="w-3 h-3" />
 													{site.type}
 												</span>

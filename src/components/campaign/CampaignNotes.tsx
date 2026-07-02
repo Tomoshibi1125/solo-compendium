@@ -232,7 +232,7 @@ export function CampaignNotes({ campaignId }: CampaignNotesProps) {
 			case "location":
 				return "bg-green-500/20 text-green-400";
 			case "quest":
-				return "bg-yellow-500/20 text-yellow-400";
+				return "bg-gate-s/20 text-gate-s";
 			default:
 				return "bg-muted text-muted-foreground";
 		}
@@ -344,9 +344,9 @@ export function CampaignNotes({ campaignId }: CampaignNotesProps) {
 												) : canViewSecretBlocks ? (
 													<div
 														key={`${note.id}-${segment.id}`}
-														className="rounded-md border border-amber-500/30 bg-amber-500/10 px-3 py-2 space-y-1"
+														className="rounded-md border border-gate-s/30 bg-gate-s/10 px-3 py-2 space-y-1"
 													>
-														<p className="text-[11px] uppercase tracking-wide text-amber-300">
+														<p className="text-[11px] uppercase tracking-wide text-gate-s">
 															{segment.label || "Secret"}
 														</p>
 														<p className="text-sm whitespace-pre-wrap">

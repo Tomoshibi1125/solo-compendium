@@ -343,7 +343,7 @@ export function AddEquipmentDialog({
 												: Gem;
 								const rarityColor =
 									itemRarity === "legendary"
-										? "text-amber-500"
+										? "text-gate-s"
 										: itemRarity === "epic"
 											? "text-purple-500"
 											: itemRarity === "rare"
@@ -387,7 +387,7 @@ export function AddEquipmentDialog({
 												</div>
 												<div className="flex items-center gap-3 text-xs text-muted-foreground mb-1">
 													{itemPrice != null && (
-														<span className="text-bond-gold">
+														<span className="text-gate-s">
 															{formatRaCurrencyValue(itemPrice)}
 														</span>
 													)}

@@ -16,20 +16,20 @@ export const spells_d: CompendiumSpell[] = [
 			"Draw a spike of crystallized mana from the caster's palm and hurl it at a target within 30 feet. Make a ranged spell attack using Sense to deal 1d10 cold damage, or the target must succeed on a DC 14 Sense saving throw, taking full damage and becoming Frightened for 1 minute on a failure (half damage and no condition on a success).",
 		lore: {
 			origin:
-				"Reverse-engineered from the frost plating of a Class-B Beast anomaly pulled from the Harbin Gate.",
+				"Reverse-engineered from the frost plating of a Class-B Beast anomaly pulled from the Harbin Rift.",
 			history:
-				"Standardized by the Gate Bureau after three field medics reported matching casting gestures during uncoordinated debriefs.",
+				"Standardized by the Rift Bureau after three field medics reported matching casting gestures during uncoordinated debriefs.",
 			curse: "",
 			personality:
 				"Quiet and precise; the spell hums faintly against metal within arm's reach.",
 			current_owner: "Distributed openly to Bureau-licensed Rank D Ascendants.",
 			prior_owners: [
 				"Medic-3 of the Harbin Recovery Team",
-				"Gate Bureau archivist S. Ro",
+				"Rift Bureau archivist S. Ro",
 			],
 		},
 		flavor:
-			"The first breath of a Gate's inner chamber, cast back at anything warm enough to notice.",
+			"The first breath of a Rift's inner chamber, cast back at anything warm enough to notice.",
 		tags: ["awakened", "magic", "D"],
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
@@ -111,7 +111,7 @@ export const spells_d: CompendiumSpell[] = [
 			"Slam the lattice beneath a creature's feet; a 100-foot line erupts with percussive force. The primary target takes a ranged spell attack for 1d10 thunder damage (Presence), and each creature in the line must succeed on a DC 13 Agility save or take full damage and be Stunned until the end of its next turn (on a success, it is pushed 10 feet away instead).",
 		lore: {
 			origin:
-				"First observed in the collapse of the Seoul Mid-Tier Gate, where the caster arrived with no memory of how he learned it.",
+				"First observed in the collapse of the Meridian City Mid-Tier Rift, where the caster arrived with no memory of how he learned it.",
 			history:
 				"Classified under Bureau Protocol 14 until a second caster independently reproduced it two months later.",
 			curse: "",
@@ -119,7 +119,7 @@ export const spells_d: CompendiumSpell[] = [
 				"Impatient; the air pressure spikes the moment the casting gesture begins.",
 			current_owner: "Open Bureau training manual, Rank D volume.",
 			prior_owners: [
-				"Ascendant K. Yun of the Seoul Third Wall",
+				"Ascendant K. Yun of the Meridian City Third Wall",
 				"Bureau Research Team Echo-9",
 			],
 		},
@@ -141,8 +141,8 @@ export const spells_d: CompendiumSpell[] = [
 		components: {
 			verbal: true,
 			somatic: true,
-			material: "a shard of Gate crystal",
-			focus: "a shard of Gate crystal",
+			material: "a shard of Rift crystal",
+			focus: "a shard of Rift crystal",
 		},
 		concentration: false,
 		ritual: false,
@@ -334,8 +334,8 @@ export const spells_d: CompendiumSpell[] = [
 		components: {
 			verbal: true,
 			somatic: true,
-			material: "crushed mana stone (50 Gate Credits)",
-			focus: "crushed mana stone (50 Gate Credits)",
+			material: "crushed mana stone (50 Rift Credits)",
+			focus: "crushed mana stone (50 Rift Credits)",
 		},
 		concentration: false,
 		ritual: false,
@@ -532,8 +532,8 @@ export const spells_d: CompendiumSpell[] = [
 		components: {
 			verbal: true,
 			somatic: true,
-			material: "crushed mana stone (50 Gate Credits)",
-			focus: "crushed mana stone (50 Gate Credits)",
+			material: "crushed mana stone (50 Rift Credits)",
+			focus: "crushed mana stone (50 Rift Credits)",
 		},
 		concentration: true,
 		ritual: false,
@@ -586,7 +586,7 @@ export const spells_d: CompendiumSpell[] = [
 			scaling: "Scales with spell slot rank",
 		},
 		discovery_lore:
-			"The first recorded deployment held a Red Gate entrance for forty seconds; the caster survived, the ward did not.",
+			"The first recorded deployment held a Red Rift entrance for forty seconds; the caster survived, the ward did not.",
 		theme_tags: ["archive-guard", "guild-ops", "defensive"],
 	},
 	{
@@ -690,7 +690,7 @@ export const spells_d: CompendiumSpell[] = [
 			"Draw a 60-foot line of force through the target point. Make a melee spell attack using Intelligence for 3d4 force damage against every creature the line crosses; creatures adjacent to the line on a critical hit take an additional 1d4. No saving throw.",
 		lore: {
 			origin:
-				"A hand-stabilized variant of a Bureau demolition cantrip, refined for close-quarters Gate work.",
+				"A hand-stabilized variant of a Bureau demolition cantrip, refined for close-quarters Rift work.",
 			history:
 				"Became the default 'first-breach' cast after the Fifth Wall Incident, where three Ascendants cleared a 60-foot corridor simultaneously.",
 			curse: "",
@@ -716,8 +716,8 @@ export const spells_d: CompendiumSpell[] = [
 		components: {
 			verbal: true,
 			somatic: true,
-			material: "crushed mana stone (50 Gate Credits)",
-			focus: "crushed mana stone (50 Gate Credits)",
+			material: "crushed mana stone (50 Rift Credits)",
+			focus: "crushed mana stone (50 Rift Credits)",
 		},
 		concentration: false,
 		ritual: false,
@@ -1040,7 +1040,7 @@ export const spells_d: CompendiumSpell[] = [
 			"Open a lattice shunt in a 30-foot cone. Make a melee spell attack using Presence against one target in the cone for 1d12 necrotic damage; no saving throw. The caster regains 1d4 HP on hit.",
 		lore: {
 			origin:
-				"Reconstructed from partial casting notes recovered from a Siberian S-rank Gate sealed for forty days.",
+				"Reconstructed from partial casting notes recovered from a Siberian S-rank Rift sealed for forty days.",
 			history:
 				"Only released to Bureau casters after a three-month confinement trial confirmed no compulsion side-effects on the caster.",
 			curse: "",
@@ -1049,7 +1049,7 @@ export const spells_d: CompendiumSpell[] = [
 			current_owner:
 				"Bureau-cleared Rank D casters with a Resonance Monitoring Order.",
 			prior_owners: [
-				"Siberian Gate Seal Team",
+				"Siberian Rift Seal Team",
 				"Bureau Resonance Monitoring Cell",
 			],
 		},
@@ -1345,8 +1345,8 @@ export const spells_d: CompendiumSpell[] = [
 		components: {
 			verbal: true,
 			somatic: true,
-			material: "crushed mana stone (50 Gate Credits)",
-			focus: "crushed mana stone (50 Gate Credits)",
+			material: "crushed mana stone (50 Rift Credits)",
+			focus: "crushed mana stone (50 Rift Credits)",
 		},
 		concentration: false,
 		ritual: false,

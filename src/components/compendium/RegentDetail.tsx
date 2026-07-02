@@ -66,11 +66,11 @@ export const RegentDetail = ({ data }: RegentDetailProps) => {
 			{/* Header */}
 			<AscendantWindow
 				title={displayName.toUpperCase()}
-				className="border-amber-500/50 border-2"
+				className="border-gate-s/50 border-2"
 			>
 				<div className="space-y-4">
 					<div className="flex items-center gap-3">
-						<Crown className="w-8 h-8 text-amber-400" />
+						<Crown className="w-8 h-8 text-gate-s" />
 						<div>
 							<h2 className="font-display text-2xl gradient-text-ascendant">
 								{displayTitle}
@@ -92,8 +92,8 @@ export const RegentDetail = ({ data }: RegentDetailProps) => {
 					)}
 
 					{data.lore && (
-						<div className="mt-4 pt-4 border-t border-amber-500/20">
-							<h4 className="text-amber-400 font-bold text-[10px] uppercase tracking-wider mb-2">
+						<div className="mt-4 pt-4 border-t border-gate-s/20">
+							<h4 className="text-gate-s font-bold text-[10px] uppercase tracking-wider mb-2">
 								Historical Record
 							</h4>
 							<p className="text-sm text-muted-foreground leading-relaxed">
@@ -109,7 +109,7 @@ export const RegentDetail = ({ data }: RegentDetailProps) => {
 					)}
 
 					<div className="flex flex-wrap gap-2">
-						<Badge className="bg-amber-600 text-white border-amber-400">
+						<Badge className="bg-gate-s text-white border-gate-s">
 							<Crown className="w-3 h-3 mr-1" /> Warden VERIFIED ACCESS
 						</Badge>
 						{data.hit_dice && (
@@ -129,7 +129,7 @@ export const RegentDetail = ({ data }: RegentDetailProps) => {
 				<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 					<AscendantWindow title="ASCENSION REQUIREMENTS">
 						<div className="space-y-4">
-							<div className="flex items-center gap-2 text-amber-400 font-semibold">
+							<div className="flex items-center gap-2 text-gate-s font-semibold">
 								<Crown className="w-4 h-4" /> Warden MANUAL VERIFICATION
 								REQUIRED
 							</div>
@@ -138,7 +138,7 @@ export const RegentDetail = ({ data }: RegentDetailProps) => {
 								<p className="text-sm uppercase tracking-wider text-muted-foreground font-display font-bold">
 									Current Quest Objective
 								</p>
-								<p className="text-foreground border-l-2 border-amber-500/30 pl-4 py-1 italic">
+								<p className="text-foreground border-l-2 border-gate-s/30 pl-4 py-1 italic">
 									<AutoLinkText
 										text={
 											data.regent_requirements?.quest_completion ||
@@ -184,7 +184,7 @@ export const RegentDetail = ({ data }: RegentDetailProps) => {
 
 							<ul className="space-y-2 pl-1">
 								<li className="flex gap-2">
-									<div className="w-1.5 h-1.5 rounded-full bg-amber-500 mt-1.5 shrink-0" />
+									<div className="w-1.5 h-1.5 rounded-full bg-gate-s mt-1.5 shrink-0" />
 									<span>
 										<strong className="text-foreground">Initial Choice:</strong>{" "}
 										Select 1 of 3 initial options upon first Warden
@@ -192,13 +192,13 @@ export const RegentDetail = ({ data }: RegentDetailProps) => {
 									</span>
 								</li>
 								<li className="flex gap-2">
-									<div className="w-1.5 h-1.5 rounded-full bg-amber-500 mt-1.5 shrink-0" />
+									<div className="w-1.5 h-1.5 rounded-full bg-gate-s mt-1.5 shrink-0" />
 									<span>
 										<strong className="text-foreground">
 											Sovereign Expansion:
 										</strong>{" "}
 										A second quest completion allows for a second choice (
-										<strong className="text-amber-400">Max 2 Total</strong>).
+										<strong className="text-gate-s">Max 2 Total</strong>).
 									</span>
 								</li>
 								<li className="flex gap-2">
@@ -220,23 +220,23 @@ export const RegentDetail = ({ data }: RegentDetailProps) => {
 			{signatureFeatures.length > 0 && (
 				<AscendantWindow
 					title="ASCENDANT ABILITIES (LVL 11-20)"
-					className="border-amber-500/30"
+					className="border-gate-s/30"
 				>
 					<div className="space-y-4">
 						{signatureFeatures.map((feature: CombinedFeature) => (
 							<div
 								key={feature.id || feature.name}
-								className="border-l-2 border-amber-500/50 pl-4"
+								className="border-l-2 border-gate-s/50 pl-4"
 							>
 								<div className="flex items-center gap-2 mb-1">
-									<Flame className="w-4 h-4 text-amber-400" />
-									<h4 className="font-heading font-semibold text-amber-400">
+									<Flame className="w-4 h-4 text-gate-s" />
+									<h4 className="font-heading font-semibold text-gate-s">
 										{formatRegentVernacular(feature.name)}
 									</h4>
 									{feature.level > 0 && (
 										<Badge
 											variant="outline"
-											className="text-xs border-amber-500/50 text-amber-500"
+											className="text-xs border-gate-s/50 text-gate-s"
 										>
 											Level {feature.level}
 										</Badge>
@@ -313,9 +313,7 @@ export const RegentDetail = ({ data }: RegentDetailProps) => {
 													<span className="text-xs uppercase tracking-tighter text-muted-foreground">
 														{stat}
 													</span>
-													<span className="text-amber-400 font-bold">
-														+{val}
-													</span>
+													<span className="text-gate-s font-bold">+{val}</span>
 												</div>
 											),
 										)

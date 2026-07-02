@@ -100,7 +100,7 @@ const DIRECTIVE_COMPLICATIONS = [
 
 const DIRECTIVE_REWARDS = [
 	"Standard Rift rewards",
-	"Gate Credits",
+	"Rift Credits",
 	"Core Credits",
 	"Crystal Credits",
 	"Mana Credits",

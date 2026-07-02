@@ -105,7 +105,7 @@ export const BackgroundDetail = ({ data }: { data: BackgroundData }) => {
 						)}
 						{data.starting_credits && (
 							<div className="flex items-center gap-2 mt-2">
-								<Coins className="w-5 h-5 text-yellow-400" />
+								<Coins className="w-5 h-5 text-gate-s" />
 								<span className="font-heading">
 									{formatRaCurrencyAmount(data.starting_credits)}
 								</span>

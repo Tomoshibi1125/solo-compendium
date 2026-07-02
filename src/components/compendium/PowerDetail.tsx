@@ -28,8 +28,8 @@ const tierColors: Record<number, string> = {
 	4: "text-blue-400 border-blue-500/30",
 	5: "text-purple-400 border-purple-500/30",
 	6: "text-purple-400 border-purple-500/30",
-	7: "text-orange-400 border-orange-500/30",
-	8: "text-orange-400 border-orange-500/30",
+	7: "text-gate-a border-gate-a/30",
+	8: "text-gate-a border-gate-a/30",
 	9: "text-red-400 border-red-500/30",
 };
 

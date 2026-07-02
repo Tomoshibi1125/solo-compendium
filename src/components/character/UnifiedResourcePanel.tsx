@@ -53,7 +53,7 @@ const RECHARGE_LABEL: Record<ResourceRecharge, string> = {
 function countTone(current: number, max: number | null): string {
 	if (current === 0) return "text-red-500";
 	const low = max !== null ? Math.max(1, Math.floor(max * 0.25)) : 5;
-	return current <= low ? "text-amber-500" : "text-fuchsia-100";
+	return current <= low ? "text-gate-s" : "text-resurge-violet";
 }
 
 function Stepper({
@@ -68,12 +68,12 @@ function Stepper({
 	disabled?: boolean;
 }) {
 	return (
-		<div className="flex items-center gap-1 bg-black/80 rounded-md p-1 border border-fuchsia-500/20 shadow-inner">
+		<div className="flex items-center gap-1 bg-black/80 rounded-md p-1 border border-resurge-violet/20 shadow-inner">
 			<button
 				type="button"
 				onClick={() => onAdjust(-1)}
 				disabled={disabled || current <= 0}
-				className="p-1 hover:bg-fuchsia-500/20 rounded disabled:opacity-50 text-red-400 transition-colors"
+				className="p-1 hover:bg-resurge-violet/20 rounded disabled:opacity-50 text-red-400 transition-colors"
 				aria-label="Spend one"
 			>
 				<Minus className="w-3.5 h-3.5" />
@@ -91,7 +91,7 @@ function Stepper({
 				type="button"
 				onClick={() => onAdjust(1)}
 				disabled={disabled || (max !== null && current >= max)}
-				className="p-1 hover:bg-fuchsia-500/20 rounded disabled:opacity-50 text-emerald-400 transition-colors"
+				className="p-1 hover:bg-resurge-violet/20 rounded disabled:opacity-50 text-system-green transition-colors"
 				aria-label="Regain one"
 			>
 				<Plus className="w-3.5 h-3.5" />
@@ -112,7 +112,7 @@ function SectionHeading({
 	action?: React.ReactNode;
 }) {
 	return (
-		<div className="flex items-center gap-2 text-[11px] font-medium uppercase tracking-widest text-fuchsia-400/80">
+		<div className="flex items-center gap-2 text-[11px] font-medium uppercase tracking-widest text-resurge-violet/80">
 			<Icon className="w-3.5 h-3.5" />
 			{label}
 			<Badge variant="outline" className="text-[10px] h-4 px-1">
@@ -159,7 +159,7 @@ export function UnifiedResourcePanel({
 	const renderCustomRow = (row: CustomResource, deletable: boolean) => (
 		<div
 			key={row.id}
-			className="flex items-center justify-between gap-3 p-3 rounded-md border border-fuchsia-500/20 bg-black/60 shadow-inner group transition-all hover:border-fuchsia-500/40 hover:bg-black/80"
+			className="flex items-center justify-between gap-3 p-3 rounded-md border border-resurge-violet/20 bg-black/60 shadow-inner group transition-all hover:border-resurge-violet/40 hover:bg-black/80"
 		>
 			<div className="min-w-0">
 				<div className="font-bold text-sm text-primary-foreground truncate">
@@ -193,7 +193,7 @@ export function UnifiedResourcePanel({
 	const renderEquipmentRow = (entry: EquipmentResourceEntry) => (
 		<div
 			key={entry.equipmentId}
-			className="flex items-center justify-between gap-3 p-3 rounded-md border border-fuchsia-500/20 bg-black/60 shadow-inner transition-all hover:border-fuchsia-500/40 hover:bg-black/80"
+			className="flex items-center justify-between gap-3 p-3 rounded-md border border-resurge-violet/20 bg-black/60 shadow-inner transition-all hover:border-resurge-violet/40 hover:bg-black/80"
 		>
 			<div className="min-w-0">
 				<div className="font-bold text-sm text-primary-foreground truncate">
@@ -225,19 +225,19 @@ export function UnifiedResourcePanel({
 	return (
 		<Card
 			className={cn(
-				"bg-obsidian-charcoal/80 border border-fuchsia-500/30 backdrop-blur-md shadow-[0_0_15px_rgba(217,70,239,0.1)]",
+				"bg-obsidian-charcoal/80 border border-resurge-violet/30 backdrop-blur-md shadow-[0_0_15px_rgba(217,70,239,0.1)]",
 				className,
 			)}
 		>
-			<CardHeader className="pb-3 border-b border-fuchsia-500/20">
-				<CardTitle className="text-lg flex items-center gap-2 text-fuchsia-400 font-display tracking-wide">
+			<CardHeader className="pb-3 border-b border-resurge-violet/20">
+				<CardTitle className="text-lg flex items-center gap-2 text-resurge-violet font-display tracking-wide">
 					<Sparkles className="w-4 h-4" />
 					Resources
 				</CardTitle>
 			</CardHeader>
 			<CardContent className={cn("pt-4 space-y-5", compact && "space-y-4")}>
 				{isEmpty && (
-					<div className="text-sm text-fuchsia-400/60 text-center py-6 border border-dashed border-fuchsia-500/30 rounded-md bg-fuchsia-500/5">
+					<div className="text-sm text-resurge-violet/60 text-center py-6 border border-dashed border-resurge-violet/30 rounded-md bg-resurge-violet/5">
 						No resources yet — job pools, ammunition, consumables, and charged
 						items appear here automatically.
 					</div>
@@ -315,26 +315,26 @@ export function UnifiedResourcePanel({
 				)}
 
 				{!compact && !readOnly && (
-					<div className="pt-4 border-t border-fuchsia-500/20 flex flex-wrap sm:flex-nowrap items-center gap-2">
+					<div className="pt-4 border-t border-resurge-violet/20 flex flex-wrap sm:flex-nowrap items-center gap-2">
 						<Input
 							placeholder="New resource name..."
 							value={newName}
 							onChange={(e) => setNewName(e.target.value)}
-							className="h-9 flex-1 min-w-[140px] text-xs bg-black/40 border-fuchsia-500/20 text-fuchsia-100 placeholder:text-fuchsia-500/30 focus-visible:ring-fuchsia-500/50"
+							className="h-9 flex-1 min-w-[140px] text-xs bg-black/40 border-resurge-violet/20 text-resurge-violet placeholder:text-resurge-violet/30 focus-visible:ring-resurge-violet/50"
 						/>
 						<Input
 							type="number"
 							placeholder="Max"
 							value={newMax}
 							onChange={(e) => setNewMax(e.target.value)}
-							className="h-9 w-20 text-xs bg-black/40 border-fuchsia-500/20 text-fuchsia-100 placeholder:text-fuchsia-500/30 focus-visible:ring-fuchsia-500/50"
+							className="h-9 w-20 text-xs bg-black/40 border-resurge-violet/20 text-resurge-violet placeholder:text-resurge-violet/30 focus-visible:ring-resurge-violet/50"
 						/>
 						<select
 							value={newRecharge}
 							onChange={(e) =>
 								setNewRecharge(e.target.value as ResourceRecharge)
 							}
-							className="h-9 text-xs bg-black/40 border border-fuchsia-500/20 rounded-md px-2 text-fuchsia-200 focus:outline-none focus:ring-1 focus:ring-fuchsia-500/50"
+							className="h-9 text-xs bg-black/40 border border-resurge-violet/20 rounded-md px-2 text-resurge-violet focus:outline-none focus:ring-1 focus:ring-resurge-violet/50"
 						>
 							<option value="long-rest">Long rest</option>
 							<option value="short-rest">Short rest</option>
@@ -345,7 +345,7 @@ export function UnifiedResourcePanel({
 						<Button
 							size="sm"
 							onClick={handleAdd}
-							className="h-9 px-4 whitespace-nowrap bg-fuchsia-500 hover:bg-fuchsia-400 text-black font-bold tracking-wide"
+							className="h-9 px-4 whitespace-nowrap bg-resurge-violet hover:bg-resurge-violet text-black font-bold tracking-wide"
 						>
 							<Plus className="w-4 h-4 mr-1.5" /> Add
 						</Button>

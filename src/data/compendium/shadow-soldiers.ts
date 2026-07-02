@@ -80,20 +80,20 @@ export const shadowSoldiers: ShadowSoldier[] = [
 		rank: "A",
 		role: "Tank",
 		description:
-			"A towering construct of compressed shadow-matter and necrotic bone, encased in carapace armour forged from A-Rank gate remnants. The Umbral Bulwark anchors the Regent's front line, absorbing punishment that would annihilate lesser soldiers.",
+			"A towering construct of compressed shadow-matter and necrotic bone, encased in carapace armour forged from A-Rank Rift remnants. The Umbral Bulwark anchors the Regent's front line, absorbing punishment that would annihilate lesser soldiers.",
 		flavor:
 			"It does not bleed. It does not tire. It simply holds the line until you break first.",
 		lore: {
 			origin:
-				"Assembled from the remnants of an A-Rank stone-giant anomaly slain in the Frozen Gate.",
+				"Assembled from the remnants of an A-Rank stone-giant anomaly slain in the Frozen Rift.",
 			history:
-				"The Bulwark form was the first perfected Umbral Legion pattern, designed after the third failed Gate clearing at the Citadel Rift.",
+				"The Bulwark form was the first perfected Umbral Legion pattern, designed after the third failed Rift clearing at the Citadel Rift.",
 			curse:
 				"Exudes a faint aura of despair; non-Umbral allies within 10 ft. suffer -1 to morale checks.",
 			personality:
 				"Implacable. Does not speak. Communicates intent through the weight of its silence.",
 			current_owner: "The Umbral Regent",
-			prior_owners: ["The slain Stonewarden of the Frozen Gate"],
+			prior_owners: ["The slain Stonewarden of the Frozen Rift"],
 		},
 		tags: ["umbral-legion", "umbral", "tank", "a-rank", "anomaly-construct"],
 		source_book: "Rift Ascendant Canon",
@@ -202,7 +202,7 @@ export const shadowSoldiers: ShadowSoldier[] = [
 				"Leaves trace shadow-residue on kills detectable by sense-type Ascendants (DC 20 Perception).",
 			personality: "Purposeful and absolute. Executes without hesitation.",
 			current_owner: "The Umbral Regent",
-			prior_owners: ["The Shade of Gate Zero"],
+			prior_owners: ["The Shade of Rift Zero"],
 		},
 		tags: [
 			"umbral-legion",
@@ -309,7 +309,7 @@ export const shadowSoldiers: ShadowSoldier[] = [
 			"It casts with the memory of a mind that no longer exists. The spells are perfectly executed—and entirely hollow.",
 		lore: {
 			origin:
-				"Shaped from the echo-mana of a slain B-Rank Esper anomaly from the Resonance Gate.",
+				"Shaped from the echo-mana of a slain B-Rank Esper anomaly from the Resonance Rift.",
 			history:
 				"Developed after the Regent identified the tactical gap of lacking ranged magical firepower in early Legion deployments.",
 			curse:
@@ -317,7 +317,7 @@ export const shadowSoldiers: ShadowSoldier[] = [
 			personality:
 				"Cold and mechanical. Selects targets using pure threat-assessment logic.",
 			current_owner: "The Umbral Regent",
-			prior_owners: ["The Echo-Esper of the Resonance Gate"],
+			prior_owners: ["The Echo-Esper of the Resonance Rift"],
 		},
 		tags: ["umbral-legion", "umbral", "mage", "b-rank", "anomaly-construct"],
 		source_book: "Rift Ascendant Canon",
@@ -408,7 +408,7 @@ export const shadowSoldiers: ShadowSoldier[] = [
 			"Each arrow carries a sliver of the Regent's will. It is not aimed—it is sent.",
 		lore: {
 			origin:
-				"Reconstructed from remains of a B-Rank Phantom Archer anomaly from the Siege of Outer Gate Seven.",
+				"Reconstructed from remains of a B-Rank Phantom Archer anomaly from the Siege of Outer Rift Seven.",
 			history:
 				"Deployed in open terrain; Bureau tactical reports flag Umbral Archers as priority targets.",
 			curse:
@@ -416,7 +416,7 @@ export const shadowSoldiers: ShadowSoldier[] = [
 			personality:
 				"Relentlessly patient. Will hold position indefinitely unless commanded otherwise.",
 			current_owner: "The Umbral Regent",
-			prior_owners: ["The Phantom Archer of Gate Seven"],
+			prior_owners: ["The Phantom Archer of Rift Seven"],
 		},
 		tags: [
 			"umbral-legion",
@@ -514,7 +514,7 @@ export const shadowSoldiers: ShadowSoldier[] = [
 			"One Umbral Warrior is a nuisance. Ten are a problem. Fifty are the last thing you see.",
 		lore: {
 			origin:
-				"Mass-produced from C-Rank wolf and bear anomaly remains from mid-tier Gate clearings.",
+				"Mass-produced from C-Rank wolf and bear anomaly remains from mid-tier Rift clearings.",
 			history:
 				"The first Umbral Warriors were raised experimentally during the Regent's early awakening. The pattern has been refined over dozens of deployments.",
 			curse: "None notable at this tier.",
@@ -603,14 +603,14 @@ export const shadowSoldiers: ShadowSoldier[] = [
 			"It was behind you before you turned around. It was already reporting back before you drew your weapon.",
 		lore: {
 			origin:
-				"Assembled from C-Rank Shade Hound anomaly remains—fast, low-mass entities from scouting-type gates.",
+				"Assembled from C-Rank Shade Hound anomaly remains—fast, low-mass entities from scouting-type Rifts.",
 			history:
 				"Deployed in advance of all major Legion offensives. Three Scouts identified Bureau HQ's blind spots before the Restricted Zone assault.",
 			curse: "None notable at this tier.",
 			personality:
 				"Skittish and evasive. Avoids direct confrontation unless cornered.",
 			current_owner: "The Umbral Regent",
-			prior_owners: ["Shade Hound packs from Gate Tier 3-C"],
+			prior_owners: ["Shade Hound packs from Rift Tier 3-C"],
 		},
 		tags: [
 			"umbral-legion",

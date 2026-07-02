@@ -148,7 +148,7 @@ const CampaignBookView = () => {
 	if (loadingCampaign || loadingAccess) {
 		return (
 			<Layout>
-				<div className="flex items-center justify-center min-h-screen text-fuchsia-500 animate-pulse gap-3">
+				<div className="flex items-center justify-center min-h-screen text-resurge-violet animate-pulse gap-3">
 					<Loader2 className="w-6 h-6 animate-spin" />
 					Syncing Campaign Archives...
 				</div>
@@ -373,21 +373,21 @@ const CampaignBookView = () => {
 	};
 
 	return (
-		<div className="source-book-container flex min-h-[100dvh] bg-void text-slate-300 font-sans">
-			<aside className="w-72 bg-glass border-r border-fuchsia-500/20 flex flex-col shrink-0 relative overflow-y-auto">
-				<div className="p-6 border-b border-fuchsia-500/20 relative z-10 bg-black/40 backdrop-blur-md">
+		<div className="source-book-container flex min-h-[100dvh] bg-void-black text-slate-300 font-sans">
+			<aside className="w-72 bg-glass border-r border-resurge-violet/20 flex flex-col shrink-0 relative overflow-y-auto">
+				<div className="p-6 border-b border-resurge-violet/20 relative z-10 bg-black/40 backdrop-blur-md">
 					<Link
 						to={`/campaigns/${id}`}
-						className="text-fuchsia-400 hover:text-white flex items-center gap-2 mb-4 text-xs font-display uppercase tracking-widest transition-colors"
+						className="text-resurge-violet hover:text-white flex items-center gap-2 mb-4 text-xs font-display uppercase tracking-widest transition-colors"
 					>
 						<ChevronLeft className="w-4 h-4" />
 						Back to Dashboard
 					</Link>
 					<h2 className="text-lg font-bold text-white tracking-widest uppercase font-display flex items-center gap-2">
-						<BookOpen className="w-5 h-5 text-fuchsia-500" />
+						<BookOpen className="w-5 h-5 text-resurge-violet" />
 						Module Book
 					</h2>
-					<div className="text-[10px] font-mono text-fuchsia-500/50 uppercase tracking-[0.2em] mt-1 break-words">
+					<div className="text-[10px] font-mono text-resurge-violet/50 uppercase tracking-[0.2em] mt-1 break-words">
 						{campaign.name}
 					</div>
 				</div>
@@ -395,19 +395,19 @@ const CampaignBookView = () => {
 				<nav className="flex-1 p-4 space-y-6 overflow-y-auto">
 					{/* Full-text search across the book */}
 					<div className="relative">
-						<Search className="pointer-events-none absolute left-2.5 top-2.5 h-3.5 w-3.5 text-fuchsia-400/50" />
+						<Search className="pointer-events-none absolute left-2.5 top-2.5 h-3.5 w-3.5 text-resurge-violet/50" />
 						<input
 							type="search"
 							value={searchQuery}
 							onChange={(e) => setSearchQuery(e.target.value)}
 							placeholder="Search the book…"
-							className="w-full rounded border border-fuchsia-500/20 bg-black/40 py-2 pl-8 pr-2 text-xs text-slate-200 placeholder:text-slate-600 focus:border-fuchsia-500/50 focus:outline-none"
+							className="w-full rounded border border-resurge-violet/20 bg-black/40 py-2 pl-8 pr-2 text-xs text-slate-200 placeholder:text-slate-600 focus:border-resurge-violet/50 focus:outline-none"
 						/>
 					</div>
 
 					{searchTerm ? (
 						<div className="space-y-1">
-							<h3 className="px-2 font-display text-[10px] font-bold uppercase tracking-[0.2em] text-fuchsia-400/60">
+							<h3 className="px-2 font-display text-[10px] font-bold uppercase tracking-[0.2em] text-resurge-violet/60">
 								Search Results ({searchResults.length})
 							</h3>
 							{searchResults.length === 0 ? (
@@ -422,8 +422,8 @@ const CampaignBookView = () => {
 										onClick={() => setActiveSectionId(section.id)}
 										className={`w-full rounded p-2 pl-3 text-left transition-all ${
 											activeSectionId === section.id
-												? "border-l-2 border-fuchsia-500 bg-fuchsia-500/10 text-white"
-												: "text-slate-400 hover:bg-fuchsia-500/5 hover:text-fuchsia-300"
+												? "border-l-2 border-resurge-violet bg-resurge-violet/10 text-white"
+												: "text-slate-400 hover:bg-resurge-violet/5 hover:text-resurge-violet"
 										}`}
 									>
 										<span className="block truncate text-[11px]">
@@ -440,7 +440,7 @@ const CampaignBookView = () => {
 						<>
 							{/* Lore Chapters */}
 							<div className="space-y-2">
-								<h3 className="px-2 text-[10px] font-bold text-fuchsia-400/60 uppercase tracking-[0.2em] mb-3 font-display flex items-center gap-1.5">
+								<h3 className="px-2 text-[10px] font-bold text-resurge-violet/60 uppercase tracking-[0.2em] mb-3 font-display flex items-center gap-1.5">
 									<BookOpen className="w-3 h-3" />
 									Lore Chapters (
 									{
@@ -460,8 +460,8 @@ const CampaignBookView = () => {
 												onClick={() => setActiveSectionId(section.id)}
 												className={`w-full text-left p-2 pl-3 rounded transition-all font-display uppercase text-[10px] tracking-widest ${
 													activeSectionId === section.id
-														? "bg-fuchsia-500/10 border-l-2 border-fuchsia-500 text-white shadow-inner"
-														: "text-slate-500 hover:bg-fuchsia-500/5 hover:text-fuchsia-300"
+														? "bg-resurge-violet/10 border-l-2 border-resurge-violet text-white shadow-inner"
+														: "text-slate-500 hover:bg-resurge-violet/5 hover:text-resurge-violet"
 												}`}
 											>
 												{section.title}
@@ -472,7 +472,7 @@ const CampaignBookView = () => {
 
 							{managementSections.length > 0 && (
 								<div className="space-y-2">
-									<h3 className="px-2 text-[10px] font-bold text-violet-400/60 uppercase tracking-[0.2em] mb-3 font-display flex items-center gap-1.5">
+									<h3 className="px-2 text-[10px] font-bold text-resurge-violet/60 uppercase tracking-[0.2em] mb-3 font-display flex items-center gap-1.5">
 										<ShieldAlert className="w-3 h-3" />
 										Campaign Management ({managementSections.length})
 									</h3>
@@ -484,8 +484,8 @@ const CampaignBookView = () => {
 												onClick={() => setActiveSectionId(section.id)}
 												className={`w-full text-left p-2 pl-3 rounded transition-all font-display uppercase text-[10px] tracking-widest ${
 													activeSectionId === section.id
-														? "bg-violet-500/10 border-l-2 border-violet-500 text-white shadow-inner"
-														: "text-slate-500 hover:bg-violet-500/5 hover:text-violet-300"
+														? "bg-resurge-violet/10 border-l-2 border-resurge-violet text-white shadow-inner"
+														: "text-slate-500 hover:bg-resurge-violet/5 hover:text-resurge-violet"
 												}`}
 											>
 												<span className="truncate">{section.title}</span>
@@ -517,7 +517,7 @@ const CampaignBookView = () => {
 													}`}
 												>
 													{!section.meta?.visibleToPlayers && (
-														<Lock className="w-2.5 h-2.5 text-amber-400/60 shrink-0" />
+														<Lock className="w-2.5 h-2.5 text-gate-s/60 shrink-0" />
 													)}
 													<span className="truncate">{section.title}</span>
 												</button>
@@ -529,7 +529,7 @@ const CampaignBookView = () => {
 							{/* NPC Roster */}
 							{npcArticles.length > 0 && (
 								<div className="space-y-2">
-									<h3 className="px-2 text-[10px] font-bold text-emerald-400/60 uppercase tracking-[0.2em] mb-3 font-display flex items-center gap-1.5">
+									<h3 className="px-2 text-[10px] font-bold text-system-green/60 uppercase tracking-[0.2em] mb-3 font-display flex items-center gap-1.5">
 										<Users className="w-3 h-3" />
 										NPC Roster ({npcArticles.length})
 									</h3>
@@ -539,8 +539,8 @@ const CampaignBookView = () => {
 											onClick={() => setActiveSectionId("npc-roster")}
 											className={`w-full text-left p-2 pl-3 rounded transition-all font-display uppercase text-[10px] tracking-widest ${
 												activeSectionId === "npc-roster"
-													? "bg-emerald-500/10 border-l-2 border-emerald-500 text-white shadow-inner"
-													: "text-slate-500 hover:bg-emerald-500/5 hover:text-emerald-300"
+													? "bg-system-green/10 border-l-2 border-system-green text-white shadow-inner"
+													: "text-slate-500 hover:bg-system-green/5 hover:text-system-green"
 											}`}
 										>
 											View All NPCs ({npcArticles.length})
@@ -552,26 +552,26 @@ const CampaignBookView = () => {
 					)}
 
 					{/* Module Generation Actions */}
-					<div className="border-t border-fuchsia-500/20 pt-4 space-y-2">
-						<h3 className="px-2 text-[10px] font-bold text-fuchsia-400/60 uppercase tracking-[0.2em] mb-3 font-display">
+					<div className="border-t border-resurge-violet/20 pt-4 space-y-2">
+						<h3 className="px-2 text-[10px] font-bold text-resurge-violet/60 uppercase tracking-[0.2em] mb-3 font-display">
 							Module Tools
 						</h3>
 						<Button
 							variant="outline"
 							size="sm"
-							className="w-full gap-2 border-fuchsia-500/30 hover:border-amethyst hover:bg-amethyst/10 text-xs"
+							className="w-full gap-2 border-resurge-violet/30 hover:border-amethyst-purple hover:bg-amethyst-purple/10 text-xs"
 							onClick={handleAutoPopulate}
 							disabled={isInjecting}
 						>
 							{isInjecting ? (
 								<Loader2 className="w-3 h-3 animate-spin" />
 							) : (
-								<Sparkles className="w-3 h-3 text-amethyst" />
+								<Sparkles className="w-3 h-3 text-amethyst-purple" />
 							)}
 							{isInjecting ? "Importing Module..." : "Auto-Populate Wiki"}
 						</Button>
 						{isInjecting && progressString && (
-							<div className="text-[9px] text-amethyst mt-1 text-center truncate italic">
+							<div className="text-[9px] text-amethyst-purple mt-1 text-center truncate italic">
 								{progressString}
 							</div>
 						)}
@@ -579,18 +579,18 @@ const CampaignBookView = () => {
 				</nav>
 			</aside>
 
-			<main className="flex-1 relative flex flex-col overflow-y-auto bg-system-grid-overlay-50 text-slate-300">
-				<header className="h-16 border-b border-fuchsia-500/10 bg-glass/50 flex items-center justify-between px-8 sticky top-0 z-40 backdrop-blur-md">
+			<main className="flex-1 relative flex flex-col overflow-y-auto system-grid-overlay-50 text-slate-300">
+				<header className="h-16 border-b border-resurge-violet/10 bg-glass/50 flex items-center justify-between px-8 sticky top-0 z-40 backdrop-blur-md">
 					<div className="flex items-center gap-2 text-xs font-heading tracking-widest text-muted-foreground uppercase">
 						<span>Campaign Module</span>
-						<span className="text-amethyst">/</span>
+						<span className="text-amethyst-purple">/</span>
 						<span className="text-cyan">{activeSection?.title}</span>
 					</div>
 					<div className="flex items-center gap-2">
 						<Button
 							variant="ghost"
 							size="sm"
-							className="gap-1 text-xs text-fuchsia-400 hover:text-white"
+							className="gap-1 text-xs text-resurge-violet hover:text-white"
 							onClick={handleDownloadSection}
 						>
 							<Download className="w-3 h-3" />
@@ -605,7 +605,7 @@ const CampaignBookView = () => {
 							<RiftHeading
 								level={1}
 								variant="sovereign"
-								className="text-5xl mb-4 border-b border-fuchsia-500/20 pb-4"
+								className="text-5xl mb-4 border-b border-resurge-violet/20 pb-4"
 							>
 								{campaign.name}
 							</RiftHeading>
@@ -615,8 +615,8 @@ const CampaignBookView = () => {
 							</div>
 
 							{/* Import Summary Panel */}
-							<div className="bg-fuchsia-900/10 border border-fuchsia-500/20 rounded p-6 mt-8">
-								<h3 className="text-lg font-display uppercase tracking-widest text-fuchsia-400 mb-2 flex items-center gap-2">
+							<div className="bg-resurge-violet/10 border border-resurge-violet/20 rounded p-6 mt-8">
+								<h3 className="text-lg font-display uppercase tracking-widest text-resurge-violet mb-2 flex items-center gap-2">
 									<ShieldAlert className="w-5 h-5" />
 									Warden's Note
 								</h3>
@@ -628,8 +628,8 @@ const CampaignBookView = () => {
 
 								{/* Import Manifest */}
 								<div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-4 not-prose">
-									<div className="bg-fuchsia-950/40 border border-fuchsia-500/20 rounded p-3 text-center">
-										<div className="text-2xl font-bold text-fuchsia-400">
+									<div className="bg-resurge-violet/25 border border-resurge-violet/20 rounded p-3 text-center">
+										<div className="text-2xl font-bold text-resurge-violet">
 											{loreArticles.length}
 										</div>
 										<div className="text-[10px] text-slate-500 uppercase tracking-wider">
@@ -644,8 +644,8 @@ const CampaignBookView = () => {
 											Handouts
 										</div>
 									</div>
-									<div className="bg-emerald-950/40 border border-emerald-500/20 rounded p-3 text-center">
-										<div className="text-2xl font-bold text-emerald-400">
+									<div className="bg-system-green/25 border border-system-green/20 rounded p-3 text-center">
+										<div className="text-2xl font-bold text-system-green">
 											{npcArticles.length}
 										</div>
 										<div className="text-[10px] text-slate-500 uppercase tracking-wider">
@@ -657,7 +657,7 @@ const CampaignBookView = () => {
 								{wikiPages.length === 0 && (
 									<Button
 										variant="outline"
-										className="border-amethyst/50 text-amethyst hover:bg-amethyst/10 mt-4"
+										className="border-amethyst-purple/50 text-amethyst-purple hover:bg-amethyst-purple/10 mt-4"
 										onClick={handleAutoPopulate}
 										disabled={isInjecting}
 									>
@@ -677,7 +677,7 @@ const CampaignBookView = () => {
 
 					{activeSection?.type === "wiki" && (
 						<div className="space-y-6">
-							<h1 className="text-4xl font-display text-white uppercase tracking-wider mb-8 border-b border-fuchsia-500/20 pb-4">
+							<h1 className="text-4xl font-display text-white uppercase tracking-wider mb-8 border-b border-resurge-violet/20 pb-4">
 								{activeSection.title}
 							</h1>
 							<div className="font-serif text-lg leading-loose">
@@ -701,11 +701,11 @@ const CampaignBookView = () => {
 								<div>
 									<Badge
 										variant="outline"
-										className="mb-3 text-violet-400 border-violet-500/30 text-[10px]"
+										className="mb-3 text-resurge-violet border-resurge-violet/30 text-[10px]"
 									>
 										{activeSection.type.toUpperCase()}
 									</Badge>
-									<h1 className="text-4xl font-display text-white uppercase tracking-wider border-b border-violet-500/20 pb-4">
+									<h1 className="text-4xl font-display text-white uppercase tracking-wider border-b border-resurge-violet/20 pb-4">
 										{activeSection.title}
 									</h1>
 								</div>
@@ -744,7 +744,7 @@ const CampaignBookView = () => {
 								) : (
 									<Badge
 										variant="outline"
-										className="text-amber-400 border-amber-500/30 text-[10px]"
+										className="text-gate-s border-gate-s/30 text-[10px]"
 									>
 										<Lock className="w-3 h-3 mr-1" />
 										Warden Only
@@ -762,7 +762,7 @@ const CampaignBookView = () => {
 					{/* NPC Roster Renderer */}
 					{activeSection?.type === "npc-roster" && (
 						<div className="space-y-6 not-prose">
-							<h1 className="text-4xl font-display text-white uppercase tracking-wider mb-4 border-b border-emerald-500/20 pb-4">
+							<h1 className="text-4xl font-display text-white uppercase tracking-wider mb-4 border-b border-system-green/20 pb-4">
 								NPC Roster ({npcArticles.length})
 							</h1>
 							<p className="text-sm text-slate-400 mb-6">
@@ -779,30 +779,30 @@ const CampaignBookView = () => {
 									return (
 										<details
 											key={npc.id}
-											className="bg-emerald-950/20 border border-emerald-500/20 rounded-lg overflow-hidden group"
+											className="bg-system-green/20 border border-system-green/20 rounded-lg overflow-hidden group"
 										>
-											<summary className="flex items-center justify-between p-4 cursor-pointer hover:bg-emerald-500/5 transition-colors list-none">
+											<summary className="flex items-center justify-between p-4 cursor-pointer hover:bg-system-green/5 transition-colors list-none">
 												<div className="flex items-center gap-3">
 													{portraitUrl ? (
 														<img
 															src={portraitUrl}
 															alt=""
-															className="h-14 w-14 rounded-md border border-emerald-400/20 object-cover object-top bg-black/40 shrink-0"
+															className="h-14 w-14 rounded-md border border-system-green/20 object-cover object-top bg-black/40 shrink-0"
 														/>
 													) : (
-														<Users className="w-4 h-4 text-emerald-400 shrink-0" />
+														<Users className="w-4 h-4 text-system-green shrink-0" />
 													)}
 													<div>
 														<div className="font-display text-sm text-white uppercase tracking-wider">
 															{npc.title}
 														</div>
-														<div className="text-[10px] text-emerald-400/60 mt-0.5">
+														<div className="text-[10px] text-system-green/60 mt-0.5">
 															{npc.category.toUpperCase()}
 														</div>
 													</div>
 												</div>
 											</summary>
-											<div className="p-4 pt-0 border-t border-emerald-500/10">
+											<div className="p-4 pt-0 border-t border-system-green/10">
 												<div
 													className={
 														portraitUrl
@@ -814,7 +814,7 @@ const CampaignBookView = () => {
 														<img
 															src={portraitUrl}
 															alt={`${npc.title} portrait`}
-															className="aspect-square w-full rounded-md border border-emerald-400/20 object-cover object-top bg-black/40"
+															className="aspect-square w-full rounded-md border border-system-green/20 object-cover object-top bg-black/40"
 														/>
 													)}
 													<div className="font-serif text-sm leading-relaxed text-slate-400 prose prose-invert prose-sm max-w-none">

@@ -20,7 +20,7 @@ export const PRIME_PANTHEON: CompendiumDeity[] = [
 			"Protect the timeline at all costs; every sacrifice must lead to a stronger world.",
 		],
 		worshippers:
-			"Sovereigns, Umbral Echoes, ascendants seeking to surpass their rank, and those who guard the gates.",
+			"Sovereigns, Umbral Echoes, ascendants seeking to surpass their rank, and those who guard the Rifts.",
 		temples:
 			"Umbral Monuments — towering monoliths that appear as gateways to an infinite dark realm where the light never reaches.",
 		home_realm: "The Domain of Repose (The Umbral Realm)",
@@ -52,7 +52,7 @@ export const PRIME_PANTHEON: CompendiumDeity[] = [
 		image_url: "/images/compendium/placeholder.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
-		lore: "Once an E-Rank ascendant who could barely survive a gate, Kael Voss clawed his way through every rank, every dungeon, and every trial the Rift threw at him. Where other ascendants plateaued, his power kept growing — the only one of his kind. He reached the Zenith, surpassed it, and used the Catalyst of Eras to reset the timeline itself. He spent decades fighting wars in the dimensional gap — the space between gates — before returning as the Weaver of the Absolute. He no longer follows the Rift's rules. He IS the Rift. He commands Resurge — the power to extract the umbral essence of the fallen and resurrect them as loyal, immortal Umbral Echoes. His legion is infinite, drawn from every enemy he has ever defeated across every timeline.",
+		lore: "Once an E-Rank ascendant who could barely survive a Rift, Kael Voss clawed his way through every rank, every Rift, and every trial the Rift threw at him. Where other ascendants plateaued, his power kept growing — the only one of his kind. He reached the Zenith, surpassed it, and used the Catalyst of Eras to reset the timeline itself. He spent decades fighting wars in the dimensional gap — the space between Rifts — before returning as the Weaver of the Absolute. He no longer follows the Rift's rules. He IS the Rift. He commands Resurge — the power to extract the umbral essence of the fallen and resurrect them as loyal, immortal Umbral Echoes. His legion is infinite, drawn from every enemy he has ever defeated across every timeline.",
 		source: "Rift Ascendant Canon",
 		source_book: "Rift Ascendant Canon",
 		tags: [],
@@ -149,7 +149,7 @@ export const PRIME_PANTHEON: CompendiumDeity[] = [
 		directive: "Eternal Vigilance",
 		portfolio: [
 			"The Rift's Memory",
-			"Gates of Trial",
+			"Rifts of Trial",
 			"Ancient Records",
 			"Awakening Rites",
 		],
@@ -187,7 +187,7 @@ export const PRIME_PANTHEON: CompendiumDeity[] = [
 		image_url: "/images/compendium/placeholder.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
-		lore: "Xylo serves as the living memory of the Rift. He records every gate cleared, every rank achieved, every ascendant who ever lived. While Kael Voss is the Prime Eternal, Xylo is the one who watches the growth of every ascendant — tracking their stats, their potential, their trajectory. He is the master of hidden gates and trial-based ascensions, the guardian of the Rift's deepest truths. It was Xylo who recorded the existence of the Catalyst of Eras, and it is Xylo who ensures that the knowledge of the previous timeline is never fully lost.",
+		lore: "Xylo serves as the living memory of the Rift. He records every Rift cleared, every rank achieved, every ascendant who ever lived. While Kael Voss is the Prime Eternal, Xylo is the one who watches the growth of every ascendant — tracking their stats, their potential, their trajectory. He is the master of hidden Rifts and trial-based ascensions, the guardian of the Rift's deepest truths. It was Xylo who recorded the existence of the Catalyst of Eras, and it is Xylo who ensures that the knowledge of the previous timeline is never fully lost.",
 		source: "Rift Ascendant Canon",
 		source_book: "Rift Ascendant Canon",
 		tags: [],
@@ -285,7 +285,7 @@ export const PRIME_PANTHEON: CompendiumDeity[] = [
 		portfolio: [
 			"Celestial Radiance",
 			"Exarch's Authority",
-			"Gate Stabilization",
+			"Rift Stabilization",
 			"Healing",
 		],
 		sigil: "A radiant angelic wing composed of pure condensed mana",
@@ -322,7 +322,7 @@ export const PRIME_PANTHEON: CompendiumDeity[] = [
 		image_url: "/images/compendium/placeholder.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
-		lore: "When the first gates tore open across the world, Solara was the force that prevented total annihilation. She stabilized the mana-flow, preventing the gates from merging and consuming reality whole. She empowers the strongest guardians among the ascendants, granting them a fragment of her Exarch's Authority — the power to exert dominion over the physical world through sheer force of will. Ascendants blessed by Solara can move objects without touching them, deflect attacks with a gesture, and project barriers of pure radiant mana.",
+		lore: "When the first Rifts tore open across the world, Solara was the force that prevented total annihilation. She stabilized the mana-flow, preventing the Rifts from merging and consuming reality whole. She empowers the strongest guardians among the ascendants, granting them a fragment of her Exarch's Authority — the power to exert dominion over the physical world through sheer force of will. Ascendants blessed by Solara can move objects without touching them, deflect attacks with a gesture, and project barriers of pure radiant mana.",
 		source: "Rift Ascendant Canon",
 		source_book: "Rift Ascendant Canon",
 		tags: [],
@@ -427,9 +427,9 @@ export const PRIME_PANTHEON: CompendiumDeity[] = [
 			"Fear the Breath of the End, for it clears the path to the Next Beginning.",
 		],
 		worshippers:
-			"Destroyers, Berserkers, those who seek power through annihilation, and wardens of the forbidden gates.",
+			"Destroyers, Berserkers, those who seek power through annihilation, and wardens of the forbidden Rifts.",
 		temples:
-			"The Ashen Halls — grand obsidian structures built in the scorched wake of gate breaks and fallen dungeons.",
+			"The Ashen Halls — grand obsidian structures built in the scorched wake of Rift breaks and fallen Rifts.",
 		home_realm: "The Dragon's Maw (The Scorched Realm)",
 		relationships: [
 			{
@@ -452,7 +452,7 @@ export const PRIME_PANTHEON: CompendiumDeity[] = [
 		image_url: "/images/compendium/placeholder.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
-		lore: "Marthos is the inevitable end. Where Kael Voss raises the fallen, Marthos erases them from existence entirely. He commands the Infinite Calamity — a legion of regent-tier entities that serve as the world's final reckoning. When a gate breaks and a city falls, when corruption spreads too deep for the Ascendant Bureau to contain — Marthos arrives. His Void-Breath does not merely kill; it unmakes. Matter, mana, memory — all dissolve. He is not evil. He is the wildfire that clears the dead forest so new growth can begin.",
+		lore: "Marthos is the inevitable end. Where Kael Voss raises the fallen, Marthos erases them from existence entirely. He commands the Infinite Calamity — a legion of regent-tier entities that serve as the world's final reckoning. When a Rift breaks and a city falls, when corruption spreads too deep for the Ascendant Bureau to contain — Marthos arrives. His Void-Breath does not merely kill; it unmakes. Matter, mana, memory — all dissolve. He is not evil. He is the wildfire that clears the dead forest so new growth can begin.",
 		source: "Rift Ascendant Canon",
 		source_book: "Rift Ascendant Canon",
 		tags: [],
@@ -587,7 +587,7 @@ export const PRIME_PANTHEON: CompendiumDeity[] = [
 		image_url: "/images/compendium/placeholder.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
-		lore: "Vaelen was once a rival eternal who sought to overthrow Kael Voss and claim the supreme throne. After being defeated, he was bound as the ultimate challenge for ascendants who seek true combat mastery. He oversees the Cataclysm Gates — the most dangerous S-Rank dungeons — and the combat trials that push an ascendant beyond their limits. Vaelen embodies the sheer speed and devastating power of lightning-warfare. His approval is the mark of the strongest Destroyer in history. The Ascendant Bureau uses his trials as the final benchmark for Zenith-class certification.",
+		lore: "Vaelen was once a rival eternal who sought to overthrow Kael Voss and claim the supreme throne. After being defeated, he was bound as the ultimate challenge for ascendants who seek true combat mastery. He oversees the Cataclysm Rifts — the most dangerous S-Rank Rifts — and the combat trials that push an ascendant beyond their limits. Vaelen embodies the sheer speed and devastating power of lightning-warfare. His approval is the mark of the strongest Destroyer in history. The Ascendant Bureau uses his trials as the final benchmark for Zenith-class certification.",
 		source: "Rift Ascendant Canon",
 		source_book: "Rift Ascendant Canon",
 		tags: [],
@@ -683,22 +683,22 @@ export const PRIME_PANTHEON: CompendiumDeity[] = [
 		rank: "Quasi-Deity",
 		directive: "Adaptive Multiplication",
 		portfolio: [
-			"Gate Topology",
+			"Rift Topology",
 			"Evolution",
 			"Organic Swarms",
 			"Biological Resilience",
 		],
 		sigil: "A crystalline insect wing with floral patterns",
 		manifestation: "The Hive Staff (Stave of Growth)",
-		specializations: ["Gate Topology", "Life", "Survival"],
+		specializations: ["Rift Topology", "Life", "Survival"],
 		dogma: [
 			"Multiply or perish — the swarm endures where the individual falls.",
 			"Evolution is the soul's way of reaching the Zenith.",
-			"Adapt to the dungeon, or the dungeon adapts you.",
+			"Adapt to the Rift, or the Rift adapts you.",
 		],
-		worshippers: "Summoners, Summoner, gate ecologists, and survivalists.",
+		worshippers: "Summoners, Summoner, Rift ecologists, and survivalists.",
 		temples:
-			"The Living Hives — colossal biological structures that grow like ancient trees and house millions of evolved gate organisms.",
+			"The Living Hives — colossal biological structures that grow like ancient trees and house millions of evolved Rift organisms.",
 		home_realm: "The Swarm-Heart",
 		relationships: [
 			{
@@ -721,7 +721,7 @@ export const PRIME_PANTHEON: CompendiumDeity[] = [
 		image_url: "/images/compendium/placeholder.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
-		lore: "Lyra governs the organic chaos within the gates. The alien ecosystems inside dungeons — the mutant flora, the gate insects, the impossible predators — all of it is her domain. She treats life as a swarm: constantly adapting, multiplying, and evolving to survive a world ravaged by gates. Her evolutionary leaps birth new species overnight. Summoners and gate ecologists revere her. The Ascendant Bureau's Ecology Division studies her biomes as carefully as they study boss mechanics.",
+		lore: "Lyra governs the organic chaos within the Rifts. The alien ecosystems inside Rifts — the mutant flora, the Rift insects, the impossible predators — all of it is her domain. She treats life as a swarm: constantly adapting, multiplying, and evolving to survive a world ravaged by Rifts. Her evolutionary leaps birth new species overnight. Summoners and Rift ecologists revere her. The Ascendant Bureau's Ecology Division studies her biomes as carefully as they study boss mechanics.",
 		source: "Rift Ascendant Canon",
 		source_book: "Rift Ascendant Canon",
 		tags: [],
@@ -956,7 +956,7 @@ export const PRIME_PANTHEON: CompendiumDeity[] = [
 			"Expect the unexpected — the world shifts beneath your feet.",
 		],
 		worshippers:
-			"Assassins who use phase-step, rift-walkers, gate specialists, and the Ascendant Bureau's Containment Division.",
+			"Assassins who use phase-step, rift-walkers, Rift specialists, and the Ascendant Bureau's Containment Division.",
 		temples:
 			"The Rift-Gates — massive floating stone arches that serve as hubs for travel between realms.",
 		home_realm: "The Transfigured Skies",
@@ -981,7 +981,7 @@ export const PRIME_PANTHEON: CompendiumDeity[] = [
 		image_url: "/images/compendium/placeholder.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
-		lore: "Every gate that opens is, in a sense, Sylph's doing. She is the master of dimensional rifts — the spaces between. She enables travel between the realms, governs where gates appear and how they behave, and can reshape the fabric of space itself. She appears as a gentle breeze or a violent maelstrom, shifting form like a phantom. Ascendants who travel through gates regularly whisper a prayer to Sylph — not for safety, but for the wind to carry them home. The Ascendant Bureau's Containment Division secretly believes she chooses where gate breaks occur.",
+		lore: "Every Rift that opens is, in a sense, Sylph's doing. She is the master of dimensional rifts — the spaces between. She enables travel between the realms, governs where Rifts appear and how they behave, and can reshape the fabric of space itself. She appears as a gentle breeze or a violent maelstrom, shifting form like a phantom. Ascendants who travel through Rifts regularly whisper a prayer to Sylph — not for safety, but for the wind to carry them home. The Ascendant Bureau's Containment Division secretly believes she chooses where Rift breaks occur.",
 		source: "Rift Ascendant Canon",
 		source_book: "Rift Ascendant Canon",
 		tags: [],
@@ -1070,7 +1070,7 @@ export const PRIME_PANTHEON: CompendiumDeity[] = [
 		name: "Sylph",
 		display_name: "The Eternal of Transfiguration",
 		description:
-			"Sylph is the Mistress of Gates — the force that governs the rifts between realms and the winds that carry ascendants between worlds.",
+			"Sylph is the Mistress of Rifts — the force that governs the rifts between realms and the winds that carry ascendants between worlds.",
 	},
 	{
 		avatar_id: "none-yet",
@@ -1087,7 +1087,7 @@ export const PRIME_PANTHEON: CompendiumDeity[] = [
 		],
 		worshippers: "Stalkers, Assassins, beast-tamers, and solo-gate ascendants.",
 		temples:
-			"The Under-Dens — secret, subterranean lairs built into the deepest floors of the most dangerous dungeons.",
+			"The Under-Dens — secret, subterranean lairs built into the deepest floors of the most dangerous Rifts.",
 		home_realm: "The Savage Realm",
 		relationships: [
 			{
@@ -1215,7 +1215,7 @@ export const PRIME_PANTHEON: CompendiumDeity[] = [
 			"Even in war, there is grace — find it, or lose yourself.",
 		],
 		worshippers:
-			"Idol, artists, Ascendant Bureau counselors, and those who keep the peace between gate raids.",
+			"Idol, artists, Ascendant Bureau counselors, and those who keep the peace between Rift raids.",
 		temples:
 			"The Galleries of Echoes — breathtaking halls where mana is woven into sensory masterpieces that heal the spirit.",
 		home_realm: "The Muse's Realm",
@@ -1240,7 +1240,7 @@ export const PRIME_PANTHEON: CompendiumDeity[] = [
 		image_url: "/images/compendium/placeholder.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
-		lore: "In a world of gates, dungeons, and constant battle, Elara preserves everything else — the sunset over a mana-sea, the laughter in a guild hall, the quiet moment before an ascendant enters a gate they might not return from. She prevents the soul-weariness that breaks even S-Rank ascendants, the burnout that the Ascendant Bureau calls 'Overload Fatigue.' She is worshipped not in grand ceremonies but in small moments: a warrior humming a song before a raid, an artist painting the view from a gate's entrance, a healer holding a dying comrade's hand. Without Elara, the world would have the power to survive — but not the will.",
+		lore: "In a world of Rifts, Rifts, and constant battle, Elara preserves everything else — the sunset over a mana-sea, the laughter in a guild hall, the quiet moment before an ascendant enters a Rift they might not return from. She prevents the soul-weariness that breaks even S-Rank ascendants, the burnout that the Ascendant Bureau calls 'Overload Fatigue.' She is worshipped not in grand ceremonies but in small moments: a warrior humming a song before a raid, an artist painting the view from a Rift's entrance, a healer holding a dying comrade's hand. Without Elara, the world would have the power to survive — but not the will.",
 		source: "Rift Ascendant Canon",
 		source_book: "Rift Ascendant Canon",
 		tags: [],
@@ -1370,7 +1370,7 @@ export const PRIME_PANTHEON: CompendiumDeity[] = [
 		image_url: "/images/compendium/placeholder.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
-		lore: "Golem is the bedrock. When gates open and the ground cracks, Golem holds it together. When a gate break levels a city block, Golem is the force that prevents the entire district from collapsing into the dungeon below. He does not fight with speed or cunning — he simply endures. He is the patron of every tanker who has ever held the line, every shield-bearer who refused to move, every Ascendant Bureau containment wall that held when it shouldn't have. Where he stands, lies cannot take root — his presence forces truth from the lips of all who face him. S-Rank tankers say they can feel him in the ground when they brace for impact.",
+		lore: "Golem is the bedrock. When Rifts open and the ground cracks, Golem holds it together. When a Rift Break levels a city block, Golem is the force that prevents the entire district from collapsing into the Rift below. He does not fight with speed or cunning — he simply endures. He is the patron of every tanker who has ever held the line, every shield-bearer who refused to move, every Ascendant Bureau containment wall that held when it shouldn't have. Where he stands, lies cannot take root — his presence forces truth from the lips of all who face him. S-Rank tankers say they can feel him in the ground when they brace for impact.",
 		source: "Rift Ascendant Canon",
 		source_book: "Rift Ascendant Canon",
 		tags: [],
@@ -1459,7 +1459,7 @@ export const PRIME_PANTHEON: CompendiumDeity[] = [
 		name: "Golem",
 		display_name: "The Eternal of Giants",
 		description:
-			"Golem is the Unyielding Wall — the force that ensures the world stands firm no matter how many gates open or how many gate breaks shatter the surface.",
+			"Golem is the Unyielding Wall — the force that ensures the world stands firm no matter how many Rifts open or how many Rift breaks shatter the surface.",
 	},
 	{
 		avatar_id: "none-yet",
@@ -1500,7 +1500,7 @@ export const PRIME_PANTHEON: CompendiumDeity[] = [
 		image_url: "/images/compendium/placeholder.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
-		lore: "Cipher represents the absolute zero — the state where all mana ceases to flow and all truths are laid bare in crystalline clarity. He guards the Mystery Gates — dungeons that test the mind instead of the body, where brute strength means nothing and only intellect survives. His frozen mana can suspend time, space, and even thought within an instant of frost. The Ascendant Bureau's most difficult classification exams are rumored to be his creation. Mages and Espers who seek deeper understanding of the Rift's foundations make pilgrimage to his frozen sanctuaries — but many who enter are never seen again, preserved forever in perfect, silent ice.",
+		lore: "Cipher represents the absolute zero — the state where all mana ceases to flow and all truths are laid bare in crystalline clarity. He guards the Mystery Rifts — Rifts that test the mind instead of the body, where brute strength means nothing and only intellect survives. His frozen mana can suspend time, space, and even thought within an instant of frost. The Ascendant Bureau's most difficult classification exams are rumored to be his creation. Mages and Espers who seek deeper understanding of the Rift's foundations make pilgrimage to his frozen sanctuaries — but many who enter are never seen again, preserved forever in perfect, silent ice.",
 		source: "Rift Ascendant Canon",
 		source_book: "Rift Ascendant Canon",
 		tags: [],

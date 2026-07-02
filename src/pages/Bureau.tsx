@@ -9,12 +9,12 @@ import {
 import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
-import { AscendantText, RiftHeading } from "@/components/ui/AscendantText";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { PageHeader } from "@/components/ui/PageHeader";
 import {
 	Select,
 	SelectContent,
@@ -125,19 +125,14 @@ export default function Bureau() {
 	return (
 		<Layout>
 			<div className="container mx-auto px-4 py-8 max-w-5xl space-y-6 book-print-root">
-				<div>
-					<RiftHeading level={1} variant="sovereign" dimensional>
-						Hunter Bureau
-					</RiftHeading>
-					<AscendantText className="block text-sm text-muted-foreground mt-1">
-						Licensing, rank evaluation, and gate-contract dispatch for
-						registered Ascendants.
-					</AscendantText>
-				</div>
+				<PageHeader
+					title="The Bureau"
+					description="Licensing, rank evaluation, and Rift-contract dispatch for registered Ascendants."
+				/>
 
-				{/* Dungeon-break alerts */}
+				{/* Rift-break alerts */}
 				{alerts.length > 0 && (
-					<AscendantWindow title="DUNGEON-BREAK ALERTS">
+					<AscendantWindow title="RIFT-BREAK ALERTS">
 						<div className="space-y-3">
 							{alerts.map((alert) => (
 								<div
@@ -209,10 +204,8 @@ export default function Bureau() {
 												<SelectValue />
 											</SelectTrigger>
 											<SelectContent>
-												<SelectItem value="contract">Gate contract</SelectItem>
-												<SelectItem value="alert">
-													Dungeon-break alert
-												</SelectItem>
+												<SelectItem value="contract">Rift contract</SelectItem>
+												<SelectItem value="alert">Rift-break alert</SelectItem>
 											</SelectContent>
 										</Select>
 									</div>

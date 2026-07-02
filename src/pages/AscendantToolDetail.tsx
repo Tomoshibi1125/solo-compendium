@@ -19,9 +19,10 @@ import { RegentStatusView } from "@/components/character/RegentStatusView";
 import { RunesList } from "@/components/character/RunesList";
 import { TattoosList } from "@/components/character/TattoosList";
 import { Layout } from "@/components/layout/Layout";
-import { ManaFlowText, RiftHeading } from "@/components/ui/AscendantText";
+import { ManaFlowText } from "@/components/ui/AscendantText";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Button } from "@/components/ui/button";
+import { PageHeader } from "@/components/ui/PageHeader";
 import {
 	Select,
 	SelectContent,
@@ -245,62 +246,70 @@ export default function AscendantToolDetail() {
 	return (
 		<Layout>
 			<div className="container mx-auto px-4 py-8 space-y-6">
-				<div className="flex items-center gap-4">
+				<div>
 					<Button
 						variant="ghost"
 						onClick={() => navigate("/ascendant-tools")}
-						className="gap-2"
+						className="gap-2 mb-4"
 					>
 						<ArrowLeft className="w-4 h-4" />
 						Back to Ascendant Tools
 					</Button>
-					<div className="flex-1">
-						<RiftHeading
-							level={1}
-							variant="sovereign"
-							dimensional
-							className="text-2xl sm:text-3xl mb-1"
-						>
-							{tool.title}
-						</RiftHeading>
-						<ManaFlowText variant="rift" speed="slow">
-							{tool.subtitle}
-						</ManaFlowText>
-					</div>
-					{toolId === "compendium-viewer" && (
-						<Button onClick={() => navigate("/compendium")} className="gap-2">
-							<BookOpen className="w-4 h-4" />
-							Open Compendium
-						</Button>
-					)}
-					{toolId === "dice-roller" && (
-						<Button onClick={() => navigate("/dice")} className="gap-2">
-							<Dice6 className="w-4 h-4" />
-							Open Dice Roller
-						</Button>
-					)}
-					{toolId === "character-art" && (
-						<Button
-							onClick={() => navigate("/warden-directives/art-generator")}
-							variant="outline"
-							className="gap-2"
-						>
-							<Sparkles className="w-4 h-4" />
-							Warden Art Tools
-						</Button>
-					)}
-					{toolId === "homebrew-studio" && (
-						<Button onClick={() => navigate("/homebrew")} className="gap-2">
-							<FlaskConical className="w-4 h-4" />
-							Open Homebrew Studio
-						</Button>
-					)}
-					{toolId === "marketplace" && (
-						<Button onClick={() => navigate("/marketplace")} className="gap-2">
-							<Store className="w-4 h-4" />
-							Open Marketplace
-						</Button>
-					)}
+					<PageHeader
+						title={tool.title}
+						description={
+							<ManaFlowText variant="rift" speed="slow">
+								{tool.subtitle}
+							</ManaFlowText>
+						}
+						actions={
+							<>
+								{toolId === "compendium-viewer" && (
+									<Button
+										onClick={() => navigate("/compendium")}
+										className="gap-2"
+									>
+										<BookOpen className="w-4 h-4" />
+										Open Compendium
+									</Button>
+								)}
+								{toolId === "dice-roller" && (
+									<Button onClick={() => navigate("/dice")} className="gap-2">
+										<Dice6 className="w-4 h-4" />
+										Open Dice Roller
+									</Button>
+								)}
+								{toolId === "character-art" && (
+									<Button
+										onClick={() => navigate("/warden-directives/art-generator")}
+										variant="outline"
+										className="gap-2"
+									>
+										<Sparkles className="w-4 h-4" />
+										Warden Art Tools
+									</Button>
+								)}
+								{toolId === "homebrew-studio" && (
+									<Button
+										onClick={() => navigate("/homebrew")}
+										className="gap-2"
+									>
+										<FlaskConical className="w-4 h-4" />
+										Open Homebrew Studio
+									</Button>
+								)}
+								{toolId === "marketplace" && (
+									<Button
+										onClick={() => navigate("/marketplace")}
+										className="gap-2"
+									>
+										<Store className="w-4 h-4" />
+										Open Marketplace
+									</Button>
+								)}
+							</>
+						}
+					/>
 				</div>
 
 				{showCharacterSelector && (

@@ -110,27 +110,27 @@ export function calculateEncumbrance(
 
 	if (totalWeight === 0) {
 		status = "unencumbered";
-		statusColor = "text-green-400";
+		statusColor = "text-success";
 		statusMessage = "No encumbrance";
 	} else if (percentage <= 33) {
 		status = "unencumbered";
-		statusColor = "text-green-400";
+		statusColor = "text-success";
 		statusMessage = "Unencumbered";
 	} else if (percentage <= 66) {
 		status = "light";
-		statusColor = "text-blue-400";
+		statusColor = "text-shadow-blue";
 		statusMessage = "Light Load";
 	} else if (percentage <= 100) {
 		status = "medium";
-		statusColor = "text-yellow-400";
+		statusColor = "text-warning";
 		statusMessage = "Medium Load";
 	} else if (percentage <= 200) {
 		status = "heavy";
-		statusColor = "text-orange-400";
+		statusColor = "text-resurge";
 		statusMessage = "Heavy Load (Speed -10)";
 	} else {
 		status = "overloaded";
-		statusColor = "text-red-400";
+		statusColor = "text-destructive";
 		statusMessage = "Overloaded (Speed -20, Disadvantage)";
 	}
 

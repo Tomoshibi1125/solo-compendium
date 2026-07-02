@@ -12,7 +12,7 @@ describe("RA currency", () => {
 	it("defines uniform Credits denominations", () => {
 		expect(RA_CURRENCY_TYPES.map((currency) => currency.name)).toEqual([
 			"Core Credits",
-			"Gate Credits",
+			"Rift Credits",
 			"Crystal Credits",
 			"Mana Credits",
 		]);
@@ -32,16 +32,18 @@ describe("RA currency", () => {
 		expect(convertCurrencyAmount(100, "mana", "gate")).toBe(1);
 	});
 
-	it("normalizes legacy 5e coin aliases into RA denominations", () => {
-		expect(getRaCurrencyDefinition("gp")?.name).toBe("Gate Credits");
-		expect(getRaCurrencyDefinition("gold")?.name).toBe("Gate Credits");
+	it("normalizes legacy 5e coin and gate-era aliases into RA denominations", () => {
+		expect(getRaCurrencyDefinition("gp")?.name).toBe("Rift Credits");
+		expect(getRaCurrencyDefinition("gold")?.name).toBe("Rift Credits");
+		expect(getRaCurrencyDefinition("gate credits")?.name).toBe("Rift Credits");
+		expect(getRaCurrencyDefinition("rift credit")?.name).toBe("Rift Credits");
 		expect(getRaCurrencyDefinition("pp")?.name).toBe("Core Credits");
 		expect(getRaCurrencyDefinition("cp")?.name).toBe("Mana Credits");
 	});
 
 	it("formats standard and base-unit credit values", () => {
-		expect(formatRaCurrencyAmount(1, "gate")).toBe("1 Gate Credit");
-		expect(formatRaCurrencyAmount(2, "gate")).toBe("2 Gate Credits");
+		expect(formatRaCurrencyAmount(1, "gate")).toBe("1 Rift Credit");
+		expect(formatRaCurrencyAmount(2, "gate")).toBe("2 Rift Credits");
 		expect(formatRaCurrencyFromBaseUnits(1000)).toBe("1 Core Credit");
 		expect(formatRaCurrencyFromBaseUnits(250)).toBe("25 Crystal Credits");
 		expect(formatRaCurrencyFromBaseUnits(7)).toBe("7 Mana Credits");

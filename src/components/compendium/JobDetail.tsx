@@ -215,10 +215,7 @@ export const JobDetail = ({ data }: { data: JobData }) => {
 							</Badge>
 						)}
 						{data.rank !== undefined && data.rank !== null && (
-							<Badge
-								variant="outline"
-								className="border-amber-500/40 text-amber-400"
-							>
+							<Badge variant="outline" className="border-gate-s/40 text-gate-s">
 								Rank {String(data.rank)}
 							</Badge>
 						)}
@@ -244,7 +241,7 @@ export const JobDetail = ({ data }: { data: JobData }) => {
 
 				<AscendantWindow title="PRIMARY ABILITIES" compact>
 					<div className="flex items-center gap-2">
-						<Zap className="w-5 h-5 text-yellow-400" />
+						<Zap className="w-5 h-5 text-gate-s" />
 						<span className="font-heading">
 							{data.primary_abilities?.map(formatRegentVernacular).join(", ") ||
 								"None"}
@@ -637,7 +634,7 @@ export const JobDetail = ({ data }: { data: JobData }) => {
 									<h4 className="font-heading font-semibold">
 										{formatRegentVernacular(nw.name)}
 									</h4>
-									<span className="font-display text-sm text-amber-400">
+									<span className="font-display text-sm text-gate-s">
 										{nw.damage} {formatEnumLabel(nw.damage_type)}
 									</span>
 								</div>
@@ -679,7 +676,7 @@ export const JobDetail = ({ data }: { data: JobData }) => {
 							<h4 className="font-heading font-semibold text-primary">
 								{data.resonance_breath.name}
 							</h4>
-							<span className="font-display text-sm text-amber-400">
+							<span className="font-display text-sm text-gate-s">
 								{data.resonance_breath.damage_die}{" "}
 								{formatEnumLabel(data.resonance_breath.damage_type)}
 							</span>

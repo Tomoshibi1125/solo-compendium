@@ -7,7 +7,7 @@ export const tattoos: CompendiumTattoo[] = [
 		display_name: "Regent's Heartbeat",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"Ritually inscribed marks that violently push the heart's endurance. This ink weaves directly into the subject's soul, imbuing their physical form with the essence of slain dungeon beasts.",
+			"Ritually inscribed marks that violently push the heart's endurance. This ink weaves directly into the subject's soul, imbuing their physical form with the essence of slain Rift beasts.",
 		rarity: "common",
 		image: "/generated/effects/arcane-sigil.webp",
 		effects: {
@@ -40,9 +40,9 @@ export const tattoos: CompendiumTattoo[] = [
 				"Available through the Bureau's open augmentation catalog.",
 			curse: "",
 			history:
-				"Covered by the standard Guild Association compliance agreement. The Regent's Heartbeat carried the story forward.",
+				"Covered by the standard Guild Bureau compliance agreement. The Regent's Heartbeat carried the story forward.",
 			origin:
-				"Applied under the Guild Association's dermal-weave protocol. Bureau provenance files log it as the Regent's Heartbeat.",
+				"Applied under the Guild Bureau's dermal-weave protocol. Bureau provenance files log it as the Regent's Heartbeat.",
 			personality: "Disciplined in its at-rest state.",
 			prior_owners: ["Guild Outcasts", "Assassin Ascendants"],
 		},
@@ -110,7 +110,7 @@ export const tattoos: CompendiumTattoo[] = [
 		display_name: "Bone-Weave Tapestry",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"Hardens the skeleton by absorbing ambient mana. This ink weaves directly into the subject's soul, imbuing their physical form with the essence of slain dungeon beasts.",
+			"Hardens the skeleton by absorbing ambient mana. This ink weaves directly into the subject's soul, imbuing their physical form with the essence of slain Rift beasts.",
 		rarity: "common",
 		image: "/generated/effects/arcane-sigil.webp",
 		effects: {
@@ -137,7 +137,7 @@ export const tattoos: CompendiumTattoo[] = [
 			current_owner: "Common at Guild-authorized dermal-mod clinics.",
 			curse: "",
 			history:
-				"Tracked through the Guild Association's compliance schedule. The Bone-Weave Tapestry carried the story forward.",
+				"Tracked through the Guild Bureau's compliance schedule. The Bone-Weave Tapestry carried the story forward.",
 			origin:
 				"Formulated within the Guild's authorized dermal-mod program. Archived under the Bone-Weave Tapestry designation.",
 			personality: "Quiet between activations.",
@@ -207,7 +207,7 @@ export const tattoos: CompendiumTattoo[] = [
 		display_name: "Ascendant's Acuity",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"Quickens the mind and reflexes using raw magical energy. This ink weaves directly into the subject's soul, imbuing their physical form with the essence of slain dungeon beasts.",
+			"Quickens the mind and reflexes using raw magical energy. This ink weaves directly into the subject's soul, imbuing their physical form with the essence of slain Rift beasts.",
 		rarity: "uncommon",
 		image: "/generated/effects/darkness-shroud.webp",
 		effects: {
@@ -244,7 +244,7 @@ export const tattoos: CompendiumTattoo[] = [
 		flavor:
 			"Inverts the dimensional barrier. A testament to what Ascendants have become.",
 		discovery_lore:
-			"Excavated from the crystallized mana deposit at the center of a depleted Gate core. Logged on arrival as the Ascendant's Acuity.",
+			"Excavated from the crystallized mana deposit at the center of a depleted Rift core. Logged on arrival as the Ascendant's Acuity.",
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		theme_tags: ["hunter-mod", "mana-blood", "boss-essence"],
 		active_veins: ["Temple"],
@@ -305,7 +305,7 @@ export const tattoos: CompendiumTattoo[] = [
 		display_name: "Earth-Mantle Plating",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"Flesh hardens into magical stone plates on command. This ink weaves directly into the subject's soul, imbuing their physical form with the essence of slain dungeon beasts.",
+			"Flesh hardens into magical stone plates on command. This ink weaves directly into the subject's soul, imbuing their physical form with the essence of slain Rift beasts.",
 		rarity: "uncommon",
 		image: "/generated/effects/arcane-sigil.webp",
 		effects: {
@@ -334,16 +334,16 @@ export const tattoos: CompendiumTattoo[] = [
 				"Available through the Bureau's open augmentation catalog.",
 			curse: "",
 			history:
-				"Covered by the standard Guild Association compliance agreement. The Earth-Mantle Plating carried the story forward.",
+				"Covered by the standard Guild Bureau compliance agreement. The Earth-Mantle Plating carried the story forward.",
 			origin:
-				"Applied under the Guild Association's dermal-weave protocol. Bureau provenance files log it as the Earth-Mantle Plating.",
+				"Applied under the Guild Bureau's dermal-weave protocol. Bureau provenance files log it as the Earth-Mantle Plating.",
 			personality: "Disciplined in its at-rest state.",
 			prior_owners: ["Guild Outcasts", "Assassin Ascendants"],
 		},
 		flavor:
 			"Ignites the last defense of the unprepared. The breaking point of all resistance.",
 		discovery_lore:
-			"Dropped by a mini-boss that shouldn't have existed according to the Gate's difficulty rating. Intake tagged it the Earth-Mantle Plating.",
+			"Dropped by a mini-boss that shouldn't have existed according to the Rift's difficulty rating. Intake tagged it the Earth-Mantle Plating.",
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		theme_tags: ["hunter-mod", "mana-blood", "boss-essence"],
 		active_veins: ["Chest"],
@@ -404,7 +404,7 @@ export const tattoos: CompendiumTattoo[] = [
 		display_name: "Impact Reservoir",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"Stores the forceful blows from enemy strikes into the skin's magical weave. This ink weaves directly into the subject's soul, imbuing their physical form with the essence of slain dungeon beasts.",
+			"Stores the forceful blows from enemy strikes into the skin's magical weave. This ink weaves directly into the subject's soul, imbuing their physical form with the essence of slain Rift beasts.",
 		rarity: "uncommon",
 		image: "/generated/effects/darkness-shroud.webp",
 		effects: {
@@ -502,7 +502,7 @@ export const tattoos: CompendiumTattoo[] = [
 		display_name: "Predator's Gaze",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"Allows sensing magical auras through solid walls. This ink weaves directly into the subject's soul, imbuing their physical form with the essence of slain dungeon beasts.",
+			"Allows sensing magical auras through solid walls. This ink weaves directly into the subject's soul, imbuing their physical form with the essence of slain Rift beasts.",
 		rarity: "uncommon",
 		image: "/generated/effects/darkness-shroud.webp",
 		effects: {
@@ -538,7 +538,7 @@ export const tattoos: CompendiumTattoo[] = [
 		flavor:
 			"Purges the chains of mortality. Evolution compressed into a single, violent instant.",
 		discovery_lore:
-			"Sold by a mysterious merchant who appears only during full moons near active Gate sites. Intake tagged it the Predator's Gaze.",
+			"Sold by a mysterious merchant who appears only during full moons near active Rift sites. Intake tagged it the Predator's Gaze.",
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		theme_tags: ["hunter-mod", "mana-blood", "boss-essence"],
 		active_veins: ["Around Eyes"],
@@ -599,7 +599,7 @@ export const tattoos: CompendiumTattoo[] = [
 		display_name: "Flame Exhaust",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"Safely expels excess heat from fire magic. This ink weaves directly into the subject's soul, imbuing their physical form with the essence of slain dungeon beasts.",
+			"Safely expels excess heat from fire magic. This ink weaves directly into the subject's soul, imbuing their physical form with the essence of slain Rift beasts.",
 		rarity: "uncommon",
 		image: "/generated/effects/arcane-sigil.webp",
 		effects: {
@@ -640,7 +640,7 @@ export const tattoos: CompendiumTattoo[] = [
 		flavor:
 			"Mirrors the threshold of human potential. A whisper from the edge of oblivion.",
 		discovery_lore:
-			"Discovered by an E-Rank Ascendant who stumbled into an unmarked side passage during a routine dungeon clear. Intake tagged it the Flame Exhaust.",
+			"Discovered by an E-Rank Ascendant who stumbled into an unmarked side passage during a routine Rift clear. Intake tagged it the Flame Exhaust.",
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		theme_tags: ["hunter-mod", "mana-blood", "boss-essence"],
 		active_veins: ["Ribs"],
@@ -701,7 +701,7 @@ export const tattoos: CompendiumTattoo[] = [
 		display_name: "Wind-Shear Cloak",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"A wind-magic weave that helps the Ascendant cut through the air. This ink weaves directly into the subject's soul, imbuing their physical form with the essence of slain dungeon beasts.",
+			"A wind-magic weave that helps the Ascendant cut through the air. This ink weaves directly into the subject's soul, imbuing their physical form with the essence of slain Rift beasts.",
 		rarity: "uncommon",
 		image: "/generated/effects/darkness-shroud.webp",
 		effects: {
@@ -732,14 +732,14 @@ export const tattoos: CompendiumTattoo[] = [
 			current_owner: "Common at Guild-authorized dermal-mod clinics.",
 			curse: "",
 			history:
-				"Tracked through the Guild Association's compliance schedule. The Wind-Shear Cloak carried the story forward.",
+				"Tracked through the Guild Bureau's compliance schedule. The Wind-Shear Cloak carried the story forward.",
 			origin:
 				"Formulated within the Guild's authorized dermal-mod program. The Wind-Shear Cloak entered service from there.",
 			personality: "Quiet between activations.",
 			prior_owners: ["Guild Outcasts", "Assassin Ascendants"],
 		},
 		flavor:
-			"Erases the boundary between life and death. The reason S-Rank Gates are feared.",
+			"Erases the boundary between life and death. The reason S-Rank Rifts are feared.",
 		discovery_lore:
 			"Gifted by the System itself as a reward for completing a hidden quest chain.",
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
@@ -802,7 +802,7 @@ export const tattoos: CompendiumTattoo[] = [
 		display_name: "Blood-Iron Seal",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"Seals wounds instantly using blood-magic manipulation. This ink weaves directly into the subject's soul, imbuing their physical form with the essence of slain dungeon beasts.",
+			"Seals wounds instantly using blood-magic manipulation. This ink weaves directly into the subject's soul, imbuing their physical form with the essence of slain Rift beasts.",
 		rarity: "uncommon",
 		image: "/generated/effects/darkness-shroud.webp",
 		effects: {
@@ -839,7 +839,7 @@ export const tattoos: CompendiumTattoo[] = [
 		flavor:
 			"Absorbs the threshold of human potential. The breaking point of all resistance.",
 		discovery_lore:
-			"Emerged from a Gate Boss's dissolution cloud, hovering where the creature's heart had been. The recovery slip named it the Blood-Iron Seal.",
+			"Emerged from a Rift Boss's dissolution cloud, hovering where the creature's heart had been. The recovery slip named it the Blood-Iron Seal.",
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		theme_tags: ["hunter-mod", "mana-blood", "boss-essence"],
 		active_veins: ["Heart"],
@@ -900,7 +900,7 @@ export const tattoos: CompendiumTattoo[] = [
 		display_name: "Pain-Ward Glyphs",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"Temporarily dulls agony via localized illusion magic. This ink weaves directly into the subject's soul, imbuing their physical form with the essence of slain dungeon beasts.",
+			"Temporarily dulls agony via localized illusion magic. This ink weaves directly into the subject's soul, imbuing their physical form with the essence of slain Rift beasts.",
 		rarity: "uncommon",
 		image: "/generated/effects/darkness-shroud.webp",
 		effects: {
@@ -997,7 +997,7 @@ export const tattoos: CompendiumTattoo[] = [
 		display_name: "Blind-Sight Resonance",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"Uses magical pulses to track threats in total darkness. This ink weaves directly into the subject's soul, imbuing their physical form with the essence of slain dungeon beasts.",
+			"Uses magical pulses to track threats in total darkness. This ink weaves directly into the subject's soul, imbuing their physical form with the essence of slain Rift beasts.",
 		rarity: "uncommon",
 		image: "/generated/effects/darkness-shroud.webp",
 		effects: {
@@ -1024,7 +1024,7 @@ export const tattoos: CompendiumTattoo[] = [
 			current_owner: "Common at Guild-authorized dermal-mod clinics.",
 			curse: "",
 			history:
-				"Tracked through the Guild Association's compliance schedule. That much survives in the Blind-Sight Resonance's field history.",
+				"Tracked through the Guild Bureau's compliance schedule. That much survives in the Blind-Sight Resonance's field history.",
 			origin:
 				"Formulated within the Guild's authorized dermal-mod program. Archived under the Blind-Sight Resonance designation.",
 			personality: "Quiet between activations.",
@@ -1033,7 +1033,7 @@ export const tattoos: CompendiumTattoo[] = [
 		flavor:
 			"Dissolves the silence between heartbeats. A whisper from the edge of oblivion.",
 		discovery_lore:
-			"Sold by a mysterious merchant who appears only during full moons near active Gate sites. The recovery slip named it the Blind-Sight Resonance.",
+			"Sold by a mysterious merchant who appears only during full moons near active Rift sites. The recovery slip named it the Blind-Sight Resonance.",
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		theme_tags: ["hunter-mod", "mana-blood", "boss-essence"],
 		active_veins: ["Throat"],
@@ -1094,7 +1094,7 @@ export const tattoos: CompendiumTattoo[] = [
 		display_name: "Acidic Excretion",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"Secretes a thin layer of dungeon-grade corrosive fluid. This ink weaves directly into the subject's soul, imbuing their physical form with the essence of slain dungeon beasts.",
+			"Secretes a thin layer of dungeon-grade corrosive fluid. This ink weaves directly into the subject's soul, imbuing their physical form with the essence of slain Rift beasts.",
 		rarity: "uncommon",
 		image: "/generated/effects/darkness-shroud.webp",
 		effects: {
@@ -1132,7 +1132,7 @@ export const tattoos: CompendiumTattoo[] = [
 		flavor:
 			"Rends the certainty of outcomes. A testament to what Ascendants have become.",
 		discovery_lore:
-			"Excavated from the crystallized mana deposit at the center of a depleted Gate core. Logged on arrival as the Acidic Excretion.",
+			"Excavated from the crystallized mana deposit at the center of a depleted Rift core. Logged on arrival as the Acidic Excretion.",
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		theme_tags: ["hunter-mod", "mana-blood", "boss-essence"],
 		active_veins: ["Palms"],
@@ -1193,7 +1193,7 @@ export const tattoos: CompendiumTattoo[] = [
 		display_name: "Purifying Furnace",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"Burns toxins and venoms out of the bloodstream. This ink weaves directly into the subject's soul, imbuing their physical form with the essence of slain dungeon beasts.",
+			"Burns toxins and venoms out of the bloodstream. This ink weaves directly into the subject's soul, imbuing their physical form with the essence of slain Rift beasts.",
 		rarity: "uncommon",
 		image: "/generated/effects/darkness-shroud.webp",
 		effects: {
@@ -1222,9 +1222,9 @@ export const tattoos: CompendiumTattoo[] = [
 				"Available through the Bureau's open augmentation catalog.",
 			curse: "",
 			history:
-				"Covered by the standard Guild Association compliance agreement. That much survives in the Purifying Furnace's field history.",
+				"Covered by the standard Guild Bureau compliance agreement. That much survives in the Purifying Furnace's field history.",
 			origin:
-				"Applied under the Guild Association's dermal-weave protocol. The Purifying Furnace entered service from there.",
+				"Applied under the Guild Bureau's dermal-weave protocol. The Purifying Furnace entered service from there.",
 			personality: "Disciplined in its at-rest state.",
 			prior_owners: ["Guild Outcasts", "Assassin Ascendants"],
 		},
@@ -1292,7 +1292,7 @@ export const tattoos: CompendiumTattoo[] = [
 		display_name: "Sky-Walker's Tread",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"Grants the ability to walk on walls via wind magic. This ink weaves directly into the subject's soul, imbuing their physical form with the essence of slain dungeon beasts.",
+			"Grants the ability to walk on walls via wind magic. This ink weaves directly into the subject's soul, imbuing their physical form with the essence of slain Rift beasts.",
 		rarity: "uncommon",
 		image: "/generated/effects/arcane-sigil.webp",
 		effects: {
@@ -1390,7 +1390,7 @@ export const tattoos: CompendiumTattoo[] = [
 		display_name: "Mimic's Voice",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"Perfectly replicate any voice heard. This ink weaves directly into the subject's soul, imbuing their physical form with the essence of slain dungeon beasts.",
+			"Perfectly replicate any voice heard. This ink weaves directly into the subject's soul, imbuing their physical form with the essence of slain Rift beasts.",
 		rarity: "rare",
 		image: "/generated/effects/arcane-sigil.webp",
 		effects: {
@@ -1421,7 +1421,7 @@ export const tattoos: CompendiumTattoo[] = [
 		lore: {
 			current_owner: "Applied routinely to qualifying field operatives.",
 			curse:
-				"The user becomes unable to dream, replaced by visions of the void between Gates.",
+				"The user becomes unable to dream, replaced by visions of the void between Rifts.",
 			history:
 				"Logged in the Bureau's ongoing dermal-mod registry. That much survives in the Mimic's Voice's field history.",
 			origin:
@@ -1493,7 +1493,7 @@ export const tattoos: CompendiumTattoo[] = [
 		display_name: "Ogre's Vigor",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"Instantly doubles muscle density for a short time. This ink weaves directly into the subject's soul, imbuing their physical form with the essence of slain dungeon beasts.",
+			"Instantly doubles muscle density for a short time. This ink weaves directly into the subject's soul, imbuing their physical form with the essence of slain Rift beasts.",
 		rarity: "rare",
 		image: "/generated/effects/darkness-shroud.webp",
 		effects: {
@@ -1522,7 +1522,7 @@ export const tattoos: CompendiumTattoo[] = [
 			curse:
 				"Prolonged wielders report hearing a second heartbeat that doesn't match their own.",
 			history:
-				"Tracked through the Guild Association's compliance schedule. The Ogre's Vigor carried the story forward.",
+				"Tracked through the Guild Bureau's compliance schedule. The Ogre's Vigor carried the story forward.",
 			origin:
 				"Formulated within the Guild's authorized dermal-mod program. Bureau provenance files log it as the Ogre's Vigor.",
 			personality: "Quiet between activations.",
@@ -1592,7 +1592,7 @@ export const tattoos: CompendiumTattoo[] = [
 		display_name: "Shadow-Shift Sigils",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"Temporarily turn flesh into incorporeal shadows. This ink weaves directly into the subject's soul, imbuing their physical form with the essence of slain dungeon beasts.",
+			"Temporarily turn flesh into incorporeal shadows. This ink weaves directly into the subject's soul, imbuing their physical form with the essence of slain Rift beasts.",
 		rarity: "rare",
 		image: "/generated/effects/arcane-sigil.webp",
 		effects: {
@@ -1632,7 +1632,7 @@ export const tattoos: CompendiumTattoo[] = [
 		flavor:
 			"Eclipses the illusion of safety. A beautiful catastrophe measured in milliseconds.",
 		discovery_lore:
-			"Purchased from a black-market auction in the underground district of Neo-Seoul for an undisclosed sum.",
+			"Purchased from a black-market auction in the underground district of Meridian City for an undisclosed sum.",
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		theme_tags: ["hunter-mod", "mana-blood", "boss-essence"],
 		active_veins: ["Shoulders"],
@@ -1693,7 +1693,7 @@ export const tattoos: CompendiumTattoo[] = [
 		display_name: "Chameleon Epidermis",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"Blends perfectly into the environment using light-bending magic. This ink weaves directly into the subject's soul, imbuing their physical form with the essence of slain dungeon beasts.",
+			"Blends perfectly into the environment using light-bending magic. This ink weaves directly into the subject's soul, imbuing their physical form with the essence of slain Rift beasts.",
 		rarity: "rare",
 		image: "/generated/effects/arcane-sigil.webp",
 		effects: {
@@ -1731,7 +1731,7 @@ export const tattoos: CompendiumTattoo[] = [
 		flavor:
 			"Reclaims the illusion of safety. A testament to what Ascendants have become.",
 		discovery_lore:
-			"Discovered by an E-Rank Ascendant who stumbled into an unmarked side passage during a routine dungeon clear. The recovery slip named it the Chameleon Epidermis.",
+			"Discovered by an E-Rank Ascendant who stumbled into an unmarked side passage during a routine Rift clear. The recovery slip named it the Chameleon Epidermis.",
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		theme_tags: ["hunter-mod", "mana-blood", "boss-essence"],
 		active_veins: ["Full Back"],
@@ -1792,7 +1792,7 @@ export const tattoos: CompendiumTattoo[] = [
 		display_name: "Abyssal Lungs",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"Extracts oxygen from water and poison gas. This ink weaves directly into the subject's soul, imbuing their physical form with the essence of slain dungeon beasts.",
+			"Extracts oxygen from water and poison gas. This ink weaves directly into the subject's soul, imbuing their physical form with the essence of slain Rift beasts.",
 		rarity: "rare",
 		image: "/generated/effects/darkness-shroud.webp",
 		effects: {
@@ -1820,16 +1820,16 @@ export const tattoos: CompendiumTattoo[] = [
 				"Available through the Bureau's open augmentation catalog.",
 			curse: "",
 			history:
-				"Covered by the standard Guild Association compliance agreement. The Abyssal Lungs's service record notes as much.",
+				"Covered by the standard Guild Bureau compliance agreement. The Abyssal Lungs's service record notes as much.",
 			origin:
-				"Applied under the Guild Association's dermal-weave protocol. The Abyssal Lungs entered service from there.",
+				"Applied under the Guild Bureau's dermal-weave protocol. The Abyssal Lungs entered service from there.",
 			personality: "Disciplined in its at-rest state.",
 			prior_owners: ["Guild Outcasts", "Assassin Ascendants"],
 		},
 		flavor:
 			"Binds the silence between heartbeats. Evolution compressed into a single, violent instant.",
 		discovery_lore:
-			"Found washed ashore near a coastal Gate, wrapped in fabric that dissolved upon touch.",
+			"Found washed ashore near a coastal Rift, wrapped in fabric that dissolved upon touch.",
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		theme_tags: ["hunter-mod", "mana-blood", "boss-essence"],
 		active_veins: ["Neck"],
@@ -1890,7 +1890,7 @@ export const tattoos: CompendiumTattoo[] = [
 		display_name: "Mana-Sever Pulse",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"Shut down unshielded magic circles in the immediate vicinity. This ink weaves directly into the subject's soul, imbuing their physical form with the essence of slain dungeon beasts.",
+			"Shut down unshielded magic circles in the immediate vicinity. This ink weaves directly into the subject's soul, imbuing their physical form with the essence of slain Rift beasts.",
 		rarity: "rare",
 		image: "/generated/effects/arcane-sigil.webp",
 		effects: {
@@ -1927,7 +1927,7 @@ export const tattoos: CompendiumTattoo[] = [
 		flavor:
 			"Warps the architect's design. The breaking point of all resistance.",
 		discovery_lore:
-			"Excavated from the crystallized mana deposit at the center of a depleted Gate core. Intake tagged it the Mana-Sever Pulse.",
+			"Excavated from the crystallized mana deposit at the center of a depleted Rift core. Intake tagged it the Mana-Sever Pulse.",
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		theme_tags: ["hunter-mod", "mana-blood", "boss-essence"],
 		active_veins: ["Chest"],
@@ -1988,7 +1988,7 @@ export const tattoos: CompendiumTattoo[] = [
 		display_name: "Spatial Anchor",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"Prevents being forcibly teleported or banished. This ink weaves directly into the subject's soul, imbuing their physical form with the essence of slain dungeon beasts.",
+			"Prevents being forcibly teleported or banished. This ink weaves directly into the subject's soul, imbuing their physical form with the essence of slain Rift beasts.",
 		rarity: "rare",
 		image: "/generated/effects/arcane-sigil.webp",
 		effects: {
@@ -2017,21 +2017,21 @@ export const tattoos: CompendiumTattoo[] = [
 				"Available through the Bureau's open augmentation catalog.",
 			curse: "",
 			history:
-				"Covered by the standard Guild Association compliance agreement. The Spatial Anchor's service record notes as much.",
+				"Covered by the standard Guild Bureau compliance agreement. The Spatial Anchor's service record notes as much.",
 			origin:
-				"Applied under the Guild Association's dermal-weave protocol. The Spatial Anchor entered service from there.",
+				"Applied under the Guild Bureau's dermal-weave protocol. The Spatial Anchor entered service from there.",
 			personality: "Disciplined in its at-rest state.",
 			prior_owners: ["Guild Outcasts", "Assassin Ascendants"],
 		},
 		flavor:
 			"Crushes the architecture of the soul. Evolution compressed into a single, violent instant.",
 		discovery_lore:
-			"Dropped by a mini-boss that shouldn't have existed according to the Gate's difficulty rating. Intake tagged it the Spatial Anchor.",
+			"Dropped by a mini-boss that shouldn't have existed according to the Rift's difficulty rating. Intake tagged it the Spatial Anchor.",
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		theme_tags: ["hunter-mod", "mana-blood", "boss-essence"],
 		active_veins: ["Feet"],
 		body_part: "Feet",
-		ink_type: "Void Gate Dust",
+		ink_type: "Void Rift Dust",
 		limitations: {
 			requires_attunement: true,
 			charges: 0,
@@ -2068,14 +2068,14 @@ export const tattoos: CompendiumTattoo[] = [
 			duration: "1 hour",
 			frequency: "2/short rest",
 			lattice_interaction:
-				"Void Gate Dust resonates with the bearer's mana lattice through dermal contact",
+				"Void Rift Dust resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
 				"Occupies feet tattoo slot",
 				"Tattoo attunement is separate from equipment attunement",
 			],
 			saving_throw: { ability: "", dc: 0, failure: "", success: "" },
 			special_abilities: [
-				"Inscription requires: Void Gate Dust, DC 18 tattooing check, 4 hours of uninterrupted work",
+				"Inscription requires: Void Rift Dust, DC 18 tattooing check, 4 hours of uninterrupted work",
 			],
 			stat_bonuses: {},
 		},
@@ -2087,7 +2087,7 @@ export const tattoos: CompendiumTattoo[] = [
 		display_name: "Harpy's Grace",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"Reduces bodily weight to allow slow falling and massive jumps. This ink weaves directly into the subject's soul, imbuing their physical form with the essence of slain dungeon beasts.",
+			"Reduces bodily weight to allow slow falling and massive jumps. This ink weaves directly into the subject's soul, imbuing their physical form with the essence of slain Rift beasts.",
 		rarity: "rare",
 		image: "/generated/effects/arcane-sigil.webp",
 		effects: {
@@ -2115,7 +2115,7 @@ export const tattoos: CompendiumTattoo[] = [
 			current_owner: "Common at Guild-authorized dermal-mod clinics.",
 			curse: "",
 			history:
-				"Tracked through the Guild Association's compliance schedule. The Harpy's Grace's service record notes as much.",
+				"Tracked through the Guild Bureau's compliance schedule. The Harpy's Grace's service record notes as much.",
 			origin:
 				"Formulated within the Guild's authorized dermal-mod program. The Harpy's Grace entered service from there.",
 			personality: "Quiet between activations.",
@@ -2124,7 +2124,7 @@ export const tattoos: CompendiumTattoo[] = [
 		flavor:
 			"Inverts the boundary between life and death. Evolution compressed into a single, violent instant.",
 		discovery_lore:
-			"Excavated from the crystallized mana deposit at the center of a depleted Gate core. The recovery slip named it the Harpy's Grace.",
+			"Excavated from the crystallized mana deposit at the center of a depleted Rift core. The recovery slip named it the Harpy's Grace.",
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		theme_tags: ["hunter-mod", "mana-blood", "boss-essence"],
 		active_veins: ["Collarbone"],
@@ -2185,7 +2185,7 @@ export const tattoos: CompendiumTattoo[] = [
 		display_name: "Rebound Ward",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"Explodes outward with force magic when hit by melee attacks. This ink weaves directly into the subject's soul, imbuing their physical form with the essence of slain dungeon beasts.",
+			"Explodes outward with force magic when hit by melee attacks. This ink weaves directly into the subject's soul, imbuing their physical form with the essence of slain Rift beasts.",
 		rarity: "rare",
 		image: "/generated/effects/darkness-shroud.webp",
 		effects: {
@@ -2225,7 +2225,7 @@ export const tattoos: CompendiumTattoo[] = [
 		flavor:
 			"Ignites the laws of physics. The death of hesitation, made manifest.",
 		discovery_lore:
-			"Emerged from a Gate Boss's dissolution cloud, hovering where the creature's heart had been. The recovery slip named it the Rebound Ward.",
+			"Emerged from a Rift Boss's dissolution cloud, hovering where the creature's heart had been. The recovery slip named it the Rebound Ward.",
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		theme_tags: ["hunter-mod", "mana-blood", "boss-essence"],
 		active_veins: ["Shoulders"],
@@ -2286,7 +2286,7 @@ export const tattoos: CompendiumTattoo[] = [
 		display_name: "Anomaly's Breath",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"Breathe out a cloud of choking, magical exhaust. This ink weaves directly into the subject's soul, imbuing their physical form with the essence of slain dungeon beasts.",
+			"Breathe out a cloud of choking, magical exhaust. This ink weaves directly into the subject's soul, imbuing their physical form with the essence of slain Rift beasts.",
 		rarity: "rare",
 		image: "/generated/effects/arcane-sigil.webp",
 		effects: {
@@ -2319,9 +2319,9 @@ export const tattoos: CompendiumTattoo[] = [
 				"Available through the Bureau's open augmentation catalog.",
 			curse: "",
 			history:
-				"Covered by the standard Guild Association compliance agreement. The Anomaly's Breath's service record notes as much.",
+				"Covered by the standard Guild Bureau compliance agreement. The Anomaly's Breath's service record notes as much.",
 			origin:
-				"Applied under the Guild Association's dermal-weave protocol. The Anomaly's Breath entered service from there.",
+				"Applied under the Guild Bureau's dermal-weave protocol. The Anomaly's Breath entered service from there.",
 			personality: "Disciplined in its at-rest state.",
 			prior_owners: ["Guild Outcasts", "Assassin Ascendants"],
 		},
@@ -2389,7 +2389,7 @@ export const tattoos: CompendiumTattoo[] = [
 		display_name: "Chrono-Stutter",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"Allows a brief rewind in time. This ink weaves directly into the subject's soul, imbuing their physical form with the essence of slain dungeon beasts.",
+			"Allows a brief rewind in time. This ink weaves directly into the subject's soul, imbuing their physical form with the essence of slain Rift beasts.",
 		rarity: "rare",
 		image: "/generated/effects/darkness-shroud.webp",
 		effects: {
@@ -2427,7 +2427,7 @@ export const tattoos: CompendiumTattoo[] = [
 		flavor:
 			"Corrodes the fabric of reality. The last thing many anomalies ever see.",
 		discovery_lore:
-			"Found pulsing with residual mana in the aftermath of a Gate break, half-buried in shattered concrete. Intake tagged it the Chrono-Stutter.",
+			"Found pulsing with residual mana in the aftermath of a Rift Break, half-buried in shattered concrete. Intake tagged it the Chrono-Stutter.",
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		theme_tags: ["hunter-mod", "mana-blood", "boss-essence"],
 		active_veins: ["Temple"],
@@ -2488,7 +2488,7 @@ export const tattoos: CompendiumTattoo[] = [
 		display_name: "Presence Concealment",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"Hides your Awakened aura completely. This ink weaves directly into the subject's soul, imbuing their physical form with the essence of slain dungeon beasts.",
+			"Hides your Awakened aura completely. This ink weaves directly into the subject's soul, imbuing their physical form with the essence of slain Rift beasts.",
 		rarity: "rare",
 		image: "/generated/effects/darkness-shroud.webp",
 		effects: {
@@ -2516,7 +2516,7 @@ export const tattoos: CompendiumTattoo[] = [
 			current_owner: "Common at Guild-authorized dermal-mod clinics.",
 			curse: "",
 			history:
-				"Tracked through the Guild Association's compliance schedule. The Presence Concealment carried the story forward.",
+				"Tracked through the Guild Bureau's compliance schedule. The Presence Concealment carried the story forward.",
 			origin:
 				"Formulated within the Guild's authorized dermal-mod program. Bureau provenance files log it as the Presence Concealment.",
 			personality: "Quiet between activations.",
@@ -2525,7 +2525,7 @@ export const tattoos: CompendiumTattoo[] = [
 		flavor:
 			"Rends the flow of causality. The breaking point of all resistance.",
 		discovery_lore:
-			"Dropped by a mini-boss that shouldn't have existed according to the Gate's difficulty rating. The recovery slip named it the Presence Concealment.",
+			"Dropped by a mini-boss that shouldn't have existed according to the Rift's difficulty rating. The recovery slip named it the Presence Concealment.",
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		theme_tags: ["hunter-mod", "mana-blood", "boss-essence"],
 		active_veins: ["Heart"],
@@ -2586,7 +2586,7 @@ export const tattoos: CompendiumTattoo[] = [
 		display_name: "Mind-Fortress",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"Reflects mental intrusions and charm magic. This ink weaves directly into the subject's soul, imbuing their physical form with the essence of slain dungeon beasts.",
+			"Reflects mental intrusions and charm magic. This ink weaves directly into the subject's soul, imbuing their physical form with the essence of slain Rift beasts.",
 		rarity: "rare",
 		image: "/generated/effects/arcane-sigil.webp",
 		effects: {
@@ -2683,7 +2683,7 @@ export const tattoos: CompendiumTattoo[] = [
 		display_name: "Manticore Spurs",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"Extrudes poisoned bone spurs from the wrists. This ink weaves directly into the subject's soul, imbuing their physical form with the essence of slain dungeon beasts.",
+			"Extrudes poisoned bone spurs from the wrists. This ink weaves directly into the subject's soul, imbuing their physical form with the essence of slain Rift beasts.",
 		rarity: "very_rare",
 		image: "/generated/effects/arcane-sigil.webp",
 		effects: {
@@ -2711,16 +2711,16 @@ export const tattoos: CompendiumTattoo[] = [
 				"Available through the Bureau's open augmentation catalog.",
 			curse: "",
 			history:
-				"Covered by the standard Guild Association compliance agreement. The Manticore Spurs's service record notes as much.",
+				"Covered by the standard Guild Bureau compliance agreement. The Manticore Spurs's service record notes as much.",
 			origin:
-				"Applied under the Guild Association's dermal-weave protocol. The Manticore Spurs entered service from there.",
+				"Applied under the Guild Bureau's dermal-weave protocol. The Manticore Spurs entered service from there.",
 			personality: "Disciplined in its at-rest state.",
 			prior_owners: ["Guild Outcasts", "Assassin Ascendants"],
 		},
 		flavor:
 			"Dissolves the remnants of a dead world. The death of hesitation, made manifest.",
 		discovery_lore:
-			"Found pulsing with residual mana in the aftermath of a Gate break, half-buried in shattered concrete. Intake tagged it the Manticore Spurs.",
+			"Found pulsing with residual mana in the aftermath of a Rift Break, half-buried in shattered concrete. Intake tagged it the Manticore Spurs.",
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		theme_tags: ["hunter-mod", "mana-blood", "boss-essence"],
 		active_veins: ["Wrists"],
@@ -2781,7 +2781,7 @@ export const tattoos: CompendiumTattoo[] = [
 		display_name: "Levitation Repulse",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"Creates an area where targets are pushed away and float slightly. This ink weaves directly into the subject's soul, imbuing their physical form with the essence of slain dungeon beasts.",
+			"Creates an area where targets are pushed away and float slightly. This ink weaves directly into the subject's soul, imbuing their physical form with the essence of slain Rift beasts.",
 		rarity: "very_rare",
 		image: "/generated/effects/arcane-sigil.webp",
 		effects: {
@@ -2819,7 +2819,7 @@ export const tattoos: CompendiumTattoo[] = [
 		flavor:
 			"Shatters the remnants of a dead world. A testament to what Ascendants have become.",
 		discovery_lore:
-			"Excavated from the crystallized mana deposit at the center of a depleted Gate core. Logged on arrival as the Levitation Repulse.",
+			"Excavated from the crystallized mana deposit at the center of a depleted Rift core. Logged on arrival as the Levitation Repulse.",
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		theme_tags: ["hunter-mod", "mana-blood", "boss-essence"],
 		active_veins: ["Palms"],
@@ -2880,7 +2880,7 @@ export const tattoos: CompendiumTattoo[] = [
 		display_name: "Troll's Regeneration",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"Accelerates healing to close grievous wounds mid-combat. This ink weaves directly into the subject's soul, imbuing their physical form with the essence of slain dungeon beasts.",
+			"Accelerates healing to close grievous wounds mid-combat. This ink weaves directly into the subject's soul, imbuing their physical form with the essence of slain Rift beasts.",
 		rarity: "very_rare",
 		image: "/generated/effects/darkness-shroud.webp",
 		effects: {
@@ -2908,7 +2908,7 @@ export const tattoos: CompendiumTattoo[] = [
 			current_owner: "Common at Guild-authorized dermal-mod clinics.",
 			curse: "",
 			history:
-				"Tracked through the Guild Association's compliance schedule. The Troll's Regeneration carried the story forward.",
+				"Tracked through the Guild Bureau's compliance schedule. The Troll's Regeneration carried the story forward.",
 			origin:
 				"Formulated within the Guild's authorized dermal-mod program. Bureau provenance files log it as the Troll's Regeneration.",
 			personality: "Quiet between activations.",
@@ -2978,7 +2978,7 @@ export const tattoos: CompendiumTattoo[] = [
 		display_name: "Winter Core",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"Freezes anything touching the bearer. This ink weaves directly into the subject's soul, imbuing their physical form with the essence of slain dungeon beasts.",
+			"Freezes anything touching the bearer. This ink weaves directly into the subject's soul, imbuing their physical form with the essence of slain Rift beasts.",
 		rarity: "very_rare",
 		image: "/generated/effects/darkness-shroud.webp",
 		effects: {
@@ -3016,7 +3016,7 @@ export const tattoos: CompendiumTattoo[] = [
 		flavor:
 			"Purges the dimensional barrier. A whisper from the edge of oblivion.",
 		discovery_lore:
-			"Purchased from a black-market auction in the underground district of Neo-Seoul for an undisclosed sum.",
+			"Purchased from a black-market auction in the underground district of Meridian City for an undisclosed sum.",
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		theme_tags: ["hunter-mod", "mana-blood", "boss-essence"],
 		active_veins: ["Spine"],
@@ -3077,7 +3077,7 @@ export const tattoos: CompendiumTattoo[] = [
 		display_name: "Phoenix Flare",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"Emit blinding, burning light from the skin. This ink weaves directly into the subject's soul, imbuing their physical form with the essence of slain dungeon beasts.",
+			"Emit blinding, burning light from the skin. This ink weaves directly into the subject's soul, imbuing their physical form with the essence of slain Rift beasts.",
 		rarity: "very_rare",
 		image: "/generated/effects/darkness-shroud.webp",
 		effects: {
@@ -3175,7 +3175,7 @@ export const tattoos: CompendiumTattoo[] = [
 		display_name: "Vampiric Siphon",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"Drain health from enemies in melee range to replenish your own. This ink weaves directly into the subject's soul, imbuing their physical form with the essence of slain dungeon beasts.",
+			"Drain health from enemies in melee range to replenish your own. This ink weaves directly into the subject's soul, imbuing their physical form with the essence of slain Rift beasts.",
 		rarity: "very_rare",
 		image: "/generated/effects/darkness-shroud.webp",
 		effects: {
@@ -3272,7 +3272,7 @@ export const tattoos: CompendiumTattoo[] = [
 		display_name: "Poltergeist Fists",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"Throw punches that land far away via force magic. This ink weaves directly into the subject's soul, imbuing their physical form with the essence of slain dungeon beasts.",
+			"Throw punches that land far away via force magic. This ink weaves directly into the subject's soul, imbuing their physical form with the essence of slain Rift beasts.",
 		rarity: "very_rare",
 		image: "/generated/effects/arcane-sigil.webp",
 		effects: {
@@ -3371,7 +3371,7 @@ export const tattoos: CompendiumTattoo[] = [
 		display_name: "Shadow Clone",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"Creates an exact physical double from shadow magic. This ink weaves directly into the subject's soul, imbuing their physical form with the essence of slain dungeon beasts.",
+			"Creates an exact physical double from shadow magic. This ink weaves directly into the subject's soul, imbuing their physical form with the essence of slain Rift beasts.",
 		rarity: "very_rare",
 		image: "/generated/effects/arcane-sigil.webp",
 		effects: {
@@ -3404,9 +3404,9 @@ export const tattoos: CompendiumTattoo[] = [
 				"Available through the Bureau's open augmentation catalog.",
 			curse: "",
 			history:
-				"Covered by the standard Guild Association compliance agreement. The Shadow Clone carried the story forward.",
+				"Covered by the standard Guild Bureau compliance agreement. The Shadow Clone carried the story forward.",
 			origin:
-				"Applied under the Guild Association's dermal-weave protocol. Bureau provenance files log it as the Shadow Clone.",
+				"Applied under the Guild Bureau's dermal-weave protocol. Bureau provenance files log it as the Shadow Clone.",
 			personality: "Disciplined in its at-rest state.",
 			prior_owners: ["Guild Outcasts", "Assassin Ascendants"],
 		},
@@ -3474,7 +3474,7 @@ export const tattoos: CompendiumTattoo[] = [
 		display_name: "Rift Pocket",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"Store items inside a magical tattoo on your skin. This ink weaves directly into the subject's soul, imbuing their physical form with the essence of slain dungeon beasts.",
+			"Store items inside a magical tattoo on your skin. This ink weaves directly into the subject's soul, imbuing their physical form with the essence of slain Rift beasts.",
 		rarity: "very_rare",
 		image: "/generated/effects/darkness-shroud.webp",
 		effects: {
@@ -3514,7 +3514,7 @@ export const tattoos: CompendiumTattoo[] = [
 		theme_tags: ["hunter-mod", "mana-blood", "boss-essence"],
 		active_veins: ["Thigh"],
 		body_part: "Thigh",
-		ink_type: "Gate-Weaver Thread",
+		ink_type: "Rift-Weaver Thread",
 		limitations: {
 			requires_attunement: true,
 			charges: 0,
@@ -3551,14 +3551,14 @@ export const tattoos: CompendiumTattoo[] = [
 			duration: "10 minutes",
 			frequency: "Proficiency/long rest",
 			lattice_interaction:
-				"Gate-Weaver Thread resonates with the bearer's mana lattice through dermal contact",
+				"Rift-Weaver Thread resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
 				"Occupies thigh tattoo slot",
 				"Tattoo attunement is separate from equipment attunement",
 			],
 			saving_throw: { ability: "", dc: 0, failure: "", success: "" },
 			special_abilities: [
-				"Inscription requires: Gate-Weaver Thread, DC 12 tattooing check, 4 hours of uninterrupted work",
+				"Inscription requires: Rift-Weaver Thread, DC 12 tattooing check, 4 hours of uninterrupted work",
 			],
 			stat_bonuses: {},
 		},
@@ -3570,7 +3570,7 @@ export const tattoos: CompendiumTattoo[] = [
 		display_name: "Magic-Bane Aura",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"Delete all magic in a small radius. This ink weaves directly into the subject's soul, imbuing their physical form with the essence of slain dungeon beasts.",
+			"Delete all magic in a small radius. This ink weaves directly into the subject's soul, imbuing their physical form with the essence of slain Rift beasts.",
 		rarity: "very_rare",
 		image: "/generated/effects/darkness-shroud.webp",
 		effects: {
@@ -3598,7 +3598,7 @@ export const tattoos: CompendiumTattoo[] = [
 			current_owner: "Common at Guild-authorized dermal-mod clinics.",
 			curse: "",
 			history:
-				"Tracked through the Guild Association's compliance schedule. The Magic-Bane Aura carried the story forward.",
+				"Tracked through the Guild Bureau's compliance schedule. The Magic-Bane Aura carried the story forward.",
 			origin:
 				"Formulated within the Guild's authorized dermal-mod program. Archived under the Magic-Bane Aura designation.",
 			personality: "Quiet between activations.",
@@ -3607,7 +3607,7 @@ export const tattoos: CompendiumTattoo[] = [
 		flavor:
 			"Mirrors the flow of causality. The breaking point of all resistance.",
 		discovery_lore:
-			"Found pulsing with residual mana in the aftermath of a Gate break, half-buried in shattered concrete. Logged on arrival as the Magic-Bane Aura.",
+			"Found pulsing with residual mana in the aftermath of a Rift Break, half-buried in shattered concrete. Logged on arrival as the Magic-Bane Aura.",
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		theme_tags: ["hunter-mod", "mana-blood", "boss-essence"],
 		active_veins: ["Chest"],
@@ -3668,7 +3668,7 @@ export const tattoos: CompendiumTattoo[] = [
 		display_name: "Blink Strike",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"Teleport to an enemy and automatically attack. This ink weaves directly into the subject's soul, imbuing their physical form with the essence of slain dungeon beasts.",
+			"Teleport to an enemy and automatically attack. This ink weaves directly into the subject's soul, imbuing their physical form with the essence of slain Rift beasts.",
 		rarity: "very_rare",
 		image: "/generated/effects/arcane-sigil.webp",
 		effects: {
@@ -3697,16 +3697,16 @@ export const tattoos: CompendiumTattoo[] = [
 				"Available through the Bureau's open augmentation catalog.",
 			curse: "",
 			history:
-				"Covered by the standard Guild Association compliance agreement. The Blink Strike carried the story forward.",
+				"Covered by the standard Guild Bureau compliance agreement. The Blink Strike carried the story forward.",
 			origin:
-				"Applied under the Guild Association's dermal-weave protocol. Bureau provenance files log it as the Blink Strike.",
+				"Applied under the Guild Bureau's dermal-weave protocol. Bureau provenance files log it as the Blink Strike.",
 			personality: "Disciplined in its at-rest state.",
 			prior_owners: ["Guild Outcasts", "Assassin Ascendants"],
 		},
 		flavor:
 			"Annihilates the threshold of human potential. A testament to what Ascendants have become.",
 		discovery_lore:
-			"Found pulsing with residual mana in the aftermath of a Gate break, half-buried in shattered concrete. The recovery slip named it the Blink Strike.",
+			"Found pulsing with residual mana in the aftermath of a Rift Break, half-buried in shattered concrete. The recovery slip named it the Blink Strike.",
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		theme_tags: ["hunter-mod", "mana-blood", "boss-essence"],
 		active_veins: ["Calves"],
@@ -3767,7 +3767,7 @@ export const tattoos: CompendiumTattoo[] = [
 		display_name: "Iron Maiden's Embrace",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"Skin grows magical iron spikes that impale grapplers. This ink weaves directly into the subject's soul, imbuing their physical form with the essence of slain dungeon beasts.",
+			"Skin grows magical iron spikes that impale grapplers. This ink weaves directly into the subject's soul, imbuing their physical form with the essence of slain Rift beasts.",
 		rarity: "very_rare",
 		image: "/generated/effects/arcane-sigil.webp",
 		effects: {
@@ -3813,7 +3813,7 @@ export const tattoos: CompendiumTattoo[] = [
 		theme_tags: ["hunter-mod", "mana-blood", "boss-essence"],
 		active_veins: ["Full Body"],
 		body_part: "Full Body",
-		ink_type: "Dungeon Iron",
+		ink_type: "Rift Iron",
 		limitations: {
 			requires_attunement: true,
 			charges: 0,
@@ -3850,14 +3850,14 @@ export const tattoos: CompendiumTattoo[] = [
 			duration: "1 hour",
 			frequency: "1/short rest",
 			lattice_interaction:
-				"Dungeon Iron resonates with the bearer's mana lattice through dermal contact",
+				"Rift Iron resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
 				"Occupies full body tattoo slot",
 				"Tattoo attunement is separate from equipment attunement",
 			],
 			saving_throw: { ability: "", dc: 0, failure: "", success: "" },
 			special_abilities: [
-				"Inscription requires: Dungeon Iron, DC 10 tattooing check, 4 hours of uninterrupted work",
+				"Inscription requires: Rift Iron, DC 10 tattooing check, 4 hours of uninterrupted work",
 			],
 			stat_bonuses: {},
 		},
@@ -3869,7 +3869,7 @@ export const tattoos: CompendiumTattoo[] = [
 		display_name: "Dreadnought's Grasp",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"Stun enemies with a touch of overwhelming mana. This ink weaves directly into the subject's soul, imbuing their physical form with the essence of slain dungeon beasts.",
+			"Stun enemies with a touch of overwhelming mana. This ink weaves directly into the subject's soul, imbuing their physical form with the essence of slain Rift beasts.",
 		rarity: "very_rare",
 		image: "/generated/effects/arcane-sigil.webp",
 		effects: {
@@ -3906,7 +3906,7 @@ export const tattoos: CompendiumTattoo[] = [
 		flavor:
 			"Eclipses the architect's design. A testament to what Ascendants have become.",
 		discovery_lore:
-			"Sold by a mysterious merchant who appears only during full moons near active Gate sites. The recovery slip named it the Dreadnought's Grasp.",
+			"Sold by a mysterious merchant who appears only during full moons near active Rift sites. The recovery slip named it the Dreadnought's Grasp.",
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		theme_tags: ["hunter-mod", "mana-blood", "boss-essence"],
 		active_veins: ["Palms"],
@@ -3967,7 +3967,7 @@ export const tattoos: CompendiumTattoo[] = [
 		display_name: "Soul Severing Edge",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"Attacks bypass physical armor and directly damage the target's spirit. This ink weaves directly into the subject's soul, imbuing their physical form with the essence of slain dungeon beasts.",
+			"Attacks bypass physical armor and directly damage the target's spirit. This ink weaves directly into the subject's soul, imbuing their physical form with the essence of slain Rift beasts.",
 		rarity: "legendary",
 		image: "/generated/effects/arcane-sigil.webp",
 		effects: {
@@ -4004,7 +4004,7 @@ export const tattoos: CompendiumTattoo[] = [
 		flavor:
 			"Erases the boundary between life and death. A whisper from the edge of oblivion.",
 		discovery_lore:
-			"Excavated from the crystallized mana deposit at the center of a depleted Gate core. The recovery slip named it the Soul Severing Edge.",
+			"Excavated from the crystallized mana deposit at the center of a depleted Rift core. The recovery slip named it the Soul Severing Edge.",
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		theme_tags: ["hunter-mod", "mana-blood", "boss-essence"],
 		active_veins: ["Right Arm"],
@@ -4065,7 +4065,7 @@ export const tattoos: CompendiumTattoo[] = [
 		display_name: "Anomaly's Ascendancy",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"Sprout ethereal anomaly wings of pure mana. This ink weaves directly into the subject's soul, imbuing their physical form with the essence of slain dungeon beasts.",
+			"Sprout ethereal anomaly wings of pure mana. This ink weaves directly into the subject's soul, imbuing their physical form with the essence of slain Rift beasts.",
 		rarity: "legendary",
 		image: "/generated/effects/arcane-sigil.webp",
 		effects: {
@@ -4097,16 +4097,16 @@ export const tattoos: CompendiumTattoo[] = [
 				"Available through the Bureau's open augmentation catalog.",
 			curse: "",
 			history:
-				"Covered by the standard Guild Association compliance agreement. That much survives in the Anomaly's Ascendancy's field history.",
+				"Covered by the standard Guild Bureau compliance agreement. That much survives in the Anomaly's Ascendancy's field history.",
 			origin:
-				"Applied under the Guild Association's dermal-weave protocol. Archived under the Anomaly's Ascendancy designation.",
+				"Applied under the Guild Bureau's dermal-weave protocol. Archived under the Anomaly's Ascendancy designation.",
 			personality: "Disciplined in its at-rest state.",
 			prior_owners: ["Guild Outcasts", "Assassin Ascendants"],
 		},
 		flavor:
 			"Corrodes the architecture of the soul. The last thing many anomalies ever see.",
 		discovery_lore:
-			"Sold by a mysterious merchant who appears only during full moons near active Gate sites. The recovery slip named it the Anomaly's Ascendancy.",
+			"Sold by a mysterious merchant who appears only during full moons near active Rift sites. The recovery slip named it the Anomaly's Ascendancy.",
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		theme_tags: ["hunter-mod", "mana-blood", "boss-essence"],
 		active_veins: ["Shoulder Blades"],
@@ -4167,7 +4167,7 @@ export const tattoos: CompendiumTattoo[] = [
 		display_name: "Tsunami's Wrath",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"Command massive amounts of water. This ink weaves directly into the subject's soul, imbuing their physical form with the essence of slain dungeon beasts.",
+			"Command massive amounts of water. This ink weaves directly into the subject's soul, imbuing their physical form with the essence of slain Rift beasts.",
 		rarity: "legendary",
 		image: "/generated/effects/darkness-shroud.webp",
 		effects: {
@@ -4204,7 +4204,7 @@ export const tattoos: CompendiumTattoo[] = [
 		flavor:
 			"Eclipses the threshold of human potential. The breaking point of all resistance.",
 		discovery_lore:
-			"Sold by a mysterious merchant who appears only during full moons near active Gate sites. The recovery slip named it the Tsunami's Wrath.",
+			"Sold by a mysterious merchant who appears only during full moons near active Rift sites. The recovery slip named it the Tsunami's Wrath.",
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		theme_tags: ["hunter-mod", "mana-blood", "boss-essence"],
 		active_veins: ["Chest"],
@@ -4265,7 +4265,7 @@ export const tattoos: CompendiumTattoo[] = [
 		display_name: "Earthshaker's Stride",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"Cause localized earthquakes with every step. This ink weaves directly into the subject's soul, imbuing their physical form with the essence of slain dungeon beasts.",
+			"Cause localized earthquakes with every step. This ink weaves directly into the subject's soul, imbuing their physical form with the essence of slain Rift beasts.",
 		rarity: "legendary",
 		image: "/generated/effects/arcane-sigil.webp",
 		effects: {
@@ -4293,7 +4293,7 @@ export const tattoos: CompendiumTattoo[] = [
 			current_owner: "Common at Guild-authorized dermal-mod clinics.",
 			curse: "",
 			history:
-				"Tracked through the Guild Association's compliance schedule. The Earthshaker's Stride's service record notes as much.",
+				"Tracked through the Guild Bureau's compliance schedule. The Earthshaker's Stride's service record notes as much.",
 			origin:
 				"Formulated within the Guild's authorized dermal-mod program. The Earthshaker's Stride entered service from there.",
 			personality: "Quiet between activations.",
@@ -4363,7 +4363,7 @@ export const tattoos: CompendiumTattoo[] = [
 		display_name: "Resurrection Grace",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"Resurrect a fallen Ascendant, permanently sacrificing the ink. This ink weaves directly into the subject's soul, imbuing their physical form with the essence of slain dungeon beasts.",
+			"Resurrect a fallen Ascendant, permanently sacrificing the ink. This ink weaves directly into the subject's soul, imbuing their physical form with the essence of slain Rift beasts.",
 		rarity: "legendary",
 		image: "/generated/effects/arcane-sigil.webp",
 		effects: {
@@ -4400,7 +4400,7 @@ export const tattoos: CompendiumTattoo[] = [
 		flavor:
 			"Condemns the fabric of reality. The breaking point of all resistance.",
 		discovery_lore:
-			"Found pulsing with residual mana in the aftermath of a Gate break, half-buried in shattered concrete. The recovery slip named it the Resurrection Grace.",
+			"Found pulsing with residual mana in the aftermath of a Rift Break, half-buried in shattered concrete. The recovery slip named it the Resurrection Grace.",
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		theme_tags: ["hunter-mod", "mana-blood", "boss-essence"],
 		active_veins: ["Heart"],
@@ -4461,7 +4461,7 @@ export const tattoos: CompendiumTattoo[] = [
 		display_name: "Regent of Dread's Fury",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"Enter an uncontrollable rage offering immense strength. This ink weaves directly into the subject's soul, imbuing their physical form with the essence of slain dungeon beasts.",
+			"Enter an uncontrollable rage offering immense strength. This ink weaves directly into the subject's soul, imbuing their physical form with the essence of slain Rift beasts.",
 		rarity: "legendary",
 		image: "/generated/effects/arcane-sigil.webp",
 		effects: {
@@ -4558,7 +4558,7 @@ export const tattoos: CompendiumTattoo[] = [
 		display_name: "Undying Phylactery",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"Store your soul's essence in the tattoo. This ink weaves directly into the subject's soul, imbuing their physical form with the essence of slain dungeon beasts.",
+			"Store your soul's essence in the tattoo. This ink weaves directly into the subject's soul, imbuing their physical form with the essence of slain Rift beasts.",
 		rarity: "legendary",
 		image: "/generated/effects/darkness-shroud.webp",
 		effects: {
@@ -4587,16 +4587,16 @@ export const tattoos: CompendiumTattoo[] = [
 				"Available through the Bureau's open augmentation catalog.",
 			curse: "",
 			history:
-				"Covered by the standard Guild Association compliance agreement. The Undying Phylactery's service record notes as much.",
+				"Covered by the standard Guild Bureau compliance agreement. The Undying Phylactery's service record notes as much.",
 			origin:
-				"Applied under the Guild Association's dermal-weave protocol. The Undying Phylactery entered service from there.",
+				"Applied under the Guild Bureau's dermal-weave protocol. The Undying Phylactery entered service from there.",
 			personality: "Disciplined in its at-rest state.",
 			prior_owners: ["Guild Outcasts", "Assassin Ascendants"],
 		},
 		flavor:
-			"Inverts the silence between heartbeats. The reason S-Rank Gates are feared.",
+			"Inverts the silence between heartbeats. The reason S-Rank Rifts are feared.",
 		discovery_lore:
-			"Emerged from a Gate Boss's dissolution cloud, hovering where the creature's heart had been. Intake tagged it the Undying Phylactery.",
+			"Emerged from a Rift Boss's dissolution cloud, hovering where the creature's heart had been. Intake tagged it the Undying Phylactery.",
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		theme_tags: ["hunter-mod", "mana-blood", "boss-essence"],
 		active_veins: ["Forehead"],
@@ -4657,7 +4657,7 @@ export const tattoos: CompendiumTattoo[] = [
 		display_name: "World Tree Sap",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"Immune to all poison, disease, and magical decay. This ink weaves directly into the subject's soul, imbuing their physical form with the essence of slain dungeon beasts.",
+			"Immune to all poison, disease, and magical decay. This ink weaves directly into the subject's soul, imbuing their physical form with the essence of slain Rift beasts.",
 		rarity: "legendary",
 		image: "/generated/effects/darkness-shroud.webp",
 		effects: {
@@ -4686,16 +4686,16 @@ export const tattoos: CompendiumTattoo[] = [
 				"Available through the Bureau's open augmentation catalog.",
 			curse: "",
 			history:
-				"Covered by the standard Guild Association compliance agreement. That much survives in the World Tree Sap's field history.",
+				"Covered by the standard Guild Bureau compliance agreement. That much survives in the World Tree Sap's field history.",
 			origin:
-				"Applied under the Guild Association's dermal-weave protocol. Bureau provenance files log it as the World Tree Sap.",
+				"Applied under the Guild Bureau's dermal-weave protocol. Bureau provenance files log it as the World Tree Sap.",
 			personality: "Disciplined in its at-rest state.",
 			prior_owners: ["Guild Outcasts", "Assassin Ascendants"],
 		},
 		flavor:
 			"Shatters the certainty of outcomes. The last thing many anomalies ever see.",
 		discovery_lore:
-			"Found pulsing with residual mana in the aftermath of a Gate break, half-buried in shattered concrete. Logged on arrival as the World Tree Sap.",
+			"Found pulsing with residual mana in the aftermath of a Rift Break, half-buried in shattered concrete. Logged on arrival as the World Tree Sap.",
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		theme_tags: ["hunter-mod", "mana-blood", "boss-essence"],
 		active_veins: ["Spine"],
@@ -4756,7 +4756,7 @@ export const tattoos: CompendiumTattoo[] = [
 		display_name: "Astral Projection",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"Leave your physical body behind safely. This ink weaves directly into the subject's soul, imbuing their physical form with the essence of slain dungeon beasts.",
+			"Leave your physical body behind safely. This ink weaves directly into the subject's soul, imbuing their physical form with the essence of slain Rift beasts.",
 		rarity: "legendary",
 		image: "/generated/effects/darkness-shroud.webp",
 		effects: {
@@ -4792,7 +4792,7 @@ export const tattoos: CompendiumTattoo[] = [
 			prior_owners: ["Guild Outcasts", "Assassin Ascendants"],
 		},
 		flavor:
-			"Rends the chains of mortality. The reason S-Rank Gates are feared.",
+			"Rends the chains of mortality. The reason S-Rank Rifts are feared.",
 		discovery_lore:
 			"Logged by the Bureau's issue-desk after a scheduled handover.",
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
@@ -4855,7 +4855,7 @@ export const tattoos: CompendiumTattoo[] = [
 		display_name: "Time Stop",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"Freeze time for a few seconds. This ink weaves directly into the subject's soul, imbuing their physical form with the essence of slain dungeon beasts.",
+			"Freeze time for a few seconds. This ink weaves directly into the subject's soul, imbuing their physical form with the essence of slain Rift beasts.",
 		rarity: "legendary",
 		image: "/generated/effects/arcane-sigil.webp",
 		effects: {
@@ -4883,15 +4883,15 @@ export const tattoos: CompendiumTattoo[] = [
 			current_owner: "Common at Guild-authorized dermal-mod clinics.",
 			curse: "",
 			history:
-				"Tracked through the Guild Association's compliance schedule. The Time Stop's service record notes as much.",
+				"Tracked through the Guild Bureau's compliance schedule. The Time Stop's service record notes as much.",
 			origin:
 				"Formulated within the Guild's authorized dermal-mod program. Archived under the Time Stop designation.",
 			personality: "Quiet between activations.",
 			prior_owners: ["Guild Outcasts", "Assassin Ascendants"],
 		},
-		flavor: "Rends the illusion of safety. The reason S-Rank Gates are feared.",
+		flavor: "Rends the illusion of safety. The reason S-Rank Rifts are feared.",
 		discovery_lore:
-			"Discovered by an E-Rank Ascendant who stumbled into an unmarked side passage during a routine dungeon clear. Logged on arrival as the Time Stop.",
+			"Discovered by an E-Rank Ascendant who stumbled into an unmarked side passage during a routine Rift clear. Logged on arrival as the Time Stop.",
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		theme_tags: ["hunter-mod", "mana-blood", "boss-essence"],
 		active_veins: ["Chest"],
@@ -4952,7 +4952,7 @@ export const tattoos: CompendiumTattoo[] = [
 		display_name: "Regent's Authority",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"Force any being of lower Ascendant rank to kneel. This ink weaves directly into the subject's soul, imbuing their physical form with the essence of slain dungeon beasts.",
+			"Force any being of lower Ascendant rank to kneel. This ink weaves directly into the subject's soul, imbuing their physical form with the essence of slain Rift beasts.",
 		rarity: "legendary",
 		image: "/generated/effects/darkness-shroud.webp",
 		effects: {
@@ -4980,7 +4980,7 @@ export const tattoos: CompendiumTattoo[] = [
 			current_owner: "Common at Guild-authorized dermal-mod clinics.",
 			curse: "",
 			history:
-				"Tracked through the Guild Association's compliance schedule. The Regent's Authority's service record notes as much.",
+				"Tracked through the Guild Bureau's compliance schedule. The Regent's Authority's service record notes as much.",
 			origin:
 				"Formulated within the Guild's authorized dermal-mod program. The Regent's Authority entered service from there.",
 			personality: "Quiet between activations.",
@@ -4989,7 +4989,7 @@ export const tattoos: CompendiumTattoo[] = [
 		flavor:
 			"Erases the flow of causality. Proof that some things cannot be survived.",
 		discovery_lore:
-			"Found washed ashore near a coastal Gate, wrapped in fabric that dissolved upon touch.",
+			"Found washed ashore near a coastal Rift, wrapped in fabric that dissolved upon touch.",
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		theme_tags: ["hunter-mod", "mana-blood", "boss-essence"],
 		active_veins: ["Neck"],
@@ -5050,7 +5050,7 @@ export const tattoos: CompendiumTattoo[] = [
 		display_name: "Fate Weaver's Thread",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"Temporarily warp destiny to grant luck and avert death. This ink weaves directly into the subject's soul, imbuing their physical form with the essence of slain dungeon beasts.",
+			"Temporarily warp destiny to grant luck and avert death. This ink weaves directly into the subject's soul, imbuing their physical form with the essence of slain Rift beasts.",
 		rarity: "legendary",
 		image: "/generated/effects/darkness-shroud.webp",
 		effects: {

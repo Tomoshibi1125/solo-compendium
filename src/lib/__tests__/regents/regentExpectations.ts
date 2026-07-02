@@ -164,7 +164,7 @@ export const REGENT_EXPECTATIONS = {
 	spatial_regent: {
 		id: "spatial_regent",
 		theme: "Cosmic Weaving & Dimensional Void",
-		quest: "Complete the Trial of the Spatial Gate",
+		quest: "Complete the Trial of the Spatial Rift",
 		prerequisiteJob: COMMON_QUEST_PREREQUISITE,
 		powerLevel: 10,
 		featureCount: 26,

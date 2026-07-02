@@ -89,7 +89,7 @@ describe("formatActionType", () => {
 
 describe("getRarityBadgeClass", () => {
 	it("returns a class for known tiers and matches across very-rare spellings", () => {
-		expect(getRarityBadgeClass("epic")).toContain("purple");
+		expect(getRarityBadgeClass("epic")).toContain("gate-national");
 		expect(getRarityBadgeClass("very_rare")).toBe(
 			getRarityBadgeClass("very-rare"),
 		);

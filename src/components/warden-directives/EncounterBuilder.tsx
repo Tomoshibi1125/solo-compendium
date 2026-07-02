@@ -686,9 +686,9 @@ export function EncounterBuilder({
 									difficulty === "easy"
 										? "text-green-400"
 										: difficulty === "medium"
-											? "text-yellow-400"
+											? "text-gate-s"
 											: difficulty === "hard"
-												? "text-orange-400"
+												? "text-gate-a"
 												: "text-red-500",
 								)}
 							>

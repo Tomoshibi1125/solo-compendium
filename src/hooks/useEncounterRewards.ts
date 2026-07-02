@@ -290,7 +290,7 @@ function generateLootForEncounter(
 
 	if (creditValue > 0) {
 		loot.push({
-			name: "Gate Credits",
+			name: "Rift Credits",
 			value: creditValue,
 			description: "Bureau Credits issued for verified encounter salvage",
 		});

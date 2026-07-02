@@ -107,7 +107,7 @@ export const items_part9: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Preserve Rift, mana lattice, and anomaly terminology.",
 					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
@@ -223,7 +223,7 @@ export const items_part9: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Preserve Rift, mana lattice, and anomaly terminology.",
 					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
@@ -347,7 +347,7 @@ export const items_part9: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Preserve Rift, mana lattice, and anomaly terminology.",
 					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
@@ -506,7 +506,7 @@ export const items_part9: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Preserve Rift, mana lattice, and anomaly terminology.",
 					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
@@ -626,7 +626,7 @@ export const items_part9: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Preserve Rift, mana lattice, and anomaly terminology.",
 					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
@@ -745,7 +745,7 @@ export const items_part9: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Preserve Rift, mana lattice, and anomaly terminology.",
 					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
@@ -863,7 +863,7 @@ export const items_part9: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Preserve Rift, mana lattice, and anomaly terminology.",
 					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
@@ -983,7 +983,7 @@ export const items_part9: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Preserve Rift, mana lattice, and anomaly terminology.",
 					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
@@ -1107,7 +1107,7 @@ export const items_part9: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Preserve Rift, mana lattice, and anomaly terminology.",
 					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
@@ -1227,7 +1227,7 @@ export const items_part9: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Preserve Rift, mana lattice, and anomaly terminology.",
 					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
@@ -1343,7 +1343,7 @@ export const items_part9: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Preserve Rift, mana lattice, and anomaly terminology.",
 					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
@@ -1467,7 +1467,7 @@ export const items_part9: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Preserve Rift, mana lattice, and anomaly terminology.",
 					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
@@ -1583,7 +1583,7 @@ export const items_part9: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Preserve Rift, mana lattice, and anomaly terminology.",
 					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
@@ -1699,7 +1699,7 @@ export const items_part9: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Preserve Rift, mana lattice, and anomaly terminology.",
 					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
@@ -1763,7 +1763,7 @@ export const items_part9: Item[] = [
 		flavor:
 			"Tested in the dark, blooded in the bright. — the Abyssal Revolver.",
 		discovery_lore:
-			"Walked out of the gate in the bottom of an Ascendant's pack, mostly forgotten. Logged on arrival as the Abyssal Revolver.",
+			"Walked out of the Rift in the bottom of an Ascendant's pack, mostly forgotten. Logged on arrival as the Abyssal Revolver.",
 		tags: ["equipment", "shadow", "burst", "stealth", "void", "firearm"],
 		theme_tags: ["elite-tier", "survival"],
 		activation: {
@@ -1859,7 +1859,7 @@ export const items_part9: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Preserve Rift, mana lattice, and anomaly terminology.",
 					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
@@ -1983,7 +1983,7 @@ export const items_part9: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Preserve Rift, mana lattice, and anomaly terminology.",
 					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
@@ -2103,7 +2103,7 @@ export const items_part9: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Preserve Rift, mana lattice, and anomaly terminology.",
 					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
@@ -2222,7 +2222,7 @@ export const items_part9: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Preserve Rift, mana lattice, and anomaly terminology.",
 					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
@@ -2339,7 +2339,7 @@ export const items_part9: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Preserve Rift, mana lattice, and anomaly terminology.",
 					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
@@ -2458,7 +2458,7 @@ export const items_part9: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Preserve Rift, mana lattice, and anomaly terminology.",
 					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
@@ -2576,7 +2576,7 @@ export const items_part9: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Preserve Rift, mana lattice, and anomaly terminology.",
 					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
@@ -2594,7 +2594,7 @@ export const items_part9: Item[] = [
 		name: "Nano-Weave Shin Guards",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"A Stalker-class light armor sized for extended gate sweeps. Field teams know this pattern as the Nano-Weave Shin Guards.",
+			"A Stalker-class light armor sized for extended Rift sweeps. Field teams know this pattern as the Nano-Weave Shin Guards.",
 		rarity: "rare",
 		type: "armor",
 		image: "/generated/compendium/items/item-0061.webp",
@@ -2636,7 +2636,7 @@ export const items_part9: Item[] = [
 		flavor:
 			"Worn down at the seams. That's how you know it works. — the Nano-Weave Shin Guards.",
 		discovery_lore:
-			"Tagged at the gate seal during the Bureau's standard cataloging sweep. Logged on arrival as the Nano-Weave Shin Guards.",
+			"Tagged at the Rift seal during the Bureau's standard cataloging sweep. Logged on arrival as the Nano-Weave Shin Guards.",
 		tags: ["equipment", "ice", "offensive", "defensive", "armor"],
 		theme_tags: ["dungeon-core", "system-glitch", "black-market"],
 		activation: {
@@ -2726,7 +2726,7 @@ export const items_part9: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Preserve Rift, mana lattice, and anomaly terminology.",
 					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
@@ -2846,7 +2846,7 @@ export const items_part9: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Preserve Rift, mana lattice, and anomaly terminology.",
 					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
@@ -2968,7 +2968,7 @@ export const items_part9: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Preserve Rift, mana lattice, and anomaly terminology.",
 					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
@@ -3084,7 +3084,7 @@ export const items_part9: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Preserve Rift, mana lattice, and anomaly terminology.",
 					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
@@ -3208,7 +3208,7 @@ export const items_part9: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Preserve Rift, mana lattice, and anomaly terminology.",
 					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
@@ -3226,7 +3226,7 @@ export const items_part9: Item[] = [
 		name: "Guild-Issue Revolver",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"A short-barrel handgun tuned for fast draw and reliable function inside cramped gate corridors. Issued under the Guild-Issue Revolver designation.",
+			"A short-barrel handgun tuned for fast draw and reliable function inside cramped Rift corridors. Issued under the Guild-Issue Revolver designation.",
 		rarity: "uncommon",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0270.webp",
@@ -3330,7 +3330,7 @@ export const items_part9: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Preserve Rift, mana lattice, and anomaly terminology.",
 					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
@@ -3458,7 +3458,7 @@ export const items_part9: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Preserve Rift, mana lattice, and anomaly terminology.",
 					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
@@ -3570,7 +3570,7 @@ export const items_part9: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Preserve Rift, mana lattice, and anomaly terminology.",
 					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
@@ -3588,7 +3588,7 @@ export const items_part9: Item[] = [
 		name: "Lattice-Scale Combat Vest",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"A Stalker-class light armor sized for extended gate sweeps. Bureau quartermasters catalog it as the Lattice-Scale Combat Vest.",
+			"A Stalker-class light armor sized for extended Rift sweeps. Bureau quartermasters catalog it as the Lattice-Scale Combat Vest.",
 		rarity: "uncommon",
 		type: "armor",
 		image: "/generated/compendium/items/item-0789.webp",
@@ -3689,7 +3689,7 @@ export const items_part9: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Preserve Rift, mana lattice, and anomaly terminology.",
 					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
@@ -3805,7 +3805,7 @@ export const items_part9: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Preserve Rift, mana lattice, and anomaly terminology.",
 					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
@@ -3820,10 +3820,10 @@ export const items_part9: Item[] = [
 	},
 	{
 		id: "item_p9_31",
-		name: "Gate-Forged Tactical Helmet",
+		name: "Rift-Forged Tactical Helmet",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"Bureau-issued head protection, lightweight and fitted. Stamped and logged as the Gate-Forged Tactical Helmet.",
+			"Bureau-issued head protection, lightweight and fitted. Stamped and logged as the Rift-Forged Tactical Helmet.",
 		rarity: "uncommon",
 		type: "armor",
 		image: "/generated/compendium/items/item-0374.webp",
@@ -3894,7 +3894,7 @@ export const items_part9: Item[] = [
 				archetype: "armor_headgear",
 				canon_basis: "RA canon",
 				distinguishing_rule:
-					"Gate-Forged Tactical Helmet keys standard armor headgear rules through signature 070d7571.",
+					"Rift-Forged Tactical Helmet keys standard armor headgear rules through signature 070d7571.",
 				role: "defense",
 				signature: "070d7571",
 				theme: "standard",
@@ -3921,7 +3921,7 @@ export const items_part9: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Preserve Rift, mana lattice, and anomaly terminology.",
 					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
@@ -3939,7 +3939,7 @@ export const items_part9: Item[] = [
 		name: "Aegis Shin Guards",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"A reinforced shield. Standard kit for line-holders inside high-rank gates. Bureau quartermasters catalog it as the Aegis Shin Guards.",
+			"A reinforced shield. Standard kit for line-holders inside high-rank Rifts. Bureau quartermasters catalog it as the Aegis Shin Guards.",
 		rarity: "rare",
 		type: "armor",
 		image: "/generated/compendium/items/item-0625.webp",
@@ -3973,7 +3973,7 @@ export const items_part9: Item[] = [
 			history:
 				"Catalogued in the Ascendant Bureau's standard equipment registry after a six-month field trial. That much survives in the Aegis Shin Guards's field history.",
 			origin:
-				"Recovered from the Bureau Vault-7 evidence locker after the Jeju Outbreak. Archived under the Aegis Shin Guards designation.",
+				"Recovered from the Bureau Vault-7 evidence locker after the Vantage Isle Outbreak. Archived under the Aegis Shin Guards designation.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -4069,7 +4069,7 @@ export const items_part9: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Preserve Rift, mana lattice, and anomaly terminology.",
 					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
@@ -4185,7 +4185,7 @@ export const items_part9: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Preserve Rift, mana lattice, and anomaly terminology.",
 					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
@@ -4306,7 +4306,7 @@ export const items_part9: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Preserve Rift, mana lattice, and anomaly terminology.",
 					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
@@ -4425,7 +4425,7 @@ export const items_part9: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Preserve Rift, mana lattice, and anomaly terminology.",
 					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
@@ -4544,7 +4544,7 @@ export const items_part9: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Preserve Rift, mana lattice, and anomaly terminology.",
 					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
@@ -4667,7 +4667,7 @@ export const items_part9: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Preserve Rift, mana lattice, and anomaly terminology.",
 					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
@@ -4786,7 +4786,7 @@ export const items_part9: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Preserve Rift, mana lattice, and anomaly terminology.",
 					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
@@ -4843,14 +4843,14 @@ export const items_part9: Item[] = [
 			history:
 				"Briefly classified for export until the Guild Inspectors lifted the embargo. The Guild-Issue Halberd carried the story forward.",
 			origin:
-				"Sourced from the post-clear loot dispersion of a successful A-rank gate operation. The Guild-Issue Halberd entered service from there.",
+				"Sourced from the post-clear loot dispersion of a successful A-rank Rift operation. The Guild-Issue Halberd entered service from there.",
 			personality: "",
 			prior_owners: [],
 		},
 		flavor:
 			"The Guild-Issue Halberd: it rewards the steady, punishes the loud.",
 		discovery_lore:
-			"Found by a B-rank Ascendant on a bounty assignment in a half-cleared gate annex. The recovery slip named it the Guild-Issue Halberd.",
+			"Found by a B-rank Ascendant on a bounty assignment in a half-cleared Rift annex. The recovery slip named it the Guild-Issue Halberd.",
 		tags: ["equipment", "healing", "fire", "debuff", "utility", "melee"],
 		theme_tags: ["urban-combat", "rift-energy"],
 		activation: {
@@ -4945,7 +4945,7 @@ export const items_part9: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Preserve Rift, mana lattice, and anomaly terminology.",
 					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
@@ -5054,7 +5054,7 @@ export const items_part9: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Preserve Rift, mana lattice, and anomaly terminology.",
 					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
@@ -5172,7 +5172,7 @@ export const items_part9: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Preserve Rift, mana lattice, and anomaly terminology.",
 					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
@@ -5292,7 +5292,7 @@ export const items_part9: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Preserve Rift, mana lattice, and anomaly terminology.",
 					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
@@ -5443,7 +5443,7 @@ export const items_part9: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Preserve Rift, mana lattice, and anomaly terminology.",
 					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
@@ -5555,7 +5555,7 @@ export const items_part9: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Preserve Rift, mana lattice, and anomaly terminology.",
 					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
@@ -5674,7 +5674,7 @@ export const items_part9: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Preserve Rift, mana lattice, and anomaly terminology.",
 					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
@@ -5805,7 +5805,7 @@ export const items_part9: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Preserve Rift, mana lattice, and anomaly terminology.",
 					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
@@ -5924,7 +5924,7 @@ export const items_part9: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Preserve Rift, mana lattice, and anomaly terminology.",
 					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
@@ -5942,7 +5942,7 @@ export const items_part9: Item[] = [
 		name: "Starlight Warhammer",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"A heavy maul with a Bureau-stamped haft and a head heavy enough to dent gate steel. Issued under the Starlight Warhammer designation.",
+			"A heavy maul with a Bureau-stamped haft and a head heavy enough to dent Rift steel. Issued under the Starlight Warhammer designation.",
 		rarity: "uncommon",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0966.webp",
@@ -6044,7 +6044,7 @@ export const items_part9: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Preserve Rift, mana lattice, and anomaly terminology.",
 					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
@@ -6163,7 +6163,7 @@ export const items_part9: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Preserve Rift, mana lattice, and anomaly terminology.",
 					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,

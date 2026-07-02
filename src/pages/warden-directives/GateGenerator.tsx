@@ -19,15 +19,12 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AutoLinkText } from "@/components/compendium/AutoLinkText";
 import { Layout } from "@/components/layout/Layout";
-import {
-	AscendantText,
-	ManaFlowText,
-	RiftHeading,
-} from "@/components/ui/AscendantText";
+import { AscendantText, ManaFlowText } from "@/components/ui/AscendantText";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
+import { PageHeader } from "@/components/ui/PageHeader";
 import {
 	Select,
 	SelectContent,
@@ -245,18 +242,19 @@ const GateGenerator = () => {
 						<ArrowLeft className="w-4 h-4 mr-2" />
 						Back to Warden Directives
 					</Button>
-					<RiftHeading
-						level={1}
-						variant="sovereign"
-						dimensional
-						className="mb-2"
-					>
-						Dimensional Rift Synthesis
-					</RiftHeading>
-					<ManaFlowText variant="rift" speed="slow" className="font-heading">
-						Compute localized anomalies embedding structural motifs,
-						environmental strata, Guardian constructs, and entropy vectors.
-					</ManaFlowText>
+					<PageHeader
+						title="Dimensional Rift Synthesis"
+						description={
+							<ManaFlowText
+								variant="rift"
+								speed="slow"
+								className="font-heading"
+							>
+								Compute localized anomalies embedding structural motifs,
+								environmental strata, Guardian constructs, and entropy vectors.
+							</ManaFlowText>
+						}
+					/>
 				</div>
 			)}
 
@@ -557,7 +555,7 @@ const GateGenerator = () => {
 														</div>
 													)}
 													{room.hazard && (
-														<div className="flex items-start gap-2 text-orange-400">
+														<div className="flex items-start gap-2 text-gate-a">
 															<AlertTriangle className="w-4 h-4 mt-0.5 shrink-0" />
 															<span>
 																{room.hazard.name} — DC {room.hazard.dc},{" "}
@@ -566,7 +564,7 @@ const GateGenerator = () => {
 														</div>
 													)}
 													{room.loot.length > 0 && (
-														<div className="flex items-start gap-2 text-yellow-400">
+														<div className="flex items-start gap-2 text-gate-s">
 															<Trophy className="w-4 h-4 mt-0.5 shrink-0" />
 															<span>{room.loot.join(", ")}</span>
 														</div>
@@ -666,7 +664,7 @@ const GateGenerator = () => {
 												className="border border-border rounded-lg p-3 space-y-1"
 											>
 												<div className="flex items-center gap-2">
-													<AlertTriangle className="w-4 h-4 text-orange-400" />
+													<AlertTriangle className="w-4 h-4 text-gate-a" />
 													<span className="font-heading text-sm">
 														{haz.name}
 													</span>
@@ -690,7 +688,7 @@ const GateGenerator = () => {
 							<AscendantWindow title="REWARDS">
 								<div className="space-y-3 text-sm">
 									<div className="flex items-center gap-2">
-										<Trophy className="w-4 h-4 text-yellow-400" />
+										<Trophy className="w-4 h-4 text-gate-s" />
 										<span>
 											Total XP: {rift.rewards.totalXP.toLocaleString()}
 										</span>
@@ -706,7 +704,7 @@ const GateGenerator = () => {
 															? `${rift.rewards.treasure.hundreds} Core Credits`
 															: "",
 														rift.rewards.treasure.tens > 0
-															? `${rift.rewards.treasure.tens} Gate Credits`
+															? `${rift.rewards.treasure.tens} Rift Credits`
 															: "",
 													]
 														.filter(Boolean)

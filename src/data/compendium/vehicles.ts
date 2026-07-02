@@ -14,7 +14,7 @@
  *   - Rift-tech / augmented Bureau & Guild assets — 6
  *   - Rare / Pantheon / one-of-a-kind — 3
  *
- * All entries fit RA canon (modern urban-fantasy setting with Gates,
+ * All entries fit RA canon (modern urban-fantasy setting with Rifts,
  * Bureau, Vermillion Guild, and Pantheon Eternals — no medieval ships
  * or fantasy chariots).
  *
@@ -75,7 +75,7 @@ const mountsRealWorld: CompendiumVehicle[] = [
 		name: "Bureau Riding Horse",
 		display_name: "Bureau Riding Horse",
 		description:
-			"Standard-issue mount from Bureau stables. Trained for urban deployment; spooks less than a civilian horse when a Gate flickers nearby.",
+			"Standard-issue mount from Bureau stables. Trained for urban deployment; spooks less than a civilian horse when a Rift flickers nearby.",
 		vehicle_type: "mount",
 		size: "large",
 		speed: { land: 60 },
@@ -221,7 +221,7 @@ const mountsRealWorld: CompendiumVehicle[] = [
 		name: "Dust-Rift Camel",
 		display_name: "Dust-Rift Camel",
 		description:
-			"Desert-Bureau mount, originally bred for Saudi-line Gate ops. Immune to exhaustion from heat; carries a full water-week.",
+			"Desert-Bureau mount, originally bred for Saudi-line Rift ops. Immune to exhaustion from heat; carries a full water-week.",
 		vehicle_type: "mount",
 		size: "large",
 		speed: { land: 50 },
@@ -468,7 +468,7 @@ const mountsBondedAnomalies: CompendiumVehicle[] = [
 		name: "Bonded Abyssal Titan, Whelp",
 		display_name: "Bonded Abyssal Titan, Whelp",
 		description:
-			"Juvenile form of the Eternal Abyssal Titan. Heavy carry mount; cannot enter gates smaller than Large.",
+			"Juvenile form of the Eternal Abyssal Titan. Heavy carry mount; cannot enter Rifts smaller than Large.",
 		vehicle_type: "mount",
 		size: "large",
 		speed: { land: 30 },
@@ -483,7 +483,7 @@ const mountsBondedAnomalies: CompendiumVehicle[] = [
 			{
 				name: "Titanic Frame",
 				description:
-					"The whelp's doubled carry capacity lets it haul riders, gear, and salvage that would break a lesser mount, but it cannot enter spaces or gates sized smaller than Large.",
+					"The whelp's doubled carry capacity lets it haul riders, gear, and salvage that would break a lesser mount, but it cannot enter spaces or Rifts sized smaller than Large.",
 				action_type: "passive",
 			},
 			{
@@ -610,7 +610,7 @@ const mountsNetNew: CompendiumVehicle[] = [
 		name: "Mana-Touched Wolf",
 		display_name: "Mana-Touched Wolf",
 		description:
-			"Feral wolf-class anomaly that has acquired faint mana resonance from a leaked Gate. Most common path-tamed mount.",
+			"Feral wolf-class anomaly that has acquired faint mana resonance from a leaked Rift. Most common path-tamed mount.",
 		vehicle_type: "mount",
 		size: "medium",
 		speed: { land: 50 },
@@ -622,7 +622,7 @@ const mountsNetNew: CompendiumVehicle[] = [
 			{
 				name: "Mana-Sense",
 				description:
-					"Detects mana resonance within 30 ft (e.g. Gate residue, an active Ascendant overflux).",
+					"Detects mana resonance within 30 ft (e.g. Rift residue, an active Ascendant overflux).",
 				action_type: "passive",
 			},
 		],
@@ -899,7 +899,7 @@ const vehiclesRealWorld: CompendiumVehicle[] = [
 		name: "Bureau Search-and-Rescue Helicopter",
 		display_name: "Bureau Search-and-Rescue Helicopter",
 		description:
-			"Bureau air-mobile unit. Crew: pilot + door-gunner + 4 passengers. Deployed during Gate-Breach response within minutes of an alert.",
+			"Bureau air-mobile unit. Crew: pilot + door-gunner + 4 passengers. Deployed during Rift-Breach response within minutes of an alert.",
 		vehicle_type: "air",
 		size: "huge",
 		speed: { air: 200 },
@@ -956,7 +956,7 @@ const vehiclesRealWorld: CompendiumVehicle[] = [
 		name: "Coast Cutter / Patrol Boat",
 		display_name: "Coast Cutter / Patrol Boat",
 		description:
-			"Bureau marine unit for coastal Gates. Twin-engine; 12-person crew.",
+			"Bureau marine unit for coastal Rifts. Twin-engine; 12-person crew.",
 		vehicle_type: "water",
 		size: "gargantuan",
 		speed: { water: 80 },
@@ -978,7 +978,7 @@ const vehiclesRealWorld: CompendiumVehicle[] = [
 		name: "Subway Car, Rift-Warded",
 		display_name: "Subway Car, Rift-Warded",
 		description:
-			"Bureau-modified subway car deployed when a subway-station Gate opens. Carries a full strike team; the warding holds against C-rank residue.",
+			"Bureau-modified subway car deployed when a subway-station Rift opens. Carries a full strike team; the warding holds against C-rank residue.",
 		vehicle_type: "land",
 		size: "gargantuan",
 		speed: { land: 120 },
@@ -1034,7 +1034,7 @@ const vehiclesRealWorld: CompendiumVehicle[] = [
 		name: "City Bus",
 		display_name: "City Bus",
 		description:
-			"Mass-evac platform during Gate breach. Carries 40 civilians; slow, soft target, but the only thing that gets a neighborhood out at once.",
+			"Mass-evac platform during Rift breach. Carries 40 civilians; slow, soft target, but the only thing that gets a neighborhood out at once.",
 		vehicle_type: "land",
 		size: "gargantuan",
 		speed: { land: 60 },

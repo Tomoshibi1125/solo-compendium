@@ -7,7 +7,7 @@ export const PantheonChapter = () => {
 	return (
 		<div className="space-y-16 animate-in fade-in slide-in-from-bottom-4 duration-1000 max-w-5xl mx-auto">
 			<section className="text-center mb-16">
-				<RiftHeading level={1} className="text-5xl text-fuchsia-400 mb-6">
+				<RiftHeading level={1} className="text-5xl text-resurge-violet mb-6">
 					The Echelon of Balance
 				</RiftHeading>
 				<p className="text-lg text-muted-foreground leading-relaxed max-w-3xl mx-auto">
@@ -21,8 +21,8 @@ export const PantheonChapter = () => {
 
 			{/* The Prime Pantheon */}
 			<section className="space-y-12">
-				<div className="flex items-center gap-3 mb-8 border-b border-fuchsia-500/20 pb-4">
-					<Stars className="w-8 h-8 text-fuchsia-400" />
+				<div className="flex items-center gap-3 mb-8 border-b border-resurge-violet/20 pb-4">
+					<Stars className="w-8 h-8 text-resurge-violet" />
 					<h2 className="text-3xl font-display font-bold text-white uppercase tracking-wider">
 						The Prime Pantheon (Eternals)
 					</h2>
@@ -32,22 +32,22 @@ export const PantheonChapter = () => {
 					{PRIME_PANTHEON.map((deity) => (
 						<article
 							key={deity.id}
-							className="bg-glass border border-fuchsia-900/30 rounded-xl overflow-hidden shadow-2xl relative p-8"
+							className="bg-glass border border-resurge-violet/30 rounded-xl overflow-hidden shadow-2xl relative p-8"
 						>
-							<div className="absolute top-0 right-0 w-64 h-64 bg-fuchsia-500/5 rounded-full blur-3xl pointer-events-none" />
+							<div className="absolute top-0 right-0 w-64 h-64 bg-resurge-violet/5 rounded-full blur-3xl pointer-events-none" />
 
 							<div className="relative z-10 grid md:grid-cols-3 gap-8">
-								<div className="md:col-span-1 border-r border-fuchsia-500/20 pr-8">
+								<div className="md:col-span-1 border-r border-resurge-violet/20 pr-8">
 									<div className="flex items-center gap-2 mb-2">
-										<Crown className="w-5 h-5 text-fuchsia-400" />
-										<span className="text-[10px] font-mono text-fuchsia-300 uppercase tracking-widest">
+										<Crown className="w-5 h-5 text-resurge-violet" />
+										<span className="text-[10px] font-mono text-resurge-violet uppercase tracking-widest">
 											{deity.rank}
 										</span>
 									</div>
 									<h3 className="text-3xl font-display font-bold text-white uppercase mb-1">
 										{deity.name}
 									</h3>
-									<p className="text-xs text-fuchsia-400/80 italic mb-4">
+									<p className="text-xs text-resurge-violet/80 italic mb-4">
 										{deity.display_name}
 									</p>
 									<div className="space-y-4">
@@ -71,20 +71,20 @@ export const PantheonChapter = () => {
 								</div>
 
 								<div className="md:col-span-2 space-y-6">
-									<p className="text-sm text-slate-300 leading-relaxed border-l-2 border-fuchsia-500/30 pl-4 py-1 italic">
+									<p className="text-sm text-slate-300 leading-relaxed border-l-2 border-resurge-violet/30 pl-4 py-1 italic">
 										{deity.description}
 									</p>
 
 									<div className="grid sm:grid-cols-2 gap-6">
 										<div>
-											<h4 className="text-[10px] font-bold text-fuchsia-400 uppercase tracking-widest mb-2 flex items-center gap-1">
+											<h4 className="text-[10px] font-bold text-resurge-violet uppercase tracking-widest mb-2 flex items-center gap-1">
 												<Sparkles className="w-3 h-3" /> Core Domains
 											</h4>
 											<div className="flex flex-wrap gap-2">
 												{(deity.specializations ?? []).map((spec: string) => (
 													<span
 														key={spec}
-														className="px-2 py-0.5 bg-fuchsia-500/10 text-fuchsia-300 text-[10px] border border-fuchsia-500/20 rounded-full font-mono"
+														className="px-2 py-0.5 bg-resurge-violet/10 text-resurge-violet text-[10px] border border-resurge-violet/20 rounded-full font-mono"
 													>
 														{spec}
 													</span>
@@ -92,7 +92,7 @@ export const PantheonChapter = () => {
 											</div>
 										</div>
 										<div>
-											<h4 className="text-[10px] font-bold text-fuchsia-400 uppercase tracking-widest mb-2 flex items-center gap-1">
+											<h4 className="text-[10px] font-bold text-resurge-violet uppercase tracking-widest mb-2 flex items-center gap-1">
 												<ShieldAlert className="w-3 h-3" /> Manifestation
 											</h4>
 											<p className="text-xs text-slate-400">
@@ -118,8 +118,8 @@ export const PantheonChapter = () => {
 
 			{/* Regent Overlays */}
 			<section className="space-y-12">
-				<div className="flex items-center gap-3 mb-8 border-b border-fuchsia-500/20 pb-4">
-					<Sparkles className="w-8 h-8 text-fuchsia-400" />
+				<div className="flex items-center gap-3 mb-8 border-b border-resurge-violet/20 pb-4">
+					<Sparkles className="w-8 h-8 text-resurge-violet" />
 					<h2 className="text-3xl font-display font-bold text-white uppercase tracking-wider">
 						Regent Class Overlays
 					</h2>
@@ -129,17 +129,17 @@ export const PantheonChapter = () => {
 					{regents.map((regent) => (
 						<article
 							key={regent.id}
-							className="bg-glass border border-fuchsia-900/50 rounded-xl overflow-hidden shadow-2xl relative"
+							className="bg-glass border border-resurge-violet/40 rounded-xl overflow-hidden shadow-2xl relative"
 						>
-							<div className="absolute top-0 right-0 w-96 h-96 bg-fuchsia-500/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none" />
+							<div className="absolute top-0 right-0 w-96 h-96 bg-resurge-violet/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none" />
 
 							<div className="flex flex-col md:flex-row">
-								<div className="md:w-1/3 bg-void/80 p-8 border-r border-fuchsia-900/30 flex flex-col items-center text-center justify-center relative z-10">
-									<Crown className="w-16 h-16 text-fuchsia-400 mb-4 opacity-80" />
+								<div className="md:w-1/3 bg-void/80 p-8 border-r border-resurge-violet/30 flex flex-col items-center text-center justify-center relative z-10">
+									<Crown className="w-16 h-16 text-resurge-violet mb-4 opacity-80" />
 									<h3 className="text-3xl font-display font-bold text-white uppercase tracking-wider mb-2">
 										{regent.name}
 									</h3>
-									<p className="text-fuchsia-300 font-mono text-sm uppercase tracking-widest mb-4">
+									<p className="text-resurge-violet font-mono text-sm uppercase tracking-widest mb-4">
 										{regent.title}
 									</p>
 									<span className="px-4 py-1 bg-red-500/20 text-red-400 font-bold border border-red-500/40 rounded-sm font-mono text-sm shadow-lg">
@@ -148,7 +148,7 @@ export const PantheonChapter = () => {
 								</div>
 
 								<div className="md:w-2/3 p-8 relative z-10 space-y-6">
-									<p className="text-sm text-slate-300 leading-relaxed italic border-l-4 border-fuchsia-500/50 pl-4 bg-fuchsia-500/5 py-4">
+									<p className="text-sm text-slate-300 leading-relaxed italic border-l-4 border-resurge-violet/50 pl-4 bg-resurge-violet/5 py-4">
 										{regent.description}
 									</p>
 
@@ -172,18 +172,18 @@ export const PantheonChapter = () => {
 									</div>
 
 									<div>
-										<h4 className="text-xs font-bold text-fuchsia-400 uppercase tracking-widest mb-3 border-b border-fuchsia-500/20 pb-1">
+										<h4 className="text-xs font-bold text-resurge-violet uppercase tracking-widest mb-3 border-b border-resurge-violet/20 pb-1">
 											Sovereign Job Features
 										</h4>
 										<div className="grid sm:grid-cols-2 gap-3 max-h-64 overflow-y-auto pr-2 custom-scrollbar">
 											{regent.class_features?.map((feat) => (
 												<div
 													key={feat.name}
-													className="bg-void p-3 rounded border border-white/5 hover:border-fuchsia-500/30 transition-colors"
+													className="bg-void p-3 rounded border border-white/5 hover:border-resurge-violet/30 transition-colors"
 												>
 													<h5 className="text-white font-bold text-xs mb-1 flex justify-between">
 														<span>{feat.name}</span>
-														<span className="text-fuchsia-500/70 font-mono">
+														<span className="text-resurge-violet/70 font-mono">
 															Lv {feat.level}
 														</span>
 													</h5>

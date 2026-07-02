@@ -27,7 +27,7 @@ export interface SandboxNPC {
 	 */
 	kind?: "ascendant" | "mundane";
 	/**
-	 * Hunter rank letter E–SS (ascendants only). Informational/display — NEVER a permission gate.
+	 * Hunter rank letter E–SS (ascendants only). Informational/display — NEVER a permission Rift.
 	 */
 	rank?: string;
 	job: string;
@@ -1328,7 +1328,7 @@ const independents: SandboxNPC[] = [
 		backstory:
 			"Someone has to walk the rolls, and Dunn decided it should be someone who flinches. He under-counts, mis-files, and looks away — and the ledger has begun to notice the shortfall.",
 		keyAbilities: [
-			"Grim Livery (passes the gates)",
+			"Grim Livery (passes the Rifts)",
 			"Knows the Rolls",
 			"Reluctant Authority",
 		],
@@ -1894,7 +1894,7 @@ const independents: SandboxNPC[] = [
 			"Ysolde was posted to the Gloamreach cordon and simply never accepted the order to fall back.",
 		keyAbilities: ["Warding Oath", "Perimeter Sense", "Shield of the Sleeping"],
 		recruitCondition:
-			"Stand a full night-watch at her side and she marches with a guild that means to protect people, not just clear gates.",
+			"Stand a full night-watch at her side and she marches with a guild that means to protect people, not just clear Rifts.",
 		isRecruitable: true,
 		guildAffiliation: null,
 		location: "The settlement perimeter, Ysolde's watch-post",
@@ -2197,19 +2197,19 @@ const anomalyAdjacent: SandboxNPC[] = [
 	makeNPC({
 		id: "npc-court-006",
 		name: "The Doorward",
-		title: "Keeper of the Last Gate",
+		title: "Keeper of the Last Rift",
 		faction: "anomaly_adjacent",
 		level: 9,
 		job: "Destroyer",
 		hp: 96,
 		ac: 17,
 		description:
-			"A worn-dead that guards a gate deep in the dark — part golem, part old custom, entirely certain of who may pass and who may not.",
+			"A worn-dead that guards a Rift deep in the dark — part golem, part old custom, entirely certain of who may pass and who may not.",
 		personality: "Literal, ceremonial, and without a flicker of doubt.",
 		motivation:
 			"Admit those who pass its test, turn away the rest, and remember every face that tries twice.",
 		backstory:
-			"The Doorward has stood at its gate since the Gloamreach first went dark. It lets a false name pass once; the second time, it remembers. Broken promises become hostile witnesses in its presence.",
+			"The Doorward has stood at its Rift since the Gloamreach first went dark. It lets a false name pass once; the second time, it remembers. Broken promises become hostile witnesses in its presence.",
 		keyAbilities: [
 			"Tests Who Passes",
 			"Remembers False Names",
@@ -2219,7 +2219,7 @@ const anomalyAdjacent: SandboxNPC[] = [
 			"Cannot be recruited. The right token, true silence, or a convincing seeming gets the party past it; a broken promise gets them remembered.",
 		isRecruitable: false,
 		guildAffiliation: "The Quiet's Worn Dead",
-		location: "A gate deep in the Gloamreach, near the Threshold",
+		location: "A Rift deep in the Gloamreach, near the Threshold",
 		questHook:
 			"The Doorward has the party's true names among those to be turned away — unless they arrive carrying something the threshold itself cannot refuse.",
 	}),

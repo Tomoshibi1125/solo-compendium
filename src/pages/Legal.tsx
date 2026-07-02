@@ -1,6 +1,6 @@
 import { Scale } from "lucide-react";
-import { AscendantText } from "@/components/ui/AscendantText";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
+import { PageHeader } from "@/components/ui/PageHeader";
 
 /**
  * Licenses & Attribution.
@@ -13,15 +13,11 @@ import { AscendantWindow } from "@/components/ui/AscendantWindow";
 export default function Legal() {
 	return (
 		<div className="container mx-auto max-w-3xl px-4 py-6 space-y-6">
-			<header>
-				<h1 className="font-resurge text-2xl tracking-wide flex items-center gap-2">
-					<Scale className="w-6 h-6 text-primary" />
-					LICENSES &amp; ATTRIBUTION
-				</h1>
-				<AscendantText className="block mt-2 text-sm text-muted-foreground">
-					What Rift Ascendant is built on, and the terms it honors.
-				</AscendantText>
-			</header>
+			<PageHeader
+				leading={<Scale className="w-8 h-8 text-primary" />}
+				title="LICENSES & ATTRIBUTION"
+				description="What Rift Ascendant is built on, and the terms it honors."
+			/>
 
 			<AscendantWindow title="SYSTEM REFERENCE DOCUMENT 5.1">
 				<div className="space-y-3 text-sm text-foreground/90">
@@ -59,9 +55,9 @@ export default function Legal() {
 				<p className="text-sm text-foreground/90">
 					The Rift Ascendant setting — including the Rift Age world, the
 					Ascendant jobs and paths, Regents and Sovereign fusion, anomalies,
-					gates and thresholds, the Hunter Bureau, all narrative prose, and the
-					Rift Ascendant source books — is original content of the Rift
-					Ascendant Canon. It is not open game content.
+					Rifts and Thresholds, the Bureau, all narrative prose, and the Rift
+					Ascendant source books — is original content of the Rift Ascendant
+					Canon. It is not open game content.
 				</p>
 			</AscendantWindow>
 

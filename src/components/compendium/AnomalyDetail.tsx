@@ -488,7 +488,7 @@ export const AnomalyDetail = ({ data }: { data: AnomalyData }) => {
 
 				<AscendantWindow title="RIFT RANK" compact>
 					<div className="flex items-center gap-2">
-						<Swords className="w-5 h-5 text-orange-400" />
+						<Swords className="w-5 h-5 text-gate-a" />
 						<span className="font-display text-2xl">
 							{(rankVal || "—").toUpperCase()}
 						</span>
@@ -550,7 +550,7 @@ export const AnomalyDetail = ({ data }: { data: AnomalyData }) => {
 							{data.damage_resistances &&
 								data.damage_resistances.length > 0 && (
 									<div>
-										<span className="text-yellow-400 font-heading text-sm">
+										<span className="text-gate-s font-heading text-sm">
 											Resistances:{" "}
 										</span>
 										<span className="text-muted-foreground">
@@ -808,7 +808,7 @@ export const AnomalyDetail = ({ data }: { data: AnomalyData }) => {
 			{legendaryActions.length > 0 && (
 				<StatBlock
 					title="LEGENDARY ACTIONS"
-					className="border-amber-500/30 border-2"
+					className="border-gate-s/30 border-2"
 					id="anomaly-legendary"
 				>
 					<p className="text-sm text-foreground mb-4 font-medium leading-relaxed">
@@ -822,7 +822,7 @@ export const AnomalyDetail = ({ data }: { data: AnomalyData }) => {
 								className="mb-4 last:mb-0 pb-4 last:pb-0 border-b border-border/30 last:border-b-0"
 							>
 								<div className="flex items-center gap-2 mb-2">
-									<h4 className="font-heading font-semibold text-amber-400 text-base">
+									<h4 className="font-heading font-semibold text-gate-s text-base">
 										{formatRegentVernacular(action.name)}
 									</h4>
 									{action.legendary_cost && action.legendary_cost > 1 && (

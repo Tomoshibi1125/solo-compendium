@@ -23,9 +23,9 @@ import { OfflineStatus } from "@/components/pwa/PWAComponents";
 import { RouteEffects } from "@/components/RouteEffects";
 import { AnalyticsConsentBanner } from "@/components/ui/AnalyticsConsentBanner";
 import { CommandPalette } from "@/components/ui/CommandPalette";
-import { ZonedCosmicBackground } from "@/components/ui/CosmicBackground";
 import { GlobalEffects } from "@/components/ui/GlobalEffects";
 import { OfflineIndicator } from "@/components/ui/OfflineIndicator";
+import { ZonedRiftSiteBackground } from "@/components/ui/RiftSiteBackground";
 import { ServiceWorkerUpdatePrompt } from "@/components/ui/ServiceWorkerUpdatePrompt";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
@@ -873,7 +873,7 @@ const App = () => {
 						<TooltipProvider>
 							<PerformanceProvider>
 								<AuthProvider>
-									<ZonedCosmicBackground />
+									<ZonedRiftSiteBackground />
 									<GlobalEffects />
 									<PerformancePreload />
 									<Toaster />

@@ -2343,11 +2343,11 @@ export const LevelUpWizardModal = ({
 								{/* Level Down Preview — only shown when going down */}
 								{isLevelDown && (
 									<>
-										<div className="p-4 rounded-lg bg-gradient-to-r from-red-500/10 to-amber-500/5 border border-red-500/30">
+										<div className="p-4 rounded-lg bg-gradient-to-r from-red-500/10 to-gate-s/5 border border-red-500/30">
 											<div className="flex items-start gap-3">
-												<AlertTriangle className="w-5 h-5 text-amber-400 mt-0.5 flex-shrink-0" />
+												<AlertTriangle className="w-5 h-5 text-gate-s mt-0.5 flex-shrink-0" />
 												<div>
-													<h4 className="font-resurge text-amber-400 tracking-wide text-sm mb-2">
+													<h4 className="font-resurge text-gate-s tracking-wide text-sm mb-2">
 														DESTRUCTIVE OPERATION
 													</h4>
 													<p className="text-sm text-muted-foreground font-heading">
@@ -2893,8 +2893,8 @@ export const LevelUpWizardModal = ({
 								)}
 
 								{requiredSpellbookInscriptions > 0 && (
-									<div className="p-4 rounded-lg bg-gradient-to-r from-indigo-500/10 to-transparent border border-indigo-500/20">
-										<Label className="font-resurge text-indigo-400 tracking-wide flex items-center gap-2 mb-4">
+									<div className="p-4 rounded-lg bg-gradient-to-r from-hunter-blue/10 to-transparent border border-hunter-blue/20">
+										<Label className="font-resurge text-hunter-blue tracking-wide flex items-center gap-2 mb-4">
 											<Sparkles className="w-4 h-4" />
 											{formatRegentVernacular(
 												jobObj?.spellbook?.label ?? "Spellbook",
@@ -2918,7 +2918,7 @@ export const LevelUpWizardModal = ({
 															"flex items-start gap-3 p-2 rounded-lg border transition-all",
 															isSelected
 																? "bg-primary/15 border-primary ring-2 ring-primary/60"
-																: "bg-background/50 border-indigo-500/10 hover:border-indigo-500/30",
+																: "bg-background/50 border-hunter-blue/10 hover:border-hunter-blue/30",
 														)}
 													>
 														<input
@@ -2939,14 +2939,14 @@ export const LevelUpWizardModal = ({
 																selectedSpellbookIds.length >=
 																	requiredSpellbookInscriptions
 															}
-															className="mt-1 rounded border-indigo-500/30"
+															className="mt-1 rounded border-hunter-blue/30"
 														/>
 														<label
 															htmlFor={`level-spellbook-${spell.id}`}
 															className="flex-1 cursor-pointer"
 														>
 															<div className="flex items-center gap-2 flex-wrap">
-																<span className="font-resurge text-sm text-indigo-400">
+																<span className="font-resurge text-sm text-hunter-blue">
 																	{formatRegentVernacular(spell.name)}
 																</span>
 																<Badge variant="secondary" className="text-xs">
@@ -3057,8 +3057,8 @@ export const LevelUpWizardModal = ({
 								)}
 
 								{requiredTechniqueChoices > 0 && (
-									<div className="p-4 rounded-lg bg-gradient-to-r from-orange-500/10 to-transparent border border-orange-500/20">
-										<Label className="font-resurge text-orange-400 tracking-wide flex items-center gap-2 mb-4">
+									<div className="p-4 rounded-lg bg-gradient-to-r from-gate-a/10 to-transparent border border-gate-a/20">
+										<Label className="font-resurge text-gate-a tracking-wide flex items-center gap-2 mb-4">
 											<Swords className="w-4 h-4" />
 											TECHNIQUES
 										</Label>
@@ -3079,7 +3079,7 @@ export const LevelUpWizardModal = ({
 															"flex items-start gap-3 p-2 rounded-lg border transition-all",
 															isSelected
 																? "bg-primary/15 border-primary ring-2 ring-primary/60"
-																: "bg-background/50 border-orange-500/10 hover:border-orange-500/30",
+																: "bg-background/50 border-gate-a/10 hover:border-gate-a/30",
 														)}
 													>
 														<input
@@ -3110,14 +3110,14 @@ export const LevelUpWizardModal = ({
 																selectedTechniqueIds.length >=
 																	requiredTechniqueChoices
 															}
-															className="mt-1 rounded border-orange-500/30"
+															className="mt-1 rounded border-gate-a/30"
 														/>
 														<label
 															htmlFor={`level-technique-${technique.id}`}
 															className="flex-1 cursor-pointer"
 														>
 															<div className="flex items-center gap-2 flex-wrap">
-																<span className="font-resurge text-sm text-orange-400">
+																<span className="font-resurge text-sm text-gate-a">
 																	{formatRegentVernacular(technique.name)}
 																</span>
 																{technique.level_requirement && (
@@ -3224,8 +3224,8 @@ export const LevelUpWizardModal = ({
 								)}
 
 								{requiredFightingStyleChoices > 0 && (
-									<div className="p-4 rounded-lg bg-gradient-to-r from-rose-500/10 to-transparent border border-rose-500/20">
-										<Label className="font-resurge text-rose-400 tracking-wide flex items-center gap-2 mb-4">
+									<div className="p-4 rounded-lg bg-gradient-to-r from-gate-a/10 to-transparent border border-gate-a/20">
+										<Label className="font-resurge text-gate-a tracking-wide flex items-center gap-2 mb-4">
 											<Shield className="w-4 h-4" />
 											FIGHTING STYLE
 										</Label>
@@ -3246,7 +3246,7 @@ export const LevelUpWizardModal = ({
 															"flex items-start gap-3 p-2 rounded-lg border transition-all",
 															isSelected
 																? "bg-primary/15 border-primary ring-2 ring-primary/60"
-																: "bg-background/50 border-rose-500/10 hover:border-rose-500/30",
+																: "bg-background/50 border-gate-a/10 hover:border-gate-a/30",
 														)}
 													>
 														<input
@@ -3267,14 +3267,14 @@ export const LevelUpWizardModal = ({
 																selectedFightingStyleIds.length >=
 																	requiredFightingStyleChoices
 															}
-															className="mt-1 rounded border-rose-500/30"
+															className="mt-1 rounded border-gate-a/30"
 														/>
 														<label
 															htmlFor={`level-style-${style.id}`}
 															className="flex-1 cursor-pointer"
 														>
 															<div className="flex items-center gap-2 flex-wrap">
-																<span className="font-resurge text-sm text-rose-400">
+																<span className="font-resurge text-sm text-gate-a">
 																	{formatRegentVernacular(style.name)}
 																</span>
 																<Badge variant="outline" className="text-xs">
@@ -3303,9 +3303,9 @@ export const LevelUpWizardModal = ({
 									return (
 										<div
 											key={panel.key}
-											className="p-4 rounded-lg bg-gradient-to-r from-violet-500/10 to-transparent border border-violet-500/20"
+											className="p-4 rounded-lg bg-gradient-to-r from-resurge-violet/10 to-transparent border border-resurge-violet/20"
 										>
-											<Label className="font-resurge text-violet-400 tracking-wide flex items-center gap-2 mb-4">
+											<Label className="font-resurge text-resurge-violet tracking-wide flex items-center gap-2 mb-4">
 												<Sparkles className="w-4 h-4" />
 												{formatRegentVernacular(panel.label).toUpperCase()}
 											</Label>
@@ -3319,7 +3319,7 @@ export const LevelUpWizardModal = ({
 													return (
 														<div
 															key={option.id}
-															className="flex items-start gap-3 p-2 rounded-lg bg-background/50 border border-violet-500/10"
+															className="flex items-start gap-3 p-2 rounded-lg bg-background/50 border border-resurge-violet/10"
 														>
 															<input
 																type="checkbox"
@@ -3339,13 +3339,13 @@ export const LevelUpWizardModal = ({
 																	!isSelected &&
 																	selectedValues.length >= panel.count
 																}
-																className="mt-1 rounded border-violet-500/30"
+																className="mt-1 rounded border-resurge-violet/30"
 															/>
 															<label
 																htmlFor={`level-ledger-${panel.key}-${option.id}`}
 																className="flex-1 cursor-pointer"
 															>
-																<span className="font-resurge text-sm text-violet-400">
+																<span className="font-resurge text-sm text-resurge-violet">
 																	{formatRegentVernacular(option.label)}
 																</span>
 																{option.description && (
@@ -3366,8 +3366,8 @@ export const LevelUpWizardModal = ({
 								})}
 
 								{unresolvedLedgerEntries.length > 0 && (
-									<div className="p-4 rounded-lg bg-gradient-to-r from-amber-500/10 to-transparent border border-amber-500/20">
-										<Label className="font-resurge text-amber-400 tracking-wide flex items-center gap-2 mb-4">
+									<div className="p-4 rounded-lg bg-gradient-to-r from-gate-s/10 to-transparent border border-gate-s/20">
+										<Label className="font-resurge text-gate-s tracking-wide flex items-center gap-2 mb-4">
 											<Sparkles className="w-4 h-4" />
 											PENDING SELECTION PROTOCOLS
 										</Label>
@@ -3380,9 +3380,9 @@ export const LevelUpWizardModal = ({
 											{unresolvedLedgerEntries.map((entry) => (
 												<div
 													key={`${entry.level}:${entry.type}:${entry.source}`}
-													className="p-2 rounded-lg bg-background/50 border border-amber-500/10"
+													className="p-2 rounded-lg bg-background/50 border border-gate-s/10"
 												>
-													<span className="font-resurge text-sm text-amber-400">
+													<span className="font-resurge text-sm text-gate-s">
 														{formatRegentVernacular(entry.source)}
 													</span>
 													<p className="text-xs text-muted-foreground mt-1">
@@ -3398,8 +3398,8 @@ export const LevelUpWizardModal = ({
 
 								{/* New Features */}
 								{newFeatures.length > 0 && (
-									<div className="p-4 rounded-lg bg-gradient-to-r from-amber-500/10 to-transparent border border-amber-500/20">
-										<Label className="font-resurge text-amber-400 tracking-wide flex items-center gap-2 mb-4">
+									<div className="p-4 rounded-lg bg-gradient-to-r from-gate-s/10 to-transparent border border-gate-s/20">
+										<Label className="font-resurge text-gate-s tracking-wide flex items-center gap-2 mb-4">
 											<Sparkles className="w-4 h-4" />
 											NEW ABILITIES UNLOCKED
 										</Label>
@@ -3419,7 +3419,7 @@ export const LevelUpWizardModal = ({
 																	<div className="flex items-center gap-2 mb-1 flex-wrap">
 																		<Label
 																			htmlFor={`feature-${feature.id}`}
-																			className="font-resurge font-semibold cursor-pointer text-amber-400 tracking-wide"
+																			className="font-resurge font-semibold cursor-pointer text-gate-s tracking-wide"
 																		>
 																			{formatRegentVernacular(feature.name)}
 																		</Label>
@@ -3436,7 +3436,7 @@ export const LevelUpWizardModal = ({
 																		{feature.uses_formula && (
 																			<Badge
 																				variant="outline"
-																				className="text-xs font-heading border-amber-500/30 text-amber-400"
+																				className="text-xs font-heading border-gate-s/30 text-gate-s"
 																			>
 																				{formatRegentVernacular(
 																					feature.uses_formula,

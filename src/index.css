@@ -51,6 +51,15 @@
 	--color-silver-commander: hsl(var(--silver-commander));
 	--color-void-black: hsl(var(--void-black));
 
+	/* Brand vocabulary aliases — used widely in components (tabs, NavBar,
+	   character sheet). Without these @theme entries Tailwind v4 silently
+	   generates no CSS for e.g. `bg-obsidian-charcoal/40`. */
+	--color-amethyst-purple: hsl(var(--shadow-purple));
+	--color-obsidian-charcoal: hsl(265 30% 8%);
+	--color-resurge: hsl(var(--resurge-violet));
+	--color-amethyst: hsl(var(--shadow-purple));
+	--color-void: hsl(var(--void-black));
+
 	/* ── shadcn semantic tokens (map :root HSL vars → utilities) ── */
 	--color-background: hsl(var(--background));
 	--color-foreground: hsl(var(--foreground));
@@ -98,6 +107,12 @@
 	--animate-system-boot: system-boot 0.8s ease-out both;
 
 	/* ── Keyframes (defined below as standard CSS) ────────── */
+}
+
+/* Radial-gradient utility (Tailwind v3-style API; v4 doesn't ship it).
+   Consumed by RaLogo aura + DiceRoller ambience. */
+@utility bg-gradient-radial {
+	background-image: radial-gradient(circle, var(--tw-gradient-stops));
 }
 
 /* ============================================================
@@ -385,20 +400,16 @@ h3 {
 	background-size: 50px 50px;
 }
 
-.hero-bg-image {
-	--hero-bg: -webkit-image-set(
-		url("/ui/landing-page-hero.avif") type("image/avif"),
-		url("/ui/landing-page-hero.webp") type("image/webp")
-	);
-	background: var(--color-shadow-dark) var(--hero-bg) center / cover no-repeat;
-	filter: brightness(0.3) saturate(1.2) contrast(1.1);
+/* RiftSiteBackground base layer — avif with webp fallback via image-set */
+.rift-site-base {
+	background-image: url("/ui-art/rift-site-hero.webp");
 }
 
 @supports (background-image: image-set(url("/a") type("image/avif"))) {
-	.hero-bg-image {
-		--hero-bg: image-set(
-			url("/ui/landing-page-hero.avif") type("image/avif"),
-			url("/ui/landing-page-hero.webp") type("image/webp")
+	.rift-site-base {
+		background-image: image-set(
+			url("/ui-art/rift-site-hero.avif") type("image/avif"),
+			url("/ui-art/rift-site-hero.webp") type("image/webp")
 		);
 	}
 }

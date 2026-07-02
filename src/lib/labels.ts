@@ -91,17 +91,18 @@ export function formatActionType(value: string | null | undefined): string {
 	return ACTION_TYPE_KNOWN.has(v.toLowerCase()) ? formatEnumLabel(v) : v;
 }
 
-// Canonical per-tier badge classes (matches the ItemDetail palette). Normalizes
-// the underscore very_rare spelling so data in either form styles correctly.
+// Canonical per-tier badge classes on the cool gate ordinal ramp (mirrors
+// rankColors.ts rarityToGateBadge, plus a bg wash). Normalizes the underscore
+// very_rare spelling so data in either form styles correctly.
 const RARITY_BADGE_CLASS: Record<string, string> = {
 	common: "text-muted-foreground border-border bg-card",
-	uncommon: "text-emerald-400 border-emerald-500/40 bg-emerald-500/10",
-	rare: "text-blue-400 border-blue-500/40 bg-blue-500/10",
-	"very-rare": "text-violet-400 border-violet-500/40 bg-violet-500/10",
-	epic: "text-purple-400 border-purple-500/40 bg-purple-500/10",
-	legendary: "text-amber-400 border-amber-500/40 bg-amber-500/10",
-	mythic: "text-pink-400 border-pink-500/40 bg-pink-500/10",
-	artifact: "text-rose-400 border-rose-500/40 bg-rose-500/10",
+	uncommon: "text-gate-d border-gate-d/40 bg-gate-d/10",
+	rare: "text-gate-c border-gate-c/40 bg-gate-c/10",
+	"very-rare": "text-gate-b border-gate-b/40 bg-gate-b/10",
+	epic: "text-gate-national border-gate-national/40 bg-gate-national/10",
+	legendary: "text-gate-s border-gate-s/40 bg-gate-s/10",
+	mythic: "text-gate-ss border-gate-ss/40 bg-gate-ss/10",
+	artifact: "text-gate-red border-gate-red/50 bg-gate-red/10",
 };
 
 export function getRarityBadgeClass(rarity: string | null | undefined): string {

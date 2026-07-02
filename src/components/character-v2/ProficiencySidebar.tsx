@@ -243,14 +243,14 @@ export function ProficiencySidebar({
 								)}
 								{defenses.immunities.length > 0 && (
 									<div className="space-y-1">
-										<span className="text-[10px] font-mono text-emerald-400/60 uppercase">
+										<span className="text-[10px] font-mono text-system-green/60 uppercase">
 											Immunities
 										</span>
 										<div className="flex flex-wrap gap-1">
 											{defenses.immunities.map((i) => (
 												<span
 													key={i}
-													className="text-[10px] text-emerald-400 bg-emerald-400/10 border border-emerald-400/20 px-1.5 py-0.5 rounded-[2px]"
+													className="text-[10px] text-system-green bg-system-green/10 border border-system-green/20 px-1.5 py-0.5 rounded-[2px]"
 												>
 													{i}
 												</span>

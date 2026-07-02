@@ -36,7 +36,7 @@ const TYPE_ICONS = {
 const TYPE_COLORS = {
 	info: "text-blue-500",
 	success: "text-green-500",
-	warning: "text-yellow-500",
+	warning: "text-gate-s",
 	error: "text-red-500",
 };
 

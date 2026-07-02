@@ -1,14 +1,14 @@
 # Rift Image Replacement Plan
 
-Generated: 2026-07-02T03:22:00.097Z
+Generated: 2026-07-02T21:45:04.173Z
 
 ## Overview
 
-- Audited image references: 1339
+- Audited image references: 1342
 - Likely placeholders: 509
 - High-priority replacements: 0
-- Medium-priority replacements: 523
-- Prompt records: 1131
+- Medium-priority replacements: 525
+- Prompt records: 1143
 
 The audit uses repo lore first. Global tone comes from `docs/rift-ascendant-world-lore.md`; Gloamreach prompts use current Run Silent / The Quiet sandbox text where present.
 
@@ -54,11 +54,11 @@ The audit uses repo lore first. Global tone comes from `docs/rift-ascendant-worl
 - `/generated/compendium/items/item-0059.webp` - Sovereign Crown, Doom Forged Revolver, High Grade Aetheric Antidote: Generic generated filename suggests placeholder or pooled art. Same generic image is reused for multiple distinct subjects.
 - `/generated/compendium/items/item-0062.webp` - Aegis Trench Coat: Generic generated filename suggests placeholder or pooled art.
 - `/generated/compendium/items/item-0066.webp` - Hacking Tools, Sworn Reinforced Mask: Generic generated filename suggests placeholder or pooled art.
-- `/generated/compendium/items/item-0067.webp` - Gate Forged Bracers: Generic generated filename suggests placeholder or pooled art.
+- `/generated/compendium/items/item-0067.webp` - Rift Forged Bracers: Generic generated filename suggests placeholder or pooled art.
 - `/generated/compendium/items/item-0071.webp` - Void Longsword, Mana Infused Dagger: Generic generated filename suggests placeholder or pooled art.
 - `/generated/compendium/items/item-0076.webp` - Hexbound Tread Boots: Generic generated filename suggests placeholder or pooled art.
 - `/generated/compendium/items/item-0083.webp` - Stormcaller Pendant, Frost Combat Bow: Generic generated filename suggests placeholder or pooled art.
-- `/generated/compendium/items/item-0084.webp` - Custom Forged Service Pistol, Gate Forged Spaulders, Lesser Mana Elixir: Generic generated filename suggests placeholder or pooled art. Same generic image is reused for multiple distinct subjects.
+- `/generated/compendium/items/item-0084.webp` - Custom Forged Service Pistol, Rift Forged Spaulders, Lesser Mana Elixir: Generic generated filename suggests placeholder or pooled art. Same generic image is reused for multiple distinct subjects.
 - `/generated/compendium/items/item-0085.webp` - Sanguine Sigil Amulet, Hexbound Composite Bow, Quartermaster's Kusarigama, Greater Mana Elixir: Generic generated filename suggests placeholder or pooled art. Same generic image is reused for multiple distinct subjects.
 - `/generated/compendium/items/item-0087.webp` - Chain Mail, Phantom Crested Ring, Greater Stamina Stim: Generic generated filename suggests placeholder or pooled art. Same generic image is reused for multiple distinct subjects.
 - `/generated/compendium/items/item-0088.webp` - Herald's Insignia, Refit Hood, Resonant Scroll, Custom Forged Combat Shield: Generic generated filename suggests placeholder or pooled art. Same generic image is reused for multiple distinct subjects.
@@ -67,12 +67,14 @@ The audit uses repo lore first. Global tone comes from `docs/rift-ascendant-worl
 - `/generated/compendium/items/item-0095.webp` - War Pick, Service Belt: Generic generated filename suggests placeholder or pooled art.
 - `/generated/compendium/items/item-0097.webp` - World Ender Reliquary, Shadow Bound Ring, Unstable Aetheric Antidote, Shadow Combat Vest, Guild Issue Spear: Generic generated filename suggests placeholder or pooled art. Same generic image is reused for multiple distinct subjects.
 - `/generated/compendium/items/item-0099.webp` - Service Club: Generic generated filename suggests placeholder or pooled art.
-- `/generated/compendium/items/item-0101.webp` - Dawnbringer's Ceremonial Robe: Generic generated filename suggests placeholder or pooled art.
-- `/generated/compendium/items/item-0105.webp` - Refit Mantle, Sanguine Twin Sickles: Generic generated filename suggests placeholder or pooled art.
-- `/generated/compendium/items/item-0106.webp` - Lattice Scale Exo Suit, Mana Infused Dagger, Greater Aetheric Antidote: Generic generated filename suggests placeholder or pooled art. Same generic image is reused for multiple distinct subjects.
-- `/generated/compendium/items/item-0110.webp` - Black Market Ceremonial Robe, Nebular Battle Scroll, Black Market Orb: Generic generated filename suggests placeholder or pooled art. Same generic image is reused for multiple distinct subjects.
+- `/generated/compendium/items/item-0101.webp` - Common Clothes, Dawnbringer's Ceremonial Robe: Generic generated filename suggests placeholder or pooled art.
+- `/generated/compendium/items/item-0103.webp` - Trench Coat, Doom Forged Ward Scroll, Provisional Elixir: Generic generated filename suggests placeholder or pooled art. Same generic image is reused for multiple distinct subjects.
+- `/generated/compendium/items/item-0105.webp` - Smartphone, Refit Mantle, Sanguine Twin Sickles: Generic generated filename suggests placeholder or pooled art. Same generic image is reused for multiple distinct subjects.
+- `/generated/compendium/items/item-0106.webp` - Backpack, Lattice Scale Exo Suit, Mana Infused Dagger, Greater Aetheric Antidote: Generic generated filename suggests placeholder or pooled art. Same generic image is reused for multiple distinct subjects.
+- `/generated/compendium/items/item-0107.webp` - Alchemist's Supplies, Gas Mask, Toxic Inscription: Generic generated filename suggests placeholder or pooled art. Same generic image is reused for multiple distinct subjects.
+- `/generated/compendium/items/item-0110.webp` - Safety Goggles, Black Market Ceremonial Robe, Nebular Battle Scroll, Black Market Orb: Generic generated filename suggests placeholder or pooled art. Same generic image is reused for multiple distinct subjects.
 - `/generated/compendium/items/item-0114.webp` - Regent's Edge, Dimensional Field Crossbow: Generic generated filename suggests placeholder or pooled art.
-- `/generated/compendium/items/item-0116.webp` - Phantom Maul, Gate Forged Combat Vest: Generic generated filename suggests placeholder or pooled art.
+- `/generated/compendium/items/item-0116.webp` - Phantom Maul, Rift Forged Combat Vest: Generic generated filename suggests placeholder or pooled art.
 - `/generated/compendium/items/item-0118.webp` - Adept's Tactical Light, Obsidian Spear: Generic generated filename suggests placeholder or pooled art.
 - `/generated/compendium/items/item-0119.webp` - Skyveil Bo Staff, Purified Stamina Stim, Guild Issue Katana: Generic generated filename suggests placeholder or pooled art. Same generic image is reused for multiple distinct subjects.
 - `/generated/compendium/items/item-0121.webp` - Calligrapher's Supplies, Singular Reinforced Plate: Generic generated filename suggests placeholder or pooled art.
@@ -86,7 +88,7 @@ The audit uses repo lore first. Global tone comes from `docs/rift-ascendant-worl
 - `/generated/compendium/items/item-0139.webp` - Field Issue Throwing Spears, Quartermaster's Battle Blade, Starlight Warhammer: Generic generated filename suggests placeholder or pooled art. Same generic image is reused for multiple distinct subjects.
 - `/generated/compendium/items/item-0141.webp` - Shadow Bracers: Generic generated filename suggests placeholder or pooled art.
 - `/generated/compendium/items/item-0143.webp` - Tempest Syringe, Crownbearer's Heir Casting Staff: Generic generated filename suggests placeholder or pooled art.
-- `/generated/compendium/items/item-0147.webp` - Gate Beast Fang, Phantom Tactical Helmet: Generic generated filename suggests placeholder or pooled art.
+- `/generated/compendium/items/item-0147.webp` - Rift Beast Fang, Phantom Tactical Helmet: Generic generated filename suggests placeholder or pooled art.
 - `/generated/compendium/items/item-0148.webp` - Crimson Buckler, Void Revolver: Generic generated filename suggests placeholder or pooled art.
 - `/generated/compendium/items/item-0149.webp` - Aetheric Gauntlets: Generic generated filename suggests placeholder or pooled art.
 - `/generated/compendium/items/item-0151.webp` - Black Market Sceptre, Digital Voice Recorder: Generic generated filename suggests placeholder or pooled art.
@@ -114,5 +116,3 @@ The audit uses repo lore first. Global tone comes from `docs/rift-ascendant-worl
 - `/generated/compendium/items/item-0184.webp` - Mana Treated Reaver Sword: Generic generated filename suggests placeholder or pooled art.
 - `/generated/compendium/items/item-0185.webp` - Worldbreaker's Greatsword, Titanium Trench Coat: Generic generated filename suggests placeholder or pooled art.
 - `/generated/compendium/items/item-0188.webp` - Mana Treated Cord Charm, Adept's Combat Boots: Generic generated filename suggests placeholder or pooled art.
-- `/generated/compendium/items/item-0189.webp` - Lunar Footwraps: Generic generated filename suggests placeholder or pooled art.
-- `/generated/compendium/items/item-0192.webp` - Splint Armor, Field Tested Insignia: Generic generated filename suggests placeholder or pooled art.

@@ -218,7 +218,7 @@ export function CharacterBackupPanel({ characterId }: { characterId: string }) {
 			>
 				<AlertDialogContent>
 					<AlertDialogHeader>
-						<AlertDialogTitle className="flex items-center gap-2 text-amber-400">
+						<AlertDialogTitle className="flex items-center gap-2 text-gate-s">
 							<AlertTriangle className="w-5 h-5" />
 							Restore Character?
 						</AlertDialogTitle>
@@ -236,7 +236,7 @@ export function CharacterBackupPanel({ characterId }: { characterId: string }) {
 					<AlertDialogFooter>
 						<AlertDialogCancel>Cancel</AlertDialogCancel>
 						<AlertDialogAction
-							className="bg-amber-500 hover:bg-amber-600 text-black"
+							className="bg-gate-s hover:bg-gate-s text-black"
 							onClick={async () => {
 								if (!restoreTarget) return;
 								// Re-import the backup data as the current character

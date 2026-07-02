@@ -156,9 +156,9 @@ export const RuneDetail = ({ data }: RuneDetailProps) => {
 								</div>
 							)}
 							{taughtDamage && (
-								<div className="flex items-center gap-2 px-4 py-2 rounded-lg bg-rose-500/10 border border-rose-500/20">
-									<Swords className="w-4 h-4 text-rose-400" />
-									<span className="text-xs font-bold uppercase text-rose-400/90">
+								<div className="flex items-center gap-2 px-4 py-2 rounded-lg bg-gate-a/10 border border-gate-a/20">
+									<Swords className="w-4 h-4 text-gate-a" />
+									<span className="text-xs font-bold uppercase text-gate-a/90">
 										Damage: {taughtDamage}
 									</span>
 								</div>
@@ -229,29 +229,27 @@ export const RuneDetail = ({ data }: RuneDetailProps) => {
 						</p>
 					</div>
 
-					<div className="p-6 rounded-2xl bg-orange-500/5 border border-orange-500/20 relative group overflow-hidden">
-						<div className="absolute -top-4 -right-4 w-24 h-24 bg-orange-500/10 rounded-full blur-2xl group-hover:bg-orange-500/20 transition-colors" />
+					<div className="p-6 rounded-2xl bg-gate-a/5 border border-gate-a/20 relative group overflow-hidden">
+						<div className="absolute -top-4 -right-4 w-24 h-24 bg-gate-a/10 rounded-full blur-2xl group-hover:bg-gate-a/20 transition-colors" />
 						<div className="flex items-center gap-3 mb-4">
-							<Layers className="w-5 h-5 text-orange-400" />
-							<h3 className="font-display font-bold text-lg text-orange-400 uppercase">
+							<Layers className="w-5 h-5 text-gate-a" />
+							<h3 className="font-display font-bold text-lg text-gate-a uppercase">
 								Adapted Use
 							</h3>
 						</div>
 						<p className="text-sm text-muted-foreground mb-4 leading-relaxed">
 							When absorbed by a cross-archetype character, the lattice is
 							converted into a{" "}
-							<span className="text-orange-400 font-bold">Per Rest</span> model.
+							<span className="text-gate-a font-bold">Per Rest</span> model.
 						</p>
-						<div className="space-y-2 text-xs font-medium text-foreground py-3 border-y border-orange-500/10">
+						<div className="space-y-2 text-xs font-medium text-foreground py-3 border-y border-gate-a/10">
 							<div className="flex justify-between">
 								<span>Adapted Mode:</span>
-								<span className="text-orange-400">Uses per Long Rest</span>
+								<span className="text-gate-a">Uses per Long Rest</span>
 							</div>
 							<div className="flex justify-between">
 								<span>Limit:</span>
-								<span className="text-orange-400">
-									Proficiency Bonus + Rarity
-								</span>
+								<span className="text-gate-a">Proficiency Bonus + Rarity</span>
 							</div>
 						</div>
 						<p className="text-xs text-muted-foreground/60 mt-4 italic">

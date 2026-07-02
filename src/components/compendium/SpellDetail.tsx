@@ -32,7 +32,7 @@ import type { CompendiumMechanics, CompendiumSpell } from "@/types/compendium";
 export interface SpellData extends CompendiumSpell {}
 
 const rankStyles: Record<string, string> = {
-	S: "text-amber-400 border-amber-500/40 bg-amber-500/10",
+	S: "text-gate-s border-gate-s/40 bg-gate-s/10",
 	A: "text-purple-400 border-purple-500/40 bg-purple-500/10",
 	B: "text-blue-400 border-blue-500/40 bg-blue-500/10",
 	C: "text-green-400 border-green-500/40 bg-green-500/10",
@@ -314,7 +314,7 @@ export const SpellDetail = ({ data }: { data: SpellData }) => {
 					{rangeText && (
 						<AscendantWindow title="RANGE" compact>
 							<div className="flex items-center gap-2">
-								<Target className="w-5 h-5 text-emerald-400" />
+								<Target className="w-5 h-5 text-system-green" />
 								<span className="font-heading">
 									{formatRegentVernacular(rangeText)}
 								</span>
@@ -431,7 +431,7 @@ export const SpellDetail = ({ data }: { data: SpellData }) => {
 								"modifier" in attack ? attack.modifier : topAttack?.ability;
 							return (
 								<div className="flex items-start gap-2">
-									<Swords className="w-5 h-5 text-rose-400 flex-shrink-0 mt-0.5" />
+									<Swords className="w-5 h-5 text-gate-a flex-shrink-0 mt-0.5" />
 									<div>
 										<p className="font-heading capitalize">
 											{formatRegentVernacular(attack.type || "")}
@@ -457,7 +457,7 @@ export const SpellDetail = ({ data }: { data: SpellData }) => {
 							if (!st) return null;
 							return (
 								<div className="flex items-start gap-2">
-									<Shield className="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5" />
+									<Shield className="w-5 h-5 text-system-green flex-shrink-0 mt-0.5" />
 									<div>
 										<p className="font-heading">
 											{formatRegentVernacular(String(st.ability || ""))} Save
@@ -482,7 +482,7 @@ export const SpellDetail = ({ data }: { data: SpellData }) => {
 							if (!healing?.dice) return null;
 							return (
 								<div className="flex items-start gap-2">
-									<Sparkles className="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5" />
+									<Sparkles className="w-5 h-5 text-system-green flex-shrink-0 mt-0.5" />
 									<div>
 										<p className="font-heading">Healing</p>
 										<p className="text-sm text-muted-foreground">
@@ -508,7 +508,7 @@ export const SpellDetail = ({ data }: { data: SpellData }) => {
 							if (!profile || !/\d+d\d+/i.test(profile)) return null;
 							return (
 								<div className="flex items-start gap-2">
-									<Swords className="w-5 h-5 text-rose-400 flex-shrink-0 mt-0.5" />
+									<Swords className="w-5 h-5 text-gate-a flex-shrink-0 mt-0.5" />
 									<div>
 										<p className="font-heading">Damage</p>
 										<p className="text-sm text-muted-foreground">
@@ -570,7 +570,7 @@ export const SpellDetail = ({ data }: { data: SpellData }) => {
 							(mechanics as CompendiumMechanics).condition,
 						) && (
 							<div className="flex items-start gap-2">
-								<Shield className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" />
+								<Shield className="w-5 h-5 text-gate-s flex-shrink-0 mt-0.5" />
 								<div>
 									<p className="font-heading">Conditions</p>
 									<p className="text-sm text-muted-foreground">

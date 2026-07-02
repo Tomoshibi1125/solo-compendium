@@ -67,7 +67,7 @@ export const SKILLS: Skill[] = [
 	},
 	{
 		id: "nature",
-		name: "Gate Topology",
+		name: "Rift Topology",
 		defaultAbility: "INT",
 		description: "Knowing wild ecosystems, beasts, natural hazards",
 	},

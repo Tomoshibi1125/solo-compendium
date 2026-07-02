@@ -37,6 +37,7 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { OptimizedImage } from "@/components/ui/OptimizedImage";
+import { PageHeader } from "@/components/ui/PageHeader";
 import {
 	Select,
 	SelectContent,
@@ -151,66 +152,65 @@ const Characters = () => {
 	return (
 		<Layout>
 			<div className="container mx-auto px-3 sm:px-4 py-4 sm:py-8">
-				<div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6 sm:mb-8">
-					<div className="min-w-0 flex-1">
-						<RiftHeading
-							level={1}
-							variant="sovereign"
-							dimensional
-							className="leading-tight"
-						>
-							Ascendant Roster
-						</RiftHeading>
-						<ManaFlowText
-							variant="rift"
-							speed="slow"
-							className="text-sm sm:text-base mt-1"
-						>
-							Manage your awakened Ascendants and prepare them for the Rift's
-							challenges.
-						</ManaFlowText>
-						<p className="text-xs text-muted-foreground mt-1">
-							<span
-								className={
-									characters.length >= MAX_CHARACTERS_PER_USER
-										? "text-destructive font-semibold"
-										: "text-foreground font-semibold"
-								}
+				<PageHeader
+					className="mb-6 sm:mb-8"
+					title="Ascendant Roster"
+					description={
+						<>
+							<ManaFlowText
+								variant="rift"
+								speed="slow"
+								className="text-sm sm:text-base mt-1"
 							>
-								{characters.length} / {MAX_CHARACTERS_PER_USER}
-							</span>{" "}
-							Ascendants awakened
-							{characters.length >= MAX_CHARACTERS_PER_USER && " — roster full"}
-						</p>
-					</div>
-					<div className="flex gap-2">
-						<Link to="/party-stash">
+								Manage your awakened Ascendants and prepare them for the Rift's
+								challenges.
+							</ManaFlowText>
+							<p className="text-xs text-muted-foreground mt-1">
+								<span
+									className={
+										characters.length >= MAX_CHARACTERS_PER_USER
+											? "text-destructive font-semibold"
+											: "text-foreground font-semibold"
+									}
+								>
+									{characters.length} / {MAX_CHARACTERS_PER_USER}
+								</span>{" "}
+								Ascendants awakened
+								{characters.length >= MAX_CHARACTERS_PER_USER &&
+									" — roster full"}
+							</p>
+						</>
+					}
+					actions={
+						<>
+							<Link to="/party-stash">
+								<Button
+									variant="outline"
+									className="gap-2 font-heading min-h-[44px] border-gate-s/30 hover:border-gate-s/60 hover:bg-gate-s/5 text-gate-s"
+								>
+									<Package className="w-4 h-4" />
+									<span className="hidden sm:inline">Party Stash</span>
+								</Button>
+							</Link>
 							<Button
+								onClick={() => setImportDialogOpen(true)}
+								className="gap-2 font-heading min-h-[44px]"
 								variant="outline"
-								className="gap-2 font-heading min-h-[44px] border-amber-500/30 hover:border-amber-500/60 hover:bg-amber-500/5 text-amber-400"
 							>
-								<Package className="w-4 h-4" />
-								<span className="hidden sm:inline">Party Stash</span>
+								<Upload className="w-4 h-4" />
+								<span className="hidden sm:inline">Import</span>
+								<span className="sm:hidden">Import</span>
 							</Button>
-						</Link>
-						<Button
-							onClick={() => setImportDialogOpen(true)}
-							className="gap-2 font-heading min-h-[44px]"
-							variant="outline"
-						>
-							<Upload className="w-4 h-4" />
-							<span className="hidden sm:inline">Import</span>
-							<span className="sm:hidden">Import</span>
-						</Button>
-						<Link to="/characters/new">
-							<Button className="gap-2 font-heading bg-gradient-to-r from-resurge to-shadow-purple min-h-[44px]">
-								<Plus className="w-4 h-4" />
-								<span className="hidden sm:inline">Awaken Ascendant</span>
-								<span className="sm:hidden">Create</span>
-							</Button>
-						</Link>
-					</div>
-				</div>
+							<Link to="/characters/new">
+								<Button className="gap-2 font-heading bg-gradient-to-r from-resurge-violet to-shadow-purple min-h-[44px]">
+									<Plus className="w-4 h-4" />
+									<span className="hidden sm:inline">Awaken Ascendant</span>
+									<span className="sm:hidden">Create</span>
+								</Button>
+							</Link>
+						</>
+					}
+				/>
 
 				{selectedIds.size > 0 && (
 					<BulkActionsBar
@@ -499,7 +499,7 @@ const Characters = () => {
 															hpPercent < 25
 																? "text-destructive"
 																: hpPercent < 50
-																	? "text-orange-400"
+																	? "text-gate-a"
 																	: "text-green-400",
 														)}
 													>
@@ -513,7 +513,7 @@ const Characters = () => {
 															hpPercent < 25
 																? "bg-destructive"
 																: hpPercent < 50
-																	? "bg-orange-500"
+																	? "bg-gate-a"
 																	: "bg-green-500",
 														)}
 														ref={(el) => {
@@ -537,7 +537,7 @@ const Characters = () => {
 													</span>
 												</div>
 												<div className="text-center p-2 rounded-[2px] bg-black/40 border border-primary/20 shadow-[inset_0_0_8px_rgba(0,0,0,0.5)] group/stat">
-													<Zap className="w-3 h-3 mx-auto mb-1 text-yellow-400 opacity-80 group-hover/stat:text-yellow-300 transition-colors" />
+													<Zap className="w-3 h-3 mx-auto mb-1 text-gate-s opacity-80 group-hover/stat:text-gate-s transition-colors" />
 													<span className="font-heading font-bold text-lg text-white drop-shadow-[0_0_5px_currentColor]">
 														+{character.initiative}
 													</span>
@@ -546,7 +546,7 @@ const Characters = () => {
 													</span>
 												</div>
 												<div className="text-center p-2 rounded-[2px] bg-black/40 border border-primary/20 shadow-[inset_0_0_8px_rgba(0,0,0,0.5)] group/stat">
-													<Crown className="w-3 h-3 mx-auto mb-1 text-resurge opacity-80 group-hover/stat:text-resurge-light transition-colors" />
+													<Crown className="w-3 h-3 mx-auto mb-1 text-resurge-violet opacity-80 group-hover/stat:opacity-100 transition-opacity" />
 													<span className="font-heading font-bold text-lg text-white drop-shadow-[0_0_5px_currentColor]">
 														{character.proficiency_bonus}
 													</span>

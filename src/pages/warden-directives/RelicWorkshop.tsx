@@ -17,16 +17,13 @@ import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AutoLinkText } from "@/components/compendium/AutoLinkText";
 import { Layout } from "@/components/layout/Layout";
-import {
-	AscendantText,
-	ManaFlowText,
-	RiftHeading,
-} from "@/components/ui/AscendantText";
+import { AscendantText, ManaFlowText } from "@/components/ui/AscendantText";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { PageHeader } from "@/components/ui/PageHeader";
 import {
 	Select,
 	SelectContent,
@@ -88,14 +85,14 @@ export interface Relic {
 }
 
 const RELIC_VALUE: Record<string, string> = {
-	common: "100+ Gate Credits",
-	uncommon: "500+ Gate Credits",
-	rare: "2,000+ Gate Credits",
-	"very-rare": "5,000+ Gate Credits",
-	epic: "7,500+ Gate Credits",
-	legendary: "10,000+ Gate Credits",
-	mythic: "15,000+ Gate Credits",
-	artifact: "25,000+ Gate Credits",
+	common: "100+ Rift Credits",
+	uncommon: "500+ Rift Credits",
+	rare: "2,000+ Rift Credits",
+	"very-rare": "5,000+ Rift Credits",
+	epic: "7,500+ Rift Credits",
+	legendary: "10,000+ Rift Credits",
+	mythic: "15,000+ Rift Credits",
+	artifact: "25,000+ Rift Credits",
 };
 
 function relicToMarkdown(relic: Relic, enhanced?: string | null): string {
@@ -368,10 +365,11 @@ Provide ALL of the following sections with full detail:
 			common: "text-gray-400 border-gray-400/30 bg-gray-400/10",
 			uncommon: "text-green-400 border-green-400/30 bg-green-400/10",
 			rare: "text-blue-400 border-blue-400/30 bg-blue-400/10",
-			"very-rare": "text-violet-400 border-violet-400/30 bg-violet-400/10",
+			"very-rare":
+				"text-resurge-violet border-resurge-violet/30 bg-resurge-violet/10",
 			epic: "text-purple-400 border-purple-400/30 bg-purple-400/10",
-			legendary: "text-amber-400 border-amber-400/30 bg-amber-400/10",
-			artifact: "text-rose-400 border-rose-400/30 bg-rose-400/10",
+			legendary: "text-gate-s border-gate-s/30 bg-gate-s/10",
+			artifact: "text-gate-a border-gate-a/30 bg-gate-a/10",
 		};
 		return colors[rarity] || colors.common;
 	};
@@ -405,18 +403,19 @@ Provide ALL of the following sections with full detail:
 						<ArrowLeft className="w-4 h-4 mr-2" />
 						Back to Warden Tools
 					</Button>
-					<RiftHeading
-						level={1}
-						variant="sovereign"
-						dimensional
-						className="mb-2"
-					>
-						Relic Synthesis Chamber
-					</RiftHeading>
-					<ManaFlowText variant="rift" speed="slow" className="font-heading">
-						Forge specialized armaments and conceptual objects functioning
-						outside normative System constraints.
-					</ManaFlowText>
+					<PageHeader
+						title="Relic Synthesis Chamber"
+						description={
+							<ManaFlowText
+								variant="rift"
+								speed="slow"
+								className="font-heading"
+							>
+								Forge specialized armaments and conceptual objects functioning
+								outside normative System constraints.
+							</ManaFlowText>
+						}
+					/>
 				</div>
 			)}
 

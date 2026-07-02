@@ -12,10 +12,14 @@ import { AppError } from "@/lib/appError";
 import type { RaCurrencyId } from "@/lib/currency";
 import { applyFundsDelta } from "@/lib/guildTreasury";
 
+/**
+ * Canon ranks run E–S. "SS" stays in the type for back-compat reads (older
+ * quest rows may persist it) but is retired from the authoring ladder.
+ */
 export type GuildQuestRank = "E" | "D" | "C" | "B" | "A" | "S" | "SS";
 export type GuildQuestStatus = "active" | "completed" | "failed";
 
-/** Gate-contract rank ladder, weakest → strongest. */
+/** Rift-contract rank ladder, weakest → strongest. */
 export const QUEST_RANK_ORDER: GuildQuestRank[] = [
 	"E",
 	"D",
@@ -23,7 +27,6 @@ export const QUEST_RANK_ORDER: GuildQuestRank[] = [
 	"B",
 	"A",
 	"S",
-	"SS",
 ];
 
 export interface GuildQuestRewards {
@@ -49,7 +52,11 @@ export interface GuildQuest {
 export const questRewardsForRank = (
 	rank: GuildQuestRank,
 ): GuildQuestRewards => {
-	const factor = QUEST_RANK_ORDER.indexOf(rank) + 1; // E=1 … S=6
+	// E=1 … S=6; legacy persisted "SS" rows scale as S.
+	const factor =
+		rank === "SS"
+			? QUEST_RANK_ORDER.length
+			: QUEST_RANK_ORDER.indexOf(rank) + 1;
 	return {
 		currency: "gate",
 		funds: 50 * factor,

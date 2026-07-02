@@ -21,6 +21,7 @@ import { Layout } from "@/components/layout/Layout";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
+import { PageHeader } from "@/components/ui/PageHeader";
 import { getFightingStylesForJob } from "@/data/compendium/fightingStyles";
 import type { StaticCompendiumEntry } from "@/data/compendium/providers/types";
 import { useToast } from "@/hooks/use-toast";
@@ -411,7 +412,7 @@ const CharacterNew = () => {
 	const [equipmentChoices, setEquipmentChoices] = useState<
 		Record<number, string>
 	>({});
-	// DDB parity (5e starting wealth): take flat Gate Credits instead of the
+	// DDB parity (5e starting wealth): take flat Rift Credits instead of the
 	// job/background equipment packages.
 	const [takeStartingCredits, setTakeStartingCredits] = useState(false);
 	const [selectedPowerIds, setSelectedPowerIds] = useState<string[]>([]);
@@ -1445,10 +1446,10 @@ const CharacterNew = () => {
 					);
 				}
 				if (takeStartingCredits) {
-					// 5e starting wealth: flat Gate Credits instead of gear packages.
+					// 5e starting wealth: flat Rift Credits instead of gear packages.
 					// Same row shape CurrencyManager creates, so the wallet picks it up.
 					const currencyRow = {
-						name: "Gate Credits",
+						name: "Rift Credits",
 						item_type: "currency",
 						quantity: getStartingCreditsForJob(staticJobData),
 						weight: 0.02,
@@ -2225,32 +2226,36 @@ const CharacterNew = () => {
 	return (
 		<Layout>
 			<div className="container py-8 max-w-4xl animate-in fade-in duration-700">
-				<div className="flex items-center gap-4 mb-8 flex-wrap">
+				<div className="mb-8">
 					<Button
 						variant="ghost"
 						size="sm"
 						onClick={() => navigate("/")}
-						className="group"
+						className="group mb-4"
 					>
 						<ArrowLeft className="w-4 h-4 mr-2 group-hover:-translate-x-1 transition-transform" />
 						Abat Database Link
 					</Button>
-					<h1 className="text-3xl font-heading font-bold tracking-tighter">
-						Protocol:{" "}
-						<span className="text-primary italic">Initialization</span>
-					</h1>
-					<div className="ml-auto">
-						<Button
-							onClick={() => setQuickAscendantOpen(true)}
-							variant="outline"
-							className="gap-2"
-							data-testid="quick-ascendant-launcher"
-							title="Spin up a level-1 Ascendant in ~10 clicks (RA Quickbuilder)"
-						>
-							<Zap className="w-4 h-4" />
-							Quick Ascendant
-						</Button>
-					</div>
+					<PageHeader
+						title={
+							<>
+								Protocol:{" "}
+								<span className="text-primary italic">Initialization</span>
+							</>
+						}
+						actions={
+							<Button
+								onClick={() => setQuickAscendantOpen(true)}
+								variant="outline"
+								className="gap-2"
+								data-testid="quick-ascendant-launcher"
+								title="Spin up a level-1 Ascendant in ~10 clicks (RA Quickbuilder)"
+							>
+								<Zap className="w-4 h-4" />
+								Quick Ascendant
+							</Button>
+						}
+					/>
 				</div>
 				<QuickAscendantWizard
 					open={quickAscendantOpen}

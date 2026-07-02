@@ -265,7 +265,7 @@ function makeCatalogAuthoredRune(
 		},
 		discovery_lore:
 			nonEmpty(entry.discovery_lore, 41) ??
-			`Recovered from a stabilized Gate echo where ${entry.name} had been etched into the local mana lattice deeply enough for runewrights to preserve it.`,
+			`Recovered from a stabilized Rift echo where ${entry.name} had been etched into the local mana lattice deeply enough for runewrights to preserve it.`,
 		image: entry.image ?? entry.image_url ?? undefined,
 		higher_levels: `When the bearer naturally unlocks ${rank}, this rune's dedicated slot becomes a general extra ${rank} slot of the same type.`,
 	};

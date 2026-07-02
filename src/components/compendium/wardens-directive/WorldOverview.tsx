@@ -82,7 +82,7 @@ const SANCTUARY_CITIES: CityInfo[] = [
 			"A network of shimmering aetheric domes protecting an ancient, Gothic landscape. The Shard Domes sit on the highest concentration of volatile mana vents, requiring a massive population of Sorcerers and Clergy just to maintain the shields. It serves as the global center of magical academia.",
 		demographics:
 			"Sorcerers, Researchers, Clergy. The primary seat of Lattice Research.",
-		color: "text-fuchsia-400",
+		color: "text-resurge-violet",
 	},
 	{
 		id: "abyssal-breach",
@@ -92,7 +92,7 @@ const SANCTUARY_CITIES: CityInfo[] = [
 			"Built directly on the edge of the first recorded Eclipse Rift. The city is a sprawling, neon-soaked cyberpunk nightmare heavily entrenched in Anomaly-part smuggling and black markets. It is dangerous, incredibly wealthy, and highly chaotic—the only place where the Lattice's laws are openly challenged.",
 		demographics:
 			"Stalkers, Shadow-Sovereigns, Black-Market Dealers. Home to the Onyx Cartel.",
-		color: "text-amber-500",
+		color: "text-gate-s",
 	},
 ];
 
@@ -111,7 +111,7 @@ const GRAND_GUILDS: GuildInfo[] = [
 		marketCap: "3.1 Trillion Credits",
 		description:
 			"An elite, hyper-focused guild of S-Rank Ascendants. They exclusively clear Red Rifts and prevent national catastrophes. While small in number, their combat power is theoretically infinite, rivaling entire nations.",
-		color: "text-fuchsia-500",
+		color: "text-resurge-violet",
 	},
 	{
 		id: "onyx-cartel",
@@ -156,8 +156,8 @@ export const WorldOverview = () => {
 
 				{/* 2. Sanctuary Cities */}
 				<section className="space-y-8">
-					<div className="flex items-center gap-3 mb-2 border-b border-amber-500/20 pb-4">
-						<Building2 className="w-8 h-8 text-amber-500" />
+					<div className="flex items-center gap-3 mb-2 border-b border-gate-s/20 pb-4">
+						<Building2 className="w-8 h-8 text-gate-s" />
 						<h2 className="text-3xl font-display font-bold text-white uppercase tracking-wider">
 							The Sanctuary Cities
 						</h2>
@@ -282,8 +282,8 @@ export const WorldOverview = () => {
 
 				{/* 5. The Prime Eternal (Kael Voss Stat Block) */}
 				<section className="space-y-8">
-					<div className="flex items-center gap-3 mb-2 border-b border-fuchsia-500/20 pb-4">
-						<Crown className="w-8 h-8 text-fuchsia-400" />
+					<div className="flex items-center gap-3 mb-2 border-b border-resurge-violet/20 pb-4">
+						<Crown className="w-8 h-8 text-resurge-violet" />
 						<h2 className="text-3xl font-display font-bold text-white uppercase tracking-wider">
 							Sovereign Authority: Kael Voss
 						</h2>

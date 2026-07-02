@@ -12,15 +12,12 @@ import {
 	XCircle,
 } from "lucide-react";
 import { useEffect, useState } from "react";
-import {
-	AscendantText,
-	ManaFlowText,
-	RiftHeading,
-} from "@/components/ui/AscendantText";
+import { AscendantText, ManaFlowText } from "@/components/ui/AscendantText";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { PageHeader } from "@/components/ui/PageHeader";
 import { Progress } from "@/components/ui/progress";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
@@ -285,11 +282,9 @@ export default function ArtGenerationAdmin() {
 
 	return (
 		<div className="container mx-auto p-6 space-y-6">
-			<div className="flex items-center justify-between">
-				<div>
-					<RiftHeading level={1} variant="sovereign" dimensional>
-						Art Generation
-					</RiftHeading>
+			<PageHeader
+				title="Art Generation"
+				description={
 					<ManaFlowText
 						variant="rift"
 						speed="slow"
@@ -297,22 +292,24 @@ export default function ArtGenerationAdmin() {
 					>
 						Manage AI-assisted art generation
 					</ManaFlowText>
-				</div>
-				<div className="flex items-center gap-2">
-					<Badge variant={enabled && isAvailable ? "default" : "secondary"}>
-						{enabled && isAvailable ? "Available" : "Disabled"}
-					</Badge>
-					<Button
-						variant="outline"
-						size="sm"
-						onClick={checkAvailability}
-						disabled={!enabled}
-					>
-						<RefreshCw className="w-4 h-4 mr-2" />
-						Refresh
-					</Button>
-				</div>
-			</div>
+				}
+				actions={
+					<>
+						<Badge variant={enabled && isAvailable ? "default" : "secondary"}>
+							{enabled && isAvailable ? "Available" : "Disabled"}
+						</Badge>
+						<Button
+							variant="outline"
+							size="sm"
+							onClick={checkAvailability}
+							disabled={!enabled}
+						>
+							<RefreshCw className="w-4 h-4 mr-2" />
+							Refresh
+						</Button>
+					</>
+				}
+			/>
 
 			{!enabled && (
 				<Alert>

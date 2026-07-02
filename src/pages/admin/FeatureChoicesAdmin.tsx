@@ -11,12 +11,13 @@ import {
 } from "lucide-react";
 import { useMemo, useRef, useState } from "react";
 import { Layout } from "@/components/layout/Layout";
-import { ManaFlowText, RiftHeading } from "@/components/ui/AscendantText";
+import { ManaFlowText } from "@/components/ui/AscendantText";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { PageHeader } from "@/components/ui/PageHeader";
 import {
 	Select,
 	SelectContent,
@@ -538,29 +539,24 @@ export default function FeatureChoicesAdmin() {
 	return (
 		<Layout>
 			<div className="container mx-auto px-4 py-8 max-w-7xl">
-				<div className="mb-6">
-					<div className="flex items-center gap-3">
+				<PageHeader
+					className="mb-6"
+					leading={
 						<div className="w-12 h-12 rounded-xl bg-gradient-to-br from-resurge/20 to-shadow-purple/20 border border-resurge/30 flex items-center justify-center">
 							<Layers className="w-6 h-6 text-resurge" />
 						</div>
-						<div className="flex-1">
-							<RiftHeading
-								level={1}
-								variant="sovereign"
-								dimensional
-								className="tracking-wider"
-							>
-								SELECTION PROTOCOLS
-							</RiftHeading>
-							<ManaFlowText
-								variant="rift"
-								speed="slow"
-								className="text-muted-foreground"
-							>
-								Configure job feature choice points
-							</ManaFlowText>
-						</div>
-
+					}
+					title="SELECTION PROTOCOLS"
+					description={
+						<ManaFlowText
+							variant="rift"
+							speed="slow"
+							className="text-muted-foreground"
+						>
+							Configure job feature choice points
+						</ManaFlowText>
+					}
+					actions={
 						<Button
 							variant="outline"
 							className="gap-2 border-resurge/30 hover:bg-resurge/10 hover:border-resurge"
@@ -574,8 +570,8 @@ export default function FeatureChoicesAdmin() {
 							)}
 							Auto-Seed ASI/Feats
 						</Button>
-					</div>
-				</div>
+					}
+				/>
 
 				<div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
 					<AscendantWindow

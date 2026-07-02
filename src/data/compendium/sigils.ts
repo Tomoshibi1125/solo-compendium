@@ -59,7 +59,7 @@ export const sigils: CompendiumSigil[] = [
 			restrictions: [
 				"Socket type: weapon",
 				"Inscription DC: 11 (Void Stylus)",
-				"Material cost: 2,500 Gate Credits",
+				"Material cost: 2,500 Rift Credits",
 			],
 			special_abilities: [
 				"Passive: Ignores first 2 points of target's damage reduction or physical resistance on each hit",
@@ -82,7 +82,7 @@ export const sigils: CompendiumSigil[] = [
 			secondary: "None",
 		},
 		lore: {
-			current_owner: "Lost to the depths of a high-tier dungeon.",
+			current_owner: "Lost to the depths of a high-tier Rift.",
 			curse: "",
 			history:
 				"Archived in the Guild's secured inscription reference. That much survives in the Sigil of the Crushing Mountain's field history.",
@@ -125,7 +125,7 @@ export const sigils: CompendiumSigil[] = [
 			restrictions: [
 				"Socket type: weapon",
 				"Inscription DC: 12 (Shadow Quill)",
-				"Material cost: 2,500 Gate Credits",
+				"Material cost: 2,500 Rift Credits",
 			],
 			special_abilities: [
 				"Passive: On critical hit, target must succeed on DC 15 Strength save or fall Prone (Large or smaller only)",
@@ -191,7 +191,7 @@ export const sigils: CompendiumSigil[] = [
 			restrictions: [
 				"Socket type: weapon",
 				"Inscription DC: 12 (Rift Calligraphy Brush)",
-				"Material cost: 100 Gate Credits",
+				"Material cost: 100 Rift Credits",
 			],
 			special_abilities: [
 				"Passive: Slashing or piercing hits cause target to bleed, losing 1d4 HP at start of their next turn",
@@ -263,7 +263,7 @@ export const sigils: CompendiumSigil[] = [
 			restrictions: [
 				"Socket type: weapon",
 				"Inscription DC: 15 (Shadow Quill)",
-				"Material cost: 2,500 Gate Credits",
+				"Material cost: 2,500 Rift Credits",
 			],
 			special_abilities: [
 				"Active: Imbue next weapon attack with +2d6 fire damage, bypasses standard fire resistance (1/short rest)",
@@ -331,7 +331,7 @@ export const sigils: CompendiumSigil[] = [
 			restrictions: [
 				"Socket type: weapon",
 				"Inscription DC: 15 (Void Stylus)",
-				"Material cost: 2,500 Gate Credits",
+				"Material cost: 2,500 Rift Credits",
 			],
 			special_abilities: [
 				"Passive: On hit, target's movement speed reduced by 5 feet until end of their next turn (does not stack)",
@@ -357,7 +357,7 @@ export const sigils: CompendiumSigil[] = [
 				"Double-hit on same target deals 1d8 lightning damage to adjacent enemy",
 		},
 		lore: {
-			current_owner: "Lost to the depths of a high-tier dungeon.",
+			current_owner: "Lost to the depths of a high-tier Rift.",
 			curse: "",
 			history:
 				"Catalogued in the Technomancer Guild's closed-reference volume. The Sigil of the Thunder-Bird carried the story forward.",
@@ -403,7 +403,7 @@ export const sigils: CompendiumSigil[] = [
 			restrictions: [
 				"Socket type: weapon",
 				"Inscription DC: 13 (Arcane Chisel)",
-				"Material cost: 1,000 Gate Credits",
+				"Material cost: 1,000 Rift Credits",
 			],
 			special_abilities: [
 				"Passive: If you hit same target twice in one turn, deal 1d8 lightning damage to adjacent enemy",
@@ -433,13 +433,13 @@ export const sigils: CompendiumSigil[] = [
 			history:
 				"Tracked through the Bureau's restricted-inscription registry. That much survives in the Sigil of the Radiant Truth's field history.",
 			origin:
-				"Sanctified by the High Priests of the Cathedral to purge the encroaching darkness of S-Rank gates.",
+				"Sanctified by the High Priests of the Cathedral to purge the encroaching darkness of S-Rank Rifts.",
 			personality: "Dormant and silent.",
 			prior_owners: ["Archmage Valerius"],
 		},
 		flavor: "The light burns away the rot.",
 		discovery_lore:
-			"Sanctified by Holylight Cathedral High Priests during the purging of S-Rank gates in the Eastern Rift Zone.",
+			"Sanctified by Holylight Cathedral High Priests during the purging of S-Rank Rifts in the Eastern Rift Zone.",
 		tags: ["sigil", "weapon", "radiant"],
 		active_feature:
 			"Radiant Burst: As an action, emit a 15ft radiant pulse dealing 3d8 radiant damage (CON save for half) to anomaly/anomaly. (1/long rest)",
@@ -475,7 +475,7 @@ export const sigils: CompendiumSigil[] = [
 			restrictions: [
 				"Socket type: weapon",
 				"Inscription DC: 13 (Shadow Quill)",
-				"Material cost: 500 Gate Credits",
+				"Material cost: 500 Rift Credits",
 			],
 			special_abilities: [
 				"Passive: Against Anomaly or Shadow-type anomalies, weapon damage die increases by one step (1d6→1d8, 1d8→1d10, etc.)",
@@ -542,7 +542,7 @@ export const sigils: CompendiumSigil[] = [
 			restrictions: [
 				"Socket type: weapon",
 				"Inscription DC: 19 (Rift Calligraphy Brush)",
-				"Material cost: 2,500 Gate Credits",
+				"Material cost: 2,500 Rift Credits",
 			],
 			special_abilities: [
 				"Passive: Weapon attacks make no sound and give off no light, do not break stealth when drawing",
@@ -565,7 +565,7 @@ export const sigils: CompendiumSigil[] = [
 			secondary: "None",
 		},
 		lore: {
-			current_owner: "Lost to the depths of a high-tier dungeon.",
+			current_owner: "Lost to the depths of a high-tier Rift.",
 			curse: "",
 			history:
 				"Catalogued in the Technomancer Guild's closed-reference volume. The Sigil of the Aegis's service record notes as much.",
@@ -609,7 +609,7 @@ export const sigils: CompendiumSigil[] = [
 			restrictions: [
 				"Socket type: armor or shield",
 				"Inscription DC: 17 (Crystal Engraver)",
-				"Material cost: 50 Gate Credits",
+				"Material cost: 50 Rift Credits",
 			],
 			special_abilities: [
 				"Passive: Reduces damage taken from ranged weapon attacks by 3",
@@ -642,7 +642,7 @@ export const sigils: CompendiumSigil[] = [
 		},
 		flavor: "Hold the line.",
 		discovery_lore:
-			"Developed by Bureau healers attempting to keep critically wounded Ascendants alive long enough for Evacuation from Hell-Class gates.",
+			"Developed by Bureau healers attempting to keep critically wounded Ascendants alive long enough for Evacuation from Hell-Class Rifts.",
 		tags: ["sigil", "armor", "vitality"],
 		can_inscribe_on: ["armor"],
 		effect_description:
@@ -675,7 +675,7 @@ export const sigils: CompendiumSigil[] = [
 			restrictions: [
 				"Socket type: armor",
 				"Inscription DC: 13 (Rift Calligraphy Brush)",
-				"Material cost: 1,000 Gate Credits",
+				"Material cost: 1,000 Rift Credits",
 			],
 			special_abilities: [
 				"Passive: While below 50% max HP, gain +1 bonus to Armor Class",
@@ -704,13 +704,13 @@ export const sigils: CompendiumSigil[] = [
 			history:
 				"Documented in the Ascendant Bureau's archivist-access manual. That much survives in the Sigil of the Frost-Ward's field history.",
 			origin:
-				"Invented after a tragic eruption of a Red Gate composed of volcanic anomalies.",
+				"Invented after a tragic eruption of a Red Rift composed of volcanic anomalies.",
 			personality: "Hungry for ambient magic.",
 			prior_owners: ["Warden Thorne", "A-Rank Ascendant 'Ghost'"],
 		},
 		flavor: "Cooler heads prevail.",
 		discovery_lore:
-			"Invented after a tragic eruption of a Red Gate composed of volcanic anomalies, now standard issue for fire-zone operations.",
+			"Invented after a tragic eruption of a Red Rift composed of volcanic anomalies, now standard issue for fire-zone operations.",
 		tags: ["sigil", "armor", "protection"],
 		can_inscribe_on: ["armor"],
 		effect_description: "Passive: Reduces all Fire damage taken by 5.",
@@ -742,7 +742,7 @@ export const sigils: CompendiumSigil[] = [
 			restrictions: [
 				"Socket type: armor",
 				"Inscription DC: 12 (Crystal Engraver)",
-				"Material cost: 1,000 Gate Credits",
+				"Material cost: 1,000 Rift Credits",
 			],
 			special_abilities: ["Passive: Reduces all Fire damage taken by 5"],
 			stat_bonuses: {},
@@ -807,7 +807,7 @@ export const sigils: CompendiumSigil[] = [
 			restrictions: [
 				"Socket type: armor",
 				"Inscription DC: 20 (Arcane Chisel)",
-				"Material cost: 2,500 Gate Credits",
+				"Material cost: 2,500 Rift Credits",
 			],
 			special_abilities: ["Passive: Reduces all Cold damage taken by 5"],
 			stat_bonuses: {},
@@ -871,7 +871,7 @@ export const sigils: CompendiumSigil[] = [
 			restrictions: [
 				"Socket type: armor",
 				"Inscription DC: 21 (Void Stylus)",
-				"Material cost: 2,500 Gate Credits",
+				"Material cost: 2,500 Rift Credits",
 			],
 			special_abilities: ["Passive: Reduces all Lightning damage taken by 5"],
 			stat_bonuses: {},
@@ -904,7 +904,7 @@ export const sigils: CompendiumSigil[] = [
 		},
 		flavor: "Weightless steps.",
 		discovery_lore:
-			"An agile enhancement favored by the Guild's scouting corps for navigating treacherous dungeon environments and collapsed ruins.",
+			"An agile enhancement favored by the Guild's scouting corps for navigating treacherous Rift environments and collapsed ruins.",
 		tags: ["sigil", "armor", "utility"],
 		can_inscribe_on: ["armor", "boots"],
 		effect_description:
@@ -936,7 +936,7 @@ export const sigils: CompendiumSigil[] = [
 			restrictions: [
 				"Socket type: armor or boots",
 				"Inscription DC: 19 (Rift Calligraphy Brush)",
-				"Material cost: 250 Gate Credits",
+				"Material cost: 250 Rift Credits",
 			],
 			special_abilities: [
 				"Passive: Ignore difficult terrain penalties created by rubble or natural ground",
@@ -1002,7 +1002,7 @@ export const sigils: CompendiumSigil[] = [
 			restrictions: [
 				"Socket type: accessory or helmet",
 				"Inscription DC: 17 (Arcane Chisel)",
-				"Material cost: 1,000 Gate Credits",
+				"Material cost: 1,000 Rift Credits",
 			],
 			special_abilities: [
 				"Passive: Advantage on Intelligence (Investigation) checks to identify enemy weaknesses",
@@ -1025,7 +1025,7 @@ export const sigils: CompendiumSigil[] = [
 			secondary: "None",
 		},
 		lore: {
-			current_owner: "Lost to the depths of a high-tier dungeon.",
+			current_owner: "Lost to the depths of a high-tier Rift.",
 			curse: "",
 			history:
 				"Catalogued in the Technomancer Guild's closed-reference volume. The Sigil of the Hawk's Vision carried the story forward.",
@@ -1068,7 +1068,7 @@ export const sigils: CompendiumSigil[] = [
 			restrictions: [
 				"Socket type: accessory or goggles",
 				"Inscription DC: 19 (Void Stylus)",
-				"Material cost: 2,500 Gate Credits",
+				"Material cost: 2,500 Rift Credits",
 			],
 			special_abilities: [
 				"Passive: Cannot be surprised by visible enemies, ranged attacks ignore half cover",
@@ -1135,7 +1135,7 @@ export const sigils: CompendiumSigil[] = [
 			restrictions: [
 				"Socket type: accessory or armor",
 				"Inscription DC: 18 (Arcane Chisel)",
-				"Material cost: 1,000 Gate Credits",
+				"Material cost: 1,000 Rift Credits",
 			],
 			special_abilities: [
 				"Passive: When taking the ready action, can move up to 10 feet as part of the reaction",
@@ -1163,13 +1163,13 @@ export const sigils: CompendiumSigil[] = [
 			history:
 				"Archived in the Guild's secured inscription reference. That much survives in the Sigil of the Titan's Grasp's field history.",
 			origin:
-				"Used by Holy Knights to physically wrestle dungeon bosses to the ground.",
+				"Used by Holy Knights to physically wrestle Rift bosses to the ground.",
 			personality: "Dormant and silent.",
 			prior_owners: ["Archmage Valerius"],
 		},
 		flavor: "Unbreakable strength.",
 		discovery_lore:
-			"Used by Holy Knights to physically wrestle dungeon bosses to the ground, recovered from a battlefield where a S-Rank anomaly was subdued.",
+			"Used by Holy Knights to physically wrestle Rift bosses to the ground, recovered from a battlefield where a S-Rank anomaly was subdued.",
 		tags: ["sigil", "accessory", "strength"],
 		can_inscribe_on: ["accessory", "gloves"],
 		effect_description:
@@ -1201,7 +1201,7 @@ export const sigils: CompendiumSigil[] = [
 			restrictions: [
 				"Socket type: accessory or gloves",
 				"Inscription DC: 14 (Arcane Chisel)",
-				"Material cost: 1,000 Gate Credits",
+				"Material cost: 1,000 Rift Credits",
 			],
 			special_abilities: [
 				"Passive: Count as one size category larger for grappling, shoving, and carrying capacity",
@@ -1267,7 +1267,7 @@ export const sigils: CompendiumSigil[] = [
 			restrictions: [
 				"Socket type: accessory or cloak",
 				"Inscription DC: 19 (Rift Calligraphy Brush)",
-				"Material cost: 500 Gate Credits",
+				"Material cost: 500 Rift Credits",
 			],
 			special_abilities: [
 				"Passive: Hostile creatures must succeed on DC 13 Sense check to target you if another ally is within 5 feet",
@@ -1337,7 +1337,7 @@ export const sigils: CompendiumSigil[] = [
 			restrictions: [
 				"Socket type: accessory or amulet",
 				"Inscription DC: 16 (Shadow Quill)",
-				"Material cost: 2,500 Gate Credits",
+				"Material cost: 2,500 Rift Credits",
 			],
 			special_abilities: [
 				"Passive: On critical hit, recover 1 expended Job resource or spell slot of level 1",
@@ -1411,7 +1411,7 @@ export const sigils: CompendiumSigil[] = [
 			restrictions: [
 				"Socket type: weapon",
 				"Inscription DC: 17 (Mana Etching Needle)",
-				"Material cost: 2,500 Gate Credits",
+				"Material cost: 2,500 Rift Credits",
 			],
 			special_abilities: [
 				"Passive: Any humanoid killed by this weapon instantly rises as a Shadow Minion under your control for 1 minute",
@@ -1441,13 +1441,13 @@ export const sigils: CompendiumSigil[] = [
 			history:
 				"Entered into the Bureau's controlled-inscription ledger. The Sigil of the Undying Flame carried the story forward.",
 			origin:
-				"The ultimate safeguard for Ascendants entering uncharted Red Gates.",
+				"The ultimate safeguard for Ascendants entering uncharted Red Rifts.",
 			personality: "Sorrowful, weeping mana.",
 			prior_owners: ["An unknown Assassin Awakened"],
 		},
 		flavor: "Refuse to fall.",
 		discovery_lore:
-			"The ultimate safeguard for Ascendants entering uncharted Red Gates, blessed by Holylight Cathedral High Priests.",
+			"The ultimate safeguard for Ascendants entering uncharted Red Rifts, blessed by Holylight Cathedral High Priests.",
 		tags: ["sigil", "armor", "vitality"],
 		active_feature:
 			"Undying Flame: When you drop to 0 HP, you instead drop to 1 HP and gain temporary HP equal to your level. (1/long rest)",
@@ -1484,7 +1484,7 @@ export const sigils: CompendiumSigil[] = [
 			restrictions: [
 				"Socket type: armor",
 				"Inscription DC: 21 (Crystal Engraver)",
-				"Material cost: 50 Gate Credits",
+				"Material cost: 50 Rift Credits",
 			],
 			special_abilities: [
 				"Passive: If attack would reduce you to 0 HP, instead reduce to 1 HP and release 20ft fiery explosion (4d10 Fire damage, DEX DC 15 half)",
@@ -1510,19 +1510,19 @@ export const sigils: CompendiumSigil[] = [
 			secondary: "None",
 		},
 		lore: {
-			current_owner: "Lost to the depths of a high-tier dungeon.",
+			current_owner: "Lost to the depths of a high-tier Rift.",
 			curse: "",
 			history:
 				"Tracked through the Bureau's restricted-inscription registry. The Sigil of the Anomaly's Scale carried the story forward.",
 			origin:
-				"A necessity when traversing the deeper layers of Hell-Class gates.",
+				"A necessity when traversing the deeper layers of Hell-Class Rifts.",
 			personality: "Proud and unyielding.",
 			prior_owners: ["Archmage Valerius"],
 		},
 		flavor:
 			"Corrodes the certainty of outcomes. The death of hesitation, made manifest.",
 		discovery_lore:
-			"A necessity when traversing the deeper layers of Hell-Class gates, recovered from a fallen Ascendant's armor.",
+			"A necessity when traversing the deeper layers of Hell-Class Rifts, recovered from a fallen Ascendant's armor.",
 		tags: ["sigil", "armor", "protection"],
 		can_inscribe_on: ["armor"],
 		effect_description:
@@ -1554,7 +1554,7 @@ export const sigils: CompendiumSigil[] = [
 			restrictions: [
 				"Socket type: armor",
 				"Inscription DC: 19 (Shadow Quill)",
-				"Material cost: 500 Gate Credits",
+				"Material cost: 500 Rift Credits",
 			],
 			special_abilities: [
 				"Passive: Grants Resistance to Fire damage; if already have resistance, gain Immunity instead",
@@ -1579,7 +1579,7 @@ export const sigils: CompendiumSigil[] = [
 			secondary: "None",
 		},
 		lore: {
-			current_owner: "Lost to the depths of a high-tier dungeon.",
+			current_owner: "Lost to the depths of a high-tier Rift.",
 			curse: "",
 			history:
 				"Documented in the Ascendant Bureau's archivist-access manual. That much survives in the Sigil of the True Glacier's field history.",
@@ -1622,7 +1622,7 @@ export const sigils: CompendiumSigil[] = [
 			restrictions: [
 				"Socket type: armor",
 				"Inscription DC: 21 (Crystal Engraver)",
-				"Material cost: 50 Gate Credits",
+				"Material cost: 50 Rift Credits",
 			],
 			special_abilities: [
 				"Passive: Grants Resistance to Cold damage; if already have resistance, gain Immunity instead",
@@ -1690,7 +1690,7 @@ export const sigils: CompendiumSigil[] = [
 			restrictions: [
 				"Socket type: armor",
 				"Inscription DC: 17 (Void Stylus)",
-				"Material cost: 250 Gate Credits",
+				"Material cost: 250 Rift Credits",
 			],
 			special_abilities: [
 				"Passive: Grants Resistance to Lightning damage; if already have resistance, gain Immunity instead",
@@ -1722,13 +1722,13 @@ export const sigils: CompendiumSigil[] = [
 			history:
 				"Documented in the Ascendant Bureau's archivist-access manual. The Sigil of the Obsidian Polish's service record notes as much.",
 			origin:
-				"Crucial for fighting the acid-spitting Arachnids of Sector D gates.",
+				"Crucial for fighting the acid-spitting Arachnids of Sector D Rifts.",
 			personality: "Resonates only with lattice-compatible host items.",
 			prior_owners: ["Archmage Valerius"],
 		},
 		flavor: "Nothing sticks.",
 		discovery_lore:
-			"Crucial for fighting the acid-spitting Arachnids of Sector D gates, recovered from a contaminated zone.",
+			"Crucial for fighting the acid-spitting Arachnids of Sector D Rifts, recovered from a contaminated zone.",
 		tags: ["sigil", "armor", "protection"],
 		can_inscribe_on: ["armor"],
 		effect_description:
@@ -1760,7 +1760,7 @@ export const sigils: CompendiumSigil[] = [
 			restrictions: [
 				"Socket type: armor",
 				"Inscription DC: 11 (Arcane Chisel)",
-				"Material cost: 50 Gate Credits",
+				"Material cost: 50 Rift Credits",
 			],
 			special_abilities: [
 				"Passive: Grants Resistance to Acid damage; if already have resistance, gain Immunity instead",
@@ -1828,7 +1828,7 @@ export const sigils: CompendiumSigil[] = [
 			restrictions: [
 				"Socket type: armor",
 				"Inscription DC: 12 (Rift Calligraphy Brush)",
-				"Material cost: 1,000 Gate Credits",
+				"Material cost: 1,000 Rift Credits",
 			],
 			special_abilities: [
 				"Passive: Grants Resistance to Poison damage; if already have resistance, gain Immunity instead",
@@ -1896,7 +1896,7 @@ export const sigils: CompendiumSigil[] = [
 			restrictions: [
 				"Socket type: armor",
 				"Inscription DC: 13 (Mana Etching Needle)",
-				"Material cost: 2,500 Gate Credits",
+				"Material cost: 2,500 Rift Credits",
 			],
 			special_abilities: [
 				"Passive: Grants Resistance to Thunder damage; if already have resistance, gain Immunity instead",
@@ -1966,7 +1966,7 @@ export const sigils: CompendiumSigil[] = [
 			restrictions: [
 				"Socket type: armor",
 				"Inscription DC: 18 (Shadow Quill)",
-				"Material cost: 500 Gate Credits",
+				"Material cost: 500 Rift Credits",
 			],
 			special_abilities: [
 				"Passive: Grants Resistance to Force damage; if already have resistance, gain Immunity instead",
@@ -1996,13 +1996,13 @@ export const sigils: CompendiumSigil[] = [
 			history:
 				"Catalogued in the Technomancer Guild's closed-reference volume. The Sigil of the Iron Mind's service record notes as much.",
 			origin:
-				"Constructed after an Illithid-variant gate resulted in hundreds of mind-controlled casualties.",
+				"Constructed after an Illithid-variant Rift resulted in hundreds of mind-controlled casualties.",
 			personality: "Chaotic and unpredictable.",
 			prior_owners: ["Guild Master Kael"],
 		},
 		flavor: "My thoughts are my own.",
 		discovery_lore:
-			"Constructed after an Illithid-variant gate resulted in hundreds of mind-controlled casualties, recovered from a quarantine zone.",
+			"Constructed after an Illithid-variant Rift resulted in hundreds of mind-controlled casualties, recovered from a quarantine zone.",
 		tags: ["sigil", "armor", "protection"],
 		can_inscribe_on: ["armor", "helmet"],
 		effect_description:
@@ -2034,7 +2034,7 @@ export const sigils: CompendiumSigil[] = [
 			restrictions: [
 				"Socket type: armor or helmet",
 				"Inscription DC: 18 (Mana Etching Needle)",
-				"Material cost: 250 Gate Credits",
+				"Material cost: 250 Rift Credits",
 			],
 			special_abilities: [
 				"Passive: Grants Resistance to Psychic damage; if already have resistance, gain Immunity instead",
@@ -2104,7 +2104,7 @@ export const sigils: CompendiumSigil[] = [
 			restrictions: [
 				"Socket type: weapon",
 				"Inscription DC: 10 (Void Stylus)",
-				"Material cost: 1,000 Gate Credits",
+				"Material cost: 1,000 Rift Credits",
 			],
 			special_abilities: [
 				"Passive: Slashing attacks ignore slashing resistance and treat immunity as resistance",
@@ -2172,7 +2172,7 @@ export const sigils: CompendiumSigil[] = [
 			restrictions: [
 				"Socket type: weapon",
 				"Inscription DC: 19 (Mana Etching Needle)",
-				"Material cost: 1,000 Gate Credits",
+				"Material cost: 1,000 Rift Credits",
 			],
 			special_abilities: [
 				"Passive: Bludgeoning attacks push targets 10 feet backward on a hit",
@@ -2238,7 +2238,7 @@ export const sigils: CompendiumSigil[] = [
 			restrictions: [
 				"Socket type: weapon",
 				"Inscription DC: 13 (Mana Etching Needle)",
-				"Material cost: 250 Gate Credits",
+				"Material cost: 250 Rift Credits",
 			],
 			special_abilities: [
 				"Passive: Ranged attacks ignore half and three-quarters cover entirely",
@@ -2306,7 +2306,7 @@ export const sigils: CompendiumSigil[] = [
 			restrictions: [
 				"Socket type: weapon",
 				"Inscription DC: 19 (Rift Calligraphy Brush)",
-				"Material cost: 250 Gate Credits",
+				"Material cost: 250 Rift Credits",
 			],
 			special_abilities: [
 				"Passive: Attacks at 10-foot reach or 20-foot range deal additional 1d6 piercing damage",
@@ -2331,7 +2331,7 @@ export const sigils: CompendiumSigil[] = [
 			secondary: "None",
 		},
 		lore: {
-			current_owner: "Lost to the depths of a high-tier dungeon.",
+			current_owner: "Lost to the depths of a high-tier Rift.",
 			curse: "",
 			history:
 				"Tracked through the Bureau's restricted-inscription registry. The Sigil of the Executioner's Swing carried the story forward.",
@@ -2374,7 +2374,7 @@ export const sigils: CompendiumSigil[] = [
 			restrictions: [
 				"Socket type: weapon",
 				"Inscription DC: 19 (Void Stylus)",
-				"Material cost: 2,500 Gate Credits",
+				"Material cost: 2,500 Rift Credits",
 			],
 			special_abilities: [
 				"Passive: Once per turn, can declare reckless attack; on hit, target is stunned until their turn",
@@ -2441,7 +2441,7 @@ export const sigils: CompendiumSigil[] = [
 			restrictions: [
 				"Socket type: weapon",
 				"Inscription DC: 12 (Shadow Quill)",
-				"Material cost: 100 Gate Credits",
+				"Material cost: 100 Rift Credits",
 			],
 			special_abilities: [
 				"Passive: Spells requiring attack roll score critical hit on 19 or 20",
@@ -2508,7 +2508,7 @@ export const sigils: CompendiumSigil[] = [
 			restrictions: [
 				"Socket type: armor or accessory",
 				"Inscription DC: 10 (Void Stylus)",
-				"Material cost: 500 Gate Credits",
+				"Material cost: 500 Rift Credits",
 			],
 			special_abilities: [
 				"Passive: Increases Maximum HP by Character Level x 2",
@@ -2571,7 +2571,7 @@ export const sigils: CompendiumSigil[] = [
 			restrictions: [
 				"Socket type: armor or boots",
 				"Inscription DC: 12 (Crystal Engraver)",
-				"Material cost: 1,000 Gate Credits",
+				"Material cost: 1,000 Rift Credits",
 			],
 			special_abilities: ["Passive: Base walking speed increases by 10 feet"],
 			stat_bonuses: {},
@@ -2632,7 +2632,7 @@ export const sigils: CompendiumSigil[] = [
 			restrictions: [
 				"Socket type: accessory",
 				"Inscription DC: 19 (Mana Etching Needle)",
-				"Material cost: 100 Gate Credits",
+				"Material cost: 100 Rift Credits",
 			],
 			special_abilities: [
 				"Passive: Entirely immune to the Frightened condition",
@@ -2697,7 +2697,7 @@ export const sigils: CompendiumSigil[] = [
 			restrictions: [
 				"Socket type: armor",
 				"Inscription DC: 11 (Crystal Engraver)",
-				"Material cost: 50 Gate Credits",
+				"Material cost: 50 Rift Credits",
 			],
 			special_abilities: ["Passive: Grants permanent +2 to Armor Class"],
 			stat_bonuses: {},
@@ -2759,7 +2759,7 @@ export const sigils: CompendiumSigil[] = [
 			restrictions: [
 				"Socket type: helmet or accessory",
 				"Inscription DC: 11 (Mana Etching Needle)",
-				"Material cost: 2,500 Gate Credits",
+				"Material cost: 2,500 Rift Credits",
 			],
 			special_abilities: [
 				"Passive: Can perceive invisible creatures and illusions for what they truly are within 30 feet",

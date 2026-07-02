@@ -14,7 +14,7 @@ export interface StaticRollableTableSource {
 	id: string;
 	name: string;
 	description: string;
-	category: "gates" | "rewards" | "npcs" | "treasure";
+	category: "Rifts" | "rewards" | "npcs" | "treasure";
 	group: string;
 	diceFormula: string;
 	entries: string[];
@@ -31,7 +31,7 @@ export const rollableTables: StaticRollableTableSource[] = [
 		id: "rift-complications",
 		name: "Rift Complications",
 		description: "Complications that can destabilize an active rift encounter.",
-		category: "gates",
+		category: "Rifts",
 		group: "complication",
 		diceFormula: createUniformDiceFormula(GATE_COMPLICATIONS.length) ?? "1d0",
 		entries: [...GATE_COMPLICATIONS],
@@ -43,7 +43,7 @@ export const rollableTables: StaticRollableTableSource[] = [
 		name: "Rift Hazards",
 		description:
 			"Environmental hazards and battlefield effects inside unstable rifts.",
-		category: "gates",
+		category: "Rifts",
 		group: "hazard",
 		diceFormula: createUniformDiceFormula(GATE_HAZARDS.length) ?? "1d0",
 		entries: [...GATE_HAZARDS],
@@ -54,7 +54,7 @@ export const rollableTables: StaticRollableTableSource[] = [
 		id: "rift-themes",
 		name: "Rift Themes",
 		description: "Theme overlays that define the flavor and enemies of a rift.",
-		category: "gates",
+		category: "Rifts",
 		group: "theme",
 		diceFormula: createUniformDiceFormula(GATE_THEMES.length) ?? "1d0",
 		entries: [...GATE_THEMES],
@@ -65,7 +65,7 @@ export const rollableTables: StaticRollableTableSource[] = [
 		id: "rift-biomes",
 		name: "Rift Biomes",
 		description: "Biome prompts for building the physical space of a rift.",
-		category: "gates",
+		category: "Rifts",
 		group: "biome",
 		diceFormula: createUniformDiceFormula(GATE_BIOMES.length) ?? "1d0",
 		entries: [...GATE_BIOMES],

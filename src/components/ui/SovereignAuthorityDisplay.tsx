@@ -262,12 +262,12 @@ export const AscensionMeter = ({
 			sovereign: {
 				color: "#ffd700",
 				glow: "#ffed4e",
-				bg: "from-yellow-900/20 to-yellow-800/20",
+				bg: "from-gate-s/20 to-gate-s/20",
 			},
 			regent: {
 				color: "#f59e0b",
 				glow: "#fbbf24",
-				bg: "from-orange-900/20 to-orange-800/20",
+				bg: "from-gate-a/20 to-gate-a/20",
 			},
 			eternal: {
 				color: "#dc2626",

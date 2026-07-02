@@ -11,14 +11,11 @@ import {
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
-import {
-	AscendantText,
-	ManaFlowText,
-	RiftHeading,
-} from "@/components/ui/AscendantText";
+import { AscendantText, ManaFlowText } from "@/components/ui/AscendantText";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { PageHeader } from "@/components/ui/PageHeader";
 import { GenerationHistoryPanel } from "@/components/warden-directives/GenerationHistoryPanel";
 import { useEmbedded } from "@/contexts/EmbeddedContext";
 import {
@@ -156,11 +153,12 @@ ${event.consequences}${linked}
 ${event.aiEnhanced ? `\n## Warden Detail (AI)\n${event.aiEnhanced}\n` : ""}`);
 }
 
+/* Cool severity ramp: teal → cyan → violet → crimson (no warm hues). */
 const SEVERITY_COLOR: Record<GeneratedEvent["severity"], string> = {
-	Minor: "text-green-400 border-green-400/40",
-	Moderate: "text-yellow-400 border-yellow-400/40",
-	Severe: "text-orange-400 border-orange-400/40",
-	Critical: "text-red-400 border-red-400/50",
+	Minor: "text-success border-success/40",
+	Moderate: "text-warning border-warning/40",
+	Severe: "text-resurge border-resurge/40",
+	Critical: "text-destructive border-destructive/50",
 };
 
 interface EventToolState {
@@ -369,7 +367,7 @@ Expand with read-aloud boxed text, detailed mechanics (DCs, triggers), success/f
 			case "encounter":
 				return "text-blue-400 border-blue-400/30 bg-blue-400/10";
 			case "complication":
-				return "text-orange-400 border-orange-400/30 bg-orange-400/10";
+				return "text-gate-a border-gate-a/30 bg-gate-a/10";
 			default:
 				return "text-muted-foreground";
 		}
@@ -389,18 +387,20 @@ Expand with read-aloud boxed text, detailed mechanics (DCs, triggers), success/f
 						<ArrowLeft className="w-4 h-4 mr-2" />
 						Back to Warden Tools
 					</Button>
-					<RiftHeading
-						level={1}
-						variant="sovereign"
-						dimensional
-						className="mb-2"
-					>
-						Systemic Entropy Generator
-					</RiftHeading>
-					<ManaFlowText variant="rift" speed="slow" className="font-heading">
-						Induce non-deterministic anomalies, unpredicted conceptual entities,
-						and localized destabilization protocols into active regions.
-					</ManaFlowText>
+					<PageHeader
+						title="Systemic Entropy Generator"
+						description={
+							<ManaFlowText
+								variant="rift"
+								speed="slow"
+								className="font-heading"
+							>
+								Induce non-deterministic anomalies, unpredicted conceptual
+								entities, and localized destabilization protocols into active
+								regions.
+							</ManaFlowText>
+						}
+					/>
 				</div>
 			)}
 
@@ -477,7 +477,7 @@ Expand with read-aloud boxed text, detailed mechanics (DCs, triggers), success/f
 							</Badge>
 							<Badge variant="outline">{event.riftScale}</Badge>
 							{event.dc != null && (
-								<Badge variant="outline" className="text-amber-300">
+								<Badge variant="outline" className="text-gate-s">
 									DC {event.dc}
 								</Badge>
 							)}
@@ -487,7 +487,7 @@ Expand with read-aloud boxed text, detailed mechanics (DCs, triggers), success/f
 
 						<div className="p-4 rounded-lg bg-muted/30 border border-border">
 							<div className="flex items-start gap-2">
-								<AlertTriangle className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
+								<AlertTriangle className="w-5 h-5 text-gate-s mt-0.5 shrink-0" />
 								<div>
 									<h4 className="font-heading font-semibold mb-1">Mechanics</h4>
 									<AscendantText className="block text-sm text-muted-foreground">
@@ -601,8 +601,8 @@ Expand with read-aloud boxed text, detailed mechanics (DCs, triggers), success/f
 								information, or complications.
 							</AscendantText>
 						</div>
-						<div className="p-4 rounded-lg border border-orange-400/30 bg-orange-400/10">
-							<h4 className="font-heading font-semibold text-orange-400 mb-2">
+						<div className="p-4 rounded-lg border border-gate-a/30 bg-gate-a/10">
+							<h4 className="font-heading font-semibold text-gate-a mb-2">
 								Complications
 							</h4>
 							<AscendantText className="block text-muted-foreground text-xs">

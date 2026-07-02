@@ -65,7 +65,7 @@ export const regents: Regent[] = [
 			"Medium Aether Armor",
 			"Mana Shields",
 		],
-		weapon_proficiencies: ["Awakened Weapons", "Gate-Forged Weapons"],
+		weapon_proficiencies: ["Awakened Weapons", "Rift-Forged Weapons"],
 		tool_proficiencies: [],
 		class_features: [
 			{
@@ -133,14 +133,14 @@ export const regents: Regent[] = [
 				level: 5,
 				name: "Dimensional Regent",
 				description:
-					"You can cast gate and plane shift without expending spell slots. You have advantage on saving throws against teleportation effects.",
+					"You can cast Rift and plane shift without expending spell slots. You have advantage on saving throws against teleportation effects.",
 				type: "passive",
 			},
 			{
 				level: 5,
 				name: "Dimensional Authority",
 				description:
-					"You can travel between planes at will and control dimensional gates.",
+					"You can travel between planes at will and control dimensional Rifts.",
 				type: "passive",
 			},
 			{
@@ -540,7 +540,7 @@ export const regents: Regent[] = [
 		title: "Radiant Regent (Regent of White Flames)",
 		theme: "White Flames and Purification",
 		description:
-			"The ultimate manifestation of purification fire, sharing a fragment of Solara, the Brightest Fragment. You command the sacred 'Exarch's Authority' that incinerates corruption and illuminates the darkest depths of the realms. As a vessel of the Radiant Warden, you are tasked with stabilizing the gates and purging the void-noise from reality.",
+			"The ultimate manifestation of purification fire, sharing a fragment of Solara, the Brightest Fragment. You command the sacred 'Exarch's Authority' that incinerates corruption and illuminates the darkest depths of the realms. As a vessel of the Radiant Warden, you are tasked with stabilizing the Rifts and purging the void-noise from reality.",
 		rank: "S",
 		image: getRegentPortraitUrl("radiant_regent"),
 		type: "ascendant-class-overlay",
@@ -556,7 +556,7 @@ export const regents: Regent[] = [
 			"Medium Aether Armor",
 			"Mana Shields",
 		],
-		weapon_proficiencies: ["Awakened Weapons", "Gate-Forged Weapons"],
+		weapon_proficiencies: ["Awakened Weapons", "Rift-Forged Weapons"],
 		tool_proficiencies: [],
 		requirements: {
 			quest_completion: "Complete the Flame Regent Trials quest series",
@@ -940,7 +940,7 @@ export const regents: Regent[] = [
 		saving_throws: ["Vitality", "Vitality"],
 		skill_proficiencies: ["Athletics", "Intimidation", "Survival"],
 		armor_proficiencies: ["All armor", "Mana Shields"],
-		weapon_proficiencies: ["Awakened Weapons", "Gate-Forged Weapons"],
+		weapon_proficiencies: ["Awakened Weapons", "Rift-Forged Weapons"],
 		tool_proficiencies: [],
 		requirements: {
 			quest_completion: "Complete the Steel Regent Ascension trials",
@@ -1354,7 +1354,7 @@ export const regents: Regent[] = [
 			"Medium Aether Armor",
 			"Mana Shields",
 		],
-		weapon_proficiencies: ["Awakened Weapons", "Gate-Forged Weapons"],
+		weapon_proficiencies: ["Awakened Weapons", "Rift-Forged Weapons"],
 		tool_proficiencies: [],
 		requirements: {
 			quest_completion: "Complete the Path of Destruction quest series",
@@ -1772,7 +1772,7 @@ export const regents: Regent[] = [
 			"Intimidation",
 		],
 		armor_proficiencies: ["All armor", "Mana Shields"],
-		weapon_proficiencies: ["Awakened Weapons", "Gate-Forged Weapons"],
+		weapon_proficiencies: ["Awakened Weapons", "Rift-Forged Weapons"],
 		tool_proficiencies: [],
 		requirements: {
 			quest_completion: "Complete the Command Regent Ascension trials",
@@ -2164,11 +2164,11 @@ export const regents: Regent[] = [
 		skill_proficiencies: [
 			"Mana Flow",
 			"Investigation",
-			"Gate Topology",
+			"Rift Topology",
 			"Perception",
 		],
 		armor_proficiencies: ["Light Mana-Weave Armor", "Medium Aether Armor"],
-		weapon_proficiencies: ["Awakened Weapons", "Gate-Forged Weapons"],
+		weapon_proficiencies: ["Awakened Weapons", "Rift-Forged Weapons"],
 		tool_proficiencies: [],
 		class_features: [
 			{
@@ -2529,7 +2529,7 @@ export const regents: Regent[] = [
 		skill_proficiencies: [
 			"Athletics",
 			"Beast Taming",
-			"Gate Topology",
+			"Rift Topology",
 			"Survival",
 		],
 		armor_proficiencies: [
@@ -2537,7 +2537,7 @@ export const regents: Regent[] = [
 			"Medium Aether Armor",
 			"Mana Shields",
 		],
-		weapon_proficiencies: ["Awakened Weapons", "Gate-Forged Weapons"],
+		weapon_proficiencies: ["Awakened Weapons", "Rift-Forged Weapons"],
 		tool_proficiencies: [],
 		class_features: [
 			{
@@ -2879,7 +2879,7 @@ export const regents: Regent[] = [
 		hit_dice: "1d10",
 		primary_ability: ["Intelligence", "Sense"],
 		saving_throws: ["Intelligence", "Vitality"],
-		skill_proficiencies: ["Mana Flow", "Medicine", "Gate Topology", "Survival"],
+		skill_proficiencies: ["Mana Flow", "Medicine", "Rift Topology", "Survival"],
 		armor_proficiencies: ["Light Mana-Weave Armor"],
 		weapon_proficiencies: ["Awakened Weapons"],
 		tool_proficiencies: ["Poisoner's kit", "Herbalism kit"],
@@ -3272,7 +3272,7 @@ export const regents: Regent[] = [
 				"Misty Step",
 				"Dimension Door",
 				"Teleport",
-				"Gate",
+				"Rift",
 			],
 		},
 		name: "Spatial Regent",
@@ -3342,7 +3342,7 @@ export const regents: Regent[] = [
 				level: 7,
 				name: "Lattice Vision",
 				description:
-					"See spatial weaknesses, hidden dimensions, and dimensional instabilities. Detect all portals/gates within 5 miles.",
+					"See spatial weaknesses, hidden dimensions, and dimensional instabilities. Detect all portals/Rifts within 5 miles.",
 				type: "passive",
 			},
 			{
@@ -3611,7 +3611,7 @@ export const regents: Regent[] = [
 			],
 		},
 		requirements: {
-			quest_completion: "Complete the Trial of the Spatial Gate",
+			quest_completion: "Complete the Trial of the Spatial Rift",
 			warden_verification: true,
 			prerequisite_job: "Any base job",
 			power_level: 10,
@@ -3637,7 +3637,7 @@ export const regents: Regent[] = [
 		saving_throws: ["Agility", "Presence"],
 		skill_proficiencies: ["Deception", "Stealth", "Perception", "Performance"],
 		armor_proficiencies: ["Light Mana-Weave Armor", "Medium Aether Armor"],
-		weapon_proficiencies: ["Awakened Weapons", "Gate-Forged Weapons"],
+		weapon_proficiencies: ["Awakened Weapons", "Rift-Forged Weapons"],
 		tool_proficiencies: ["Disguise kit", "Forgery kit"],
 		class_features: [
 			{
@@ -4043,7 +4043,7 @@ export const regents: Regent[] = [
 			"Mana Flow",
 		],
 		armor_proficiencies: ["Light Mana-Weave Armor", "Medium Aether Armor"],
-		weapon_proficiencies: ["Awakened Weapons", "Gate-Forged Weapons"],
+		weapon_proficiencies: ["Awakened Weapons", "Rift-Forged Weapons"],
 		tool_proficiencies: [],
 		class_features: [
 			{
@@ -4403,7 +4403,7 @@ export const regents: Regent[] = [
 			"Medium Aether Armor",
 			"Heavy Carapace Armor",
 		],
-		weapon_proficiencies: ["Awakened Weapons", "Gate-Forged Weapons"],
+		weapon_proficiencies: ["Awakened Weapons", "Rift-Forged Weapons"],
 		tool_proficiencies: [],
 		class_features: [
 			{

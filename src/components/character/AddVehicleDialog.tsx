@@ -138,7 +138,7 @@ export function AddVehicleDialog({
 										{v.price != null && (
 											<Badge
 												variant="outline"
-												className="text-[11px] text-bond-gold border-yellow-600/40"
+												className="text-[11px] text-gate-s border-gate-s/40"
 											>
 												{formatRaCurrencyValue(v.price)}
 											</Badge>
@@ -150,7 +150,7 @@ export function AddVehicleDialog({
 											{v.mod_capacity ?? 0} cap
 										</Badge>
 										{v.rank && (
-											<span className="text-[11px] text-fuchsia-300">
+											<span className="text-[11px] text-resurge-violet">
 												Rank {v.rank}
 											</span>
 										)}
@@ -220,7 +220,7 @@ export function AddVehicleDialog({
 					<div className="space-y-2 pt-2">
 						<div className="flex flex-wrap items-center gap-2 text-xs">
 							{selected.price != null && (
-								<Badge variant="secondary" className="text-bond-gold">
+								<Badge variant="secondary" className="text-gate-s">
 									{formatRaCurrencyValue(selected.price)}
 								</Badge>
 							)}

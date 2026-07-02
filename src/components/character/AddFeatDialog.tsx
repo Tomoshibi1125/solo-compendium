@@ -352,7 +352,7 @@ export function AddFeatDialog({
 															<Badge
 																key={req}
 																variant="outline"
-																className="text-xs text-amber-700 border-amber-600/40"
+																className="text-xs text-gate-s border-gate-s/40"
 															>
 																Requires {req}
 															</Badge>

@@ -181,7 +181,7 @@ export function CustomActionsList({
 						data-testid="custom-action-add-btn"
 					>
 						<Plus className="w-4 h-4" />
-						<Sparkles className="w-4 h-4 text-fuchsia-300" />
+						<Sparkles className="w-4 h-4 text-resurge-violet" />
 						Add Custom Action
 					</Button>
 				)}

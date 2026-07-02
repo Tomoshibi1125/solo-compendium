@@ -149,7 +149,7 @@ function BackgroundChipGroup({
 							variant={variant}
 							className={
 								isDup
-									? "text-[11px] h-5 bg-amber-500/10 border-amber-400/60 text-amber-200"
+									? "text-[11px] h-5 bg-gate-s/10 border-gate-s/60 text-gate-s"
 									: "text-[11px] h-5 bg-primary/10 border-primary/20"
 							}
 							title={

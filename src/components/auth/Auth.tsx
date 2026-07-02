@@ -3,10 +3,10 @@ import { ThemeSupa } from "@supabase/auth-ui-shared";
 import { ArrowRight, Crown, Sword } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
-import { AscendantSigil } from "@/components/ui/AscendantSigil";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
+import { RaLogo } from "@/components/ui/RaLogo";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useOAuth } from "@/hooks/useOAuth";
 import { useProfile, useUpdateProfile } from "@/hooks/useProfile";
@@ -154,7 +154,7 @@ export function Auth() {
 					>
 						<div className="p-8 space-y-4">
 							<div className="flex justify-center">
-								<AscendantSigil size="md" variant="supreme" />
+								<RaLogo variant="full" size="md" />
 							</div>
 							<div>
 								<h2 className="font-resurge text-2xl font-bold gradient-text-resurge mb-2">
@@ -192,7 +192,7 @@ export function Auth() {
 					>
 						<div className="p-8 space-y-4">
 							<div className="flex justify-center">
-								<AscendantSigil size="md" variant="supreme" />
+								<RaLogo variant="full" size="md" />
 							</div>
 							<div>
 								<h2 className="font-resurge text-2xl font-bold gradient-text-resurge mb-2">
@@ -230,7 +230,7 @@ export function Auth() {
 					<AscendantWindow variant="resurge" className="text-center">
 						<div className="p-8 space-y-6">
 							<div className="flex justify-center mb-4">
-								<AscendantSigil size="md" variant="supreme" />
+								<RaLogo variant="full" size="md" />
 							</div>
 							<h2 className="font-resurge text-2xl font-bold gradient-text-resurge mb-2">
 								{isSignup
@@ -334,7 +334,7 @@ export function Auth() {
 				<AscendantWindow variant="resurge">
 					<div className="p-6">
 						<div className="flex justify-center mb-6">
-							<AscendantSigil size="md" variant="supreme" />
+							<RaLogo variant="full" size="md" />
 						</div>
 
 						{/* OAuth Buttons */}

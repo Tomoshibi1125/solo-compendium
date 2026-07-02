@@ -426,7 +426,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 			"Touch a creature at 0 HP. The target is stabilized and regains 1 hit point. A small bioluminescent sprout grows from the ground at the point of contact, providing dim light in a 5-foot radius for 1 minute.",
 		lore: {
 			origin:
-				"Gate ecology researchers discovered that certain gate-plant spores respond to Sense-based mana.",
+				"Rift ecology researchers discovered that certain gate-plant spores respond to Sense-based mana.",
 			history:
 				"Herald chaplains adopted it as a battlefield triage tool within the first year.",
 			curse: "",
@@ -543,7 +543,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 			"Speak a word of your oath and your weapon ignites with radiant mana. The next melee weapon attack you make before the end of your next turn deals an extra 1d6 radiant damage. If you hit, the target sheds dim light in a 5-foot radius until the end of your next turn, negating invisibility.",
 		lore: {
 			origin:
-				"First channeled by a Holy Knight who refused to let an invisible anomaly escape a collapsing gate.",
+				"First channeled by a Holy Knight who refused to let an invisible anomaly escape a collapsing Rift.",
 			history:
 				"Every Holy Knight chapter teaches a slightly different invocation word. All produce the same effect.",
 			curse: "",
@@ -609,7 +609,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 			"Emit a subsonic mana pulse that maps your immediate surroundings. You gain blindsight 10 feet until the end of your next turn. Invisible or hidden creatures within that range are revealed to you.",
 		lore: {
 			origin:
-				"Copied from the sensory organs of a Bat-Class gate anomaly after a Stalker spent three weeks observing it.",
+				"Copied from the sensory organs of a Bat-Class Rift anomaly after a Stalker spent three weeks observing it.",
 			history:
 				"Technomancers added a hardware-assisted variant that feeds data to their combat HUD.",
 			curse: "",
@@ -806,7 +806,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 			"Tear a micro-rift at a point you can see within 60 feet. A burst of spatial distortion strikes one creature. Ranged spell attack using Sense; on hit, 1d8 force damage. The rift leaves behind a 5-foot square of difficult terrain until the end of your next turn.",
 		lore: {
 			origin:
-				"A Summoner's failed attempt to open a full gate accidentally produced this micro-rift effect.",
+				"A Summoner's failed attempt to open a full Rift accidentally produced this micro-rift effect.",
 			history:
 				"Bureau safety classified it as 'acceptable collateral' after extensive field testing.",
 			curse: "",
@@ -858,7 +858,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 			scaling: "Scales with character level",
 		},
 		discovery_lore:
-			"The first successful cast left a patch of alien grass growing on a Seoul sidewalk for three days.",
+			"The first successful cast left a patch of alien grass growing on a Meridian City sidewalk for three days.",
 		theme_tags: ["summoner", "rift", "conjuration", "terrain"],
 	},
 	{
@@ -925,7 +925,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 			scaling: "Scales with character level",
 		},
 		discovery_lore:
-			"The first user reported seeing 'the entire city glow like a circuit board.' She was looking at Seoul's gate-scarred infrastructure.",
+			"The first user reported seeing 'the entire city glow like a circuit board.' She was looking at Meridian City's gate-scarred infrastructure.",
 		theme_tags: ["mage", "esper", "technomancer", "utility", "divination"],
 	},
 	{
@@ -1679,7 +1679,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 		name: "Verdant Grasp",
 		display_name: "Verdant Grasp",
 		description:
-			"Gate-flora vines erupt from the ground around a creature within range. The target must make a DC 13 Strength save or be restrained for the duration. While restrained, it takes 1d6 piercing damage at the start of each of its turns. It can repeat the save at the end of each turn.",
+			"Rift-flora vines erupt from the ground around a creature within range. The target must make a DC 13 Strength save or be restrained for the duration. While restrained, it takes 1d6 piercing damage at the start of each of its turns. It can repeat the save at the end of each turn.",
 		lore: {
 			origin: "Documented in the Rift Ascendant compendium.",
 			history: "",
@@ -1688,7 +1688,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 			current_owner: "Bureau Archives.",
 			prior_owners: [],
 		},
-		flavor: "The gate remembers what grew there. It grows again.",
+		flavor: "The Rift remembers what grew there. It grows again.",
 		tags: [
 			"awakened",
 			"magic",
@@ -2392,7 +2392,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 		name: "Mana Seal",
 		display_name: "Mana Seal",
 		description:
-			"Touch a closed entry point — a door, container, or minor gate fissure — and fuse it shut with crystallized mana. The seal is invisible but tangible, raising the DC to breach by 10. You and designated allies pass through unimpeded. The seal can be suppressed by a successful Circuit Interrupt for 10 minutes.",
+			"Touch a closed entry point — a door, container, or minor Rift fissure — and fuse it shut with crystallized mana. The seal is invisible but tangible, raising the DC to breach by 10. You and designated allies pass through unimpeded. The seal can be suppressed by a successful Circuit Interrupt for 10 minutes.",
 		lore: {
 			origin: "Documented in the Rift Ascendant compendium.",
 			history: "",
@@ -2415,7 +2415,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 		source_book: "Rift Ascendant Canon",
 		effects: {
 			primary:
-				"Touch a closed entry point — a door, container, or minor gate fissure — and fuse it shut with crystallized mana.",
+				"Touch a closed entry point — a door, container, or minor Rift fissure — and fuse it shut with crystallized mana.",
 			secondary: "",
 		},
 		level: 2,
@@ -2438,7 +2438,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 			resolution: {
 				type: "utility",
 				effect:
-					"Touch a closed entry point — a door, container, or minor gate fissure — and fuse it shut with crystallized mana.",
+					"Touch a closed entry point — a door, container, or minor Rift fissure — and fuse it shut with crystallized mana.",
 			},
 			duration: "Until dispelled",
 			range: "Touch",
@@ -2932,8 +2932,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	{
 		id: "spell-sup-2-50-gate-snare",
 		classes: ["Mage", "Summoner", "Contractor"],
-		name: "Gate Snare",
-		display_name: "Gate Snare",
+		name: "Rift Snare",
+		display_name: "Rift Snare",
 		description:
 			"Open micro-rifts around a creature that snap shut like jaws. The target must make a DC 14 Strength save or be restrained by spatial distortion for the duration, taking 2d6 force damage at the start of each of its turns. It can repeat the save at the end of each turn.",
 		lore: {
@@ -4097,10 +4097,10 @@ export const spells_supplemental: CompendiumSpell[] = [
 	{
 		id: "spell-sup-3-68-summon-gate-echo",
 		classes: ["Mage", "Summoner", "Contractor"],
-		name: "Summon Gate Echo",
-		display_name: "Summon Gate Echo",
+		name: "Summon Rift Echo",
+		display_name: "Summon Rift Echo",
 		description:
-			"Tear a brief rift and pull a semi-autonomous gate echo into an unoccupied space within range. The echo is a Medium creature (AC 14, HP 30, +5 to hit, 2d6+3 damage) that acts on its own initiative and obeys your mental commands (no action required). It vanishes at 0 HP.",
+			"Tear a brief rift and pull a semi-autonomous Rift echo into an unoccupied space within range. The echo is a Medium creature (AC 14, HP 30, +5 to hit, 2d6+3 damage) that acts on its own initiative and obeys your mental commands (no action required). It vanishes at 0 HP.",
 		lore: {
 			origin: "Documented in the Rift Ascendant compendium.",
 			history: "",
@@ -4123,7 +4123,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 		source_book: "Rift Ascendant Canon",
 		effects: {
 			primary:
-				"Tear a brief rift and pull a semi-autonomous gate echo into an unoccupied space within range.",
+				"Tear a brief rift and pull a semi-autonomous Rift echo into an unoccupied space within range.",
 			secondary: "",
 		},
 		level: 3,
@@ -4146,7 +4146,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 			resolution: {
 				type: "utility",
 				effect:
-					"Tear a brief rift and pull a semi-autonomous gate echo into an unoccupied space within range.",
+					"Tear a brief rift and pull a semi-autonomous Rift echo into an unoccupied space within range.",
 			},
 			duration: "Concentration, up to 1 hour",
 			range: "60 feet",
@@ -4300,7 +4300,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 		name: "Whisper Network",
 		display_name: "Whisper Network",
 		description:
-			"Transmit a whispered message of 25 words or fewer to a creature within 1 mile that you are familiar with. The creature hears the message in your voice and can reply with 25 words of its own. The spell can reach across gate boundaries.",
+			"Transmit a whispered message of 25 words or fewer to a creature within 1 mile that you are familiar with. The creature hears the message in your voice and can reply with 25 words of its own. The spell can reach across Rift boundaries.",
 		lore: {
 			origin: "Documented in the Rift Ascendant compendium.",
 			history: "",
@@ -4493,7 +4493,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 		name: "Dimensional Anchor",
 		display_name: "Dimensional Anchor",
 		description:
-			"Launch a mana anchor that pins a creature to its current plane. Make a ranged spell attack. On a hit, the target is barred from teleportation, plane shifting, gate travel, and all extradimensional movement for the duration. If it attempts any such effect, it takes 4d6 force damage.",
+			"Launch a mana anchor that pins a creature to its current plane. Make a ranged spell attack. On a hit, the target is barred from teleportation, plane shifting, Rift travel, and all extradimensional movement for the duration. If it attempts any such effect, it takes 4d6 force damage.",
 		lore: {
 			origin: "Documented in the Rift Ascendant compendium.",
 			history: "",
@@ -4738,8 +4738,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	{
 		id: "spell-sup-4-78-gate-ward",
 		classes: ["Mage", "Holy Knight", "Esper", "Technomancer"],
-		name: "Gate Ward",
-		display_name: "Gate Ward",
+		name: "Rift Ward",
+		display_name: "Rift Ward",
 		description:
 			"Erect a translucent 20-foot radius dome at a point within range. For the duration, no creature can teleport into or out of the area, and summoning effects within the dome fail. Creatures inside gain advantage on saves against conjuration spells.",
 		lore: {
@@ -4943,8 +4943,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	{
 		id: "spell-sup-4-81-pact-gate",
 		classes: ["Mage", "Summoner", "Contractor"],
-		name: "Pact Gate",
-		display_name: "Pact Gate",
+		name: "Pact Rift",
+		display_name: "Pact Rift",
 		description:
 			"Open two linked portals within range. Willing creatures can move between them freely. Attacks and spells can pass through as if the spaces were adjacent. Unwilling creatures forced through must make a DC 16 Agility save or take 4d6 force damage from spatial shearing.",
 		lore: {
@@ -5145,8 +5145,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	{
 		id: "spell-sup-5-84-raise-gate-dead",
 		classes: ["Herald", "Holy Knight", "Idol"],
-		name: "Raise Gate Dead",
-		display_name: "Raise Gate Dead",
+		name: "Raise Rift Dead",
+		display_name: "Raise Rift Dead",
 		description:
 			"Touch a creature that died within the last 10 days and restore it to life with 1 hit point. The soul must be willing and free to return. The target takes a -4 penalty to all attack rolls, saving throws, and ability checks, decreasing by 1 every 24 hours until eliminated.",
 		lore: {
@@ -5530,8 +5530,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	{
 		id: "spell-sup-5-90-gate-fissure",
 		classes: ["Mage", "Summoner", "Contractor"],
-		name: "Gate Fissure",
-		display_name: "Gate Fissure",
+		name: "Rift Fissure",
+		display_name: "Rift Fissure",
 		description:
 			"Tear a rift in local space-time creating a 60-foot long, 10-foot wide, 20-foot deep fissure. Creatures in the area when it opens must make a DC 17 Agility save or fall in, taking 6d6 force damage. The fissure is impassable terrain. Creatures can climb out with a DC 15 Athletics check.",
 		lore: {
@@ -6143,10 +6143,10 @@ export const spells_supplemental: CompendiumSpell[] = [
 	{
 		id: "spell-sup-6-99-gate-behemoth",
 		classes: ["Mage", "Summoner", "Contractor"],
-		name: "Gate Behemoth",
-		display_name: "Gate Behemoth",
+		name: "Rift Behemoth",
+		display_name: "Rift Behemoth",
 		description:
-			"Tear open a major rift and summon a Large gate behemoth (AC 17, HP 100, multiattack: 2 slams at +8 for 2d10+5 bludgeoning). The behemoth acts on its own initiative and obeys your mental commands. It vanishes at 0 HP or when the spell ends.",
+			"Tear open a major rift and summon a Large Rift behemoth (AC 17, HP 100, multiattack: 2 slams at +8 for 2d10+5 bludgeoning). The behemoth acts on its own initiative and obeys your mental commands. It vanishes at 0 HP or when the spell ends.",
 		lore: {
 			origin: "Documented in the Rift Ascendant compendium.",
 			history: "",
@@ -6170,7 +6170,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 		source_book: "Rift Ascendant Canon",
 		effects: {
 			primary:
-				"Tear open a major rift and summon a Large gate behemoth (AC 17, HP 100, multiattack: 2 slams at +8 for 2d10+5 bludgeoning).",
+				"Tear open a major rift and summon a Large Rift behemoth (AC 17, HP 100, multiattack: 2 slams at +8 for 2d10+5 bludgeoning).",
 			secondary: "",
 		},
 		level: 6,
@@ -6191,7 +6191,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 			resolution: {
 				type: "utility",
 				effect:
-					"Tear open a major rift and summon a Large gate behemoth (AC 17, HP 100, multiattack: 2 slams at +8 for 2d10+5 bludgeoning).",
+					"Tear open a major rift and summon a Large Rift behemoth (AC 17, HP 100, multiattack: 2 slams at +8 for 2d10+5 bludgeoning).",
 			},
 			duration: "Concentration, up to 1 hour",
 			range: "60 feet",
@@ -6665,10 +6665,10 @@ export const spells_supplemental: CompendiumSpell[] = [
 	{
 		id: "spell-sup-7-107-gate-leviathan",
 		classes: ["Mage", "Summoner", "Contractor"],
-		name: "Gate Leviathan",
-		display_name: "Gate Leviathan",
+		name: "Rift Leviathan",
+		display_name: "Rift Leviathan",
 		description:
-			"Tear open a massive rift and summon a Huge gate leviathan (AC 18, HP 160, multiattack: 3 at +11 for 2d12+7, swim/fly 60 ft, siege: double damage to objects/structures). The leviathan obeys mental commands and acts on its own initiative.",
+			"Tear open a massive rift and summon a Huge Rift leviathan (AC 18, HP 160, multiattack: 3 at +11 for 2d12+7, swim/fly 60 ft, siege: double damage to objects/structures). The leviathan obeys mental commands and acts on its own initiative.",
 		lore: {
 			origin: "Documented in the Rift Ascendant compendium.",
 			history: "",
@@ -6692,7 +6692,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 		source_book: "Rift Ascendant Canon",
 		effects: {
 			primary:
-				"Tear open a massive rift and summon a Huge gate leviathan (AC 18, HP 160, multiattack: 3 at +11 for 2d12+7, swim/fly 60 ft, siege: double damage to objects/structures).",
+				"Tear open a massive rift and summon a Huge Rift leviathan (AC 18, HP 160, multiattack: 3 at +11 for 2d12+7, swim/fly 60 ft, siege: double damage to objects/structures).",
 			secondary: "",
 		},
 		level: 7,
@@ -6715,7 +6715,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 			resolution: {
 				type: "utility",
 				effect:
-					"Tear open a massive rift and summon a Huge gate leviathan (AC 18, HP 160, multiattack: 3 at +11 for 2d12+7, swim/fly 60 ft, siege: double damage to objects/structures).",
+					"Tear open a massive rift and summon a Huge Rift leviathan (AC 18, HP 160, multiattack: 3 at +11 for 2d12+7, swim/fly 60 ft, siege: double damage to objects/structures).",
 			},
 			duration: "Concentration, up to 1 hour",
 			range: "60 feet",
@@ -7406,10 +7406,10 @@ export const spells_supplemental: CompendiumSpell[] = [
 	{
 		id: "spell-sup-9-118-gate-colossus",
 		classes: ["Mage", "Summoner", "Contractor"],
-		name: "Gate Colossus",
-		display_name: "Gate Colossus",
+		name: "Rift Colossus",
+		display_name: "Rift Colossus",
 		description:
-			"Tear open the largest rift you've ever manifested and summon a Gargantuan gate colossus (AC 20, HP 300, multiattack: 4 slams at +14 for 4d10+8, siege, legendary actions: stomp/tail/roar). The colossus obeys your mental commands. When it falls, the rift seals.",
+			"Tear open the largest rift you've ever manifested and summon a Gargantuan Rift colossus (AC 20, HP 300, multiattack: 4 slams at +14 for 4d10+8, siege, legendary actions: stomp/tail/roar). The colossus obeys your mental commands. When it falls, the rift seals.",
 		lore: {
 			origin: "Documented in the Rift Ascendant compendium.",
 			history: "",
@@ -7433,7 +7433,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 		source_book: "Rift Ascendant Canon",
 		effects: {
 			primary:
-				"Tear open the largest rift you've ever manifested and summon a Gargantuan gate colossus (AC 20, HP 300, multiattack: 4 slams at +14 for 4d10+8, siege, legendary actions: stomp/tail/roar).",
+				"Tear open the largest rift you've ever manifested and summon a Gargantuan Rift colossus (AC 20, HP 300, multiattack: 4 slams at +14 for 4d10+8, siege, legendary actions: stomp/tail/roar).",
 			secondary: "",
 		},
 		level: 9,
@@ -7454,7 +7454,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 			resolution: {
 				type: "utility",
 				effect:
-					"Tear open the largest rift you've ever manifested and summon a Gargantuan gate colossus (AC 20, HP 300, multiattack: 4 slams at +14 for 4d10+8, siege, legendary actions: stomp/tail/roar).",
+					"Tear open the largest rift you've ever manifested and summon a Gargantuan Rift colossus (AC 20, HP 300, multiattack: 4 slams at +14 for 4d10+8, siege, legendary actions: stomp/tail/roar).",
 			},
 			duration: "Concentration, up to 1 hour",
 			range: "120 feet",
@@ -7745,8 +7745,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	{
 		id: "spell-sup-1-123-gate-resonance-spike",
 		classes: ["Mage", "Esper", "Technomancer", "Idol", "Summoner", "Stalker"],
-		name: "Gate Resonance Spike",
-		display_name: "Gate Resonance Spike",
+		name: "Rift Resonance Spike",
+		display_name: "Rift Resonance Spike",
 		description:
 			"Fire a pulse calibrated to gate-frequency mana. On hit: 2d8 force damage (3d8 against gate-anomalies). The impact leaves a traceable mana-signature on the target for 1 minute, granting advantage on Stalker tracking checks against it.",
 		lore: {
@@ -7757,7 +7757,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 			current_owner: "Bureau Archives.",
 			prior_owners: [],
 		},
-		flavor: "The pulse knows what came through a Gate. It hits harder.",
+		flavor: "The pulse knows what came through a Rift. It hits harder.",
 		tags: ["awakened", "magic", "D"],
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
@@ -8167,10 +8167,10 @@ export const spells_supplemental: CompendiumSpell[] = [
 	{
 		id: "spell-sup-3-131-gate-anchor",
 		classes: ["Mage", "Holy Knight", "Esper", "Technomancer"],
-		name: "Gate Anchor",
-		display_name: "Gate Anchor",
+		name: "Rift Anchor",
+		display_name: "Rift Anchor",
 		description:
-			"Anchor the local mana-lattice to prevent dimensional manipulation. Within a 30-foot radius: no creature can teleport, be summoned, or use dimensional travel. Gate-anomalies cannot phase between dimensional layers. Existing teleportation effects are suppressed.",
+			"Anchor the local mana-lattice to prevent dimensional manipulation. Within a 30-foot radius: no creature can teleport, be summoned, or use dimensional travel. Rift-anomalies cannot phase between dimensional layers. Existing teleportation effects are suppressed.",
 		lore: {
 			origin: "Documented in the Rift Ascendant compendium.",
 			history: "",
@@ -8289,7 +8289,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 			prior_owners: [],
 		},
 		flavor:
-			"She puts the gate boss's head in her pocket. The pocket is bigger than it looks.",
+			"She puts the Rift boss's head in her pocket. The pocket is bigger than it looks.",
 		tags: ["awakened", "magic", "C"],
 		rarity: "uncommon",
 		source_book: "Rift Ascendant Canon",
@@ -8666,10 +8666,10 @@ export const spells_supplemental: CompendiumSpell[] = [
 	{
 		id: "spell-sup-8-140-gate-collapse",
 		classes: ["Mage", "Summoner", "Contractor"],
-		name: "Gate Collapse",
-		display_name: "Gate Collapse",
+		name: "Rift Collapse",
+		display_name: "Rift Collapse",
 		description:
-			"Trigger a controlled collapse of local space-time in a 40-foot radius. DC 19 Agility save: 12d10 force on failure, half on success. All active gates, portals, summoning effects, and dimensional anchors within the area are permanently destroyed. The collapsed zone is difficult terrain for 24 hours.",
+			"Trigger a controlled collapse of local space-time in a 40-foot radius. DC 19 Agility save: 12d10 force on failure, half on success. All active Rifts, portals, summoning effects, and dimensional anchors within the area are permanently destroyed. The collapsed zone is difficult terrain for 24 hours.",
 		lore: {
 			origin: "Documented in the Rift Ascendant compendium.",
 			history: "",
@@ -8833,7 +8833,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 		name: "Quarantine Membrane",
 		display_name: "Quarantine Membrane",
 		description:
-			"Project a shimmering dome of purified mana in a 20-foot radius. Gate-anomaly creatures cannot enter or pass through the barrier. Awakened creatures and mundane beings pass freely. Spells can cross the barrier normally.",
+			"Project a shimmering dome of purified mana in a 20-foot radius. Rift-anomaly creatures cannot enter or pass through the barrier. Awakened creatures and mundane beings pass freely. Spells can cross the barrier normally.",
 		lore: {
 			origin: "Documented in the Rift Ascendant compendium.",
 			history: "",
@@ -9000,7 +9000,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 		name: "Anomaly Mimicry",
 		display_name: "Anomaly Mimicry",
 		description:
-			"Overwrite your mana-circuit's broadcast signature to mimic a gate-anomaly. You appear to be an anomaly of CR equal to your character level. Gate-anomalies treat you as one of their own (unless you attack them). Awakened creatures who observe you can make a DC 16 Intelligence save to see through the disguise.",
+			"Overwrite your mana-circuit's broadcast signature to mimic a gate-anomaly. You appear to be an anomaly of CR equal to your character level. Rift-anomalies treat you as one of their own (unless you attack them). Awakened creatures who observe you can make a DC 16 Intelligence save to see through the disguise.",
 		lore: {
 			origin: "Documented in the Rift Ascendant compendium.",
 			history: "",
@@ -9270,10 +9270,10 @@ export const spells_supplemental: CompendiumSpell[] = [
 	{
 		id: "spell-sup-6-151-gate-layer-overlap",
 		classes: ["Mage", "Summoner", "Contractor"],
-		name: "Gate-Layer Overlap",
-		display_name: "Gate-Layer Overlap",
+		name: "Rift-Layer Overlap",
+		display_name: "Rift-Layer Overlap",
 		description:
-			"Force the local gate-dimensional layer to overlap with the material plane. Within 30 feet: the terrain warps (difficult terrain for non-Awakened), gravity fluctuates (ranged attacks have disadvantage), and Summoner-class creatures gain +2 AC and advantage on saves. Gate-anomalies in the area become confused (50% chance of attacking nearest creature instead of intended target).",
+			"Force the local gate-dimensional layer to overlap with the material plane. Within 30 feet: the terrain warps (difficult terrain for non-Awakened), gravity fluctuates (ranged attacks have disadvantage), and Summoner-class creatures gain +2 AC and advantage on saves. Rift-anomalies in the area become confused (50% chance of attacking nearest creature instead of intended target).",
 		lore: {
 			origin: "Documented in the Rift Ascendant compendium.",
 			history: "",
@@ -9543,7 +9543,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 		name: "Dimensional Lockdown",
 		display_name: "Dimensional Lockdown",
 		description:
-			"Anchor the dimensional fabric within a 1-mile radius with overwhelming stabilizing force. For 24 hours: no new gates can open, no portals can form, all dimensional travel fails, and existing gates are suppressed. This spell requires 10 minutes of preparation and a mana-crystal worth 1000 GP.",
+			"Anchor the dimensional fabric within a 1-mile radius with overwhelming stabilizing force. For 24 hours: no new Rifts can open, no portals can form, all dimensional travel fails, and existing Rifts are suppressed. This spell requires 10 minutes of preparation and a mana-crystal worth 1000 GP.",
 		lore: {
 			origin: "Documented in the Rift Ascendant compendium.",
 			history: "",
@@ -10043,8 +10043,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	{
 		id: "spell-sup-3-165-gate-flora-eruption",
 		classes: ["Mage", "Summoner", "Contractor"],
-		name: "Gate Flora Eruption",
-		display_name: "Gate Flora Eruption",
+		name: "Rift Flora Eruption",
+		display_name: "Rift Flora Eruption",
 		description:
 			"Trigger an explosive eruption of gate-dimension flora at a point within range. A 20-foot radius becomes difficult terrain choked with razor-edged crystal vines. Creatures starting their turn there: 3d6 piercing and restrained (DC 15 STR to escape as an action).",
 		lore: {
@@ -10055,7 +10055,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 			current_owner: "Bureau Archives.",
 			prior_owners: [],
 		},
-		flavor: "The gate remembers its garden. She brings it back.",
+		flavor: "The Rift remembers its garden. She brings it back.",
 		tags: ["awakened", "magic", "C"],
 		rarity: "uncommon",
 		source_book: "Rift Ascendant Canon",
@@ -10599,7 +10599,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 		name: "Bureau Authority Seal",
 		display_name: "Bureau Authority Seal",
 		description:
-			"Inscribe the Bureau's authority seal on a surface, creating a 60-foot radius ward. Gate-anomalies cannot willingly enter. Teleportation into or out of the area requires a DC 17 Presence save. You receive a telepathic alarm if any creature fails the save or forces entry.",
+			"Inscribe the Bureau's authority seal on a surface, creating a 60-foot radius ward. Rift-anomalies cannot willingly enter. Teleportation into or out of the area requires a DC 17 Presence save. You receive a telepathic alarm if any creature fails the save or forces entry.",
 		lore: {
 			origin: "Documented in the Rift Ascendant compendium.",
 			history: "",
@@ -10770,8 +10770,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 			"Summoner",
 			"Stalker",
 		],
-		name: "Total Gate Suppression",
-		display_name: "Total Gate Suppression",
+		name: "Total Rift Suppression",
+		display_name: "Total Rift Suppression",
 		description:
 			"Project a field of total mana-suppression calibrated to gate-frequency signatures. All gate-anomaly creatures within 120 feet: lose all damage resistances and immunities, special abilities are suppressed, and movement speed is halved. Awakened creatures are unaffected.",
 		lore: {
@@ -10782,7 +10782,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 			current_owner: "Bureau Archives.",
 			prior_owners: [],
 		},
-		flavor: "The gate rules don't apply here anymore. Bureau rules do.",
+		flavor: "The Rift rules don't apply here anymore. Bureau rules do.",
 		tags: ["awakened", "magic", "A"],
 		rarity: "epic",
 		source_book: "Rift Ascendant Canon",
@@ -11003,7 +11003,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 			current_owner: "Bureau Archives.",
 			prior_owners: [],
 		},
-		flavor: "She takes away what the gate gave. Permanently.",
+		flavor: "She takes away what the Rift gave. Permanently.",
 		tags: ["awakened", "magic", "S"],
 		rarity: "legendary",
 		source_book: "Rift Ascendant Canon",

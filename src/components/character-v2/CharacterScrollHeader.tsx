@@ -108,8 +108,8 @@ export function CharacterScrollHeader({
 								Init
 							</span>
 							<div className="flex items-center gap-1">
-								<Zap className="w-3 h-3 text-yellow-400" />
-								<span className="text-xs font-bold text-yellow-100">
+								<Zap className="w-3 h-3 text-gate-s" />
+								<span className="text-xs font-bold text-gate-s">
 									{formatModifier(initiative)}
 								</span>
 							</div>
@@ -119,8 +119,8 @@ export function CharacterScrollHeader({
 								PB
 							</span>
 							<div className="flex items-center gap-1">
-								<Award className="w-3 h-3 text-amber-300" />
-								<span className="text-xs font-bold text-amber-100">
+								<Award className="w-3 h-3 text-gate-s" />
+								<span className="text-xs font-bold text-gate-s">
 									{formatModifier(proficiencyBonus)}
 								</span>
 							</div>

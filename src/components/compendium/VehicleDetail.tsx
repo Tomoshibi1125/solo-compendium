@@ -116,10 +116,7 @@ export const VehicleDetail = ({ data }: { data: VehicleData }) => {
 							</Badge>
 						)}
 						{data.price != null && (
-							<Badge
-								variant="outline"
-								className="text-bond-gold border-yellow-600/40"
-							>
+							<Badge variant="outline" className="text-gate-s border-gate-s/40">
 								{formatRaCurrencyValue(data.price)}
 							</Badge>
 						)}
@@ -182,7 +179,7 @@ export const VehicleDetail = ({ data }: { data: VehicleData }) => {
 
 				<AscendantWindow title="HIT POINTS" compact>
 					<div className="flex items-center gap-2">
-						<Heart className="w-5 h-5 text-rose-500" />
+						<Heart className="w-5 h-5 text-gate-a" />
 						<span className="font-display text-xl">{hitPoints.max}</span>
 					</div>
 					<span className="text-xs text-muted-foreground">Max HP</span>
@@ -238,7 +235,7 @@ export const VehicleDetail = ({ data }: { data: VehicleData }) => {
 					)}
 					{speed.air && (
 						<div className="flex items-center gap-2">
-							<Wind className="w-4 h-4 text-sky-400" />
+							<Wind className="w-4 h-4 text-mana-cyan" />
 							<span className="text-sm">Air: {formatSpeed(speed.air)}</span>
 						</div>
 					)}

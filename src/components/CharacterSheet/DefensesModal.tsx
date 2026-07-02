@@ -158,7 +158,7 @@ export function DefensesModal({
 						</div>
 
 						{acBreakdown.warnings.length > 0 && (
-							<div className="bg-amber-500/10 border border-amber-500/20 text-amber-600 text-xs p-2 rounded-md space-y-1">
+							<div className="bg-gate-s/10 border border-gate-s/20 text-gate-s text-xs p-2 rounded-md space-y-1">
 								{acBreakdown.warnings.map((warning, _i) => (
 									<p key={warning} className="flex items-start gap-1.5">
 										<ShieldAlert className="h-3.5 w-3.5 mt-0.5 shrink-0" />
@@ -233,7 +233,7 @@ export function DefensesModal({
 
 							{conditionImmunities.length > 0 && (
 								<div className="space-y-1.5">
-									<div className="flex items-center gap-1.5 text-xs font-medium text-amber-600 dark:text-amber-400">
+									<div className="flex items-center gap-1.5 text-xs font-medium text-gate-s dark:text-gate-s">
 										<ShieldAlert className="h-3.5 w-3.5" /> Condition Immunities
 									</div>
 									<div className="flex flex-wrap gap-1.5">
@@ -241,7 +241,7 @@ export function DefensesModal({
 											<Badge
 												key={c}
 												variant="outline"
-												className="text-[11px] font-normal border-amber-200 bg-amber-50/50 text-amber-700 dark:border-amber-900 dark:bg-amber-950/50 dark:text-amber-300"
+												className="text-[11px] font-normal border-gate-s bg-gate-s/50 text-gate-s dark:border-gate-s/40 dark:bg-gate-s/25 dark:text-gate-s"
 											>
 												{c}
 											</Badge>

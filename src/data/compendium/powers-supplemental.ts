@@ -82,7 +82,7 @@ export const powers_supplemental: CompendiumPower[] = [
 			"Plant yourself and channel defensive mana through your weapon. Until the start of your next turn, you have +2 AC and advantage on Strength saves. Creatures that hit you with melee attacks take 2d6 force damage.",
 		lore: {
 			origin:
-				"The stance was developed after a Destroyer tanked a gate boss's charge without moving. The boss moved.",
+				"The stance was developed after a Destroyer tanked a Rift boss's charge without moving. The boss moved.",
 			history:
 				"Catalogued in the Bureau's common-tier compendium after field validation.",
 			curse: "",
@@ -137,7 +137,7 @@ export const powers_supplemental: CompendiumPower[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"The stance was developed after a Destroyer tanked a gate boss's charge without moving. The boss moved.",
+			"The stance was developed after a Destroyer tanked a Rift boss's charge without moving. The boss moved.",
 		theme_tags: ["guard", "destroyer"],
 	},
 	{
@@ -149,7 +149,7 @@ export const powers_supplemental: CompendiumPower[] = [
 			"When a creature within 5 feet hits you, channel the impact into a devastating counterstrike. As a reaction, make a melee weapon attack with advantage. On a hit, deal weapon damage plus 3d8 force damage and push the target 10 feet.",
 		lore: {
 			origin:
-				"A Destroyer used this against a B-Rank gate boss's claw attack. The boss reconsidered its targeting priorities.",
+				"A Destroyer used this against a B-Rank Rift boss's claw attack. The boss reconsidered its targeting priorities.",
 			history:
 				"Catalogued in the Bureau's uncommon-tier compendium after field validation.",
 			curse: "",
@@ -204,7 +204,7 @@ export const powers_supplemental: CompendiumPower[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"A Destroyer used this against a B-Rank gate boss's claw attack. The boss reconsidered its targeting priorities.",
+			"A Destroyer used this against a B-Rank Rift boss's claw attack. The boss reconsidered its targeting priorities.",
 		theme_tags: ["guard", "destroyer"],
 	},
 	{
@@ -714,10 +714,10 @@ export const powers_supplemental: CompendiumPower[] = [
 		name: "Nerve Gate Cascade",
 		display_name: "Nerve Gate Cascade",
 		description:
-			"Deliver a rapid sequence of three strikes targeting different nerve gates. Make three unarmed attacks, each dealing 1d8 + AGI modifier bludgeoning damage. If all three hit the same target, it must make a DC 14 Vitality save or be stunned until the end of its next turn.",
+			"Deliver a rapid sequence of three strikes targeting different nerve Rifts. Make three unarmed attacks, each dealing 1d8 + AGI modifier bludgeoning damage. If all three hit the same target, it must make a DC 14 Vitality save or be stunned until the end of its next turn.",
 		lore: {
 			origin:
-				"The nerve gate sequence was mapped by a Striker who studied gate-anomaly anatomy for six months. She hit all the right spots.",
+				"The nerve Rift sequence was mapped by a Striker who studied gate-anomaly anatomy for six months. She hit all the right spots.",
 			history:
 				"Catalogued in the Bureau's common-tier compendium after field validation.",
 			curse: "",
@@ -780,7 +780,7 @@ export const powers_supplemental: CompendiumPower[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"The nerve gate sequence was mapped by a Striker who studied gate-anomaly anatomy for six months. She hit all the right spots.",
+			"The nerve Rift sequence was mapped by a Striker who studied gate-anomaly anatomy for six months. She hit all the right spots.",
 		theme_tags: ["kinetic", "striker"],
 	},
 	{
@@ -934,7 +934,7 @@ export const powers_supplemental: CompendiumPower[] = [
 			"Channel your oath into a burst of purifying light. One creature within 30 feet must make a DC 14 Presence save: 3d8 radiant damage on failure, half on success. If the target is anomaly-type, it also has disadvantage on attack rolls until the end of its next turn.",
 		lore: {
 			origin:
-				"An Oath Purge cast inside a shadow-filled gate instantly illuminated the entire chamber. Every shadow anomaly was visible.",
+				"An Oath Purge cast inside a shadow-filled Rift instantly illuminated the entire chamber. Every shadow anomaly was visible.",
 			history:
 				"Catalogued in the Bureau's common-tier compendium after field validation.",
 			curse: "",
@@ -989,7 +989,7 @@ export const powers_supplemental: CompendiumPower[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"An Oath Purge cast inside a shadow-filled gate instantly illuminated the entire chamber. Every shadow anomaly was visible.",
+			"An Oath Purge cast inside a shadow-filled Rift instantly illuminated the entire chamber. Every shadow anomaly was visible.",
 		theme_tags: ["radiant", "holy-knight"],
 	},
 	{
@@ -1001,7 +1001,7 @@ export const powers_supplemental: CompendiumPower[] = [
 			"Create a 10-foot radius aura of radiant protection centered on you for 1 minute. Allies in the aura gain +2 to AC and saving throws. Hostile creatures entering the aura take 2d6 radiant damage. You can end the aura early to heal all allies in it for 3d8 HP.",
 		lore: {
 			origin:
-				"During a gate siege, a Holy Knight maintained Divine Bastion for the full minute while the raid team evacuated. She was the last one out.",
+				"During a Rift siege, a Holy Knight maintained Divine Bastion for the full minute while the raid team evacuated. She was the last one out.",
 			history:
 				"Catalogued in the Bureau's uncommon-tier compendium after field validation.",
 			curse: "",
@@ -1056,7 +1056,7 @@ export const powers_supplemental: CompendiumPower[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"During a gate siege, a Holy Knight maintained Divine Bastion for the full minute while the raid team evacuated. She was the last one out.",
+			"During a Rift siege, a Holy Knight maintained Divine Bastion for the full minute while the raid team evacuated. She was the last one out.",
 		theme_tags: ["radiant", "holy-knight"],
 	},
 	{
@@ -1366,10 +1366,10 @@ export const powers_supplemental: CompendiumPower[] = [
 		name: "Terrain Ghost",
 		display_name: "Terrain Ghost",
 		description:
-			"Adapt to your environment. For 1 hour, you ignore difficult terrain, can't be tracked except by magical means, and have advantage on Stealth checks. If you are in natural terrain within a gate, you also gain +10 feet movement speed.",
+			"Adapt to your environment. For 1 hour, you ignore difficult terrain, can't be tracked except by magical means, and have advantage on Stealth checks. If you are in natural terrain within a Rift, you also gain +10 feet movement speed.",
 		lore: {
 			origin:
-				"Bureau field tests showed a Stalker using Terrain Ghost crossed a B-Rank gate's obstacle course in half the time of any other job.",
+				"Bureau field tests showed a Stalker using Terrain Ghost crossed a B-Rank Rift's obstacle course in half the time of any other job.",
 			history:
 				"Catalogued in the Bureau's common-tier compendium after field validation.",
 			curse: "",
@@ -1424,7 +1424,7 @@ export const powers_supplemental: CompendiumPower[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Bureau field tests showed a Stalker using Terrain Ghost crossed a B-Rank gate's obstacle course in half the time of any other job.",
+			"Bureau field tests showed a Stalker using Terrain Ghost crossed a B-Rank Rift's obstacle course in half the time of any other job.",
 		theme_tags: ["tracking", "stalker"],
 	},
 	{
@@ -1436,7 +1436,7 @@ export const powers_supplemental: CompendiumPower[] = [
 			"Set an invisible mana-wire trap in a 10-foot square area. The first creature to enter triggers it: DC 15 Agility save or take 4d6 force damage and be restrained. The snare alerts you mentally when triggered. Lasts 8 hours or until triggered.",
 		lore: {
 			origin:
-				"A Stalker once rigged an entire gate floor with Resonance Snares. The anomalies cleared themselves.",
+				"A Stalker once rigged an entire Rift floor with Resonance Snares. The anomalies cleared themselves.",
 			history:
 				"Catalogued in the Bureau's uncommon-tier compendium after field validation.",
 			curse: "",
@@ -1491,7 +1491,7 @@ export const powers_supplemental: CompendiumPower[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"A Stalker once rigged an entire gate floor with Resonance Snares. The anomalies cleared themselves.",
+			"A Stalker once rigged an entire Rift floor with Resonance Snares. The anomalies cleared themselves.",
 		theme_tags: ["tracking", "stalker"],
 	},
 	{
@@ -2371,7 +2371,7 @@ export const powers_supplemental: CompendiumPower[] = [
 			"Mark a creature you can see within 60 feet. For 1 minute, all attacks against the marked target have +2 to hit, and critical hits against it deal an extra 2d6 damage of the weapon's type. Only one mark active at a time.",
 		lore: {
 			origin:
-				"Raid leaders coordinate with Assassins for mark placement. It's the most requested power in organized gate clears.",
+				"Raid leaders coordinate with Assassins for mark placement. It's the most requested power in organized Rift clears.",
 			history:
 				"Catalogued in the Bureau's uncommon-tier compendium after field validation.",
 			curse: "",
@@ -2442,7 +2442,7 @@ export const powers_supplemental: CompendiumPower[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Raid leaders coordinate with Assassins for mark placement. It's the most requested power in organized gate clears.",
+			"Raid leaders coordinate with Assassins for mark placement. It's the most requested power in organized Rift clears.",
 		theme_tags: ["ambush", "assassin", "stalker", "destroyer"],
 	},
 	{
@@ -2663,7 +2663,7 @@ export const powers_supplemental: CompendiumPower[] = [
 			"Execute a flurry of six rapid strikes against one or two targets within 5 feet. Make six unarmed attacks, each dealing 1d6 + AGI modifier bludgeoning damage. If four or more hit the same target, it must make a DC 16 Vitality save or be stunned for 1 round.",
 		lore: {
 			origin:
-				"Frame-by-frame analysis shows each strike targets a different nerve gate. The precision is 'beyond human.'",
+				"Frame-by-frame analysis shows each strike targets a different nerve Rift. The precision is 'beyond human.'",
 			history:
 				"Catalogued in the Bureau's uncommon-tier compendium after field validation.",
 			curse: "",
@@ -2726,7 +2726,7 @@ export const powers_supplemental: CompendiumPower[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Frame-by-frame analysis shows each strike targets a different nerve gate. The precision is 'beyond human.'",
+			"Frame-by-frame analysis shows each strike targets a different nerve Rift. The precision is 'beyond human.'",
 		theme_tags: ["kinetic", "striker"],
 	},
 	{
@@ -2950,7 +2950,7 @@ export const powers_supplemental: CompendiumPower[] = [
 			"Encase yourself in ultra-dense mana for 1 minute. You gain resistance to all damage except psychic, immunity to critical hits, and any creature that hits you with a melee attack takes 3d6 force damage.",
 		lore: {
 			origin:
-				"A Destroyer survived a direct hit from an S-Rank gate boss's breath weapon while in lattice-stable composite Shell. She described it as 'warm.'",
+				"A Destroyer survived a direct hit from an S-Rank Rift boss's breath weapon while in lattice-stable composite Shell. She described it as 'warm.'",
 			history:
 				"Catalogued in the Bureau's rare-tier compendium after field validation.",
 			curse: "",
@@ -3007,7 +3007,7 @@ export const powers_supplemental: CompendiumPower[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"A Destroyer survived a direct hit from an S-Rank gate boss's breath weapon while in lattice-stable composite Shell. She described it as 'warm.'",
+			"A Destroyer survived a direct hit from an S-Rank Rift boss's breath weapon while in lattice-stable composite Shell. She described it as 'warm.'",
 		theme_tags: ["guard", "destroyer"],
 	},
 	{
@@ -3392,7 +3392,7 @@ export const powers_supplemental: CompendiumPower[] = [
 			"Enter a heightened combat trance for 1 minute. Your movement speed doubles, you have advantage on all attack rolls, you can't be surprised, and your first hit each turn deals an extra 3d6 damage. You must make a DC 15 Presence save at the end of the duration or gain 1 level of exhaustion.",
 		lore: {
 			origin:
-				"Bureau combat analysts rate an awakened in full Killing Tempo as 'equivalent to a B-Rank gate boss.' The comparison is conservative.",
+				"Bureau combat analysts rate an awakened in full Killing Tempo as 'equivalent to a B-Rank Rift boss.' The comparison is conservative.",
 			history:
 				"Catalogued in the Bureau's rare-tier compendium after field validation.",
 			curse: "",
@@ -3449,7 +3449,7 @@ export const powers_supplemental: CompendiumPower[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Bureau combat analysts rate an awakened in full Killing Tempo as 'equivalent to a B-Rank gate boss.' The comparison is conservative.",
+			"Bureau combat analysts rate an awakened in full Killing Tempo as 'equivalent to a B-Rank Rift boss.' The comparison is conservative.",
 		theme_tags: ["tracking", "stalker"],
 	},
 	{
@@ -4423,7 +4423,7 @@ export const powers_supplemental: CompendiumPower[] = [
 			"Mark every hostile creature within 300 feet simultaneously. For 1 minute, you and all allies have advantage on attacks against all marked targets, can't be surprised, have truesight 300 ft, and the first hit against each marked target each round deals an extra 4d6 damage.",
 		lore: {
 			origin:
-				"A Stalker used Apex Convergence during a double S-Rank gate-break. The tactical advantage was described as 'the closest thing to omniscience in combat.'",
+				"A Stalker used Apex Convergence during a double S-Rank Rift Break. The tactical advantage was described as 'the closest thing to omniscience in combat.'",
 			history:
 				"Catalogued in the Bureau's legendary-tier compendium after field validation.",
 			curse: "",
@@ -4482,7 +4482,7 @@ export const powers_supplemental: CompendiumPower[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"A Stalker used Apex Convergence during a double S-Rank gate-break. The tactical advantage was described as 'the closest thing to omniscience in combat.'",
+			"A Stalker used Apex Convergence during a double S-Rank Rift Break. The tactical advantage was described as 'the closest thing to omniscience in combat.'",
 		theme_tags: ["tracking", "stalker"],
 	},
 	{
@@ -4927,7 +4927,7 @@ export const powers_supplemental: CompendiumPower[] = [
 			"Attune to a creature you've damaged within the last hour. For 10 minutes, you know its exact location within 1 mile, its remaining HP percentage, and whether it's moving. Your first attack against it each turn deals +1d6 damage.",
 		lore: {
 			origin:
-				"A Stalker tracked an A-Rank anomaly through 4 gate floors using Prey Sense alone. It took 6 hours. She was patient.",
+				"A Stalker tracked an A-Rank anomaly through 4 Rift floors using Prey Sense alone. It took 6 hours. She was patient.",
 			history:
 				"Catalogued in the Bureau's common-tier compendium after field validation.",
 			curse: "",
@@ -4982,7 +4982,7 @@ export const powers_supplemental: CompendiumPower[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"A Stalker tracked an A-Rank anomaly through 4 gate floors using Prey Sense alone. It took 6 hours. She was patient.",
+			"A Stalker tracked an A-Rank anomaly through 4 Rift floors using Prey Sense alone. It took 6 hours. She was patient.",
 		theme_tags: ["tracking", "stalker"],
 	},
 	{
@@ -5195,7 +5195,7 @@ export const powers_supplemental: CompendiumPower[] = [
 			"Plant yourself as an immovable point. For 1 minute, you can't be moved against your will, knocked prone, or pushed. Your AC increases by +2. As a reaction, when an ally within 10 feet is targeted by an attack, you can force the attack to target you instead.",
 		lore: {
 			origin:
-				"A Destroyer held Seismic Anchor for 4 minutes while an S-Rank gate boss tried to push her off a bridge. The bridge broke. She didn't.",
+				"A Destroyer held Seismic Anchor for 4 minutes while an S-Rank Rift boss tried to push her off a bridge. The bridge broke. She didn't.",
 			history:
 				"Catalogued in the Bureau's uncommon-tier compendium after field validation.",
 			curse: "",
@@ -5250,7 +5250,7 @@ export const powers_supplemental: CompendiumPower[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"A Destroyer held Seismic Anchor for 4 minutes while an S-Rank gate boss tried to push her off a bridge. The bridge broke. She didn't.",
+			"A Destroyer held Seismic Anchor for 4 minutes while an S-Rank Rift boss tried to push her off a bridge. The bridge broke. She didn't.",
 		theme_tags: ["guard", "destroyer"],
 	},
 	{
@@ -6547,7 +6547,7 @@ export const powers_supplemental: CompendiumPower[] = [
 			"Lock onto a creature you've tracked for at least 1 minute. For the next minute, all your attacks against it have advantage, you deal +3d6 bonus damage per hit, and it can't benefit from invisibility, cover, or teleportation against you.",
 		lore: {
 			origin:
-				"A Stalker used Quarry Annihilation on an S-Rank gate boss that had been fleeing for 40 minutes. The boss lasted 18 seconds.",
+				"A Stalker used Quarry Annihilation on an S-Rank Rift boss that had been fleeing for 40 minutes. The boss lasted 18 seconds.",
 			history:
 				"Catalogued in the Bureau's rare-tier compendium after field validation.",
 			curse: "",
@@ -6604,7 +6604,7 @@ export const powers_supplemental: CompendiumPower[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"A Stalker used Quarry Annihilation on an S-Rank gate boss that had been fleeing for 40 minutes. The boss lasted 18 seconds.",
+			"A Stalker used Quarry Annihilation on an S-Rank Rift boss that had been fleeing for 40 minutes. The boss lasted 18 seconds.",
 		theme_tags: ["tracking", "stalker"],
 	},
 	{
@@ -6842,7 +6842,7 @@ export const powers_supplemental: CompendiumPower[] = [
 				"Available to Bureau-certified Strikers at the appropriate rank.",
 			prior_owners: ["Bureau Combat Archives", "Striker Training Division"],
 		},
-		flavor: "Eight gates. All open. Nothing held back.",
+		flavor: "Eight Rifts. All open. Nothing held back.",
 		tags: ["awakened", "power", "kinetic", "Transmutation", "Striker"],
 		rarity: "epic",
 		source_book: "Rift Ascendant Canon",
@@ -6898,7 +6898,7 @@ export const powers_supplemental: CompendiumPower[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Bureau martial arts researchers documented the eight-gate sequence. The seventh gate is described as 'inadvisable.' The eighth is 'theoretical.'",
+			"Bureau martial arts researchers documented the eight-gate sequence. The seventh Rift is described as 'inadvisable.' The eighth is 'theoretical.'",
 		theme_tags: ["kinetic", "striker"],
 	},
 	{
@@ -6910,7 +6910,7 @@ export const powers_supplemental: CompendiumPower[] = [
 			"The ultimate expression of the Absolute's judgment. Next melee hit deals +12d8 radiant. The target's mana circuit is permanently scarred: it loses access to its highest-level ability permanently. Anomaly and anomaly are instantly destroyed regardless of HP.",
 		lore: {
 			origin:
-				"Bureau records: one confirmed S-Rank Smite. The Holy Knight collapsed after. The S-Rank gate boss was already dust.",
+				"Bureau records: one confirmed S-Rank Smite. The Holy Knight collapsed after. The S-Rank Rift boss was already dust.",
 			history:
 				"Catalogued in the Bureau's legendary-tier compendium after field validation.",
 			curse: "",
@@ -6969,7 +6969,7 @@ export const powers_supplemental: CompendiumPower[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Bureau records: one confirmed S-Rank Smite. The Holy Knight collapsed after. The S-Rank gate boss was already dust.",
+			"Bureau records: one confirmed S-Rank Smite. The Holy Knight collapsed after. The S-Rank Rift boss was already dust.",
 		theme_tags: ["radiant", "holy-knight"],
 	},
 	{
@@ -7135,7 +7135,7 @@ export const powers_supplemental: CompendiumPower[] = [
 			"Perform the Final Chorus — a harmonic so perfect it reshapes reality within 120 feet. All allies: full HP restoration, all conditions removed, gain 50 temp HP. All enemies: DC 20 PRS save or charmed and incapacitated for 1 minute. You can't cast spells for 24 hours after.",
 		lore: {
 			origin:
-				"Bureau records list one Final Chorus. Every creature in a 120-foot radius stopped fighting. Allies. Enemies. The gate boss. For 47 seconds, there was only music.",
+				"Bureau records list one Final Chorus. Every creature in a 120-foot radius stopped fighting. Allies. Enemies. The Rift boss. For 47 seconds, there was only music.",
 			history:
 				"Catalogued in the Bureau's legendary-tier compendium after field validation.",
 			curse: "",
@@ -7192,7 +7192,7 @@ export const powers_supplemental: CompendiumPower[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Bureau records list one Final Chorus. Every creature in a 120-foot radius stopped fighting. Allies. Enemies. The gate boss. For 47 seconds, there was only music.",
+			"Bureau records list one Final Chorus. Every creature in a 120-foot radius stopped fighting. Allies. Enemies. The Rift boss. For 47 seconds, there was only music.",
 		theme_tags: ["resonance", "idol"],
 	},
 	{
@@ -7204,7 +7204,7 @@ export const powers_supplemental: CompendiumPower[] = [
 			"Invoke the ultimate clause of your patron contract. Your patron physically manifests (CR 20, acts independently, follows your commands) for 1 minute. You take 8d6 psychic damage at the end of each of your turns while the patron is manifested. If you die during the manifestation, your patron claims your soul.",
 		lore: {
 			origin:
-				"Bureau classified. One confirmed Absolute Pact. The Contractor survived. The S-Rank gate did not. The patron 'seemed satisfied.'",
+				"Bureau classified. One confirmed Absolute Pact. The Contractor survived. The S-Rank Rift did not. The patron 'seemed satisfied.'",
 			history:
 				"Catalogued in the Bureau's legendary-tier compendium after field validation.",
 			curse: "",
@@ -7264,7 +7264,7 @@ export const powers_supplemental: CompendiumPower[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Bureau classified. One confirmed Absolute Pact. The Contractor survived. The S-Rank gate did not. The patron 'seemed satisfied.'",
+			"Bureau classified. One confirmed Absolute Pact. The Contractor survived. The S-Rank Rift did not. The patron 'seemed satisfied.'",
 		theme_tags: ["pact", "contractor"],
 	},
 	{
@@ -7343,7 +7343,7 @@ export const powers_supplemental: CompendiumPower[] = [
 			"As a reaction when you take damage, surge your mana circuit's combat response. Gain temporary HP equal to 1d8 + your Vitality modifier. Your next melee attack deals +1d6 damage.",
 		lore: {
 			origin:
-				"Bureau medical staff track 'adrenaline surge events.' Destroyers average 12 per gate operation.",
+				"Bureau medical staff track 'adrenaline surge events.' Destroyers average 12 per Rift operation.",
 			history:
 				"Catalogued in the Bureau's common-tier compendium after field validation.",
 			curse: "",
@@ -7398,7 +7398,7 @@ export const powers_supplemental: CompendiumPower[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Bureau medical staff track 'adrenaline surge events.' Berserkers average 12 per gate operation.",
+			"Bureau medical staff track 'adrenaline surge events.' Berserkers average 12 per Rift operation.",
 		theme_tags: ["overload", "berserker", "striker"],
 	},
 	{
@@ -7482,7 +7482,7 @@ export const powers_supplemental: CompendiumPower[] = [
 		name: "Gate Reader",
 		display_name: "Gate Reader",
 		description:
-			"Touch a gate surface and read its dimensional frequency. Learn the gate's rank, number of floors remaining, boss type category, and dominant element. Also learn if any other Awakened have entered in the last 24 hours.",
+			"Touch a Rift surface and read its dimensional frequency. Learn the Rift's rank, number of floors remaining, boss type category, and dominant element. Also learn if any other Awakened have entered in the last 24 hours.",
 		lore: {
 			origin:
 				"Bureau recon protocols require Gate Reader before any entry. The intelligence it provides has a 98% accuracy rate.",
@@ -7494,7 +7494,7 @@ export const powers_supplemental: CompendiumPower[] = [
 				"Available to Bureau-certified Stalkers at the appropriate rank.",
 			prior_owners: ["Bureau Combat Archives", "Stalker Training Division"],
 		},
-		flavor: "She listens to the gate. The gate talks.",
+		flavor: "She listens to the Rift. The Rift talks.",
 		tags: [
 			"awakened",
 			"power",
@@ -7506,7 +7506,7 @@ export const powers_supplemental: CompendiumPower[] = [
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
 		effects: {
-			primary: "Full gate intelligence scan.",
+			primary: "Full Rift intelligence scan.",
 			secondary: "Damage increases by 1d6 per level above 1st.",
 		},
 		power_type: "Innate",
@@ -7537,7 +7537,7 @@ export const powers_supplemental: CompendiumPower[] = [
 				ability: "Strength",
 				dc: 13,
 				success: "Half damage and no rider.",
-				failure: "Full gate intelligence scan.",
+				failure: "Full Rift intelligence scan.",
 			},
 		},
 		limitations: {
@@ -8189,7 +8189,7 @@ export const powers_supplemental: CompendiumPower[] = [
 			"Summon 3 Small gate-creature scouts (AC 13, 10 HP each, 40 ft speed). They act on your initiative, obey mental commands, and can perform the Help action. If one is destroyed, it explodes for 1d6 force to adjacent creatures.",
 		lore: {
 			origin:
-				"Bureau reconnaissance values quantity over quality at lower gate levels. Three scouts cover more ground than one big summon.",
+				"Bureau reconnaissance values quantity over quality at lower Rift levels. Three scouts cover more ground than one big summon.",
 			history:
 				"Catalogued in the Bureau's uncommon-tier compendium after field validation.",
 			curse: "",
@@ -8244,7 +8244,7 @@ export const powers_supplemental: CompendiumPower[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Bureau reconnaissance values quantity over quality at lower gate levels. Three scouts cover more ground than one big summon.",
+			"Bureau reconnaissance values quantity over quality at lower Rift levels. Three scouts cover more ground than one big summon.",
 		theme_tags: ["tracking", "summoner"],
 	},
 	{
@@ -8941,7 +8941,7 @@ export const powers_supplemental: CompendiumPower[] = [
 				"Available to Bureau-certified Summoners at the appropriate rank.",
 			prior_owners: ["Bureau Combat Archives", "Summoner Training Division"],
 		},
-		flavor: "The gate opened. Something enormous answered.",
+		flavor: "The Rift opened. Something enormous answered.",
 		tags: ["awakened", "power", "tracking", "Conjuration", "Summoner"],
 		rarity: "epic",
 		source_book: "Rift Ascendant Canon",

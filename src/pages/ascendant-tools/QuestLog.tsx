@@ -262,7 +262,7 @@ ${section("Active", activeQuests)}${section("Completed", completedQuests)}${sect
 		} else {
 			await addEquipment({
 				character_id: characterId,
-				name: "Gate Credits",
+				name: "Rift Credits",
 				item_type: "currency",
 				quantity: Math.max(0, amount),
 				weight: 0.02,

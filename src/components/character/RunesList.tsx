@@ -38,8 +38,8 @@ const RUNE_TYPE_COLORS: Record<string, string> = {
 	caster: "bg-blue-500/20 text-blue-400 border-blue-500/30",
 	hybrid: "bg-purple-500/20 text-purple-400 border-purple-500/30",
 	utility: "bg-green-500/20 text-green-400 border-green-500/30",
-	defensive: "bg-yellow-500/20 text-yellow-400 border-yellow-500/30",
-	offensive: "bg-orange-500/20 text-orange-400 border-orange-500/30",
+	defensive: "bg-gate-s/20 text-gate-s border-gate-s/30",
+	offensive: "bg-gate-a/20 text-gate-a border-gate-a/30",
 };
 
 const RUNE_TYPE_ICONS: Record<
@@ -256,8 +256,8 @@ export function RunesList({
 													)}
 													{absorptionPreviews[rk.rune_id]?.isCrossType && (
 														<div className="flex items-center gap-1.5 mt-1.5">
-															<AlertTriangle className="w-3 h-3 text-amber-400 flex-shrink-0" />
-															<span className="text-[10px] text-amber-400">
+															<AlertTriangle className="w-3 h-3 text-gate-s flex-shrink-0" />
+															<span className="text-[10px] text-gate-s">
 																{absorptionPreviews[rk.rune_id]?.adaptationNote}
 															</span>
 														</div>

@@ -1,8 +1,9 @@
 import { ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
-import { ManaFlowText, RiftHeading } from "@/components/ui/AscendantText";
+import { ManaFlowText } from "@/components/ui/AscendantText";
 import { Button } from "@/components/ui/button";
+import { PageHeader } from "@/components/ui/PageHeader";
 import { NPCGenerator as NPCGeneratorComponent } from "@/components/warden-directives/NPCGenerator";
 
 const NPCGeneratorPage = () => {
@@ -22,18 +23,20 @@ const NPCGeneratorPage = () => {
 						<ArrowLeft className="w-4 h-4 mr-2" />
 						Back to Warden Tools
 					</Button>
-					<RiftHeading
-						level={1}
-						variant="sovereign"
-						dimensional
-						className="mb-2"
-					>
-						Construct Synthesis Protocol
-					</RiftHeading>
-					<ManaFlowText variant="rift" speed="slow" className="font-heading">
-						Instantiate semi-autonomous conceptual entities possessing distinct
-						motivations, encrypted parameters, and idiosyncratic behaviors.
-					</ManaFlowText>
+					<PageHeader
+						title="Construct Synthesis Protocol"
+						description={
+							<ManaFlowText
+								variant="rift"
+								speed="slow"
+								className="font-heading"
+							>
+								Instantiate semi-autonomous conceptual entities possessing
+								distinct motivations, encrypted parameters, and idiosyncratic
+								behaviors.
+							</ManaFlowText>
+						}
+					/>
 				</div>
 
 				<NPCGeneratorComponent className="lg:min-h-[600px]" />

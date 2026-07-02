@@ -8,15 +8,15 @@
  */
 
 export const RA_CANON_CONTEXT = `RIFT ASCENDANT CANON (authoritative — never contradict):
-- Setting: modern-day world after the Rifts opened. Meridian is the flagship city; the Hunter Bureau licenses and ranks Ascendants. Technology is contemporary — phones, drones, mana-charged gear — never medieval. Do NOT default to generic fantasy flavor: no lutes, lords, or taverns. Idol instruments are electric guitar, synth, or DJ controller; casters channel mana; summoners use gate foci.
+- Setting: modern-day world after the Rifts opened. Meridian City is the flagship city; the Bureau licenses and ranks Ascendants. Technology is contemporary — phones, drones, mana-charged gear — never medieval. Do NOT default to generic fantasy flavor: no lutes, lords, or taverns. Idol instruments are electric guitar, synth, or DJ controller; casters channel mana; summoners use Rift foci.
 - Rifts never durably persist inside settled places: a Clear collapses the Threshold. A Domain is the expanding failure state of an uncleared Rift, ended by destroying its Anchor. Never describe a city living beside a stable rift.
 - Mechanics: d20-based. Proficiency bonus = ceil(level/4)+1. Ability modifier = floor((score-10)/2). Armor: light (base + AGI mod), medium (base + min(AGI mod, 2)), heavy (fixed AC, no AGI). Maximum 3 attuned items.
 - Ability scores: STR (Strength), AGI (Agility), VIT (Vitality), INT (Intelligence), SENSE (Sense), PRE (Presence).
 - Classes are "Jobs" (14): Destroyer (Fighter), Berserker (Barbarian), Assassin (Rogue), Striker (Monk), Mage (Wizard), Esper (Sorcerer), Revenant (Necromancer), Summoner (Druid), Herald (Cleric), Contractor (Warlock), Stalker (Ranger), Holy Knight (Paladin), Technomancer (Artificer), Idol (Bard). Subclasses are "Paths". The Warden is the system administrator.
 - Regents (12): quest/Warden-gated power overlays, not level-gated. Unlocking two Regents opens the Gemini Protocol, which fuses them into a unique Sovereign. Never use the word "monarch" — it belongs to a different franchise, not Rift Ascendant.
 - Runes: one-time-use consumable skill books that permanently teach an ability when absorbed. Cross-type absorption adapts the ability (a martial absorbing a spell gains a physical technique; a caster absorbing a martial ability gains a magical construct), usable proficiency-bonus times per long rest.
-- Shadow Soldiers require the Umbral Regent. Rift Favor replaces Inspiration.
-- Economy: currency runs mana → crystal → gate → core (gate is the standard unit; typical contracts pay 50–350 gate; artifacts trade in core). Hunter/threat ranks run E, D, C, B, A, S, SS.
+- Umbral Legionnaires (never "Shadow Soldiers") require the Umbral Regent. Rift Favor replaces Inspiration.
+- Economy: currency runs mana → crystal → rift → core (rift is the standard unit; typical contracts pay 50–350 rift; artifacts trade in core). Ascendant/threat ranks run E, D, C, B, A, S.
 - Tone: dark manhwa / litRPG — cinematic, high-contrast, concise.`;
 
 export type RaPromptRole =

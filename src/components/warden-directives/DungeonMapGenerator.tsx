@@ -265,13 +265,13 @@ const CELL_TYPES: CellTypeConfig[] = [
 	{
 		type: "treasure",
 		icon: Gem,
-		color: "bg-yellow-500/40 border-yellow-500/70",
+		color: "bg-gate-s/40 border-gate-s/70",
 		label: "Treasure Room",
 	},
 	{
 		type: "trap",
 		icon: AlertTriangle,
-		color: "bg-orange-500/40 border-orange-500/70",
+		color: "bg-gate-a/40 border-gate-a/70",
 		label: "Trap Room",
 	},
 	{
@@ -283,7 +283,7 @@ const CELL_TYPES: CellTypeConfig[] = [
 	{
 		type: "secret",
 		icon: LayoutGrid,
-		color: "bg-indigo-500/40 border-indigo-500/70",
+		color: "bg-hunter-blue/40 border-hunter-blue/70",
 		label: "Secret Room",
 	},
 ];
@@ -915,7 +915,7 @@ export function DungeonMapGenerator({
 		const roomSummary = dungeonMap.rooms
 			.map((r, i) => `Room ${i + 1}: ${r.type} (${r.width}x${r.height})`)
 			.join("; ");
-		const seed = `Generate a complete dungeon key for a Rift Ascendant TTRPG Rift dungeon.
+		const seed = `Generate a complete room key for a Rift Ascendant TTRPG Rift Interior.
 Rift Rank: ${selectedRank}
 ${riftContext ? `Theme: ${riftContext.theme}\nBiome: ${riftContext.biome}\nBoss: ${riftContext.boss}\n` : ""}Map Size: ${mapSize.width}x${mapSize.height}
 Rooms: ${dungeonMap.rooms.length}
@@ -1038,7 +1038,7 @@ Room Layout: ${roomSummary}`;
 				return `${index + 1}. ${room.label} (${room.width}x${room.height})${details ? ` — ${details}` : ""}`;
 			})
 			.join("\n");
-		const text = `RIFT DUNGEON MAP\nRank: ${selectedRank}\nSize: ${mapSize.width}x${mapSize.height}\nRooms: ${dungeonMap.rooms.length}\n\n${roomLines}`;
+		const text = `RIFT MAP\nRank: ${selectedRank}\nSize: ${mapSize.width}x${mapSize.height}\nRooms: ${dungeonMap.rooms.length}\n\n${roomLines}`;
 		navigator.clipboard.writeText(text);
 		toast({
 			title: "Copied!",

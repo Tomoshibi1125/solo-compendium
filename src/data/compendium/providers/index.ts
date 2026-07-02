@@ -716,7 +716,7 @@ const SCHOOL_KEYWORDS: [RegExp, string][] = [
 	[/heal|restore|cure|mend|revive|resurrect|vitality|regenerat/i, "Evocation"],
 	[/holy|divine|celestial|sacred|smite|purif/i, "Evocation"],
 	[
-		/summon|conjur|anomaly|abyssal|portal|gate|call|manifest|rift/i,
+		/summon|conjur|anomaly|abyssal|portal|Rift|call|manifest|rift/i,
 		"Conjuration",
 	],
 	[/illus|phantom|mirage|invis|disguise|mirror|decep/i, "Illusion"],
@@ -1233,7 +1233,7 @@ function transformItem(item: StaticItemSource): StaticCompendiumEntry {
 		charges: item.charges ?? null,
 		stats: item.stats,
 		effect: item.effect,
-		// `value`/`cost_credits` stay numeric Gate Credits for legacy math; `price`
+		// `value`/`cost_credits` stay numeric Rift Credits for legacy math; `price`
 		// carries the structured {currency, amount} so the UI shows varied credit types.
 		value: valueToGate(item.value),
 		cost_credits: valueToGate(item.value),
@@ -2063,7 +2063,7 @@ export const staticDataProvider: StaticDataProvider = {
 			item_type: relic.type || "relic",
 			equipment_type: relic.type || "relic",
 			// Structured catalog price → cost badge on relic cards/detail;
-			// `value` keeps the numeric Gate amount for inventory sends.
+			// `value` keeps the numeric Rift amount for inventory sends.
 			value: valueToGate(relic.value),
 			price: toRaCurrencyValue(relic.value),
 			attunement: relic.attunement ?? null,
@@ -2082,7 +2082,7 @@ export const staticDataProvider: StaticDataProvider = {
 			charges: relic.charges ?? null,
 			effects: relic.effects ?? null,
 			// Pass the relic's authored `flavor` through so it reaches detail views
-			// and the audit's boilerplate gate; fall back to the legacy
+			// and the audit's boilerplate Rift; fall back to the legacy
 			// lore-derived value only when a relic has no explicit flavor.
 			flavor:
 				(typeof relic.flavor === "string" && relic.flavor) ||
@@ -2517,7 +2517,7 @@ export const staticDataProvider: StaticDataProvider = {
 			mechanics: artifact.mechanics || null,
 			source: artifact.source,
 			// Pass the artifact's authored `flavor` through so it reaches detail
-			// views and the audit's boilerplate gate; fall back to the legacy
+			// views and the audit's boilerplate Rift; fall back to the legacy
 			// lore-derived value only when an artifact has no explicit flavor.
 			flavor:
 				(typeof artifact.flavor === "string" && artifact.flavor) ||

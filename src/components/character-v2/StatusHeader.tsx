@@ -238,7 +238,7 @@ export function StatusHeader({
 							onClick={onRollInitiative}
 							className="relative group bg-obsidian-charcoal/60 border border-primary/20 rounded-[2px] p-4 flex flex-col items-center justify-center transition-all hover:bg-obsidian-charcoal/80 hover:border-primary/40 w-full"
 						>
-							<Zap className="w-5 h-5 text-yellow-400 mb-2 transition-transform group-hover:scale-110" />
+							<Zap className="w-5 h-5 text-gate-s mb-2 transition-transform group-hover:scale-110" />
 							<div className="flex items-center gap-1">
 								<span className="ra-stat-number text-3xl text-white">
 									{formatModifier(initiative)}
@@ -267,7 +267,7 @@ export function StatusHeader({
 				<Tooltip>
 					<TooltipTrigger asChild>
 						<div className="bg-obsidian-charcoal/60 border border-primary/20 rounded-[2px] p-4 flex flex-col items-center justify-center w-full">
-							<Move className="w-5 h-5 text-emerald-400 mb-2" />
+							<Move className="w-5 h-5 text-system-green mb-2" />
 							<span className="ra-stat-number text-3xl text-white">
 								{speed}{" "}
 								<span className="text-sm font-mono text-primary/60">FT</span>
@@ -297,7 +297,7 @@ export function StatusHeader({
 							data-testid="status-proficiency-bonus"
 							className="bg-obsidian-charcoal/60 border border-primary/20 rounded-[2px] p-4 flex flex-col items-center justify-center w-full"
 						>
-							<Award className="w-5 h-5 text-amber-300 mb-2" />
+							<Award className="w-5 h-5 text-gate-s mb-2" />
 							<span className="ra-stat-number text-3xl text-white">
 								{formatModifier(proficiencyBonus)}
 							</span>
@@ -403,17 +403,17 @@ export function StatusHeader({
 						<DropdownMenuTrigger asChild>
 							<button
 								type="button"
-								className="bg-obsidian-charcoal/60 border border-primary/20 rounded-[2px] p-2 flex flex-col items-center justify-center relative group font-mono hover:bg-amber-500/10 hover:border-amber-500/40 transition-colors w-full cursor-pointer h-full"
+								className="bg-obsidian-charcoal/60 border border-primary/20 rounded-[2px] p-2 flex flex-col items-center justify-center relative group font-mono hover:bg-gate-s/10 hover:border-gate-s/40 transition-colors w-full cursor-pointer h-full"
 							>
 								<div className="flex items-center gap-1.5">
-									<span className="text-sm font-bold text-amber-400">
+									<span className="text-sm font-bold text-gate-s">
 										{riftFavor.current}/{riftFavor.max}
 									</span>
 								</div>
-								<span className="text-[10px] text-amber-500/70 uppercase mt-1 font-bold flex items-center gap-1">
+								<span className="text-[10px] text-gate-s/70 uppercase mt-1 font-bold flex items-center gap-1">
 									<Sparkles className="w-2 h-2" /> SPEND FAVOR
 								</span>
-								<span className="text-[10px] text-amber-500/50 mt-0.5">
+								<span className="text-[10px] text-gate-s/50 mt-0.5">
 									d{riftFavor.die}
 								</span>
 							</button>
@@ -431,9 +431,7 @@ export function StatusHeader({
 										className="flex flex-col items-start gap-1 p-2 cursor-pointer"
 									>
 										<div className="flex justify-between w-full">
-											<span className="font-bold text-amber-400">
-												{opt.name}
-											</span>
+											<span className="font-bold text-gate-s">{opt.name}</span>
 											<span className="text-xs">Cost: {opt.cost}</span>
 										</div>
 										<span className="text-[10px] text-muted-foreground whitespace-normal">
@@ -457,7 +455,7 @@ export function StatusHeader({
 								<Minus className="w-3 h-3 text-primary/60" />
 							</button>
 							<span
-								className={`text-sm font-bold ${inspirationPoints > 0 ? "text-yellow-400" : "text-white"}`}
+								className={`text-sm font-bold ${inspirationPoints > 0 ? "text-gate-s" : "text-white"}`}
 							>
 								{inspirationPoints}
 							</span>

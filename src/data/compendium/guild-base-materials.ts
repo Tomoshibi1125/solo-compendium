@@ -1,7 +1,7 @@
 /**
  * GUILD BASE MATERIALS — the components a guild's forge consumes (built in full).
  *
- * These are the salvage a mining squad pulls from gates and a guild's workshop
+ * These are the salvage a mining squad pulls from Rifts and a guild's workshop
  * works into upgrades and gear. They surface in the compendium under the
  * Crafting category and are referenced by guild crafting at the Forge facility
  * (which reuses the standard crafting system, `useCrafting` / `crafting.ts`).
@@ -28,7 +28,7 @@ export interface GuildBaseMaterial {
 	rarity: GuildMaterialRarity;
 	/** Market value of one unit, in the denomination that fits its worth. */
 	value: { currency: RaCurrencyId; amount: number };
-	/** Where the material is recovered (gate rank / biome). */
+	/** Where the material is recovered (Rift rank / biome). */
 	source: string;
 	/** What the workshop uses it for. */
 	uses: string;
@@ -42,7 +42,7 @@ export const GUILD_BASE_MATERIALS: GuildBaseMaterial[] = [
 		name: "Husk Resin",
 		rarity: "common",
 		value: { currency: "mana", amount: 8 },
-		source: "E–D rank gates; shallow husk swarms",
+		source: "E–D rank Rifts; shallow husk swarms",
 		uses: "Binding agent for field repairs and tier-1 facility fittings.",
 		description:
 			"The tacky residue left when a husk is dispersed. Cheap, plentiful, and just sturdy enough to hold a bench together.",
@@ -61,13 +61,13 @@ export const GUILD_BASE_MATERIALS: GuildBaseMaterial[] = [
 	},
 	{
 		id: "gm-gate-iron",
-		name: "Gate Iron",
+		name: "Rift Iron",
 		rarity: "uncommon",
 		value: { currency: "gate", amount: 6 },
-		source: "C–B rank gate structures",
+		source: "C–B rank Rift structures",
 		uses: "Structural plating for Forge, Vault, and War Room upgrades.",
 		description:
-			"Metal that has set inside a gate's threshold, denser and stranger than anything smelted outside one.",
+			"Metal that has set inside a Rift's threshold, denser and stranger than anything smelted outside one.",
 		source_book: "Rift Ascendant Canon",
 	},
 	{
@@ -75,7 +75,7 @@ export const GUILD_BASE_MATERIALS: GuildBaseMaterial[] = [
 		name: "Stabilizer Salt",
 		rarity: "uncommon",
 		value: { currency: "crystal", amount: 45 },
-		source: "Sealed gates; recovery wards",
+		source: "Sealed Rifts; recovery wards",
 		uses: "Essence-purge baths and Infirmary stabilizers.",
 		description:
 			"A crystalline salt that quiets unstable essence. The difference between a recovery and a mana-burn casualty.",
@@ -86,7 +86,7 @@ export const GUILD_BASE_MATERIALS: GuildBaseMaterial[] = [
 		name: "Resonant Core",
 		rarity: "rare",
 		value: { currency: "gate", amount: 45 },
-		source: "B–A rank gate bosses",
+		source: "B–A rank Rift bosses",
 		uses: "Power source for Master Workshop and Command Center tiers.",
 		description:
 			"The intact core of a powerful anomaly, still humming. Workshops a tier below it tend to crack under the load.",
@@ -111,7 +111,7 @@ export const GUILD_BASE_MATERIALS: GuildBaseMaterial[] = [
 		source: "S rank veins; deep domains",
 		uses: "High-yield crafting; bonded healer reagents.",
 		description:
-			"A flowering of raw essence that grows only where a gate has festered for a long time. Volatile, valuable, watched.",
+			"A flowering of raw essence that grows only where a Rift has festered for a long time. Volatile, valuable, watched.",
 		source_book: "Rift Ascendant Canon",
 	},
 	{

@@ -76,9 +76,9 @@ export interface ArtifactData {
 }
 
 const rarityStyles: Record<string, string> = {
-	legendary: "text-amber-400 border-amber-500/40 bg-amber-500/10",
+	legendary: "text-gate-s border-gate-s/40 bg-gate-s/10",
 	mythic: "text-purple-400 border-purple-500/40 bg-purple-500/10",
-	divine: "text-rose-400 border-rose-500/40 bg-rose-500/10",
+	divine: "text-gate-a border-gate-a/40 bg-gate-a/10",
 };
 
 export const ArtifactDetail = ({ data }: { data: ArtifactData }) => {
@@ -223,7 +223,7 @@ export const ArtifactDetail = ({ data }: { data: ArtifactData }) => {
 			{artifact.price != null && (
 				<AscendantWindow title="VALUE" compact>
 					<div className="flex items-center gap-2">
-						<Coins className="w-5 h-5 text-yellow-400" />
+						<Coins className="w-5 h-5 text-gate-s" />
 						<span className="font-heading">
 							{formatRaCurrencyValue(artifact.price)}
 						</span>
@@ -401,7 +401,7 @@ export const ArtifactDetail = ({ data }: { data: ArtifactData }) => {
 					<div className="space-y-3 text-sm">
 						{artifact.mechanics.bonus && (
 							<div className="flex items-start gap-2">
-								<Swords className="w-4 h-4 text-amber-400 flex-shrink-0 mt-0.5" />
+								<Swords className="w-4 h-4 text-gate-s flex-shrink-0 mt-0.5" />
 								<div>
 									<p className="text-foreground">
 										Bonus:{" "}

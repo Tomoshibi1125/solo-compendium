@@ -54,7 +54,7 @@ export function CampaignCalendarPanel({
 						Rift Cycle
 					</p>
 					<p
-						className="font-mono text-base text-amber-300"
+						className="font-mono text-base text-gate-s"
 						data-testid="campaign-calendar-pip"
 						aria-live="polite"
 					>

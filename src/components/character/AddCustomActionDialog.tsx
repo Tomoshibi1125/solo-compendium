@@ -141,7 +141,7 @@ export function AddCustomActionDialog({
 			>
 				<DialogHeader>
 					<DialogTitle className="flex items-center gap-2">
-						<Sparkles className="w-5 h-5 text-fuchsia-300" />
+						<Sparkles className="w-5 h-5 text-resurge-violet" />
 						{initial ? "Edit Custom Action" : "Add Custom Action"}
 					</DialogTitle>
 					<DialogDescription>

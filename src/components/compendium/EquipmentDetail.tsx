@@ -115,7 +115,7 @@ export const EquipmentDetail = ({ data }: { data: EquipmentData }) => {
 			<div className="grid grid-cols-2 md:grid-cols-4 gap-4">
 				<AscendantWindow title="COST" compact>
 					<div className="flex items-center gap-2">
-						<Coins className="w-5 h-5 text-yellow-400" />
+						<Coins className="w-5 h-5 text-gate-s" />
 						<span className="font-display text-xl">
 							{formatRaCurrencyValue(costValue)}
 						</span>
@@ -148,7 +148,7 @@ export const EquipmentDetail = ({ data }: { data: EquipmentData }) => {
 				{isWeapon && rangeText && (
 					<AscendantWindow title="RANGE" compact>
 						<div className="flex items-center gap-2">
-							<Sword className="w-5 h-5 text-orange-400" />
+							<Sword className="w-5 h-5 text-gate-a" />
 							<span className="font-display text-sm">{rangeText}</span>
 						</div>
 					</AscendantWindow>

@@ -84,6 +84,35 @@ describe("calculateSkillModifier — base formula", () => {
 		).toBe(0);
 	});
 
+	it("resolves RA display names that differ from their 5e key (Rift Topology = Nature)", () => {
+		// Regression: SKILLS is keyed by 5e names; getAllSkills() consumers pass
+		// RA display names, which used to miss the lookup and return 0.
+		expect(
+			calculateSkillModifier(
+				"Rift Topology",
+				abilities({ INT: 16 }),
+				["Rift Topology"],
+				[],
+				3,
+			),
+		).toBe(3 + 3);
+		expect(
+			calculateSkillModifier("Mana Flow", abilities({ INT: 14 }), [], [], 2),
+		).toBe(2);
+	});
+
+	it("matches proficiencies stored under the retired 'Gate Topology' name", () => {
+		expect(
+			calculateSkillModifier(
+				"Rift Topology",
+				abilities({ INT: 12 }),
+				["Gate Topology"], // persisted before the canon rename
+				[],
+				2,
+			),
+		).toBe(1 + 2);
+	});
+
 	it("scales with PB through 5e tiers", () => {
 		const lvl1 = calculateSkillModifier(
 			"Investigation",
@@ -175,7 +204,7 @@ describe("getAllSkills — RA skill catalog (17 5e skills with RA ability mappin
 		["Investigation", "INT"],
 		["Mana Flow", "INT"],
 		["Dimensional Lore", "INT"],
-		["Gate Topology", "INT"],
+		["Rift Topology", "INT"],
 		["Cosmic Lore", "INT"],
 		["Perception", "SENSE"],
 		["Insight", "SENSE"],

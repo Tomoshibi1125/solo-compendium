@@ -35,19 +35,26 @@ interface AshParticle {
 	drift: number;
 }
 
-interface CosmicBackgroundProps {
-	variant?: "default" | "gate" | "sovereign" | "shadow";
+interface RiftSiteBackgroundProps {
+	/** `rift` = active-response blue, `domain` = amethyst failure-state, `umbral` = deep violet. */
+	variant?: "default" | "rift" | "domain" | "umbral";
 	intensity?: "low" | "medium" | "high";
 	animated?: boolean;
 	className?: string;
 }
 
-export const CosmicBackground = ({
+/**
+ * Global ambient background: the Rift Site containment scene as the base
+ * layer, with animated rift-crack fractures, ascending mana ash, canvas
+ * energy streams, and tsParticles embers layered above. All effect layers
+ * respect `usePerformanceProfile` (tier + reduced motion).
+ */
+export const RiftSiteBackground = ({
 	variant = "default",
 	intensity = "medium",
 	animated = true,
 	className,
-}: CosmicBackgroundProps) => {
+}: RiftSiteBackgroundProps) => {
 	const canvasRef = useRef<HTMLCanvasElement>(null);
 	const { reducedMotion, fx, tier } = usePerformanceProfile();
 	const [ParticlesComponent, setParticlesComponent] =
@@ -59,11 +66,11 @@ export const CosmicBackground = ({
 
 	// Accent colors per variant
 	const accentHex =
-		variant === "gate"
+		variant === "rift"
 			? "#3b8cff"
-			: variant === "shadow"
+			: variant === "umbral"
 				? "#6b46c1"
-				: "#9d4edd"; // amethyst for sovereign/default
+				: "#9d4edd"; // amethyst for domain/default
 
 	// ── Rift crack fractures (framer-motion) ─────────────────────
 	const riftCracks = useMemo<RiftCrack[]>(() => {
@@ -96,7 +103,7 @@ export const CosmicBackground = ({
 		}));
 	}, [finalIntensity]);
 
-	// ── Canvas: animated gate energy streams ─────────────────────
+	// ── Canvas: animated rift energy streams ─────────────────────
 	useEffect(() => {
 		if (!canvasRef.current || !enableAnimation || finalIntensity === "low")
 			return;
@@ -158,7 +165,7 @@ export const CosmicBackground = ({
 				ctx.lineWidth = 1.5;
 				ctx.stroke();
 
-				// Occasional 90-degree branch — feels like gate circuit energy
+				// Occasional 90-degree branch — feels like rift circuit energy
 				if (Math.random() < 0.008) s.horizontal = !s.horizontal;
 			}
 
@@ -233,7 +240,7 @@ export const CosmicBackground = ({
 				size: { value: { min: 1, max: 3.5 } },
 				move: {
 					enable: true,
-					direction: "top" as const, // ascend like mana rising from gates
+					direction: "top" as const, // ascend like mana rising from the rift
 					speed: { min: 0.3, max: 1.1 },
 					random: true,
 					outModes: { default: "out" as const },
@@ -276,11 +283,10 @@ export const CosmicBackground = ({
 				className,
 			)}
 		>
-			{/* ── Layer 1: RA Hero — atmospheric base ──────────────── */}
+			{/* ── Layer 1: Rift Site scene — atmospheric base ───────── */}
 			<div
-				className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-1000"
+				className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-1000 rift-site-base"
 				style={{
-					backgroundImage: "url('/ui-art/rift-gate-hero.png')",
 					opacity:
 						finalIntensity === "high"
 							? 0.95
@@ -292,7 +298,7 @@ export const CosmicBackground = ({
 			{/* Dark overlay to ensure text legibility */}
 			<div className="absolute inset-0 bg-black/20" />
 
-			{/* ── Layer 2: Canvas gate energy streams ──────────────── */}
+			{/* ── Layer 2: Canvas rift energy streams ──────────────── */}
 			<DynamicStyle
 				as="canvas"
 				ref={canvasRef}
@@ -300,11 +306,11 @@ export const CosmicBackground = ({
 				vars={{ opacity: finalIntensity === "low" ? 0.25 : 0.7 }}
 			/>
 
-			{/* ── Layer 3: tsParticles mana embers + gate links ─────── */}
+			{/* ── Layer 3: tsParticles mana embers + rift links ─────── */}
 			{ParticlesComponent && (
 				<div className="absolute inset-0 w-full h-full">
 					<ParticlesComponent
-						id="ra-cosmic-particles"
+						id="ra-riftsite-particles"
 						options={particlesOptions}
 						className="w-full h-full"
 					/>
@@ -388,8 +394,8 @@ export const CosmicBackground = ({
 				}}
 			/>
 
-			{/* ── Layer 7: Gate energy flow (gate variant only) ─────── */}
-			{variant === "gate" && (
+			{/* ── Layer 7: Rift energy flow (rift variant only) ─────── */}
+			{variant === "rift" && (
 				<GateEnergyFlow
 					tier="e"
 					intensity={finalIntensity}
@@ -403,25 +409,25 @@ export const CosmicBackground = ({
 const ZONE_BACKGROUND: Record<
 	AppZone,
 	{
-		variant: CosmicBackgroundProps["variant"];
-		intensity: CosmicBackgroundProps["intensity"];
+		variant: RiftSiteBackgroundProps["variant"];
+		intensity: RiftSiteBackgroundProps["intensity"];
 	}
 > = {
 	default: { variant: "default", intensity: "medium" },
 	compendium: { variant: "default", intensity: "low" },
-	warden: { variant: "gate", intensity: "medium" },
-	campaign: { variant: "shadow", intensity: "medium" },
-	character: { variant: "sovereign", intensity: "medium" },
+	warden: { variant: "rift", intensity: "medium" },
+	campaign: { variant: "umbral", intensity: "medium" },
+	character: { variant: "domain", intensity: "medium" },
 };
 
 /**
  * Route-zone-aware ambient background. Reads the active zone from the UI store
- * (set by RouteEffects on navigation) and maps it to a CosmicBackground
+ * (set by RouteEffects on navigation) and maps it to a RiftSiteBackground
  * variant/intensity so the vignette shifts per app area.
  */
-export const ZonedCosmicBackground = () => {
+export const ZonedRiftSiteBackground = () => {
 	const zone = useUiStore((state) => state.zone);
 	const { variant, intensity } =
 		ZONE_BACKGROUND[zone] ?? ZONE_BACKGROUND.default;
-	return <CosmicBackground variant={variant} intensity={intensity} />;
+	return <RiftSiteBackground variant={variant} intensity={intensity} />;
 };

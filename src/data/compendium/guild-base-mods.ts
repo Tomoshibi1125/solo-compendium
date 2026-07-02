@@ -106,7 +106,7 @@ export const GUILD_FACILITIES: GuildFacility[] = [
 				cost: { currency: "gate", amount: 180 },
 				effects: [{ kind: "initiative_bonus", value: 1 }],
 				description:
-					"A briefing table and a pin-board of open gate contracts. Squads walk into the threshold already knowing the plan.",
+					"A briefing table and a pin-board of open Rift contracts. Squads walk into the threshold already knowing the plan.",
 			},
 			{
 				tier: 2,
@@ -114,7 +114,7 @@ export const GUILD_FACILITIES: GuildFacility[] = [
 				cost: { currency: "gate", amount: 450 },
 				effects: [{ kind: "initiative_bonus", value: 1 }],
 				description:
-					"A live operations room tracking multiple gates at once. Standing drills shave the seconds that decide a breach.",
+					"A live operations room tracking multiple Rifts at once. Standing drills shave the seconds that decide a breach.",
 			},
 			{
 				tier: 3,
@@ -122,7 +122,7 @@ export const GUILD_FACILITIES: GuildFacility[] = [
 				cost: { currency: "gate", amount: 1000 },
 				effects: [{ kind: "initiative_bonus", value: 1 }],
 				description:
-					"A Bureau-grade command center with relay links and a standing dispatch — members enter every gate fully briefed.",
+					"A Bureau-grade command center with relay links and a standing dispatch — members enter every Rift fully briefed.",
 			},
 		],
 	},
@@ -166,7 +166,7 @@ export const GUILD_FACILITIES: GuildFacility[] = [
 		id: "infirmary",
 		name: "Infirmary",
 		summary:
-			"Recovery cots and essence-stabilizers that get a strike squad back on its feet between gates.",
+			"Recovery cots and essence-stabilizers that get a strike squad back on its feet between Rifts.",
 		source_book: "Rift Ascendant Canon",
 		tiers: [
 			{
@@ -202,7 +202,7 @@ export const GUILD_FACILITIES: GuildFacility[] = [
 		id: "archive",
 		name: "Archive",
 		summary:
-			"Dossiers, gate surveys, and rank-eval records — the guild's institutional memory and Bureau standing.",
+			"Dossiers, Rift surveys, and rank-eval records — the guild's institutional memory and Bureau standing.",
 		source_book: "Rift Ascendant Canon",
 		tiers: [
 			{
@@ -219,9 +219,9 @@ export const GUILD_FACILITIES: GuildFacility[] = [
 				name: "Survey Archive",
 				cost: { currency: "gate", amount: 410 },
 				benefit:
-					"A cross-referenced survey archive — squads walk into a gate already knowing where the veins and choke-points run.",
+					"A cross-referenced survey archive — squads walk into a Rift already knowing where the veins and choke-points run.",
 				description:
-					"A cross-referenced survey archive — the guild walks into a gate already knowing where the veins run.",
+					"A cross-referenced survey archive — the guild walks into a Rift already knowing where the veins run.",
 			},
 			{
 				tier: 3,
@@ -238,7 +238,7 @@ export const GUILD_FACILITIES: GuildFacility[] = [
 		id: "training_hall",
 		name: "Training Hall",
 		summary:
-			"Sparring floors and conditioning drills that harden a roster — members who train here carry more punishment through a gate.",
+			"Sparring floors and conditioning drills that harden a roster — members who train here carry more punishment through a Rift.",
 		source_book: "Rift Ascendant Canon",
 		tiers: [
 			{
@@ -265,7 +265,7 @@ export const GUILD_FACILITIES: GuildFacility[] = [
 				benefit:
 					"A standing war academy — recruits arrive soft and leave able to shrug off hits that would drop a rival crew.",
 				description:
-					"A full war academy with instructors and graded courses. Members leave hardened against the punishment a gate deals out.",
+					"A full war academy with instructors and graded courses. Members leave hardened against the punishment a Rift deals out.",
 			},
 		],
 	},
@@ -273,7 +273,7 @@ export const GUILD_FACILITIES: GuildFacility[] = [
 		id: "armory",
 		name: "Armory",
 		summary:
-			"Racked, maintained, standard-issue gear — a guild that arms its members well sends them into a gate better protected.",
+			"Racked, maintained, standard-issue gear — a guild that arms its members well sends them into a Rift better protected.",
 		source_book: "Rift Ascendant Canon",
 		tiers: [
 			{
@@ -308,7 +308,7 @@ export const GUILD_FACILITIES: GuildFacility[] = [
 		id: "sanctum",
 		name: "Ward Sanctum",
 		summary:
-			"Layered wards against rift corruption — members who rest under them carry that protection out into the gate.",
+			"Layered wards against rift corruption — members who rest under them carry that protection out into the Rift.",
 		source_book: "Rift Ascendant Canon",
 		tiers: [
 			{
@@ -326,7 +326,7 @@ export const GUILD_FACILITIES: GuildFacility[] = [
 				cost: { currency: "gate", amount: 520 },
 				effects: [{ kind: "resistance", damageType: "necrotic" }],
 				description:
-					"A sealed reliquary of grounding relics. Attunement to its wards leaves members inured to the gate's rot.",
+					"A sealed reliquary of grounding relics. Attunement to its wards leaves members inured to the Rift's rot.",
 			},
 			{
 				tier: 3,
@@ -334,17 +334,17 @@ export const GUILD_FACILITIES: GuildFacility[] = [
 				cost: { currency: "gate", amount: 1080 },
 				effects: [{ kind: "resistance", damageType: "psychic" }],
 				benefit:
-					"A Great Ward that quiets the rift's whisper — members steeped in it resist the minds a deep gate turns against them.",
+					"A Great Ward that quiets the rift's whisper — members steeped in it resist the minds a deep Rift turns against them.",
 				description:
-					"A full Great Ward, tuned by a bonded warden. Members steeped in it withstand both the gate's rot and its whisper.",
+					"A full Great Ward, tuned by a bonded warden. Members steeped in it withstand both the Rift's rot and its whisper.",
 			},
 		],
 	},
 	{
 		id: "observatory",
-		name: "Gate Observatory",
+		name: "Rift Observatory",
 		summary:
-			"Watch spires and survey instruments that read a gate before it opens — a guild that studies the threshold is harder to surprise.",
+			"Watch spires and survey instruments that read a Rift before it opens — a guild that studies the threshold is harder to surprise.",
 		source_book: "Rift Ascendant Canon",
 		tiers: [
 			{
@@ -361,7 +361,7 @@ export const GUILD_FACILITIES: GuildFacility[] = [
 				cost: { currency: "gate", amount: 500 },
 				effects: [{ kind: "passive_bonus", passive: "perception", value: 1 }],
 				description:
-					"A survey deck cross-referencing flux against known gate types — the guild spots an anomaly's tells sooner.",
+					"A survey deck cross-referencing flux against known Rift types — the guild spots an anomaly's tells sooner.",
 			},
 			{
 				tier: 3,
@@ -369,9 +369,9 @@ export const GUILD_FACILITIES: GuildFacility[] = [
 				cost: { currency: "gate", amount: 1050 },
 				effects: [{ kind: "passive_bonus", passive: "perception", value: 1 }],
 				benefit:
-					"A Bureau-grade observatory — the guild reads a gate so thoroughly its squads are almost never caught blind.",
+					"A Bureau-grade observatory — the guild reads a Rift so thoroughly its squads are almost never caught blind.",
 				description:
-					"A full astral observatory with a bonded surveyor. Members enter every gate having already studied what waits inside.",
+					"A full astral observatory with a bonded surveyor. Members enter every Rift having already studied what waits inside.",
 			},
 		],
 	},
@@ -388,7 +388,7 @@ export const GUILD_FACILITIES: GuildFacility[] = [
 				cost: { currency: "gate", amount: 180 },
 				capability: { craftingOptions: ["recipe-essence-tonic"] },
 				description:
-					"Warded spore beds coaxing essence-blooms from stabilized gate soil. The first steady reagent supply reaches the bench.",
+					"Warded spore beds coaxing essence-blooms from stabilized Rift soil. The first steady reagent supply reaches the bench.",
 			},
 			{
 				tier: 2,

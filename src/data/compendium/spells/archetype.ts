@@ -171,7 +171,7 @@ export const spells_archetype: CompendiumSpell[] = [
 	S("Maw of the Hive", "A", "Conjuration", "5d8", "piercing", "Vitality"),
 	S("Summon Apex Beast", "A", "Conjuration", "5d8", "slashing", "Strength"),
 	S("Devouring Swarm", "A", "Conjuration", "5d6", "acid", "Vitality"),
-	S("Gate the Horde", "S", "Conjuration", "6d8", "force", "Vitality"),
+	S("Rift the Horde", "S", "Conjuration", "6d8", "force", "Vitality"),
 	S("Avatar of the Wild", "S", "Conjuration", "6d8", "slashing", "Strength"),
 	S("Conjure Lesser Swarm", "D", "Conjuration", "2d6", "acid", "Vitality"),
 	S("Thornfang Strike", "C", "Conjuration", "3d8", "piercing", "Agility"),

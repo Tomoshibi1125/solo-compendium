@@ -269,7 +269,7 @@ export interface StaticCompendiumEntry {
 	stats?: Record<string, Json> | null;
 	value?: number | null;
 	cost_credits?: number | null;
-	// Structured catalog price (varied credit type); `value` stays numeric Gate.
+	// Structured catalog price (varied credit type); `value` stays numeric Rift.
 	price?: RaCurrencyValue | null;
 	source?: string | null;
 	image?: string | null;

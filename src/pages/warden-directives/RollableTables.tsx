@@ -10,10 +10,11 @@ import {
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
-import { ManaFlowText, RiftHeading } from "@/components/ui/AscendantText";
+import { ManaFlowText } from "@/components/ui/AscendantText";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { PageHeader } from "@/components/ui/PageHeader";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useEmbedded } from "@/contexts/EmbeddedContext";
 import type { StaticCompendiumEntry } from "@/data/compendium/providers/types";
@@ -408,18 +409,19 @@ ${enhancedText ? `\n## AI-Enhanced\n${enhancedText}\n` : ""}`;
 							<ArrowLeft className="w-4 h-4 mr-2" />
 							Back to System Tools
 						</Button>
-						<RiftHeading
-							level={1}
-							variant="sovereign"
-							dimensional
-							className="mb-2"
-						>
-							Warden Tables
-						</RiftHeading>
-						<ManaFlowText variant="rift" speed="slow" className="font-heading">
-							Rollable tables from the Warden's Guide, adapted for the
-							post-reset world.
-						</ManaFlowText>
+						<PageHeader
+							title="Warden Tables"
+							description={
+								<ManaFlowText
+									variant="rift"
+									speed="slow"
+									className="font-heading"
+								>
+									Rollable tables from the Warden's Guide, adapted for the
+									post-reset world.
+								</ManaFlowText>
+							}
+						/>
 					</div>
 				)}
 

@@ -217,7 +217,7 @@ Services:
 
 Bounties include missing teams, dangerous crossings, predators of the wilds, settlement relief, Means clues, and Awoko ritual sites.
 
-## Room 9 - Smuggler Gate
+## Room 9 - Smuggler Rift
 
 A hidden exit that does not always open to the same place. Vermillion uses it to move goods around the worn dead and the open ground. Each use risks the dark noticing.
 

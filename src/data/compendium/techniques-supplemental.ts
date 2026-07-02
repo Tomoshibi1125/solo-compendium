@@ -15,7 +15,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"Slam your shield or weapon flat into a creature within 5 feet. Make a melee attack using Strength; on hit, 1d8+STR bludgeoning damage and the target must make a DC 13 Strength save or be pushed 10 feet and knocked prone.",
 		lore: {
 			origin:
-				"Developed through Destroyer combat doctrine and field-tested in gate operations.",
+				"Developed through Destroyer combat doctrine and field-tested in Rift operations.",
 			history: "Catalogued in the Bureau's common-tier martial compendium.",
 			curse: "",
 			personality: "Steadfast; the mana flow is distinctive.",
@@ -69,7 +69,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Bureau-certified Destroyer combat technique, field-validated across multiple gate operations.",
+			"Bureau-certified Destroyer combat technique, field-validated across multiple Rift operations.",
 		theme_tags: ["vanguard", "Weapon", "destroyer"],
 	},
 	{
@@ -81,7 +81,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"As a reaction when an ally within 10 feet is targeted by an attack, impose yourself. The attack targets you instead. You have +3 AC against it. If the attack misses you, you can make one melee weapon attack against the attacker as part of the same reaction.",
 		lore: {
 			origin:
-				"Developed through Destroyer combat doctrine and field-tested in gate operations.",
+				"Developed through Destroyer combat doctrine and field-tested in Rift operations.",
 			history: "Catalogued in the Bureau's uncommon-tier martial compendium.",
 			curse: "",
 			personality: "Steadfast; the mana flow is distinctive.",
@@ -135,7 +135,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Bureau-certified Destroyer combat technique, field-validated across multiple gate operations.",
+			"Bureau-certified Destroyer combat technique, field-validated across multiple Rift operations.",
 		theme_tags: ["vanguard", "Defense", "destroyer"],
 	},
 	{
@@ -147,7 +147,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"Slam your weapon into the ground, creating a 15-foot radius shockwave. Each creature makes DC 16 STR save: 5d8 force and knocked prone on failure, half on success. The area becomes difficult terrain for 1 minute.",
 		lore: {
 			origin:
-				"Developed through Destroyer combat doctrine and field-tested in gate operations.",
+				"Developed through Destroyer combat doctrine and field-tested in Rift operations.",
 			history: "Catalogued in the Bureau's rare-tier martial compendium.",
 			curse: "",
 			personality: "Steadfast; the mana flow is distinctive.",
@@ -201,7 +201,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Bureau-certified Destroyer combat technique, field-validated across multiple gate operations.",
+			"Bureau-certified Destroyer combat technique, field-validated across multiple Rift operations.",
 		theme_tags: ["vanguard", "Weapon", "destroyer"],
 	},
 	{
@@ -213,7 +213,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"Enter an immovable stance for 1 minute. You can't be moved, you have advantage on all Strength and Vitality saves, reduce all damage by 5, and can use your reaction to impose disadvantage on any attack targeting an ally within 10 feet.",
 		lore: {
 			origin:
-				"Developed through Destroyer combat doctrine and field-tested in gate operations.",
+				"Developed through Destroyer combat doctrine and field-tested in Rift operations.",
 			history: "Catalogued in the Bureau's epic-tier martial compendium.",
 			curse: "",
 			personality: "Steadfast; the mana flow is distinctive.",
@@ -221,7 +221,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 				"Available to Bureau-certified Destroyers at the appropriate rank.",
 			prior_owners: ["Bureau Combat Archives", "Destroyer Training Division"],
 		},
-		flavor: "I am the wall. I am the gate. Nothing passes.",
+		flavor: "I am the wall. I am the Rift. Nothing passes.",
 		tags: ["awakened", "technique", "vanguard", "Stance", "Destroyer"],
 		rarity: "epic",
 		source_book: "Rift Ascendant Canon",
@@ -267,7 +267,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Bureau-certified Destroyer combat technique, field-validated across multiple gate operations.",
+			"Bureau-certified Destroyer combat technique, field-validated across multiple Rift operations.",
 		theme_tags: ["vanguard", "Stance", "destroyer"],
 	},
 	{
@@ -279,7 +279,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"Drive your weapon into the earth and become one with the battlefield. For 1 minute: you can't move but gain immunity to all conditions, reduce all damage by 15, and any creature that attacks an ally within 30 feet of you takes 5d10 force damage automatically. After the effect ends, gain 2 exhaustion.",
 		lore: {
 			origin:
-				"Developed through Destroyer combat doctrine and field-tested in gate operations.",
+				"Developed through Destroyer combat doctrine and field-tested in Rift operations.",
 			history: "Catalogued in the Bureau's legendary-tier martial compendium.",
 			curse: "",
 			personality: "Steadfast; the mana flow is overwhelming.",
@@ -333,7 +333,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Bureau-certified Destroyer combat technique, field-validated across multiple gate operations.",
+			"Bureau-certified Destroyer combat technique, field-validated across multiple Rift operations.",
 		theme_tags: ["vanguard", "Ultimate", "destroyer"],
 	},
 	{
@@ -345,7 +345,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"Make a melee weapon attack with advantage, but attacks against you also have advantage until the start of your next turn. On a hit, deal weapon damage plus 1d8 slashing damage to the target and each creature within 5 feet of it.",
 		lore: {
 			origin:
-				"Developed through Berserker combat doctrine and field-tested in gate operations.",
+				"Developed through Berserker combat doctrine and field-tested in Rift operations.",
 			history: "Catalogued in the Bureau's common-tier martial compendium.",
 			curse: "",
 			personality: "Savage; the mana flow is distinctive.",
@@ -399,7 +399,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Bureau-certified Berserker combat technique, field-validated across multiple gate operations.",
+			"Bureau-certified Berserker combat technique, field-validated across multiple Rift operations.",
 		theme_tags: ["brutal", "Weapon", "berserker"],
 	},
 	{
@@ -411,7 +411,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"Charge up to 30 feet in a straight line, then make a melee attack with advantage. On a hit, deal weapon damage plus 3d8 bludgeoning and the target must make DC 15 STR save or be knocked prone. If already in Overload, charge distance increases to 60 feet.",
 		lore: {
 			origin:
-				"Developed through Berserker combat doctrine and field-tested in gate operations.",
+				"Developed through Berserker combat doctrine and field-tested in Rift operations.",
 			history: "Catalogued in the Bureau's uncommon-tier martial compendium.",
 			curse: "",
 			personality: "Savage; the mana flow is distinctive.",
@@ -465,7 +465,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Bureau-certified Berserker combat technique, field-validated across multiple gate operations.",
+			"Bureau-certified Berserker combat technique, field-validated across multiple Rift operations.",
 		theme_tags: ["brutal", "Movement", "berserker"],
 	},
 	{
@@ -477,7 +477,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"Sweep your weapon in a devastating arc. Make a melee weapon attack against each creature within 10 feet. On a hit, deal weapon damage plus 3d10 slashing. Creatures reduced to 0 HP explode (2d6 slashing to creatures within 5 feet of them).",
 		lore: {
 			origin:
-				"Developed through Berserker combat doctrine and field-tested in gate operations.",
+				"Developed through Berserker combat doctrine and field-tested in Rift operations.",
 			history: "Catalogued in the Bureau's rare-tier martial compendium.",
 			curse: "",
 			personality: "Savage; the mana flow is distinctive.",
@@ -531,7 +531,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Bureau-certified Berserker combat technique, field-validated across multiple gate operations.",
+			"Bureau-certified Berserker combat technique, field-validated across multiple Rift operations.",
 		theme_tags: ["brutal", "Weapon", "berserker"],
 	},
 	{
@@ -543,7 +543,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"For 1 minute: you can make a melee attack against every creature you pass within 5 feet during your movement (once each), your speed can't be reduced, and you're immune to prone, grappled, and restrained. Each kill grants +5 temporary HP.",
 		lore: {
 			origin:
-				"Developed through Berserker combat doctrine and field-tested in gate operations.",
+				"Developed through Berserker combat doctrine and field-tested in Rift operations.",
 			history: "Catalogued in the Bureau's epic-tier martial compendium.",
 			curse: "",
 			personality: "Savage; the mana flow is distinctive.",
@@ -597,7 +597,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Bureau-certified Berserker combat technique, field-validated across multiple gate operations.",
+			"Bureau-certified Berserker combat technique, field-validated across multiple Rift operations.",
 		theme_tags: ["brutal", "Stance", "berserker"],
 	},
 	{
@@ -609,7 +609,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"Channel maximum Overload into a single attack. Make a melee weapon attack. On a hit: weapon damage plus 15d12 fire damage. The target is launched 60 feet and everything in the path takes half damage. Miss: half damage to the target anyway. Usable once per long rest.",
 		lore: {
 			origin:
-				"Developed through Berserker combat doctrine and field-tested in gate operations.",
+				"Developed through Berserker combat doctrine and field-tested in Rift operations.",
 			history: "Catalogued in the Bureau's legendary-tier martial compendium.",
 			curse: "",
 			personality: "Savage; the mana flow is overwhelming.",
@@ -663,7 +663,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Bureau-certified Berserker combat technique, field-validated across multiple gate operations.",
+			"Bureau-certified Berserker combat technique, field-validated across multiple Rift operations.",
 		theme_tags: ["brutal", "Ultimate", "berserker"],
 	},
 	{
@@ -675,7 +675,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"Target a vital point. If you have advantage or the target is within 5 feet of an ally, deal weapon damage plus 1d8 piercing and the target's AC is reduced by 1 until the end of its next turn (doesn't stack).",
 		lore: {
 			origin:
-				"Developed through Assassin combat doctrine and field-tested in gate operations.",
+				"Developed through Assassin combat doctrine and field-tested in Rift operations.",
 			history: "Catalogued in the Bureau's common-tier martial compendium.",
 			curse: "",
 			personality: "Clinical; the mana flow is distinctive.",
@@ -730,7 +730,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Bureau-certified Assassin combat technique, field-validated across multiple gate operations.",
+			"Bureau-certified Assassin combat technique, field-validated across multiple Rift operations.",
 		theme_tags: ["precision", "Weapon", "assassin"],
 	},
 	{
@@ -742,7 +742,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"Slice a precise wound that bleeds. On a hit with advantage, deal weapon damage plus 3d6 slashing. The target takes 2d4 bleed damage at the start of each of its turns for 1 minute. A creature can use its action to staunch the wound (DC 14 Medicine).",
 		lore: {
 			origin:
-				"Developed through Assassin combat doctrine and field-tested in gate operations.",
+				"Developed through Assassin combat doctrine and field-tested in Rift operations.",
 			history: "Catalogued in the Bureau's uncommon-tier martial compendium.",
 			curse: "",
 			personality: "Clinical; the mana flow is distinctive.",
@@ -797,7 +797,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Bureau-certified Assassin combat technique, field-validated across multiple gate operations.",
+			"Bureau-certified Assassin combat technique, field-validated across multiple Rift operations.",
 		theme_tags: ["precision", "Weapon", "assassin"],
 	},
 	{
@@ -809,7 +809,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"Target a creature's internal mana node. If you have advantage, on a hit deal weapon damage plus 6d6 necrotic. The target must make DC 16 VIT save or be poisoned for 1 minute (its speed halved, disadvantage on attacks). Save ends.",
 		lore: {
 			origin:
-				"Developed through Assassin combat doctrine and field-tested in gate operations.",
+				"Developed through Assassin combat doctrine and field-tested in Rift operations.",
 			history: "Catalogued in the Bureau's rare-tier martial compendium.",
 			curse: "",
 			personality: "Clinical; the mana flow is distinctive.",
@@ -864,7 +864,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Bureau-certified Assassin combat technique, field-validated across multiple gate operations.",
+			"Bureau-certified Assassin combat technique, field-validated across multiple Rift operations.",
 		theme_tags: ["precision", "Weapon", "assassin"],
 	},
 	{
@@ -876,7 +876,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"Deliver the ideal strike. If you have advantage and the attack hits, it automatically crits. The critical deals maximum damage on all dice. The target must make DC 18 VIT save or be stunned for 1 round.",
 		lore: {
 			origin:
-				"Developed through Assassin combat doctrine and field-tested in gate operations.",
+				"Developed through Assassin combat doctrine and field-tested in Rift operations.",
 			history: "Catalogued in the Bureau's epic-tier martial compendium.",
 			curse: "",
 			personality: "Clinical; the mana flow is distinctive.",
@@ -931,7 +931,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Bureau-certified Assassin combat technique, field-validated across multiple gate operations.",
+			"Bureau-certified Assassin combat technique, field-validated across multiple Rift operations.",
 		theme_tags: ["precision", "Weapon", "assassin"],
 	},
 	{
@@ -943,7 +943,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"Execute a flawless killing sequence. Make 3 attacks with advantage. Each that hits deals weapon damage plus 5d8 necrotic. If all three hit the same target and it has fewer than 150 HP afterward, it dies instantly (DC 20 VIT negates the instant kill, not the damage).",
 		lore: {
 			origin:
-				"Developed through Assassin combat doctrine and field-tested in gate operations.",
+				"Developed through Assassin combat doctrine and field-tested in Rift operations.",
 			history: "Catalogued in the Bureau's legendary-tier martial compendium.",
 			curse: "",
 			personality: "Clinical; the mana flow is overwhelming.",
@@ -998,7 +998,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Bureau-certified Assassin combat technique, field-validated across multiple gate operations.",
+			"Bureau-certified Assassin combat technique, field-validated across multiple Rift operations.",
 		theme_tags: ["precision", "Ultimate", "assassin"],
 	},
 	{
@@ -1010,7 +1010,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"Strike a nerve cluster. Make an unarmed attack; on hit, 1d8+AGI bludgeoning damage and the target must make DC 13 VIT save or lose its reaction until the end of your next turn.",
 		lore: {
 			origin:
-				"Developed through Striker combat doctrine and field-tested in gate operations.",
+				"Developed through Striker combat doctrine and field-tested in Rift operations.",
 			history: "Catalogued in the Bureau's common-tier martial compendium.",
 			curse: "",
 			personality: "Disciplined; the mana flow is distinctive.",
@@ -1064,7 +1064,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Bureau-certified Striker combat technique, field-validated across multiple gate operations.",
+			"Bureau-certified Striker combat technique, field-validated across multiple Rift operations.",
 		theme_tags: ["unarmed", "Martial", "striker"],
 	},
 	{
@@ -1076,7 +1076,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"Strike 5 pressure points in rapid succession. Make 3 unarmed attacks. If 2+ hit the same target, it must make DC 15 VIT save or have its speed reduced to 0 and disadvantage on attacks until end of its next turn.",
 		lore: {
 			origin:
-				"Developed through Striker combat doctrine and field-tested in gate operations.",
+				"Developed through Striker combat doctrine and field-tested in Rift operations.",
 			history: "Catalogued in the Bureau's uncommon-tier martial compendium.",
 			curse: "",
 			personality: "Disciplined; the mana flow is distinctive.",
@@ -1130,19 +1130,19 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Bureau-certified Striker combat technique, field-validated across multiple gate operations.",
+			"Bureau-certified Striker combat technique, field-validated across multiple Rift operations.",
 		theme_tags: ["unarmed", "Martial", "striker"],
 	},
 	{
 		id: "tech-sup-5-18-gate-breaker-fist",
 		classes: ["Striker"],
-		name: "Gate Breaker Fist",
-		display_name: "Gate Breaker Fist",
+		name: "Rift Breaker Fist",
+		display_name: "Rift Breaker Fist",
 		description:
 			"Channel mana through your fist for a strike that ignores all resistances and immunities. Make an unarmed attack: 6d10+AGI force damage. Deals double damage to objects and structures. Can target ethereal/incorporeal creatures normally.",
 		lore: {
 			origin:
-				"Developed through Striker combat doctrine and field-tested in gate operations.",
+				"Developed through Striker combat doctrine and field-tested in Rift operations.",
 			history: "Catalogued in the Bureau's rare-tier martial compendium.",
 			curse: "",
 			personality: "Disciplined; the mana flow is distinctive.",
@@ -1196,7 +1196,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Bureau-certified Striker combat technique, field-validated across multiple gate operations.",
+			"Bureau-certified Striker combat technique, field-validated across multiple Rift operations.",
 		theme_tags: ["unarmed", "Martial", "striker"],
 	},
 	{
@@ -1208,7 +1208,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"Deliver a close-range strike of concentrated force. Touch range. On hit: 10d8 force damage and the target is launched 30 feet. If it collides with another creature, both make DC 18 STR saves or take 5d6 bludgeoning and are prone.",
 		lore: {
 			origin:
-				"Developed through Striker combat doctrine and field-tested in gate operations.",
+				"Developed through Striker combat doctrine and field-tested in Rift operations.",
 			history: "Catalogued in the Bureau's epic-tier martial compendium.",
 			curse: "",
 			personality: "Disciplined; the mana flow is distinctive.",
@@ -1262,7 +1262,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Bureau-certified Striker combat technique, field-validated across multiple gate operations.",
+			"Bureau-certified Striker combat technique, field-validated across multiple Rift operations.",
 		theme_tags: ["unarmed", "Martial", "striker"],
 	},
 	{
@@ -1274,7 +1274,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"Achieve martial transcendence for 1 minute. Your unarmed strikes deal force damage, your attacks per Attack action become 6, your speed doubles, and you're immune to conditions. Each creature you hit has its AC permanently reduced by 1 (to minimum 10) for the encounter.",
 		lore: {
 			origin:
-				"Developed through Striker combat doctrine and field-tested in gate operations.",
+				"Developed through Striker combat doctrine and field-tested in Rift operations.",
 			history: "Catalogued in the Bureau's legendary-tier martial compendium.",
 			curse: "",
 			personality: "Disciplined; the mana flow is overwhelming.",
@@ -1329,7 +1329,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Bureau-certified Striker combat technique, field-validated across multiple gate operations.",
+			"Bureau-certified Striker combat technique, field-validated across multiple Rift operations.",
 		theme_tags: ["unarmed", "Ultimate", "striker"],
 	},
 	{
@@ -1341,7 +1341,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"Channel your oath through your weapon. On your next hit, deal an extra 2d8 radiant damage. Against anomaly or anomaly, 3d8 instead.",
 		lore: {
 			origin:
-				"Developed through Holy Knight combat doctrine and field-tested in gate operations.",
+				"Developed through Holy Knight combat doctrine and field-tested in Rift operations.",
 			history: "Catalogued in the Bureau's common-tier martial compendium.",
 			curse: "",
 			personality: "Resolute; the mana flow is distinctive.",
@@ -1395,7 +1395,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Bureau-certified Holy Knight combat technique, field-validated across multiple gate operations.",
+			"Bureau-certified Holy Knight combat technique, field-validated across multiple Rift operations.",
 		theme_tags: ["radiant", "Weapon", "holy-knight"],
 	},
 	{
@@ -1407,7 +1407,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"Sweep your weapon in an arc of radiant fury. Each creature within 10 feet of you must make DC 15 AGI save: 3d8 radiant on failure, half on success. Allies are unaffected.",
 		lore: {
 			origin:
-				"Developed through Holy Knight combat doctrine and field-tested in gate operations.",
+				"Developed through Holy Knight combat doctrine and field-tested in Rift operations.",
 			history: "Catalogued in the Bureau's uncommon-tier martial compendium.",
 			curse: "",
 			personality: "Resolute; the mana flow is distinctive.",
@@ -1461,7 +1461,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Bureau-certified Holy Knight combat technique, field-validated across multiple gate operations.",
+			"Bureau-certified Holy Knight combat technique, field-validated across multiple Rift operations.",
 		theme_tags: ["radiant", "Weapon", "holy-knight"],
 	},
 	{
@@ -1473,7 +1473,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"On your next melee hit, deal weapon damage plus 6d8 radiant. The target must make DC 17 PRS save or be blinded until end of its next turn. If it's anomaly/anomaly, it's also paralyzed for 1 round on a failed save.",
 		lore: {
 			origin:
-				"Developed through Holy Knight combat doctrine and field-tested in gate operations.",
+				"Developed through Holy Knight combat doctrine and field-tested in Rift operations.",
 			history: "Catalogued in the Bureau's rare-tier martial compendium.",
 			curse: "",
 			personality: "Resolute; the mana flow is distinctive.",
@@ -1527,7 +1527,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Bureau-certified Holy Knight combat technique, field-validated across multiple gate operations.",
+			"Bureau-certified Holy Knight combat technique, field-validated across multiple Rift operations.",
 		theme_tags: ["radiant", "Weapon", "holy-knight"],
 	},
 	{
@@ -1539,7 +1539,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"Deliver an electrically charged punch through your combat gauntlet. Melee attack using INT: 1d8+INT lightning damage. On a hit, the target can't take reactions until end of its next turn.",
 		lore: {
 			origin:
-				"Developed through Technomancer combat doctrine and field-tested in gate operations.",
+				"Developed through Technomancer combat doctrine and field-tested in Rift operations.",
 			history: "Catalogued in the Bureau's common-tier martial compendium.",
 			curse: "",
 			personality: "Mechanical; the mana flow is distinctive.",
@@ -1597,7 +1597,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Bureau-certified Technomancer combat technique, field-validated across multiple gate operations.",
+			"Bureau-certified Technomancer combat technique, field-validated across multiple Rift operations.",
 		theme_tags: ["engineered", "Device", "technomancer"],
 	},
 	{
@@ -1609,7 +1609,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"Discharge an electromagnetic pulse in a 15-foot radius. Each creature must make DC 15 INT save: 3d8 lightning on failure, half on success. Constructs and creatures with metal armor have disadvantage on the save. All non-magical electronic devices in the area are disabled for 1 minute.",
 		lore: {
 			origin:
-				"Developed through Technomancer combat doctrine and field-tested in gate operations.",
+				"Developed through Technomancer combat doctrine and field-tested in Rift operations.",
 			history: "Catalogued in the Bureau's uncommon-tier martial compendium.",
 			curse: "",
 			personality: "Mechanical; the mana flow is distinctive.",
@@ -1667,7 +1667,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Bureau-certified Technomancer combat technique, field-validated across multiple gate operations.",
+			"Bureau-certified Technomancer combat technique, field-validated across multiple Rift operations.",
 		theme_tags: ["engineered", "Device", "technomancer"],
 	},
 	{
@@ -1679,7 +1679,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"Fire a hypersonic mana-accelerated projectile. Make a ranged attack (INT) against a creature within 300 feet. On a hit: 8d10 force damage. The projectile pierces through up to 3 creatures in a line — each makes a DC 17 AGI save for half.",
 		lore: {
 			origin:
-				"Developed through Technomancer combat doctrine and field-tested in gate operations.",
+				"Developed through Technomancer combat doctrine and field-tested in Rift operations.",
 			history: "Catalogued in the Bureau's rare-tier martial compendium.",
 			curse: "",
 			personality: "Mechanical; the mana flow is distinctive.",
@@ -1737,7 +1737,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Bureau-certified Technomancer combat technique, field-validated across multiple gate operations.",
+			"Bureau-certified Technomancer combat technique, field-validated across multiple Rift operations.",
 		theme_tags: ["engineered", "Device", "technomancer"],
 	},
 	{
@@ -1749,7 +1749,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"Target a creature's mobility. On a weapon hit, deal weapon damage plus 1d6 slashing. The target's speed is reduced by 15 feet until the end of its next turn. If the target's speed is already reduced, it's also knocked prone.",
 		lore: {
 			origin:
-				"Developed through Stalker combat doctrine and field-tested in gate operations.",
+				"Developed through Stalker combat doctrine and field-tested in Rift operations.",
 			history: "Catalogued in the Bureau's common-tier martial compendium.",
 			curse: "",
 			personality: "Relentless; the mana flow is distinctive.",
@@ -1803,7 +1803,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Bureau-certified Stalker combat technique, field-validated across multiple gate operations.",
+			"Bureau-certified Stalker combat technique, field-validated across multiple Rift operations.",
 		theme_tags: ["pursuit", "Weapon", "stalker"],
 	},
 	{
@@ -1815,7 +1815,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"Fire a bolt or arrow wrapped in mana-wire. Ranged weapon attack. On a hit: weapon damage plus 2d6 piercing and the target must make DC 15 STR save or be restrained until it uses an action to break free (DC 15 Athletics/Acrobatics).",
 		lore: {
 			origin:
-				"Developed through Stalker combat doctrine and field-tested in gate operations.",
+				"Developed through Stalker combat doctrine and field-tested in Rift operations.",
 			history: "Catalogued in the Bureau's uncommon-tier martial compendium.",
 			curse: "",
 			personality: "Relentless; the mana flow is distinctive.",
@@ -1869,7 +1869,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Bureau-certified Stalker combat technique, field-validated across multiple gate operations.",
+			"Bureau-certified Stalker combat technique, field-validated across multiple Rift operations.",
 		theme_tags: ["pursuit", "Weapon", "stalker"],
 	},
 	{
@@ -1881,7 +1881,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"Leap up to 40 feet to a space adjacent to a creature you've marked. This movement doesn't provoke opportunity attacks. Your next attack this turn has advantage and deals an extra 3d6 damage.",
 		lore: {
 			origin:
-				"Developed through Stalker combat doctrine and field-tested in gate operations.",
+				"Developed through Stalker combat doctrine and field-tested in Rift operations.",
 			history: "Catalogued in the Bureau's rare-tier martial compendium.",
 			curse: "",
 			personality: "Relentless; the mana flow is distinctive.",
@@ -1935,7 +1935,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Bureau-certified Stalker combat technique, field-validated across multiple gate operations.",
+			"Bureau-certified Stalker combat technique, field-validated across multiple Rift operations.",
 		theme_tags: ["pursuit", "Movement", "stalker"],
 	},
 	{
@@ -1947,7 +1947,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"Channel K-pop fighting style into a flashy melee attack. On a hit, deal 1d8+PRS thunder damage. Each ally within 30 feet who can see you gains +1 to their next attack roll from the inspiring performance.",
 		lore: {
 			origin:
-				"Developed through Idol combat doctrine and field-tested in gate operations.",
+				"Developed through Idol combat doctrine and field-tested in Rift operations.",
 			history: "Catalogued in the Bureau's common-tier martial compendium.",
 			curse: "",
 			personality: "Rhythmic; the mana flow is distinctive.",
@@ -2002,7 +2002,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Bureau-certified Idol combat technique, field-validated across multiple gate operations.",
+			"Bureau-certified Idol combat technique, field-validated across multiple Rift operations.",
 		theme_tags: ["resonance", "Dance", "idol"],
 	},
 	{
@@ -2014,7 +2014,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"Perform an acrobatic weapon flourish, attacking each creature within 5 feet. Make a melee attack against each: weapon damage + 1d6 slashing. For each creature hit, you gain +1 AC until the start of your next turn (max +3).",
 		lore: {
 			origin:
-				"Developed through Idol combat doctrine and field-tested in gate operations.",
+				"Developed through Idol combat doctrine and field-tested in Rift operations.",
 			history: "Catalogued in the Bureau's uncommon-tier martial compendium.",
 			curse: "",
 			personality: "Rhythmic; the mana flow is distinctive.",
@@ -2069,7 +2069,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Bureau-certified Idol combat technique, field-validated across multiple gate operations.",
+			"Bureau-certified Idol combat technique, field-validated across multiple Rift operations.",
 		theme_tags: ["resonance", "Blade", "idol"],
 	},
 	{
@@ -2081,7 +2081,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"Build to a devastating performance climax. Make 3 melee attacks. Each hit deals weapon damage + 2d6 thunder. If all 3 hit, release a sonic burst: each hostile creature within 15 feet makes DC 16 VIT save or is stunned until end of its next turn.",
 		lore: {
 			origin:
-				"Developed through Idol combat doctrine and field-tested in gate operations.",
+				"Developed through Idol combat doctrine and field-tested in Rift operations.",
 			history: "Catalogued in the Bureau's rare-tier martial compendium.",
 			curse: "",
 			personality: "Rhythmic; the mana flow is distinctive.",
@@ -2136,7 +2136,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Bureau-certified Idol combat technique, field-validated across multiple gate operations.",
+			"Bureau-certified Idol combat technique, field-validated across multiple Rift operations.",
 		theme_tags: ["resonance", "Performance", "idol"],
 	},
 	{
@@ -2148,7 +2148,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"Bless your weapon with the Absolute's light for 1 minute. Your weapon attacks deal an extra 1d4 radiant damage and count as magical. You shed bright light in a 20-foot radius.",
 		lore: {
 			origin:
-				"Developed through Herald combat doctrine and field-tested in gate operations.",
+				"Developed through Herald combat doctrine and field-tested in Rift operations.",
 			history: "Catalogued in the Bureau's common-tier martial compendium.",
 			curse: "",
 			personality: "Sacred; the mana flow is distinctive.",
@@ -2202,7 +2202,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Bureau-certified Herald combat technique, field-validated across multiple gate operations.",
+			"Bureau-certified Herald combat technique, field-validated across multiple Rift operations.",
 		theme_tags: ["divine", "Weapon", "herald"],
 	},
 	{
@@ -2214,7 +2214,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"Summon a spectral weapon within 60 feet. As a bonus action each turn, make a melee spell attack (Sense): 2d8+SNS radiant damage. The hammer sheds light and can move 20 feet per turn.",
 		lore: {
 			origin:
-				"Developed through Herald combat doctrine and field-tested in gate operations.",
+				"Developed through Herald combat doctrine and field-tested in Rift operations.",
 			history: "Catalogued in the Bureau's uncommon-tier martial compendium.",
 			curse: "",
 			personality: "Sacred; the mana flow is distinctive.",
@@ -2268,7 +2268,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Bureau-certified Herald combat technique, field-validated across multiple gate operations.",
+			"Bureau-certified Herald combat technique, field-validated across multiple Rift operations.",
 		theme_tags: ["divine", "Summoned", "herald"],
 	},
 	{
@@ -2280,7 +2280,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"As a reaction when an ally within 30 feet makes an attack roll, add +10 to the roll. Usable once per short rest.",
 		lore: {
 			origin:
-				"Developed through Herald combat doctrine and field-tested in gate operations.",
+				"Developed through Herald combat doctrine and field-tested in Rift operations.",
 			history: "Catalogued in the Bureau's rare-tier martial compendium.",
 			curse: "",
 			personality: "Sacred; the mana flow is distinctive.",
@@ -2334,7 +2334,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Bureau-certified Herald combat technique, field-validated across multiple gate operations.",
+			"Bureau-certified Herald combat technique, field-validated across multiple Rift operations.",
 		theme_tags: ["divine", "Blessing", "herald"],
 	},
 	{
@@ -2346,7 +2346,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"Summon a weapon forged from your patron's essence. The pact blade uses PRS for attack and damage, deals 1d8+PRS force damage, counts as magical, and can be dismissed/resummoned as a bonus action.",
 		lore: {
 			origin:
-				"Developed through Contractor combat doctrine and field-tested in gate operations.",
+				"Developed through Contractor combat doctrine and field-tested in Rift operations.",
 			history: "Catalogued in the Bureau's common-tier martial compendium.",
 			curse: "",
 			personality: "Eldritch; the mana flow is distinctive.",
@@ -2400,7 +2400,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Bureau-certified Contractor combat technique, field-validated across multiple gate operations.",
+			"Bureau-certified Contractor combat technique, field-validated across multiple Rift operations.",
 		theme_tags: ["pact", "Weapon", "contractor"],
 	},
 	{
@@ -2412,7 +2412,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"As a reaction when a creature misses you with a melee attack, make a pact blade attack against it with advantage. On a hit, deal weapon damage plus 2d8 force and push the target 10 feet.",
 		lore: {
 			origin:
-				"Developed through Contractor combat doctrine and field-tested in gate operations.",
+				"Developed through Contractor combat doctrine and field-tested in Rift operations.",
 			history: "Catalogued in the Bureau's uncommon-tier martial compendium.",
 			curse: "",
 			personality: "Eldritch; the mana flow is distinctive.",
@@ -2466,7 +2466,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Bureau-certified Contractor combat technique, field-validated across multiple gate operations.",
+			"Bureau-certified Contractor combat technique, field-validated across multiple Rift operations.",
 		theme_tags: ["pact", "Reaction", "contractor"],
 	},
 	{
@@ -2478,7 +2478,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"Channel your patron's wrath through your blade. Make 3 pact blade attacks. Each hit deals weapon damage plus 2d6 force. If all 3 hit the same target, your patron manifests briefly: the target must make DC 17 PRS save or be frightened for 1 minute.",
 		lore: {
 			origin:
-				"Developed through Contractor combat doctrine and field-tested in gate operations.",
+				"Developed through Contractor combat doctrine and field-tested in Rift operations.",
 			history: "Catalogued in the Bureau's rare-tier martial compendium.",
 			curse: "",
 			personality: "Eldritch; the mana flow is distinctive.",
@@ -2532,7 +2532,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Bureau-certified Contractor combat technique, field-validated across multiple gate operations.",
+			"Bureau-certified Contractor combat technique, field-validated across multiple Rift operations.",
 		theme_tags: ["pact", "Weapon", "contractor"],
 	},
 	{
@@ -2544,7 +2544,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"Channel entropy into your weapon. On your next hit, deal weapon damage plus 1d6 necrotic. You heal HP equal to the necrotic damage dealt.",
 		lore: {
 			origin:
-				"Developed through Revenant combat doctrine and field-tested in gate operations.",
+				"Developed through Revenant combat doctrine and field-tested in Rift operations.",
 			history: "Catalogued in the Bureau's common-tier martial compendium.",
 			curse: "",
 			personality: "Mournful; the mana flow is distinctive.",
@@ -2598,7 +2598,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Bureau-certified Revenant combat technique, field-validated across multiple gate operations.",
+			"Bureau-certified Revenant combat technique, field-validated across multiple Rift operations.",
 		theme_tags: ["entropy", "Weapon", "revenant"],
 	},
 	{
@@ -2610,7 +2610,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"Extend your weapon's reach with a tendril of necrotic energy. Make a melee weapon attack with 15-foot reach. On a hit, weapon damage plus 3d6 necrotic. The target can't regain HP until the start of your next turn.",
 		lore: {
 			origin:
-				"Developed through Revenant combat doctrine and field-tested in gate operations.",
+				"Developed through Revenant combat doctrine and field-tested in Rift operations.",
 			history: "Catalogued in the Bureau's uncommon-tier martial compendium.",
 			curse: "",
 			personality: "Mournful; the mana flow is distinctive.",
@@ -2664,7 +2664,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Bureau-certified Revenant combat technique, field-validated across multiple gate operations.",
+			"Bureau-certified Revenant combat technique, field-validated across multiple Rift operations.",
 		theme_tags: ["entropy", "Weapon", "revenant"],
 	},
 	{
@@ -2676,7 +2676,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"On your next melee hit, deal weapon damage plus 5d8 necrotic. The target must make DC 17 VIT save or its maximum HP is reduced by the necrotic damage dealt until it finishes a long rest. You heal for half.",
 		lore: {
 			origin:
-				"Developed through Revenant combat doctrine and field-tested in gate operations.",
+				"Developed through Revenant combat doctrine and field-tested in Rift operations.",
 			history: "Catalogued in the Bureau's rare-tier martial compendium.",
 			curse: "",
 			personality: "Mournful; the mana flow is distinctive.",
@@ -2730,19 +2730,19 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Bureau-certified Revenant combat technique, field-validated across multiple gate operations.",
+			"Bureau-certified Revenant combat technique, field-validated across multiple Rift operations.",
 		theme_tags: ["entropy", "Weapon", "revenant"],
 	},
 	{
 		id: "tech-sup-1-42-gate-breaker-chop",
 		classes: ["Destroyer", "Berserker"],
-		name: "Gate Breaker Chop",
-		display_name: "Gate Breaker Chop",
+		name: "Rift Breaker Chop",
+		display_name: "Rift Breaker Chop",
 		description:
 			"A devastating overhead strike that channels mana through the weapon's edge. Melee attack: normal damage + 1d8 force. If the target is a construct or gate-structure, deals double bonus damage. Can be used to destroy gate-crystal locks.",
 		lore: {
 			origin:
-				"Developed through Destroyer combat doctrine and field-tested in gate operations.",
+				"Developed through Destroyer combat doctrine and field-tested in Rift operations.",
 			history: "Catalogued in the Bureau's common-tier martial compendium.",
 			curse: "",
 			personality: "Focused; the mana flow is distinctive.",
@@ -2804,7 +2804,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Bureau-certified Destroyer combat technique, field-validated across multiple gate operations.",
+			"Bureau-certified Destroyer combat technique, field-validated across multiple Rift operations.",
 		theme_tags: ["offensive", "offensive", "destroyer", "berserker"],
 	},
 	{
@@ -2816,7 +2816,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"Flood your mana circuit into your legs and charge up to 30 feet in a straight line toward a target. If you reach it, make a melee attack with advantage. On hit, normal damage + 1d8 force and target must make DC 13 STR save or be knocked prone.",
 		lore: {
 			origin:
-				"Developed through Striker combat doctrine and field-tested in gate operations.",
+				"Developed through Striker combat doctrine and field-tested in Rift operations.",
 			history: "Catalogued in the Bureau's common-tier martial compendium.",
 			curse: "",
 			personality: "Focused; the mana flow is distinctive.",
@@ -2878,7 +2878,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Bureau-certified Striker combat technique, field-validated across multiple gate operations.",
+			"Bureau-certified Striker combat technique, field-validated across multiple Rift operations.",
 		theme_tags: ["offensive", "offensive", "striker", "berserker"],
 	},
 	{
@@ -2890,7 +2890,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"Target the tendons and grip-muscles with a precise strike. On a hit, normal damage and the target must make DC 13 AGI save or drop one held item of your choice. The item lands at the target's feet.",
 		lore: {
 			origin:
-				"Developed through Assassin combat doctrine and field-tested in gate operations.",
+				"Developed through Assassin combat doctrine and field-tested in Rift operations.",
 			history: "Catalogued in the Bureau's common-tier martial compendium.",
 			curse: "",
 			personality: "Focused; the mana flow is distinctive.",
@@ -2952,7 +2952,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Bureau-certified Assassin combat technique, field-validated across multiple gate operations.",
+			"Bureau-certified Assassin combat technique, field-validated across multiple Rift operations.",
 		theme_tags: ["offensive", "offensive", "assassin", "stalker"],
 	},
 	{
@@ -2964,7 +2964,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"As a reaction when a creature misses you with a melee attack, immediately make a melee attack against it. If you hit, deal normal damage + 1d6 radiant and regain 1d4 HP.",
 		lore: {
 			origin:
-				"Developed through Holy Knight combat doctrine and field-tested in gate operations.",
+				"Developed through Holy Knight combat doctrine and field-tested in Rift operations.",
 			history: "Catalogued in the Bureau's common-tier martial compendium.",
 			curse: "",
 			personality: "Focused; the mana flow is distinctive.",
@@ -3026,7 +3026,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Bureau-certified Holy Knight combat technique, field-validated across multiple gate operations.",
+			"Bureau-certified Holy Knight combat technique, field-validated across multiple Rift operations.",
 		theme_tags: ["defensive", "defensive", "holy-knight", "destroyer"],
 	},
 	{
@@ -3038,7 +3038,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"Infuse a thrown weapon or projectile with sonic mana. Ranged attack: normal damage + 1d8 thunder. If the target is concentrating on a spell, it has disadvantage on the concentration save.",
 		lore: {
 			origin:
-				"Developed through Idol combat doctrine and field-tested in gate operations.",
+				"Developed through Idol combat doctrine and field-tested in Rift operations.",
 			history: "Catalogued in the Bureau's common-tier martial compendium.",
 			curse: "",
 			personality: "Focused; the mana flow is distinctive.",
@@ -3100,7 +3100,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Bureau-certified Idol combat technique, field-validated across multiple gate operations.",
+			"Bureau-certified Idol combat technique, field-validated across multiple Rift operations.",
 		theme_tags: ["offensive", "offensive", "idol", "technomancer"],
 	},
 	{
@@ -3112,7 +3112,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"Strike a creature and anchor it to the local mana-lattice. On hit: normal damage + 2d6 force, and the target's speed becomes 0 until the end of its next turn. If it tries to teleport, it takes 2d8 force and the teleport fails.",
 		lore: {
 			origin:
-				"Developed through Destroyer combat doctrine and field-tested in gate operations.",
+				"Developed through Destroyer combat doctrine and field-tested in Rift operations.",
 			history: "Catalogued in the Bureau's common-tier martial compendium.",
 			curse: "",
 			personality: "Focused; the mana flow is distinctive.",
@@ -3174,7 +3174,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Bureau-certified Destroyer combat technique, field-validated across multiple gate operations.",
+			"Bureau-certified Destroyer combat technique, field-validated across multiple Rift operations.",
 		theme_tags: ["offensive", "offensive", "destroyer", "holy-knight"],
 	},
 	{
@@ -3186,7 +3186,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"Charge through up to 3 creatures in a 30-foot line. Make a separate melee attack against each. Each hit deals normal damage + 1d6 force. Creatures hit must make DC 14 STR save or be pushed 10 feet to the side.",
 		lore: {
 			origin:
-				"Developed through Berserker combat doctrine and field-tested in gate operations.",
+				"Developed through Berserker combat doctrine and field-tested in Rift operations.",
 			history: "Catalogued in the Bureau's common-tier martial compendium.",
 			curse: "",
 			personality: "Focused; the mana flow is distinctive.",
@@ -3248,7 +3248,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Bureau-certified Berserker combat technique, field-validated across multiple gate operations.",
+			"Bureau-certified Berserker combat technique, field-validated across multiple Rift operations.",
 		theme_tags: ["offensive", "offensive", "berserker", "striker"],
 	},
 	{
@@ -3260,7 +3260,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"Target a creature's mana-circuit junction point with a surgical strike. On hit: normal damage + 2d6 necrotic. Target's mana recovery is suppressed: it can't regain HP from any source until the end of its next turn.",
 		lore: {
 			origin:
-				"Developed through Assassin combat doctrine and field-tested in gate operations.",
+				"Developed through Assassin combat doctrine and field-tested in Rift operations.",
 			history: "Catalogued in the Bureau's common-tier martial compendium.",
 			curse: "",
 			personality: "Focused; the mana flow is distinctive.",
@@ -3322,7 +3322,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Bureau-certified Assassin combat technique, field-validated across multiple gate operations.",
+			"Bureau-certified Assassin combat technique, field-validated across multiple Rift operations.",
 		theme_tags: ["offensive", "offensive", "assassin", "striker"],
 	},
 	{
@@ -3334,7 +3334,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"Infuse a melee weapon with harmonic resonance and strike. On hit: normal damage + 2d6 thunder. The impact creates a 10-foot shockwave: each creature other than you within 10 feet of the target makes DC 14 VIT save or takes 1d6 thunder.",
 		lore: {
 			origin:
-				"Developed through Idol combat doctrine and field-tested in gate operations.",
+				"Developed through Idol combat doctrine and field-tested in Rift operations.",
 			history: "Catalogued in the Bureau's common-tier martial compendium.",
 			curse: "",
 			personality: "Focused; the mana flow is distinctive.",
@@ -3389,7 +3389,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Bureau-certified Idol combat technique, field-validated across multiple gate operations.",
+			"Bureau-certified Idol combat technique, field-validated across multiple Rift operations.",
 		theme_tags: ["offensive", "offensive", "idol"],
 	},
 	{
@@ -3401,7 +3401,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"As a bonus action, coat your weapon with superheated mana. For 1 minute, your weapon attacks deal +1d6 fire damage and ignite flammable objects. You can dismiss the coating as a free action.",
 		lore: {
 			origin:
-				"Developed through Technomancer combat doctrine and field-tested in gate operations.",
+				"Developed through Technomancer combat doctrine and field-tested in Rift operations.",
 			history: "Catalogued in the Bureau's common-tier martial compendium.",
 			curse: "",
 			personality: "Focused; the mana flow is distinctive.",
@@ -3465,19 +3465,19 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Bureau-certified Technomancer combat technique, field-validated across multiple gate operations.",
+			"Bureau-certified Technomancer combat technique, field-validated across multiple Rift operations.",
 		theme_tags: ["utility", "utility", "technomancer", "mage"],
 	},
 	{
 		id: "tech-sup-3-52-gate-cutter",
 		classes: ["Destroyer"],
-		name: "Gate Cutter",
-		display_name: "Gate Cutter",
+		name: "Rift Cutter",
+		display_name: "Rift Cutter",
 		description:
-			"Swing your weapon in a massive arc that tears through the mana-lattice. All creatures in a 15-foot cone in front of you: DC 15 AGI save, 4d8 force on failure, half on success. Gate-structures and mana-barriers take double damage.",
+			"Swing your weapon in a massive arc that tears through the mana-lattice. All creatures in a 15-foot cone in front of you: DC 15 AGI save, 4d8 force on failure, half on success. Rift-structures and mana-barriers take double damage.",
 		lore: {
 			origin:
-				"Developed through Destroyer combat doctrine and field-tested in gate operations.",
+				"Developed through Destroyer combat doctrine and field-tested in Rift operations.",
 			history: "Catalogued in the Bureau's uncommon-tier martial compendium.",
 			curse: "",
 			personality: "Focused; the mana flow is distinctive.",
@@ -3485,7 +3485,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 				"Available to Bureau-certified Destroyers at the appropriate rank.",
 			prior_owners: ["Bureau Combat Archives", "Destroyer Training Division"],
 		},
-		flavor: "The arc cuts through everything. Including the gate itself.",
+		flavor: "The arc cuts through everything. Including the Rift itself.",
 		tags: ["awakened", "technique", "offensive", "offensive", "Destroyer"],
 		rarity: "uncommon",
 		source_book: "Rift Ascendant Canon",
@@ -3532,7 +3532,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Bureau-certified Destroyer combat technique, field-validated across multiple gate operations.",
+			"Bureau-certified Destroyer combat technique, field-validated across multiple Rift operations.",
 		theme_tags: ["offensive", "offensive", "destroyer"],
 	},
 	{
@@ -3544,7 +3544,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"A single devastating overhead strike that concentrates your full mana output. Melee attack: normal damage + 4d10 force. If the target is at or below half HP, you score a critical hit on a roll of 18-20.",
 		lore: {
 			origin:
-				"Developed through Berserker combat doctrine and field-tested in gate operations.",
+				"Developed through Berserker combat doctrine and field-tested in Rift operations.",
 			history: "Catalogued in the Bureau's uncommon-tier martial compendium.",
 			curse: "",
 			personality: "Focused; the mana flow is distinctive.",
@@ -3599,7 +3599,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Bureau-certified Berserker combat technique, field-validated across multiple gate operations.",
+			"Bureau-certified Berserker combat technique, field-validated across multiple Rift operations.",
 		theme_tags: ["offensive", "offensive", "berserker"],
 	},
 	{
@@ -3611,7 +3611,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"If you are hidden from the target, your attack automatically crits. On hit: normal damage + 3d6 necrotic. Target must make DC 15 PRS save or be blinded until the end of its next turn as shadow-mana floods its visual cortex.",
 		lore: {
 			origin:
-				"Developed through Assassin combat doctrine and field-tested in gate operations.",
+				"Developed through Assassin combat doctrine and field-tested in Rift operations.",
 			history: "Catalogued in the Bureau's uncommon-tier martial compendium.",
 			curse: "",
 			personality: "Focused; the mana flow is distinctive.",
@@ -3666,7 +3666,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Bureau-certified Assassin combat technique, field-validated across multiple gate operations.",
+			"Bureau-certified Assassin combat technique, field-validated across multiple Rift operations.",
 		theme_tags: ["offensive", "offensive", "assassin"],
 	},
 	{
@@ -3678,7 +3678,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"Plant your feet and become an immovable defender. For 1 minute: you can't be moved, gain +3 AC, and as a reaction can make a melee attack against any creature that enters your reach. Movement speed becomes 0.",
 		lore: {
 			origin:
-				"Developed through Destroyer combat doctrine and field-tested in gate operations.",
+				"Developed through Destroyer combat doctrine and field-tested in Rift operations.",
 			history: "Catalogued in the Bureau's uncommon-tier martial compendium.",
 			curse: "",
 			personality: "Focused; the mana flow is distinctive.",
@@ -3741,7 +3741,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Bureau-certified Destroyer combat technique, field-validated across multiple gate operations.",
+			"Bureau-certified Destroyer combat technique, field-validated across multiple Rift operations.",
 		theme_tags: ["defensive", "defensive", "destroyer", "holy-knight"],
 	},
 	{
@@ -3753,7 +3753,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"Execute a three-hit mana-accelerated combo. Make three unarmed attacks (each at -2). Each successive hit that connects deals escalating damage: 1d8, 2d8, 3d8 force. If all three connect, the target is stunned until end of its next turn.",
 		lore: {
 			origin:
-				"Developed through Striker combat doctrine and field-tested in gate operations.",
+				"Developed through Striker combat doctrine and field-tested in Rift operations.",
 			history: "Catalogued in the Bureau's uncommon-tier martial compendium.",
 			curse: "",
 			personality: "Focused; the mana flow is distinctive.",
@@ -3808,7 +3808,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Bureau-certified Striker combat technique, field-validated across multiple gate operations.",
+			"Bureau-certified Striker combat technique, field-validated across multiple Rift operations.",
 		theme_tags: ["offensive", "offensive", "striker"],
 	},
 	{
@@ -3820,7 +3820,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"When you hit a creature, mark it as prey. For 1 minute: you have advantage on attacks against it, you always know its location, and your first hit each turn deals +2d6 damage. If the target dies, you can transfer the mark as a free action.",
 		lore: {
 			origin:
-				"Developed through Stalker combat doctrine and field-tested in gate operations.",
+				"Developed through Stalker combat doctrine and field-tested in Rift operations.",
 			history: "Catalogued in the Bureau's uncommon-tier martial compendium.",
 			curse: "",
 			personality: "Focused; the mana flow is distinctive.",
@@ -3875,7 +3875,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Bureau-certified Stalker combat technique, field-validated across multiple gate operations.",
+			"Bureau-certified Stalker combat technique, field-validated across multiple Rift operations.",
 		theme_tags: ["offensive", "offensive", "stalker"],
 	},
 	{
@@ -3887,7 +3887,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"As a reaction when an ally within 10 feet takes damage, interpose yourself. You take the damage instead (reduced by your AC bonus, minimum 1). The ally gains temporary HP equal to your Presence modifier.",
 		lore: {
 			origin:
-				"Developed through Holy Knight combat doctrine and field-tested in gate operations.",
+				"Developed through Holy Knight combat doctrine and field-tested in Rift operations.",
 			history: "Catalogued in the Bureau's uncommon-tier martial compendium.",
 			curse: "",
 			personality: "Focused; the mana flow is distinctive.",
@@ -3942,7 +3942,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Bureau-certified Holy Knight combat technique, field-validated across multiple gate operations.",
+			"Bureau-certified Holy Knight combat technique, field-validated across multiple Rift operations.",
 		theme_tags: ["defensive", "defensive", "holy-knight"],
 	},
 	{
@@ -3954,7 +3954,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"Strike a creature and discharge a mana-electric chain through its body. On hit: normal damage + 3d8 lightning. The charge arcs to up to 2 additional creatures within 15 feet of the target: each takes 2d8 lightning (DC 16 AGI, half on success).",
 		lore: {
 			origin:
-				"Developed through Technomancer combat doctrine and field-tested in gate operations.",
+				"Developed through Technomancer combat doctrine and field-tested in Rift operations.",
 			history: "Catalogued in the Bureau's uncommon-tier martial compendium.",
 			curse: "",
 			personality: "Focused; the mana flow is distinctive.",
@@ -4012,7 +4012,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Bureau-certified Technomancer combat technique, field-validated across multiple gate operations.",
+			"Bureau-certified Technomancer combat technique, field-validated across multiple Rift operations.",
 		theme_tags: ["offensive", "offensive", "technomancer"],
 	},
 	{
@@ -4024,7 +4024,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"Infuse your weapon with pure entropy and strike. On hit: normal damage + 4d6 necrotic. Target's AC is reduced by 2 for 1 minute as its defensive mana-lattice corrodes. This reduction stacks with itself up to -4 AC.",
 		lore: {
 			origin:
-				"Developed through Revenant combat doctrine and field-tested in gate operations.",
+				"Developed through Revenant combat doctrine and field-tested in Rift operations.",
 			history: "Catalogued in the Bureau's uncommon-tier martial compendium.",
 			curse: "",
 			personality: "Focused; the mana flow is distinctive.",
@@ -4079,7 +4079,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Bureau-certified Revenant combat technique, field-validated across multiple gate operations.",
+			"Bureau-certified Revenant combat technique, field-validated across multiple Rift operations.",
 		theme_tags: ["offensive", "offensive", "revenant"],
 	},
 	{
@@ -4091,7 +4091,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"Manifest a weapon from your patron's dimension. Choose any melee weapon form. It counts as magical, uses Presence for attack/damage, deals +2d6 damage of your patron's element, and can't be disarmed. Lasts 1 hour or until dismissed.",
 		lore: {
 			origin:
-				"Developed through Contractor combat doctrine and field-tested in gate operations.",
+				"Developed through Contractor combat doctrine and field-tested in Rift operations.",
 			history: "Catalogued in the Bureau's uncommon-tier martial compendium.",
 			curse: "",
 			personality: "Focused; the mana flow is distinctive.",
@@ -4149,7 +4149,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Bureau-certified Contractor combat technique, field-validated across multiple gate operations.",
+			"Bureau-certified Contractor combat technique, field-validated across multiple Rift operations.",
 		theme_tags: ["offensive", "offensive", "contractor"],
 	},
 	{
@@ -4161,7 +4161,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"Concentrate all mana-kinetic force into a single punch that strikes with the impact of a falling star. Melee attack: 8d10 force damage. The target must make DC 17 STR save or be launched 30 feet and knocked prone. If it collides with a surface, both take 4d6 bludgeoning.",
 		lore: {
 			origin:
-				"Developed through Striker combat doctrine and field-tested in gate operations.",
+				"Developed through Striker combat doctrine and field-tested in Rift operations.",
 			history: "Catalogued in the Bureau's rare-tier martial compendium.",
 			curse: "",
 			personality: "Focused; the mana flow is distinctive.",
@@ -4216,7 +4216,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Bureau-certified Striker combat technique, field-validated across multiple gate operations.",
+			"Bureau-certified Striker combat technique, field-validated across multiple Rift operations.",
 		theme_tags: ["offensive", "offensive", "striker"],
 	},
 	{
@@ -4228,7 +4228,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"Strike the ground and send a devastating shockwave in a 30-foot cone. Each creature: DC 17 STR save, 6d10 force on failure, half on success. All structures, barriers, and constructs in the area take triple damage. Terrain becomes difficult.",
 		lore: {
 			origin:
-				"Developed through Destroyer combat doctrine and field-tested in gate operations.",
+				"Developed through Destroyer combat doctrine and field-tested in Rift operations.",
 			history: "Catalogued in the Bureau's rare-tier martial compendium.",
 			curse: "",
 			personality: "Focused; the mana flow is distinctive.",
@@ -4283,7 +4283,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Bureau-certified Destroyer combat technique, field-validated across multiple gate operations.",
+			"Bureau-certified Destroyer combat technique, field-validated across multiple Rift operations.",
 		theme_tags: ["offensive", "offensive", "destroyer"],
 	},
 	{
@@ -4295,7 +4295,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"Brand a creature with the Absolute's mark. On hit: normal damage + 5d8 radiant. For 1 minute, the marked creature takes 2d8 radiant at the start of each of its turns, sheds bright light 10 feet (can't hide), and all attacks against it from allies deal +1d6 radiant.",
 		lore: {
 			origin:
-				"Developed through Holy Knight combat doctrine and field-tested in gate operations.",
+				"Developed through Holy Knight combat doctrine and field-tested in Rift operations.",
 			history: "Catalogued in the Bureau's rare-tier martial compendium.",
 			curse: "",
 			personality: "Focused; the mana flow is distinctive.",
@@ -4350,7 +4350,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Bureau-certified Holy Knight combat technique, field-validated across multiple gate operations.",
+			"Bureau-certified Holy Knight combat technique, field-validated across multiple Rift operations.",
 		theme_tags: ["offensive", "offensive", "holy-knight"],
 	},
 	{
@@ -4362,7 +4362,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"Spin through multiple targets with mana-enhanced speed. Make a melee attack against up to 5 creatures within reach. Each hit deals normal damage + 3d6 force. If you hit 3 or more targets, you become invisible until the start of your next turn.",
 		lore: {
 			origin:
-				"Developed through Assassin combat doctrine and field-tested in gate operations.",
+				"Developed through Assassin combat doctrine and field-tested in Rift operations.",
 			history: "Catalogued in the Bureau's rare-tier martial compendium.",
 			curse: "",
 			personality: "Focused; the mana flow is distinctive.",
@@ -4426,7 +4426,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Bureau-certified Assassin combat technique, field-validated across multiple gate operations.",
+			"Bureau-certified Assassin combat technique, field-validated across multiple Rift operations.",
 		theme_tags: ["offensive", "offensive", "assassin", "stalker"],
 	},
 	{
@@ -4438,7 +4438,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"Leap 30 feet into the air and slam down with gravity-multiplied force. Each creature within 15 feet of impact: DC 17 STR save, 8d8 force on failure, half on success. Targets that fail are knocked prone and their speed is 0 until end of their next turn.",
 		lore: {
 			origin:
-				"Developed through Striker combat doctrine and field-tested in gate operations.",
+				"Developed through Striker combat doctrine and field-tested in Rift operations.",
 			history: "Catalogued in the Bureau's rare-tier martial compendium.",
 			curse: "",
 			personality: "Focused; the mana flow is distinctive.",
@@ -4500,7 +4500,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Bureau-certified Striker combat technique, field-validated across multiple gate operations.",
+			"Bureau-certified Striker combat technique, field-validated across multiple Rift operations.",
 		theme_tags: ["offensive", "offensive", "striker", "destroyer"],
 	},
 	{
@@ -4512,7 +4512,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"Execute a blade strike infused with terminal entropy. On hit: normal damage + 6d8 necrotic. The wound cannot be healed by any means for 1 minute. If the target is reduced to 0 HP while the wound persists, it cannot be revived by spells below 7th level.",
 		lore: {
 			origin:
-				"Developed through Assassin combat doctrine and field-tested in gate operations.",
+				"Developed through Assassin combat doctrine and field-tested in Rift operations.",
 			history: "Catalogued in the Bureau's rare-tier martial compendium.",
 			curse: "",
 			personality: "Focused; the mana flow is distinctive.",
@@ -4567,7 +4567,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Bureau-certified Assassin combat technique, field-validated across multiple gate operations.",
+			"Bureau-certified Assassin combat technique, field-validated across multiple Rift operations.",
 		theme_tags: ["offensive", "offensive", "assassin"],
 	},
 	{
@@ -4579,7 +4579,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"Perform a combat dance that generates mana-blades of sound. For 1 minute, you can make ranged spell attacks (60 ft, 3d8 thunder) as a bonus action. While dancing, you gain +2 AC and your movement doesn't provoke opportunity attacks.",
 		lore: {
 			origin:
-				"Developed through Idol combat doctrine and field-tested in gate operations.",
+				"Developed through Idol combat doctrine and field-tested in Rift operations.",
 			history: "Catalogued in the Bureau's rare-tier martial compendium.",
 			curse: "",
 			personality: "Focused; the mana flow is distinctive.",
@@ -4635,19 +4635,19 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Bureau-certified Idol combat technique, field-validated across multiple gate operations.",
+			"Bureau-certified Idol combat technique, field-validated across multiple Rift operations.",
 		theme_tags: ["offensive", "offensive", "idol"],
 	},
 	{
 		id: "tech-sup-6-69-gate-breaker-barrage",
 		classes: ["Berserker"],
-		name: "Gate Breaker Barrage",
-		display_name: "Gate Breaker Barrage",
+		name: "Rift Breaker Barrage",
+		display_name: "Rift Breaker Barrage",
 		description:
 			"Enter a 1-round rampage of mana-fueled strikes. Make 4 melee attacks with advantage. Each hit deals normal damage + 2d8 force. If you hit with all 4, the target must make DC 17 VIT save or be stunned for 1 round.",
 		lore: {
 			origin:
-				"Developed through Berserker combat doctrine and field-tested in gate operations.",
+				"Developed through Berserker combat doctrine and field-tested in Rift operations.",
 			history: "Catalogued in the Bureau's rare-tier martial compendium.",
 			curse: "",
 			personality: "Focused; the mana flow is distinctive.",
@@ -4702,7 +4702,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Bureau-certified Berserker combat technique, field-validated across multiple gate operations.",
+			"Bureau-certified Berserker combat technique, field-validated across multiple Rift operations.",
 		theme_tags: ["offensive", "offensive", "berserker"],
 	},
 	{
@@ -4714,7 +4714,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"Manifest a blade that cuts through dimensional boundaries. For 1 minute: your weapon attacks ignore armor AC (targets use base 10 + DEX only), deal +3d8 force, and can hit creatures in adjacent gate-layers (invisible, ethereal, phase-shifted).",
 		lore: {
 			origin:
-				"Developed through Assassin combat doctrine and field-tested in gate operations.",
+				"Developed through Assassin combat doctrine and field-tested in Rift operations.",
 			history: "Catalogued in the Bureau's epic-tier martial compendium.",
 			curse: "",
 			personality: "Focused; the mana flow is distinctive.",
@@ -4777,7 +4777,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Bureau-certified Assassin combat technique, field-validated across multiple gate operations.",
+			"Bureau-certified Assassin combat technique, field-validated across multiple Rift operations.",
 		theme_tags: ["offensive", "offensive", "assassin", "stalker"],
 	},
 	{
@@ -4789,7 +4789,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"Channel your full mana reserve into a single world-breaking strike. Melee attack: normal damage + 10d10 force. All creatures within 30 feet of the impact: DC 18 STR save or knocked prone and pushed 20 feet. Structures within 30 feet take 100 force damage.",
 		lore: {
 			origin:
-				"Developed through Destroyer combat doctrine and field-tested in gate operations.",
+				"Developed through Destroyer combat doctrine and field-tested in Rift operations.",
 			history: "Catalogued in the Bureau's epic-tier martial compendium.",
 			curse: "",
 			personality: "Focused; the mana flow is distinctive.",
@@ -4852,7 +4852,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Bureau-certified Destroyer combat technique, field-validated across multiple gate operations.",
+			"Bureau-certified Destroyer combat technique, field-validated across multiple Rift operations.",
 		theme_tags: ["offensive", "offensive", "destroyer", "berserker"],
 	},
 	{
@@ -4864,7 +4864,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"Enter a mana-accelerated state where each consecutive hit builds momentum. Make melee attacks until you miss. Each hit after the first deals escalating damage: +1d10 per hit (2nd hit +1d10, 3rd +2d10, etc). If you land 5+ hits, the target is stunned for 1 minute (DC 19 VIT).",
 		lore: {
 			origin:
-				"Developed through Striker combat doctrine and field-tested in gate operations.",
+				"Developed through Striker combat doctrine and field-tested in Rift operations.",
 			history: "Catalogued in the Bureau's epic-tier martial compendium.",
 			curse: "",
 			personality: "Focused; the mana flow is distinctive.",
@@ -4919,7 +4919,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Bureau-certified Striker combat technique, field-validated across multiple gate operations.",
+			"Bureau-certified Striker combat technique, field-validated across multiple Rift operations.",
 		theme_tags: ["offensive", "offensive", "striker"],
 	},
 	{
@@ -4931,7 +4931,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"Mark a target and study it for 1 round. On your next turn, make a single melee attack. This attack automatically hits, automatically crits, and deals maximum damage on all dice + 8d8 necrotic. If the target has 100 HP or fewer after damage, it dies instantly.",
 		lore: {
 			origin:
-				"Developed through Assassin combat doctrine and field-tested in gate operations.",
+				"Developed through Assassin combat doctrine and field-tested in Rift operations.",
 			history: "Catalogued in the Bureau's epic-tier martial compendium.",
 			curse: "",
 			personality: "Focused; the mana flow is distinctive.",
@@ -4986,7 +4986,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Bureau-certified Assassin combat technique, field-validated across multiple gate operations.",
+			"Bureau-certified Assassin combat technique, field-validated across multiple Rift operations.",
 		theme_tags: ["offensive", "offensive", "assassin"],
 	},
 	{
@@ -4998,7 +4998,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"The ultimate Destroyer technique. Strike the ground and split reality in a 60-foot line, 20 feet wide. Everything in the area: DC 20 STR save, 15d10 force on failure, half on success. Structures are automatically destroyed. The fissure persists for 1 minute as impassable terrain.",
 		lore: {
 			origin:
-				"Developed through Destroyer combat doctrine and field-tested in gate operations.",
+				"Developed through Destroyer combat doctrine and field-tested in Rift operations.",
 			history: "Catalogued in the Bureau's legendary-tier martial compendium.",
 			curse: "",
 			personality: "Focused; the mana flow is overwhelming.",
@@ -5053,7 +5053,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Bureau-certified Destroyer combat technique, field-validated across multiple gate operations.",
+			"Bureau-certified Destroyer combat technique, field-validated across multiple Rift operations.",
 		theme_tags: ["offensive", "offensive", "destroyer"],
 	},
 	{
@@ -5062,10 +5062,10 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		name: "Fist of the Infinite",
 		display_name: "Fist of the Infinite",
 		description:
-			"Channel every mana gate, every circuit node, every ounce of kinetic potential into a single transcendent punch. Melee attack: 20d10 force damage. If this reduces the target to 0 HP, everything within 30 feet takes 10d10 force as the mana-shockwave propagates. You gain 5 levels of exhaustion.",
+			"Channel every mana Rift, every circuit node, every ounce of kinetic potential into a single transcendent punch. Melee attack: 20d10 force damage. If this reduces the target to 0 HP, everything within 30 feet takes 10d10 force as the mana-shockwave propagates. You gain 5 levels of exhaustion.",
 		lore: {
 			origin:
-				"Developed through Striker combat doctrine and field-tested in gate operations.",
+				"Developed through Striker combat doctrine and field-tested in Rift operations.",
 			history: "Catalogued in the Bureau's legendary-tier martial compendium.",
 			curse: "",
 			personality: "Focused; the mana flow is overwhelming.",
@@ -5121,7 +5121,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Bureau-certified Striker combat technique, field-validated across multiple gate operations.",
+			"Bureau-certified Striker combat technique, field-validated across multiple Rift operations.",
 		theme_tags: ["offensive", "offensive", "striker"],
 	},
 	{
@@ -5133,7 +5133,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"Declare a Final Hunt against one creature you can see. For 24 hours: you always know its location regardless of distance or plane, all your attacks against it have advantage and deal +5d8 damage, and it can't benefit from healing, concealment, or dimensional travel. If you kill it, regain all spent resources.",
 		lore: {
 			origin:
-				"Developed through Stalker combat doctrine and field-tested in gate operations.",
+				"Developed through Stalker combat doctrine and field-tested in Rift operations.",
 			history: "Catalogued in the Bureau's legendary-tier martial compendium.",
 			curse: "",
 			personality: "Focused; the mana flow is overwhelming.",
@@ -5197,7 +5197,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Bureau-certified Stalker combat technique, field-validated across multiple gate operations.",
+			"Bureau-certified Stalker combat technique, field-validated across multiple Rift operations.",
 		theme_tags: ["offensive", "offensive", "stalker", "assassin"],
 	},
 	{
@@ -5209,7 +5209,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"Perform the ultimate harmonic — a sound that resonates with the fundamental frequency of reality. All creatures within 120 feet (ally and enemy): DC 20 PRS save. Enemies on failure: 12d8 thunder, stunned 1 minute, deafened permanently. Allies on success: full HP, all conditions removed, +3 to all rolls for 1 minute.",
 		lore: {
 			origin:
-				"Developed through Idol combat doctrine and field-tested in gate operations.",
+				"Developed through Idol combat doctrine and field-tested in Rift operations.",
 			history: "Catalogued in the Bureau's legendary-tier martial compendium.",
 			curse: "",
 			personality: "Focused; the mana flow is overwhelming.",
@@ -5266,7 +5266,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Bureau-certified Idol combat technique, field-validated across multiple gate operations.",
+			"Bureau-certified Idol combat technique, field-validated across multiple Rift operations.",
 		theme_tags: ["offensive", "offensive", "idol"],
 	},
 	{
@@ -5278,7 +5278,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"Channel mana into your skull and deliver a devastating headbutt. Melee attack: normal damage + 1d8 force. On hit, both you and the target must make DC 13 VIT saves or be stunned until end of your next turn. You have advantage on this save.",
 		lore: {
 			origin:
-				"Developed through Berserker combat doctrine and field-tested in gate operations.",
+				"Developed through Berserker combat doctrine and field-tested in Rift operations.",
 			history: "Catalogued in the Bureau's common-tier martial compendium.",
 			curse: "",
 			personality: "Focused; the mana flow is distinctive.",
@@ -5340,7 +5340,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Bureau-certified Berserker combat technique, field-validated across multiple gate operations.",
+			"Bureau-certified Berserker combat technique, field-validated across multiple Rift operations.",
 		theme_tags: ["offensive", "offensive", "berserker", "striker"],
 	},
 	{
@@ -5352,7 +5352,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"Extend your weapon's reach by channeling mana into a whip-like extension. Your melee attack gains 10 feet of additional reach for this strike. On hit: normal damage + 1d6 force, and you can pull the target 5 feet toward you.",
 		lore: {
 			origin:
-				"Developed through Stalker combat doctrine and field-tested in gate operations.",
+				"Developed through Stalker combat doctrine and field-tested in Rift operations.",
 			history: "Catalogued in the Bureau's common-tier martial compendium.",
 			curse: "",
 			personality: "Focused; the mana flow is distinctive.",
@@ -5414,7 +5414,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Bureau-certified Stalker combat technique, field-validated across multiple gate operations.",
+			"Bureau-certified Stalker combat technique, field-validated across multiple Rift operations.",
 		theme_tags: ["offensive", "offensive", "stalker", "assassin"],
 	},
 	{
@@ -5426,7 +5426,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"As a reaction when you're hit by a melee attack, absorb the impact's kinetic energy and store it. Your next melee attack within 1 round deals bonus damage equal to the damage you absorbed (max 15).",
 		lore: {
 			origin:
-				"Developed through Striker combat doctrine and field-tested in gate operations.",
+				"Developed through Striker combat doctrine and field-tested in Rift operations.",
 			history: "Catalogued in the Bureau's common-tier martial compendium.",
 			curse: "",
 			personality: "Focused; the mana flow is distinctive.",
@@ -5488,7 +5488,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Bureau-certified Striker combat technique, field-validated across multiple gate operations.",
+			"Bureau-certified Striker combat technique, field-validated across multiple Rift operations.",
 		theme_tags: ["defensive", "defensive", "striker", "holy-knight"],
 	},
 	{
@@ -5500,7 +5500,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"Deliver a bleeding strike. On hit: normal damage + 1d8 slashing. Target bleeds: takes 1d4 necrotic at the start of each of its turns for 3 rounds (or until it receives healing or uses an action to staunch).",
 		lore: {
 			origin:
-				"Developed through Assassin combat doctrine and field-tested in gate operations.",
+				"Developed through Assassin combat doctrine and field-tested in Rift operations.",
 			history: "Catalogued in the Bureau's common-tier martial compendium.",
 			curse: "",
 			personality: "Focused; the mana flow is distinctive.",
@@ -5562,7 +5562,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Bureau-certified Assassin combat technique, field-validated across multiple gate operations.",
+			"Bureau-certified Assassin combat technique, field-validated across multiple Rift operations.",
 		theme_tags: ["offensive", "offensive", "assassin", "berserker"],
 	},
 	{
@@ -5574,7 +5574,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"Fire a mana-tethered grappling hook at a creature or surface within 30 feet. If targeting a creature: ranged attack, 1d8 force on hit, and you pull yourself to the target (or pull a Medium or smaller target to you). If targeting a surface: you launch yourself to that point.",
 		lore: {
 			origin:
-				"Developed through Technomancer combat doctrine and field-tested in gate operations.",
+				"Developed through Technomancer combat doctrine and field-tested in Rift operations.",
 			history: "Catalogued in the Bureau's common-tier martial compendium.",
 			curse: "",
 			personality: "Focused; the mana flow is distinctive.",
@@ -5639,7 +5639,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Bureau-certified Technomancer combat technique, field-validated across multiple gate operations.",
+			"Bureau-certified Technomancer combat technique, field-validated across multiple Rift operations.",
 		theme_tags: ["offensive", "offensive", "technomancer", "stalker"],
 	},
 	{
@@ -5651,7 +5651,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"As a reaction when you hit a creature with a melee attack, bind it with radiant chains. Target must make DC 15 STR save or be restrained until end of its next turn. While restrained, it takes 2d6 radiant at the start of its turn.",
 		lore: {
 			origin:
-				"Developed through Herald combat doctrine and field-tested in gate operations.",
+				"Developed through Herald combat doctrine and field-tested in Rift operations.",
 			history: "Catalogued in the Bureau's uncommon-tier martial compendium.",
 			curse: "",
 			personality: "Focused; the mana flow is distinctive.",
@@ -5713,7 +5713,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Bureau-certified Herald combat technique, field-validated across multiple gate operations.",
+			"Bureau-certified Herald combat technique, field-validated across multiple Rift operations.",
 		theme_tags: ["defensive", "defensive", "herald", "holy-knight"],
 	},
 	{
@@ -5725,7 +5725,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"Your weapon flickers between visible and invisible as you strike. Make 2 melee attacks; the target can't use reactions against these attacks (shield spells, parries, etc.). Each hit deals normal damage + 1d6 force.",
 		lore: {
 			origin:
-				"Developed through Assassin combat doctrine and field-tested in gate operations.",
+				"Developed through Assassin combat doctrine and field-tested in Rift operations.",
 			history: "Catalogued in the Bureau's uncommon-tier martial compendium.",
 			curse: "",
 			personality: "Focused; the mana flow is distinctive.",
@@ -5787,7 +5787,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Bureau-certified Assassin combat technique, field-validated across multiple gate operations.",
+			"Bureau-certified Assassin combat technique, field-validated across multiple Rift operations.",
 		theme_tags: ["offensive", "offensive", "assassin", "stalker"],
 	},
 	{
@@ -5799,7 +5799,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"As a reaction, project a kinetic deflection field. Reduce ranged attack damage by 3d6. If this reduces the damage to 0, you can redirect the projectile at another creature within 30 feet (use your attack modifier).",
 		lore: {
 			origin:
-				"Developed through Technomancer combat doctrine and field-tested in gate operations.",
+				"Developed through Technomancer combat doctrine and field-tested in Rift operations.",
 			history: "Catalogued in the Bureau's uncommon-tier martial compendium.",
 			curse: "",
 			personality: "Focused; the mana flow is distinctive.",
@@ -5864,7 +5864,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Bureau-certified Technomancer combat technique, field-validated across multiple gate operations.",
+			"Bureau-certified Technomancer combat technique, field-validated across multiple Rift operations.",
 		theme_tags: ["defensive", "defensive", "technomancer", "esper"],
 	},
 	{
@@ -5876,7 +5876,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"On a successful grapple check, you can activate Crushing Grapple. The grappled creature takes 3d8 force damage immediately and 2d8 at the start of each of its turns while grappled. Your grapple DC increases by 3.",
 		lore: {
 			origin:
-				"Developed through Destroyer combat doctrine and field-tested in gate operations.",
+				"Developed through Destroyer combat doctrine and field-tested in Rift operations.",
 			history: "Catalogued in the Bureau's uncommon-tier martial compendium.",
 			curse: "",
 			personality: "Focused; the mana flow is distinctive.",
@@ -5938,7 +5938,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Bureau-certified Destroyer combat technique, field-validated across multiple gate operations.",
+			"Bureau-certified Destroyer combat technique, field-validated across multiple Rift operations.",
 		theme_tags: ["offensive", "offensive", "destroyer", "berserker"],
 	},
 	{
@@ -5950,7 +5950,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"Throw a mana-formed blade that ricochets between targets. Choose up to 3 creatures within 30 feet of each other. Make a ranged attack against each: 3d6 force per hit. If all 3 hit, the blade returns and you can make a fourth attack against any of the original targets.",
 		lore: {
 			origin:
-				"Developed through Technomancer combat doctrine and field-tested in gate operations.",
+				"Developed through Technomancer combat doctrine and field-tested in Rift operations.",
 			history: "Catalogued in the Bureau's uncommon-tier martial compendium.",
 			curse: "",
 			personality: "Focused; the mana flow is distinctive.",
@@ -6015,7 +6015,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Bureau-certified Technomancer combat technique, field-validated across multiple gate operations.",
+			"Bureau-certified Technomancer combat technique, field-validated across multiple Rift operations.",
 		theme_tags: ["offensive", "offensive", "technomancer", "idol"],
 	},
 	{
@@ -6027,7 +6027,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"Teleport up to 60 feet to an unoccupied space you can see. If you appear within 5 feet of a creature, you can make one melee attack with advantage. On hit: normal damage + 3d8 necrotic as void energy bleeds through.",
 		lore: {
 			origin:
-				"Developed through Assassin combat doctrine and field-tested in gate operations.",
+				"Developed through Assassin combat doctrine and field-tested in Rift operations.",
 			history: "Catalogued in the Bureau's uncommon-tier martial compendium.",
 			curse: "",
 			personality: "Focused; the mana flow is distinctive.",
@@ -6082,7 +6082,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Bureau-certified Assassin combat technique, field-validated across multiple gate operations.",
+			"Bureau-certified Assassin combat technique, field-validated across multiple Rift operations.",
 		theme_tags: ["offensive", "offensive", "assassin"],
 	},
 	{
@@ -6094,7 +6094,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"Slam both feet into the ground, creating a localized earthquake. All creatures within 20 feet on the ground: DC 16 STR save or knocked prone and take 4d6 force. Structures within 20 feet take 50 force damage.",
 		lore: {
 			origin:
-				"Developed through Destroyer combat doctrine and field-tested in gate operations.",
+				"Developed through Destroyer combat doctrine and field-tested in Rift operations.",
 			history: "Catalogued in the Bureau's uncommon-tier martial compendium.",
 			curse: "",
 			personality: "Focused; the mana flow is distinctive.",
@@ -6149,7 +6149,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Bureau-certified Destroyer combat technique, field-validated across multiple gate operations.",
+			"Bureau-certified Destroyer combat technique, field-validated across multiple Rift operations.",
 		theme_tags: ["offensive", "offensive", "destroyer"],
 	},
 	{
@@ -6161,7 +6161,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"Challenge one creature to a performance duel. DC 16 PRS save. On failure, for 1 minute: the target can only attack you, and your attacks against it deal +2d8 thunder. If you reduce it to 0 HP, all allies within 30 feet gain 3d8 temporary HP.",
 		lore: {
 			origin:
-				"Developed through Idol combat doctrine and field-tested in gate operations.",
+				"Developed through Idol combat doctrine and field-tested in Rift operations.",
 			history: "Catalogued in the Bureau's uncommon-tier martial compendium.",
 			curse: "",
 			personality: "Focused; the mana flow is distinctive.",
@@ -6216,7 +6216,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Bureau-certified Idol combat technique, field-validated across multiple gate operations.",
+			"Bureau-certified Idol combat technique, field-validated across multiple Rift operations.",
 		theme_tags: ["offensive", "offensive", "idol"],
 	},
 	{
@@ -6228,7 +6228,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"Strike a creature's mana circuit junction with a calibrated blade. On hit: normal damage + 4d8 force. Target must make DC 17 INT save or lose access to one random spell slot (1st-3rd level) for 1 minute.",
 		lore: {
 			origin:
-				"Developed through Assassin combat doctrine and field-tested in gate operations.",
+				"Developed through Assassin combat doctrine and field-tested in Rift operations.",
 			history: "Catalogued in the Bureau's rare-tier martial compendium.",
 			curse: "",
 			personality: "Focused; the mana flow is distinctive.",
@@ -6290,7 +6290,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Bureau-certified Assassin combat technique, field-validated across multiple gate operations.",
+			"Bureau-certified Assassin combat technique, field-validated across multiple Rift operations.",
 		theme_tags: ["offensive", "offensive", "assassin", "technomancer"],
 	},
 	{
@@ -6302,7 +6302,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"Charge up to 60 feet in a straight line. Every creature in your path: DC 17 STR save or take 5d10 force and knocked prone. Creatures that fail by 5+ are also pushed 15 feet to the side. Nothing stops the charge.",
 		lore: {
 			origin:
-				"Developed through Destroyer combat doctrine and field-tested in gate operations.",
+				"Developed through Destroyer combat doctrine and field-tested in Rift operations.",
 			history: "Catalogued in the Bureau's rare-tier martial compendium.",
 			curse: "",
 			personality: "Focused; the mana flow is distinctive.",
@@ -6364,7 +6364,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Bureau-certified Destroyer combat technique, field-validated across multiple gate operations.",
+			"Bureau-certified Destroyer combat technique, field-validated across multiple Rift operations.",
 		theme_tags: ["offensive", "offensive", "destroyer", "berserker"],
 	},
 	{
@@ -6376,7 +6376,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"As a reaction when an enemy casts a spell within 60 feet, perform a counter-harmonic. The caster must make a DC 17 PRS save. On failure, the spell is disrupted and the caster takes 3d8 thunder damage. On success, the spell goes through but at disadvantage.",
 		lore: {
 			origin:
-				"Developed through Idol combat doctrine and field-tested in gate operations.",
+				"Developed through Idol combat doctrine and field-tested in Rift operations.",
 			history: "Catalogued in the Bureau's rare-tier martial compendium.",
 			curse: "",
 			personality: "Focused; the mana flow is distinctive.",
@@ -6431,7 +6431,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Bureau-certified Idol combat technique, field-validated across multiple gate operations.",
+			"Bureau-certified Idol combat technique, field-validated across multiple Rift operations.",
 		theme_tags: ["defensive", "defensive", "idol"],
 	},
 	{
@@ -6443,7 +6443,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"Strike a creature's shadow, causing its mana circuit to hemorrhage. On hit: normal damage + 5d6 necrotic. For 1 minute, the target bleeds mana: at the start of each of its turns, you gain 1d8 temporary HP.",
 		lore: {
 			origin:
-				"Developed through Revenant combat doctrine and field-tested in gate operations.",
+				"Developed through Revenant combat doctrine and field-tested in Rift operations.",
 			history: "Catalogued in the Bureau's rare-tier martial compendium.",
 			curse: "",
 			personality: "Focused; the mana flow is distinctive.",
@@ -6505,7 +6505,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Bureau-certified Revenant combat technique, field-validated across multiple gate operations.",
+			"Bureau-certified Revenant combat technique, field-validated across multiple Rift operations.",
 		theme_tags: ["offensive", "offensive", "revenant", "assassin"],
 	},
 	{
@@ -6517,7 +6517,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"Increase gravity around your weapon tenfold and strike. Melee attack: normal damage + 8d8 force. On hit, target is knocked prone and pinned (speed 0, disadvantage on AGI saves) until it makes a DC 17 STR check as an action.",
 		lore: {
 			origin:
-				"Developed through Destroyer combat doctrine and field-tested in gate operations.",
+				"Developed through Destroyer combat doctrine and field-tested in Rift operations.",
 			history: "Catalogued in the Bureau's rare-tier martial compendium.",
 			curse: "",
 			personality: "Focused; the mana flow is distinctive.",
@@ -6572,7 +6572,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Bureau-certified Destroyer combat technique, field-validated across multiple gate operations.",
+			"Bureau-certified Destroyer combat technique, field-validated across multiple Rift operations.",
 		theme_tags: ["offensive", "offensive", "destroyer"],
 	},
 	{
@@ -6584,7 +6584,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"Strike a creature while briefly accelerating your personal timeline. Make 3 melee attacks, each dealing normal damage + 2d6 force. The attacks occur so fast the target can't use reactions until the start of its next turn.",
 		lore: {
 			origin:
-				"Developed through Striker combat doctrine and field-tested in gate operations.",
+				"Developed through Striker combat doctrine and field-tested in Rift operations.",
 			history: "Catalogued in the Bureau's rare-tier martial compendium.",
 			curse: "",
 			personality: "Focused; the mana flow is distinctive.",
@@ -6646,7 +6646,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Bureau-certified Striker combat technique, field-validated across multiple gate operations.",
+			"Bureau-certified Striker combat technique, field-validated across multiple Rift operations.",
 		theme_tags: ["offensive", "offensive", "striker", "esper"],
 	},
 	{
@@ -6658,7 +6658,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"You and your summoned creature attack simultaneously. Both make melee attacks against the same target. If both hit, the target takes an additional 4d8 force as the dual mana-signatures create a destructive interference pattern.",
 		lore: {
 			origin:
-				"Developed through Summoner combat doctrine and field-tested in gate operations.",
+				"Developed through Summoner combat doctrine and field-tested in Rift operations.",
 			history: "Catalogued in the Bureau's rare-tier martial compendium.",
 			curse: "",
 			personality: "Focused; the mana flow is distinctive.",
@@ -6713,7 +6713,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Bureau-certified Summoner combat technique, field-validated across multiple gate operations.",
+			"Bureau-certified Summoner combat technique, field-validated across multiple Rift operations.",
 		theme_tags: ["offensive", "offensive", "summoner"],
 	},
 	{
@@ -6725,7 +6725,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"Manifest a blade of pure entropy from your mana circuit. For 1 minute: melee attacks with this blade deal 5d8 necrotic, ignore resistance to necrotic, and reduce the target's max HP by half the damage dealt. The blade dims all light within 10 feet.",
 		lore: {
 			origin:
-				"Developed through Revenant combat doctrine and field-tested in gate operations.",
+				"Developed through Revenant combat doctrine and field-tested in Rift operations.",
 			history: "Catalogued in the Bureau's epic-tier martial compendium.",
 			curse: "",
 			personality: "Focused; the mana flow is distinctive.",
@@ -6780,7 +6780,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Bureau-certified Revenant combat technique, field-validated across multiple gate operations.",
+			"Bureau-certified Revenant combat technique, field-validated across multiple Rift operations.",
 		theme_tags: ["offensive", "offensive", "revenant"],
 	},
 	{
@@ -6792,7 +6792,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"Deliver a sweeping attack infused with the Absolute's judgment. All creatures in a 15-foot cone: melee attack roll, 6d10 radiant on hit. Anomaly and anomaly that are hit by this attack and have 50 HP or fewer are instantly destroyed.",
 		lore: {
 			origin:
-				"Developed through Holy Knight combat doctrine and field-tested in gate operations.",
+				"Developed through Holy Knight combat doctrine and field-tested in Rift operations.",
 			history: "Catalogued in the Bureau's epic-tier martial compendium.",
 			curse: "",
 			personality: "Focused; the mana flow is distinctive.",
@@ -6854,7 +6854,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Bureau-certified Holy Knight combat technique, field-validated across multiple gate operations.",
+			"Bureau-certified Holy Knight combat technique, field-validated across multiple Rift operations.",
 		theme_tags: ["offensive", "offensive", "holy-knight", "destroyer"],
 	},
 	{
@@ -6866,7 +6866,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"Prepare a contingency attack during a short rest. Choose a trigger (creature attacks you, creature casts a spell, creature moves within 5 feet). When triggered within the next 8 hours, you instantly make a melee attack with advantage that deals normal damage + 5d8 force.",
 		lore: {
 			origin:
-				"Developed through Stalker combat doctrine and field-tested in gate operations.",
+				"Developed through Stalker combat doctrine and field-tested in Rift operations.",
 			history: "Catalogued in the Bureau's epic-tier martial compendium.",
 			curse: "",
 			personality: "Focused; the mana flow is distinctive.",
@@ -6928,7 +6928,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Bureau-certified Stalker combat technique, field-validated across multiple gate operations.",
+			"Bureau-certified Stalker combat technique, field-validated across multiple Rift operations.",
 		theme_tags: ["defensive", "defensive", "stalker", "assassin"],
 	},
 	{
@@ -6940,7 +6940,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"Overclock your focus device's mana engine to critical. For 3 rounds: all device attacks deal triple damage, you can fire two Payload Deployments per turn, and your constructs gain +100% HP. When it ends, device is disabled for 1 hour.",
 		lore: {
 			origin:
-				"Developed through Technomancer combat doctrine and field-tested in gate operations.",
+				"Developed through Technomancer combat doctrine and field-tested in Rift operations.",
 			history: "Catalogued in the Bureau's epic-tier martial compendium.",
 			curse: "",
 			personality: "Focused; the mana flow is distinctive.",
@@ -7000,7 +7000,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Bureau-certified Technomancer combat technique, field-validated across multiple gate operations.",
+			"Bureau-certified Technomancer combat technique, field-validated across multiple Rift operations.",
 		theme_tags: ["offensive", "offensive", "technomancer"],
 	},
 	{
@@ -7012,7 +7012,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"Execute a flurry of mana-accelerated strikes too fast to perceive individually. Make 10 melee attacks against creatures within reach. Each hit deals 1d10 + STR force. If more than 5 attacks hit, all targets are stunned for 1 round.",
 		lore: {
 			origin:
-				"Developed through Striker combat doctrine and field-tested in gate operations.",
+				"Developed through Striker combat doctrine and field-tested in Rift operations.",
 			history: "Catalogued in the Bureau's epic-tier martial compendium.",
 			curse: "",
 			personality: "Focused; the mana flow is distinctive.",
@@ -7067,7 +7067,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Bureau-certified Striker combat technique, field-validated across multiple gate operations.",
+			"Bureau-certified Striker combat technique, field-validated across multiple Rift operations.",
 		theme_tags: ["offensive", "offensive", "striker"],
 	},
 	{
@@ -7079,7 +7079,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"The final overload. For 1 minute: all stats become 24, you can't be killed (stay at 1 HP minimum), all melee attacks deal +6d12 force, and you have advantage on everything. When it ends: you die. Only Full Revival or equivalent can bring you back.",
 		lore: {
 			origin:
-				"Developed through Berserker combat doctrine and field-tested in gate operations.",
+				"Developed through Berserker combat doctrine and field-tested in Rift operations.",
 			history: "Catalogued in the Bureau's legendary-tier martial compendium.",
 			curse: "",
 			personality: "Focused; the mana flow is overwhelming.",
@@ -7134,7 +7134,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Bureau-certified Berserker combat technique, field-validated across multiple gate operations.",
+			"Bureau-certified Berserker combat technique, field-validated across multiple Rift operations.",
 		theme_tags: ["offensive", "offensive", "berserker"],
 	},
 	{
@@ -7146,7 +7146,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"Channel every particle of mana into a single catastrophic strike. Melee attack against the ground: every creature and structure within 60 feet takes 20d8 force damage (DC 20 STR save for half). The terrain within 60 feet is permanently destroyed and becomes a crater.",
 		lore: {
 			origin:
-				"Developed through Destroyer combat doctrine and field-tested in gate operations.",
+				"Developed through Destroyer combat doctrine and field-tested in Rift operations.",
 			history: "Catalogued in the Bureau's legendary-tier martial compendium.",
 			curse: "",
 			personality: "Focused; the mana flow is overwhelming.",
@@ -7202,7 +7202,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Bureau-certified Destroyer combat technique, field-validated across multiple gate operations.",
+			"Bureau-certified Destroyer combat technique, field-validated across multiple Rift operations.",
 		theme_tags: ["offensive", "offensive", "destroyer"],
 	},
 	{
@@ -7214,7 +7214,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"Summon every gate-creature you've ever bonded with simultaneously. Up to 8 creatures appear (total CR cannot exceed 20). They all act on your initiative, obey mental commands, and remain for 1 minute. You can't cast spells while maintaining.",
 		lore: {
 			origin:
-				"Developed through Summoner combat doctrine and field-tested in gate operations.",
+				"Developed through Summoner combat doctrine and field-tested in Rift operations.",
 			history: "Catalogued in the Bureau's legendary-tier martial compendium.",
 			curse: "",
 			personality: "Focused; the mana flow is overwhelming.",
@@ -7269,7 +7269,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Bureau-certified Summoner combat technique, field-validated across multiple gate operations.",
+			"Bureau-certified Summoner combat technique, field-validated across multiple Rift operations.",
 		theme_tags: ["offensive", "offensive", "summoner"],
 	},
 	{
@@ -7281,7 +7281,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"The ultimate oath. Choose one ally within 30 feet. For 1 minute: all damage that would affect that ally is redirected to you, your AC becomes 25, and you regenerate 5d10 HP per round. If you are reduced to 0 HP during this time, the ally gains 100 temporary HP and advantage on all rolls for 10 minutes.",
 		lore: {
 			origin:
-				"Developed through Holy Knight combat doctrine and field-tested in gate operations.",
+				"Developed through Holy Knight combat doctrine and field-tested in Rift operations.",
 			history: "Catalogued in the Bureau's legendary-tier martial compendium.",
 			curse: "",
 			personality: "Focused; the mana flow is overwhelming.",
@@ -7338,7 +7338,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Bureau-certified Holy Knight combat technique, field-validated across multiple gate operations.",
+			"Bureau-certified Holy Knight combat technique, field-validated across multiple Rift operations.",
 		theme_tags: ["defensive", "defensive", "holy-knight"],
 	},
 	{
@@ -7350,7 +7350,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"Collapse every mind within 120 feet into a single psionic singularity. All enemies: DC 20 PRS save. Failure: 15d6 psychic and incapacitated for 1 minute. Success: half damage and stunned for 1 round. Allies within range instead gain advantage on all rolls for 1 minute.",
 		lore: {
 			origin:
-				"Developed through Esper combat doctrine and field-tested in gate operations.",
+				"Developed through Esper combat doctrine and field-tested in Rift operations.",
 			history: "Catalogued in the Bureau's legendary-tier martial compendium.",
 			curse: "",
 			personality: "Focused; the mana flow is overwhelming.",
@@ -7405,7 +7405,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Bureau-certified Esper combat technique, field-validated across multiple gate operations.",
+			"Bureau-certified Esper combat technique, field-validated across multiple Rift operations.",
 		theme_tags: ["offensive", "offensive", "esper"],
 	},
 	{
@@ -7417,7 +7417,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"Channel the full entropy of your mana circuit into a 60-foot radius death field. All enemy creatures: DC 20 VIT save. Failure: current HP is halved and max HP is halved for 24 hours. Success: take 10d8 necrotic. You regain HP equal to total damage dealt.",
 		lore: {
 			origin:
-				"Developed through Revenant combat doctrine and field-tested in gate operations.",
+				"Developed through Revenant combat doctrine and field-tested in Rift operations.",
 			history: "Catalogued in the Bureau's legendary-tier martial compendium.",
 			curse: "",
 			personality: "Focused; the mana flow is overwhelming.",
@@ -7473,7 +7473,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Bureau-certified Revenant combat technique, field-validated across multiple gate operations.",
+			"Bureau-certified Revenant combat technique, field-validated across multiple Rift operations.",
 		theme_tags: ["offensive", "offensive", "revenant"],
 	},
 ];

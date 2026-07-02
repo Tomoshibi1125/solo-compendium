@@ -32,9 +32,9 @@ const rarityColors: Record<string, string> = {
 	// with the canonical ladder. epic + mythic are live relic tiers.
 	very_rare: "bg-purple-500",
 	"very-rare": "bg-purple-500",
-	epic: "bg-fuchsia-500",
-	legendary: "bg-amber-500",
-	mythic: "bg-rose-500",
+	epic: "bg-resurge-violet",
+	legendary: "bg-gate-s",
+	mythic: "bg-gate-a",
 };
 
 const tierColors: Record<string, string> = {
@@ -46,7 +46,7 @@ const tierColors: Record<string, string> = {
 	C: "text-green-400 border-green-500/30",
 	B: "text-blue-400 border-blue-500/30",
 	A: "text-purple-400 border-purple-500/30",
-	S: "text-amber-400 border-amber-500/30",
+	S: "text-gate-s border-gate-s/30",
 	SS: "text-red-400 border-red-500/30",
 };
 
@@ -200,7 +200,7 @@ export const RelicDetail = ({ data }: { data: RelicData }) => {
 				<AscendantWindow title="RARITY" compact>
 					<div className="flex items-center gap-2">
 						<Gem
-							className={`w-5 h-5 ${data.rarity === "legendary" ? "text-amber-500" : rarityColors[data.rarity || "common"] ? "text-white" : ""}`}
+							className={`w-5 h-5 ${data.rarity === "legendary" ? "text-gate-s" : rarityColors[data.rarity || "common"] ? "text-white" : ""}`}
 						/>
 						<span className="font-heading capitalize">
 							{formatRegentVernacular(
@@ -224,7 +224,7 @@ export const RelicDetail = ({ data }: { data: RelicData }) => {
 				{(data.price ?? data.value ?? data.cost) != null && (
 					<AscendantWindow title="VALUE" compact>
 						<div className="flex items-center gap-2">
-							<Coins className="w-5 h-5 text-yellow-400" />
+							<Coins className="w-5 h-5 text-gate-s" />
 							<span className="font-heading">
 								{formatRaCurrencyValue(data.price ?? data.value ?? data.cost)}
 							</span>

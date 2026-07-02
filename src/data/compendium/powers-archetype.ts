@@ -224,7 +224,7 @@ function P(
 		lore: {
 			origin: `A ${theme} discipline catalogued in the Bureau's shared awakened training compendium.`,
 			history:
-				"Field-validated across multiple gate operations and made available to all martial-capable awakened.",
+				"Field-validated across multiple Rift operations and made available to all martial-capable awakened.",
 			curse: "",
 			personality: "Reliable; the mana signature is clean and well-documented.",
 			current_owner: "Open Bureau curriculum for martial-capable awakened.",

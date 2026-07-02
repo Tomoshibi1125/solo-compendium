@@ -509,7 +509,7 @@ export function WardenItemDeliveryDialog({
 									</div>
 								)}
 								{createdItem && (
-									<div className="p-3 rounded border border-amber-500/30 bg-amber-500/5">
+									<div className="p-3 rounded border border-gate-s/30 bg-gate-s/5">
 										<p className="font-heading font-semibold">
 											{formatRegentVernacular(createdItem.name)}
 										</p>

@@ -104,7 +104,7 @@ Artifacts in this campaign should not feel like treasure alone. They are evidenc
 
 ## Overview
 
-This is the keyed version of the finale's crossing (see *The Long Dark and the Threshold*, Ch16): the deepest, darkest stretch of the Gloamreach, run as the campaign's final dungeon — except the dungeon is open country and old dark, and the only room that matters is the sealed Threshold at the far end. Run it as a sequence of survival-horror stages, in whatever order the crossing takes them, with the Hunt Clock louder than it has ever been and the Quiet closing the whole way.
+This is the keyed version of the finale's crossing (see *The Long Dark and the Threshold*, Ch16): the deepest, darkest stretch of the Gloamreach, run as the campaign's final Rift — except the Rift is open country and old dark, and the only room that matters is the sealed Threshold at the far end. Run it as a sequence of survival-horror stages, in whatever order the crossing takes them, with the Hunt Clock louder than it has ever been and the Quiet closing the whole way.
 
 This chapter keys the stages; Ch16 holds the Quiet's behaviour at the end, the gated kill, and the endings.
 
@@ -123,7 +123,7 @@ Resolve what the party carry into the dark — it decides how the crossing goes:
 
 ### 1. The Last Road
 
-The final stretch of exposed ground, and the most watched. The dark *names* each character here — a true name surfacing in carved stone, in a whisper, on the lips of a worn-dead waiting at the verge. Answer it, or accept it, and the crossing grows easier and the Quiet's hold tighter (a step toward Quiet-Marked); refuse, stay silent and dark, and the road is longer but the dark keeps less of a grip. There is no toll and no gate — only how much of themselves the party give away to go faster.
+The final stretch of exposed ground, and the most watched. The dark *names* each character here — a true name surfacing in carved stone, in a whisper, on the lips of a worn-dead waiting at the verge. Answer it, or accept it, and the crossing grows easier and the Quiet's hold tighter (a step toward Quiet-Marked); refuse, stay silent and dark, and the road is longer but the dark keeps less of a grip. There is no toll and no Rift — only how much of themselves the party give away to go faster.
 
 ### 2. The Field of the Lost
 
@@ -175,7 +175,7 @@ The crossing ends one of three ways — **Escape**, **Kill**, or **Become** — 
 
 ## Warden Guidance
 
-The crossing should be frightening because it knows the campaign. Bring back choices, names, lies, saved natives, abandoned ones, unpaid debts, and old kindnesses — and the dead the party made along the way, wearing every face they failed. The final dungeon is not a place the party visit. It is the campaign, and the dark, looking back at them.
+The crossing should be frightening because it knows the campaign. Bring back choices, names, lies, saved natives, abandoned ones, unpaid debts, and old kindnesses — and the dead the party made along the way, wearing every face they failed. The final Rift is not a place the party visit. It is the campaign, and the dark, looking back at them.
 `,
 	},
 ];

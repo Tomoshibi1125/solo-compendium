@@ -242,7 +242,7 @@ export function CampaignWiki({ campaignId }: { campaignId: string }) {
 										"uppercase text-[11px]",
 										selectedArticle.is_public
 											? "border-green-500/50 text-green-400"
-											: "border-amber-500/50 text-amber-400",
+											: "border-gate-s/50 text-gate-s",
 									)}
 								>
 									{selectedArticle.is_public ? (
@@ -528,7 +528,7 @@ function WikiEditorDialog({
 								{isPublic ? (
 									<Globe className="w-3.5 h-3.5 text-green-400" />
 								) : (
-									<Lock className="w-3.5 h-3.5 text-amber-400" />
+									<Lock className="w-3.5 h-3.5 text-gate-s" />
 								)}
 								{isPublic ? "Public Record" : "Restricted File (Warden Only)"}
 							</Label>

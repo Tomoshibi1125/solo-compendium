@@ -49,11 +49,7 @@ function useMediaQuery(query: string): boolean {
 function useRAZone(): string {
 	const location = useLocation();
 	const path = location.pathname;
-	if (
-		path.startsWith("/warden-directives") ||
-		path.startsWith("/warden-directives") ||
-		path.startsWith("/admin")
-	)
+	if (path.startsWith("/warden-directives") || path.startsWith("/admin"))
 		return "warden";
 	if (path.startsWith("/campaigns")) return "campaign";
 	if (path.startsWith("/compendium") || path.startsWith("/favorites"))

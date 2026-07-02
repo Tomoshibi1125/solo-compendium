@@ -35,6 +35,7 @@ import {
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
+import { PageHeader } from "@/components/ui/PageHeader";
 import {
 	Select,
 	SelectContent,
@@ -133,18 +134,18 @@ const THEME_SWATCH_CLASSES: Partial<
 		bar: "bg-shadow-purple/40",
 	},
 	"frost-regent": { icon: "text-shadow-blue", bar: "bg-shadow-blue/40" },
-	"flame-regent": { icon: "text-orange-400", bar: "bg-orange-400/40" },
-	"beast-regent": { icon: "text-lime-400", bar: "bg-lime-400/40" },
-	"plague-regent": { icon: "text-emerald-400", bar: "bg-emerald-400/40" },
+	"flame-regent": { icon: "text-gate-a", bar: "bg-gate-a/40" },
+	"beast-regent": { icon: "text-system-green", bar: "bg-system-green/40" },
+	"plague-regent": { icon: "text-system-green", bar: "bg-system-green/40" },
 	"iron-regent": {
 		icon: "text-muted-foreground",
 		bar: "bg-muted-foreground/40",
 	},
-	"dragon-regent": { icon: "text-pink-400", bar: "bg-pink-400/40" },
+	"dragon-regent": { icon: "text-resurge-violet", bar: "bg-resurge-violet/40" },
 	"regent-regent": { icon: "text-solar-glow", bar: "bg-solar-glow/40" },
 	"supreme-deity": { icon: "text-shadow-blue", bar: "bg-shadow-blue/40" },
 	"gate-portal": { icon: "text-red-400", bar: "bg-red-400/40" },
-	"mana-circuit": { icon: "text-emerald-400", bar: "bg-emerald-400/40" },
+	"mana-circuit": { icon: "text-system-green", bar: "bg-system-green/40" },
 	"resurge-violet": {
 		icon: "text-resurge-violet",
 		bar: "bg-resurge-violet/40",
@@ -573,25 +574,24 @@ const DiceRoller = () => {
 	return (
 		<Layout>
 			<div className="container mx-auto px-4 py-8">
-				<div className="mb-8">
-					<div className="flex items-center justify-between mb-4">
-						<div>
-							<RiftHeading
-								level={1}
-								variant="gate"
-								dimensional
-								className="mb-2 flex items-center gap-3"
-							>
-								<Sparkles className="w-8 h-8 text-shadow-purple animate-pulse" />
-								Dice Roller
-								<Zap className="w-8 h-8 text-shadow-blue animate-pulse" />
-							</RiftHeading>
-							<ManaFlowText variant="rift" speed="slow">
-								Roll dice with the Rift's guidance — may the The Absolute's
-								favor be with you
-							</ManaFlowText>
-						</div>
-						<div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+				<PageHeader
+					className="mb-8"
+					variant="gate"
+					title={
+						<span className="flex items-center gap-3">
+							<Sparkles className="w-8 h-8 text-shadow-purple animate-pulse" />
+							Dice Roller
+							<Zap className="w-8 h-8 text-shadow-blue animate-pulse" />
+						</span>
+					}
+					description={
+						<ManaFlowText variant="rift" speed="slow">
+							Roll dice with the Rift's guidance — may the The Absolute's favor
+							be with you
+						</ManaFlowText>
+					}
+					actions={
+						<>
 							{campaigns.length > 0 && (
 								<div className="flex items-center gap-2 bg-muted/50 p-1.5 rounded-lg border border-border">
 									<span className="text-xs font-heading font-medium text-muted-foreground px-2">
@@ -630,9 +630,9 @@ const DiceRoller = () => {
 							>
 								{show3D ? "2D View" : "3D View"}
 							</Button>
-						</div>
-					</div>
-				</div>
+						</>
+					}
+				/>
 
 				<div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
 					{/* Dice Selection */}

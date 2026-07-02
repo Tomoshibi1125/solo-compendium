@@ -32,7 +32,7 @@ export const generalFeats: CompendiumFeat[] = [
 			conditions: [],
 		},
 		discovery_lore:
-			"Codified by the Academy of High Magic as elective coursework after demand from non-caster Ascendants who needed to evaluate gate loot without a Mage on hand.",
+			"Codified by the Academy of High Magic as elective coursework after demand from non-caster Ascendants who needed to evaluate Rift loot without a Mage on hand.",
 		theme_tags: ["intelligence", "identification", "lattice"],
 	},
 	{
@@ -65,7 +65,7 @@ export const generalFeats: CompendiumFeat[] = [
 			conditions: [],
 		},
 		discovery_lore:
-			"First observed in long-service Destroyers and Berserkers who had spent years near active gate sites — their bone density exceeded medical instrumentation limits.",
+			"First observed in long-service Destroyers and Berserkers who had spent years near active Rift sites — their bone density exceeded medical instrumentation limits.",
 		theme_tags: ["defense", "hardening", "crystalline"],
 	},
 	{
@@ -99,7 +99,7 @@ export const generalFeats: CompendiumFeat[] = [
 			conditions: [],
 		},
 		discovery_lore:
-			"The Assassin training academy in Seoul measured reflex arcs in Awakened cadets and found a 40ms advantage over peak human athletes.",
+			"The Assassin training academy in Meridian City measured reflex arcs in Awakened cadets and found a 40ms advantage over peak human athletes.",
 		theme_tags: ["reflexes", "initiative", "agility"],
 	},
 	{
@@ -204,7 +204,7 @@ export const generalFeats: CompendiumFeat[] = [
 		display_name: "Sentinel Stance",
 		description:
 			"Your mana-reinforced footwork lets you lock down threats that try to bypass you. Increase your Strength or Vitality by 1 (max 20). When you hit a creature with an opportunity attack, that creature's speed becomes 0 for the rest of the turn. Creatures provoke opportunity attacks from you even if they take the Disengage action. When a creature within 5 feet of you makes an attack against a target other than you, you can use your reaction to make a melee weapon attack against the attacking creature.",
-		flavor: "Nothing gets past you. The gate boss tried. The gate boss failed.",
+		flavor: "Nothing gets past you. The Rift boss tried. The Rift boss failed.",
 		tags: ["awakened", "feat", "general", "martial", "defensive"],
 		rarity: "uncommon",
 		source_book: "Rift Ascendant Canon",
@@ -227,7 +227,7 @@ export const generalFeats: CompendiumFeat[] = [
 			conditions: [],
 		},
 		discovery_lore:
-			"Destroyer frontline doctrine codified this stance after analyzing how A-Rank gate bosses consistently targeted the weakest party member.",
+			"Destroyer frontline doctrine codified this stance after analyzing how A-Rank Rift bosses consistently targeted the weakest party member.",
 		theme_tags: ["sentinel", "tanking", "opportunity-attack"],
 	},
 	{
@@ -237,7 +237,7 @@ export const generalFeats: CompendiumFeat[] = [
 		description:
 			"Battle sharpens your mana focus rather than breaking it. Increase your Intelligence or Presence by 1 (max 20). You have advantage on Vitality saving throws to maintain concentration on a spell or power when you take damage. You can perform the somatic components of spells even when you have weapons or a shield in one or both hands. When a hostile creature's movement provokes an opportunity attack from you, you can cast a spell at the creature instead of making a weapon attack — the spell must have a casting time of 1 action and target only that creature.",
 		flavor:
-			"Most casters flinch when the gate boss charges. You finish the incantation.",
+			"Most casters flinch when the Rift boss charges. You finish the incantation.",
 		tags: ["awakened", "feat", "general", "spellcasting", "combat"],
 		rarity: "uncommon",
 		source_book: "Rift Ascendant Canon",
@@ -260,7 +260,7 @@ export const generalFeats: CompendiumFeat[] = [
 			conditions: ["Must have spellcasting access"],
 		},
 		discovery_lore:
-			"Mages who survived S-Rank gates developed this naturally — the lattice in their nervous system adapted to stabilize under combat stress.",
+			"Mages who survived S-Rank Rifts developed this naturally — the lattice in their nervous system adapted to stabilize under combat stress.",
 		theme_tags: ["concentration", "combat-casting", "war"],
 	},
 	{
@@ -331,11 +331,11 @@ export const generalFeats: CompendiumFeat[] = [
 	},
 	{
 		id: "gate-vanguard",
-		name: "Gate Vanguard",
-		display_name: "Gate Vanguard",
+		name: "Rift Vanguard",
+		display_name: "Rift Vanguard",
 		description:
-			"You specialize in being the first through the gate and the last to leave. Increase your Vitality or Presence by 1 (max 20). You have advantage on initiative rolls. You cannot be surprised while conscious. Other creatures do not gain advantage on attack rolls against you as a result of being unseen by you.",
-		flavor: "When the gate opens, someone has to go first. It's always you.",
+			"You specialize in being the first through the Rift and the last to leave. Increase your Vitality or Presence by 1 (max 20). You have advantage on initiative rolls. You cannot be surprised while conscious. Other creatures do not gain advantage on attack rolls against you as a result of being unseen by you.",
+		flavor: "When the Rift opens, someone has to go first. It's always you.",
 		tags: ["awakened", "feat", "general", "defensive", "initiative"],
 		rarity: "uncommon",
 		source_book: "Rift Ascendant Canon",
@@ -358,7 +358,7 @@ export const generalFeats: CompendiumFeat[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"After the third gate-break ambush in a single month, the Bureau mandated point-entry training for all field-certified Ascendants rank C and above.",
+			"After the third Rift Break ambush in a single month, the Bureau mandated point-entry training for all field-certified Ascendants rank C and above.",
 		theme_tags: ["initiative", "surprise", "vanguard"],
 	},
 	{
@@ -368,7 +368,7 @@ export const generalFeats: CompendiumFeat[] = [
 		description:
 			"Your Aetheric-Sight has been trained to a surgical level of precision. Increase your Sense or Intelligence by 1 (max 20). As a bonus action, you can focus your Aetheric-Sight on a creature within 60 feet. You learn its current HP percentage, AC, highest saving throw, and lowest saving throw. You can use this a number of times equal to your proficiency bonus per long rest.",
 		flavor:
-			"You don't guess at the gate boss's weak point. You see it glowing.",
+			"You don't guess at the Rift boss's weak point. You see it glowing.",
 		tags: ["awakened", "feat", "general", "utility", "tactical"],
 		rarity: "uncommon",
 		source_book: "Rift Ascendant Canon",
@@ -425,7 +425,7 @@ export const generalFeats: CompendiumFeat[] = [
 			conditions: ["Must deal damage with spell/power/technique"],
 		},
 		discovery_lore:
-			"Bureau medical staff documented the first mana surge feedback injury when an Esper deliberately overcharged a Thought Spike during the Gwangju gate break.",
+			"Bureau medical staff documented the first mana surge feedback injury when an Esper deliberately overcharged a Thought Spike during the Gwangju Rift Break.",
 		theme_tags: ["surge", "overclock", "risk-reward"],
 	},
 	{
@@ -490,7 +490,7 @@ export const generalFeats: CompendiumFeat[] = [
 			conditions: ["Two-weapon fighting"],
 		},
 		discovery_lore:
-			"Assassin Guild records attribute the formalization of this style to a B-Rank operative who cleared 47 consecutive gates using nothing but paired daggers.",
+			"Assassin Guild records attribute the formalization of this style to a B-Rank operative who cleared 47 consecutive Rifts using nothing but paired daggers.",
 		theme_tags: ["dual-wield", "twin-weapon", "assassin"],
 	},
 	{
@@ -557,7 +557,7 @@ export const generalFeats: CompendiumFeat[] = [
 			conditions: ["Ally within 30 feet, visible"],
 		},
 		discovery_lore:
-			"Herald and Idol raid leaders first documented this resonance link during coordinated S-Rank gate clears, where synchronized mana fields measurably improved party survival.",
+			"Herald and Idol raid leaders first documented this resonance link during coordinated S-Rank Rift clears, where synchronized mana fields measurably improved party survival.",
 		theme_tags: ["party", "sync", "aura"],
 	},
 ];

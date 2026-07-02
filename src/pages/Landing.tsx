@@ -117,10 +117,10 @@ const Landing = () => {
 					</div>
 					<div className="flex-1">
 						<div className="relative">
-							{/* Rift Gate Display */}
+							{/* Rift Site Display */}
 							<RiftManifestation
 								variant="default"
-								title="GATE MONITOR"
+								title="RIFT MONITOR"
 								className="mb-8 relative shadow-[0_0_50px_hsl(var(--accent)/0.1)] group"
 							>
 								<div className="absolute -inset-1 bg-gradient-to-r from-accent/0 via-accent/20 to-accent/0 rounded-lg blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200" />
@@ -180,8 +180,8 @@ const Landing = () => {
 							<div className="relative">
 								<div className="absolute inset-0 bg-gate-national/20 blur-3xl animate-dimensional-pulse" />
 								<OptimizedImage
-									src="/ui-art/gate-portal-3d.webp"
-									alt="Rift Gate Interface"
+									src="/ui-art/rift-site-hero.webp"
+									alt="Rift Site containment perimeter"
 									className="relative rounded-lg border border-gate-s/30 shadow-2xl shadow-gate-s/20"
 									size="large"
 								/>

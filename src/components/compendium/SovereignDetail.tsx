@@ -155,9 +155,9 @@ export const SovereignDetail = ({ data }: { data: SovereignData }) => {
 			case "job":
 				return "text-blue-400 bg-blue-500/10 border-blue-500/30";
 			case "path":
-				return "text-emerald-400 bg-emerald-500/10 border-emerald-500/30";
+				return "text-system-green bg-system-green/10 border-system-green/30";
 			case "regent":
-				return "text-amber-400 bg-amber-500/10 border-amber-500/30";
+				return "text-gate-s bg-gate-s/10 border-gate-s/30";
 		}
 	};
 
@@ -167,16 +167,16 @@ export const SovereignDetail = ({ data }: { data: SovereignData }) => {
 			<AscendantWindow
 				id="sovereign-overview"
 				title="GEMINI PROTOCOL"
-				className="border-violet-500/50 border-2 bg-gradient-to-br from-violet-950/20 to-background"
+				className="border-resurge-violet/50 border-2 bg-gradient-to-br from-resurge-violet/20 to-background"
 			>
 				<div className="space-y-4">
 					<div className="flex items-center gap-3">
 						<div className="relative">
-							<Merge className="w-10 h-10 text-violet-400" />
-							<Sparkles className="w-4 h-4 text-amber-400 absolute -top-1 -right-1 animate-pulse" />
+							<Merge className="w-10 h-10 text-resurge-violet" />
+							<Sparkles className="w-4 h-4 text-gate-s absolute -top-1 -right-1 animate-pulse" />
 						</div>
 						<div>
-							<h2 className="font-display text-2xl md:text-3xl bg-gradient-to-r from-violet-400 via-purple-400 to-amber-400 bg-clip-text text-transparent">
+							<h2 className="font-display text-2xl md:text-3xl bg-gradient-to-r from-resurge-violet via-purple-400 to-gate-s bg-clip-text text-transparent">
 								{displayName}
 							</h2>
 							{data.fusion_theme && (
@@ -192,15 +192,12 @@ export const SovereignDetail = ({ data }: { data: SovereignData }) => {
 					</p>
 
 					<div className="flex flex-wrap gap-2">
-						<Badge className="bg-violet-600/80 text-white border-violet-400">
+						<Badge className="bg-resurge-violet/80 text-white border-resurge-violet">
 							<Merge className="w-3 h-3 mr-1" />
 							Permanent Subclass Overlay
 						</Badge>
 						{data.is_template && (
-							<Badge
-								variant="outline"
-								className="border-amber-500/50 text-amber-400"
-							>
+							<Badge variant="outline" className="border-gate-s/50 text-gate-s">
 								<Star className="w-3 h-3 mr-1" />
 								Template Sovereign
 							</Badge>
@@ -250,7 +247,7 @@ export const SovereignDetail = ({ data }: { data: SovereignData }) => {
 											</p>
 										</div>
 										{index < fusionComponents.length - 1 && (
-											<Merge className="w-4 h-4 text-violet-400 ml-auto hidden md:block" />
+											<Merge className="w-4 h-4 text-resurge-violet ml-auto hidden md:block" />
 										)}
 									</div>
 								);
@@ -264,10 +261,10 @@ export const SovereignDetail = ({ data }: { data: SovereignData }) => {
 			{data.fusion_description && (
 				<AscendantWindow
 					title="FUSION MANIFESTATION"
-					className="border-violet-500/30"
+					className="border-resurge-violet/30"
 				>
 					<div className="flex items-start gap-3">
-						<Sparkles className="w-6 h-6 text-violet-400 flex-shrink-0" />
+						<Sparkles className="w-6 h-6 text-resurge-violet flex-shrink-0" />
 						<p className="text-foreground leading-relaxed italic">
 							<AutoLinkText text={data.fusion_description || ""} />
 						</p>
@@ -279,10 +276,10 @@ export const SovereignDetail = ({ data }: { data: SovereignData }) => {
 			{data.prerequisites && (
 				<AscendantWindow
 					title="GEMINI PROTOCOL REQUIREMENTS"
-					className="border-rose-500/30"
+					className="border-gate-a/30"
 				>
 					<div className="flex items-start gap-3">
-						<Shield className="w-5 h-5 text-rose-400 flex-shrink-0" />
+						<Shield className="w-5 h-5 text-gate-a flex-shrink-0" />
 						<p className="text-foreground">
 							<AutoLinkText text={data.prerequisites} />
 						</p>
@@ -349,30 +346,30 @@ export const SovereignDetail = ({ data }: { data: SovereignData }) => {
 				<AscendantWindow
 					id={coreFeatures.length === 0 ? "sovereign-features" : undefined}
 					title="CAPSTONE ABILITIES"
-					className="border-amber-500/50"
+					className="border-gate-s/50"
 				>
 					<div className="space-y-4">
 						{capstoneFeatures.map((feature) => (
 							<div
 								key={feature.id}
-								className="border-l-2 border-amber-500/50 pl-4 space-y-2 bg-amber-500/5 -ml-4 p-4 rounded-r-lg"
+								className="border-l-2 border-gate-s/50 pl-4 space-y-2 bg-gate-s/5 -ml-4 p-4 rounded-r-lg"
 							>
 								<div className="flex flex-wrap items-center gap-2">
-									<Flame className="w-5 h-5 text-amber-400" />
-									<h4 className="font-heading font-semibold text-amber-400">
+									<Flame className="w-5 h-5 text-gate-s" />
+									<h4 className="font-heading font-semibold text-gate-s">
 										{formatRegentVernacular(
 											feature.display_name || feature.name,
 										)}
 									</h4>
 									{feature.action_type && (
-										<Badge className="bg-amber-500/20 text-amber-300 text-xs">
+										<Badge className="bg-gate-s/20 text-gate-s text-xs">
 											{feature.action_type}
 										</Badge>
 									)}
 									{feature.recharge && (
 										<Badge
 											variant="outline"
-											className="text-xs border-amber-500/30"
+											className="text-xs border-gate-s/30"
 										>
 											{feature.recharge}
 										</Badge>
@@ -388,7 +385,7 @@ export const SovereignDetail = ({ data }: { data: SovereignData }) => {
 												<Badge
 													key={`source-capstone-${source}`}
 													variant="outline"
-													className="text-xs text-amber-400/70 border-amber-500/30"
+													className="text-xs text-gate-s/70 border-gate-s/30"
 												>
 													{formatRegentVernacular(source)}
 												</Badge>

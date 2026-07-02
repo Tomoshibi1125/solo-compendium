@@ -15,12 +15,13 @@ import {
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
-import { ManaFlowText, RiftHeading } from "@/components/ui/AscendantText";
+import { ManaFlowText } from "@/components/ui/AscendantText";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { PageHeader } from "@/components/ui/PageHeader";
 import {
 	Select,
 	SelectContent,
@@ -1178,21 +1179,19 @@ const InitiativeTracker = () => {
 						<ArrowLeft className="w-4 h-4 mr-2" />
 						Back to System Tools
 					</Button>
-					<RiftHeading
-						level={1}
-						variant="sovereign"
-						dimensional
-						className="mb-2"
-					>
-						RIFT COMBAT TRACKER
-					</RiftHeading>
-					<ManaFlowText
-						variant="rift"
-						speed="slow"
-						className="text-muted-foreground"
-					>
-						Track initiative, HP, and conditions during Rift combat encounters.
-					</ManaFlowText>
+					<PageHeader
+						title="RIFT COMBAT TRACKER"
+						description={
+							<ManaFlowText
+								variant="rift"
+								speed="slow"
+								className="text-muted-foreground"
+							>
+								Track initiative, HP, and conditions during Rift combat
+								encounters.
+							</ManaFlowText>
+						}
+					/>
 				</div>
 
 				{!campaignsLoading && manageableCampaigns.length > 0 && (

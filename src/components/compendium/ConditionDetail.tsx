@@ -19,10 +19,10 @@ export const ConditionDetail = ({ data }: { data: ConditionData }) => {
 			{/* Header */}
 			<AscendantWindow
 				title={displayName.toUpperCase()}
-				className="border-yellow-500/30"
+				className="border-gate-s/30"
 			>
 				<div className="flex items-start gap-3">
-					<AlertTriangle className="w-6 h-6 text-yellow-400 flex-shrink-0" />
+					<AlertTriangle className="w-6 h-6 text-gate-s flex-shrink-0" />
 					<p className="text-foreground leading-relaxed">
 						<AutoLinkText text={data.description || ""} />
 					</p>
@@ -63,7 +63,7 @@ export const ConditionDetail = ({ data }: { data: ConditionData }) => {
 						{effects.map((effect) => (
 							<li
 								key={effect}
-								className="flex items-start gap-3 border-l-2 border-yellow-500/30 pl-4"
+								className="flex items-start gap-3 border-l-2 border-gate-s/30 pl-4"
 							>
 								<span className="text-foreground">
 									<AutoLinkText text={effect} />
@@ -80,10 +80,10 @@ export const ConditionDetail = ({ data }: { data: ConditionData }) => {
 					<ul className="space-y-4">
 						{data.stages.map((stage) => (
 							<li key={stage.level} className="space-y-1">
-								<h4 className="text-xs font-bold text-yellow-500 uppercase tracking-widest">
+								<h4 className="text-xs font-bold text-gate-s uppercase tracking-widest">
 									Stage {stage.level}
 								</h4>
-								<p className="text-sm text-muted-foreground pl-4 border-l border-yellow-500/20">
+								<p className="text-sm text-muted-foreground pl-4 border-l border-gate-s/20">
 									<AutoLinkText text={stage.effect} />
 								</p>
 							</li>
@@ -101,7 +101,7 @@ export const ConditionDetail = ({ data }: { data: ConditionData }) => {
 								{data.condition_removal.map((step) => (
 									<li
 										key={step}
-										className="flex items-start gap-3 border-l-2 border-emerald-500/30 pl-4"
+										className="flex items-start gap-3 border-l-2 border-system-green/30 pl-4"
 									>
 										<span className="text-foreground">
 											<AutoLinkText text={step} />
@@ -111,7 +111,7 @@ export const ConditionDetail = ({ data }: { data: ConditionData }) => {
 							</ul>
 						)}
 						{data.cure_lore && (
-							<div className="pt-2 border-t border-yellow-500/10">
+							<div className="pt-2 border-t border-gate-s/10">
 								<h4 className="text-[10px] font-bold text-amethyst uppercase tracking-tighter mb-1">
 									Cure Methodology
 								</h4>

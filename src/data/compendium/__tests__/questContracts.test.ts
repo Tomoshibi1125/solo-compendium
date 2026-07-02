@@ -37,8 +37,13 @@ describe("prebuilt quest contracts", () => {
 	it("filters by rank via getPrebuiltQuestContracts", () => {
 		const all = getPrebuiltQuestContracts();
 		expect(all).toHaveLength(PREBUILT_QUEST_CONTRACTS.length);
-		const ssOnly = getPrebuiltQuestContracts("SS");
-		expect(ssOnly.length).toBeGreaterThanOrEqual(1);
-		expect(ssOnly.every((q) => q.rank === "SS")).toBe(true);
+		const sOnly = getPrebuiltQuestContracts("S");
+		expect(sOnly.length).toBeGreaterThanOrEqual(1);
+		expect(sOnly.every((q) => q.rank === "S")).toBe(true);
+	});
+
+	it("authors no contract above S (canon ranks are E–S)", () => {
+		expect(PREBUILT_QUEST_CONTRACTS.some((q) => q.rank === "SS")).toBe(false);
+		expect(QUEST_RANK_ORDER).not.toContain("SS");
 	});
 });

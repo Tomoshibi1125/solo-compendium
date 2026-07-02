@@ -17,11 +17,11 @@ export const TheManifest = () => {
 		<div className="space-y-16 animate-in fade-in slide-in-from-bottom-4 duration-1000 max-w-7xl mx-auto">
 			<section className="text-center mb-16 relative">
 				<div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-12 opacity-10 pointer-events-none">
-					<Fingerprint className="w-32 h-32 text-orange-500" />
+					<Fingerprint className="w-32 h-32 text-gate-a" />
 				</div>
 				<RiftHeading
 					level={1}
-					className="text-5xl text-orange-500 mb-6 font-display uppercase tracking-widest"
+					className="text-5xl text-gate-a mb-6 font-display uppercase tracking-widest"
 				>
 					The Anomaly Manifest
 				</RiftHeading>
@@ -31,7 +31,7 @@ export const TheManifest = () => {
 					nightmares. Their Resonance Ranks range from localized threats to
 					Sovereign-tier catastrophes.
 				</p>
-				<div className="inline-flex items-center gap-4 px-6 py-2 bg-orange-500/5 border border-orange-500/20 rounded-full text-[10px] uppercase font-mono text-orange-500/80 tracking-[0.2em]">
+				<div className="inline-flex items-center gap-4 px-6 py-2 bg-gate-a/5 border border-gate-a/20 rounded-full text-[10px] uppercase font-mono text-gate-a/80 tracking-[0.2em]">
 					<Radio className="w-3 h-3 animate-pulse" />
 					Lattice Sync Active: {sortedAnomalies.length} Spirits Documented
 				</div>
@@ -54,7 +54,7 @@ export const TheManifest = () => {
 						return (
 							<article
 								key={anomaly.id}
-								className="bg-glass/20 border border-orange-900/40 rounded-xl overflow-hidden shadow-2xl flex flex-col hover:border-orange-500/40 transition-colors"
+								className="bg-glass/20 border border-gate-a/40 rounded-xl overflow-hidden shadow-2xl flex flex-col hover:border-gate-a/40 transition-colors"
 							>
 								{/* Thematic thumbnail */}
 								<div className="relative w-full h-36 overflow-hidden bg-void">
@@ -70,9 +70,9 @@ export const TheManifest = () => {
 											anomaly.rank === "S"
 												? "bg-red-500/80 text-red-100 border-red-500/50"
 												: anomaly.rank === "A"
-													? "bg-orange-500/80 text-orange-100 border-orange-500/50"
+													? "bg-gate-a/80 text-gate-a border-gate-a/50"
 													: anomaly.rank === "B"
-														? "bg-yellow-500/80 text-yellow-100 border-yellow-500/50"
+														? "bg-gate-s/80 text-gate-s border-gate-s/50"
 														: "bg-slate-700/80 text-slate-200 border-slate-500/50"
 										}`}
 									>
@@ -80,19 +80,19 @@ export const TheManifest = () => {
 									</span>
 								</div>
 
-								<header className="p-5 border-b border-orange-500/20 bg-void/80 flex items-start justify-between gap-4">
+								<header className="p-5 border-b border-gate-a/20 bg-void/80 flex items-start justify-between gap-4">
 									<div>
 										<h3 className="text-xl font-display font-bold text-white uppercase tracking-wider mb-1 line-clamp-1">
 											{anomaly.name}
 										</h3>
-										<p className="text-[10px] font-mono text-orange-400/80 uppercase tracking-widest">
+										<p className="text-[10px] font-mono text-gate-a/80 uppercase tracking-widest">
 											{anomaly.type}
 										</p>
 									</div>
 								</header>
 
 								<div className="p-5 flex-1 flex flex-col">
-									<div className="text-xs text-slate-300 italic mb-4 line-clamp-3 bg-void/40 p-3 rounded-sm border-l-2 border-orange-500/40">
+									<div className="text-xs text-slate-300 italic mb-4 line-clamp-3 bg-void/40 p-3 rounded-sm border-l-2 border-gate-a/40">
 										{anomaly.description}
 									</div>
 
@@ -118,7 +118,7 @@ export const TheManifest = () => {
 										</div>
 
 										<div className="bg-void/60 p-3 rounded-sm border border-white/5 mt-auto">
-											<h4 className="text-[10px] font-bold text-orange-500 uppercase tracking-widest mb-2 border-b border-orange-500/20 pb-1">
+											<h4 className="text-[10px] font-bold text-gate-a uppercase tracking-widest mb-2 border-b border-gate-a/20 pb-1">
 												Attributes
 											</h4>
 											<div className="flex justify-between text-[10px] font-mono text-center">
@@ -128,7 +128,7 @@ export const TheManifest = () => {
 														className={
 															(anomaly.stats?.ability_scores?.strength || 10) >
 															15
-																? "text-orange-400 font-bold"
+																? "text-gate-a font-bold"
 																: "text-slate-300"
 														}
 													>
@@ -141,7 +141,7 @@ export const TheManifest = () => {
 														className={
 															(anomaly.stats?.ability_scores?.agility || 10) >
 															15
-																? "text-orange-400 font-bold"
+																? "text-gate-a font-bold"
 																: "text-slate-300"
 														}
 													>
@@ -154,7 +154,7 @@ export const TheManifest = () => {
 														className={
 															(anomaly.stats?.ability_scores?.vitality || 10) >
 															15
-																? "text-orange-400 font-bold"
+																? "text-gate-a font-bold"
 																: "text-slate-300"
 														}
 													>
@@ -167,7 +167,7 @@ export const TheManifest = () => {
 														className={
 															(anomaly.stats?.ability_scores?.intelligence ||
 																10) > 15
-																? "text-orange-400 font-bold"
+																? "text-gate-a font-bold"
 																: "text-slate-300"
 														}
 													>
@@ -179,7 +179,7 @@ export const TheManifest = () => {
 													<div
 														className={
 															(anomaly.stats?.ability_scores?.sense || 10) > 15
-																? "text-orange-400 font-bold"
+																? "text-gate-a font-bold"
 																: "text-slate-300"
 														}
 													>
@@ -192,7 +192,7 @@ export const TheManifest = () => {
 														className={
 															(anomaly.stats?.ability_scores?.presence || 10) >
 															15
-																? "text-orange-400 font-bold"
+																? "text-gate-a font-bold"
 																: "text-slate-300"
 														}
 													>
@@ -209,7 +209,7 @@ export const TheManifest = () => {
 				)}
 			</div>
 			{sortedAnomalies.length > 50 && (
-				<div className="text-center p-8 text-orange-500/50 font-mono text-xs uppercase tracking-widest">
+				<div className="text-center p-8 text-gate-a/50 font-mono text-xs uppercase tracking-widest">
 					... And {sortedAnomalies.length - 50} more lower-threat entries in the
 					archives. Seek Warden clearance for full D-Rank Bestiary.
 				</div>

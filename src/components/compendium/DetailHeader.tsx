@@ -56,7 +56,7 @@ export const DetailHeader = ({
 					variant="outline"
 					size="icon"
 					onClick={() => toggleFavorite(entryType, entryId)}
-					className={favorite ? "text-amber-400 border-amber-400/30" : ""}
+					className={favorite ? "text-gate-s border-gate-s/30" : ""}
 					aria-label={favorite ? "Remove from favorites" : "Add to favorites"}
 				>
 					<Heart className={favorite ? "fill-current" : ""} />

@@ -88,7 +88,7 @@ export const fightingStyleFeats: CompendiumFeat[] = [
 			conditions: ["Two-handed or versatile melee weapon"],
 		},
 		discovery_lore:
-			"Destroyer heavy-weapons doctrine emphasizes that every swing must count — gate bosses don't give you second chances.",
+			"Destroyer heavy-weapons doctrine emphasizes that every swing must count — Rift bosses don't give you second chances.",
 		theme_tags: ["great-weapon", "two-handed", "reroll"],
 	},
 	{
@@ -216,7 +216,7 @@ export const fightingStyleFeats: CompendiumFeat[] = [
 		display_name: "Anomaly Ascendant",
 		description:
 			"You deal an extra 1d4 damage against anomaly, monstrosities, and creatures with the gate-born tag. You have advantage on Intelligence checks to recall information about gate-born anomalies. Your Aetheric-Sight highlights anatomical vulnerabilities specific to non-humanoid physiology.",
-		flavor: "You've killed enough gate anomalies to know where they break.",
+		flavor: "You've killed enough Rift anomalies to know where they break.",
 		tags: ["awakened", "feat", "fighting-style", "offensive"],
 		rarity: "uncommon",
 		source_book: "Rift Ascendant Canon",
@@ -369,18 +369,18 @@ export const zenithBoons: CompendiumFeat[] = [
 	},
 	{
 		id: "boon-gate-sovereignty",
-		name: "Boon of Gate Sovereignty",
-		display_name: "Boon of Gate Sovereignty",
+		name: "Boon of Rift Sovereignty",
+		display_name: "Boon of Rift Sovereignty",
 		description:
-			"Your mana density is sufficient to manipulate gate membranes directly. Increase your Intelligence or Sense by 4 (max 30). Once per long rest, you can open or close a gate portal within 60 feet. You can also stabilize a collapsing gate for 1 hour, preventing a dungeon break. You are immune to forced teleportation and banishment effects.",
-		flavor: "Gates open and close at your command. The membrane obeys.",
+			"Your mana density is sufficient to manipulate Rift membranes directly. Increase your Intelligence or Sense by 4 (max 30). Once per long rest, you can open or close a Rift portal within 60 feet. You can also stabilize a collapsing Rift for 1 hour, preventing a Rift Break. You are immune to forced teleportation and banishment effects.",
+		flavor: "Rifts open and close at your command. The membrane obeys.",
 		tags: ["awakened", "feat", "zenith-boon", "utility"],
 		rarity: "legendary",
 		source_book: "Rift Ascendant Canon",
 		effects: {
-			primary: "+4 Intelligence or Sense (max 30). Open/close gate portals.",
+			primary: "+4 Intelligence or Sense (max 30). Open/close Rift portals.",
 			secondary:
-				"Stabilize collapsing gates; immune to banishment/teleportation.",
+				"Stabilize collapsing Rifts; immune to banishment/teleportation.",
 		},
 		prerequisites: { level: 19 },
 		repeatable: false,
@@ -398,7 +398,7 @@ export const zenithBoons: CompendiumFeat[] = [
 			conditions: [],
 		},
 		discovery_lore:
-			"The first recorded instance was an S-Rank Mage who sealed the Seoul Mega-Gate by pressing her palm against the membrane and willing it shut.",
+			"The first recorded instance was an S-Rank Mage who sealed the Meridian Mega-Rift by pressing her palm against the membrane and willing it shut.",
 		theme_tags: ["zenith", "gate", "sovereignty"],
 	},
 	{
@@ -431,7 +431,7 @@ export const zenithBoons: CompendiumFeat[] = [
 			conditions: [],
 		},
 		discovery_lore:
-			"Developed after the Busan Incident where an S-Rank gate boss used mass teleportation to scatter an entire raid party into separate dungeon chambers.",
+			"Developed after the Harrow Bay Incident where an S-Rank Rift boss used mass teleportation to scatter an entire raid party into separate Interior chambers.",
 		theme_tags: ["zenith", "dimensional", "anchor"],
 	},
 	{
@@ -497,7 +497,7 @@ export const zenithBoons: CompendiumFeat[] = [
 			conditions: [],
 		},
 		discovery_lore:
-			"The term 'Annihilation Mandate' entered Bureau vocabulary after a Destroyer solo-cleared an A-Rank gate in under four minutes.",
+			"The term 'Annihilation Mandate' entered Bureau vocabulary after a Destroyer solo-cleared an A-Rank Rift in under four minutes.",
 		theme_tags: ["zenith", "annihilation", "force"],
 	},
 	{
@@ -507,7 +507,7 @@ export const zenithBoons: CompendiumFeat[] = [
 		description:
 			"Your Aetheric-Sight has evolved beyond physical limitation. Increase your Sense or Intelligence by 4 (max 30). You have truesight out to 120 feet. You cannot be blinded. You can see through illusions, shapechanging, and magical darkness automatically. Once per long rest, you can see the exact location and condition of every creature within 1 mile for 1 minute.",
 		flavor:
-			"You see everything. The gate boss sees you seeing it. It starts running.",
+			"You see everything. The Rift boss sees you seeing it. It starts running.",
 		tags: ["awakened", "feat", "zenith-boon", "perception"],
 		rarity: "legendary",
 		source_book: "Rift Ascendant Canon",
@@ -530,7 +530,7 @@ export const zenithBoons: CompendiumFeat[] = [
 			conditions: [],
 		},
 		discovery_lore:
-			"An S-Rank Esper reported seeing the gate boss through 200 meters of solid rock. Bureau sensors confirmed the creature was exactly where she said it was.",
+			"An S-Rank Esper reported seeing the Rift boss through 200 meters of solid rock. Bureau sensors confirmed the creature was exactly where she said it was.",
 		theme_tags: ["zenith", "truesight", "omniscience"],
 	},
 	{

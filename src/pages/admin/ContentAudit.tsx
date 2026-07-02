@@ -17,14 +17,11 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import { Layout } from "@/components/layout/Layout";
-import {
-	AscendantText,
-	ManaFlowText,
-	RiftHeading,
-} from "@/components/ui/AscendantText";
+import { AscendantText, ManaFlowText } from "@/components/ui/AscendantText";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { PageHeader } from "@/components/ui/PageHeader";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
 	type ContentAuditReport,
@@ -137,7 +134,7 @@ function SummaryCards({ report }: { report: ContentAuditReport }) {
 						summary.averageCompleteness >= 80
 							? "text-green-400"
 							: summary.averageCompleteness >= 60
-								? "text-yellow-400"
+								? "text-gate-s"
 								: "text-red-400",
 					)}
 				>
@@ -187,7 +184,7 @@ function Recommendations({ recommendations }: { recommendations: string[] }) {
 						key={rec}
 						className="flex items-start gap-2 p-2 rounded bg-muted/30"
 					>
-						<AlertTriangle className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+						<AlertTriangle className="w-4 h-4 text-gate-s mt-0.5 flex-shrink-0" />
 						<span className="text-sm">{rec}</span>
 					</div>
 				))}
@@ -261,38 +258,35 @@ function ContentAudit() {
 			<div className="container mx-auto px-4 py-8 max-w-6xl">
 				<div className="space-y-6">
 					{/* Header */}
-					<div className="flex items-center justify-between">
-						<div>
-							<RiftHeading
-								level={1}
-								variant="sovereign"
-								dimensional
-								className="mb-2"
-							>
-								Content Audit
-							</RiftHeading>
-							<ManaFlowText
-								variant="rift"
-								speed="slow"
-								className="text-muted-foreground"
-							>
-								Comprehensive database content analysis and quality metrics
-							</ManaFlowText>
-							<AscendantText className="block text-xs text-muted-foreground mt-1">
-								Last updated: {new Date(report.timestamp).toLocaleString()}
-							</AscendantText>
-						</div>
-						<div className="flex gap-2">
-							<Button onClick={handleRefresh} variant="outline" size="sm">
-								<RefreshCw className="w-4 h-4 mr-2" />
-								Refresh
-							</Button>
-							<Button onClick={handleExport} variant="outline" size="sm">
-								<Download className="w-4 h-4 mr-2" />
-								Export JSON
-							</Button>
-						</div>
-					</div>
+					<PageHeader
+						title="Content Audit"
+						description={
+							<>
+								<ManaFlowText
+									variant="rift"
+									speed="slow"
+									className="text-muted-foreground"
+								>
+									Comprehensive database content analysis and quality metrics
+								</ManaFlowText>
+								<AscendantText className="block text-xs text-muted-foreground mt-1">
+									Last updated: {new Date(report.timestamp).toLocaleString()}
+								</AscendantText>
+							</>
+						}
+						actions={
+							<>
+								<Button onClick={handleRefresh} variant="outline" size="sm">
+									<RefreshCw className="w-4 h-4 mr-2" />
+									Refresh
+								</Button>
+								<Button onClick={handleExport} variant="outline" size="sm">
+									<Download className="w-4 h-4 mr-2" />
+									Export JSON
+								</Button>
+							</>
+						}
+					/>
 
 					{/* Summary Cards */}
 					<SummaryCards report={report} />

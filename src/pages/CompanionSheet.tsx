@@ -193,7 +193,7 @@ export default function CompanionSheet() {
 							</Link>
 						</Button>
 						<div className="flex items-center gap-2">
-							<Skull className="w-5 h-5 text-fuchsia-300" />
+							<Skull className="w-5 h-5 text-resurge-violet" />
 							<h1 className="font-display text-2xl">{displayName}</h1>
 							<Badge variant="outline" className="text-xs">
 								{soldier.rank}
@@ -262,8 +262,8 @@ export default function CompanionSheet() {
 										hpPercent < 25
 											? "bg-red-900"
 											: hpPercent < 50
-												? "bg-amber-900"
-												: "bg-emerald-900",
+												? "bg-gate-s/25"
+												: "bg-system-green/25",
 									)}
 								/>
 							</div>
@@ -294,7 +294,7 @@ export default function CompanionSheet() {
 										Initiative
 									</div>
 									<div className="flex items-center justify-center gap-1">
-										<Zap className="w-4 h-4 text-yellow-400" />
+										<Zap className="w-4 h-4 text-gate-s" />
 										<Input
 											type="number"
 											value={initiative}
@@ -374,7 +374,7 @@ export default function CompanionSheet() {
 									className="rounded border border-border/40 bg-black/20 p-3"
 								>
 									<div className="flex items-center gap-2">
-										<Sparkles className="w-3.5 h-3.5 text-fuchsia-300" />
+										<Sparkles className="w-3.5 h-3.5 text-resurge-violet" />
 										<span className="font-display text-sm font-semibold">
 											{ability.name}
 										</span>

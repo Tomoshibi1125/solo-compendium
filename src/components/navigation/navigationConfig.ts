@@ -181,7 +181,7 @@ export const navigationConfig: NavItemConfig[] = [
 			{
 				title: "Umbral Legion",
 				href: "/compendium?category=shadow-soldiers",
-				description: "Shadow soldier summons and legion units.",
+				description: "Umbral Legionnaire summons and legion units.",
 				icon: Users,
 			},
 		],
@@ -242,9 +242,9 @@ export const navigationConfig: NavItemConfig[] = [
 				icon: Users,
 			},
 			{
-				title: "Hunter Bureau",
+				title: "The Bureau",
 				href: "/bureau",
-				description: "Licenses, rank evaluation, and contract dispatch.",
+				description: "Licenses, rank evaluation, and Rift-contract dispatch.",
 				icon: Landmark,
 			},
 		],

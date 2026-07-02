@@ -364,7 +364,7 @@ export function CampaignInviteModal({
 																: "Ascendant"}
 														</Badge>
 														{status === "active" ? (
-															<Badge className="bg-emerald-600 text-white text-[11px]">
+															<Badge className="bg-system-green text-white text-[11px]">
 																Active
 															</Badge>
 														) : (

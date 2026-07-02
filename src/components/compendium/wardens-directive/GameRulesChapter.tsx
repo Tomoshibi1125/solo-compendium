@@ -5,7 +5,7 @@ export const GameRulesChapter = () => {
 	return (
 		<div className="space-y-16 animate-in fade-in slide-in-from-bottom-4 duration-1000 max-w-5xl mx-auto">
 			<section className="text-center mb-16">
-				<RiftHeading level={1} className="text-5xl text-emerald-400 mb-6">
+				<RiftHeading level={1} className="text-5xl text-system-green mb-6">
 					Running The Urban Fantasy
 				</RiftHeading>
 				<p className="text-lg text-muted-foreground leading-relaxed max-w-3xl mx-auto">
@@ -17,9 +17,9 @@ export const GameRulesChapter = () => {
 			</section>
 
 			<div className="grid md:grid-cols-2 gap-8">
-				<article className="bg-glass/20 border border-emerald-900/40 p-8 rounded-xl shadow-xl hover:border-emerald-500/40 transition-colors">
+				<article className="bg-glass/20 border border-system-green/40 p-8 rounded-xl shadow-xl hover:border-system-green/40 transition-colors">
 					<h2 className="text-2xl font-display font-bold text-white uppercase tracking-wider mb-4 flex items-center gap-3">
-						<AlertTriangle className="w-6 h-6 text-emerald-500" />
+						<AlertTriangle className="w-6 h-6 text-system-green" />
 						Rift Eruptions
 					</h2>
 					<p className="text-sm text-slate-300 leading-relaxed min-h-[100px]">
@@ -34,9 +34,9 @@ export const GameRulesChapter = () => {
 					</p>
 				</article>
 
-				<article className="bg-glass/20 border border-emerald-900/40 p-8 rounded-xl shadow-xl hover:border-emerald-500/40 transition-colors">
+				<article className="bg-glass/20 border border-system-green/40 p-8 rounded-xl shadow-xl hover:border-system-green/40 transition-colors">
 					<h2 className="text-2xl font-display font-bold text-white uppercase tracking-wider mb-4 flex items-center gap-3">
-						<ActivitySquare className="w-6 h-6 text-emerald-500" />
+						<ActivitySquare className="w-6 h-6 text-system-green" />
 						The Awakening
 					</h2>
 					<p className="text-sm text-slate-300 leading-relaxed min-h-[100px]">
@@ -49,9 +49,9 @@ export const GameRulesChapter = () => {
 					</p>
 				</article>
 
-				<article className="md:col-span-2 bg-glass/20 border border-emerald-900/40 p-8 rounded-xl shadow-xl hover:border-emerald-500/40 transition-colors">
+				<article className="md:col-span-2 bg-glass/20 border border-system-green/40 p-8 rounded-xl shadow-xl hover:border-system-green/40 transition-colors">
 					<h2 className="text-2xl font-display font-bold text-white uppercase tracking-wider mb-4 flex items-center gap-3">
-						<ScrollText className="w-6 h-6 text-emerald-500" />
+						<ScrollText className="w-6 h-6 text-system-green" />
 						Modern World Impact
 					</h2>
 					<div className="text-sm text-slate-300 leading-relaxed columns-1 md:columns-2 gap-8 space-y-4">

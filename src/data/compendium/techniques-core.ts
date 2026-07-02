@@ -61,7 +61,7 @@ export const techniques_core: CompendiumTechnique[] = [
 			conditions: ["Requires a melee weapon"],
 		},
 		discovery_lore:
-			"Excavated from the crystallized mana deposit at the center of a depleted Gate core.",
+			"Excavated from the crystallized mana deposit at the center of a depleted Rift core.",
 		theme_tags: ["resonance-anomaly", "post-awakening", "rift-energy"],
 	},
 	{
@@ -128,7 +128,7 @@ export const techniques_core: CompendiumTechnique[] = [
 			conditions: ["Requires a melee weapon"],
 		},
 		discovery_lore:
-			"Sold by a mysterious merchant who appears only during full moons near active Gate sites.",
+			"Sold by a mysterious merchant who appears only during full moons near active Rift sites.",
 		theme_tags: ["forbidden", "urban-combat"],
 	},
 	{
@@ -150,12 +150,12 @@ export const techniques_core: CompendiumTechnique[] = [
 		lore: {
 			origin: "Developed by the Academy of High Magic.",
 			history:
-				"Developed at the Academy of High Magic as a specialized interposition technique for close-quarters Gate defense.",
+				"Developed at the Academy of High Magic as a specialized interposition technique for close-quarters Rift defense.",
 			curse:
 				"Prolonged wielders report hearing a second heartbeat that doesn't match their own.",
 			personality: "Protective; flares when allies take damage nearby.",
 			current_owner:
-				"Assigned to Bureau front-line Vanguard squads for active Gate deployment.",
+				"Assigned to Bureau front-line Vanguard squads for active Rift deployment.",
 			prior_owners: [
 				"Academy of High Magic Combat Division",
 				"Bureau Front-Line Archives",
@@ -197,7 +197,7 @@ export const techniques_core: CompendiumTechnique[] = [
 			conditions: ["Requires a melee weapon"],
 		},
 		discovery_lore:
-			"Found washed ashore near a coastal Gate, wrapped in fabric that dissolved upon touch.",
+			"Found washed ashore near a coastal Rift, wrapped in fabric that dissolved upon touch.",
 		theme_tags: ["post-awakening", "dimensional-bleed"],
 	},
 ];

@@ -2,7 +2,7 @@
  * Centralized rank → Rift Ascendant token color mappings.
  *
  * Keeps rank coloring consistent and free of raw Tailwind palette colors
- * (no `text-amber-400`/`text-red-400` etc.). Gate-tier text colors use the
+ * (no raw amber/red text utilities). Gate-tier text colors use the
  * `--color-gate-*` theme tokens; Umbral Legion grade badges use entity tokens.
  */
 

@@ -377,7 +377,7 @@ export function parseModifiers(properties: string[]): EquipmentModifiers {
 					"Mana Flow",
 					"Dimensional Lore",
 					"Investigation",
-					"Gate Topology",
+					"Rift Topology",
 					"Cosmic Lore",
 					"Beast Taming",
 					"Insight",
@@ -413,11 +413,13 @@ export function parseModifiers(properties: string[]): EquipmentModifiers {
 				raw !== "skills" &&
 				raw !== "skill"
 			) {
-				const canonical = raw
+				let canonical = raw
 					.split(/\s+/)
 					.map((w) => (w.length ? w[0].toUpperCase() + w.slice(1) : w))
 					.join(" ")
 					.replaceAll("'S", "'s");
+				// Retired skill display name still present in stored item prose.
+				if (canonical === "Rift Topology") canonical = "Rift Topology";
 
 				if (!modifiers.skills) modifiers.skills = {};
 				modifiers.skills[canonical] =

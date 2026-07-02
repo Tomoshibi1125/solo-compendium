@@ -7,7 +7,7 @@ export const backgrounds: StaticBackground[] = [
 		type: "background",
 		rank: "A",
 		description:
-			"A former civilian drafted by an A-Rank guild during a catastrophic gate break. You were pulled into a rift and survived purely by sticking close to the combat teams and carrying their gear. You've seen the horrors of the dungeons and the brutal corporate reality of the guilds.",
+			"A former civilian drafted by an A-Rank guild during a catastrophic Rift Break. You were pulled into a rift and survived purely by sticking close to the combat teams and carrying their gear. You've seen the horrors of the Rifts and the brutal corporate reality of the guilds.",
 		skill_proficiencies: ["Survival", "Athletics"],
 		tool_proficiencies: ["Vehicles (Land)"],
 		languages: ["One additional language of your choice"],
@@ -21,12 +21,12 @@ export const backgrounds: StaticBackground[] = [
 		starting_credits: 500,
 		feature_name: "Hazard Instinct",
 		feature_description:
-			"You have advantage on perception checks related to environmental traps inside a gate. Additionally, you can always find safe passage through non-magical difficult terrain.",
+			"You have advantage on perception checks related to environmental traps inside a Rift. Additionally, you can always find safe passage through non-magical difficult terrain.",
 		features: [
 			{
 				name: "Hazard Instinct",
 				description:
-					"You have advantage on perception checks related to environmental traps inside a gate. Additionally, you can always find safe passage through non-magical difficult terrain.",
+					"You have advantage on perception checks related to environmental traps inside a Rift. Additionally, you can always find safe passage through non-magical difficult terrain.",
 			},
 		],
 		personality_traits: [
@@ -46,11 +46,11 @@ export const backgrounds: StaticBackground[] = [
 			"Preparedness. Proper planning prevents poor performance. (Lawful)",
 		],
 		bonds: [
-			"I owe my life to a veteran Ascendant who dragged me out of my first gate.",
+			"I owe my life to a veteran Ascendant who dragged me out of my first Rift.",
 			"My family thinks I work a safe desk job at the Guild.",
-			"I lost someone close to me in the gate break that drafted me.",
+			"I lost someone close to me in the Rift Break that drafted me.",
 			"I kept a strange, unregistered mana crystal from my first dive.",
-			"My old neighborhood is in the shadow of an active, volatile gate.",
+			"My old neighborhood is in the shadow of an active, volatile Rift.",
 			"I have a deep loyalty to my fellow contractors who survived with me.",
 		],
 		flaws: [
@@ -69,7 +69,7 @@ export const backgrounds: StaticBackground[] = [
 		type: "background",
 		rank: "A",
 		description:
-			"You are one of the few who survived a dungeon break before you even awakened. You spent days trapped in a collapsed building or a transformed subway station, hiding from anomalies. The trauma awakened you, and now you hunt the things that once hunted you.",
+			"You are one of the few who survived a Rift Break before you even awakened. You spent days trapped in a collapsed building or a transformed subway station, hiding from anomalies. The trauma awakened you, and now you hunt the things that once hunted you.",
 		skill_proficiencies: ["Stealth", "Perception"],
 		tool_proficiencies: ["Thieves' Tools"],
 		languages: ["One language spoken by anomalies (e.g., Abyssal, anomaly)"],
@@ -117,7 +117,7 @@ export const backgrounds: StaticBackground[] = [
 		flaws: [
 			"I am severely claustrophobic.",
 			"I suffer from debilitating flashbacks when cornered.",
-			"I am overly aggressive toward anyone who dismisses the danger of gates.",
+			"I am overly aggressive toward anyone who dismisses the danger of Rifts.",
 			"I refuse to retreat, even when heavily outmatched.",
 			"I mistrust Authority and official Ascendant Bureau protocols.",
 			"I rely heavily on sedatives or alcohol to sleep.",
@@ -130,13 +130,13 @@ export const backgrounds: StaticBackground[] = [
 		type: "background",
 		rank: "B",
 		description:
-			"You were identified as an Awakened early and sent to a prestigious academy funded by the mega-guilds. You have been trained in magical theory, gate mechanics, and PR. You are polished, educated, and expected to be a star.",
+			"You were identified as an Awakened early and sent to a prestigious academy funded by the mega-guilds. You have been trained in magical theory, Rift mechanics, and PR. You are polished, educated, and expected to be a star.",
 		skill_proficiencies: ["Mana Flow", "Dimensional Lore"],
 		tool_proficiencies: ["Calligrapher's Supplies"],
 		languages: ["Two additional languages of your choice"],
 		equipment: [
 			"A diploma or signet ring from the Academy",
-			"A high-end tablet with gate data",
+			"A high-end tablet with Rift data",
 			"Fine clothes",
 			"A stylish pen",
 		],
@@ -155,7 +155,7 @@ export const backgrounds: StaticBackground[] = [
 			"I quote textbooks and theory in the middle of combat.",
 			"I look down on self-taught or 'street' ascendants.",
 			"I care deeply about my public image and ranking.",
-			"I treat gate diving like a graded exam.",
+			"I treat Rift diving like a graded exam.",
 			"I am overly formal and polite, even to my enemies.",
 			"I name my attacks based on classic magical theory.",
 		],
@@ -168,7 +168,7 @@ export const backgrounds: StaticBackground[] = [
 			"Innovation. Theory is useless unless applied in new ways. (Chaotic)",
 		],
 		bonds: [
-			"My favorite professor went missing in an S-Rank gate.",
+			"My favorite professor went missing in an S-Rank Rift.",
 			"I have a fierce rivalry with the top student of my graduating class.",
 			"My tuition was paid by a shadowy corporate sponsor I must repay.",
 			"I want to make my mundane parents proud of my magical talents.",
@@ -204,19 +204,19 @@ export const backgrounds: StaticBackground[] = [
 		starting_credits: 2500,
 		feature_name: "Guild Authority",
 		feature_description:
-			"You can leverage your guild's name to secure loans, bypass standard Association bureaucracy, and requisition basic mundane gear from affiliated businesses. You also command the loyalty of low-rank guild employees.",
+			"You can leverage your guild's name to secure loans, bypass standard Bureau bureaucracy, and requisition basic mundane gear from affiliated businesses. You also command the loyalty of low-rank guild employees.",
 		features: [
 			{
 				name: "Guild Authority",
 				description:
-					"You can leverage your guild's name to secure loans, bypass standard Association bureaucracy, and requisition basic mundane gear from affiliated businesses. You also command the loyalty of low-rank guild employees.",
+					"You can leverage your guild's name to secure loans, bypass standard Bureau bureaucracy, and requisition basic mundane gear from affiliated businesses. You also command the loyalty of low-rank guild employees.",
 			},
 		],
 		personality_traits: [
 			"I view every interaction as a negotiation.",
 			"I am incredibly protective of my guild members.",
 			"I speak in corporate buzzwords and synergy jargon.",
-			"I always dress impeccably, even in a dungeon.",
+			"I always dress impeccably, even in a Rift.",
 			"I delegate tasks constantly, rarely doing grunt work.",
 			"I calculate the monetary value of anomaly corpses mid-fight.",
 		],
@@ -252,7 +252,7 @@ export const backgrounds: StaticBackground[] = [
 		type: "background",
 		rank: "B",
 		description:
-			"Before the raid team goes in, you go in. You are a specialist in stealth and reconnaissance, tasked with mapping the gate, identifying the boss room, and slipping out before the anomalies notice you.",
+			"Before the raid team goes in, you go in. You are a specialist in stealth and reconnaissance, tasked with mapping the Rift, identifying the boss room, and slipping out before the anomalies notice you.",
 		skill_proficiencies: ["Stealth", "Investigation"],
 		tool_proficiencies: ["Cartographer's Tools", "Navigators Tools"],
 		languages: [],
@@ -266,12 +266,12 @@ export const backgrounds: StaticBackground[] = [
 		starting_credits: 800,
 		feature_name: "Aether-Pathfinder",
 		feature_description:
-			"You have a flawless memory for dungeon layouts. You can always retrace your steps in a gate, and you can accurately estimate the rank and type of anomalies in an area based on ambient mana traces.",
+			"You have a flawless memory for Rift layouts. You can always retrace your steps in a Rift, and you can accurately estimate the rank and type of anomalies in an area based on ambient mana traces.",
 		features: [
 			{
 				name: "Aether-Pathfinder",
 				description:
-					"You have a flawless memory for dungeon layouts. You can always retrace your steps in a gate, and you can accurately estimate the rank and type of anomalies in an area based on ambient mana traces.",
+					"You have a flawless memory for Rift layouts. You can always retrace your steps in a Rift, and you can accurately estimate the rank and type of anomalies in an area based on ambient mana traces.",
 			},
 		],
 		personality_traits: [
@@ -279,7 +279,7 @@ export const backgrounds: StaticBackground[] = [
 			"I map every room I enter in my head.",
 			"I speak quickly and concisely, reporting only facts.",
 			"I am deeply uncomfortable in open, brightly lit spaces.",
-			"I collect a small souvenir from every gate I map.",
+			"I collect a small souvenir from every Rift I map.",
 			"I am always looking for the quickest exit.",
 		],
 		ideals: [
@@ -291,10 +291,10 @@ export const backgrounds: StaticBackground[] = [
 			"Greed. I map the boss room, but I pocket the loose crystals on the way. (Evil)",
 		],
 		bonds: [
-			"I once mapped a gate that I swore I would never return to.",
+			"I once mapped a Rift that I swore I would never return to.",
 			"I owe my career to a mentor who didn't make it back from a scouting run.",
 			"My maps are my legacy; I fiercely protect my digital archives.",
-			"I am trying to find a gate that swallowed my hometown.",
+			"I am trying to find a Rift that swallowed my hometown.",
 			"I have a strange, sympathetic bond with an anomaly I watched for days.",
 			"I work to pay for my sibling's expensive medical care.",
 		],
@@ -315,7 +315,7 @@ export const backgrounds: StaticBackground[] = [
 		rank: "A",
 		description:
 			"You are highly sensitive to mana, capable of feeling the fluctuations of aether in the air. You might have been a radar operator, a meteorologist, or just someone with extreme migraines before awakening.",
-		skill_proficiencies: ["Perception", "Gate Topology"],
+		skill_proficiencies: ["Perception", "Rift Topology"],
 		tool_proficiencies: ["Alchemist's Supplies"],
 		languages: ["One additional language"],
 		equipment: [
@@ -327,12 +327,12 @@ export const backgrounds: StaticBackground[] = [
 		starting_credits: 600,
 		feature_name: "Natural Resonance",
 		feature_description:
-			"You can accurately predict when and where a gate will open up to 24 hours in advance within your city, and you can sense if an Awakened individual is actively concealing their true rank.",
+			"You can accurately predict when and where a Rift will open up to 24 hours in advance within your city, and you can sense if an Awakened individual is actively concealing their true rank.",
 		features: [
 			{
 				name: "Natural Resonance",
 				description:
-					"You can accurately predict when and where a gate will open up to 24 hours in advance within your city, and you can sense if an Awakened individual is actively concealing their true rank.",
+					"You can accurately predict when and where a Rift will open up to 24 hours in advance within your city, and you can sense if an Awakened individual is actively concealing their true rank.",
 			},
 		],
 		personality_traits: [
@@ -346,15 +346,15 @@ export const backgrounds: StaticBackground[] = [
 		ideals: [
 			"Harmony. We must balance our world with the mana leaking into it. (Neutral)",
 			"Warning. I must use my gift to evacuate people before breaks happen. (Good)",
-			"Exploitation. Knowing where gates open first means I get the best loot. (Evil)",
+			"Exploitation. Knowing where Rifts open first means I get the best loot. (Evil)",
 			"Understanding. The rifts are a puzzle I must solve. (Lawful)",
 			"Flow. Go where the energy takes you. (Chaotic)",
 			"Adaptation. Humanity must evolve to survive the aether. (Any)",
 		],
 		bonds: [
-			"I predicted a gate break but no one believed me, resulting in tragedy.",
+			"I predicted a Rift Break but no one believed me, resulting in tragedy.",
 			"I am tracking a specific, massive mana signature that haunts my dreams.",
-			"I work for the Association's early-warning division.",
+			"I work for the Bureau's early-warning division.",
 			"My mentor taught me how to filter the noise; I owe them everything.",
 			"I have a piece of a core that hums a specific frequency to me.",
 			"I am trying to find a cure for the physical toll my sensitivity takes on me.",
@@ -401,7 +401,7 @@ export const backgrounds: StaticBackground[] = [
 			"I often stare into space, listening to voices no one else hears.",
 			"I believe I am destined for something greater than mortal concerns.",
 			"I treat common people with patronizing pity.",
-			"I am intensely curious about the deep lore of the gates.",
+			"I am intensely curious about the deep lore of the Rifts.",
 			"I bear physical signs of my patron's influence (e.g., glowing eyes).",
 		],
 		ideals: [
@@ -436,7 +436,7 @@ export const backgrounds: StaticBackground[] = [
 		type: "background",
 		rank: "B",
 		description:
-			"You were part of a specialized mundane military unit designed to hold the line against gate breaks before Ascendants became common. You survived through extreme discipline and heavy firepower.",
+			"You were part of a specialized mundane military unit designed to hold the line against Rift breaks before Ascendants became common. You survived through extreme discipline and heavy firepower.",
 		skill_proficiencies: ["Athletics", "Medicine"],
 		tool_proficiencies: ["Land Vehicles", "Smith's Tools"],
 		languages: [],
@@ -447,12 +447,12 @@ export const backgrounds: StaticBackground[] = [
 			"A military-issue radio",
 		],
 		starting_credits: 700,
-		feature_name: "Gate-Line Stance",
+		feature_name: "Rift-Line Stance",
 		feature_description:
 			"You have an encyclopedic knowledge of military logistics and barricade construction. You can requisition supplies from military outposts, and mundane soldiers will follow your tactical commands in a crisis.",
 		features: [
 			{
-				name: "Gate-Line Stance",
+				name: "Rift-Line Stance",
 				description:
 					"You have an encyclopedic knowledge of military logistics and barricade construction. You can requisition supplies from military outposts, and mundane soldiers will follow your tactical commands in a crisis.",
 			},
@@ -497,7 +497,7 @@ export const backgrounds: StaticBackground[] = [
 		type: "background",
 		rank: "A",
 		description:
-			"You are a master of runic technology, blending modern computer science with ancient magical sigils. You design the containment fields that keep gates from breaking and craft the magical gear Ascendants rely on.",
+			"You are a master of runic technology, blending modern computer science with ancient magical sigils. You design the containment fields that keep Rifts from breaking and craft the magical gear Ascendants rely on.",
 		skill_proficiencies: ["Mana Flow", "Investigation"],
 		tool_proficiencies: ["Tinker's Tools", "Jeweler's Tools"],
 		languages: ["One exotic language"],
@@ -539,8 +539,8 @@ export const backgrounds: StaticBackground[] = [
 			"My masterpiece was stolen by a rival guild.",
 			"I am deeply indebted to the corporation that funds my lab.",
 			"I am obsessed with deciphering a specific, ancient tablet.",
-			"My former assistant was lost in a gate we were studying.",
-			"I want to build an ultimate weapon to close all gates permanently.",
+			"My former assistant was lost in a Rift we were studying.",
+			"I want to build an ultimate weapon to close all Rifts permanently.",
 		],
 		flaws: [
 			"I am oblivious to social cues and emotional needs.",
@@ -571,12 +571,12 @@ export const backgrounds: StaticBackground[] = [
 		starting_credits: 2000,
 		feature_name: "Containment Mandates",
 		feature_description:
-			"Your Association clearance allows you to confiscate 'dangerous' artifacts from other Ascendants legally. You have access to the Association's black-site databases and secure transport networks.",
+			"Your Bureau clearance allows you to confiscate 'dangerous' artifacts from other Ascendants legally. You have access to the Bureau's black-site databases and secure transport networks.",
 		features: [
 			{
 				name: "Containment Mandates",
 				description:
-					"Your Association clearance allows you to confiscate 'dangerous' artifacts from other Ascendants legally. You have access to the Association's black-site databases and secure transport networks.",
+					"Your Bureau clearance allows you to confiscate 'dangerous' artifacts from other Ascendants legally. You have access to the Bureau's black-site databases and secure transport networks.",
 			},
 		],
 		personality_traits: [
@@ -597,10 +597,10 @@ export const backgrounds: StaticBackground[] = [
 		],
 		bonds: [
 			"I am guarding an artifact that holds the soul of someone I love.",
-			"I failed to stop a heist that cost the Association a Sovereign core.",
+			"I failed to stop a heist that cost the Bureau a Sovereign core.",
 			"My mentor went mad guarding the deep vaults.",
 			"I am secretly hoarding confiscated artifacts for my own use.",
-			"I am fiercely loyal to the Director of the Association.",
+			"I am fiercely loyal to the Director of the Bureau.",
 			"I hear a specific cursed sword whispering to me in my dreams.",
 		],
 		flaws: [
@@ -656,7 +656,7 @@ export const backgrounds: StaticBackground[] = [
 			"Victory. I play to win, no matter the cost. (Evil)",
 			"Protection. My plans ensure everyone comes home. (Good)",
 			"Ego. I am the smartest person in the room, and I know it. (Chaotic)",
-			"Logic. Emotion has no place in the dungeon. (Neutral)",
+			"Logic. Emotion has no place in the Rift. (Neutral)",
 			"Glory. A flawless raid is a work of art. (Any)",
 		],
 		bonds: [
@@ -683,7 +683,7 @@ export const backgrounds: StaticBackground[] = [
 		type: "background",
 		rank: "B",
 		description:
-			"Before the gates, you investigated the paranormal. After the gates, you got a massive budget. You track down Assassin Ascendants, illegal artifact smuggling, and cults worshipping the Sovereigns.",
+			"Before the Rifts, you investigated the paranormal. After the Rifts, you got a massive budget. You track down Assassin Ascendants, illegal artifact smuggling, and cults worshipping the Sovereigns.",
 		skill_proficiencies: ["Investigation", "Insight"],
 		tool_proficiencies: ["Disguise Kit", "Thieves' Tools"],
 		languages: [],
@@ -718,7 +718,7 @@ export const backgrounds: StaticBackground[] = [
 			"Justice. Assassin Ascendants must be put down. (Good)",
 			"Profit. Blackmail is a lucrative business. (Evil)",
 			"Curiosity. I must uncover the deepest secrets of the rifts. (Neutral)",
-			"Freedom. The Association's lies must be exposed. (Chaotic)",
+			"Freedom. The Bureau's lies must be exposed. (Chaotic)",
 			"Vengeance. I will find the cult that took my family. (Any)",
 		],
 		bonds: [
@@ -745,7 +745,7 @@ export const backgrounds: StaticBackground[] = [
 		type: "background",
 		rank: "C",
 		description:
-			"You are the unsung hero of the dungeon raids. A non-combatant Awakened (or incredibly brave civilian) hired to carry heavy gear, harvest mana crystals from corpses, and haul the loot out. You have unparalleled endurance and a knack for avoiding aggro.",
+			"You are the unsung hero of the Rift raids. A non-combatant Awakened (or incredibly brave civilian) hired to carry heavy gear, harvest mana crystals from corpses, and haul the loot out. You have unparalleled endurance and a knack for avoiding aggro.",
 		skill_proficiencies: ["Athletics", "Survival"],
 		tool_proficiencies: ["Weaver's Tools", "Vehicles (Land)"],
 		languages: [],
@@ -789,13 +789,13 @@ export const backgrounds: StaticBackground[] = [
 			"I carry a lucky charm from my first successful D-Rank raid.",
 			"I have a bitter rivalry with another porter over scavenging rights.",
 			"My younger sibling is a hotshot A-Ranker; I keep them grounded.",
-			"I found an incredibly rare artifact and I'm hiding it from the Association.",
+			"I found an incredibly rare artifact and I'm hiding it from the Bureau.",
 		],
 		flaws: [
 			"I am a coward and will flee if not directly protected.",
 			"I am incredibly greedy and will risk my life for a shiny core.",
 			"I resent the combat ascendants who treat me like a pack mule.",
-			"I constantly complain about the conditions of the dungeon.",
+			"I constantly complain about the conditions of the Rift.",
 			"I have a gambling addiction that drains my hard-earned credits.",
 			"I hoard useless junk 'just in case it's valuable later.'",
 		],
@@ -803,34 +803,34 @@ export const backgrounds: StaticBackground[] = [
 	},
 	{
 		id: "b-14",
-		name: "Association Bureaucrat",
+		name: "Bureau Registrar",
 		type: "background",
 		rank: "C",
 		description:
-			"You worked a desk job for the Ascendant Bureau. You measured gate mana waves, issued Ascendant licenses, processed compensation claims for property damage, and dealt with the massive red tape of the Awakened world.",
+			"You worked a desk job for the Ascendant Bureau. You measured Rift mana waves, issued Ascendant licenses, processed compensation claims for property damage, and dealt with the massive red tape of the Awakened world.",
 		skill_proficiencies: ["Investigation", "Persuasion"],
 		tool_proficiencies: ["Calligrapher's Supplies", "Forgery Kit"],
 		languages: ["One additional language"],
 		equipment: [
-			"A stack of official Association forms",
+			"A stack of official Bureau forms",
 			"A high-end smartphone",
 			"A tailored business suit",
-			"An Association ID badge",
+			"A Bureau ID badge",
 			"A voice recorder",
 		],
 		starting_credits: 1000,
 		feature_name: "Red Tape Cutter",
 		feature_description:
-			"You know exactly how to navigate the Ascendant Bureau's bureaucracy. You can expedite gate clearances, secure meetings with high-ranking officials, and legally bypass standard quarantine protocols for your party.",
+			"You know exactly how to navigate the Ascendant Bureau's bureaucracy. You can expedite Rift clearances, secure meetings with high-ranking officials, and legally bypass standard quarantine protocols for your party.",
 		features: [
 			{
 				name: "Red Tape Cutter",
 				description:
-					"You know exactly how to navigate the Ascendant Bureau's bureaucracy. You can expedite gate clearances, secure meetings with high-ranking officials, and legally bypass standard quarantine protocols for your party.",
+					"You know exactly how to navigate the Ascendant Bureau's bureaucracy. You can expedite Rift clearances, secure meetings with high-ranking officials, and legally bypass standard quarantine protocols for your party.",
 			},
 		],
 		personality_traits: [
-			"I cite Association bylaws in casual conversation.",
+			"I cite Bureau bylaws in casual conversation.",
 			"I am obsessively organized and neat.",
 			"I treat life-or-death situations as paperwork issues.",
 			"I always read the fine print before doing anything.",
@@ -838,7 +838,7 @@ export const backgrounds: StaticBackground[] = [
 			"I drink copious amounts of coffee.",
 		],
 		ideals: [
-			"Order. The Association is the only thing keeping society from collapsing. (Lawful)",
+			"Order. The Bureau is the only thing keeping society from collapsing. (Lawful)",
 			"Corruption. The system is rigged, so I might as well get mine. (Evil)",
 			"Service. I do the boring work so the Ascendants can save lives. (Good)",
 			"Efficiency. Time is money, and bureaucracy wastes both. (Chaotic)",
@@ -847,9 +847,9 @@ export const backgrounds: StaticBackground[] = [
 		],
 		bonds: [
 			"I covered up a massive scandal for a major Guild, and they owe me.",
-			"My mentor in the Association was assassinated; I seek the truth.",
-			"I am secretly leaking Association data to a whistle-blowing journalist.",
-			"I am fiercely loyal to the current Chairman of the Association.",
+			"My mentor in the Bureau was assassinated; I seek the truth.",
+			"I am secretly leaking Bureau data to a whistle-blowing journalist.",
+			"I am fiercely loyal to the current Chairman of the Bureau.",
 			"I have a stack of rejected compensation claims from victims I want to help.",
 			"I lost my desk job because of an Ascendant's mistake, and now I'm forced to dive.",
 		],
@@ -858,7 +858,7 @@ export const backgrounds: StaticBackground[] = [
 			"I am incredibly arrogant toward 'uneducated' combat Ascendants.",
 			"I will accept bribes to look the other way.",
 			"I am physically unfit and complain about manual labor.",
-			"I prioritize the Association's reputation over human lives.",
+			"I prioritize the Bureau's reputation over human lives.",
 			"I am a stickler for rules to a highly detrimental degree.",
 		],
 		source: "Rift Ascendant Canon",
@@ -869,7 +869,7 @@ export const backgrounds: StaticBackground[] = [
 		type: "background",
 		rank: "B",
 		description:
-			"Not all artifacts get registered. Not all cores get taxed. You operate in the criminal underworld, fencing illegal gate drops, cursed weapons, and untraceable mana potions to Assassin, villains, and desperate heroes alike.",
+			"Not all artifacts get registered. Not all cores get taxed. You operate in the criminal underworld, fencing illegal Rift drops, cursed weapons, and untraceable mana potions to Assassin, villains, and desperate heroes alike.",
 		skill_proficiencies: ["Deception", "Sleight of Hand"],
 		tool_proficiencies: ["Thieves' Tools", "Jeweler's Tools"],
 		languages: ["Thieves' Cant (or Underworld Slang)"],
@@ -901,7 +901,7 @@ export const backgrounds: StaticBackground[] = [
 		],
 		ideals: [
 			"Greed. Everything and everyone has a price. (Evil)",
-			"Freedom. The Association's taxes are theft; I operate outside their control. (Chaotic)",
+			"Freedom. The Bureau's taxes are theft; I operate outside their control. (Chaotic)",
 			"Honor. I am a crook, but I never betray a business partner. (Lawful)",
 			"Survival. I sell to whoever pays because I need to eat. (Neutral)",
 			"Redemption. I use my illicit funds to support a good cause. (Good)",
@@ -910,7 +910,7 @@ export const backgrounds: StaticBackground[] = [
 		bonds: [
 			"I owe a massive debt to a dangerous Yakuza/Cartel boss.",
 			"I am trying to buy back a family heirloom I was forced to sell.",
-			"My sibling is an honest Association investigator; we pretend not to know each other.",
+			"My sibling is an honest Bureau investigator; we pretend not to know each other.",
 			"I have a trusted fence who is the only person I consider a friend.",
 			"I sold a cursed artifact that killed a town; I must retrieve it.",
 			"I am secretly gathering funds to buy a cure for my magical illness.",
@@ -927,11 +927,11 @@ export const backgrounds: StaticBackground[] = [
 	},
 	{
 		id: "b-16",
-		name: "Gate-Site Scavenger",
+		name: "Rift-Site Scavenger",
 		type: "background",
 		rank: "C",
 		description:
-			"When the big guilds clear an A-Rank gate, they leave the small stuff behind. You are a 'hyena', illegally sneaking into uncleared or recently cleared gates to mine overlooked crystals or scavenge gear from dead Ascendants.",
+			"When the big guilds clear an A-Rank Rift, they leave the small stuff behind. You are a 'hyena', illegally sneaking into uncleared or recently cleared Rifts to mine overlooked crystals or scavenge gear from dead Ascendants.",
 		skill_proficiencies: ["Stealth", "Survival"],
 		tool_proficiencies: ["Thieves' Tools", "Cobbler's Tools"],
 		languages: [],
@@ -945,12 +945,12 @@ export const backgrounds: StaticBackground[] = [
 		starting_credits: 300,
 		feature_name: "Hyena's Path",
 		feature_description:
-			"You know how to bypass Association police barricades and security perimeters around active gates. You can also identify areas in a dungeon where loot is likely to be hidden or overlooked by main raid teams.",
+			"You know how to bypass Bureau police barricades and security perimeters around active Rifts. You can also identify areas in a Rift where loot is likely to be hidden or overlooked by main raid teams.",
 		features: [
 			{
 				name: "Hyena's Path",
 				description:
-					"You know how to bypass Association police barricades and security perimeters around active gates. You can also identify areas in a dungeon where loot is likely to be hidden or overlooked by main raid teams.",
+					"You know how to bypass Bureau police barricades and security perimeters around active Rifts. You can also identify areas in a Rift where loot is likely to be hidden or overlooked by main raid teams.",
 			},
 		],
 		personality_traits: [
@@ -959,11 +959,11 @@ export const backgrounds: StaticBackground[] = [
 			"I move quietly and stay close to the walls.",
 			"I despise the wealthy elites of the mega-guilds.",
 			"I am fiercely territorial over my 'finds'.",
-			"I smell faintly of dungeon rot and ozone.",
+			"I smell faintly of Rift rot and ozone.",
 		],
 		ideals: [
 			"Survival. The scraps of the rich are the feasts of the poor. (Neutral)",
-			"Rebellion. The guilds don't own the gates; the gates belong to everyone. (Chaotic)",
+			"Rebellion. The guilds don't own the Rifts; the Rifts belong to everyone. (Chaotic)",
 			"Greed. I'll pick the gold off a corpse before it gets cold. (Evil)",
 			"Family. I scavenge to feed the orphans in my slum. (Good)",
 			"Code. I never steal from a living Ascendant, only the dead. (Lawful)",
@@ -973,9 +973,9 @@ export const backgrounds: StaticBackground[] = [
 			"I scavenged the signature weapon of a famous dead Ascendant, and now people are looking for it.",
 			"I am fiercely protective of my fellow street hyenas.",
 			"I owe my life to a guild team that caught me but let me go.",
-			"I am looking for the body of my parent who died in a gate.",
-			"I know a secret entrance to a permanent gate that no one else knows.",
-			"I have a pet anomaly cub I rescued from a cleared dungeon.",
+			"I am looking for the body of my parent who died in a Rift.",
+			"I know a secret entrance to a permanent Rift that no one else knows.",
+			"I have a pet anomaly cub I rescued from a cleared Rift.",
 		],
 		flaws: [
 			"I am a kleptomaniac.",
@@ -993,7 +993,7 @@ export const backgrounds: StaticBackground[] = [
 		type: "background",
 		rank: "B",
 		description:
-			"You are an ex-military operative who transitioned into the lucrative private sector. You are hired by mega-guilds and corporations to provide security outside the gates, protect VIPs, or handle 'wetwork' against rival guilds.",
+			"You are an ex-military operative who transitioned into the lucrative private sector. You are hired by mega-guilds and corporations to provide security outside the Rifts, protect VIPs, or handle 'wetwork' against rival guilds.",
 		skill_proficiencies: ["Intimidation", "Athletics"],
 		tool_proficiencies: ["Land Vehicles", "Smith's Tools"],
 		languages: ["One additional language"],
@@ -1117,7 +1117,7 @@ export const backgrounds: StaticBackground[] = [
 		type: "background",
 		rank: "C",
 		description:
-			"Before the awakening, you were a street punk, a gang member, or a petty criminal. When you got your powers, you used them to rule the streets—until the Association or a major Guild forced you into legitimate hunting as an alternative to prison.",
+			"Before the awakening, you were a street punk, a gang member, or a petty criminal. When you got your powers, you used them to rule the streets—until the Bureau or a major Guild forced you into legitimate hunting as an alternative to prison.",
 		skill_proficiencies: ["Intimidation", "Sleight of Hand"],
 		tool_proficiencies: ["Thieves' Tools", "Vehicles (Land)"],
 		languages: ["Underworld Slang"],
@@ -1151,7 +1151,7 @@ export const backgrounds: StaticBackground[] = [
 			"Freedom. No one tells me what to do. (Chaotic)",
 			"Power. The strong rule the streets. (Evil)",
 			"Loyalty. You don't turn your back on your family. (Lawful)",
-			"Protection. I look out for the people the Association ignores. (Good)",
+			"Protection. I look out for the people the Bureau ignores. (Good)",
 			"Survival. It's a dog-eat-dog world. (Neutral)",
 			"Respect. I will make sure everyone knows my name. (Any)",
 		],
@@ -1159,7 +1159,7 @@ export const backgrounds: StaticBackground[] = [
 			"My old gang leader is now a powerful villain I must stop.",
 			"I am hunting to pay off a massive debt to keep my family safe.",
 			"I am fiercely protective of the neighborhood I grew up in.",
-			"I have a parole officer (an Association agent) I must appease.",
+			"I have a parole officer (an Bureau agent) I must appease.",
 			"I carry a weapon that belonged to my murdered best friend.",
 			"I am secretly in love with a high-society Academy graduate.",
 		],
@@ -1179,7 +1179,7 @@ export const backgrounds: StaticBackground[] = [
 		type: "background",
 		rank: "B",
 		description:
-			"When an Ascendant murders someone inside a gate, the normal police can't do anything. You are a specialized detective working for the government or the Association, tasked with solving crimes committed by gods among men.",
+			"When an Ascendant murders someone inside a Rift, the normal police can't do anything. You are a specialized detective working for the government or the Bureau, tasked with solving crimes committed by gods among men.",
 		skill_proficiencies: ["Investigation", "Insight"],
 		tool_proficiencies: ["Disguise Kit", "Forgery Kit"],
 		languages: ["One additional language"],
@@ -1193,12 +1193,12 @@ export const backgrounds: StaticBackground[] = [
 		starting_credits: 1000,
 		feature_name: "Jurisdiction",
 		feature_description:
-			"You have the legal authority to enter crime scenes, demand cooperation from local police, and request access to an Ascendant's public dungeon-dive records from the Association.",
+			"You have the legal authority to enter crime scenes, demand cooperation from local police, and request access to an Ascendant's public dungeon-dive records from the Bureau.",
 		features: [
 			{
 				name: "Jurisdiction",
 				description:
-					"You have the legal authority to enter crime scenes, demand cooperation from local police, and request access to an Ascendant's public dungeon-dive records from the Association.",
+					"You have the legal authority to enter crime scenes, demand cooperation from local police, and request access to an Ascendant's public dungeon-dive records from the Bureau.",
 			},
 		],
 		personality_traits: [
@@ -1218,7 +1218,7 @@ export const backgrounds: StaticBackground[] = [
 			"Duty. I do the job because no one else will. (Any)",
 		],
 		bonds: [
-			"I am hunting a serial killer who uses gates to dispose of bodies.",
+			"I am hunting a serial killer who uses Rifts to dispose of bodies.",
 			"My former partner was murdered by a Guild Master who got away with it.",
 			"I have an informant in the underworld I would die to protect.",
 			"I am deeply devoted to my family, whom I keep isolated from my work.",
@@ -1300,7 +1300,7 @@ export const backgrounds: StaticBackground[] = [
 	},
 	{
 		id: "b-22",
-		name: "Gate-Worshipping Cultist",
+		name: "Rift-Worshipping Cultist",
 		type: "background",
 		rank: "D",
 		description:
@@ -1312,7 +1312,7 @@ export const backgrounds: StaticBackground[] = [
 			"A hidden cult symbol",
 			"Dark robes",
 			"A sacrificial dagger",
-			"A strange, humming piece of a gate",
+			"A strange, humming piece of a Rift",
 			"A book of prophecies",
 		],
 		starting_credits: 200,
@@ -1366,7 +1366,7 @@ export const backgrounds: StaticBackground[] = [
 		type: "background",
 		rank: "C",
 		description:
-			"You make your living broadcasting your life to millions. When the gates opened, you didn't run; you turned the camera on. You are an Awakened influencer who live-streams dungeon dives for superchats and sponsorships.",
+			"You make your living broadcasting your life to millions. When the Rifts opened, you didn't run; you turned the camera on. You are an Awakened influencer who live-streams Rift dives for superchats and sponsorships.",
 		skill_proficiencies: ["Performance", "Acrobatics"],
 		tool_proficiencies: ["Disguise Kit"],
 		languages: ["One additional language"],
@@ -1410,7 +1410,7 @@ export const backgrounds: StaticBackground[] = [
 			"I am hiding a dark secret that would ruin my career if exposed.",
 			"I am desperately seeking a sponsor to pay off a massive debt.",
 			"I want to document the ultimate S-Rank boss fight.",
-			"I am trying to find a missing fan who disappeared in a gate.",
+			"I am trying to find a missing fan who disappeared in a Rift.",
 		],
 		flaws: [
 			"I will risk the lives of my party for a viral clip.",
@@ -1431,7 +1431,7 @@ export const backgrounds: StaticBackground[] = [
 			"You were a manufactured pop star, trained for years to be perfect. Your awakening was a PR nightmare—or a PR miracle. Now, your agency manages your Ascendant career, and you fight anomalies while maintaining perfect choreography.",
 		skill_proficiencies: ["Performance", "Persuasion"],
 		tool_proficiencies: ["Musical Instrument", "Disguise Kit"],
-		languages: ["Korean", "One additional language"],
+		languages: ["Accordan", "One additional language"],
 		equipment: [
 			"A microphone (can be a focus)",
 			"Designer combat outfits",
@@ -1471,7 +1471,7 @@ export const backgrounds: StaticBackground[] = [
 			"I am trapped in an abusive contract with my entertainment agency.",
 			"I am fiercely protective of my sasaeng (obsessive) fans.",
 			"I am trying to protect my younger sibling from the industry.",
-			"I want to avenge a former bandmate who died in a gate.",
+			"I want to avenge a former bandmate who died in a Rift.",
 			"I carry a specific song lyric that holds the key to my awakening.",
 		],
 		flaws: [
@@ -1595,7 +1595,7 @@ export const backgrounds: StaticBackground[] = [
 			"I owe my success to a harsh but fair coach.",
 			"I suffered a career-ending injury that my awakening healed; I must prove I'm still the best.",
 			"I am fiercely loyal to my hometown team.",
-			"I want to avenge a teammate who was killed in a gate.",
+			"I want to avenge a teammate who was killed in a Rift.",
 			"I carry the jersey of my childhood idol.",
 		],
 		flaws: [
@@ -1614,7 +1614,7 @@ export const backgrounds: StaticBackground[] = [
 		type: "background",
 		rank: "S",
 		description:
-			"You are a shark in a tailored suit. You ran a Fortune 500 company before the gates, and when you awakened, you realized the true profit lay in mana crystals and guild acquisitions. You are a CEO, a board member, or a ruthless venture capitalist.",
+			"You are a shark in a tailored suit. You ran a Fortune 500 company before the Rifts, and when you awakened, you realized the true profit lay in mana crystals and guild acquisitions. You are a CEO, a board member, or a ruthless venture capitalist.",
 		skill_proficiencies: ["Persuasion", "Insight"],
 		tool_proficiencies: ["Calligrapher's Supplies", "Forgery Kit"],
 		languages: ["Two additional languages"],
@@ -1649,7 +1649,7 @@ export const backgrounds: StaticBackground[] = [
 			"Order. The corporate structure is the pinnacle of human achievement. (Lawful)",
 			"Efficiency. Waste is a sin; I optimize everything. (Neutral)",
 			"Power. I want to own the Ascendant Bureau itself. (Any)",
-			"Philanthropy. I use my wealth to rebuild cities destroyed by gates. (Good)",
+			"Philanthropy. I use my wealth to rebuild cities destroyed by Rifts. (Good)",
 			"Disruption. I break established markets to create new opportunities. (Chaotic)",
 		],
 		bonds: [
@@ -1676,7 +1676,7 @@ export const backgrounds: StaticBackground[] = [
 		type: "background",
 		rank: "B",
 		description:
-			"You are a ghost in the machine. You grew up in the dark web, breaching corporate firewalls and stealing Association data. Your awakening enhanced your mind, allowing you to interface with technology and magic simultaneously.",
+			"You are a ghost in the machine. You grew up in the dark web, breaching corporate firewalls and stealing Bureau data. Your awakening enhanced your mind, allowing you to interface with technology and magic simultaneously.",
 		skill_proficiencies: ["Investigation", "Sleight of Hand"],
 		tool_proficiencies: ["Thieves' Tools", "Tinker's Tools"],
 		languages: ["Machine Code (or one exotic language)"],
@@ -1719,7 +1719,7 @@ export const backgrounds: StaticBackground[] = [
 			"I am fiercely loyal to my online hacker collective.",
 			"I am blackmailing a corrupt Guild Master.",
 			"I am running from a corporate hit squad I stole from.",
-			"I want to find the true origin of the gates hidden in the code.",
+			"I want to find the true origin of the Rifts hidden in the code.",
 			"I am searching for my sibling who was 'deleted' by the government.",
 		],
 		flaws: [
@@ -1782,7 +1782,7 @@ export const backgrounds: StaticBackground[] = [
 			"I am engaged in a bitter feud with a rival influencer.",
 			"I am hiding a massive scandal that would ruin my career.",
 			"I want to prove I am more than just a pretty face.",
-			"I am secretly funding a charity for victims of gate breaks.",
+			"I am secretly funding a charity for victims of Rift breaks.",
 		],
 		flaws: [
 			"I am incredibly vain and shallow.",
@@ -1800,10 +1800,10 @@ export const backgrounds: StaticBackground[] = [
 		type: "background",
 		rank: "B",
 		description:
-			"You were a professional gamer with inhuman reaction times and APM (Actions Per Minute). When you awakened, those skills translated perfectly to dodging anomaly attacks and managing cooldowns. You treat dungeon dives like an MMORPG raid.",
+			"You were a professional gamer with inhuman reaction times and APM (Actions Per Minute). When you awakened, those skills translated perfectly to dodging anomaly attacks and managing cooldowns. You treat Rift dives like an MMORPG raid.",
 		skill_proficiencies: ["Insight", "Perception"],
 		tool_proficiencies: ["Gaming Set", "Tinker's Tools"],
-		languages: ["Korean (or another language common in E-Sports)"],
+		languages: ["Accordan (or another language common in E-Sports)"],
 		equipment: [
 			"A high-end gaming headset",
 			"A mechanical keyboard (modified into a weapon or focus)",
@@ -1844,7 +1844,7 @@ export const backgrounds: StaticBackground[] = [
 			"I have a bitter rivalry with another top-ranked Ascendant/Gamer.",
 			"I am trying to secure a massive sponsorship deal.",
 			"I want to prove that gamers make the best Ascendants.",
-			"I am searching for a 'glitch' or exploit in the gate system.",
+			"I am searching for a 'glitch' or exploit in the Rift system.",
 		],
 		flaws: [
 			"I am incredibly arrogant and rage when things go wrong.",

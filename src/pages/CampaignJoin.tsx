@@ -8,16 +8,13 @@ import {
 	useSearchParams,
 } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
-import {
-	AscendantText,
-	ManaFlowText,
-	RiftHeading,
-} from "@/components/ui/AscendantText";
+import { AscendantText, ManaFlowText } from "@/components/ui/AscendantText";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { PageHeader } from "@/components/ui/PageHeader";
 import {
 	Select,
 	SelectContent,
@@ -163,18 +160,16 @@ const CampaignJoin = () => {
 					</Button>
 				</Link>
 
-				<RiftHeading
-					level={1}
-					variant="sovereign"
-					dimensional
-					className="mb-2 text-3xl sm:text-4xl"
-				>
-					Establish Nexus Link
-				</RiftHeading>
-				<ManaFlowText variant="rift" speed="slow" className="mb-8">
-					Implement an access cipher or localized token from a Warden to merge
-					with their domain.
-				</ManaFlowText>
+				<PageHeader
+					className="mb-8"
+					title="Establish Nexus Link"
+					description={
+						<ManaFlowText variant="rift" speed="slow">
+							Implement an access cipher or localized token from a Warden to
+							merge with their domain.
+						</ManaFlowText>
+					}
+				/>
 
 				{isInviteFlow && !authLoading && !user && (
 					<AscendantWindow

@@ -186,7 +186,7 @@ export function AddTattooDialog({
 													{tattoo.price != null && (
 														<Badge
 															variant="outline"
-															className="text-xs text-bond-gold border-yellow-600/40"
+															className="text-xs text-gate-s border-gate-s/40"
 														>
 															{formatRaCurrencyValue(tattoo.price)}
 														</Badge>

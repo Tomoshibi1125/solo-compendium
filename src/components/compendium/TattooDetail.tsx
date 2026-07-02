@@ -19,11 +19,11 @@ interface TattooDetailProps {
 
 const rarityStyles: Record<string, string> = {
 	common: "text-muted-foreground border-border bg-card",
-	uncommon: "text-emerald-400 border-emerald-500/40 bg-emerald-500/10",
+	uncommon: "text-system-green border-system-green/40 bg-system-green/10",
 	rare: "text-blue-400 border-blue-500/40 bg-blue-500/10",
-	very_rare: "text-indigo-400 border-indigo-500/40 bg-indigo-500/10",
+	very_rare: "text-hunter-blue border-hunter-blue/40 bg-hunter-blue/10",
 	epic: "text-purple-400 border-purple-500/40 bg-purple-500/10",
-	legendary: "text-amber-400 border-amber-500/40 bg-amber-500/10",
+	legendary: "text-gate-s border-gate-s/40 bg-gate-s/10",
 };
 
 export const TattooDetail = ({ data }: TattooDetailProps) => {
@@ -68,10 +68,7 @@ export const TattooDetail = ({ data }: TattooDetailProps) => {
 							<Badge variant="destructive">Requires Attunement</Badge>
 						)}
 						{data.price != null && (
-							<Badge
-								variant="outline"
-								className="text-bond-gold border-yellow-600/40"
-							>
+							<Badge variant="outline" className="text-gate-s border-gate-s/40">
 								{formatRaCurrencyValue(data.price)}
 							</Badge>
 						)}

@@ -13,11 +13,11 @@
 import type { GuildQuestRank } from "@/lib/guildQuests";
 
 export type QuestContractType =
-	| "strike" // clear monsters / kill a boss / seal a gate
+	| "strike" // clear monsters / kill a boss / seal a Rift
 	| "mining" // essence & mana-stone recovery
 	| "extraction" // pull out a stranded team or civilians
 	| "investigation" // determine cause / origin
-	| "containment" // dungeon-break / domain response
+	| "containment" // Rift Break / domain response
 	| "recovery" // retrieve a relic or lost asset
 	| "hunt" // eliminate a named anomaly or rogue
 	| "recon" // survey a new rift / threshold
@@ -77,7 +77,7 @@ export const PREBUILT_QUEST_CONTRACTS: QuestContract[] = [
 		rank: "E",
 		type: "extraction",
 		summary:
-			"Two awakened scavengers wandered into a low rift chasing salvage and never came back out. Pull them before the gate sours.",
+			"Two awakened scavengers wandered into a low rift chasing salvage and never came back out. Pull them before the Rift sours.",
 		objectives: [
 			"Locate the scavengers by their AFA pings",
 			"Stabilize the wounded before the timer runs",
@@ -115,14 +115,14 @@ export const PREBUILT_QUEST_CONTRACTS: QuestContract[] = [
 	},
 	{
 		id: "qc-e-firstgate",
-		title: "First Gate, First Seal",
+		title: "First Rift, First Seal",
 		rank: "E",
 		type: "recon",
 		summary:
 			"A brand-new threshold has opened on farmland east of the relay. Scout it, rank it, and report before anyone steps through blind.",
 		objectives: [
 			"Survey the threshold's perimeter and pulse rate",
-			"Estimate the gate's rank and core depth",
+			"Estimate the Rift's rank and core depth",
 			"Plant Bureau markers and file the dossier",
 		],
 		rewardNotes: "Recon fee; first-survey naming credit.",
@@ -148,7 +148,7 @@ export const PREBUILT_QUEST_CONTRACTS: QuestContract[] = [
 		rank: "E",
 		type: "containment",
 		summary:
-			"A hairline rift is weeping corruption into a village well. Contain it before the failure widens into a true gate.",
+			"A hairline rift is weeping corruption into a village well. Contain it before the failure widens into a true Rift.",
 		objectives: [
 			"Lay containment salt around the weep",
 			"Drain and purge the tainted well",
@@ -178,7 +178,7 @@ export const PREBUILT_QUEST_CONTRACTS: QuestContract[] = [
 		rank: "D",
 		type: "mining",
 		summary:
-			"A rich essence vein runs beneath an unstable gate. Mining squads need cover while they cut, and a fast exit if it turns.",
+			"A rich essence vein runs beneath an unstable Rift. Mining squads need cover while they cut, and a fast exit if it turns.",
 		objectives: [
 			"Hold the cut-site against wandering spawns",
 			"Recover the high-grade essence nodes",
@@ -279,13 +279,13 @@ export const PREBUILT_QUEST_CONTRACTS: QuestContract[] = [
 		rank: "C",
 		type: "strike",
 		summary:
-			"A C-rank gate has grown a 'choir' of resonant undead whose song lures the unawakened inside. Break the choir and seal the gate.",
+			"A C-rank Rift has grown a 'choir' of resonant undead whose song lures the unawakened inside. Break the choir and seal the Rift.",
 		objectives: [
 			"Push to the resonance chamber through the nave",
 			"Shatter the three choir-conductors in sequence",
-			"Seal the gate before the song reforms",
+			"Seal the Rift before the song reforms",
 		],
-		rewardNotes: "Gate-clear bounty; resonance cores.",
+		rewardNotes: "Rift-clear bounty; resonance cores.",
 	},
 	{
 		id: "qc-c-motherlode",
@@ -307,9 +307,9 @@ export const PREBUILT_QUEST_CONTRACTS: QuestContract[] = [
 		rank: "C",
 		type: "extraction",
 		summary:
-			"An entire strike team went dark inside a shifting gate. Central will mark them expendable at dawn unless someone brings answers.",
+			"An entire strike team went dark inside a shifting Rift. Central will mark them expendable at dawn unless someone brings answers.",
 		objectives: [
-			"Enter the shifting gate and follow Seven's trail",
+			"Enter the shifting Rift and follow Seven's trail",
 			"Recover survivors or confirm their fate",
 			"Bring back proof before Central's deadline",
 		],
@@ -317,11 +317,11 @@ export const PREBUILT_QUEST_CONTRACTS: QuestContract[] = [
 	},
 	{
 		id: "qc-c-twinpings",
-		title: "Two Cores, One Gate",
+		title: "Two Cores, One Rift",
 		rank: "C",
 		type: "investigation",
 		summary:
-			"Instruments insist this gate has two cores — which should be impossible. Find out what's really down there before clearing it.",
+			"Instruments insist this Rift has two cores — which should be impossible. Find out what's really down there before clearing it.",
 		objectives: [
 			"Confirm or refute the dual-core reading",
 			"Identify the source of the second signature",
@@ -335,7 +335,7 @@ export const PREBUILT_QUEST_CONTRACTS: QuestContract[] = [
 		rank: "C",
 		type: "recovery",
 		summary:
-			"A dead warden's signature relic is still broadcasting from inside the gate that killed them. Recover it before a rival guild does.",
+			"A dead warden's signature relic is still broadcasting from inside the Rift that killed them. Recover it before a rival guild does.",
 		objectives: [
 			"Reach the relic ahead of the rival crew",
 			"Break the relic's grief-ward without triggering it",
@@ -394,7 +394,7 @@ export const PREBUILT_QUEST_CONTRACTS: QuestContract[] = [
 		rank: "B",
 		type: "recovery",
 		summary:
-			"A sealed pre-rift vault has surfaced inside a B-rank gate, packed with relics — and whatever was sealed in with them.",
+			"A sealed pre-rift vault has surfaced inside a B-rank Rift, packed with relics — and whatever was sealed in with them.",
 		objectives: [
 			"Clear the approach to the vault doors",
 			"Solve or force the vault's three locks",
@@ -423,7 +423,7 @@ export const PREBUILT_QUEST_CONTRACTS: QuestContract[] = [
 		rank: "B",
 		type: "mining",
 		summary:
-			"A B-rank gate's deep core is dense with high-grade essence, but the descent is guarded the whole way down.",
+			"A B-rank Rift's deep core is dense with high-grade essence, but the descent is guarded the whole way down.",
 		objectives: [
 			"Fight down through three guarded descent stages",
 			"Hold the core chamber for the mining crew",
@@ -437,7 +437,7 @@ export const PREBUILT_QUEST_CONTRACTS: QuestContract[] = [
 		rank: "B",
 		type: "extraction",
 		summary:
-			"A gate erupted under a residential district. Get the trapped residents out through a collapsing, spawn-filled grid.",
+			"A Rift erupted under a residential district. Get the trapped residents out through a collapsing, spawn-filled grid.",
 		objectives: [
 			"Open a safe corridor through the spawn",
 			"Move residents in waves to the muster point",
@@ -447,15 +447,15 @@ export const PREBUILT_QUEST_CONTRACTS: QuestContract[] = [
 	},
 	{
 		id: "qc-b-breakboss",
-		title: "Dungeon-Break: The Gorewright",
+		title: "Rift Break: The Gorewright",
 		rank: "B",
 		type: "strike",
 		summary:
-			"A gate is hours from breaking and disgorging its boss, the Gorewright, into the city. Go in and kill it before it comes out.",
+			"A Rift is hours from breaking and disgorging its boss, the Gorewright, into the city. Go in and kill it before it comes out.",
 		objectives: [
 			"Race to the boss arena before the break",
 			"Down the Gorewright's two heralds",
-			"Kill the Gorewright and seal the gate",
+			"Kill the Gorewright and seal the Rift",
 		],
 		rewardNotes: "Break-prevention bounty; boss-core trophy.",
 	},
@@ -465,7 +465,7 @@ export const PREBUILT_QUEST_CONTRACTS: QuestContract[] = [
 		rank: "B",
 		type: "recon",
 		summary:
-			"A vast null-field gate swallows instruments and ascendant power alike. Map it the hard way and learn its rules.",
+			"A vast null-field Rift swallows instruments and ascendant power alike. Map it the hard way and learn its rules.",
 		objectives: [
 			"Chart the expanse without powered navigation",
 			"Identify where power does and doesn't function",
@@ -481,7 +481,7 @@ export const PREBUILT_QUEST_CONTRACTS: QuestContract[] = [
 		rank: "A",
 		type: "strike",
 		summary:
-			"An A-rank gate has produced a titan-class spawn that no single guild has survived. Coordinate a full strike and bring it down.",
+			"An A-rank Rift has produced a titan-class spawn that no single guild has survived. Coordinate a full strike and bring it down.",
 		objectives: [
 			"Stagger the titan with a coordinated opening",
 			"Break its three armor anchors under fire",
@@ -496,7 +496,7 @@ export const PREBUILT_QUEST_CONTRACTS: QuestContract[] = [
 		rank: "A",
 		type: "extraction",
 		summary:
-			"A national-grade warden fell holding a collapsing A-rank gate. Get them and their team out before the gate finishes failing.",
+			"A national-grade warden fell holding a collapsing A-rank Rift. Get them and their team out before the Rift finishes failing.",
 		objectives: [
 			"Punch through to the warden's last position",
 			"Stabilize the warden for transport",
@@ -534,13 +534,13 @@ export const PREBUILT_QUEST_CONTRACTS: QuestContract[] = [
 	},
 	{
 		id: "qc-a-mindgate",
-		title: "The Gate That Thinks",
+		title: "The Rift That Thinks",
 		rank: "A",
 		type: "investigation",
 		summary:
-			"An A-rank gate appears to anticipate every strike sent against it. Determine whether it is intelligent — or being directed.",
+			"An A-rank Rift appears to anticipate every strike sent against it. Determine whether it is intelligent — or being directed.",
 		objectives: [
-			"Probe the gate's adaptive responses",
+			"Probe the Rift's adaptive responses",
 			"Find the intelligence or the hand behind it",
 			"Deliver findings before the next strike window",
 		],
@@ -564,15 +564,15 @@ export const PREBUILT_QUEST_CONTRACTS: QuestContract[] = [
 	// ── S-rank ────────────────────────────────────────────────────────────────
 	{
 		id: "qc-s-monarchgate",
-		title: "The Monarch Gate",
+		title: "The Monarch Rift",
 		rank: "S",
 		type: "strike",
 		summary:
-			"An S-rank gate is ruled by a Monarch-class entity. Only a coalition of elite ascendants can hope to clear it.",
+			"An S-rank Rift is ruled by a Monarch-class entity. Only a coalition of elite ascendants can hope to clear it.",
 		objectives: [
 			"Survive the Monarch's domain on entry",
 			"Dismantle the Monarch's court of heralds",
-			"Defeat the Monarch and seal the gate",
+			"Defeat the Monarch and seal the Rift",
 		],
 		rewardNotes: "Legendary clear; Monarch-grade relics; national renown.",
 		grantsRegentUnlock: true,
@@ -609,13 +609,13 @@ export const PREBUILT_QUEST_CONTRACTS: QuestContract[] = [
 	},
 	{
 		id: "qc-s-deadgate",
-		title: "Reopen the Dead Gate",
+		title: "Reopen the Dead Rift",
 		rank: "S",
 		type: "investigation",
 		summary:
-			"A gate that 'died' decades ago has begun to breathe again. Determine what is reviving it before it finishes — and stop it if you must.",
+			"A Rift that 'died' decades ago has begun to breathe again. Determine what is reviving it before it finishes — and stop it if you must.",
 		objectives: [
-			"Enter the reviving dead gate",
+			"Enter the reviving dead Rift",
 			"Identify the force restarting its core",
 			"Halt the revival or evacuate the region",
 		],
@@ -624,14 +624,14 @@ export const PREBUILT_QUEST_CONTRACTS: QuestContract[] = [
 		grantsRegentUnlock: true,
 	},
 
-	// ── SS-rank ───────────────────────────────────────────────────────────────
+	// ── S-Rank ───────────────────────────────────────────────────────────────
 	{
 		id: "qc-ss-worldwound",
 		title: "Seal the World-Wound",
-		rank: "SS",
+		rank: "S",
 		type: "containment",
 		summary:
-			"An SS-rank tear is bleeding multiple Domains into one another. Every elite guild on the continent is being called to seal it.",
+			"An S-Rank tear is bleeding multiple Domains into one another. Every elite guild on the continent is being called to seal it.",
 		objectives: [
 			"Coordinate the multi-guild assault on the tear",
 			"Sever the linked Domain anchors in sequence",
@@ -644,7 +644,7 @@ export const PREBUILT_QUEST_CONTRACTS: QuestContract[] = [
 	{
 		id: "qc-ss-fallensovereign",
 		title: "The Fallen Sovereign",
-		rank: "SS",
+		rank: "S",
 		type: "hunt",
 		summary:
 			"A Sovereign — a fusion of two Regents — has fallen to corruption and walks the waking world. Only the strongest coalition can answer.",

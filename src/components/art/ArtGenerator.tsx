@@ -470,7 +470,7 @@ export function ArtGenerator({
 						) : (
 							<>
 								{genMode === "ai" ? (
-									<Zap className="w-5 h-5 text-amber-400 fill-amber-400" />
+									<Zap className="w-5 h-5 text-gate-s fill-gate-s" />
 								) : (
 									<Sparkles className="w-5 h-5" />
 								)}

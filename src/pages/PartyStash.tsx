@@ -12,6 +12,7 @@ import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { PageHeader } from "@/components/ui/PageHeader";
 import { useCampaignGold } from "@/hooks/useCampaignGold";
 import { useCampaignInventory } from "@/hooks/useCampaignInventory";
 import { supabase } from "@/integrations/supabase/client";
@@ -106,24 +107,20 @@ export default function PartyStash() {
 	return (
 		<Layout>
 			<div className="container py-8 max-w-4xl mx-auto space-y-6">
-				<div className="flex items-center gap-4">
-					<Button variant="ghost" onClick={() => navigate(-1)}>
+				<div>
+					<Button variant="ghost" className="mb-4" onClick={() => navigate(-1)}>
 						<ArrowLeft className="w-4 h-4 mr-2" />
 						Back
 					</Button>
-					<div>
-						<RiftHeading
-							level={1}
-							variant="sovereign"
-							dimensional
-							className="mb-1"
-						>
-							Dimensional Stash
-						</RiftHeading>
-						<ManaFlowText variant="rift" speed="fast">
-							Manage shared wealth, artifacts, and dimensional inventory bounds.
-						</ManaFlowText>
-					</div>
+					<PageHeader
+						title="Dimensional Stash"
+						description={
+							<ManaFlowText variant="rift" speed="fast">
+								Manage shared wealth, artifacts, and dimensional inventory
+								bounds.
+							</ManaFlowText>
+						}
+					/>
 				</div>
 
 				<AscendantWindow title="ADD LOOT">

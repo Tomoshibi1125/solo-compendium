@@ -14,15 +14,12 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AutoLinkText } from "@/components/compendium/AutoLinkText";
 import { Layout } from "@/components/layout/Layout";
-import {
-	AscendantText,
-	ManaFlowText,
-	RiftHeading,
-} from "@/components/ui/AscendantText";
+import { AscendantText, ManaFlowText } from "@/components/ui/AscendantText";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
+import { PageHeader } from "@/components/ui/PageHeader";
 import {
 	Select,
 	SelectContent,
@@ -102,7 +99,7 @@ function treasureToMarkdown(
 	enhanced?: string | null,
 ): string {
 	const currency = [
-		`${t.tens} Gate Credits`,
+		`${t.tens} Rift Credits`,
 		t.hundreds > 0 ? `${t.hundreds} Core Credits` : "",
 		t.fives > 0 ? `${t.fives} Crystal Credits` : "",
 		t.ones > 0 ? `${t.ones} Mana Credits` : "",
@@ -253,7 +250,7 @@ const TreasureGenerator = () => {
 
 SEED DATA:
 - Rift Rank: ${treasure.rank}
-- Gate Credits: ${treasure.tens}
+- Rift Credits: ${treasure.tens}
 ${treasure.hundreds > 0 ? `- Core Credits: ${treasure.hundreds}\n` : ""}${treasure.fives > 0 ? `- Crystal Credits: ${treasure.fives}\n` : ""}${treasure.ones > 0 ? `- Mana Credits: ${treasure.ones}\n` : ""}${treasure.dimes > 0 ? `- Mana Credit Chips: ${treasure.dimes}\n` : ""}- Items: ${treasure.items.join(", ") || "None"}
 - Materials: ${treasure.materials.join(", ") || "None"}
 - Relics: ${treasure.relics.join(", ") || "None"}
@@ -336,7 +333,7 @@ For each item and relic, expand on activation rules, charges, side effects, lore
 						{it.rarity}
 					</Badge>
 					{it.attunement && (
-						<Badge variant="outline" className="text-[11px] text-amber-300">
+						<Badge variant="outline" className="text-[11px] text-gate-s">
 							Attunement
 						</Badge>
 					)}
@@ -379,19 +376,20 @@ For each item and relic, expand on activation rules, charges, side effects, lore
 						<ArrowLeft className="w-4 h-4 mr-2" />
 						Back to Warden Tools
 					</Button>
-					<RiftHeading
-						level={1}
-						variant="sovereign"
-						dimensional
-						className="mb-2"
-					>
-						Material Requisition
-					</RiftHeading>
-					<ManaFlowText variant="rift" speed="slow" className="font-heading">
-						Synthesize valuable physical matter appropriate for cleared
-						dimensional constructs. Requisition quotas are scaled linearly with
-						Rift Rank.
-					</ManaFlowText>
+					<PageHeader
+						title="Material Requisition"
+						description={
+							<ManaFlowText
+								variant="rift"
+								speed="slow"
+								className="font-heading"
+							>
+								Synthesize valuable physical matter appropriate for cleared
+								dimensional constructs. Requisition quotas are scaled linearly
+								with Rift Rank.
+							</ManaFlowText>
+						}
+					/>
 				</div>
 			)}
 
@@ -486,9 +484,9 @@ For each item and relic, expand on activation rules, charges, side effects, lore
 							>
 								Rank {treasure.rank}
 							</Badge>
-							<div className="flex items-center gap-2 text-2xl font-resurge text-emerald-400">
+							<div className="flex items-center gap-2 text-2xl font-resurge text-system-green">
 								<Coins className="w-6 h-6" />
-								{treasure.tens} Gate Credits
+								{treasure.tens} Rift Credits
 							</div>
 						</div>
 

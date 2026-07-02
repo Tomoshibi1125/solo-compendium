@@ -21,39 +21,40 @@ interface EncumbranceWidgetProps {
 	compact?: boolean;
 }
 
+/* Cool severity ramp: teal → blue → cyan → violet → crimson (no warm hues). */
 const STATUS_CONFIG = {
 	unencumbered: {
-		barClass: "bg-green-500",
+		barClass: "bg-success",
 		icon: CheckCircle2,
-		iconClass: "text-green-400",
+		iconClass: "text-success",
 		label: "Unencumbered",
 		penalty: null,
 	},
 	light: {
-		barClass: "bg-blue-400",
+		barClass: "bg-shadow-blue",
 		icon: Weight,
-		iconClass: "text-blue-400",
+		iconClass: "text-shadow-blue",
 		label: "Light Load",
 		penalty: null,
 	},
 	medium: {
-		barClass: "bg-yellow-400",
+		barClass: "bg-warning",
 		icon: Weight,
-		iconClass: "text-yellow-400",
+		iconClass: "text-warning",
 		label: "Medium Load",
 		penalty: null,
 	},
 	heavy: {
-		barClass: "bg-orange-400",
+		barClass: "bg-resurge",
 		icon: AlertTriangle,
-		iconClass: "text-orange-400",
+		iconClass: "text-resurge",
 		label: "Heavy Load",
 		penalty: "Speed −10 ft.",
 	},
 	overloaded: {
-		barClass: "bg-red-500",
+		barClass: "bg-destructive",
 		icon: AlertOctagon,
-		iconClass: "text-red-400",
+		iconClass: "text-destructive",
 		label: "Overloaded",
 		penalty: "Speed −20 ft. · Disadvantage on STR/AGI checks",
 	},
@@ -108,7 +109,7 @@ export function EncumbranceWidget({
 							<span className="font-mono">{totalWeight.toFixed(1)} lb</span> of{" "}
 							<span className="font-mono">{carryingCapacity} lb</span>
 						</p>
-						{cfg.penalty && <p className="text-orange-400">{cfg.penalty}</p>}
+						{cfg.penalty && <p className="text-resurge">{cfg.penalty}</p>}
 						<p className="text-muted-foreground">
 							Push/drag/lift: {enc.pushDragLift} lb
 						</p>
@@ -128,8 +129,8 @@ export function EncumbranceWidget({
 		<div
 			className={cn(
 				"rounded-lg border p-3 space-y-2 transition-colors",
-				enc.status === "heavy" && "border-orange-400/50 bg-orange-400/5",
-				enc.status === "overloaded" && "border-red-500/60 bg-red-500/5",
+				enc.status === "heavy" && "border-resurge/50 bg-resurge/5",
+				enc.status === "overloaded" && "border-destructive/60 bg-destructive/5",
 				enc.status !== "heavy" &&
 					enc.status !== "overloaded" &&
 					"border-border bg-muted/20",
@@ -167,7 +168,7 @@ export function EncumbranceWidget({
 						"flex items-center gap-1.5 text-xs rounded px-2 py-1",
 						enc.status === "overloaded"
 							? "bg-red-500/15 text-red-400"
-							: "bg-orange-400/15 text-orange-400",
+							: "bg-gate-a/15 text-gate-a",
 					)}
 				>
 					<AlertTriangle className="w-3 h-3 shrink-0" />

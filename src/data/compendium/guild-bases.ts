@@ -12,7 +12,7 @@
  * twelve facilities buys the lot and raises exactly the wings it needs.
  *
  * Prices are in Core Credits (property is a real-estate–scale purchase, unlike the
- * per-wing facility upgrades priced in Gate Credits). Perks are the HONEST grounded
+ * per-wing facility upgrades priced in Rift Credits). Perks are the HONEST grounded
  * model (see `GuildBenefitSource` in `lib/guildBase.ts`): a real capability, a real
  * 5e effect applied to members' sheets, or narrative prose. No invented stat keys.
  *
@@ -28,7 +28,7 @@ export const GUILD_BASES: GuildBaseProperty[] = [
 		summary:
 			"A walled drill-fort on the city's gate-facing edge — the home of a guild that fields hard, disciplined strike squads.",
 		description:
-			"A converted border redoubt of rammed stone and warded gates. It comes garrisoned and drilled, built around putting a trained, well-armed squad through a threshold and bringing it back. The Bureau logs it as a hard point.",
+			"A converted border redoubt of rammed stone and warded Rifts. It comes garrisoned and drilled, built around putting a trained, well-armed squad through a threshold and bringing it back. The Bureau logs it as a hard point.",
 		cost: { currency: "core", amount: 28 },
 		includedFacilities: {
 			barracks: 2,
@@ -63,9 +63,9 @@ export const GUILD_BASES: GuildBaseProperty[] = [
 		id: "base-astral-athenaeum",
 		name: "Astral Athenaeum",
 		summary:
-			"A survey-tower library above the gate district — the home of a guild that reads a threshold before it steps through.",
+			"A survey-tower library above the Rift district — the home of a guild that reads a threshold before it steps through.",
 		description:
-			"A tall archive-and-observatory the Bureau once used for gate cartography. It comes with a cross-referenced survey archive and a working watch spire — a guild here walks into a gate already knowing its shape, its veins, and its choke-points.",
+			"A tall archive-and-observatory the Bureau once used for Rift cartography. It comes with a cross-referenced survey archive and a working watch spire — a guild here walks into a Rift already knowing its shape, its veins, and its choke-points.",
 		cost: { currency: "core", amount: 22 },
 		includedFacilities: {
 			archive: 2,
@@ -74,16 +74,16 @@ export const GUILD_BASES: GuildBaseProperty[] = [
 		},
 		effects: [{ kind: "passive_bonus", passive: "investigation", value: 1 }],
 		benefit:
-			"A standing research library — members steeped in its dossiers piece a gate's puzzles together faster than crews going in blind.",
+			"A standing research library — members steeped in its dossiers piece a Rift's puzzles together faster than crews going in blind.",
 		source_book: "Rift Ascendant Canon",
 	},
 	{
 		id: "base-quiet-hearth",
 		name: "Quiet Hearth",
 		summary:
-			"A warded sanctuary house set back from the gates — the home of a guild that brings its people home whole.",
+			"A warded sanctuary house set back from the Rifts — the home of a guild that brings its people home whole.",
 		description:
-			"A quiet, heavily-warded hall built around recovery. It comes with a staffed recovery ward, a warding sanctum that bleeds the rift out of returning squads, and a hearth to gather at — a guild here loses fewer members to the slow damage a gate does.",
+			"A quiet, heavily-warded hall built around recovery. It comes with a staffed recovery ward, a warding sanctum that bleeds the rift out of returning squads, and a hearth to gather at — a guild here loses fewer members to the slow damage a Rift does.",
 		cost: { currency: "core", amount: 20 },
 		includedFacilities: {
 			infirmary: 2,

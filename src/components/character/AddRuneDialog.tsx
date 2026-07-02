@@ -341,7 +341,7 @@ export function AddRuneDialog({
 													{characterJob && access === "cross-class" && (
 														<Badge
 															variant="outline"
-															className="text-xs text-amber-700 border-amber-600/40"
+															className="text-xs text-gate-s border-gate-s/40"
 														>
 															Cross-class
 														</Badge>

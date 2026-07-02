@@ -28,6 +28,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { PageHeader } from "@/components/ui/PageHeader";
 import {
 	Select,
 	SelectContent,
@@ -198,11 +199,10 @@ const Guilds = () => {
 	return (
 		<Layout>
 			<div className="container mx-auto px-4 py-8">
-				<div className="flex flex-col sm:flex-row sm:items-center justify-between mb-8 gap-4">
-					<div>
-						<RiftHeading level={1} variant="sovereign" dimensional>
-							GUILD HALL
-						</RiftHeading>
+				<PageHeader
+					className="mb-8"
+					title="GUILD HALL"
+					description={
 						<ManaFlowText
 							variant="rift"
 							speed="slow"
@@ -211,25 +211,27 @@ const Guilds = () => {
 							Establish or join a guild. Recruit NPCs, manage your roster, and
 							forge alliances across campaigns.
 						</ManaFlowText>
-					</div>
-					<div className="flex items-center gap-2">
-						<Button
-							variant="outline"
-							className="gap-2"
-							onClick={() => setJoinDialogOpen(true)}
-						>
-							<LogIn className="w-4 h-4" />
-							Join Guild
-						</Button>
-						<Button
-							className="btn-umbral gap-2"
-							onClick={() => setCreateDialogOpen(true)}
-						>
-							<Plus className="w-4 h-4" />
-							Establish Guild
-						</Button>
-					</div>
-				</div>
+					}
+					actions={
+						<>
+							<Button
+								variant="outline"
+								className="gap-2"
+								onClick={() => setJoinDialogOpen(true)}
+							>
+								<LogIn className="w-4 h-4" />
+								Join Guild
+							</Button>
+							<Button
+								className="btn-umbral gap-2"
+								onClick={() => setCreateDialogOpen(true)}
+							>
+								<Plus className="w-4 h-4" />
+								Establish Guild
+							</Button>
+						</>
+					}
+				/>
 
 				{isLoading ? (
 					<div className="flex flex-col items-center justify-center py-12 gap-4">

@@ -547,7 +547,7 @@ export function MarketplaceWorkbench() {
 											{item.is_bundle && (
 												<Badge
 													variant="outline"
-													className="gap-1 text-fuchsia-300 border-fuchsia-400/40"
+													className="gap-1 text-resurge-violet border-resurge-violet/40"
 													data-testid={`marketplace-bundle-pill-${item.id}`}
 												>
 													<Package2 className="w-3 h-3" />
@@ -840,7 +840,7 @@ export function MarketplaceWorkbench() {
 				>
 					<DialogHeader>
 						<DialogTitle className="flex items-center gap-2">
-							<Gift className="w-5 h-5 text-fuchsia-300" />
+							<Gift className="w-5 h-5 text-resurge-violet" />
 							Gift {giftItemTarget?.title}
 						</DialogTitle>
 						<DialogDescription>
@@ -874,7 +874,7 @@ export function MarketplaceWorkbench() {
 							/>
 						</div>
 						{giftItemTarget?.is_bundle && (
-							<div className="rounded border border-fuchsia-400/30 bg-fuchsia-500/10 px-2 py-1.5 text-xs text-fuchsia-200">
+							<div className="rounded border border-resurge-violet/30 bg-resurge-violet/10 px-2 py-1.5 text-xs text-resurge-violet">
 								This is a bundle — the recipient also gets access to{" "}
 								{giftItemTarget.bundled_item_ids?.length ?? 0} bundled items.
 							</div>

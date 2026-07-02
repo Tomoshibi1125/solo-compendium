@@ -231,7 +231,7 @@ export default function CompanionExtraSheet() {
 							</Link>
 						</Button>
 						<div className="flex items-center gap-2">
-							<PawPrint className="w-5 h-5 text-emerald-300" />
+							<PawPrint className="w-5 h-5 text-system-green" />
 							<h1 className="font-display text-2xl">{extra.name}</h1>
 							<Badge variant="outline" className="text-xs uppercase">
 								{extra.extra_type}
@@ -298,8 +298,8 @@ export default function CompanionExtraSheet() {
 									hpPercent < 25
 										? "bg-red-900"
 										: hpPercent < 50
-											? "bg-amber-900"
-											: "bg-emerald-900",
+											? "bg-gate-s/25"
+											: "bg-system-green/25",
 								)}
 							/>
 						</div>
@@ -335,7 +335,7 @@ export default function CompanionExtraSheet() {
 									Initiative
 								</div>
 								<div className="flex items-center justify-center gap-1">
-									<Zap className="w-4 h-4 text-yellow-400" />
+									<Zap className="w-4 h-4 text-gate-s" />
 									<Input
 										type="number"
 										value={initiative}
@@ -472,7 +472,7 @@ export default function CompanionExtraSheet() {
 										className="rounded border border-border/40 bg-black/20 p-3"
 									>
 										<div className="flex items-center gap-2">
-											<Sparkles className="w-3.5 h-3.5 text-emerald-300" />
+											<Sparkles className="w-3.5 h-3.5 text-system-green" />
 											<span className="font-display text-sm font-semibold">
 												{ability.name}
 											</span>

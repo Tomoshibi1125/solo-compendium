@@ -23,7 +23,7 @@ interface EquipmentStepProps {
 	/** DDB parity (5e starting wealth): take flat credits instead of gear. */
 	takeCredits?: boolean;
 	setTakeCredits?: (value: boolean) => void;
-	/** Gate Credits granted when taking funds instead of equipment. */
+	/** Rift Credits granted when taking funds instead of equipment. */
 	creditsAmount?: number;
 }
 
@@ -247,19 +247,19 @@ export const EquipmentStep: React.FC<EquipmentStepProps> = ({
 							className={cn(
 								"p-4 rounded-lg border space-y-2 transition-colors",
 								takeCredits
-									? "border-yellow-500/40 bg-yellow-500/5"
+									? "border-gate-s/40 bg-gate-s/5"
 									: "border-primary/10 bg-black/20",
 							)}
 						>
 							<div className="flex items-center justify-between gap-3">
 								<div>
-									<p className="text-[11px] uppercase tracking-widest text-yellow-500/80 font-bold">
+									<p className="text-[11px] uppercase tracking-widest text-gate-s/80 font-bold">
 										Bureau Provisioning Stipend
 									</p>
 									<p className="text-xs text-muted-foreground mt-1">
 										Forgo the standard loadout and background issue — draw{" "}
-										<span className="text-yellow-400 font-bold">
-											{creditsAmount} Gate Credits
+										<span className="text-gate-s font-bold">
+											{creditsAmount} Rift Credits
 										</span>{" "}
 										to outfit yourself at the Gate Market instead.
 									</p>
@@ -278,12 +278,12 @@ export const EquipmentStep: React.FC<EquipmentStepProps> = ({
 					)}
 
 					{takeCredits && (
-						<div className="text-center py-8 text-muted-foreground border border-dashed border-yellow-500/20 rounded-lg">
-							<p className="font-heading text-sm uppercase tracking-widest text-yellow-500/70">
+						<div className="text-center py-8 text-muted-foreground border border-dashed border-gate-s/20 rounded-lg">
+							<p className="font-heading text-sm uppercase tracking-widest text-gate-s/70">
 								Equipment package waived
 							</p>
 							<p className="text-[11px] mt-2 italic">
-								{creditsAmount} Gate Credits will be deposited on activation.
+								{creditsAmount} Rift Credits will be deposited on activation.
 							</p>
 						</div>
 					)}

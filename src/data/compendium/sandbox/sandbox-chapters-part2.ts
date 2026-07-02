@@ -196,7 +196,7 @@ The Gloamreach's **native inhabitants** — whole settlements of them, born to a
 
 ## Key Areas
 
-### The Harvest Gate
+### The Harvest Rift
 
 A frame of fused resonance-stalk hung with ration-tags instead of name tags. Hang a tag bearing a true name and the orchard takes you for one who keeps the old custom: safe passage, but the place has your name now, and you are a step closer to Quiet-Marked. Hang a blank tag and the harvester-things treat you as *unknown* — safer for now, but the orchard begins to study you to learn the name you withheld.
 
@@ -328,7 +328,7 @@ The Sunken Tunnels are a drowned under-road beneath the Gloamreach — flooded n
 
 ## Key Areas
 
-### Flood Gate
+### Flood Rift
 
 The entrance seals after the party descends. Opening it from inside requires solving which name belongs to which drowned voice.
 
@@ -384,7 +384,7 @@ Here the Gloamreach's cruelest trick is plain: *a line once sworn must be held* 
 
 ### Broken Gatehouse
 
-The wall's last working gate; its Golem-lock reads intent, not keys. It opens only for those who will swear — and mean it — to hold the line for someone other than themselves. Swear falsely and the oath binds anyway: the Bastion simply adds your name to the roster of the drafted.
+The wall's last working Rift; its Golem-lock reads intent, not keys. It opens only for those who will swear — and mean it — to hold the line for someone other than themselves. Swear falsely and the oath binds anyway: the Bastion simply adds your name to the roster of the drafted.
 
 ### Hall of Empty Armor
 
@@ -507,7 +507,7 @@ The party come to the Threshold with one of two intentions, and may not decide w
 
 ## The Long Dark (the approach)
 
-Run the approach as the campaign's hardest survival sequence, not a dungeon crawl. Hold these beats in whatever order the crossing takes them.
+Run the approach as the campaign's hardest survival sequence, not a Rift crawl. Hold these beats in whatever order the crossing takes them.
 
 ### The Gathered Dead
 

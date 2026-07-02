@@ -9,14 +9,11 @@ import {
 import { useMemo, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
-import {
-	AscendantText,
-	ManaFlowText,
-	RiftHeading,
-} from "@/components/ui/AscendantText";
+import { AscendantText, ManaFlowText } from "@/components/ui/AscendantText";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { PageHeader } from "@/components/ui/PageHeader";
 import {
 	useCampaignCombatSession,
 	useEndCombatSession,
@@ -95,24 +92,23 @@ const CampaignSessionPlay = () => {
 				className="container mx-auto px-4 py-8 max-w-5xl space-y-6"
 				data-testid="campaign-session-play"
 			>
-				<div className="flex items-center justify-between gap-3 flex-wrap">
-					<div>
-						<RiftHeading level={1} variant="gate" dimensional className="mb-2">
-							Active Engagement
-						</RiftHeading>
+				<PageHeader
+					title="Active Engagement"
+					variant="gate"
+					description={
 						<ManaFlowText variant="rift" speed="slow" className="text-sm">
 							Live engagement Lattice: initiative queues, temporal tracking, and
 							dimensional topology.
 						</ManaFlowText>
-					</div>
-					<div className="flex gap-2">
+					}
+					actions={
 						<Button variant="outline" asChild>
 							<Link to={`/campaigns/${resolvedCampaignId}`}>
 								Back to Campaign
 							</Link>
 						</Button>
-					</div>
-				</div>
+					}
+				/>
 
 				<AscendantWindow title="LIVE COMBAT SESSION">
 					{isLoading ? (
@@ -315,12 +311,12 @@ const CampaignSessionPlay = () => {
 
 										<Button
 											variant="outline"
-											className="flex flex-col items-center justify-center h-20 gap-1.5 border-amber-500/20 hover:border-amber-500/50"
+											className="flex flex-col items-center justify-center h-20 gap-1.5 border-gate-s/20 hover:border-gate-s/50"
 											onClick={() =>
 												wardenTools.awardEncounterRewards(resolvedSessionId)
 											}
 										>
-											<AlertTriangle className="w-4 h-4 text-amber-500" />
+											<AlertTriangle className="w-4 h-4 text-gate-s" />
 											<span className="font-heading text-sm">
 												Award Rewards
 											</span>

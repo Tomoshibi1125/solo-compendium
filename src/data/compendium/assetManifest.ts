@@ -9,13 +9,13 @@
 // Base asset paths
 const ASSET_BASE_PATH = "/generated/compendium";
 
-// Default fallback assets
+// Default fallback assets (RA brand art — see scripts/generate-brand-assets.mjs)
 const DEFAULT_FALLBACKS = {
-	portrait: "/ui-art/shadow-silhouette.webp",
-	thumbnail: "/ui-art/shadow-soldier-emblem.webp",
-	icon: "/ui-art/shadow-soldier-emblem.webp",
-	banner: "/ui-art/gate-portal-3d.webp",
-	token: "/ui-art/shadow-soldier-emblem.webp",
+	portrait: "/ui-art/ra-portrait-fallback.webp",
+	thumbnail: "/ui-art/ra-logo-mark.webp",
+	icon: "/ui-art/ra-logo-mark.webp",
+	banner: "/ui-art/rift-site-hero.webp",
+	token: "/ui-art/ra-logo-mark.webp",
 };
 
 // Type â†’ folder mapping

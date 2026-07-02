@@ -2,7 +2,6 @@ import { Menu, Search, Volume2, VolumeX, X } from "lucide-react";
 import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { SyncStatusIndicator } from "@/components/shared/SyncStatusIndicator";
-import { AscendantSigil } from "@/components/ui/AscendantSigil";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -13,6 +12,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { GlobalSearch } from "@/components/ui/GlobalSearch";
 import { NotificationCenter } from "@/components/ui/NotificationCenter";
+import { RaLogo } from "@/components/ui/RaLogo";
 import { useAppStore } from "@/hooks/useAppStore";
 import { useAuth } from "@/lib/auth/authContext";
 
@@ -56,7 +56,7 @@ export function NavBar() {
 						to="/"
 						className="flex items-center gap-2 transition-opacity hover:opacity-80"
 					>
-						<AscendantSigil className="h-8 w-8 text-primary shadow-primary/20 drop-shadow-md" />
+						<RaLogo variant="mark" still className="h-8 w-8" />
 						<span className="hidden sm:inline-block font-display font-bold tracking-widest uppercase text-sm">
 							Rift Ascendant
 						</span>

@@ -110,8 +110,8 @@ export function GlobalCharacterHUD() {
 							className="flex items-center gap-1.5 md:gap-2 group cursor-help hidden xs:flex"
 							title="Initiative"
 						>
-							<Zap className="w-3 h-3 md:w-4 md:h-4 text-yellow-400" />
-							<span className="font-bold text-yellow-100">
+							<Zap className="w-3 h-3 md:w-4 md:h-4 text-gate-s" />
+							<span className="font-bold text-gate-s">
 								{formatModifier(derivedStats?.calculatedStats.initiative ?? 0)}
 							</span>
 						</div>
@@ -130,7 +130,7 @@ export function GlobalCharacterHUD() {
 				{/* Notifications / Toggles - Only show on larger mobile/desktop to prevent cramming */}
 				<div className="hidden sm:flex items-center gap-4 shrink-0">
 					{characterResources.inspiration.inspiration_points > 0 && (
-						<Badge className="bg-yellow-500/20 text-yellow-500 border-yellow-500/30 animate-pulse text-[11px]">
+						<Badge className="bg-gate-s/20 text-gate-s border-gate-s/30 animate-pulse text-[11px]">
 							INSPIRE
 						</Badge>
 					)}

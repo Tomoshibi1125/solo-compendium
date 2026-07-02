@@ -156,9 +156,9 @@ export function VehiclesPanel({ characterId, readOnly }: VehiclesPanelProps) {
 								return (
 									<div
 										key={row.id}
-										className="rounded border border-amber-500/30 bg-amber-500/10 p-3 text-xs"
+										className="rounded border border-gate-s/30 bg-gate-s/10 p-3 text-xs"
 									>
-										<span className="font-mono text-amber-300">
+										<span className="font-mono text-gate-s">
 											Unknown vehicle id: {row.vehicle_id}
 										</span>
 									</div>
@@ -203,7 +203,7 @@ export function VehiclesPanel({ characterId, readOnly }: VehiclesPanelProps) {
 										<div className="flex-1 min-w-0">
 											<div className="flex items-center gap-2 flex-wrap">
 												{isMount ? (
-													<span className="text-fuchsia-300">🐾</span>
+													<span className="text-resurge-violet">🐾</span>
 												) : (
 													<Truck className="w-4 h-4 text-blue-300" />
 												)}
@@ -239,8 +239,8 @@ export function VehiclesPanel({ characterId, readOnly }: VehiclesPanelProps) {
 													hpPercent < 25
 														? "bg-red-900"
 														: hpPercent < 50
-															? "bg-amber-900"
-															: "bg-emerald-900",
+															? "bg-gate-s/25"
+															: "bg-system-green/25",
 												)}
 											/>
 											{!readOnly && (

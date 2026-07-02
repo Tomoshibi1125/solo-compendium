@@ -1,14 +1,9 @@
 import type { LucideIcon } from "lucide-react";
-import {
-	ChevronLeft,
-	ChevronRight,
-	LogOut,
-	Shield,
-	Sparkles,
-} from "lucide-react";
+import { ChevronLeft, ChevronRight, LogOut, Sparkles } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
+import { RaLogo } from "@/components/ui/RaLogo";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { Sheet, SheetContent } from "@/components/ui/sheet";
@@ -92,11 +87,9 @@ export function AppSidebar() {
 					<div className="flex flex-col h-full bg-black/40 backdrop-blur-xl">
 						<div className="p-6 border-b border-primary/10">
 							<div className="flex items-center gap-3">
-								<div className="w-8 h-8 rounded-[2px] bg-primary/20 border border-primary/40 flex items-center justify-center">
-									<Shield className="w-5 h-5 text-primary" />
-								</div>
+								<RaLogo variant="mark" still className="w-8 h-8" />
 								<span className="font-display font-bold tracking-widest text-sm uppercase">
-									System Protocol
+									Rift Ascendant
 								</span>
 							</div>
 						</div>
@@ -155,12 +148,10 @@ export function AppSidebar() {
 
 				<div className="p-4 border-b border-primary/10 h-16 flex items-center">
 					<div className="flex items-center gap-3 overflow-hidden">
-						<div className="min-w-[32px] w-8 h-8 rounded-[2px] bg-primary/20 border border-primary/40 flex items-center justify-center">
-							<Shield className="w-5 h-5 text-primary" />
-						</div>
+						<RaLogo variant="mark" still className="min-w-[32px] w-8 h-8" />
 						{!sidebarCollapsed && (
 							<span className="font-display font-bold tracking-widest text-sm uppercase truncate animate-in fade-in slide-in-from-left-2 duration-500">
-								Warden
+								Rift Ascendant
 							</span>
 						)}
 					</div>

@@ -17,7 +17,7 @@ export function MainLayout({ children, className }: MainLayoutProps) {
 
 	return (
 		<div className="min-h-[100dvh] w-full flex bg-transparent selection:bg-primary/30 relative">
-			{/* Global System Visual Effects handled by CosmicBackground + GlobalEffects in App.tsx */}
+			{/* Global System Visual Effects handled by RiftSiteBackground + GlobalEffects in App.tsx */}
 			{/* Unified Sidebar (Rail/Drawer) */}
 			<AppSidebar />
 

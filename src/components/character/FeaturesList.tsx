@@ -192,12 +192,12 @@ export function FeaturesList({
 				</div>
 
 				{pendingChoiceFeatures.length > 0 && (
-					<div className="p-3 rounded-lg border border-amber-500/30 bg-amber-500/10">
+					<div className="p-3 rounded-lg border border-gate-s/30 bg-gate-s/10">
 						<div className="flex items-start gap-2">
-							<AlertTriangle className="w-4 h-4 text-amber-400 mt-0.5" />
+							<AlertTriangle className="w-4 h-4 text-gate-s mt-0.5" />
 							<div className="space-y-2">
 								<div>
-									<h4 className="font-heading font-semibold text-amber-400">
+									<h4 className="font-heading font-semibold text-gate-s">
 										Pending Selection Protocols
 									</h4>
 									<p className="text-xs text-muted-foreground">
@@ -224,8 +224,8 @@ export function FeaturesList({
 				)}
 
 				{frequencyMasteryFeatures.length > 0 && (
-					<div className="p-3 rounded-lg border border-violet-500/20 bg-violet-500/10">
-						<h4 className="font-heading font-semibold text-violet-400">
+					<div className="p-3 rounded-lg border border-resurge-violet/20 bg-resurge-violet/10">
+						<h4 className="font-heading font-semibold text-resurge-violet">
 							Frequency Mastery
 						</h4>
 						<p className="text-xs text-muted-foreground mt-1">

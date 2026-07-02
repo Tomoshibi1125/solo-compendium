@@ -31,6 +31,7 @@ import {
 	CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { PageHeader } from "@/components/ui/PageHeader";
 import {
 	Select,
 	SelectContent,
@@ -136,16 +137,9 @@ const AscendantTools = () => {
 			<div data-testid="ascendant-tools" className="ascendant-tools-container">
 				{/* Header */}
 				<div className="ascendant-tools-header">
-					<div className="flex items-center justify-between">
-						<div>
-							<RiftHeading
-								level={1}
-								variant="sovereign"
-								dimensional
-								className="ascendant-tools-title"
-							>
-								Ascendant Tools
-							</RiftHeading>
+					<PageHeader
+						title="Ascendant Tools"
+						description={
 							<ManaFlowText
 								variant="rift"
 								speed="slow"
@@ -153,27 +147,28 @@ const AscendantTools = () => {
 							>
 								Manage your Ascendant's journey through the Rift
 							</ManaFlowText>
-						</div>
-
-						<div className="flex items-center gap-4">
-							<Button
-								variant="outline"
-								size="sm"
-								onClick={() => navigate("/compendium")}
-							>
-								<HelpCircle className="w-4 h-4 mr-2" />
-								Help
-							</Button>
-							<Button
-								variant="outline"
-								size="sm"
-								onClick={() => navigate("/profile")}
-							>
-								<Settings className="w-4 h-4 mr-2" />
-								Settings
-							</Button>
-						</div>
-					</div>
+						}
+						actions={
+							<>
+								<Button
+									variant="outline"
+									size="sm"
+									onClick={() => navigate("/compendium")}
+								>
+									<HelpCircle className="w-4 h-4 mr-2" />
+									Help
+								</Button>
+								<Button
+									variant="outline"
+									size="sm"
+									onClick={() => navigate("/profile")}
+								>
+									<Settings className="w-4 h-4 mr-2" />
+									Settings
+								</Button>
+							</>
+						}
+					/>
 
 					{/* Character Status Bar */}
 					{activeCharacter && (
@@ -566,8 +561,8 @@ const ToolCard = ({
 						size="sm"
 						className={cn(
 							"font-heading tracking-widest uppercase gap-1",
-							tool.color.includes("amber")
-								? "bg-amber-500/20 text-amber-400 hover:bg-amber-500/40 border border-amber-500/50"
+							tool.color.includes("gate-s")
+								? "bg-gate-s/20 text-gate-s hover:bg-gate-s/40 border border-gate-s/50"
 								: tool.color.includes("red")
 									? "bg-red-500/20 text-red-400 hover:bg-red-500/40 border border-red-500/50"
 									: "bg-primary/20 text-primary hover:bg-primary/40 border border-primary/50",

@@ -392,9 +392,9 @@
 		{
 			"category": "focus",
 			"srd": "Druidic Focus",
-			"ra": "Gate-Beast Fang",
+			"ra": "Rift-Beast Fang",
 			"status": "present",
-			"note": "RA primal foci (Summoner): Gate-Beast Fang, Anomaly Core Shard, Bonded Tamer's Collar."
+			"note": "RA primal foci (Summoner): Rift-Beast Fang, Anomaly Core Shard, Bonded Tamer's Collar."
 		},
 		{
 			"category": "focus",
@@ -575,7 +575,7 @@
 		{
 			"category": "other_tools",
 			"srd": "Navigator's Tools",
-			"ra": "Gate Navigator's Kit",
+			"ra": "Rift Navigator's Kit",
 			"status": "authored",
 			"note": "RA rift-navigation kit replaces sea/land navigator's tools."
 		},

@@ -82,7 +82,7 @@ export const SKILLS: Skill[] = [
 	},
 	{
 		id: "nature",
-		name: "Gate Topology",
+		name: "Rift Topology",
 		ability: "INT",
 		description: "Natural world and creatures",
 	},

@@ -2,14 +2,14 @@
    Rift Ascendant — Global Dungeon Ascendant Aesthetic v2
    Glassmorphism · Neon Glows · Angular Frames · Holographic HUD
    ============================================================
-   Zones:
-     [data-ra-zone="character"]  — Purple/violet ascendant profile
-     [data-ra-zone="warden"]         — Red/orange warden command center
-     [data-ra-zone="campaign"]   — Blue/teal campaign hall
-     [data-ra-zone="compendium"] — Gold/amber knowledge archive
-     [data-ra-zone="player"]     — Cyan/green ascendant toolkit
-     [data-ra-zone="auth"]       — Deep purple gate awakening
-     (default)                   — Base purple RA theme
+   Zones (cool brand family only — no warm gold/orange):
+     [data-ra-zone="character"]  — Amethyst ascendant profile
+     [data-ra-zone="warden"]     — Crimson-violet warden command center
+     [data-ra-zone="campaign"]   — Stellar blue campaign hall
+     [data-ra-zone="compendium"] — Icy platinum knowledge archive
+     [data-ra-zone="player"]     — Teal ascendant toolkit
+     [data-ra-zone="auth"]       — Deep purple rift awakening
+     (default)                   — Base amethyst RA theme
    ============================================================ */
 
 /* --- Zone Accent Variables --- */
@@ -29,10 +29,11 @@
 }
 
 [data-ra-zone="warden"] {
-	--ra-accent: 15 90% 55%;
-	--ra-accent-rgb: 234, 88, 12;
-	--ra-accent-secondary: 0 85% 55%;
-	--ra-accent-secondary-rgb: 229, 29, 29;
+	/* Cool crimson (matches --gate-a/--destructive) + void violet */
+	--ra-accent: 350 85% 60%;
+	--ra-accent-rgb: 240, 66, 93;
+	--ra-accent-secondary: 285 85% 60%;
+	--ra-accent-secondary-rgb: 186, 66, 240;
 }
 
 [data-ra-zone="campaign"] {
@@ -43,15 +44,17 @@
 }
 
 [data-ra-zone="compendium"] {
-	--ra-accent: 43 95% 60%;
-	--ra-accent-rgb: 251, 191, 36;
-	--ra-accent-secondary: 30 85% 54%;
-	--ra-accent-secondary-rgb: 243, 127, 28;
+	/* Icy platinum (matches --gate-s) + mana cyan */
+	--ra-accent: 210 55% 85%;
+	--ra-accent-rgb: 196, 219, 238;
+	--ra-accent-secondary: 195 95% 60%;
+	--ra-accent-secondary-rgb: 51, 199, 245;
 }
 
 [data-ra-zone="player"] {
-	--ra-accent: 145 75% 45%;
-	--ra-accent-rgb: 29, 206, 116;
+	/* Teal (matches --system-green) + mana cyan */
+	--ra-accent: 160 75% 50%;
+	--ra-accent-rgb: 32, 223, 159;
 	--ra-accent-secondary: 190 100% 50%;
 	--ra-accent-secondary-rgb: 0, 212, 255;
 }
@@ -594,10 +597,10 @@
 [data-ra-zone="warden"] .ra-page-header {
 	background: linear-gradient(
 		135deg,
-		rgba(20, 5, 5, 0.97) 0%,
+		rgba(18, 4, 10, 0.97) 0%,
 		rgba(var(--ra-accent-rgb), 0.12) 45%,
 		rgba(var(--ra-accent-secondary-rgb), 0.05) 65%,
-		rgba(15, 3, 3, 0.97) 100%
+		rgba(13, 3, 8, 0.97) 100%
 	);
 }
 
@@ -616,10 +619,10 @@
 [data-ra-zone="compendium"] .ra-page-header {
 	background: linear-gradient(
 		135deg,
-		rgba(18, 13, 3, 0.97) 0%,
+		rgba(10, 13, 20, 0.97) 0%,
 		rgba(var(--ra-accent-rgb), 0.08) 45%,
 		rgba(var(--ra-accent-secondary-rgb), 0.04) 65%,
-		rgba(14, 9, 2, 0.97) 100%
+		rgba(7, 10, 16, 0.97) 100%
 	);
 }
 
@@ -627,10 +630,10 @@
 [data-ra-zone="player"] .ra-page-header {
 	background: linear-gradient(
 		135deg,
-		rgba(3, 14, 9, 0.97) 0%,
+		rgba(3, 14, 12, 0.97) 0%,
 		rgba(var(--ra-accent-rgb), 0.1) 45%,
 		rgba(var(--ra-accent-secondary-rgb), 0.06) 65%,
-		rgba(2, 10, 6, 0.97) 100%
+		rgba(2, 10, 9, 0.97) 100%
 	);
 }
 

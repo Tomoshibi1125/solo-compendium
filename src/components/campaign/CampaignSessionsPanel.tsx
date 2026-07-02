@@ -440,7 +440,7 @@ export function CampaignSessionsPanel({
 							)}
 						</div>
 						{isRecurring && !sessionScheduledFor && (
-							<p className="text-xs text-amber-400">
+							<p className="text-xs text-gate-s">
 								Set a Scheduled For date to enable recurring scheduling.
 							</p>
 						)}

@@ -109,11 +109,11 @@ export const locations: CompendiumLocation[] = [
 		rarity: "common",
 		cr: "0",
 		id: "location-0001",
-		name: "Eternal Shadow Dungeon",
-		type: "Dungeon",
+		name: "Eternal Shadow Rift",
+		type: "Rift",
 		rank: "D",
 		description:
-			"An ancient dungeon carved from solid shadow stone, where the barriers between the mortal realm and the shadow dimension grow thin. The Eternal Shadow Dungeon is a training ground for D-rank ascendants, featuring shifting corridors that reconfigure themselves and walls that whisper forgotten secrets. Those who venture here report seeing their own shadows move independently and hearing voices that promise power at a terrible cost.",
+			"An ancient Rift carved from solid shadow stone, where the barriers between the mortal realm and the shadow dimension grow thin. The Eternal Shadow Rift is a training ground for D-rank ascendants, featuring shifting corridors that reconfigure themselves and walls that whisper forgotten secrets. Those who venture here report seeing their own shadows move independently and hearing voices that promise power at a terrible cost.",
 		encounters: ["Shadow anomaly", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
@@ -134,7 +134,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Decoded from ancient sigil-stones found beneath the ruins of a pre-Awakening temple in Kyoto.",
 			history:
-				"This technique was banned by the International Guild Association for eighteen months before being reclassified.",
+				"This technique was banned by the International Guild Bureau for eighteen months before being reclassified.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -248,7 +248,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Born from an Order glitch that briefly merged two overlapping Gate instances.",
+				"Born from an Order glitch that briefly merged two overlapping Rift instances.",
 			history:
 				"The Japanese Ascendant Bureau attempted to classify this as a national treasure to prevent export.",
 			curse: "",
@@ -611,7 +611,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Crystallized from raw mana overflow during the catastrophic Seoul Gate Breach of Year 7.",
+				"Crystallized from raw mana overflow during the catastrophic Meridian City Rift Break of Year 7.",
 			history:
 				"The first recorded use caused a localized reality fracture that took a specialized team forty hours to repair.",
 			curse: "",
@@ -732,7 +732,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Stolen from a Guild vault during the Three-Day War between rival Korean Ascendant factions.",
+				"Stolen from a Guild vault during the Three-Day War between rival Accord Ascendant factions.",
 			history:
 				"Intelligence reports link this to the Shadow Regent's army, though the connection remains unconfirmed.",
 			curse: "",
@@ -826,10 +826,10 @@ export const locations: CompendiumLocation[] = [
 		cr: "0",
 		id: "location-0007",
 		name: "Eternal pre-gate ruins",
-		type: "Dungeon",
+		type: "Rift",
 		rank: "C",
 		description:
-			"A multi-level dungeon complex where reality itself becomes unstable, causing gravity to shift and time to flow erratically. C-rank ascendants who venture here must contend with rooms that exist in multiple dimensions simultaneously and corridors that lead to different versions of the same place.",
+			"A multi-level Rift complex where reality itself becomes unstable, causing gravity to shift and time to flow erratically. C-rank ascendants who venture here must contend with rooms that exist in multiple dimensions simultaneously and corridors that lead to different versions of the same place.",
 		encounters: ["Shadow anomaly", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
@@ -850,7 +850,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Recovered from the personal vault of a National-Level Ascendant who vanished during the First Calamity.",
 			history:
-				"Historical analysis suggests this predates the modern Gate system by several centuries.",
+				"Historical analysis suggests this predates the modern Rift system by several centuries.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -966,7 +966,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Unearthed by a mining Guild operating in the mana-saturated quarries of the Australian Outback.",
 			history:
-				"This technique was banned by the International Guild Association for eighteen months before being reclassified.",
+				"This technique was banned by the International Guild Bureau for eighteen months before being reclassified.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -1542,10 +1542,10 @@ export const locations: CompendiumLocation[] = [
 		cr: "0",
 		id: "location-0013",
 		name: "Eternal Void Gateway",
-		type: "Dungeon",
+		type: "Rift",
 		rank: "B",
 		description:
-			"An extensive dungeon network that serves as a proving ground for B-rank ascendants, featuring intelligent traps that learn from their victims and corridors that actively resist intrusion. The dungeon's central core houses a fragment of pure shadow energy that warps reality around it.",
+			"An extensive Rift network that serves as a proving ground for B-rank ascendants, featuring intelligent traps that learn from their victims and corridors that actively resist intrusion. The Rift's central core houses a fragment of pure shadow energy that warps reality around it.",
 		encounters: ["Shadow anomaly", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
@@ -1566,7 +1566,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Translated from forbidden shadow-language inscriptions found in a Regent's throne room.",
 			history:
-				"This technique was banned by the International Guild Association for eighteen months before being reclassified.",
+				"This technique was banned by the International Guild Bureau for eighteen months before being reclassified.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -2174,7 +2174,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Extracted from the dimensional residue of a collapsed B-Rank Gate in downtown Seoul.",
+				"Extracted from the dimensional residue of a collapsed B-Rank Rift in downtown Meridian City.",
 			history:
 				"Originally thought to be a failed experiment, it was rediscovered when a junior researcher noticed anomalous readings.",
 			curse: "",
@@ -2268,10 +2268,10 @@ export const locations: CompendiumLocation[] = [
 		cr: "0",
 		id: "location-0019",
 		name: "Eternal Ancient Battlefield",
-		type: "Dungeon",
+		type: "Rift",
 		rank: "A",
 		description:
-			"A legendary dungeon that exists as a living entity, constantly evolving and adapting to challenge those who enter. A-rank ascendants must contend with the dungeon's intelligence, which learns from their tactics and creates new challenges specifically designed to exploit their weaknesses.",
+			"A legendary Rift that exists as a living entity, constantly evolving and adapting to challenge those who enter. A-rank ascendants must contend with the Rift's intelligence, which learns from their tactics and creates new challenges specifically designed to exploit their weaknesses.",
 		encounters: ["Shadow anomaly", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
@@ -2416,7 +2416,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Reconstructed from fragments scattered across seven different C-Rank dungeons.",
+				"Reconstructed from fragments scattered across seven different C-Rank Rifts.",
 			history:
 				"First documented during the Second Awakening Wave, when Ascendants worldwide reported spontaneous power surges.",
 			curse: "",
@@ -2509,7 +2509,7 @@ export const locations: CompendiumLocation[] = [
 		rarity: "common",
 		cr: "0",
 		id: "location-0021",
-		name: "Lost Shadow Dungeon",
+		name: "Lost Shadow Rift",
 		type: "City",
 		rank: "D",
 		description:
@@ -2537,7 +2537,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Woven from the screams of a Gate Boss that achieved sentience moments before death.",
+				"Woven from the screams of a Rift Boss that achieved sentience moments before death.",
 			history:
 				"The Ascendant Bureau classified this as a Level-4 threat vector before it was repurposed for field operations.",
 			curse: "",
@@ -2655,7 +2655,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Formed naturally in a mana vein so dense that reality itself began to crystallize around it.",
 			history:
-				"Historical analysis suggests this predates the modern Gate system by several centuries.",
+				"Historical analysis suggests this predates the modern Rift system by several centuries.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -2984,10 +2984,10 @@ export const locations: CompendiumLocation[] = [
 		cr: "0",
 		id: "location-0025",
 		name: "Lost Celestial Palace",
-		type: "Dungeon",
+		type: "Rift",
 		rank: "S",
 		description:
-			"The ultimate dungeon, a living labyrinth that exists as a test of worthiness for those who would challenge the gods themselves. S-rank ascendants who enter must face manifestations of their own fears and doubts, given form by the dungeon's consciousness.",
+			"The ultimate Rift, a living labyrinth that exists as a test of worthiness for those who would challenge the gods themselves. S-rank ascendants who enter must face manifestations of their own fears and doubts, given form by the Rift's consciousness.",
 		encounters: [
 			"Shadow anomaly",
 			"Void Beasts",
@@ -3016,7 +3016,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Born from an Order glitch that briefly merged two overlapping Gate instances.",
+				"Born from an Order glitch that briefly merged two overlapping Rift instances.",
 			history:
 				"This was one of twelve artifacts recovered from the infamous Kamish Raid that changed modern Ascendant warfare.",
 			curse: "",
@@ -3139,7 +3139,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Gifted by a dying Regent as payment for a debt that predates human civilization.",
 			history:
-				"Records indicate this was used by the original Clearing Party that neutralized the first S-Rank Gate on Korean soil.",
+				"Records indicate this was used by the original Clearing Party that neutralized the first S-Rank Rift on Accord soil.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -3715,10 +3715,10 @@ export const locations: CompendiumLocation[] = [
 		cr: "0",
 		id: "location-0031",
 		name: "Lost Sacred Mountain",
-		type: "Dungeon",
+		type: "Rift",
 		rank: "D",
 		description:
-			"An ancient dungeon carved from solid shadow stone, where the barriers between the mortal realm and the shadow dimension grow thin. This D-rank dungeon features shifting corridors that reconfigure themselves and walls that whisper forgotten secrets.",
+			"An ancient Rift carved from solid shadow stone, where the barriers between the mortal realm and the shadow dimension grow thin. This D-rank Rift features shifting corridors that reconfigure themselves and walls that whisper forgotten secrets.",
 		encounters: ["Shadow anomaly", "Void Beasts", "Abyssal Horrors"],
 		treasures: [
 			"Shadow Items",
@@ -3742,7 +3742,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Extracted from the dimensional residue of a collapsed B-Rank Gate in downtown Seoul.",
+				"Extracted from the dimensional residue of a collapsed B-Rank Rift in downtown Meridian City.",
 			history:
 				"Archaeological evidence suggests ancient civilizations may have accessed similar power through ritual sacrifice.",
 			curse: "",
@@ -3989,7 +3989,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Crystallized from raw mana overflow during the catastrophic Seoul Gate Breach of Year 7.",
+				"Crystallized from raw mana overflow during the catastrophic Meridian City Rift Break of Year 7.",
 			history:
 				"Archaeological evidence suggests ancient civilizations may have accessed similar power through ritual sacrifice.",
 			curse: "",
@@ -4337,7 +4337,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Reconstructed from fragments scattered across seven different C-Rank dungeons.",
+				"Reconstructed from fragments scattered across seven different C-Rank Rifts.",
 			history:
 				"The first recorded use caused a localized reality fracture that took a specialized team forty hours to repair.",
 			curse: "",
@@ -4431,10 +4431,10 @@ export const locations: CompendiumLocation[] = [
 		cr: "0",
 		id: "location-0037",
 		name: "Lost Celestial Garden",
-		type: "Dungeon",
+		type: "Rift",
 		rank: "C",
 		description:
-			"A legendary dungeon that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary Rift that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
 			"Shadow anomaly",
 			"Void Beasts",
@@ -4458,7 +4458,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Reconstructed from fragments scattered across seven different C-Rank dungeons.",
+				"Reconstructed from fragments scattered across seven different C-Rank Rifts.",
 			history:
 				"Intelligence reports link this to the Shadow Regent's army, though the connection remains unconfirmed.",
 			curse: "",
@@ -4695,7 +4695,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Extracted from the dimensional residue of a collapsed B-Rank Gate in downtown Seoul.",
+				"Extracted from the dimensional residue of a collapsed B-Rank Rift in downtown Meridian City.",
 			history:
 				"This was one of twelve artifacts recovered from the infamous Kamish Raid that changed modern Ascendant warfare.",
 			curse: "",
@@ -4914,7 +4914,7 @@ export const locations: CompendiumLocation[] = [
 		rarity: "common",
 		cr: "0",
 		id: "location-0041",
-		name: "Hidden Shadow Dungeon",
+		name: "Hidden Shadow Rift",
 		type: "Mountain",
 		rank: "D",
 		description:
@@ -4947,7 +4947,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Distilled from the ambient mana of a Red Gate that refused to close for seventeen days.",
+				"Distilled from the ambient mana of a Red Rift that refused to close for seventeen days.",
 			history:
 				"A-Rank appraiser Guild Master Ryker personally verified its authenticity before it entered general circulation.",
 			curse: "",
@@ -5157,10 +5157,10 @@ export const locations: CompendiumLocation[] = [
 		cr: "0",
 		id: "location-0043",
 		name: "Hidden Abyssal Citadel",
-		type: "Dungeon",
+		type: "Rift",
 		rank: "B",
 		description:
-			"A legendary dungeon that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary Rift that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
 			"Shadow anomaly",
 			"Void Beasts",
@@ -5418,7 +5418,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Translated from forbidden shadow-language inscriptions found in a Regent's throne room.",
 			history:
-				"Combat logs from the Busan Incident show this was used to hold a Gate breach for forty-seven minutes.",
+				"Combat logs from the Harrow Bay Incident show this was used to hold a Rift breach for forty-seven minutes.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -5653,9 +5653,9 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Reconstructed from fragments scattered across seven different C-Rank dungeons.",
+				"Reconstructed from fragments scattered across seven different C-Rank Rifts.",
 			history:
-				"This technique was banned by the International Guild Association for eighteen months before being reclassified.",
+				"This technique was banned by the International Guild Bureau for eighteen months before being reclassified.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -5868,10 +5868,10 @@ export const locations: CompendiumLocation[] = [
 		cr: "0",
 		id: "location-0049",
 		name: "Hidden Cursed Swamp",
-		type: "Dungeon",
+		type: "Rift",
 		rank: "A",
 		description:
-			"A legendary dungeon that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary Rift that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow anomaly", "Void Beasts"],
 		treasures: [
 			"Shadow Items",
@@ -6371,7 +6371,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Found clutched in the hand of a petrified E-Rank Ascendant who had been missing for three years.",
 			history:
-				"This technique was banned by the International Guild Association for eighteen months before being reclassified.",
+				"This technique was banned by the International Guild Bureau for eighteen months before being reclassified.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -6487,7 +6487,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Emerged from the Ascendant Bureau's classified Project: Lattice Break experiments.",
 			history:
-				"Records indicate this was used by the original Clearing Party that neutralized the first S-Rank Gate on Korean soil.",
+				"Records indicate this was used by the original Clearing Party that neutralized the first S-Rank Rift on Accord soil.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -6579,10 +6579,10 @@ export const locations: CompendiumLocation[] = [
 		cr: "0",
 		id: "location-0055",
 		name: "Hidden Abyssal Portal",
-		type: "Dungeon",
+		type: "Rift",
 		rank: "S",
 		description:
-			"A legendary dungeon that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary Rift that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow anomaly", "Void Beasts"],
 		treasures: [
 			"Shadow Items",
@@ -6724,7 +6724,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Unearthed by a mining Guild operating in the mana-saturated quarries of the Australian Outback.",
 			history:
-				"Records indicate this was used by the original Clearing Party that neutralized the first S-Rank Gate on Korean soil.",
+				"Records indicate this was used by the original Clearing Party that neutralized the first S-Rank Rift on Accord soil.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -7080,7 +7080,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Crystallized from raw mana overflow during the catastrophic Seoul Gate Breach of Year 7.",
+				"Crystallized from raw mana overflow during the catastrophic Meridian City Rift Break of Year 7.",
 			history:
 				"Field reports indicate prolonged exposure causes minor spatial distortions in a three-meter radius.",
 			curse: "",
@@ -7294,11 +7294,11 @@ export const locations: CompendiumLocation[] = [
 		rarity: "common",
 		cr: "0",
 		id: "location-0061",
-		name: "Forbidden Shadow Dungeon",
-		type: "Dungeon",
+		name: "Forbidden Shadow Rift",
+		type: "Rift",
 		rank: "D",
 		description:
-			"A legendary dungeon that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary Rift that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
 			"Shadow anomaly",
 			"Void Beasts",
@@ -7561,7 +7561,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Found clutched in the hand of a petrified E-Rank Ascendant who had been missing for three years.",
 			history:
-				"Historical analysis suggests this predates the modern Gate system by several centuries.",
+				"Historical analysis suggests this predates the modern Rift system by several centuries.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -8011,10 +8011,10 @@ export const locations: CompendiumLocation[] = [
 		cr: "0",
 		id: "location-0067",
 		name: "Forbidden pre-gate ruins",
-		type: "Dungeon",
+		type: "Rift",
 		rank: "C",
 		description:
-			"A legendary dungeon that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary Rift that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow anomaly", "Void Beasts", "Abyssal Horrors"],
 		treasures: [
 			"Shadow Items",
@@ -8154,7 +8154,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Stolen from a Guild vault during the Three-Day War between rival Korean Ascendant factions.",
+				"Stolen from a Guild vault during the Three-Day War between rival Accord Ascendant factions.",
 			history:
 				"First documented during the Second Awakening Wave, when Ascendants worldwide reported spontaneous power surges.",
 			curse: "",
@@ -8386,7 +8386,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Distilled from the ambient mana of a Red Gate that refused to close for seventeen days.",
+				"Distilled from the ambient mana of a Red Rift that refused to close for seventeen days.",
 			history:
 				"Originally thought to be a failed experiment, it was rediscovered when a junior researcher noticed anomalous readings.",
 			curse: "",
@@ -8625,7 +8625,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Manifested spontaneously during a double-dungeon event in the American Midwest.",
 			history:
-				"This technique was banned by the International Guild Association for eighteen months before being reclassified.",
+				"This technique was banned by the International Guild Bureau for eighteen months before being reclassified.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -8717,10 +8717,10 @@ export const locations: CompendiumLocation[] = [
 		cr: "0",
 		id: "location-0073",
 		name: "Forbidden Void Gateway",
-		type: "Dungeon",
+		type: "Rift",
 		rank: "B",
 		description:
-			"A legendary dungeon that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary Rift that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
 			"Shadow anomaly",
 			"Void Beasts",
@@ -8744,7 +8744,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Stolen from a Guild vault during the Three-Day War between rival Korean Ascendant factions.",
+				"Stolen from a Guild vault during the Three-Day War between rival Accord Ascendant factions.",
 			history:
 				"First documented during the Second Awakening Wave, when Ascendants worldwide reported spontaneous power surges.",
 			curse: "",
@@ -8981,9 +8981,9 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Woven from the screams of a Gate Boss that achieved sentience moments before death.",
+				"Woven from the screams of a Rift Boss that achieved sentience moments before death.",
 			history:
-				"Historical analysis suggests this predates the modern Gate system by several centuries.",
+				"Historical analysis suggests this predates the modern Rift system by several centuries.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -9433,10 +9433,10 @@ export const locations: CompendiumLocation[] = [
 		cr: "0",
 		id: "location-0079",
 		name: "Forbidden Ancient Battlefield",
-		type: "Dungeon",
+		type: "Rift",
 		rank: "A",
 		description:
-			"A legendary dungeon that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary Rift that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow anomaly", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
@@ -9455,7 +9455,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Crystallized from raw mana overflow during the catastrophic Seoul Gate Breach of Year 7.",
+				"Crystallized from raw mana overflow during the catastrophic Meridian City Rift Break of Year 7.",
 			history:
 				"Intelligence reports link this to the Shadow Regent's army, though the connection remains unconfirmed.",
 			curse: "",
@@ -9664,7 +9664,7 @@ export const locations: CompendiumLocation[] = [
 		rarity: "common",
 		cr: "0",
 		id: "location-0081",
-		name: "Sacred Shadow Dungeon",
+		name: "Sacred Shadow Rift",
 		type: "City",
 		rank: "D",
 		description:
@@ -9687,7 +9687,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Stolen from a Guild vault during the Three-Day War between rival Korean Ascendant factions.",
+				"Stolen from a Guild vault during the Three-Day War between rival Accord Ascendant factions.",
 			history:
 				"The Japanese Ascendant Bureau attempted to classify this as a national treasure to prevent export.",
 			curse: "",
@@ -9919,7 +9919,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Extracted from the dimensional residue of a collapsed B-Rank Gate in downtown Seoul.",
+				"Extracted from the dimensional residue of a collapsed B-Rank Rift in downtown Meridian City.",
 			history:
 				"The European Ascendant Council maintains a standing bounty for information regarding its original creator.",
 			curse: "",
@@ -10134,10 +10134,10 @@ export const locations: CompendiumLocation[] = [
 		cr: "0",
 		id: "location-0085",
 		name: "Sacred Celestial Palace",
-		type: "Dungeon",
+		type: "Rift",
 		rank: "S",
 		description:
-			"A legendary dungeon that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary Rift that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow anomaly", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
@@ -10156,9 +10156,9 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Woven from the screams of a Gate Boss that achieved sentience moments before death.",
+				"Woven from the screams of a Rift Boss that achieved sentience moments before death.",
 			history:
-				"Historical analysis suggests this predates the modern Gate system by several centuries.",
+				"Historical analysis suggests this predates the modern Rift system by several centuries.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -10272,7 +10272,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Extracted from the dimensional residue of a collapsed B-Rank Gate in downtown Seoul.",
+				"Extracted from the dimensional residue of a collapsed B-Rank Rift in downtown Meridian City.",
 			history:
 				"Intelligence reports link this to the Shadow Regent's army, though the connection remains unconfirmed.",
 			curse: "",
@@ -10751,9 +10751,9 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Stolen from a Guild vault during the Three-Day War between rival Korean Ascendant factions.",
+				"Stolen from a Guild vault during the Three-Day War between rival Accord Ascendant factions.",
 			history:
-				"This technique was banned by the International Guild Association for eighteen months before being reclassified.",
+				"This technique was banned by the International Guild Bureau for eighteen months before being reclassified.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -10845,10 +10845,10 @@ export const locations: CompendiumLocation[] = [
 		cr: "0",
 		id: "location-0091",
 		name: "Sacred Sacred Mountain",
-		type: "Dungeon",
+		type: "Rift",
 		rank: "D",
 		description:
-			"A legendary dungeon that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary Rift that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow anomaly", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
@@ -10869,7 +10869,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Confiscated from a black-market dealer operating in the shadow districts of Manila.",
 			history:
-				"Historical analysis suggests this predates the modern Gate system by several centuries.",
+				"Historical analysis suggests this predates the modern Rift system by several centuries.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -10990,7 +10990,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Excavated from a pocket dimension that existed for exactly one hour before collapsing.",
 			history:
-				"Combat logs from the Busan Incident show this was used to hold a Gate breach for forty-seven minutes.",
+				"Combat logs from the Harrow Bay Incident show this was used to hold a Rift breach for forty-seven minutes.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -11232,7 +11232,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Unearthed by a mining Guild operating in the mana-saturated quarries of the Australian Outback.",
 			history:
-				"Records indicate this was used by the original Clearing Party that neutralized the first S-Rank Gate on Korean soil.",
+				"Records indicate this was used by the original Clearing Party that neutralized the first S-Rank Rift on Accord soil.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -11351,7 +11351,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Extracted from the dimensional residue of a collapsed B-Rank Gate in downtown Seoul.",
+				"Extracted from the dimensional residue of a collapsed B-Rank Rift in downtown Meridian City.",
 			history:
 				"Intelligence reports link this to the Shadow Regent's army, though the connection remains unconfirmed.",
 			curse: "",
@@ -11474,7 +11474,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Unearthed by a mining Guild operating in the mana-saturated quarries of the Australian Outback.",
 			history:
-				"Records indicate this was used by the original Clearing Party that neutralized the first S-Rank Gate on Korean soil.",
+				"Records indicate this was used by the original Clearing Party that neutralized the first S-Rank Rift on Accord soil.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -11566,10 +11566,10 @@ export const locations: CompendiumLocation[] = [
 		cr: "0",
 		id: "location-0097",
 		name: "Sacred Celestial Garden",
-		type: "Dungeon",
+		type: "Rift",
 		rank: "C",
 		description:
-			"A legendary dungeon that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary Rift that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow anomaly", "Void Beasts"],
 		treasures: [
 			"Shadow Items",
@@ -11593,7 +11593,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Born from an Order glitch that briefly merged two overlapping Gate instances.",
+				"Born from an Order glitch that briefly merged two overlapping Rift instances.",
 			history:
 				"The Japanese Ascendant Bureau attempted to classify this as a national treasure to prevent export.",
 			curse: "",
@@ -11709,7 +11709,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Born from an Order glitch that briefly merged two overlapping Gate instances.",
+				"Born from an Order glitch that briefly merged two overlapping Rift instances.",
 			history:
 				"The Japanese Ascendant Bureau attempted to classify this as a national treasure to prevent export.",
 			curse: "",
@@ -11953,7 +11953,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Confiscated from a black-market dealer operating in the shadow districts of Manila.",
 			history:
-				"This technique was banned by the International Guild Association for eighteen months before being reclassified.",
+				"This technique was banned by the International Guild Bureau for eighteen months before being reclassified.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -12044,7 +12044,7 @@ export const locations: CompendiumLocation[] = [
 		rarity: "common",
 		cr: "0",
 		id: "location-0101",
-		name: "Cursed Shadow Dungeon",
+		name: "Cursed Shadow Rift",
 		type: "Mountain",
 		rank: "D",
 		description:
@@ -12069,7 +12069,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Synthesized in the clandestine laboratories beneath the Chinese Ascendant Bureau headquarters.",
 			history:
-				"Historical analysis suggests this predates the modern Gate system by several centuries.",
+				"Historical analysis suggests this predates the modern Rift system by several centuries.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -12183,7 +12183,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Reconstructed from fragments scattered across seven different C-Rank dungeons.",
+				"Reconstructed from fragments scattered across seven different C-Rank Rifts.",
 			history:
 				"The European Ascendant Council maintains a standing bounty for information regarding its original creator.",
 			curse: "",
@@ -12277,10 +12277,10 @@ export const locations: CompendiumLocation[] = [
 		cr: "0",
 		id: "location-0103",
 		name: "Cursed Abyssal Citadel",
-		type: "Dungeon",
+		type: "Rift",
 		rank: "B",
 		description:
-			"A legendary dungeon that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary Rift that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow anomaly", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
@@ -12538,7 +12538,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Found clutched in the hand of a petrified E-Rank Ascendant who had been missing for three years.",
 			history:
-				"This technique was banned by the International Guild Association for eighteen months before being reclassified.",
+				"This technique was banned by the International Guild Bureau for eighteen months before being reclassified.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -12891,7 +12891,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Confiscated from a black-market dealer operating in the shadow districts of Manila.",
 			history:
-				"Historical analysis suggests this predates the modern Gate system by several centuries.",
+				"Historical analysis suggests this predates the modern Rift system by several centuries.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -12983,10 +12983,10 @@ export const locations: CompendiumLocation[] = [
 		cr: "0",
 		id: "location-0109",
 		name: "Cursed Cursed Swamp",
-		type: "Dungeon",
+		type: "Rift",
 		rank: "A",
 		description:
-			"A legendary dungeon that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary Rift that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow anomaly", "Void Beasts"],
 		treasures: [
 			"Shadow Items",
@@ -13010,7 +13010,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Reconstructed from fragments scattered across seven different C-Rank dungeons.",
+				"Reconstructed from fragments scattered across seven different C-Rank Rifts.",
 			history:
 				"Archaeological evidence suggests ancient civilizations may have accessed similar power through ritual sacrifice.",
 			curse: "",
@@ -13249,7 +13249,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Leaked through a micro-rift that appeared inside the International Ascendant Conference hall.",
 			history:
-				"This technique was banned by the International Guild Association for eighteen months before being reclassified.",
+				"This technique was banned by the International Guild Bureau for eighteen months before being reclassified.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -13368,7 +13368,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Extracted from the dimensional residue of a collapsed B-Rank Gate in downtown Seoul.",
+				"Extracted from the dimensional residue of a collapsed B-Rank Rift in downtown Meridian City.",
 			history:
 				"Originally thought to be a failed experiment, it was rediscovered when a junior researcher noticed anomalous readings.",
 			curse: "",
@@ -13699,10 +13699,10 @@ export const locations: CompendiumLocation[] = [
 		cr: "0",
 		id: "location-0115",
 		name: "Cursed Abyssal Portal",
-		type: "Dungeon",
+		type: "Rift",
 		rank: "S",
 		description:
-			"A legendary dungeon that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary Rift that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
 			"Shadow anomaly",
 			"Void Beasts",
@@ -13842,7 +13842,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Woven from the screams of a Gate Boss that achieved sentience moments before death.",
+				"Woven from the screams of a Rift Boss that achieved sentience moments before death.",
 			history:
 				"This was one of twelve artifacts recovered from the infamous Kamish Raid that changed modern Ascendant warfare.",
 			curse: "",
@@ -14084,7 +14084,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Reconstructed from fragments scattered across seven different C-Rank dungeons.",
+				"Reconstructed from fragments scattered across seven different C-Rank Rifts.",
 			history:
 				"The American Ascendant Bureau's Project: Starfall attempted to weaponize this before the program was defunded.",
 			curse: "",
@@ -14419,11 +14419,11 @@ export const locations: CompendiumLocation[] = [
 		rarity: "common",
 		cr: "0",
 		id: "location-0121",
-		name: "Ancient Shadow Dungeon",
-		type: "Dungeon",
+		name: "Ancient Shadow Rift",
+		type: "Rift",
 		rank: "D",
 		description:
-			"A legendary dungeon that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary Rift that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
 			"Shadow anomaly",
 			"Void Beasts",
@@ -14805,7 +14805,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Reconstructed from fragments scattered across seven different C-Rank dungeons.",
+				"Reconstructed from fragments scattered across seven different C-Rank Rifts.",
 			history:
 				"This was one of twelve artifacts recovered from the infamous Kamish Raid that changed modern Ascendant warfare.",
 			curse: "",
@@ -14921,7 +14921,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Distilled from the ambient mana of a Red Gate that refused to close for seventeen days.",
+				"Distilled from the ambient mana of a Red Rift that refused to close for seventeen days.",
 			history:
 				"Originally thought to be a failed experiment, it was rediscovered when a junior researcher noticed anomalous readings.",
 			curse: "",
@@ -15042,7 +15042,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Extracted from the dimensional residue of a collapsed B-Rank Gate in downtown Seoul.",
+				"Extracted from the dimensional residue of a collapsed B-Rank Rift in downtown Meridian City.",
 			history:
 				"Guild archives show at least three S-Rank Ascendants have died attempting to master its full potential.",
 			curse: "",
@@ -15136,10 +15136,10 @@ export const locations: CompendiumLocation[] = [
 		cr: "0",
 		id: "location-0127",
 		name: "Ancient pre-gate ruins",
-		type: "Dungeon",
+		type: "Rift",
 		rank: "C",
 		description:
-			"A legendary dungeon that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary Rift that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
 			"Shadow anomaly",
 			"Void Beasts",
@@ -15170,7 +15170,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Pulled from the dreams of a comatose S-Rank Ascendant by a team of psychic-type Awakened.",
 			history:
-				"This technique was banned by the International Guild Association for eighteen months before being reclassified.",
+				"This technique was banned by the International Guild Bureau for eighteen months before being reclassified.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -15528,7 +15528,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Decoded from ancient sigil-stones found beneath the ruins of a pre-Awakening temple in Kyoto.",
 			history:
-				"Historical analysis suggests this predates the modern Gate system by several centuries.",
+				"Historical analysis suggests this predates the modern Rift system by several centuries.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -15862,10 +15862,10 @@ export const locations: CompendiumLocation[] = [
 		cr: "0",
 		id: "location-0133",
 		name: "Ancient Void Gateway",
-		type: "Dungeon",
+		type: "Rift",
 		rank: "B",
 		description:
-			"A legendary dungeon that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary Rift that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow anomaly", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
@@ -16002,7 +16002,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Salvaged from the corpse of an S-Rank anomaly that breached containment in the European Dead Zone.",
 			history:
-				"Records indicate this was used by the original Clearing Party that neutralized the first S-Rank Gate on Korean soil.",
+				"Records indicate this was used by the original Clearing Party that neutralized the first S-Rank Rift on Accord soil.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -16116,7 +16116,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Stolen from a Guild vault during the Three-Day War between rival Korean Ascendant factions.",
+				"Stolen from a Guild vault during the Three-Day War between rival Accord Ascendant factions.",
 			history:
 				"The first recorded use caused a localized reality fracture that took a specialized team forty hours to repair.",
 			curse: "",
@@ -16237,9 +16237,9 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Stolen from a Guild vault during the Three-Day War between rival Korean Ascendant factions.",
+				"Stolen from a Guild vault during the Three-Day War between rival Accord Ascendant factions.",
 			history:
-				"Combat logs from the Busan Incident show this was used to hold a Gate breach for forty-seven minutes.",
+				"Combat logs from the Harrow Bay Incident show this was used to hold a Rift breach for forty-seven minutes.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -16563,10 +16563,10 @@ export const locations: CompendiumLocation[] = [
 		cr: "0",
 		id: "location-0139",
 		name: "Ancient Ancient Battlefield",
-		type: "Dungeon",
+		type: "Rift",
 		rank: "A",
 		description:
-			"A legendary dungeon that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary Rift that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow anomaly", "Void Beasts"],
 		treasures: [
 			"Shadow Items",
@@ -16590,7 +16590,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Reconstructed from fragments scattered across seven different C-Rank dungeons.",
+				"Reconstructed from fragments scattered across seven different C-Rank Rifts.",
 			history:
 				"Originally developed as a countermeasure against Regent-class entities during the Regent Wars.",
 			curse: "",
@@ -16711,7 +16711,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Extracted from the dimensional residue of a collapsed B-Rank Gate in downtown Seoul.",
+				"Extracted from the dimensional residue of a collapsed B-Rank Rift in downtown Meridian City.",
 			history:
 				"This was one of twelve artifacts recovered from the infamous Kamish Raid that changed modern Ascendant warfare.",
 			curse: "",
@@ -16804,7 +16804,7 @@ export const locations: CompendiumLocation[] = [
 		rarity: "common",
 		cr: "0",
 		id: "location-0141",
-		name: "Primordial Shadow Dungeon",
+		name: "Primordial Shadow Rift",
 		type: "City",
 		rank: "D",
 		description:
@@ -16827,7 +16827,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Reconstructed from fragments scattered across seven different C-Rank dungeons.",
+				"Reconstructed from fragments scattered across seven different C-Rank Rifts.",
 			history:
 				"The European Ascendant Council maintains a standing bounty for information regarding its original creator.",
 			curse: "",
@@ -16948,9 +16948,9 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Reconstructed from fragments scattered across seven different C-Rank dungeons.",
+				"Reconstructed from fragments scattered across seven different C-Rank Rifts.",
 			history:
-				"Historical analysis suggests this predates the modern Gate system by several centuries.",
+				"Historical analysis suggests this predates the modern Rift system by several centuries.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -17187,7 +17187,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Synthesized in the clandestine laboratories beneath the Chinese Ascendant Bureau headquarters.",
 			history:
-				"Combat logs from the Busan Incident show this was used to hold a Gate breach for forty-seven minutes.",
+				"Combat logs from the Harrow Bay Incident show this was used to hold a Rift breach for forty-seven minutes.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -17279,10 +17279,10 @@ export const locations: CompendiumLocation[] = [
 		cr: "0",
 		id: "location-0145",
 		name: "Primordial Celestial Palace",
-		type: "Dungeon",
+		type: "Rift",
 		rank: "S",
 		description:
-			"A legendary dungeon that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary Rift that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
 			"Shadow anomaly",
 			"Void Beasts",
@@ -17427,7 +17427,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Distilled from the ambient mana of a Red Gate that refused to close for seventeen days.",
+				"Distilled from the ambient mana of a Red Rift that refused to close for seventeen days.",
 			history:
 				"Guild archives show at least three S-Rank Ascendants have died attempting to master its full potential.",
 			curse: "",
@@ -17659,7 +17659,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Distilled from the ambient mana of a Red Gate that refused to close for seventeen days.",
+				"Distilled from the ambient mana of a Red Rift that refused to close for seventeen days.",
 			history:
 				"First documented during the Second Awakening Wave, when Ascendants worldwide reported spontaneous power surges.",
 			curse: "",
@@ -17990,10 +17990,10 @@ export const locations: CompendiumLocation[] = [
 		cr: "0",
 		id: "location-0151",
 		name: "Primordial Sacred Mountain",
-		type: "Dungeon",
+		type: "Rift",
 		rank: "D",
 		description:
-			"A legendary dungeon that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary Rift that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow anomaly", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
@@ -18481,7 +18481,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Stolen from a Guild vault during the Three-Day War between rival Korean Ascendant factions.",
+				"Stolen from a Guild vault during the Three-Day War between rival Accord Ascendant factions.",
 			history:
 				"Multiple Guilds have attempted to replicate this; all reproductions have proven inferior to the original.",
 			curse: "",
@@ -18696,10 +18696,10 @@ export const locations: CompendiumLocation[] = [
 		cr: "0",
 		id: "location-0157",
 		name: "Primordial Celestial Garden",
-		type: "Dungeon",
+		type: "Rift",
 		rank: "C",
 		description:
-			"A legendary dungeon that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary Rift that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow anomaly", "Void Beasts", "Abyssal Horrors"],
 		treasures: [
 			"Shadow Items",
@@ -18723,7 +18723,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Distilled from the ambient mana of a Red Gate that refused to close for seventeen days.",
+				"Distilled from the ambient mana of a Red Rift that refused to close for seventeen days.",
 			history:
 				"Guild archives show at least three S-Rank Ascendants have died attempting to master its full potential.",
 			curse: "",
@@ -18849,7 +18849,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Crystallized from raw mana overflow during the catastrophic Seoul Gate Breach of Year 7.",
+				"Crystallized from raw mana overflow during the catastrophic Meridian City Rift Break of Year 7.",
 			history:
 				"Originally thought to be a failed experiment, it was rediscovered when a junior researcher noticed anomalous readings.",
 			curse: "",
@@ -19086,7 +19086,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Distilled from the ambient mana of a Red Gate that refused to close for seventeen days.",
+				"Distilled from the ambient mana of a Red Rift that refused to close for seventeen days.",
 			history:
 				"Field reports indicate prolonged exposure causes minor spatial distortions in a three-meter radius.",
 			curse: "",
@@ -19179,7 +19179,7 @@ export const locations: CompendiumLocation[] = [
 		rarity: "common",
 		cr: "0",
 		id: "location-0161",
-		name: "Supreme Shadow Dungeon",
+		name: "Supreme Shadow Rift",
 		type: "Mountain",
 		rank: "D",
 		description:
@@ -19328,7 +19328,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Woven from the screams of a Gate Boss that achieved sentience moments before death.",
+				"Woven from the screams of a Rift Boss that achieved sentience moments before death.",
 			history:
 				"Archaeological evidence suggests ancient civilizations may have accessed similar power through ritual sacrifice.",
 			curse: "",
@@ -19422,10 +19422,10 @@ export const locations: CompendiumLocation[] = [
 		cr: "0",
 		id: "location-0163",
 		name: "Supreme Abyssal Citadel",
-		type: "Dungeon",
+		type: "Rift",
 		rank: "B",
 		description:
-			"A legendary dungeon that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary Rift that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow anomaly", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
@@ -20128,10 +20128,10 @@ export const locations: CompendiumLocation[] = [
 		cr: "0",
 		id: "location-0169",
 		name: "Supreme Cursed Swamp",
-		type: "Dungeon",
+		type: "Rift",
 		rank: "A",
 		description:
-			"A legendary dungeon that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary Rift that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow anomaly", "Void Beasts"],
 		treasures: [
 			"Shadow Items",
@@ -20155,7 +20155,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Crystallized from raw mana overflow during the catastrophic Seoul Gate Breach of Year 7.",
+				"Crystallized from raw mana overflow during the catastrophic Meridian City Rift Break of Year 7.",
 			history:
 				"The American Ascendant Bureau's Project: Starfall attempted to weaponize this before the program was defunded.",
 			curse: "",
@@ -20839,10 +20839,10 @@ export const locations: CompendiumLocation[] = [
 		cr: "0",
 		id: "location-0175",
 		name: "Supreme Abyssal Portal",
-		type: "Dungeon",
+		type: "Rift",
 		rank: "S",
 		description:
-			"A legendary dungeon that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary Rift that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
 			"Shadow anomaly",
 			"Void Beasts",
@@ -20866,7 +20866,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Stolen from a Guild vault during the Three-Day War between rival Korean Ascendant factions.",
+				"Stolen from a Guild vault during the Three-Day War between rival Accord Ascendant factions.",
 			history:
 				"The first recorded use caused a localized reality fracture that took a specialized team forty hours to repair.",
 			curse: "",
@@ -20992,9 +20992,9 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Reconstructed from fragments scattered across seven different C-Rank dungeons.",
+				"Reconstructed from fragments scattered across seven different C-Rank Rifts.",
 			history:
-				"Historical analysis suggests this predates the modern Gate system by several centuries.",
+				"Historical analysis suggests this predates the modern Rift system by several centuries.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -21350,7 +21350,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Stolen from a Guild vault during the Three-Day War between rival Korean Ascendant factions.",
+				"Stolen from a Guild vault during the Three-Day War between rival Accord Ascendant factions.",
 			history:
 				"This was one of twelve artifacts recovered from the infamous Kamish Raid that changed modern Ascendant warfare.",
 			curse: "",
@@ -21559,11 +21559,11 @@ export const locations: CompendiumLocation[] = [
 		rarity: "common",
 		cr: "0",
 		id: "location-0181",
-		name: "Legendary Shadow Dungeon",
-		type: "Dungeon",
+		name: "Legendary Shadow Rift",
+		type: "Rift",
 		rank: "D",
 		description:
-			"A legendary dungeon that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary Rift that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow anomaly", "Void Beasts"],
 		treasures: [
 			"Shadow Items",
@@ -22179,7 +22179,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Discovered embedded in the spine of a petrified World Tree fragment found in Scandinavia.",
 			history:
-				"Records indicate this was used by the original Clearing Party that neutralized the first S-Rank Gate on Korean soil.",
+				"Records indicate this was used by the original Clearing Party that neutralized the first S-Rank Rift on Accord soil.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -22271,10 +22271,10 @@ export const locations: CompendiumLocation[] = [
 		cr: "0",
 		id: "location-0187",
 		name: "Legendary pre-gate ruins",
-		type: "Dungeon",
+		type: "Rift",
 		rank: "C",
 		description:
-			"A legendary dungeon that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary Rift that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
 			"Shadow anomaly",
 			"Void Beasts",
@@ -22424,7 +22424,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Born from an Order glitch that briefly merged two overlapping Gate instances.",
+				"Born from an Order glitch that briefly merged two overlapping Rift instances.",
 			history:
 				"A-Rank appraiser Guild Master Ryker personally verified its authenticity before it entered general circulation.",
 			curse: "",
@@ -22545,7 +22545,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Distilled from the ambient mana of a Red Gate that refused to close for seventeen days.",
+				"Distilled from the ambient mana of a Red Rift that refused to close for seventeen days.",
 			history:
 				"The Ascendant Bureau classified this as a Level-4 threat vector before it was repurposed for field operations.",
 			curse: "",
@@ -22777,9 +22777,9 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Woven from the screams of a Gate Boss that achieved sentience moments before death.",
+				"Woven from the screams of a Rift Boss that achieved sentience moments before death.",
 			history:
-				"This technique was banned by the International Guild Association for eighteen months before being reclassified.",
+				"This technique was banned by the International Guild Bureau for eighteen months before being reclassified.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -22997,10 +22997,10 @@ export const locations: CompendiumLocation[] = [
 		cr: "0",
 		id: "location-0193",
 		name: "Legendary Void Gateway",
-		type: "Dungeon",
+		type: "Rift",
 		rank: "B",
 		description:
-			"A legendary dungeon that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary Rift that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow anomaly", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
@@ -23137,7 +23137,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Unearthed by a mining Guild operating in the mana-saturated quarries of the Australian Outback.",
 			history:
-				"This technique was banned by the International Guild Association for eighteen months before being reclassified.",
+				"This technique was banned by the International Guild Bureau for eighteen months before being reclassified.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -23379,7 +23379,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Unearthed by a mining Guild operating in the mana-saturated quarries of the Australian Outback.",
 			history:
-				"Historical analysis suggests this predates the modern Gate system by several centuries.",
+				"Historical analysis suggests this predates the modern Rift system by several centuries.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -23619,7 +23619,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Woven from the screams of a Gate Boss that achieved sentience moments before death.",
+				"Woven from the screams of a Rift Boss that achieved sentience moments before death.",
 			history:
 				"This was the subject of a bidding war between three S-Rank Guilds that nearly escalated to armed conflict.",
 			curse: "",
@@ -23713,10 +23713,10 @@ export const locations: CompendiumLocation[] = [
 		cr: "0",
 		id: "location-0199",
 		name: "Legendary Ancient Battlefield",
-		type: "Dungeon",
+		type: "Rift",
 		rank: "A",
 		description:
-			"A legendary dungeon that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary Rift that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow anomaly", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
@@ -23954,7 +23954,7 @@ export const locations: CompendiumLocation[] = [
 		rarity: "common",
 		cr: "0",
 		id: "location-0201",
-		name: "Mythic Shadow Dungeon",
+		name: "Mythic Shadow Rift",
 		type: "City",
 		rank: "D",
 		description:
@@ -24100,7 +24100,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Excavated from a pocket dimension that existed for exactly one hour before collapsing.",
 			history:
-				"Records indicate this was used by the original Clearing Party that neutralized the first S-Rank Gate on Korean soil.",
+				"Records indicate this was used by the original Clearing Party that neutralized the first S-Rank Rift on Accord soil.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -24221,7 +24221,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Synthesized in the clandestine laboratories beneath the Chinese Ascendant Bureau headquarters.",
 			history:
-				"Combat logs from the Busan Incident show this was used to hold a Gate breach for forty-seven minutes.",
+				"Combat logs from the Harrow Bay Incident show this was used to hold a Rift breach for forty-seven minutes.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -24434,10 +24434,10 @@ export const locations: CompendiumLocation[] = [
 		cr: "0",
 		id: "location-0205",
 		name: "Mythic Celestial Palace",
-		type: "Dungeon",
+		type: "Rift",
 		rank: "S",
 		description:
-			"A legendary dungeon that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary Rift that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow anomaly", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
@@ -24458,7 +24458,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Formed naturally in a mana vein so dense that reality itself began to crystallize around it.",
 			history:
-				"Combat logs from the Busan Incident show this was used to hold a Gate breach for forty-seven minutes.",
+				"Combat logs from the Harrow Bay Incident show this was used to hold a Rift breach for forty-seven minutes.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -24577,9 +24577,9 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Reconstructed from fragments scattered across seven different C-Rank dungeons.",
+				"Reconstructed from fragments scattered across seven different C-Rank Rifts.",
 			history:
-				"Combat logs from the Busan Incident show this was used to hold a Gate breach for forty-seven minutes.",
+				"Combat logs from the Harrow Bay Incident show this was used to hold a Rift breach for forty-seven minutes.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -24698,7 +24698,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Extracted from the dimensional residue of a collapsed B-Rank Gate in downtown Seoul.",
+				"Extracted from the dimensional residue of a collapsed B-Rank Rift in downtown Meridian City.",
 			history:
 				"Originally developed as a countermeasure against Regent-class entities during the Regent Wars.",
 			curse: "",
@@ -24816,7 +24816,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Emerged from the Ascendant Bureau's classified Project: Lattice Break experiments.",
 			history:
-				"Historical analysis suggests this predates the modern Gate system by several centuries.",
+				"Historical analysis suggests this predates the modern Rift system by several centuries.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -25145,10 +25145,10 @@ export const locations: CompendiumLocation[] = [
 		cr: "0",
 		id: "location-0211",
 		name: "Mythic Sacred Mountain",
-		type: "Dungeon",
+		type: "Rift",
 		rank: "D",
 		description:
-			"A legendary dungeon that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary Rift that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
 			"Shadow anomaly",
 			"Void Beasts",
@@ -25298,7 +25298,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Born from an Order glitch that briefly merged two overlapping Gate instances.",
+				"Born from an Order glitch that briefly merged two overlapping Rift instances.",
 			history:
 				"Originally developed as a countermeasure against Regent-class entities during the Regent Wars.",
 			curse: "",
@@ -25784,7 +25784,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Emerged from the Ascendant Bureau's classified Project: Lattice Break experiments.",
 			history:
-				"Combat logs from the Busan Incident show this was used to hold a Gate breach for forty-seven minutes.",
+				"Combat logs from the Harrow Bay Incident show this was used to hold a Rift breach for forty-seven minutes.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -25876,10 +25876,10 @@ export const locations: CompendiumLocation[] = [
 		cr: "0",
 		id: "location-0217",
 		name: "Mythic Celestial Garden",
-		type: "Dungeon",
+		type: "Rift",
 		rank: "C",
 		description:
-			"A legendary dungeon that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary Rift that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow anomaly", "Void Beasts", "Abyssal Horrors"],
 		treasures: [
 			"Shadow Items",
@@ -26026,7 +26026,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Found clutched in the hand of a petrified E-Rank Ascendant who had been missing for three years.",
 			history:
-				"This technique was banned by the International Guild Association for eighteen months before being reclassified.",
+				"This technique was banned by the International Guild Bureau for eighteen months before being reclassified.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -26359,7 +26359,7 @@ export const locations: CompendiumLocation[] = [
 		rarity: "common",
 		cr: "0",
 		id: "location-0221",
-		name: "Divine Shadow Dungeon",
+		name: "Divine Shadow Rift",
 		type: "Mountain",
 		rank: "D",
 		description:
@@ -26389,7 +26389,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Found clutched in the hand of a petrified E-Rank Ascendant who had been missing for three years.",
 			history:
-				"Combat logs from the Busan Incident show this was used to hold a Gate breach for forty-seven minutes.",
+				"Combat logs from the Harrow Bay Incident show this was used to hold a Rift breach for forty-seven minutes.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -26602,10 +26602,10 @@ export const locations: CompendiumLocation[] = [
 		cr: "0",
 		id: "location-0223",
 		name: "Divine Abyssal Citadel",
-		type: "Dungeon",
+		type: "Rift",
 		rank: "B",
 		description:
-			"A legendary dungeon that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary Rift that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow anomaly", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
@@ -26624,9 +26624,9 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Stolen from a Guild vault during the Three-Day War between rival Korean Ascendant factions.",
+				"Stolen from a Guild vault during the Three-Day War between rival Accord Ascendant factions.",
 			history:
-				"This technique was banned by the International Guild Association for eighteen months before being reclassified.",
+				"This technique was banned by the International Guild Bureau for eighteen months before being reclassified.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -27095,7 +27095,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Recovered from the personal vault of a National-Level Ascendant who vanished during the First Calamity.",
 			history:
-				"Combat logs from the Busan Incident show this was used to hold a Gate breach for forty-seven minutes.",
+				"Combat logs from the Harrow Bay Incident show this was used to hold a Rift breach for forty-seven minutes.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -27209,7 +27209,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Reconstructed from fragments scattered across seven different C-Rank dungeons.",
+				"Reconstructed from fragments scattered across seven different C-Rank Rifts.",
 			history:
 				"The first recorded use caused a localized reality fracture that took a specialized team forty hours to repair.",
 			curse: "",
@@ -27303,10 +27303,10 @@ export const locations: CompendiumLocation[] = [
 		cr: "0",
 		id: "location-0229",
 		name: "Divine Cursed Swamp",
-		type: "Dungeon",
+		type: "Rift",
 		rank: "A",
 		description:
-			"A legendary dungeon that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary Rift that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow anomaly", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
@@ -27325,7 +27325,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Stolen from a Guild vault during the Three-Day War between rival Korean Ascendant factions.",
+				"Stolen from a Guild vault during the Three-Day War between rival Accord Ascendant factions.",
 			history:
 				"The first recorded use caused a localized reality fracture that took a specialized team forty hours to repair.",
 			curse: "",
@@ -27446,7 +27446,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Stolen from a Guild vault during the Three-Day War between rival Korean Ascendant factions.",
+				"Stolen from a Guild vault during the Three-Day War between rival Accord Ascendant factions.",
 			history:
 				"Originally developed as a countermeasure against Regent-class entities during the Regent Wars.",
 			curse: "",
@@ -27572,7 +27572,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Born from an Order glitch that briefly merged two overlapping Gate instances.",
+				"Born from an Order glitch that briefly merged two overlapping Rift instances.",
 			history:
 				"Originally developed as a countermeasure against Regent-class entities during the Regent Wars.",
 			curse: "",
@@ -28024,10 +28024,10 @@ export const locations: CompendiumLocation[] = [
 		cr: "0",
 		id: "location-0235",
 		name: "Divine Abyssal Portal",
-		type: "Dungeon",
+		type: "Rift",
 		rank: "S",
 		description:
-			"A legendary dungeon that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
+			"A legendary Rift that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
 		encounters: ["Shadow anomaly", "Void Beasts"],
 		treasures: [
 			"Shadow Items",
@@ -28051,7 +28051,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Stolen from a Guild vault during the Three-Day War between rival Korean Ascendant factions.",
+				"Stolen from a Guild vault during the Three-Day War between rival Accord Ascendant factions.",
 			history:
 				"The American Ascendant Bureau's Project: Starfall attempted to weaponize this before the program was defunded.",
 			curse: "",
@@ -28414,9 +28414,9 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Stolen from a Guild vault during the Three-Day War between rival Korean Ascendant factions.",
+				"Stolen from a Guild vault during the Three-Day War between rival Accord Ascendant factions.",
 			history:
-				"This technique was banned by the International Guild Association for eighteen months before being reclassified.",
+				"This technique was banned by the International Guild Bureau for eighteen months before being reclassified.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -28894,9 +28894,9 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Woven from the screams of a Gate Boss that achieved sentience moments before death.",
+				"Woven from the screams of a Rift Boss that achieved sentience moments before death.",
 			history:
-				"Combat logs from the Busan Incident show this was used to hold a Gate breach for forty-seven minutes.",
+				"Combat logs from the Harrow Bay Incident show this was used to hold a Rift breach for forty-seven minutes.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -29131,6 +29131,388 @@ export const locations: CompendiumLocation[] = [
 			"Eternal Shadow Scepter",
 			"Divine Void Throne",
 			"God-Tier Shadow Armor",
+		],
+	},
+	// ── The Accord gazetteer — canonical civilian geography ──────────────
+	{
+		created_at: "2026-07-02",
+		updated_at: "2026-07-02",
+		source_kind: "Warden Authority",
+		source_name: "Rift Ascendant Canon",
+		theme_tags: ["ascendant-bureau", "regent-era", "post-awakening"],
+		generated_reason: "Accord gazetteer canon",
+		discovery_lore:
+			"Every licensed Ascendant knows Meridian City; most of them were ranked there.",
+		concentration: false,
+		image: "/ui-art/rift-site-hero.webp",
+		image_url: "/ui-art/rift-site-hero.webp",
+		license_note: "Restricted",
+		flavor:
+			"Guild towers crowd the crescent bay like teeth, and every window watches the water for the next tear in the world.",
+		lore: {
+			origin:
+				"Meridian City grew where a deepwater crescent bay meets the mouth of the Meridian River delta — a natural harbor feeding a floodplain wide enough to hold ten million people. Port trade built it; the Rifts remade it.",
+			history:
+				"The Meridian City Rift Break of Year 7 tore open the harbor district and became the Accord's founding emergency — the first S-Rank Rift on Accord soil was neutralized here by the original Clearing Party. The Bureau's coastal command has occupied the rebuilt waterfront ever since, and the Meridian Forge District now outfits half the licensed Ascendants on the continent.",
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
+		source: "Rift Ascendant Canon",
+		source_book: "Rift Ascendant Canon",
+		tags: ["location", "city", "bureau", "support"],
+		system_interaction: "Standard",
+		mechanics: {
+			action_type: "",
+			duration: "",
+			save_dc: 0,
+			damage_profile: "",
+			range: "",
+			lattice_interaction: "",
+			type: "",
+			frequency: "",
+			action: "",
+			ability: "",
+			save: "",
+			dc: 0,
+			attack: {
+				type: "",
+				mode: "",
+				resolution: "",
+				modifier: "",
+				damage: "1",
+				damage_type: "none",
+			},
+			saving_throw: {
+				ability: "",
+				dc: 0,
+				success: "",
+				failure: "",
+			},
+			movement: "",
+			condition: [],
+			stat_bonuses: {},
+			special_abilities: [],
+			restrictions: [],
+			progression: {},
+			ac_formula: "",
+			replaces_armor: false,
+			detection_target: "",
+			usage: "",
+			check: "",
+			scaling: "",
+			critical: false,
+			fumble: false,
+			bonus: {
+				type: "none",
+				value: 0,
+				ability: "",
+				skills: [],
+			},
+			immunity: [],
+			resistance: [],
+			vulnerability: [],
+			special: [],
+			healing: {
+				dice: "",
+				type: "",
+				bonus: 0,
+			},
+		},
+		limitations: {
+			uses: "",
+			recharge: "",
+			requires_attunement: false,
+			conditions: [],
+			charges: 0,
+			uses_per_rest: 0,
+			consumable: false,
+			prerequisites: [],
+			cost: 0,
+		},
+		effects: {
+			primary: "",
+			secondary: "",
+			tertiary: "",
+			passive: [],
+			active: [],
+			primaryEffect: "",
+			secondaryEffect: "",
+			passiveBonuses: [],
+		},
+		rarity: "common",
+		cr: "0",
+		id: "location-0404",
+		name: "Meridian City",
+		type: "City",
+		rank: "A",
+		description:
+			"The Accord's largest metropolis, built around a deepwater crescent bay at the mouth of the Meridian River delta. The natural harbor made it a port giant long before the Rifts; the delta plain let it sprawl into a guild-tower skyline that houses the Bureau's coastal command, the continent's densest Rift-response port infrastructure, and the artificer workshops of the Meridian Forge District. Contracts post here first, ranks are evaluated here fastest, and when a Rift Break alarm sounds over the bay, the whole city moves like a drilled response team — because once, in Year 7, it didn't.",
+		encounters: [
+			"Bureau response convoy",
+			"Guild recruitment scrum",
+			"Harbor-district Rift Break drill",
+			"Black-market Relic broker",
+		],
+		treasures: [
+			"Bureau contract dispatches",
+			"Meridian Forge District commissions",
+			"Clearing Party memorial archives",
+		],
+	},
+	{
+		created_at: "2026-07-02",
+		updated_at: "2026-07-02",
+		source_kind: "Warden Authority",
+		source_name: "Rift Ascendant Canon",
+		theme_tags: ["ascendant-bureau", "regent-era", "post-awakening"],
+		generated_reason: "Accord gazetteer canon",
+		discovery_lore:
+			"Salvage crews say Harrow Bay never stopped rebuilding — it just learned to build around the scars.",
+		concentration: false,
+		image: "/ui-art/ra-portrait-fallback.webp",
+		image_url: "/ui-art/ra-portrait-fallback.webp",
+		license_note: "Restricted",
+		flavor:
+			"Rust, salt, and old mana-scorch: the harbor smells like the Incident never fully ended.",
+		lore: {
+			origin:
+				"A storm-carved harbor city on the Accord's southern coast, Harrow Bay ran on shipbreaking, salvage, and the roughest docks in the hemisphere long before the first tear opened above its cranes.",
+			history:
+				"The Harrow Bay Incident made the city a byword for attrition warfare: an S-Rank Rift boss scattered a full raid party with mass teleportation while second-strike teams held the breach line for forty-seven minutes until the seal took. Half the Bureau's current containment doctrine was written from its combat logs.",
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
+		source: "Rift Ascendant Canon",
+		source_book: "Rift Ascendant Canon",
+		tags: ["location", "city", "bureau", "support"],
+		system_interaction: "Standard",
+		mechanics: {
+			action_type: "",
+			duration: "",
+			save_dc: 0,
+			damage_profile: "",
+			range: "",
+			lattice_interaction: "",
+			type: "",
+			frequency: "",
+			action: "",
+			ability: "",
+			save: "",
+			dc: 0,
+			attack: {
+				type: "",
+				mode: "",
+				resolution: "",
+				modifier: "",
+				damage: "1",
+				damage_type: "none",
+			},
+			saving_throw: {
+				ability: "",
+				dc: 0,
+				success: "",
+				failure: "",
+			},
+			movement: "",
+			condition: [],
+			stat_bonuses: {},
+			special_abilities: [],
+			restrictions: [],
+			progression: {},
+			ac_formula: "",
+			replaces_armor: false,
+			detection_target: "",
+			usage: "",
+			check: "",
+			scaling: "",
+			critical: false,
+			fumble: false,
+			bonus: {
+				type: "none",
+				value: 0,
+				ability: "",
+				skills: [],
+			},
+			immunity: [],
+			resistance: [],
+			vulnerability: [],
+			special: [],
+			healing: {
+				dice: "",
+				type: "",
+				bonus: 0,
+			},
+		},
+		limitations: {
+			uses: "",
+			recharge: "",
+			requires_attunement: false,
+			conditions: [],
+			charges: 0,
+			uses_per_rest: 0,
+			consumable: false,
+			prerequisites: [],
+			cost: 0,
+		},
+		effects: {
+			primary: "",
+			secondary: "",
+			tertiary: "",
+			passive: [],
+			active: [],
+			primaryEffect: "",
+			secondaryEffect: "",
+			passiveBonuses: [],
+		},
+		rarity: "common",
+		cr: "0",
+		id: "location-0405",
+		name: "Harrow Bay",
+		type: "City",
+		rank: "B",
+		description:
+			"A southern port city of cranes, breakwaters, and salvage yards that survived the worst single engagement in Accord history. The Harrow Bay Incident left the city with a standing culture of second-strike readiness: every dock crew doubles as an evacuation marshal, every warehouse district keeps a breach line painted on the asphalt, and the veterans who held the seal for forty-seven minutes drink free in any bar on the waterfront. Gear that 'saw rotation at Harrow Bay' commands a premium in every market on the coast.",
+		encounters: [
+			"Second-strike veteran crew",
+			"Salvage-yard turf dispute",
+			"Breach-line readiness drill",
+			"Incident-relic counterfeiter",
+		],
+		treasures: [
+			"Incident combat logs",
+			"Second-strike service records",
+			"Salvaged breach-line plating",
+		],
+	},
+	{
+		created_at: "2026-07-02",
+		updated_at: "2026-07-02",
+		source_kind: "Warden Authority",
+		source_name: "Rift Ascendant Canon",
+		theme_tags: ["ascendant-bureau", "regent-era", "post-awakening"],
+		generated_reason: "Accord gazetteer canon",
+		discovery_lore:
+			"Tourist brochures still call it paradise; the Bureau's hazard maps disagree in four colors.",
+		concentration: false,
+		image: "/ui-art/rift-site-hero.webp",
+		image_url: "/ui-art/rift-site-hero.webp",
+		license_note: "Restricted",
+		flavor:
+			"Black volcanic sand, turquoise water, and quarantine pylons humming just past the resort line.",
+		lore: {
+			origin:
+				"A volcanic island off the Accord's southern coast, Vantage Isle was a resort economy — honeymoons, dive tours, citrus groves — until the Outbreak turned its lava tubes into the hemisphere's most studied containment site.",
+			history:
+				"The Vantage Isle Outbreak filled the Bureau's Vault-7 evidence locker with recovered artifacts, and the later Vantage Isle Raid — where most casualties came from delayed medical response inside the Rift — rewrote field-medic doctrine across every licensed guild. The island now runs a double life: tourism on the coasts, hazard science in the highlands.",
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
+		},
+		source: "Rift Ascendant Canon",
+		source_book: "Rift Ascendant Canon",
+		tags: ["location", "city", "bureau", "support"],
+		system_interaction: "Standard",
+		mechanics: {
+			action_type: "",
+			duration: "",
+			save_dc: 0,
+			damage_profile: "",
+			range: "",
+			lattice_interaction: "",
+			type: "",
+			frequency: "",
+			action: "",
+			ability: "",
+			save: "",
+			dc: 0,
+			attack: {
+				type: "",
+				mode: "",
+				resolution: "",
+				modifier: "",
+				damage: "1",
+				damage_type: "none",
+			},
+			saving_throw: {
+				ability: "",
+				dc: 0,
+				success: "",
+				failure: "",
+			},
+			movement: "",
+			condition: [],
+			stat_bonuses: {},
+			special_abilities: [],
+			restrictions: [],
+			progression: {},
+			ac_formula: "",
+			replaces_armor: false,
+			detection_target: "",
+			usage: "",
+			check: "",
+			scaling: "",
+			critical: false,
+			fumble: false,
+			bonus: {
+				type: "none",
+				value: 0,
+				ability: "",
+				skills: [],
+			},
+			immunity: [],
+			resistance: [],
+			vulnerability: [],
+			special: [],
+			healing: {
+				dice: "",
+				type: "",
+				bonus: 0,
+			},
+		},
+		limitations: {
+			uses: "",
+			recharge: "",
+			requires_attunement: false,
+			conditions: [],
+			charges: 0,
+			uses_per_rest: 0,
+			consumable: false,
+			prerequisites: [],
+			cost: 0,
+		},
+		effects: {
+			primary: "",
+			secondary: "",
+			tertiary: "",
+			passive: [],
+			active: [],
+			primaryEffect: "",
+			secondaryEffect: "",
+			passiveBonuses: [],
+		},
+		rarity: "common",
+		cr: "0",
+		id: "location-0406",
+		name: "Vantage Isle",
+		type: "City",
+		rank: "C",
+		description:
+			"A volcanic resort island living a double life since the Outbreak: beach resorts and citrus groves ring the coast while quarantine pylons fence the highland lava tubes where the Bureau runs its longest-standing containment study. The Vantage Isle Raid taught the Accord a brutal lesson about medical response inside a Rift, and the island's field-hospital academy now trains every guild medic worth licensing. Locals measure the seasons in tourist ferries and hazard-map revisions.",
+		encounters: [
+			"Quarantine pylon patrol",
+			"Field-medic certification exam",
+			"Lava-tube containment survey",
+			"Relic smuggler posing as dive guide",
+		],
+		treasures: [
+			"Vault-7 evidence manifests",
+			"Outbreak-era research samples",
+			"Field-hospital doctrine manuals",
 		],
 	},
 ];

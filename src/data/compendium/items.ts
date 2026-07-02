@@ -60,8 +60,8 @@ export interface Item {
 	requires_attunement?: boolean;
 	weight: number; // In pounds
 	// Structured catalog price: the credit TYPE varies by tier (cheap goods in
-	// mana/crystal, gear in gate, legendary/artifacts in core). A bare number is
-	// still accepted by helpers (treated as Gate Credits) for any legacy entry.
+	// mana/crystal, gear in Rift, legendary/artifacts in core). A bare number is
+	// still accepted by helpers (treated as Rift Credits) for any legacy entry.
 	value: RaCurrencyValue;
 
 	// Rift Ascendant specific fields

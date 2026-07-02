@@ -1,9 +1,9 @@
 import { Loader2 } from "lucide-react";
 import { useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { AscendantSigil } from "@/components/ui/AscendantSigil";
 import { ManaFlowText, RiftHeading } from "@/components/ui/AscendantText";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
+import { RaLogo } from "@/components/ui/RaLogo";
 import { supabase } from "@/integrations/supabase/client";
 import { isSafeNextPath } from "@/lib/campaignInviteUtils";
 import { logger } from "@/lib/logger";
@@ -145,7 +145,7 @@ export default function AuthCallback() {
 				<AscendantWindow variant="resurge">
 					<div className="p-6">
 						<div className="flex justify-center mb-6">
-							<AscendantSigil size="md" variant="supreme" />
+							<RaLogo variant="full" size="md" />
 						</div>
 
 						<div className="flex flex-col items-center justify-center py-8">

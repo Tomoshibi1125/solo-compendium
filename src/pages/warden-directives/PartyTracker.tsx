@@ -15,16 +15,13 @@ import { useMemo, useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { CampaignExtrasPanel } from "@/components/campaign/CampaignExtrasPanel";
 import { Layout } from "@/components/layout/Layout";
-import {
-	AscendantText,
-	ManaFlowText,
-	RiftHeading,
-} from "@/components/ui/AscendantText";
+import { AscendantText, ManaFlowText } from "@/components/ui/AscendantText";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { PageHeader } from "@/components/ui/PageHeader";
 import { Progress } from "@/components/ui/progress";
 import {
 	Select,
@@ -386,16 +383,16 @@ const PartyTracker = () => {
 	const getHpColor = (hp: number, maxHp: number) => {
 		const percentage = (hp / maxHp) * 100;
 		if (percentage > 75) return "text-green-400";
-		if (percentage > 50) return "text-yellow-400";
-		if (percentage > 25) return "text-orange-400";
+		if (percentage > 50) return "text-gate-s";
+		if (percentage > 25) return "text-gate-a";
 		return "text-red-400";
 	};
 
 	const getHpBarClass = (hp: number, maxHp: number) => {
 		const percentage = (hp / maxHp) * 100;
 		if (percentage > 75) return "[&>div]:bg-green-400";
-		if (percentage > 50) return "[&>div]:bg-yellow-400";
-		if (percentage > 25) return "[&>div]:bg-orange-400";
+		if (percentage > 50) return "[&>div]:bg-gate-s";
+		if (percentage > 25) return "[&>div]:bg-gate-a";
 		return "[&>div]:bg-red-400";
 	};
 
@@ -411,18 +408,19 @@ const PartyTracker = () => {
 						<ArrowLeft className="w-4 h-4 mr-2" />
 						Back to Warden Tools
 					</Button>
-					<RiftHeading
-						level={1}
-						variant="sovereign"
-						dimensional
-						className="mb-2"
-					>
-						Vanguard Synchronization
-					</RiftHeading>
-					<ManaFlowText variant="rift" speed="slow" className="font-heading">
-						A persistent localized tracker for Vanguard operational status,
-						active parameters, condition anomalies, and observational notes.
-					</ManaFlowText>
+					<PageHeader
+						title="Vanguard Synchronization"
+						description={
+							<ManaFlowText
+								variant="rift"
+								speed="slow"
+								className="font-heading"
+							>
+								A persistent localized tracker for Vanguard operational status,
+								active parameters, condition anomalies, and observational notes.
+							</ManaFlowText>
+						}
+					/>
 				</div>
 
 				{campaignsLoading ? (

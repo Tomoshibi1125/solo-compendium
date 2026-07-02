@@ -13,7 +13,7 @@ import {
 	ManaFlowText,
 	RiftHeading,
 } from "@/components/ui/AscendantText";
-import { OptimizedImage } from "@/components/ui/OptimizedImage";
+import { RaLogo } from "@/components/ui/RaLogo";
 import { type OAuthProvider, useOAuth } from "@/hooks/useOAuth";
 import { useAuth } from "@/lib/auth/authContext";
 import { isSafeNextPath } from "@/lib/campaignInviteUtils";
@@ -142,12 +142,7 @@ export default function Login() {
 				{/* Logo and Title */}
 				<div className="text-center mb-8">
 					<div className="flex justify-center mb-4">
-						<OptimizedImage
-							src="/ui-art/shadow-soldier-emblem.webp"
-							alt="Umbral Legionnaire Emblem"
-							className="w-20 h-20 rounded-full border-2 border-primary shadow-lg shadow-primary/50"
-							size="small"
-						/>
+						<RaLogo variant="full" size="lg" />
 					</div>
 					<RiftHeading
 						level={1}

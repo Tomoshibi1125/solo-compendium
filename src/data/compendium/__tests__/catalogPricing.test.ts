@@ -7,7 +7,7 @@ const CURRENCY_IDS = new Set<RaCurrencyId>(RA_CURRENCY_TYPES.map((c) => c.id));
 
 // Guardrail for the Part-2 structured re-pricing: catalog prices must be
 // explicit { currency, amount } with the credit TYPE varied by tier (cheap goods
-// in mana/crystal, gear in gate, legendary/artifacts in core) — not all Gate.
+// in mana/crystal, gear in Rift, legendary/artifacts in core) — not all Rift.
 
 describe("catalog pricing — raw item data is structured", () => {
 	it("every base-equipment entry has a structured { currency, amount } value", () => {
@@ -82,7 +82,7 @@ describe("catalog pricing — surfaced prices are varied + tier-correct", () => 
 		}
 	});
 
-	it("relics carry a structured price in the top denominations (gate/core)", async () => {
+	it("relics carry a structured price in the top denominations (Rift/core)", async () => {
 		const entries = await staticDataProvider.getRelics("");
 		expect(entries.length).toBeGreaterThan(0);
 		for (const entry of entries) {
@@ -91,6 +91,7 @@ describe("catalog pricing — surfaced prices are varied + tier-correct", () => 
 			).price;
 			expect(price, `${entry.id} missing price`).toBeTruthy();
 			// Relics are rare+ tier: never priced in the small denominations.
+			// "gate" is the persisted currency ID (display name is "Rift").
 			expect(["gate", "core"]).toContain(price?.currency);
 			expect(price?.amount ?? 0).toBeGreaterThan(0);
 		}

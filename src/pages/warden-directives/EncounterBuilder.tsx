@@ -1,8 +1,9 @@
 import { ArrowLeft } from "lucide-react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
-import { ManaFlowText, RiftHeading } from "@/components/ui/AscendantText";
+import { ManaFlowText } from "@/components/ui/AscendantText";
 import { Button } from "@/components/ui/button";
+import { PageHeader } from "@/components/ui/PageHeader";
 import { EncounterBuilder as EncounterBuilderComponent } from "@/components/warden-directives/EncounterBuilder";
 
 const EncounterBuilderPage = () => {
@@ -24,19 +25,20 @@ const EncounterBuilderPage = () => {
 						<ArrowLeft className="w-4 h-4 mr-2" />
 						Back to Warden Tools
 					</Button>
-					<RiftHeading
-						level={1}
-						variant="sovereign"
-						dimensional
-						className="mb-2"
-					>
-						Threat Vector Protocol
-					</RiftHeading>
-					<ManaFlowText variant="rift" speed="slow" className="font-heading">
-						Synthesize combat matrices and calculate probability of unit
-						neutralization. Balance multi-planar entities against identified
-						ascendant ratings.
-					</ManaFlowText>
+					<PageHeader
+						title="Threat Vector Protocol"
+						description={
+							<ManaFlowText
+								variant="rift"
+								speed="slow"
+								className="font-heading"
+							>
+								Synthesize combat matrices and calculate probability of unit
+								neutralization. Balance multi-planar entities against identified
+								ascendant ratings.
+							</ManaFlowText>
+						}
+					/>
 				</div>
 
 				<EncounterBuilderComponent

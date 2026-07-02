@@ -40,6 +40,7 @@ import { applySigilBonuses } from "@/lib/sigilAutomation";
 import {
 	calculateSkillModifier,
 	getAllSkills,
+	normalizeSkillName,
 	type SkillDefinition,
 } from "@/lib/skills";
 import { getUnarmoredDefenseBaseAC } from "@/lib/unarmoredDefense";
@@ -60,9 +61,6 @@ const ABILITY_KEYS: AbilityScore[] = [
 	"SENSE",
 	"PRE",
 ];
-
-const normalizeSkillName = (value: string): string =>
-	value.trim().toLowerCase().replace(/[_-]+/g, " ").replace(/\s+/g, " ");
 
 const hasSkill = (
 	values: string[] | null | undefined,

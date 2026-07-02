@@ -41,6 +41,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { PageHeader } from "@/components/ui/PageHeader";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { useCampaignSandboxInjector } from "@/hooks/useCampaignSandboxInjector";
@@ -205,16 +206,10 @@ const Campaigns = () => {
 	return (
 		<Layout>
 			<div className="container mx-auto px-3 sm:px-4 py-4 sm:py-8">
-				<div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6 sm:mb-8">
-					<div className="min-w-0 flex-1">
-						<RiftHeading
-							level={1}
-							variant="sovereign"
-							dimensional
-							className="mb-2 leading-tight"
-						>
-							Campaign Registry
-						</RiftHeading>
+				<PageHeader
+					className="mb-6 sm:mb-8"
+					title="Campaign Registry"
+					description={
 						<ManaFlowText
 							variant="rift"
 							speed="slow"
@@ -222,16 +217,18 @@ const Campaigns = () => {
 						>
 							Establish or join campaigns to hunt across the Rift's domain
 						</ManaFlowText>
-					</div>
-					<Button
-						onClick={() => setCreateDialogOpen(true)}
-						className="gap-2 font-heading bg-gradient-to-r from-resurge to-shadow-purple hover:shadow-resurge/30 hover:shadow-lg transition-all min-h-[44px] px-4 sm:px-6"
-					>
-						<Plus className="w-4 h-4" />
-						<span className="hidden sm:inline">Create Campaign</span>
-						<span className="sm:hidden">Create</span>
-					</Button>
-				</div>
+					}
+					actions={
+						<Button
+							onClick={() => setCreateDialogOpen(true)}
+							className="gap-2 font-heading bg-gradient-to-r from-resurge-violet to-shadow-purple hover:shadow-resurge-violet/30 hover:shadow-lg transition-all min-h-[44px] px-4 sm:px-6"
+						>
+							<Plus className="w-4 h-4" />
+							<span className="hidden sm:inline">Create Campaign</span>
+							<span className="sm:hidden">Create</span>
+						</Button>
+					}
+				/>
 
 				{/* My Campaigns (Warden) */}
 				<div className="mb-8">
@@ -240,13 +237,13 @@ const Campaigns = () => {
 						variant="sovereign"
 						className="mb-4 flex items-center gap-2"
 					>
-						<Crown className="w-5 h-5 text-amber-400" />
+						<Crown className="w-5 h-5 text-gate-s" />
 						Campaigns I Lead
 					</RiftHeading>
 					{loadingMy ? (
 						<div className="flex flex-col items-center justify-center py-12 gap-4">
 							<div className="relative">
-								<div className="w-12 h-12 border-4 border-amber-500/20 rounded-full" />
+								<div className="w-12 h-12 border-4 border-gate-s/20 rounded-full" />
 								<div className="absolute inset-0 w-12 h-12 border-4 border-t-amber-400 rounded-full animate-spin" />
 							</div>
 							<ManaFlowText
@@ -260,9 +257,9 @@ const Campaigns = () => {
 					) : myCampaigns.length === 0 ? (
 						<AscendantWindow
 							title="NO CAMPAIGNS FOUND"
-							className="text-center py-8 border-amber-500/30"
+							className="text-center py-8 border-gate-s/30"
 						>
-							<Crown className="w-12 h-12 mx-auto text-amber-400/50 mb-4" />
+							<Crown className="w-12 h-12 mx-auto text-gate-s/50 mb-4" />
 							<ManaFlowText
 								variant="rift"
 								speed="slow"
@@ -273,7 +270,7 @@ const Campaigns = () => {
 							</ManaFlowText>
 							<Button
 								onClick={() => setCreateDialogOpen(true)}
-								className="bg-gradient-to-r from-amber-500 to-amber-600 hover:shadow-amber-500/30 hover:shadow-lg min-h-[44px]"
+								className="bg-gradient-to-r from-gate-s to-gate-s hover:shadow-gate-s/30 hover:shadow-lg min-h-[44px]"
 							>
 								<Crown className="w-4 h-4 mr-2" />
 								<span className="hidden sm:inline">
@@ -289,21 +286,21 @@ const Campaigns = () => {
 									key={campaign.id}
 									className={cn(
 										"rounded-[2px] p-5 transition-all duration-300 group relative overflow-hidden backdrop-blur-md",
-										"border-l-4 border-y border-r border-amber-500/30 border-l-amber-500 bg-black/60",
-										"hover:border-amber-500/50 hover:shadow-[0_0_20px_rgba(0,0,0,0.8),inset_0_0_15px_hsl(var(--amber-500)/0.2)] focus:outline-none",
+										"border-l-4 border-y border-r border-gate-s/30 border-l-amber-500 bg-black/60",
+										"hover:border-gate-s/50 hover:shadow-[0_0_20px_rgba(0,0,0,0.8),inset_0_0_15px_hsl(var(--amber-500)/0.2)] focus:outline-none",
 									)}
 								>
 									{/* Background glow */}
-									<div className="absolute -bottom-10 -right-10 w-32 h-32 bg-amber-500/10 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity" />
+									<div className="absolute -bottom-10 -right-10 w-32 h-32 bg-gate-s/10 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity" />
 
 									<div className="flex flex-col sm:flex-row sm:items-start sm:justify-between mb-3 relative gap-2">
 										<div className="flex items-center gap-2">
-											<Crown className="w-4 h-4 sm:w-5 sm:h-5 text-amber-400" />
-											<h3 className="font-resurge text-base sm:text-lg font-semibold tracking-wide group-hover:text-amber-400 transition-colors leading-tight">
+											<Crown className="w-4 h-4 sm:w-5 sm:h-5 text-gate-s" />
+											<h3 className="font-resurge text-base sm:text-lg font-semibold tracking-wide group-hover:text-gate-s transition-colors leading-tight">
 												{campaign.name.toUpperCase()}
 											</h3>
 										</div>
-										<span className="text-xs font-resurge text-amber-400 bg-amber-500/10 px-2 py-1 rounded whitespace-nowrap">
+										<span className="text-xs font-resurge text-gate-s bg-gate-s/10 px-2 py-1 rounded whitespace-nowrap">
 											WARDEN
 										</span>
 									</div>
@@ -313,11 +310,11 @@ const Campaigns = () => {
 									</AscendantText>
 
 									<div className="space-y-3 relative">
-										<div className="flex flex-col sm:flex-row sm:items-center sm:justify-between p-3 bg-black/40 rounded-[2px] border border-amber-500/20 shadow-[inset_0_0_8px_rgba(0,0,0,0.5)] gap-2">
+										<div className="flex flex-col sm:flex-row sm:items-center sm:justify-between p-3 bg-black/40 rounded-[2px] border border-gate-s/20 shadow-[inset_0_0_8px_rgba(0,0,0,0.5)] gap-2">
 											<span className="text-xs font-mono text-muted-foreground uppercase tracking-widest">
 												SHARE CODE
 											</span>
-											<span className="font-mono font-bold text-lg sm:text-xl text-amber-400 tracking-widest text-center sm:text-right">
+											<span className="font-mono font-bold text-lg sm:text-xl text-gate-s tracking-widest text-center sm:text-right">
 												{campaign.share_code}
 											</span>
 										</div>
@@ -325,7 +322,7 @@ const Campaigns = () => {
 											<Button
 												variant="outline"
 												size="sm"
-												className="flex-1 gap-2 border-amber-500/30 hover:bg-amber-500/10 hover:border-amber-500/50 min-h-[36px]"
+												className="flex-1 gap-2 border-gate-s/30 hover:bg-gate-s/10 hover:border-gate-s/50 min-h-[36px]"
 												onClick={() => handleCopyShareLink(campaign.share_code)}
 											>
 												<Copy className="w-3 h-3" />
@@ -335,7 +332,7 @@ const Campaigns = () => {
 											<Link to={`/campaigns/${campaign.id}`} className="flex-1">
 												<Button
 													size="sm"
-													className="w-full gap-2 bg-gradient-to-r from-amber-500 to-amber-600 hover:shadow-amber-500/30 hover:shadow-lg min-h-[36px]"
+													className="w-full gap-2 bg-gradient-to-r from-gate-s to-gate-s hover:shadow-gate-s/30 hover:shadow-lg min-h-[36px]"
 												>
 													<ExternalLink className="w-3 h-3" />
 													<span className="hidden sm:inline">Open</span>
@@ -347,18 +344,18 @@ const Campaigns = () => {
 													<Button
 														variant="outline"
 														size="sm"
-														className="px-2 border-amber-500/30 hover:bg-amber-500/10 hover:border-amber-500/50 min-h-[36px]"
+														className="px-2 border-gate-s/30 hover:bg-gate-s/10 hover:border-gate-s/50 min-h-[36px]"
 													>
-														<MoreVertical className="w-4 h-4 text-amber-400" />
+														<MoreVertical className="w-4 h-4 text-gate-s" />
 													</Button>
 												</DropdownMenuTrigger>
 												<DropdownMenuContent
 													align="end"
-													className="w-48 bg-black/95 border-amber-500/30"
+													className="w-48 bg-black/95 border-gate-s/30"
 												>
 													<DropdownMenuItem
 														onClick={() => handleRegenerateCode(campaign.id)}
-														className="gap-2 cursor-pointer focus:bg-amber-500/20 focus:text-amber-400"
+														className="gap-2 cursor-pointer focus:bg-gate-s/20 focus:text-gate-s"
 													>
 														<RefreshCw className="w-4 h-4" />
 														Regenerate Code
@@ -454,7 +451,7 @@ const Campaigns = () => {
 												className={cn(
 													"font-heading font-semibold px-2 py-1 rounded text-sm",
 													campaign.member_role === "co-warden"
-														? "text-amber-400 bg-amber-500/10"
+														? "text-gate-s bg-gate-s/10"
 														: "text-resurge bg-resurge/10",
 												)}
 											>

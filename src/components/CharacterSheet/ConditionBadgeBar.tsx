@@ -11,18 +11,18 @@ const ALL_CONDITIONS = Object.keys(CONDITION_EFFECTS);
 
 const CONDITION_COLORS: Record<string, string> = {
 	blinded: "bg-gray-600 text-white",
-	charmed: "bg-pink-500 text-white",
+	charmed: "bg-resurge-violet text-white",
 	deafened: "bg-gray-500 text-white",
-	frightened: "bg-yellow-600 text-white",
-	grappled: "bg-orange-600 text-white",
+	frightened: "bg-gate-s text-white",
+	grappled: "bg-gate-a text-white",
 	incapacitated: "bg-red-700 text-white",
-	invisible: "bg-indigo-400 text-white",
+	invisible: "bg-hunter-blue text-white",
 	paralyzed: "bg-red-800 text-white",
 	petrified: "bg-stone-600 text-white",
 	poisoned: "bg-green-700 text-white",
-	prone: "bg-amber-700 text-white",
-	restrained: "bg-orange-800 text-white",
-	stunned: "bg-yellow-800 text-white",
+	prone: "bg-gate-s/25 text-white",
+	restrained: "bg-gate-a/25 text-white",
+	stunned: "bg-gate-s/25 text-white",
 	unconscious: "bg-gray-800 text-white",
 };
 
@@ -124,7 +124,7 @@ export function ConditionBadgeBar({
 					);
 				})}
 				{exhaustionLevel > 0 && (
-					<Badge className="bg-orange-600 text-white gap-1 select-none">
+					<Badge className="bg-gate-a text-white gap-1 select-none">
 						<InfoPopover
 							side="bottom"
 							ariaLabel={`Exhaustion level ${exhaustionLevel} effects`}

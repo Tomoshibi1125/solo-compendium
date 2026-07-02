@@ -234,9 +234,9 @@ export const comprehensiveSkills: Skill[] = [
 	// EXPLORATION SKILLS (Expanded)
 	{
 		id: "dungeon-navigation",
-		name: "Dungeon Navigation",
+		name: "Rift Navigation",
 		description:
-			"Expertise in navigating complex underground environments and dungeons.",
+			"Expertise in navigating complex underground environments and Rifts.",
 		ability: "Sense",
 		type: "exploration",
 		uses: "Passive",
@@ -246,26 +246,26 @@ export const comprehensiveSkills: Skill[] = [
 		},
 		benefits: {
 			basic: [
-				"Cannot get lost in dungeons",
+				"Cannot get lost in Rifts",
 				"Advantage on Perception checks to notice traps",
-				"Can estimate dungeon depth and direction",
+				"Can estimate Rift depth and direction",
 			],
 			expert: [
-				"Can map dungeons from memory",
+				"Can map Rifts from memory",
 				"Automatically notice secret doors on passive Perception",
-				"Can predict dungeon layouts and anomaly placements",
+				"Can predict Rift layouts and anomaly placements",
 			],
 			master: [
-				"Can sense dungeon magic and enchantments",
-				"Can navigate dungeons without sight",
-				"Can find optimal paths through complex dungeons",
+				"Can sense Rift magic and enchantments",
+				"Can navigate Rifts without sight",
+				"Can find optimal paths through complex Rifts",
 			],
 		},
 		applications: [
-			"Dungeon crawling and exploration",
+			"Rift crawling and exploration",
 			"Trap detection and avoidance",
 			"Finding secret areas and treasure",
-			"Escaping from dungeons",
+			"Escaping from Rifts",
 		],
 		synergies: ["Trap Disarmament", "Cartography", "Stonecunning"],
 		source: "Rift Ascendant Canon",

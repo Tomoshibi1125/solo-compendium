@@ -1,8 +1,9 @@
 import { ArrowLeft } from "lucide-react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
-import { ManaFlowText, RiftHeading } from "@/components/ui/AscendantText";
+import { ManaFlowText } from "@/components/ui/AscendantText";
 import { Button } from "@/components/ui/button";
+import { PageHeader } from "@/components/ui/PageHeader";
 import {
 	Select,
 	SelectContent,
@@ -46,53 +47,53 @@ const DirectiveLatticePage = () => {
 	return (
 		<Layout>
 			<div className="container mx-auto px-4 py-8 max-w-4xl">
-				<div className="mb-6 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
-					<div>
-						<Button
-							variant="ghost"
-							onClick={() => navigate("/warden-directives")}
-							className="mb-4"
-						>
-							<ArrowLeft className="w-4 h-4 mr-2" />
-							Back to Warden Directives
-						</Button>
-						<RiftHeading
-							level={1}
-							variant="sovereign"
-							dimensional
-							className="mb-2"
-						>
-							Directive Lattice
-						</RiftHeading>
-						<ManaFlowText variant="rift" speed="slow" className="font-heading">
-							Synthesize operational directives and localized contracts.
-							Extrapolate operational parameters, complication probabilities,
-							and calculated systemic compensation.
-						</ManaFlowText>
-					</div>
-
-					{myCampaigns.length > 0 && (
-						<div className="w-full md:w-64">
-							<span className="mb-1 block text-xs uppercase tracking-wide text-muted-foreground">
-								Save to Campaign
-							</span>
-							<Select
-								value={activeCampaignId}
-								onValueChange={handleCampaignChange}
+				<div className="mb-6">
+					<Button
+						variant="ghost"
+						onClick={() => navigate("/warden-directives")}
+						className="mb-4"
+					>
+						<ArrowLeft className="w-4 h-4 mr-2" />
+						Back to Warden Directives
+					</Button>
+					<PageHeader
+						title="Directive Lattice"
+						description={
+							<ManaFlowText
+								variant="rift"
+								speed="slow"
+								className="font-heading"
 							>
-								<SelectTrigger>
-									<SelectValue placeholder="Personal (not shared)..." />
-								</SelectTrigger>
-								<SelectContent>
-									{myCampaigns.map((campaign) => (
-										<SelectItem key={campaign.id} value={campaign.id}>
-											{campaign.name}
-										</SelectItem>
-									))}
-								</SelectContent>
-							</Select>
-						</div>
-					)}
+								Synthesize operational directives and localized contracts.
+								Extrapolate operational parameters, complication probabilities,
+								and calculated systemic compensation.
+							</ManaFlowText>
+						}
+						actions={
+							myCampaigns.length > 0 && (
+								<div className="w-full md:w-64">
+									<span className="mb-1 block text-xs uppercase tracking-wide text-muted-foreground">
+										Save to Campaign
+									</span>
+									<Select
+										value={activeCampaignId}
+										onValueChange={handleCampaignChange}
+									>
+										<SelectTrigger>
+											<SelectValue placeholder="Personal (not shared)..." />
+										</SelectTrigger>
+										<SelectContent>
+											{myCampaigns.map((campaign) => (
+												<SelectItem key={campaign.id} value={campaign.id}>
+													{campaign.name}
+												</SelectItem>
+											))}
+										</SelectContent>
+									</Select>
+								</div>
+							)
+						}
+					/>
 				</div>
 
 				<DirectiveLatticeComponent campaignId={activeCampaignId || null} />

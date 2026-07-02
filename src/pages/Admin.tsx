@@ -18,16 +18,13 @@ import {
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
-import {
-	AscendantText,
-	ManaFlowText,
-	RiftHeading,
-} from "@/components/ui/AscendantText";
+import { AscendantText, ManaFlowText } from "@/components/ui/AscendantText";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
+import { PageHeader } from "@/components/ui/PageHeader";
 import {
 	Select,
 	SelectContent,
@@ -171,30 +168,22 @@ const Admin = () => {
 	return (
 		<Layout>
 			<div className="container mx-auto px-4 py-8 max-w-6xl">
-				<div className="mb-8">
-					<div className="flex items-center gap-3 mb-2">
+				<PageHeader
+					className="mb-8"
+					leading={
 						<div className="w-12 h-12 rounded-xl bg-gradient-to-br from-resurge/20 to-shadow-purple/20 border border-resurge/30 flex items-center justify-center">
 							<Database className="w-6 h-6 text-resurge" />
 						</div>
-						<div className="flex-1">
-							<RiftHeading
-								level={1}
-								variant="sovereign"
-								dimensional
-								className="tracking-wider"
-							>
-								Rift Console
-							</RiftHeading>
-							<ManaFlowText
-								variant="rift"
-								speed="slow"
-								className="font-heading"
-							>
-								Import and validate operational parameters for the Rift
-								Compendium.
-							</ManaFlowText>
-						</div>
-						<div className="flex gap-2">
+					}
+					title="Rift Console"
+					description={
+						<ManaFlowText variant="rift" speed="slow" className="font-heading">
+							Import and validate operational parameters for the Rift
+							Compendium.
+						</ManaFlowText>
+					}
+					actions={
+						<>
 							<Link to="/warden-directives/content-audit">
 								<Button
 									variant="outline"
@@ -222,9 +211,9 @@ const Admin = () => {
 									Art Generation
 								</Button>
 							</Link>
-						</div>
-					</div>
-				</div>
+						</>
+					}
+				/>
 
 				<div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
 					{/* Input Section */}

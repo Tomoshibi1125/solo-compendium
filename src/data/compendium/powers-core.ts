@@ -20,7 +20,7 @@ export const powers_core: CompendiumPower[] = [
 		lore: {
 			origin: "Developed by the Academy of High Magic.",
 			history:
-				"First recorded when an Assassin-class regent stepped between two heartbeats to slip a collapsing C-Rank gate.",
+				"First recorded when an Assassin-class regent stepped between two heartbeats to slip a collapsing C-Rank Rift.",
 			curse: "",
 			personality: "Disciplined in its at-rest state.",
 			current_owner: "Taught within Assassin and Stalker tradecraft circles.",
@@ -83,11 +83,11 @@ export const powers_core: CompendiumPower[] = [
 		description:
 			"Restores hit points to the caster through lattice-assisted regeneration. Heals 5d4 HP to the caster. Overflow becomes temporary HP for 1 minute.",
 		lore: {
-			origin: "Uncovered in an S-Rank Red Gate in Siberia.",
+			origin: "Uncovered in an S-Rank Red Rift in Siberia.",
 			history:
 				"Reverse-engineered from the regenerative biology of a Siberian gate-beast that refused to stay dead.",
 			curse:
-				"Creates a sympathetic bond with the nearest Gate; the user feels physical pain when Gates are destroyed.",
+				"Creates a sympathetic bond with the nearest Rift; the user feels physical pain when Rifts are destroyed.",
 			personality: "Unobtrusive while not being used.",
 			current_owner:
 				"Fielded by frontline Destroyers and Berserkers who outlast their wounds.",
@@ -138,7 +138,7 @@ export const powers_core: CompendiumPower[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Purchased from a black-market auction in the underground district of Neo-Seoul for an undisclosed sum.",
+			"Purchased from a black-market auction in the underground district of Meridian City for an undisclosed sum.",
 		theme_tags: ["dungeon-core", "rift-energy", "dimensional-bleed"],
 	},
 	{
@@ -293,9 +293,9 @@ export const powers_core: CompendiumPower[] = [
 		description:
 			"Weaves a bulwark of lattice-harmonized aegis around the caster or a willing ally within 30 feet. Grants 5d4 temporary HP to the target. Lasts until dissipated or 1 hour elapses.",
 		lore: {
-			origin: "Uncovered in an S-Rank Red Gate in Siberia.",
+			origin: "Uncovered in an S-Rank Red Rift in Siberia.",
 			history:
-				"Developed from aegis-lattice shielding salvaged in a Siberian red gate.",
+				"Developed from aegis-lattice shielding salvaged in a Siberian red Rift.",
 			curse: "",
 			personality: "Inert until intentionally engaged.",
 			current_owner: "Relied on by Technomancer support specialists.",
@@ -418,7 +418,7 @@ export const powers_core: CompendiumPower[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Sold by a mysterious merchant who appears only during full moons near active Gate sites.",
+			"Sold by a mysterious merchant who appears only during full moons near active Rift sites.",
 		theme_tags: ["ascendant-bureau", "experimental"],
 	},
 	{
@@ -551,7 +551,7 @@ export const powers_core: CompendiumPower[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Sold by a mysterious merchant who appears only during full moons near active Gate sites.",
+			"Sold by a mysterious merchant who appears only during full moons near active Rift sites.",
 		theme_tags: ["survival", "post-awakening"],
 	},
 	{
@@ -619,7 +619,7 @@ export const powers_core: CompendiumPower[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Excavated from the crystallized mana deposit at the center of a depleted Gate core.",
+			"Excavated from the crystallized mana deposit at the center of a depleted Rift core.",
 		theme_tags: ["urban-combat", "guild-ops", "ascendant-bureau"],
 	},
 	{
@@ -648,7 +648,7 @@ export const powers_core: CompendiumPower[] = [
 			prior_owners: ["The Veiled Hand", "Bureau Shared-Materiel Archive"],
 		},
 		flavor:
-			"Dissolves the laws of physics. The reason S-Rank Gates are feared.",
+			"Dissolves the laws of physics. The reason S-Rank Rifts are feared.",
 		tags: ["awakened", "magic", "power"],
 		rarity: "rare",
 		source_book: "Rift Ascendant Canon",
@@ -685,7 +685,7 @@ export const powers_core: CompendiumPower[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Purchased from a black-market auction in the underground district of Neo-Seoul for an undisclosed sum.",
+			"Purchased from a black-market auction in the underground district of Meridian City for an undisclosed sum.",
 		theme_tags: ["guild-ops", "ancient-power"],
 	},
 ];

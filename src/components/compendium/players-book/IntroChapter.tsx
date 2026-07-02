@@ -81,7 +81,7 @@ export const IntroChapter = () => {
 						].map((r, i) => (
 							<div
 								key={r.rank}
-								className={`p-4 border rounded-sm flex flex-col justify-center ${i === 5 ? "border-amber-500 bg-amber-500/10 text-amber-500 shadow-[0_0_10px_rgba(245,158,11,0.2)]" : "border-white/10 bg-white/5 text-muted-foreground"}`}
+								className={`p-4 border rounded-sm flex flex-col justify-center ${i === 5 ? "border-gate-s bg-gate-s/10 text-gate-s shadow-[0_0_10px_rgba(245,158,11,0.2)]" : "border-white/10 bg-white/5 text-muted-foreground"}`}
 							>
 								<h6 className="font-mono text-xs uppercase tracking-wider mb-2 font-bold">
 									{r.rank}
@@ -203,8 +203,8 @@ export const IntroChapter = () => {
 
 				<section>
 					<div className="flex items-center gap-3 mb-6">
-						<Sparkles className="w-8 h-8 text-amber-500" />
-						<RiftHeading level={2} className="text-3xl text-amber-500 m-0">
+						<Sparkles className="w-8 h-8 text-gate-s" />
+						<RiftHeading level={2} className="text-3xl text-gate-s m-0">
 							Sovereign Ascension
 						</RiftHeading>
 					</div>
@@ -221,14 +221,14 @@ export const IntroChapter = () => {
 							</p>
 						</div>
 
-						<div className="bg-glass/10 p-6 border border-amber-500/30 rounded-lg relative overflow-hidden group shadow-xl">
-							<div className="absolute inset-0 bg-amber-500/5 blur-xl group-hover:bg-amber-500/10 transition-all duration-500" />
-							<h4 className="text-amber-500 font-display text-lg uppercase tracking-widest mb-6">
+						<div className="bg-glass/10 p-6 border border-gate-s/30 rounded-lg relative overflow-hidden group shadow-xl">
+							<div className="absolute inset-0 bg-gate-s/5 blur-xl group-hover:bg-gate-s/10 transition-all duration-500" />
+							<h4 className="text-gate-s font-display text-lg uppercase tracking-widest mb-6">
 								Ascension Requirements
 							</h4>
-							<ul className="space-y-4 font-mono text-xs text-amber-500/80 relative z-10">
+							<ul className="space-y-4 font-mono text-xs text-gate-s/80 relative z-10">
 								<li className="flex items-start gap-3">
-									<span className="w-2 h-2 rounded-full bg-amber-500 mt-1 shrink-0" />
+									<span className="w-2 h-2 rounded-full bg-gate-s mt-1 shrink-0" />
 									<div>
 										<strong className="block text-white mb-1">
 											Mastered Job Core

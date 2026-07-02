@@ -666,7 +666,7 @@ Include: combat tactics, full lore, dialogue samples, and plot hooks. Keep the s
 									)}
 									{linked?.location && (
 										<div className="flex items-start gap-2">
-											<MapPin className="w-3.5 h-3.5 mt-0.5 text-emerald-400 shrink-0" />
+											<MapPin className="w-3.5 h-3.5 mt-0.5 text-system-green shrink-0" />
 											<div>
 												<span className="text-[11px] uppercase text-muted-foreground tracking-wider block">
 													Known Location
@@ -677,7 +677,7 @@ Include: combat tactics, full lore, dialogue samples, and plot hooks. Keep the s
 									)}
 									{linked?.regent && (
 										<div className="flex items-start gap-2">
-											<Star className="w-3.5 h-3.5 mt-0.5 text-amber-400 shrink-0" />
+											<Star className="w-3.5 h-3.5 mt-0.5 text-gate-s shrink-0" />
 											<div>
 												<span className="text-[11px] uppercase text-muted-foreground tracking-wider block">
 													Regent Vector

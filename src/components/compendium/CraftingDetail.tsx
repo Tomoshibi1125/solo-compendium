@@ -202,7 +202,7 @@ export function CraftingDetail({ data }: { data: CraftingData }) {
 							{data.outcome && <AutoLinkText text={data.outcome} />}
 							{data.failure_risk && (
 								<p>
-									<span className="text-amber-300">Risk: </span>
+									<span className="text-gate-s">Risk: </span>
 									<AutoLinkText text={data.failure_risk} />
 								</p>
 							)}

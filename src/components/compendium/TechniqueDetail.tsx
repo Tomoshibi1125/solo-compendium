@@ -395,7 +395,7 @@ export const TechniqueDetail = ({ data }: { data: TechniqueData }) => {
 										: "";
 								return (
 									<div className="flex items-start gap-2">
-										<Swords className="w-5 h-5 text-rose-400 flex-shrink-0 mt-0.5" />
+										<Swords className="w-5 h-5 text-gate-a flex-shrink-0 mt-0.5" />
 										<div>
 											<p className="font-heading capitalize">
 												{formatRegentVernacular(attack.type || "")} attack
@@ -418,7 +418,7 @@ export const TechniqueDetail = ({ data }: { data: TechniqueData }) => {
 							})()}
 						{mechanics.saving_throw && (
 							<div className="flex items-start gap-2">
-								<Shield className="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5" />
+								<Shield className="w-5 h-5 text-system-green flex-shrink-0 mt-0.5" />
 								<div>
 									<p className="font-heading">
 										{formatRegentVernacular(
@@ -462,7 +462,7 @@ export const TechniqueDetail = ({ data }: { data: TechniqueData }) => {
 						)}
 						{formatDetailValue(mechanics.condition) && (
 							<div className="flex items-start gap-2">
-								<Shield className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" />
+								<Shield className="w-5 h-5 text-gate-s flex-shrink-0 mt-0.5" />
 								<div>
 									<p className="font-heading">Conditions</p>
 									<p className="text-sm text-muted-foreground">

@@ -466,7 +466,7 @@ export default defineConfig(({ mode: _mode }) => {
 					},
 				],
 			},
-			includeAssets: ["favicon.ico", "apple-touch-icon.png", "masked-icon.svg"],
+			includeAssets: ["favicon.ico", "apple-touch-icon.png"],
 			manifest: {
 				name: "Rift Ascendant",
 				short_name: "Ascendant",

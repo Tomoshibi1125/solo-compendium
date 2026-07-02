@@ -17,14 +17,14 @@ export function ConcentrationBanner({
 	if (!isConcentrating || !effectName) return null;
 
 	return (
-		<div className="flex items-center justify-between rounded-lg border border-violet-300 bg-violet-50/80 px-4 py-2">
+		<div className="flex items-center justify-between rounded-lg border border-resurge-violet bg-resurge-violet/80 px-4 py-2">
 			<div className="flex items-center gap-2">
-				<Focus className="h-4 w-4 text-violet-600 animate-pulse" />
-				<span className="text-sm font-medium text-violet-800">
+				<Focus className="h-4 w-4 text-resurge-violet animate-pulse" />
+				<span className="text-sm font-medium text-resurge-violet">
 					Concentrating: <span className="font-semibold">{effectName}</span>
 				</span>
 				{remainingRounds !== undefined && remainingRounds > 0 && (
-					<span className="text-xs text-violet-500">
+					<span className="text-xs text-resurge-violet">
 						({remainingRounds} rounds)
 					</span>
 				)}
@@ -33,7 +33,7 @@ export function ConcentrationBanner({
 				size="sm"
 				variant="ghost"
 				onClick={onDrop}
-				className="h-6 w-6 p-0 text-violet-500 hover:text-violet-700"
+				className="h-6 w-6 p-0 text-resurge-violet hover:text-resurge-violet"
 			>
 				<X className="h-3.5 w-3.5" />
 				<span className="sr-only">Drop concentration</span>

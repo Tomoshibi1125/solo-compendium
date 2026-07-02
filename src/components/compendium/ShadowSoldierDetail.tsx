@@ -47,11 +47,11 @@ const getRankColor = (rank?: string) => {
 const getRarityStyle = (rarity?: string) => {
 	switch (rarity) {
 		case "very_rare":
-			return "text-indigo-400 border-indigo-500/40 bg-indigo-500/10";
+			return "text-hunter-blue border-hunter-blue/40 bg-hunter-blue/10";
 		case "rare":
 			return "text-blue-400 border-blue-500/40 bg-blue-500/10";
 		case "uncommon":
-			return "text-emerald-400 border-emerald-500/40 bg-emerald-500/10";
+			return "text-system-green border-system-green/40 bg-system-green/10";
 		default:
 			return "text-muted-foreground border-border bg-card";
 	}
@@ -203,8 +203,8 @@ export const ShadowSoldierDetail = ({ data }: ShadowSoldierDetailProps) => {
 					)}
 					{speed != null && (
 						<div className="bg-card border rounded-lg p-4 text-center">
-							<Zap className="w-5 h-5 mx-auto mb-1 text-amber-400" />
-							<div className="text-2xl font-bold font-heading text-amber-400">
+							<Zap className="w-5 h-5 mx-auto mb-1 text-gate-s" />
+							<div className="text-2xl font-bold font-heading text-gate-s">
 								{speed} ft.
 							</div>
 							<div className="text-[11px] text-muted-foreground uppercase tracking-wider">
@@ -292,14 +292,14 @@ export const ShadowSoldierDetail = ({ data }: ShadowSoldierDetailProps) => {
 					<AscendantWindow
 						title="DAMAGE RESISTANCES"
 						compact
-						className="border-amber-500/20"
+						className="border-gate-s/20"
 					>
 						<div className="flex flex-wrap gap-1.5">
 							{damageResistances.map((r) => (
 								<Badge
 									key={r}
 									variant="secondary"
-									className="text-amber-400 bg-amber-500/10 border-amber-500/20 text-xs"
+									className="text-gate-s bg-gate-s/10 border-gate-s/20 text-xs"
 								>
 									{r}
 								</Badge>
@@ -418,7 +418,7 @@ export const ShadowSoldierDetail = ({ data }: ShadowSoldierDetailProps) => {
 									<h4 className="font-heading font-bold text-red-400 text-sm">
 										{action.name}
 										{action.recharge && (
-											<span className="text-amber-400 ml-1 text-xs">
+											<span className="text-gate-s ml-1 text-xs">
 												(Recharge {action.recharge})
 											</span>
 										)}
@@ -452,7 +452,7 @@ export const ShadowSoldierDetail = ({ data }: ShadowSoldierDetailProps) => {
 											</span>
 										)}
 										{action.dc != null && (
-											<span className="text-amber-400">
+											<span className="text-gate-s">
 												DC {action.dc} {action.save || ""} save
 											</span>
 										)}
@@ -485,7 +485,7 @@ export const ShadowSoldierDetail = ({ data }: ShadowSoldierDetailProps) => {
 						<AscendantWindow
 							title="LIMITATIONS"
 							compact
-							className="border-amber-500/20"
+							className="border-gate-s/20"
 						>
 							<div className="space-y-2 text-sm">
 								{Object.entries(limitations).map(([key, val]) => (

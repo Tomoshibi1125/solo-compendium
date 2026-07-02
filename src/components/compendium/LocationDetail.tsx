@@ -10,7 +10,7 @@ import { formatRegentVernacular } from "@/lib/vernacular";
 import type { CompendiumLocation } from "@/types/compendium";
 
 const rankStyles: Record<string, string> = {
-	S: "text-amber-400 border-amber-500/40 bg-amber-500/10",
+	S: "text-gate-s border-gate-s/40 bg-gate-s/10",
 	A: "text-purple-400 border-purple-500/40 bg-purple-500/10",
 	B: "text-blue-400 border-blue-500/40 bg-blue-500/10",
 	C: "text-green-400 border-green-500/40 bg-green-500/10",
@@ -74,7 +74,7 @@ export const LocationDetail = ({ data }: { data: CompendiumLocation }) => {
 					<ul className="space-y-2">
 						{data.encounters.map((encounter) => (
 							<li key={encounter} className="flex items-center gap-2">
-								<Skull className="w-4 h-4 text-rose-400" />
+								<Skull className="w-4 h-4 text-gate-a" />
 								<span className="text-muted-foreground">
 									<AutoLinkText text={encounter} />
 								</span>
@@ -89,7 +89,7 @@ export const LocationDetail = ({ data }: { data: CompendiumLocation }) => {
 					<ul className="space-y-2">
 						{data.treasures.map((treasure) => (
 							<li key={treasure} className="flex items-center gap-2">
-								<Gem className="w-4 h-4 text-amber-400" />
+								<Gem className="w-4 h-4 text-gate-s" />
 								<span className="text-muted-foreground">
 									<AutoLinkText text={treasure} />
 								</span>

@@ -19,7 +19,7 @@ export const GUILD_SKILLS: GuildSkill[] = [
 		cost: { currency: "gate", amount: 300 },
 		capability: { craftingOptions: ["recipe-emergency-bridge-kit"] },
 		description:
-			"Standing orders to strip a gate of every crystal before the seal. The guild's salvage stores support heavier field-engineering work.",
+			"Standing orders to strip a Rift of every crystal before the seal. The guild's salvage stores support heavier field-engineering work.",
 		source_book: "Rift Ascendant Canon",
 	},
 	{
@@ -51,7 +51,7 @@ export const GUILD_SKILLS: GuildSkill[] = [
 		cost: { currency: "gate", amount: 450 },
 		effects: [{ kind: "initiative_bonus", value: 1 }],
 		description:
-			"Pre-packed kit and a rotating ready-squad. Members drilled in fast deployment act sooner when a gate opens.",
+			"Pre-packed kit and a rotating ready-squad. Members drilled in fast deployment act sooner when a Rift opens.",
 		source_book: "Rift Ascendant Canon",
 	},
 	{

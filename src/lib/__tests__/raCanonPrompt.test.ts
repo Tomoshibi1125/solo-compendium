@@ -24,7 +24,7 @@ describe("RA canon prompt module", () => {
 			"AGI (Agility)",
 			"SENSE (Sense)",
 			"Idol instruments are electric guitar, synth, or DJ controller",
-			"E, D, C, B, A, S, SS",
+			"E, D, C, B, A, S",
 		]) {
 			expect(RA_CANON_CONTEXT).toContain(term);
 		}

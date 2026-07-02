@@ -3,15 +3,12 @@ import { useMemo } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { CampaignSessionsPanel } from "@/components/campaign/CampaignSessionsPanel";
 import { Layout } from "@/components/layout/Layout";
-import {
-	AscendantText,
-	ManaFlowText,
-	RiftHeading,
-} from "@/components/ui/AscendantText";
+import { AscendantText, ManaFlowText } from "@/components/ui/AscendantText";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
+import { PageHeader } from "@/components/ui/PageHeader";
 import {
 	Select,
 	SelectContent,
@@ -101,18 +98,19 @@ const SessionPlanner = () => {
 						<ArrowLeft className="w-4 h-4 mr-2" />
 						Back to Warden Tools
 					</Button>
-					<RiftHeading
-						level={1}
-						variant="sovereign"
-						dimensional
-						className="mb-2"
-					>
-						Temporal Synchronization
-					</RiftHeading>
-					<ManaFlowText variant="rift" speed="slow" className="font-heading">
-						Campaign-backed session schedule and temporal records with local
-						storage buffering.
-					</ManaFlowText>
+					<PageHeader
+						title="Temporal Synchronization"
+						description={
+							<ManaFlowText
+								variant="rift"
+								speed="slow"
+								className="font-heading"
+							>
+								Campaign-backed session schedule and temporal records with local
+								storage buffering.
+							</ManaFlowText>
+						}
+					/>
 				</div>
 
 				{isLoading ? (

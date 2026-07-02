@@ -135,7 +135,7 @@ const THEME_CONFIG: Record<Theme, ThemeConfig> = {
 		duration: "1 minute",
 		ability: "Vitality",
 		template: (dmg, dtype, save) =>
-			`Steel your body against the worst the gate can give. For 1 minute, a creature that hits you in melee must make a ${save} save, taking ${dmg} ${dtype} damage on a failure from your retaliatory reflex.`,
+			`Steel your body against the worst the Rift can give. For 1 minute, a creature that hits you in melee must make a ${save} save, taking ${dmg} ${dtype} damage on a failure from your retaliatory reflex.`,
 		secondary: "Damage scales at higher tiers.",
 		rest: "short rest",
 	},

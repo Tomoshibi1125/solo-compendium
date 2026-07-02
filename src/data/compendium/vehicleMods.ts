@@ -290,7 +290,7 @@ export const mountMods: CompendiumVehicleMod[] = [
 		name: "Threshold Desensitization",
 		display_name: "Threshold Desensitization",
 		description:
-			"Training package for strobing gates, gravity lurches, rune alarms, and alien weather.",
+			"Training package for strobing Rifts, gravity lurches, rune alarms, and alien weather.",
 		mod_type: "mount",
 		category: "training",
 		vrp_cost: 2,

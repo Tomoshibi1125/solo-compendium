@@ -916,7 +916,7 @@ export default function CharacterSheetV2() {
 							}}
 							className="h-8 border-primary/20 bg-black/20 hover:bg-primary/10 transition-colors uppercase font-mono text-[10px] tracking-widest"
 						>
-							<Sun className="w-3 h-3 mr-1.5 text-orange-400" />
+							<Sun className="w-3 h-3 mr-1.5 text-gate-a" />
 							Long Rest
 						</Button>
 						<Button
@@ -942,8 +942,8 @@ export default function CharacterSheetV2() {
 							{character.level >= 20 ? "Manage Level" : "Level Up"}
 							{levelUpEligibility.canLevelUp && (
 								<span className="absolute -top-1 -right-1 flex h-2.5 w-2.5">
-									<span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-amber-400 opacity-75" />
-									<span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-amber-500" />
+									<span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-gate-s opacity-75" />
+									<span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-gate-s" />
 								</span>
 							)}
 						</Button>
@@ -956,7 +956,7 @@ export default function CharacterSheetV2() {
 							title="Customize sheet theme + backdrop"
 							aria-label="Customize sheet appearance"
 						>
-							<Palette className="w-3 h-3 mr-1.5 text-fuchsia-300" />
+							<Palette className="w-3 h-3 mr-1.5 text-resurge-violet" />
 							Customize
 						</Button>
 						<Button
@@ -1458,7 +1458,7 @@ export default function CharacterSheetV2() {
 				>
 					<DialogContent className="sm:max-w-md bg-obsidian-charcoal/95 border border-primary/20">
 						<DialogHeader>
-							<DialogTitle className="font-display tracking-widest text-bond-gold">
+							<DialogTitle className="font-display tracking-widest text-gate-s">
 								Share Ascendant
 							</DialogTitle>
 							<DialogDescription>

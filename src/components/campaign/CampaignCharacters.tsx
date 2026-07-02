@@ -163,7 +163,7 @@ export function CampaignCharacters({ campaignId }: CampaignCharactersProps) {
 				>
 					<div className="flex items-center justify-between mb-3 gap-3">
 						<p className="text-xs text-muted-foreground flex items-center gap-1.5">
-							<Crown className="w-3.5 h-3.5 text-amber-400" aria-hidden />
+							<Crown className="w-3.5 h-3.5 text-gate-s" aria-hidden />
 							<span>
 								{filteredWardenNpcs.length} module-imported NPC
 								{filteredWardenNpcs.length === 1 ? "" : "s"} — visible only to

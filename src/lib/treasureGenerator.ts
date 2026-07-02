@@ -216,7 +216,7 @@ export async function generateTreasure(rank: string): Promise<TreasureResult> {
 	const displayMaterials = materials.map(formatRegentVernacular);
 	const displayRelics = relics.map(formatRegentVernacular);
 
-	let currencyDesc = `Rift Rank ${rank} treasure hoard containing ${tens} Gate Credits.`;
+	let currencyDesc = `Rift Rank ${rank} treasure hoard containing ${tens} Rift Credits.`;
 	const extras = [];
 	if (hundreds > 0) extras.push(`${hundreds} Core Credits`);
 	if (fives > 0) extras.push(`${fives} Crystal Credits`);

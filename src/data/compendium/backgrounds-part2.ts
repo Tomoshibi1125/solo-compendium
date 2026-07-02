@@ -7,7 +7,7 @@ export const expandedBackgrounds: StaticBackground[] = [
 		type: "background",
 		rank: "C",
 		description:
-			"You were a first responder, used to rushing into danger to save lives. When the gates opened, the casualties skyrocketed. Your awakening allowed you to heal wounds that modern medicine couldn't touch.",
+			"You were a first responder, used to rushing into danger to save lives. When the Rifts opened, the casualties skyrocketed. Your awakening allowed you to heal wounds that modern medicine couldn't touch.",
 		skill_proficiencies: ["Medicine", "Athletics"],
 		tool_proficiencies: ["Vehicles (Land)", "Herbalism Kit"],
 		languages: [],
@@ -108,7 +108,7 @@ export const expandedBackgrounds: StaticBackground[] = [
 			"Ambition. I will be the best at whatever job I have. (Any)",
 		],
 		bonds: [
-			"I am deeply loyal to my former coworkers who survived a gate break.",
+			"I am deeply loyal to my former coworkers who survived a Rift Break.",
 			"I am trying to pay off my massive student loans.",
 			"I owe everything to the manager who fired me, forcing me to awaken.",
 			"I carry a photo of the family I support.",
@@ -121,7 +121,7 @@ export const expandedBackgrounds: StaticBackground[] = [
 			"I will throw my teammates under the bus to avoid blame.",
 			"I am deeply uncreative and struggle to think outside the box.",
 			"I am easily intimidated by authority figures.",
-			"I complain constantly about the working conditions in the dungeon.",
+			"I complain constantly about the working conditions in the Rift.",
 		],
 		source: "Rift Ascendant Canon",
 	},
@@ -131,7 +131,7 @@ export const expandedBackgrounds: StaticBackground[] = [
 		type: "background",
 		rank: "C",
 		description:
-			"You built the cities, and when the gates destroyed them, you rebuilt them. You are used to hard manual labor, dangerous heights, and heavy machinery. Your awakening just made you hit harder.",
+			"You built the cities, and when the Rifts destroyed them, you rebuilt them. You are used to hard manual labor, dangerous heights, and heavy machinery. Your awakening just made you hit harder.",
 		skill_proficiencies: ["Athletics", "Perception"],
 		tool_proficiencies: ["Mason's Tools", "Carpenter's Tools"],
 		languages: [],
@@ -145,12 +145,12 @@ export const expandedBackgrounds: StaticBackground[] = [
 		starting_credits: 500,
 		feature_name: "Structural Analysis",
 		feature_description:
-			"You can instantly identify the weak points in any physical structure (buildings, bridges, dungeon walls). You have advantage on checks made to break objects or navigate collapsing ruins safely.",
+			"You can instantly identify the weak points in any physical structure (buildings, bridges, Rift walls). You have advantage on checks made to break objects or navigate collapsing ruins safely.",
 		features: [
 			{
 				name: "Structural Analysis",
 				description:
-					"You can instantly identify the weak points in any physical structure (buildings, bridges, dungeon walls). You have advantage on checks made to break objects or navigate collapsing ruins safely.",
+					"You can instantly identify the weak points in any physical structure (buildings, bridges, Rift walls). You have advantage on checks made to break objects or navigate collapsing ruins safely.",
 			},
 		],
 		personality_traits: [
@@ -171,7 +171,7 @@ export const expandedBackgrounds: StaticBackground[] = [
 		],
 		bonds: [
 			"I am fiercely loyal to my old construction crew.",
-			"I am trying to rebuild my family home that was destroyed by a gate.",
+			"I am trying to rebuild my family home that was destroyed by a Rift.",
 			"I carry a tool that belonged to my late father.",
 			"I owe my life to an Ascendant who saved my crew during a break.",
 			"I am angry at the mega-guild that refused to pay my crew for a job.",
@@ -193,7 +193,7 @@ export const expandedBackgrounds: StaticBackground[] = [
 		type: "background",
 		rank: "D",
 		description:
-			"You are an investigative reporter, a blogger, or a war correspondent. You risk your life to get the truth about the Ascendant Bureau, the mega-guilds, and the origin of the gates.",
+			"You are an investigative reporter, a blogger, or a war correspondent. You risk your life to get the truth about the Ascendant Bureau, the mega-guilds, and the origin of the Rifts.",
 		skill_proficiencies: ["Investigation", "Insight"],
 		tool_proficiencies: ["Calligrapher's Supplies", "Forgery Kit"],
 		languages: ["One additional language"],
@@ -207,12 +207,12 @@ export const expandedBackgrounds: StaticBackground[] = [
 		starting_credits: 700,
 		feature_name: "Press Credentials",
 		feature_description:
-			"You can leverage your press pass to gain entry to restricted Association press conferences, guild headquarters lobbies, and crime scenes. People are more likely to answer your questions if they think it will get them good PR.",
+			"You can leverage your press pass to gain entry to restricted Bureau press conferences, guild headquarters lobbies, and crime scenes. People are more likely to answer your questions if they think it will get them good PR.",
 		features: [
 			{
 				name: "Press Credentials",
 				description:
-					"You can leverage your press pass to gain entry to restricted Association press conferences, guild headquarters lobbies, and crime scenes. People are more likely to answer your questions if they think it will get them good PR.",
+					"You can leverage your press pass to gain entry to restricted Bureau press conferences, guild headquarters lobbies, and crime scenes. People are more likely to answer your questions if they think it will get them good PR.",
 			},
 		],
 		personality_traits: [
@@ -224,7 +224,7 @@ export const expandedBackgrounds: StaticBackground[] = [
 			"I am highly observant of minor inconsistencies.",
 		],
 		ideals: [
-			"Truth. The public has a right to know the dark secrets of the gates. (Good)",
+			"Truth. The public has a right to know the dark secrets of the Rifts. (Good)",
 			"Exposure. I will tear down the corrupt guilds with my pen. (Chaotic)",
 			"Fame. I want to win a Pulitzer for my reporting. (Neutral)",
 			"Blackmail. Information is power, and I sell it to the highest bidder. (Evil)",
@@ -237,7 +237,7 @@ export const expandedBackgrounds: StaticBackground[] = [
 			"I owe my career to a grizzled editor who believed in me.",
 			"I carry an encrypted hard drive with explosive information.",
 			"I am deeply loyal to my publication.",
-			"I want to clear the name of an innocent Ascendant framed by the Association.",
+			"I want to clear the name of an innocent Ascendant framed by the Bureau.",
 		],
 		flaws: [
 			"I will endanger my team to get a good story.",
@@ -255,7 +255,7 @@ export const expandedBackgrounds: StaticBackground[] = [
 		type: "background",
 		rank: "D",
 		description:
-			"You ran a food stall, a convenience store, or sold cheap trinkets near a popular gate site. You know the local Ascendants, the guild rivalries, and the ebb and flow of the awakened economy better than anyone.",
+			"You ran a food stall, a convenience store, or sold cheap trinkets near a popular Rift site. You know the local Ascendants, the guild rivalries, and the ebb and flow of the awakened economy better than anyone.",
 		skill_proficiencies: ["Persuasion", "Insight"],
 		tool_proficiencies: ["Cook's Utensils", "Brewer's Supplies"],
 		languages: ["One additional language"],
@@ -269,12 +269,12 @@ export const expandedBackgrounds: StaticBackground[] = [
 		starting_credits: 300,
 		feature_name: "Street Gossip",
 		feature_description:
-			"You know the word on the street. By spending an hour in a local market or near a gate entrance, you can discover local guild rivalries, the general rank of nearby anomalies, and the location of black-market fences.",
+			"You know the word on the street. By spending an hour in a local market or near a Rift entrance, you can discover local guild rivalries, the general rank of nearby anomalies, and the location of black-market fences.",
 		features: [
 			{
 				name: "Street Gossip",
 				description:
-					"You know the word on the street. By spending an hour in a local market or near a gate entrance, you can discover local guild rivalries, the general rank of nearby anomalies, and the location of black-market fences.",
+					"You know the word on the street. By spending an hour in a local market or near a Rift entrance, you can discover local guild rivalries, the general rank of nearby anomalies, and the location of black-market fences.",
 			},
 		],
 		personality_traits: [
@@ -419,7 +419,7 @@ export const expandedBackgrounds: StaticBackground[] = [
 		],
 		bonds: [
 			"I am trying to pay off the debt on my expensive vehicle.",
-			"I owe my life to a customer who warned me about a gate break.",
+			"I owe my life to a customer who warned me about a Rift Break.",
 			"I am fiercely loyal to my dispatcher/boss.",
 			"I carry a package I was never able to deliver.",
 			"I am secretly couriering illegal goods for the black market.",
@@ -441,7 +441,7 @@ export const expandedBackgrounds: StaticBackground[] = [
 		type: "background",
 		rank: "D",
 		description:
-			"You were an educator, shaping the minds of the next generation. When the gates opened, you found yourself protecting your students. Your awakening gave you the power to ensure they had a future.",
+			"You were an educator, shaping the minds of the next generation. When the Rifts opened, you found yourself protecting your students. Your awakening gave you the power to ensure they had a future.",
 		skill_proficiencies: ["Dimensional Lore", "Insight"],
 		tool_proficiencies: ["Calligrapher's Supplies"],
 		languages: ["Two additional languages"],
@@ -485,7 +485,7 @@ export const expandedBackgrounds: StaticBackground[] = [
 			"I am trying to rebuild my destroyed school.",
 			"I carry a drawing made by a student I couldn't save.",
 			"I am deeply loyal to my fellow educators.",
-			"I am secretly researching the gates to teach humanity how to close them.",
+			"I am secretly researching the Rifts to teach humanity how to close them.",
 		],
 		flaws: [
 			"I am incredibly condescending and treat everyone like children.",
@@ -565,7 +565,7 @@ export const expandedBackgrounds: StaticBackground[] = [
 		type: "background",
 		rank: "C",
 		description:
-			"You ran into burning buildings while everyone else ran out. When the gates opened, the fires just got hotter and the buildings fell faster. You are an expert in search and rescue and hazardous environments.",
+			"You ran into burning buildings while everyone else ran out. When the Rifts opened, the fires just got hotter and the buildings fell faster. You are an expert in search and rescue and hazardous environments.",
 		skill_proficiencies: ["Athletics", "Survival"],
 		tool_proficiencies: ["Vehicles (Land)", "Carpenter's Tools"],
 		languages: [],
@@ -604,7 +604,7 @@ export const expandedBackgrounds: StaticBackground[] = [
 			"Glory. I want to be the hero everyone cheers for. (Evil)",
 		],
 		bonds: [
-			"I lost my entire crew in a gate break; I am the only survivor.",
+			"I lost my entire crew in a Rift Break; I am the only survivor.",
 			"I am fiercely loyal to the firehouse that raised me.",
 			"I owe my life to an Ascendant who pulled me from a collapsing building.",
 			"I carry the charred helmet of my former captain.",
@@ -627,7 +627,7 @@ export const expandedBackgrounds: StaticBackground[] = [
 		type: "background",
 		rank: "D",
 		description:
-			"You navigated the broken system of the modern world, trying to help those who fell through the cracks. After the gates appeared, the cracks became chasms. You use your awakening to protect the vulnerable.",
+			"You navigated the broken system of the modern world, trying to help those who fell through the cracks. After the Rifts appeared, the cracks became chasms. You use your awakening to protect the vulnerable.",
 		skill_proficiencies: ["Insight", "Persuasion"],
 		tool_proficiencies: ["Calligrapher's Supplies"],
 		languages: ["One additional language"],
@@ -670,7 +670,7 @@ export const expandedBackgrounds: StaticBackground[] = [
 			"I owe my career to a mentor who burned out.",
 			"I am trying to find a specific child who went missing during a break.",
 			"I carry a handmade gift from someone I helped.",
-			"I am secretly funding a charity with my dungeon loot.",
+			"I am secretly funding a charity with my Rift loot.",
 			"I am fighting a legal battle against a mega-guild that destroyed a neighborhood.",
 		],
 		flaws: [
@@ -689,7 +689,7 @@ export const expandedBackgrounds: StaticBackground[] = [
 		type: "background",
 		rank: "C",
 		description:
-			"You walked the beat in a city that was rapidly changing. Before the gates, you dealt with gangs and thieves. After the gates, you dealt with Awakened criminals and anomalies. You are a street-level enforcer of the law.",
+			"You walked the beat in a city that was rapidly changing. Before the Rifts, you dealt with gangs and thieves. After the Rifts, you dealt with Awakened criminals and anomalies. You are a street-level enforcer of the law.",
 		skill_proficiencies: ["Investigation", "Intimidation"],
 		tool_proficiencies: ["Vehicles (Land)"],
 		languages: [],

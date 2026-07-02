@@ -108,7 +108,7 @@ export function RunSilentTrackers({ campaignId }: { campaignId: string }) {
 					"fixed bottom-5 right-5 z-50 flex items-center gap-2 rounded-full border px-4 py-2.5 font-display text-xs uppercase tracking-widest shadow-lg backdrop-blur-md transition-colors",
 					peaked
 						? "animate-pulse border-red-500/60 bg-red-950/70 text-red-300"
-						: "border-fuchsia-500/40 bg-black/70 text-fuchsia-300 hover:border-fuchsia-400 hover:text-white",
+						: "border-resurge-violet/40 bg-black/70 text-resurge-violet hover:border-resurge-violet hover:text-white",
 				)}
 				aria-label="Open the Hunt and Dread trackers"
 			>
@@ -119,9 +119,9 @@ export function RunSilentTrackers({ campaignId }: { campaignId: string }) {
 	}
 
 	return (
-		<div className="fixed bottom-5 right-5 z-50 w-80 max-w-[calc(100vw-2.5rem)] rounded-lg border border-fuchsia-500/30 bg-black/85 p-4 shadow-2xl backdrop-blur-md">
+		<div className="fixed bottom-5 right-5 z-50 w-80 max-w-[calc(100vw-2.5rem)] rounded-lg border border-resurge-violet/30 bg-black/85 p-4 shadow-2xl backdrop-blur-md">
 			<div className="mb-3 flex items-center justify-between">
-				<h3 className="flex items-center gap-2 font-display text-xs uppercase tracking-[0.2em] text-fuchsia-300">
+				<h3 className="flex items-center gap-2 font-display text-xs uppercase tracking-[0.2em] text-resurge-violet">
 					<Skull className="h-4 w-4" />
 					Hunt &amp; Dread
 				</h3>
@@ -144,7 +144,7 @@ export function RunSilentTrackers({ campaignId }: { campaignId: string }) {
 					<button
 						type="button"
 						onClick={() => setHunt(0)}
-						className="flex items-center gap-1 text-[11px] text-slate-500 hover:text-fuchsia-300"
+						className="flex items-center gap-1 text-[11px] text-slate-500 hover:text-resurge-violet"
 						aria-label="Reset Hunt Clock to zero"
 					>
 						<RotateCcw className="h-3 w-3" />
@@ -162,7 +162,7 @@ export function RunSilentTrackers({ campaignId }: { campaignId: string }) {
 								seg <= hunt
 									? peaked
 										? "border-red-400/70 bg-red-500/70"
-										: "border-fuchsia-400/70 bg-fuchsia-500/60"
+										: "border-resurge-violet/70 bg-resurge-violet/60"
 									: "border-slate-600/40 bg-slate-800/40 hover:bg-slate-700/50",
 							)}
 							aria-label={`Set Hunt Clock to ${seg}`}
@@ -221,7 +221,7 @@ export function RunSilentTrackers({ campaignId }: { campaignId: string }) {
 											d.value >= 5
 												? "text-red-400"
 												: d.value >= 3
-													? "text-amber-400"
+													? "text-gate-s"
 													: "text-slate-300",
 										)}
 									>
@@ -264,7 +264,7 @@ export function RunSilentTrackers({ campaignId }: { campaignId: string }) {
 					<Button
 						variant="outline"
 						size="sm"
-						className="h-8 gap-1 border-fuchsia-500/30 px-2 text-xs"
+						className="h-8 gap-1 border-resurge-violet/30 px-2 text-xs"
 						onClick={addDread}
 						disabled={!newName.trim()}
 					>

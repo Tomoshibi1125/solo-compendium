@@ -300,17 +300,18 @@
 	background: transparent;
 }
 
+/* Cool severity ramp: teal → violet → crimson (no warm hues). */
 .character-sheet-hp-progress.hp-healthy::-webkit-progress-value {
-	background: #ef4444; /* red-500 */
+	background: hsl(var(--success));
 }
 
 .character-sheet-hp-progress.hp-danger::-webkit-progress-value {
-	background: #f97316; /* orange-500 */
+	background: hsl(var(--resurge-violet));
 }
 
 .character-sheet-hp-progress.hp-critical::-webkit-progress-value {
-	background: #ef4444; /* destructive/red-500 */
-	box-shadow: 0 0 8px rgba(239, 68, 68, 0.5);
+	background: hsl(var(--destructive));
+	box-shadow: 0 0 8px hsl(var(--destructive) / 0.5);
 }
 
 /* --- System Notification Flash --- */

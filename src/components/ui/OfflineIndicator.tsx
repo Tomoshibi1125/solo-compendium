@@ -19,12 +19,12 @@ export function OfflineIndicator() {
 		<div
 			className={cn(
 				"fixed bottom-0 left-0 right-0 z-50",
-				"bg-amber-500/90 dark:bg-amber-600/90",
-				"text-amber-950 dark:text-amber-50",
+				"bg-warning/90",
+				"text-warning-foreground",
 				"px-4 py-2",
 				"flex items-center justify-center gap-2",
 				"text-sm font-medium",
-				"border-t border-amber-600 dark:border-amber-700",
+				"border-t border-warning",
 				"backdrop-blur-sm",
 			)}
 		>

@@ -28,11 +28,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
 import { ActivityFeedPanel } from "@/components/shared/ActivityFeedPanel";
 import { ExportMenu } from "@/components/shared/ExportMenu";
-import {
-	AscendantText,
-	ManaFlowText,
-	RiftHeading,
-} from "@/components/ui/AscendantText";
+import { AscendantText, ManaFlowText } from "@/components/ui/AscendantText";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -53,6 +49,7 @@ import {
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
+import { PageHeader } from "@/components/ui/PageHeader";
 import {
 	Select,
 	SelectContent,
@@ -477,46 +474,44 @@ const GuildDetail = () => {
 					</Link>
 				</Button>
 
-				<div className="mb-6 sm:mb-8">
-					<div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 mb-2">
-						<RiftHeading
-							level={1}
-							variant="sovereign"
-							dimensional
-							className="leading-tight"
-						>
-							{guild.name.toUpperCase()}
-						</RiftHeading>
-						{isLeader && (
-							<Badge className="bg-primary/20 text-primary border-primary/30 w-fit">
-								<Crown className="w-3 h-3 mr-1" /> Guild Leader
-							</Badge>
-						)}
-					</div>
-					{guild.motto && (
-						<p className="text-sm italic text-muted-foreground mb-2">
-							"{guild.motto}"
-						</p>
-					)}
-					{guild.description && (
-						<ManaFlowText
-							variant="rift"
-							speed="slow"
-							className="text-sm sm:text-base leading-relaxed"
-						>
-							{guild.description}
-						</ManaFlowText>
-					)}
-					<div className="mt-4 flex justify-end">
-						<ExportMenu
-							baseName={`guild-${guild.name}`}
-							label="Export Roster"
-							markdown={() => buildGuildMarkdown(guild, members)}
-							json={() => ({ guild, members })}
-							csv={() => buildGuildRosterCsv(members)}
-						/>
-					</div>
-				</div>
+				<PageHeader
+					className="mb-6 sm:mb-8"
+					title={guild.name.toUpperCase()}
+					description={
+						<>
+							{guild.motto && (
+								<p className="text-sm italic text-muted-foreground mb-2">
+									"{guild.motto}"
+								</p>
+							)}
+							{guild.description && (
+								<ManaFlowText
+									variant="rift"
+									speed="slow"
+									className="text-sm sm:text-base leading-relaxed"
+								>
+									{guild.description}
+								</ManaFlowText>
+							)}
+						</>
+					}
+					actions={
+						<div className="flex flex-col items-end gap-2">
+							{isLeader && (
+								<Badge className="bg-primary/20 text-primary border-primary/30 w-fit">
+									<Crown className="w-3 h-3 mr-1" /> Guild Leader
+								</Badge>
+							)}
+							<ExportMenu
+								baseName={`guild-${guild.name}`}
+								label="Export Roster"
+								markdown={() => buildGuildMarkdown(guild, members)}
+								json={() => ({ guild, members })}
+								csv={() => buildGuildRosterCsv(members)}
+							/>
+						</div>
+					}
+				/>
 
 				<Tabs
 					value={activeTab}

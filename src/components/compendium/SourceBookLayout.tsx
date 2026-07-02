@@ -103,16 +103,16 @@ export const SourceBookLayout: React.FC<SourceBookLayoutProps> = ({
 		<div className="source-book-container flex min-h-screen bg-void text-slate-300">
 			{/* TOC Sidebar */}
 			<aside
-				className={`transition-all duration-300 ${isSidebarOpen ? "w-64" : "w-0"} bg-glass border-r border-fuchsia-500/20 overflow-hidden flex flex-col shrink-0 relative`}
+				className={`transition-all duration-300 ${isSidebarOpen ? "w-64" : "w-0"} bg-glass border-r border-resurge-violet/20 overflow-hidden flex flex-col shrink-0 relative`}
 			>
-				<div className="absolute inset-0 bg-fuchsia-500/5 pointer-events-none" />
+				<div className="absolute inset-0 bg-resurge-violet/5 pointer-events-none" />
 
-				<div className="p-6 border-b border-fuchsia-500/20 relative z-10">
+				<div className="p-6 border-b border-resurge-violet/20 relative z-10">
 					<h2 className="text-xl font-bold text-white tracking-widest uppercase font-display flex items-center gap-2">
-						<ShieldAlert className="w-5 h-5 text-fuchsia-500 animate-pulse" />
+						<ShieldAlert className="w-5 h-5 text-resurge-violet animate-pulse" />
 						Warden's Compendium
 					</h2>
-					<div className="text-[8px] font-mono text-fuchsia-500/50 uppercase tracking-[0.3em] mt-1">
+					<div className="text-[8px] font-mono text-resurge-violet/50 uppercase tracking-[0.3em] mt-1">
 						Protocol Overseer v4.0
 					</div>
 				</div>
@@ -120,7 +120,7 @@ export const SourceBookLayout: React.FC<SourceBookLayoutProps> = ({
 				<nav className="flex-1 overflow-y-auto p-4 space-y-8 relative z-10 custom-scrollbar">
 					{BOOKS.map((book) => (
 						<div key={book.title} className="space-y-2">
-							<h3 className="px-2 text-[10px] font-bold text-fuchsia-400/60 uppercase tracking-[0.2em] mb-3 font-display">
+							<h3 className="px-2 text-[10px] font-bold text-resurge-violet/60 uppercase tracking-[0.2em] mb-3 font-display">
 								{book.title}
 							</h3>
 							<div className="space-y-1">
@@ -131,8 +131,8 @@ export const SourceBookLayout: React.FC<SourceBookLayoutProps> = ({
 										onClick={() => navigate(section.path)}
 										className={`w-full text-left p-2 pl-3 rounded transition-all font-display uppercase text-[10px] tracking-widest ${
 											activeSection === section.id
-												? "bg-fuchsia-500/10 border-l-2 border-fuchsia-500 text-white shadow-inner"
-												: "text-slate-500 hover:bg-fuchsia-500/5 hover:text-fuchsia-300"
+												? "bg-resurge-violet/10 border-l-2 border-resurge-violet text-white shadow-inner"
+												: "text-slate-500 hover:bg-resurge-violet/5 hover:text-resurge-violet"
 										}`}
 									>
 										{section.label}
@@ -145,13 +145,13 @@ export const SourceBookLayout: React.FC<SourceBookLayoutProps> = ({
 			</aside>
 
 			{/* Main Content Area */}
-			<main className="flex-1 relative flex flex-col overflow-y-auto bg-system-grid-overlay-50">
-				<header className="h-16 border-b border-fuchsia-500/10 bg-glass/50 flex items-center justify-between px-6 sticky top-0 z-40 backdrop-blur-md">
+			<main className="flex-1 relative flex flex-col overflow-y-auto system-grid-overlay-50">
+				<header className="h-16 border-b border-resurge-violet/10 bg-glass/50 flex items-center justify-between px-6 sticky top-0 z-40 backdrop-blur-md">
 					<div className="flex items-center gap-4">
 						<button
 							type="button"
 							onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-							className="text-fuchsia-400 hover:text-white transition-colors"
+							className="text-resurge-violet hover:text-white transition-colors"
 							title={isSidebarOpen ? "Close Sidebar" : "Open Sidebar"}
 						>
 							<svg

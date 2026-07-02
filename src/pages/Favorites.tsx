@@ -9,6 +9,7 @@ import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { PageHeader } from "@/components/ui/PageHeader";
 import { useToast } from "@/hooks/use-toast";
 import { useFavorites } from "@/hooks/useFavorites";
 import {
@@ -171,19 +172,19 @@ const Favorites = () => {
 			powers: "border-blue-500/30 bg-blue-500/10",
 			spells: "border-purple-500/30 bg-purple-500/10",
 			equipment: "border-green-500/30 bg-green-500/10",
-			feats: "border-yellow-500/30 bg-yellow-500/10",
-			skills: "border-orange-500/30 bg-orange-500/10",
+			feats: "border-gate-s/30 bg-gate-s/10",
+			skills: "border-gate-a/30 bg-gate-a/10",
 			backgrounds: "border-gray-500/30 bg-gray-500/10",
-			regents: "border-indigo-500/30 bg-indigo-500/10",
-			relics: "border-amber-500/30 bg-amber-500/10",
+			regents: "border-hunter-blue/30 bg-hunter-blue/10",
+			relics: "border-gate-s/30 bg-gate-s/10",
 			jobs: "border-cyan-500/30 bg-cyan-500/10",
-			paths: "border-teal-500/30 bg-teal-500/10",
-			runes: "border-lime-500/30 bg-lime-500/10",
-			sovereigns: "border-rose-500/30 bg-rose-500/10",
+			paths: "border-system-green/30 bg-system-green/10",
+			runes: "border-system-green/30 bg-system-green/10",
+			sovereigns: "border-gate-a/30 bg-gate-a/10",
 			"shadow-soldiers": "border-slate-500/30 bg-slate-500/10",
-			items: "border-emerald-500/30 bg-emerald-500/10",
-			techniques: "border-fuchsia-500/30 bg-fuchsia-500/10",
-			artifacts: "border-sky-500/30 bg-sky-500/10",
+			items: "border-system-green/30 bg-system-green/10",
+			techniques: "border-resurge-violet/30 bg-resurge-violet/10",
+			artifacts: "border-mana-cyan/30 bg-mana-cyan/10",
 			locations: "border-stone-500/30 bg-stone-500/10",
 		};
 		return colors[type] || "border-border bg-muted";
@@ -196,24 +197,20 @@ const Favorites = () => {
 		<Layout>
 			<div className="container mx-auto px-4 sm:px-6 py-4 sm:py-8">
 				{/* Header */}
-				<div className="mb-8">
-					<RiftHeading
-						level={1}
-						variant="sovereign"
-						dimensional
-						className="mb-2"
-					>
-						Favorites
-					</RiftHeading>
-					<ManaFlowText
-						variant="rift"
-						speed="slow"
-						className="text-muted-foreground"
-					>
-						Your curated compendium entries — {favoritesCount}{" "}
-						{favoritesCount === 1 ? "artifact" : "artifacts"} saved
-					</ManaFlowText>
-				</div>
+				<PageHeader
+					className="mb-8"
+					title="Favorites"
+					description={
+						<ManaFlowText
+							variant="rift"
+							speed="slow"
+							className="text-muted-foreground"
+						>
+							Your curated compendium entries — {favoritesCount}{" "}
+							{favoritesCount === 1 ? "artifact" : "artifacts"} saved
+						</ManaFlowText>
+					}
+				/>
 
 				{/* Search and Filter */}
 				<div className="flex flex-col sm:flex-row gap-4 mb-6">

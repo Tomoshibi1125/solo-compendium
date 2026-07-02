@@ -311,7 +311,7 @@ export function SigilSlotsDialog({
 											)}
 											{existing?.sigil?.passive_bonuses &&
 												typeof existing.sigil.passive_bonuses === "object" && (
-													<div className="text-xs text-emerald-500 line-clamp-1">
+													<div className="text-xs text-system-green line-clamp-1">
 														{Object.entries(
 															existing.sigil.passive_bonuses as Record<
 																string,
@@ -329,7 +329,7 @@ export function SigilSlotsDialog({
 													</div>
 												)}
 											{existing?.sigil?.active_feature && (
-												<div className="text-xs text-amber-500 line-clamp-1">
+												<div className="text-xs text-gate-s line-clamp-1">
 													⚡{" "}
 													{typeof existing.sigil.active_feature === "string"
 														? existing.sigil.active_feature

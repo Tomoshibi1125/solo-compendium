@@ -13,11 +13,12 @@ import { useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AIProviderSettings } from "@/components/ai/AIProviderSettings";
 import { Layout } from "@/components/layout/Layout";
-import { AscendantText, RiftHeading } from "@/components/ui/AscendantText";
+import { AscendantText } from "@/components/ui/AscendantText";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { PageHeader } from "@/components/ui/PageHeader";
 import { useToast } from "@/hooks/use-toast";
 import { usePushNotifications } from "@/hooks/usePushNotifications";
 import { supabase } from "@/integrations/supabase/client";
@@ -194,9 +195,7 @@ export default function Profile() {
 	return (
 		<Layout>
 			<div className="container mx-auto px-4 py-8 max-w-2xl space-y-6">
-				<RiftHeading level={1} variant="sovereign" dimensional className="mb-4">
-					Profile & Settings
-				</RiftHeading>
+				<PageHeader className="mb-4" title="Profile & Settings" />
 
 				{/* Avatar + Name */}
 				<AscendantWindow title="IDENTITY">

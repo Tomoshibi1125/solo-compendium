@@ -48,7 +48,7 @@ const glasslineCrew: SandboxNPC[] = [
 			"Finish a Glassline-style job cleanly under her and she brings her crew, her contacts, and her paperwork to your guild.",
 		isRecruitable: true,
 		guildAffiliation: null,
-		location: "Ironclad staging yard, Eternal Shadow Dungeon",
+		location: "Ironclad staging yard, Eternal Shadow Rift",
 		questHook:
 			"Mira's last clean file came back from the Bureau bearing one signature she swears she never collected.",
 		maxLevel: 5,
@@ -192,7 +192,7 @@ const glasslineCrew: SandboxNPC[] = [
 			"Beat him cleanly on the paperwork instead of the fists and he switches sides to whoever respects the rules.",
 		isRecruitable: true,
 		guildAffiliation: null,
-		location: "Eternal Shadow Dungeon, disputed claim line",
+		location: "Eternal Shadow Rift, disputed claim line",
 		questHook:
 			"Harlan's rival employer just filed a claim under his name that he never signed.",
 		maxLevel: 5,
@@ -278,7 +278,7 @@ const bureauFieldRoster: SandboxNPC[] = [
 		description:
 			"A heavy-weapons corporal who holds the line at thresholds and never quite stands down on his off-hours.",
 		personality:
-			"Gruff, dependable, dryly funny, and haunted by the gates he could not hold.",
+			"Gruff, dependable, dryly funny, and haunted by the Rifts he could not hold.",
 		motivation:
 			"Be the wall that lets lighter Ascendants do the clever work and walk away.",
 		backstory:
@@ -290,7 +290,7 @@ const bureauFieldRoster: SandboxNPC[] = [
 		guildAffiliation: null,
 		location: "Bureau threshold cordon",
 		questHook:
-			"Vance keeps getting redeployed away from one specific gate the night before every breach.",
+			"Vance keeps getting redeployed away from one specific Rift the night before every breach.",
 		maxLevel: 9,
 		hpPerLevel: 9,
 	}),
@@ -392,7 +392,7 @@ const bureauFieldRoster: SandboxNPC[] = [
 		hp: 26,
 		ac: 15,
 		description:
-			"A quiet pathfinder who maps the first hundred metres of a new gate so the heavier teams do not walk in blind.",
+			"A quiet pathfinder who maps the first hundred metres of a new Rift so the heavier teams do not walk in blind.",
 		personality:
 			"Soft-spoken, patient, fatalistic, and most comfortable a step ahead of everyone else.",
 		motivation:
@@ -401,12 +401,12 @@ const bureauFieldRoster: SandboxNPC[] = [
 			"Halvard scouts because he survived the team that did not, and refuses to let that happen to anyone he leads.",
 		keyAbilities: ["Threshold Recon", "Silent Tracking", "Hazard Sense"],
 		recruitCondition:
-			"Follow his read of a gate and live, and he scouts every approach your guild ever runs.",
+			"Follow his read of a Rift and live, and he scouts every approach your guild ever runs.",
 		isRecruitable: true,
 		guildAffiliation: null,
 		location: "Bureau forward staging, new thresholds",
 		questHook:
-			"Halvard mapped a gate's entry corridor twice and got two completely different maps.",
+			"Halvard mapped a Rift's entry corridor twice and got two completely different maps.",
 		maxLevel: 8,
 	}),
 	makeNPC({
@@ -448,11 +448,11 @@ const bureauFieldRoster: SandboxNPC[] = [
 		hp: 28,
 		ac: 13,
 		description:
-			"A pattern-reading analyst who feels a gate's mood before the instruments catch up.",
+			"A pattern-reading analyst who feels a Rift's mood before the instruments catch up.",
 		personality:
 			"Precise, sleepless, intuitive, and uneasy about how often she is right.",
 		motivation:
-			"Predict the next dangerous gate early enough that someone actually listens.",
+			"Predict the next dangerous Rift early enough that someone actually listens.",
 		backstory:
 			"Wen Li flagged three breaches before they happened and was reprimanded twice for 'unverifiable' warnings.",
 		keyAbilities: ["Rift Reading", "Threat Forecasting", "Mind's Eye"],
@@ -462,7 +462,7 @@ const bureauFieldRoster: SandboxNPC[] = [
 		guildAffiliation: null,
 		location: "Bureau analysis office",
 		questHook:
-			"Wen Li's models all converge on one unremarkable gate that the Bureau insists is empty.",
+			"Wen Li's models all converge on one unremarkable Rift that the Bureau insists is empty.",
 		maxLevel: 9,
 	}),
 	makeNPC({
@@ -476,11 +476,11 @@ const bureauFieldRoster: SandboxNPC[] = [
 		hp: 38,
 		ac: 15,
 		description:
-			"A heavy-handed crowd enforcer who keeps panicking civilians behind the line when a gate goes loud.",
+			"A heavy-handed crowd enforcer who keeps panicking civilians behind the line when a Rift goes loud.",
 		personality:
 			"Intimidating, surprisingly gentle with the frightened, and sick of being pointed at the wrong people.",
 		motivation:
-			"Stand between the crowd and the gate, and never the other way around.",
+			"Stand between the crowd and the Rift, and never the other way around.",
 		backstory:
 			"Boyd was ordered to clear a protest once and refused; the transfer to cordon duty was the punishment he wanted.",
 		keyAbilities: ["Crowd Control", "Riot Wall", "Unyielding"],
@@ -490,7 +490,7 @@ const bureauFieldRoster: SandboxNPC[] = [
 		guildAffiliation: null,
 		location: "Bureau cordon, public line",
 		questHook:
-			"Boyd keeps being assigned to hold back crowds at gates where there are no crowds.",
+			"Boyd keeps being assigned to hold back crowds at Rifts where there are no crowds.",
 		maxLevel: 9,
 		hpPerLevel: 9,
 	}),
@@ -590,7 +590,7 @@ const bureauFieldRoster: SandboxNPC[] = [
 		hp: 34,
 		ac: 14,
 		description:
-			"A grim specialist who walks back into cleared gates to bring out the fallen the strike teams left behind.",
+			"A grim specialist who walks back into cleared Rifts to bring out the fallen the strike teams left behind.",
 		personality:
 			"Quiet, unflinching, oddly comforting, and at peace with the dead in a way the living find unsettling.",
 		motivation:
@@ -604,7 +604,7 @@ const bureauFieldRoster: SandboxNPC[] = [
 		guildAffiliation: null,
 		location: "Bureau recovery detail",
 		questHook:
-			"Cole keeps recovering the same Ascendant's tags from three different gates.",
+			"Cole keeps recovering the same Ascendant's tags from three different Rifts.",
 		maxLevel: 9,
 	}),
 	makeNPC({
@@ -722,7 +722,7 @@ const independentAscendants: SandboxNPC[] = [
 		guildAffiliation: null,
 		location: "A rented lab full of unlicensed notes",
 		questHook:
-			"Okonkwo's latest proof predicts a gate that does not exist yet at a precise address.",
+			"Okonkwo's latest proof predicts a Rift that does not exist yet at a precise address.",
 		maxLevel: 10,
 	}),
 	makeNPC({
@@ -778,7 +778,7 @@ const independentAscendants: SandboxNPC[] = [
 		guildAffiliation: null,
 		location: "The wild edges where anomalies are left alone",
 		questHook:
-			"Yara's bonded anomaly has begun leading her toward a gate she swore never to enter again.",
+			"Yara's bonded anomaly has begun leading her toward a Rift she swore never to enter again.",
 		maxLevel: 10,
 	}),
 	makeNPC({
@@ -792,21 +792,21 @@ const independentAscendants: SandboxNPC[] = [
 		hp: 50,
 		ac: 16,
 		description:
-			"A scarred solo delver who clears low and mid-rank gates for the salvage no guild will share with him.",
+			"A scarred solo delver who clears low and mid-rank Rifts for the salvage no guild will share with him.",
 		personality:
 			"Brash, dependable, scarred into honesty, and secretly lonely after years of solo runs.",
 		motivation:
-			"Clear one more gate, bank one more haul, and maybe stop running alone someday.",
+			"Clear one more Rift, bank one more haul, and maybe stop running alone someday.",
 		backstory:
 			"Brand was cut from a premier guild's strike team for being expendable and has out-cleared most of them since.",
-		keyAbilities: ["Gate Clearing", "Cleaving Blow", "Salvage Instinct"],
+		keyAbilities: ["Rift Clearing", "Cleaving Blow", "Salvage Instinct"],
 		recruitCondition:
 			"Split a clear fairly and treat him as more than a hired blade and he joins your guild for keeps.",
 		isRecruitable: true,
 		guildAffiliation: null,
-		location: "Any open low-rank gate with a salvage tag",
+		location: "Any open low-rank Rift with a salvage tag",
 		questHook:
-			"Brand keeps finding his old guild's markers in gates they never registered clearing.",
+			"Brand keeps finding his old guild's markers in Rifts they never registered clearing.",
 		maxLevel: 10,
 		hpPerLevel: 9,
 	}),
@@ -848,7 +848,7 @@ const independentAscendants: SandboxNPC[] = [
 		hp: 46,
 		ac: 14,
 		description:
-			"A grinning pit-fighter who took her brawling Ascendant talent from the underground rings to open gate work.",
+			"A grinning pit-fighter who took her brawling Ascendant talent from the underground rings to open Rift work.",
 		personality:
 			"Boisterous, big-hearted, reckless, and fiercely protective of anyone smaller than her.",
 		motivation:
@@ -904,7 +904,7 @@ const independentAscendants: SandboxNPC[] = [
 		hp: 30,
 		ac: 13,
 		description:
-			"A charismatic broadcasting Ascendant who livestreams her gate clears and funds her work on her audience's roar.",
+			"A charismatic broadcasting Ascendant who livestreams her Rift clears and funds her work on her audience's roar.",
 		personality:
 			"Radiant on camera, sharper off it, generous, and tired of performing courage she does not always feel.",
 		motivation:
@@ -938,7 +938,7 @@ const independentAscendants: SandboxNPC[] = [
 		motivation:
 			"Quiet the dead the guilds leave behind so they do not become something worse.",
 		backstory:
-			"Esca died in a gate, came back wrong, and decided to spend his borrowed time on the unburied.",
+			"Esca died in a Rift, came back wrong, and decided to spend his borrowed time on the unburied.",
 		keyAbilities: ["Lay to Rest", "Undying Resolve", "Grave-Sight"],
 		recruitCondition:
 			"Help him lay one impossible spirit to rest and he walks the dark roads for your guild.",
@@ -960,21 +960,21 @@ const independentAscendants: SandboxNPC[] = [
 		hp: 24,
 		ac: 13,
 		description:
-			"A young drone-pilot who scouts and salvages gates by remote so the dangerous part happens to a machine first.",
+			"A young drone-pilot who scouts and salvages Rifts by remote so the dangerous part happens to a machine first.",
 		personality:
-			"Quick, mouthy, inventive, and braver behind a screen than in front of a gate.",
+			"Quick, mouthy, inventive, and braver behind a screen than in front of a Rift.",
 		motivation:
 			"Prove that smart machines can do the dying so people do not have to.",
 		backstory:
-			"Renn built her first scout drone from gate salvage after losing a sibling to a job a drone could have scouted.",
+			"Renn built her first scout drone from Rift salvage after losing a sibling to a job a drone could have scouted.",
 		keyAbilities: ["Drone Piloting", "Remote Salvage", "Signal Hacking"],
 		recruitCondition:
 			"Fund one good drone and trust her eyes-in-the-sky and she pilots for your guild.",
 		isRecruitable: true,
 		guildAffiliation: null,
-		location: "A van full of screens near the latest gate",
+		location: "A van full of screens near the latest Rift",
 		questHook:
-			"Renn's drone keeps transmitting footage of a corridor that is not in any gate she has flown.",
+			"Renn's drone keeps transmitting footage of a corridor that is not in any Rift she has flown.",
 		maxLevel: 8,
 	}),
 	makeNPC({
@@ -1045,7 +1045,7 @@ const independentAscendants: SandboxNPC[] = [
 		hp: 66,
 		ac: 17,
 		description:
-			"A near-legendary A-rank loner who clears catastrophic gates alone and refuses every guild and Bureau offer.",
+			"A near-legendary A-rank loner who clears catastrophic Rifts alone and refuses every guild and Bureau offer.",
 		personality:
 			"Reserved, exacting, weary of fame, and watching for the one cause worth ending his solitude.",
 		motivation:
@@ -1057,9 +1057,9 @@ const independentAscendants: SandboxNPC[] = [
 			"Earn his rare respect with a cause worth his power — not his fame — and the Quiet Star fights for your guild.",
 		isRecruitable: true,
 		guildAffiliation: null,
-		location: "Wherever the worst gates open, alone",
+		location: "Wherever the worst Rifts open, alone",
 		questHook:
-			"Vael has started receiving anonymous tips that send him to gates just before they turn catastrophic.",
+			"Vael has started receiving anonymous tips that send him to Rifts just before they turn catastrophic.",
 		maxLevel: 12,
 		hpPerLevel: 9,
 	}),

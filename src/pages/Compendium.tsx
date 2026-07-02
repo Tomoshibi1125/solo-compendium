@@ -34,11 +34,7 @@ import { GeminiProtocolGenerator } from "@/components/compendium/GeminiProtocolG
 import { SearchHistoryDropdown } from "@/components/compendium/SearchHistoryDropdown";
 import { SkeletonLoader } from "@/components/compendium/SkeletonLoader";
 import { Layout } from "@/components/layout/Layout";
-import {
-	AscendantText,
-	ManaFlowText,
-	RiftHeading,
-} from "@/components/ui/AscendantText";
+import { AscendantText, ManaFlowText } from "@/components/ui/AscendantText";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -51,6 +47,7 @@ import {
 	DialogTrigger,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
+import { PageHeader } from "@/components/ui/PageHeader";
 import { Pagination } from "@/components/ui/pagination";
 import {
 	Select,
@@ -1110,24 +1107,20 @@ const Compendium = () => {
 				<div className="absolute inset-0 bg-gradient-to-b from-amethyst-purple/5 via-transparent to-transparent pointer-events-none" />
 
 				{/* Header with Ascendant UI styling */}
-				<div className="mb-3 sm:mb-8 relative z-10">
-					<RiftHeading
-						level={1}
-						variant="sovereign"
-						dimensional
-						className="mb-1 sm:mb-2 tracking-wider"
-					>
-						Compendium
-					</RiftHeading>
-					<ManaFlowText
-						variant="rift"
-						speed="slow"
-						className="text-sm sm:text-base leading-relaxed block"
-					>
-						Browse the complete collection of System knowledge, from character
-						foundations to world entities.
-					</ManaFlowText>
-				</div>
+				<PageHeader
+					className="mb-3 sm:mb-8 relative z-10"
+					title="Compendium"
+					description={
+						<ManaFlowText
+							variant="rift"
+							speed="slow"
+							className="text-sm sm:text-base leading-relaxed block"
+						>
+							Browse the complete collection of System knowledge, from character
+							foundations to world entities.
+						</ManaFlowText>
+					}
+				/>
 
 				{/* Search and Controls */}
 				<section
@@ -1424,8 +1417,8 @@ const Compendium = () => {
 												"absolute top-2 right-2 z-10 p-1.5 rounded-full transition-all duration-200",
 												"hover:scale-110 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2",
 												entry.isFavorite
-													? "text-amber-400 hover:text-amber-300 bg-amber-400/10"
-													: "text-muted-foreground hover:text-amber-400 opacity-0 group-hover:opacity-100 bg-background/80 backdrop-blur-sm",
+													? "text-gate-s hover:text-gate-s bg-gate-s/10"
+													: "text-muted-foreground hover:text-gate-s opacity-0 group-hover:opacity-100 bg-background/80 backdrop-blur-sm",
 											)}
 											aria-label={
 												entry.isFavorite
@@ -1514,7 +1507,7 @@ const Compendium = () => {
 												</AscendantText>
 												<div className="flex items-center gap-2 mt-2 text-xs text-muted-foreground">
 													{entry.price && (
-														<span className="text-amber-300/90 font-medium">
+														<span className="text-gate-s/90 font-medium">
 															{formatRaCurrencyValue(entry.price)}
 														</span>
 													)}
@@ -1565,7 +1558,7 @@ const Compendium = () => {
 												</div>
 												<div className="flex items-center gap-2 flex-shrink-0">
 													{entry.price && (
-														<span className="text-xs text-amber-300/90 font-medium">
+														<span className="text-xs text-gate-s/90 font-medium">
 															{formatRaCurrencyValue(entry.price)}
 														</span>
 													)}

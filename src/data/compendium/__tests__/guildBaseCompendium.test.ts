@@ -95,7 +95,7 @@ describe("guild-base compendium category", () => {
 		const currencies = new Set(
 			GUILD_BASE_MATERIALS.map((m) => m.value.currency),
 		);
-		// Catalog spans multiple credit types, not just gate.
+		// Catalog spans multiple credit types, not just Rift.
 		expect(currencies.size).toBeGreaterThanOrEqual(3);
 		expect(currencies.has("core")).toBe(true);
 		for (const material of GUILD_BASE_MATERIALS) {

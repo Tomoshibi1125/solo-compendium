@@ -41,9 +41,9 @@ const cardVariants = {
 	character:
 		"bg-gradient-to-br from-primary/10 to-primary/5 text-primary-foreground border-primary/30 shadow-lg hover:shadow-xl hover:scale-[1.02] transition-all duration-300",
 	campaign:
-		"bg-gradient-to-br from-purple-10 to-blue-10 text-white border-purple/30 shadow-lg hover:shadow-xl hover:scale-[1.02] transition-all duration-300",
-	item: "bg-gradient-to-br from-amber-10 to-orange-10 text-white border-amber/30 shadow-md hover:shadow-lg hover:scale-[1.02] transition-all duration-300",
-	tool: "bg-gradient-to-br from-green-10 to-emerald-10 text-white border-green/30 shadow-md hover:shadow-lg hover:scale-[1.02] transition-all duration-300",
+		"bg-gradient-to-br from-shadow-purple/10 to-shadow-blue/10 text-white border-shadow-purple/30 shadow-lg hover:shadow-xl hover:scale-[1.02] transition-all duration-300",
+	item: "bg-gradient-to-br from-gate-s/10 to-gate-s/5 text-white border-gate-s/30 shadow-md hover:shadow-lg hover:scale-[1.02] transition-all duration-300",
+	tool: "bg-gradient-to-br from-system-green/10 to-mana-cyan/10 text-white border-system-green/30 shadow-md hover:shadow-lg hover:scale-[1.02] transition-all duration-300",
 	// Rift Ascendant variants with dimensional effects
 	sovereign:
 		"bg-gradient-to-br from-regent-gold/20 via-shadow-purple/15 to-void-black/90 text-white border-regent-gold/40 shadow-[0_0_25px_hsl(var(--regent-gold)/0.3)] hover:shadow-[0_0_40px_hsl(var(--regent-gold)/0.5)] hover:scale-[1.03] transition-all duration-500 regent-seal",
@@ -129,7 +129,7 @@ const EnhancedCard = ({
 							className={cn(
 								"shrink-0 transition-colors",
 								isFavorite
-									? "text-yellow-500 hover:text-yellow-600"
+									? "text-gate-s hover:text-gate-s"
 									: "text-muted-foreground hover:text-foreground",
 							)}
 						>
@@ -263,7 +263,7 @@ const EnhancedCard = ({
 					</div>
 
 					{isFavorite && (
-						<Star className="h-5 w-5 text-yellow-500 fill-current flex-shrink-0 pointer-events-auto" />
+						<Star className="h-5 w-5 text-gate-s fill-current flex-shrink-0 pointer-events-auto" />
 					)}
 				</div>
 

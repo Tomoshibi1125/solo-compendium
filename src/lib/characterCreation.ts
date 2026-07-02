@@ -875,7 +875,7 @@ export function getRacialTraitModifiers(
 				{
 					type: "skill_prof",
 					value: 0,
-					target: "Gate Topology",
+					target: "Rift Topology",
 					source: traitName,
 				},
 			];

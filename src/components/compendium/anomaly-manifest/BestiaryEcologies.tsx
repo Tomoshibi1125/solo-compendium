@@ -86,8 +86,8 @@ export const BestiaryEcologies = () => {
 
 				{/* 3. Catastrophe Class Records */}
 				<section className="space-y-8">
-					<div className="flex items-center gap-3 mb-2 border-b border-amber-500/20 pb-4">
-						<ShieldAlert className="w-8 h-8 text-amber-500" />
+					<div className="flex items-center gap-3 mb-2 border-b border-gate-s/20 pb-4">
+						<ShieldAlert className="w-8 h-8 text-gate-s" />
 						<h2 className="text-3xl font-display font-bold text-white uppercase tracking-wider">
 							Registered Sovereign Anomalies
 						</h2>
@@ -120,23 +120,23 @@ export const BestiaryEcologies = () => {
 				</section>
 
 				{/* 4. The Umbral Legion */}
-				<section className="p-8 bg-void border border-fuchsia-900/30 rounded-xl relative shadow-2xl">
-					<div className="absolute inset-0 bg-fuchsia-500/5 blur-xl pointer-events-none" />
-					<div className="flex items-center gap-3 mb-8 border-b border-fuchsia-500/20 pb-4 relative z-10">
-						<Ghost className="w-8 h-8 text-fuchsia-400 animate-pulse" />
-						<h2 className="text-3xl font-display font-bold text-fuchsia-400 uppercase tracking-wider">
+				<section className="p-8 bg-void border border-resurge-violet/30 rounded-xl relative shadow-2xl">
+					<div className="absolute inset-0 bg-resurge-violet/5 blur-xl pointer-events-none" />
+					<div className="flex items-center gap-3 mb-8 border-b border-resurge-violet/20 pb-4 relative z-10">
+						<Ghost className="w-8 h-8 text-resurge-violet animate-pulse" />
+						<h2 className="text-3xl font-display font-bold text-resurge-violet uppercase tracking-wider">
 							The Umbral Legion
 						</h2>
 					</div>
 
 					<div className="grid lg:grid-cols-3 gap-8 relative z-10">
 						<div className="lg:col-span-2 space-y-6">
-							<p className="text-sm text-slate-300 leading-relaxed font-light italic border-l-4 border-fuchsia-400/50 pl-6 py-2 bg-fuchsia-500/5">
+							<p className="text-sm text-slate-300 leading-relaxed font-light italic border-l-4 border-resurge-violet/50 pl-6 py-2 bg-resurge-violet/5">
 								<AutoLinkText text={umbralText} />
 							</p>
 							<div className="grid sm:grid-cols-2 gap-6">
-								<div className="bg-fuchsia-950/20 p-5 rounded border border-fuchsia-500/20 shadow-inner">
-									<h4 className="text-[10px] font-bold text-fuchsia-400 uppercase mb-3 flex items-center gap-2">
+								<div className="bg-resurge-violet/20 p-5 rounded border border-resurge-violet/20 shadow-inner">
+									<h4 className="text-[10px] font-bold text-resurge-violet uppercase mb-3 flex items-center gap-2">
 										<Sparkles className="w-3 h-3" /> Extraction Laws
 									</h4>
 									<ul className="text-[10px] text-slate-400 space-y-2 list-disc pl-4 font-mono leading-relaxed">
@@ -150,13 +150,13 @@ export const BestiaryEcologies = () => {
 										</li>
 									</ul>
 								</div>
-								<div className="bg-fuchsia-950/20 p-5 rounded border border-fuchsia-500/20 shadow-inner">
-									<h4 className="text-[10px] font-bold text-fuchsia-400 uppercase mb-3 flex items-center gap-2">
+								<div className="bg-resurge-violet/20 p-5 rounded border border-resurge-violet/20 shadow-inner">
+									<h4 className="text-[10px] font-bold text-resurge-violet uppercase mb-3 flex items-center gap-2">
 										<Zap className="w-3 h-3" /> Sustenance Protocol
 									</h4>
 									<ul className="text-[10px] text-slate-400 space-y-2 list-disc pl-4 font-mono leading-relaxed">
 										<li>
-											Shadow Soldiers consume a passive mana-drain from the
+											Umbral Legionnaires consume a passive mana-drain from the
 											host.
 										</li>
 										<li>Destruction of the Umbral essence is permanent.</li>
@@ -168,8 +168,8 @@ export const BestiaryEcologies = () => {
 							</div>
 						</div>
 
-						<div className="bg-glass border border-fuchsia-500/10 p-8 rounded-lg flex flex-col items-center justify-center text-center group">
-							<Skull className="w-16 h-16 text-fuchsia-900 mb-6 group-hover:text-fuchsia-400 transition-colors duration-500" />
+						<div className="bg-glass border border-resurge-violet/10 p-8 rounded-lg flex flex-col items-center justify-center text-center group">
+							<Skull className="w-16 h-16 text-resurge-violet mb-6 group-hover:text-resurge-violet transition-colors duration-500" />
 							<h4 className="text-slate-200 font-display uppercase tracking-widest text-lg mb-2">
 								The Command: RISE
 							</h4>

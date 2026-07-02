@@ -90,7 +90,7 @@ export const FeatDetail = ({ data }: { data: FeatData }) => {
 			{data.prerequisites && (
 				<AscendantWindow title="PREREQUISITES">
 					<div className="flex items-start gap-3">
-						<AlertCircle className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" />
+						<AlertCircle className="w-5 h-5 text-gate-s flex-shrink-0 mt-0.5" />
 						<div className="space-y-2">
 							{typeof data.prerequisites === "string" ? (
 								<p className="text-sm text-muted-foreground">
@@ -124,7 +124,7 @@ export const FeatDetail = ({ data }: { data: FeatData }) => {
 							<ul className="space-y-3">
 								{data.benefits.map((benefit) => (
 									<li key={benefit} className="flex items-start gap-3">
-										<CheckCircle className="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5" />
+										<CheckCircle className="w-5 h-5 text-system-green flex-shrink-0 mt-0.5" />
 										<p className="text-sm text-muted-foreground">
 											<AutoLinkText text={benefit} />
 										</p>
@@ -141,7 +141,7 @@ export const FeatDetail = ({ data }: { data: FeatData }) => {
 										<ul className="space-y-3">
 											{data.benefits.basic.map((benefit) => (
 												<li key={benefit} className="flex items-start gap-3">
-													<CheckCircle className="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5" />
+													<CheckCircle className="w-5 h-5 text-system-green flex-shrink-0 mt-0.5" />
 													<p className="text-sm text-muted-foreground">
 														<AutoLinkText text={benefit} />
 													</p>
@@ -169,13 +169,13 @@ export const FeatDetail = ({ data }: { data: FeatData }) => {
 								)}
 								{data.benefits.master && data.benefits.master.length > 0 && (
 									<div>
-										<h4 className="text-xs font-bold uppercase tracking-widest text-amber-500 mb-3">
+										<h4 className="text-xs font-bold uppercase tracking-widest text-gate-s mb-3">
 											Master Benefits
 										</h4>
 										<ul className="space-y-3">
 											{data.benefits.master.map((benefit) => (
 												<li key={benefit} className="flex items-start gap-3">
-													<CheckCircle className="w-5 h-5 text-amber-500 flex-shrink-0 mt-0.5" />
+													<CheckCircle className="w-5 h-5 text-gate-s flex-shrink-0 mt-0.5" />
 													<p className="text-sm text-muted-foreground">
 														<AutoLinkText text={benefit} />
 													</p>

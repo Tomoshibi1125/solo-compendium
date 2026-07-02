@@ -94,7 +94,7 @@ export function CampaignHandouts({ campaignId }: { campaignId: string }) {
 											<div className="font-heading font-semibold text-sm truncate flex items-center gap-1.5">
 												{entry.title}
 												{!entry.visibleToPlayers && hasWardenAccess && (
-													<Lock className="w-3 h-3 text-amber-400 opacity-60 shrink-0" />
+													<Lock className="w-3 h-3 text-gate-s opacity-60 shrink-0" />
 												)}
 											</div>
 											<div className="flex items-center gap-2 mt-1">
@@ -104,7 +104,7 @@ export function CampaignHandouts({ campaignId }: { campaignId: string }) {
 												{!entry.visibleToPlayers && hasWardenAccess && (
 													<Badge
 														variant="outline"
-														className="text-[11px] text-amber-400 border-amber-500/30"
+														className="text-[11px] text-gate-s border-gate-s/30"
 													>
 														Warden Only
 													</Badge>
@@ -141,7 +141,7 @@ export function CampaignHandouts({ campaignId }: { campaignId: string }) {
 								) : (
 									<Badge
 										variant="outline"
-										className="text-amber-400 border-amber-500/30"
+										className="text-gate-s border-gate-s/30"
 									>
 										<Lock className="w-3 h-3 mr-1" />
 										Warden Only

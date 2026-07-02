@@ -6,10 +6,10 @@ import type { CompendiumFeat } from "../../types/compendium";
 const awakeningFeats: CompendiumFeat[] = [
 	{
 		id: "gate-survivor",
-		name: "Gate Survivor",
-		display_name: "Gate Survivor",
+		name: "Rift Survivor",
+		display_name: "Rift Survivor",
 		description:
-			"You survived a gate break before your Awakening — the ambient mana scarred your nervous system into a permanent state of threat-readiness. You have advantage on saving throws against being frightened by gate-born anomalies and anomaly. Your hit point maximum increases by your character level.",
+			"You survived a Rift Break before your Awakening — the ambient mana scarred your nervous system into a permanent state of threat-readiness. You have advantage on saving throws against being frightened by gate-born anomalies and anomaly. Your hit point maximum increases by your character level.",
 		flavor:
 			"The sirens went off at 3 AM. By dawn, half the district was rubble. You walked out.",
 		tags: ["awakened", "feat", "awakening", "defensive"],
@@ -41,14 +41,14 @@ const awakeningFeats: CompendiumFeat[] = [
 		name: "Bureau Analyst",
 		display_name: "Bureau Analyst",
 		description:
-			"You trained under the Ascendant Bureau's intelligence division before fieldwork. You add your proficiency bonus to Intelligence (Investigation) checks involving gate data, dungeon mapping, or anomaly classification. You can read Bureau-classified documents and identify forged credentials on sight.",
+			"You trained under the Ascendant Bureau's intelligence division before fieldwork. You add your proficiency bonus to Intelligence (Investigation) checks involving Rift data, Rift mapping, or anomaly classification. You can read Bureau-classified documents and identify forged credentials on sight.",
 		flavor: "The Bureau has a file on everything. You wrote half of them.",
 		tags: ["awakened", "feat", "awakening", "utility"],
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
 		effects: {
 			primary:
-				"Add proficiency bonus to Investigation checks for gate/anomaly data.",
+				"Add proficiency bonus to Investigation checks for Rift/anomaly data.",
 			secondary: "Read Bureau-classified documents; detect forged credentials.",
 		},
 		repeatable: false,
@@ -65,7 +65,7 @@ const awakeningFeats: CompendiumFeat[] = [
 			conditions: [],
 		},
 		discovery_lore:
-			"Standard Bureau intake curriculum, expanded after the Neo-Seoul Intelligence Breach proved how many field agents couldn't read a gate-frequency chart.",
+			"Standard Bureau intake curriculum, expanded after the Meridian City Intelligence Breach proved how many field agents couldn't read a gate-frequency chart.",
 		theme_tags: ["bureau", "intelligence", "analysis"],
 	},
 	{
@@ -75,7 +75,7 @@ const awakeningFeats: CompendiumFeat[] = [
 		description:
 			"You learned to fight in the unregulated gate-adjacent districts before the Bureau found you. You ignore difficult terrain in urban environments. You have advantage on Stealth checks in crowds of 10 or more people, and you can use a bonus action to Hide when within 5 feet of two or more non-hostile creatures.",
 		flavor:
-			"Licensed ascendants clear gates. Street ascendants clear everything else.",
+			"Licensed ascendants clear Rifts. Street ascendants clear everything else.",
 		tags: ["awakened", "feat", "awakening", "mobility"],
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
@@ -98,7 +98,7 @@ const awakeningFeats: CompendiumFeat[] = [
 			conditions: [],
 		},
 		discovery_lore:
-			"The Bureau eventually formalized this as a training module after E-Rank street ascendants consistently outperformed licensed C-Ranks in urban gate-break scenarios.",
+			"The Bureau eventually formalized this as a training module after E-Rank street ascendants consistently outperformed licensed C-Ranks in urban Rift Break scenarios.",
 		theme_tags: ["urban", "stealth", "street"],
 	},
 	{
@@ -106,14 +106,14 @@ const awakeningFeats: CompendiumFeat[] = [
 		name: "Mana Sensitive",
 		display_name: "Mana Sensitive",
 		description:
-			"Your Awakening left your mana receptors permanently dilated. You can detect active gate seams within 60 feet, even through walls up to 1 foot thick. You can identify whether a creature is Awakened by observing it for one round. You have advantage on Sense (Perception) checks to notice magical auras or mana disturbances.",
+			"Your Awakening left your mana receptors permanently dilated. You can detect active Rift seams within 60 feet, even through walls up to 1 foot thick. You can identify whether a creature is Awakened by observing it for one round. You have advantage on Sense (Perception) checks to notice magical auras or mana disturbances.",
 		flavor:
 			"Your eyes hurt near hospitals. Too much mana leaking from the healing wards.",
 		tags: ["awakened", "feat", "awakening", "sense"],
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
 		effects: {
-			primary: "Detect gate seams within 60 feet through thin walls.",
+			primary: "Detect Rift seams within 60 feet through thin walls.",
 			secondary:
 				"Identify Awakened creatures; advantage on Perception for magical auras.",
 		},
@@ -131,7 +131,7 @@ const awakeningFeats: CompendiumFeat[] = [
 			conditions: [],
 		},
 		discovery_lore:
-			"First catalogued after a D-Rank Ascendant in Busan alerted authorities to a forming gate six hours before any Bureau sensor detected it.",
+			"First catalogued after a D-Rank Ascendant in Harrow Bay alerted authorities to a forming Rift six hours before any Bureau sensor detected it.",
 		theme_tags: ["detection", "mana", "perception"],
 	},
 	{
@@ -141,7 +141,7 @@ const awakeningFeats: CompendiumFeat[] = [
 		description:
 			"You completed field medic certification through a licensed Ascendant Guild. When you use a Healer's Kit to stabilize a creature, that creature also regains 1 hit point. You can spend one use of a Healer's Kit as an action to restore hit dice equal to your proficiency bonus to a willing creature, which it can immediately spend to heal.",
 		flavor:
-			"The Guild pays for the certification. The gate teaches you how to use it.",
+			"The Guild pays for the certification. The Rift teaches you how to use it.",
 		tags: ["awakened", "feat", "awakening", "healing"],
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
@@ -165,16 +165,16 @@ const awakeningFeats: CompendiumFeat[] = [
 			conditions: ["Requires Healer's Kit"],
 		},
 		discovery_lore:
-			"Standardized after the Jeju Island Raid, where 60% of casualties were attributed to delayed medical response inside the gate.",
+			"Standardized after the Vantage Isle Raid, where 60% of casualties were attributed to delayed medical response inside the Rift.",
 		theme_tags: ["healing", "guild", "support"],
 	},
 	{
 		id: "dungeon-crawler",
-		name: "Dungeon Crawler",
-		display_name: "Dungeon Crawler",
+		name: "Rift Crawler",
+		display_name: "Rift Crawler",
 		description:
-			"Hundreds of gate clears have honed your spatial awareness in enclosed environments. You have darkvision out to 30 feet (or extend existing darkvision by 30 feet). You have advantage on Sense (Perception) checks to detect traps, hidden doors, and environmental hazards within dungeons or gate instances. You can move through spaces sized for creatures one size smaller without squeezing.",
-		flavor: "You've been inside more gates than some gates have been open.",
+			"Hundreds of Rift clears have honed your spatial awareness in enclosed environments. You have darkvision out to 30 feet (or extend existing darkvision by 30 feet). You have advantage on Sense (Perception) checks to detect traps, hidden doors, and environmental hazards within Rifts or Rift instances. You can move through spaces sized for creatures one size smaller without squeezing.",
+		flavor: "You've been inside more Rifts than some Rifts have been open.",
 		tags: ["awakened", "feat", "awakening", "exploration"],
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
@@ -197,7 +197,7 @@ const awakeningFeats: CompendiumFeat[] = [
 			conditions: [],
 		},
 		discovery_lore:
-			"Evolved informally among independent Ascendants who couldn't afford Guild support teams and had to clear low-rank gates solo for income.",
+			"Evolved informally among independent Ascendants who couldn't afford Guild support teams and had to clear low-rank Rifts solo for income.",
 		theme_tags: ["dungeon", "exploration", "spatial"],
 	},
 	{
@@ -266,18 +266,18 @@ const awakeningFeats: CompendiumFeat[] = [
 	},
 	{
 		id: "gate-linguist",
-		name: "Gate Linguist",
-		display_name: "Gate Linguist",
+		name: "Rift Linguist",
+		display_name: "Rift Linguist",
 		description:
-			"Prolonged gate exposure has imprinted fragments of anomalous languages into your subconscious. You can speak, read, and write two additional languages of your choice. You can attempt to decipher gate-born inscriptions, anomaly vocalizations, and rune scripts by making an Intelligence check (DC 15, or DC 10 if the source shares a language family with one you know).",
+			"Prolonged Rift exposure has imprinted fragments of anomalous languages into your subconscious. You can speak, read, and write two additional languages of your choice. You can attempt to decipher gate-born inscriptions, anomaly vocalizations, and rune scripts by making an Intelligence check (DC 15, or DC 10 if the source shares a language family with one you know).",
 		flavor:
-			"The runes on the gate wall say 'TURN BACK.' You're the only one who can read them.",
+			"The runes on the Rift wall say 'TURN BACK.' You're the only one who can read them.",
 		tags: ["awakened", "feat", "awakening", "knowledge"],
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
 		effects: {
 			primary: "Learn two additional languages.",
-			secondary: "Decipher gate inscriptions and anomaly speech (INT check).",
+			secondary: "Decipher Rift inscriptions and anomaly speech (INT check).",
 		},
 		repeatable: false,
 		mechanics: {
@@ -326,7 +326,7 @@ const awakeningFeats: CompendiumFeat[] = [
 			conditions: ["Settlement population 10,000+"],
 		},
 		discovery_lore:
-			"The underground economy formed within weeks of the first gate break, when governments couldn't regulate the flood of gate-crystal and anomaly drops.",
+			"The underground economy formed within weeks of the first Rift Break, when governments couldn't regulate the flood of gate-crystal and anomaly drops.",
 		theme_tags: ["black-market", "social", "economy"],
 	},
 	{
@@ -334,7 +334,7 @@ const awakeningFeats: CompendiumFeat[] = [
 		name: "Raid Party Leader",
 		display_name: "Raid Party Leader",
 		description:
-			"You've led enough gate clears to read the flow of combat instinctively. As a bonus action, you can direct one ally who can hear you to reposition — that ally can immediately use its reaction to move up to half its speed without provoking opportunity attacks. Additionally, when you roll initiative, each ally within 30 feet who can hear you adds +2 to their initiative roll.",
+			"You've led enough Rift clears to read the flow of combat instinctively. As a bonus action, you can direct one ally who can hear you to reposition — that ally can immediately use its reaction to move up to half its speed without provoking opportunity attacks. Additionally, when you roll initiative, each ally within 30 feet who can hear you adds +2 to their initiative roll.",
 		flavor:
 			"You don't bark orders. You state facts. 'Left flank, three seconds.' They move.",
 		tags: ["awakened", "feat", "awakening", "leadership"],
@@ -360,7 +360,7 @@ const awakeningFeats: CompendiumFeat[] = [
 			conditions: ["Ally must hear you"],
 		},
 		discovery_lore:
-			"The Guild Masters' Association codified raid leadership doctrine after analyzing the 40% survival rate difference between led and unled gate clears.",
+			"The Guild Masters' Bureau codified raid leadership doctrine after analyzing the 40% survival rate difference between led and unled Rift clears.",
 		theme_tags: ["leadership", "tactical", "party"],
 	},
 	{
@@ -368,13 +368,13 @@ const awakeningFeats: CompendiumFeat[] = [
 		name: "Anomaly Harvester",
 		display_name: "Anomaly Harvester",
 		description:
-			"You know how to extract useful materials from slain gate creatures before their bodies dissolve. When a gate-born creature is reduced to 0 HP within 30 feet of you, you can use your reaction to harvest one material component (gate-crystal shard, mana core, or reagent) before dissolution. You have advantage on Intelligence (Nature) or Intelligence (Arcana) checks to identify anomaly weaknesses, resistances, and drop tables.",
+			"You know how to extract useful materials from slain Rift creatures before their bodies dissolve. When a gate-born creature is reduced to 0 HP within 30 feet of you, you can use your reaction to harvest one material component (gate-crystal shard, mana core, or reagent) before dissolution. You have advantage on Intelligence (Nature) or Intelligence (Arcana) checks to identify anomaly weaknesses, resistances, and drop tables.",
 		flavor: "Most ascendants let the loot dissolve. You carry the right jars.",
 		tags: ["awakened", "feat", "awakening", "crafting"],
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
 		effects: {
-			primary: "Reaction: harvest one material from a slain gate creature.",
+			primary: "Reaction: harvest one material from a slain Rift creature.",
 			secondary: "Advantage on checks to identify anomaly traits.",
 		},
 		repeatable: false,
@@ -389,7 +389,7 @@ const awakeningFeats: CompendiumFeat[] = [
 			uses: "Proficiency bonus/long rest",
 			recharge: "Long rest",
 			requires_attunement: false,
-			conditions: ["Gate-born creature must be within 30 feet"],
+			conditions: ["Rift-born creature must be within 30 feet"],
 		},
 		discovery_lore:
 			"Pioneered by low-rank ascendants who couldn't afford Guild equipment and learned to recycle anomaly remains into field-expedient tools.",

@@ -37,40 +37,40 @@ const baseComponents: Components = {
 		const text = nodeText(node as unknown as HastNode);
 		if (READ_ALOUD_RE.test(text)) {
 			return (
-				<div className="not-prose my-5 rounded-md border border-amber-500/40 border-l-4 border-l-amber-500/80 bg-amber-950/15 px-5 py-3 shadow-inner">
-					<div className="mb-1.5 flex items-center gap-1.5 font-display text-[10px] uppercase tracking-[0.2em] text-amber-400/80">
+				<div className="not-prose my-5 rounded-md border border-gate-s/40 border-l-4 border-l-amber-500/80 bg-gate-s/15 px-5 py-3 shadow-inner">
+					<div className="mb-1.5 flex items-center gap-1.5 font-display text-[10px] uppercase tracking-[0.2em] text-gate-s/80">
 						<Volume2 className="h-3 w-3" />
 						Read Aloud
 					</div>
-					<div className="font-serif italic leading-relaxed text-amber-100/90">
+					<div className="font-serif italic leading-relaxed text-gate-s/90">
 						{children}
 					</div>
 				</div>
 			);
 		}
 		return (
-			<blockquote className="my-4 border-l-2 border-fuchsia-500/40 pl-4 italic text-slate-400">
+			<blockquote className="my-4 border-l-2 border-resurge-violet/40 pl-4 italic text-slate-400">
 				{children}
 			</blockquote>
 		);
 	},
 	table({ children }) {
 		return (
-			<div className="not-prose my-5 overflow-x-auto rounded-md border border-fuchsia-500/20">
+			<div className="not-prose my-5 overflow-x-auto rounded-md border border-resurge-violet/20">
 				<table className="w-full border-collapse text-sm">{children}</table>
 			</div>
 		);
 	},
 	th({ children }) {
 		return (
-			<th className="border border-fuchsia-500/20 bg-fuchsia-950/40 px-3 py-2 text-left font-display text-xs uppercase tracking-wider text-fuchsia-300">
+			<th className="border border-resurge-violet/20 bg-resurge-violet/25 px-3 py-2 text-left font-display text-xs uppercase tracking-wider text-resurge-violet">
 				{children}
 			</th>
 		);
 	},
 	td({ children }) {
 		return (
-			<td className="border border-fuchsia-500/15 px-3 py-2 align-top text-slate-300">
+			<td className="border border-resurge-violet/15 px-3 py-2 align-top text-slate-300">
 				{children}
 			</td>
 		);
@@ -100,8 +100,8 @@ export function BookMarkdown({ children, extraComponents }: BookMarkdownProps) {
 				{content}
 			</ReactMarkdown>
 			{referenced.length > 0 && (
-				<details className="not-prose mt-8 rounded-lg border border-fuchsia-500/25 bg-black/30 [&[open]]:bg-black/40">
-					<summary className="cursor-pointer select-none px-4 py-3 font-display text-xs uppercase tracking-[0.2em] text-fuchsia-300 transition-colors hover:text-white">
+				<details className="not-prose mt-8 rounded-lg border border-resurge-violet/25 bg-black/30 [&[open]]:bg-black/40">
+					<summary className="cursor-pointer select-none px-4 py-3 font-display text-xs uppercase tracking-[0.2em] text-resurge-violet transition-colors hover:text-white">
 						Stat Blocks Referenced ({referenced.length})
 					</summary>
 					<div className="space-y-6 px-4 pb-5 pt-2">

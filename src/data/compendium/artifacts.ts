@@ -113,7 +113,7 @@ export const artifacts: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Preserve Rift, mana lattice, and anomaly terminology.",
 					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
@@ -237,7 +237,7 @@ export const artifacts: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Preserve Rift, mana lattice, and anomaly terminology.",
 					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
@@ -357,7 +357,7 @@ export const artifacts: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Preserve Rift, mana lattice, and anomaly terminology.",
 					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
@@ -397,7 +397,7 @@ export const artifacts: Item[] = [
 			history:
 				"The Bureau logged it, sealed it, and reclassified the vault around it as a containment site after a junior archivist opened it once and erased a wing of the archive.",
 			origin:
-				"Retrieved from the dead center of an S-Rank gate that had already consumed two full guild raids, found sitting in the one square meter the anomaly had left untouched.",
+				"Retrieved from the dead center of an S-Rank Rift that had already consumed two full guild raids, found sitting in the one square meter the anomaly had left untouched.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -481,7 +481,7 @@ export const artifacts: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Preserve Rift, mana lattice, and anomaly terminology.",
 					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
@@ -522,9 +522,9 @@ export const artifacts: Item[] = [
 			current_owner: "",
 			curse: "Slowly drains ambient stamina from the wielder.",
 			history:
-				"A guildmaster who claimed it walked into an A-Rank gate alone and walked out with a retinue of eleven shadows that had entered as monsters an hour before.",
+				"A guildmaster who claimed it walked into an A-Rank Rift alone and walked out with a retinue of eleven shadows that had entered as monsters an hour before.",
 			origin:
-				"Condensed out of the command-shadow that a fallen Umbral Regent shed at the moment of death, hardened into an edge by the pressure of the S-Rank gate collapsing around it.",
+				"Condensed out of the command-shadow that a fallen Umbral Regent shed at the moment of death, hardened into an edge by the pressure of the S-Rank Rift collapsing around it.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -609,7 +609,7 @@ export const artifacts: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Preserve Rift, mana lattice, and anomaly terminology.",
 					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
@@ -734,7 +734,7 @@ export const artifacts: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Preserve Rift, mana lattice, and anomaly terminology.",
 					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
@@ -774,7 +774,7 @@ export const artifacts: Item[] = [
 			history:
 				"It spent two years mislabeled as inert containment glass in a Guild Vault before an appraiser opened it and lost the sight in both eyes for a week, after which its true classification was restored.",
 			origin:
-				"Pulled from the abyssal shelf of a drowned S-Rank gate whose interior had inverted into open void, recovered by a diver who reported the casket was the only object down there casting no reflection.",
+				"Pulled from the abyssal shelf of a drowned S-Rank Rift whose interior had inverted into open void, recovered by a diver who reported the casket was the only object down there casting no reflection.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -859,7 +859,7 @@ export const artifacts: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Preserve Rift, mana lattice, and anomaly terminology.",
 					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
@@ -983,7 +983,7 @@ export const artifacts: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Preserve Rift, mana lattice, and anomaly terminology.",
 					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
@@ -1112,7 +1112,7 @@ export const artifacts: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Preserve Rift, mana lattice, and anomaly terminology.",
 					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
@@ -1239,7 +1239,7 @@ export const artifacts: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Preserve Rift, mana lattice, and anomaly terminology.",
 					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
@@ -1271,7 +1271,7 @@ export const artifacts: Item[] = [
 		effects: {
 			passive: [
 				"While this shield is equipped, the first time each turn you would fail a saving throw, you can choose to succeed instead if you have not done so since your last short rest.",
-				"You have advantage on saving throws against effects originating from a Rift, Gate, or anomaly.",
+				"You have advantage on saving throws against effects originating from a Rift, Rift, or anomaly.",
 			],
 		},
 		source: "Rift Ascendant Canon",
@@ -1304,7 +1304,7 @@ export const artifacts: Item[] = [
 		mechanics: {
 			special: [
 				"While this shield is equipped, the first time each turn you would fail a saving throw, you can choose to succeed instead if you have not done so since your last short rest.",
-				"You have advantage on saving throws against effects originating from a Rift, Gate, or anomaly.",
+				"You have advantage on saving throws against effects originating from a Rift, Rift, or anomaly.",
 			],
 			ability_modifiers: {
 				damage: [],
@@ -1348,7 +1348,7 @@ export const artifacts: Item[] = [
 			},
 			passive_rules: [
 				"While this shield is equipped, the first time each turn you would fail a saving throw, you can choose to succeed instead if you have not done so since your last short rest.",
-				"You have advantage on saving throws against effects originating from a Rift, Gate, or anomaly.",
+				"You have advantage on saving throws against effects originating from a Rift, Rift, or anomaly.",
 			],
 			resolution: {
 				type: "armor_class",
@@ -1358,7 +1358,7 @@ export const artifacts: Item[] = [
 				strength_requirement: null,
 				equipped_effects: [
 					"While this shield is equipped, the first time each turn you would fail a saving throw, you can choose to succeed instead if you have not done so since your last short rest.",
-					"You have advantage on saving throws against effects originating from a Rift, Gate, or anomaly.",
+					"You have advantage on saving throws against effects originating from a Rift, Rift, or anomaly.",
 				],
 			},
 			rules_payload_version: "ra-item-v1",
@@ -1366,7 +1366,7 @@ export const artifacts: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Preserve Rift, mana lattice, and anomaly terminology.",
 					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
@@ -1494,7 +1494,7 @@ export const artifacts: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Preserve Rift, mana lattice, and anomaly terminology.",
 					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
@@ -1535,7 +1535,7 @@ export const artifacts: Item[] = [
 			current_owner: "",
 			curse: "Slowly drains ambient stamina from the wielder.",
 			history:
-				"Its first wielder cleared a collapsing B-Rank gate by cutting a path through the horde faster than the gate could close, then sold the blade the same night, unwilling to sleep near it.",
+				"Its first wielder cleared a collapsing B-Rank Rift by cutting a path through the horde faster than the Rift could close, then sold the blade the same night, unwilling to sleep near it.",
 			origin:
 				"Beaten back into shape by a guild smith from the molten residue a slain Regent left when its body failed to fully dissolve, the metal never fully cooling since.",
 			personality: "",
@@ -1622,7 +1622,7 @@ export const artifacts: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Preserve Rift, mana lattice, and anomaly terminology.",
 					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
@@ -1662,7 +1662,7 @@ export const artifacts: Item[] = [
 			current_owner: "",
 			curse: "Slowly drains ambient stamina from the wielder.",
 			history:
-				"It anchored a guild's last defensive line at the mouth of an S-Rank gate for six hours, the bearer never taking a step back, until the relief column arrived to find the front rank still standing exactly where the shield had told them to hold.",
+				"It anchored a guild's last defensive line at the mouth of an S-Rank Rift for six hours, the bearer never taking a step back, until the relief column arrived to find the front rank still standing exactly where the shield had told them to hold.",
 			origin:
 				"Struck from the personal panoply of an Umbral Regent during the First Awakening, its sigil still holding the compulsion that once made armies form up behind it.",
 			personality: "",
@@ -1748,7 +1748,7 @@ export const artifacts: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Preserve Rift, mana lattice, and anomaly terminology.",
 					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
@@ -1788,7 +1788,7 @@ export const artifacts: Item[] = [
 			history:
 				"The first Bureau agent to don it reported the strike team's monsters turning on each other within seconds, then removed the crown and refused to touch it again, calling it a weapon aimed at whoever wore it too long.",
 			origin:
-				"Recovered from an S-Rank throne-space where it sat upon a chair grown from the gate's own substance, radiating a dread that had emptied the surrounding chambers of even the anomaly's own spawn.",
+				"Recovered from an S-Rank throne-space where it sat upon a chair grown from the Rift's own substance, radiating a dread that had emptied the surrounding chambers of even the anomaly's own spawn.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -1873,7 +1873,7 @@ export const artifacts: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Preserve Rift, mana lattice, and anomaly terminology.",
 					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
@@ -2000,7 +2000,7 @@ export const artifacts: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Preserve Rift, mana lattice, and anomaly terminology.",
 					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
@@ -2128,7 +2128,7 @@ export const artifacts: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, mana lattice, and anomaly terminology.",
+					"Preserve Rift, mana lattice, and anomaly terminology.",
 					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,

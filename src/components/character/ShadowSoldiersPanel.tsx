@@ -228,7 +228,7 @@ export function ShadowSoldiersPanel({
 														title: css.nickname || soldier.name,
 														description: soldier.description || "",
 														payload: {
-															type: "Shadow Soldier",
+															type: "Umbral Legionnaire",
 															rank: soldier.rank,
 															icon: typeData.icon,
 														},
@@ -296,7 +296,7 @@ export function ShadowSoldiersPanel({
 														result: 0,
 														rolls: [],
 														roll_type: "ability",
-														context: `${actionText} Shadow Soldier: ${soldierName}`,
+														context: `${actionText} Umbral Legionnaire: ${soldierName}`,
 														character_id: characterId,
 													});
 												}
@@ -306,7 +306,7 @@ export function ShadowSoldiersPanel({
 													result: 0,
 													rolls: [],
 													roll_type: "ability",
-													context: `${actionText} Shadow Soldier: ${soldierName}`,
+													context: `${actionText} Umbral Legionnaire: ${soldierName}`,
 													campaign_id: campaignId ?? null,
 													character_id: characterId,
 												});
@@ -324,7 +324,7 @@ export function ShadowSoldiersPanel({
 											size="sm"
 											variant="outline"
 											asChild
-											className="ml-2 border-fuchsia-300/40 hover:border-fuchsia-300 hover:bg-fuchsia-300/10"
+											className="ml-2 border-resurge-violet/40 hover:border-resurge-violet hover:bg-resurge-violet/10"
 											data-testid={`open-companion-sheet-${css.id}`}
 											title="Open full Legionnaire sub-sheet"
 										>
@@ -569,7 +569,7 @@ export function ShadowSoldiersPanel({
 																		result: 0,
 																		rolls: [],
 																		roll_type: "ability",
-																		context: `Extracts new Shadow Soldier: ${soldierName}`,
+																		context: `Extracts new Umbral Legionnaire: ${soldierName}`,
 																		character_id: characterId,
 																	});
 																}
@@ -579,7 +579,7 @@ export function ShadowSoldiersPanel({
 																	result: 0,
 																	rolls: [],
 																	roll_type: "ability",
-																	context: `Extracts new Shadow Soldier: ${soldierName}`,
+																	context: `Extracts new Umbral Legionnaire: ${soldierName}`,
 																	campaign_id: campaignId ?? null,
 																	character_id: characterId,
 																});
