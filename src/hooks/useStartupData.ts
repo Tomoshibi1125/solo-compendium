@@ -310,8 +310,9 @@ async function loadMarketplaceStartupEntries(): Promise<CompendiumEntry[]> {
 	}
 }
 
-export const useStartupData = () => {
+export const useStartupData = (options?: { enabled?: boolean }) => {
 	return useQuery({
+		enabled: options?.enabled ?? true,
 		queryKey: ["startup-data"],
 		queryFn: async (): Promise<StartupData> => {
 			try {

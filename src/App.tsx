@@ -2,7 +2,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/react";
 import { ThemeProvider } from "next-themes";
-import { lazy, Suspense, useEffect } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import {
 	BrowserRouter,
 	Navigate,
@@ -43,9 +43,13 @@ import { AuthProvider, useAuth } from "@/lib/auth/authContext";
 import { migrateLegacyConditions } from "@/lib/conditionSystem";
 import { validateEnv } from "@/lib/envValidation";
 import { useFeatureFlags } from "@/lib/featureFlags";
+import { cancelIdle, runIdle } from "@/lib/idle";
 import { warn as logWarn } from "@/lib/logger";
 import { runProficiencyPatch } from "@/lib/maintenance/ProficiencyPatch";
-import { PerformanceProvider } from "@/lib/performanceProfile";
+import {
+	PerformanceProvider,
+	usePerformanceProfile,
+} from "@/lib/performanceProfile";
 import { getRuntimeEnvValue, normalizeBasePath } from "@/lib/runtimeEnv";
 import { isSetupRouteEnabled } from "@/lib/setupAccess";
 
@@ -241,8 +245,18 @@ const AppContent = () => {
 	// Enable background sync for offline → online data reconciliation (DDB parity)
 	useBackgroundSync();
 
-	// Prefetch compendium data into React Query cache for faster navigation
-	useStartupData();
+	// Prefetch compendium data into React Query cache for faster navigation.
+	// Deferred to browser idle so first paint/interaction never competes with
+	// the 24-category data chunks; skipped entirely on Save-Data connections
+	// (pages fetch what they need on demand). AutoLinkText and the offline
+	// warmer both wait on this query, so they inherit the deferral.
+	const { saveData } = usePerformanceProfile();
+	const [pastBootIdle, setPastBootIdle] = useState(false);
+	useEffect(() => {
+		const idleId = runIdle(() => setPastBootIdle(true));
+		return () => cancelIdle(idleId);
+	}, []);
+	useStartupData({ enabled: pastBootIdle && !saveData });
 
 	// Load feature flags from environment (used by components to gate features)
 	const _featureFlags = useFeatureFlags();

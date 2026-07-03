@@ -11,6 +11,7 @@ import {
 	DialogTitle,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
+import { VirtualizedList } from "@/components/ui/VirtualizedList";
 import { useToast } from "@/hooks/use-toast";
 import { useCharacterChoiceTotals } from "@/hooks/useCharacterChoiceTotals";
 import { useCharacter } from "@/hooks/useCharacters";
@@ -240,23 +241,23 @@ export function AddSpellDialog({
 						</div>
 					</div>
 
-					<div className="min-h-0 flex-1 overflow-y-auto space-y-2 pr-1">
-						{isLoading ? (
-							<div className="flex items-center justify-center py-8">
-								<Loader2 className="w-6 h-6 animate-spin text-primary" />
-							</div>
-						) : visibleSpells.length === 0 ? (
-							<div className="text-center py-8 text-muted-foreground">
-								{searchQuery
-									? "No spells found matching your search."
-									: "No lore-matched spells are available for this job."}
-							</div>
-						) : (
-							visibleSpells.map((spell) => (
-								<div
-									key={spell.id}
-									className="p-3 rounded-lg border bg-muted/30 hover:bg-muted/50 transition-colors"
-								>
+					{isLoading ? (
+						<div className="flex items-center justify-center py-8">
+							<Loader2 className="w-6 h-6 animate-spin text-primary" />
+						</div>
+					) : visibleSpells.length === 0 ? (
+						<div className="text-center py-8 text-muted-foreground">
+							{searchQuery
+								? "No spells found matching your search."
+								: "No lore-matched spells are available for this job."}
+						</div>
+					) : (
+						<VirtualizedList
+							items={visibleSpells}
+							getItemKey={(spell) => spell.id}
+							className="min-h-0 flex-1 pr-1"
+							renderItem={(spell) => (
+								<div className="p-3 rounded-lg border bg-muted/30 hover:bg-muted/50 transition-colors">
 									<div className="flex items-start justify-between gap-2">
 										<div className="flex-1">
 											<div className="flex items-center gap-2 mb-1 flex-wrap">
@@ -303,9 +304,9 @@ export function AddSpellDialog({
 										</Button>
 									</div>
 								</div>
-							))
-						)}
-					</div>
+							)}
+						/>
+					)}
 				</div>
 			</DialogContent>
 		</Dialog>

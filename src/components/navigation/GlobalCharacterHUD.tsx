@@ -16,10 +16,29 @@ import { useSigils } from "@/hooks/useSigils";
 import { useTattoos } from "@/hooks/useTattoos";
 import { formatModifier } from "@/lib/characterCalculations";
 
+type ActiveCharacter = NonNullable<
+	ReturnType<typeof useActiveCharacter>["activeCharacter"]
+>;
+
 export function GlobalCharacterHUD() {
 	const location = useLocation();
 	const { activeCharacter: character } = useActiveCharacter();
-	const charId = character?.id || "";
+
+	const isAuthPage =
+		location.pathname.startsWith("/login") ||
+		location.pathname.startsWith("/auth") ||
+		location.pathname.startsWith("/setup");
+
+	// The HUD renders on every page — keep its data hooks (equipment, sigils,
+	// runes, tattoos, sheet state, derived stats) out of the tree entirely
+	// unless a character is actually active.
+	if (isAuthPage || !character) return null;
+
+	return <GlobalCharacterHUDBody character={character} />;
+}
+
+function GlobalCharacterHUDBody({ character }: { character: ActiveCharacter }) {
+	const charId = character.id;
 
 	const { equipment } = useEquipment(charId);
 	const { map: canonicalEquipmentMap } = useCanonicalEquipmentMap(charId);
@@ -40,13 +59,6 @@ export function GlobalCharacterHUD() {
 	);
 
 	const [characterResources] = useCharacterResources(charId);
-
-	const isAuthPage =
-		location.pathname.startsWith("/login") ||
-		location.pathname.startsWith("/auth") ||
-		location.pathname.startsWith("/setup");
-
-	if (isAuthPage || !character) return null;
 
 	return (
 		<div className="sticky top-16 z-30 w-full border-b border-primary/20 bg-background/90 backdrop-blur-md shadow-lg transition-all duration-300">

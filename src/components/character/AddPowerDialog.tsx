@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { VirtualizedList } from "@/components/ui/VirtualizedList";
 import { useToast } from "@/hooks/use-toast";
 import { useCharacterChoiceTotals } from "@/hooks/useCharacterChoiceTotals";
 import { useCharacter } from "@/hooks/useCharacters";
@@ -308,7 +309,7 @@ export function AddPowerDialog({
 
 						<TabsContent
 							value={levelTab}
-							className="mt-3 min-h-0 flex-1 overflow-y-auto space-y-2 pr-1"
+							className="mt-3 min-h-0 flex-1 flex flex-col"
 						>
 							{isLoading ? (
 								<div className="flex items-center justify-center py-8">
@@ -321,80 +322,86 @@ export function AddPowerDialog({
 										: "No lore-matched powers available for this job."}
 								</div>
 							) : (
-								visiblePowers.map((power) => (
-									<div
-										key={power.id}
-										className="p-3 rounded-lg border bg-muted/30 hover:bg-muted/50 transition-colors"
-									>
-										<div className="flex items-start justify-between gap-2">
-											<div className="flex-1">
-												<div className="flex items-center gap-2 mb-1 flex-wrap">
-													<span className="font-heading font-semibold">
-														{formatRegentVernacular(power.name)}
-													</span>
-													{(power.power_level ?? 0) > 0 ? (
-														<Badge variant="secondary" className="text-xs">
-															Level {power.power_level}
-														</Badge>
-													) : (
-														<Badge variant="outline" className="text-xs">
-															Level 0
-														</Badge>
-													)}
-													{power.school && (
-														<Badge variant="outline" className="text-xs">
-															{formatRegentVernacular(power.school)}
-														</Badge>
-													)}
-													{power.concentration && (
-														<Badge variant="destructive" className="text-xs">
-															Concentration
-														</Badge>
-													)}
-													{(accessByEntryId.get(power.id) ?? []).map((src) => (
-														<Badge
-															key={src}
-															variant={src === "Rune" ? "default" : "outline"}
-															className="text-[11px] uppercase tracking-wider"
-														>
-															{src}
-														</Badge>
-													))}
-													{(power as { source_book?: string | null })
-														.source_book && (
-														<Badge
-															variant="secondary"
-															className="text-[11px] uppercase bg-primary/10 text-primary/80 border-primary/20"
-														>
-															{formatRegentVernacular(
-																(power as { source_book?: string | null })
-																	.source_book as string,
-															)}
-														</Badge>
-													)}
-												</div>
-												{power.description && (
-													<p className="text-sm leading-relaxed text-muted-foreground">
-														{formatRegentVernacular(power.description)}
-													</p>
-												)}
-												<div className="flex flex-wrap gap-2 mt-1 text-xs text-muted-foreground">
-													{power.casting_time && (
-														<span>
-															{formatRegentVernacular(power.casting_time)}
+								<VirtualizedList
+									items={visiblePowers}
+									getItemKey={(power) => power.id}
+									className="min-h-0 flex-1 pr-1"
+									renderItem={(power) => (
+										<div className="p-3 rounded-lg border bg-muted/30 hover:bg-muted/50 transition-colors">
+											<div className="flex items-start justify-between gap-2">
+												<div className="flex-1">
+													<div className="flex items-center gap-2 mb-1 flex-wrap">
+														<span className="font-heading font-semibold">
+															{formatRegentVernacular(power.name)}
 														</span>
+														{(power.power_level ?? 0) > 0 ? (
+															<Badge variant="secondary" className="text-xs">
+																Level {power.power_level}
+															</Badge>
+														) : (
+															<Badge variant="outline" className="text-xs">
+																Level 0
+															</Badge>
+														)}
+														{power.school && (
+															<Badge variant="outline" className="text-xs">
+																{formatRegentVernacular(power.school)}
+															</Badge>
+														)}
+														{power.concentration && (
+															<Badge variant="destructive" className="text-xs">
+																Concentration
+															</Badge>
+														)}
+														{(accessByEntryId.get(power.id) ?? []).map(
+															(src) => (
+																<Badge
+																	key={src}
+																	variant={
+																		src === "Rune" ? "default" : "outline"
+																	}
+																	className="text-[11px] uppercase tracking-wider"
+																>
+																	{src}
+																</Badge>
+															),
+														)}
+														{(power as { source_book?: string | null })
+															.source_book && (
+															<Badge
+																variant="secondary"
+																className="text-[11px] uppercase bg-primary/10 text-primary/80 border-primary/20"
+															>
+																{formatRegentVernacular(
+																	(power as { source_book?: string | null })
+																		.source_book as string,
+																)}
+															</Badge>
+														)}
+													</div>
+													{power.description && (
+														<p className="text-sm leading-relaxed text-muted-foreground">
+															{formatRegentVernacular(power.description)}
+														</p>
 													)}
-													{power.range && (
-														<span>{formatRegentVernacular(power.range)}</span>
-													)}
+													<div className="flex flex-wrap gap-2 mt-1 text-xs text-muted-foreground">
+														{power.casting_time && (
+															<span>
+																{formatRegentVernacular(power.casting_time)}
+															</span>
+														)}
+														{power.range && (
+															<span>{formatRegentVernacular(power.range)}</span>
+														)}
+													</div>
 												</div>
+												<Button size="sm" onClick={() => handleAdd(power)}>
+													Add
+												</Button>
 											</div>
-											<Button size="sm" onClick={() => handleAdd(power)}>
-												Add
-											</Button>
 										</div>
-									</div>
-								))
+									)}
+								/>
 							)}
 						</TabsContent>
 					</Tabs>

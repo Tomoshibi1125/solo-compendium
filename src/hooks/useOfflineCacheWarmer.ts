@@ -94,19 +94,28 @@ export function useOfflineCacheWarmer() {
 		};
 
 		// Delay cache warming until startup-data is successful or failed
-		// to avoid missing data if the network request takes longer than 3 seconds
+		// to avoid missing data if the network request takes longer than 3 seconds.
+		// The startup prefetch is idle-deferred (and skipped on Save-Data), so cap
+		// the wait — after that, warm whatever is already in the query cache.
+		let pollId: ReturnType<typeof setTimeout> | undefined;
+		let attempts = 0;
+		const MAX_ATTEMPTS = 60;
 		const checkAndWarmCache = () => {
 			const state = queryClient.getQueryState(["startup-data"]);
-			if (state?.status === "success" || state?.status === "error") {
+			attempts += 1;
+			if (
+				state?.status === "success" ||
+				state?.status === "error" ||
+				attempts >= MAX_ATTEMPTS
+			) {
 				warmCache();
 			} else {
-				// Check again in 1s if not settled
-				setTimeout(checkAndWarmCache, 1000);
+				pollId = setTimeout(checkAndWarmCache, 1000);
 			}
 		};
 
 		// Start checking after a small initial delay to let React Query mount
-		const timerId = setTimeout(checkAndWarmCache, 1000);
-		return () => clearTimeout(timerId);
+		pollId = setTimeout(checkAndWarmCache, 1000);
+		return () => clearTimeout(pollId);
 	}, [queryClient]);
 }

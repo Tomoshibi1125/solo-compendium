@@ -1,22 +1,6 @@
 import { useEffect, useRef } from "react";
+import { cancelIdle, runIdle } from "@/lib/idle";
 import { usePerformanceProfile } from "@/lib/performanceProfile";
-
-const runIdle = (callback: () => void) => {
-	if (typeof window === "undefined") return 0;
-	if (typeof window.requestIdleCallback === "function") {
-		return window.requestIdleCallback(() => callback(), { timeout: 3500 });
-	}
-	return window.setTimeout(callback, 1200);
-};
-
-const cancelIdle = (id: number) => {
-	if (typeof window === "undefined") return;
-	if (typeof window.cancelIdleCallback === "function") {
-		window.cancelIdleCallback(id);
-		return;
-	}
-	window.clearTimeout(id);
-};
 
 const warmModules = () =>
 	Promise.allSettled([
