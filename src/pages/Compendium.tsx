@@ -73,6 +73,7 @@ import { useFilterPersistence } from "@/hooks/useFilterPersistence";
 import { useSearchHistory } from "@/hooks/useSearchHistory";
 import type { CompendiumEntry } from "@/hooks/useStartupData";
 import { isSupabaseConfigured } from "@/integrations/supabase/client";
+import { computeCompendiumFilterUpdates } from "@/lib/compendiumUrlFilters";
 import { formatRaCurrencyValue } from "@/lib/currency";
 import { formatRarityLabel } from "@/lib/labels";
 import { logger } from "@/lib/logger";
@@ -692,43 +693,27 @@ const Compendium = () => {
 
 	const totalPages = Math.ceil(filteredAndSortedEntries.length / itemsPerPage);
 
-	// Load URL parameters on mount
+	// Sync URL parameters → filters. Reactive (not mount-only) so sidebar links
+	// that only change the query string — the route stays /compendium, so the
+	// component never remounts — still switch the view. Semantics live in
+	// computeCompendiumFilterUpdates (unit-tested).
+	const prevSearchParamsRef = useRef<string | null>(null);
 	useEffect(() => {
-		const params = new URLSearchParams(window.location.search);
-		const updates: Partial<typeof filters> = {};
+		const isFirstRun = prevSearchParamsRef.current === null;
+		prevSearchParamsRef.current = searchParams.toString();
 
-		const categoryParam = params.get("category");
-		const tabParam = params.get("tab");
-		if (categoryParam) {
-			updates.selectedCategory = categoryParam || "all";
-		} else if (tabParam) {
-			// Backward-compatible mapping for older links like /compendium?tab=classes
-			const tabToCategory: Record<string, string> = {
-				classes: "jobs",
-				features: "feats",
-				gear: "equipment",
-				items: "items",
-				runes: "runes",
-				sigils: "sigils",
-			};
-			updates.selectedCategory = tabToCategory[tabParam] || "all";
-		}
-		if (params.get("search")) {
+		const updates = computeCompendiumFilterUpdates(searchParams, isFirstRun);
+		if (updates.searchQuery !== undefined) {
 			// update draft immediately
-			setSearchDraft(params.get("search") || "");
-			updates.searchQuery = params.get("search") || "";
+			setSearchDraft(updates.searchQuery);
 		}
-		if (params.get("favorites") === "true") {
-			updates.showFavoritesOnly = true;
-		}
-		if (params.get("sources")) {
-			updates.selectedSourceBooks = params.get("sources")?.split(",") || [];
-		}
-
 		if (Object.keys(updates).length > 0) {
 			setFilters((prev) => ({ ...prev, ...updates }));
+			if (updates.selectedCategory !== undefined) {
+				setCurrentPage(1);
+			}
 		}
-	}, [setFilters]);
+	}, [searchParams, setFilters]);
 
 	// counts + favoriteCount are derived above in a single pass
 

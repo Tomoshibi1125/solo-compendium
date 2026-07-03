@@ -22,7 +22,7 @@ const rollTypeConfig: Record<
 	skill: { icon: Sparkles, color: "text-green-400", label: "Skill" },
 	ability: { icon: Dice5, color: "text-purple-400", label: "Ability" },
 	initiative: { icon: Dice5, color: "text-gate-s", label: "Initiative" },
-	resource: { icon: Sparkles, color: "text-hunter-blue", label: "Resource" },
+	resource: { icon: Sparkles, color: "text-shadow-blue", label: "Resource" },
 	default: { icon: Dice5, color: "text-primary", label: "Roll" },
 };
 

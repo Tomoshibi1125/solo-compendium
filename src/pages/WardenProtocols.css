@@ -752,24 +752,24 @@
 	box-shadow: 0 0 20px hsl(var(--system-green) / 0.2);
 }
 
-.from-hunter-blue\/20 {
+.from-shadow-blue\/20 {
 	background: linear-gradient(
 		135deg,
-		hsl(var(--hunter-blue) / 0.2),
-		hsl(var(--hunter-blue) / 0.1)
+		hsl(var(--shadow-blue) / 0.2),
+		hsl(var(--shadow-blue) / 0.1)
 	);
 }
 
-.border-hunter-blue\/30 {
-	border-color: hsl(var(--hunter-blue) / 0.3);
+.border-shadow-blue\/30 {
+	border-color: hsl(var(--shadow-blue) / 0.3);
 }
 
-.hover\:border-hunter-blue\/60:hover {
-	border-color: hsl(var(--hunter-blue) / 0.6);
+.hover\:border-shadow-blue\/60:hover {
+	border-color: hsl(var(--shadow-blue) / 0.6);
 }
 
-.group-hover\:shadow-hunter-blue\/20:hover {
-	box-shadow: 0 0 20px hsl(var(--hunter-blue) / 0.2);
+.group-hover\:shadow-shadow-blue\/20:hover {
+	box-shadow: 0 0 20px hsl(var(--shadow-blue) / 0.2);
 }
 
 .from-mana-cyan\/20 {

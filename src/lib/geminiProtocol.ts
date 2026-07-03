@@ -1,5 +1,5 @@
 // Gemini Protocol - Unified Sovereign Fusion Generator
-// Rift Ascendant Post-Reset Timeline - The Absolute Setting
+// Rift Ascendant - The Absolute Setting
 // Unified Fusion System - Single comprehensive fusion approach
 
 import type { Tables } from "@/integrations/supabase/types";
@@ -825,7 +825,7 @@ Generate a COMPLETE sovereign with these EXACT sections. Be creative — every s
 3. FUSION THEME: The combined elemental/conceptual theme, expressed as a single unified concept (e.g., "Singularity Frost", "Ashen Void", "Supernova Iron").
 4. FUSION ORIGIN: 2-3 paragraphs describing the "Ascendant Event" where the Protocol triggered—the moment of merging where Job, Path, and Regents dissolved into one. Describe the new perspective and power this Sovereign now wields.
 5. COMBAT DOCTRINE: The "Fused Martial Style"—how the Sovereign's combat techniques have evolved into something neither Job nor Regent could achieve alone.
-6. POWER MULTIPLIER: A description of the Sovereign's "Post-Reset" power level (e.g., "Zenith-Tier", "Timeline-Anchored", "Prime-Architect Scale").
+6. POWER MULTIPLIER: A description of the Sovereign's fused power ceiling (e.g., "Zenith-Tier", "Rift-Anchored", "Prime-Architect Scale").
 7. FUSION STABILITY: The structural integrity of the merger.
 
 8. ABILITIES (exactly 8, one per level milestone):

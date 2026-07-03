@@ -91,7 +91,7 @@ export const PersonaStep: React.FC<PersonaStepProps> = ({
 							id="protocol-alignment"
 							value={alignment}
 							onChange={(event) => onAlignmentChange(event.target.value)}
-							placeholder="How does this Ascendant align with Bureau protocol, civilians, gates, or Regents?"
+							placeholder="How does this Ascendant align with Bureau protocol, civilians, rifts, or Regents?"
 							className="h-12 bg-black/40 border-primary/20 focus:border-primary/50"
 						/>
 						<AscendantText className="block text-[11px] text-muted-foreground">

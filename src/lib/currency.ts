@@ -26,8 +26,8 @@ export const RA_CURRENCY_TYPES = [
 		symbol: "CC",
 		shortLabel: "Core",
 		baseUnitValue: 1000,
-		colorClass: "text-hunter-blue",
-		borderClass: "border-hunter-blue",
+		colorClass: "text-shadow-blue",
+		borderClass: "border-shadow-blue",
 		description: "High-value Bureau notes backed by S-Rank essence reserves.",
 	},
 	{

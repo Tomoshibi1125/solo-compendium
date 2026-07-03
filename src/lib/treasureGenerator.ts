@@ -21,7 +21,7 @@ export { GATE_RANKS, TREASURE_TABLES };
 export interface TreasureResult {
 	rank: string;
 	hundreds: number; // Core Credits
-	tens: number; // Gate Credits
+	tens: number; // Rift Credits
 	fives: number; // Crystal Credits
 	ones: number; // Mana Credits
 	dimes: number; // Mana Credit chips

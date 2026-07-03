@@ -283,7 +283,7 @@ const CELL_TYPES: CellTypeConfig[] = [
 	{
 		type: "secret",
 		icon: LayoutGrid,
-		color: "bg-hunter-blue/40 border-hunter-blue/70",
+		color: "bg-shadow-blue/40 border-shadow-blue/70",
 		label: "Secret Room",
 	},
 ];

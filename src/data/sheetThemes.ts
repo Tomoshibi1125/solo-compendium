@@ -41,7 +41,7 @@ export const SHEET_THEMES: ReadonlyArray<SheetTheme> = [
 		id: "rift-crimson",
 		name: "Rift Crimson",
 		description:
-			"Blood-red gates and lava-vein highlights — favored by Destroyers and Berserkers.",
+			"Blood-red rifts and lava-vein highlights — favored by Destroyers and Berserkers.",
 		accent: "hsl(0, 80%, 60%)",
 		accentSoft: "hsl(0, 80%, 75%)",
 		glow: "rgba(248, 113, 113, 0.4)",
@@ -56,10 +56,11 @@ export const SHEET_THEMES: ReadonlyArray<SheetTheme> = [
 		glow: "rgba(250, 204, 21, 0.4)",
 	},
 	{
+		// id persists in saved user prefs — display name is canon, id stays.
 		id: "shadow-monarch",
-		name: "Shadow Monarch",
+		name: "Umbral Regent",
 		description:
-			"Obsidian and indigo with monarch-purple inks — for Stalkers and Assassins.",
+			"Obsidian and indigo with deep-violet inks — for Stalkers and Assassins.",
 		accent: "hsl(240, 70%, 65%)",
 		accentSoft: "hsl(240, 70%, 78%)",
 		glow: "rgba(129, 140, 248, 0.4)",

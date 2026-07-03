@@ -47,7 +47,7 @@ const getRankColor = (rank?: string) => {
 const getRarityStyle = (rarity?: string) => {
 	switch (rarity) {
 		case "very_rare":
-			return "text-hunter-blue border-hunter-blue/40 bg-hunter-blue/10";
+			return "text-shadow-blue border-shadow-blue/40 bg-shadow-blue/10";
 		case "rare":
 			return "text-blue-400 border-blue-500/40 bg-blue-500/10";
 		case "uncommon":

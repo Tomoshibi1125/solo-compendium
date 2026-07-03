@@ -21,7 +21,7 @@ const rarityStyles: Record<string, string> = {
 	common: "text-muted-foreground border-border bg-card",
 	uncommon: "text-system-green border-system-green/40 bg-system-green/10",
 	rare: "text-blue-400 border-blue-500/40 bg-blue-500/10",
-	very_rare: "text-hunter-blue border-hunter-blue/40 bg-hunter-blue/10",
+	very_rare: "text-shadow-blue border-shadow-blue/40 bg-shadow-blue/10",
 	epic: "text-purple-400 border-purple-500/40 bg-purple-500/10",
 	legendary: "text-gate-s border-gate-s/40 bg-gate-s/10",
 };

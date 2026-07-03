@@ -182,6 +182,12 @@ test.describe
 					await compendium.deepExercise();
 				});
 
+				// ── 23b. Compendium Sidebar Deep-Links ──────────────────────
+				test("23b. Compendium: sidebar category links switch the view without remount", async () => {
+					const compendium = new CompendiumPage(dmPage);
+					await compendium.verifySidebarCategoryDeepLinks();
+				});
+
 				// ── 24. Compendium Detail ───────────────────────────────────
 				test("24. Compendium Detail: click entry if available, verify controls", async () => {
 					const compendium = new CompendiumPage(dmPage);

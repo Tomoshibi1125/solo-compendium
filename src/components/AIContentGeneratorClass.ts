@@ -38,13 +38,13 @@ interface ContentGenerationOptions {
 }
 
 const AI_CONTENT_PROMPTS = {
-	npc: "Generate a detailed Rift Ascendant NPC (Ascendant or Citizen). Include name, appearance, personality, background, motivations, and dialogue examples. Use Rift Ascendant terminology: Awakened, Rifts, System, Awakened Council.",
+	npc: "Generate a detailed Rift Ascendant NPC (Ascendant or Citizen). Include name, appearance, personality, background, motivations, and dialogue examples. Use Rift Ascendant terminology: Awakened, Rifts, System, the Bureau.",
 	encounter:
-		"Create a combat encounter set in a Rift or the Umbral Waste. Include enemies (Anomalies/Regents), environment, tactics, treasure (Credits, Mats, Runes), and story context.",
+		"Create a combat encounter set in a Rift or the Umbral Waste. Include enemies (Anomalies/Regents), environment, tactics, treasure (Rift Credits, materials, Runes), and story context.",
 	location:
-		"Describe a detailed location within the world of Rift Ascendant (e.g., Neon District, Umbral Forest, Rift Interior). Include atmosphere, features, secrets, and interactive elements.",
+		"Describe a detailed location within the world of Rift Ascendant (e.g., a Meridian City district, Umbral Forest, Rift Interior). Include atmosphere, features, secrets, and interactive elements.",
 	quest:
-		"Design a Directive (Quest) for Ascendants. Include title, rank (E through SS), objectives, NPCs involved, complications, and rewards. Align with Warden terminology.",
+		"Design a Directive (Quest) for Ascendants. Include title, rank (E through S), objectives, NPCs involved, complications, and rewards. Align with Warden terminology.",
 	dialogue:
 		"Write dialogue between Ascendants or with the Rift interface. Include personality, emotion, and plot advancement aligned with the high-stakes setting.",
 	item: "Create a System-grade item (Equipment, Rune, or Relic) with description, properties, history, and game mechanics.",

@@ -16,7 +16,7 @@ const CONDITION_COLORS: Record<string, string> = {
 	frightened: "bg-gate-s text-white",
 	grappled: "bg-gate-a text-white",
 	incapacitated: "bg-red-700 text-white",
-	invisible: "bg-hunter-blue text-white",
+	invisible: "bg-shadow-blue text-white",
 	paralyzed: "bg-red-800 text-white",
 	petrified: "bg-stone-600 text-white",
 	poisoned: "bg-green-700 text-white",

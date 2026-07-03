@@ -17,7 +17,7 @@ const INDEX_CSS = join(SRC_ROOT, "index.css");
 // Custom RA color families (anything else — slate, red, primary… — is either
 // standard Tailwind or a shadcn semantic token and out of scope here).
 const FAMILIES =
-	"shadow|gate|solar|mana|resurge|system|obsidian|amethyst|void|crimson|gilded|silver|regent|hunter|bond";
+	"shadow|gate|solar|mana|resurge|system|obsidian|amethyst|void|crimson|gilded|silver|regent|bond";
 
 // Bare family names count too — `text-resurge` resolves via `--color-resurge`,
 // which slipped this guard when the suffix was mandatory.
@@ -76,5 +76,30 @@ describe("theme token resolution", () => {
 		}
 
 		expect([...new Set(offenders)]).toEqual([]);
+	});
+
+	it("every var(--x) referenced by a --color-* token is itself defined", () => {
+		// A @theme entry like `--color-hunter-blue: hsl(var(--hunter-blue))` is
+		// "defined" to the check above, but if the base `--hunter-blue` var has
+		// no definition the color resolves to invalid → utilities silently
+		// render unstyled. (This exact hole shipped a dead token for months.)
+		const css = readFileSync(INDEX_CSS, "utf8");
+		const definedVars = new Set(
+			[...css.matchAll(/(?<![\w-])--([a-z0-9-]+)\s*:/g)].map((m) => m[1]),
+		);
+
+		const offenders: string[] = [];
+		for (const match of css.matchAll(
+			/--color-([a-z0-9-]+)\s*:[^;]*var\(--([a-z0-9-]+)\)/g,
+		)) {
+			const [, token, referenced] = match;
+			if (!definedVars.has(referenced)) {
+				offenders.push(
+					`--color-${token} references undefined var --${referenced}`,
+				);
+			}
+		}
+
+		expect(offenders).toEqual([]);
 	});
 });

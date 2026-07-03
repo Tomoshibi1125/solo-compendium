@@ -156,9 +156,9 @@ export const WARDEN_TOOLS: ToolCatalogItem[] = [
 		icon: Scroll,
 		status: "available",
 		color:
-			"from-hunter-blue/20 to-hunter-blue/10 border-hunter-blue/30 hover:border-hunter-blue/60",
-		iconColor: "text-hunter-blue",
-		glow: "group-hover:shadow-hunter-blue/20",
+			"from-shadow-blue/20 to-shadow-blue/10 border-shadow-blue/30 hover:border-shadow-blue/60",
+		iconColor: "text-shadow-blue",
+		glow: "group-hover:shadow-shadow-blue/20",
 		category: "content",
 		priority: 7,
 	},
@@ -192,7 +192,7 @@ export const WARDEN_TOOLS: ToolCatalogItem[] = [
 		id: "treasure-generator",
 		name: "Treasure Generator",
 		description:
-			"Generate treasure hoards by Rift Rank with gold, items, materials, and relics.",
+			"Generate treasure hoards by Rift Rank with credits, items, materials, and relics.",
 		icon: Gem,
 		status: "available",
 		color:
@@ -331,9 +331,9 @@ export const PLAYER_TOOLS: ToolCatalogItem[] = [
 		icon: BookOpen,
 		status: "available",
 		color:
-			"from-hunter-blue/20 to-hunter-blue/10 border-hunter-blue/30 hover:border-hunter-blue/60",
-		iconColor: "text-hunter-blue",
-		glow: "group-hover:shadow-hunter-blue/20",
+			"from-shadow-blue/20 to-shadow-blue/10 border-shadow-blue/30 hover:border-shadow-blue/60",
+		iconColor: "text-shadow-blue",
+		glow: "group-hover:shadow-shadow-blue/20",
 		category: "reference",
 		priority: 5,
 	},

@@ -2893,8 +2893,8 @@ export const LevelUpWizardModal = ({
 								)}
 
 								{requiredSpellbookInscriptions > 0 && (
-									<div className="p-4 rounded-lg bg-gradient-to-r from-hunter-blue/10 to-transparent border border-hunter-blue/20">
-										<Label className="font-resurge text-hunter-blue tracking-wide flex items-center gap-2 mb-4">
+									<div className="p-4 rounded-lg bg-gradient-to-r from-shadow-blue/10 to-transparent border border-shadow-blue/20">
+										<Label className="font-resurge text-shadow-blue tracking-wide flex items-center gap-2 mb-4">
 											<Sparkles className="w-4 h-4" />
 											{formatRegentVernacular(
 												jobObj?.spellbook?.label ?? "Spellbook",
@@ -2918,7 +2918,7 @@ export const LevelUpWizardModal = ({
 															"flex items-start gap-3 p-2 rounded-lg border transition-all",
 															isSelected
 																? "bg-primary/15 border-primary ring-2 ring-primary/60"
-																: "bg-background/50 border-hunter-blue/10 hover:border-hunter-blue/30",
+																: "bg-background/50 border-shadow-blue/10 hover:border-shadow-blue/30",
 														)}
 													>
 														<input
@@ -2939,14 +2939,14 @@ export const LevelUpWizardModal = ({
 																selectedSpellbookIds.length >=
 																	requiredSpellbookInscriptions
 															}
-															className="mt-1 rounded border-hunter-blue/30"
+															className="mt-1 rounded border-shadow-blue/30"
 														/>
 														<label
 															htmlFor={`level-spellbook-${spell.id}`}
 															className="flex-1 cursor-pointer"
 														>
 															<div className="flex items-center gap-2 flex-wrap">
-																<span className="font-resurge text-sm text-hunter-blue">
+																<span className="font-resurge text-sm text-shadow-blue">
 																	{formatRegentVernacular(spell.name)}
 																</span>
 																<Badge variant="secondary" className="text-xs">

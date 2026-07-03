@@ -94,7 +94,7 @@ const DIRECTIVE_COMPLICATIONS = [
 	"Betrayal: NPC contact is untrustworthy",
 	"Escalation: Situation worsens during mission",
 	"Information blackout: Limited communication",
-	"Political interference: Awakened Council politics",
+	"Political interference: Bureau politics",
 	"Regent involvement: Umbral Regent fragments detected",
 ] as const;
 
@@ -106,13 +106,13 @@ const DIRECTIVE_REWARDS = [
 	"Mana Credits",
 	"Mana Credit chips",
 	"Rare material access",
-	"Awakened Council favor",
+	"Bureau favor",
 	"Relic fragment",
 	"Exclusive information",
 	"Guild recommendation",
 	"Special equipment",
 	"System favor bonus",
-	"The Absolute blessing",
+	"The Absolute's blessing",
 ] as const;
 
 const DIRECTIVE_STAKES: Record<string, string> = {
@@ -179,9 +179,9 @@ function generateRandomDirective(rank?: string): GeneratedDirective {
 	const title = `${type} at ${location}`;
 
 	const descriptions: Record<string, string> = {
-		"Rift Clearance": `Clear the ${location} and eliminate all threats. The Awakened Council has marked this Rift for immediate clearance.`,
+		"Rift Clearance": `Clear the ${location} and eliminate all threats. The Bureau has marked this Rift for immediate clearance.`,
 		"Rescue Mission": `A group of civilians/ascendants are trapped within the ${location}. Extract them safely before it's too late.`,
-		Investigation: `Strange activity detected in the ${location}. Investigate the source and report findings to the Awakened Council.`,
+		Investigation: `Strange activity detected in the ${location}. Investigate the source and report findings to the Bureau.`,
 		Defense: `Defend a location from an incoming Rift breach. Hold the line until reinforcements arrive.`,
 		Extermination: `Eliminate a specific threat within the ${location}. Target is particularly dangerous and must be destroyed.`,
 		Retrieval: `Recover a valuable item or artifact from within the ${location}. Item is critical and must not be damaged.`,

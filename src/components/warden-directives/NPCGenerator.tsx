@@ -56,13 +56,14 @@ export interface NPCStatBlock {
 	ac: number;
 	hp: number;
 	speed: number;
+	/** RA canon ability scores: STR / AGI / VIT / INT / SENSE / PRE. */
 	abilities: {
 		str: number;
-		dex: number;
-		con: number;
+		agi: number;
+		vit: number;
 		int: number;
-		wis: number;
-		cha: number;
+		sense: number;
+		pre: number;
 	};
 }
 
@@ -136,13 +137,44 @@ function buildStatBlock(rank: string): NPCStatBlock {
 		speed: 30,
 		abilities: {
 			str: rollAbility(),
-			dex: rollAbility(),
-			con: rollAbility(),
+			agi: rollAbility(),
+			vit: rollAbility(),
 			int: rollAbility(),
-			wis: rollAbility(),
-			cha: rollAbility(),
+			sense: rollAbility(),
+			pre: rollAbility(),
 		},
 	};
+}
+
+/**
+ * Saved NPCs from before the RA-canon ability rename carry D&D keys
+ * (dex/con/wis/cha). Map them onto the canon shape so old history entries
+ * still render.
+ */
+function normalizeStatBlock(statBlock: NPCStatBlock): NPCStatBlock {
+	const abilities = statBlock.abilities as Partial<
+		NPCStatBlock["abilities"] & {
+			dex: number;
+			con: number;
+			wis: number;
+			cha: number;
+		}
+	>;
+	return {
+		...statBlock,
+		abilities: {
+			str: abilities.str ?? 10,
+			agi: abilities.agi ?? abilities.dex ?? 10,
+			vit: abilities.vit ?? abilities.con ?? 10,
+			int: abilities.int ?? 10,
+			sense: abilities.sense ?? abilities.wis ?? 10,
+			pre: abilities.pre ?? abilities.cha ?? 10,
+		},
+	};
+}
+
+function normalizeNpc(npc: GeneratedNPC): GeneratedNPC {
+	return { ...npc, statBlock: normalizeStatBlock(npc.statBlock) };
 }
 
 // --- Logic ---
@@ -179,11 +211,11 @@ function generateNPCBase(): GeneratedNPC {
 
 const ABILITY_ORDER: Array<keyof NPCStatBlock["abilities"]> = [
 	"str",
-	"dex",
-	"con",
+	"agi",
+	"vit",
 	"int",
-	"wis",
-	"cha",
+	"sense",
+	"pre",
 ];
 
 function npcToMarkdown(npc: GeneratedNPC): string {
@@ -201,7 +233,7 @@ function npcToMarkdown(npc: GeneratedNPC): string {
 - **Speed** ${s.speed} ft.
 - **Challenge** ${s.cr}  ·  **Proficiency** ${formatMod(s.proficiency)}
 
-| STR | DEX | CON | INT | WIS | CHA |
+| STR | AGI | VIT | INT | SENSE | PRE |
 | --- | --- | --- | --- | --- | --- |
 | ${abilityRow} |
 
@@ -259,12 +291,18 @@ export function NPCGenerator({ entityId, className }: NPCGeneratorProps) {
 			npc?: GeneratedNPC | null;
 		};
 		if (Array.isArray(raw.history)) {
-			return { current: raw.current ?? null, history: raw.history };
+			return {
+				current: raw.current ? normalizeNpc(raw.current) : null,
+				history: raw.history.map((entry) => ({
+					...entry,
+					record: normalizeNpc(entry.record),
+				})),
+			};
 		}
 		// Migrate the legacy latest-only shape ({ npc }).
 		if (raw.npc) {
 			return {
-				current: { ...raw.npc, id: raw.npc.id ?? makeEntryId() },
+				current: normalizeNpc({ ...raw.npc, id: raw.npc.id ?? makeEntryId() }),
 				history: [],
 			};
 		}

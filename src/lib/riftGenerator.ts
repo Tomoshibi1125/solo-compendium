@@ -6,11 +6,11 @@
  */
 
 import {
-	GATE_HAZARDS,
-	GATE_REWARDS,
 	RIFT_BIOMES,
 	RIFT_BOSS_TYPES,
 	RIFT_COMPLICATIONS,
+	RIFT_HAZARDS,
+	RIFT_REWARDS,
 	RIFT_THEMES,
 	WARDEN_RANKS,
 	WORLD_EVENTS,
@@ -418,7 +418,7 @@ function buildHazards(
 			const linked =
 				hazardEntries[entryIdx % Math.max(1, hazardEntries.length)] ?? null;
 			entryIdx++;
-			const hazardName = linked?.name ?? pick(GATE_HAZARDS);
+			const hazardName = linked?.name ?? pick(RIFT_HAZARDS);
 			hazards.push({
 				id: `haz-${i}`,
 				roomId: `room-${i}`,
@@ -534,7 +534,7 @@ function generateObjective(
 		"Recover all treasure caches within the Rift.",
 		"Discover the source of the Rift's formation.",
 		"Rescue any trapped civilians or operatives.",
-		"Map the complete Rift layout for Council records.",
+		"Map the complete Rift layout for Bureau records.",
 		"Collect anomaly core samples for research.",
 	];
 
@@ -589,7 +589,7 @@ function generateLoreNotes(
 	loreEntries: WardenLinkedEntry[],
 ): string[] {
 	const notes: string[] = [
-		`This Rift manifests within the ${theme}, an area classified as ${rank}-Rank by the Awakened Council. The terrain presents as ${biome}, though the actual topography is a construct of the Rift's mana signature.`,
+		`This Rift manifests within the ${theme}, an area classified as ${rank}-Rank by the Bureau. The terrain presents as ${biome}, though the actual topography is a construct of the Rift's mana signature.`,
 	];
 
 	if (loreEntries.length > 0) {
@@ -724,7 +724,7 @@ export async function generateFullRift(
 		// Treasure generation may fail if compendium entries are sparse — degrade gracefully
 	}
 
-	const bonusRewards = pickN(GATE_REWARDS, 2).map(String);
+	const bonusRewards = pickN(RIFT_REWARDS, 2).map(String);
 	const objective = generateObjective(rank, bossName, theme);
 
 	const description = formatRegentVernacular(
@@ -887,8 +887,8 @@ export function packetToTextDossier(packet: GeneratedRiftPacket): string {
 	if (packet.rewards.treasure) {
 		const t = packet.rewards.treasure;
 		const currency = [
-			t.hundreds > 0 ? `$${t.hundreds * 100}` : "",
-			t.tens > 0 ? `$${t.tens * 10}` : "",
+			t.hundreds > 0 ? `${t.hundreds} Core Credits` : "",
+			t.tens > 0 ? `${t.tens} Rift Credits` : "",
 		]
 			.filter(Boolean)
 			.join(" + ");

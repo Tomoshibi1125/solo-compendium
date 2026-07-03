@@ -52,6 +52,45 @@ export class CompendiumPage {
 		).toBeVisible({ timeout: 10_000 });
 	}
 
+	/**
+	 * Sidebar deep-links: the app-sidebar Compendium links only change the
+	 * query string (route stays /compendium), so the page must react to
+	 * param changes without a remount. Regression test for the bug where
+	 * every sidebar category landed on the main compendium view.
+	 */
+	async verifySidebarCategoryDeepLinks() {
+		await this.goto();
+
+		const sidebarLink = (href: string) =>
+			this.page.locator(`aside a[href="${href}"]`).first();
+		const activeCategoryButton = (name: RegExp) =>
+			this.page
+				.getByRole("button", { name })
+				.and(this.page.locator(".bg-primary"))
+				.first();
+
+		// Click a category link while already mounted on /compendium.
+		await sidebarLink("/compendium?category=anomalies").click();
+		await expect(this.page).toHaveURL(/category=anomalies/);
+		await expect(activeCategoryButton(/Anomalies/i)).toBeVisible({
+			timeout: 10_000,
+		});
+
+		// Switch to a second category — still no remount.
+		await sidebarLink("/compendium?category=backgrounds").click();
+		await expect(this.page).toHaveURL(/category=backgrounds/);
+		await expect(activeCategoryButton(/Backgrounds/i)).toBeVisible({
+			timeout: 10_000,
+		});
+
+		// Bare /compendium ("Game Rules") resets the category to All.
+		await sidebarLink("/compendium").click();
+		await expect(this.page).not.toHaveURL(/category=/);
+		await expect(activeCategoryButton(/^All/i)).toBeVisible({
+			timeout: 10_000,
+		});
+	}
+
 	async deepExercise() {
 		await this.goto();
 
@@ -62,8 +101,8 @@ export class CompendiumPage {
 			await this.page.waitForTimeout(500);
 		}
 
-		// Categories
-		const categories = ["Monarchs", "Items", "Spells", "Monsters"];
+		// Categories (RA canon names — "Monarchs"/"Monsters" were stale no-ops)
+		const categories = ["Regents", "Items", "Spells", "Anomalies"];
 		for (const cat of categories) {
 			const btn = this.page
 				.getByRole("button", { name: new RegExp(cat, "i") })

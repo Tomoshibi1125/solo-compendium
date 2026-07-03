@@ -175,7 +175,7 @@ const Favorites = () => {
 			feats: "border-gate-s/30 bg-gate-s/10",
 			skills: "border-gate-a/30 bg-gate-a/10",
 			backgrounds: "border-gray-500/30 bg-gray-500/10",
-			regents: "border-hunter-blue/30 bg-hunter-blue/10",
+			regents: "border-shadow-blue/30 bg-shadow-blue/10",
 			relics: "border-gate-s/30 bg-gate-s/10",
 			jobs: "border-cyan-500/30 bg-cyan-500/10",
 			paths: "border-system-green/30 bg-system-green/10",

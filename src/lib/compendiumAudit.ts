@@ -1,3 +1,4 @@
+import { rollableTables } from "@/data/compendium/rollableTables";
 import srdItemManifest from "@/data/srd-item-manifest.json";
 import type { Json } from "@/integrations/supabase/types";
 import {
@@ -464,6 +465,32 @@ function auditDuplicates(
 }
 
 const RA_CANON_SOURCE_BOOK = "Rift Ascendant Canon";
+
+/**
+ * Rollable tables are static data (not provider-served), so they were never
+ * covered by the per-dataset pass — this applies the canon source-book rule
+ * and required-field checks to them too. Exported for the negative-probe test.
+ */
+export function auditRollableTableSources(
+	tables: ReadonlyArray<{
+		id: string;
+		name: string;
+		description: string;
+		source_book: string;
+	}>,
+	issues: CompendiumAuditIssue[],
+) {
+	const entries: AuditEntry[] = tables.map((table) => ({
+		id: table.id,
+		name: table.name,
+		description: table.description,
+		source_book: table.source_book,
+	}));
+	auditDuplicates("rollable_tables", entries, issues);
+	for (const entry of entries) {
+		auditRequiredFields("rollable_tables", entry, issues);
+	}
+}
 
 function auditRequiredFields(
 	dataset: string,
@@ -2042,6 +2069,7 @@ export async function runCompendiumAudit(
 	auditSrdCompleteness(datasets, issues);
 	auditBoilerplateRepetition(datasets, issues);
 	auditShallowMagicEffect(datasets, issues);
+	auditRollableTableSources(rollableTables, issues);
 	auditVehicleBondedReferences(
 		datasets.vehicles ?? [],
 		datasets.anomalies ?? [],

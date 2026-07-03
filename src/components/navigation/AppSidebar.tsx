@@ -24,6 +24,21 @@ export function AppSidebar() {
 
 	const activePath = location.pathname;
 
+	// Hrefs may carry a query (`/compendium?category=anomalies`), which
+	// `pathname.startsWith(href)` can never match. Compare the pathname and the
+	// category/tab param separately so exactly one compendium item highlights.
+	const isItemActive = (href: string) => {
+		const [hrefPath, hrefQuery] = href.split("?");
+		if (hrefPath === "/") return activePath === "/";
+		if (!activePath.startsWith(hrefPath)) return false;
+		const hrefParams = new URLSearchParams(hrefQuery ?? "");
+		const currentParams = new URLSearchParams(location.search);
+		const hrefKey = hrefParams.get("category") ?? hrefParams.get("tab") ?? "";
+		const currentKey =
+			currentParams.get("category") ?? currentParams.get("tab") ?? "";
+		return hrefKey === currentKey;
+	};
+
 	const renderNavItems = (collapsed: boolean) => (
 		<div className="flex flex-col gap-4 py-4">
 			{navigationConfig.map((section) => (
@@ -36,10 +51,7 @@ export function AppSidebar() {
 					<div className="space-y-1">
 						{section.items?.map((item) => {
 							const Icon = (item.icon as LucideIcon) || Sparkles;
-							const isActive =
-								item.href === "/"
-									? activePath === "/"
-									: activePath.startsWith(item.href);
+							const isActive = isItemActive(item.href);
 
 							return (
 								<Link key={item.title} to={item.href}>
