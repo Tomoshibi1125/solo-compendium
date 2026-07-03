@@ -103,7 +103,9 @@ export const RiftSiteBackground = ({
 		}));
 	}, [finalIntensity]);
 
-	// ── Canvas: animated rift energy streams ─────────────────────
+	// ── Canvas: rising mana filaments + rift flares ──────────────
+	// Curved, swaying wisps of rift energy drifting upward (no straight
+	// scan-line streaks — those read as CRT/terminal, not Rift Ascendant).
 	useEffect(() => {
 		if (!canvasRef.current || !enableAnimation || finalIntensity === "low")
 			return;
@@ -119,54 +121,110 @@ export const RiftSiteBackground = ({
 		resize();
 		window.addEventListener("resize", resize);
 
-		const streamCount = finalIntensity === "high" ? 10 : 6;
-		const streams = Array.from({ length: streamCount }, () => ({
-			x: Math.random() * window.innerWidth,
-			y: Math.random() * window.innerHeight,
-			length: Math.random() * 220 + 80,
-			speed: Math.random() * 1.4 + 0.5,
-			horizontal: Math.random() > 0.5,
+		type Wisp = {
+			baseX: number;
+			y: number;
+			phase: number;
+			sway: number;
+			swaySpeed: number;
+			speed: number;
+			color: string;
+			trail: { x: number; y: number }[];
+			trailMax: number;
+		};
+
+		const spawnWisp = (startAnywhere: boolean): Wisp => ({
+			baseX: Math.random() * canvas.width,
+			y: startAnywhere
+				? Math.random() * canvas.height
+				: canvas.height + Math.random() * 60,
+			phase: Math.random() * Math.PI * 2,
+			sway: Math.random() * 42 + 14,
+			swaySpeed: Math.random() * 0.03 + 0.012,
+			speed: Math.random() * 0.9 + 0.45,
 			color: Math.random() > 0.5 ? accentHex : "#00d4ff",
-		}));
+			trail: [],
+			trailMax: Math.floor(Math.random() * 40) + 45,
+		});
+
+		const wispCount = finalIntensity === "high" ? 10 : 6;
+		const wisps = Array.from({ length: wispCount }, () => spawnWisp(true));
+
+		// Brief radial glow pulses — a rift venting energy.
+		type Flare = { x: number; y: number; r: number; life: number };
+		const flares: Flare[] = [];
 
 		let animId: number;
 		const draw = () => {
-			// Dark trailing fade for ghost trails
-			ctx.fillStyle = "rgba(7, 3, 18, 0.07)";
+			// Dark trailing fade keeps soft ghost trails between frames
+			ctx.fillStyle = "rgba(7, 3, 18, 0.08)";
 			ctx.fillRect(0, 0, canvas.width, canvas.height);
 			ctx.globalCompositeOperation = "screen";
 
-			for (const s of streams) {
-				ctx.beginPath();
-				ctx.moveTo(s.x, s.y);
-				if (s.horizontal) {
-					ctx.lineTo(s.x + s.length, s.y);
-					s.x += s.speed;
-					if (s.x > canvas.width) {
-						s.x = -s.length;
-						s.y = Math.random() * canvas.height;
+			for (let i = 0; i < wisps.length; i++) {
+				const w = wisps[i];
+				w.phase += w.swaySpeed;
+				w.y -= w.speed;
+				const x = w.baseX + Math.sin(w.phase) * w.sway;
+				w.trail.push({ x, y: w.y });
+				if (w.trail.length > w.trailMax) w.trail.shift();
+
+				if (w.trail.length > 2) {
+					const head = w.trail[w.trail.length - 1];
+					const tail = w.trail[0];
+					const g = ctx.createLinearGradient(tail.x, tail.y, head.x, head.y);
+					g.addColorStop(0, "rgba(0,0,0,0)");
+					g.addColorStop(1, w.color);
+					ctx.strokeStyle = g;
+					ctx.lineWidth = 1.4;
+					ctx.beginPath();
+					ctx.moveTo(tail.x, tail.y);
+					// Smooth the path through midpoints so the filament curves
+					for (let p = 1; p < w.trail.length - 1; p++) {
+						const mx = (w.trail[p].x + w.trail[p + 1].x) / 2;
+						const my = (w.trail[p].y + w.trail[p + 1].y) / 2;
+						ctx.quadraticCurveTo(w.trail[p].x, w.trail[p].y, mx, my);
 					}
-				} else {
-					ctx.lineTo(s.x, s.y + s.length);
-					s.y -= s.speed;
-					if (s.y + s.length < 0) {
-						s.y = canvas.height;
-						s.x = Math.random() * canvas.width;
-					}
+					ctx.stroke();
 				}
 
-				const g = s.horizontal
-					? ctx.createLinearGradient(s.x, s.y, s.x + s.length, s.y)
-					: ctx.createLinearGradient(s.x, s.y, s.x, s.y + s.length);
-				g.addColorStop(0, "rgba(0,0,0,0)");
-				g.addColorStop(0.5, s.color);
-				g.addColorStop(1, "rgba(0,0,0,0)");
-				ctx.strokeStyle = g;
-				ctx.lineWidth = 1.5;
-				ctx.stroke();
+				if (w.y < -20) wisps[i] = spawnWisp(false);
+			}
 
-				// Occasional 90-degree branch — feels like rift circuit energy
-				if (Math.random() < 0.008) s.horizontal = !s.horizontal;
+			// Spawn at most two concurrent flares, rarely
+			if (flares.length < 2 && Math.random() < 0.004) {
+				flares.push({
+					x: Math.random() * canvas.width,
+					y: Math.random() * canvas.height * 0.7,
+					r: 6,
+					life: 1,
+				});
+			}
+			for (let f = flares.length - 1; f >= 0; f--) {
+				const flare = flares[f];
+				flare.r += 1.6;
+				flare.life -= 0.02;
+				if (flare.life <= 0) {
+					flares.splice(f, 1);
+					continue;
+				}
+				const glow = ctx.createRadialGradient(
+					flare.x,
+					flare.y,
+					0,
+					flare.x,
+					flare.y,
+					flare.r,
+				);
+				const alpha = Math.round(flare.life * 60)
+					.toString(16)
+					.padStart(2, "0");
+				glow.addColorStop(0, `${accentHex}${alpha}`);
+				glow.addColorStop(1, "rgba(0,0,0,0)");
+				ctx.fillStyle = glow;
+				ctx.beginPath();
+				ctx.arc(flare.x, flare.y, flare.r, 0, Math.PI * 2);
+				ctx.fill();
 			}
 
 			ctx.globalCompositeOperation = "source-over";
@@ -385,9 +443,12 @@ export const RiftSiteBackground = ({
 				</div>
 			)}
 
-			{/* ── Layer 6: Obsidian radial vignette ────────────────── */}
+			{/* ── Layer 6: Obsidian radial vignette (breathes slowly) ── */}
 			<div
-				className="absolute inset-0"
+				className={cn(
+					"absolute inset-0",
+					enableAnimation && "ra-vignette-breathe",
+				)}
 				style={{
 					background:
 						"radial-gradient(ellipse at center, transparent 40%, hsl(var(--background) / 0.5) 80%, hsl(var(--background)) 100%)",

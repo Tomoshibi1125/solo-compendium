@@ -1010,8 +1010,8 @@ export default function CharacterSheetV2() {
 					</div>
 				)}
 			</div>
-			{/* Scanner Line Animation */}
-			<div className="absolute top-0 left-0 w-full h-[1px] bg-primary/20 animate-[scan_4s_linear_infinite] pointer-events-none" />
+			{/* Rift energy hairline (static gradient, matches HUD chrome) */}
+			<div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-primary/40 to-transparent pointer-events-none" />
 		</div>
 	);
 

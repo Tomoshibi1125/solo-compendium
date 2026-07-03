@@ -313,15 +313,19 @@ img[loading="lazy"] {
 	}
 }
 
-html[data-performance-tier="low"] .rift-scan-line {
-	display: none;
+/* Kill the panel shimmer + vignette breathing where every repaint counts. */
+@media (pointer: coarse), (max-width: 767px) {
+	html body .sw-scan-line {
+		animation: none;
+	}
+}
+
+html[data-performance-tier="low"] .sw-scan-line,
+html[data-performance-tier="low"] .ra-vignette-breathe {
+	animation: none;
 }
 
 @media (pointer: coarse), (max-width: 767px) {
-	html body .rift-scan-line {
-		display: none;
-	}
-
 	html body .ambient-glow-container {
 		opacity: 0.45;
 	}

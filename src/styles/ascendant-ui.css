@@ -5,45 +5,36 @@
    digital materialization effects, and status-window styling.
    ============================================================ */
 
-/* ── Holographic scan-line that sweeps top→bottom ───────────── */
-@keyframes rift-scan-line {
+/* ── Rift shimmer — a soft diagonal light refraction that drifts
+      across holographic panes (replaces the CRT-style scan sweep) ── */
+@keyframes rift-shimmer {
 	0% {
-		transform: translateY(-100%);
-		opacity: 0;
+		background-position: 130% 130%;
 	}
 
-	10% {
-		opacity: 1;
-	}
-
-	90% {
-		opacity: 1;
+	55% {
+		background-position: -30% -30%;
 	}
 
 	100% {
-		transform: translateY(100vh);
-		opacity: 0;
+		background-position: -30% -30%;
 	}
 }
 
-@keyframes rift-scan-line-subtle {
-	0% {
-		transform: translateY(-100%);
-		opacity: 0;
-	}
-
-	15% {
-		opacity: 0.5;
-	}
-
-	85% {
-		opacity: 0.5;
-	}
-
+/* ── Ambient vignette breathing — the rift site exhales ──────── */
+@keyframes ra-vignette-breathe {
+	0%,
 	100% {
-		transform: translateY(200%);
-		opacity: 0;
+		opacity: 1;
 	}
+
+	50% {
+		opacity: 0.82;
+	}
+}
+
+.ra-vignette-breathe {
+	animation: ra-vignette-breathe 11s ease-in-out infinite;
 }
 
 /* ── Hologram flicker — mimics unstable projection ─────────── */
@@ -783,15 +774,17 @@
 }
 
 .sw-scan-line {
+	/* Rift refraction sheen: a soft diagonal light pass, not a CRT sweep. */
 	background: linear-gradient(
-		180deg,
+		115deg,
 		transparent 0%,
-		hsl(var(--sw-glow) / 0.03) 48%,
-		hsl(var(--sw-glow) / 0.08) 50%,
-		hsl(var(--sw-glow) / 0.03) 52%,
+		hsl(var(--sw-glow) / 0.04) 44%,
+		hsl(var(--sw-glow) / 0.1) 50%,
+		hsl(var(--sw-glow) / 0.04) 56%,
 		transparent 100%
 	);
-	animation: rift-scan-line-subtle 3s ease-in-out infinite;
+	background-size: 260% 260%;
+	animation: rift-shimmer 8s ease-in-out infinite;
 }
 
 .sw-glow-top {
