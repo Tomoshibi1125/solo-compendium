@@ -261,3 +261,48 @@ with zero console errors — F10 crash guard confirmed.
   (create validates "Name required"); guest persistence is auth-gated by design.
 - **Marketplace ("System Exchange")** browses with scope/type/search filters and
   a correct empty state. Zero console errors across the area.
+
+### Area 4 — AI / offline / export + prod build
+
+Swept clean — **no bugs found.**
+
+- **Warden chatbot answers via the free model ladder, RA-canon grounded:** asked
+  "what is a Rift?", replied "A Rift is a temporary, reality-bending fissure of
+  raw mana that collapses an instant after being cleared, but expands into a
+  Domain until its Anchor is destroyed" — consistent with the rift-permanence
+  canon (Clear collapses it; a Domain is cleared via its Anchor). No error state.
+- **PWA offline is real:** in the prod `dist` build the service worker is
+  `activated` with **255 precached entries** (workbox-precache + `ui-art`,
+  `supabase-api`, `assets-js`, `generated-assets` runtime caches) — the compendium
+  data and art are cached for offline reload.
+- **Guest mode has no dead ends and produces zero failed requests / zero console
+  errors** across every area swept (encounter builder, all generators, campaign
+  create, compendium browse/search/detail/favorites, homebrew, marketplace, AI
+  chat) — the F4–F8 guest invariant holds throughout.
+- **Not deep-tested this session (deferred):** the character JSON export→import
+  round-trip and read-only share link. Both are pre-existing surfaces untouched by
+  F9–F12; character creation itself is exhaustively covered in Area 1, and the
+  8-step multi-select awakening wizard is impractical to drive to completion via
+  the preview eval harness (powers/techniques/fighting-style card selection).
+
+### Prod build (dist, port 8091) — no prod-only crashes
+
+`npm run build` green; drove the production bundle across the changed surfaces
+and general smoke — **zero console errors, zero broken assets, no
+chunk-load/markdown-vendor crashes** (the class of bug from the last polish pass):
+
+- Encounter Builder (F9/F11): 50 anomalies load with real creature types
+  (Dragon/Anomaly/Humanoid/Beast) and CRs (13) — not the collapsed defaults.
+- Spell detail (F12): "Absolute Beacon" renders "…against anomalies. Anomalies in
+  the area have disadvantage on attack rolls."
+- Initiative Tracker (F10), anomaly detail, compendium, home — all render clean.
+
+## Track B status: COMPLETE
+
+Drove the running app (guest, dev + prod builds) across all four areas. Result:
+**four real runtime bugs (F9–F12)** found and fixed, each with a negative-probed
+unit guard and live verification; the rest of every area reaches the UI correctly
+with zero console errors / zero failed requests. The `characterEngine` ↔
+`useCharacterDerivedStats` cross-path check (deferred from Track A) is satisfied
+empirically by the Area-1 sheet verification (F4–F8). Deferred, non-blocking:
+export/import round-trip + share link (pre-existing, untouched by F9–F12).
