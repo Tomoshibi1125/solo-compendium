@@ -539,6 +539,28 @@ export function getJobPrimaryAbility(
 	return jobPrimaryAbilityMap[jobName] || null;
 }
 
+// Canonical SRD "Spells Known" tables for RA's known casters, indexed by
+// character level 1–20. These MIRROR the static per-Job arrays in
+// `data/compendium/jobs.ts` (the creation / level-up wizard reads those arrays;
+// this function feeds the sheet's known-spells badge). They are bound together
+// by a guard test so the badge can never again drift from the creation limit —
+// the badge previously used a rough `level + 1`, which mis-counted (e.g. an Idol
+// at L1 showed 2 but could actually learn 4; an Esper at L12 showed 13 vs 12).
+const SPELLS_KNOWN_TABLES: Record<string, number[]> = {
+	// Esper → Sorcerer
+	Esper: [
+		2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 12, 13, 13, 14, 14, 15, 15, 15, 15,
+	],
+	// Idol → Bard
+	Idol: [
+		4, 5, 6, 7, 8, 9, 10, 11, 12, 14, 15, 15, 16, 18, 19, 19, 20, 22, 22, 22,
+	],
+	// Contractor → Warlock
+	Contractor: [
+		2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 11, 11, 12, 12, 13, 13, 14, 15, 15, 15,
+	],
+};
+
 // Calculate spells known limit (standard 5e)
 export function getSpellsKnownLimit(
 	job: string | { name: string } | null | undefined,
@@ -547,15 +569,20 @@ export function getSpellsKnownLimit(
 	const jobName = typeof job === "string" ? job : job?.name;
 	if (!jobName) return null;
 
-	// Stalker → Ranger: a KNOWN half-caster (not prepared). Ranger has no spells
-	// at level 1 and learns floor(level/2)+1 thereafter (2→2, 4→3, … 20→11).
+	// Stalker → Ranger: a KNOWN half-caster (not prepared). Ranger knows no
+	// spells at level 1 and thereafter follows the SRD Ranger "Spells Known"
+	// column = ceil(level/2)+1 (2→2, 3→3, 5→4, 9→6, … 20→11). The earlier
+	// floor(level/2)+1 under-counted at every odd level ≥3.
 	if (jobName === "Stalker") {
-		return level < 2 ? 0 : Math.floor(level / 2) + 1;
+		return level < 2 ? 0 : Math.ceil(level / 2) + 1;
 	}
 
-	// Known full/pact casters (Sorcerer/Warlock/Bard analogs): level + 1
-	if (["Esper", "Contractor", "Idol"].includes(jobName)) {
-		return level + 1;
+	// Known full/pact casters (Sorcerer/Warlock/Bard analogs) use their exact
+	// SRD tables so the sheet badge matches the creation-wizard limit.
+	const table = SPELLS_KNOWN_TABLES[jobName];
+	if (table) {
+		const idx = Math.max(0, Math.min(level - 1, 19));
+		return table[idx];
 	}
 
 	// Other classes are prepared casters
@@ -574,22 +601,21 @@ export function getSpellsPreparedLimit(
 	const spellcastingAbility = getSpellcastingAbility(job);
 	if (!spellcastingAbility) return null;
 
-	// Revenant is a half-caster (drain-tank rework): prepared count uses
-	// half-caster math (ability modifier + half level, minimum 1).
-	if (jobName === "Revenant") {
+	// Half-caster prepared casters use ability modifier + half level (min 1):
+	//   Revenant (drain-tank rework), Holy Knight → Paladin, and Technomancer →
+	//   Artificer. All three have half-caster spell slots, so — matching
+	//   Paladin/Artificer RAW — they prepare mod + floor(level/2), not the
+	//   full-caster mod + level. (Holy Knight and Technomancer were previously
+	//   over-counted with the full-caster formula.)
+	const halfCasterPrepared = ["Revenant", "Holy Knight", "Technomancer"];
+	if (halfCasterPrepared.includes(jobName)) {
 		return Math.max(1, abilityModifier + Math.floor(level / 2));
 	}
 
-	// Prepared casters: ability modifier + level (minimum 1) - standard 5e.
+	// Full-caster prepared casters: ability modifier + level (minimum 1) - SRD.
 	// Stalker is intentionally excluded — its 5e counterpart (Ranger) is a KNOWN
 	// caster, so it uses getSpellsKnownLimit instead of a prepared limit.
-	const preparedCasters = [
-		"Mage",
-		"Technomancer",
-		"Herald",
-		"Holy Knight",
-		"Summoner",
-	];
+	const preparedCasters = ["Mage", "Herald", "Summoner"];
 	if (preparedCasters.includes(jobName)) {
 		return Math.max(1, abilityModifier + level);
 	}

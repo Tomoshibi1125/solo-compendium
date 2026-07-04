@@ -45,8 +45,9 @@ async function recoverTrackedAbilityUses(
 
 /**
  * Execute short rest
- * - Restore hit dice (up to half of max, rounded up)
- * - Reset short-rest recharge features
+ * - Does NOT restore hit dice (players may spend them to heal; hit dice
+ *   return on a long rest, half of max rounded down)
+ * - Reset short-rest recharge features, spells, and short-rest spell slots
  */
 export async function executeShortRest(characterId: string): Promise<void> {
 	const { data: character } = await supabase

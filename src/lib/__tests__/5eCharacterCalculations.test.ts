@@ -105,9 +105,15 @@ describe("5e Character Calculations", () => {
 	});
 
 	test("Spells known limit", () => {
-		// Esper (Sorcerer) - known caster
+		// Esper (Sorcerer) - known caster; exact SRD Sorcerer table (L5 = 6)
 		const knownLimit = getSpellsKnownLimit("Esper", 5);
-		expect(knownLimit).toBe(6); // Level + 1
+		expect(knownLimit).toBe(6);
+		// Higher levels track the Sorcerer table, not a naive level+1 (L12 = 12)
+		expect(getSpellsKnownLimit("Esper", 12)).toBe(12);
+		// Idol (Bard) knows far more than level+1 at low levels (L1 = 4)
+		expect(getSpellsKnownLimit("Idol", 1)).toBe(4);
+		// Contractor (Warlock) plateaus per the Warlock table (L10 = 10)
+		expect(getSpellsKnownLimit("Contractor", 10)).toBe(10);
 
 		// Mage (Wizard) - prepared caster
 		const preparedLimit = getSpellsPreparedLimit("Mage", 5, 3);
@@ -131,10 +137,10 @@ describe("5e Character Calculations", () => {
 	test("Stalker (Ranger) is a KNOWN caster, not a prepared caster", () => {
 		// Ranger is a known half-caster in 5e: no daily preparation.
 		expect(getSpellsPreparedLimit("Stalker", 5, 3)).toBeNull();
-		// No spells at level 1; floor(level/2)+1 from level 2 onward.
+		// No spells at level 1; SRD Ranger "Spells Known" = ceil(level/2)+1 after.
 		expect(getSpellsKnownLimit("Stalker", 1)).toBe(0);
 		expect(getSpellsKnownLimit("Stalker", 2)).toBe(2);
-		expect(getSpellsKnownLimit("Stalker", 5)).toBe(3);
+		expect(getSpellsKnownLimit("Stalker", 5)).toBe(4);
 		expect(getSpellsKnownLimit("Stalker", 20)).toBe(11);
 	});
 });

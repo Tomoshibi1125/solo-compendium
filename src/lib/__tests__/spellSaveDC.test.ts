@@ -9,6 +9,7 @@
  * regress to the wrong stat.
  */
 import { describe, expect, it } from "vitest";
+import { jobs } from "@/data/compendium/jobs";
 import {
 	calculateSpellAttackBonus,
 	calculateSpellSaveDC,
@@ -173,23 +174,31 @@ describe("calculateSpellAttackBonus (PB + ability mod)", () => {
 });
 
 describe("spell known/prepared count formulas", () => {
+	// Known casters use their exact SRD "Spells Known" tables (Sorcerer / Warlock
+	// / Bard), which the sheet badge must match the creation limit for — not a
+	// naive level+1 (e.g. Idol/Bard L1 = 4, not 2; Esper/Sorcerer L12 = 12; the
+	// Warlock/Bard tables plateau at high levels).
 	it.each([
 		["Esper", 1, 2],
 		["Esper", 10, 11],
+		["Esper", 12, 12],
 		["Contractor", 5, 6],
-		["Idol", 20, 21],
-	])("%s level %i knows level + 1 spells", (jobName, level, expected) => {
+		["Contractor", 10, 10],
+		["Idol", 1, 4],
+		["Idol", 20, 22],
+	])("%s level %i knows its SRD Spells Known count", (jobName, level, expected) => {
 		expect(getSpellsKnownLimit(jobName, level)).toBe(expected);
 	});
 
-	// Stalker → Ranger: a KNOWN half-caster (floor(level/2)+1, none at level 1),
-	// NOT a prepared caster.
+	// Stalker → Ranger: a KNOWN half-caster (SRD Ranger table = ceil(level/2)+1,
+	// none at level 1), NOT a prepared caster.
 	it.each([
 		["Stalker", 1, 0],
 		["Stalker", 2, 2],
-		["Stalker", 9, 5],
+		["Stalker", 5, 4],
+		["Stalker", 9, 6],
 		["Stalker", 20, 11],
-	])("%s level %i knows floor(level/2)+1 spells", (jobName, level, expected) => {
+	])("%s level %i knows ceil(level/2)+1 spells", (jobName, level, expected) => {
 		expect(getSpellsKnownLimit(jobName, level)).toBe(expected);
 	});
 
@@ -207,12 +216,11 @@ describe("spell known/prepared count formulas", () => {
 		expect(getSpellsKnownLimit(jobName, 5)).toBeNull();
 	});
 
+	// Full-caster prepared casters: max(1, level + ability mod).
 	it.each([
 		["Mage", 1, -1, 1],
 		["Mage", 5, 4, 9],
-		["Technomancer", 2, 3, 5],
 		["Herald", 10, 5, 15],
-		["Holy Knight", 13, 1, 14],
 		["Summoner", 20, 3, 23],
 	])("%s level %i prepares max(1, level + ability mod)", (jobName, level, abilityModifier, expected) => {
 		expect(getSpellsPreparedLimit(jobName, level, abilityModifier)).toBe(
@@ -220,12 +228,17 @@ describe("spell known/prepared count formulas", () => {
 		);
 	});
 
-	// Revenant is a half-caster (drain-tank rework): prepared count uses
-	// half-caster math, max(1, ability mod + floor(level / 2)).
+	// Half-caster prepared casters use half-caster math, max(1, ability mod +
+	// floor(level / 2)): Revenant (drain-tank rework), Holy Knight → Paladin, and
+	// Technomancer → Artificer all have half-caster slots. (Holy Knight and
+	// Technomancer were previously over-counted with the full-caster formula:
+	// Holy Knight L13 mod +1 = 7, not 14; Technomancer L2 mod +3 = 4, not 5.)
 	it.each([
 		["Revenant", 1, 3, 3],
 		["Revenant", 7, 2, 5],
 		["Revenant", 20, 4, 14],
+		["Holy Knight", 13, 1, 7],
+		["Technomancer", 2, 3, 4],
 	])("%s level %i prepares max(1, ability mod + half level) as a half-caster", (jobName, level, abilityModifier, expected) => {
 		expect(getSpellsPreparedLimit(jobName, level, abilityModifier)).toBe(
 			expected,
@@ -239,5 +252,25 @@ describe("spell known/prepared count formulas", () => {
 		"Destroyer",
 	])("%s does not use the prepared-spells formula", (jobName) => {
 		expect(getSpellsPreparedLimit(jobName, 5, 4)).toBeNull();
+	});
+});
+
+// Guard: the sheet's known-spells badge (getSpellsKnownLimit) must never drift
+// from the static per-Job "Spells Known" arrays that the creation / level-up
+// wizard reads. If a table is edited in one place but not the other, this fails.
+describe("spells-known badge matches the static Job arrays (single source)", () => {
+	it.each([
+		"Esper",
+		"Idol",
+		"Contractor",
+	])("%s known-limit equals its jobs.ts spellsKnown at every level", (jobName) => {
+		const staticKnown = jobs.find((j) => j.name === jobName)?.spellcasting
+			?.spellsKnown;
+		expect(staticKnown, `${jobName} missing static spellsKnown`).toBeDefined();
+		for (let level = 1; level <= 20; level++) {
+			expect(getSpellsKnownLimit(jobName, level)).toBe(
+				staticKnown?.[level - 1],
+			);
+		}
 	});
 });
