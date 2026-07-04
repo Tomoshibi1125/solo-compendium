@@ -10,6 +10,7 @@ import {
 	useCharacterSheetState,
 } from "@/hooks/useCharacterSheetState";
 import { useEquipment } from "@/hooks/useEquipment";
+import { useMergedCustomModifiers } from "@/hooks/useMergedCustomModifiers";
 
 import { useCharacterRuneKnowledge } from "@/hooks/useRunes";
 import { useSigils } from "@/hooks/useSigils";
@@ -48,12 +49,20 @@ function GlobalCharacterHUDBody({ character }: { character: ActiveCharacter }) {
 	const { tattoos } = useTattoos(charId);
 	const { state: sheetState } = useCharacterSheetState(charId);
 
+	// Merged sheet + feature + guild + active-spell modifiers so the HUD's
+	// AC/HP match the character sheet exactly.
+	const customModifiers = useMergedCustomModifiers(
+		charId,
+		sheetState?.customModifiers,
+		character.level ?? 1,
+	);
+
 	const derivedStats = useCharacterDerivedStats(
 		character,
 		equipment || [],
 
 		sigils || [],
-		sheetState?.customModifiers || [],
+		customModifiers,
 		canonicalEquipmentMap,
 		{ runeKnowledge, tattoos },
 	);

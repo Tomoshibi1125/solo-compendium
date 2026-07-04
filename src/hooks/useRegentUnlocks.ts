@@ -2,6 +2,7 @@
 import { useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import { isLocalCharacterId } from "@/lib/guestStore";
 import { clientChannelName } from "@/lib/realtimeChannel";
 import { REGENT_LABEL } from "@/lib/vernacular";
 
@@ -78,6 +79,10 @@ export function useRegentUnlocks(characterId: string) {
 	} = useQuery({
 		queryKey: ["regent-unlocks", characterId],
 		queryFn: async () => {
+			// Regent unlocks are Warden-granted (cloud campaigns only). Guest
+			// characters can't receive them — return empty instead of hitting
+			// the server with a `local_` id (400 + retry spam).
+			if (isLocalCharacterId(characterId)) return [] as RegentUnlock[];
 			const { data, error } = await supabase
 				.from("character_regent_unlocks")
 				.select(`
@@ -106,7 +111,7 @@ export function useRegentUnlocks(characterId: string) {
 	// on the player's open sheet without a refresh. character_regent_unlocks is
 	// added to the supabase_realtime publication in migration 20260627*.
 	useEffect(() => {
-		if (!characterId) return;
+		if (!characterId || isLocalCharacterId(characterId)) return;
 		const channel = supabase
 			.channel(clientChannelName(`regent-unlocks-${characterId}`))
 			.on(

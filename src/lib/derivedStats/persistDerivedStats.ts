@@ -20,6 +20,7 @@
  */
 
 import { supabase } from "@/integrations/supabase/client";
+import { isLocalCharacterId, updateLocalCharacter } from "@/lib/guestStore";
 
 export interface DerivedStatsSnapshot {
 	armorClass: number;
@@ -58,6 +59,17 @@ export async function persistDerivedStats(
 ): Promise<void> {
 	if (!characterId) return;
 	try {
+		if (isLocalCharacterId(characterId)) {
+			// Guest characters: write the cache to the local store — the cloud
+			// PATCH below 400s for `local_` ids on every derived-stats recompute.
+			updateLocalCharacter(characterId, {
+				armor_class: snapshot.armorClass,
+				speed: snapshot.speed,
+				initiative: snapshot.initiative,
+				derived_stats_cached_at: new Date().toISOString(),
+			});
+			return;
+		}
 		await supabase
 			.from("characters")
 			.update({

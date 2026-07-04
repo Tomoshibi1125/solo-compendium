@@ -10,6 +10,7 @@ import {
 	loadLocalGuilds,
 } from "@/hooks/useGuilds";
 import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
+import { isLocalCharacterId } from "@/lib/guestStore";
 import {
 	type AggregatedGuildEffects,
 	aggregateGuildEffects,
@@ -51,7 +52,10 @@ const resolveCharacterGuildBase = async (
 	skillsState: GuildSkillsState;
 	baseProperty: GuildBasePropertyState;
 } | null> => {
-	if (isGuestGuildStore()) {
+	// A guest-local character can never be a member of a cloud guild — always
+	// resolve through the local store (avoids querying the server with a
+	// `local_` id, which 400s and retries).
+	if (isGuestGuildStore() || isLocalCharacterId(characterId)) {
 		const member = loadLocalGuildMembers().find(
 			(m) => m.character_id === characterId,
 		);

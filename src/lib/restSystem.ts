@@ -11,6 +11,21 @@ import {
 	type RestLongEvent,
 	type RestShortEvent,
 } from "@/lib/domainEvents";
+import {
+	getLocalCharacterState,
+	isLocalCharacterId,
+	listLocalFeatures,
+	listLocalPowers,
+	listLocalSpellSlots,
+	listLocalSpells,
+	listLocalTechniques,
+	updateLocalCharacter,
+	updateLocalFeature,
+	updateLocalPower,
+	updateLocalSpell,
+	updateLocalSpellSlotRow,
+	updateLocalTechnique,
+} from "@/lib/guestStore";
 import { AppError } from "./appError";
 import { logger } from "./logger";
 
@@ -44,12 +59,79 @@ async function recoverTrackedAbilityUses(
 }
 
 /**
+ * Guest (`local_`) branch of executeShortRest: mirrors the cloud logic
+ * against the localStorage guest store. Every supabase call in the cloud
+ * path 400s for a local id (the server has no such rows), which silently
+ * made rests a no-op for guest characters.
+ */
+function executeShortRestLocal(characterId: string): void {
+	const entry = getLocalCharacterState(characterId);
+	if (!entry) throw new AppError("Ascendant not found", "NOT_FOUND");
+
+	const recoveredSlotLevels: number[] = [];
+	for (const feature of listLocalFeatures(characterId)) {
+		if (feature.recharge === "short-rest" && feature.uses_max !== null) {
+			updateLocalFeature(feature.id, { uses_current: feature.uses_max });
+		}
+	}
+	for (const slot of listLocalSpellSlots(characterId)) {
+		if (slot.slots_recovered_on_short_rest === 1) {
+			updateLocalSpellSlotRow(slot.id, { slots_current: slot.slots_max });
+			recoveredSlotLevels.push(slot.spell_level);
+		}
+	}
+	for (const spell of listLocalSpells(characterId)) {
+		if (spell.recharge === "short-rest" && spell.uses_max !== null) {
+			updateLocalSpell(spell.id, { uses_current: spell.uses_max });
+		}
+	}
+	for (const power of listLocalPowers(characterId)) {
+		if (power.recharge === "short-rest" && power.uses_max !== null) {
+			updateLocalPower(power.id, { uses_current: power.uses_max });
+		}
+	}
+	for (const technique of listLocalTechniques(characterId)) {
+		if (technique.recharge === "short-rest" && technique.uses_max !== null) {
+			updateLocalTechnique(technique.id, { uses_current: technique.uses_max });
+		}
+	}
+
+	try {
+		const character = entry.character;
+		const shortRestEvent: RestShortEvent = {
+			...buildCorePayload({
+				characterId: character.id,
+				characterName: character.name,
+				className: character.job,
+				pathName: character.path,
+				level: character.level,
+			}),
+			type: "rest:short",
+			hitDiceSpent: 0,
+			hpRecovered: 0,
+			featuresRecharged: listLocalFeatures(characterId)
+				.filter((f) => f.recharge === "short-rest")
+				.map((f) => f.name),
+			slotsRecovered: recoveredSlotLevels,
+		};
+		DomainEventBus.emit(shortRestEvent);
+	} catch {
+		// Best-effort event emission
+	}
+}
+
+/**
  * Execute short rest
  * - Does NOT restore hit dice (players may spend them to heal; hit dice
  *   return on a long rest, half of max rounded down)
  * - Reset short-rest recharge features, spells, and short-rest spell slots
  */
 export async function executeShortRest(characterId: string): Promise<void> {
+	if (isLocalCharacterId(characterId)) {
+		executeShortRestLocal(characterId);
+		return;
+	}
+
 	const { data: character } = await supabase
 		.from("characters")
 		.select("*")
@@ -154,6 +236,109 @@ export async function executeShortRest(characterId: string): Promise<void> {
 }
 
 /**
+ * Guest (`local_`) branch of executeLongRest: mirrors the cloud logic
+ * against the localStorage guest store (no daily-quest RPC for guests).
+ */
+async function executeLongRestLocal(
+	characterId: string,
+): Promise<{ questAssignmentError?: string }> {
+	const entry = getLocalCharacterState(characterId);
+	if (!entry) throw new AppError("Ascendant not found", "NOT_FOUND");
+	const character = entry.character;
+
+	const characterState =
+		(character.gemini_state as Record<string, unknown>) || {};
+	const { clearConditionsOnLongRest } = await import("@/lib/conditionSystem");
+	const geminiState = await normalizeGeminiState({
+		...characterState,
+		conditions: clearConditionsOnLongRest(),
+	});
+
+	updateLocalCharacter(characterId, {
+		hp_current: character.hp_max,
+		hit_dice_current: Math.min(
+			character.hit_dice_max,
+			character.hit_dice_current +
+				Math.max(1, Math.floor(character.hit_dice_max / 2)),
+		),
+		rift_favor_current: character.rift_favor_max,
+		exhaustion_level: Math.max(0, character.exhaustion_level - 1),
+		conditions: [], // Legacy sync
+		gemini_state: geminiState as never,
+		death_save_successes: 0,
+		death_save_failures: 0,
+		stable: false,
+	});
+
+	// Long rest also restores short-rest and encounter resources (5e SRD).
+	const rechargedFeatures: string[] = [];
+	for (const feature of listLocalFeatures(characterId)) {
+		if (
+			["long-rest", "short-rest", "encounter"].includes(
+				feature.recharge ?? "",
+			) &&
+			feature.uses_max !== null
+		) {
+			updateLocalFeature(feature.id, { uses_current: feature.uses_max });
+			rechargedFeatures.push(feature.name);
+		}
+	}
+	for (const slot of listLocalSpellSlots(characterId)) {
+		updateLocalSpellSlotRow(slot.id, { slots_current: slot.slots_max });
+	}
+	for (const spell of listLocalSpells(characterId)) {
+		if (
+			["long-rest", "short-rest"].includes(spell.recharge ?? "") &&
+			spell.uses_max !== null
+		) {
+			updateLocalSpell(spell.id, { uses_current: spell.uses_max });
+		}
+	}
+	for (const power of listLocalPowers(characterId)) {
+		if (
+			["long-rest", "short-rest"].includes(power.recharge ?? "") &&
+			power.uses_max !== null
+		) {
+			updateLocalPower(power.id, { uses_current: power.uses_max });
+		}
+	}
+	for (const technique of listLocalTechniques(characterId)) {
+		if (
+			["long-rest", "short-rest"].includes(technique.recharge ?? "") &&
+			technique.uses_max !== null
+		) {
+			updateLocalTechnique(technique.id, {
+				uses_current: technique.uses_max,
+			});
+		}
+	}
+
+	try {
+		const longRestEvent: RestLongEvent = {
+			...buildCorePayload({
+				characterId: character.id,
+				characterName: character.name,
+				className: character.job,
+				pathName: character.path,
+				level: character.level,
+			}),
+			type: "rest:long",
+			hpRecovered: character.hp_max - character.hp_current,
+			hitDiceRecovered: character.hit_dice_max - character.hit_dice_current,
+			featuresRecharged: rechargedFeatures,
+			slotsRecovered: [],
+			exhaustionReduced: character.exhaustion_level > 0,
+			conditionsCleared: character.conditions || [],
+		};
+		DomainEventBus.emit(longRestEvent);
+	} catch {
+		// Best-effort
+	}
+
+	return {};
+}
+
+/**
  * Execute long rest
  * - Restore all HP
  * - Restore all hit dice
@@ -165,6 +350,10 @@ export async function executeShortRest(characterId: string): Promise<void> {
 export async function executeLongRest(
 	characterId: string,
 ): Promise<{ questAssignmentError?: string }> {
+	if (isLocalCharacterId(characterId)) {
+		return executeLongRestLocal(characterId);
+	}
+
 	const { data: character } = await supabase
 		.from("characters")
 		.select("*")

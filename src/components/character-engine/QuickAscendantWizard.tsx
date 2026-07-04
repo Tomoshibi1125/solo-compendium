@@ -18,6 +18,8 @@
  * on the sheet after the Quick Ascendant lands — they get a fully
  * playable level-1 character immediately.
  */
+
+import { useQueryClient } from "@tanstack/react-query";
 import { Sparkles, Zap } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -117,6 +119,7 @@ export function QuickAscendantWizard({
 	onOpenChange,
 }: QuickAscendantWizardProps) {
 	const navigate = useNavigate();
+	const queryClient = useQueryClient();
 	const { toast } = useToast();
 	const createCharacterMutation = useCreateCharacter();
 	const { mutateAsync: initializeSpellSlots } = useInitializeSpellSlots();
@@ -339,6 +342,15 @@ export function QuickAscendantWizard({
 			toast({
 				title: "Ascendant Awakened",
 				description: `${name.trim()} is ready to enter the Rift.`,
+			});
+
+			// The create mutation invalidated ["characters"] before the ASI /
+			// feature / gear steps above rewrote the row — refresh the caches so
+			// list-fed surfaces (action cards, HUD) don't serve pre-ASI scores
+			// for the query staleTime.
+			await queryClient.invalidateQueries({ queryKey: ["characters"] });
+			await queryClient.invalidateQueries({
+				queryKey: ["character", character.id],
 			});
 
 			onOpenChange(false);

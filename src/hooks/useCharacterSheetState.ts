@@ -372,6 +372,13 @@ export function useCharacterSheetState(
 			await executeShortRest(id);
 			queryClient.invalidateQueries({ queryKey: ["character", id] });
 			queryClient.invalidateQueries({ queryKey: ["features", id] });
+			// Pact slots + per-ability uses recharge on a short rest — refresh
+			// their queries or the restored values don't render until refocus.
+			queryClient.invalidateQueries({ queryKey: ["spell-slots", id] });
+			queryClient.invalidateQueries({ queryKey: ["character-features", id] });
+			queryClient.invalidateQueries({ queryKey: ["powers", id] });
+			queryClient.invalidateQueries({ queryKey: ["character-spells", id] });
+			queryClient.invalidateQueries({ queryKey: ["character-techniques", id] });
 			await applyRestResourceUpdates("short");
 
 			ascendantTools
@@ -401,6 +408,15 @@ export function useCharacterSheetState(
 			const result = await executeLongRest(id);
 			queryClient.invalidateQueries({ queryKey: ["character", id] });
 			queryClient.invalidateQueries({ queryKey: ["features", id] });
+			// Slots + per-ability uses reset on a long rest — refresh their
+			// queries or the restored values don't render until refocus. The
+			// plural list keeps HUD/action-card consumers in sync with hp/HD.
+			queryClient.invalidateQueries({ queryKey: ["spell-slots", id] });
+			queryClient.invalidateQueries({ queryKey: ["character-features", id] });
+			queryClient.invalidateQueries({ queryKey: ["powers", id] });
+			queryClient.invalidateQueries({ queryKey: ["character-spells", id] });
+			queryClient.invalidateQueries({ queryKey: ["character-techniques", id] });
+			queryClient.invalidateQueries({ queryKey: ["characters"] });
 			await applyRestResourceUpdates("long");
 
 			const hpHealed = maxHp - currentHp;

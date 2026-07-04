@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { ArrowLeft, Zap } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
@@ -349,6 +349,7 @@ const CharacterNew = () => {
 		safeNext?.match(/^\/campaigns\/([^/?#]+)/)?.[1] ?? null;
 	const homebrewCampaignId = queryCampaignId ?? nextCampaignId;
 	const { toast } = useToast();
+	const queryClient = useQueryClient();
 	const createCharacterMutation = useCreateCharacter();
 	const { data: existingCharacters = [] } = useCharacters();
 	const initializeSpellSlots = useInitializeSpellSlots();
@@ -1706,6 +1707,15 @@ const CharacterNew = () => {
 				);
 
 			toast({ title: "Unit Awakened!", description: `${name} initialized.` });
+			// The create mutation invalidated ["characters"] BEFORE the racial-ASI
+			// / feature / slot steps above rewrote the row, so the list cache holds
+			// pre-ASI ability scores for its full staleTime (5 min) — every
+			// list-fed surface (combat action cards, HUD) reads stale numbers.
+			// Invalidate again now that the pipeline is complete.
+			await queryClient.invalidateQueries({ queryKey: ["characters"] });
+			await queryClient.invalidateQueries({
+				queryKey: ["character", character.id],
+			});
 			navigate(safeNext ?? `/characters/${character.id}`);
 		} catch (error) {
 			logErrorWithContext(error, "CharacterNew: initialization failed");
@@ -1720,6 +1730,12 @@ const CharacterNew = () => {
 					description: describeError(
 						"Some initialization details can be repaired from the character sheet.",
 					),
+				});
+				// Same stale-list hazard as the success path: later pipeline steps
+				// may have rewritten the row after the create-time invalidation.
+				await queryClient.invalidateQueries({ queryKey: ["characters"] });
+				await queryClient.invalidateQueries({
+					queryKey: ["character", createdCharacterId],
 				});
 				navigate(safeNext ?? `/characters/${createdCharacterId}`);
 				return;

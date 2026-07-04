@@ -5,19 +5,12 @@ import { useToast } from "@/hooks/use-toast";
 import { useCampaignByCharacterId } from "@/hooks/useCampaigns";
 import { useCanonicalEquipmentMap } from "@/hooks/useCanonicalEquipmentMap";
 import {
-	activeSpellsToCustomModifiers,
-	useCharacterActiveSpells,
 	useRemoveActiveSpellByName,
 	useRemoveConcentrationSpells,
 } from "@/hooks/useCharacterActiveSpells";
 import { useAutoBackup } from "@/hooks/useCharacterBackup";
 import { useCharacterDerivedStats } from "@/hooks/useCharacterDerivedStats";
-import {
-	featureEffectsToCustomModifiers,
-	featureModifiersToCustomModifiers,
-	useCharacterFeatures,
-} from "@/hooks/useCharacterFeatures";
-import { useCharacterGuildBenefits } from "@/hooks/useCharacterGuildBenefits";
+import { useCharacterFeatures } from "@/hooks/useCharacterFeatures";
 import { useCharacterSheetState } from "@/hooks/useCharacterSheetState";
 import {
 	type CharacterWithAbilities,
@@ -30,6 +23,7 @@ import { useConcentration } from "@/hooks/useConcentration";
 import { useDeathSaves } from "@/hooks/useDeathSaves";
 import { useEquipment } from "@/hooks/useEquipment";
 import { useAscendantTools } from "@/hooks/useGlobalDDBeyondIntegration";
+import { useMergedCustomModifiers } from "@/hooks/useMergedCustomModifiers";
 import { useRealtimeCollaboration } from "@/hooks/useRealtimeCollaboration";
 import { useRegentUnlocks } from "@/hooks/useRegentUnlocks";
 import { useRecordRoll } from "@/hooks/useRollHistory";
@@ -46,10 +40,7 @@ import {
 	type ConditionEntry,
 	migrateLegacyConditions,
 } from "@/lib/conditionSystem";
-import {
-	normalizeCustomModifiers,
-	resolveAdvantageFromCustomModifiers,
-} from "@/lib/customModifiers";
+import { resolveAdvantageFromCustomModifiers } from "@/lib/customModifiers";
 import {
 	type DiceRoll,
 	formatRollResult,
@@ -219,39 +210,13 @@ export function useCharacterPageModel() {
 	});
 	const { state: sheetState } = sheetController;
 	const { data: charFeatures = [] } = useCharacterFeatures(character?.id || "");
-	const { data: characterActiveSpells = [] } = useCharacterActiveSpells(
+	// Sheet + feature/feat + Guild Base + active-spell modifiers, merged by the
+	// shared hook so every derived-stats consumer (this page model, combat
+	// actions, the global HUD) computes from the identical modifier set.
+	const customModifiers = useMergedCustomModifiers(
 		character?.id,
-	);
-	// Guild Base benefits: real `FeatureEffect`s granted by the character's guild
-	// (War Room +Initiative, Vanguard Tactics +Attack, …) apply to the sheet via
-	// the same custom-modifier pipeline as feats. One guild per character.
-	const guildBenefits = useCharacterGuildBenefits(character?.id);
-
-	const customModifiers = useMemo(
-		() => [
-			...normalizeCustomModifiers(sheetState.customModifiers),
-			...featureModifiersToCustomModifiers(charFeatures),
-			// B4/P1.9: structured feat effects (Tough +2 HP/level, etc.) that
-			// flat modifiers can't express — per-level HP scaling, preset
-			// fallback for feats authored without explicit modifiers.
-			...featureEffectsToCustomModifiers(charFeatures, character?.level ?? 1),
-			// Guild Base effects routed through the identical converter.
-			...featureEffectsToCustomModifiers(
-				guildBenefits.syntheticFeatures,
-				character?.level ?? 1,
-			),
-			// D&D Beyond parity: persisted active spells (Bless, Shield of
-			// Faith, Haste, …) project into customModifiers so derived stats
-			// pick up their bonuses without the engine knowing about spells.
-			...activeSpellsToCustomModifiers(characterActiveSpells),
-		],
-		[
-			sheetState.customModifiers,
-			charFeatures,
-			characterActiveSpells,
-			character?.level,
-			guildBenefits.syntheticFeatures,
-		],
+		sheetState.customModifiers,
+		character?.level ?? 1,
 	);
 
 	const undoRedo = useCharacterUndoRedo(character ?? null);

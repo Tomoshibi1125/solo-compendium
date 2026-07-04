@@ -162,8 +162,39 @@ is verified empirically in **Track B** (build a real character in the running
 app; confirm the sheet's displayed AC/HP/saves/skills/slots/DC match the
 re-derived values), rather than by a synthetic unit fixture.
 
-## Track B — runtime sweep (next)
+## Track B — runtime sweep
 
 Drive the running app and confirm the automations/populations actually reach the
 UI across the four areas (player lifecycle, Warden/campaign, compendium/content,
 AI/offline/export). Findings appended below as they surface.
+
+### Area 1 — player lifecycle (guest mode, dev server)
+
+Drove the full creation wizard twice (Idol ×2), level-up wizard L1→L2, short +
+long rest, inline attack rolls. Verified live against the Track A derivations:
+review-step numbers, sheet ability grid / saves / skills / passives, spellcasting
+card (DC 10 / ATK +2 / **Known 4/4** — the F3 fix live), POWER SLOTS (2 @ L1 →
+3 @ L2, current preserved on level-up per RAW), HP 9 → 15 (avg 6 = 5+VIT),
+XP threshold 300 @ L2, weapon/spell action-card formulas. **Five real runtime
+bugs found and fixed (F4–F8):**
+
+| # | Bug (user-visible symptom) | Root cause → fix | Guard |
+|---|---|---|---|
+| **F4** | Action cards missed every feature/guild/active-spell bonus (sheet stats had them) | `useCombatActions` + `GlobalCharacterHUD` fed `useCharacterDerivedStats` only raw `sheetState.customModifiers`, while the page model merges sheet + feature + guild + active-spell modifiers → new shared `useMergedCustomModifiers` hook (`mergeCustomModifierSources`) used by all three call sites | `mergedModifiersAndWeaponProficiency.test.ts` (negative-probed) |
+| **F5** | Idol's Rapier attack showed +2 (no PB) — SRD Bard is rapier-proficient | Weapon-proficiency name match compared plural authored lists ("Rapiers", jobs.ts) against singular item names ("Rapier") → extracted `lib/weaponProficiency.ts` with singularized matching | same file (negative-probed) |
+| **F6** | Immediately after creation, spell cards read PRE −1 (base 8) while the sheet grid showed 10 — for up to 5 min (query staleTime) | Creation invalidates `["characters"]` at row-insert, then the racial-ASI step rewrites abilities WITHOUT re-invalidating → stale list served to `useCombatActions`. Fixed: re-invalidate `["characters"]` + `["character", id]` at pipeline end (`CharacterNew`, `QuickAscendantWizard`) and in both level-up/down completion blocks (`LevelUpWizardModal`) | verified live (fresh creation shows +0 with no reload) |
+| **F7** | Guest short/long rest silently did nothing (no slots/features/uses recovered; success toast anyway) | `executeShortRest`/`executeLongRest` are supabase-only — every call 400s for `local_` ids → added guest branches mirroring the cloud logic against the guest store; rest handlers now also invalidate `spell-slots`/`powers`/`character-spells`/`character-techniques`/`character-features` | verified live (slot 2/3 → 3/3 on long rest; full-caster slots correctly NOT recovered on short rest) |
+| **F8** | Every inline Attack roll button disabled in guest mode | `InlineRollButton` gated on `!user` (Supabase auth) though guest rolls work locally → gate is now `!user && !isLocalCharacterId(characterId)` (share-link cloud views stay read-only) | verified live (roll executes, toasts, records to guest roll history) |
+
+**Guest 400-spam eliminated** (was: continuous failed `guild_members`,
+`character_regent_unlocks`, `characters` PATCH requests with `local_` ids against
+the real API): guest guards added to `useRegentUnlocks` (query + realtime),
+`useCharacterGuildBenefits.resolveCharacterGuildBase`, and
+`persistDerivedStats` (writes the derived cache to the guest store instead).
+After the fixes a full guest sheet load produces **zero failed requests**.
+
+Notes: regent-fusion runtime check requires an authenticated Warden-granted
+unlock (guests can't receive them by design) — fusion formula layer remains
+unit-verified ([[fusion-balance-rules]]). Cantrip scaling/crit/death-saves are
+unit-locked; their card bindings (`scaleCantripDamage` in `useCombatActions`)
+ride the same now-verified action pipeline.

@@ -3,6 +3,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { useCharacterSheetEnhancements } from "@/hooks/useGlobalDDBeyondIntegration";
 import { useAuth } from "@/lib/auth/authContext";
+import { isLocalCharacterId } from "@/lib/guestStore";
 import type { AdvantageState } from "@/lib/rollAdvantage";
 import { cn } from "@/lib/utils";
 
@@ -74,12 +75,17 @@ export function InlineRollButton({
 		return modifier >= 0 ? `+${modifier}` : `${modifier}`;
 	};
 
+	// Guest-local characters roll entirely against the local store (rollCheck +
+	// local roll history), so they don't need an authenticated user. The auth
+	// gate only applies to cloud characters — e.g. a read-only share-link view.
+	const canRoll = !!user || isLocalCharacterId(characterId);
+
 	return (
 		<Button
 			variant={variant}
 			size={size}
 			onClick={handleRoll}
-			disabled={disabled || !user}
+			disabled={disabled || !canRoll}
 			className={cn(
 				"inline-flex items-center gap-1 hover:bg-primary/10 transition-colors",
 				className,

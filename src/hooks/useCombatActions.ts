@@ -6,6 +6,7 @@ import {
 	useCharacters,
 } from "@/hooks/useCharacters";
 import { useEquipment } from "@/hooks/useEquipment";
+import { useMergedCustomModifiers } from "@/hooks/useMergedCustomModifiers";
 import { usePowers } from "@/hooks/usePowers";
 import { useCharacterRuneKnowledge } from "@/hooks/useRunes";
 import { useSigils } from "@/hooks/useSigils";
@@ -37,6 +38,7 @@ import {
 	pickLargerDamageDice,
 	weaponRequiresAmmunition,
 } from "@/lib/weaponAutomation";
+import { isWeaponProficient } from "@/lib/weaponProficiency";
 import type { CompendiumPower, CompendiumTechnique } from "@/types/compendium";
 import { type AbilityScore, getAbilityModifier } from "@/types/core-rules";
 import {
@@ -139,12 +141,21 @@ export const useCombatActions = (characterId: string) => {
 	const { state: sheetState } = useCharacterSheetState(characterId);
 	const { data: charFeatures = [] } = useCharacterFeatures(characterId);
 
+	// Merged sheet + feature + guild + active-spell modifiers — MUST match the
+	// list the character page model feeds its derived stats, or action-card
+	// numbers (spell attack/DC, weapon bonuses) drift from the sheet's.
+	const customModifiers = useMergedCustomModifiers(
+		characterId,
+		sheetState.customModifiers,
+		character?.level ?? 1,
+	);
+
 	const derivedStats = useCharacterDerivedStats(
 		character,
 		equipment || [],
 
 		sigils || [],
-		sheetState.customModifiers || [],
+		customModifiers,
 		canonicalEquipmentMap,
 		{ runeKnowledge, tattoos },
 	);
@@ -162,13 +173,13 @@ export const useCombatActions = (characterId: string) => {
 
 		const profBonus = getProficiencyBonus(character.level);
 		const result: CombatAction[] = [];
-		const customModifiers = sheetState.customModifiers || [];
 
-		// Sheet-level custom modifiers that apply to every weapon attack/damage.
-		// Per-target custom modifiers (e.g. "+1 to Stealth") are handled by the
-		// derived-stats pipeline, not here. Both `attack`/`damage` and the
-		// `attack_bonus`/`damage_bonus` aliases are summed for parity with how
-		// custom modifiers are entered on the sheet UI.
+		// Custom modifiers (merged sheet + feature + guild + active-spell) that
+		// apply to every weapon attack/damage. Per-target custom modifiers
+		// (e.g. "+1 to Stealth") are handled by the derived-stats pipeline, not
+		// here. Both `attack`/`damage` and the `attack_bonus`/`damage_bonus`
+		// aliases are summed for parity with how custom modifiers are entered
+		// on the sheet UI.
 		const customWeaponAttackBonus =
 			sumCustomModifiers(customModifiers, "attack") +
 			sumCustomModifiers(customModifiers, "attack_bonus");
@@ -176,35 +187,12 @@ export const useCombatActions = (characterId: string) => {
 			sumCustomModifiers(customModifiers, "damage") +
 			sumCustomModifiers(customModifiers, "damage_bonus");
 
-		// Helper: Check proficiency
+		// Helper: Check proficiency (plural-tolerant name + category matching;
+		// see weaponProficiency.ts for the SRD semantics and the plural gotcha).
 		const isProficient = (item: {
 			name: string;
 			properties?: string[] | null;
-		}) => {
-			const profs = (character.weapon_proficiencies || []).map((p: string) =>
-				p.toLowerCase(),
-			);
-			const itemProps =
-				(item.properties as string[])?.map((p: string) => p.toLowerCase()) ||
-				[];
-
-			// Name match
-			if (profs.includes(item.name.toLowerCase())) return true;
-
-			// Category match
-			if (
-				itemProps.some((p: string) => p.includes("simple")) &&
-				profs.some((p: string) => p.includes("simple"))
-			)
-				return true;
-			if (
-				itemProps.some((p: string) => p.includes("martial")) &&
-				profs.some((p: string) => p.includes("martial"))
-			)
-				return true;
-
-			return false;
-		};
+		}) => isWeaponProficient(character.weapon_proficiencies, item);
 
 		// Helper: Parse Range
 		const parseRange = (item: {
@@ -967,7 +955,7 @@ export const useCombatActions = (characterId: string) => {
 		techniques,
 		sigils,
 		canonicalEquipmentMap,
-		sheetState.customModifiers,
+		customModifiers,
 		charFeatures,
 	]);
 

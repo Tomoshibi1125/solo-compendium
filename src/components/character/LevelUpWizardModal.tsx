@@ -1383,6 +1383,9 @@ export const LevelUpWizardModal = ({
 				queryClient.invalidateQueries({
 					queryKey: ["character", character.id],
 				}),
+				// The plural list feeds useCombatActions/HUD — without this the
+				// action cards read pre-change scores for the query staleTime.
+				queryClient.invalidateQueries({ queryKey: ["characters"] }),
 				queryClient.invalidateQueries({
 					queryKey: ["combat-actions", character.id],
 				}),
@@ -2169,6 +2172,9 @@ export const LevelUpWizardModal = ({
 				queryClient.invalidateQueries({
 					queryKey: ["character", character.id],
 				}),
+				// The plural list feeds useCombatActions/HUD — without this the
+				// action cards read pre-level-up scores for the query staleTime.
+				queryClient.invalidateQueries({ queryKey: ["characters"] }),
 				queryClient.invalidateQueries({
 					queryKey: ["combat-actions", character.id],
 				}),
