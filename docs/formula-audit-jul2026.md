@@ -219,5 +219,23 @@ Initiative Tracker with correct **AC 20 / HP 255** and no crash; injecting a
 legacy combatant with no `advancedConditions` also renders (condition backfilled)
 with zero console errors — F10 crash guard confirmed.
 
-_Remaining Area 2 sweep (campaign notes/sessions, all 12 generators for RA-canon
-output) recorded below as it proceeds._
+**Rest of Area 2 swept clean (guest, dev server) — no further bugs:**
+
+- **All 12 Warden generators render + emit RA-canon output, zero console errors /
+  zero failed requests:** Gate ("Dimensional Rift Synthesis" → A-Rank Beast
+  Domain, XP 18,600), NPC ("Construct Synthesis" → full stat block with RA
+  abilities), Treasure ("Material Requisition" → Rift/Mana Credits, no gold-piece
+  leakage), Rollable Tables ("Warden Tables"), Random Event ("Systemic Entropy"),
+  Directive Lattice (= the DirectiveMatrix page), Session Planner + Party Tracker
+  (campaign-gated, correct empty state), Relic Workshop ("Relic Synthesis
+  Chamber", 5e balance guide), Art Generator ("Visualization Lattice", free-model
+  settings). The Dungeon Map generator is merged into the Gate generator (no
+  separate route). No Solo-Leveling ("Monarch"/"Shadow Army"/"Sung Jin-Woo") or
+  medieval-fantasy ("tavern"/"kingdom"/"gold pieces") leakage in any output.
+- **Campaign lifecycle works in guest mode:** create → "Campaign Created" with
+  share code → detail page renders all tabs (Overview/Wiki/Sessions/Chat/Notes/
+  Handouts/Characters/Guilds/Activity/Settings/Oversight); Sessions panel shows
+  the session schedule. No failed requests on guest campaign create.
+- Cosmetic: fixed a Directive Lattice flavor typo (`FAST_EXPTRAPOLATION_ACTIVE`
+  → `FAST_EXTRAPOLATION_ACTIVE`). Left as-is: the campaign-create name placeholder
+  "The Shadow Legion" (an evocative example, not canon-breaking).

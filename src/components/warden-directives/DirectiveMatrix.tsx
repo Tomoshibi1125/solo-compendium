@@ -580,7 +580,7 @@ Please provide a complete directive structure using Rift Ascendant terminology.`
 					className="text-[11px] opacity-70 mb-2"
 				>
 					{genMode === "quick"
-						? "SYNT_PARAM: FAST_EXPTRAPOLATION_ACTIVE"
+						? "SYNT_PARAM: FAST_EXTRAPOLATION_ACTIVE"
 						: "SYNT_PARAM: DEEP_Lattice_RECURSION_ACTIVE"}
 				</ManaFlowText>
 
