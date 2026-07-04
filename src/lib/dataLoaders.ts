@@ -27,7 +27,9 @@ type Regent = Tables<"compendium_regents">;
 export const loadJobs = (): Promise<StaticJob[]> =>
 	import("@/data/compendium/jobs").then((m) => m.jobs as StaticJob[]);
 export const loadItems = (): Promise<CompendiumItem[]> =>
-	import("@/data/compendium/items").then((m) => m.items as CompendiumItem[]);
+	import("@/data/compendium/items-lazy").then(
+		(m) => m.loadCoreItems() as Promise<CompendiumItem[]>,
+	);
 export const loadBackgrounds = (): Promise<StaticBackground[]> =>
 	import("@/data/compendium/backgrounds").then(
 		(m) => m.backgrounds as StaticBackground[],
@@ -106,8 +108,8 @@ export const loadBackgroundsAll = (): Promise<CompendiumBackground[]> =>
 		(m) => m.allBackgrounds as CompendiumBackground[],
 	);
 export const loadItemsAll = (): Promise<CompendiumItem[]> =>
-	import("@/data/compendium/items-index").then(
-		(m) => m.allItems as CompendiumItem[],
+	import("@/data/compendium/items-lazy").then(
+		(m) => m.loadAllItems() as Promise<CompendiumItem[]>,
 	);
 export const loadPaths = (): Promise<CompendiumPath[]> =>
 	import("@/data/compendium/paths").then((m) =>

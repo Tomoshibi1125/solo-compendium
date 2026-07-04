@@ -8,7 +8,8 @@ import { VitePWA } from "vite-plugin-pwa";
 import wasm from "vite-plugin-wasm";
 
 // Load .env for server-side use (GEMINI_API_KEY is not VITE_ prefixed)
-dotenvConfig();
+// quiet: suppress dotenv v17's promotional banner in every tool run.
+dotenvConfig({ quiet: true });
 
 /**
  * Vite dev middleware plugin that mimics the Vercel serverless function
@@ -429,8 +430,30 @@ export default defineConfig(({ mode: _mode }) => {
 			registerType: "autoUpdate",
 			workbox: {
 				maximumFileSizeToCacheInBytes: 15 * 1024 * 1024, // 15MB precache limit
-				globPatterns: ["**/*.{js,css,html,ico,png,svg,webmanifest}"],
-				globIgnores: ["**/generated/**"],
+				globPatterns: ["**/*.{js,css,html,ico,png,svg,webmanifest,woff2}"],
+				// Kept out of the precache manifest:
+				// - generated/**: runtime-cached below (generated-assets)
+				// - ui-art/**: precaching grabbed only the PNG <picture> fallbacks
+				//   (~5 MB) while browsers actually request the webp/avif variants;
+				//   the ui-art runtime route below caches what's really served.
+				// - the 3D/PDF stack: multi-MB chunks with their own load paths
+				//   (dice idle prefetch fills the assets-js runtime cache during any
+				//   online session; PDF export loads on demand). Compendium DATA
+				//   chunks (items parts included) stay precached on purpose — a
+				//   table companion must browse its full compendium offline.
+				globIgnores: [
+					"**/generated/**",
+					"ui-art/**",
+					"assets/Dice3DScene-*.js",
+					"assets/rapier-vendor-*.js",
+					"assets/three-vendor-*.js",
+					"assets/three-stdlib-vendor-*.js",
+					"assets/react-three-vendor-*.js",
+					"assets/postprocessing-vendor-*.js",
+					"assets/mediapipe-vendor-*.js",
+					"assets/media-vendor-*.js",
+					"assets/pdf-vendor-*.js",
+				],
 				runtimeCaching: [
 					{
 						urlPattern: /\.(?:wasm|glb|gltf|mp3|wav)$/i,
@@ -451,6 +474,32 @@ export default defineConfig(({ mode: _mode }) => {
 							expiration: {
 								maxEntries: 500,
 								maxAgeSeconds: 60 * 60 * 24 * 14, // 14 days
+							},
+						},
+					},
+					{
+						// Brand/hero art: <picture> serves webp/avif to modern
+						// browsers with PNG as fallback — cache whichever is fetched.
+						urlPattern: /\/ui-art\/.*\.(png|webp|avif|jpg|jpeg|svg)$/i,
+						handler: "CacheFirst",
+						options: {
+							cacheName: "ui-art",
+							expiration: {
+								maxEntries: 200,
+								maxAgeSeconds: 60 * 60 * 24 * 30, // 30 days
+							},
+						},
+					},
+					{
+						// Hashed build chunks excluded from precache above; immutable
+						// by name, so cache-first on first use keeps them offline.
+						urlPattern: /\/assets\/.*\.js$/i,
+						handler: "CacheFirst",
+						options: {
+							cacheName: "assets-js",
+							expiration: {
+								maxEntries: 60,
+								maxAgeSeconds: 60 * 60 * 24 * 30, // 30 days
 							},
 						},
 					},
@@ -534,8 +583,6 @@ export default defineConfig(({ mode: _mode }) => {
 		);
 	}
 
-	const normalizeId = (id: string) => id.replace(/\\/g, "/");
-
 	return {
 		server: {
 			host: "::",
@@ -568,102 +615,131 @@ export default defineConfig(({ mode: _mode }) => {
 			// Needed for wasm chunks that rely on top-level await.
 			target: "es2022",
 			cssCodeSplit: true,
-			// Enable code splitting for better mobile performance
+			// Vendor grouping via rolldown's native codeSplitting groups.
+			//
+			// The previous rollup-style `manualChunks(id)` function was emulated by
+			// rolldown with recursive dependency capture: each named group absorbed
+			// its matched modules' shared dependencies (react-dom landed inside the
+			// dice chunk, compendium helpers inside particles-vendor, ...), which
+			// made unrelated chunks statically import multi-MB vendor chunks and
+			// dragged ~10 MB of 3D/PDF/analytics code into the boot modulepreloads.
+			//
+			// codeSplitting groups with includeDependenciesRecursively:false assign
+			// ONLY the matched modules, so lazy-route vendors stay lazy. Group order
+			// decides ties (earlier wins), mirroring the old if-chain order.
 			rollupOptions: {
 				output: {
-					manualChunks(id) {
-						// Split vendor chunks for better caching while avoiding circular deps.
-						const normalizedId = normalizeId(id);
+					codeSplitting: {
+						includeDependenciesRecursively: false,
+						groups: [
+							// ── Core shared libraries first ──
+							{
+								name: "react-vendor",
+								test: /node_modules[\\/](react|react-dom|react-is|scheduler)[\\/]/,
+							},
+							{
+								name: "router-vendor",
+								test: /node_modules[\\/]react-router(-dom)?[\\/]/,
+							},
+							{ name: "query-vendor", test: /[\\/]@tanstack[\\/]/ },
+							{ name: "dnd-vendor", test: /node_modules[\\/]@dnd-kit[\\/]/ },
+							{ name: "validation-vendor", test: /node_modules[\\/]zod[\\/]/ },
+							{ name: "editor-vendor", test: /node_modules[\\/]quill[\\/]/ },
+							{ name: "date-vendor", test: /node_modules[\\/]date-fns[\\/]/ },
+							{
+								name: "icons-vendor",
+								test: /node_modules[\\/]lucide-react[\\/]/,
+							},
+							{
+								name: "sanitize-vendor",
+								test: /node_modules[\\/]dompurify[\\/]/,
+							},
+							{
+								name: "ui-vendor",
+								test: /[\\/]@radix-ui[\\/]|[\\/]@floating-ui[\\/]|node_modules[\\/](cmdk|vaul|aria-hidden|tslib)[\\/]|[\\/]react-remove-scroll|[\\/]react-dismissable-layer|[\\/]react-style-singleton|[\\/]use-callback-ref|[\\/]use-sidecar|[\\/]use-sync-external-store|[\\/]get-nonce[\\/]/,
+							},
+							{
+								name: "particles-vendor",
+								test: /node_modules[\\/]@tsparticles[\\/]/,
+							},
+							{
+								name: "pixi-vendor",
+								test: /node_modules[\\/](pixi\.js|pixi-filters)[\\/]|[\\/]@pixi[\\/]/,
+							},
+							{
+								name: "media-vendor",
+								test: /node_modules[\\/](howler|hls\.js)[\\/]/,
+							},
+							{
+								name: "motion-vendor",
+								test: /node_modules[\\/]framer-motion[\\/]/,
+							},
 
-						if (
-							normalizedId.includes("/src/components/dice/Dice3DScene") ||
-							normalizedId.includes("/src/components/dice/Dice3D") ||
-							normalizedId.includes("/src/components/dice/diceGeometry") ||
-							normalizedId.includes("/src/lib/dice/audio")
-						) {
-							return "dice-3d";
-						}
-						if (normalizedId.includes("node_modules")) {
-							// ── Core shared libraries MUST be checked first ──
-							// These are imported by almost everything (including dice/3D code).
-							// If isDiceDependency runs first it will incorrectly pull React,
-							// the router, Radix UI, etc. into a dice-3d-* chunk, causing a
-							// "Cannot access 'n' before initialization" TDZ crash at runtime.
-							if (
-								normalizedId.includes("/node_modules/react/") ||
-								normalizedId.includes("/node_modules/react-dom/") ||
-								normalizedId.includes("/node_modules/react-is/") ||
-								normalizedId.includes("/node_modules/scheduler/")
-							) {
-								return "react-vendor";
-							}
-							if (
-								normalizedId.includes("/node_modules/react-router/") ||
-								normalizedId.includes("/node_modules/react-router-dom/")
-							) {
-								return "router-vendor";
-							}
-							if (normalizedId.includes("/@tanstack/")) return "query-vendor";
-							if (normalizedId.includes("/node_modules/@dnd-kit/"))
-								return "dnd-vendor";
-							if (normalizedId.includes("/node_modules/zod/"))
-								return "validation-vendor";
-							if (normalizedId.includes("/node_modules/quill/"))
-								return "editor-vendor";
-							if (normalizedId.includes("/node_modules/date-fns/")) {
-								return "date-vendor";
-							}
-							if (normalizedId.includes("/node_modules/lucide-react/"))
-								return "icons-vendor";
-							if (normalizedId.includes("/node_modules/dompurify/"))
-								return "sanitize-vendor";
-							if (
-								normalizedId.includes("/@radix-ui/") ||
-								normalizedId.includes("/@floating-ui/") ||
-								normalizedId.includes("/node_modules/cmdk/") ||
-								normalizedId.includes("/node_modules/vaul/") ||
-								normalizedId.includes("/react-remove-scroll") ||
-								normalizedId.includes("/react-dismissable-layer") ||
-								normalizedId.includes("/aria-hidden") ||
-								normalizedId.includes("/react-style-singleton") ||
-								normalizedId.includes("/use-callback-ref") ||
-								normalizedId.includes("/use-sidecar") ||
-								normalizedId.includes("/use-sync-external-store") ||
-								normalizedId.includes("/get-nonce/") ||
-								normalizedId.includes("/tslib/")
-							)
-								return "ui-vendor";
-							if (normalizedId.includes("/node_modules/@tsparticles/"))
-								return "particles-vendor";
-							if (
-								normalizedId.includes("/node_modules/pixi.js/") ||
-								normalizedId.includes("/node_modules/pixi-filters/") ||
-								normalizedId.includes("/node_modules/@pixi/")
-							) {
-								return "pixi-vendor";
-							}
-							if (normalizedId.includes("/node_modules/howler/")) {
-								return "media-vendor";
-							}
-							if (normalizedId.includes("/node_modules/framer-motion/"))
-								return "motion-vendor";
+							// ── 3D vendors (all reached only via lazy dice/3D scenes) ──
+							{ name: "three-vendor", test: /node_modules[\\/]three[\\/]/ },
+							{
+								name: "three-stdlib-vendor",
+								test: /node_modules[\\/]three-stdlib[\\/]/,
+							},
+							{
+								name: "react-three-vendor",
+								test: /node_modules[\\/](@react-three|troika-three-text|troika-worker-utils|troika-three-utils|three-mesh-bvh|camera-controls|maath|detect-gpu|stats-gl|meshline|glsl-noise|suspend-react|its-fine)[\\/]/,
+							},
+							{
+								name: "postprocessing-vendor",
+								test: /node_modules[\\/](postprocessing|@monogrid)[\\/]/,
+							},
+							{
+								name: "mediapipe-vendor",
+								test: /node_modules[\\/]@mediapipe[\\/]/,
+							},
+							{
+								name: "rapier-vendor",
+								test: /node_modules[\\/]@dimforge[\\/]/,
+							},
 
-							// ── 3D vendors ──
-							if (normalizedId.includes("/node_modules/three/"))
-								return "three-vendor";
-							if (normalizedId.includes("/node_modules/three-stdlib/"))
-								return "three-stdlib-vendor";
-							if (normalizedId.includes("/node_modules/@react-three/"))
-								return "react-three-vendor";
-							if (normalizedId.includes("/node_modules/troika-"))
-								return "react-three-vendor";
-							if (normalizedId.includes("/node_modules/postprocessing/"))
-								return "postprocessing-vendor";
-							if (normalizedId.includes("/node_modules/@monogrid/gainmap-js/"))
-								return "postprocessing-vendor";
+							// ── Lazy-feature vendors (PDF export, analytics consent,
+							// login screen, markdown surfaces) ──
+							{
+								name: "pdf-vendor",
+								test: /node_modules[\\/](pdf-lib|@pdf-lib|pako)[\\/]/,
+							},
+							{
+								name: "analytics-vendor",
+								test: /node_modules[\\/]posthog-js[\\/]/,
+							},
+							{
+								name: "auth-ui-vendor",
+								test: /[\\/]@supabase[\\/]auth-ui-(react|shared)[\\/]|node_modules[\\/](yup|@stitches)[\\/]/,
+							},
+							{
+								// The whole react-markdown/unified subtree must live in ONE
+								// leaf chunk. Small helpers left off this list (style-to-object
+								// + inline-style-parser are CJS) otherwise scatter into whatever
+								// lazy app chunk imports them first; markdown-vendor then does a
+								// cross-chunk `__toESM(require())` against that app chunk, which
+								// has a back-edge to markdown-vendor — the circular init order
+								// leaves the CJS factory undefined ("Hr is not a function") and
+								// crashes every markdown surface (compendium detail, etc.).
+								name: "markdown-vendor",
+								test: /node_modules[\\/](react-markdown|unified|hastscript|vfile[^\\/]*|property-information|space-separated-tokens|comma-separated-tokens|trim-lines|devlop|style-to-js|style-to-object|inline-style-parser|html-url-attributes|bail|trough|is-plain-obj|extend|estree-util-is-identifier-name)[\\/]|node_modules[\\/](remark-|rehype-|micromark|mdast-|hast-|unist-|character-entities|decode-named-character-reference)|node_modules[\\/]@ungap[\\/]structured-clone[\\/]/,
+							},
+							{
+								name: "forms-vendor",
+								test: /node_modules[\\/](react-hook-form|@hookform)[\\/]/,
+							},
+							// Supabase client core: needed at boot, but versioned
+							// independently of app code — its own chunk caches better.
+							{ name: "supabase-vendor", test: /[\\/]@supabase[\\/]/ },
 
-							return "vendor";
-						}
+							// NO node_modules catch-all on purpose: a catch-all "vendor"
+							// chunk sits in the boot graph (it holds boot libs like the
+							// toaster), so any lazy-only lib that fell into it dragged its
+							// vendor deps (three, auth-ui, react-hook-form) into the boot
+							// modulepreloads. Unmatched modules follow natural splitting:
+							// boot libs join shared boot chunks, lazy libs stay with their
+							// lazy importers.
+						],
 					},
 				},
 			},

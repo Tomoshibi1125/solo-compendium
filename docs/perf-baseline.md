@@ -43,7 +43,51 @@ Referenced and kept: `/generated/compendium/**` (2,260 refs), `/generated/maps/M
 - `GlobalCharacterHUD` runs ~8 character data hooks + derived-stats on every non-sheet page.
 - Fonts: Google Fonts CSS (render-blocking third-party chain) + 1 local preload.
 
-## After targets (fill in at program close)
+## After targets — CLOSED 2026-07-04
 
-- `public/` < 500 MB; precache < 15 MB; boot network without data chunks (idle-deferred); items data split per part; vendor chunk audited.
-- Boot waterfall + Lighthouse mobile run captured via preview/final verification.
+| Target | Result |
+| --- | --- |
+| `public/` < 500 MB | **367 MB** ✓ |
+| PWA precache < 15 MB | **13.8 MB** (255 entries; baseline 25.6 MB) ✓ — compendium data incl. all 12 items parts precached for offline; 3D/PDF/media vendors + `ui-art/**` + `generated/**` excluded |
+| Boot without data chunks | ✓ idle-deferred; boot modulepreload carries zero data chunks (items/anomalies/locations/etc. load post-boot) |
+| Items data split per part | ✓ `items-lazy.ts` assembles parts 1–9 via dynamic imports; each part is its own ~90–150 KB chunk (was one 3.2 MB `items-index`); `items-gap-fill` (2.7 MB source data) is its own on-demand chunk |
+| Vendor chunk audited | ✓ boot vendor 1.4 MB → **~128 KB residual**; pdf-lib/posthog/auth-ui/mediapipe/markdown/forms/supabase split into lazy or cache-stable chunks |
+
+### Chunking rework (2026-07-04, root-cause fix)
+
+Under rolldown-vite the rollup-style `manualChunks(id)` function was emulated
+with **recursive dependency capture**: named groups absorbed their matched
+modules' shared deps (react-dom landed inside the 4.9 MB `dice-3d` chunk,
+compendium helpers inside `particles-vendor`), so unrelated chunks statically
+imported multi-MB vendors and index.html **modulepreloaded ~7 MB+ at boot**.
+Replaced with rolldown-native `codeSplitting.groups`
+(`includeDependenciesRecursively: false`) and **no node_modules catch-all**
+(a catch-all vendor chunk sits in the boot graph and drags lazy-only libs'
+deps into boot). See vite.config.ts for the group list and rationale.
+
+**Boot modulepreload after: 30 chunks, ~1.16 MB minified total** — zero
+3D/PDF/analytics/markdown/auth-UI vendors in the boot graph (verified against
+`dist/index.html`).
+
+**markdown-vendor circular-init fix (2026-07-04).** `codeSplitting.groups`
+with `includeDependenciesRecursively: false` only assigns *matched* modules, so
+react-markdown/unified helpers left off the `markdown-vendor` regex
+(`style-to-object` + `inline-style-parser` are CJS, plus `style-to-js`,
+`html-url-attributes`, `bail`, `trough`, `is-plain-obj`, `extend`,
+`estree-util-is-identifier-name`, `@ungap/structured-clone`) scattered into
+whichever lazy app chunk imported them first. `markdown-vendor` then did a
+cross-chunk `__toESM(require())` against that app chunk — which has a back-edge
+to `markdown-vendor` — so the circular eval order left the CJS factory
+undefined (`TypeError: Hr is not a function`) and crashed **every** markdown
+surface (compendium detail, players-book) in the production build. Latent since
+the chunking rework; only observable once the build could run again. Fix: the
+whole subtree is now pinned to `markdown-vendor` (boot size unchanged).
+
+### Offline art fix (2026-07-04)
+
+Precache previously shipped ~5 MB of `/ui-art/*.png` `<picture>` fallbacks
+while the webp/avif variants browsers actually request had no cache route —
+offline art was broken. Now: `ui-art/**` excluded from precache + a
+`CacheFirst` runtime route for `/ui-art/*.(png|webp|avif|jpg|svg)`, plus a
+`CacheFirst` route for hashed `/assets/*.js` so precache-excluded lazy chunks
+still work offline after first use.

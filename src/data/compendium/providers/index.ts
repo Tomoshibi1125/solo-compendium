@@ -28,7 +28,7 @@ type DataLoader<T> = () => Promise<T[]>;
 
 const dataLoaders = {
 	anomalies: () => import("../anomalies").then((module) => module.anomalies),
-	items: () => import("../items-index").then((module) => module.allItems),
+	items: () => import("../items-lazy").then((module) => module.loadAllItems()),
 	jobs: () => import("../jobs").then((module) => module.jobs),
 	spells: () => import("../spells").then((module) => module.spells),
 	locations: () => import("../locations").then((module) => module.locations),

@@ -1,8 +1,11 @@
 /**
  * Service Worker Update Prompt
  *
- * Prompts users when a new version of the app is available.
- * Uses the Workbox window library to detect service worker updates.
+ * Prompts users when a new build is stuck in the "waiting" state.
+ * Observes the single registration made in lib/pwa.ts (production only) —
+ * this component must NOT register /sw.js itself: dev servers answer that
+ * URL with index.html (console MIME error) and double registration blurs
+ * the documented single-registration-point contract.
  */
 
 import { RefreshCw, X } from "lucide-react";
@@ -25,74 +28,63 @@ export function ServiceWorkerUpdatePrompt() {
 	);
 
 	useEffect(() => {
+		if (!import.meta.env.PROD) return;
 		if (typeof window === "undefined" || !("serviceWorker" in navigator)) {
 			return;
 		}
 
 		let active = true;
 		let updateInterval: ReturnType<typeof setInterval> | null = null;
-		let removeWaitingListener: (() => void) | null = null;
+		let removeUpdateFoundListener: (() => void) | null = null;
 
-		// Import workbox-window dynamically
-		void import("workbox-window").then(({ Workbox }) => {
+		const surfaceWaiting = (registration: ServiceWorkerRegistration) => {
 			if (!active) return;
+			// Only an UPDATE has a controller; first installs activate silently.
+			if (registration.waiting && navigator.serviceWorker.controller) {
+				setWaitingWorker(registration.waiting);
+				setUpdateAvailable(true);
+			}
+		};
 
-			const wb = new Workbox("/sw.js");
-
-			// Listen for updates
-			const handleWaiting = () => {
+		// lib/pwa.ts owns registration; attach once it is active.
+		navigator.serviceWorker.ready
+			.then((registration) => {
 				if (!active) return;
 
-				setUpdateAvailable(true);
-				// Store the waiting service worker
-				if (navigator.serviceWorker.controller) {
-					navigator.serviceWorker
-						.getRegistration("/sw.js")
-						.then((registration) => {
-							if (!active) return;
-							if (registration?.waiting) {
-								setWaitingWorker(registration.waiting);
-							}
-						});
-				}
-			};
+				surfaceWaiting(registration);
 
-			wb.addEventListener("waiting", handleWaiting);
-			removeWaitingListener = () =>
-				wb.removeEventListener("waiting", handleWaiting);
+				const handleUpdateFound = () => {
+					const installing = registration.installing;
+					if (!installing) return;
+					installing.addEventListener("statechange", () => {
+						if (installing.state === "installed") {
+							surfaceWaiting(registration);
+						}
+					});
+				};
+				registration.addEventListener("updatefound", handleUpdateFound);
+				removeUpdateFoundListener = () =>
+					registration.removeEventListener("updatefound", handleUpdateFound);
 
-			// Register the service worker
-			wb.register()
-				.then(() => {
-					if (!active) return;
-
-					if (import.meta.env.DEV) {
-						logger.debug("[SW] Service worker registered");
-					}
-
-					// Check for updates immediately
-					wb.update();
-
-					// Check for updates periodically (every hour)
-					updateInterval = setInterval(
-						() => {
-							void wb.update();
-						},
-						60 * 60 * 1000,
-					);
-				})
-				.catch((error) => {
-					logger.warn("[SW] Service worker registration failed:", error);
-				});
-		});
+				// Check for updates periodically (every hour)
+				updateInterval = setInterval(
+					() => {
+						void registration.update();
+					},
+					60 * 60 * 1000,
+				);
+			})
+			.catch((error) => {
+				logger.warn("[SW] Waiting for service worker failed:", error);
+			});
 
 		return () => {
 			active = false;
 			if (updateInterval) {
 				clearInterval(updateInterval);
 			}
-			if (removeWaitingListener) {
-				removeWaitingListener();
+			if (removeUpdateFoundListener) {
+				removeUpdateFoundListener();
 			}
 		};
 	}, []);
