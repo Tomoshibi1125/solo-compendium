@@ -142,8 +142,15 @@ test.describe
 			await waitForSheet(playerPage);
 			await openResourcesSubTab(playerPage);
 
+			// Poll: the slots panel briefly renders seeded/max values before the
+			// persisted row hydrates (async rune-bonus computation), so a direct
+			// read races the UI even though the localStorage write is synchronous.
+			await expect
+				.poll(async () => (await readSlotCounts(playerPage)).current, {
+					timeout: 10_000,
+				})
+				.toBe(initial.current - 1);
 			const reloaded = await readSlotCounts(playerPage);
-			expect(reloaded.current).toBe(initial.current - 1);
 			expect(reloaded.max).toBe(initial.max);
 		});
 
