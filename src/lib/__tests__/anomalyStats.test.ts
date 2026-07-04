@@ -14,10 +14,11 @@ const asAnomaly = (shape: Record<string, unknown>): CompendiumAnomaly =>
 	shape as unknown as CompendiumAnomaly;
 
 describe("resolveAnomalyStats", () => {
-	it("reads provider-TRANSFORMED fields (the F9 regression path)", () => {
+	it("reads provider-TRANSFORMED fields (the F9/F11 regression path)", () => {
 		// The exact shape `listCanonicalEntries("anomalies")` hands the builder:
-		// numbers at armor_class / hit_points_average / gate_rank / cr, and NO
-		// raw ac / hp / rank / stats.challenge_rating.
+		// numbers at armor_class / hit_points_average / gate_rank / cr, the type
+		// at creature_type, and ability scores + saving_throws at the TOP level —
+		// and NO raw ac / hp / rank / type / stats.*.
 		const stats = resolveAnomalyStats(
 			asAnomaly({
 				id: "a1",
@@ -26,6 +27,14 @@ describe("resolveAnomalyStats", () => {
 				hit_points_average: 120,
 				armor_class: 16,
 				cr: "8",
+				creature_type: "Dragon",
+				str: 26,
+				agi: 20,
+				vit: 26,
+				int: 14,
+				sense: 14,
+				pre: 16,
+				saving_throws: { Strength: 13, Vitality: 13 },
 			}),
 		);
 
@@ -34,12 +43,24 @@ describe("resolveAnomalyStats", () => {
 		expect(stats.ac).toBe(16);
 		expect(stats.cr).toBe("8");
 		expect(stats.xp).toBe(3900); // getCRXP("8")
+		expect(stats.creatureType).toBe("Dragon");
+		expect(stats.abilities).toEqual({
+			str: 26,
+			agi: 20,
+			vit: 26,
+			int: 14,
+			sense: 14,
+			pre: 16,
+		});
+		expect(stats.savingThrows).toEqual({ Strength: 13, Vitality: 13 });
 
 		// Explicitly assert it did NOT collapse to the raw-only defaults.
 		expect(stats.hp).not.toBe(1);
 		expect(stats.rank).not.toBeNull();
 		expect(stats.cr).not.toBe("1/2");
 		expect(stats.xp).not.toBe(100);
+		expect(stats.creatureType).not.toBe("Unknown");
+		expect(stats.abilities.str).not.toBe(10);
 	});
 
 	it("still resolves the raw authored shape via fallbacks", () => {
@@ -47,10 +68,15 @@ describe("resolveAnomalyStats", () => {
 			asAnomaly({
 				id: "a2",
 				name: "Lesser Wisp",
+				type: "Aberration",
 				rank: "B",
 				hp: 45,
 				ac: 14,
-				stats: { challenge_rating: 4 },
+				stats: {
+					challenge_rating: 4,
+					ability_scores: { strength: 12, agility: 18 },
+					saving_throws: { Agility: 5 },
+				},
 			}),
 		);
 
@@ -59,6 +85,11 @@ describe("resolveAnomalyStats", () => {
 		expect(stats.ac).toBe(14);
 		expect(stats.cr).toBe("4");
 		expect(stats.xp).toBe(1100); // getCRXP("4")
+		expect(stats.creatureType).toBe("Aberration");
+		expect(stats.abilities.str).toBe(12);
+		expect(stats.abilities.agi).toBe(18);
+		expect(stats.abilities.vit).toBe(10); // absent → default
+		expect(stats.savingThrows).toEqual({ Agility: 5 });
 	});
 
 	it("prefers a numeric challenge_rating and labels fractional CRs", () => {
@@ -100,5 +131,15 @@ describe("resolveAnomalyStats", () => {
 		expect(stats.rank).toBeNull();
 		expect(stats.cr).toBe("1/2"); // RANK_CR_MAP["D"] fallback
 		expect(stats.xp).toBe(100);
+		expect(stats.creatureType).toBe("Unknown");
+		expect(stats.abilities).toEqual({
+			str: 10,
+			agi: 10,
+			vit: 10,
+			int: 10,
+			sense: 10,
+			pre: 10,
+		});
+		expect(stats.savingThrows).toBeNull();
 	});
 });

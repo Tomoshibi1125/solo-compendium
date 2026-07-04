@@ -96,9 +96,6 @@ const INITIATIVE_STORAGE_KEY = "solo-compendium.Warden-tools.initiative.v1";
 
 // --- Mappers ---
 
-const toNumber = (value: number | undefined, fallback: number) =>
-	Number.isFinite(value) ? (value as number) : fallback;
-
 const toStringArray = (value: string | string[] | null | undefined) => {
 	if (Array.isArray(value))
 		return value.filter((item) => typeof item === "string");
@@ -115,7 +112,6 @@ const mapStaticAnomaly = (Anomaly: CompendiumAnomaly): Anomaly => {
 	// `listCanonicalEntries("anomalies")` returns provider-TRANSFORMED entries,
 	// so stat reconciliation (raw authored vs. transformed shape) lives in the
 	// pure, unit-tested `resolveAnomalyStats` helper. See its docblock for why.
-	const abilities = Anomaly.stats?.ability_scores ?? {};
 	const stats = resolveAnomalyStats(Anomaly);
 
 	return {
@@ -132,19 +128,19 @@ const mapStaticAnomaly = (Anomaly: CompendiumAnomaly): Anomaly => {
 		xp: stats.xp,
 		gate_rank: stats.rank,
 		is_boss: stats.rank === "S" || stats.rank === "A",
-		creature_type: Anomaly.type || "Unknown",
+		creature_type: stats.creatureType,
 		armor_class: stats.ac,
 		hit_points_average: stats.hp,
 		hit_points_formula: "1d8",
 		size: "Medium",
-		str: toNumber(abilities.strength, 10),
-		agi: toNumber(abilities.agility, 10),
-		vit: toNumber(abilities.vitality, 10),
-		int: toNumber(abilities.intelligence, 10),
-		sense: toNumber(abilities.sense, 10),
-		pre: toNumber(abilities.presence, 10),
+		str: stats.abilities.str,
+		agi: stats.abilities.agi,
+		vit: stats.abilities.vit,
+		int: stats.abilities.int,
+		sense: stats.abilities.sense,
+		pre: stats.abilities.pre,
 		skills: null,
-		saving_throws: Anomaly.stats?.saving_throws ?? null,
+		saving_throws: stats.savingThrows,
 		senses: Anomaly.senses ?? null,
 		languages: toStringArray(Anomaly.languages),
 		damage_resistances: toStringArray(Anomaly.damage_resistances),
@@ -164,7 +160,10 @@ const mapStaticAnomaly = (Anomaly: CompendiumAnomaly): Anomaly => {
 		speed_fly: null,
 		speed_swim: null,
 		speed_walk: null,
-		tags: [Anomaly.type, stats.rank].filter(Boolean) as string[],
+		tags: [
+			stats.creatureType === "Unknown" ? null : stats.creatureType,
+			stats.rank,
+		].filter(Boolean) as string[],
 		theme_tags: null,
 	} as unknown as Anomaly;
 };

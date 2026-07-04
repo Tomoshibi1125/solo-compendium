@@ -208,6 +208,16 @@ found and fixed (F9–F10):**
 |---|---|---|---|
 | **F9** | Every canonical anomaly added to an encounter showed HP 1 / rank UNKNOWN / CR 1/2 / XP 100, so the CR-budget difficulty verdict was meaningless | `EncounterBuilder.mapStaticAnomaly` read the **raw authored** shape (`ac`/`hp`/`rank`/`stats.challenge_rating`), but `listCanonicalEntries("anomalies")` returns provider-**transformed** entries (`armor_class`/`hit_points_average`/`gate_rank`/`cr`) → every read missed and fell back to the collapse defaults. Extracted a pure `resolveAnomalyStats` (`src/lib/anomalyStats.ts`) that reads transformed fields first with raw fallbacks; `mapStaticAnomaly` now also routes `gate_rank`/`is_boss`/`tags` through it (they were still reading raw `Anomaly.rank`) | `anomalyStats.test.ts` (negative-probed: raw-only reads → transformed-shape case RED) |
 | **F10** | Adding combatants from the Encounter Builder handoff (or opening a pre-refactor save) crashed the Initiative Tracker on render | The roster render reads `combatant.advancedConditions` unguarded (`.length`, `.map`), but the handoff write and legacy saves omit it → `undefined.length`. Extracted a reusable `normalizeCombatConditions` (`src/lib/conditionSystem.ts`) that backfills `advancedConditions` from the legacy string `conditions` (defending both against non-array junk); the tracker's hydration `normalizeStoredCombatant` + the handoff write both go through it | `conditionSystem.test.ts` (negative-probed: drop backfill → crash-path case RED) |
+| **F11** | Every anomaly's search-result badge read creature type "Unknown", and the mapped stat block silently defaulted all six ability scores to 10 with null saving throws (found while live-verifying F9) | Same raw-vs-transformed root cause: the transformed shape carries `creature_type` at top level and ability scores + `saving_throws` at the TOP level (`str`/`agi`/…), but `mapStaticAnomaly` read raw `Anomaly.type` and `Anomaly.stats?.ability_scores`/`stats.saving_throws` (all absent). Extended `resolveAnomalyStats` to also reconcile `creatureType`/`abilities`/`savingThrows` (transformed-first, raw fallback); `mapStaticAnomaly` + `tags` now route through it | `anomalyStats.test.ts` (negative-probed: raw-only type/ability reads → transformed case RED) |
 
-_Remaining Area 2 sweep (encounter CR budget live, campaign notes/sessions, all 12
-generators for RA-canon output) recorded below as it proceeds._
+**Verified live (guest, dev server):** anomaly search cards now show varied CRs
+(13/14/15) and real creature types (Dragon/Anomaly/Humanoid/Beast/Elemental)
+instead of the collapsed "CR 1/2"/"Unknown"; a single CR-13 anomaly vs. an L1
+party correctly reads **Projected Difficulty: deadly** (only possible with the
+restored XP 10000, was XP 100). The "Commence Combat Sync" handoff loads the
+Initiative Tracker with correct **AC 20 / HP 255** and no crash; injecting a
+legacy combatant with no `advancedConditions` also renders (condition backfilled)
+with zero console errors — F10 crash guard confirmed.
+
+_Remaining Area 2 sweep (campaign notes/sessions, all 12 generators for RA-canon
+output) recorded below as it proceeds._
