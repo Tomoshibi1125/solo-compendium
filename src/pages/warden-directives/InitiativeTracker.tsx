@@ -62,6 +62,7 @@ import {
 	type ConditionEntry,
 	getActiveConditionNames,
 	migrateLegacyConditions,
+	normalizeCombatConditions,
 	removeCondition as removeAdvancedCondition,
 } from "@/lib/conditionSystem";
 import { rollMonsterInitiative } from "@/lib/initiative";
@@ -241,6 +242,17 @@ const mapCampaignCombatantToTracker = (
 		dexMod: toNumber(stats.dex_mod ?? stats.dexMod),
 	};
 };
+
+/**
+ * Normalize combatants hydrated from persisted tool-state. The reusable,
+ * unit-tested `normalizeCombatConditions` backfills the `advancedConditions`
+ * the roster render reads unguarded (see its docblock for why this is a crash
+ * guard, not a nicety).
+ */
+const normalizeStoredCombatant = (combatant: Combatant): Combatant => ({
+	...combatant,
+	...normalizeCombatConditions(combatant),
+});
 
 const STORAGE_KEY = "solo-compendium.Warden-tools.initiative.v1";
 
@@ -465,7 +477,7 @@ const InitiativeTracker = () => {
 		if (isSyncingCombatSession) return;
 		if (isLoading || hydratedContextRef.current === persistenceContext) return;
 		if (Array.isArray(storedState.combatants)) {
-			setCombatants(storedState.combatants);
+			setCombatants(storedState.combatants.map(normalizeStoredCombatant));
 		}
 		if (typeof storedState.currentTurn === "number") {
 			setCurrentTurn(storedState.currentTurn);

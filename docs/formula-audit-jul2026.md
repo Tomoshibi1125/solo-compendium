@@ -198,3 +198,16 @@ unlock (guests can't receive them by design) — fusion formula layer remains
 unit-verified ([[fusion-balance-rules]]). Cantrip scaling/crit/death-saves are
 unit-locked; their card bindings (`scaleCantripDamage` in `useCombatActions`)
 ride the same now-verified action pipeline.
+
+### Area 2 — Warden & campaign (guest mode, dev server)
+
+Drove the encounter builder → initiative tracker handoff. **Two real runtime bugs
+found and fixed (F9–F10):**
+
+| # | Bug (user-visible symptom) | Root cause → fix | Guard |
+|---|---|---|---|
+| **F9** | Every canonical anomaly added to an encounter showed HP 1 / rank UNKNOWN / CR 1/2 / XP 100, so the CR-budget difficulty verdict was meaningless | `EncounterBuilder.mapStaticAnomaly` read the **raw authored** shape (`ac`/`hp`/`rank`/`stats.challenge_rating`), but `listCanonicalEntries("anomalies")` returns provider-**transformed** entries (`armor_class`/`hit_points_average`/`gate_rank`/`cr`) → every read missed and fell back to the collapse defaults. Extracted a pure `resolveAnomalyStats` (`src/lib/anomalyStats.ts`) that reads transformed fields first with raw fallbacks; `mapStaticAnomaly` now also routes `gate_rank`/`is_boss`/`tags` through it (they were still reading raw `Anomaly.rank`) | `anomalyStats.test.ts` (negative-probed: raw-only reads → transformed-shape case RED) |
+| **F10** | Adding combatants from the Encounter Builder handoff (or opening a pre-refactor save) crashed the Initiative Tracker on render | The roster render reads `combatant.advancedConditions` unguarded (`.length`, `.map`), but the handoff write and legacy saves omit it → `undefined.length`. Extracted a reusable `normalizeCombatConditions` (`src/lib/conditionSystem.ts`) that backfills `advancedConditions` from the legacy string `conditions` (defending both against non-array junk); the tracker's hydration `normalizeStoredCombatant` + the handoff write both go through it | `conditionSystem.test.ts` (negative-probed: drop backfill → crash-path case RED) |
+
+_Remaining Area 2 sweep (encounter CR budget live, campaign notes/sessions, all 12
+generators for RA-canon output) recorded below as it proceeds._

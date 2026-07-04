@@ -146,6 +146,34 @@ export function migrateLegacyConditions(
 		isActive: true,
 	}));
 }
+
+export interface NormalizedCombatConditions {
+	conditions: string[];
+	advancedConditions: ConditionEntry[];
+}
+
+/**
+ * Backfill a combatant's condition pair when hydrating from persisted or
+ * external state. Writers such as the Encounter Builder → Initiative handoff
+ * and saves that predate the advanced-conditions refactor may omit
+ * `advancedConditions` — which the initiative roster render reads unguarded, so
+ * a missing value crashes the whole tracker. This derives `advancedConditions`
+ * from the legacy string `conditions` (and defends both fields against
+ * non-array junk) so hydration is always safe.
+ */
+export function normalizeCombatConditions(source: {
+	conditions?: unknown;
+	advancedConditions?: unknown;
+}): NormalizedCombatConditions {
+	const conditions = Array.isArray(source.conditions)
+		? source.conditions.filter((c): c is string => typeof c === "string")
+		: [];
+	const advancedConditions = Array.isArray(source.advancedConditions)
+		? (source.advancedConditions as ConditionEntry[])
+		: migrateLegacyConditions(conditions);
+	return { conditions, advancedConditions };
+}
+
 /**
  * Clear conditions on Long Rest
  * Following existing "Fresh Start" logic — clears all conditions.

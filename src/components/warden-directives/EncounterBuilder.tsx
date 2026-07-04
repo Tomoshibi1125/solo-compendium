@@ -32,17 +32,16 @@ import {
 	writeLocalToolState,
 } from "@/hooks/useToolState";
 import type { Database } from "@/integrations/supabase/types";
+import { resolveAnomalyStats } from "@/lib/anomalyStats";
 import { listCanonicalEntries } from "@/lib/canonicalCompendium";
 import { getRandomAnomaly } from "@/lib/compendiumAutopopulate";
 import { calculateDifficulty, calculateXP } from "@/lib/encounterMath";
-import { getCRXP } from "@/lib/experience";
 import {
 	type HistoryEntry,
 	pushGeneration,
 	removeGeneration,
 	togglePin,
 } from "@/lib/generationHistory";
-import { numericCrToLabel } from "@/lib/monster5eTable";
 import { downloadJson, downloadMarkdown } from "@/lib/toolExport";
 import { cn } from "@/lib/utils";
 import { normalizeRegentSearch } from "@/lib/vernacular";
@@ -87,21 +86,13 @@ interface EncounterToolState {
 	savedAt?: string;
 }
 
-/** Ranks offered for "Rift Optimization" random injection (keys of RANK_CR_MAP). */
+/** Ranks offered for "Rift Optimization" random injection. */
 const RANK_OPTIONS = ["D", "C", "B", "A", "S"] as const;
 type OptimizationRank = (typeof RANK_OPTIONS)[number];
 
 const ENCOUNTER_STORAGE_KEY =
 	"solo-compendium.Warden-tools.encounter-builder.v1";
 const INITIATIVE_STORAGE_KEY = "solo-compendium.Warden-tools.initiative.v1";
-
-const RANK_CR_MAP: Record<string, string> = {
-	D: "1/2",
-	C: "1",
-	B: "4",
-	A: "8",
-	S: "15",
-};
 
 // --- Mappers ---
 
@@ -121,16 +112,11 @@ const toStringArray = (value: string | string[] | null | undefined) => {
 };
 
 const mapStaticAnomaly = (Anomaly: CompendiumAnomaly): Anomaly => {
+	// `listCanonicalEntries("anomalies")` returns provider-TRANSFORMED entries,
+	// so stat reconciliation (raw authored vs. transformed shape) lives in the
+	// pure, unit-tested `resolveAnomalyStats` helper. See its docblock for why.
 	const abilities = Anomaly.stats?.ability_scores ?? {};
-	const crValue =
-		typeof Anomaly.stats?.challenge_rating === "number"
-			? numericCrToLabel(Anomaly.stats.challenge_rating)
-			: RANK_CR_MAP[Anomaly.rank || "D"] || "1";
-	const hitPoints = toNumber(
-		Anomaly.hp ??
-			((Anomaly as unknown as Record<string, unknown>).hit_points as number),
-		1,
-	);
+	const stats = resolveAnomalyStats(Anomaly);
 
 	return {
 		id: Anomaly.id,
@@ -142,17 +128,13 @@ const mapStaticAnomaly = (Anomaly: CompendiumAnomaly): Anomaly => {
 		image_url: Anomaly.image || Anomaly.image_url || null,
 		mechanics: null,
 		created_at: new Date().toISOString(),
-		cr: crValue,
-		xp: getCRXP(crValue),
-		gate_rank: Anomaly.rank || null,
-		is_boss: Anomaly.rank === "S" || Anomaly.rank === "A",
+		cr: stats.cr,
+		xp: stats.xp,
+		gate_rank: stats.rank,
+		is_boss: stats.rank === "S" || stats.rank === "A",
 		creature_type: Anomaly.type || "Unknown",
-		armor_class: toNumber(
-			Anomaly.ac ??
-				((Anomaly as unknown as Record<string, unknown>).armor_class as number),
-			10,
-		),
-		hit_points_average: hitPoints,
+		armor_class: stats.ac,
+		hit_points_average: stats.hp,
 		hit_points_formula: "1d8",
 		size: "Medium",
 		str: toNumber(abilities.strength, 10),
@@ -182,7 +164,7 @@ const mapStaticAnomaly = (Anomaly: CompendiumAnomaly): Anomaly => {
 		speed_fly: null,
 		speed_swim: null,
 		speed_walk: null,
-		tags: [Anomaly.type, Anomaly.rank].filter(Boolean) as string[],
+		tags: [Anomaly.type, stats.rank].filter(Boolean) as string[],
 		theme_tags: null,
 	} as unknown as Anomaly;
 };
@@ -540,6 +522,9 @@ export function EncounterBuilder({
 				maxHp: em.Anomaly.hit_points_average || undefined,
 				ac: em.Anomaly.armor_class || undefined,
 				conditions: [],
+				// The tracker's roster render requires this array on every
+				// combatant (its hydration also backfills, but write it right).
+				advancedConditions: [],
 				isHunter: false,
 			}));
 		});
