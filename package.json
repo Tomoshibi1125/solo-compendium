@@ -178,9 +178,6 @@
 		],
 		"ignoreExportsUsedInFile": true,
 		"ignoreDependencies": [
-			"tailwindcss",
-			"tailwindcss-animate",
-			"@tailwindcss/typography",
 			"@radix-ui/react-slider"
 		],
 		"project": [

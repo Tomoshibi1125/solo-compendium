@@ -2529,60 +2529,10 @@
 }
 
 /* ========================================
-   GLOBAL MOBILE DIALOG ENHANCEMENTS
-   ======================================== */
-
-@media (max-width: 640px) {
-	/* Full-width dialogs on mobile */
-	[role="dialog"] > div,
-	[data-radix-popper-content-wrapper] {
-		max-width: calc(100vw - 1rem);
-		width: calc(100vw - 1rem);
-		max-height: 85vh;
-		overflow-y: auto;
-	}
-
-	/* Dialog footer buttons stack vertically */
-	[role="dialog"] footer,
-	.dialog-footer {
-		flex-direction: column;
-		gap: 0.5rem;
-	}
-
-	[role="dialog"] footer button,
-	.dialog-footer button {
-		width: 100%;
-		min-height: 44px;
-	}
-}
-
-/* ========================================
-   GLOBAL MOBILE FORM ENHANCEMENTS
-   ======================================== */
-
-@media (max-width: 640px) {
-	/* Prevent iOS zoom on inputs (must be >=16px) */
-	input[type="text"],
-	input[type="number"],
-	input[type="email"],
-	input[type="password"],
-	input[type="search"],
-	input[type="url"],
-	input[type="tel"],
-	textarea,
-	select {
-		font-size: 1rem;
-	}
-
-	/* Larger select triggers for touch */
-	[role="combobox"],
-	[data-radix-select-trigger] {
-		min-height: 44px;
-	}
-}
-
-/* ========================================
    GLOBAL TOUCH TARGET ENFORCEMENT
+   (kept before the dialog/form blocks: these generic selectors are the
+   lowest-specificity layer, so later blocks may only match with equal or
+   higher specificity — ascending order keeps the cascade predictable.)
    ======================================== */
 
 @media (pointer: coarse) {
@@ -2624,6 +2574,59 @@
 		min-height: 44px;
 		padding-top: 0.5rem;
 		padding-bottom: 0.5rem;
+	}
+}
+
+/* ========================================
+   GLOBAL MOBILE DIALOG ENHANCEMENTS
+   ======================================== */
+
+@media (max-width: 640px) {
+	/* Full-width dialogs on mobile */
+	[role="dialog"] > div,
+	[data-radix-popper-content-wrapper] {
+		max-width: calc(100vw - 1rem);
+		width: calc(100vw - 1rem);
+		max-height: 85vh;
+		overflow-y: auto;
+	}
+
+	/* Dialog footer buttons stack vertically */
+	[role="dialog"] footer,
+	.dialog-footer {
+		flex-direction: column;
+		gap: 0.5rem;
+	}
+
+	.dialog-footer button,
+	[role="dialog"] footer button {
+		width: 100%;
+		min-height: 44px;
+	}
+}
+
+/* ========================================
+   GLOBAL MOBILE FORM ENHANCEMENTS
+   ======================================== */
+
+@media (max-width: 640px) {
+	/* Prevent iOS zoom on inputs (must be >=16px) */
+	input[type="text"],
+	input[type="number"],
+	input[type="email"],
+	input[type="password"],
+	input[type="search"],
+	input[type="url"],
+	input[type="tel"],
+	textarea,
+	select {
+		font-size: 1rem;
+	}
+
+	/* Larger select triggers for touch */
+	[role="combobox"],
+	[data-radix-select-trigger] {
+		min-height: 44px;
 	}
 }
 

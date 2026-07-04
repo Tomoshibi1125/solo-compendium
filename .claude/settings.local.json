@@ -200,7 +200,28 @@
       "Bash(git -C /c/Users/jjcal/Documents/solo-compendium log --oneline -3)",
       "Bash(git -C /c/Users/jjcal/Documents/solo-compendium diff --stat .claude/settings.local.json)",
       "Bash(awk '{printf \"%.1fMB %s\\\\n\", $5/1048576, $NF}')",
-      "Bash(awk '{printf \"%.2fMB %s\\\\n\", $5/1048576, $NF}')"
+      "Bash(awk '{printf \"%.2fMB %s\\\\n\", $5/1048576, $NF}')",
+      "Bash(xargs -I{} du -h {})",
+      "Bash(node -e \"const fs=require\\('fs'\\);const m=fs.readFileSync\\('dist/sw.js','utf8'\\);const match=m.match\\(/precacheAndRoute\\\\\\(\\\\[/\\);console.log\\('sw.js size:',\\(fs.statSync\\('dist/sw.js'\\).size/1024\\).toFixed\\(0\\)+'KB'\\)\")",
+      "Bash(node -e \"const fs=require\\('fs'\\);const files=fs.readdirSync\\('dist/assets'\\).filter\\(f=>f.includes\\('workbox'\\)||f.startsWith\\('sw'\\)\\);console.log\\(files\\)\")",
+      "Bash(npm audit *)",
+      "Bash(npm outdated *)",
+      "Bash(PW_HEADLESS=1 npx playwright test)",
+      "Bash(timeout 420 tail -f \"C:\\\\Users\\\\jjcal\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\C--Users-jjcal-Documents-solo-compendium\\\\55299d9e-ac50-47ba-a083-1879f3570906\\\\tasks\\\\b1y1q3zi0.output\")",
+      "PowerShell(npm outdated)",
+      "PowerShell(npm audit --audit-level=low)",
+      "PowerShell(npx knip; echo \"KNIP_EXIT=$LASTEXITCODE\")",
+      "PowerShell(npx vitest run --reporter=dot 2>$null)",
+      "PowerShell(npm view @vitejs/plugin-react version peerDependencies dependencies)",
+      "PowerShell(npm view @vitejs/plugin-react-oxc version peerDependencies dependencies deprecated)",
+      "PowerShell(npm view @vitejs/plugin-react-swc version peerDependencies)",
+      "PowerShell(npm view @vitejs/plugin-react peerDependenciesMeta)",
+      "PowerShell(npm view @rolldown/plugin-babel@0.2 peerDependencies dependencies)",
+      "Bash(echo \"EXIT: $?\")",
+      "Bash(node -p \"require\\('./node_modules/html-react-parser/package.json'\\).version\")",
+      "Bash(node -p \"require\\('./node_modules/posthog-js/package.json'\\).version\")",
+      "Bash(node -p \"require\\('./node_modules/tsx/package.json'\\).version\")",
+      "Bash(node -p \"require\\('./node_modules/@vitejs/plugin-react/package.json'\\).version\")"
     ]
   }
 }
