@@ -1,6 +1,6 @@
 import path from "node:path";
 import { GoogleGenAI } from "@google/genai";
-import react from "@vitejs/plugin-react-swc";
+import react from "@vitejs/plugin-react";
 import { config as dotenvConfig } from "dotenv";
 import { visualizer } from "rollup-plugin-visualizer";
 import { defineConfig, type Plugin } from "vite";
