@@ -156,10 +156,11 @@ async function getAccessibleSourcebookSet(
 		return null;
 	}
 
-	const {
-		data: { user },
-		error: authError,
-	} = await supabase.auth.getUser();
+	// getSession() is local-only: no network round-trip on this hot startup
+	// path, and no AuthSessionMissingError noise for guests (getUser() logs a
+	// stack trace whenever there is simply no session).
+	const { data: sessionData, error: authError } =
+		await supabase.auth.getSession();
 
 	if (authError) {
 		logger.warn(
@@ -169,6 +170,7 @@ async function getAccessibleSourcebookSet(
 		return null;
 	}
 
+	const user = sessionData.session?.user ?? null;
 	if (!user) {
 		return null;
 	}

@@ -8,8 +8,9 @@ import {
 	DialogHeader,
 	DialogTitle,
 } from "@/components/ui/dialog";
+import { useCharacterExport } from "@/hooks/useCharacterExportImport";
 import type { Database } from "@/integrations/supabase/types";
-import { downloadCharacterJSON, exportCharacterPDF } from "@/lib/export";
+import { exportCharacterPDF } from "@/lib/export";
 
 export type Character = Database["public"]["Tables"]["characters"]["Row"];
 type CharacterWithAbilities = Character & {
@@ -45,8 +46,11 @@ export function ExportDialog({
 		if (!open) setPreviewOpen(false);
 	}, [open]);
 
+	// Canonical v2.4 envelope export — the same shape ImportDialog reads, so
+	// export → import round-trips (guest characters included).
+	const { exportCharacterJson } = useCharacterExport();
 	const handleExportJSON = () => {
-		downloadCharacterJSON(character);
+		void exportCharacterJson(character.id);
 		onOpenChange(false);
 	};
 

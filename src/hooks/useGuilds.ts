@@ -86,6 +86,19 @@ const isLocalMode = (): boolean => {
 	return !isSupabaseConfigured || import.meta.env.VITE_E2E === "true";
 };
 
+/**
+ * Whether guild reads/writes should hit the per-browser local store.
+ * True in local/E2E mode AND for guest visitors (no Supabase session) when
+ * guest mode is enabled — guests create guilds locally, so every hook must
+ * read/write the same store or guests end up with guilds they can't open.
+ */
+const shouldUseLocalGuilds = async (): Promise<boolean> => {
+	if (isLocalMode()) return true;
+	if (!guestEnabled) return false;
+	const { data } = await supabase.auth.getSession();
+	return !data.session?.user;
+};
+
 export const loadLocalGuilds = (): Guild[] => {
 	if (typeof window === "undefined") return [];
 	const raw = window.localStorage.getItem(GUILDS_KEY);
@@ -139,7 +152,7 @@ export const useMyGuilds = () => {
 	return useQuery({
 		queryKey: ["guilds", "mine"],
 		queryFn: async (): Promise<Guild[]> => {
-			if (isLocalMode()) {
+			if (await shouldUseLocalGuilds()) {
 				const userId = getLocalUserId();
 				return loadLocalGuilds().filter((g) => g.leader_user_id === userId);
 			}
@@ -168,7 +181,7 @@ export const useJoinedGuilds = () => {
 	return useQuery({
 		queryKey: ["guilds", "joined"],
 		queryFn: async (): Promise<Guild[]> => {
-			if (isLocalMode()) {
+			if (await shouldUseLocalGuilds()) {
 				const userId = getLocalUserId();
 				const memberGuildIds = loadLocalGuildMembers()
 					.filter((m) => m.user_id === userId)
@@ -215,7 +228,7 @@ export const useGuild = (guildId: string) => {
 	return useQuery({
 		queryKey: ["guilds", guildId],
 		queryFn: async (): Promise<Guild | null> => {
-			if (isLocalMode()) {
+			if (await shouldUseLocalGuilds()) {
 				return loadLocalGuilds().find((g) => g.id === guildId) ?? null;
 			}
 			const { data, error } = await supabase
@@ -237,7 +250,7 @@ export const useGuildsByCampaign = (campaignId: string | null | undefined) => {
 		queryKey: ["guilds", "campaign", campaignId ?? "none"],
 		queryFn: async (): Promise<Guild[]> => {
 			if (!campaignId) return [];
-			if (isLocalMode() || (!user && guestEnabled)) {
+			if (await shouldUseLocalGuilds()) {
 				return loadLocalGuilds().filter((g) => g.campaign_id === campaignId);
 			}
 			if (!user) return [];
@@ -258,7 +271,7 @@ export const useGuildMembers = (guildId: string) => {
 	return useQuery({
 		queryKey: ["guilds", guildId, "members"],
 		queryFn: async (): Promise<GuildMember[]> => {
-			if (isLocalMode()) {
+			if (await shouldUseLocalGuilds()) {
 				return loadLocalGuildMembers().filter((m) => m.guild_id === guildId);
 			}
 			const { data, error } = await supabase
@@ -293,7 +306,7 @@ export const useCreateGuild = () => {
 		}): Promise<string> => {
 			const shareCode = createShareCode();
 
-			if (isLocalMode()) {
+			if (await shouldUseLocalGuilds()) {
 				const userId = getLocalUserId();
 				const id = crypto.randomUUID();
 				const guild: Guild = {
@@ -477,7 +490,7 @@ export const useRecruitNPC = () => {
 				npc_leveling_mode: params.levelingMode ?? "auto",
 			};
 
-			if (isLocalMode() || !isSupabaseConfigured) {
+			if (await shouldUseLocalGuilds()) {
 				const members = loadLocalGuildMembers();
 				members.push(member);
 				saveLocalGuildMembers(members);
@@ -522,7 +535,7 @@ export const useLevelUpNPC = () => {
 
 	return useMutation({
 		mutationFn: async (params: { guildId: string; memberId: string }) => {
-			if (isLocalMode() || !isSupabaseConfigured) {
+			if (await shouldUseLocalGuilds()) {
 				const members = loadLocalGuildMembers();
 				const idx = members.findIndex((m) => m.id === params.memberId);
 				if (idx === -1) throw new Error("Member not found");
@@ -580,7 +593,7 @@ export const useDeleteGuild = () => {
 
 	return useMutation({
 		mutationFn: async (guildId: string) => {
-			if (isLocalMode() || !isSupabaseConfigured) {
+			if (await shouldUseLocalGuilds()) {
 				saveLocalGuilds(loadLocalGuilds().filter((g) => g.id !== guildId));
 				saveLocalGuildMembers(
 					loadLocalGuildMembers().filter((m) => m.guild_id !== guildId),
@@ -617,7 +630,7 @@ export const useLeaveGuild = () => {
 
 	return useMutation({
 		mutationFn: async (guildId: string) => {
-			if (isLocalMode() || !isSupabaseConfigured) {
+			if (await shouldUseLocalGuilds()) {
 				const userId = getLocalUserId();
 				saveLocalGuildMembers(
 					loadLocalGuildMembers().filter(
@@ -664,7 +677,7 @@ export const useSetNPCLevelingMode = () => {
 			memberId: string;
 			mode: "auto" | "manual";
 		}) => {
-			if (isLocalMode() || !isSupabaseConfigured) {
+			if (await shouldUseLocalGuilds()) {
 				const members = loadLocalGuildMembers();
 				const idx = members.findIndex((m) => m.id === params.memberId);
 				if (idx !== -1) {
@@ -702,7 +715,7 @@ export const useChangeMemberRole = () => {
 			memberId: string;
 			role: GuildRole;
 		}) => {
-			if (isLocalMode() || !isSupabaseConfigured) {
+			if (await shouldUseLocalGuilds()) {
 				const members = loadLocalGuildMembers();
 				const idx = members.findIndex((m) => m.id === params.memberId);
 				if (idx === -1) throw new Error("Member not found");
@@ -739,7 +752,7 @@ export const useKickMember = () => {
 
 	return useMutation({
 		mutationFn: async (params: { guildId: string; memberId: string }) => {
-			if (isLocalMode() || !isSupabaseConfigured) {
+			if (await shouldUseLocalGuilds()) {
 				saveLocalGuildMembers(
 					loadLocalGuildMembers().filter((m) => m.id !== params.memberId),
 				);
@@ -781,7 +794,7 @@ export const useTransferLeadership = () => {
 			newLeaderUserId: string;
 			currentLeaderUserId: string;
 		}) => {
-			if (isLocalMode() || !isSupabaseConfigured) {
+			if (await shouldUseLocalGuilds()) {
 				const guilds = loadLocalGuilds();
 				const gIdx = guilds.findIndex((g) => g.id === params.guildId);
 				if (gIdx === -1) throw new Error("Guild not found");
@@ -853,7 +866,7 @@ export const useAdjustGuildFunds = () => {
 			delta: number;
 			note?: string;
 		}): Promise<GuildFunds> => {
-			if (isLocalMode() || !isSupabaseConfigured) {
+			if (await shouldUseLocalGuilds()) {
 				const guilds = loadLocalGuilds();
 				const idx = guilds.findIndex((g) => g.id === params.guildId);
 				if (idx === -1) throw new AppError("Guild not found", "NOT_FOUND");

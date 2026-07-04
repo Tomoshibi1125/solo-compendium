@@ -4,6 +4,11 @@ import { supabase } from "@/integrations/supabase/client";
 import type { Json } from "@/integrations/supabase/types";
 import { RA_CURRENCY_TYPES, type RaCurrencyId } from "@/lib/currency";
 import { getErrorMessage, logErrorWithContext } from "@/lib/errorHandling";
+import {
+	readLocalPartyCredits,
+	saveLocalPartyCredits,
+	shouldUseLocalStash,
+} from "@/lib/guestCampaignStash";
 
 type PartyCredits = Record<RaCurrencyId, number>;
 
@@ -39,6 +44,11 @@ export const useCampaignGold = (campaignId: string | null) => {
 		queryFn: async () => {
 			if (!campaignId) return DEFAULT_PARTY_CREDITS;
 
+			if (await shouldUseLocalStash()) {
+				const local = readLocalPartyCredits(campaignId);
+				return local ? parsePartyCredits(local) : DEFAULT_PARTY_CREDITS;
+			}
+
 			const { data, error } = await supabase
 				.from("campaigns")
 				.select("party_gold")
@@ -70,6 +80,11 @@ export const useCampaignGold = (campaignId: string | null) => {
 					Math.max(0, Math.floor(newCredits[currency.id] || 0)),
 				]),
 			) as PartyCredits;
+
+			if (await shouldUseLocalStash()) {
+				saveLocalPartyCredits(campaignId, sanitized);
+				return { party_gold: sanitized as unknown as Json };
+			}
 
 			const { data, error } = await supabase
 				.from("campaigns")

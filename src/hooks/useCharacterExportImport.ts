@@ -19,6 +19,16 @@ import {
 } from "@/lib/characterAbilityAccess";
 import { normalizeCharacterOverlayFields } from "@/lib/characterOverlayValidation";
 import {
+	addLocalEquipment,
+	addLocalFeature,
+	addLocalPower,
+	addLocalSpell,
+	addLocalTechnique,
+	createLocalCharacter,
+	getLocalCharacterState,
+	isLocalCharacterId,
+} from "@/lib/guestStore";
+import {
 	classifyImportVersion,
 	collectContainerOriginalIds,
 	resolveImportedContainerId,
@@ -979,6 +989,54 @@ async function importRelatedCharacterRows(
 		}
 	}
 }
+/**
+ * Guest-import counterpart of importRelatedCharacterRows: replay the
+ * envelope's character-owned rows into the per-browser store. Covers the
+ * row types the guest store tracks; server-only tables (journal, backups,
+ * unlocks) are skipped.
+ */
+function importRelatedLocalRows(
+	data: Record<string, unknown>,
+	characterId: string,
+): void {
+	const rows = (key: string): Record<string, unknown>[] =>
+		Array.isArray(data[key]) ? (data[key] as Record<string, unknown>[]) : [];
+
+	const strip = (row: Record<string, unknown>): Record<string, unknown> => {
+		const { id, character_id, created_at, updated_at, ...rest } = row;
+		return rest;
+	};
+
+	for (const row of rows("equipment"))
+		addLocalEquipment(characterId, strip(row) as never);
+	for (const row of rows("features"))
+		addLocalFeature(characterId, strip(row) as never);
+	for (const row of rows("powers"))
+		addLocalPower(characterId, strip(row) as never);
+	for (const row of rows("spells"))
+		addLocalSpell(characterId, strip(row) as never);
+	for (const row of rows("techniques"))
+		addLocalTechnique(characterId, strip(row) as never);
+}
+
+/** Trigger a browser download of the export envelope. */
+function downloadExportEnvelope(
+	exportData: Record<string, unknown>,
+	characterName: string | null,
+): void {
+	const blob = new Blob([JSON.stringify(exportData, null, 2)], {
+		type: "application/json",
+	});
+	const url = URL.createObjectURL(blob);
+	const link = document.createElement("a");
+	link.href = url;
+	link.download = `${characterName || "character"}-${new Date().toISOString().split("T")[0]}.json`;
+	document.body.appendChild(link);
+	link.click();
+	document.body.removeChild(link);
+	URL.revokeObjectURL(url);
+}
+
 export function useCharacterExport() {
 	const { toast } = useToast();
 
@@ -987,6 +1045,45 @@ export function useCharacterExport() {
 	const exportCharacterJson = useCallback(
 		async (characterId: string) => {
 			try {
+				// Guest characters live in the per-browser store — export the same
+				// v2.4 envelope from there so guests get full data backups too.
+				if (isLocalCharacterId(characterId)) {
+					const entry = getLocalCharacterState(characterId);
+					if (!entry) throw new Error("Character not found");
+					const exportData = {
+						character: entry.character as unknown as Record<string, unknown>,
+						// Guest ability scores live on the character row itself.
+						abilities: [],
+						equipment: entry.equipment,
+						features: entry.features,
+						powers: entry.powers,
+						spells: entry.spells,
+						techniques: entry.techniques,
+						rune_knowledge: entry.runeKnowledge,
+						rune_inscriptions: entry.runeInscriptions,
+						sigil_inscriptions: entry.sigilInscriptions,
+						regents: [],
+						shadow_soldiers: [],
+						shadow_army: [],
+						active_spells: [],
+						extras: [],
+						monarch_unlocks: [],
+						regent_unlocks: [],
+						feature_choices: [],
+						journal: [],
+						backups: [],
+						exported_at: new Date().toISOString(),
+						exported_by: "guest",
+						version: EXPORT_VERSION,
+					};
+					downloadExportEnvelope(exportData, entry.character.name);
+					toast({
+						title: "Export Successful",
+						description: `${entry.character.name || "Character"} exported as JSON`,
+					});
+					return exportData;
+				}
+
 				if (!isSupabaseConfigured) {
 					throw new Error("Backend not configured");
 				}
@@ -1136,19 +1233,7 @@ export function useCharacterExport() {
 					version: EXPORT_VERSION,
 				};
 
-				// Download JSON file
-				const blob = new Blob([JSON.stringify(exportData, null, 2)], {
-					type: "application/json",
-				});
-
-				const url = URL.createObjectURL(blob);
-				const link = document.createElement("a");
-				link.href = url;
-				link.download = `${character.name || "character"}-${new Date().toISOString().split("T")[0]}.json`;
-				document.body.appendChild(link);
-				link.click();
-				document.body.removeChild(link);
-				URL.revokeObjectURL(url);
+				downloadExportEnvelope(exportData, character.name);
 
 				toast({
 					title: "Export Successful",
@@ -1214,14 +1299,6 @@ export function useCharacterExport() {
 	const importCharacterJson = useCallback(
 		async (file: File) => {
 			try {
-				if (!isSupabaseConfigured) {
-					throw new Error("Backend not configured");
-				}
-
-				if (!user) {
-					throw new Error("Must be logged in to import characters");
-				}
-
 				const text = await file.text();
 				const data = JSON.parse(text);
 
@@ -1243,8 +1320,30 @@ export function useCharacterExport() {
 					});
 				}
 
-				// Create new character from import
 				const { character: charData } = data;
+
+				// Guest import: recreate the character in the per-browser store.
+				if (!user) {
+					const guestInsert = await buildImportedCharacterInsert(
+						charData as Record<string, unknown>,
+						"guest",
+					);
+					const { user_id: _guestOwner, ...localInsert } =
+						guestInsert as CharacterInsert;
+					const created = createLocalCharacter(localInsert);
+					importRelatedLocalRows(data as Record<string, unknown>, created.id);
+					toast({
+						title: "Import Successful",
+						description: `${charData.name} has been imported successfully`,
+					});
+					return created;
+				}
+
+				if (!isSupabaseConfigured) {
+					throw new Error("Backend not configured");
+				}
+
+				// Create new character from import
 				const newCharacter = await buildImportedCharacterInsert(
 					charData as Record<string, unknown>,
 					user.id,

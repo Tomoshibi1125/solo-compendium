@@ -5,13 +5,16 @@ import {
 	BarChart3,
 	Copy,
 	Crown,
+	Download,
 	Ghost,
 	LayoutGrid,
 	Package,
 	Palette,
+	Pencil,
 	Printer,
 	Redo2,
 	ScrollText,
+	Share2,
 	Shield,
 	Sparkles,
 	Sun,
@@ -1006,6 +1009,42 @@ export default function CharacterSheetV2() {
 						>
 							<Printer className="w-3 h-3 mr-1.5" />
 							Print
+						</Button>
+						<Button
+							variant="ghost"
+							size="sm"
+							onClick={() => sheetController.setModal("export", true)}
+							className="h-8 border-primary/20 bg-black/20 hover:bg-primary/10 transition-colors uppercase font-mono text-[10px] tracking-widest"
+							data-testid="sheet-export-btn"
+							title="Export character (JSON / PDF)"
+							aria-label="Export character"
+						>
+							<Download className="w-3 h-3 mr-1.5" />
+							Export
+						</Button>
+						<Button
+							variant="ghost"
+							size="sm"
+							onClick={() => sheetController.setModal("share", true)}
+							className="h-8 border-primary/20 bg-black/20 hover:bg-primary/10 transition-colors uppercase font-mono text-[10px] tracking-widest"
+							data-testid="sheet-share-btn"
+							title="Share character"
+							aria-label="Share character"
+						>
+							<Share2 className="w-3 h-3 mr-1.5" />
+							Share
+						</Button>
+						<Button
+							variant="ghost"
+							size="sm"
+							onClick={() => sheetController.setModal("edit", true)}
+							className="h-8 border-primary/20 bg-black/20 hover:bg-primary/10 transition-colors uppercase font-mono text-[10px] tracking-widest"
+							data-testid="sheet-edit-btn"
+							title="Edit identity + details"
+							aria-label="Edit character details"
+						>
+							<Pencil className="w-3 h-3 mr-1.5" />
+							Edit
 						</Button>
 					</div>
 				)}

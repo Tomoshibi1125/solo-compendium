@@ -3,19 +3,25 @@ import { act } from "react";
 import { createRoot } from "react-dom/client";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
+const exportCharacterJsonMock = vi.fn(async () => ({}));
+
 vi.mock("@/lib/export", () => ({
-	downloadCharacterJSON: vi.fn(async () => undefined),
 	exportCharacterPDF: vi.fn(),
+}));
+vi.mock("@/hooks/useCharacterExportImport", () => ({
+	useCharacterExport: () => ({
+		exportCharacterJson: exportCharacterJsonMock,
+	}),
 }));
 
 import { ExportDialog } from "@/components/character/ExportDialog";
-import { downloadCharacterJSON, exportCharacterPDF } from "@/lib/export";
+import { exportCharacterPDF } from "@/lib/export";
 
 (
 	globalThis as { IS_REACT_ACT_ENVIRONMENT?: boolean }
 ).IS_REACT_ACT_ENVIRONMENT = true;
 
-const downloadJsonMock = vi.mocked(downloadCharacterJSON);
+const downloadJsonMock = exportCharacterJsonMock;
 const exportPdfMock = vi.mocked(exportCharacterPDF);
 
 const baseCharacter = {
@@ -89,7 +95,7 @@ describe("ExportDialog (smoke wiring)", () => {
 		unmount();
 	});
 
-	it("JSON button calls downloadCharacterJSON and closes the dialog", () => {
+	it("JSON button calls the canonical JSON exporter and closes the dialog", () => {
 		const onOpenChange = vi.fn();
 		const { unmount } = mount(
 			<ExportDialog
@@ -106,7 +112,7 @@ describe("ExportDialog (smoke wiring)", () => {
 		});
 
 		expect(downloadJsonMock).toHaveBeenCalledTimes(1);
-		expect(downloadJsonMock).toHaveBeenCalledWith(baseCharacter);
+		expect(downloadJsonMock).toHaveBeenCalledWith(baseCharacter.id);
 		expect(onOpenChange).toHaveBeenCalledWith(false);
 		expect(exportPdfMock).not.toHaveBeenCalled();
 

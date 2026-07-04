@@ -77,7 +77,41 @@ export function validateCharacterImport(
 		};
 	}
 
-	const obj = json as Record<string, unknown>;
+	let obj = json as Record<string, unknown>;
+
+	// v2.x export envelope: `{ version, character: <row>, equipment: [...] }`.
+	// Map the character row into the flat preview schema so the dialog can
+	// validate/preview canonical exports — the actual importer consumes the
+	// full envelope unchanged.
+	if (obj.character && typeof obj.character === "object") {
+		const row = obj.character as Record<string, unknown>;
+		const score = (v: unknown): number => (typeof v === "number" ? v : 10);
+		obj = {
+			...obj,
+			name: row.name,
+			level: row.level,
+			job: row.job ?? null,
+			path: row.path ?? null,
+			background: row.background ?? null,
+			abilities: {
+				STR: score(row.str),
+				AGI: score(row.agi),
+				VIT: score(row.vit),
+				INT: score(row.int),
+				SENSE: score(row.sense),
+				PRE: score(row.pre),
+			},
+			experience: row.experience,
+			notes: row.notes ?? null,
+			appearance: row.appearance ?? null,
+			backstory: row.backstory ?? null,
+			// Envelope stats live as flat row columns; the preview defaults are
+			// fine — the importer reads the real values from the row.
+			stats: undefined,
+			conditions: Array.isArray(row.conditions) ? row.conditions : [],
+			exhaustionLevel: row.exhaustion_level,
+		};
+	}
 
 	// Required fields
 	if (typeof obj.name !== "string" || obj.name.trim().length === 0) {

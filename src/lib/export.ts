@@ -6,114 +6,9 @@
 import { supabase } from "@/integrations/supabase/client";
 import type { Database } from "@/integrations/supabase/types";
 import { AppError } from "@/lib/appError";
-import { formatRegentVernacular } from "@/lib/vernacular";
+import { getLocalCharacterState, isLocalCharacterId } from "@/lib/guestStore";
 
 export type Character = Database["public"]["Tables"]["characters"]["Row"];
-
-interface ExportOptions {
-	includeEquipment?: boolean;
-	includeFeatures?: boolean;
-	includePowers?: boolean;
-	includeSpells?: boolean;
-	includeTechniques?: boolean;
-	includeNotes?: boolean;
-	format?: "json" | "pdf" | "markdown" | "html";
-}
-
-/**
- * Export character to JSON
- */
-export async function exportCharacter(
-	characterId: string,
-	options: ExportOptions = {},
-): Promise<string> {
-	const { data: character } = await supabase
-		.from("characters")
-		.select("*")
-		.eq("id", characterId)
-		.single();
-
-	if (!character) throw new AppError("Character not found", "NOT_FOUND");
-
-	const exportData: Record<string, unknown> = {
-		name: character.name,
-		level: character.level,
-		job: character.job,
-		path: character.path,
-		background: character.background,
-		stats: {
-			hp: {
-				current: character.hp_current,
-				max: character.hp_max,
-				temp: character.hp_temp,
-			},
-			hitDice: {
-				current: character.hit_dice_current,
-				max: character.hit_dice_max,
-				size: character.hit_dice_size,
-			},
-			riftFavor: {
-				current: character.rift_favor_current,
-				max: character.rift_favor_max,
-				die: character.rift_favor_die,
-			},
-			armorClass: character.armor_class,
-			speed: character.speed,
-			initiative: character.initiative,
-			proficiencyBonus: character.proficiency_bonus,
-		},
-		conditions: character.conditions || [],
-		exhaustionLevel: character.exhaustion_level,
-	};
-
-	if (options.includeNotes) {
-		exportData.notes = character.notes;
-		exportData.appearance = character.appearance;
-		exportData.backstory = character.backstory;
-	}
-
-	if (options.includeEquipment) {
-		const { data: equipment } = await supabase
-			.from("character_equipment")
-			.select("*, equipment:compendium_equipment(*)")
-			.eq("character_id", characterId);
-		exportData.equipment = equipment || [];
-	}
-
-	if (options.includeFeatures) {
-		const { data: features } = await supabase
-			.from("character_features")
-			.select("*")
-			.eq("character_id", characterId);
-		exportData.features = features || [];
-	}
-
-	if (options.includePowers) {
-		const { data: powers } = await supabase
-			.from("character_powers")
-			.select("*, power:compendium_powers(*)")
-			.eq("character_id", characterId);
-		exportData.powers = powers || [];
-	}
-
-	if (options.includeSpells) {
-		const { data: spells } = await supabase
-			.from("character_spells")
-			.select("*")
-			.eq("character_id", characterId);
-		exportData.spells = spells || [];
-	}
-
-	if (options.includeTechniques) {
-		const { data: techniques } = await supabase
-			.from("character_techniques")
-			.select("*, technique:compendium_techniques(*)")
-			.eq("character_id", characterId);
-		exportData.techniques = techniques || [];
-	}
-
-	return formatRegentVernacular(JSON.stringify(exportData, null, 2));
-}
 
 /**
  * Download file
@@ -132,27 +27,6 @@ export function downloadFile(
 	link.click();
 	document.body.removeChild(link);
 	URL.revokeObjectURL(url);
-}
-
-/**
- * Download character as JSON
- */
-export async function downloadCharacterJSON(
-	character: Character,
-): Promise<void> {
-	const json = await exportCharacter(character.id, {
-		includeEquipment: true,
-		includeFeatures: true,
-		includePowers: true,
-		includeSpells: true,
-		includeTechniques: true,
-		includeNotes: true,
-	});
-	downloadFile(
-		json,
-		`${character.name.replace(/[^a-z0-9]/gi, "_")}_character.json`,
-		"application/json",
-	);
 }
 
 /**
@@ -177,12 +51,19 @@ export function exportCharacterPDF(
 export async function downloadCharacterPdfFile(
 	characterId: string,
 ): Promise<void> {
-	const { data: character, error } = await supabase
-		.from("characters")
-		.select("*")
-		.eq("id", characterId)
-		.single();
-	if (error || !character) {
+	let character: Character | null = null;
+	if (isLocalCharacterId(characterId)) {
+		// Guest characters render from the per-browser store.
+		character = getLocalCharacterState(characterId)?.character ?? null;
+	} else {
+		const { data } = await supabase
+			.from("characters")
+			.select("*")
+			.eq("id", characterId)
+			.single();
+		character = (data as Character | null) ?? null;
+	}
+	if (!character) {
 		throw new AppError("Character not found for PDF export", "NOT_FOUND");
 	}
 	const { generateCharacterPdf } = await import("@/lib/characterPdf");

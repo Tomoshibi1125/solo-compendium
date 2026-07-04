@@ -4,6 +4,13 @@ import { useAscendantTools } from "@/hooks/useGlobalDDBeyondIntegration";
 import { supabase } from "@/integrations/supabase/client";
 import type { Database } from "@/integrations/supabase/types";
 import { getErrorMessage, logErrorWithContext } from "@/lib/errorHandling";
+import {
+	addLocalStashItem,
+	readLocalStashItems,
+	removeLocalStashItem,
+	shouldUseLocalStash,
+	updateLocalStashItem,
+} from "@/lib/guestCampaignStash";
 
 type CampaignInventory =
 	Database["public"]["Tables"]["campaign_inventory"]["Row"];
@@ -27,6 +34,12 @@ export const useCampaignInventory = (
 		queryFn: async () => {
 			if (!campaignId) return [];
 
+			if (await shouldUseLocalStash()) {
+				return readLocalStashItems(campaignId).sort((a, b) =>
+					a.name.localeCompare(b.name),
+				) as unknown as CampaignInventory[];
+			}
+
 			const { data, error } = await supabase
 				.from("campaign_inventory")
 				.select("*")
@@ -46,6 +59,14 @@ export const useCampaignInventory = (
 	const addItem = useMutation({
 		mutationFn: async (item: Omit<CampaignInventoryInsert, "campaign_id">) => {
 			if (!campaignId) throw new Error("No active campaign");
+
+			if (await shouldUseLocalStash()) {
+				return addLocalStashItem(campaignId, {
+					...(item as Record<string, unknown>),
+					name: item.name,
+				}) as unknown as CampaignInventory;
+			}
+
 			const {
 				data: { user },
 			} = await supabase.auth.getUser();
@@ -101,6 +122,15 @@ export const useCampaignInventory = (
 			id: string;
 			updates: CampaignInventoryUpdate;
 		}) => {
+			if (await shouldUseLocalStash()) {
+				const next = updateLocalStashItem(
+					id,
+					updates as Record<string, unknown>,
+				);
+				if (!next) throw new Error("Stash item not found");
+				return next as unknown as CampaignInventory;
+			}
+
 			const { data, error } = await supabase
 				.from("campaign_inventory")
 				.update(updates)
@@ -143,6 +173,11 @@ export const useCampaignInventory = (
 
 	const removeItem = useMutation({
 		mutationFn: async ({ id, name }: { id: string; name: string }) => {
+			if (await shouldUseLocalStash()) {
+				removeLocalStashItem(id);
+				return { id, name };
+			}
+
 			const { error } = await supabase
 				.from("campaign_inventory")
 				.delete()

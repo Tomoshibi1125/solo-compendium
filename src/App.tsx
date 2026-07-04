@@ -730,10 +730,13 @@ const AppContent = () => {
 						</Suspense>
 					}
 				/>
+				{/* Guests keep local prefs on /profile (role switch, appearance,
+				    display name), so the page follows the app-wide guest default;
+				    account-only rows already null-guard on `user`. */}
 				<Route
 					path="/profile"
 					element={
-						<ProtectedRoute allowGuest={false}>
+						<ProtectedRoute>
 							<Suspense fallback={<PageLoader />}>
 								<Profile />
 							</Suspense>
