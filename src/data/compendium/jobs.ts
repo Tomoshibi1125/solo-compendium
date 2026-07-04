@@ -2123,7 +2123,7 @@ export const jobs: Job[] = [
 			{
 				name: "Empathic Resonance",
 				description:
-					"Sense trait. You can feel the emotional state and surface intent of any creature (including anomalies and anomalies) within 30 ft.",
+					"Sense trait. You can feel the emotional state and surface intent of any creature (including anomalies) within 30 ft.",
 				type: "sense",
 			},
 		],
@@ -3211,7 +3211,7 @@ export const jobs: Job[] = [
 				level: 5,
 				name: "Broadcast Anomaly",
 				description:
-					"When you Receive Signal, anomaly and anomaly of CR 1/2 or lower within 30 ft must save or be destroyed. Higher CR thresholds unlock with level.",
+					"When you Receive Signal, anomalies of CR 1/2 or lower within 30 ft must save or be destroyed. Higher CR thresholds unlock with level.",
 			},
 			{
 				level: 6,

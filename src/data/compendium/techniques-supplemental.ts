@@ -1338,7 +1338,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		name: "Smite",
 		display_name: "Smite",
 		description:
-			"Channel your oath through your weapon. On your next hit, deal an extra 2d8 radiant damage. Against anomaly or anomaly, 3d8 instead.",
+			"Channel your oath through your weapon. On your next hit, deal an extra 2d8 radiant damage. Against anomalies, 3d8 instead.",
 		lore: {
 			origin:
 				"Developed through Holy Knight combat doctrine and field-tested in Rift operations.",
@@ -6789,7 +6789,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		name: "Absolute Cleave",
 		display_name: "Absolute Cleave",
 		description:
-			"Deliver a sweeping attack infused with the Absolute's judgment. All creatures in a 15-foot cone: melee attack roll, 6d10 radiant on hit. Anomaly and anomaly that are hit by this attack and have 50 HP or fewer are instantly destroyed.",
+			"Deliver a sweeping attack infused with the Absolute's judgment. All creatures in a 15-foot cone: melee attack roll, 6d10 radiant on hit. Anomalies that are hit by this attack and have 50 HP or fewer are instantly destroyed.",
 		lore: {
 			origin:
 				"Developed through Holy Knight combat doctrine and field-tested in Rift operations.",

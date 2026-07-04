@@ -239,3 +239,25 @@ with zero console errors — F10 crash guard confirmed.
 - Cosmetic: fixed a Directive Lattice flavor typo (`FAST_EXPTRAPOLATION_ACTIVE`
   → `FAST_EXTRAPOLATION_ACTIVE`). Left as-is: the campaign-create name placeholder
   "The Shadow Legion" (an evocative example, not canon-breaking).
+
+### Area 3 — Compendium & content (guest mode, dev server)
+
+**One real content bug found and fixed (F12):**
+
+| # | Bug (user-visible symptom) | Root cause → fix | Guard |
+|---|---|---|---|
+| **F12** | Compendium descriptions for the "Absolute" (radiant/holy) spell/power/technique family read the garbled phrase "against **anomaly and anomaly**", "**anomaly-type anomalies**", "**anomalies and anomalies**" — visible in the live compendium search/detail | A prior RA-rebrand global replace mapped *both* 5e creature types in the classic "vs. **fiends and undead**" pattern to "anomaly", producing the redundant pairing. Rewrote all 15 occurrences across 5 data files (`spells/supplemental.ts`, `powers-supplemental.ts`, `techniques-supplemental.ts`, `regents.ts`, `jobs.ts`) to the intended RA-canon "anomalies" (fixing singular/plural agreement, e.g. "Anomaly that enter … take" → "Anomalies that enter … take") | `compendiumAudit.test.ts` green (17/17); verified live: "Absolute Beacon" now reads "…against anomalies. Anomalies in the area have disadvantage." |
+
+**Rest of Area 3 swept clean (guest, dev server) — no further bugs:**
+
+- **Cross-category FTS search** returns ranked matches (e.g. "blade" →
+  Aetheric Blade / Cursed Blade Edge across spells/powers/items).
+- **Detail pages populate with zero missing assets:** the anomaly detail
+  (Ancient Abyssal Horror, B-Rank, AC 17, full stat block) renders 3 images, all
+  loaded (no broken `naturalWidth===0`).
+- **Favorites toggle persists:** starring an anomaly writes
+  `solo-compendium.favorites = ["anomalies:anomaly-0083"]` and flips the button.
+- **Homebrew workbench ("Genesis Studio")** renders with a working draft editor
+  (create validates "Name required"); guest persistence is auth-gated by design.
+- **Marketplace ("System Exchange")** browses with scope/type/search filters and
+  a correct empty state. Zero console errors across the area.

@@ -1036,7 +1036,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 		name: "Searing Oath",
 		display_name: "Searing Oath",
 		description:
-			"Channel your oath into your weapon. The next time you hit a creature with a melee weapon attack during the spell's duration, the attack deals an extra 2d8 radiant damage. Against anomaly-type anomalies, the extra damage is 3d8.",
+			"Channel your oath into your weapon. The next time you hit a creature with a melee weapon attack during the spell's duration, the attack deals an extra 2d8 radiant damage. Against anomalies, the extra damage is 3d8.",
 		lore: {
 			origin: "Documented in the Rift Ascendant compendium.",
 			history: "",
@@ -3194,7 +3194,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 		name: "Hallowed Ground",
 		display_name: "Hallowed Ground",
 		description:
-			"Consecrate a 15-foot radius centered on you with the Absolute's protective radiance. Allies within the area gain +2 to AC against attacks from anomaly and anomaly-type anomalies. Anomaly that enter the area or start their turn there take 1d6 radiant damage.",
+			"Consecrate a 15-foot radius centered on you with the Absolute's protective radiance. Allies within the area gain +2 to AC against attacks from anomalies. Anomalies that enter the area or start their turn there take 1d6 radiant damage.",
 		lore: {
 			origin: "Documented in the Rift Ascendant compendium.",
 			history: "",
@@ -3976,7 +3976,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 		name: "Absolute Beacon",
 		display_name: "Absolute Beacon",
 		description:
-			"Radiate the Absolute's protective light. For the duration, allies within 30 feet gain +2 to attack rolls and saving throws against anomaly and anomaly-type anomalies. Anomaly and anomaly in the area have disadvantage on attack rolls.",
+			"Radiate the Absolute's protective light. For the duration, allies within 30 feet gain +2 to attack rolls and saving throws against anomalies. Anomalies in the area have disadvantage on attack rolls.",
 		lore: {
 			origin: "Documented in the Rift Ascendant compendium.",
 			history: "",
@@ -5335,7 +5335,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 		name: "Absolute Judgment",
 		display_name: "Absolute Judgment",
 		description:
-			"Call down a column of the Absolute's judgment on a creature within range. The target makes a DC 17 Vitality save: 8d8 radiant damage on failure (10d8 against anomaly and anomaly-type anomalies), half on success. On failure, the target is also blinded until end of its next turn.",
+			"Call down a column of the Absolute's judgment on a creature within range. The target makes a DC 17 Vitality save: 8d8 radiant damage on failure (10d8 against anomalies), half on success. On failure, the target is also blinded until end of its next turn.",
 		lore: {
 			origin: "Documented in the Rift Ascendant compendium.",
 			history: "",
@@ -6272,7 +6272,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 		name: "Absolute Wrath",
 		display_name: "Absolute Wrath",
 		description:
-			"Channel the Absolute's fury into a blinding detonation of radiant force. Each creature within 60 feet must make a DC 18 Vitality save: 12d6 radiant on failure, half on success. Anomaly and anomaly-type anomalies automatically take maximum damage without a save.",
+			"Channel the Absolute's fury into a blinding detonation of radiant force. Each creature within 60 feet must make a DC 18 Vitality save: 12d6 radiant on failure, half on success. Anomalies automatically take maximum damage without a save.",
 		lore: {
 			origin: "Documented in the Rift Ascendant compendium.",
 			history: "",
@@ -10377,7 +10377,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 		name: "Radiant Condemnation",
 		display_name: "Radiant Condemnation",
 		description:
-			"Call down a focused beam of the Absolute's condemnation. One creature: DC 17 VIT save, 8d8 radiant on failure, half on success. On failure, the target is blinded for 1 round. Anomaly and anomaly-type anomalies automatically take maximum damage.",
+			"Call down a focused beam of the Absolute's condemnation. One creature: DC 17 VIT save, 8d8 radiant on failure, half on success. On failure, the target is blinded for 1 round. Anomalies automatically take maximum damage.",
 		lore: {
 			origin: "Documented in the Rift Ascendant compendium.",
 			history: "",
@@ -11102,7 +11102,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 		name: "Final Breath of the Absolute",
 		display_name: "Final Breath of the Absolute",
 		description:
-			"Channel the Absolute's final exhalation through your mana circuit. Every creature within 120 feet is affected: enemies make DC 20 VIT save, 15d8 radiant on failure, half on success. Anomaly and anomaly-type anomalies are instantly destroyed. Allied creatures instead regain HP equal to the damage that would have been dealt to them.",
+			"Channel the Absolute's final exhalation through your mana circuit. Every creature within 120 feet is affected: enemies make DC 20 VIT save, 15d8 radiant on failure, half on success. Anomalies are instantly destroyed. Allied creatures instead regain HP equal to the damage that would have been dealt to them.",
 		lore: {
 			origin: "Documented in the Rift Ascendant compendium.",
 			history: "",

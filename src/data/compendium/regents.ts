@@ -616,7 +616,7 @@ export const regents: Regent[] = [
 			{
 				name: "Purification Authority",
 				description:
-					"As an action, force all anomaly or anomaly within 300 feet to make a Sense save (DC 22) or be instantly banished or destroyed. This reflects your command over the spiritual realms.",
+					"As an action, force all anomalies within 300 feet to make a Sense save (DC 22) or be instantly banished or destroyed. This reflects your command over the spiritual realms.",
 				type: "action",
 				frequency: "once-per-day",
 				power_level: 9,
@@ -806,7 +806,7 @@ export const regents: Regent[] = [
 				"Immune to fire and radiant damage",
 				"Can see through any smoke or magical darkness",
 				"White fire automatically purifies any area you stand in",
-				"Anomaly and anomaly are automatically hostile toward you",
+				"Anomalies are automatically hostile toward you",
 			],
 			restrictions: [
 				"Requires Warden verification of quest completion",

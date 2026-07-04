@@ -4777,7 +4777,7 @@ export const powers_supplemental: CompendiumPower[] = [
 		name: "Circuit Flare",
 		display_name: "Circuit Flare",
 		description:
-			"As a bonus action, ignite your mana circuit's radiant output. For 1 minute, your melee attacks deal +1d6 radiant and shed bright light 10 feet. Anomaly and anomaly that start their turn within 5 feet take 1d4 radiant.",
+			"As a bonus action, ignite your mana circuit's radiant output. For 1 minute, your melee attacks deal +1d6 radiant and shed bright light 10 feet. Anomalies that start their turn within 5 feet take 1d4 radiant.",
 		lore: {
 			origin:
 				"The Absolute's radiance channeled through a weapon is described as 'warm.' Anomaly describe it as 'terminal.'",
@@ -6907,7 +6907,7 @@ export const powers_supplemental: CompendiumPower[] = [
 		name: "S-Rank Smite",
 		display_name: "S-Rank Smite",
 		description:
-			"The ultimate expression of the Absolute's judgment. Next melee hit deals +12d8 radiant. The target's mana circuit is permanently scarred: it loses access to its highest-level ability permanently. Anomaly and anomaly are instantly destroyed regardless of HP.",
+			"The ultimate expression of the Absolute's judgment. Next melee hit deals +12d8 radiant. The target's mana circuit is permanently scarred: it loses access to its highest-level ability permanently. Anomalies are instantly destroyed regardless of HP.",
 		lore: {
 			origin:
 				"Bureau records: one confirmed S-Rank Smite. The Holy Knight collapsed after. The S-Rank Rift boss was already dust.",
