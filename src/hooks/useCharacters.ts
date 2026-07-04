@@ -282,13 +282,20 @@ export const useCreateCharacter = () => {
 			}
 
 			// Enforce per-user limits (also enforced authoritatively by the DB
-			// trigger + unique index) up-front for a friendly error.
+			// trigger + unique index) up-front for a friendly error. Count only the
+			// user's *personal* characters — campaign sandbox NPCs live in the same
+			// table under the owner's user_id (marked `[SANDBOX_NPC]` in notes) but
+			// are hidden from the roster by `filterPersonalCharacters`, so they must
+			// not consume the limit either (mirrored by the DB trigger).
 			const { data: ownChars, error: ownCharsErr } = await supabase
 				.from("characters")
-				.select("name")
+				.select("name, notes")
 				.eq("user_id", user.id);
 			if (!ownCharsErr && ownChars) {
-				assertCharacterCreatable(ownChars, dataWithCanonicalIds.name);
+				assertCharacterCreatable(
+					filterPersonalCharacters(ownChars),
+					dataWithCanonicalIds.name,
+				);
 			}
 
 			// `characters.user_id` has a FK to `public.profiles(id)`. Accounts
