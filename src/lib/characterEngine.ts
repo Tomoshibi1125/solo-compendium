@@ -115,8 +115,6 @@ export interface Effect {
 
 import { getStaticJobs } from "@/lib/ProtocolDataManager";
 
-const JOBS_DATABASE = getStaticJobs();
-
 import { RegentGeminiSystem } from "@/lib/regentGeminiSystem";
 import {
 	getEffectiveHPMax,
@@ -389,9 +387,12 @@ export function aggregateAwakeningFeatures(
 	const features: FeatureInstance[] = [];
 
 	try {
+		// Resolved at call time: the registry array is reassigned during
+		// initializeProtocolData(), so a module-eval snapshot would stay empty.
+		const jobsDatabase = getStaticJobs();
 		for (const charJob of jobs) {
 			// Find job data from compendium
-			const jobData = JOBS_DATABASE.find(
+			const jobData = jobsDatabase.find(
 				(j: { id: string }) => j.id === charJob.job.toLowerCase(),
 			);
 			if (!jobData?.awakening_features) continue;
@@ -536,9 +537,10 @@ export function aggregateJobTraits(
 	const traits: FeatureInstance[] = [];
 
 	try {
+		const jobsDatabase = getStaticJobs();
 		for (const charJob of jobs) {
 			// Find job data from compendium
-			const jobData = JOBS_DATABASE.find(
+			const jobData = jobsDatabase.find(
 				(j: { id: string }) => j.id === charJob.job.toLowerCase(),
 			);
 			if (!jobData?.job_traits) continue;

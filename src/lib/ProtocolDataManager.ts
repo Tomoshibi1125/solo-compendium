@@ -125,6 +125,12 @@ export async function initializeProtocolData(): Promise<void> {
 					typeof a === "string" ? { name: a, description: a } : a,
 				)
 			: []) as unknown as CompendiumJob["abilities"];
+		const rawJob = j as StaticJob & {
+			awakeningFeatures?: unknown;
+			awakening_features?: unknown;
+			jobTraits?: unknown;
+			job_traits?: unknown;
+		};
 		return {
 			...rest,
 			hit_dice: j.hit_dice || j.hitDie || "1d10",
@@ -136,6 +142,11 @@ export async function initializeProtocolData(): Promise<void> {
 			toolProficiencies: j.toolProficiencies || j.tool_proficiencies || [],
 			type: j.type || "Job",
 			abilities: structuredAbilities,
+			// Snake_case aliases matching CompendiumJob (jobs.ts authors camelCase;
+			// the compendium providers do the same mapping — keep them in sync).
+			awakening_features:
+				rawJob.awakeningFeatures || rawJob.awakening_features || null,
+			job_traits: rawJob.jobTraits || rawJob.job_traits || null,
 		} as unknown as CompendiumJob;
 	});
 
@@ -170,6 +181,11 @@ export async function initializeProtocolData(): Promise<void> {
 	registry.paths = pathsRow;
 
 	registry.initialized = true;
+}
+
+/** Whether initializeProtocolData() has completed. */
+export function isProtocolDataInitialized(): boolean {
+	return registry.initialized;
 }
 
 /**

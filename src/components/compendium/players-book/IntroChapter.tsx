@@ -4,7 +4,7 @@ import { SourceBookCallout } from "@/components/compendium/SourceBookCallout";
 import { SourceBookPage } from "@/components/compendium/SourceBookPage";
 import { RiftHeading } from "@/components/ui/AscendantText";
 import { paths } from "@/data/compendium/paths";
-import { getStaticJobs } from "@/lib/ProtocolDataManager";
+import { useProtocolJobs } from "@/hooks/useProtocolJobs";
 
 export const IntroChapter = () => {
 	const awakeningText =
@@ -13,7 +13,7 @@ export const IntroChapter = () => {
 	const rankingText =
 		"Every soul touched by the Awakening is assigned a Resonance Rank, from E to S. This rank is an immutable mark of an Ascendant's maximum potential, determined by the density of their mana core at the moment of birth into the Lattice. While most are bound to their starting rank, legends speak of the 'Zenith Anomaly'—a singular force capable of bypassing these celestial limits through infinite resonance expansion.";
 
-	const allJobs = getStaticJobs();
+	const allJobs = useProtocolJobs();
 	const allPaths = paths;
 
 	return (
