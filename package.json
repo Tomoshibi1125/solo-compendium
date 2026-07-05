@@ -15,6 +15,7 @@
 		"build": "node scripts/write-runtime-env.mjs && vite build",
 		"build:vercel": "node scripts/write-runtime-env.mjs && vite build",
 		"preview": "vite preview --host",
+		"verify:chunks": "node scripts/verify-chunk-init.mjs",
 		"typecheck": "tsc -p tsconfig.json --noEmit",
 		"gen:types": "supabase gen types typescript --linked --schema public > src/integrations/supabase/types.ts && npx @biomejs/biome format --write src/integrations/supabase/types.ts",
 		"audit:compendium": "tsx scripts/audit-compendium.ts && node scripts/audit-assets.mjs",

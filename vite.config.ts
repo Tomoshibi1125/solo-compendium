@@ -627,6 +627,16 @@ export default defineConfig(({ mode: _mode }) => {
 			// codeSplitting groups with includeDependenciesRecursively:false assign
 			// ONLY the matched modules, so lazy-route vendors stay lazy. Group order
 			// decides ties (earlier wins), mirroring the old if-chain order.
+			//
+			// RULE (learned twice, Jul 3 markdown + Jul 4 quill): every group must
+			// pin its package's ENTIRE runtime dependency subtree — especially CJS
+			// deps. Unmatched deps scatter into the first app chunk that imports
+			// them; the vendor chunk then reaches back into that app chunk at
+			// module init through a chunk cycle, and the circular evaluation order
+			// crashes every consumer route with "<minified> is not a function".
+			// `npm run verify:chunks` (scripts/verify-chunk-init.mjs) enforces this
+			// after every build: no vendor chunk may import a non-vendor chunk, and
+			// every chunk must evaluate cleanly as an import-graph root.
 			rollupOptions: {
 				output: {
 					codeSplitting: {
@@ -643,8 +653,25 @@ export default defineConfig(({ mode: _mode }) => {
 							},
 							{ name: "query-vendor", test: /[\\/]@tanstack[\\/]/ },
 							{ name: "dnd-vendor", test: /node_modules[\\/]@dnd-kit[\\/]/ },
+							// zustand is shared by app stores (boot) AND @react-three/fiber;
+							// its own group keeps that edge vendor→vendor instead of letting
+							// react-three-vendor reach into a boot app chunk.
+							{ name: "state-vendor", test: /node_modules[\\/]zustand[\\/]/ },
+							// @use-gesture is shared by app surfaces (VTT pan/pinch) AND drei.
+							{
+								name: "gesture-vendor",
+								test: /[\\/]@use-gesture[\\/]/,
+							},
 							{ name: "validation-vendor", test: /node_modules[\\/]zod[\\/]/ },
-							{ name: "editor-vendor", test: /node_modules[\\/]quill[\\/]/ },
+							{
+								// Full quill subtree: quill-delta's CJS deps (lodash.clonedeep/
+								// lodash.isequal/fast-diff) otherwise scatter into the character
+								// sheet chunk and editor-vendor calls their require factories at
+								// init through a chunk cycle — "Qe is not a function" crashed
+								// every character sheet in prod (Jul 4).
+								name: "editor-vendor",
+								test: /node_modules[\\/](quill|quill-delta|parchment|eventemitter3|fast-diff|lodash\.clonedeep|lodash\.isequal|lodash-es)[\\/]/,
+							},
 							{ name: "date-vendor", test: /node_modules[\\/]date-fns[\\/]/ },
 							{
 								name: "icons-vendor",
@@ -671,8 +698,11 @@ export default defineConfig(({ mode: _mode }) => {
 								test: /node_modules[\\/](howler|hls\.js)[\\/]/,
 							},
 							{
+								// motion-dom/motion-utils are framer-motion's runtime; the
+								// __vite-optional-peer-dep stub is its @emotion/is-prop-valid
+								// virtual module.
 								name: "motion-vendor",
-								test: /node_modules[\\/]framer-motion[\\/]/,
+								test: /node_modules[\\/](framer-motion|motion-dom|motion-utils)[\\/]|__vite-optional-peer-dep/,
 							},
 
 							// ── 3D vendors (all reached only via lazy dice/3D scenes) ──
@@ -682,8 +712,10 @@ export default defineConfig(({ mode: _mode }) => {
 								test: /node_modules[\\/]three-stdlib[\\/]/,
 							},
 							{
+								// Includes drei/fiber's full runtime subtree (@babel/runtime is
+								// CJS and only consumed by this stack).
 								name: "react-three-vendor",
-								test: /node_modules[\\/](@react-three|troika-three-text|troika-worker-utils|troika-three-utils|three-mesh-bvh|camera-controls|maath|detect-gpu|stats-gl|meshline|glsl-noise|suspend-react|its-fine)[\\/]/,
+								test: /node_modules[\\/](@react-three|@babel[\\/]runtime|troika-three-text|troika-worker-utils|troika-three-utils|three-mesh-bvh|camera-controls|maath|detect-gpu|stats-gl|stats\.js|meshline|glsl-noise|suspend-react|its-fine|bidi-js|react-use-measure|tunnel-rat|webgl-sdf-generator)[\\/]/,
 							},
 							{
 								name: "postprocessing-vendor",
@@ -709,8 +741,11 @@ export default defineConfig(({ mode: _mode }) => {
 								test: /node_modules[\\/]posthog-js[\\/]/,
 							},
 							{
+								// property-expr/tiny-case/toposort are yup's CJS deps; left
+								// unpinned they scattered into an app chunk and crashed the
+								// login route at init ("Be is not a function").
 								name: "auth-ui-vendor",
-								test: /[\\/]@supabase[\\/]auth-ui-(react|shared)[\\/]|node_modules[\\/](yup|@stitches)[\\/]/,
+								test: /[\\/]@supabase[\\/]auth-ui-(react|shared)[\\/]|node_modules[\\/](yup|@stitches|property-expr|tiny-case|toposort)[\\/]/,
 							},
 							{
 								// The whole react-markdown/unified subtree must live in ONE
@@ -721,8 +756,10 @@ export default defineConfig(({ mode: _mode }) => {
 								// has a back-edge to markdown-vendor — the circular init order
 								// leaves the CJS factory undefined ("Hr is not a function") and
 								// crashes every markdown surface (compendium detail, etc.).
+								// ccount/markdown-table/longest-streak/zwitch/escape-string-regexp
+								// are the remark-gfm helpers that scattered next (Jul 4).
 								name: "markdown-vendor",
-								test: /node_modules[\\/](react-markdown|unified|hastscript|vfile[^\\/]*|property-information|space-separated-tokens|comma-separated-tokens|trim-lines|devlop|style-to-js|style-to-object|inline-style-parser|html-url-attributes|bail|trough|is-plain-obj|extend|estree-util-is-identifier-name)[\\/]|node_modules[\\/](remark-|rehype-|micromark|mdast-|hast-|unist-|character-entities|decode-named-character-reference)|node_modules[\\/]@ungap[\\/]structured-clone[\\/]/,
+								test: /node_modules[\\/](react-markdown|unified|hastscript|vfile[^\\/]*|property-information|space-separated-tokens|comma-separated-tokens|trim-lines|devlop|style-to-js|style-to-object|inline-style-parser|html-url-attributes|bail|trough|is-plain-obj|extend|estree-util-is-identifier-name|ccount|markdown-table|longest-streak|zwitch|escape-string-regexp)[\\/]|node_modules[\\/](remark-|rehype-|micromark|mdast-|hast-|unist-|character-entities|decode-named-character-reference)|node_modules[\\/]@ungap[\\/]structured-clone[\\/]/,
 							},
 							{
 								name: "forms-vendor",
@@ -730,7 +767,12 @@ export default defineConfig(({ mode: _mode }) => {
 							},
 							// Supabase client core: needed at boot, but versioned
 							// independently of app code — its own chunk caches better.
-							{ name: "supabase-vendor", test: /[\\/]@supabase[\\/]/ },
+							// iceberg-js is @supabase/storage-js's CJS dep — unpinned it
+							// scattered into the app client chunk (vendor→app cycle).
+							{
+								name: "supabase-vendor",
+								test: /[\\/]@supabase[\\/]|node_modules[\\/]iceberg-js[\\/]/,
+							},
 
 							// NO node_modules catch-all on purpose: a catch-all "vendor"
 							// chunk sits in the boot graph (it holds boot libs like the
