@@ -9,3 +9,7 @@ coverage
 playwright-report
 test-results
 audit-artifacts
+books
+audit
+.claude
+.git
