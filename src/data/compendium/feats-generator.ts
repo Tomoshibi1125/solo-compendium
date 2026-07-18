@@ -9,7 +9,7 @@ const awakeningFeats: CompendiumFeat[] = [
 		name: "Rift Survivor",
 		display_name: "Rift Survivor",
 		description:
-			"You survived a Rift Break before your Awakening — the ambient mana scarred your nervous system into a permanent state of threat-readiness. You have advantage on saving throws against being frightened by gate-born anomalies and anomaly. Your hit point maximum increases by your character level.",
+			"You survived a Rift Break before your Awakening — the ambient mana scarred your nervous system into a permanent state of threat-readiness. You have advantage on saving throws against being frightened by rift-born anomalies. Your hit point maximum increases by your character level.",
 		flavor:
 			"The sirens went off at 3 AM. By dawn, half the district was rubble. You walked out.",
 		tags: ["awakened", "feat", "awakening", "defensive"],

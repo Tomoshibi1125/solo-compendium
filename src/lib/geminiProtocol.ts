@@ -590,7 +590,7 @@ const abilityTemplates: Record<string, AbilityTemplate> = {
 	// LEVEL 20: Sovereign Transcendence - Ultimate power
 	sovereignTranscendence: {
 		name: "Sovereign Transcendence: {fusionName}",
-		desc: "[BEYOND FUSION] Under the The Absolute's blessing, transcend the Gemini Protocol itself. You have become a true Sovereign of {fusionTheme}. Permanent benefits: +4 to all ability scores, resistance to all damage, and once per day you may automatically succeed on any roll. When you die, you may choose to reform after 1d4 days at full power.",
+		desc: "[BEYOND FUSION] Under The Absolute's blessing, transcend the Gemini Protocol itself. You have become a true Sovereign of {fusionTheme}. Permanent benefits: +4 to all ability scores, resistance to all damage, and once per day you may automatically succeed on any roll. When you die, you may choose to reform after 1d4 days at full power.",
 		action: "Passive",
 		isCapstone: true,
 	},

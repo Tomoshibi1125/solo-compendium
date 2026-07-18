@@ -2250,7 +2250,7 @@ const CharacterNew = () => {
 						className="group mb-4"
 					>
 						<ArrowLeft className="w-4 h-4 mr-2 group-hover:-translate-x-1 transition-transform" />
-						Abat Database Link
+						Back to Home
 					</Button>
 					<PageHeader
 						title={

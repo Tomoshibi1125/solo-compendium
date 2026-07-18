@@ -586,8 +586,8 @@ const DiceRoller = () => {
 					}
 					description={
 						<ManaFlowText variant="rift" speed="slow">
-							Roll dice with the Rift's guidance — may the The Absolute's favor
-							be with you
+							Roll dice with the Rift's guidance — may The Absolute's favor be
+							with you
 						</ManaFlowText>
 					}
 					actions={

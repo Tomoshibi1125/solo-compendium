@@ -1875,7 +1875,7 @@ export const jobs: Job[] = [
 			{
 				name: "Aura of the Grave",
 				description:
-					"Sense trait. Low-intelligence Rift anomalies and anomaly ignore you unless you attack them first, perceiving your mana signature as part of the environment.",
+					"Sense trait. Low-intelligence Rift anomalies ignore you unless you attack them first, perceiving your mana signature as part of the environment.",
 				type: "sense",
 			},
 		],

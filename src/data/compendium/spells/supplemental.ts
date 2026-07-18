@@ -10393,7 +10393,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 		effects: {
 			primary:
 				"8d8 radiant; the target is blinded for 1 round on a failed save.",
-			secondary: "Anomalies and anomaly-type creatures take maximum damage.",
+			secondary: "Anomalies take maximum damage.",
 		},
 		level: 5,
 		school: "Evocation",

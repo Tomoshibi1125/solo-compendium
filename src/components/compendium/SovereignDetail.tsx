@@ -411,11 +411,11 @@ export const SovereignDetail = ({ data }: { data: SovereignData }) => {
 
 			{/* Lore Note */}
 			<AscendantWindow
-				title="THE The Absolute's SACRED PROCLAMATION"
+				title="THE ABSOLUTE'S SACRED PROCLAMATION"
 				className="border-cyan-500/30 bg-cyan-500/5"
 			>
 				<p className="text-sm text-cyan-200/80 italic leading-relaxed">
-					Under the Post-Reset timeline, Kael Voss, the The Absolute & Eternal
+					Under the Post-Reset timeline, Kael Voss, The Absolute & Eternal
 					Engine, granted the Gemini Protocol as a divine resolution to worthy
 					Ascendants. To become a Sovereign is to accept a permanent subclass
 					overlay that transcends the limitations of single-path power, wielding

@@ -255,7 +255,7 @@ const Characters = () => {
 							<Skull className="w-16 h-16 mx-auto text-muted-foreground mb-4 opacity-50" />
 							<AscendantText className="block text-muted-foreground">
 								No awakened Ascendants in the Rift registry. Begin your journey
-								in the The Absolute's domain.
+								in The Absolute's domain.
 							</AscendantText>
 						</div>
 						<Link to="/characters/new">
@@ -630,7 +630,7 @@ const Characters = () => {
 								</div>
 								<AscendantText className="block text-sm text-muted-foreground mt-6">
 									The Rift guides you through each awakening step, validating
-									your choices against the The Absolute's laws.
+									your choices against The Absolute's laws.
 								</AscendantText>
 								<Link to="/characters/new" className="inline-block mt-4">
 									<Button className="gap-2 font-heading bg-gradient-to-r from-resurge to-shadow-purple">
