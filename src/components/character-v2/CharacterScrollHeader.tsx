@@ -1,6 +1,7 @@
 import { Award, Heart, Shield, Zap } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 import { formatModifier } from "@/lib/characterCalculations";
+import { hunterRankForLevel } from "@/lib/hunterRank";
 import { cn } from "@/lib/utils";
 
 interface CharacterScrollHeaderProps {
@@ -56,16 +57,7 @@ export function CharacterScrollHeader({
 							{name}
 						</span>
 						<span className="text-[10px] font-mono text-primary/60 uppercase tracking-tighter">
-							Rank{" "}
-							{level >= 17
-								? "S"
-								: level >= 13
-									? "A"
-									: level >= 9
-										? "B"
-										: level >= 5
-											? "C"
-											: "D"}
+							Rank {hunterRankForLevel(level)}
 						</span>
 					</div>
 				</div>

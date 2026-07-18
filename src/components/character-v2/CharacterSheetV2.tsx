@@ -112,6 +112,7 @@ import {
 	type LevelingType,
 } from "@/lib/experience";
 import { applyDamage, applyHealing } from "@/lib/hpAdjustments";
+import { type HunterRank, hunterRankForLevel } from "@/lib/hunterRank";
 import { cn } from "@/lib/utils";
 import { QuestLog } from "@/pages/ascendant-tools/QuestLog";
 import { useCharacterSheetUiStore } from "@/stores/characterSheetUiStore";
@@ -134,6 +135,17 @@ const MOBILE_SECTIONS: { value: string; label: string; icon: LucideIcon }[] = [
 	{ value: "extras", label: "Extras", icon: LayoutGrid },
 	{ value: "stats", label: "Stats", icon: BarChart3 },
 ];
+
+// Rank-badge styling per canonical license rank (literal class strings for
+// Tailwind's scanner). The rank LETTER always comes from hunterRankForLevel —
+// see the "Rank truth" guard in uiTruthParity.test.ts.
+const RANK_BADGE_CLASSES: Record<HunterRank, string> = {
+	S: "border-gate-s text-gate-s shadow-[0_0_10px_rgba(var(--gate-s-rgb),0.5)]",
+	A: "border-gate-a text-gate-a",
+	B: "border-gate-b text-gate-b",
+	C: "border-gate-c text-gate-c",
+	D: "border-gate-d text-gate-d",
+};
 
 // CharacterSheetV2 is now the single authoritative page component.
 
@@ -799,35 +811,13 @@ export default function CharacterSheetV2() {
 						{/* Rank Badge */}
 						<div
 							className={`absolute -bottom-2 -right-2 w-8 h-8 rounded-full border-2 flex flex-col items-center justify-center font-display font-bold text-sm bg-obsidian-charcoal z-20 ${
-								character.level >= 17
-									? "border-gate-s text-gate-s shadow-[0_0_10px_rgba(var(--gate-s-rgb),0.5)]"
-									: character.level >= 13
-										? "border-gate-a text-gate-a"
-										: character.level >= 9
-											? "border-gate-b text-gate-b"
-											: character.level >= 5
-												? "border-gate-c text-gate-c"
-												: character.level >= 2
-													? "border-gate-d text-gate-d"
-													: "border-gate-e text-gate-e"
+								RANK_BADGE_CLASSES[hunterRankForLevel(character.level)]
 							}`}
 						>
 							<span className="text-[11px] leading-none text-primary/60 -mb-0.5">
 								RANK
 							</span>
-							<span>
-								{character.level >= 17
-									? "S"
-									: character.level >= 13
-										? "A"
-										: character.level >= 9
-											? "B"
-											: character.level >= 5
-												? "C"
-												: character.level >= 2
-													? "D"
-													: "E"}
-							</span>
+							<span>{hunterRankForLevel(character.level)}</span>
 						</div>
 					</div>
 

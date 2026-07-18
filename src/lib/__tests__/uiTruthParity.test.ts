@@ -7,6 +7,7 @@ import {
 	getRiftFavorMax,
 } from "@/lib/characterCalculations";
 import { getEffectiveHpMax, resolveHpMax } from "@/lib/derivedStats";
+import { hunterRankForLevel } from "@/lib/hunterRank";
 import { getRegentHpContributionForIds } from "@/lib/regentGestalt";
 
 const ROOT = resolve(__dirname, "../../..");
@@ -80,6 +81,36 @@ describe("Rift Favor truth (level-derived, not stale cache)", () => {
 		expect(getRiftFavorDie(5)).toBe(6);
 		expect(getRiftFavorDie(11)).toBe(8);
 		expect(getRiftFavorDie(17)).toBe(10);
+	});
+});
+
+describe("Rank truth — one license ladder (audit Phase A)", () => {
+	it("hunterRankForLevel is canonical: D at level 1, no E rank", () => {
+		expect(hunterRankForLevel(1)).toBe("D");
+		expect(hunterRankForLevel(4)).toBe("D");
+		expect(hunterRankForLevel(5)).toBe("C");
+		expect(hunterRankForLevel(9)).toBe("B");
+		expect(hunterRankForLevel(13)).toBe("A");
+		expect(hunterRankForLevel(17)).toBe("S");
+	});
+
+	it("sheet surfaces delegate to the canonical ladder (no inline ladders)", () => {
+		// The sheet badge shipped its own ladder with a phantom "E" tier at
+		// level 1 while the HUD used the canonical D — the same character
+		// showed two different ranks at once (Jul 18 live smoke).
+		for (const rel of [
+			"src/components/character-v2/CharacterSheetV2.tsx",
+			"src/components/character-v2/CharacterScrollHeader.tsx",
+		]) {
+			const s = src(rel);
+			expect(s.includes("hunterRankForLevel"), `${rel} must delegate`).toBe(
+				true,
+			);
+			expect(
+				/level >= 17[\s\S]{0,24}\?[\s\S]{0,10}"S"/.test(s),
+				`${rel} must not carry an inline rank ladder`,
+			).toBe(false);
+		}
 	});
 });
 
