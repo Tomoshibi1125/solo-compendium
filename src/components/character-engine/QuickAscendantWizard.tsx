@@ -57,6 +57,7 @@ import {
 	addLevel1Features,
 	addStartingEquipment,
 	applyJobAwakeningTraitsToCharacter,
+	getJobASI,
 } from "@/lib/characterCreation";
 import { getErrorInfo, getErrorMessage } from "@/lib/errorHandling";
 import { isLocalCharacterId, setLocalAbilities } from "@/lib/guestStore";
@@ -68,6 +69,7 @@ import {
 } from "@/lib/proficiencyDedup";
 import {
 	ALL_ABILITIES_CANONICAL_ORDER,
+	applyAbilityBonuses,
 	placeStandardArray,
 } from "@/lib/quickAscendantDefaults";
 import type { AbilityScore } from "@/types/core-rules";
@@ -207,9 +209,17 @@ export function QuickAscendantWizard({
 				typeof job.hit_die === "number" && Number.isFinite(job.hit_die)
 					? job.hit_die
 					: 8;
-			const vitMod = getAbilityModifier(abilities.VIT);
+			// Racial-ASI preview: derived values captured at creation (HP, AC)
+			// must use post-awakening scores, matching CharacterNew's
+			// effectiveAbilities. The stored scores stay BASE — the idempotent
+			// applyJobAwakeningTraitsToCharacter below applies the real ASI.
+			const effectiveAbilities = applyAbilityBonuses(
+				abilities,
+				getJobASI(job.name, 1, job),
+			);
+			const vitMod = getAbilityModifier(effectiveAbilities.VIT);
 			const hpMax = calculateHPMax(1, hitDieSize, vitMod);
-			const ac = 10 + getAbilityModifier(abilities.AGI);
+			const ac = 10 + getAbilityModifier(effectiveAbilities.AGI);
 			const speed =
 				typeof job.speed === "number" && Number.isFinite(job.speed)
 					? job.speed

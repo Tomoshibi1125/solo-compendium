@@ -15,6 +15,7 @@ import {
 } from "@/lib/characterResources";
 import {
 	applyJobPoolReconcile,
+	characterRowToJobPoolShape,
 	classifyEquipmentResources,
 	type EquipmentResourceRowLike,
 	expandEquipmentGrant,
@@ -40,6 +41,50 @@ const customResource = (
 	current: 0,
 	max: 0,
 	...overrides,
+});
+
+describe("characterRowToJobPoolShape (DB row → pool formula shape)", () => {
+	it("maps short ability columns to the full-name pool shape", () => {
+		const shape = characterRowToJobPoolShape({
+			level: 1,
+			str: 14,
+			agi: 12,
+			vit: 16,
+			int: 15,
+			sense: 10,
+			pre: 8,
+		});
+		expect(shape).toEqual({
+			level: 1,
+			strength: 14,
+			agility: 12,
+			vitality: 16,
+			intelligence: 15,
+			sense: 10,
+			presence: 8,
+		});
+	});
+
+	it("level-1 Revenant Remnants derive from real INT, not a phantom 10", () => {
+		// Regression: the hook cast the row directly, so `intelligence` was
+		// undefined and the pool seeded at max(1, mod(10) + PB) = 2. With the
+		// mapper it must be mod(15) + 2 = 4.
+		const row = { level: 1, str: 14, agi: 12, vit: 16, int: 15, pre: 8 };
+		const result = reconcileJobPools(
+			"Revenant",
+			characterRowToJobPoolShape(row),
+			[],
+		);
+		expect(result?.additions[0]?.name).toBe("Remnants");
+		expect(result?.additions[0]?.max).toBe(4);
+		// The un-mapped row reproduces the old bug — pinned as distinct.
+		expect(reconcileJobPools("Revenant", row, [])?.additions[0]?.max).toBe(2);
+	});
+
+	it("passes through rows that already use full-name fields", () => {
+		const shape = characterRowToJobPoolShape({ level: 3, intelligence: 18 });
+		expect(shape.intelligence).toBe(18);
+	});
 });
 
 describe("reconcileJobPools", () => {

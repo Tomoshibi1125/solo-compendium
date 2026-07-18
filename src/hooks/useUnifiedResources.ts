@@ -22,6 +22,7 @@ import type {
 } from "@/lib/characterResources";
 import {
 	applyJobPoolReconcile,
+	characterRowToJobPoolShape,
 	classifyEquipmentResources,
 	type EquipmentResourceEntry,
 	type LegacyTrackedResource,
@@ -76,15 +77,10 @@ export function useUnifiedResources(
 		);
 		const merged = [...customResources, ...migrated];
 
-		const poolCharacter = character as {
-			level?: number | null;
-			strength?: number | null;
-			agility?: number | null;
-			vitality?: number | null;
-			presence?: number | null;
-			intelligence?: number | null;
-			sense?: number | null;
-		};
+		// Rows carry short ability columns (str/agi/vit/int/sense/pre); the
+		// pool formulas read full names — map, don't cast (a direct cast fed
+		// every ability-scaled pool a phantom score of 10).
+		const poolCharacter = characterRowToJobPoolShape(character);
 		const reconcile = reconcileJobPools(character.job, poolCharacter, merged);
 
 		reconciledFor.current = characterId;

@@ -8,7 +8,16 @@
  *   3. Remaining in canonical declared order (STR/AGI/VIT/INT/SENSE/PRE)
  */
 import { describe, expect, it } from "vitest";
-import { placeStandardArray } from "@/lib/quickAscendantDefaults";
+import { jobs } from "@/data/compendium/jobs";
+import {
+	calculateHPMax,
+	getAbilityModifier,
+} from "@/lib/characterCalculations";
+import { getJobASI } from "@/lib/characterCreation";
+import {
+	applyAbilityBonuses,
+	placeStandardArray,
+} from "@/lib/quickAscendantDefaults";
 
 describe("placeStandardArray", () => {
 	it("places 15 on the Job's primary ability (Mage = INT)", () => {
@@ -54,5 +63,37 @@ describe("placeStandardArray", () => {
 			const result = placeStandardArray(ability);
 			expect(result[ability]).toBe(15);
 		}
+	});
+});
+
+describe("applyAbilityBonuses (racial-ASI preview for creation math)", () => {
+	it("overlays bonuses without mutating the base scores", () => {
+		const base = placeStandardArray("INT");
+		const effective = applyAbilityBonuses(base, { VIT: 2, STR: 1 });
+		expect(effective.VIT).toBe(base.VIT + 2);
+		expect(effective.STR).toBe(base.STR + 1);
+		expect(base.VIT).toBe(14); // untouched
+	});
+
+	it("ignores unknown ability keys", () => {
+		const base = placeStandardArray(null);
+		const effective = applyAbilityBonuses(base, { LUCK: 5 });
+		expect(effective).toEqual(base);
+	});
+
+	it("level-1 Revenant Quickbuilder HP uses post-ASI VIT (10 → 11 fix)", () => {
+		// Revenant primary = INT: array gives INT 15, VIT 14; awakening ASI
+		// is VIT +2 / STR +1, so HP must be 8 (max d8) + mod(16) = 11, not
+		// 8 + mod(14) = 10 — the pre-ASI value the wizard shipped before.
+		const base = placeStandardArray("INT");
+		const revenant = jobs.find((j) => j.name === "Revenant");
+		expect(revenant).toBeDefined();
+		const asi = getJobASI("Revenant", 1, revenant);
+		expect(asi.VIT).toBe(2);
+		const effective = applyAbilityBonuses(base, asi);
+		const hp = calculateHPMax(1, 8, getAbilityModifier(effective.VIT));
+		expect(hp).toBe(11);
+		// The buggy pre-ASI computation is pinned as distinct:
+		expect(calculateHPMax(1, 8, getAbilityModifier(base.VIT))).toBe(10);
 	});
 });

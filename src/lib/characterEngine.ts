@@ -1175,11 +1175,24 @@ export function computeArmorClass(
 	abilityModifiers: Record<AbilityScore, number>,
 	equippedItems: EquipmentInstance[],
 	effects: Effect[],
+	jobs: CharacterJob[] = [],
 ): number {
-	// Find equipped armor (if any)
+	// Find equipped armor (if any). Shields carry type "armor" too, so
+	// exclude them here — a shield alone must not suppress the unarmored
+	// formulas below.
 	const armor = equippedItems.find(
 		(item) =>
 			item.type === "armor" &&
+			item.isEquipped &&
+			!item.properties?.includes("shield") &&
+			(!item.requiresAttunement || item.isAttuned),
+	);
+
+	// Shield lookup happens before the base-formula pick because Striker's
+	// unarmored defense is shield-disqualified (monk-style).
+	const equippedShield = equippedItems.find(
+		(item) =>
+			item.properties?.includes("shield") &&
 			item.isEquipped &&
 			(!item.requiresAttunement || item.isAttuned),
 	);
@@ -1190,18 +1203,34 @@ export function computeArmorClass(
 		// Parse AC formula (e.g., "13 + AGI (max 2)", "18", "10 + AGI")
 		baseAC = parseACFormula(armor.acFormula, abilityModifiers);
 	} else {
-		// Unarmored: 10 + AGI
+		// Unarmored: highest of 10 + AGI and any job unarmored-defense
+		// formula — same candidates as acFormulas.ts (the two AC stacks
+		// must agree; see engineUnarmoredDefense.test.ts).
 		baseAC = 10 + abilityModifiers.AGI;
+		for (const { job } of jobs) {
+			const name = (job ?? "").trim().toLowerCase();
+			if (name === "berserker") {
+				baseAC = Math.max(
+					baseAC,
+					10 + abilityModifiers.STR + abilityModifiers.VIT,
+				);
+			} else if (name === "revenant") {
+				// Deathbound Flesh: 10 + INT + VIT, shield allowed.
+				baseAC = Math.max(
+					baseAC,
+					10 + abilityModifiers.INT + abilityModifiers.VIT,
+				);
+			} else if (name === "striker" && !equippedShield) {
+				baseAC = Math.max(
+					baseAC,
+					10 + abilityModifiers.AGI + abilityModifiers.SENSE,
+				);
+			}
+		}
 	}
 
 	// Apply shield bonus (if equipped)
-	const shield = equippedItems.find(
-		(item) =>
-			item.properties?.includes("shield") &&
-			item.isEquipped &&
-			(!item.requiresAttunement || item.isAttuned),
-	);
-	if (shield) {
+	if (equippedShield) {
 		baseAC += 2; // Standard shield bonus
 	}
 
@@ -1519,6 +1548,7 @@ export function computeCharacterStats(
 		abilityModifiers,
 		base.equippedItems,
 		effects,
+		base.jobs,
 	);
 
 	// 7. Compute initiative (AGI modifier + effects)

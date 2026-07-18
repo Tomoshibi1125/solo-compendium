@@ -24,6 +24,30 @@ export const ALL_ABILITIES_CANONICAL_ORDER: ReadonlyArray<AbilityScore> = [
  * primary ability first, then VIT (drives HP at level 1), then the rest
  * in canonical declared order.
  */
+/**
+ * Overlay ability bonuses (racial/awakening ASI preview) onto base scores.
+ *
+ * The Quickbuilder persists BASE scores and lets the idempotent
+ * `applyJobAwakeningTraitsToCharacter` apply the racial ASI — but derived
+ * values captured at creation (level-1 HP, stored AC) must be computed
+ * from the post-ASI scores, exactly like CharacterNew's
+ * `effectiveAbilities`. Computing HP from base VIT shipped level-1
+ * Revenants at 10 HP instead of 11 (Jul 18 prod smoke).
+ */
+export function applyAbilityBonuses(
+	base: Record<AbilityScore, number>,
+	bonuses: Record<string, number>,
+): Record<AbilityScore, number> {
+	const next = { ...base };
+	for (const [ability, bonus] of Object.entries(bonuses)) {
+		const key = ability as AbilityScore;
+		if (key in next && typeof bonus === "number") {
+			next[key] += bonus;
+		}
+	}
+	return next;
+}
+
 export function placeStandardArray(
 	primary: AbilityScore | null,
 ): Record<AbilityScore, number> {

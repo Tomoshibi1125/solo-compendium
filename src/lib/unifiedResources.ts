@@ -43,6 +43,38 @@ export interface JobResourceDef {
 	recovery: "short-rest" | "long-rest";
 }
 
+/**
+ * Map a characters row (short DB columns: str/agi/vit/int/sense/pre) to the
+ * full-name JobPoolCharacterShape the pool formulas read.
+ *
+ * The hook used to cast the row directly, so `c.intelligence` etc. were
+ * always undefined and every ability-scaled pool computed from a phantom
+ * score of 10 (level-1 Revenant Remnants showed 2 instead of INT mod + PB;
+ * Idol Hype Dice were stuck at 1). Rows that already carry full-name fields
+ * (tests, future shapes) pass through unchanged.
+ */
+export function characterRowToJobPoolShape(
+	row: Partial<JobPoolCharacterShape> & {
+		level?: number | null;
+		str?: number | null;
+		agi?: number | null;
+		vit?: number | null;
+		int?: number | null;
+		sense?: number | null;
+		pre?: number | null;
+	},
+): JobPoolCharacterShape {
+	return {
+		level: row.level,
+		strength: row.strength ?? row.str,
+		agility: row.agility ?? row.agi,
+		vitality: row.vitality ?? row.vit,
+		intelligence: row.intelligence ?? row.int,
+		sense: row.sense,
+		presence: row.presence ?? row.pre,
+	};
+}
+
 const mod = (score: number | null | undefined): number =>
 	getAbilityModifier(score ?? 10);
 
