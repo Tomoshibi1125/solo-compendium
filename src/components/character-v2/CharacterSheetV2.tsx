@@ -422,12 +422,18 @@ export default function CharacterSheetV2() {
 	// and omits gestalt/override/custom (see getEffectiveHpMax / audit D1-D2).
 	const effectiveHpMax = stats.calculatedStats.hpMax;
 
+	// DDB parity: conditions + exhaustion auto-apply advantage/disadvantage.
+	// The ADV/DIS toggle is layered on top as a manual override rather than
+	// being the only input (a Poisoned character used to roll straight).
 	const onRollAbility = (ability: AbilityScore) =>
 		rollAndRecord({
 			title: `${ability} Check`,
 			formula: "1d20",
 			rollType: "ability",
-			advantage: rollMode,
+			advantage: pm.resolveD20Advantage("ability_checks", {
+				ability,
+				uiOverride: rollMode,
+			}),
 			context: `${ability} ability check`,
 			modifier: getAbilityModifier(stats.finalAbilities[ability]),
 		});
@@ -437,7 +443,10 @@ export default function CharacterSheetV2() {
 			title: `${ability} Save`,
 			formula: "1d20",
 			rollType: "save",
-			advantage: rollMode,
+			advantage: pm.resolveD20Advantage("saving_throws", {
+				ability,
+				uiOverride: rollMode,
+			}),
 			context: `${ability} saving throw`,
 			modifier: stats.calculatedStats.savingThrows[ability],
 		});
@@ -449,7 +458,9 @@ export default function CharacterSheetV2() {
 			title: `${skill} Check`,
 			formula: "1d20",
 			rollType: "skill",
-			advantage: rollMode,
+			advantage: pm.resolveD20Advantage("ability_checks", {
+				uiOverride: rollMode,
+			}),
 			context: `${skill} skill check`,
 			modifier,
 		});
@@ -460,7 +471,9 @@ export default function CharacterSheetV2() {
 			title: "Initiative",
 			formula: "1d20",
 			rollType: "initiative",
-			advantage: rollMode,
+			advantage: pm.resolveD20Advantage("initiative", {
+				uiOverride: rollMode,
+			}),
 			context: "Initiative roll",
 			modifier: stats.finalInitiative,
 		});

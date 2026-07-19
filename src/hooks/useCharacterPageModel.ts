@@ -48,9 +48,15 @@ import {
 } from "@/lib/diceRoller";
 import { isLocalCharacterId } from "@/lib/guestStore";
 import { notifyAsync } from "@/lib/notify";
+import {
+	type AdvantageState,
+	combineAdvantageStates,
+	resolveAdvantageForRoll,
+} from "@/lib/rollAdvantage";
 import { quickRoll } from "@/lib/rollEngine";
 import { isSourcebookAccessible } from "@/lib/sourcebookAccess";
 import { formatRegentVernacular } from "@/lib/vernacular";
+import type { AbilityScore } from "@/types/core-rules";
 
 const isConditionEntryLike = (value: unknown): value is ConditionEntry => {
 	if (typeof value !== "object" || value === null || Array.isArray(value)) {
@@ -350,6 +356,59 @@ export function useCharacterPageModel() {
 	}, [character?.gemini_state, character?.conditions]);
 	const characterConditions =
 		sheetConditions.length > 0 ? sheetConditions : fallbackConditions;
+
+	// D&D Beyond parity: active conditions and exhaustion auto-apply
+	// advantage/disadvantage to d20 rolls. The engine already derives this
+	// (conditionEffects → rollAdvantage), but the sheet's roll buttons used to
+	// pass ONLY the manual ADV/DIS toggle, so a Poisoned or exhausted
+	// character rolled straight unless the player noticed and flipped it
+	// (Jul 18 audit). This resolver is the single entry point the sheet uses.
+	const conditionNames = useMemo(
+		() => characterConditions.map((entry) => entry.conditionName),
+		[characterConditions],
+	);
+	const exhaustionLevel = character?.exhaustion_level ?? 0;
+
+	const resolveD20Advantage = useCallback(
+		(
+			rollType:
+				| "attack_rolls"
+				| "ability_checks"
+				| "saving_throws"
+				| "initiative",
+			options?: { ability?: AbilityScore | null; uiOverride?: AdvantageState },
+		): AdvantageState => {
+			// Initiative is an AGI ability check in 5e, so it inherits
+			// ability-check effects (exhaustion 1, Frightened, …).
+			const baseType = rollType === "initiative" ? "ability_checks" : rollType;
+			const states: AdvantageState[] = [
+				resolveAdvantageForRoll({
+					conditions: conditionNames,
+					exhaustionLevel,
+					rollType: baseType,
+					customModifiers,
+					customTargets: rollType === "initiative" ? ["initiative"] : [],
+				}),
+			];
+			// Per-ability save effects (Paralyzed → STR/AGI saves, Restrained →
+			// AGI saves) live under their own targets, so a save must consult
+			// both the generic and the ability-specific bucket.
+			if (baseType === "saving_throws" && options?.ability) {
+				states.push(
+					resolveAdvantageForRoll({
+						conditions: conditionNames,
+						exhaustionLevel,
+						rollType: `${options.ability}_saves` as "AGI_saves",
+						customModifiers,
+						customTargets: [`save:${options.ability.toLowerCase()}`],
+					}),
+				);
+			}
+			if (options?.uiOverride) states.push(options.uiOverride);
+			return combineAdvantageStates(states);
+		},
+		[conditionNames, exhaustionLevel, customModifiers],
+	);
 
 	useEffect(() => {
 		if (!character || isReadOnly) return;
@@ -760,6 +819,8 @@ export function useCharacterPageModel() {
 		memoizedStats,
 		characterResources,
 		characterConditions,
+		/** Condition/exhaustion-aware advantage for the sheet's d20 rolls. */
+		resolveD20Advantage,
 		displayNames,
 		characterCampaign,
 		spellCasting,
