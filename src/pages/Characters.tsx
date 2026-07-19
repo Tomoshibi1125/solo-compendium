@@ -47,6 +47,7 @@ import {
 } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 import { useCharacters, useDeleteCharacter } from "@/hooks/useCharacters";
+import { getProficiencyBonus } from "@/lib/characterCalculations";
 import { MAX_CHARACTERS_PER_USER } from "@/lib/characterLimits";
 import { hunterRankStyleForLevel } from "@/lib/hunterRank";
 import { cn } from "@/lib/utils";
@@ -548,7 +549,10 @@ const Characters = () => {
 												<div className="text-center p-2 rounded-[2px] bg-black/40 border border-primary/20 shadow-[inset_0_0_8px_rgba(0,0,0,0.5)] group/stat">
 													<Crown className="w-3 h-3 mx-auto mb-1 text-resurge-violet opacity-80 group-hover/stat:opacity-100 transition-opacity" />
 													<span className="font-heading font-bold text-lg text-white drop-shadow-[0_0_5px_currentColor]">
-														{character.proficiency_bonus}
+														{/* Level-derived, never the stored column: writers
+														    (notably import) leave it stale, which made the
+														    roster disagree with the sheet. */}
+														+{getProficiencyBonus(character.level)}
 													</span>
 													<span className="text-[10px] font-mono tracking-widest text-muted-foreground block uppercase mt-1">
 														PROF

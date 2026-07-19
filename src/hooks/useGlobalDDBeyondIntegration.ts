@@ -117,8 +117,10 @@ export function useCharacterSheetEnhancements(
 		() => character?.abilities ?? {},
 		[character?.abilities],
 	);
-	const proficiencyBonus =
-		character?.proficiency_bonus ?? getProficiencyBonus(character?.level ?? 1);
+	// Always level-derived. The stored proficiency_bonus column goes stale
+	// (the import path never writes it; the guest store defaults it to 2), so
+	// preferring it made rolls from this hook disagree with the sheet.
+	const proficiencyBonus = getProficiencyBonus(character?.level ?? 1);
 
 	const characterRoll = useCharacterRoll({
 		characterId,

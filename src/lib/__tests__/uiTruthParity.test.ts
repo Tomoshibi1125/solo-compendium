@@ -3,6 +3,7 @@ import { resolve } from "node:path";
 import { describe, expect, it } from "vitest";
 import {
 	calculateSpellSaveDC,
+	getProficiencyBonus,
 	getRiftFavorDie,
 	getRiftFavorMax,
 } from "@/lib/characterCalculations";
@@ -110,6 +111,37 @@ describe("Rank truth — one license ladder (audit Phase A)", () => {
 				/level >= 17[\s\S]{0,24}\?[\s\S]{0,10}"S"/.test(s),
 				`${rel} must not carry an inline rank ladder`,
 			).toBe(false);
+		}
+	});
+});
+
+describe("Proficiency-bonus truth — level-derived, not the cached column", () => {
+	it("getProficiencyBonus is the canonical ladder", () => {
+		expect(getProficiencyBonus(1)).toBe(2);
+		expect(getProficiencyBonus(4)).toBe(2);
+		expect(getProficiencyBonus(5)).toBe(3);
+		expect(getProficiencyBonus(9)).toBe(4);
+		expect(getProficiencyBonus(13)).toBe(5);
+		expect(getProficiencyBonus(17)).toBe(6);
+	});
+
+	// The characters row carries a proficiency_bonus column that writers can
+	// leave stale: the import path never sets it and the guest store defaults
+	// it to 2, so an imported level-10 Ascendant showed PB 2 on the roster
+	// card while the sheet (which computes from level) showed +4.
+	it("roster + roll surfaces derive PB from level, not the stored column", () => {
+		for (const rel of [
+			"src/pages/Characters.tsx",
+			"src/hooks/useGlobalDDBeyondIntegration.ts",
+		]) {
+			const s = src(rel);
+			expect(
+				/\.proficiency_bonus\b/.test(s),
+				`${rel} must not read the cached proficiency_bonus column`,
+			).toBe(false);
+			expect(s.includes("getProficiencyBonus"), `${rel} must derive PB`).toBe(
+				true,
+			);
 		}
 	});
 });
