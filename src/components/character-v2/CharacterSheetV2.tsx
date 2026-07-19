@@ -1166,19 +1166,21 @@ export default function CharacterSheetV2() {
 					/>
 				)}
 
-				{((characterConditions && characterConditions.length > 0) ||
-					character.exhaustion_level > 0) &&
-					!isReadOnly && (
-						<ConditionBadgeBar
-							conditions={characterConditions}
-							exhaustionLevel={character.exhaustion_level}
-							onClearExhaustion={() =>
-								handleExhaustionChange(-character.exhaustion_level)
-							}
-							onAddCondition={handleAddCondition}
-							onRemoveCondition={handleRemoveCondition}
-						/>
-					)}
+				{/* Always rendered when editable: the "Add" control lives inside
+			    this bar, so gating it on already-having-a-condition left a clean
+			    character unable to apply their first one. The bar renders its
+			    own "No active conditions" empty state. */}
+				{!isReadOnly && (
+					<ConditionBadgeBar
+						conditions={characterConditions}
+						exhaustionLevel={character.exhaustion_level}
+						onClearExhaustion={() =>
+							handleExhaustionChange(-character.exhaustion_level)
+						}
+						onAddCondition={handleAddCondition}
+						onRemoveCondition={handleRemoveCondition}
+					/>
+				)}
 
 				{!isReadOnly && (
 					<div className="flex items-center gap-2 flex-wrap">

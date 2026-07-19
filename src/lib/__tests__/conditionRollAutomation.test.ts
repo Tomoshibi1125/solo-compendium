@@ -90,4 +90,21 @@ describe("structural wiring — the sheet consumes the resolver", () => {
 		// The old shape — `advantage: rollMode` — must be gone.
 		expect(/advantage:\s*rollMode\b/.test(s)).toBe(false);
 	});
+
+	// The automation above is unusable if you can't apply a condition in the
+	// first place: the "Add" control lives inside ConditionBadgeBar, and the
+	// sheet used to render that bar only when the character ALREADY had a
+	// condition or exhaustion — so a clean character had no way in. Found while
+	// trying to drive the automation live (Jul 19).
+	it("the condition bar renders even with no conditions, so Add is reachable", () => {
+		const s = src("src/components/character-v2/CharacterSheetV2.tsx");
+		const idx = s.indexOf("<ConditionBadgeBar");
+		expect(idx).toBeGreaterThan(-1);
+		// Look at the guard immediately preceding the element.
+		const preceding = s.slice(Math.max(0, idx - 400), idx);
+		expect(
+			/characterConditions\.length > 0/.test(preceding),
+			"the bar must not be gated on already having a condition",
+		).toBe(false);
+	});
 });
