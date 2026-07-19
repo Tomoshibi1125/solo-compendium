@@ -134,6 +134,22 @@ describe("5e Character Calculations", () => {
 		expect(minLimit).toBe(1);
 	});
 
+	test("half-caster prepared limit is gated on spellcasting start (level 2)", () => {
+		// Revenant/Holy Knight/Technomancer gain spellcasting at level 2
+		// (Paladin/Artificer pattern; Revenant's Reaper's Ledger is a L2
+		// feature). At level 1 there is nothing castable, so no prepared
+		// allowance may be shown — the sheet displayed "Prepared: 0/2" on a
+		// level-1 Revenant (Jul 18 audit).
+		expect(getSpellsPreparedLimit("Revenant", 1, 2)).toBeNull();
+		expect(getSpellsPreparedLimit("Holy Knight", 1, 3)).toBeNull();
+		expect(getSpellsPreparedLimit("Technomancer", 1, 2)).toBeNull();
+		// From level 2 the Paladin-style formula applies: mod + floor(level/2).
+		expect(getSpellsPreparedLimit("Revenant", 2, 2)).toBe(3);
+		expect(getSpellsPreparedLimit("Holy Knight", 5, 3)).toBe(5);
+		// Full casters still prepare from level 1.
+		expect(getSpellsPreparedLimit("Mage", 1, 3)).toBe(4);
+	});
+
 	test("Stalker (Ranger) is a KNOWN caster, not a prepared caster", () => {
 		// Ranger is a known half-caster in 5e: no daily preparation.
 		expect(getSpellsPreparedLimit("Stalker", 5, 3)).toBeNull();

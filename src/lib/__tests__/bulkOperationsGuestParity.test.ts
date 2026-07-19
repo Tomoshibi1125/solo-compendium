@@ -284,7 +284,10 @@ describe("bulkOperations — guest parity & ASI safety", () => {
 	});
 
 	describe("bulkRest", () => {
-		it("short rest restores half max hit dice (rounded up)", async () => {
+		// 5e RAW: hit dice are SPENT on a short rest, never regained. bulkRest
+		// used to grant ceil(max/2) dice here — free healing every short rest
+		// (Jul 18 audit). It now delegates to restSystem like the sheet does.
+		it("short rest does not regain hit dice (RAW: they are spent, not restored)", async () => {
 			const c = makeLocalCharacter({
 				hit_dice_max: 10,
 				hit_dice_current: 0,
@@ -293,11 +296,10 @@ describe("bulkOperations — guest parity & ASI safety", () => {
 			expect(result).toEqual({ success: 1, failed: 0 });
 
 			const after = getLocalCharacterState(c.id)?.character;
-			// Math.ceil(10/2) = 5
-			expect(after?.hit_dice_current).toBe(5);
+			expect(after?.hit_dice_current).toBe(0);
 		});
 
-		it("long rest fully resets HP, hit dice, rift favor, exhaustion -1, conditions cleared", async () => {
+		it("long rest resets HP/favor, regains half the hit dice, exhaustion -1, conditions cleared", async () => {
 			const c = makeLocalCharacter({
 				hp_current: 1,
 				hp_max: 30,
@@ -313,7 +315,9 @@ describe("bulkOperations — guest parity & ASI safety", () => {
 
 			const after = getLocalCharacterState(c.id)?.character;
 			expect(after?.hp_current).toBe(30);
-			expect(after?.hit_dice_current).toBe(5);
+			// RAW: regain max(1, floor(total/2)) spent dice — 2 of 5, not all 5.
+			// bulkRest previously refilled the whole pool (Jul 18 audit).
+			expect(after?.hit_dice_current).toBe(2);
 			expect(after?.rift_favor_current).toBe(4);
 			expect(after?.exhaustion_level).toBe(2);
 			expect(after?.conditions).toEqual([]);

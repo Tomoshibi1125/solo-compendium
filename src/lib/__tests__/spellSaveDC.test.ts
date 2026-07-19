@@ -234,7 +234,10 @@ describe("spell known/prepared count formulas", () => {
 	// Technomancer were previously over-counted with the full-caster formula:
 	// Holy Knight L13 mod +1 = 7, not 14; Technomancer L2 mod +3 = 4, not 5.)
 	it.each([
-		["Revenant", 1, 3, 3],
+		// Level 1 is NOT a data point here: half-casters have no spell slots
+		// until level 2, so there is nothing to prepare (see the
+		// "no slots → no prepared allowance" case below).
+		["Revenant", 2, 3, 4],
 		["Revenant", 7, 2, 5],
 		["Revenant", 20, 4, 14],
 		["Holy Knight", 13, 1, 7],
@@ -252,6 +255,22 @@ describe("spell known/prepared count formulas", () => {
 		"Destroyer",
 	])("%s does not use the prepared-spells formula", (jobName) => {
 		expect(getSpellsPreparedLimit(jobName, 5, 4)).toBeNull();
+	});
+
+	// Jul 18 audit: a level-1 Revenant sheet rendered "Prepared: 0/2" even
+	// though half-casters have no spell slots until level 2 — nothing was
+	// castable, so no allowance may be shown. The gate is derived from the
+	// slot table, so it tracks the progression automatically.
+	it.each([
+		["Revenant", 1, 2],
+		["Holy Knight", 1, 3],
+		["Technomancer", 1, 2],
+	])("%s level %i has no slots yet, so no prepared allowance", (jobName, level, abilityModifier) => {
+		expect(getSpellsPreparedLimit(jobName, level, abilityModifier)).toBeNull();
+	});
+
+	it("full casters still prepare from level 1 (slots exist immediately)", () => {
+		expect(getSpellsPreparedLimit("Mage", 1, 3)).toBe(4);
 	});
 });
 

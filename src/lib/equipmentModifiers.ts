@@ -75,6 +75,34 @@ export function inferArmorType(
 	return null;
 }
 
+/**
+ * True when a row is WORN armor for AC purposes. The bare tokens
+ * "light"/"medium"/"heavy" are also 5e WEAPON properties (dagger/sickle
+ * "light", greatsword "heavy"), so property tokens alone cannot decide:
+ * an equipped Sickle classified as light armor suppressed Revenant/
+ * Berserker/Striker unarmored defense on the live sheet (Jul 18 audit —
+ * AC showed 10 + AGI because the "Armored" formula won and disqualified
+ * the UD formulas).
+ *
+ * Rules: weapon-typed rows are never armor; armor-typed rows are armor
+ * unless they are shields; anything else needs an explicit
+ * "<tier> armor" property.
+ */
+export function isWornArmorRow(row: {
+	item_type?: string | null;
+	properties?: (string | null | undefined)[] | null;
+}): boolean {
+	const type = row.item_type?.trim().toLowerCase();
+	const props = (row.properties ?? [])
+		.filter((p): p is string => typeof p === "string")
+		.map((p) => p.toLowerCase());
+	if (type === "weapon") return false;
+	const isShield = type === "shield" || props.some((p) => p.includes("shield"));
+	if (isShield) return false;
+	if (type === "armor") return true;
+	return props.some((p) => /\b(light|medium|heavy)\s+armor\b/.test(p));
+}
+
 function isArmorItem(properties: string[]): boolean {
 	return properties.some((p) => {
 		const lower = p.toLowerCase();

@@ -428,68 +428,23 @@ export async function bulkRest(
 	let success = 0;
 	let failed = 0;
 
+	// One rest engine for the whole app. This used to carry its own hit-dice
+	// math that contradicted both restSystem.ts and 5e RAW: it GRANTED
+	// ceil(max/2) hit dice on a short rest (RAW spends them, never regains)
+	// and refilled the entire pool on a long rest (RAW regains half, min 1).
+	// A party bulk-resting from the roster bar got free dice every time.
+	// restSystem handles guest + Supabase, features, slots, conditions and
+	// exhaustion, so delegating also fixes the recharges bulkRest skipped.
+	const { executeShortRest, executeLongRest } = await import(
+		"@/lib/restSystem"
+	);
+
 	for (const id of characterIds) {
 		try {
-			// Guest parity: branch local IDs through guestStore so the
-			// roster bar can rest guest characters without requiring an
-			// account. Mirrors the auth path (short = ½ hit dice, long =
-			// full reset + exhaustion -1 + conditions cleared).
-			if (isLocalCharacterId(id)) {
-				const localState = getLocalCharacterState(id);
-				if (!localState) {
-					throw new AppError("Local character not found", "NOT_FOUND");
-				}
-				const character = localState.character;
-				if (restType === "short") {
-					const hitDiceToRestore = Math.ceil(character.hit_dice_max / 2);
-					const newHitDiceCurrent = Math.min(
-						character.hit_dice_current + hitDiceToRestore,
-						character.hit_dice_max,
-					);
-					updateLocalCharacter(id, { hit_dice_current: newHitDiceCurrent });
-				} else {
-					updateLocalCharacter(id, {
-						hp_current: character.hp_max,
-						hit_dice_current: character.hit_dice_max,
-						rift_favor_current: character.rift_favor_max,
-						exhaustion_level: Math.max(0, character.exhaustion_level - 1),
-						conditions: [],
-					});
-				}
-				success++;
-				continue;
-			}
-
-			const { data: character } = await supabase
-				.from("characters")
-				.select("*")
-				.eq("id", id)
-				.single();
-
-			if (!character) throw new AppError("Character not found", "NOT_FOUND");
-
 			if (restType === "short") {
-				const hitDiceToRestore = Math.ceil(character.hit_dice_max / 2);
-				const newHitDiceCurrent = Math.min(
-					character.hit_dice_current + hitDiceToRestore,
-					character.hit_dice_max,
-				);
-
-				await supabase
-					.from("characters")
-					.update({ hit_dice_current: newHitDiceCurrent })
-					.eq("id", id);
+				await executeShortRest(id);
 			} else {
-				await supabase
-					.from("characters")
-					.update({
-						hp_current: character.hp_max,
-						hit_dice_current: character.hit_dice_max,
-						rift_favor_current: character.rift_favor_max,
-						exhaustion_level: Math.max(0, character.exhaustion_level - 1),
-						conditions: [],
-					})
-					.eq("id", id);
+				await executeLongRest(id);
 			}
 
 			success++;

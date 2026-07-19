@@ -30,6 +30,7 @@ import {
 import {
 	applyEquipmentModifiers,
 	inferArmorType,
+	isWornArmorRow,
 } from "@/lib/equipmentModifiers";
 import { computeAttacksPerAction } from "@/lib/featEffectParser";
 import {
@@ -137,15 +138,16 @@ export function useCharacterDerivedStats(
 			);
 		};
 
+		// "light"/"heavy" are weapon properties too — classification must go
+		// through isWornArmorRow or an equipped Sickle/dagger reads as armor
+		// and suppresses unarmored defense (Jul 18 audit).
 		const equippedArmor = (equipment || []).some((item) => {
-			const props = getEquipmentProperties(item).map((p) => p.toLowerCase());
 			if (!item.is_equipped) return false;
 			if (item.requires_attunement && !item.is_attuned) return false;
-			return (
-				props.some((p) => p.includes("light")) ||
-				props.some((p) => p.includes("medium")) ||
-				props.some((p) => p.includes("heavy"))
-			);
+			return isWornArmorRow({
+				item_type: item.item_type,
+				properties: getEquipmentProperties(item),
+			});
 		});
 
 		const unarmoredDefenseBase = equippedArmor
@@ -430,12 +432,15 @@ export function useCharacterDerivedStats(
 		// row name matches a canonical entry — falls back to row-property regex
 		// parsing for homebrew/freeform items.
 		const isArmorRow = (e: EquipmentRow): boolean => {
-			if (e.item_type === "armor") return true;
-			const rowProps = getEquipmentProperties(e).map((p) => p.toLowerCase());
+			// Weapon-typed rows can never be worn armor — "light"/"heavy" are
+			// weapon properties, so token matching alone misclassifies them
+			// (the Jul 18 Sickle bug: UD jobs lost their AC formula).
+			if (e.item_type === "weapon") return false;
 			if (
-				rowProps.some((p) =>
-					["light", "medium", "heavy"].some((tag) => p.includes(tag)),
-				)
+				isWornArmorRow({
+					item_type: e.item_type,
+					properties: getEquipmentProperties(e),
+				})
 			)
 				return true;
 			if (canonicalEquipmentMap) {

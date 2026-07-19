@@ -601,6 +601,19 @@ export function getSpellsPreparedLimit(
 	const spellcastingAbility = getSpellcastingAbility(job);
 	if (!spellcastingAbility) return null;
 
+	// Preparation requires slots to cast from. Delayed casters (the
+	// half-casters below gain Spellcasting at level 2 — Revenant's Reaper's
+	// Ledger is a L2 feature) have an empty slot table at level 1, so a
+	// prepared allowance there is meaningless: the sheet rendered
+	// "Prepared: 0/2" on a level-1 Revenant with no castable spell (Jul 18
+	// audit). Deriving the gate from the slot table keeps this in lockstep
+	// with the progression instead of forking a second "when casting starts"
+	// source of truth.
+	const casterType = getCasterType(jobName);
+	const slotsAtLevel = getSpellSlotsPerLevel(casterType, level);
+	const hasAnySlot = Object.values(slotsAtLevel).some((count) => count > 0);
+	if (!hasAnySlot) return null;
+
 	// Half-caster prepared casters use ability modifier + half level (min 1):
 	//   Revenant (drain-tank rework), Holy Knight → Paladin, and Technomancer →
 	//   Artificer. All three have half-caster spell slots, so — matching
