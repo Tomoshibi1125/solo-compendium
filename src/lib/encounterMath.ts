@@ -118,33 +118,58 @@ export function calculateXP(Anomaly: Anomaly, quantity: number): number {
 	return xp * quantity;
 }
 
+/** DMG encounter-multiplier bands, indexed by number of monsters. */
+const MULTIPLIER_BANDS = [1, 1.5, 2, 2.5, 3, 4] as const;
+
+function bandForMonsterCount(monsterCount: number): number {
+	if (monsterCount <= 1) return 0;
+	if (monsterCount === 2) return 1;
+	if (monsterCount <= 6) return 2;
+	if (monsterCount <= 10) return 3;
+	if (monsterCount <= 14) return 4;
+	return 5;
+}
+
+/**
+ * The DMG encounter multiplier: it scales with the number of MONSTERS, not
+ * the size of the party. Party size only shifts the band — a party of one or
+ * two treats the encounter as one step more dangerous, a party of six or more
+ * as one step less.
+ */
+export function encounterMultiplier(
+	monsterCount: number,
+	partySize = 4,
+): number {
+	let band = bandForMonsterCount(monsterCount);
+	if (partySize <= 2) band += 1;
+	else if (partySize >= 6) band -= 1;
+	const clamped = Math.min(MULTIPLIER_BANDS.length - 1, Math.max(0, band));
+	return MULTIPLIER_BANDS[clamped];
+}
+
+/**
+ * Classify an encounter against the party's XP thresholds (DMG).
+ *
+ * Adjusted XP = raw XP × the monster-count multiplier; it is compared with
+ * the PARTY threshold (per-character value × party size). The previous
+ * implementation derived the multiplier from party size and compared against
+ * a single character's threshold, which reported a solo 200 XP anomaly as
+ * "deadly" for four level-1 characters when RAW calls it medium.
+ */
 export function calculateDifficulty(
 	totalXP: number,
 	hunterLevel: number,
 	hunterCount: number,
+	monsterCount = 1,
 ): EncounterDifficulty {
-	const multiplier =
-		hunterCount === 1 ? 1 : hunterCount <= 2 ? 1.5 : hunterCount <= 6 ? 2 : 2.5;
-	const adjustedXP = totalXP * multiplier;
-	const thresholds = DIFFICULTY_THRESHOLDS;
+	const partySize = Math.max(1, hunterCount);
+	const adjustedXP = totalXP * encounterMultiplier(monsterCount, partySize);
 
-	if (
-		adjustedXP >=
-		(thresholds.deadly[hunterLevel as keyof typeof thresholds.deadly] || 1200)
-	) {
-		return "deadly";
-	}
-	if (
-		adjustedXP >=
-		(thresholds.hard[hunterLevel as keyof typeof thresholds.hard] || 750)
-	) {
-		return "hard";
-	}
-	if (
-		adjustedXP >=
-		(thresholds.medium[hunterLevel as keyof typeof thresholds.medium] || 500)
-	) {
-		return "medium";
-	}
+	const partyThreshold = (difficulty: EncounterDifficulty): number =>
+		singleMonsterXpBudget(hunterLevel, difficulty, partySize);
+
+	if (adjustedXP >= partyThreshold("deadly")) return "deadly";
+	if (adjustedXP >= partyThreshold("hard")) return "hard";
+	if (adjustedXP >= partyThreshold("medium")) return "medium";
 	return "easy";
 }

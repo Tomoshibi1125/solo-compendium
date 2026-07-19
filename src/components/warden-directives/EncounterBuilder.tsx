@@ -337,7 +337,18 @@ export function EncounterBuilder({
 			sum + calculateXP(em.Anomaly, em.quantity),
 		0,
 	);
-	const difficulty = calculateDifficulty(totalXP, hunterLevel, hunterCount);
+	// DMG: the encounter multiplier scales with how many monsters are in the
+	// fight (quantities included), not with party size.
+	const monsterCount = encounterAnomalies.reduce(
+		(sum: number, em: EncounterAnomaly) => sum + em.quantity,
+		0,
+	);
+	const difficulty = calculateDifficulty(
+		totalXP,
+		hunterLevel,
+		hunterCount,
+		monsterCount,
+	);
 
 	useEffect(() => {
 		if (progressBarRef.current) {
