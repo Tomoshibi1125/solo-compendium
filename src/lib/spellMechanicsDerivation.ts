@@ -16,6 +16,8 @@
  * Pure and deterministic: no side effects, no randomness.
  */
 
+import { DAMAGE_TYPES } from "@/lib/damageApplication";
+
 const RA_ABILITIES = [
 	"Strength",
 	"Agility",
@@ -23,22 +25,6 @@ const RA_ABILITIES = [
 	"Intelligence",
 	"Sense",
 	"Presence",
-] as const;
-
-const DAMAGE_TYPES = [
-	"acid",
-	"bludgeoning",
-	"cold",
-	"fire",
-	"force",
-	"lightning",
-	"necrotic",
-	"piercing",
-	"poison",
-	"psychic",
-	"radiant",
-	"slashing",
-	"thunder",
 ] as const;
 
 const abilityGroup = RA_ABILITIES.join("|");

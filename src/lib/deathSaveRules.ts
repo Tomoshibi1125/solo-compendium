@@ -107,13 +107,16 @@ export function applyDeathSaveRoll(
  * Apply damage taken while already at 0 HP.
  *
  * Massive-damage rule (PHB p.197): if a single hit deals ≥ HP max while
- * the target is at 0 HP, they die immediately. Otherwise the hit counts
- * as a single auto-failure (or two for a critical, handled by callers).
+ * the target is at 0 HP, they die immediately.
+ *
+ * Otherwise the hit is an automatic death-save failure — TWO failures if it
+ * was a critical hit (PHB p.197), which is why callers pass `isCritical`.
  */
 export function applyDamageAtZero(
 	state: DeathSaveState,
 	damage: number,
 	hpMax: number,
+	isCritical = false,
 ): DeathSaveState {
 	if (damage >= hpMax) {
 		return {
@@ -123,7 +126,10 @@ export function applyDamageAtZero(
 			isDead: true,
 		};
 	}
-	const newFailures = Math.min(MAX_TRACKED, state.failures + 1);
+	const newFailures = Math.min(
+		MAX_TRACKED,
+		state.failures + (isCritical ? 2 : 1),
+	);
 	return {
 		...state,
 		failures: newFailures,

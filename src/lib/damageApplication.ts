@@ -1,5 +1,33 @@
 export type DamageApplicationMode = "typed" | "raw";
 
+/**
+ * The canonical damage types — 5e's thirteen plus RA's "void".
+ *
+ * Single source of truth for every consumer that needs to recognise a damage
+ * type: the equipment/spell prose parsers, and the sheet's damage dialog.
+ * Two private copies previously drifted (one carried "void", the other did
+ * not), which is how a type can be resistible by an item but invisible to the
+ * spell parser.
+ */
+export const DAMAGE_TYPES = [
+	"acid",
+	"bludgeoning",
+	"cold",
+	"fire",
+	"force",
+	"lightning",
+	"necrotic",
+	"piercing",
+	"poison",
+	"psychic",
+	"radiant",
+	"slashing",
+	"thunder",
+	"void",
+] as const;
+
+export type DamageType = (typeof DAMAGE_TYPES)[number];
+
 export interface DamageMitigationProfile {
 	resistances?: string[] | null;
 	immunities?: string[] | null;

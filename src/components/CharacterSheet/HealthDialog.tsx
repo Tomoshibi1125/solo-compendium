@@ -1,6 +1,7 @@
 import { Heart, Minus, Plus, Shield } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
 	Dialog,
 	DialogContent,
@@ -9,6 +10,26 @@ import {
 	DialogTitle,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+	Select,
+	SelectContent,
+	SelectItem,
+	SelectTrigger,
+	SelectValue,
+} from "@/components/ui/select";
+import {
+	applyDamageMitigation,
+	DAMAGE_TYPES,
+	type DamageMitigationProfile,
+} from "@/lib/damageApplication";
+
+const UNTYPED = "untyped";
+
+export interface TakeDamageOptions {
+	damageType?: string | null;
+	isCritical?: boolean;
+}
 
 interface HealthDialogProps {
 	hpCurrent: number;
@@ -16,8 +37,10 @@ interface HealthDialogProps {
 	tempHp: number;
 	isOpen: boolean;
 	onOpenChange: (open: boolean) => void;
-	onTakeDamage: (amount: number) => void;
+	onTakeDamage: (amount: number, options?: TakeDamageOptions) => void;
 	onHeal: (amount: number) => void;
+	/** The character's damage resistances/immunities/vulnerabilities. */
+	mitigation?: DamageMitigationProfile | null;
 }
 
 export function HealthDialog({
@@ -28,26 +51,64 @@ export function HealthDialog({
 	onOpenChange,
 	onTakeDamage,
 	onHeal,
+	mitigation,
 }: HealthDialogProps) {
 	const [amount, setAmount] = useState<string>("");
+	const [damageType, setDamageType] = useState<string>(UNTYPED);
+	const [isCritical, setIsCritical] = useState(false);
+
+	const parsed = parseInt(amount, 10);
+	const hasAmount = !Number.isNaN(parsed) && parsed > 0;
+
+	const reset = () => {
+		setAmount("");
+		setDamageType(UNTYPED);
+		setIsCritical(false);
+	};
 
 	const handleDamage = () => {
-		const val = parseInt(amount, 10);
-		if (!Number.isNaN(val) && val > 0) {
-			onTakeDamage(val);
-			setAmount("");
-			onOpenChange(false);
-		}
+		if (!hasAmount) return;
+		onTakeDamage(parsed, {
+			damageType: damageType === UNTYPED ? null : damageType,
+			isCritical,
+		});
+		reset();
+		onOpenChange(false);
 	};
 
 	const handleHeal = () => {
-		const val = parseInt(amount, 10);
-		if (!Number.isNaN(val) && val > 0) {
-			onHeal(val);
-			setAmount("");
-			onOpenChange(false);
-		}
+		if (!hasAmount) return;
+		onHeal(parsed);
+		reset();
+		onOpenChange(false);
 	};
+
+	// Live preview of what the damage button will actually do: mitigation
+	// first, then temp HP absorbs, then the remainder hits real HP. Mirrors
+	// the handler's pipeline so the number shown is the number applied.
+	const preview = (() => {
+		if (!hasAmount) return null;
+		const mitigated = applyDamageMitigation({
+			rawDamage: parsed,
+			damageType: damageType === UNTYPED ? null : damageType,
+			mitigation,
+		});
+		const absorbed = Math.min(tempHp, mitigated.finalDamage);
+		const toHp = mitigated.finalDamage - absorbed;
+		const parts: string[] = [];
+		if (mitigated.finalDamage !== parsed) {
+			parts.push(
+				mitigated.immunityApplied
+					? `immunity negates ${parsed}`
+					: mitigated.resistanceApplied
+						? `resistance halves ${parsed} → ${mitigated.finalDamage}`
+						: `vulnerability doubles ${parsed} → ${mitigated.finalDamage}`,
+			);
+		}
+		if (absorbed > 0) parts.push(`temp HP absorbs ${absorbed}`);
+		if (parts.length === 0) return null;
+		return `${parts.join("; ")} — ${toHp} to HP`;
+	})();
 
 	return (
 		<Dialog open={isOpen} onOpenChange={onOpenChange}>
@@ -108,13 +169,60 @@ export function HealthDialog({
 							/>
 						</div>
 
+						{/* Damage options — ignored by Heal. */}
+						<div className="grid grid-cols-2 gap-3 items-center">
+							<Select value={damageType} onValueChange={setDamageType}>
+								<SelectTrigger
+									className="h-10"
+									aria-label="Damage type"
+									data-testid="damage-type-select"
+								>
+									<SelectValue placeholder="Damage type" />
+								</SelectTrigger>
+								<SelectContent>
+									<SelectItem value={UNTYPED}>Untyped</SelectItem>
+									{DAMAGE_TYPES.map((type) => (
+										<SelectItem key={type} value={type}>
+											{type.charAt(0).toUpperCase() + type.slice(1)}
+										</SelectItem>
+									))}
+								</SelectContent>
+							</Select>
+							<div className="flex items-center gap-2">
+								<Checkbox
+									id="critical-hit"
+									checked={isCritical}
+									onCheckedChange={(checked) => setIsCritical(checked === true)}
+									data-testid="critical-hit-checkbox"
+								/>
+								<Label
+									htmlFor="critical-hit"
+									className="text-sm cursor-pointer leading-tight"
+								>
+									Critical hit
+									<span className="block text-[10px] text-muted-foreground">
+										2 death saves at 0 HP
+									</span>
+								</Label>
+							</div>
+						</div>
+
+						{preview && (
+							<p
+								className="text-xs font-mono text-cyan-400/90 text-center"
+								data-testid="damage-preview"
+							>
+								{preview}
+							</p>
+						)}
+
 						{/* Action Buttons */}
 						<div className="grid grid-cols-2 gap-3">
 							<Button
 								variant="destructive"
 								className="h-12 text-base font-bold"
 								onClick={handleDamage}
-								disabled={!amount || parseInt(amount, 10) <= 0}
+								disabled={!hasAmount}
 							>
 								<Minus className="w-5 h-5 mr-1" />
 								Damage
@@ -123,7 +231,7 @@ export function HealthDialog({
 								variant="default"
 								className="h-12 text-base font-bold bg-green-600 hover:bg-green-700 text-white"
 								onClick={handleHeal}
-								disabled={!amount || parseInt(amount, 10) <= 0}
+								disabled={!hasAmount}
 							>
 								<Plus className="w-5 h-5 mr-1" />
 								Heal

@@ -238,6 +238,50 @@ export function addTemporaryHP(
 	};
 }
 
+/**
+ * Spend temporary HP to absorb incoming damage.
+ *
+ * RA house rule: temp HP from multiple sources POOLS (see
+ * `calculateTotalTempHP`) rather than following 5e's "keep the higher, discard
+ * the rest". That is deliberate — do not "correct" it to RAW.
+ *
+ * Sources drain in array order (oldest first), so a short-lived buff granted
+ * early is spent before a later, longer-lived one. Expired sources are skipped
+ * and left untouched for `clearExpiredTempHP` to reap.
+ *
+ * Pure: returns new resources plus how much was actually absorbed. The caller
+ * persists and applies the remainder to real HP.
+ */
+export function consumeTemporaryHP(
+	resources: CharacterResources,
+	damage: number,
+): { resources: CharacterResources; absorbed: number } {
+	const incoming = Math.max(0, Math.floor(damage));
+	if (incoming === 0) return { resources, absorbed: 0 };
+
+	const now = new Date();
+	let remaining = incoming;
+	const nextSources = resources.temp_hp_sources.map((source) => {
+		if (remaining <= 0) return source;
+		const expired = source.expires_at && new Date(source.expires_at) <= now;
+		if (expired) return source;
+		const available = Math.max(0, source.amount);
+		const spent = Math.min(available, remaining);
+		remaining -= spent;
+		return { ...source, amount: available - spent };
+	});
+
+	return {
+		// Fully-spent sources are dropped so the tracker doesn't accumulate
+		// zero-amount rows across a fight.
+		resources: {
+			...resources,
+			temp_hp_sources: nextSources.filter((source) => source.amount > 0),
+		},
+		absorbed: incoming - remaining,
+	};
+}
+
 // Clear expired temporary HP
 export function clearExpiredTempHP(
 	resources: CharacterResources,

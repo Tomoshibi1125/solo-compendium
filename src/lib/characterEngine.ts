@@ -33,6 +33,12 @@ import {
 	SKILLS,
 } from "./5eRulesEngine";
 import {
+	calculateCarryingCapacity,
+	ENCUMBRANCE_SPEED_PENALTY,
+	type EncumbranceTier,
+	encumbranceTierForWeight,
+} from "./encumbrance";
+import {
 	aggregateFeatAndStyleEffects,
 	computeAttacksPerAction,
 } from "./featEffectParser";
@@ -317,11 +323,7 @@ interface ComputedCharacterStats {
 	// Carrying capacity
 	carryingCapacity: number;
 	currentWeight: number;
-	encumbranceTier:
-		| "normal"
-		| "encumbered"
-		| "heavily-encumbered"
-		| "over-capacity";
+	encumbranceTier: EncumbranceTier;
 
 	// Rift Favor (homebrew inspiration mechanic)
 	riftFavorMax: number;
@@ -1457,9 +1459,9 @@ export function computeEncumbrance(
 ): {
 	capacity: number;
 	currentWeight: number;
-	tier: "normal" | "encumbered" | "heavily-encumbered" | "over-capacity";
+	tier: EncumbranceTier;
 } {
-	const capacity = strScore * 15; // Rift Ascendant scaling
+	const capacity = calculateCarryingCapacity(strScore);
 
 	// Find containers with special rules
 	const inactiveContainerIds = new Set(
@@ -1489,17 +1491,15 @@ export function computeEncumbrance(
 		currentWeight += item.weight;
 	}
 
-	let tier: "normal" | "encumbered" | "heavily-encumbered" | "over-capacity" =
-		"normal";
-	if (currentWeight > capacity) {
-		tier = "over-capacity";
-	} else if (currentWeight > strScore * 10) {
-		tier = "heavily-encumbered";
-	} else if (currentWeight > strScore * 5) {
-		tier = "encumbered";
-	}
-
-	return { capacity, currentWeight, tier };
+	// One tier ladder for the whole app (lib/encumbrance.ts). This function
+	// used to apply 5e's optional VARIANT thresholds (5×/10×/15× STR) while
+	// the sheet rendered the lenient percentage bands, so the engine and the
+	// sheet disagreed about whether a loaded character was slowed.
+	return {
+		capacity,
+		currentWeight,
+		tier: encumbranceTierForWeight(currentWeight, capacity),
+	};
 }
 
 // ============================================================================
@@ -1565,15 +1565,12 @@ export function computeCharacterStats(
 		base.equippedItems,
 	);
 
-	// Apply encumbrance speed penalty (5e variant rule, D&D Beyond parity)
-	let speedAfterEncumbrance = baseSpeed;
-	if (encumbrance.tier === "heavily-encumbered") {
-		speedAfterEncumbrance = Math.max(0, baseSpeed - 20);
-	} else if (encumbrance.tier === "encumbered") {
-		speedAfterEncumbrance = Math.max(0, baseSpeed - 10);
-	} else if (encumbrance.tier === "over-capacity") {
-		speedAfterEncumbrance = 0;
-	}
+	// Apply the encumbrance speed penalty from the shared tier→penalty map, so
+	// the engine and the sheet can never disagree about a loaded character.
+	const speedAfterEncumbrance = Math.max(
+		0,
+		baseSpeed - ENCUMBRANCE_SPEED_PENALTY[encumbrance.tier],
+	);
 
 	const speed = getEffectiveSpeed(
 		speedAfterEncumbrance,

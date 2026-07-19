@@ -3,6 +3,7 @@
  */
 
 import { getAbilityModifier } from "@/lib/5eRulesEngine";
+import { DAMAGE_TYPES } from "@/lib/damageApplication";
 
 interface EquipmentModifiers {
 	ac?: number;
@@ -138,22 +139,8 @@ function parseDelimitedList(value: string): string[] {
 // `effects.passive` into properties), so free-text matches must be anchored to
 // closed vocabularies — a bare \d+ regex would turn "deals 1d6 damage per turn"
 // or "DC 15 Strength saving throw" into phantom flat bonuses.
-const DAMAGE_TYPES = [
-	"acid",
-	"bludgeoning",
-	"cold",
-	"fire",
-	"force",
-	"lightning",
-	"necrotic",
-	"piercing",
-	"poison",
-	"psychic",
-	"radiant",
-	"slashing",
-	"thunder",
-	"void",
-];
+// Damage types come from the canonical list in damageApplication.ts — see the
+// note there about the two copies that drifted.
 
 const CONDITIONS = [
 	"blinded",

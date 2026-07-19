@@ -28,7 +28,10 @@ import { useEffect, useState } from "react";
 import { ConcentrationBanner } from "@/components/CharacterSheet/ConcentrationBanner";
 import { ConditionBadgeBar } from "@/components/CharacterSheet/ConditionBadgeBar";
 import { DefensesModal } from "@/components/CharacterSheet/DefensesModal";
-import { HealthDialog } from "@/components/CharacterSheet/HealthDialog";
+import {
+	HealthDialog,
+	type TakeDamageOptions,
+} from "@/components/CharacterSheet/HealthDialog";
 import { ShortRestDialog } from "@/components/CharacterSheet/ShortRestDialog";
 import { ActionsList } from "@/components/character/ActionsList";
 import { CharacterBackupPanel } from "@/components/character/CharacterBackupPanel";
@@ -105,7 +108,11 @@ import {
 	getRiftFavorDie,
 	getRiftFavorMax,
 } from "@/lib/characterCalculations";
-import { calculateTotalTempHP } from "@/lib/characterResources";
+import {
+	calculateTotalTempHP,
+	consumeTemporaryHP,
+} from "@/lib/characterResources";
+import { applyDamageMitigation } from "@/lib/damageApplication";
 import {
 	checkLevelUpEligibility,
 	getXPProgress,
@@ -501,19 +508,32 @@ export default function CharacterSheetV2() {
 		delta: number,
 	) => handleResourceAdjust(field, delta);
 
-	const handleTakeDamage = (amount: number) => {
+	const handleTakeDamage = (amount: number, options?: TakeDamageOptions) => {
 		if (amount <= 0) return;
 
-		// Pure-logic damage resolution (THP-aware, massive-damage aware).
-		// Note: tempHp here is intentionally 0 — the THP pool is tracked in
-		// `character_sheet_state.resources.temp_hp_sources` and is consumed
-		// by the HealthDialog component via `addTemporaryHP`. The page-level
-		// damage button doesn't read it; UI parity with the existing flow.
+		// Full DDB-parity pipeline, in rules order:
+		//   1. resistance / immunity / vulnerability for the declared type
+		//   2. temporary HP absorbs what's left (RA pools THP across sources)
+		//   3. the remainder reaches real HP
+		// Every stage already existed; the handler previously skipped 1 and 2
+		// by passing a bare amount and an empty temp-HP pool (Jul 18 audit).
+		const mitigated = applyDamageMitigation({
+			rawDamage: amount,
+			damageType: options?.damageType ?? null,
+			mitigation: {
+				resistances: stats.resistances,
+				immunities: stats.immunities,
+				vulnerabilities: stats.vulnerabilities,
+			},
+		});
+		const effectiveDamage = mitigated.finalDamage;
+
+		const tempHpPool = calculateTotalTempHP(characterResources);
 		const result = applyDamage({
 			hpCurrent: character.hp_current,
 			hpMax: effectiveHpMax,
-			tempHp: 0,
-			damage: amount,
+			tempHp: tempHpPool,
+			damage: effectiveDamage,
 		});
 
 		updateCharacter.mutate({
@@ -521,25 +541,42 @@ export default function CharacterSheetV2() {
 			data: { hp_current: result.newHp },
 		});
 
+		// Persist the drained THP sources so the pool doesn't regenerate on
+		// the next render.
+		const absorbed = tempHpPool - result.newTempHp;
+		if (absorbed > 0) {
+			const { resources: nextResources } = consumeTemporaryHP(
+				characterResources,
+				absorbed,
+			);
+			void sheetController.saveSheetState({ resources: nextResources });
+		}
+
 		ascendantTools
-			.trackHealthChange(character.id, amount, "damage")
+			.trackHealthChange(character.id, effectiveDamage, "damage")
 			.catch(console.error);
 
 		// D&D Beyond parity for downed/dying characters:
-		//  - Damage while AT 0 HP: 1 death save failure per hit (or instant
-		//    death on massive damage = damage >= max HP).
+		//  - Damage while AT 0 HP: 1 death save failure per hit — 2 if the hit
+		//    was a critical (PHB p.197) — or instant death on massive damage
+		//    (damage >= max HP).
 		//  - Damage going FROM positive to 0: only triggers instant death if
 		//    overflow >= max HP (RAW massive-damage rule). Otherwise the
 		//    character is simply unconscious — no failure yet.
+		const isCritical = options?.isCritical ?? false;
 		if (result.wasAtZero) {
-			deathSaves.takeDamageAtZero(amount, effectiveHpMax);
+			deathSaves.takeDamageAtZero(effectiveDamage, effectiveHpMax, isCritical);
 		} else if (result.massiveDamage) {
-			deathSaves.takeDamageAtZero(result.overflowDamage, effectiveHpMax);
+			deathSaves.takeDamageAtZero(
+				result.overflowDamage,
+				effectiveHpMax,
+				isCritical,
+			);
 		}
 
-		// Process concentration check (advantage/disadvantage applied by
-		// useCharacterPageModel from custom-modifier resolution).
-		const concentrationResult = concentration.takeDamage(amount);
+		// Concentration DC is driven by the damage actually taken, so it must
+		// use the post-mitigation value.
+		const concentrationResult = concentration.takeDamage(effectiveDamage);
 		if (concentrationResult?.concentrationLost) {
 			// Note: useConcentration auto-clears in-memory state and fires the
 			// onConcentrationLost analytics event. The ConcentrationBanner
@@ -902,6 +939,11 @@ export default function CharacterSheetV2() {
 							tempHp={calculateTotalTempHP(characterResources)}
 							onTakeDamage={handleTakeDamage}
 							onHeal={handleHeal}
+							mitigation={{
+								resistances: stats.resistances,
+								immunities: stats.immunities,
+								vulnerabilities: stats.vulnerabilities,
+							}}
 						/>
 						<ShortRestDialog
 							hitDiceAvailable={character.hit_dice_current}

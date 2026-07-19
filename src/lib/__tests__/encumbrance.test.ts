@@ -1,14 +1,22 @@
 /**
- * Encumbrance regression tests (DDB / variant-rule parity).
+ * Encumbrance regression tests.
  *
- * Locks in the Rift Ascendant carrying-capacity formula and tier
- * thresholds:
- *   capacity        = STR * 15
- *   encumbered      > STR * 5
- *   heavily-enc.    > STR * 10
- *   over-capacity   > STR * 15
+ * Locks in the Rift Ascendant carrying-capacity formula and tier ladder:
+ *   capacity      = STR * 15
+ *   unencumbered  ≤ 33% of capacity
+ *   light         ≤ 66%
+ *   medium        ≤ 100%
+ *   heavy         ≤ 200%   (speed −10)
+ *   overloaded    > 200%   (speed −20)
  *
- * Plus the container weight rules:
+ * This file previously pinned 5e's OPTIONAL variant thresholds (5×/10×/15×
+ * STR) that `computeEncumbrance` used to apply on its own — but the sheet
+ * rendered the lenient percentage bands, so engine and UI disagreed about
+ * whether a loaded character was slowed (Jul 18 audit). RA keeps the lenient
+ * model by design; both entry points now derive from `encumbranceTierForWeight`
+ * (see encumbranceParity.test.ts for the cross-stack agreement guard).
+ *
+ * Plus the container weight rules, unchanged:
  *   - Inactive container: 0 weight, contents ignored.
  *   - Magic container (ignoreContentsWeight): contents ignored.
  *   - Container itself always counts unless inactive.
@@ -59,46 +67,45 @@ describe("computeEncumbrance — capacity formula", () => {
 	it("returns 0 weight for empty inventory", () => {
 		const result = computeEncumbrance(10, [] as never[]);
 		expect(result.currentWeight).toBe(0);
-		expect(result.tier).toBe("normal");
+		expect(result.tier).toBe("unencumbered");
 	});
 });
 
-describe("computeEncumbrance — tier thresholds (STR 10)", () => {
-	// STR 10 → encumbered > 50, heavily > 100, over > 150
-	it("0 lb is normal", () => {
+describe("computeEncumbrance — tier thresholds (STR 10, capacity 150)", () => {
+	it("0 lb is unencumbered", () => {
 		const r = computeEncumbrance(10, [] as never[]);
-		expect(r.tier).toBe("normal");
+		expect(r.tier).toBe("unencumbered");
 	});
 
-	it("exactly 50 lb (STR*5) is still normal", () => {
-		const r = computeEncumbrance(10, [item({ weight: 50 }) as never]);
-		expect(r.currentWeight).toBe(50);
-		expect(r.tier).toBe("normal");
+	it("49 lb (≤33%) is unencumbered", () => {
+		const r = computeEncumbrance(10, [item({ weight: 49 }) as never]);
+		expect(r.currentWeight).toBe(49);
+		expect(r.tier).toBe("unencumbered");
 	});
 
-	it("51 lb (just over STR*5) is encumbered", () => {
-		const r = computeEncumbrance(10, [item({ weight: 51 }) as never]);
-		expect(r.tier).toBe("encumbered");
+	it("60 lb (≤66%) is a light load", () => {
+		const r = computeEncumbrance(10, [item({ weight: 60 }) as never]);
+		expect(r.tier).toBe("light");
 	});
 
-	it("100 lb (exactly STR*10) is encumbered", () => {
-		const r = computeEncumbrance(10, [item({ weight: 100 }) as never]);
-		expect(r.tier).toBe("encumbered");
+	it("120 lb (≤100%) is a medium load — still no speed penalty", () => {
+		const r = computeEncumbrance(10, [item({ weight: 120 }) as never]);
+		expect(r.tier).toBe("medium");
 	});
 
-	it("101 lb is heavily-encumbered", () => {
-		const r = computeEncumbrance(10, [item({ weight: 101 }) as never]);
-		expect(r.tier).toBe("heavily-encumbered");
-	});
-
-	it("150 lb (exactly STR*15) is heavily-encumbered (still within capacity)", () => {
-		const r = computeEncumbrance(10, [item({ weight: 150 }) as never]);
-		expect(r.tier).toBe("heavily-encumbered");
-	});
-
-	it("151 lb is over-capacity", () => {
+	it("151 lb (just over capacity) becomes heavy", () => {
 		const r = computeEncumbrance(10, [item({ weight: 151 }) as never]);
-		expect(r.tier).toBe("over-capacity");
+		expect(r.tier).toBe("heavy");
+	});
+
+	it("300 lb (exactly 200%) is still heavy", () => {
+		const r = computeEncumbrance(10, [item({ weight: 300 }) as never]);
+		expect(r.tier).toBe("heavy");
+	});
+
+	it("301 lb (>200%) is overloaded", () => {
+		const r = computeEncumbrance(10, [item({ weight: 301 }) as never]);
+		expect(r.tier).toBe("overloaded");
 	});
 });
 
@@ -116,7 +123,7 @@ describe("computeEncumbrance — container rules", () => {
 		]);
 		// Pack itself is inactive (0) and its 60 lb of contents are ignored.
 		expect(r.currentWeight).toBe(0);
-		expect(r.tier).toBe("normal");
+		expect(r.tier).toBe("unencumbered");
 	});
 
 	it("magic container (ignoreContentsWeight) ignores contents but still has its own weight", () => {
@@ -169,25 +176,30 @@ describe("computeEncumbrance — container rules", () => {
 });
 
 describe("computeEncumbrance — STR scaling", () => {
-	it("higher STR → higher thresholds (no tier at 30 lb for STR 18)", () => {
+	it("higher STR → higher thresholds (30 lb is nothing to STR 18)", () => {
+		// STR 18 → capacity 270; 30 lb is ~11%.
 		const r = computeEncumbrance(18, [item({ weight: 30 }) as never]);
-		// STR 18: encumbered > 90, so 30 is normal.
-		expect(r.tier).toBe("normal");
+		expect(r.tier).toBe("unencumbered");
 	});
 
-	it("STR 8 makes a 50-lb load over-capacity (STR*15 = 120 → 50 is encumbered)", () => {
-		const r = computeEncumbrance(8, [item({ weight: 50 }) as never]);
-		// STR 8: STR*5=40, STR*10=80. 50 > 40 → encumbered.
-		expect(r.tier).toBe("encumbered");
+	it("the same 50-lb load lands in different tiers by STR", () => {
+		// STR 8 → capacity 120, so 50 lb is ~42% → light.
+		expect(computeEncumbrance(8, [item({ weight: 50 }) as never]).tier).toBe(
+			"light",
+		);
+		// STR 18 → capacity 270, so 50 lb is ~19% → unencumbered.
+		expect(computeEncumbrance(18, [item({ weight: 50 }) as never]).tier).toBe(
+			"unencumbered",
+		);
 	});
 
-	it("STR 8 with 81 lb hits heavily-encumbered", () => {
-		const r = computeEncumbrance(8, [item({ weight: 81 }) as never]);
-		expect(r.tier).toBe("heavily-encumbered");
-	});
-
-	it("STR 8 with 121 lb hits over-capacity", () => {
+	it("STR 8 with 121 lb (just over its 120 capacity) is heavy", () => {
 		const r = computeEncumbrance(8, [item({ weight: 121 }) as never]);
-		expect(r.tier).toBe("over-capacity");
+		expect(r.tier).toBe("heavy");
+	});
+
+	it("STR 8 with 241 lb (>200% of capacity) is overloaded", () => {
+		const r = computeEncumbrance(8, [item({ weight: 241 }) as never]);
+		expect(r.tier).toBe("overloaded");
 	});
 });

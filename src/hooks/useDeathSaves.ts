@@ -39,8 +39,12 @@ interface UseDeathSavesReturn {
 	state: DeathSaveState;
 	/** Roll a death saving throw */
 	rollDeathSave: () => DeathSaveRollResult;
-	/** Take damage while at 0 HP */
-	takeDamageAtZero: (damage: number, hpMax: number) => DeathSaveState;
+	/** Take damage while at 0 HP (a critical hit costs two failures) */
+	takeDamageAtZero: (
+		damage: number,
+		hpMax: number,
+		isCritical?: boolean,
+	) => DeathSaveState;
 	/** Receive healing while at 0 HP — resets saves */
 	receiveHealing: () => void;
 	/** Manually stabilize (e.g. Medicine check) */
@@ -77,8 +81,8 @@ export function useDeathSaves(
 	}, [state]);
 
 	const takeDamageAtZero = useCallback(
-		(damage: number, hpMax: number): DeathSaveState => {
-			const next = applyDamageAtZero(state, damage, hpMax);
+		(damage: number, hpMax: number, isCritical = false): DeathSaveState => {
+			const next = applyDamageAtZero(state, damage, hpMax, isCritical);
 			setState(next);
 			return next;
 		},
