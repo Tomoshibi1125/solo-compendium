@@ -8,14 +8,12 @@
  *  - prerequisites.validatePrereq + parsePrerequisiteText (P1.8)
  *  - experience.checkLevelUpEligibility (P1.11)
  *  - featureEffects.sumHpPerLevel / sumHpFlat + calculateHPMax bake-in (P1.9)
- *  - advancedDiceEngine.applyCritical (P1.3)
  *  - sensesEngine.computePassiveScore + passiveStealth (P0.3 / P1.1)
  */
 
 import { describe, expect, it } from "vitest";
 import { calculateHPMax } from "@/lib/5eCharacterCalculations";
 import { getArmorClass } from "@/lib/acFormulas";
-import { applyCritical, rollCritical } from "@/lib/advancedDiceEngine";
 import {
 	formatWallet,
 	normalizeWallet,
@@ -58,6 +56,58 @@ describe("P0.1 — Canonical AC (acFormulas.getArmorClass)", () => {
 		});
 		expect(result.ac).toBe(18); // 16 + 2 shield
 		expect(result.shieldApplied).toBe(true);
+	});
+
+	// Ported from engineUnarmoredDefense.test.ts when the unwired
+	// characterEngine.computeCharacterStats was retired (Jul 19 audit). These
+	// now run against the LIVE evaluator the sheet actually uses.
+	it("Revenant Unarmored Requiem uses 10 + INT + VIT", () => {
+		const result = getArmorClass({
+			abilities: { STR: 14, AGI: 12, VIT: 16, INT: 15, SENSE: 10, PRE: 8 },
+			job: "Revenant",
+		});
+		// 10 + INT(2) + VIT(3) = 15, beating Unarmored's 10 + AGI(1) = 11.
+		expect(result.ac).toBe(15);
+		expect(result.selectedFormula.id).toBe("revenant_ud");
+	});
+
+	it("Revenant keeps its unarmored formula with a shield (+2)", () => {
+		const result = getArmorClass({
+			abilities: { STR: 14, AGI: 12, VIT: 16, INT: 15, SENSE: 10, PRE: 8 },
+			job: "Revenant",
+			equippedShield: {
+				name: "Shield",
+				baseAC: 2,
+				armorType: "shield",
+				magicBonus: 0,
+			},
+		});
+		expect(result.ac).toBe(17);
+	});
+
+	it("Striker Unarmored Defense uses 10 + AGI + SENSE", () => {
+		const result = getArmorClass({
+			abilities: { STR: 10, AGI: 14, VIT: 12, INT: 10, SENSE: 16, PRE: 8 },
+			job: "Striker",
+		});
+		expect(result.ac).toBe(15);
+		expect(result.selectedFormula.id).toBe("striker_ud");
+	});
+
+	it("Striker LOSES unarmored defense while holding a shield (monk rule)", () => {
+		const result = getArmorClass({
+			abilities: { STR: 10, AGI: 14, VIT: 12, INT: 10, SENSE: 16, PRE: 8 },
+			job: "Striker",
+			equippedShield: {
+				name: "Shield",
+				baseAC: 2,
+				armorType: "shield",
+				magicBonus: 0,
+			},
+		});
+		// Falls back to Unarmored 10 + AGI(2) = 12, plus the shield = 14.
+		expect(result.ac).toBe(14);
+		expect(result.selectedFormula.id).not.toBe("striker_ud");
 	});
 
 	it("picks Mage Armor formula when active and unarmored", () => {
@@ -266,31 +316,6 @@ describe("P1.9 — Structured feat effect bake-in", () => {
 		expect(calculateHPMax(5, 12, 3)).toBe(55);
 		expect(calculateHPMax(5, 12, 3, null)).toBe(55);
 		expect(calculateHPMax(5, 12, 3, [])).toBe(55);
-	});
-});
-
-describe("P1.3 — Critical hit dice doubling", () => {
-	it("rollCritical doubles dice count when isCritical=true", () => {
-		const result = rollCritical("4d6", true);
-		expect(result.rolls.length).toBe(8);
-		expect(result.criticalMultiplier).toBe(2);
-	});
-
-	it("applyCritical adds a second set of dice to an existing roll", () => {
-		const base = {
-			formula: "2d8",
-			rolls: [4, 5],
-			modifier: 3,
-			total: 9,
-			result: 12,
-			isNatural20: false,
-			isNatural1: false,
-		};
-		const crit = applyCritical(base);
-		expect(crit.rolls.length).toBe(4); // 2 original + 2 new
-		expect(crit.criticalMultiplier).toBe(2);
-		// total counts all dice; result adds the modifier on top
-		expect(crit.result).toBe(crit.total + 3);
 	});
 });
 

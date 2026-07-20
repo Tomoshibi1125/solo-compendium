@@ -1,9 +1,9 @@
 import { describe, expect, it } from "vitest";
 import {
+	applyExhaustionToHpMax,
 	CONDITION_EFFECTS,
 	EXHAUSTION_TABLE,
 	getActivePenaltySummary,
-	getEffectiveHPMax,
 	getEffectiveSpeed,
 	isIncapacitated,
 	resolveRollModifiers,
@@ -83,8 +83,8 @@ describe("Exhaustion Effects", () => {
 	});
 
 	it("exhaustion 4 halves HP max", () => {
-		expect(getEffectiveHPMax(40, 4)).toBe(20);
-		expect(getEffectiveHPMax(40, 3)).toBe(40);
+		expect(applyExhaustionToHpMax(40, 4)).toBe(20);
+		expect(applyExhaustionToHpMax(40, 3)).toBe(40);
 	});
 
 	it("exhaustion 5 sets speed to 0", () => {

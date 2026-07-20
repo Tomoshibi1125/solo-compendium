@@ -14,20 +14,14 @@
  *   400 – Condition effects (override all)
  */
 
-import type {
-	Effect,
-	EffectSource,
-	EffectTarget,
-	EffectType,
-} from "./characterEngine";
+import type { Effect, EffectTarget, EffectType } from "./characterEngine";
 import { parseModifiers } from "./equipmentModifiers";
-import type { FeatEffect } from "./featEffectParser";
 
 // ─── Canonical EffectTarget expansions ──────────────────────
 // Define the expanded target set that feat/spell modules produce.
 // These are bridged into the narrower engine targets via `mapTarget`.
 
-const TARGET_MAP: Record<string, EffectTarget> = {
+const _TARGET_MAP: Record<string, EffectTarget> = {
 	// Direct matches (already in EffectTarget union)
 	ac: "ac",
 	speed: "speed",
@@ -84,7 +78,7 @@ const TARGET_MAP: Record<string, EffectTarget> = {
 	ally_ac: "ac",
 };
 
-const TYPE_MAP: Record<string, EffectType> = {
+const _TYPE_MAP: Record<string, EffectType> = {
 	bonus: "modifier",
 	penalty: "modifier",
 	set: "modifier",
@@ -97,37 +91,6 @@ const TYPE_MAP: Record<string, EffectType> = {
 };
 
 // ─── Bridge Functions ───────────────────────────────────────
-
-export function mapTarget(raw: string): EffectTarget {
-	return TARGET_MAP[raw] ?? "skill"; // default to 'skill' for unknown targets
-}
-
-export function mapType(raw: string): EffectType {
-	return TYPE_MAP[raw] ?? "modifier";
-}
-
-/**
- * Convert a FeatEffect into a canonical Effect + EffectSource pair
- */
-export function bridgeFeatEffect(feat: FeatEffect): {
-	effect: Effect;
-	source: EffectSource;
-} {
-	return {
-		effect: {
-			type: mapType(feat.type),
-			target: mapTarget(feat.target),
-			value: feat.value,
-			condition: feat.description,
-			priority: feat.priority,
-		},
-		source: {
-			sourceType: "feat",
-			sourceId: feat.source,
-			sourceName: feat.source,
-		},
-	};
-}
 
 /**
  * Bridge equipment property strings → Effect[] via parseModifiers.
@@ -562,62 +525,4 @@ export function bridgeSigilEffects(entry: UnifiedEffectEntry): Effect[] {
 
 export function bridgeTattooEffects(entry: UnifiedEffectEntry): Effect[] {
 	return bridgeEffectBearingEntry(entry, "tattoo");
-}
-
-/**
- * Batch-convert all FeatEffects into canonical Effects
- */
-export function bridgeAllFeatEffects(feats: FeatEffect[]): Effect[] {
-	return feats.map((f) => bridgeFeatEffect(f).effect);
-}
-
-/**
- * Merge multiple effect arrays, sort by priority (lower = applied first),
- * and return the unified list ready for characterEngine consumption.
- */
-export function mergeAndSortEffects(...effectArrays: Effect[][]): Effect[] {
-	return effectArrays
-		.flat()
-		.sort((a, b) => (a.priority ?? 0) - (b.priority ?? 0));
-}
-
-/**
- * Resolve conflicts: for each EffectTarget, if there are both 'modifier'
- * and 'roll_tag' effects, keep both. If there are duplicate modifiers
- * for the same target, highest priority wins (last in sorted order).
- */
-export function resolveEffectConflicts(effects: Effect[]): Effect[] {
-	const sorted = [...effects].sort(
-		(a, b) => (a.priority ?? 0) - (b.priority ?? 0),
-	);
-	const byTarget = new Map<EffectTarget, Effect[]>();
-
-	for (const effect of sorted) {
-		const existing = byTarget.get(effect.target) ?? [];
-		existing.push(effect);
-		byTarget.set(effect.target, existing);
-	}
-
-	const resolved: Effect[] = [];
-	for (const [, targetEffects] of byTarget) {
-		// Keep all roll_tag effects (they stack: advantage + disadvantage = normal)
-		const rollTags = targetEffects.filter((e) => e.type === "roll_tag");
-		// Keep highest priority modifier effect
-		const modifiers = targetEffects.filter((e) => e.type === "modifier");
-		const resources = targetEffects.filter((e) => e.type === "resource");
-		// Keep all other types (validation, etc.) — don't silently drop them
-		const others = targetEffects.filter(
-			(e) =>
-				e.type !== "roll_tag" && e.type !== "modifier" && e.type !== "resource",
-		);
-
-		if (modifiers.length > 0) {
-			resolved.push(modifiers[modifiers.length - 1]); // Highest priority last
-		}
-		resolved.push(...rollTags);
-		resolved.push(...resources);
-		resolved.push(...others);
-	}
-
-	return resolved;
 }

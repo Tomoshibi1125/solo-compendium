@@ -429,6 +429,13 @@ export default function CharacterSheetV2() {
 	// and omits gestalt/override/custom (see getEffectiveHpMax / audit D1-D2).
 	const effectiveHpMax = stats.calculatedStats.hpMax;
 
+	// Exhaustion 4+ halves the maximum, which can leave the STORED current HP
+	// above it. Clamp for display and for damage/heal math so the sheet never
+	// reads "11/5" — but never write the reduced value back: exhaustion is
+	// temporary, and a destructive write would burn HP permanently on a
+	// mis-click. Clearing exhaustion restores the character's real total.
+	const displayHpCurrent = Math.min(character.hp_current, effectiveHpMax);
+
 	// DDB parity: conditions + exhaustion auto-apply advantage/disadvantage.
 	// The ADV/DIS toggle is layered on top as a manual override rather than
 	// being the only input (a Poisoned character used to roll straight).
@@ -530,7 +537,7 @@ export default function CharacterSheetV2() {
 
 		const tempHpPool = calculateTotalTempHP(characterResources);
 		const result = applyDamage({
-			hpCurrent: character.hp_current,
+			hpCurrent: displayHpCurrent,
 			hpMax: effectiveHpMax,
 			tempHp: tempHpPool,
 			damage: effectiveDamage,
@@ -602,7 +609,7 @@ export default function CharacterSheetV2() {
 		if (amount <= 0) return;
 
 		const result = applyHealing({
-			hpCurrent: character.hp_current,
+			hpCurrent: displayHpCurrent,
 			hpMax: effectiveHpMax,
 			heal: amount,
 		});
@@ -934,7 +941,7 @@ export default function CharacterSheetV2() {
 						<HealthDialog
 							isOpen={persistentModals.health}
 							onOpenChange={(open) => sheetController.setModal("health", open)}
-							hpCurrent={character.hp_current}
+							hpCurrent={displayHpCurrent}
 							hpMax={effectiveHpMax}
 							tempHp={calculateTotalTempHP(characterResources)}
 							onTakeDamage={handleTakeDamage}
@@ -950,7 +957,7 @@ export default function CharacterSheetV2() {
 							hitDiceMax={character.hit_dice_max}
 							hitDieSize={character.hit_dice_size}
 							vitScore={stats.finalAbilities.VIT}
-							hpCurrent={character.hp_current}
+							hpCurrent={displayHpCurrent}
 							hpMax={effectiveHpMax}
 							onFinishRest={onShortRest}
 						/>
@@ -1105,7 +1112,7 @@ export default function CharacterSheetV2() {
 				name={character.name}
 				level={character.level}
 				portraitUrl={character.portrait_url}
-				hp={{ current: character.hp_current, max: effectiveHpMax }}
+				hp={{ current: displayHpCurrent, max: effectiveHpMax }}
 				tempHp={calculateTotalTempHP(characterResources)}
 				ac={stats.calculatedStats.armorClass}
 				initiative={stats.finalInitiative}
@@ -1259,7 +1266,7 @@ export default function CharacterSheetV2() {
 						{/* Top Status Bar (Desktop Only) */}
 						<StatusHeader
 							hp={{
-								current: character.hp_current,
+								current: displayHpCurrent,
 								max: effectiveHpMax,
 								temp: calculateTotalTempHP(characterResources),
 							}}
@@ -1379,7 +1386,7 @@ export default function CharacterSheetV2() {
 				<div className="md:hidden space-y-6 pb-20">
 					<StatusHeader
 						hp={{
-							current: character.hp_current,
+							current: displayHpCurrent,
 							max: effectiveHpMax,
 							temp: calculateTotalTempHP(characterResources),
 						}}

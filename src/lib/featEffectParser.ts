@@ -20,7 +20,7 @@ export interface FeatEffect {
 }
 
 // ─── Fighting Style Effects ─────────────────────────────────
-const FIGHTING_STYLE_EFFECTS: Record<string, FeatEffect[]> = {
+const _FIGHTING_STYLE_EFFECTS: Record<string, FeatEffect[]> = {
 	archery: [
 		{
 			source: "Fighting Style: Archery",
@@ -125,7 +125,7 @@ const FIGHTING_STYLE_EFFECTS: Record<string, FeatEffect[]> = {
 };
 
 // ─── Feat Effects ───────────────────────────────────────────
-const FEAT_EFFECTS: Record<string, (level: number) => FeatEffect[]> = {
+const _FEAT_EFFECTS: Record<string, (level: number) => FeatEffect[]> = {
 	alert: () => [
 		{
 			source: "Feat: Alert",
@@ -291,47 +291,6 @@ const FEAT_EFFECTS: Record<string, (level: number) => FeatEffect[]> = {
 };
 
 // ─── Parser Functions ───────────────────────────────────────
-
-/**
- * Parse fighting style name into Effect[]
- */
-export function parseFightingStyleEffects(styleName: string): FeatEffect[] {
-	const key = styleName.toLowerCase().trim();
-	return FIGHTING_STYLE_EFFECTS[key] ?? [];
-}
-
-/**
- * Parse feat name into Effect[] (some feats scale with level)
- */
-export function parseFeatEffects(
-	featName: string,
-	characterLevel: number,
-): FeatEffect[] {
-	const key = featName.toLowerCase().trim();
-	const factory = FEAT_EFFECTS[key];
-	return factory ? factory(characterLevel) : [];
-}
-
-/**
- * Parse all character feats + fighting styles into aggregated Effect[]
- */
-export function aggregateFeatAndStyleEffects(
-	feats: string[],
-	fightingStyles: string[],
-	characterLevel: number,
-): FeatEffect[] {
-	const effects: FeatEffect[] = [];
-
-	for (const feat of feats) {
-		effects.push(...parseFeatEffects(feat, characterLevel));
-	}
-
-	for (const style of fightingStyles) {
-		effects.push(...parseFightingStyleEffects(style));
-	}
-
-	return effects;
-}
 
 /**
  * Compute attacks per action from Job + Regent features

@@ -13,6 +13,10 @@ import {
 	computeEncumbrance,
 	maintainConcentration,
 } from "@/lib/characterEngine";
+import {
+	applyExhaustionToHpMax,
+	getExhaustionSpeedMultiplier,
+} from "@/lib/conditionEffects";
 import { getActiveConditionEffects } from "@/lib/conditions";
 import { type CustomModifier, sumCustomModifiers } from "@/lib/customModifiers";
 import {
@@ -37,6 +41,10 @@ import {
 	computeGestaltSummary,
 	getRegentHpContribution,
 } from "@/lib/regentGestalt";
+import {
+	extractSensesFromProperties,
+	type SpecialSense,
+} from "@/lib/sensesEngine";
 import { applySigilBonuses } from "@/lib/sigilAutomation";
 import {
 	calculateSkillModifier,
@@ -353,13 +361,28 @@ export function useCharacterDerivedStats(
 					character.level,
 				);
 
+		// Exhaustion (PHB p.291): speed halved at level 2+, zero at 5+, and HP
+		// maximum halved at 4+. These rules existed only inside the retired
+		// engine, so the sheet never applied them — while the exhaustion badge
+		// already told the player "Speed halved" (Jul 19 audit). Applied last so
+		// the penalty lands on the fully-adjusted values, and kept separate from
+		// the condition speed block above so nothing is halved twice.
+		const exhaustionLevel = character.exhaustion_level || 0;
+		const speedBeforeExhaustion = Math.max(0, finalSpeed + customSpeedBonus);
+		const hpMaxBeforeExhaustion = Math.max(
+			1,
+			resolvedHpMax + customHpMaxBonus + regentHpBonus,
+		);
+
 		const calculatedStats = {
 			...baseStats,
 			initiative: initiativeBreakdown.calculatedStatsInitiative,
 			savingThrows: finalSavingThrows,
 			armorClass: armorClassStack.displayedArmorClass,
-			speed: Math.max(0, finalSpeed + customSpeedBonus),
-			hpMax: Math.max(1, resolvedHpMax + customHpMaxBonus + regentHpBonus),
+			speed: Math.floor(
+				speedBeforeExhaustion * getExhaustionSpeedMultiplier(exhaustionLevel),
+			),
+			hpMax: applyExhaustionToHpMax(hpMaxBeforeExhaustion, exhaustionLevel),
 			encumbrance,
 		};
 
@@ -393,11 +416,26 @@ export function useCharacterDerivedStats(
 			return match ? parseInt(match[0], 10) : 0;
 		};
 
+		// Gear-granted senses (a relic with "darkvision 60 ft" in its
+		// properties) union with the persisted job/racial senses, longest range
+		// winning. This previously ran only inside the retired engine, so an
+		// item granting a sense contributed nothing to the sheet.
+		const equipmentSenses = extractSensesFromProperties(
+			(equipment || [])
+				.filter(
+					(item) =>
+						item.is_equipped && (!item.requires_attunement || item.is_attuned),
+				)
+				.map((item) => ({ properties: getEquipmentProperties(item) })),
+		);
+		const senseRange = (name: SpecialSense): number =>
+			Math.max(parseSense(name), equipmentSenses[name] ?? 0);
+
 		const senses = {
-			darkvision: parseSense("darkvision"),
-			blindsight: parseSense("blindsight"),
-			tremorsense: parseSense("tremorsense"),
-			truesight: parseSense("truesight"),
+			darkvision: senseRange("darkvision"),
+			blindsight: senseRange("blindsight"),
+			tremorsense: senseRange("tremorsense"),
+			truesight: senseRange("truesight"),
 		};
 
 		// Multi-Speeds Extraction

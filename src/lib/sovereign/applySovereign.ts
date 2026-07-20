@@ -4,15 +4,18 @@
 // imported from an outside AI — we persist a single `gemini_state` payload so
 // the fusion is applied identically in every consumer:
 //   • characters.active_sovereign_id  → SovereignOverlayPanel (display)        [set in useSaveSovereign]
-//   • characters.gemini_state.overlay → characterEngine.aggregateGeminiFeatures (full class overlay)
+//   • characters.gemini_state.overlay → SovereignOverlayPanel / geminiResolver (fusion features)
 //   • characters.gemini_state runtime → geminiResolver (theme / stability / power / modifiers)
 //
-// The overlay block is shape-compatible with `CharacterJob.gemini`, so the
-// engine bridge can hand it straight to `aggregateGeminiFeatures`.
+// The overlay block is shape-compatible with `CharacterJob.gemini`. NOTE: a
+// `characterEngine.aggregateGeminiFeatures` bridge was documented here but was
+// never wired to any UI; it was removed with the unused engine (Jul 19 audit).
+// Fusion features reach the sheet through the Sovereign panel and the
+// custom-modifier pipeline, not through a character-engine aggregation.
 
 import type { GeneratedSovereign } from "@/lib/geminiProtocol";
 
-/** Overlay block consumed by characterEngine.aggregateGeminiFeatures (== CharacterJob["gemini"]). */
+/** Persisted Sovereign overlay block (shape-compatible with CharacterJob["gemini"]). */
 export interface SovereignOverlayPayload {
 	id: string;
 	sovereignId: string;

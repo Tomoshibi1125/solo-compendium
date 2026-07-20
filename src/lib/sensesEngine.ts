@@ -19,6 +19,46 @@ export interface CharacterSenses {
 	passiveStealth: number;
 }
 
+/** The four special senses RA tracks, matching `CharacterSenses` keys. */
+export type SpecialSense =
+	| "darkvision"
+	| "blindsight"
+	| "tremorsense"
+	| "truesight";
+
+const SPECIAL_SENSE_PATTERN =
+	/(darkvision|blindsight|tremorsense|truesight)\s*(\d+)\s*ft/gi;
+
+/**
+ * Extract special senses granted by gear from its property strings, keeping
+ * the LONGEST range per sense ("best-of" stacking, per this module's header).
+ *
+ * Item-granted senses previously reached only `characterEngine.computeSenses`,
+ * which had no production caller — so a relic granting darkvision showed
+ * nothing on the sheet (Jul 19 audit). Job/racial senses were unaffected:
+ * those persist on the `senses` column.
+ */
+export function extractSensesFromProperties(
+	sources: ReadonlyArray<{
+		properties?: ReadonlyArray<string | null | undefined> | null;
+	}>,
+): Partial<Record<SpecialSense, number>> {
+	const found: Partial<Record<SpecialSense, number>> = {};
+	for (const source of sources) {
+		for (const prop of source.properties ?? []) {
+			if (typeof prop !== "string") continue;
+			// matchAll needs a fresh lastIndex per string for a /g regex.
+			for (const match of prop.matchAll(SPECIAL_SENSE_PATTERN)) {
+				const sense = match[1].toLowerCase() as SpecialSense;
+				const range = Number.parseInt(match[2], 10);
+				if (!Number.isFinite(range)) continue;
+				found[sense] = Math.max(found[sense] ?? 0, range);
+			}
+		}
+	}
+	return found;
+}
+
 /**
  * Canonical formula for all passive scores.
  *  passive = 10 + skill modifier (+ optional flat bonus such as Observant +5)

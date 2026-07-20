@@ -117,25 +117,9 @@ export function applyHealing(input: HpHealInput): HpHealResult {
 	};
 }
 
-export interface TempHpResult {
-	/** New THP pool after applying the new source. */
-	newTempHp: number;
-	/** Whether the new source was used (RAW: only the larger pool sticks). */
-	replaced: boolean;
-}
-
-/**
- * Apply a new Temporary HP source. RAW (PHB p.196): Temp HP doesn't
- * stack — when you receive a new pool, it overwrites the old pool only
- * if it's larger.
- */
-export function applyTempHp(
-	currentTempHp: number,
-	newSource: number,
-): TempHpResult {
-	const incoming = Math.max(0, newSource);
-	if (incoming > currentTempHp) {
-		return { newTempHp: incoming, replaced: true };
-	}
-	return { newTempHp: currentTempHp, replaced: false };
-}
+// NOTE: temporary HP is granted by `characterResources.addTemporaryHP` and
+// spent by `consumeTemporaryHP`. In Rift Ascendant, THP from multiple sources
+// POOLS (additive) — a deliberate house rule, NOT 5e's "keep the larger pool".
+// A RAW `applyTempHp(current, incoming)` helper used to live here; it had no
+// callers and contradicted the shipped rule, so it was removed rather than
+// left as a trap for a future refactor (Jul 19 audit).

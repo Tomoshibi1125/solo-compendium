@@ -26,7 +26,7 @@ export const DAMAGE_TYPES = [
 	"void",
 ] as const;
 
-export type DamageType = (typeof DAMAGE_TYPES)[number];
+// (A `DamageType` union used to be exported here; nothing consumed it.)
 
 export interface DamageMitigationProfile {
 	resistances?: string[] | null;

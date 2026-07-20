@@ -6,7 +6,7 @@
  * saves, healing clamp, and the RAW Temp HP "doesn't stack" rule.
  */
 import { describe, expect, it } from "vitest";
-import { applyDamage, applyHealing, applyTempHp } from "@/lib/hpAdjustments";
+import { applyDamage, applyHealing } from "@/lib/hpAdjustments";
 
 describe("applyDamage — temp HP absorbs first", () => {
 	it("THP fully absorbs damage smaller than the pool", () => {
@@ -126,37 +126,5 @@ describe("applyHealing", () => {
 		const r = applyHealing({ hpCurrent: 10, hpMax: 30, heal: -5 });
 		expect(r.newHp).toBe(10);
 		expect(r.hpGained).toBe(0);
-	});
-});
-
-describe("applyTempHp — RAW: doesn't stack, larger replaces", () => {
-	it("new pool larger than current replaces it", () => {
-		const r = applyTempHp(5, 10);
-		expect(r.newTempHp).toBe(10);
-		expect(r.replaced).toBe(true);
-	});
-
-	it("new pool smaller than current is ignored", () => {
-		const r = applyTempHp(10, 5);
-		expect(r.newTempHp).toBe(10);
-		expect(r.replaced).toBe(false);
-	});
-
-	it("equal pools do not replace (RAW: 'larger', strictly greater)", () => {
-		const r = applyTempHp(7, 7);
-		expect(r.newTempHp).toBe(7);
-		expect(r.replaced).toBe(false);
-	});
-
-	it("negative new source is treated as 0 (no-op)", () => {
-		const r = applyTempHp(5, -10);
-		expect(r.newTempHp).toBe(5);
-		expect(r.replaced).toBe(false);
-	});
-
-	it("from 0 THP, any positive new source replaces", () => {
-		const r = applyTempHp(0, 1);
-		expect(r.newTempHp).toBe(1);
-		expect(r.replaced).toBe(true);
 	});
 });

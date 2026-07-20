@@ -346,14 +346,38 @@ export function getEffectiveSpeed(
 }
 
 /**
- * Get effective HP max after exhaustion penalties.
+ * Speed multiplier from EXHAUSTION ALONE (1 = unaffected, 0.5 = halved at
+ * level 2+, 0 at level 5+).
+ *
+ * Deliberately excludes conditions: the character sheet already applies
+ * condition speed effects through `conditions.getActiveConditionEffects`,
+ * which uses different semantics (absolute/relative modifiers). Callers that
+ * want both should use `getEffectiveSpeed`; the sheet composes this one on
+ * top of its existing condition handling so nothing is applied twice.
  */
-export function getEffectiveHPMax(
+export function getExhaustionSpeedMultiplier(exhaustionLevel: number): number {
+	const exhaustion = EXHAUSTION_TABLE[Math.min(exhaustionLevel, 5)];
+	if (!exhaustion) return 1;
+	let multiplier = 1;
+	for (const effect of exhaustion.effects) {
+		if (effect.type === "speed_zero") return 0;
+		if (effect.type === "speed_halved") multiplier = Math.min(multiplier, 0.5);
+	}
+	return multiplier;
+}
+
+/**
+ * Apply the exhaustion HP-maximum penalty (halved at level 4+, PHB p.291).
+ *
+ * Named to avoid confusion with `derivedStats.getEffectiveHpMax`, which is an
+ * unrelated regent-gestalt helper differing only by capitalisation.
+ */
+export function applyExhaustionToHpMax(
 	baseHPMax: number,
 	exhaustionLevel: number,
 ): number {
 	if (exhaustionLevel >= 4) {
-		return Math.floor(baseHPMax * 0.5);
+		return Math.max(1, Math.floor(baseHPMax * 0.5));
 	}
 	return baseHPMax;
 }

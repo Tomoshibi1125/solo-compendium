@@ -313,8 +313,9 @@ export function useSpellCasting(
 
 /**
  * Create an active spell effect entry if the spell has known mechanical effects.
- * This feeds into computeCharacterStats() so buff/debuff spells auto-apply
- * stat modifiers (AC, attack, speed, etc.) — full DDB/Foundry parity.
+ * These reach the sheet through `useMergedCustomModifiers` →
+ * `useCharacterDerivedStats`, so buff/debuff spells auto-apply stat modifiers
+ * (AC, attack, speed, etc.) — full DDB/Foundry parity.
  */
 export function buildActiveSpellEffectEntry(
 	spellName: string,

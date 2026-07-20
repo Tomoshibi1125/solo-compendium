@@ -1,12 +1,11 @@
 /**
  * Spell Effect → Stat Pipeline
  *
- * Bridges `spellAutomation.ts` → `characterEngine.ts` so casting a buff/debuff
- * spell automatically updates computed character stats.
+ * Bridges `spellAutomation.ts` → the derived-stats stack so casting a
+ * buff/debuff spell automatically updates computed character stats.
  *
- * Pipeline: castSpell() → createActiveSpellEffect() → effectsEngine.applyEffects()
- *   → DomainEventBus.emit('spell:cast') → useComputedCharacterStats invalidation
- *   → computeCharacterStats() picks up new activeSpells → stats recalculated
+ * Pipeline: castSpell() → createActiveSpellEffect() → persisted active-spell
+ *   row → `useMergedCustomModifiers` → `useCharacterDerivedStats` recomputes.
  */
 
 // ─── Types ──────────────────────────────────────────────────

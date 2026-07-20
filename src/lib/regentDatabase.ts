@@ -1,7 +1,7 @@
 // Complete Regent database for the Gemini Protocol fusion engine.
 //
-// The Sovereign fusion lookup (`aggregateGeminiFeatures`) resolves a saved
-// sovereign's `monarch_a_id` / `monarch_b_id` against this list. Those ids are
+// The Sovereign fusion lookup resolves a saved sovereign's
+// `monarch_a_id` / `monarch_b_id` against this list. Those ids are
 // the CANONICAL compendium regent ids (e.g. "umbral_regent"), produced by
 // `listCanonicalEntries("regents")` → `regents.ts`. The legacy `NINE_REGENTS`
 // table used different ids ("shadow_regent", …), so AI/imported sovereigns
