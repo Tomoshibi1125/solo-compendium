@@ -850,29 +850,23 @@ export function useCharacterDerivedStats(
 	// the engine. Best-effort — see persistDerivedStats JSDoc.
 	const characterId = character?.id ?? null;
 	const cacheAC = memoized?.calculatedStats.armorClass ?? null;
-	const cacheSpeed = memoized?.finalSpeed ?? null;
 	const cacheInitiative = memoized?.finalInitiative ?? null;
 
 	useEffect(() => {
-		if (
-			!characterId ||
-			cacheAC === null ||
-			cacheSpeed === null ||
-			cacheInitiative === null
-		) {
+		if (!characterId || cacheAC === null || cacheInitiative === null) {
 			return;
 		}
-		// NOTE: hp_max is deliberately NOT cached here — it is authoritative-
-		// stored (rolled HP preserved, maintained additively by level-up) and is
-		// read back as the base by the engine. Persisting the display value
-		// (base + gestalt + custom) would re-feed those bonuses on refetch →
-		// runaway HP inflation. See persistDerivedStats / getEffectiveHpMax.
+		// NOTE: hp_max AND speed are deliberately NOT cached here. Both are
+		// authoritative-stored columns the engine reads back as its own base:
+		// persisting the display value re-feeds bonuses (hp_max → runaway
+		// inflation) or transient penalties (speed → compounding decay under
+		// encumbrance/conditions/exhaustion: 35 → 17 → 8 → …, observed live
+		// Jul 20). See persistDerivedStats' deprecation notes.
 		void persistDerivedStats(characterId, {
 			armorClass: cacheAC,
-			speed: cacheSpeed,
 			initiative: cacheInitiative,
 		});
-	}, [characterId, cacheAC, cacheSpeed, cacheInitiative]);
+	}, [characterId, cacheAC, cacheInitiative]);
 
 	return memoized;
 }

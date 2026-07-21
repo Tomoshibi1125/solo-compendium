@@ -24,7 +24,18 @@ import { isLocalCharacterId, updateLocalCharacter } from "@/lib/guestStore";
 
 export interface DerivedStatsSnapshot {
 	armorClass: number;
-	speed: number;
+	/**
+	 * @deprecated Do NOT cache speed through this write-through. Unlike AC and
+	 * initiative (recomputed from abilities/equipment each render), the engine
+	 * READS `character.speed` back as its own base input — and the display
+	 * value includes TRANSIENT penalties (encumbrance, conditions, exhaustion).
+	 * Persisting it re-feeds the penalty on the next render and the value
+	 * compounds toward zero (35 → 17 → 8 → …, observed live Jul 20 the moment
+	 * exhaustion halving shipped). The `speed` column stays the authoritative
+	 * BASE, written only by creation/level-up/awakening traits. This field is
+	 * ignored on write.
+	 */
+	speed?: number;
 	initiative: number;
 	/**
 	 * @deprecated Do NOT cache hp_max through this write-through. Unlike AC /
@@ -64,7 +75,6 @@ export async function persistDerivedStats(
 			// PATCH below 400s for `local_` ids on every derived-stats recompute.
 			updateLocalCharacter(characterId, {
 				armor_class: snapshot.armorClass,
-				speed: snapshot.speed,
 				initiative: snapshot.initiative,
 				derived_stats_cached_at: new Date().toISOString(),
 			});
@@ -74,7 +84,6 @@ export async function persistDerivedStats(
 			.from("characters")
 			.update({
 				armor_class: snapshot.armorClass,
-				speed: snapshot.speed,
 				initiative: snapshot.initiative,
 				derived_stats_cached_at: new Date().toISOString(),
 			})

@@ -55,6 +55,25 @@ describe("D1 structural guard — derived cache must not clobber authoritative h
 		const callBlock = s.slice(callIdx, callIdx + 220);
 		expect(callBlock.includes("hpMax:")).toBe(false);
 	});
+
+	// Speed is the same trap with the opposite sign: the engine reads
+	// `character.speed` back as its own base, and the display value carries
+	// TRANSIENT penalties (encumbrance, conditions, exhaustion). Persisting it
+	// compounds toward zero — 35 → 17 → 8, observed live on Jul 20 the moment
+	// exhaustion halving shipped. The column stays the authoritative base.
+	it("persistDerivedStats does NOT write speed (either branch)", () => {
+		const s = src("src/lib/derivedStats/persistDerivedStats.ts");
+		const writes = s.match(/speed:\s*snapshot\.speed/g) ?? [];
+		expect(writes.length).toBe(0);
+	});
+
+	it("the derived write-through does not persist finalSpeed", () => {
+		const s = src("src/hooks/useCharacterDerivedStats.ts");
+		const callIdx = s.indexOf("persistDerivedStats(characterId");
+		expect(callIdx).toBeGreaterThan(-1);
+		const callBlock = s.slice(callIdx, callIdx + 220);
+		expect(callBlock.includes("speed:")).toBe(false);
+	});
 });
 
 describe("D2 structural guard — sheet renders HP from engine, not raw cache", () => {
