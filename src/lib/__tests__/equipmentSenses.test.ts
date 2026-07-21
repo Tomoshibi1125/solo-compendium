@@ -71,6 +71,58 @@ describe("extractSensesFromProperties", () => {
 			]),
 		).toEqual({});
 	});
+
+	it("binds self-directed prose forms", () => {
+		expect(
+			extractSensesFromProperties([
+				{ properties: ["you gain darkvision 60 ft"] },
+			]).darkvision,
+		).toBe(60);
+		expect(
+			extractSensesFromProperties([
+				{ properties: ["you have truesight 30 ft"] },
+			]).truesight,
+		).toBe(30);
+		expect(
+			extractSensesFromProperties([{ properties: ["grants blindsight 10 ft"] }])
+				.blindsight,
+		).toBe(10);
+	});
+
+	// The house rule: a sense the item grants to SOMEONE ELSE, or that merely
+	// appears mid-sentence, must never bind to the wearer. Every one of these
+	// bound wrongly under the original "match anywhere" regex (verified red).
+	it("never binds a sense granted to someone/something else", () => {
+		expect(
+			extractSensesFromProperties([
+				{ properties: ["your ally gains darkvision 60 ft"] },
+			]),
+		).toEqual({});
+		expect(
+			extractSensesFromProperties([
+				{ properties: ["the target has truesight 30 ft"] },
+			]),
+		).toEqual({});
+		// A Technomancer ultimate describing a deployed device — the caster does
+		// NOT gain the drone's truesight.
+		expect(
+			extractSensesFromProperties([
+				{ properties: ["a scanner (truesight 120 ft)"] },
+			]),
+		).toEqual({});
+	});
+
+	it("does not bind a sense buried mid-sentence", () => {
+		expect(
+			extractSensesFromProperties([
+				{
+					properties: [
+						"while attuned, creatures within 30 ft with darkvision 60 ft are revealed",
+					],
+				},
+			]),
+		).toEqual({});
+	});
 });
 
 describe("structural wiring — the sheet unions gear senses", () => {

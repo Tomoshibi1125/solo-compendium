@@ -26,8 +26,28 @@ export type SpecialSense =
 	| "tremorsense"
 	| "truesight";
 
-const SPECIAL_SENSE_PATTERN =
-	/(darkvision|blindsight|tremorsense|truesight)\s*(\d+)\s*ft/gi;
+const SENSE_ALT = "darkvision|blindsight|tremorsense|truesight";
+
+// A sense binds to the WEARER only from canonical, self-directed phrasing —
+// mirroring the closed-vocabulary approach parseModifiers uses for resistances
+// (equipmentModifiers.ts). Two accepted shapes:
+//   1. a bare mechanical property token — "darkvision 60 ft" — the sense at
+//      the very start of the property, how buildItemProperties emits it; and
+//   2. explicit self-directed prose — "you gain/have darkvision 60 ft",
+//      "grants darkvision 60 ft".
+// Narrative that assigns the sense to someone/something else ("your ally
+// gains…", "the target has…", "a scanner (truesight 120 ft)") must NEVER
+// bind — the item-effect-prose-binding house rule. No current item data
+// exercises the prose forms, but the guard keeps a future authoring mistake
+// from silently granting the wearer a drone's or ally's sense.
+const SENSE_TOKEN_RE = new RegExp(`^\\s*(${SENSE_ALT})\\s*(\\d+)\\s*ft`, "i");
+// Self-directed prose only: the property must START with the granting phrase
+// (anchored), so "your ally gains darkvision 60 ft" — where another subject
+// precedes the verb — cannot match. "you gain/have …", "grants …", "gain …".
+const SENSE_PROSE_RE = new RegExp(
+	`^\\s*(?:you\\s+(?:gain|have)|grants?|gain)\\s+(${SENSE_ALT})\\s*(\\d+)\\s*ft`,
+	"i",
+);
 
 /**
  * Extract special senses granted by gear from its property strings, keeping
@@ -44,16 +64,18 @@ export function extractSensesFromProperties(
 	}>,
 ): Partial<Record<SpecialSense, number>> {
 	const found: Partial<Record<SpecialSense, number>> = {};
+	const bind = (match: RegExpMatchArray | null) => {
+		if (!match) return;
+		const sense = match[1].toLowerCase() as SpecialSense;
+		const range = Number.parseInt(match[2], 10);
+		if (!Number.isFinite(range)) return;
+		found[sense] = Math.max(found[sense] ?? 0, range);
+	};
 	for (const source of sources) {
 		for (const prop of source.properties ?? []) {
 			if (typeof prop !== "string") continue;
-			// matchAll needs a fresh lastIndex per string for a /g regex.
-			for (const match of prop.matchAll(SPECIAL_SENSE_PATTERN)) {
-				const sense = match[1].toLowerCase() as SpecialSense;
-				const range = Number.parseInt(match[2], 10);
-				if (!Number.isFinite(range)) continue;
-				found[sense] = Math.max(found[sense] ?? 0, range);
-			}
+			bind(prop.match(SENSE_TOKEN_RE));
+			bind(prop.match(SENSE_PROSE_RE));
 		}
 	}
 	return found;
