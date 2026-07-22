@@ -179,6 +179,46 @@ export interface HomebrewRuntimeFeat extends Record<string, unknown> {
 	homebrew_id: string;
 }
 
+/**
+ * A homebrew creature ("anomaly" — RA's monster equivalent), shaped to match
+ * the flat `Anomaly` row the Encounter Builder / Combat Tracker consume so a
+ * Warden can drop a custom creature straight into an encounter.
+ */
+export interface HomebrewRuntimeAnomaly extends Record<string, unknown> {
+	id: string;
+	name: string;
+	display_name: string;
+	description: string;
+	cr: string;
+	xp: number;
+	gate_rank: string;
+	is_boss: boolean;
+	creature_type: string;
+	armor_class: number;
+	hit_points_average: number;
+	hit_points_formula: string;
+	size: string;
+	str: number;
+	agi: number;
+	vit: number;
+	int: number;
+	sense: number;
+	pre: number;
+	saving_throws: string | null;
+	senses: string | null;
+	languages: string[] | null;
+	damage_resistances: string[] | null;
+	damage_immunities: string[] | null;
+	damage_vulnerabilities: string[] | null;
+	condition_immunities: string[] | null;
+	speed_walk: number | null;
+	source_book: string;
+	tags: string[];
+	_homebrew: true;
+	homebrewId: string;
+	homebrew_id: string;
+}
+
 const ABILITY_ALIASES: Record<string, string> = {
 	strength: "STR",
 	agility: "AGI",
@@ -643,6 +683,84 @@ export const mapHomebrewFeatForRuntime = (
 		prerequisites: data.prerequisites ?? null,
 		benefits: data.benefits ?? null,
 		modifiers: data.modifiers ?? null,
+		tags: record.tags ?? [],
+		_homebrew: true,
+		homebrewId: record.id,
+		homebrew_id: record.id,
+	};
+};
+
+/** Default CR + XP per RA gate rank when a homebrew anomaly omits them. */
+const RANK_DEFAULTS: Record<string, { cr: string; xp: number }> = {
+	F: { cr: "1/8", xp: 25 },
+	E: { cr: "1/4", xp: 50 },
+	D: { cr: "1", xp: 200 },
+	C: { cr: "3", xp: 700 },
+	B: { cr: "6", xp: 2300 },
+	A: { cr: "10", xp: 5900 },
+	S: { cr: "15", xp: 13000 },
+};
+
+export const mapHomebrewAnomalyForRuntime = (
+	record: HomebrewRuntimeRecord,
+): HomebrewRuntimeAnomaly => {
+	const data = asRecord(record.data);
+	const source = record.source_book || "Rift Ascendant Homebrew";
+	const rank = asString(
+		pick(data, ["gate_rank", "rank", "gateRank"]),
+		"D",
+	).toUpperCase();
+	const defaults = RANK_DEFAULTS[rank] ?? RANK_DEFAULTS.D;
+	const cr = asString(pick(data, ["cr", "challenge_rating"]), defaults.cr);
+	const xp = asNumber(pick(data, ["xp", "experience"]), defaults.xp);
+	const abilityScore = (keys: string[]) => asNumber(pick(data, keys), 10);
+
+	return {
+		...data,
+		id: record.id,
+		name: record.name,
+		display_name: record.name,
+		description: (record.description ?? asString(data.description)) || "",
+		cr,
+		xp,
+		gate_rank: rank,
+		is_boss: rank === "S" || rank === "A",
+		creature_type: asString(
+			pick(data, ["creature_type", "creatureType", "type"]),
+			"Anomaly",
+		),
+		armor_class: asNumber(pick(data, ["armor_class", "armorClass", "ac"]), 12),
+		hit_points_average: asNumber(
+			pick(data, ["hit_points_average", "hit_points", "hp", "hitPoints"]),
+			20,
+		),
+		hit_points_formula: asString(
+			pick(data, ["hit_points_formula", "hitPointsFormula"]),
+			"1d8",
+		),
+		size: asString(pick(data, ["size"]), "Medium"),
+		str: abilityScore(["str", "strength"]),
+		agi: abilityScore(["agi", "agility", "dex", "dexterity"]),
+		vit: abilityScore(["vit", "vitality", "con", "constitution"]),
+		int: abilityScore(["int", "intellect", "intelligence"]),
+		sense: abilityScore(["sense", "wis", "wisdom"]),
+		pre: abilityScore(["pre", "presence", "cha", "charisma"]),
+		saving_throws:
+			asString(pick(data, ["saving_throws", "savingThrows"])) || null,
+		senses: asString(pick(data, ["senses"])) || null,
+		languages: asStringArray(pick(data, ["languages"])),
+		damage_resistances: asStringArray(
+			pick(data, ["damage_resistances", "resistances"]),
+		),
+		damage_immunities: asStringArray(
+			pick(data, ["damage_immunities", "immunities"]),
+		),
+		damage_vulnerabilities: asStringArray(
+			pick(data, ["damage_vulnerabilities", "vulnerabilities"]),
+		),
+		condition_immunities: asStringArray(pick(data, ["condition_immunities"])),
+		speed_walk: asOptionalNumber(pick(data, ["speed_walk", "speed"])),
+		source_book: source,
 		tags: record.tags ?? [],
 		_homebrew: true,
 		homebrewId: record.id,

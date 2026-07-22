@@ -52,6 +52,7 @@ const CONTENT_TYPES: HomebrewContentType[] = [
 	"power",
 	"feat",
 	"item",
+	"anomaly",
 ];
 
 const VISIBILITY_OPTIONS: HomebrewVisibilityScope[] = [

@@ -3,6 +3,7 @@ import { homebrewRuntimeItemToDeliverableItem } from "@/hooks/useWardenItemDeliv
 import {
 	filterPublishedHomebrewRecords,
 	type HomebrewRuntimeRecord,
+	mapHomebrewAnomalyForRuntime,
 	mapHomebrewFeatForRuntime,
 	mapHomebrewFeaturesForRuntime,
 	mapHomebrewItemForRuntime,
@@ -35,6 +36,50 @@ const makeRecord = (
 	created_at: "2026-05-04T00:00:00.000Z",
 	updated_at: "2026-05-04T00:00:00.000Z",
 	...overrides,
+});
+
+describe("homebrew anomaly runtime mapping", () => {
+	it("maps a homebrew anomaly into encounter-ready stats with explicit fields", () => {
+		const record = makeRecord({
+			content_type: "anomaly",
+			name: "Hollow Choir",
+			description: "A shrieking swarm from a collapsed rift.",
+			data: {
+				gate_rank: "B",
+				armor_class: 16,
+				hp: 95,
+				creature_type: "Aberration",
+				str: 18,
+				agi: 14,
+				damage_immunities: "psychic, poison",
+			},
+		});
+		const anomaly = mapHomebrewAnomalyForRuntime(record);
+		expect(anomaly).toMatchObject({
+			name: "Hollow Choir",
+			gate_rank: "B",
+			armor_class: 16,
+			hit_points_average: 95,
+			creature_type: "Aberration",
+			str: 18,
+			agi: 14,
+			_homebrew: true,
+		});
+		expect(anomaly.damage_immunities).toEqual(["psychic", "poison"]);
+	});
+
+	it("derives CR/XP defaults from rank and falls back for missing stats", () => {
+		const anomaly = mapHomebrewAnomalyForRuntime(
+			makeRecord({ content_type: "anomaly", name: "Gloom Wisp", data: {} }),
+		);
+		// Default rank D → CR 1 / 200 XP, AC 12, HP 20, ability scores 10.
+		expect(anomaly.gate_rank).toBe("D");
+		expect(anomaly.cr).toBe("1");
+		expect(anomaly.xp).toBe(200);
+		expect(anomaly.armor_class).toBe(12);
+		expect(anomaly.hit_points_average).toBe(20);
+		expect(anomaly.str).toBe(10);
+	});
 });
 
 describe("homebrew runtime mapping", () => {

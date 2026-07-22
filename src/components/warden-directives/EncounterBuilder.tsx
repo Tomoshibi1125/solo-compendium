@@ -25,6 +25,7 @@ import "./EncounterBuilder.css";
 import { useToast } from "@/hooks/use-toast";
 import { useJoinedCampaigns, useMyCampaigns } from "@/hooks/useCampaigns";
 import { useDebounce } from "@/hooks/useDebounce";
+import { usePublishedHomebrew } from "@/hooks/useHomebrewContent";
 import { useLiveEncounterScaler } from "@/hooks/useLiveEncounterScaler";
 import {
 	useCampaignToolState,
@@ -42,6 +43,10 @@ import {
 	removeGeneration,
 	togglePin,
 } from "@/lib/generationHistory";
+import {
+	filterPublishedHomebrewRecords,
+	mapHomebrewAnomalyForRuntime,
+} from "@/lib/homebrewRuntime";
 import { downloadJson, downloadMarkdown } from "@/lib/toolExport";
 import { cn } from "@/lib/utils";
 import { normalizeRegentSearch } from "@/lib/vernacular";
@@ -332,6 +337,25 @@ export function EncounterBuilder({
 		queryFn: () => loadCanonicalAnomalies(searchQuery, campaignId ?? null),
 	});
 
+	// DDB homebrew-monster parity: the Warden's published homebrew anomalies are
+	// selectable alongside canonical ones, so custom creatures can be dropped
+	// straight into an encounter.
+	const { data: publishedAnomalyHomebrew = [] } = usePublishedHomebrew(
+		"anomaly",
+		campaignId ?? null,
+	);
+	const combinedAnomalies = useMemo(() => {
+		const q = searchQuery.trim().toLowerCase();
+		const homebrew = filterPublishedHomebrewRecords(
+			publishedAnomalyHomebrew,
+			"anomaly",
+		)
+			.map(mapHomebrewAnomalyForRuntime)
+			.filter((a) => !q || a.name.toLowerCase().includes(q))
+			.map((a) => a as unknown as Anomaly);
+		return [...homebrew, ...anomalies];
+	}, [publishedAnomalyHomebrew, anomalies, searchQuery]);
+
 	const totalXP = encounterAnomalies.reduce(
 		(sum: number, em: EncounterAnomaly) =>
 			sum + calculateXP(em.Anomaly, em.quantity),
@@ -597,7 +621,7 @@ export function EncounterBuilder({
 									<Loader2 className="w-8 h-8 animate-spin mx-auto text-primary/60" />
 								</div>
 							) : (
-								anomalies.map((Anomaly) => (
+								combinedAnomalies.map((Anomaly) => (
 									<div
 										key={Anomaly.id}
 										className="group p-3 rounded-lg border border-primary/10 bg-primary/5 hover:bg-primary/10 transition-colors flex justify-between items-center"

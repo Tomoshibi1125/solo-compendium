@@ -12,7 +12,8 @@ export type HomebrewContentType =
 	| "spell"
 	| "item"
 	| "power"
-	| "feat";
+	| "feat"
+	| "anomaly";
 export type HomebrewStatus = "draft" | "published" | "archived";
 export type HomebrewVisibilityScope = "private" | "campaign" | "public";
 
