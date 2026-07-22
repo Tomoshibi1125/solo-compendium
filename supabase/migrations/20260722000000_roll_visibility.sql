@@ -32,7 +32,7 @@ CREATE POLICY campaign_roll_events_select ON public.campaign_roll_events
 				OR EXISTS (
 					SELECT 1 FROM public.campaigns c
 					WHERE c.id = campaign_roll_events.campaign_id
-						AND c.dm_id = auth.uid()
+						AND c.warden_id = auth.uid()
 				)
 			)
 		)
@@ -45,7 +45,7 @@ CREATE POLICY campaign_roll_events_select ON public.campaign_roll_events
 				OR EXISTS (
 					SELECT 1 FROM public.campaigns c
 					WHERE c.id = campaign_roll_events.campaign_id
-						AND c.dm_id = auth.uid()
+						AND c.warden_id = auth.uid()
 				)
 			)
 		)
