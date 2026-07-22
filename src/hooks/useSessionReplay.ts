@@ -1,17 +1,29 @@
 /**
- * Misty Pearl H4 — Bureau Field Recorder client.
+ * Bureau Field Recorder client.
  *
- * Reads `campaign_session_events` rows, exposes a scrubber-ready API,
- * and emits replayed events back onto the Bureau Directive Bus so
- * existing UI (Pixi stage, initiative tracker, chat) reconstructs the
- * past without any new code paths.
+ * Reads a campaign's past as a single ordered timeline — combat turn/round
+ * transitions + applied effects from `campaign_session_events`, merged with dice
+ * rolls from `campaign_roll_events` (the Game Log) — and exposes a scrubber-ready
+ * API. During playback it re-emits combat/effect/roll events onto the Bureau
+ * Directive Bus so any live listener (module host, future surfaces) can
+ * reconstruct the moment; the panel itself renders the readable timeline.
+ *
+ * VTT kinds (`token:*`, `scene:*`) are out of scope — the VTT was retired.
  */
 import { useEffect, useMemo, useRef, useState } from "react";
 import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
+import {
+	type CampaignRollEventRow,
+	listLocalCampaignRollEvents,
+} from "@/lib/campaignRollEvents";
+import {
+	listLocalSessionEvents,
+	type SessionEventRecord,
+} from "@/lib/campaignSessionEvents";
 import { hooks } from "@/lib/hooks/registry";
 
 export interface SessionEventRow {
-	id: number;
+	id: number | string;
 	campaign_id: string;
 	session_id: string | null;
 	actor_id: string | null;
@@ -39,10 +51,6 @@ export interface UseSessionReplayResult {
 }
 
 const REPLAY_HOOK_KINDS = new Set([
-	"token:created",
-	"token:moved",
-	"token:removed",
-	"scene:changed",
 	"combat:turnStart",
 	"combat:turnEnd",
 	"combat:roundStart",
@@ -51,6 +59,26 @@ const REPLAY_HOOK_KINDS = new Set([
 	"effect:applied",
 	"effect:expired",
 ]);
+
+/** Map a Game Log roll row into the unified session-timeline shape. */
+function rollToSessionRow(roll: CampaignRollEventRow): SessionEventRow {
+	return {
+		id: `roll-${roll.id}`,
+		campaign_id: roll.campaign_id,
+		session_id: null,
+		actor_id: roll.character_id,
+		kind: "roll:submitted",
+		payload: {
+			actor: roll.character_name ?? "Unknown",
+			formula: roll.dice_formula,
+			result: roll.result,
+			campaignId: roll.campaign_id,
+			context: roll.context,
+			rollType: roll.roll_type,
+		},
+		created_at: roll.created_at,
+	};
+}
 
 export function useSessionReplay({
 	campaignId,
@@ -70,35 +98,77 @@ export function useSessionReplay({
 	speedRef.current = speed;
 
 	useEffect(() => {
-		if (!isSupabaseConfigured || !campaignId) {
+		if (!campaignId) {
 			setIsLoading(false);
 			return;
 		}
 		let cancelled = false;
+
+		const mergeAndSet = (
+			sessionRows: SessionEventRow[],
+			rollRows: CampaignRollEventRow[],
+		) => {
+			const merged = [...sessionRows, ...rollRows.map(rollToSessionRow)].sort(
+				(a, b) => a.created_at.localeCompare(b.created_at),
+			);
+			setEvents(merged);
+		};
+
 		const load = async () => {
 			setIsLoading(true);
-			const query = supabase
+
+			// Guest / no-backend: read the localStorage mirrors.
+			const {
+				data: { user },
+			} = isSupabaseConfigured
+				? await supabase.auth.getUser()
+				: { data: { user: null } };
+
+			if (!isSupabaseConfigured || !user) {
+				if (cancelled) return;
+				mergeAndSet(
+					listLocalSessionEvents(campaignId, sessionId) as SessionEventRow[],
+					listLocalCampaignRollEvents(campaignId),
+				);
+				setIsLoading(false);
+				return;
+			}
+
+			const sessionQuery = supabase
 				.from("campaign_session_events")
 				.select("*")
 				.eq("campaign_id", campaignId)
 				.order("created_at", { ascending: true })
 				.limit(20_000);
-			const filtered = sessionId
-				? await query.eq("session_id", sessionId)
-				: await query;
+			const sessionResult = sessionId
+				? await sessionQuery.eq("session_id", sessionId)
+				: await sessionQuery;
+
+			const rollResult = await supabase
+				.from("campaign_roll_events")
+				.select("*")
+				.eq("campaign_id", campaignId)
+				.order("created_at", { ascending: true })
+				.limit(20_000);
+
 			if (cancelled) return;
-			const { data, error } = filtered;
-			if (error) {
-				if (
-					(error as { code?: string }).code !== "42P01" &&
-					(error as { code?: string }).code !== "PGRST205"
-				) {
-					console.warn("[useSessionReplay] load failed:", error);
-				}
-				setEvents([]);
-			} else {
-				setEvents((data ?? []) as unknown as SessionEventRow[]);
+
+			const isMissingTable = (err: unknown) => {
+				const code = (err as { code?: string })?.code;
+				return code === "42P01" || code === "PGRST205";
+			};
+
+			if (sessionResult.error && !isMissingTable(sessionResult.error)) {
+				console.warn("[useSessionReplay] load failed:", sessionResult.error);
 			}
+
+			mergeAndSet(
+				(sessionResult.error
+					? []
+					: ((sessionResult.data ??
+							[]) as unknown as SessionEventRecord[])) as SessionEventRow[],
+				rollResult.error ? [] : (rollResult.data ?? []),
+			);
 			setIsLoading(false);
 		};
 		void load();
@@ -137,11 +207,7 @@ export function useSessionReplay({
 				consumed += 1;
 			}
 			if (consumed > 0) {
-				setCursor(
-					nextCursor + consumed > events.length - 1
-						? targetMs - startTs
-						: targetMs - startTs,
-				);
+				setCursor(targetMs - startTs);
 			}
 			if (nextCursor + consumed >= events.length) {
 				setPlaying(false);

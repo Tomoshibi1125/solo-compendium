@@ -56,6 +56,8 @@ import {
 	resolveHealing,
 	resolveSave,
 } from "@/lib/actionResolution";
+import { useAuth } from "@/lib/auth/authContext";
+import { publishSessionEvent } from "@/lib/campaignSessionEvents";
 import {
 	advanceConditionRound,
 	applyCondition,
@@ -287,6 +289,7 @@ const InitiativeTracker = () => {
 		useJoinedCampaigns();
 	const campaignId = searchParams.get("campaignId")?.trim() || null;
 	const sendMessage = useSendCampaignMessage();
+	const { user } = useAuth();
 	const sessionId = searchParams.get("sessionId")?.trim() || null;
 	const isCampaignScoped = !!campaignId;
 	const persistenceContext = campaignId ? `campaign:${campaignId}` : "user";
@@ -828,38 +831,79 @@ const InitiativeTracker = () => {
 		[campaignId, ascendantTools, sendMessage],
 	);
 
+	// Bureau Field Recorder — persist combat/effect events to the shared
+	// session timeline (`campaign_session_events`) so Session Replay can
+	// reconstruct the encounter. Campaign-scoped only; never throws.
+	const recordSessionEvent = useCallback(
+		(
+			kind: Parameters<typeof publishSessionEvent>[0]["kind"],
+			payload: Record<string, unknown>,
+		) => {
+			if (!campaignId) return;
+			void publishSessionEvent(
+				{
+					campaignId,
+					sessionId: sessionId ?? null,
+					actorId: user?.id ?? null,
+					kind,
+					payload,
+				},
+				user?.id ?? null,
+			);
+		},
+		[campaignId, sessionId, user?.id],
+	);
+
 	const nextTurn = useCallback(() => {
 		if (sortedCombatants.length === 0) return;
-		setCurrentTurn((prev) => {
-			const next = (prev + 1) % sortedCombatants.length;
-			if (next === 0) {
-				const nextRound = round + 1;
-				setRound(nextRound);
-				cleanupExpiredConditions(nextRound);
-				logEvent(`— Round ${nextRound} begins —`, nextRound, 0);
-			}
+		const prev = currentTurn;
+		const next = (prev + 1) % sortedCombatants.length;
+		const endingCombatant = sortedCombatants[prev];
+		const startingCombatant = sortedCombatants[next];
 
-			// DDB Parity: Broadcast turn change
-			const activeCombatant = sortedCombatants[next];
-			if (activeCombatant) {
-				ascendantTools
-					.trackCustomFeatureUsage(
-						activeCombatant.id || activeCombatant.name,
-						"Turn Start",
-						"start",
-						"SA",
-					)
-					.catch(console.error);
-			}
+		if (endingCombatant) {
+			recordSessionEvent("combat:turnEnd", {
+				round,
+				actorName: endingCombatant.name,
+				actorTokenId: endingCombatant.id ?? null,
+			});
+		}
 
-			return next;
-		});
+		let effectiveRound = round;
+		if (next === 0) {
+			effectiveRound = round + 1;
+			setRound(effectiveRound);
+			cleanupExpiredConditions(effectiveRound);
+			logEvent(`— Round ${effectiveRound} begins —`, effectiveRound, 0);
+			recordSessionEvent("combat:roundStart", { round: effectiveRound });
+		}
+
+		setCurrentTurn(next);
+
+		// DDB Parity: Broadcast turn change
+		if (startingCombatant) {
+			ascendantTools
+				.trackCustomFeatureUsage(
+					startingCombatant.id || startingCombatant.name,
+					"Turn Start",
+					"start",
+					"SA",
+				)
+				.catch(console.error);
+			recordSessionEvent("combat:turnStart", {
+				round: effectiveRound,
+				actorName: startingCombatant.name,
+				actorTokenId: startingCombatant.id ?? null,
+			});
+		}
 	}, [
+		currentTurn,
 		sortedCombatants,
 		round,
 		cleanupExpiredConditions,
 		ascendantTools,
 		logEvent,
+		recordSessionEvent,
 	]);
 
 	const previousTurn = useCallback(() => {
@@ -1172,6 +1216,12 @@ const InitiativeTracker = () => {
 					: undefined;
 			for (const condition of pending.appliesConditions) {
 				addCondition(target.id, condition, durationRounds);
+				recordSessionEvent("effect:applied", {
+					effectName: condition,
+					targetName: target.name,
+					tokenId: target.id ?? null,
+					round,
+				});
 			}
 		}
 	};

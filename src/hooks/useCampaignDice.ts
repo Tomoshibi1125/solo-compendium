@@ -4,6 +4,7 @@ import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import type { Database, Json } from "@/integrations/supabase/types";
 import { aiService } from "@/lib/ai/aiService";
 import { useAuth } from "@/lib/auth/authContext";
+import { publishCampaignRollEvent } from "@/lib/campaignRollEvents";
 import { enqueueSyncItem } from "@/lib/syncManager";
 
 type _Campaign = Database["public"]["Tables"]["campaigns"]["Row"];
@@ -47,6 +48,7 @@ export function useCampaignDice() {
 				context?: string;
 				modifiers?: Record<string, Json | undefined>;
 				character_id?: string;
+				character_name?: string;
 			},
 		) => {
 			if (!user || !isSupabaseConfigured) {
@@ -58,13 +60,36 @@ export function useCampaignDice() {
 				return null;
 			}
 
+			// `character_name` is a feed-only field — `roll_history` has no such
+			// column, so keep it out of that insert and use it only for the
+			// shared campaign roll feed ("Game Log").
+			const { character_name, ...historyRoll } = rollData;
+
 			const isOfflineMode =
 				typeof navigator !== "undefined" && !navigator.onLine;
+
+			// Publish to the persistent campaign roll feed regardless of the
+			// offline branch below — the feed is the durable shared Game Log
+			// every member's CampaignRollFeed subscribes to.
+			void publishCampaignRollEvent(
+				{
+					campaign_id: campaignId,
+					character_id: historyRoll.character_id ?? null,
+					character_name: character_name ?? null,
+					dice_formula: historyRoll.dice_formula,
+					result: historyRoll.result,
+					rolls: historyRoll.rolls,
+					roll_type: historyRoll.roll_type,
+					context: historyRoll.context ?? null,
+					modifiers: (historyRoll.modifiers ?? null) as Json | null,
+				},
+				user.id,
+			);
 
 			try {
 				if (isOfflineMode) {
 					await enqueueSyncItem("roll", "create", {
-						...rollData,
+						...historyRoll,
 						campaign_id: campaignId,
 						user_id: user.id,
 					});
@@ -72,13 +97,13 @@ export function useCampaignDice() {
 						title: "Roll Saved Offline",
 						description: "Roll will sync when reconnected",
 					});
-					return { ...rollData, id: crypto.randomUUID() };
+					return { ...historyRoll, id: crypto.randomUUID() };
 				}
 
 				const { data, error } = await supabase
 					.from("roll_history")
 					.insert({
-						...rollData,
+						...historyRoll,
 						campaign_id: campaignId,
 						user_id: user.id,
 					})

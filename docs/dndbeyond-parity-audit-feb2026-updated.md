@@ -1,3 +1,11 @@
+> ⚠️ **SUPERSEDED (2026-07-21)** by
+> [`dndbeyond-parity-audit-jul2026.md`](dndbeyond-parity-audit-jul2026.md).
+> This document is retained for history only. Known inaccuracies: it lists the
+> deliberately-removed VTT (V1–V4) as ✅; it cites a `verifyDDBeyondParity()`
+> that no longer exists; and its "100%/72-of-72" headline predates the July 2026
+> finding that the campaign Game Log (`campaign_roll_events`) had no writer.
+> §9.3 "RA exceeds DDB" remains accurate.
+
 # D&D Beyond Feb 2026 Parity Audit — System Ascendant (Updated)
 
 **Audit Date:** February 2026 (targeting Feb 2026 D&D Beyond feature set)

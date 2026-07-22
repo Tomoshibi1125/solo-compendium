@@ -3,85 +3,30 @@ import { useToast } from "@/hooks/use-toast";
 import { useCampaignDice } from "@/hooks/useCampaignDice";
 import { useRecordRoll } from "@/hooks/useRollHistory";
 import { rollCheck } from "@/lib/rollEngine";
-import { getAbilityModifier as getAbilityModifierFromScore } from "@/types/core-rules";
 
 interface CharacterRollProps {
 	characterId: string;
 	characterName: string;
-	abilities: Record<string, number>;
 	proficiencyBonus: number;
-	savingThrowProficiencies: string[];
-	skillProficiencies: string[];
 }
 
+/**
+ * The live inline-roll path. `roll` takes an already-resolved modifier (the
+ * caller passes the derived-stats value), so this hook never recomputes
+ * ability/skill modifiers itself — that avoids a second, drift-prone modifier
+ * stack. Convenience wrappers that recomputed modifiers here were removed for
+ * that reason; if a call site needs them, derive from `useCharacterDerivedStats`
+ * and pass the result to `roll`.
+ */
 export function useCharacterRoll({
 	characterId,
 	characterName,
-	abilities,
 	proficiencyBonus,
-	savingThrowProficiencies,
-	skillProficiencies,
 }: CharacterRollProps) {
 	const { toast } = useToast();
 
 	const recordRoll = useRecordRoll();
 	const { rollInCampaign } = useCampaignDice();
-
-	const getAbilityModifier = useCallback(
-		(ability: string): number => {
-			const normalized = ability.toUpperCase();
-			const score = abilities[ability] ?? abilities[normalized] ?? 10;
-			return getAbilityModifierFromScore(score);
-		},
-		[abilities],
-	);
-
-	const getSaveModifier = useCallback(
-		(ability: string): number => {
-			const baseMod = getAbilityModifier(ability);
-			const normalized = ability.toUpperCase();
-			const isProficient = savingThrowProficiencies.some(
-				(entry) => entry.toUpperCase() === normalized,
-			);
-			return baseMod + (isProficient ? proficiencyBonus : 0);
-		},
-		[getAbilityModifier, savingThrowProficiencies, proficiencyBonus],
-	);
-
-	const getSkillModifier = useCallback(
-		(skill: string): number => {
-			// Map skills to their abilities
-			const skillAbilityMap: Record<string, string> = {
-				athletics: "STR",
-				acrobatics: "AGI",
-				sleight_of_hand: "AGI",
-				"sleight of hand": "AGI",
-				stealth: "AGI",
-				arcana: "INT",
-				history: "INT",
-				investigation: "INT",
-				nature: "INT",
-				religion: "INT",
-				insight: "SENSE",
-				medicine: "SENSE",
-				perception: "SENSE",
-				survival: "SENSE",
-				deception: "PRE",
-				intimidation: "PRE",
-				performance: "PRE",
-				persuasion: "PRE",
-			};
-
-			const normalizedSkill = skill.toLowerCase().replaceAll("_", " ");
-			const ability = skillAbilityMap[normalizedSkill] || "STR";
-			const baseMod = getAbilityModifier(ability);
-			const isProficient = skillProficiencies.some(
-				(entry) => entry.toLowerCase().replaceAll("_", " ") === normalizedSkill,
-			);
-			return baseMod + (isProficient ? proficiencyBonus : 0);
-		},
-		[getAbilityModifier, skillProficiencies, proficiencyBonus],
-	);
 
 	const roll = useCallback(
 		(
@@ -162,6 +107,7 @@ export function useCharacterRoll({
 						dropped: result.droppedRolls ?? null,
 					},
 					character_id: characterId,
+					character_name: characterName,
 				});
 			}
 
@@ -184,38 +130,5 @@ export function useCharacterRoll({
 		],
 	);
 
-	// Convenience methods for common rolls
-	const rollAbilityCheck = useCallback(
-		(ability: string, campaignId?: string) => {
-			const modifier = getAbilityModifier(ability);
-			return roll(ability, modifier, "ability", undefined, campaignId);
-		},
-		[roll, getAbilityModifier],
-	);
-
-	const rollSavingThrow = useCallback(
-		(ability: string, campaignId?: string) => {
-			const modifier = getSaveModifier(ability);
-			return roll(`${ability} Save`, modifier, "save", undefined, campaignId);
-		},
-		[roll, getSaveModifier],
-	);
-
-	const rollSkillCheck = useCallback(
-		(skill: string, campaignId?: string) => {
-			const modifier = getSkillModifier(skill);
-			return roll(skill, modifier, "skill", undefined, campaignId);
-		},
-		[roll, getSkillModifier],
-	);
-
-	return {
-		roll,
-		rollAbilityCheck,
-		rollSavingThrow,
-		rollSkillCheck,
-		getAbilityModifier,
-		getSaveModifier,
-		getSkillModifier,
-	};
+	return { roll };
 }

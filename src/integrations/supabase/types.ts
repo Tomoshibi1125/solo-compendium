@@ -1509,6 +1509,7 @@ export type Database = {
 					roll_type: string | null;
 					rolls: number[] | null;
 					user_id: string;
+					visibility: string;
 				};
 				Insert: {
 					campaign_id: string;
@@ -1523,6 +1524,7 @@ export type Database = {
 					roll_type?: string | null;
 					rolls?: number[] | null;
 					user_id: string;
+					visibility?: string;
 				};
 				Update: {
 					campaign_id?: string;
@@ -1537,6 +1539,7 @@ export type Database = {
 					roll_type?: string | null;
 					rolls?: number[] | null;
 					user_id?: string;
+					visibility?: string;
 				};
 				Relationships: [
 					{

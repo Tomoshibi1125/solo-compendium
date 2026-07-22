@@ -11,6 +11,7 @@ import {
 import { useAutoBackup } from "@/hooks/useCharacterBackup";
 import { useCharacterDerivedStats } from "@/hooks/useCharacterDerivedStats";
 import { useCharacterFeatures } from "@/hooks/useCharacterFeatures";
+import { useCharacterRealtime } from "@/hooks/useCharacterRealtime";
 import { useCharacterSheetState } from "@/hooks/useCharacterSheetState";
 import {
 	type CharacterWithAbilities,
@@ -34,6 +35,8 @@ import { useSpellCasting } from "@/hooks/useSpellCasting";
 import { useSpellSlots } from "@/hooks/useSpellSlots";
 import { useTattoos } from "@/hooks/useTattoos";
 import { isSupabaseConfigured } from "@/integrations/supabase/client";
+import { useAuth } from "@/lib/auth/authContext";
+import { publishCampaignRollEvent } from "@/lib/campaignRollEvents";
 import { resolveCanonicalReference } from "@/lib/canonicalCompendium";
 import { addTemporaryHP, applyResourceRest } from "@/lib/characterResources";
 import {
@@ -93,6 +96,7 @@ export function useCharacterPageModel() {
 	const navigate = useNavigate();
 	const queryClient = useQueryClient();
 	const { toast } = useToast();
+	const { user } = useAuth();
 
 	const [searchParams] = useSearchParams();
 	const isPrintMode = searchParams.get("print") === "true";
@@ -120,6 +124,10 @@ export function useCharacterPageModel() {
 	);
 	const { broadcastDiceRoll, isConnected: isCampaignConnected } =
 		useRealtimeCollaboration(campaignId || "");
+	// Live-sync the sheet's core row (HP/conditions/exhaustion) whenever the
+	// character is in a campaign, so a DM/party watching a shared sheet sees
+	// changes without a manual refresh. Skipped for guest/local characters.
+	useCharacterRealtime(character?.id, !!campaignId && !isLocal);
 	const ascendantTools = useAscendantTools();
 
 	// Compendium Display Rows for Vernacular — backed by canonical static.
@@ -615,6 +623,8 @@ export function useCharacterPageModel() {
 		context: string;
 		modifier?: number;
 		advantage?: "advantage" | "disadvantage" | "normal";
+		/** DDB secret roll — `dm_only` hides it from other players in the feed. */
+		visibility?: "public" | "dm_only";
 	}) => {
 		if (!character) return;
 		try {
@@ -667,7 +677,31 @@ export function useCharacterPageModel() {
 				campaign_id: characterCampaign?.id ?? null,
 				character_id: character.id,
 			});
-			if (scope === "campaign")
+			// Persist to the campaign's shared roll feed ("Game Log") whenever the
+			// character belongs to a campaign — the feed is a durable log, so it must
+			// not be gated on the ephemeral realtime socket being connected.
+			if (campaignId) {
+				void publishCampaignRollEvent(
+					{
+						campaign_id: campaignId,
+						character_id: character.id,
+						character_name: character.name,
+						dice_formula: roll.dice,
+						result: roll.result,
+						rolls: roll.rolls,
+						roll_type: options.rollType,
+						context: options.context,
+						modifiers: Object.keys(rollModifiers).length
+							? (rollModifiers as never)
+							: null,
+						visibility: options.visibility ?? "public",
+					},
+					user?.id ?? null,
+				);
+			}
+			// A secret roll stays out of the ephemeral broadcast too — only the
+			// roller + DM should ever see it.
+			if (scope === "campaign" && options.visibility !== "dm_only")
 				broadcastDiceRoll(finalFormula, roll.result, {
 					characterName: character.name,
 					rollType: options.rollType,

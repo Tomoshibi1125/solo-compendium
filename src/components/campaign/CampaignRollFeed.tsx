@@ -106,6 +106,16 @@ export function CampaignRollFeed({ campaignId }: CampaignRollFeedProps) {
 									</span>
 
 									<div className="flex-1 min-w-0 truncate">
+										{event.visibility === "dm_only" && (
+											<span
+												role="img"
+												className="mr-1 text-warning"
+												title="Secret roll — only you and the Warden can see this"
+												aria-label="Secret roll"
+											>
+												🔒
+											</span>
+										)}
 										<span className="font-heading text-xs">
 											{event.character_name || "Unknown"}
 										</span>

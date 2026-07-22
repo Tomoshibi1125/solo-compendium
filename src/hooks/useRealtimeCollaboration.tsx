@@ -4,27 +4,25 @@ import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/lib/auth/authContext";
 import { freshSharedChannel } from "@/lib/realtimeChannel";
 
+/**
+ * Campaign real-time presence + shared dice.
+ *
+ * Scope note (2026-07): the collaboration channel once carried cursor / text /
+ * character-update / map / combat-state broadcasts, but those were VTT-era or
+ * superseded scaffolding with no producers or listeners and were removed.
+ * Cross-client sync now rides durable DB tables + `postgres_changes`
+ * subscriptions instead: combat via `useCampaignCombat`, character HP/state via
+ * `useCharacterRealtime`. This hook keeps the two things that are actually
+ * live: member presence and shared dice-roll toasts.
+ */
+
 export type CursorPosition = { x: number; y: number };
-
-export type TextChangePayload = {
-	elementId: string;
-	content: string;
-	cursorPosition?: number;
-};
-
-export type CharacterUpdatePayload = {
-	characterId: string;
-	updates: Record<string, unknown>;
-};
 
 export type DiceRollPayload = {
 	formula: string;
 	result: number;
 	details?: Record<string, unknown>;
 };
-
-export type MapUpdatePayload = Record<string, unknown>;
-export type CombatStatePayload = Record<string, unknown>;
 
 type CollaborationEventBase = {
 	userId: string;
@@ -33,40 +31,29 @@ type CollaborationEventBase = {
 	campaignId: string;
 };
 
-type CollaborationEvent =
-	| (CollaborationEventBase & { type: "cursor_move"; data: CursorPosition })
-	| (CollaborationEventBase & { type: "text_change"; data: TextChangePayload })
-	| (CollaborationEventBase & {
-			type: "character_update";
-			data: CharacterUpdatePayload;
-	  })
-	| (CollaborationEventBase & { type: "dice_roll"; data: DiceRollPayload })
-	| (CollaborationEventBase & {
-			type: "map_update";
-			data: Record<string, unknown>;
-	  })
-	| (CollaborationEventBase & {
-			type: "combat_state";
-			data: CombatStatePayload;
-	  });
+type CollaborationEvent = CollaborationEventBase & {
+	type: "dice_roll";
+	data: DiceRollPayload;
+};
 
-export type TextChangeEvent = Extract<
-	CollaborationEvent,
-	{ type: "text_change" }
->;
-export type CharacterUpdateEvent = Extract<
-	CollaborationEvent,
-	{ type: "character_update" }
->;
-export type DiceRollEvent = Extract<CollaborationEvent, { type: "dice_roll" }>;
-export type MapUpdateEvent = Extract<
-	CollaborationEvent,
-	{ type: "map_update" }
->;
-export type CombatStateEvent = Extract<
-	CollaborationEvent,
-	{ type: "combat_state" }
->;
+export type DiceRollEvent = CollaborationEvent;
+
+export type PresencePayload = {
+	user_id?: string;
+	user_name?: string;
+	cursor?: CursorPosition;
+	isTyping?: boolean;
+	currentElement?: string;
+};
+
+export interface ActiveUser {
+	id: string;
+	name: string;
+	cursor?: CursorPosition;
+	lastSeen: number;
+	isTyping?: boolean;
+	currentElement?: string;
+}
 
 // Validation Guards
 export function isPresencePayload(v: unknown): v is PresencePayload {
@@ -81,24 +68,7 @@ export function isPresencePayload(v: unknown): v is PresencePayload {
 export function isCollaborationEvent(v: unknown): v is CollaborationEvent {
 	if (typeof v !== "object" || v === null) return false;
 	const e = v as CollaborationEvent;
-	return typeof e.type === "string" && typeof e.userId === "string";
-}
-
-export type PresencePayload = {
-	user_id?: string;
-	user_name?: string;
-	cursor?: CursorPosition;
-	isTyping?: boolean;
-	currentElement?: string;
-};
-
-export interface ActiveUser {
-	id: string;
-	name: string;
-	cursor?: { x: number; y: number };
-	lastSeen: number;
-	isTyping?: boolean;
-	currentElement?: string;
+	return e.type === "dice_roll" && typeof e.userId === "string";
 }
 
 export function useRealtimeCollaboration(campaignId: string) {
@@ -112,51 +82,12 @@ export function useRealtimeCollaboration(campaignId: string) {
 	const currentUserId = user?.id || "anonymous";
 	const currentUserName = user?.email?.split("@")[0] || "Anonymous";
 
-	const updateCursorPosition = useCallback(
-		(userId: string, position: { x: number; y: number }) => {
-			setActiveUsers((prev) => {
-				const newMap = new Map(prev);
-				const user = newMap.get(userId);
-				if (user) {
-					newMap.set(userId, {
-						...user,
-						cursor: position,
-						lastSeen: Date.now(),
-					});
-				}
-				return newMap;
-			});
-		},
-		[],
-	);
-
-	const handleTextChange = useCallback((event: TextChangeEvent) => {
-		// Emit custom event for text changes
-		window.dispatchEvent(
-			new CustomEvent("collaboration:text_change", {
-				detail: event,
-			}),
-		);
-	}, []);
-
-	const handleCharacterUpdate = useCallback((event: CharacterUpdateEvent) => {
-		// Emit custom event for character updates
-		window.dispatchEvent(
-			new CustomEvent("collaboration:character_update", {
-				detail: event,
-			}),
-		);
-	}, []);
-
 	const handleDiceRoll = useCallback(
 		(event: DiceRollEvent) => {
-			// Emit custom event for dice rolls
+			// Emit a DOM event so any interested surface can react, plus a toast.
 			window.dispatchEvent(
-				new CustomEvent("collaboration:dice_roll", {
-					detail: event,
-				}),
+				new CustomEvent("collaboration:dice_roll", { detail: event }),
 			);
-
 			toast({
 				title: "Dice Roll",
 				description: `${event.userName} rolled ${event.data.formula}: ${event.data.result}`,
@@ -165,71 +96,26 @@ export function useRealtimeCollaboration(campaignId: string) {
 		[toast],
 	);
 
-	const handleMapUpdate = useCallback((event: MapUpdateEvent) => {
-		// Emit custom event for map updates
-		window.dispatchEvent(
-			new CustomEvent("collaboration:map_update", {
-				detail: event,
-			}),
-		);
-	}, []);
-
-	const handleCombatStateUpdate = useCallback((event: CombatStateEvent) => {
-		// Emit custom event for combat state updates
-		window.dispatchEvent(
-			new CustomEvent("collaboration:combat_state", {
-				detail: event,
-			}),
-		);
-	}, []);
-
 	const handleCollaborationEvent = useCallback(
 		(event: CollaborationEvent) => {
-			switch (event.type) {
-				case "cursor_move":
-					updateCursorPosition(event.userId, event.data);
-					break;
-				case "text_change":
-					handleTextChange(event);
-					break;
-				case "character_update":
-					handleCharacterUpdate(event);
-					break;
-				case "dice_roll":
-					handleDiceRoll(event);
-					break;
-				case "map_update":
-					handleMapUpdate(event);
-					break;
-				case "combat_state":
-					handleCombatStateUpdate(event);
-					break;
-			}
+			if (event.type === "dice_roll") handleDiceRoll(event);
 		},
-		[
-			updateCursorPosition,
-			handleTextChange,
-			handleCharacterUpdate,
-			handleDiceRoll,
-			handleMapUpdate,
-			handleCombatStateUpdate,
-		],
+		[handleDiceRoll],
 	);
 
 	const handleUserJoin = useCallback(
 		(key: string, presences: PresencePayload[]) => {
 			presences.forEach((presence) => {
 				const userId = presence.user_id ?? key;
-				const user: ActiveUser = {
+				const activeUser: ActiveUser = {
 					id: userId,
 					name: presence.user_name || "Anonymous",
 					lastSeen: Date.now(),
 				};
-				setActiveUsers((prev) => new Map(prev.set(key, user)));
-
+				setActiveUsers((prev) => new Map(prev.set(key, activeUser)));
 				toast({
 					title: "User Joined",
-					description: `${user.name} joined the campaign`,
+					description: `${activeUser.name} joined the campaign`,
 				});
 			});
 		},
@@ -238,17 +124,16 @@ export function useRealtimeCollaboration(campaignId: string) {
 
 	const handleUserLeave = useCallback(
 		(key: string, _presences: PresencePayload[]) => {
-			const user = activeUsers.get(key);
-			if (user) {
+			const activeUser = activeUsers.get(key);
+			if (activeUser) {
 				setActiveUsers((prev) => {
 					const newMap = new Map(prev);
 					newMap.delete(key);
 					return newMap;
 				});
-
 				toast({
 					title: "User Left",
-					description: `${user.name} left the campaign`,
+					description: `${activeUser.name} left the campaign`,
 				});
 			}
 		},
@@ -272,7 +157,7 @@ export function useRealtimeCollaboration(campaignId: string) {
 			.on("presence", { event: "join" }, ({ key, newPresences }) => {
 				const validated: PresencePayload[] = (newPresences || [])
 					.map((p: unknown) => {
-						const data = p as Record<string, unknown>; // Bridge to unknown-access data
+						const data = p as Record<string, unknown>;
 						return {
 							user_id:
 								typeof data.user_id === "string" ? data.user_id : undefined,
@@ -336,69 +221,6 @@ export function useRealtimeCollaboration(campaignId: string) {
 		toast,
 	]);
 
-	// Broadcasting functions
-	const broadcastCursorMove = useCallback(
-		(position: { x: number; y: number }) => {
-			if (!channel || !isConnected) return;
-
-			const payload: CollaborationEvent = {
-				type: "cursor_move",
-				userId: currentUserId,
-				userName: currentUserName,
-				data: position,
-				timestamp: Date.now(),
-				campaignId,
-			};
-
-			channel.send({
-				type: "broadcast",
-				event: "collaboration",
-				payload,
-			});
-		},
-		[channel, isConnected, campaignId, currentUserId, currentUserName],
-	);
-
-	const broadcastTextChange = useCallback(
-		(elementId: string, content: string, cursorPosition?: number) => {
-			if (!channel || !isConnected) return;
-
-			channel.send({
-				type: "broadcast",
-				event: "collaboration",
-				payload: {
-					type: "text_change",
-					userId: currentUserId,
-					userName: currentUserName,
-					data: { elementId, content, cursorPosition },
-					timestamp: Date.now(),
-					campaignId,
-				} as CollaborationEvent,
-			});
-		},
-		[channel, isConnected, campaignId, currentUserId, currentUserName],
-	);
-
-	const broadcastCharacterUpdate = useCallback(
-		(characterId: string, updates: Record<string, unknown>) => {
-			if (!channel || !isConnected) return;
-
-			channel.send({
-				type: "broadcast",
-				event: "collaboration",
-				payload: {
-					type: "character_update",
-					userId: currentUserId,
-					userName: currentUserName,
-					data: { characterId, updates },
-					timestamp: Date.now(),
-					campaignId,
-				} as CollaborationEvent,
-			});
-		},
-		[channel, isConnected, campaignId, currentUserId, currentUserName],
-	);
-
 	const broadcastDiceRoll = useCallback(
 		(formula: string, result: number, details?: Record<string, unknown>) => {
 			if (!channel || !isConnected) return;
@@ -411,46 +233,6 @@ export function useRealtimeCollaboration(campaignId: string) {
 					userId: currentUserId,
 					userName: currentUserName,
 					data: { formula, result, details },
-					timestamp: Date.now(),
-					campaignId,
-				} as CollaborationEvent,
-			});
-		},
-		[channel, isConnected, campaignId, currentUserId, currentUserName],
-	);
-
-	const broadcastMapUpdate = useCallback(
-		(mapData: MapUpdatePayload) => {
-			if (!channel || !isConnected) return;
-
-			channel.send({
-				type: "broadcast",
-				event: "collaboration",
-				payload: {
-					type: "map_update",
-					userId: currentUserId,
-					userName: currentUserName,
-					data: mapData,
-					timestamp: Date.now(),
-					campaignId,
-				} as CollaborationEvent,
-			});
-		},
-		[channel, isConnected, campaignId, currentUserId, currentUserName],
-	);
-
-	const broadcastCombatState = useCallback(
-		(combatState: CombatStatePayload) => {
-			if (!channel || !isConnected) return;
-
-			channel.send({
-				type: "broadcast",
-				event: "collaboration",
-				payload: {
-					type: "combat_state",
-					userId: currentUserId,
-					userName: currentUserName,
-					data: combatState,
 					timestamp: Date.now(),
 					campaignId,
 				} as CollaborationEvent,
@@ -476,12 +258,7 @@ export function useRealtimeCollaboration(campaignId: string) {
 	return {
 		isConnected,
 		activeUsers: Array.from(activeUsers.values()),
-		broadcastCursorMove,
-		broadcastTextChange,
-		broadcastCharacterUpdate,
 		broadcastDiceRoll,
-		broadcastMapUpdate,
-		broadcastCombatState,
 		updatePresence,
 	};
 }

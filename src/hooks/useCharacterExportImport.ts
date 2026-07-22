@@ -1165,6 +1165,11 @@ export function useCharacterExport() {
 						.from("character_shadow_soldiers")
 						.select("*")
 						.eq("character_id", characterId),
+					// `character_shadow_army` holds bulk/anonymous summons (distinct
+					// from named `character_shadow_soldiers`, which render as
+					// Companions on the sheet). It is intentionally export/import-only
+					// today — carried in the portable package for round-trip fidelity
+					// but not surfaced as its own on-sheet panel.
 					supabase
 						.from("character_shadow_army")
 						.select("*")

@@ -196,6 +196,12 @@ export default function CharacterSheetV2() {
 	const [rollMode, setRollMode] = useState<
 		"normal" | "advantage" | "disadvantage"
 	>("normal");
+	// DDB secret roll — when on, campaign rolls post to the Game Log as
+	// `dm_only` (visible only to the roller + DM). Campaign context only.
+	const [secretRoll, setSecretRoll] = useState(false);
+	const rollVisibility: "public" | "dm_only" = secretRoll
+		? "dm_only"
+		: "public";
 
 	const { addEquipment } = useEquipment(character?.id ?? "");
 	const [invView, setInvView] = useState<"my" | "party">("my");
@@ -450,6 +456,7 @@ export default function CharacterSheetV2() {
 			}),
 			context: `${ability} ability check`,
 			modifier: getAbilityModifier(stats.finalAbilities[ability]),
+			visibility: rollVisibility,
 		});
 
 	const onRollSave = (ability: AbilityScore) =>
@@ -463,6 +470,7 @@ export default function CharacterSheetV2() {
 			}),
 			context: `${ability} saving throw`,
 			modifier: stats.calculatedStats.savingThrows[ability],
+			visibility: rollVisibility,
 		});
 
 	const onRollSkill = (skill: string) => {
@@ -477,6 +485,7 @@ export default function CharacterSheetV2() {
 			}),
 			context: `${skill} skill check`,
 			modifier,
+			visibility: rollVisibility,
 		});
 	};
 
@@ -490,6 +499,7 @@ export default function CharacterSheetV2() {
 			}),
 			context: "Initiative roll",
 			modifier: stats.finalInitiative,
+			visibility: rollVisibility,
 		});
 
 	const onRollHitDice = () => {
@@ -502,6 +512,7 @@ export default function CharacterSheetV2() {
 			rollType: "hit_dice",
 			context: "Hit Dice roll",
 			modifier: getAbilityModifier(stats.finalAbilities.VIT),
+			visibility: rollVisibility,
 		});
 	};
 
@@ -1213,6 +1224,23 @@ export default function CharacterSheetV2() {
 								{m === "normal" ? "Normal" : m === "advantage" ? "Adv" : "Dis"}
 							</button>
 						))}
+						{/* DDB secret roll — only meaningful when sharing to a campaign feed. */}
+						{campaignId && (
+							<button
+								type="button"
+								onClick={() => setSecretRoll((v) => !v)}
+								aria-pressed={secretRoll}
+								title="Secret roll — visible only to you and the Warden"
+								className={cn(
+									"min-h-[32px] px-3 rounded border text-[10px] font-mono uppercase tracking-wider transition-colors ml-auto",
+									secretRoll
+										? "border-warning/60 bg-warning/15 text-warning"
+										: "border-primary/15 text-muted-foreground hover:border-primary/40",
+								)}
+							>
+								{secretRoll ? "🔒 Secret" : "Secret"}
+							</button>
+						)}
 					</div>
 				)}
 

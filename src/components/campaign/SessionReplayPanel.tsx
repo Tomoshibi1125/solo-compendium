@@ -37,6 +37,39 @@ function formatElapsed(ms: number): string {
 		: `${m}:${String(s).padStart(2, "0")}`;
 }
 
+/** Human-readable one-liner for a merged session-timeline event. */
+function describeEvent(kind: string, payload: Record<string, unknown>): string {
+	const round = payload.round;
+	switch (kind) {
+		case "combat:roundStart":
+			return `Round ${round ?? "?"} began`;
+		case "combat:roundEnd":
+			return `Round ${round ?? "?"} ended`;
+		case "combat:turnStart":
+			return `${payload.actorName || "A combatant"}'s turn began${round ? ` (round ${round})` : ""}`;
+		case "combat:turnEnd":
+			return `${payload.actorName || "A combatant"}'s turn ended`;
+		case "effect:applied":
+			return `${payload.effectName || "An effect"} applied${payload.targetName ? ` to ${payload.targetName}` : ""}`;
+		case "effect:expired":
+			return `${payload.effectName || "An effect"} expired`;
+		case "roll:submitted":
+			return `${payload.actor || "Someone"} rolled ${payload.result}${payload.formula ? ` (${payload.formula})` : ""}`;
+		default:
+			return kind;
+	}
+}
+
+const EVENT_ACCENT: Record<string, string> = {
+	"combat:roundStart": "text-primary",
+	"combat:roundEnd": "text-primary",
+	"combat:turnStart": "text-solar-glow",
+	"combat:turnEnd": "text-muted-foreground",
+	"effect:applied": "text-destructive",
+	"effect:expired": "text-muted-foreground",
+	"roll:submitted": "text-foreground",
+};
+
 export function SessionReplayPanel({
 	campaignId,
 	canManage,
@@ -178,9 +211,42 @@ export function SessionReplayPanel({
 				)}
 				{!replay.isLoading && replay.events.length === 0 && (
 					<p className="text-[11px] text-muted-foreground">
-						No events recorded for this scope yet. Events stream into the
-						archive automatically once a session starts.
+						No events recorded for this scope yet. Combat turns, effects, and
+						rolls stream into the archive automatically once a session runs.
 					</p>
+				)}
+
+				{replay.events.length > 0 && (
+					<ol
+						className="max-h-64 space-y-0.5 overflow-y-auto rounded border border-border/50 bg-muted/10 p-2 text-xs"
+						data-testid="session-replay-timeline"
+					>
+						{replay.events.map((event, idx) => {
+							const startTs = Date.parse(replay.events[0].created_at);
+							const offsetMs = Date.parse(event.created_at) - startTs;
+							const played = offsetMs <= replay.cursor;
+							return (
+								<li
+									key={event.id}
+									data-testid="session-replay-event"
+									className={`flex items-baseline gap-2 rounded px-1.5 py-0.5 ${
+										played ? "opacity-100" : "opacity-40"
+									} ${idx % 2 === 0 ? "bg-transparent" : "bg-muted/20"}`}
+								>
+									<span className="shrink-0 font-mono text-[10px] text-muted-foreground">
+										{formatElapsed(offsetMs)}
+									</span>
+									<span
+										className={
+											EVENT_ACCENT[event.kind] ?? "text-muted-foreground"
+										}
+									>
+										{describeEvent(event.kind, event.payload)}
+									</span>
+								</li>
+							);
+						})}
+					</ol>
 				)}
 			</section>
 		</AscendantWindow>

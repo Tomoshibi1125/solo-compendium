@@ -1,4 +1,3 @@
-import { useMemo } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { useCampaignAnalytics } from "@/hooks/useCampaignAnalytics";
 import { useCampaignDice } from "@/hooks/useCampaignDice";
@@ -16,9 +15,6 @@ import { rollCheck } from "@/lib/rollEngine";
 import { getProficiencyBonus } from "@/types/core-rules";
 
 export interface CharacterSheetEnhancements {
-	rollAbilityCheck: (ability: string) => Promise<unknown>;
-	rollSavingThrow: (ability: string) => Promise<unknown>;
-	rollSkillCheck: (skill: string) => Promise<unknown>;
 	_quickRoll: (formula: string) => Promise<{
 		dice: string;
 		modifier: string;
@@ -69,6 +65,7 @@ export interface AscendantTools {
 			context?: string;
 			modifiers?: Record<string, Json | undefined>;
 			character_id?: string;
+			character_name?: string;
 		},
 	) => Promise<unknown>;
 	getCampaignsForRolling: () => Promise<unknown[]>;
@@ -113,10 +110,6 @@ export function useCharacterSheetEnhancements(
 	characterId: string,
 ): CharacterSheetEnhancements {
 	const { data: character } = useCharacter(characterId);
-	const abilities = useMemo(
-		() => character?.abilities ?? {},
-		[character?.abilities],
-	);
 	// Always level-derived. The stored proficiency_bonus column goes stale
 	// (the import path never writes it; the guest store defaults it to 2), so
 	// preferring it made rolls from this hook disagree with the sheet.
@@ -125,10 +118,7 @@ export function useCharacterSheetEnhancements(
 	const characterRoll = useCharacterRoll({
 		characterId,
 		characterName: character?.name ?? "Character",
-		abilities,
 		proficiencyBonus,
-		savingThrowProficiencies: character?.saving_throw_proficiencies ?? [],
-		skillProficiencies: character?.skill_proficiencies ?? [],
 	});
 
 	const { exportCharacterJson, exportCharacterPdf, importCharacterJson } =
@@ -136,15 +126,6 @@ export function useCharacterSheetEnhancements(
 	const { clearCache, getCacheSize } = useOfflineDataAccess();
 
 	return {
-		rollAbilityCheck: async (ability: string) => {
-			return characterRoll.rollAbilityCheck(ability);
-		},
-		rollSavingThrow: async (ability: string) => {
-			return characterRoll.rollSavingThrow(ability);
-		},
-		rollSkillCheck: async (skill: string) => {
-			return characterRoll.rollSkillCheck(skill);
-		},
 		roll: async (rollKey, modifier, kind, label, campaignId, advantage) => {
 			return characterRoll.roll(
 				rollKey,
@@ -318,6 +299,7 @@ export function useAscendantTools(): AscendantTools {
 				context?: string;
 				modifiers?: Record<string, Json | undefined>;
 				character_id?: string;
+				character_name?: string;
 			},
 		) => {
 			return await rollInCampaign(campaignId, rollData);

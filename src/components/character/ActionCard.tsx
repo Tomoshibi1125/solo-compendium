@@ -228,7 +228,10 @@ function ActionCardComponent({
 					};
 
 					if (campaignId) {
-						ascendantTools.rollInCampaign(campaignId, rollPayload);
+						ascendantTools.rollInCampaign(campaignId, {
+							...rollPayload,
+							character_name: displayName,
+						});
 					}
 					recordRoll.mutate(rollPayload);
 				}
@@ -263,7 +266,10 @@ function ActionCardComponent({
 						campaign_id: campaignId || undefined,
 					};
 					if (campaignId) {
-						ascendantTools.rollInCampaign(campaignId, rollPayload);
+						ascendantTools.rollInCampaign(campaignId, {
+							...rollPayload,
+							character_name: displayName,
+						});
 					}
 					recordRoll.mutate(rollPayload);
 				}

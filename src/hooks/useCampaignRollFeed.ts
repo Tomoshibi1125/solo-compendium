@@ -1,48 +1,21 @@
-﻿import type { RealtimeChannel } from "@supabase/supabase-js";
-import { useCallback, useEffect, useState } from "react";
+import type { RealtimeChannel } from "@supabase/supabase-js";
+import { useEffect, useState } from "react";
 import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
-import type { Database } from "@/integrations/supabase/types";
 import { useAuth } from "@/lib/auth/authContext";
+import {
+	type CampaignRollEventRow,
+	listLocalCampaignRollEvents,
+} from "@/lib/campaignRollEvents";
 import { clientChannelName } from "@/lib/realtimeChannel";
 
-type CampaignRollEvent =
-	Database["public"]["Tables"]["campaign_roll_events"]["Row"];
-
-const LOCAL_ROLL_EVENTS_KEY = "solo-compendium.campaign-roll-events.v1";
-
-const loadLocalRollEvents = (campaignId: string): CampaignRollEvent[] => {
-	if (typeof window === "undefined") return [];
-	const raw = window.localStorage.getItem(LOCAL_ROLL_EVENTS_KEY);
-	if (!raw) return [];
-	try {
-		const all = JSON.parse(raw) as CampaignRollEvent[];
-		return Array.isArray(all)
-			? all.filter((e) => e.campaign_id === campaignId).slice(0, 50)
-			: [];
-	} catch {
-		return [];
-	}
-};
-
-const saveLocalRollEvent = (event: CampaignRollEvent) => {
-	if (typeof window === "undefined") return;
-	const raw = window.localStorage.getItem(LOCAL_ROLL_EVENTS_KEY);
-	const all: CampaignRollEvent[] = raw ? JSON.parse(raw) : [];
-	all.unshift(event);
-	// Keep only latest 200 events
-	window.localStorage.setItem(
-		LOCAL_ROLL_EVENTS_KEY,
-		JSON.stringify(all.slice(0, 200)),
-	);
-};
-
 /**
- * Subscribe to real-time campaign roll events.
- * Uses Supabase Realtime postgres_changes on campaign_roll_events table.
- * Falls back to localStorage polling for guest/local mode.
+ * Subscribe to the campaign's shared roll feed ("Game Log").
+ * Cloud mode reads `campaign_roll_events` + a Realtime INSERT subscription;
+ * guest/local mode polls the shared localStorage store that
+ * `publishCampaignRollEvent` writes.
  */
 export function useCampaignRollFeed(campaignId: string) {
-	const [events, setEvents] = useState<CampaignRollEvent[]>([]);
+	const [events, setEvents] = useState<CampaignRollEventRow[]>([]);
 	const [isConnected, setIsConnected] = useState(false);
 	const { user } = useAuth();
 
@@ -52,7 +25,7 @@ export function useCampaignRollFeed(campaignId: string) {
 
 		const loadInitial = async () => {
 			if (!isSupabaseConfigured || !user) {
-				setEvents(loadLocalRollEvents(campaignId));
+				setEvents(listLocalCampaignRollEvents(campaignId));
 				return;
 			}
 
@@ -66,7 +39,7 @@ export function useCampaignRollFeed(campaignId: string) {
 			if (!error && data) {
 				setEvents(data);
 			} else {
-				setEvents(loadLocalRollEvents(campaignId));
+				setEvents(listLocalCampaignRollEvents(campaignId));
 			}
 		};
 
@@ -91,7 +64,7 @@ export function useCampaignRollFeed(campaignId: string) {
 						filter: `campaign_id=eq.${campaignId}`,
 					},
 					(payload) => {
-						const newEvent = payload.new as CampaignRollEvent;
+						const newEvent = payload.new as CampaignRollEventRow;
 						setEvents((prev) => [newEvent, ...prev].slice(0, 50));
 					},
 				)
@@ -114,47 +87,11 @@ export function useCampaignRollFeed(campaignId: string) {
 		if (!campaignId || (isSupabaseConfigured && user)) return;
 
 		const interval = setInterval(() => {
-			setEvents(loadLocalRollEvents(campaignId));
+			setEvents(listLocalCampaignRollEvents(campaignId));
 		}, 2000);
 
 		return () => clearInterval(interval);
 	}, [campaignId, user]);
 
-	const addEvent = useCallback(
-		async (event: Omit<CampaignRollEvent, "id" | "created_at">) => {
-			const fullEvent: CampaignRollEvent = {
-				...event,
-				id: crypto.randomUUID(),
-				created_at: new Date().toISOString(),
-			} as CampaignRollEvent;
-
-			if (!isSupabaseConfigured || !user) {
-				saveLocalRollEvent(fullEvent);
-				setEvents((prev) => [fullEvent, ...prev].slice(0, 50));
-				return;
-			}
-
-			const { error } = await supabase.from("campaign_roll_events").insert({
-				campaign_id: event.campaign_id,
-				user_id: event.user_id,
-				character_id: event.character_id,
-				character_name: event.character_name,
-				dice_formula: event.dice_formula,
-				result: event.result,
-				rolls: event.rolls,
-				roll_type: event.roll_type,
-				context: event.context,
-				modifiers: event.modifiers,
-			});
-
-			if (error) {
-				// Fallback to local
-				saveLocalRollEvent(fullEvent);
-				setEvents((prev) => [fullEvent, ...prev].slice(0, 50));
-			}
-		},
-		[user],
-	);
-
-	return { events, isConnected, addEvent };
+	return { events, isConnected };
 }
