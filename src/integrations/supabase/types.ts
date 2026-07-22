@@ -81,6 +81,33 @@ export type Database = {
 					},
 				];
 			};
+			admin_audit_log: {
+				Row: {
+					action: string;
+					actor_user_id: string;
+					created_at: string | null;
+					details: Json;
+					id: string;
+					target_user_id: string | null;
+				};
+				Insert: {
+					action: string;
+					actor_user_id: string;
+					created_at?: string | null;
+					details?: Json;
+					id?: string;
+					target_user_id?: string | null;
+				};
+				Update: {
+					action?: string;
+					actor_user_id?: string;
+					created_at?: string | null;
+					details?: Json;
+					id?: string;
+					target_user_id?: string | null;
+				};
+				Relationships: [];
+			};
 			ai_generated_content: {
 				Row: {
 					content: Json;
@@ -144,33 +171,6 @@ export type Database = {
 					service_id?: string;
 					tokens_used?: number | null;
 					user_id?: string | null;
-				};
-				Relationships: [];
-			};
-			admin_audit_log: {
-				Row: {
-					action: string;
-					actor_user_id: string;
-					created_at: string | null;
-					details: Json;
-					id: string;
-					target_user_id: string | null;
-				};
-				Insert: {
-					action: string;
-					actor_user_id: string;
-					created_at?: string | null;
-					details?: Json;
-					id?: string;
-					target_user_id?: string | null;
-				};
-				Update: {
-					action?: string;
-					actor_user_id?: string;
-					created_at?: string | null;
-					details?: Json;
-					id?: string;
-					target_user_id?: string | null;
 				};
 				Relationships: [];
 			};
@@ -2434,6 +2434,69 @@ export type Database = {
 					},
 				];
 			};
+			character_crafting_projects: {
+				Row: {
+					character_id: string;
+					completed_at: string | null;
+					created_at: string;
+					id: string;
+					materials_committed: Json;
+					name: string | null;
+					notes: string | null;
+					progress: number;
+					progress_required: number;
+					recipe_id: string;
+					started_at: string;
+					status: string;
+					updated_at: string;
+				};
+				Insert: {
+					character_id: string;
+					completed_at?: string | null;
+					created_at?: string;
+					id?: string;
+					materials_committed?: Json;
+					name?: string | null;
+					notes?: string | null;
+					progress?: number;
+					progress_required?: number;
+					recipe_id: string;
+					started_at?: string;
+					status?: string;
+					updated_at?: string;
+				};
+				Update: {
+					character_id?: string;
+					completed_at?: string | null;
+					created_at?: string;
+					id?: string;
+					materials_committed?: Json;
+					name?: string | null;
+					notes?: string | null;
+					progress?: number;
+					progress_required?: number;
+					recipe_id?: string;
+					started_at?: string;
+					status?: string;
+					updated_at?: string;
+				};
+				Relationships: [
+					{
+						foreignKeyName: "character_crafting_projects_character_id_fkey";
+						columns: ["character_id"];
+						isOneToOne: false;
+						referencedRelation: "characters";
+						referencedColumns: ["id"];
+					},
+					{
+						foreignKeyName: "character_crafting_projects_character_id_fkey";
+						columns: ["character_id"];
+						isOneToOne: false;
+						referencedRelation: "user_characters";
+						referencedColumns: ["id"];
+					},
+				];
+			};
 			character_equipment: {
 				Row: {
 					capacity_volume: number | null;
@@ -2829,6 +2892,51 @@ export type Database = {
 					},
 				];
 			};
+			character_materials: {
+				Row: {
+					character_id: string;
+					created_at: string;
+					id: string;
+					material_id: string;
+					notes: string | null;
+					quantity: number;
+					updated_at: string;
+				};
+				Insert: {
+					character_id: string;
+					created_at?: string;
+					id?: string;
+					material_id: string;
+					notes?: string | null;
+					quantity?: number;
+					updated_at?: string;
+				};
+				Update: {
+					character_id?: string;
+					created_at?: string;
+					id?: string;
+					material_id?: string;
+					notes?: string | null;
+					quantity?: number;
+					updated_at?: string;
+				};
+				Relationships: [
+					{
+						foreignKeyName: "character_materials_character_id_fkey";
+						columns: ["character_id"];
+						isOneToOne: false;
+						referencedRelation: "characters";
+						referencedColumns: ["id"];
+					},
+					{
+						foreignKeyName: "character_materials_character_id_fkey";
+						columns: ["character_id"];
+						isOneToOne: false;
+						referencedRelation: "user_characters";
+						referencedColumns: ["id"];
+					},
+				];
+			};
 			character_monarch_unlocks: {
 				Row: {
 					character_id: string;
@@ -2962,6 +3070,51 @@ export type Database = {
 					},
 				];
 			};
+			character_recipes: {
+				Row: {
+					character_id: string;
+					created_at: string;
+					id: string;
+					learned_at: string;
+					notes: string | null;
+					recipe_id: string;
+					updated_at: string;
+				};
+				Insert: {
+					character_id: string;
+					created_at?: string;
+					id?: string;
+					learned_at?: string;
+					notes?: string | null;
+					recipe_id: string;
+					updated_at?: string;
+				};
+				Update: {
+					character_id?: string;
+					created_at?: string;
+					id?: string;
+					learned_at?: string;
+					notes?: string | null;
+					recipe_id?: string;
+					updated_at?: string;
+				};
+				Relationships: [
+					{
+						foreignKeyName: "character_recipes_character_id_fkey";
+						columns: ["character_id"];
+						isOneToOne: false;
+						referencedRelation: "characters";
+						referencedColumns: ["id"];
+					},
+					{
+						foreignKeyName: "character_recipes_character_id_fkey";
+						columns: ["character_id"];
+						isOneToOne: false;
+						referencedRelation: "user_characters";
+						referencedColumns: ["id"];
+					},
+				];
+			};
 			character_regent_unlock_grants: {
 				Row: {
 					character_id: string;
@@ -2993,7 +3146,22 @@ export type Database = {
 					quest_id?: string | null;
 					quest_title?: string;
 				};
-				Relationships: [];
+				Relationships: [
+					{
+						foreignKeyName: "character_regent_unlock_grants_character_id_fkey";
+						columns: ["character_id"];
+						isOneToOne: false;
+						referencedRelation: "characters";
+						referencedColumns: ["id"];
+					},
+					{
+						foreignKeyName: "character_regent_unlock_grants_character_id_fkey";
+						columns: ["character_id"];
+						isOneToOne: false;
+						referencedRelation: "user_characters";
+						referencedColumns: ["id"];
+					},
+				];
 			};
 			character_regent_unlocks: {
 				Row: {
@@ -3059,6 +3227,54 @@ export type Database = {
 						foreignKeyName: "character_regents_character_id_fkey";
 						columns: ["character_id"];
 						isOneToOne: false;
+						referencedRelation: "user_characters";
+						referencedColumns: ["id"];
+					},
+				];
+			};
+			character_requisition_profiles: {
+				Row: {
+					available_vrp: number | null;
+					character_id: string;
+					created_at: string;
+					id: string;
+					notes: string | null;
+					spent_vrp: number;
+					total_vrp: number;
+					updated_at: string;
+				};
+				Insert: {
+					available_vrp?: number | null;
+					character_id: string;
+					created_at?: string;
+					id?: string;
+					notes?: string | null;
+					spent_vrp?: number;
+					total_vrp?: number;
+					updated_at?: string;
+				};
+				Update: {
+					available_vrp?: number | null;
+					character_id?: string;
+					created_at?: string;
+					id?: string;
+					notes?: string | null;
+					spent_vrp?: number;
+					total_vrp?: number;
+					updated_at?: string;
+				};
+				Relationships: [
+					{
+						foreignKeyName: "character_requisition_profiles_character_id_fkey";
+						columns: ["character_id"];
+						isOneToOne: true;
+						referencedRelation: "characters";
+						referencedColumns: ["id"];
+					},
+					{
+						foreignKeyName: "character_requisition_profiles_character_id_fkey";
+						columns: ["character_id"];
+						isOneToOne: true;
 						referencedRelation: "user_characters";
 						referencedColumns: ["id"];
 					},
@@ -7833,6 +8049,20 @@ export type Database = {
 				};
 				Relationships: [
 					{
+						foreignKeyName: "guild_join_requests_character_id_fkey";
+						columns: ["character_id"];
+						isOneToOne: false;
+						referencedRelation: "characters";
+						referencedColumns: ["id"];
+					},
+					{
+						foreignKeyName: "guild_join_requests_character_id_fkey";
+						columns: ["character_id"];
+						isOneToOne: false;
+						referencedRelation: "user_characters";
+						referencedColumns: ["id"];
+					},
+					{
 						foreignKeyName: "guild_join_requests_guild_id_fkey";
 						columns: ["guild_id"];
 						isOneToOne: false;
@@ -7960,64 +8190,64 @@ export type Database = {
 			};
 			guilds: {
 				Row: {
+					base_facilities: Json;
+					base_property: string | null;
 					campaign_id: string | null;
-					contribution: number | null;
+					contribution: number;
 					created_at: string | null;
 					description: string | null;
-					base_facilities: Json | null;
-					base_property: string | null;
-					funds: Json | null;
-					guild_rank: string | null;
-					guild_skills: Json | null;
+					funds: Json;
+					guild_rank: string;
+					guild_skills: Json;
 					id: string;
 					is_active: boolean | null;
 					leader_user_id: string;
-					level: number | null;
+					level: number;
 					motto: string | null;
 					name: string;
-					reputation: number | null;
+					reputation: number;
 					settings: Json | null;
 					share_code: string;
 					updated_at: string | null;
 				};
 				Insert: {
+					base_facilities?: Json;
+					base_property?: string | null;
 					campaign_id?: string | null;
-					contribution?: number | null;
+					contribution?: number;
 					created_at?: string | null;
 					description?: string | null;
-					base_facilities?: Json | null;
-					base_property?: string | null;
-					funds?: Json | null;
-					guild_rank?: string | null;
-					guild_skills?: Json | null;
+					funds?: Json;
+					guild_rank?: string;
+					guild_skills?: Json;
 					id?: string;
 					is_active?: boolean | null;
 					leader_user_id: string;
-					level?: number | null;
+					level?: number;
 					motto?: string | null;
 					name: string;
-					reputation?: number | null;
+					reputation?: number;
 					settings?: Json | null;
 					share_code: string;
 					updated_at?: string | null;
 				};
 				Update: {
+					base_facilities?: Json;
+					base_property?: string | null;
 					campaign_id?: string | null;
-					contribution?: number | null;
+					contribution?: number;
 					created_at?: string | null;
 					description?: string | null;
-					base_facilities?: Json | null;
-					base_property?: string | null;
-					funds?: Json | null;
-					guild_rank?: string | null;
-					guild_skills?: Json | null;
+					funds?: Json;
+					guild_rank?: string;
+					guild_skills?: Json;
 					id?: string;
 					is_active?: boolean | null;
 					leader_user_id?: string;
-					level?: number | null;
+					level?: number;
 					motto?: string | null;
 					name?: string;
-					reputation?: number | null;
+					reputation?: number;
 					settings?: Json | null;
 					share_code?: string;
 					updated_at?: string | null;
@@ -9071,6 +9301,9 @@ export type Database = {
 				Row: {
 					created_at: string | null;
 					description: string | null;
+					discord_app_id: string | null;
+					discord_public_key: string | null;
+					discord_webhook_url: string | null;
 					dm_email: string | null;
 					dm_id: string | null;
 					dm_name: string | null;
@@ -9078,6 +9311,7 @@ export type Database = {
 					is_active: boolean | null;
 					name: string | null;
 					party_gold: Json | null;
+					public_listing: Json | null;
 					settings: Json | null;
 					share_code: string | null;
 					updated_at: string | null;
@@ -9119,6 +9353,7 @@ export type Database = {
 					armor_class: number | null;
 					armor_proficiencies: string[] | null;
 					background: string | null;
+					background_id: string | null;
 					backstory: string | null;
 					base_class: string | null;
 					condition_immunities: string[] | null;
@@ -9126,6 +9361,7 @@ export type Database = {
 					created_at: string | null;
 					death_save_failures: number | null;
 					death_save_successes: number | null;
+					derived_stats_cached_at: string | null;
 					exhaustion_level: number | null;
 					experience: number | null;
 					gemini_state: Json | null;
@@ -9134,18 +9370,21 @@ export type Database = {
 					hit_dice_size: number | null;
 					hp_current: number | null;
 					hp_max: number | null;
+					hp_max_override: number | null;
 					hp_temp: number | null;
 					id: string | null;
 					immunities: string[] | null;
 					initiative: number | null;
 					int: number | null;
 					job: string | null;
+					job_id: string | null;
 					languages: string[] | null;
 					level: number | null;
 					monarch_overlays: string[] | null;
 					name: string | null;
 					notes: string | null;
 					path: string | null;
+					path_id: string | null;
 					portrait_url: string | null;
 					pre: number | null;
 					proficiency_bonus: number | null;
@@ -9162,6 +9401,9 @@ export type Database = {
 					shadow_energy_current: number | null;
 					shadow_energy_max: number | null;
 					share_token: string | null;
+					sheet_accent: string | null;
+					sheet_backdrop: string | null;
+					sheet_theme: string | null;
 					skill_expertise: string[] | null;
 					skill_proficiencies: string[] | null;
 					sovereign_id: string | null;
@@ -9197,64 +9439,15 @@ export type Database = {
 			};
 		};
 		Functions: {
+			accept_bureau_contract: {
+				Args: { p_contract_id: string; p_guild_id: string };
+				Returns: string;
+			};
 			add_ascendant_character_to_campaign: {
 				Args: {
 					p_campaign_id: string;
 					p_character_id: string;
 					p_invite_token?: string;
-				};
-				Returns: string;
-			};
-			approve_guild_join_request: {
-				Args: {
-					p_request_id: string;
-					p_role?: string;
-				};
-				Returns: string;
-			};
-			admin_set_user_role: {
-				Args: {
-					p_target: string;
-					p_role: string;
-				};
-				Returns: undefined;
-			};
-			admin_set_user_ban: {
-				Args: {
-					p_target: string;
-					p_banned: boolean;
-				};
-				Returns: undefined;
-			};
-			accept_bureau_contract: {
-				Args: {
-					p_contract_id: string;
-					p_guild_id: string;
-				};
-				Returns: string;
-			};
-			bureau_guild_leaderboard: {
-				Args: Record<PropertyKey, never>;
-				Returns: {
-					id: string;
-					name: string;
-					guild_rank: string | null;
-					contribution: number;
-					member_count: number;
-				}[];
-			};
-			resolve_guild_quest: {
-				Args: {
-					p_quest_id: string;
-					p_success: boolean;
-				};
-				Returns: undefined;
-			};
-			request_to_join_guild: {
-				Args: {
-					p_character_id?: string;
-					p_message?: string;
-					p_share_code: string;
 				};
 				Returns: string;
 			};
@@ -9292,9 +9485,21 @@ export type Database = {
 				};
 				Returns: string;
 			};
+			admin_set_user_ban: {
+				Args: { p_banned: boolean; p_target: string };
+				Returns: undefined;
+			};
+			admin_set_user_role: {
+				Args: { p_role: string; p_target: string };
+				Returns: undefined;
+			};
 			advance_combat_turn: {
 				Args: { p_session_id: string };
 				Returns: undefined;
+			};
+			approve_guild_join_request: {
+				Args: { p_request_id: string; p_role?: string };
+				Returns: string;
 			};
 			asset_exists: { Args: { p_path: string }; Returns: boolean };
 			assign_campaign_loot: {
@@ -9344,6 +9549,16 @@ export type Database = {
 					p_roll_total: number;
 				};
 				Returns: string;
+			};
+			bureau_guild_leaderboard: {
+				Args: never;
+				Returns: {
+					contribution: number;
+					guild_rank: string;
+					id: string;
+					member_count: number;
+					name: string;
+				}[];
 			};
 			calculate_character_hp: {
 				Args: { constitution_score: number; hit_dice?: string; level: number };
@@ -9567,6 +9782,10 @@ export type Database = {
 				};
 				Returns: string;
 			};
+			guild_member_role: {
+				Args: { p_guild_id: string; p_uid: string };
+				Returns: string;
+			};
 			hash_campaign_invite_token: {
 				Args: { p_token: string };
 				Returns: string;
@@ -9645,6 +9864,14 @@ export type Database = {
 				Args: { p_tamed_id: string };
 				Returns: undefined;
 			};
+			request_to_join_guild: {
+				Args: {
+					p_character_id?: string;
+					p_message?: string;
+					p_share_code: string;
+				};
+				Returns: string;
+			};
 			resolve_campaign_invite: {
 				Args: { p_access_key: string };
 				Returns: {
@@ -9664,6 +9891,10 @@ export type Database = {
 					status: string;
 					used_count: number;
 				}[];
+			};
+			resolve_guild_quest: {
+				Args: { p_quest_id: string; p_success: boolean };
+				Returns: undefined;
 			};
 			revoke_campaign_invite: {
 				Args: { p_invite_id: string; p_reason?: string };
