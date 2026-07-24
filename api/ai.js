@@ -9,8 +9,8 @@
  * Order is configurable via AI_PROVIDER_ORDER (comma-separated). Default favours
  * the best-in-class free model first, then alternatives, then a keyless fallback:
  *     gemini, openrouter, pollinations
- * Gemini 3.5 Flash leads (Google AI Studio free-tier flagship; vision, 1M context,
- * no card), with lite/older Flash models as in-leg fallbacks. OpenRouter adds the
+ * Gemini flash-latest leads (Google AI Studio free-tier flagship alias; vision,
+ * 1M context, no card), with the lite Flash model as an in-leg fallback. OpenRouter adds the
  * strongest current :free models (Nemotron 3 Ultra 550B, Gemma 4 31B) plus a free
  * VISION ladder for multimodal. Pollinations is the keyless zero-config fallback
  * (text + vision), so the app works with ZERO configuration. (Groq intentionally
@@ -31,9 +31,12 @@ const REQUEST_TIMEOUT_MS = 30000;
 // (404 model-not-found, rate limit, empty response), so accounts without the
 // newest model still work. GEMINI_MODEL / OPENROUTER_MODEL env vars prepend.
 const DEFAULT_GEMINI_MODELS = [
-	"gemini-3.5-flash", // Google AI Studio free-tier flagship (vision, 1M ctx)
-	"gemini-3.1-flash-lite", // free-tier lite (vision), used if 3.5 is throttled
-	"gemini-2.5-flash", // older free fallback
+	// Google's rolling alias to the latest stable free Flash (vision, 1M ctx).
+	// Verified live against the API — exact-version IDs like "gemini-3.5-flash"
+	// 404 on the free tier, so we lead with the alias and keep an explicit
+	// lite fallback for when the flagship is throttled.
+	"gemini-flash-latest",
+	"gemini-3.1-flash-lite",
 ];
 // Refreshed against OpenRouter's live free roster (Jul 2026): the previous
 // hermes-3-405b / gpt-oss-120b / llama-3.3-70b:free listings were pulled, so

@@ -68,10 +68,10 @@ describe("/api/ai free provider chain", () => {
 		vi.restoreAllMocks();
 	});
 
-	it("tries gemini-3.5-flash first and falls through the model ladder on 404", async () => {
+	it("tries gemini-flash-latest first and falls through the model ladder on 404", async () => {
 		const fetchMock = vi
 			.fn<typeof fetch>()
-			.mockResolvedValueOnce(notFound()) // gemini-3.5-flash
+			.mockResolvedValueOnce(notFound()) // gemini-flash-latest
 			.mockResolvedValueOnce(geminiSuccess("ladder-success")); // gemini-3.1-flash-lite
 		vi.stubGlobal("fetch", fetchMock);
 
@@ -87,7 +87,7 @@ describe("/api/ai free provider chain", () => {
 		});
 
 		const urls = fetchMock.mock.calls.map(([url]) => String(url));
-		expect(urls[0]).toContain("/models/gemini-3.5-flash:");
+		expect(urls[0]).toContain("/models/gemini-flash-latest:");
 		expect(urls[1]).toContain("/models/gemini-3.1-flash-lite:");
 	});
 
