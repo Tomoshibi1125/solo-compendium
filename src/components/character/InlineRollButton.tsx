@@ -10,7 +10,7 @@ import { cn } from "@/lib/utils";
 interface InlineRollButtonProps {
 	characterId: string;
 	characterName: string;
-	rollType: "ability" | "save" | "skill";
+	rollType: "ability" | "save" | "skill" | "attack";
 	rollKey: string;
 	label: string;
 	modifier?: number;

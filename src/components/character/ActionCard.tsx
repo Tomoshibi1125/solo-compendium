@@ -410,7 +410,7 @@ function ActionCardComponent({
 							<InlineRollButton
 								characterId={characterId || ""}
 								characterName={displayName}
-								rollType="ability"
+								rollType="attack"
 								rollKey="attack"
 								label={
 									displayAttackRoll

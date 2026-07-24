@@ -19,6 +19,11 @@ function formatTimeAgo(dateStr: string): string {
 	return new Date(dateStr).toLocaleDateString();
 }
 
+// The feed aggregates rolls from several producers whose `roll_type` vocabularies
+// differ (sheet checks write "ability"/"skill"/"skill_check"/"initiative", the
+// action bar writes "attack"/"damage", rests write "rest", the dice page writes
+// "normal"). Normalize the whole set so every roll reads with the right badge
+// instead of falling through to a generic "ROLL".
 function rollTypeLabel(rollType: string | null): string {
 	switch (rollType) {
 		case "attack":
@@ -26,9 +31,18 @@ function rollTypeLabel(rollType: string | null): string {
 		case "damage":
 			return "DMG";
 		case "check":
+		case "ability":
+		case "skill":
+		case "skill_check":
 			return "CHK";
 		case "save":
 			return "SAV";
+		case "initiative":
+			return "INIT";
+		case "hit_dice":
+			return "HD";
+		case "rest":
+			return "REST";
 		default:
 			return "ROLL";
 	}
@@ -41,6 +55,10 @@ function rollTypeColor(rollType: string | null): string {
 		case "damage":
 			return "text-gate-a";
 		case "check":
+		case "ability":
+		case "skill":
+		case "skill_check":
+		case "initiative":
 			return "text-blue-400";
 		case "save":
 			return "text-green-400";

@@ -57,6 +57,7 @@ import {
 	resolveHealing,
 	resolveSave,
 } from "@/lib/actionResolution";
+import { useAuth } from "@/lib/auth/authContext";
 import {
 	DICE_SESSION_CSV_COLUMNS,
 	diceSessionMarkdown,
@@ -220,6 +221,12 @@ const applyRollsToDice3D = (
 const DiceRoller = () => {
 	const { rollInCampaign, getCampaignsForRolling } = useCampaignDice();
 	const recordRoll = useRecordRoll();
+	const { user } = useAuth();
+	// Standalone dice-page rolls aren't tied to a character, so the shared Game
+	// Log has no character name to show. Label them with the roller's identity
+	// (falling back to "Freeform") instead of a misleading "Unknown".
+	const rollerName =
+		user?.displayName || user?.email?.split("@")[0] || "Freeform";
 	const [selectedDice, setSelectedDice] = useState<
 		{ sides: number; count: number }[]
 	>([]);
@@ -354,6 +361,7 @@ const DiceRoller = () => {
 							>)
 						: undefined,
 					character_id: undefined,
+					character_name: rollerName,
 				});
 			} else {
 				recordRoll.mutate(
@@ -383,7 +391,7 @@ const DiceRoller = () => {
 			pendingRollRef.current = null;
 			setIsRolling(false);
 		},
-		[recordRoll, campaignId, rollInCampaign],
+		[recordRoll, campaignId, rollInCampaign, rollerName],
 	);
 
 	const startPendingRoll = useCallback(

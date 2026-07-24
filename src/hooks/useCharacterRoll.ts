@@ -32,7 +32,7 @@ export function useCharacterRoll({
 		(
 			rollKey: string,
 			modifier: number,
-			kind: "ability" | "save" | "skill",
+			kind: "ability" | "save" | "skill" | "attack",
 			label?: string,
 			campaignId?: string,
 			advantage?: "advantage" | "disadvantage" | "normal",
@@ -70,7 +70,9 @@ export function useCharacterRoll({
 					? "Ability Check"
 					: kind === "save"
 						? "Saving Throw"
-						: "Skill Check";
+						: kind === "attack"
+							? "Attack Roll"
+							: "Skill Check";
 
 			// Record the roll
 			recordRoll.mutate({
