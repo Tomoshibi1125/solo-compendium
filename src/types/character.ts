@@ -58,39 +58,6 @@ export const EARTH_LANGUAGES = [
 	"Icelandic",
 ];
 
-// Character type definitions
-export interface Character {
-	id: string;
-	name: string;
-	class: string;
-	job?: string;
-	path?: string;
-	level: number;
-	experience: number;
-	abilities?: {
-		STR: number;
-		AGI: number;
-		VIT: number;
-		INT: number;
-		SENSE: number;
-		PRE: number;
-	};
-	abilityScores: {
-		strength: number;
-		agility: number;
-		vitality: number;
-		intelligence: number;
-		sense: number;
-		presence: number;
-	};
-	hitPoints: number;
-	armorClass: number;
-	skills: string[];
-	equipment: string[];
-	createdAt: string;
-	updatedAt: string;
-}
-
 export type Background =
 	Database["public"]["Tables"]["compendium_backgrounds"]["Row"];
 

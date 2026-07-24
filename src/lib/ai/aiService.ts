@@ -288,112 +288,6 @@ export class AIServiceManager {
 		return (response.data as { variations?: string[] }).variations || [];
 	}
 
-	/**
-	 * Filter content for appropriateness
-	 */
-	async filterContent(content: string): Promise<{
-		isAppropriate: boolean;
-		issues: string[];
-		suggestions: string[];
-	}> {
-		const request: AIRequest = {
-			service: this.config.defaultService,
-			type: "filter-content",
-			input: content,
-			context: {
-				audience: "general_audience",
-				platform: "tabletop_rpg",
-				style: "dark_fantasy",
-			},
-		};
-
-		const response = await this.processRequest(request);
-
-		if (!response.success) {
-			throw new AppError(
-				"Failed to filter content",
-				"AI_ERROR",
-				response.error,
-			);
-		}
-
-		return response.data as {
-			isAppropriate: boolean;
-			issues: string[];
-			suggestions: string[];
-		};
-	}
-
-	/**
-	 * Create variations of existing content
-	 */
-	async createVariation(
-		originalContent: string,
-		variationType: string,
-	): Promise<string> {
-		const request: AIRequest = {
-			service: this.config.defaultService,
-			type: "create-variation",
-			input: originalContent,
-			context: {
-				variation_type: variationType,
-				style: "dark manhwa anime cinematic fantasy, Rift Ascendant",
-				preserve_core_elements: true,
-			},
-		};
-
-		const response = await this.processRequest(request);
-
-		if (!response.success) {
-			throw new AppError(
-				"Failed to create variation",
-				"AI_ERROR",
-				response.error,
-			);
-		}
-
-		return (
-			(response.data as { variation?: string }).variation || originalContent
-		);
-	}
-
-	/**
-	 * Specialized: Generate Regent Choices
-	 */
-	async generateRegentChoices(
-		character: Record<string, unknown>,
-		availableRegents: Array<Record<string, unknown>>,
-		highestStat: string,
-	): Promise<unknown[]> {
-		const request: AIRequest = {
-			service: this.config.defaultService,
-			type: "generate-regents",
-			input: { character, availableRegents, highestStat },
-		};
-
-		const response = await this.processRequest(request);
-		if (!response.success) return [];
-		return Array.isArray(response.data) ? response.data : [];
-	}
-
-	/**
-	 * Specialized: Generate Gemini Fusion
-	 */
-	async generateGeminiFusion(
-		character: Record<string, unknown>,
-		regent1: Record<string, unknown>,
-		regent2: Record<string, unknown>,
-	): Promise<unknown> {
-		const request: AIRequest = {
-			service: this.config.defaultService,
-			type: "generate-fusion",
-			input: { character, regent1, regent2 },
-		};
-
-		const response = await this.processRequest(request);
-		return response.success ? response.data : null;
-	}
-
 	// Private methods
 	private normalizeResponse(
 		request: AIRequest,
@@ -518,62 +412,8 @@ export class AIServiceManager {
 				return { mood: this.detectMoodFromText(safeText) };
 			case "suggest-style":
 				return { variations: this.suggestStyleFallback(safeText || styleHint) };
-			case "filter-content":
-				return { isAppropriate: true, issues: [], suggestions: [] };
-			case "create-variation":
-				return { variation: safeText || inputText };
 			case "generate-content":
 				return { content: safeText || inputText };
-			case "generate-regents":
-				return [
-					{
-						regent: "fallback-regent",
-						name: "Path of the Unseen",
-						description: "A mysterious path shrouded in uncertainty.",
-						compatibility: 50,
-						reasoning: "Fallback data: AI unavailable.",
-						statAlignment: 0,
-					},
-				];
-			case "generate-fusion":
-				return {
-					id: "fallback-fusion",
-					name: "Sovereign of the Void",
-					description: "A temporary fusion placeholder.",
-					fusionType: "Average",
-					abilities: ["Void Strike"],
-					features: [
-						{
-							name: "Void Veil",
-							description: "Minimal protection",
-							type: "passive",
-						},
-					],
-					spells: [],
-					techniques: [],
-					traits: [],
-					statBonuses: { STR: 1 },
-					specialAbilities: [],
-				};
-			case "generate-quests":
-				return [
-					{
-						quest: "fallback-quest",
-						name: "Scout the Perimeter",
-						difficulty: "Easy",
-						successChance: 100,
-						reasoning: "Fallback data: AI unavailable.",
-						preparation: ["Check gear"],
-					},
-				];
-			case "generate-optimizations":
-				return {
-					statPriorities: ["STR", "VIT"],
-					equipment: ["Basic Gear"],
-					feats: ["Tough"],
-					abilities: ["Strike"],
-					levelUp: ["Balanced approach"],
-				};
 			default:
 				return { output: safeText };
 		}
@@ -1347,25 +1187,7 @@ export class AIServiceManager {
 			"generate-tags": `${jsonInstruction}\nGenerate relevant tags for the given content in the context of a Rift Ascendant themed campaign. Respond with JSON: {"tags":[]}`,
 			"detect-mood": `${jsonInstruction}\nDetect the primary mood of the given content. Respond with JSON: {"mood":""}`,
 			"suggest-style": `${jsonInstruction}\nSuggest variations of the given style that would work for different scenarios while maintaining the core aesthetic. Respond with JSON: {"variations":[]}`,
-			"filter-content": `${jsonInstruction}\nAnalyze the given content for appropriateness. Respond with JSON: {"isAppropriate":true,"issues":[],"suggestions":[]}`,
-			"create-variation": `${jsonInstruction}\nCreate a variation of the given content that maintains core elements but adds a different twist. Respond with JSON: {"variation":""}`,
 			"generate-content": buildRaSystemPrompt("gm-content"),
-			"generate-regents": buildRaSystemPrompt(
-				"json-tool",
-				`Help a player choose their Regent path. Analyze the player's character and generate the TOP 3 Regent choices. Respond with JSON array of objects: {"regent": "id", "name": "", "description": "", "compatibility": 0-100, "reasoning": "", "statAlignment": 0}`,
-			),
-			"generate-fusion": buildRaSystemPrompt(
-				"json-tool",
-				`Create a unique Sovereign class by combining two Regents with the character's base Job via the Gemini Protocol. Respond with JSON: {"id": "", "name": "", "description": "", "fusionType": "Perfect", "abilities": [], "features": [{"name": "", "description": "", "type": ""}], "spells": [], "techniques": [], "traits": [{"name": "", "description": "", "type": ""}], "statBonuses": {"STR": 0}, "specialAbilities": []}`,
-			),
-			"generate-quests": buildRaSystemPrompt(
-				"json-tool",
-				`Recommend the TOP 3 gate contracts for a player based on their level and Job. Respond with JSON array: {"quest": "id", "name": "", "difficulty": "Medium", "successChance": 0-100, "reasoning": "", "preparation": []}`,
-			),
-			"generate-optimizations": buildRaSystemPrompt(
-				"json-tool",
-				`Provide build suggestions for stat priorities, equipment, feats, and level-up choices. Respond with JSON: {"statPriorities": [], "equipment": [], "feats": [], "abilities": [], "levelUp": []}`,
-			),
 		};
 
 		return prompts[type] || prompts["enhance-prompt"];

@@ -22,13 +22,6 @@ export interface StructuredSpell {
 
 export type Spell = string | StructuredSpell;
 
-export interface Trait {
-	name: string;
-	description: string;
-	type: string;
-	benefits: string[];
-}
-
 export interface RegentPath {
 	id: string;
 	name: string;
