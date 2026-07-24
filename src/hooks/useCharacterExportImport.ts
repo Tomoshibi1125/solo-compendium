@@ -40,7 +40,7 @@ import {
  * legacy/unversioned file is loaded — D&D Beyond parity for graceful
  * handling of older backup files.
  */
-const EXPORT_VERSION = "2.4";
+const EXPORT_VERSION = "2.5";
 
 type _Character = Database["public"]["Tables"]["characters"]["Row"];
 type _CharacterUpdate = Database["public"]["Tables"]["characters"]["Update"];
@@ -76,6 +76,15 @@ type RegentUnlockInsert =
 	Database["public"]["Tables"]["character_regent_unlocks"]["Insert"];
 type FeatureChoiceInsert =
 	Database["public"]["Tables"]["character_feature_choices"]["Insert"];
+type VehicleInsert =
+	Database["public"]["Tables"]["character_vehicles"]["Insert"];
+type TamedAnomalyInsert =
+	Database["public"]["Tables"]["character_tamed_anomalies"]["Insert"];
+type TattooInsert = Database["public"]["Tables"]["character_tattoos"]["Insert"];
+type SheetStateInsert =
+	Database["public"]["Tables"]["character_sheet_state"]["Insert"];
+type SpellSlotInsert =
+	Database["public"]["Tables"]["character_spell_slots"]["Insert"];
 
 interface _ExportImportOptions {
 	format: "json" | "pdf";
@@ -988,6 +997,73 @@ async function importRelatedCharacterRows(
 			await supabase.from("character_backups").insert(backups).throwOnError();
 		}
 	}
+
+	// v2.5 additions: vehicles, tamed anomalies, tattoos (list tables), plus the
+	// sheet-state singleton and per-level spell slots. These carry a canonical
+	// reference id (vehicle_id/anomaly_id/tattoo_id) as a plain string that
+	// survives re-import unchanged, so no canonical re-resolution is needed —
+	// only the owning character_id is re-keyed to the freshly created row.
+	if (Array.isArray(data.vehicles) && data.vehicles.length > 0) {
+		const vehicles = (data.vehicles as Record<string, unknown>[]).map(
+			(row) => ({
+				...stripImportOnlyFields(row),
+				character_id: characterId,
+			}),
+		) as VehicleInsert[];
+		await supabase.from("character_vehicles").insert(vehicles).throwOnError();
+	}
+
+	if (Array.isArray(data.tamed_anomalies) && data.tamed_anomalies.length > 0) {
+		const tamed = (data.tamed_anomalies as Record<string, unknown>[]).map(
+			(row) => ({
+				...stripImportOnlyFields(row),
+				character_id: characterId,
+			}),
+		) as TamedAnomalyInsert[];
+		await supabase
+			.from("character_tamed_anomalies")
+			.insert(tamed)
+			.throwOnError();
+	}
+
+	if (Array.isArray(data.tattoos) && data.tattoos.length > 0) {
+		const tattoos = (data.tattoos as Record<string, unknown>[]).map((row) => ({
+			...stripImportOnlyFields(row),
+			character_id: characterId,
+		})) as TattooInsert[];
+		await supabase.from("character_tattoos").insert(tattoos).throwOnError();
+	}
+
+	// Sheet state is a per-character singleton (UNIQUE character_id). A fresh
+	// character may already have a seeded row, so upsert on character_id and
+	// re-stamp the importing user's id to satisfy row-level security.
+	const sheetStateRow = recordOrNull(data.sheet_state);
+	if (sheetStateRow) {
+		const sheetState = {
+			...stripImportOnlyFields(sheetStateRow, ["user_id"]),
+			character_id: characterId,
+			user_id: userId,
+		} as SheetStateInsert;
+		await supabase
+			.from("character_sheet_state")
+			.upsert(sheetState, { onConflict: "character_id" })
+			.throwOnError();
+	}
+
+	// Spell slots are keyed per (character_id, spell_level); upsert so a
+	// trigger-seeded default set is overwritten with the imported spent state.
+	if (Array.isArray(data.spell_slots) && data.spell_slots.length > 0) {
+		const spellSlots = (data.spell_slots as Record<string, unknown>[]).map(
+			(row) => ({
+				...stripImportOnlyFields(row),
+				character_id: characterId,
+			}),
+		) as SpellSlotInsert[];
+		await supabase
+			.from("character_spell_slots")
+			.upsert(spellSlots, { onConflict: "character_id,spell_level" })
+			.throwOnError();
+	}
 }
 /**
  * Guest-import counterpart of importRelatedCharacterRows: replay the
@@ -1046,7 +1122,7 @@ export function useCharacterExport() {
 		async (characterId: string) => {
 			try {
 				// Guest characters live in the per-browser store — export the same
-				// v2.4 envelope from there so guests get full data backups too.
+				// v2.5 envelope from there so guests get full data backups too.
 				if (isLocalCharacterId(characterId)) {
 					const entry = getLocalCharacterState(characterId);
 					if (!entry) throw new Error("Character not found");
@@ -1072,6 +1148,17 @@ export function useCharacterExport() {
 						feature_choices: [],
 						journal: [],
 						backups: [],
+						// v2.5: guests don't track vehicles/tamed anomalies/tattoos
+						// (cloud-only features). Spell slots are stored as DB rows in
+						// the guest store, so they round-trip (and migrate to a cloud
+						// account on import). Sheet state is the app-level shape here,
+						// not the DB row shape the cloud envelope carries — omit it
+						// rather than emit a mismatched object.
+						vehicles: [],
+						tamed_anomalies: [],
+						tattoos: [],
+						sheet_state: null,
+						spell_slots: entry.spellSlots ?? [],
 						exported_at: new Date().toISOString(),
 						exported_by: "guest",
 						version: EXPORT_VERSION,
@@ -1120,6 +1207,11 @@ export function useCharacterExport() {
 					featureChoicesResult,
 					journalResult,
 					backupsResult,
+					vehiclesResult,
+					tamedAnomaliesResult,
+					tattoosResult,
+					sheetStateResult,
+					spellSlotsResult,
 				] = await Promise.all([
 					supabase
 						.from("character_abilities")
@@ -1202,15 +1294,39 @@ export function useCharacterExport() {
 						.from("character_backups")
 						.select("*")
 						.eq("character_id", characterId),
+					// v2.5: RA-exclusive character-owned tables previously missing
+					// from the portable envelope (data-fidelity fix).
+					supabase
+						.from("character_vehicles")
+						.select("*")
+						.eq("character_id", characterId),
+					supabase
+						.from("character_tamed_anomalies")
+						.select("*")
+						.eq("character_id", characterId),
+					supabase
+						.from("character_tattoos")
+						.select("*")
+						.eq("character_id", characterId),
+					supabase
+						.from("character_sheet_state")
+						.select("*")
+						.eq("character_id", characterId),
+					supabase
+						.from("character_spell_slots")
+						.select("*")
+						.eq("character_id", characterId),
 				]);
-				// Export format v2.4 explicitly carries canonical IDs alongside
+				// The export format explicitly carries canonical IDs alongside
 				// the legacy name fields so importers (this app or external tools)
-				// can hydrate via canonical compendium even after renames. v2.4
-				// adds the full set of character-owned tables: techniques, rune/sigil
-				// inscriptions, regents, shadow soldiers/army, active spells, extras,
-				// monarch/regent unlocks, feature choices, journal, and backups —
-				// remapping equipment row IDs through the import so attached runes
-				// and sigils survive re-import. Backups are re-stamped with the
+				// can hydrate via canonical compendium even after renames. It
+				// carries the full set of character-owned tables: techniques,
+				// rune/sigil inscriptions, regents, shadow soldiers/army, active
+				// spells, extras, monarch/regent unlocks, feature choices, journal,
+				// backups, and (v2.5) vehicles, tamed anomalies, tattoos, the
+				// sheet-state singleton, and per-level spell slots — remapping
+				// equipment row IDs through the import so attached runes and sigils
+				// survive re-import. Backups and sheet state are re-stamped with the
 				// importing user's id on replay.
 				const exportData = {
 					character: character as Record<string, unknown>,
@@ -1233,6 +1349,12 @@ export function useCharacterExport() {
 					feature_choices: featureChoicesResult.data || [],
 					journal: journalResult.data || [],
 					backups: backupsResult.data || [],
+					// v2.5 additions (see Promise.all above).
+					vehicles: vehiclesResult.data || [],
+					tamed_anomalies: tamedAnomaliesResult.data || [],
+					tattoos: tattoosResult.data || [],
+					sheet_state: sheetStateResult.data?.[0] ?? null,
+					spell_slots: spellSlotsResult.data || [],
 					exported_at: new Date().toISOString(),
 					exported_by: user?.id || "anonymous",
 					version: EXPORT_VERSION,
