@@ -148,14 +148,12 @@ describe("/api/ai free provider chain", () => {
 		]);
 	});
 
-	it("skips text-only legs for images; vision falls through to keyless Pollinations", async () => {
-		// No Gemini/OpenRouter keys; Groq HAS a key but is text-only, so an image
-		// request must skip it and land on the keyless, vision-capable Pollinations
-		// leg (the best-first vision ladder: Gemini → OpenRouter VLM → Pollinations).
+	it("vision falls through to the keyless Pollinations leg when no keyed vision provider is available", async () => {
+		// No Gemini/OpenRouter keys → an image request must land on the keyless,
+		// vision-capable Pollinations leg (best-first ladder: Gemini → OpenRouter
+		// VLM → Pollinations).
 		vi.stubEnv("GEMINI_API_KEY", "");
 		vi.stubEnv("OPENROUTER_API_KEY", "");
-		vi.stubEnv("GROQ_API_KEY", "groq-key");
-		vi.stubEnv("AI_PROVIDER_ORDER", "gemini,openrouter,groq,pollinations");
 
 		const fetchMock = vi.fn<typeof fetch>().mockImplementation(async (url) => {
 			if (String(url).includes("text.pollinations.ai")) {
@@ -184,10 +182,6 @@ describe("/api/ai free provider chain", () => {
 			success: true,
 			provider: "pollinations",
 		});
-
-		// Only Pollinations was called — the text-only Groq leg was skipped.
-		const urls = fetchMock.mock.calls.map(([url]) => String(url));
-		expect(urls.some((u) => u.includes("api.groq.com"))).toBe(false);
 
 		// The image was formatted as an OpenAI-style image_url content part.
 		const pollCall = fetchMock.mock.calls.find(([u]) =>

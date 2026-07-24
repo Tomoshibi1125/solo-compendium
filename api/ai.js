@@ -7,19 +7,19 @@
  * guarantees the app still works with ZERO configuration (no owner key at all).
  *
  * Order is configurable via AI_PROVIDER_ORDER (comma-separated). Default favours
- * quality first, then speed, then a keyless fallback:
- *     gemini, openrouter, groq, cerebras, pollinations
+ * the best-in-class free model first, then alternatives, then a keyless fallback:
+ *     gemini, openrouter, pollinations
  * Gemini 3.5 Flash leads (Google AI Studio free-tier flagship; vision, 1M context,
  * no card), with lite/older Flash models as in-leg fallbacks. OpenRouter adds the
- * strongest current :free models (Nemotron 3 Ultra 550B, Gemma 4 31B) and a free
- * VISION ladder for multimodal. Groq and Cerebras are optional free-key (no-card)
- * high-throughput legs — inert until GROQ_API_KEY / CEREBRAS_API_KEY are set.
- * Pollinations is the keyless zero-config fallback (text + vision), so the app
- * works with ZERO configuration.
+ * strongest current :free models (Nemotron 3 Ultra 550B, Gemma 4 31B) plus a free
+ * VISION ladder for multimodal. Pollinations is the keyless zero-config fallback
+ * (text + vision), so the app works with ZERO configuration. (Groq intentionally
+ * excluded.)
  *
  * Request:  { prompt, systemPrompt?, maxTokens?, provider?, model?, images? }
  *   images: optional base64 image data-URLs (or { mimeType, data } pairs) for
- *   multimodal analysis — routed to the vision-capable Gemini leg only.
+ *   multimodal analysis — routed down the vision ladder (Gemini → OpenRouter
+ *   VLM → keyless Pollinations); text-only legs are skipped.
  * Response: { success: true, text, model, usage } | { error, available }
  */
 
@@ -56,8 +56,8 @@ const DEFAULT_OPENROUTER_VISION_MODELS = [
 
 // ── Optional multimodal input ───────────────────────────────────────────────
 // `images` accepts base64 image data-URLs ("data:image/png;base64,…") or
-// { mimeType, data } pairs. Only the Gemini leg is vision-capable on the free
-// tier, so requests carrying images skip non-vision providers.
+// { mimeType, data } pairs. The handler skips any leg without `supportsImages`,
+// so images only reach the vision ladder (Gemini, OpenRouter VLMs, Pollinations).
 const MAX_IMAGES = 4;
 const MAX_IMAGE_BASE64_CHARS = 6_000_000; // ≈4.5MB binary per image
 
@@ -161,7 +161,9 @@ async function callOpenRouter({
 	const hasImages = images.length > 0;
 	const models = buildModelAttempts(
 		modelOverride,
-		hasImages ? process.env.OPENROUTER_VISION_MODEL : process.env.OPENROUTER_MODEL,
+		hasImages
+			? process.env.OPENROUTER_VISION_MODEL
+			: process.env.OPENROUTER_MODEL,
 		hasImages ? DEFAULT_OPENROUTER_VISION_MODELS : DEFAULT_OPENROUTER_MODELS,
 	);
 	const messages = [];
@@ -362,115 +364,20 @@ async function callPollinations({
 	} catch {
 		// plain text body — use as-is
 	}
-	if (!text || !text.trim())
-		throw new Error("Pollinations returned empty response");
+	if (!text?.trim()) throw new Error("Pollinations returned empty response");
 	return { text, model: `pollinations:${model}`, usage: {} };
 }
 callPollinations.available = () => true;
 callPollinations.supportsImages = true;
 
-/** Groq — free key (no card), fastest LPU inference. Text-only. */
-async function callGroq({ prompt, systemPrompt, maxTokens, model: modelOverride }) {
-	const apiKey = process.env.GROQ_API_KEY;
-	const model =
-		modelOverride || process.env.GROQ_MODEL || "llama-3.3-70b-versatile";
-	const messages = [];
-	if (systemPrompt) messages.push({ role: "system", content: systemPrompt });
-	messages.push({ role: "user", content: prompt });
-	const response = await fetchWithTimeout(
-		"https://api.groq.com/openai/v1/chat/completions",
-		{
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-				Authorization: `Bearer ${apiKey}`,
-			},
-			body: JSON.stringify({
-				model,
-				messages,
-				max_tokens: Math.min(maxTokens || MAX_OUTPUT_TOKENS, MAX_OUTPUT_TOKENS),
-				temperature: 0.8,
-			}),
-		},
-	);
-	if (!response.ok) {
-		const err = await response.json().catch(() => ({}));
-		throw new Error(err?.error?.message || `Groq error ${response.status}`);
-	}
-	const data = await response.json();
-	const text = data?.choices?.[0]?.message?.content || "";
-	if (!text.trim()) throw new Error("Groq returned empty response");
-	return {
-		text,
-		model: data?.model || model,
-		usage: {
-			promptTokens: data?.usage?.prompt_tokens,
-			completionTokens: data?.usage?.completion_tokens,
-			totalTokens: data?.usage?.total_tokens,
-		},
-	};
-}
-callGroq.available = () => Boolean(process.env.GROQ_API_KEY);
-
-/** Cerebras — free key (no card), highest raw throughput. Text-only. */
-async function callCerebras({
-	prompt,
-	systemPrompt,
-	maxTokens,
-	model: modelOverride,
-}) {
-	const apiKey = process.env.CEREBRAS_API_KEY;
-	const model = modelOverride || process.env.CEREBRAS_MODEL || "llama-3.3-70b";
-	const messages = [];
-	if (systemPrompt) messages.push({ role: "system", content: systemPrompt });
-	messages.push({ role: "user", content: prompt });
-	const response = await fetchWithTimeout(
-		"https://api.cerebras.ai/v1/chat/completions",
-		{
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-				Authorization: `Bearer ${apiKey}`,
-			},
-			body: JSON.stringify({
-				model,
-				messages,
-				max_tokens: Math.min(maxTokens || MAX_OUTPUT_TOKENS, MAX_OUTPUT_TOKENS),
-				temperature: 0.8,
-			}),
-		},
-	);
-	if (!response.ok) {
-		const err = await response.json().catch(() => ({}));
-		throw new Error(err?.error?.message || `Cerebras error ${response.status}`);
-	}
-	const data = await response.json();
-	const text = data?.choices?.[0]?.message?.content || "";
-	if (!text.trim()) throw new Error("Cerebras returned empty response");
-	return {
-		text,
-		model: data?.model || model,
-		usage: {
-			promptTokens: data?.usage?.prompt_tokens,
-			completionTokens: data?.usage?.completion_tokens,
-			totalTokens: data?.usage?.total_tokens,
-		},
-	};
-}
-callCerebras.available = () => Boolean(process.env.CEREBRAS_API_KEY);
-
 const PROVIDERS = {
 	openrouter: callOpenRouter,
 	gemini: callGemini,
-	groq: callGroq,
-	cerebras: callCerebras,
 	pollinations: callPollinations,
 };
 
 function getProviderOrder(preferred) {
-	const raw =
-		process.env.AI_PROVIDER_ORDER ||
-		"gemini,openrouter,groq,cerebras,pollinations";
+	const raw = process.env.AI_PROVIDER_ORDER || "gemini,openrouter,pollinations";
 	let order = raw
 		.split(",")
 		.map((name) => name.trim().toLowerCase())
