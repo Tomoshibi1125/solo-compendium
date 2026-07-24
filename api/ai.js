@@ -7,13 +7,15 @@
  * guarantees the app still works with ZERO configuration (no owner key at all).
  *
  * Order is configurable via AI_PROVIDER_ORDER (comma-separated). Default favours
- * the best-in-class free model first, then alternatives, then a keyless fallback:
- *     gemini, openrouter, pollinations
- * Gemini 3.5 Flash leads (Google's free-tier flagship since May 2026; JSON-schema
- * output, 1M context, no card), with older Flash models as in-leg fallbacks.
- * OpenRouter adds the strongest current :free models (Nemotron 3 Ultra 550B,
- * Hermes 3 405B for creative work); Pollinations is the keyless zero-config
- * fallback. (Groq intentionally excluded.)
+ * quality first, then speed, then a keyless fallback:
+ *     gemini, openrouter, groq, cerebras, pollinations
+ * Gemini 3.5 Flash leads (Google AI Studio free-tier flagship; vision, 1M context,
+ * no card), with lite/older Flash models as in-leg fallbacks. OpenRouter adds the
+ * strongest current :free models (Nemotron 3 Ultra 550B, Gemma 4 31B) and a free
+ * VISION ladder for multimodal. Groq and Cerebras are optional free-key (no-card)
+ * high-throughput legs — inert until GROQ_API_KEY / CEREBRAS_API_KEY are set.
+ * Pollinations is the keyless zero-config fallback (text + vision), so the app
+ * works with ZERO configuration.
  *
  * Request:  { prompt, systemPrompt?, maxTokens?, provider?, model?, images? }
  *   images: optional base64 image data-URLs (or { mimeType, data } pairs) for
@@ -24,21 +26,32 @@
 const MAX_OUTPUT_TOKENS = 4096;
 const REQUEST_TIMEOUT_MS = 30000;
 
-// ── Best-in-class FREE model ladders (verified July 2026) ───────────────────
+// ── Best-in-class FREE model ladders (web-verified July 2026) ───────────────
 // Each leg tries its models in order and falls through on any per-model error
 // (404 model-not-found, rate limit, empty response), so accounts without the
 // newest model still work. GEMINI_MODEL / OPENROUTER_MODEL env vars prepend.
 const DEFAULT_GEMINI_MODELS = [
-	"gemini-3.5-flash", // Google's free-tier flagship (May 2026)
-	"gemini-3-flash-preview",
-	"gemini-2.5-flash",
+	"gemini-3.5-flash", // Google AI Studio free-tier flagship (vision, 1M ctx)
+	"gemini-3.1-flash-lite", // free-tier lite (vision), used if 3.5 is throttled
+	"gemini-2.5-flash", // older free fallback
 ];
+// Refreshed against OpenRouter's live free roster (Jul 2026): the previous
+// hermes-3-405b / gpt-oss-120b / llama-3.3-70b:free listings were pulled, so
+// they only wasted a round-trip. These are the current best-in-class :free IDs.
 const DEFAULT_OPENROUTER_MODELS = [
-	"nvidia/nemotron-3-ultra-550b-a55b:free", // strongest free general model
-	"nousresearch/hermes-3-llama-3.1-405b:free", // best free creative/roleplay
-	"nvidia/nemotron-3-super-120b-a12b:free",
-	"openai/gpt-oss-120b:free",
-	"meta-llama/llama-3.3-70b-instruct:free",
+	"nvidia/nemotron-3-ultra-550b-a55b:free", // strongest free general/reasoning
+	"google/gemma-4-31b-it:free", // top free general quality (also vision)
+	"nvidia/nemotron-3-super-120b-a12b:free", // strong long-context generation
+	"openai/gpt-oss-20b:free",
+	"nvidia/nemotron-nano-9b-v2:free",
+];
+// Free VISION/multimodal models (image input). Gemini leads; these give the
+// OpenRouter leg a best-first→next-best vision ladder so multimodal degrades
+// gracefully instead of dying when Gemini is unavailable.
+const DEFAULT_OPENROUTER_VISION_MODELS = [
+	"google/gemma-4-31b-it:free", // best free VLM (262K ctx, 140+ languages)
+	"nvidia/nemotron-nano-12b-v2-vl:free", // strong dedicated vision model
+	"nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free", // omni text+image+video
 ];
 
 // ── Optional multimodal input ───────────────────────────────────────────────
@@ -134,22 +147,37 @@ function fetchWithTimeout(url, options, timeoutMs = REQUEST_TIMEOUT_MS) {
 // chain skip a provider whose (free-tier) key is not configured. Pollinations is
 // keyless, so it is always available.
 
-/** OpenRouter free models — OpenAI-compatible. Best-in-class free quality. */
+/** OpenRouter free models — OpenAI-compatible. Best-in-class free quality.
+ *  Vision-capable: with images, it uses the free VLM ladder and OpenAI-style
+ *  multimodal content parts. */
 async function callOpenRouter({
 	prompt,
 	systemPrompt,
 	maxTokens,
 	model: modelOverride,
+	images = [],
 }) {
 	const apiKey = process.env.OPENROUTER_API_KEY;
+	const hasImages = images.length > 0;
 	const models = buildModelAttempts(
 		modelOverride,
-		process.env.OPENROUTER_MODEL,
-		DEFAULT_OPENROUTER_MODELS,
+		hasImages ? process.env.OPENROUTER_VISION_MODEL : process.env.OPENROUTER_MODEL,
+		hasImages ? DEFAULT_OPENROUTER_VISION_MODELS : DEFAULT_OPENROUTER_MODELS,
 	);
 	const messages = [];
 	if (systemPrompt) messages.push({ role: "system", content: systemPrompt });
-	messages.push({ role: "user", content: prompt });
+	messages.push({
+		role: "user",
+		content: hasImages
+			? [
+					{ type: "text", text: prompt },
+					...images.map(({ mimeType, data }) => ({
+						type: "image_url",
+						image_url: { url: `data:${mimeType};base64,${data}` },
+					})),
+				]
+			: prompt,
+	});
 
 	const errors = [];
 	for (const model of models) {
@@ -203,6 +231,7 @@ async function callOpenRouter({
 	throw new Error(errors.join(" | ") || "OpenRouter: no models attempted");
 }
 callOpenRouter.available = () => Boolean(process.env.OPENROUTER_API_KEY);
+callOpenRouter.supportsImages = true;
 
 /** Google Gemini free tier (generous, strong). Vision-capable. */
 async function callGemini({
@@ -288,16 +317,30 @@ async function callGemini({
 callGemini.available = () => Boolean(process.env.GEMINI_API_KEY);
 callGemini.supportsImages = true;
 
-/** Pollinations — keyless and free. Always-on last-resort fallback. */
+/** Pollinations — keyless and free. Always-on last-resort fallback. The default
+ *  "openai" model is vision-capable, so this doubles as the keyless vision floor. */
 async function callPollinations({
 	prompt,
 	systemPrompt,
 	model: modelOverride,
+	images = [],
 }) {
 	const model = modelOverride || process.env.POLLINATIONS_MODEL || "openai";
+	const hasImages = images.length > 0;
 	const messages = [];
 	if (systemPrompt) messages.push({ role: "system", content: systemPrompt });
-	messages.push({ role: "user", content: prompt });
+	messages.push({
+		role: "user",
+		content: hasImages
+			? [
+					{ type: "text", text: prompt },
+					...images.map(({ mimeType, data }) => ({
+						type: "image_url",
+						image_url: { url: `data:${mimeType};base64,${data}` },
+					})),
+				]
+			: prompt,
+	});
 
 	const response = await fetchWithTimeout(
 		"https://text.pollinations.ai/openai",
@@ -324,15 +367,110 @@ async function callPollinations({
 	return { text, model: `pollinations:${model}`, usage: {} };
 }
 callPollinations.available = () => true;
+callPollinations.supportsImages = true;
+
+/** Groq — free key (no card), fastest LPU inference. Text-only. */
+async function callGroq({ prompt, systemPrompt, maxTokens, model: modelOverride }) {
+	const apiKey = process.env.GROQ_API_KEY;
+	const model =
+		modelOverride || process.env.GROQ_MODEL || "llama-3.3-70b-versatile";
+	const messages = [];
+	if (systemPrompt) messages.push({ role: "system", content: systemPrompt });
+	messages.push({ role: "user", content: prompt });
+	const response = await fetchWithTimeout(
+		"https://api.groq.com/openai/v1/chat/completions",
+		{
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${apiKey}`,
+			},
+			body: JSON.stringify({
+				model,
+				messages,
+				max_tokens: Math.min(maxTokens || MAX_OUTPUT_TOKENS, MAX_OUTPUT_TOKENS),
+				temperature: 0.8,
+			}),
+		},
+	);
+	if (!response.ok) {
+		const err = await response.json().catch(() => ({}));
+		throw new Error(err?.error?.message || `Groq error ${response.status}`);
+	}
+	const data = await response.json();
+	const text = data?.choices?.[0]?.message?.content || "";
+	if (!text.trim()) throw new Error("Groq returned empty response");
+	return {
+		text,
+		model: data?.model || model,
+		usage: {
+			promptTokens: data?.usage?.prompt_tokens,
+			completionTokens: data?.usage?.completion_tokens,
+			totalTokens: data?.usage?.total_tokens,
+		},
+	};
+}
+callGroq.available = () => Boolean(process.env.GROQ_API_KEY);
+
+/** Cerebras — free key (no card), highest raw throughput. Text-only. */
+async function callCerebras({
+	prompt,
+	systemPrompt,
+	maxTokens,
+	model: modelOverride,
+}) {
+	const apiKey = process.env.CEREBRAS_API_KEY;
+	const model = modelOverride || process.env.CEREBRAS_MODEL || "llama-3.3-70b";
+	const messages = [];
+	if (systemPrompt) messages.push({ role: "system", content: systemPrompt });
+	messages.push({ role: "user", content: prompt });
+	const response = await fetchWithTimeout(
+		"https://api.cerebras.ai/v1/chat/completions",
+		{
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${apiKey}`,
+			},
+			body: JSON.stringify({
+				model,
+				messages,
+				max_tokens: Math.min(maxTokens || MAX_OUTPUT_TOKENS, MAX_OUTPUT_TOKENS),
+				temperature: 0.8,
+			}),
+		},
+	);
+	if (!response.ok) {
+		const err = await response.json().catch(() => ({}));
+		throw new Error(err?.error?.message || `Cerebras error ${response.status}`);
+	}
+	const data = await response.json();
+	const text = data?.choices?.[0]?.message?.content || "";
+	if (!text.trim()) throw new Error("Cerebras returned empty response");
+	return {
+		text,
+		model: data?.model || model,
+		usage: {
+			promptTokens: data?.usage?.prompt_tokens,
+			completionTokens: data?.usage?.completion_tokens,
+			totalTokens: data?.usage?.total_tokens,
+		},
+	};
+}
+callCerebras.available = () => Boolean(process.env.CEREBRAS_API_KEY);
 
 const PROVIDERS = {
 	openrouter: callOpenRouter,
 	gemini: callGemini,
+	groq: callGroq,
+	cerebras: callCerebras,
 	pollinations: callPollinations,
 };
 
 function getProviderOrder(preferred) {
-	const raw = process.env.AI_PROVIDER_ORDER || "gemini,openrouter,pollinations";
+	const raw =
+		process.env.AI_PROVIDER_ORDER ||
+		"gemini,openrouter,groq,cerebras,pollinations";
 	let order = raw
 		.split(",")
 		.map((name) => name.trim().toLowerCase())

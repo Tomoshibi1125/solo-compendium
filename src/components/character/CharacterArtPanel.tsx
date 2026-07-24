@@ -139,6 +139,7 @@ export function CharacterArtPanel({
 								rarity: `Level ${characterData.level || 1}`,
 								environment: "fantasy world",
 							}}
+							referenceImageUrl={currentArt}
 							onArtGenerated={handleArtGenerated}
 						/>
 					</DialogContent>

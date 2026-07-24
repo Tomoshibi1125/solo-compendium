@@ -6,7 +6,7 @@
 import { useCallback, useState } from "react";
 import { useFeatureFlag } from "@/lib/featureFlags";
 import { aiService } from "./aiService";
-import type { PromptEnhancement } from "./types";
+import type { ImageAnalysis, PromptEnhancement } from "./types";
 
 /**
  * Hook for AI-powered prompt enhancement
@@ -136,6 +136,54 @@ export function useAIMoodDetection() {
 		mood,
 		error,
 		detectMood,
+	};
+}
+
+/**
+ * Hook for AI-powered image analysis (multimodal). Sends an image URL/data-URL
+ * to the vision ladder (Gemini → OpenRouter VLM → keyless Pollinations) via the
+ * `/api/ai` proxy and returns a structured description + tags + style + mood.
+ */
+export function useAIImageAnalysis() {
+	const [isAnalyzing, setIsAnalyzing] = useState(false);
+	const [analysis, setAnalysis] = useState<ImageAnalysis | null>(null);
+	const [error, setError] = useState<string | null>(null);
+	const isAvailable = useFeatureFlag("aiAnalysisEnabled");
+
+	const analyzeImage = useCallback(
+		async (imageUrl: string) => {
+			if (!isAvailable) {
+				setError("AI image analysis is disabled");
+				return null;
+			}
+			if (!imageUrl?.trim()) {
+				setError("No image to analyze");
+				return null;
+			}
+
+			setIsAnalyzing(true);
+			setError(null);
+			setAnalysis(null);
+
+			try {
+				const result = await aiService.analyzeImage(imageUrl);
+				setAnalysis(result);
+				return result;
+			} catch (err) {
+				setError(err instanceof Error ? err.message : "Image analysis failed");
+				throw err;
+			} finally {
+				setIsAnalyzing(false);
+			}
+		},
+		[isAvailable],
+	);
+
+	return {
+		isAnalyzing,
+		analysis,
+		error,
+		analyzeImage,
 	};
 }
 

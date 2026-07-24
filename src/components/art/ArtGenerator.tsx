@@ -4,6 +4,7 @@ import {
 	Loader2,
 	Palette,
 	RefreshCw,
+	ScanEye,
 	Sparkles,
 	Tag,
 	Zap,
@@ -26,6 +27,7 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
 import {
 	useAIEnhancement,
+	useAIImageAnalysis,
 	useAIMoodDetection,
 	useAIStyleSuggestions,
 	useAITagGeneration,
@@ -45,6 +47,9 @@ interface ArtGeneratorProps {
 		rarity?: string;
 		environment?: string;
 	};
+	/** Optional reference image (e.g. the current portrait) the AI can analyze
+	 * to auto-fill the descriptor, tags, and mood for the next generation. */
+	referenceImageUrl?: string | null;
 	onArtGenerated?: (assetId: string, previewUrl?: string) => void;
 	className?: string;
 }
@@ -53,6 +58,7 @@ export function ArtGenerator({
 	entityType = "character",
 	entityId,
 	existingData = {},
+	referenceImageUrl,
 	onArtGenerated,
 	className,
 }: ArtGeneratorProps) {
@@ -79,6 +85,11 @@ export function ArtGenerator({
 		suggestions: styleSuggestions,
 		suggestStyles,
 	} = useAIStyleSuggestions();
+	const {
+		isAnalyzing,
+		error: analyzeError,
+		analyzeImage,
+	} = useAIImageAnalysis();
 
 	// --- Component State ---
 	const [genMode, setGenMode] = useState<"standard" | "ai">("standard");
@@ -95,6 +106,7 @@ export function ArtGenerator({
 
 	const [selectedStyle, setSelectedStyle] = useState("");
 	const [selectedTags, setSelectedTags] = useState<string[]>([]);
+	const [referenceUrl, setReferenceUrl] = useState(referenceImageUrl || "");
 	const [isGeneratingArt, setIsGeneratingArt] = useState(false);
 	const [generationResult, setGenerationResult] =
 		useState<GenerationResult | null>(null);
@@ -105,6 +117,11 @@ export function ArtGenerator({
 			setSelectedTags(existingData.tags);
 		}
 	}, [existingData.tags]);
+
+	// Sync the reference image URL when the parent supplies one (e.g. current art)
+	useEffect(() => {
+		if (referenceImageUrl) setReferenceUrl(referenceImageUrl);
+	}, [referenceImageUrl]);
 
 	// --- Helpers ---
 
@@ -152,6 +169,26 @@ export function ArtGenerator({
 			);
 		} catch (error) {
 			logger.error("Failed to suggest styles:", error);
+		}
+	};
+
+	// Multimodal: analyze a reference image and fold its description, tags, and
+	// mood back into the prompt for the next generation (best-first vision ladder).
+	const handleAnalyzeReference = async () => {
+		if (!referenceUrl.trim()) return;
+		try {
+			const result = await analyzeImage(referenceUrl.trim());
+			if (!result) return;
+			setFormData((prev) => ({
+				...prev,
+				description: result.description || prev.description,
+				mood: result.mood || prev.mood,
+			}));
+			if (Array.isArray(result.tags) && result.tags.length > 0) {
+				setSelectedTags((prev) => Array.from(new Set([...prev, ...result.tags])));
+			}
+		} catch (error) {
+			logger.error("Failed to analyze reference image:", error);
 		}
 	};
 
@@ -344,6 +381,43 @@ export function ArtGenerator({
 					{/* AI Advanced Section */}
 					{genMode === "ai" && (
 						<div className="space-y-4 pt-2 animate-in fade-in slide-in-from-top-2">
+							{/* Multimodal: analyze a reference image → descriptor/tags/mood */}
+							<div className="space-y-2">
+								<Label
+									htmlFor="art-reference"
+									className="text-[11px] uppercase tracking-wider"
+								>
+									Reference Image (Vision Analysis)
+								</Label>
+								<div className="flex gap-2">
+									<Input
+										id="art-reference"
+										value={referenceUrl}
+										onChange={(e) => setReferenceUrl(e.target.value)}
+										placeholder="Paste an image URL, or use the current portrait..."
+										className="h-8 text-xs"
+									/>
+									<Button
+										type="button"
+										variant="outline"
+										size="sm"
+										className="h-8 gap-1 text-[11px] shrink-0"
+										onClick={handleAnalyzeReference}
+										disabled={isAnalyzing || !referenceUrl.trim()}
+									>
+										{isAnalyzing ? (
+											<Loader2 className="w-3 h-3 animate-spin" />
+										) : (
+											<ScanEye className="w-3 h-3" />
+										)}
+										Analyze
+									</Button>
+								</div>
+								{analyzeError && (
+									<p className="text-[11px] text-destructive">{analyzeError}</p>
+								)}
+							</div>
+
 							<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 								<div className="space-y-2">
 									<div className="flex items-center justify-between">

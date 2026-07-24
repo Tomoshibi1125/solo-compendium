@@ -72,7 +72,7 @@ describe("/api/ai free provider chain", () => {
 		const fetchMock = vi
 			.fn<typeof fetch>()
 			.mockResolvedValueOnce(notFound()) // gemini-3.5-flash
-			.mockResolvedValueOnce(geminiSuccess("ladder-success")); // gemini-3-flash-preview
+			.mockResolvedValueOnce(geminiSuccess("ladder-success")); // gemini-3.1-flash-lite
 		vi.stubGlobal("fetch", fetchMock);
 
 		const res = makeRes();
@@ -82,13 +82,13 @@ describe("/api/ai free provider chain", () => {
 		expect(res.payload).toMatchObject({
 			success: true,
 			text: "ladder-success",
-			model: "gemini-3-flash-preview",
+			model: "gemini-3.1-flash-lite",
 			provider: "gemini",
 		});
 
 		const urls = fetchMock.mock.calls.map(([url]) => String(url));
 		expect(urls[0]).toContain("/models/gemini-3.5-flash:");
-		expect(urls[1]).toContain("/models/gemini-3-flash-preview:");
+		expect(urls[1]).toContain("/models/gemini-3.1-flash-lite:");
 	});
 
 	it("falls back to keyless pollinations when every gemini model fails", async () => {
@@ -148,9 +148,26 @@ describe("/api/ai free provider chain", () => {
 		]);
 	});
 
-	it("never sends images to non-vision legs: no Gemini key → 502, not pollinations", async () => {
+	it("skips text-only legs for images; vision falls through to keyless Pollinations", async () => {
+		// No Gemini/OpenRouter keys; Groq HAS a key but is text-only, so an image
+		// request must skip it and land on the keyless, vision-capable Pollinations
+		// leg (the best-first vision ladder: Gemini → OpenRouter VLM → Pollinations).
 		vi.stubEnv("GEMINI_API_KEY", "");
-		const fetchMock = vi.fn<typeof fetch>();
+		vi.stubEnv("OPENROUTER_API_KEY", "");
+		vi.stubEnv("GROQ_API_KEY", "groq-key");
+		vi.stubEnv("AI_PROVIDER_ORDER", "gemini,openrouter,groq,pollinations");
+
+		const fetchMock = vi.fn<typeof fetch>().mockImplementation(async (url) => {
+			if (String(url).includes("text.pollinations.ai")) {
+				return new Response(
+					JSON.stringify({
+						choices: [{ message: { content: "vision-fallback" } }],
+					}),
+					{ status: 200, headers: { "Content-Type": "application/json" } },
+				);
+			}
+			throw new Error(`unexpected call to ${String(url)}`);
+		});
 		vi.stubGlobal("fetch", fetchMock);
 
 		const res = makeRes();
@@ -162,11 +179,27 @@ describe("/api/ai free provider chain", () => {
 			res,
 		);
 
-		expect(res.statusCode).toBe(502);
-		expect(String((res.payload as { error?: string }).error)).toContain(
-			"Gemini leg",
+		expect(res.statusCode).toBe(200);
+		expect(res.payload).toMatchObject({
+			success: true,
+			provider: "pollinations",
+		});
+
+		// Only Pollinations was called — the text-only Groq leg was skipped.
+		const urls = fetchMock.mock.calls.map(([url]) => String(url));
+		expect(urls.some((u) => u.includes("api.groq.com"))).toBe(false);
+
+		// The image was formatted as an OpenAI-style image_url content part.
+		const pollCall = fetchMock.mock.calls.find(([u]) =>
+			String(u).includes("pollinations"),
 		);
-		expect(fetchMock).not.toHaveBeenCalled();
+		const body = JSON.parse(String(pollCall?.[1]?.body)) as {
+			messages: Array<{ role: string; content: unknown }>;
+		};
+		const userMsg = body.messages.find((m) => m.role === "user");
+		expect(userMsg?.content).toEqual(
+			expect.arrayContaining([expect.objectContaining({ type: "image_url" })]),
+		);
 	});
 
 	it("rejects malformed image payloads with 400", async () => {
