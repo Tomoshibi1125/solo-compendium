@@ -309,6 +309,7 @@ Warden: ${userMessage.content}`;
 						<Button
 							type="submit"
 							size="icon"
+							aria-label="Send"
 							disabled={isLoading || !input.trim()}
 						>
 							<Send className="w-4 h-4" />

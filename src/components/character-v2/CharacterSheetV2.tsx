@@ -1603,6 +1603,7 @@ export default function CharacterSheetV2() {
 									<Button
 										type="button"
 										size="icon"
+										aria-label="Copy"
 										onClick={handleCopyShareLink}
 										className="bg-primary/20 hover:bg-primary/30 border border-primary/30"
 									>

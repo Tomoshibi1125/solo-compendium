@@ -349,6 +349,7 @@ export function ShadowSoldiersPanel({
 												<div className="flex items-center gap-1">
 													<Button
 														size="icon"
+														aria-label="Decrease"
 														variant="ghost"
 														className="h-6 w-6 hover:bg-gate-a/20"
 														onClick={() =>
@@ -367,6 +368,7 @@ export function ShadowSoldiersPanel({
 													</span>
 													<Button
 														size="icon"
+														aria-label="Increase"
 														variant="ghost"
 														className="h-6 w-6 hover:bg-accent/20"
 														onClick={() =>

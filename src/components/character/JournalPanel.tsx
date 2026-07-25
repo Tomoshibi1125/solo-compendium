@@ -318,6 +318,7 @@ export function JournalPanel({ characterId }: JournalPanelProps) {
 														<Button
 															variant="ghost"
 															size="icon"
+															aria-label="Edit"
 															className="h-7 w-7 text-muted-foreground hover:text-primary"
 															onClick={() => startEditing(entry)}
 														>
@@ -326,6 +327,7 @@ export function JournalPanel({ characterId }: JournalPanelProps) {
 														<Button
 															variant="ghost"
 															size="icon"
+															aria-label="Delete"
 															className="h-7 w-7 text-muted-foreground hover:text-destructive"
 															onClick={() => handleDelete(entry.id)}
 														>

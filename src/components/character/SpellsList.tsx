@@ -566,6 +566,7 @@ export function SpellsList({
 												<Button
 													variant="ghost"
 													size="icon"
+													aria-label="Delete"
 													className="h-8 w-8"
 													onClick={() => handleRemove(spell)}
 												>

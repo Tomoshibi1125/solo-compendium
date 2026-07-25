@@ -315,6 +315,7 @@ export function FeaturesList({
 															<Button
 																variant="ghost"
 																size="icon"
+																aria-label="Decrease"
 																className="h-6 w-6"
 																onClick={() => handleUseFeature(feature, -1)}
 																disabled={
@@ -330,6 +331,7 @@ export function FeaturesList({
 															<Button
 																variant="ghost"
 																size="icon"
+																aria-label="Increase"
 																className="h-6 w-6"
 																onClick={() => handleUseFeature(feature, 1)}
 																disabled={

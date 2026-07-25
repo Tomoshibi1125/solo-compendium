@@ -281,6 +281,7 @@ export function CampaignCharacters({ campaignId }: CampaignCharactersProps) {
 									<Button
 										variant="ghost"
 										size="icon"
+										aria-label="Hide"
 										className="h-8 w-8"
 										onClick={() => handleUnshare(share.character_id)}
 									>

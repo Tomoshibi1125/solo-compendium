@@ -313,6 +313,7 @@ export function CampaignNotes({ campaignId }: CampaignNotesProps) {
 												<Button
 													variant="ghost"
 													size="icon"
+													aria-label="Edit"
 													className="h-7 w-7"
 													onClick={() => handleOpenDialog(note.id)}
 												>
@@ -321,6 +322,7 @@ export function CampaignNotes({ campaignId }: CampaignNotesProps) {
 												<Button
 													variant="ghost"
 													size="icon"
+													aria-label="Delete"
 													className="h-7 w-7"
 													onClick={() => handleDelete(note.id)}
 												>

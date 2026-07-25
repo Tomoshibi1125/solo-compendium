@@ -37,6 +37,7 @@ export function SearchHistoryDropdown({
 				<Button
 					variant="ghost"
 					size="icon"
+					aria-label="History"
 					className={cn("h-9 w-9", className)}
 				>
 					<History className="w-4 h-4" />
@@ -83,6 +84,7 @@ export function SearchHistoryDropdown({
 							<Button
 								variant="ghost"
 								size="icon"
+								aria-label="Remove"
 								className="h-6 w-6"
 								onClick={(e) => {
 									e.stopPropagation();

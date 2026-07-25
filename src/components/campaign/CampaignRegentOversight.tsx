@@ -156,6 +156,7 @@ export function CampaignRegentOversight({
 														<Button
 															variant="ghost"
 															size="icon"
+															aria-label="Delete"
 															className="h-7 w-7 opacity-0 group-hover:opacity-100 transition-opacity"
 															onClick={() => handleDelete(unlock.id, char.id)}
 														>

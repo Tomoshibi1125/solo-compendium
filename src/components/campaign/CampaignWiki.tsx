@@ -273,6 +273,7 @@ export function CampaignWiki({ campaignId }: { campaignId: string }) {
 									</Button>
 									<Button
 										size="icon"
+										aria-label="Delete"
 										variant="outline"
 										className="h-7 w-7 text-destructive hover:text-white hover:bg-destructive"
 										onClick={() =>

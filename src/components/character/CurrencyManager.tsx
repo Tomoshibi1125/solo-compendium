@@ -284,6 +284,7 @@ export function CurrencyManager({ characterId }: { characterId: string }) {
 									<div className="flex items-center gap-1">
 										<Button
 											size="icon"
+											aria-label="Decrease"
 											variant="ghost"
 											className="h-7 w-7"
 											onClick={() => handleAddCurrency(type.id, -1)}
@@ -293,6 +294,7 @@ export function CurrencyManager({ characterId }: { characterId: string }) {
 										</Button>
 										<Button
 											size="icon"
+											aria-label="Increase"
 											variant="ghost"
 											className="h-7 w-7"
 											onClick={() => handleAddCurrency(type.id, 1)}
@@ -301,6 +303,7 @@ export function CurrencyManager({ characterId }: { characterId: string }) {
 										</Button>
 										<Button
 											size="icon"
+											aria-label="Edit"
 											variant="ghost"
 											className="h-7 w-7"
 											onClick={() => {

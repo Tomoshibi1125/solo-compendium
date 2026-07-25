@@ -92,6 +92,7 @@ function NotificationItem({
 							<Button
 								variant="ghost"
 								size="icon"
+								aria-label="Remove"
 								className="h-6 w-6"
 								onClick={() => onRemove(notification.id)}
 							>
@@ -170,7 +171,12 @@ export function NotificationCenter() {
 	return (
 		<Sheet open={open} onOpenChange={setOpen}>
 			<SheetTrigger asChild>
-				<Button variant="ghost" size="icon" className="relative">
+				<Button
+					variant="ghost"
+					size="icon"
+					aria-label="Notifications"
+					className="relative"
+				>
 					<Bell className="w-5 h-5" />
 					{unreadCount > 0 && (
 						<Badge

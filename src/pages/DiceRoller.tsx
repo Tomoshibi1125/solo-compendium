@@ -854,6 +854,7 @@ const DiceRoller = () => {
 										<Button
 											variant="outline"
 											size="icon"
+											aria-label="Decrease"
 											onClick={() => setModifier((m) => m - 1)}
 										>
 											<Minus className="w-4 h-4" />
@@ -865,6 +866,7 @@ const DiceRoller = () => {
 										<Button
 											variant="outline"
 											size="icon"
+											aria-label="Increase"
 											onClick={() => setModifier((m) => m + 1)}
 										>
 											<Plus className="w-4 h-4" />
