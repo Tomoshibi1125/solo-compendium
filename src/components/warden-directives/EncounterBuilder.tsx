@@ -703,12 +703,12 @@ export function EncounterBuilder({
 								className={cn(
 									"text-2xl font-sovereign uppercase tracking-widest",
 									difficulty === "easy"
-										? "text-green-400"
+										? "text-success"
 										: difficulty === "medium"
 											? "text-gate-s"
 											: difficulty === "hard"
 												? "text-gate-a"
-												: "text-red-500",
+												: "text-destructive",
 								)}
 							>
 								{difficulty || "Minimal"}

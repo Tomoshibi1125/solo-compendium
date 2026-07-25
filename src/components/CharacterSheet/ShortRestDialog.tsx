@@ -131,7 +131,7 @@ export function ShortRestDialog({
 						<span className="font-mono">
 							{Math.min(hpCurrent + totalRecovered, hpMax)} / {hpMax}
 							{totalRecovered > 0 && (
-								<span className="text-green-600 ml-1">(+{totalRecovered})</span>
+								<span className="text-success ml-1">(+{totalRecovered})</span>
 							)}
 						</span>
 					</div>
@@ -165,10 +165,10 @@ export function ShortRestDialog({
 										<Heart
 											className={cn(
 												"inline h-3 w-3 ml-1",
-												r.hpRecovered > 0 ? "text-green-500" : "text-gray-400",
+												r.hpRecovered > 0 ? "text-success" : "text-gray-400",
 											)}
 										/>
-										<span className="font-bold ml-1 text-green-600">
+										<span className="font-bold ml-1 text-success">
 											+{r.hpRecovered} HP
 										</span>
 									</span>

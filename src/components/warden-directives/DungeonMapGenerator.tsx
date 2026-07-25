@@ -241,7 +241,7 @@ const CELL_TYPES: CellTypeConfig[] = [
 	{
 		type: "room",
 		icon: LayoutGrid,
-		color: "bg-blue-500/20 border-blue-500/50",
+		color: "bg-shadow-blue/20 border-shadow-blue/50",
 		label: "Room",
 	},
 	{
@@ -253,13 +253,13 @@ const CELL_TYPES: CellTypeConfig[] = [
 	{
 		type: "entrance",
 		icon: DoorOpen,
-		color: "bg-green-500/30 border-green-500/60",
+		color: "bg-success/30 border-success/60",
 		label: "Entrance",
 	},
 	{
 		type: "boss",
 		icon: Crown,
-		color: "bg-red-500/40 border-red-500/70",
+		color: "bg-destructive/40 border-destructive/70",
 		label: "Boss Chamber",
 	},
 	{
@@ -277,7 +277,7 @@ const CELL_TYPES: CellTypeConfig[] = [
 	{
 		type: "puzzle",
 		icon: LayoutGrid,
-		color: "bg-purple-500/40 border-purple-500/70",
+		color: "bg-resurge/40 border-resurge/70",
 		label: "Puzzle Room",
 	},
 	{

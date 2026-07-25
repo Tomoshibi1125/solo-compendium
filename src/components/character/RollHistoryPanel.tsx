@@ -16,11 +16,11 @@ const rollTypeConfig: Record<
 	string,
 	{ icon: typeof Dice5; color: string; label: string }
 > = {
-	attack: { icon: Sword, color: "text-red-400", label: "Attack" },
+	attack: { icon: Sword, color: "text-destructive", label: "Attack" },
 	damage: { icon: Target, color: "text-gate-a", label: "Damage" },
-	save: { icon: Shield, color: "text-blue-400", label: "Save" },
-	skill: { icon: Sparkles, color: "text-green-400", label: "Skill" },
-	ability: { icon: Dice5, color: "text-purple-400", label: "Ability" },
+	save: { icon: Shield, color: "text-shadow-blue", label: "Save" },
+	skill: { icon: Sparkles, color: "text-success", label: "Skill" },
+	ability: { icon: Dice5, color: "text-resurge", label: "Ability" },
 	initiative: { icon: Dice5, color: "text-gate-s", label: "Initiative" },
 	resource: { icon: Sparkles, color: "text-shadow-blue", label: "Resource" },
 	default: { icon: Dice5, color: "text-primary", label: "Roll" },

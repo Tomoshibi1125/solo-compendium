@@ -202,7 +202,7 @@ export function StatusHeader({
 							onClick={onACClick}
 							className="relative group bg-obsidian-charcoal/60 border border-primary/20 rounded-[2px] p-4 flex flex-col items-center justify-center transition-all hover:bg-obsidian-charcoal/80 hover:border-primary/40 w-full"
 						>
-							<Shield className="w-5 h-5 text-blue-400 mb-2 transition-transform group-hover:scale-110" />
+							<Shield className="w-5 h-5 text-shadow-blue mb-2 transition-transform group-hover:scale-110" />
 							<span className="ra-stat-number text-3xl text-white">{ac}</span>
 							<span className="text-[10px] font-mono text-primary/70 uppercase tracking-widest mt-1">
 								ARMOR_CLASS
@@ -328,7 +328,7 @@ export function StatusHeader({
 				>
 					<div className="flex items-center justify-between mb-2">
 						<div className="flex items-center gap-2">
-							<Heart className="w-5 h-5 text-red-500 fill-red-500/20" />
+							<Heart className="w-5 h-5 text-destructive fill-destructive/20" />
 							<span className="text-xs font-mono text-primary/60 uppercase tracking-widest">
 								HIT_POINTS
 							</span>
@@ -342,7 +342,7 @@ export function StatusHeader({
 								{hp.max}
 							</span>
 							{hp.temp > 0 && (
-								<span className="text-xs text-cyan-400 font-mono">
+								<span className="text-xs text-mana-cyan font-mono">
 									+{hp.temp}
 								</span>
 							)}
@@ -350,7 +350,7 @@ export function StatusHeader({
 					</div>
 					<Progress
 						value={(hp.current / hp.max) * 100}
-						className="h-2 bg-red-950/30"
+						className="h-2 bg-destructive/25"
 					/>
 				</button>
 

@@ -167,25 +167,27 @@ const Favorites = () => {
 	};
 
 	const getTypeColor = (type: string) => {
+		// RA Amethyst-Void palette only — no raw Tailwind hues. Category coding
+		// stays distinguishable via the gate/shadow/system/mana/resurge tokens.
 		const colors: Record<string, string> = {
-			Anomalies: "border-red-500/30 bg-red-500/10",
-			powers: "border-blue-500/30 bg-blue-500/10",
-			spells: "border-purple-500/30 bg-purple-500/10",
-			equipment: "border-green-500/30 bg-green-500/10",
+			Anomalies: "border-destructive/30 bg-destructive/10",
+			powers: "border-gate-c/30 bg-gate-c/10",
+			spells: "border-shadow-purple/30 bg-shadow-purple/10",
+			equipment: "border-system-green/30 bg-system-green/10",
 			feats: "border-gate-s/30 bg-gate-s/10",
 			skills: "border-gate-a/30 bg-gate-a/10",
-			backgrounds: "border-gray-500/30 bg-gray-500/10",
+			backgrounds: "border-gate-e/30 bg-gate-e/10",
 			regents: "border-shadow-blue/30 bg-shadow-blue/10",
 			relics: "border-gate-s/30 bg-gate-s/10",
-			jobs: "border-cyan-500/30 bg-cyan-500/10",
+			jobs: "border-mana-cyan/30 bg-mana-cyan/10",
 			paths: "border-system-green/30 bg-system-green/10",
 			runes: "border-system-green/30 bg-system-green/10",
 			sovereigns: "border-gate-a/30 bg-gate-a/10",
-			"shadow-soldiers": "border-slate-500/30 bg-slate-500/10",
+			"shadow-soldiers": "border-gate-e/30 bg-gate-e/10",
 			items: "border-system-green/30 bg-system-green/10",
 			techniques: "border-resurge-violet/30 bg-resurge-violet/10",
 			artifacts: "border-mana-cyan/30 bg-mana-cyan/10",
-			locations: "border-stone-500/30 bg-stone-500/10",
+			locations: "border-gate-e/30 bg-gate-e/10",
 		};
 		return colors[type] || "border-border bg-muted";
 	};

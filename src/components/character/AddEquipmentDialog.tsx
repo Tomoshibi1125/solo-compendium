@@ -345,11 +345,11 @@ export function AddEquipmentDialog({
 									itemRarity === "legendary"
 										? "text-gate-s"
 										: itemRarity === "epic"
-											? "text-purple-500"
+											? "text-resurge"
 											: itemRarity === "rare"
-												? "text-blue-500"
+												? "text-shadow-blue"
 												: itemRarity === "uncommon"
-													? "text-green-500"
+													? "text-success"
 													: "text-muted-foreground";
 
 								return (

@@ -9,7 +9,7 @@
 	--sb-void: #020105;
 	--sb-glass: rgba(15, 10, 30, 0.8);
 
-	font-family: "Space Grotesk", sans-serif;
+	font-family: "Inter", system-ui, sans-serif;
 	color: hsl(var(--foreground));
 	background: var(--sb-void);
 	min-height: 100vh;

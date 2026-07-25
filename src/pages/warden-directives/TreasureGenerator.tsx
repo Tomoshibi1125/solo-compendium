@@ -302,7 +302,7 @@ For each item and relic, expand on activation rules, charges, side effects, lore
 				className={cn(
 					"rounded-lg border p-3 space-y-1.5",
 					accent === "relic"
-						? "border-purple-400/40 bg-purple-400/5"
+						? "border-resurge/40 bg-resurge/5"
 						: "border-border bg-black/20",
 				)}
 			>
@@ -535,7 +535,7 @@ For each item and relic, expand on activation rules, charges, side effects, lore
 						{treasure.materials.length > 0 && (
 							<div>
 								<h3 className="font-heading font-semibold mb-2 flex items-center gap-2">
-									<Sparkles className="w-4 h-4 text-blue-400" />
+									<Sparkles className="w-4 h-4 text-shadow-blue" />
 									Materials ({treasure.materials.length})
 								</h3>
 								<div className="flex flex-wrap gap-2">
@@ -543,7 +543,7 @@ For each item and relic, expand on activation rules, charges, side effects, lore
 										<Badge
 											key={`treasure-material-${material}`}
 											variant="outline"
-											className="text-sm bg-blue-400/10 border-blue-400/30"
+											className="text-sm bg-shadow-blue/10 border-shadow-blue/30"
 										>
 											{material}
 										</Badge>
@@ -555,7 +555,7 @@ For each item and relic, expand on activation rules, charges, side effects, lore
 						{treasure.relicEntries.length > 0 && (
 							<div>
 								<h3 className="font-heading font-semibold mb-2 flex items-center gap-2">
-									<Sparkles className="w-4 h-4 text-purple-400" />
+									<Sparkles className="w-4 h-4 text-resurge" />
 									Relics ({treasure.relicEntries.length})
 								</h3>
 								<div className="grid grid-cols-1 md:grid-cols-2 gap-2">

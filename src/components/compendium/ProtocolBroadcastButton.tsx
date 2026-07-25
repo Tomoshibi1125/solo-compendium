@@ -114,7 +114,7 @@ export const ProtocolBroadcastButton: React.FC<
 					Broadcast Protocol
 				</Button>
 			</DropdownMenuTrigger>
-			<DropdownMenuContent className="w-56 bg-void border-cyan/30 text-cyan-50">
+			<DropdownMenuContent className="w-56 bg-void border-cyan/30 text-mana-cyan">
 				<DropdownMenuLabel className="font-mono text-xs text-cyan uppercase">
 					Select Target Vector
 				</DropdownMenuLabel>

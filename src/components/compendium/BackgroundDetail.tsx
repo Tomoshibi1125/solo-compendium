@@ -184,7 +184,7 @@ export const BackgroundDetail = ({ data }: { data: BackgroundData }) => {
 						<ul className="space-y-2">
 							{data.flaws.map((flaw, i) => (
 								<li key={flaw} className="flex items-start gap-2">
-									<span className="text-red-400 font-bold">{i + 1}.</span>
+									<span className="text-destructive font-bold">{i + 1}.</span>
 									<span className="text-muted-foreground">
 										<AutoLinkText text={flaw} />
 									</span>

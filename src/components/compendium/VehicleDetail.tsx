@@ -126,10 +126,7 @@ export const VehicleDetail = ({ data }: { data: VehicleData }) => {
 							</Badge>
 						)}
 						{isMount && bonded && (
-							<Badge
-								variant="secondary"
-								className="bg-purple-500/10 text-purple-400"
-							>
+							<Badge variant="secondary" className="bg-resurge/10 text-resurge">
 								Bonded
 							</Badge>
 						)}
@@ -188,7 +185,7 @@ export const VehicleDetail = ({ data }: { data: VehicleData }) => {
 				{isMount && carryCapacity && (
 					<AscendantWindow title="CARRY CAPACITY" compact>
 						<div className="flex items-center gap-2">
-							<Users className="w-5 h-5 text-blue-400" />
+							<Users className="w-5 h-5 text-shadow-blue" />
 							<span className="font-display text-xl">{carryCapacity}</span>
 						</div>
 						<span className="text-xs text-muted-foreground">lbs</span>
@@ -198,7 +195,7 @@ export const VehicleDetail = ({ data }: { data: VehicleData }) => {
 				{!isMount && cargoCapacity && (
 					<AscendantWindow title="CARGO CAPACITY" compact>
 						<div className="flex items-center gap-2">
-							<Anchor className="w-5 h-5 text-blue-400" />
+							<Anchor className="w-5 h-5 text-shadow-blue" />
 							<span className="font-display text-xl">{cargoCapacity}</span>
 						</div>
 						<span className="text-xs text-muted-foreground">lbs</span>
@@ -229,7 +226,7 @@ export const VehicleDetail = ({ data }: { data: VehicleData }) => {
 				<div className="grid grid-cols-2 md:grid-cols-4 gap-4">
 					{speed.land && (
 						<div className="flex items-center gap-2">
-							<MapPin className="w-4 h-4 text-green-400" />
+							<MapPin className="w-4 h-4 text-success" />
 							<span className="text-sm">Land: {formatSpeed(speed.land)}</span>
 						</div>
 					)}
@@ -241,13 +238,13 @@ export const VehicleDetail = ({ data }: { data: VehicleData }) => {
 					)}
 					{speed.water && (
 						<div className="flex items-center gap-2">
-							<Anchor className="w-4 h-4 text-blue-400" />
+							<Anchor className="w-4 h-4 text-shadow-blue" />
 							<span className="text-sm">Water: {formatSpeed(speed.water)}</span>
 						</div>
 					)}
 					{speed.rift && (
 						<div className="flex items-center gap-2">
-							<Sparkles className="w-4 h-4 text-purple-400" />
+							<Sparkles className="w-4 h-4 text-resurge" />
 							<span className="text-sm">Rift: {formatSpeed(speed.rift)}</span>
 						</div>
 					)}

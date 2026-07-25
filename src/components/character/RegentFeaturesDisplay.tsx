@@ -162,7 +162,7 @@ export function RegentFeaturesDisplay({
 					}
 				>
 					<div className="flex items-center gap-2 mb-2">
-						<CheckCircle className="w-4 h-4 text-green-500" />
+						<CheckCircle className="w-4 h-4 text-success" />
 						<span className="font-medium">{regentData?.name}</span>
 						<Badge variant="secondary">{regentData?.rank}</Badge>
 					</div>

@@ -333,7 +333,7 @@ export function AddRuneDialog({
 													{characterJob && access === "native" && (
 														<Badge
 															variant="default"
-															className="text-xs bg-green-600/20 text-green-700 border-green-600/30"
+															className="text-xs bg-success/20 text-success border-success/30"
 														>
 															Native
 														</Badge>

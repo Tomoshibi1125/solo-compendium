@@ -205,7 +205,7 @@ export function VehiclesPanel({ characterId, readOnly }: VehiclesPanelProps) {
 												{isMount ? (
 													<span className="text-resurge-violet">🐾</span>
 												) : (
-													<Truck className="w-4 h-4 text-blue-300" />
+													<Truck className="w-4 h-4 text-shadow-blue" />
 												)}
 												<span className="font-display font-semibold text-sm">
 													{row.nickname || catalogEntry.name}
@@ -237,7 +237,7 @@ export function VehiclesPanel({ characterId, readOnly }: VehiclesPanelProps) {
 												className={cn(
 													"h-1.5 mt-2",
 													hpPercent < 25
-														? "bg-red-900"
+														? "bg-destructive/25"
 														: hpPercent < 50
 															? "bg-gate-s/25"
 															: "bg-system-green/25",

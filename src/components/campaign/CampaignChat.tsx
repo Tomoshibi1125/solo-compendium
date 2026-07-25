@@ -146,7 +146,7 @@ export function CampaignChat({ campaignId }: CampaignChatProps) {
 		<AscendantWindow title="CAMPAIGN CHAT" className="h-[500px] flex flex-col">
 			<div className="flex items-center justify-between p-2 border-b bg-muted/50 mb-2">
 				<div className="flex items-center space-x-2">
-					<Brain className="w-4 h-4 text-purple-500" />
+					<Brain className="w-4 h-4 text-resurge" />
 					<Label
 						htmlFor="auto-narrate"
 						className="text-xs font-medium cursor-pointer"
@@ -217,7 +217,7 @@ export function CampaignChat({ campaignId }: CampaignChatProps) {
 													<Button
 														variant="ghost"
 														size="icon"
-														className="h-5 w-5 mr-1 text-purple-500 hover:text-purple-400"
+														className="h-5 w-5 mr-1 text-resurge hover:text-resurge"
 														onClick={() => handleManualNarration(msg)}
 														disabled={isNarratingMsg === msg.id}
 														title="Generate AI Narration"

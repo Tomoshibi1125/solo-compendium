@@ -251,7 +251,7 @@ export default function CompanionExtraSheet() {
 						<div className="space-y-2">
 							<div className="flex items-center justify-between">
 								<div className="flex items-center gap-2">
-									<Heart className="w-4 h-4 text-red-500" />
+									<Heart className="w-4 h-4 text-destructive" />
 									<span className="font-mono text-sm">
 										HP {extra.hp_current} / {hpMax}
 									</span>
@@ -296,7 +296,7 @@ export default function CompanionExtraSheet() {
 								className={cn(
 									"h-2",
 									hpPercent < 25
-										? "bg-red-900"
+										? "bg-destructive/25"
 										: hpPercent < 50
 											? "bg-gate-s/25"
 											: "bg-system-green/25",
@@ -311,7 +311,7 @@ export default function CompanionExtraSheet() {
 									AC
 								</div>
 								<div className="flex items-center justify-center gap-1">
-									<Shield className="w-4 h-4 text-blue-400" />
+									<Shield className="w-4 h-4 text-shadow-blue" />
 									<span className="text-xl font-display font-bold">
 										{effectiveAc}
 									</span>
@@ -370,7 +370,7 @@ export default function CompanionExtraSheet() {
 											className="rounded border border-border/40 bg-black/20 p-3"
 										>
 											<div className="flex items-center gap-2">
-												<Shield className="w-3.5 h-3.5 text-blue-400" />
+												<Shield className="w-3.5 h-3.5 text-shadow-blue" />
 												<span className="font-display text-sm font-semibold">
 													{item.name}
 												</span>

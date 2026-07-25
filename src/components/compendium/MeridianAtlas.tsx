@@ -33,7 +33,7 @@ export function MeridianAtlas() {
 			{/* Header */}
 			<header className="space-y-3">
 				<h1 className="text-3xl font-bold tracking-tight">{MERIDIAN.name}</h1>
-				<p className="text-sm font-medium uppercase tracking-wider text-cyan-300/80">
+				<p className="text-sm font-medium uppercase tracking-wider text-mana-cyan/80">
 					{MERIDIAN.tagline}
 				</p>
 				<p className="max-w-3xl text-sm leading-relaxed text-muted-foreground">
@@ -94,7 +94,7 @@ export function MeridianAtlas() {
 						className="scroll-mt-20 rounded-xl border border-white/10 bg-white/5 p-4 print-page print-avoid-break"
 					>
 						<div className="mb-3 flex items-baseline gap-2">
-							<span className="text-xs font-bold text-cyan-300/70">
+							<span className="text-xs font-bold text-mana-cyan/70">
 								{String(d.id).padStart(2, "0")}
 							</span>
 							<h3 className="text-lg font-semibold leading-tight">{d.name}</h3>

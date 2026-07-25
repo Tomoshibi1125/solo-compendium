@@ -215,7 +215,7 @@ export default function CompanionSheet() {
 							<div className="space-y-2">
 								<div className="flex items-center justify-between">
 									<div className="flex items-center gap-2">
-										<Heart className="w-4 h-4 text-red-500" />
+										<Heart className="w-4 h-4 text-destructive" />
 										<span className="font-mono text-sm">
 											HP {link.current_hp} / {maxHp}
 										</span>
@@ -260,7 +260,7 @@ export default function CompanionSheet() {
 									className={cn(
 										"h-2",
 										hpPercent < 25
-											? "bg-red-900"
+											? "bg-destructive/25"
 											: hpPercent < 50
 												? "bg-gate-s/25"
 												: "bg-system-green/25",
@@ -275,7 +275,7 @@ export default function CompanionSheet() {
 										AC
 									</div>
 									<div className="flex items-center justify-center gap-1">
-										<Shield className="w-4 h-4 text-blue-400" />
+										<Shield className="w-4 h-4 text-shadow-blue" />
 										<span className="text-xl font-display font-bold">
 											{soldier.armor_class}
 										</span>

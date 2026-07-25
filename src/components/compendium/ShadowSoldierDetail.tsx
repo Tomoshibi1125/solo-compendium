@@ -49,7 +49,7 @@ const getRarityStyle = (rarity?: string) => {
 		case "very_rare":
 			return "text-shadow-blue border-shadow-blue/40 bg-shadow-blue/10";
 		case "rare":
-			return "text-blue-400 border-blue-500/40 bg-blue-500/10";
+			return "text-shadow-blue border-shadow-blue/40 bg-shadow-blue/10";
 		case "uncommon":
 			return "text-system-green border-system-green/40 bg-system-green/10";
 		default:
@@ -154,7 +154,7 @@ export const ShadowSoldierDetail = ({ data }: ShadowSoldierDetailProps) => {
 						{isBoss && (
 							<Badge
 								variant="destructive"
-								className="bg-red-500/20 border-red-500/40 text-red-400"
+								className="bg-destructive/20 border-destructive/40 text-destructive"
 							>
 								<Skull className="w-3 h-3 mr-1" /> Elite
 							</Badge>
@@ -181,8 +181,8 @@ export const ShadowSoldierDetail = ({ data }: ShadowSoldierDetailProps) => {
 				>
 					{hp != null && (
 						<div className="bg-card border rounded-lg p-4 text-center">
-							<Heart className="w-5 h-5 mx-auto mb-1 text-red-400" />
-							<div className="text-2xl font-bold font-heading text-red-400">
+							<Heart className="w-5 h-5 mx-auto mb-1 text-destructive" />
+							<div className="text-2xl font-bold font-heading text-destructive">
 								{hp}
 							</div>
 							<div className="text-[11px] text-muted-foreground uppercase tracking-wider">
@@ -311,14 +311,14 @@ export const ShadowSoldierDetail = ({ data }: ShadowSoldierDetailProps) => {
 					<AscendantWindow
 						title="DAMAGE IMMUNITIES"
 						compact
-						className="border-red-500/20"
+						className="border-destructive/20"
 					>
 						<div className="flex flex-wrap gap-1.5">
 							{damageImmunities.map((i) => (
 								<Badge
 									key={i}
 									variant="secondary"
-									className="text-red-400 bg-red-500/10 border-red-500/20 text-xs"
+									className="text-destructive bg-destructive/10 border-destructive/20 text-xs"
 								>
 									{i}
 								</Badge>
@@ -330,14 +330,14 @@ export const ShadowSoldierDetail = ({ data }: ShadowSoldierDetailProps) => {
 					<AscendantWindow
 						title="CONDITION IMMUNITIES"
 						compact
-						className="border-purple-500/20"
+						className="border-resurge/20"
 					>
 						<div className="flex flex-wrap gap-1.5">
 							{conditionImmunities.map((c) => (
 								<Badge
 									key={c}
 									variant="secondary"
-									className="text-purple-400 bg-purple-500/10 border-purple-500/20 text-xs"
+									className="text-resurge bg-resurge/10 border-resurge/20 text-xs"
 								>
 									{c}
 								</Badge>
@@ -406,16 +406,16 @@ export const ShadowSoldierDetail = ({ data }: ShadowSoldierDetailProps) => {
 				<AscendantWindow
 					id="soldier-actions"
 					title="ACTIONS"
-					className="border-red-500/20 shadow-[0_0_15px_-5px_rgba(239,68,68,0.2)]"
+					className="border-destructive/20 shadow-[0_0_15px_-5px_rgba(239,68,68,0.2)]"
 				>
 					<div className="space-y-4">
 						{actions.map((action) => (
 							<div
 								key={action.name}
-								className="p-4 bg-muted/10 border-l border-red-500/40 rounded-r-lg"
+								className="p-4 bg-muted/10 border-l border-destructive/40 rounded-r-lg"
 							>
 								<div className="flex flex-wrap items-center gap-2 mb-2">
-									<h4 className="font-heading font-bold text-red-400 text-sm">
+									<h4 className="font-heading font-bold text-destructive text-sm">
 										{action.name}
 										{action.recharge && (
 											<span className="text-gate-s ml-1 text-xs">
@@ -446,7 +446,7 @@ export const ShadowSoldierDetail = ({ data }: ShadowSoldierDetailProps) => {
 											</span>
 										)}
 										{action.damage && (
-											<span className="text-red-400">
+											<span className="text-destructive">
 												{action.damage}
 												{action.damage_type && ` ${action.damage_type}`}
 											</span>

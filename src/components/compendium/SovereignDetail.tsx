@@ -153,7 +153,7 @@ export const SovereignDetail = ({ data }: { data: SovereignData }) => {
 	const getComponentColor = (type: "job" | "path" | "regent") => {
 		switch (type) {
 			case "job":
-				return "text-blue-400 bg-blue-500/10 border-blue-500/30";
+				return "text-shadow-blue bg-shadow-blue/10 border-shadow-blue/30";
 			case "path":
 				return "text-system-green bg-system-green/10 border-system-green/30";
 			case "regent":
@@ -176,7 +176,7 @@ export const SovereignDetail = ({ data }: { data: SovereignData }) => {
 							<Sparkles className="w-4 h-4 text-gate-s absolute -top-1 -right-1 animate-pulse" />
 						</div>
 						<div>
-							<h2 className="font-display text-2xl md:text-3xl bg-gradient-to-r from-resurge-violet via-purple-400 to-gate-s bg-clip-text text-transparent">
+							<h2 className="font-display text-2xl md:text-3xl bg-gradient-to-r from-resurge-violet via-resurge to-gate-s bg-clip-text text-transparent">
 								{displayName}
 							</h2>
 							{data.fusion_theme && (
@@ -213,7 +213,7 @@ export const SovereignDetail = ({ data }: { data: SovereignData }) => {
 			<AscendantWindow
 				id="sovereign-fusion"
 				title="FUSION COMPONENTS"
-				className="border-purple-500/30"
+				className="border-resurge/30"
 			>
 				<div className="space-y-4">
 					<p className="text-sm text-muted-foreground">
@@ -412,9 +412,9 @@ export const SovereignDetail = ({ data }: { data: SovereignData }) => {
 			{/* Lore Note */}
 			<AscendantWindow
 				title="THE ABSOLUTE'S SACRED PROCLAMATION"
-				className="border-cyan-500/30 bg-cyan-500/5"
+				className="border-mana-cyan/30 bg-mana-cyan/5"
 			>
-				<p className="text-sm text-cyan-200/80 italic leading-relaxed">
+				<p className="text-sm text-mana-cyan/80 italic leading-relaxed">
 					Under the Post-Reset timeline, Kael Voss, The Absolute & Eternal
 					Engine, granted the Gemini Protocol as a divine resolution to worthy
 					Ascendants. To become a Sovereign is to accept a permanent subclass

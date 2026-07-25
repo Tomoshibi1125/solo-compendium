@@ -169,7 +169,7 @@ async function syncAnomalies() {
 			damage_vulnerabilities: castToStringArray(m.damage_vulnerabilities),
 			xp: m.xp || 0,
 			is_boss: !!m.is_boss,
-			source_book: m.source_book || "System Ascendant Canon",
+			source_book: m.source_book || "Rift Ascendant Canon",
 			tags: m.tags || [],
 			image_url: m.image_url || m.image || null,
 			actions: castToJson(m.actions || m.Anomaly_actions || []),
@@ -217,7 +217,7 @@ async function syncSpells() {
 			lore: m.lore ? castToString(m.lore) : null,
 			mechanics: castToJson(m.mechanics),
 			tags: m.tags || [],
-			source_book: m.source_book || "System Ascendant Canon",
+			source_book: m.source_book || "Rift Ascendant Canon",
 			image_url: m.image_url || m.image || null,
 			spell_level: m.spell_level || m.level || 0,
 			school: m.school || "Evocation",
@@ -276,7 +276,7 @@ async function syncRunes() {
 			lore: m.lore ? castToString(m.lore) : null,
 			mechanics: castToJson(m.mechanics),
 			tags: m.tags || [],
-			source_book: m.source_book || "System Ascendant Canon",
+			source_book: m.source_book || "Rift Ascendant Canon",
 			image_url: m.image_url || m.image || null,
 			rune_level: m.rune_level || 1,
 			rune_type: m.rune_type || "hybrid",
@@ -335,7 +335,7 @@ async function syncEquipment() {
 			sigil_slots_base: Math.round(Number(m.sigil_slots_base) || 0),
 			cost_credits: Math.round(Number(m.value || m.cost_credits || 0)),
 			weight: Math.round(Number(m.weight || 0)),
-			source_book: m.source_book || "System Ascendant Canon",
+			source_book: m.source_book || "Rift Ascendant Canon",
 		});
 	}
 
@@ -517,7 +517,7 @@ async function syncPowers() {
 			casting_time: m.casting_time || "1 action",
 			range: castToString(m.range) || "Self",
 			duration: castToString(m.duration) || "Instantaneous",
-			source_book: m.source_book || "System Ascendant Canon",
+			source_book: m.source_book || "Rift Ascendant Canon",
 			tags: castToStringArray(m.tags) || [],
 		});
 	}
@@ -566,7 +566,7 @@ async function syncArtifacts() {
 			lore: castToJson(m.lore),
 			mechanics: castToJson(m.mechanics),
 			tags: castToStringArray(m.tags) || [],
-			source_book: m.source_book || "System Ascendant Canon",
+			source_book: m.source_book || "Rift Ascendant Canon",
 			image_url: m.image_url || m.image || null,
 		});
 	}
@@ -614,7 +614,7 @@ async function syncTattoos() {
 			lore: m.lore ? castToString(m.lore) : null,
 			flavor: m.flavor || null,
 			image_url: m.image_url || m.image || null,
-			source: m.source || m.source_book || "System Ascendant Canon",
+			source: m.source || m.source_book || "Rift Ascendant Canon",
 			tags: castToStringArray(m.tags) || [],
 			theme_tags: castToStringArray(m.theme_tags) || [],
 		});
@@ -714,7 +714,7 @@ async function syncLocations() {
 			flavor: m.flavor || null,
 			lore: m.lore ? castToString(m.lore) : null,
 			tags: castToStringArray(m.tags) || [],
-			source_book: m.source_book || "System Ascendant Canon",
+			source_book: m.source_book || "Rift Ascendant Canon",
 			image: m.image || null,
 		});
 	}
@@ -801,7 +801,7 @@ async function syncRegents() {
 			rank: m.rank || null,
 			image_url: m.image_url || m.image || null,
 			tags: m.tags || [],
-			source_book: m.source_book || "System Ascendant Canon",
+			source_book: m.source_book || "Rift Ascendant Canon",
 			hit_dice: m.hit_dice || null,
 			saving_throws: castToStringArray(m.saving_throws),
 			skill_proficiencies: castToStringArray(m.skill_proficiencies),
@@ -849,7 +849,7 @@ async function syncFeats() {
 			flavor: m.flavor || null,
 			benefits: castToStringArray(m.benefits),
 			prerequisites: castToString(m.prerequisites),
-			source_book: m.source_book || "System Ascendant Canon",
+			source_book: m.source_book || "Rift Ascendant Canon",
 		}));
 
 	const names = rows.map((r) => r.name);
@@ -900,7 +900,7 @@ async function syncRelics() {
 			attunement_requirements: castToString(m.attunement_requirements) || null,
 			value_credits: m.value_credits || 0,
 			weight: m.weight || 0,
-			source_book: m.source_book || "System Ascendant Canon",
+			source_book: m.source_book || "Rift Ascendant Canon",
 		});
 	}
 
@@ -933,7 +933,7 @@ async function syncTechniques() {
 			activation_type: m.activation_type || "action",
 			primary_effect: m.primary_effect || m.description || "",
 			secondary_effect: m.secondary_effect || null,
-			source: m.source || m.source_book || "System Ascendant Canon",
+			source: m.source || m.source_book || "Rift Ascendant Canon",
 			style: m.style || "None",
 		});
 	}

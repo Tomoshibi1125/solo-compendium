@@ -691,7 +691,7 @@ Include: combat tactics, full lore, dialogue samples, and plot hooks. Keep the s
 									)}
 									{linked?.background && (
 										<div className="flex items-start gap-2">
-											<ScrollText className="w-3.5 h-3.5 mt-0.5 text-blue-400 shrink-0" />
+											<ScrollText className="w-3.5 h-3.5 mt-0.5 text-shadow-blue shrink-0" />
 											<div>
 												<span className="text-[11px] uppercase text-muted-foreground tracking-wider block">
 													Background

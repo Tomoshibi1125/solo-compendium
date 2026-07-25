@@ -44,7 +44,7 @@ const labelFor = (type: BeatType) =>
 const BEAT_BADGE: Record<BeatType, string> = {
 	hook: "text-mana-cyan border-mana-cyan/40",
 	scene: "text-primary border-primary/40",
-	encounter: "text-red-400 border-red-400/40",
+	encounter: "text-destructive border-destructive/40",
 	rift: "text-resurge-violet border-resurge-violet/40",
 	reward: "text-gate-s border-gate-s/40",
 	transition: "text-muted-foreground border-border",

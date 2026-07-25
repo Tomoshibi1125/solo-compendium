@@ -1214,9 +1214,9 @@ export default function CharacterSheetV2() {
 									"min-h-[32px] px-3 rounded border text-[10px] font-mono uppercase tracking-wider transition-colors",
 									rollMode === m
 										? m === "advantage"
-											? "border-green-500 bg-green-500/15 text-green-400"
+											? "border-success bg-success/15 text-success"
 											: m === "disadvantage"
-												? "border-red-500 bg-red-500/15 text-red-400"
+												? "border-destructive bg-destructive/15 text-destructive"
 												: "border-primary bg-primary/15 text-primary"
 										: "border-primary/15 text-muted-foreground hover:border-primary/40",
 								)}

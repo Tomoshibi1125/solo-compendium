@@ -89,7 +89,7 @@ const Landing = () => {
 						<AscendantText
 							variant="body"
 							size="lg"
-							className="mt-4 text-gray-300"
+							className="mt-4 text-muted-foreground"
 						>
 							Access the complete Rift Ascendant compendium. Manage ascendants,
 							explore rifts, and master the shadows.
@@ -231,7 +231,7 @@ const Landing = () => {
 						<AscendantText
 							variant="body"
 							size="lg"
-							className="mt-4 text-gray-300 max-w-2xl mx-auto"
+							className="mt-4 text-muted-foreground max-w-2xl mx-auto"
 						>
 							Ascend to sovereignty, master dimensional rifts, and command the
 							shadows. The Rift awaits those worthy of dominion.

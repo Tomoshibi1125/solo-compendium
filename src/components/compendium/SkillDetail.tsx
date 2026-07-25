@@ -18,11 +18,11 @@ interface SkillData extends CompendiumSkill {
 }
 
 const abilityColors: Record<string, string> = {
-	STR: "text-red-400 border-red-500/30",
-	AGI: "text-green-400 border-green-500/30",
+	STR: "text-destructive border-destructive/30",
+	AGI: "text-success border-success/30",
 	VIT: "text-gate-a border-gate-a/30",
-	INT: "text-blue-400 border-blue-500/30",
-	SENSE: "text-purple-400 border-purple-500/30",
+	INT: "text-shadow-blue border-shadow-blue/30",
+	SENSE: "text-resurge border-resurge/30",
 	PRE: "text-resurge-violet border-resurge-violet/30",
 };
 

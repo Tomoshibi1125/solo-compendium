@@ -33,9 +33,9 @@ export interface SpellData extends CompendiumSpell {}
 
 const rankStyles: Record<string, string> = {
 	S: "text-gate-s border-gate-s/40 bg-gate-s/10",
-	A: "text-purple-400 border-purple-500/40 bg-purple-500/10",
-	B: "text-blue-400 border-blue-500/40 bg-blue-500/10",
-	C: "text-green-400 border-green-500/40 bg-green-500/10",
+	A: "text-resurge border-resurge/40 bg-resurge/10",
+	B: "text-shadow-blue border-shadow-blue/40 bg-shadow-blue/10",
+	C: "text-success border-success/40 bg-success/10",
 	D: "text-muted-foreground border-border bg-card",
 };
 
@@ -549,7 +549,7 @@ export const SpellDetail = ({ data }: { data: SpellData }) => {
 							const isObj = typeof movement === "object";
 							return (
 								<div className="flex items-start gap-2">
-									<Footprints className="w-5 h-5 text-blue-400 flex-shrink-0 mt-0.5" />
+									<Footprints className="w-5 h-5 text-shadow-blue flex-shrink-0 mt-0.5" />
 									<div>
 										<p className="font-heading capitalize">
 											{formatRegentVernacular(

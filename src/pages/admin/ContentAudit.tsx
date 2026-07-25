@@ -132,10 +132,10 @@ function SummaryCards({ report }: { report: ContentAuditReport }) {
 					className={cn(
 						"text-3xl font-bold",
 						summary.averageCompleteness >= 80
-							? "text-green-400"
+							? "text-success"
 							: summary.averageCompleteness >= 60
 								? "text-gate-s"
-								: "text-red-400",
+								: "text-destructive",
 					)}
 				>
 					{summary.averageCompleteness}%
@@ -146,14 +146,16 @@ function SummaryCards({ report }: { report: ContentAuditReport }) {
 			</AscendantWindow>
 
 			<AscendantWindow title="WITH IMAGES" className="text-center">
-				<div className="text-3xl font-bold text-blue-400">{imageCoverage}%</div>
+				<div className="text-3xl font-bold text-shadow-blue">
+					{imageCoverage}%
+				</div>
 				<div className="text-sm text-muted-foreground mt-1">
 					{summary.totalWithImages.toLocaleString()} entries
 				</div>
 			</AscendantWindow>
 
 			<AscendantWindow title="WITH DESCRIPTIONS" className="text-center">
-				<div className="text-3xl font-bold text-green-400">
+				<div className="text-3xl font-bold text-success">
 					{descriptionCoverage}%
 				</div>
 				<div className="text-sm text-muted-foreground mt-1">
@@ -168,7 +170,7 @@ function Recommendations({ recommendations }: { recommendations: string[] }) {
 	if (recommendations.length === 0) {
 		return (
 			<AscendantWindow title="RECOMMENDATIONS">
-				<div className="flex items-center gap-2 text-green-400">
+				<div className="flex items-center gap-2 text-success">
 					<CheckCircle2 className="w-5 h-5" />
 					<span>All content looks good! No recommendations at this time.</span>
 				</div>
@@ -387,7 +389,7 @@ function LinkIntegritySection() {
 						{hasBrokenLinks ? (
 							<AlertTriangle className="w-5 h-5 text-destructive" />
 						) : (
-							<CheckCircle2 className="w-5 h-5 text-green-400" />
+							<CheckCircle2 className="w-5 h-5 text-success" />
 						)}
 						<span className="font-semibold">
 							{hasBrokenLinks ? "Broken Links Found" : "All Links Valid"}
@@ -422,7 +424,7 @@ function LinkIntegritySection() {
 								"text-lg font-bold",
 								integrityReport.charactersWithBrokenLinks > 0
 									? "text-destructive"
-									: "text-green-400",
+									: "text-success",
 							)}
 						>
 							{integrityReport.charactersWithBrokenLinks}
@@ -437,7 +439,7 @@ function LinkIntegritySection() {
 								"text-lg font-bold",
 								integrityReport.totalBrokenLinks > 0
 									? "text-destructive"
-									: "text-green-400",
+									: "text-success",
 							)}
 						>
 							{integrityReport.totalBrokenLinks}

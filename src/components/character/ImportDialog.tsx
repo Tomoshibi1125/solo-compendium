@@ -209,7 +209,7 @@ export function ImportDialog({
 							</div>
 
 							<div className="flex items-center gap-2 text-xs text-muted-foreground">
-								<Check className="w-3 h-3 text-green-400" />
+								<Check className="w-3 h-3 text-success" />
 								<span>Valid character file — ready to import</span>
 							</div>
 

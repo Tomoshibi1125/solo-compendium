@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-02T22:54:11.911Z",
+  "generatedAt": "2026-07-25T02:18:19.881Z",
   "defaultCheckpoint": "stabilityai/stable-diffusion-xl-base-1.0",
   "optionalRefiner": "stabilityai/stable-diffusion-xl-refiner-1.0",
   "lorePrecedence": "Use docs/rift-ascendant-world-lore.md for global tone; for Gloamreach assets, current Run Silent / The Quiet sandbox text wins.",

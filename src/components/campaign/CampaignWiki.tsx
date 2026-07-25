@@ -241,7 +241,7 @@ export function CampaignWiki({ campaignId }: { campaignId: string }) {
 									className={cn(
 										"uppercase text-[11px]",
 										selectedArticle.is_public
-											? "border-green-500/50 text-green-400"
+											? "border-success/50 text-success"
 											: "border-gate-s/50 text-gate-s",
 									)}
 								>
@@ -526,7 +526,7 @@ function WikiEditorDialog({
 								className="flex items-center gap-1.5 cursor-pointer"
 							>
 								{isPublic ? (
-									<Globe className="w-3.5 h-3.5 text-green-400" />
+									<Globe className="w-3.5 h-3.5 text-success" />
 								) : (
 									<Lock className="w-3.5 h-3.5 text-gate-s" />
 								)}

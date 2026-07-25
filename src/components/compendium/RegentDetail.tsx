@@ -296,7 +296,7 @@ export const RegentDetail = ({ data }: RegentDetailProps) => {
 				<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 					<AscendantWindow
 						title="STATISTICAL ATTRIBUTES"
-						className="border-cyan-500/30"
+						className="border-mana-cyan/30"
 					>
 						<div className="space-y-4">
 							<div className="grid grid-cols-2 gap-2">
@@ -341,9 +341,9 @@ export const RegentDetail = ({ data }: RegentDetailProps) => {
 											{restrictionsArray.map((res: string) => (
 												<li
 													key={res}
-													className="text-xs text-red-400/80 flex gap-2 italic"
+													className="text-xs text-destructive/80 flex gap-2 italic"
 												>
-													<div className="w-1 h-1 rounded-full bg-red-400 mt-1.5 shrink-0" />
+													<div className="w-1 h-1 rounded-full bg-destructive mt-1.5 shrink-0" />
 													{res}
 												</li>
 											))}
@@ -356,7 +356,7 @@ export const RegentDetail = ({ data }: RegentDetailProps) => {
 
 					<AscendantWindow
 						title="SYSTEM OVERRIDES"
-						className="border-purple-500/30"
+						className="border-resurge/30"
 					>
 						<div className="space-y-3">
 							{(() => {
@@ -373,7 +373,7 @@ export const RegentDetail = ({ data }: RegentDetailProps) => {
 										key={ability}
 										className="flex gap-3 text-sm border-b border-white/5 pb-2 last:border-0 last:pb-0"
 									>
-										<div className="w-2 h-2 rounded-full bg-purple-500 mt-1.5 shrink-0 shadow-[0_0_8px_rgba(168,85,247,0.5)]" />
+										<div className="w-2 h-2 rounded-full bg-resurge mt-1.5 shrink-0 shadow-[0_0_8px_rgba(168,85,247,0.5)]" />
 										<span className="text-foreground/90">
 											{formatRegentVernacular(ability)}
 										</span>

@@ -26,12 +26,12 @@ type RelicAbility = NonNullable<RelicData["abilities"]>[number];
 
 const rarityColors: Record<string, string> = {
 	common: "bg-gray-500",
-	uncommon: "bg-green-500",
-	rare: "bg-blue-500",
+	uncommon: "bg-success",
+	rare: "bg-shadow-blue",
 	// Relic data uses underscore very_rare; keep the hyphen alias for parity
 	// with the canonical ladder. epic + mythic are live relic tiers.
-	very_rare: "bg-purple-500",
-	"very-rare": "bg-purple-500",
+	very_rare: "bg-resurge",
+	"very-rare": "bg-resurge",
 	epic: "bg-resurge-violet",
 	legendary: "bg-gate-s",
 	mythic: "bg-gate-a",
@@ -39,15 +39,15 @@ const rarityColors: Record<string, string> = {
 
 const tierColors: Record<string, string> = {
 	dormant: "text-gray-400 border-gray-500/30",
-	awakened: "text-blue-400 border-blue-500/30",
-	resonant: "text-purple-400 border-purple-500/30",
+	awakened: "text-shadow-blue border-shadow-blue/30",
+	resonant: "text-resurge border-resurge/30",
 	E: "text-gray-400 border-gray-500/30",
 	D: "text-gray-300 border-gray-400/30",
-	C: "text-green-400 border-green-500/30",
-	B: "text-blue-400 border-blue-500/30",
-	A: "text-purple-400 border-purple-500/30",
+	C: "text-success border-success/30",
+	B: "text-shadow-blue border-shadow-blue/30",
+	A: "text-resurge border-resurge/30",
 	S: "text-gate-s border-gate-s/30",
-	SS: "text-red-400 border-red-500/30",
+	SS: "text-destructive border-destructive/30",
 };
 
 export const RelicDetail = ({ data }: { data: RelicData }) => {
@@ -474,7 +474,7 @@ export const RelicDetail = ({ data }: { data: RelicData }) => {
 					<ul className="space-y-2">
 						{data.quirks.map((quirk, _i) => (
 							<li key={quirk} className="flex items-start gap-2">
-								<Sparkles className="w-4 h-4 text-purple-400 flex-shrink-0 mt-0.5" />
+								<Sparkles className="w-4 h-4 text-resurge flex-shrink-0 mt-0.5" />
 								<span className="text-muted-foreground">
 									<AutoLinkText text={quirk} />
 								</span>
@@ -486,9 +486,12 @@ export const RelicDetail = ({ data }: { data: RelicData }) => {
 
 			{/* Corruption Risk */}
 			{data.corruption_risk && (
-				<AscendantWindow title="CORRUPTION RISK" className="border-red-500/30">
+				<AscendantWindow
+					title="CORRUPTION RISK"
+					className="border-destructive/30"
+				>
 					<div className="flex items-start gap-3">
-						<AlertTriangle className="w-5 h-5 text-red-400 flex-shrink-0" />
+						<AlertTriangle className="w-5 h-5 text-destructive flex-shrink-0" />
 						<p className="text-foreground">
 							<AutoLinkText text={data.corruption_risk} />
 						</p>

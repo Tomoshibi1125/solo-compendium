@@ -90,8 +90,8 @@ export function AbilityScoreStrip({
 											<span
 												className={
 													modifier > baseModifier
-														? "text-green-400"
-														: "text-red-400"
+														? "text-success"
+														: "text-destructive"
 												}
 											>
 												{modifier > baseModifier ? "+" : ""}
@@ -103,7 +103,7 @@ export function AbilityScoreStrip({
 										<span>Final Modifier:</span>
 										<span
 											className={
-												modifier >= 0 ? "text-primary" : "text-red-400"
+												modifier >= 0 ? "text-primary" : "text-destructive"
 											}
 										>
 											{modifier >= 0 ? "+" : ""}
@@ -124,7 +124,7 @@ export function AbilityScoreStrip({
 								"w-12 h-10 flex items-center justify-center rounded-[2px] border bg-black/40 mb-1 transition-all group-hover:scale-105 group-hover:bg-primary/10",
 								modifier >= 0
 									? "border-primary/30 text-primary"
-									: "border-red-500/30 text-red-400",
+									: "border-destructive/30 text-destructive",
 							)}
 						>
 							<div className="flex flex-col items-center">

@@ -363,9 +363,9 @@ Expand with read-aloud boxed text, detailed mechanics (DCs, triggers), success/f
 	const getEventColor = (type: string) => {
 		switch (type) {
 			case "world":
-				return "text-purple-400 border-purple-400/30 bg-purple-400/10";
+				return "text-resurge border-resurge/30 bg-resurge/10";
 			case "encounter":
-				return "text-blue-400 border-blue-400/30 bg-blue-400/10";
+				return "text-shadow-blue border-shadow-blue/30 bg-shadow-blue/10";
 			case "complication":
 				return "text-gate-a border-gate-a/30 bg-gate-a/10";
 			default:
@@ -583,8 +583,8 @@ Expand with read-aloud boxed text, detailed mechanics (DCs, triggers), success/f
 			<AscendantWindow title="EVENT TYPES" variant="quest">
 				<div className="space-y-4 text-sm">
 					<div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-						<div className="p-4 rounded-lg border border-purple-400/30 bg-purple-400/10">
-							<h4 className="font-heading font-semibold text-purple-400 mb-2">
+						<div className="p-4 rounded-lg border border-resurge/30 bg-resurge/10">
+							<h4 className="font-heading font-semibold text-resurge mb-2">
 								World Events
 							</h4>
 							<AscendantText className="block text-muted-foreground text-xs">
@@ -592,8 +592,8 @@ Expand with read-aloud boxed text, detailed mechanics (DCs, triggers), success/f
 								for major plot developments.
 							</AscendantText>
 						</div>
-						<div className="p-4 rounded-lg border border-blue-400/30 bg-blue-400/10">
-							<h4 className="font-heading font-semibold text-blue-400 mb-2">
+						<div className="p-4 rounded-lg border border-shadow-blue/30 bg-shadow-blue/10">
+							<h4 className="font-heading font-semibold text-shadow-blue mb-2">
 								NPC Encounters
 							</h4>
 							<AscendantText className="block text-muted-foreground text-xs">

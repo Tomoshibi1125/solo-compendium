@@ -34,10 +34,10 @@ import { getProficiencyBonus } from "@/types/core-rules";
 import { AddRuneDialog } from "./AddRuneDialog";
 
 const RUNE_TYPE_COLORS: Record<string, string> = {
-	martial: "bg-red-500/20 text-red-400 border-red-500/30",
-	caster: "bg-blue-500/20 text-blue-400 border-blue-500/30",
-	hybrid: "bg-purple-500/20 text-purple-400 border-purple-500/30",
-	utility: "bg-green-500/20 text-green-400 border-green-500/30",
+	martial: "bg-destructive/20 text-destructive border-destructive/30",
+	caster: "bg-shadow-blue/20 text-shadow-blue border-shadow-blue/30",
+	hybrid: "bg-resurge/20 text-resurge border-resurge/30",
+	utility: "bg-success/20 text-success border-success/30",
 	defensive: "bg-gate-s/20 text-gate-s border-gate-s/30",
 	offensive: "bg-gate-a/20 text-gate-a border-gate-a/30",
 };
@@ -265,7 +265,7 @@ export function RunesList({
 													{absorptionPreviews[rk.rune_id] &&
 														!absorptionPreviews[rk.rune_id]?.isCrossType && (
 															<div className="flex items-center gap-1.5 mt-1.5">
-																<span className="text-[10px] text-green-400">
+																<span className="text-[10px] text-success">
 																	{absorptionPreviews[rk.rune_id]?.usesMax ===
 																	null
 																		? "At-will"
@@ -340,7 +340,7 @@ export function RunesList({
 											{!feature.uses_max && (
 												<Badge
 													variant="outline"
-													className="text-xs text-green-400 border-green-400/30"
+													className="text-xs text-success border-success/30"
 												>
 													At-will
 												</Badge>

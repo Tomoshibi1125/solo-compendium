@@ -108,72 +108,6 @@ export type Database = {
 				};
 				Relationships: [];
 			};
-			ai_generated_content: {
-				Row: {
-					content: Json;
-					content_type: string;
-					created_at: string | null;
-					entity_id: string;
-					entity_type: string;
-					id: string;
-					metadata: Json | null;
-					updated_at: string | null;
-				};
-				Insert: {
-					content: Json;
-					content_type: string;
-					created_at?: string | null;
-					entity_id: string;
-					entity_type: string;
-					id?: string;
-					metadata?: Json | null;
-					updated_at?: string | null;
-				};
-				Update: {
-					content?: Json;
-					content_type?: string;
-					created_at?: string | null;
-					entity_id?: string;
-					entity_type?: string;
-					id?: string;
-					metadata?: Json | null;
-					updated_at?: string | null;
-				};
-				Relationships: [];
-			};
-			ai_usage_logs: {
-				Row: {
-					cost: number | null;
-					created_at: string | null;
-					id: string;
-					metadata: Json | null;
-					request_type: string;
-					service_id: string;
-					tokens_used: number | null;
-					user_id: string | null;
-				};
-				Insert: {
-					cost?: number | null;
-					created_at?: string | null;
-					id?: string;
-					metadata?: Json | null;
-					request_type: string;
-					service_id: string;
-					tokens_used?: number | null;
-					user_id?: string | null;
-				};
-				Update: {
-					cost?: number | null;
-					created_at?: string | null;
-					id?: string;
-					metadata?: Json | null;
-					request_type?: string;
-					service_id?: string;
-					tokens_used?: number | null;
-					user_id?: string | null;
-				};
-				Relationships: [];
-			};
 			art_assets: {
 				Row: {
 					created_at: string | null;
@@ -243,114 +177,6 @@ export type Database = {
 					metadata?: Json | null;
 					path?: string;
 					type?: string;
-				};
-				Relationships: [];
-			};
-			audio_playlists: {
-				Row: {
-					auto_play: boolean;
-					category: string;
-					created_at: string;
-					crossfade: number;
-					description: string | null;
-					id: string;
-					name: string;
-					repeat: string;
-					shuffle: boolean;
-					tracks: string[];
-					updated_at: string;
-					user_id: string;
-					volume: number;
-				};
-				Insert: {
-					auto_play?: boolean;
-					category: string;
-					created_at?: string;
-					crossfade?: number;
-					description?: string | null;
-					id?: string;
-					name: string;
-					repeat?: string;
-					shuffle?: boolean;
-					tracks?: string[];
-					updated_at?: string;
-					user_id: string;
-					volume?: number;
-				};
-				Update: {
-					auto_play?: boolean;
-					category?: string;
-					created_at?: string;
-					crossfade?: number;
-					description?: string | null;
-					id?: string;
-					name?: string;
-					repeat?: string;
-					shuffle?: boolean;
-					tracks?: string[];
-					updated_at?: string;
-					user_id?: string;
-					volume?: number;
-				};
-				Relationships: [];
-			};
-			audio_tracks: {
-				Row: {
-					artist: string;
-					category: string;
-					created_at: string;
-					duration: number;
-					file_size: number | null;
-					id: string;
-					license: string;
-					loop: boolean;
-					mime_type: string | null;
-					mood: string | null;
-					source: string;
-					storage_path: string;
-					tags: string[];
-					title: string;
-					updated_at: string;
-					user_id: string;
-					volume: number;
-				};
-				Insert: {
-					artist: string;
-					category: string;
-					created_at?: string;
-					duration: number;
-					file_size?: number | null;
-					id?: string;
-					license?: string;
-					loop?: boolean;
-					mime_type?: string | null;
-					mood?: string | null;
-					source?: string;
-					storage_path: string;
-					tags?: string[];
-					title: string;
-					updated_at?: string;
-					user_id: string;
-					volume?: number;
-				};
-				Update: {
-					artist?: string;
-					category?: string;
-					created_at?: string;
-					duration?: number;
-					file_size?: number | null;
-					id?: string;
-					license?: string;
-					loop?: boolean;
-					mime_type?: string | null;
-					mood?: string | null;
-					source?: string;
-					storage_path?: string;
-					tags?: string[];
-					title?: string;
-					updated_at?: string;
-					user_id?: string;
-					volume?: number;
 				};
 				Relationships: [];
 			};
@@ -606,71 +432,6 @@ export type Database = {
 						columns: ["session_id"];
 						isOneToOne: false;
 						referencedRelation: "campaign_combat_sessions";
-						referencedColumns: ["id"];
-					},
-				];
-			};
-			campaign_content: {
-				Row: {
-					campaign_id: string | null;
-					content_type: string;
-					created_at: string | null;
-					created_by: string | null;
-					data: Json;
-					description: string | null;
-					id: string;
-					name: string;
-					updated_at: string | null;
-				};
-				Insert: {
-					campaign_id?: string | null;
-					content_type: string;
-					created_at?: string | null;
-					created_by?: string | null;
-					data: Json;
-					description?: string | null;
-					id?: string;
-					name: string;
-					updated_at?: string | null;
-				};
-				Update: {
-					campaign_id?: string | null;
-					content_type?: string;
-					created_at?: string | null;
-					created_by?: string | null;
-					data?: Json;
-					description?: string | null;
-					id?: string;
-					name?: string;
-					updated_at?: string | null;
-				};
-				Relationships: [
-					{
-						foreignKeyName: "campaign_content_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
-						referencedRelation: "campaign_details";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "campaign_content_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
-						referencedRelation: "campaigns";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "campaign_content_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
-						referencedRelation: "campaigns_public_listings";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "campaign_content_created_by_fkey";
-						columns: ["created_by"];
-						isOneToOne: false;
-						referencedRelation: "user_profiles";
 						referencedColumns: ["id"];
 					},
 				];
@@ -1877,62 +1638,6 @@ export type Database = {
 						columns: ["recurrence_parent_id"];
 						isOneToOne: false;
 						referencedRelation: "campaign_sessions";
-						referencedColumns: ["id"];
-					},
-				];
-			};
-			campaign_sourcebook_shares: {
-				Row: {
-					campaign_id: string;
-					created_at: string;
-					id: string;
-					shared_by: string;
-					sourcebook_id: string;
-					updated_at: string;
-				};
-				Insert: {
-					campaign_id: string;
-					created_at?: string;
-					id?: string;
-					shared_by: string;
-					sourcebook_id: string;
-					updated_at?: string;
-				};
-				Update: {
-					campaign_id?: string;
-					created_at?: string;
-					id?: string;
-					shared_by?: string;
-					sourcebook_id?: string;
-					updated_at?: string;
-				};
-				Relationships: [
-					{
-						foreignKeyName: "campaign_sourcebook_shares_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
-						referencedRelation: "campaign_details";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "campaign_sourcebook_shares_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
-						referencedRelation: "campaigns";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "campaign_sourcebook_shares_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
-						referencedRelation: "campaigns_public_listings";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "campaign_sourcebook_shares_sourcebook_id_fkey";
-						columns: ["sourcebook_id"];
-						isOneToOne: false;
-						referencedRelation: "sourcebook_catalog";
 						referencedColumns: ["id"];
 					},
 				];
@@ -4047,45 +3752,6 @@ export type Database = {
 						referencedColumns: ["id"];
 					},
 				];
-			};
-			character_templates: {
-				Row: {
-					character_data: Json;
-					created_at: string;
-					description: string | null;
-					id: string;
-					is_public: boolean;
-					name: string;
-					share_code: string | null;
-					tags: string[] | null;
-					updated_at: string;
-					user_id: string;
-				};
-				Insert: {
-					character_data: Json;
-					created_at?: string;
-					description?: string | null;
-					id?: string;
-					is_public?: boolean;
-					name: string;
-					share_code?: string | null;
-					tags?: string[] | null;
-					updated_at?: string;
-					user_id: string;
-				};
-				Update: {
-					character_data?: Json;
-					created_at?: string;
-					description?: string | null;
-					id?: string;
-					is_public?: boolean;
-					name?: string;
-					share_code?: string | null;
-					tags?: string[] | null;
-					updated_at?: string;
-					user_id?: string;
-				};
-				Relationships: [];
 			};
 			character_vehicles: {
 				Row: {
@@ -7877,139 +7543,6 @@ export type Database = {
 				};
 				Relationships: [];
 			};
-			discord_account_links: {
-				Row: {
-					campaign_id: string;
-					discord_user_id: string;
-					discord_username: string | null;
-					id: string;
-					linked_at: string;
-					user_id: string;
-				};
-				Insert: {
-					campaign_id: string;
-					discord_user_id: string;
-					discord_username?: string | null;
-					id?: string;
-					linked_at?: string;
-					user_id: string;
-				};
-				Update: {
-					campaign_id?: string;
-					discord_user_id?: string;
-					discord_username?: string | null;
-					id?: string;
-					linked_at?: string;
-					user_id?: string;
-				};
-				Relationships: [
-					{
-						foreignKeyName: "discord_account_links_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
-						referencedRelation: "campaign_details";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "discord_account_links_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
-						referencedRelation: "campaigns";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "discord_account_links_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
-						referencedRelation: "campaigns_public_listings";
-						referencedColumns: ["id"];
-					},
-				];
-			};
-			discord_command_audit: {
-				Row: {
-					campaign_id: string | null;
-					command: string;
-					created_at: string;
-					discord_user_id: string | null;
-					id: number;
-					outcome: string | null;
-					payload: Json;
-				};
-				Insert: {
-					campaign_id?: string | null;
-					command: string;
-					created_at?: string;
-					discord_user_id?: string | null;
-					id?: number;
-					outcome?: string | null;
-					payload?: Json;
-				};
-				Update: {
-					campaign_id?: string | null;
-					command?: string;
-					created_at?: string;
-					discord_user_id?: string | null;
-					id?: number;
-					outcome?: string | null;
-					payload?: Json;
-				};
-				Relationships: [
-					{
-						foreignKeyName: "discord_command_audit_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
-						referencedRelation: "campaign_details";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "discord_command_audit_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
-						referencedRelation: "campaigns";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "discord_command_audit_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
-						referencedRelation: "campaigns_public_listings";
-						referencedColumns: ["id"];
-					},
-				];
-			};
-			entity_assets: {
-				Row: {
-					asset_id: string;
-					created_at: string;
-					entity_id: string;
-					entity_type: string;
-					id: string;
-				};
-				Insert: {
-					asset_id: string;
-					created_at?: string;
-					entity_id: string;
-					entity_type: string;
-					id?: string;
-				};
-				Update: {
-					asset_id?: string;
-					created_at?: string;
-					entity_id?: string;
-					entity_type?: string;
-					id?: string;
-				};
-				Relationships: [
-					{
-						foreignKeyName: "entity_assets_asset_id_fkey";
-						columns: ["asset_id"];
-						isOneToOne: false;
-						referencedRelation: "assets";
-						referencedColumns: ["id"];
-					},
-				];
-			};
 			guild_join_requests: {
 				Row: {
 					character_id: string | null;
@@ -8403,38 +7936,6 @@ export type Database = {
 					},
 				];
 			};
-			marketplace_downloads: {
-				Row: {
-					created_at: string;
-					id: string;
-					item_id: string;
-					source: string;
-					user_id: string;
-				};
-				Insert: {
-					created_at?: string;
-					id?: string;
-					item_id: string;
-					source?: string;
-					user_id: string;
-				};
-				Update: {
-					created_at?: string;
-					id?: string;
-					item_id?: string;
-					source?: string;
-					user_id?: string;
-				};
-				Relationships: [
-					{
-						foreignKeyName: "marketplace_downloads_item_id_fkey";
-						columns: ["item_id"];
-						isOneToOne: false;
-						referencedRelation: "marketplace_items";
-						referencedColumns: ["id"];
-					},
-				];
-			};
 			marketplace_items: {
 				Row: {
 					author_id: string;
@@ -8778,30 +8279,6 @@ export type Database = {
 					},
 				];
 			};
-			saved_searches: {
-				Row: {
-					created_at: string;
-					id: string;
-					name: string;
-					search_params: Json;
-					user_id: string;
-				};
-				Insert: {
-					created_at?: string;
-					id?: string;
-					name: string;
-					search_params?: Json;
-					user_id: string;
-				};
-				Update: {
-					created_at?: string;
-					id?: string;
-					name?: string;
-					search_params?: Json;
-					user_id?: string;
-				};
-				Relationships: [];
-			};
 			saved_sovereigns: {
 				Row: {
 					abilities: Json;
@@ -8993,33 +8470,6 @@ export type Database = {
 					},
 				];
 			};
-			sourcebook_catalog: {
-				Row: {
-					created_at: string;
-					id: string;
-					is_free: boolean;
-					metadata: Json;
-					name: string;
-					updated_at: string;
-				};
-				Insert: {
-					created_at?: string;
-					id: string;
-					is_free?: boolean;
-					metadata?: Json;
-					name: string;
-					updated_at?: string;
-				};
-				Update: {
-					created_at?: string;
-					id?: string;
-					is_free?: boolean;
-					metadata?: Json;
-					name?: string;
-					updated_at?: string;
-				};
-				Relationships: [];
-			};
 			user_favorites: {
 				Row: {
 					created_at: string;
@@ -9165,47 +8615,6 @@ export type Database = {
 					updated_at?: string | null;
 				};
 				Relationships: [];
-			};
-			user_sourcebook_entitlements: {
-				Row: {
-					created_at: string;
-					entitlement_type: string;
-					expires_at: string | null;
-					granted_by: string | null;
-					id: string;
-					sourcebook_id: string;
-					updated_at: string;
-					user_id: string;
-				};
-				Insert: {
-					created_at?: string;
-					entitlement_type?: string;
-					expires_at?: string | null;
-					granted_by?: string | null;
-					id?: string;
-					sourcebook_id: string;
-					updated_at?: string;
-					user_id: string;
-				};
-				Update: {
-					created_at?: string;
-					entitlement_type?: string;
-					expires_at?: string | null;
-					granted_by?: string | null;
-					id?: string;
-					sourcebook_id?: string;
-					updated_at?: string;
-					user_id?: string;
-				};
-				Relationships: [
-					{
-						foreignKeyName: "user_sourcebook_entitlements_sourcebook_id_fkey";
-						columns: ["sourcebook_id"];
-						isOneToOne: false;
-						referencedRelation: "sourcebook_catalog";
-						referencedColumns: ["id"];
-					},
-				];
 			};
 			user_tool_states: {
 				Row: {
@@ -9646,18 +9055,6 @@ export type Database = {
 				Args: { p_session_id: string };
 				Returns: undefined;
 			};
-			enhance_art_prompt: {
-				Args: {
-					p_base_prompt: string;
-					p_entity_type: string;
-					p_style_preferences?: Json;
-				};
-				Returns: {
-					enhanced_prompt: string;
-					suggestions: string[];
-					technical_params: Json;
-				}[];
-			};
 			exec_sql: { Args: { sql_string: string }; Returns: undefined };
 			export_campaign_bundle: {
 				Args: { p_campaign_id: string };
@@ -9683,37 +9080,6 @@ export type Database = {
 					expires_at: string;
 					shared_by: string;
 					sourcebook_id: string;
-				}[];
-			};
-			get_ai_generated_content: {
-				Args: {
-					p_content_type?: string;
-					p_entity_id: string;
-					p_entity_type: string;
-				};
-				Returns: {
-					content: Json;
-					content_type: string;
-					created_at: string;
-					id: string;
-					metadata: Json;
-				}[];
-			};
-			get_ai_usage_stats: {
-				Args: { p_date_from: string; p_date_to: string; p_user_id?: string };
-				Returns: {
-					avg_tokens_per_request: number;
-					request_type: string;
-					service_id: string;
-					total_cost: number;
-					total_requests: number;
-					total_tokens: number;
-				}[];
-			};
-			get_asset_paths: {
-				Args: { p_entity_id: string; p_entity_type: string };
-				Returns: {
-					path: string;
 				}[];
 			};
 			get_campaign_by_share_code: {
@@ -9767,13 +9133,6 @@ export type Database = {
 				Args: { p_campaign_id: string };
 				Returns: number;
 			};
-			get_entity_assets: {
-				Args: { p_entity_id: string; p_entity_type: string };
-				Returns: {
-					path: string;
-					type: string;
-				}[];
-			};
 			gift_marketplace_item: {
 				Args: {
 					p_item_id: string;
@@ -9816,17 +9175,6 @@ export type Database = {
 			};
 			join_campaign_by_id: {
 				Args: { p_campaign_id: string; p_character_id?: string };
-				Returns: string;
-			};
-			log_ai_usage: {
-				Args: {
-					p_cost?: number;
-					p_metadata?: Json;
-					p_request_type: string;
-					p_service_id: string;
-					p_tokens_used?: number;
-					p_user_id?: string;
-				};
 				Returns: string;
 			};
 			log_campaign_invite_event: {
@@ -9999,10 +9347,6 @@ export type Database = {
 				};
 				Returns: string;
 			};
-			share_campaign_sourcebook: {
-				Args: { p_campaign_id: string; p_sourcebook_id: string };
-				Returns: string;
-			};
 			start_active_session: {
 				Args: {
 					p_campaign_id: string;
@@ -10014,16 +9358,6 @@ export type Database = {
 			start_session_combat: {
 				Args: { p_participants: Json; p_session_id: string };
 				Returns: undefined;
-			};
-			store_ai_generated_content: {
-				Args: {
-					p_content: Json;
-					p_content_type: string;
-					p_entity_id: string;
-					p_entity_type: string;
-					p_metadata?: Json;
-				};
-				Returns: string;
 			};
 			sync_compendium_data: { Args: never; Returns: undefined };
 			update_character_xp: {
@@ -10061,39 +9395,6 @@ export type Database = {
 					p_user_id?: string;
 				};
 				Returns: string;
-			};
-			upsert_user_sourcebook_entitlement: {
-				Args: {
-					p_entitlement_type?: string;
-					p_expires_at?: string;
-					p_sourcebook_id: string;
-					p_user_id: string;
-				};
-				Returns: string;
-			};
-			user_has_marketplace_access: {
-				Args: { p_item_id: string; p_user_id?: string };
-				Returns: boolean;
-			};
-			user_has_sourcebook_access: {
-				Args: {
-					p_campaign_id?: string;
-					p_sourcebook_id: string;
-					p_user_id?: string;
-				};
-				Returns: boolean;
-			};
-			validate_level_gate: {
-				Args: {
-					p_character_id: string;
-					p_power_level?: number;
-					p_selection_id?: string;
-					p_selection_type: string;
-				};
-				Returns: {
-					allowed: boolean;
-					reason: string;
-				}[];
 			};
 			warden_grant_character_equipment: {
 				Args: { p_campaign_id: string; p_items: Json };

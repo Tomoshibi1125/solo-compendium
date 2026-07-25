@@ -38,7 +38,7 @@ export function AttunementSlots({
 	return (
 		<div className="space-y-2">
 			<div className="flex items-center gap-2">
-				<Gem className="h-4 w-4 text-cyan-500" />
+				<Gem className="h-4 w-4 text-mana-cyan" />
 				<span className="text-sm font-medium">Attunement</span>
 				<span className="text-xs text-muted-foreground">
 					{attunedItems.length}/{MAX_ATTUNEMENT_SLOTS} · {slotsRemaining} free
@@ -54,13 +54,13 @@ export function AttunementSlots({
 							className={cn(
 								"h-10 flex-1 min-w-0 rounded-md border-2 border-dashed flex items-center justify-center text-xs transition-colors",
 								item
-									? "border-cyan-400 bg-cyan-50 text-cyan-800 font-medium"
+									? "border-mana-cyan bg-mana-cyan text-mana-cyan font-medium"
 									: "border-gray-300 bg-gray-50 text-gray-400",
 							)}
 						>
 							{item ? (
 								<div className="flex items-center gap-1 px-2 min-w-0">
-									<Gem className="h-3 w-3 flex-shrink-0 text-cyan-500" />
+									<Gem className="h-3 w-3 flex-shrink-0 text-mana-cyan" />
 									{/* Name is tappable to read the full item name on touch. */}
 									<InfoPopover
 										side="bottom"
@@ -73,7 +73,7 @@ export function AttunementSlots({
 									<button
 										type="button"
 										onClick={() => handleUnattune(item)}
-										className="flex-shrink-0 hover:text-red-500 transition-colors"
+										className="flex-shrink-0 hover:text-destructive transition-colors"
 										aria-label={`Unattune ${item.name}`}
 									>
 										<X className="h-3 w-3" />

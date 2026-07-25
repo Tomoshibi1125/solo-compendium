@@ -107,7 +107,7 @@ export function RunSilentTrackers({ campaignId }: { campaignId: string }) {
 				className={cn(
 					"fixed bottom-5 right-5 z-50 flex items-center gap-2 rounded-full border px-4 py-2.5 font-display text-xs uppercase tracking-widest shadow-lg backdrop-blur-md transition-colors",
 					peaked
-						? "animate-pulse border-red-500/60 bg-red-950/70 text-red-300"
+						? "animate-pulse border-destructive/60 bg-destructive/25 text-destructive"
 						: "border-resurge-violet/40 bg-black/70 text-resurge-violet hover:border-resurge-violet hover:text-white",
 				)}
 				aria-label="Open the Hunt and Dread trackers"
@@ -161,7 +161,7 @@ export function RunSilentTrackers({ campaignId }: { campaignId: string }) {
 								"h-8 flex-1 rounded-sm border transition-colors",
 								seg <= hunt
 									? peaked
-										? "border-red-400/70 bg-red-500/70"
+										? "border-destructive/70 bg-destructive/70"
 										: "border-resurge-violet/70 bg-resurge-violet/60"
 									: "border-slate-600/40 bg-slate-800/40 hover:bg-slate-700/50",
 							)}
@@ -170,14 +170,14 @@ export function RunSilentTrackers({ campaignId }: { campaignId: string }) {
 					))}
 				</div>
 				{peaked ? (
-					<div className="mt-2 rounded border border-red-500/50 bg-red-950/40 px-2 py-1.5 text-[11px] leading-snug text-red-300">
+					<div className="mt-2 rounded border border-destructive/50 bg-destructive/25 px-2 py-1.5 text-[11px] leading-snug text-destructive">
 						<strong>The Quiet strikes.</strong> It takes the most exposed
 						character (or forces a hide-or-flee beat), then the clock resets to{" "}
 						{HUNT_RESET}.
 						<Button
 							variant="ghost"
 							size="sm"
-							className="mt-1 h-6 w-full gap-1 text-[11px] text-red-300 hover:bg-red-500/10"
+							className="mt-1 h-6 w-full gap-1 text-[11px] text-destructive hover:bg-destructive/10"
 							onClick={() => setHunt(HUNT_RESET)}
 						>
 							Resolve strike → reset to {HUNT_RESET}
@@ -219,7 +219,7 @@ export function RunSilentTrackers({ campaignId }: { campaignId: string }) {
 										className={cn(
 											"w-6 text-center font-mono text-sm font-bold",
 											d.value >= 5
-												? "text-red-400"
+												? "text-destructive"
 												: d.value >= 3
 													? "text-gate-s"
 													: "text-slate-300",
@@ -238,7 +238,7 @@ export function RunSilentTrackers({ campaignId }: { campaignId: string }) {
 									<button
 										type="button"
 										onClick={() => removeDread(d.id)}
-										className="ml-1 text-slate-600 hover:text-red-400"
+										className="ml-1 text-slate-600 hover:text-destructive"
 										aria-label={`Remove ${d.name}`}
 									>
 										<Trash2 className="h-3.5 w-3.5" />

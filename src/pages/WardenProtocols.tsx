@@ -488,7 +488,7 @@ const WardenToolCard = ({
 						tool.color.includes("gate-s")
 							? "bg-gate-s/20 text-gate-s hover:bg-gate-s/40 border border-gate-s/50"
 							: tool.color.includes("red")
-								? "bg-red-500/20 text-red-400 hover:bg-red-500/40 border border-red-500/50"
+								? "bg-destructive/20 text-destructive hover:bg-destructive/40 border border-destructive/50"
 								: "bg-primary/20 text-primary hover:bg-primary/40 border border-primary/50",
 					)}
 					asChild

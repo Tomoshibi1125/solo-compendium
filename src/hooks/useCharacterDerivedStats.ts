@@ -347,7 +347,7 @@ export function useCharacterDerivedStats(
 		);
 
 		// Gestalt Regent overlay HP: the Regent's hit die is ADDITIVE on top of
-		// the base Job HP (Solo-Leveling power spike), applied reactively so it
+		// the base Job HP (deliberate gestalt power spike), applied reactively so it
 		// is retroactive the instant a Regent is unlocked. The stored hp_max
 		// stays Job-only — no migration, no double count. hp_max_override (if
 		// set) is treated as an explicit final value and is NOT augmented.

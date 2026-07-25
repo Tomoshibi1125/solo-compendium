@@ -561,17 +561,17 @@ export function ArtGenerator({
 							className={cn(
 								"p-4 rounded-lg border animate-in zoom-in-95 duration-300",
 								generationResult.success
-									? "border-green-500/30 bg-green-500/5"
-									: "border-red-500/30 bg-red-500/5",
+									? "border-success/30 bg-success/5"
+									: "border-destructive/30 bg-destructive/5",
 							)}
 						>
 							{generationResult.success ? (
 								<div className="flex items-center gap-3">
-									<div className="p-2 bg-green-500/20 rounded-full">
-										<ImageIcon className="w-4 h-4 text-green-500" />
+									<div className="p-2 bg-success/20 rounded-full">
+										<ImageIcon className="w-4 h-4 text-success" />
 									</div>
 									<div className="flex-1">
-										<p className="text-sm font-medium text-green-400">
+										<p className="text-sm font-medium text-success">
 											Visual Record Pattern Solidified
 										</p>
 										<p className="text-[11px] text-muted-foreground">

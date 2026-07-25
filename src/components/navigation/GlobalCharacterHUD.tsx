@@ -100,7 +100,7 @@ function GlobalCharacterHUDBody({ character }: { character: ActiveCharacter }) {
 				<div className="flex items-center gap-4 md:gap-8 flex-1 justify-end md:justify-center">
 					{/* HP Bar */}
 					<div className="flex items-center gap-2 md:gap-3 flex-1 max-w-[120px] md:max-w-none md:min-w-[200px]">
-						<Heart className="w-3 h-3 md:w-4 md:h-4 text-red-500 fill-red-500/20 shrink-0" />
+						<Heart className="w-3 h-3 md:w-4 md:h-4 text-destructive fill-destructive/20 shrink-0" />
 						<div className="flex-1 space-y-0.5 md:space-y-1">
 							<div className="flex justify-between text-[10px] md:text-[11px] font-mono leading-none">
 								<span className="hidden xs:inline">HP</span>
@@ -110,7 +110,7 @@ function GlobalCharacterHUDBody({ character }: { character: ActiveCharacter }) {
 							</div>
 							<Progress
 								value={(character.hp_current / character.hp_max) * 100}
-								className="h-1 md:h-1.5 bg-red-950/30"
+								className="h-1 md:h-1.5 bg-destructive/25"
 							/>
 						</div>
 					</div>
@@ -121,8 +121,8 @@ function GlobalCharacterHUDBody({ character }: { character: ActiveCharacter }) {
 							className="flex items-center gap-1.5 md:gap-2 group cursor-help"
 							title="Armor Class"
 						>
-							<Shield className="w-3 h-3 md:w-4 md:h-4 text-blue-400" />
-							<span className="font-bold text-blue-100">
+							<Shield className="w-3 h-3 md:w-4 md:h-4 text-shadow-blue" />
+							<span className="font-bold text-shadow-blue">
 								{derivedStats?.calculatedStats.armorClass ??
 									character.armor_class}
 							</span>
@@ -140,8 +140,8 @@ function GlobalCharacterHUDBody({ character }: { character: ActiveCharacter }) {
 							className="flex items-center gap-1.5 md:gap-2 group cursor-help"
 							title="Rift Favor"
 						>
-							<Dice6 className="w-3 h-3 md:w-4 md:h-4 text-purple-400" />
-							<span className="font-bold text-purple-100">
+							<Dice6 className="w-3 h-3 md:w-4 md:h-4 text-resurge" />
+							<span className="font-bold text-resurge">
 								{character.rift_favor_current}
 							</span>
 						</div>

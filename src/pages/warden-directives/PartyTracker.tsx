@@ -382,18 +382,18 @@ const PartyTracker = () => {
 
 	const getHpColor = (hp: number, maxHp: number) => {
 		const percentage = (hp / maxHp) * 100;
-		if (percentage > 75) return "text-green-400";
+		if (percentage > 75) return "text-success";
 		if (percentage > 50) return "text-gate-s";
 		if (percentage > 25) return "text-gate-a";
-		return "text-red-400";
+		return "text-destructive";
 	};
 
 	const getHpBarClass = (hp: number, maxHp: number) => {
 		const percentage = (hp / maxHp) * 100;
-		if (percentage > 75) return "[&>div]:bg-green-400";
+		if (percentage > 75) return "[&>div]:bg-success";
 		if (percentage > 50) return "[&>div]:bg-gate-s";
 		if (percentage > 25) return "[&>div]:bg-gate-a";
-		return "[&>div]:bg-red-400";
+		return "[&>div]:bg-destructive";
 	};
 
 	return (

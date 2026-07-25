@@ -362,12 +362,12 @@ Provide ALL of the following sections with full detail:
 
 	const getRarityColor = (rarity: string) => {
 		const colors: Record<string, string> = {
-			common: "text-gray-400 border-gray-400/30 bg-gray-400/10",
-			uncommon: "text-green-400 border-green-400/30 bg-green-400/10",
-			rare: "text-blue-400 border-blue-400/30 bg-blue-400/10",
+			common: "text-gate-e border-gate-e/30 bg-gate-e/10",
+			uncommon: "text-success border-success/30 bg-success/10",
+			rare: "text-shadow-blue border-shadow-blue/30 bg-shadow-blue/10",
 			"very-rare":
 				"text-resurge-violet border-resurge-violet/30 bg-resurge-violet/10",
-			epic: "text-purple-400 border-purple-400/30 bg-purple-400/10",
+			epic: "text-resurge border-resurge/30 bg-resurge/10",
 			legendary: "text-gate-s border-gate-s/30 bg-gate-s/10",
 			artifact: "text-gate-a border-gate-a/30 bg-gate-a/10",
 		};

@@ -36,7 +36,7 @@ export interface Guild {
 	settings: Record<string, unknown>;
 	created_at: string;
 	updated_at: string;
-	// Solo Leveling-style progression + treasury (added in the roles/ranks migration;
+	// Guild rank/level progression + treasury (added in the roles/ranks migration;
 	// optional so pre-migration local guilds still parse).
 	guild_rank?: string;
 	level?: number;
@@ -701,7 +701,7 @@ export const useSetNPCLevelingMode = () => {
 };
 
 // ============================================================================
-// Role-based management (Solo Leveling-style)
+// Role-based guild management (Guild Master ▸ Vice-Master ▸ … hierarchy)
 // ============================================================================
 
 /** Promote or demote a member to a new guild role. */

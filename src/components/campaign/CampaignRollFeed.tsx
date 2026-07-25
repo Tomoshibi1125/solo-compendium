@@ -51,7 +51,7 @@ function rollTypeLabel(rollType: string | null): string {
 function rollTypeColor(rollType: string | null): string {
 	switch (rollType) {
 		case "attack":
-			return "text-red-400";
+			return "text-destructive";
 		case "damage":
 			return "text-gate-a";
 		case "check":
@@ -59,9 +59,9 @@ function rollTypeColor(rollType: string | null): string {
 		case "skill":
 		case "skill_check":
 		case "initiative":
-			return "text-blue-400";
+			return "text-shadow-blue";
 		case "save":
-			return "text-green-400";
+			return "text-success";
 		default:
 			return "text-primary";
 	}
@@ -78,7 +78,7 @@ export function CampaignRollFeed({ campaignId }: CampaignRollFeedProps) {
 						<div className="flex items-center gap-2 text-xs text-muted-foreground">
 							{isConnected ? (
 								<>
-									<Wifi className="w-3 h-3 text-green-500" />
+									<Wifi className="w-3 h-3 text-success" />
 									<span>Live</span>
 								</>
 							) : (

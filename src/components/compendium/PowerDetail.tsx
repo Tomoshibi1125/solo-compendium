@@ -22,15 +22,15 @@ interface PowerData extends CompendiumPower {}
 
 const tierColors: Record<number, string> = {
 	0: "text-gray-400 border-gray-500/30",
-	1: "text-green-400 border-green-500/30",
-	2: "text-green-400 border-green-500/30",
-	3: "text-blue-400 border-blue-500/30",
-	4: "text-blue-400 border-blue-500/30",
-	5: "text-purple-400 border-purple-500/30",
-	6: "text-purple-400 border-purple-500/30",
+	1: "text-success border-success/30",
+	2: "text-success border-success/30",
+	3: "text-shadow-blue border-shadow-blue/30",
+	4: "text-shadow-blue border-shadow-blue/30",
+	5: "text-resurge border-resurge/30",
+	6: "text-resurge border-resurge/30",
 	7: "text-gate-a border-gate-a/30",
 	8: "text-gate-a border-gate-a/30",
-	9: "text-red-400 border-red-500/30",
+	9: "text-destructive border-destructive/30",
 };
 
 export const PowerDetail = ({ data }: { data: PowerData }) => {

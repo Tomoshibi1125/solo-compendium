@@ -51,7 +51,7 @@ const RECHARGE_LABEL: Record<ResourceRecharge, string> = {
 };
 
 function countTone(current: number, max: number | null): string {
-	if (current === 0) return "text-red-500";
+	if (current === 0) return "text-destructive";
 	const low = max !== null ? Math.max(1, Math.floor(max * 0.25)) : 5;
 	return current <= low ? "text-gate-s" : "text-resurge-violet";
 }
@@ -73,7 +73,7 @@ function Stepper({
 				type="button"
 				onClick={() => onAdjust(-1)}
 				disabled={disabled || current <= 0}
-				className="p-1 hover:bg-resurge-violet/20 rounded disabled:opacity-50 text-red-400 transition-colors"
+				className="p-1 hover:bg-resurge-violet/20 rounded disabled:opacity-50 text-destructive transition-colors"
 				aria-label="Spend one"
 			>
 				<Minus className="w-3.5 h-3.5" />
@@ -180,7 +180,7 @@ export function UnifiedResourcePanel({
 					<button
 						type="button"
 						onClick={() => void removeCustom(row.id)}
-						className="p-2 hover:bg-red-500/20 text-red-500/50 hover:text-red-400 rounded-md transition-colors opacity-0 group-hover:opacity-100"
+						className="p-2 hover:bg-destructive/20 text-destructive/50 hover:text-destructive rounded-md transition-colors opacity-0 group-hover:opacity-100"
 						aria-label={`Delete ${row.name}`}
 					>
 						<Trash2 className="w-4 h-4" />

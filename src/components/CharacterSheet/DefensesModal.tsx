@@ -78,7 +78,7 @@ export function DefensesModal({
 						className="flex flex-col items-center justify-center p-2 rounded-lg border bg-card hover:bg-accent hover:text-accent-foreground transition-colors group"
 					>
 						<div className="flex items-center gap-1.5">
-							<Shield className="h-4 w-4 text-blue-500 group-hover:text-blue-600 transition-colors" />
+							<Shield className="h-4 w-4 text-shadow-blue group-hover:text-shadow-blue transition-colors" />
 							<span className="text-2xl font-bold">{acBreakdown.total}</span>
 						</div>
 						<span className="text-[10px] uppercase font-mono tracking-wider text-muted-foreground mt-0.5">
@@ -109,7 +109,7 @@ export function DefensesModal({
 					<div className="space-y-3">
 						<div className="flex items-center justify-between border-b pb-2">
 							<h3 className="font-semibold text-sm">Armor Class</h3>
-							<span className="text-xl font-bold text-blue-600">
+							<span className="text-xl font-bold text-shadow-blue">
 								{acBreakdown.total}
 							</span>
 						</div>
@@ -176,7 +176,7 @@ export function DefensesModal({
 
 							{resistances.length > 0 && (
 								<div className="space-y-1.5">
-									<div className="flex items-center gap-1.5 text-xs font-medium text-blue-600 dark:text-blue-400">
+									<div className="flex items-center gap-1.5 text-xs font-medium text-shadow-blue dark:text-shadow-blue">
 										<ShieldCheck className="h-3.5 w-3.5" /> Resistances
 									</div>
 									<div className="flex flex-wrap gap-1.5">
@@ -184,7 +184,7 @@ export function DefensesModal({
 											<Badge
 												key={r}
 												variant="outline"
-												className="text-[11px] font-normal border-blue-200 bg-blue-50/50 text-blue-700 dark:border-blue-900 dark:bg-blue-950/50 dark:text-blue-300"
+												className="text-[11px] font-normal border-shadow-blue bg-shadow-blue/50 text-shadow-blue dark:border-shadow-blue/40 dark:bg-shadow-blue/25 dark:text-shadow-blue"
 											>
 												{r}
 											</Badge>
@@ -195,7 +195,7 @@ export function DefensesModal({
 
 							{immunities.length > 0 && (
 								<div className="space-y-1.5">
-									<div className="flex items-center gap-1.5 text-xs font-medium text-green-600 dark:text-green-400">
+									<div className="flex items-center gap-1.5 text-xs font-medium text-success dark:text-success">
 										<ShieldCheck className="h-3.5 w-3.5" /> Immunities
 									</div>
 									<div className="flex flex-wrap gap-1.5">
@@ -203,7 +203,7 @@ export function DefensesModal({
 											<Badge
 												key={`item-${i}`}
 												variant="outline"
-												className="text-[11px] font-normal border-green-200 bg-green-50/50 text-green-700 dark:border-green-900 dark:bg-green-950/50 dark:text-green-300"
+												className="text-[11px] font-normal border-success bg-success/50 text-success dark:border-success/40 dark:bg-success/25 dark:text-success"
 											>
 												{i}
 											</Badge>
@@ -214,7 +214,7 @@ export function DefensesModal({
 
 							{vulnerabilities.length > 0 && (
 								<div className="space-y-1.5">
-									<div className="flex items-center gap-1.5 text-xs font-medium text-red-600 dark:text-red-400">
+									<div className="flex items-center gap-1.5 text-xs font-medium text-destructive dark:text-destructive">
 										<ShieldX className="h-3.5 w-3.5" /> Vulnerabilities
 									</div>
 									<div className="flex flex-wrap gap-1.5">
@@ -222,7 +222,7 @@ export function DefensesModal({
 											<Badge
 												key={v}
 												variant="outline"
-												className="text-[11px] font-normal border-red-200 bg-red-50/50 text-red-700 dark:border-red-900 dark:bg-red-950/50 dark:text-red-300"
+												className="text-[11px] font-normal border-destructive bg-destructive/50 text-destructive dark:border-destructive/40 dark:bg-destructive/25 dark:text-destructive"
 											>
 												{v}
 											</Badge>
@@ -254,7 +254,7 @@ export function DefensesModal({
 
 					{sigilTraits.length > 0 && (
 						<div className="space-y-1.5">
-							<div className="flex items-center gap-1.5 text-xs font-medium text-purple-600 dark:text-purple-400">
+							<div className="flex items-center gap-1.5 text-xs font-medium text-resurge dark:text-resurge">
 								<Sparkles className="h-3.5 w-3.5" /> Sigil Traits
 							</div>
 							<div className="flex flex-wrap gap-1.5">
@@ -262,7 +262,7 @@ export function DefensesModal({
 									<Badge
 										key={t}
 										variant="outline"
-										className="text-[11px] font-normal border-purple-200 bg-purple-50/50 text-purple-700 dark:border-purple-900 dark:bg-purple-950/50 dark:text-purple-300"
+										className="text-[11px] font-normal border-resurge bg-resurge/50 text-resurge dark:border-resurge/40 dark:bg-resurge/25 dark:text-resurge"
 									>
 										{t}
 									</Badge>

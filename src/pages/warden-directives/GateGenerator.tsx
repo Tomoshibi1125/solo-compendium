@@ -487,7 +487,7 @@ const GateGenerator = () => {
 							<AscendantWindow title="OBJECTIVE">
 								<div className="space-y-2 text-sm">
 									<div className="flex items-start gap-2">
-										<Target className="w-4 h-4 mt-0.5 text-red-400 shrink-0" />
+										<Target className="w-4 h-4 mt-0.5 text-destructive shrink-0" />
 										<div>
 											<span className="text-xs font-display text-muted-foreground">
 												PRIMARY
@@ -546,7 +546,7 @@ const GateGenerator = () => {
 														{room.description}
 													</p>
 													{room.encounter && (
-														<div className="flex items-start gap-2 text-red-400">
+														<div className="flex items-start gap-2 text-destructive">
 															<Swords className="w-4 h-4 mt-0.5 shrink-0" />
 															<span>
 																{room.encounter.name} (CR {room.encounter.cr}, x
@@ -570,7 +570,7 @@ const GateGenerator = () => {
 														</div>
 													)}
 													{room.lore && (
-														<div className="flex items-start gap-2 text-blue-400">
+														<div className="flex items-start gap-2 text-shadow-blue">
 															<BookOpen className="w-4 h-4 mt-0.5 shrink-0" />
 															<span>{room.lore}</span>
 														</div>
@@ -606,7 +606,7 @@ const GateGenerator = () => {
 										>
 											<div className="flex items-center justify-between">
 												<div className="flex items-center gap-2">
-													<Swords className="w-4 h-4 text-red-400" />
+													<Swords className="w-4 h-4 text-destructive" />
 													<span className="font-heading text-sm">
 														{enc.name}
 													</span>

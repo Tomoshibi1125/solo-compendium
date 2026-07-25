@@ -359,15 +359,17 @@ export default function ArtGenerationAdmin() {
 									<div className="flex items-center gap-2">
 										{testResult.success ? (
 											<>
-												<CheckCircle className="w-5 h-5 text-green-500" />
-												<span className="text-green-700">
+												<CheckCircle className="w-5 h-5 text-success" />
+												<span className="text-success">
 													Generation Successful
 												</span>
 											</>
 										) : (
 											<>
-												<XCircle className="w-5 h-5 text-red-500" />
-												<span className="text-red-700">Generation Failed</span>
+												<XCircle className="w-5 h-5 text-destructive" />
+												<span className="text-destructive">
+													Generation Failed
+												</span>
 											</>
 										)}
 									</div>
@@ -391,7 +393,7 @@ export default function ArtGenerationAdmin() {
 									)}
 
 									{testResult.error && (
-										<p className="text-sm text-red-600">
+										<p className="text-sm text-destructive">
 											Error: {testResult.error}
 										</p>
 									)}

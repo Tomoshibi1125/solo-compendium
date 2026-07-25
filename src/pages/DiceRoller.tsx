@@ -145,7 +145,7 @@ const THEME_SWATCH_CLASSES: Partial<
 	"dragon-regent": { icon: "text-resurge-violet", bar: "bg-resurge-violet/40" },
 	"regent-regent": { icon: "text-solar-glow", bar: "bg-solar-glow/40" },
 	"supreme-deity": { icon: "text-shadow-blue", bar: "bg-shadow-blue/40" },
-	"gate-portal": { icon: "text-red-400", bar: "bg-red-400/40" },
+	"gate-portal": { icon: "text-destructive", bar: "bg-destructive/40" },
 	"mana-circuit": { icon: "text-system-green", bar: "bg-system-green/40" },
 	"resurge-violet": {
 		icon: "text-resurge-violet",
@@ -967,9 +967,9 @@ const DiceRoller = () => {
 													className={cn(
 														"px-3 py-1 rounded-lg text-sm font-display font-bold border",
 														roll === 20
-															? "bg-green-500/20 text-green-400 border-green-500/40 shadow-[0_0_10px_hsl(142_71%_45%/0.3)]"
+															? "bg-success/20 text-success border-success/40 shadow-[0_0_10px_hsl(142_71%_45%/0.3)]"
 															: roll === 1
-																? "bg-red-500/20 text-red-400 border-red-500/40 shadow-[0_0_10px_hsl(0_84%_60%/0.3)]"
+																? "bg-destructive/20 text-destructive border-destructive/40 shadow-[0_0_10px_hsl(0_84%_60%/0.3)]"
 																: "bg-primary/20 text-primary border-primary/40",
 													)}
 												>

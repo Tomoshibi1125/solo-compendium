@@ -37,7 +37,7 @@ export const SigilDetail = ({ data }: SigilDetailProps) => {
 		>
 			<AscendantWindow className="relative overflow-hidden border-primary/20 bg-background/40 backdrop-blur-xl">
 				<div className="absolute top-0 right-0 w-96 h-96 bg-primary/10 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2 pointer-events-none" />
-				<div className="absolute bottom-0 left-0 w-64 h-64 bg-blue-500/10 rounded-full blur-[80px] translate-y-1/2 -translate-x-1/2 pointer-events-none" />
+				<div className="absolute bottom-0 left-0 w-64 h-64 bg-shadow-blue/10 rounded-full blur-[80px] translate-y-1/2 -translate-x-1/2 pointer-events-none" />
 
 				<div className="relative flex flex-col md:flex-row gap-8">
 					{data.image && (
@@ -115,11 +115,11 @@ export const SigilDetail = ({ data }: SigilDetailProps) => {
 								</div>
 							</div>
 
-							<div className="p-6 rounded-2xl border border-blue-500/10 bg-blue-500/5 backdrop-blur-md relative overflow-hidden group">
+							<div className="p-6 rounded-2xl border border-shadow-blue/10 bg-shadow-blue/5 backdrop-blur-md relative overflow-hidden group">
 								<div className="absolute top-0 right-0 p-3 opacity-10 group-hover:opacity-20 transition-opacity">
-									<Shield className="w-12 h-12 text-blue-400" />
+									<Shield className="w-12 h-12 text-shadow-blue" />
 								</div>
-								<h3 className="text-xs font-bold text-blue-400 uppercase tracking-widest mb-4 flex items-center gap-2">
+								<h3 className="text-xs font-bold text-shadow-blue uppercase tracking-widest mb-4 flex items-center gap-2">
 									<Shield className="w-3 h-3" />
 									Sync Compatibility
 								</h3>
@@ -128,7 +128,7 @@ export const SigilDetail = ({ data }: SigilDetailProps) => {
 										<Badge
 											key={gear}
 											variant="outline"
-											className="bg-blue-500/10 border-blue-500/20 text-blue-300 capitalize text-[10px] px-3"
+											className="bg-shadow-blue/10 border-shadow-blue/20 text-shadow-blue capitalize text-[10px] px-3"
 										>
 											{gear}
 										</Badge>

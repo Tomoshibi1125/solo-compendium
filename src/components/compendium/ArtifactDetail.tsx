@@ -77,7 +77,7 @@ export interface ArtifactData {
 
 const rarityStyles: Record<string, string> = {
 	legendary: "text-gate-s border-gate-s/40 bg-gate-s/10",
-	mythic: "text-purple-400 border-purple-500/40 bg-purple-500/10",
+	mythic: "text-resurge border-resurge/40 bg-resurge/10",
 	divine: "text-gate-a border-gate-a/40 bg-gate-a/10",
 };
 

@@ -2235,19 +2235,19 @@ export const LevelUpWizardModal = ({
 								className={cn(
 									"inline-flex items-center gap-2 px-3 sm:px-4 py-2 rounded-full border mb-4",
 									isLevelDown
-										? "bg-red-500/10 border-red-500/30"
+										? "bg-destructive/10 border-destructive/30"
 										: "bg-resurge/10 border-resurge/30",
 								)}
 							>
 								{isLevelDown ? (
-									<TrendingDown className="w-4 h-4 sm:w-5 sm:h-5 text-red-400" />
+									<TrendingDown className="w-4 h-4 sm:w-5 sm:h-5 text-destructive" />
 								) : (
 									<TrendingUp className="w-4 h-4 sm:w-5 sm:h-5 text-resurge" />
 								)}
 								<span
 									className={cn(
 										"font-resurge tracking-wide text-sm sm:text-base",
-										isLevelDown ? "text-red-400" : "text-resurge",
+										isLevelDown ? "text-destructive" : "text-resurge",
 									)}
 								>
 									{isLevelDown ? "LEVEL DOWN PROTOCOL" : "LEVEL UP PROTOCOL"}
@@ -2262,7 +2262,7 @@ export const LevelUpWizardModal = ({
 								</span>
 								<span
 									className={cn(
-										isLevelDown ? "text-red-400" : "text-resurge",
+										isLevelDown ? "text-destructive" : "text-resurge",
 										"animate-pulse",
 									)}
 								>
@@ -2294,7 +2294,7 @@ export const LevelUpWizardModal = ({
 							title={isLevelDown ? "LEVEL REDUCTION" : "SYSTEM ENHANCEMENT"}
 							className={cn(
 								"mb-6",
-								isLevelDown ? "border-red-500/50" : "border-resurge/50",
+								isLevelDown ? "border-destructive/50" : "border-resurge/50",
 							)}
 						>
 							<div className="space-y-6">
@@ -2303,14 +2303,14 @@ export const LevelUpWizardModal = ({
 									className={cn(
 										"p-4 rounded-lg bg-gradient-to-r border",
 										isLevelDown
-											? "from-red-500/10 to-transparent border-red-500/20"
+											? "from-destructive/10 to-transparent border-destructive/20"
 											: "from-resurge/10 to-transparent border-resurge/20",
 									)}
 								>
 									<Label
 										className={cn(
 											"font-resurge tracking-wide flex items-center gap-2",
-											isLevelDown ? "text-red-400" : "text-resurge",
+											isLevelDown ? "text-destructive" : "text-resurge",
 										)}
 									>
 										<Star className="w-4 h-4" />
@@ -2339,7 +2339,7 @@ export const LevelUpWizardModal = ({
 											className={cn(
 												"w-24 text-center font-resurge text-xl",
 												isLevelDown
-													? "border-red-500/30 focus:border-red-500"
+													? "border-destructive/30 focus:border-destructive"
 													: "border-resurge/30 focus:border-resurge",
 											)}
 										/>
@@ -2349,7 +2349,7 @@ export const LevelUpWizardModal = ({
 								{/* Level Down Preview — only shown when going down */}
 								{isLevelDown && (
 									<>
-										<div className="p-4 rounded-lg bg-gradient-to-r from-red-500/10 to-gate-s/5 border border-red-500/30">
+										<div className="p-4 rounded-lg bg-gradient-to-r from-destructive/10 to-gate-s/5 border border-destructive/30">
 											<div className="flex items-start gap-3">
 												<AlertTriangle className="w-5 h-5 text-gate-s mt-0.5 flex-shrink-0" />
 												<div>
@@ -2359,7 +2359,7 @@ export const LevelUpWizardModal = ({
 													<p className="text-sm text-muted-foreground font-heading">
 														Reducing from Level {character.level} to Level{" "}
 														{newLevel} will
-														<strong className="text-red-400">
+														<strong className="text-destructive">
 															{" "}
 															automatically remove
 														</strong>{" "}
@@ -2373,8 +2373,8 @@ export const LevelUpWizardModal = ({
 										</div>
 
 										{/* Level-down stat preview */}
-										<div className="p-4 rounded-lg bg-gradient-to-r from-red-500/5 to-transparent border border-red-500/20">
-											<h4 className="font-resurge font-semibold mb-4 text-red-400 tracking-wide flex items-center gap-2">
+										<div className="p-4 rounded-lg bg-gradient-to-r from-destructive/5 to-transparent border border-destructive/20">
+											<h4 className="font-resurge font-semibold mb-4 text-destructive tracking-wide flex items-center gap-2">
 												<TrendingDown className="w-4 h-4" />
 												STAT REDUCTIONS
 											</h4>
@@ -2387,7 +2387,7 @@ export const LevelUpWizardModal = ({
 														+
 														{calculateProficiencyBonusForLevel(character.level)}{" "}
 														{"->"}{" "}
-														<span className="text-red-400">
+														<span className="text-destructive">
 															+{calculateProficiencyBonusForLevel(newLevel)}
 														</span>
 													</span>
@@ -2398,7 +2398,7 @@ export const LevelUpWizardModal = ({
 													</span>
 													<span className="font-resurge text-lg">
 														{character.hp_max} {"->"}{" "}
-														<span className="text-red-400">
+														<span className="text-destructive">
 															{Math.max(
 																1,
 																(character.hp_max ?? 1) -
@@ -2419,7 +2419,7 @@ export const LevelUpWizardModal = ({
 													</span>
 													<span className="font-resurge text-lg">
 														{character.hit_dice_max} {"->"}{" "}
-														<span className="text-red-400">{newLevel}</span>
+														<span className="text-destructive">{newLevel}</span>
 													</span>
 												</div>
 												<div className="flex items-center justify-between p-3 rounded-lg bg-background/50">
@@ -2428,7 +2428,7 @@ export const LevelUpWizardModal = ({
 													</span>
 													<span className="font-resurge text-lg">
 														d{calculateRiftFavorDie(character.level)} {"->"}{" "}
-														<span className="text-red-400">
+														<span className="text-destructive">
 															d{calculateRiftFavorDie(newLevel)}
 														</span>
 													</span>
@@ -2439,14 +2439,14 @@ export const LevelUpWizardModal = ({
 								)}
 
 								{!isLevelDown && !isMilestone && (
-									<div className="p-4 rounded-lg bg-gradient-to-r from-blue-500/10 to-transparent border border-blue-500/20">
-										<Label className="font-resurge text-blue-400 tracking-wide flex items-center gap-2">
+									<div className="p-4 rounded-lg bg-gradient-to-r from-shadow-blue/10 to-transparent border border-shadow-blue/20">
+										<Label className="font-resurge text-shadow-blue tracking-wide flex items-center gap-2">
 											<Star className="w-4 h-4" />
 											EXPERIENCE REQUIREMENT
 										</Label>
 										<div className="flex items-center justify-between mt-3 text-sm font-heading">
 											<span className="text-muted-foreground">Current XP</span>
-											<span className="font-resurge text-blue-400">
+											<span className="font-resurge text-shadow-blue">
 												{currentExperience}
 											</span>
 										</div>
@@ -2454,7 +2454,7 @@ export const LevelUpWizardModal = ({
 											<span className="text-muted-foreground">
 												Needed for Next Level
 											</span>
-											<span className="font-resurge text-blue-400">
+											<span className="font-resurge text-shadow-blue">
 												{experienceNeeded}
 											</span>
 										</div>
@@ -2463,8 +2463,8 @@ export const LevelUpWizardModal = ({
 
 								{/* HP Increase — only for level up */}
 								{!isLevelDown && (
-									<div className="p-4 rounded-lg bg-gradient-to-r from-red-500/10 to-transparent border border-red-500/20">
-										<Label className="font-resurge text-red-400 tracking-wide flex items-center gap-2">
+									<div className="p-4 rounded-lg bg-gradient-to-r from-destructive/10 to-transparent border border-destructive/20">
+										<Label className="font-resurge text-destructive tracking-wide flex items-center gap-2">
 											<Heart className="w-4 h-4" />
 											VITALITY INCREASE
 										</Label>
@@ -2483,12 +2483,12 @@ export const LevelUpWizardModal = ({
 														}
 														placeholder={`Average: ${averageHP}`}
 														className={cn(
-															"text-center font-resurge text-xl border-red-500/30 focus:border-red-500",
-															isRolling && "animate-pulse text-red-400",
+															"text-center font-resurge text-xl border-destructive/30 focus:border-destructive",
+															isRolling && "animate-pulse text-destructive",
 														)}
 													/>
 													{hpIncrease && (
-														<span className="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-red-400 font-heading">
+														<span className="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-destructive font-heading">
 															HP
 														</span>
 													)}
@@ -2515,7 +2515,7 @@ export const LevelUpWizardModal = ({
 											<Button
 												variant="outline"
 												onClick={() => setHpIncrease(averageHP)}
-												className="gap-2 border-red-500/30 hover:bg-red-500/10 hover:border-red-500"
+												className="gap-2 border-destructive/30 hover:bg-destructive/10 hover:border-destructive"
 											>
 												<Heart className="w-4 h-4" />
 												Average ({averageHP})
@@ -2526,8 +2526,8 @@ export const LevelUpWizardModal = ({
 
 								{/* Path Selection (shown when character has no path and paths are available at this level) */}
 								{!isLevelDown && showPathSelection && (
-									<div className="p-4 rounded-lg bg-gradient-to-r from-purple-500/10 to-transparent border border-purple-500/20">
-										<Label className="font-resurge text-purple-400 tracking-wide flex items-center gap-2 mb-4">
+									<div className="p-4 rounded-lg bg-gradient-to-r from-resurge/10 to-transparent border border-resurge/20">
+										<Label className="font-resurge text-resurge tracking-wide flex items-center gap-2 mb-4">
 											<Swords className="w-4 h-4" />
 											PATH SPECIALIZATION UNLOCKED
 										</Label>
@@ -2539,7 +2539,7 @@ export const LevelUpWizardModal = ({
 											value={selectedPath}
 											onValueChange={setSelectedPath}
 										>
-											<SelectTrigger className="border-purple-500/30 focus:border-purple-500">
+											<SelectTrigger className="border-resurge/30 focus:border-resurge">
 												<SelectValue placeholder="Choose a path..." />
 											</SelectTrigger>
 											<SelectContent>
@@ -2554,8 +2554,8 @@ export const LevelUpWizardModal = ({
 											</SelectContent>
 										</Select>
 										{selectedPath && (
-											<div className="mt-3 p-3 rounded-lg bg-muted/30 border border-purple-500/10">
-												<h4 className="font-heading font-semibold text-purple-400 mb-1">
+											<div className="mt-3 p-3 rounded-lg bg-muted/30 border border-resurge/10">
+												<h4 className="font-heading font-semibold text-resurge mb-1">
 													{formatRegentVernacular(
 														(
 															availablePaths.find(
@@ -2580,8 +2580,8 @@ export const LevelUpWizardModal = ({
 
 								{/* ASI / Feat Selection (shown at ASI levels: 4, 8, 12, 16, 19) */}
 								{!isLevelDown && showASISection && (
-									<div className="p-4 rounded-lg bg-gradient-to-r from-green-500/10 to-transparent border border-green-500/20">
-										<Label className="font-resurge text-green-400 tracking-wide flex items-center gap-2 mb-4">
+									<div className="p-4 rounded-lg bg-gradient-to-r from-success/10 to-transparent border border-success/20">
+										<Label className="font-resurge text-success tracking-wide flex items-center gap-2 mb-4">
 											<Shield className="w-4 h-4" />
 											ABILITY SCORE IMPROVEMENT
 										</Label>
@@ -2610,10 +2610,10 @@ export const LevelUpWizardModal = ({
 												return (
 													<div
 														key={ability}
-														className="flex items-center justify-between p-2 rounded-lg bg-background/50 border border-green-500/10"
+														className="flex items-center justify-between p-2 rounded-lg bg-background/50 border border-success/10"
 													>
 														<div>
-															<span className="font-resurge text-sm text-green-400">
+															<span className="font-resurge text-sm text-success">
 																{ability}
 															</span>
 															<span className="text-xs text-muted-foreground ml-2 font-heading">
@@ -2624,7 +2624,7 @@ export const LevelUpWizardModal = ({
 															<Button
 																variant="ghost"
 																size="sm"
-																className="h-6 w-6 p-0 text-red-400"
+																className="h-6 w-6 p-0 text-destructive"
 																disabled={!canDecrease}
 																onClick={() =>
 																	setAsiChoices((prev) => ({
@@ -2642,7 +2642,7 @@ export const LevelUpWizardModal = ({
 																className={cn(
 																	"font-resurge text-sm w-6 text-center",
 																	bonus > 0
-																		? "text-green-400"
+																		? "text-success"
 																		: "text-muted-foreground",
 																)}
 															>
@@ -2651,7 +2651,7 @@ export const LevelUpWizardModal = ({
 															<Button
 																variant="ghost"
 																size="sm"
-																className="h-6 w-6 p-0 text-green-400"
+																className="h-6 w-6 p-0 text-success"
 																disabled={!canIncrease}
 																onClick={() =>
 																	setAsiChoices((prev) => ({
@@ -2679,8 +2679,8 @@ export const LevelUpWizardModal = ({
 
 								{/* Feat Selection (shown when feats are available from awakening features) */}
 								{!isLevelDown && showFeatSelection && (
-									<div className="p-4 rounded-lg bg-gradient-to-r from-purple-500/10 to-transparent border border-purple-500/20">
-										<Label className="font-resurge text-purple-400 tracking-wide flex items-center gap-2 mb-4">
+									<div className="p-4 rounded-lg bg-gradient-to-r from-resurge/10 to-transparent border border-resurge/20">
+										<Label className="font-resurge text-resurge tracking-wide flex items-center gap-2 mb-4">
 											<Star className="w-4 h-4" />
 											FEAT SELECTION
 										</Label>
@@ -2700,7 +2700,7 @@ export const LevelUpWizardModal = ({
 															"flex items-center gap-3 p-2 rounded-lg border transition-all",
 															isSelected
 																? "bg-primary/15 border-primary ring-2 ring-primary/60 shadow-[0_0_18px_hsl(var(--primary)/0.22)]"
-																: "bg-background/50 border-purple-500/10 hover:border-purple-500/30",
+																: "bg-background/50 border-resurge/10 hover:border-resurge/30",
 														)}
 													>
 														<input
@@ -2730,14 +2730,14 @@ export const LevelUpWizardModal = ({
 																!isSelected &&
 																selectedFeats.length >= availableChoices.feats
 															}
-															className="rounded border-purple-500/30"
+															className="rounded border-resurge/30"
 														/>
 														<label
 															htmlFor={`feat-${feat.id}`}
 															className="flex-1 cursor-pointer"
 														>
 															<div>
-																<span className="font-resurge text-sm text-purple-400">
+																<span className="font-resurge text-sm text-resurge">
 																	{formatRegentVernacular(feat.name)}
 																</span>
 																<p className="text-sm text-muted-foreground mt-1 leading-relaxed">
@@ -2758,8 +2758,8 @@ export const LevelUpWizardModal = ({
 								)}
 
 								{!isLevelDown && requiredCantripChoices > 0 && (
-									<div className="p-4 rounded-lg bg-gradient-to-r from-cyan-500/10 to-transparent border border-cyan-500/20">
-										<Label className="font-resurge text-cyan-400 tracking-wide flex items-center gap-2 mb-4">
+									<div className="p-4 rounded-lg bg-gradient-to-r from-mana-cyan/10 to-transparent border border-mana-cyan/20">
+										<Label className="font-resurge text-mana-cyan tracking-wide flex items-center gap-2 mb-4">
 											<Sparkles className="w-4 h-4" />
 											CANTRIPS
 										</Label>
@@ -2780,7 +2780,7 @@ export const LevelUpWizardModal = ({
 															"flex items-start gap-3 p-2 rounded-lg border transition-all",
 															isSelected
 																? "bg-primary/15 border-primary ring-2 ring-primary/60"
-																: "bg-background/50 border-cyan-500/10 hover:border-cyan-500/30",
+																: "bg-background/50 border-mana-cyan/10 hover:border-mana-cyan/30",
 														)}
 													>
 														<input
@@ -2801,13 +2801,13 @@ export const LevelUpWizardModal = ({
 																selectedCantripIds.length >=
 																	requiredCantripChoices
 															}
-															className="mt-1 rounded border-cyan-500/30"
+															className="mt-1 rounded border-mana-cyan/30"
 														/>
 														<label
 															htmlFor={`level-cantrip-${cantrip.id}`}
 															className="flex-1 cursor-pointer"
 														>
-															<span className="font-resurge text-sm text-cyan-400">
+															<span className="font-resurge text-sm text-mana-cyan">
 																{formatRegentVernacular(cantrip.name)}
 															</span>
 															{cantrip.description && (
@@ -2828,8 +2828,8 @@ export const LevelUpWizardModal = ({
 								)}
 
 								{requiredSpellChoices > 0 && (
-									<div className="p-4 rounded-lg bg-gradient-to-r from-blue-500/10 to-transparent border border-blue-500/20">
-										<Label className="font-resurge text-blue-400 tracking-wide flex items-center gap-2 mb-4">
+									<div className="p-4 rounded-lg bg-gradient-to-r from-shadow-blue/10 to-transparent border border-shadow-blue/20">
+										<Label className="font-resurge text-shadow-blue tracking-wide flex items-center gap-2 mb-4">
 											<Sparkles className="w-4 h-4" />
 											SPELLS
 										</Label>
@@ -2848,7 +2848,7 @@ export const LevelUpWizardModal = ({
 															"flex items-start gap-3 p-2 rounded-lg border transition-all",
 															isSelected
 																? "bg-primary/15 border-primary ring-2 ring-primary/60"
-																: "bg-background/50 border-blue-500/10 hover:border-blue-500/30",
+																: "bg-background/50 border-shadow-blue/10 hover:border-shadow-blue/30",
 														)}
 													>
 														<input
@@ -2868,14 +2868,14 @@ export const LevelUpWizardModal = ({
 																!isSelected &&
 																selectedSpellIds.length >= requiredSpellChoices
 															}
-															className="mt-1 rounded border-blue-500/30"
+															className="mt-1 rounded border-shadow-blue/30"
 														/>
 														<label
 															htmlFor={`level-spell-${spell.id}`}
 															className="flex-1 cursor-pointer"
 														>
 															<div className="flex items-center gap-2 flex-wrap">
-																<span className="font-resurge text-sm text-blue-400">
+																<span className="font-resurge text-sm text-shadow-blue">
 																	{formatRegentVernacular(spell.name)}
 																</span>
 																<Badge variant="secondary" className="text-xs">
@@ -2977,8 +2977,8 @@ export const LevelUpWizardModal = ({
 								)}
 
 								{requiredPowerChoices > 0 && (
-									<div className="p-4 rounded-lg bg-gradient-to-r from-cyan-500/10 to-transparent border border-cyan-500/20">
-										<Label className="font-resurge text-cyan-400 tracking-wide flex items-center gap-2 mb-4">
+									<div className="p-4 rounded-lg bg-gradient-to-r from-mana-cyan/10 to-transparent border border-mana-cyan/20">
+										<Label className="font-resurge text-mana-cyan tracking-wide flex items-center gap-2 mb-4">
 											<Sparkles className="w-4 h-4" />
 											POWERS
 										</Label>
@@ -2997,7 +2997,7 @@ export const LevelUpWizardModal = ({
 															"flex items-start gap-3 p-2 rounded-lg border transition-all",
 															isSelected
 																? "bg-primary/15 border-primary ring-2 ring-primary/60"
-																: "bg-background/50 border-cyan-500/10 hover:border-cyan-500/30",
+																: "bg-background/50 border-mana-cyan/10 hover:border-mana-cyan/30",
 														)}
 													>
 														<input
@@ -3027,14 +3027,14 @@ export const LevelUpWizardModal = ({
 																!isSelected &&
 																selectedPowerIds.length >= requiredPowerChoices
 															}
-															className="mt-1 rounded border-cyan-500/30"
+															className="mt-1 rounded border-mana-cyan/30"
 														/>
 														<label
 															htmlFor={`level-power-${power.id}`}
 															className="flex-1 cursor-pointer"
 														>
 															<div className="flex items-center gap-2 flex-wrap">
-																<span className="font-resurge text-sm text-cyan-400">
+																<span className="font-resurge text-sm text-mana-cyan">
 																	{formatRegentVernacular(power.name)}
 																</span>
 																<Badge variant="secondary" className="text-xs">
@@ -3162,8 +3162,8 @@ export const LevelUpWizardModal = ({
 								)}
 
 								{swapKindOptions.length > 0 && (
-									<div className="p-4 rounded-lg bg-gradient-to-r from-cyan-500/10 to-transparent border border-cyan-500/20">
-										<Label className="font-resurge text-cyan-400 tracking-wide flex items-center gap-2 mb-2">
+									<div className="p-4 rounded-lg bg-gradient-to-r from-mana-cyan/10 to-transparent border border-mana-cyan/20">
+										<Label className="font-resurge text-mana-cyan tracking-wide flex items-center gap-2 mb-2">
 											<Sparkles className="w-4 h-4" />
 											RETRAIN (OPTIONAL)
 										</Label>
@@ -3563,7 +3563,7 @@ export const LevelUpWizardModal = ({
 												</span>
 												<span className="font-resurge text-lg">
 													{character.hp_max} {"->"}{" "}
-													<span className="text-red-400">
+													<span className="text-destructive">
 														{character.hp_max + (hpIncrease || 0)}
 													</span>
 												</span>
@@ -3618,7 +3618,7 @@ export const LevelUpWizardModal = ({
 								className={cn(
 									"gap-2 font-heading transition-all",
 									isLevelDown
-										? "bg-gradient-to-r from-red-600 to-red-800 hover:shadow-red-500/30 hover:shadow-lg"
+										? "bg-gradient-to-r from-destructive to-destructive/25 hover:shadow-red-500/30 hover:shadow-lg"
 										: "bg-gradient-to-r from-resurge to-shadow-purple hover:shadow-resurge/30 hover:shadow-lg",
 								)}
 							>

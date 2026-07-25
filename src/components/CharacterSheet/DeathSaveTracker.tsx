@@ -43,19 +43,19 @@ export function DeathSaveTracker({
 	};
 
 	return (
-		<div className="rounded-lg border border-red-300 bg-red-50/80 p-4 space-y-3">
+		<div className="rounded-lg border border-destructive bg-destructive/80 p-4 space-y-3">
 			<div className="flex items-center justify-between">
-				<h3 className="text-sm font-semibold text-red-800 flex items-center gap-1.5">
+				<h3 className="text-sm font-semibold text-destructive flex items-center gap-1.5">
 					<Skull className="h-4 w-4" />
 					Death Saving Throws
 				</h3>
 				{isDead && (
-					<span className="text-xs font-bold text-red-600 uppercase tracking-wider">
+					<span className="text-xs font-bold text-destructive uppercase tracking-wider">
 						Dead
 					</span>
 				)}
 				{isStable && !isDead && (
-					<span className="text-xs font-bold text-green-600 uppercase tracking-wider flex items-center gap-1">
+					<span className="text-xs font-bold text-success uppercase tracking-wider flex items-center gap-1">
 						<Shield className="h-3 w-3" /> Stable
 					</span>
 				)}
@@ -67,7 +67,7 @@ export function DeathSaveTracker({
 					<Tooltip>
 						<TooltipTrigger asChild>
 							<div className="flex items-center gap-1.5">
-								<span className="text-xs font-medium text-green-700">
+								<span className="text-xs font-medium text-success">
 									Successes
 								</span>
 								<div className="flex gap-1">
@@ -77,7 +77,7 @@ export function DeathSaveTracker({
 											className={cn(
 												"h-4 w-4 rounded-full border-2 transition-colors",
 												i < successes
-													? "bg-green-500 border-green-600"
+													? "bg-success border-success"
 													: "bg-white border-gray-300",
 											)}
 										/>
@@ -94,7 +94,7 @@ export function DeathSaveTracker({
 					<Tooltip>
 						<TooltipTrigger asChild>
 							<div className="flex items-center gap-1.5">
-								<span className="text-xs font-medium text-red-700">
+								<span className="text-xs font-medium text-destructive">
 									Failures
 								</span>
 								<div className="flex gap-1">
@@ -104,7 +104,7 @@ export function DeathSaveTracker({
 											className={cn(
 												"h-4 w-4 rounded-full border-2 transition-colors",
 												i < failures
-													? "bg-red-500 border-red-600"
+													? "bg-destructive border-destructive"
 													: "bg-white border-gray-300",
 											)}
 										/>

@@ -446,7 +446,7 @@ export const AnomalyDetail = ({ data }: { data: AnomalyData }) => {
 			<div className="grid grid-cols-3 md:grid-cols-5 gap-4" id="anomaly-stats">
 				<AscendantWindow title="ARMOR CLASS" compact>
 					<div className="flex items-center gap-2">
-						<Shield className="w-5 h-5 text-blue-400" />
+						<Shield className="w-5 h-5 text-shadow-blue" />
 						<span className="font-display text-2xl">{armorClass}</span>
 					</div>
 					{acSource && (
@@ -456,7 +456,7 @@ export const AnomalyDetail = ({ data }: { data: AnomalyData }) => {
 
 				<AscendantWindow title="HIT POINTS" compact>
 					<div className="flex items-center gap-2">
-						<Heart className="w-5 h-5 text-red-400" />
+						<Heart className="w-5 h-5 text-destructive" />
 						<span className="font-display text-2xl">{hitPointsAverage}</span>
 					</div>
 					{(() => {
@@ -471,14 +471,14 @@ export const AnomalyDetail = ({ data }: { data: AnomalyData }) => {
 
 				<AscendantWindow title="SPEED" compact>
 					<div className="flex items-center gap-2">
-						<Footprints className="w-5 h-5 text-green-400" />
+						<Footprints className="w-5 h-5 text-success" />
 						<span className="font-heading text-sm">{speeds}</span>
 					</div>
 				</AscendantWindow>
 
 				<AscendantWindow title="CR" compact>
 					<div className="flex items-center gap-2">
-						<Skull className="w-5 h-5 text-purple-400" />
+						<Skull className="w-5 h-5 text-resurge" />
 						<span className="font-display text-2xl">{cr}</span>
 					</div>
 					{data.xp && (
@@ -537,7 +537,7 @@ export const AnomalyDetail = ({ data }: { data: AnomalyData }) => {
 							{data.damage_vulnerabilities &&
 								data.damage_vulnerabilities.length > 0 && (
 									<div>
-										<span className="text-red-400 font-heading text-sm">
+										<span className="text-destructive font-heading text-sm">
 											Vulnerabilities:{" "}
 										</span>
 										<span className="text-muted-foreground">
@@ -844,7 +844,7 @@ export const AnomalyDetail = ({ data }: { data: AnomalyData }) => {
 			{lairActions.length > 0 && (
 				<StatBlock
 					title="LAIR ACTIONS"
-					className="border-purple-500/30 border-2"
+					className="border-resurge/30 border-2"
 					id="anomaly-lair"
 				>
 					<p className="text-sm text-foreground mb-4 font-medium leading-relaxed">
@@ -857,7 +857,7 @@ export const AnomalyDetail = ({ data }: { data: AnomalyData }) => {
 								key={action.id}
 								className="mb-4 last:mb-0 pb-4 last:pb-0 border-b border-border/30 last:border-b-0"
 							>
-								<h4 className="font-heading font-semibold text-purple-300 mb-1 text-base">
+								<h4 className="font-heading font-semibold text-resurge mb-1 text-base">
 									{formatRegentVernacular(action.name)}
 								</h4>
 								<p className="text-sm text-foreground leading-relaxed">

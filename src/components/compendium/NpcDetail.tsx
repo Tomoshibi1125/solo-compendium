@@ -92,7 +92,7 @@ export const NpcDetail = ({ data }: NpcDetailProps) => {
 							className={
 								recruitable
 									? "border-system-green/40 text-system-green bg-system-green/10"
-									: "border-red-500/40 text-red-400 bg-red-500/10"
+									: "border-destructive/40 text-destructive bg-destructive/10"
 							}
 						>
 							{recruitable ? (
@@ -117,8 +117,8 @@ export const NpcDetail = ({ data }: NpcDetailProps) => {
 				<div id="npc-stats" className="grid grid-cols-2 md:grid-cols-4 gap-3">
 					{hp != null && (
 						<div className="bg-card border rounded-lg p-4 text-center">
-							<Heart className="w-5 h-5 mx-auto mb-1 text-red-400" />
-							<div className="text-2xl font-bold font-heading text-red-400">
+							<Heart className="w-5 h-5 mx-auto mb-1 text-destructive" />
+							<div className="text-2xl font-bold font-heading text-destructive">
 								{hp}
 							</div>
 							<div className="text-[10px] text-muted-foreground uppercase tracking-wider">
@@ -188,17 +188,19 @@ export const NpcDetail = ({ data }: NpcDetailProps) => {
 			<AscendantWindow
 				id="npc-recruitment"
 				title="RECRUITMENT"
-				className={recruitable ? "border-system-green/20" : "border-red-500/20"}
+				className={
+					recruitable ? "border-system-green/20" : "border-destructive/20"
+				}
 			>
 				<div className="space-y-3 text-sm">
 					<div className="flex items-center gap-2">
 						{recruitable ? (
 							<Handshake className="w-4 h-4 text-system-green" />
 						) : (
-							<Lock className="w-4 h-4 text-red-400" />
+							<Lock className="w-4 h-4 text-destructive" />
 						)}
 						<span
-							className={recruitable ? "text-system-green" : "text-red-400"}
+							className={recruitable ? "text-system-green" : "text-destructive"}
 						>
 							{recruitable
 								? "Can be recruited as a companion."
@@ -253,7 +255,7 @@ export const NpcDetail = ({ data }: NpcDetailProps) => {
 								<div className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider mb-1">
 									HP / Level
 								</div>
-								<div className="text-xl font-bold font-heading text-red-400">
+								<div className="text-xl font-bold font-heading text-destructive">
 									+{leveling.hpPerLevel}
 								</div>
 							</div>

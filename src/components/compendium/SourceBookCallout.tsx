@@ -26,7 +26,7 @@ export const SourceBookCallout: React.FC<CalloutProps> = ({
 			</div>
 			<div className="sb-sidebar-content">
 				{systemInteraction && (
-					<div className="mb-3 p-2 bg-red-900/10 border-l-2 border-red-500/50 text-[11px] font-mono text-cyan/90 break-words font-semibold">
+					<div className="mb-3 p-2 bg-destructive/10 border-l-2 border-destructive/50 text-[11px] font-mono text-cyan/90 break-words font-semibold">
 						{systemInteraction}
 					</div>
 				)}

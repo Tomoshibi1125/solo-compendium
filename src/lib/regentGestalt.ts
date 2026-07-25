@@ -5,8 +5,8 @@
  * overlay** with its own complete progression. Once unlocked, the character
  * gestalts — the base Job AND the Regent advance simultaneously at the
  * character's level (regent level == character level, applied retroactively
- * on unlock). Inspired by Solo Leveling's Jinwoo gaining the Shadow Monarch
- * and leveling it alongside his base class.
+ * on unlock). An Ascendant who awakens a Regent's authority carries it as a
+ * second full progression, advancing it in lockstep with their base Job.
  *
  * Gestalt rules (locked — see docs/system-ascendant-mechanics.md):
  *   - HP per level: ADDITIVE — avg(Job die) + avg(Regent die) + VIT mod
@@ -114,7 +114,7 @@ export function getRegentHitDieContribution(
 
 /**
  * Additive HP the Regent overlay contributes ON TOP of the base Job HP, across
- * all character levels (the Solo-Leveling power spike). Applied reactively to
+ * all character levels (the deliberate gestalt power spike). Applied reactively to
  * the displayed HP max so it is retroactive the instant a Regent is unlocked —
  * no stored-HP migration, no double counting (base `hp_max` stays Job-only).
  *

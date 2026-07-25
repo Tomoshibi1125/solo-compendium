@@ -167,7 +167,7 @@ export function EncumbranceWidget({
 					className={cn(
 						"flex items-center gap-1.5 text-xs rounded px-2 py-1",
 						enc.status === "overloaded"
-							? "bg-red-500/15 text-red-400"
+							? "bg-destructive/15 text-destructive"
 							: "bg-gate-a/15 text-gate-a",
 					)}
 				>

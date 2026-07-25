@@ -446,7 +446,7 @@ export const TechniqueDetail = ({ data }: { data: TechniqueData }) => {
 						)}
 						{mechanics.movement && typeof mechanics.movement === "object" && (
 							<div className="flex items-start gap-2">
-								<Footprints className="w-5 h-5 text-blue-400 flex-shrink-0 mt-0.5" />
+								<Footprints className="w-5 h-5 text-shadow-blue flex-shrink-0 mt-0.5" />
 								<div>
 									<p className="font-heading capitalize">
 										{formatRegentVernacular(mechanics.movement.type || "")}{" "}

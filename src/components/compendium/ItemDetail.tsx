@@ -97,14 +97,14 @@ type ActiveEffect = NonNullable<
 const rarityStyles: Record<string, string> = {
 	common: "text-muted-foreground border-border bg-card",
 	uncommon: "text-system-green border-system-green/40 bg-system-green/10",
-	rare: "text-blue-400 border-blue-500/40 bg-blue-500/10",
+	rare: "text-shadow-blue border-shadow-blue/40 bg-shadow-blue/10",
 	// Data carries very-rare in both hyphen and underscore form — key on both
 	// so sigils/runes (underscore) and sandbox loot (hyphen) both style.
 	"very-rare":
 		"text-resurge-violet border-resurge-violet/40 bg-resurge-violet/10",
 	very_rare:
 		"text-resurge-violet border-resurge-violet/40 bg-resurge-violet/10",
-	epic: "text-purple-400 border-purple-500/40 bg-purple-500/10",
+	epic: "text-resurge border-resurge/40 bg-resurge/10",
 	legendary: "text-gate-s border-gate-s/40 bg-gate-s/10",
 	mythic: "text-resurge-violet border-resurge-violet/40 bg-resurge-violet/10",
 	artifact: "text-gate-a border-gate-a/40 bg-gate-a/10",
@@ -408,7 +408,7 @@ export const ItemDetail = ({ data }: { data: ItemData }) => {
 				{data.charges && (
 					<AscendantWindow title="CHARGES" compact>
 						<div className="flex items-center gap-2">
-							<Zap className="w-5 h-5 text-blue-400" />
+							<Zap className="w-5 h-5 text-shadow-blue" />
 							<span className="font-heading">
 								{data.charges.current}/{data.charges.max}
 							</span>
@@ -424,7 +424,7 @@ export const ItemDetail = ({ data }: { data: ItemData }) => {
 				item.armor_type ? (
 					<AscendantWindow title="ARMOR CLASS" compact>
 						<div className="flex items-center gap-2">
-							<Shield className="w-5 h-5 text-blue-400" />
+							<Shield className="w-5 h-5 text-shadow-blue" />
 							<span className="font-heading">
 								{item.armor_class !== null && item.armor_class !== undefined
 									? String(item.armor_class)
@@ -510,7 +510,7 @@ export const ItemDetail = ({ data }: { data: ItemData }) => {
 						{magical && (
 							<div className="space-y-2">
 								<div className="flex items-center gap-2">
-									<Sparkles className="w-4 h-4 text-purple-400" />
+									<Sparkles className="w-4 h-4 text-resurge" />
 									<span className="font-heading">Magical Traits</span>
 								</div>
 								{magical.bonus && (

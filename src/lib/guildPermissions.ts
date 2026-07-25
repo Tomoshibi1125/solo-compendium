@@ -1,5 +1,5 @@
 // ============================================================================
-// Guild role-based permissions (Solo Leveling-style guild management)
+// Guild role-based permissions (Hunter Bureau guild management)
 //
 // Permissions follow the GUILD-ROLE hierarchy only — Guild Master ▸ Vice-Master
 // ▸ Officer ▸ Member ▸ Recruit. They are NEVER gated by an Ascendant's hunter

@@ -134,7 +134,7 @@ export const EquipmentDetail = ({ data }: { data: EquipmentData }) => {
 				{isWeapon && (
 					<AscendantWindow title="DAMAGE" compact>
 						<div className="flex items-center gap-2">
-							<Sword className="w-5 h-5 text-red-400" />
+							<Sword className="w-5 h-5 text-destructive" />
 							<span className="font-display text-xl">{item.damage || "—"}</span>
 						</div>
 						{item.damage_type && (
@@ -157,7 +157,7 @@ export const EquipmentDetail = ({ data }: { data: EquipmentData }) => {
 				{isArmor && (
 					<AscendantWindow title="ARMOR CLASS" compact>
 						<div className="flex items-center gap-2">
-							<Shield className="w-5 h-5 text-blue-400" />
+							<Shield className="w-5 h-5 text-shadow-blue" />
 							<span className="font-display text-xl">
 								{item.armor_class ?? "—"}
 							</span>
@@ -179,7 +179,7 @@ export const EquipmentDetail = ({ data }: { data: EquipmentData }) => {
 				{isArmor && item.stealth_disadvantage && (
 					<AscendantWindow title="STEALTH" compact>
 						<div className="flex items-center gap-2">
-							<Shield className="w-5 h-5 text-red-400" />
+							<Shield className="w-5 h-5 text-destructive" />
 							<span className="font-display text-sm">Disadvantage</span>
 						</div>
 					</AscendantWindow>

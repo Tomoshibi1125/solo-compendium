@@ -134,7 +134,7 @@ export function CampaignHandouts({ campaignId }: { campaignId: string }) {
 								{selectedEntry.visibleToPlayers ? (
 									<Badge
 										variant="outline"
-										className="text-green-400 border-green-500/30"
+										className="text-success border-success/30"
 									>
 										Shared with Players
 									</Badge>

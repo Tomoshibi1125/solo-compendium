@@ -97,7 +97,7 @@ export function ProficiencySidebar({
 												<span
 													className={cn(
 														"text-sm font-display font-bold",
-														mod >= 0 ? "text-primary" : "text-red-400",
+														mod >= 0 ? "text-primary" : "text-destructive",
 													)}
 												>
 													{formatModifier(mod)}
@@ -260,14 +260,14 @@ export function ProficiencySidebar({
 								)}
 								{defenses.vulnerabilities.length > 0 && (
 									<div className="space-y-1">
-										<span className="text-[10px] font-mono text-red-400/60 uppercase">
+										<span className="text-[10px] font-mono text-destructive/60 uppercase">
 											Vulnerabilities
 										</span>
 										<div className="flex flex-wrap gap-1">
 											{defenses.vulnerabilities.map((v) => (
 												<span
 													key={v}
-													className="text-[10px] text-red-400 bg-red-400/10 border border-red-400/20 px-1.5 py-0.5 rounded-[2px]"
+													className="text-[10px] text-destructive bg-destructive/10 border border-destructive/20 px-1.5 py-0.5 rounded-[2px]"
 												>
 													{v}
 												</span>
@@ -277,14 +277,14 @@ export function ProficiencySidebar({
 								)}
 								{defenses.conditionImmunities.length > 0 && (
 									<div className="space-y-1">
-										<span className="text-[10px] font-mono text-blue-400/60 uppercase">
+										<span className="text-[10px] font-mono text-shadow-blue/60 uppercase">
 											Condition Immunities
 										</span>
 										<div className="flex flex-wrap gap-1">
 											{defenses.conditionImmunities.map((c) => (
 												<span
 													key={c}
-													className="text-[10px] text-blue-400 bg-blue-400/10 border border-blue-400/20 px-1.5 py-0.5 rounded-[2px]"
+													className="text-[10px] text-shadow-blue bg-shadow-blue/10 border border-shadow-blue/20 px-1.5 py-0.5 rounded-[2px]"
 												>
 													{c}
 												</span>
@@ -355,7 +355,9 @@ export function ProficiencySidebar({
 												<span
 													className={cn(
 														"text-xs font-display font-bold",
-														s.modifier >= 0 ? "text-white/90" : "text-red-400",
+														s.modifier >= 0
+															? "text-white/90"
+															: "text-destructive",
 													)}
 												>
 													{formatModifier(s.modifier)}

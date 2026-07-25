@@ -115,7 +115,7 @@ export function HealthDialog({
 			<DialogContent className="sm:max-w-sm">
 				<DialogHeader>
 					<DialogTitle className="flex items-center gap-2">
-						<Heart className="w-5 h-5 text-red-500" />
+						<Heart className="w-5 h-5 text-destructive" />
 						Manage Hit Points
 					</DialogTitle>
 					<DialogDescription>
@@ -139,10 +139,10 @@ export function HealthDialog({
 						</div>
 						{tempHp > 0 && (
 							<div className="flex flex-col items-center px-4 border-l border-border/50">
-								<span className="text-xs text-cyan-500/70 uppercase tracking-wider font-mono mb-1 flex items-center gap-1">
+								<span className="text-xs text-mana-cyan/70 uppercase tracking-wider font-mono mb-1 flex items-center gap-1">
 									<Shield className="w-3 h-3" /> Temp
 								</span>
-								<span className="text-xl font-display font-bold text-cyan-400">
+								<span className="text-xl font-display font-bold text-mana-cyan">
 									{tempHp}
 								</span>
 							</div>
@@ -209,7 +209,7 @@ export function HealthDialog({
 
 						{preview && (
 							<p
-								className="text-xs font-mono text-cyan-400/90 text-center"
+								className="text-xs font-mono text-mana-cyan/90 text-center"
 								data-testid="damage-preview"
 							>
 								{preview}
@@ -229,7 +229,7 @@ export function HealthDialog({
 							</Button>
 							<Button
 								variant="default"
-								className="h-12 text-base font-bold bg-green-600 hover:bg-green-700 text-white"
+								className="h-12 text-base font-bold bg-success hover:bg-success/25 text-white"
 								onClick={handleHeal}
 								disabled={!hasAmount}
 							>

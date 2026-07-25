@@ -420,7 +420,7 @@ export function AIEnhancedArtGenerator({
 							<div
 								className={cn(
 									"w-3 h-3 rounded-full",
-									artAvailable ? "bg-green-500" : "bg-red-500",
+									artAvailable ? "bg-success" : "bg-destructive",
 								)}
 							/>
 							<span className="text-sm">
@@ -428,11 +428,11 @@ export function AIEnhancedArtGenerator({
 							</span>
 						</div>
 						<div className="flex items-center gap-2">
-							<div className="w-3 h-3 rounded-full bg-blue-500" />
+							<div className="w-3 h-3 rounded-full bg-shadow-blue" />
 							<span className="text-sm">AI Enhancement: Active</span>
 						</div>
 						<div className="flex items-center gap-2">
-							<div className="w-3 h-3 rounded-full bg-purple-500" />
+							<div className="w-3 h-3 rounded-full bg-resurge" />
 							<span className="text-sm">Rift Ascendant Style</span>
 						</div>
 					</div>
@@ -504,7 +504,7 @@ export function AIEnhancedArtGenerator({
 										rows={4}
 										className={cn(
 											enhancedPrompt
-												? "border-green-500/30 bg-green-50"
+												? "border-success/30 bg-success"
 												: "border-border",
 										)}
 									/>
@@ -719,13 +719,13 @@ export function AIEnhancedArtGenerator({
 							className={cn(
 								"p-4 rounded-lg border",
 								generationResult.success
-									? "border-green-500/30 bg-green-500/10"
-									: "border-red-500/30 bg-red-500/10",
+									? "border-success/30 bg-success/10"
+									: "border-destructive/30 bg-destructive/10",
 							)}
 						>
 							{generationResult.success ? (
 								<div className="space-y-3">
-									<div className="flex items-center gap-2 text-green-700">
+									<div className="flex items-center gap-2 text-success">
 										<CheckCircle className="w-4 h-4" />
 										<span className="font-medium">
 											AI-Enhanced Art Generated Successfully!
@@ -756,7 +756,7 @@ export function AIEnhancedArtGenerator({
 									)}
 								</div>
 							) : (
-								<div className="flex items-center gap-2 text-red-700">
+								<div className="flex items-center gap-2 text-destructive">
 									<AlertCircle className="w-4 h-4" />
 									<span className="font-medium">Generation Failed</span>
 								</div>

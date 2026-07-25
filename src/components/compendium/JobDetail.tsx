@@ -232,7 +232,7 @@ export const JobDetail = ({ data }: { data: JobData }) => {
 			<div className="grid grid-cols-2 md:grid-cols-4 gap-4">
 				<AscendantWindow title="HIT DIE" compact>
 					<div className="flex items-center gap-2">
-						<Heart className="w-5 h-5 text-red-400" />
+						<Heart className="w-5 h-5 text-destructive" />
 						<span className="font-display text-2xl">
 							{data.hit_dice || "d10"}
 						</span>
@@ -251,7 +251,7 @@ export const JobDetail = ({ data }: { data: JobData }) => {
 
 				<AscendantWindow title="SAVING THROWS" compact>
 					<div className="flex items-center gap-2">
-						<Shield className="w-5 h-5 text-blue-400" />
+						<Shield className="w-5 h-5 text-shadow-blue" />
 						<span className="font-heading">
 							{data.saving_throws?.map(formatRegentVernacular).join(", ") ||
 								"None"}
@@ -261,7 +261,7 @@ export const JobDetail = ({ data }: { data: JobData }) => {
 
 				<AscendantWindow title="SKILL CHOICES" compact>
 					<div className="flex items-center gap-2">
-						<Swords className="w-5 h-5 text-green-400" />
+						<Swords className="w-5 h-5 text-success" />
 						<span className="font-heading">
 							Choose {data.skill_choice_count ?? 2}
 						</span>
@@ -280,7 +280,7 @@ export const JobDetail = ({ data }: { data: JobData }) => {
 						{(data.darkvision ||
 							(data.specialSenses && data.specialSenses.length > 0)) && (
 							<div className="flex items-start gap-2">
-								<Eye className="w-5 h-5 text-purple-400 flex-shrink-0 mt-0.5" />
+								<Eye className="w-5 h-5 text-resurge flex-shrink-0 mt-0.5" />
 								<div>
 									<p className="font-heading">Senses</p>
 									{data.darkvision !== undefined && (
@@ -298,7 +298,7 @@ export const JobDetail = ({ data }: { data: JobData }) => {
 						)}
 						{(data.climb_speed || data.swim_speed || data.fly_speed) && (
 							<div className="flex items-start gap-2">
-								<Footprints className="w-5 h-5 text-blue-400 flex-shrink-0 mt-0.5" />
+								<Footprints className="w-5 h-5 text-shadow-blue flex-shrink-0 mt-0.5" />
 								<div>
 									<p className="font-heading">Movement</p>
 									{data.climb_speed !== undefined && (

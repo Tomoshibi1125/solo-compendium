@@ -501,7 +501,7 @@ const Characters = () => {
 																? "text-destructive"
 																: hpPercent < 50
 																	? "text-gate-a"
-																	: "text-green-400",
+																	: "text-success",
 														)}
 													>
 														{character.hp_current}/{character.hp_max}
@@ -515,7 +515,7 @@ const Characters = () => {
 																? "bg-destructive"
 																: hpPercent < 50
 																	? "bg-gate-a"
-																	: "bg-green-500",
+																	: "bg-success",
 														)}
 														ref={(el) => {
 															if (el) el.style.width = `${hpPercent}%`;
@@ -529,7 +529,7 @@ const Characters = () => {
 											{/* Quick Stats */}
 											<div className="grid grid-cols-3 gap-2">
 												<div className="text-center p-2 rounded-[2px] bg-black/40 border border-primary/20 shadow-[inset_0_0_8px_rgba(0,0,0,0.5)] group/stat">
-													<Shield className="w-3 h-3 mx-auto mb-1 text-blue-400 opacity-80 group-hover/stat:text-blue-300 transition-colors" />
+													<Shield className="w-3 h-3 mx-auto mb-1 text-shadow-blue opacity-80 group-hover/stat:text-shadow-blue transition-colors" />
 													<span className="font-heading font-bold text-lg text-white drop-shadow-[0_0_5px_currentColor]">
 														{character.armor_class}
 													</span>

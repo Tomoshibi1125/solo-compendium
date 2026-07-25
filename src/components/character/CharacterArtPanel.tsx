@@ -87,7 +87,7 @@ export function CharacterArtPanel({
 							<OptimizedImage
 								src={currentArt}
 								alt={characterData.name || "Character portrait"}
-								className="w-32 h-32 object-cover rounded-lg border-2 border-purple-500/30"
+								className="w-32 h-32 object-cover rounded-lg border-2 border-resurge/30"
 								size="small"
 							/>
 

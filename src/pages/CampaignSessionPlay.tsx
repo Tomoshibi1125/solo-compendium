@@ -175,7 +175,7 @@ const CampaignSessionPlay = () => {
 															<span
 																className={cn(
 																	"ml-1 font-semibold",
-																	adj > 0 ? "text-green-400" : "text-red-400",
+																	adj > 0 ? "text-success" : "text-destructive",
 																)}
 															>
 																({adj > 0 ? "+" : ""}
@@ -195,7 +195,7 @@ const CampaignSessionPlay = () => {
 															<Button
 																variant="ghost"
 																size="icon"
-																className="h-6 w-6 text-red-400 hover:bg-red-500/10"
+																className="h-6 w-6 text-destructive hover:bg-destructive/10"
 																onClick={() =>
 																	setAdjustments((prev) => ({
 																		...prev,
@@ -225,7 +225,7 @@ const CampaignSessionPlay = () => {
 															<Button
 																variant="ghost"
 																size="icon"
-																className="h-6 w-6 text-green-400 hover:bg-green-500/10"
+																className="h-6 w-6 text-success hover:bg-success/10"
 																onClick={() =>
 																	setAdjustments((prev) => ({
 																		...prev,
