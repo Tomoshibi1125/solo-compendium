@@ -148,24 +148,13 @@ describe("/api/ai free provider chain", () => {
 		]);
 	});
 
-	it("vision falls through to the keyless Pollinations leg when no keyed vision provider is available", async () => {
-		// No Gemini/OpenRouter keys → an image request must land on the keyless,
-		// vision-capable Pollinations leg (best-first ladder: Gemini → OpenRouter
-		// VLM → Pollinations).
+	it("images 502 when no keyed vision provider is available (Pollinations is text-only)", async () => {
+		// Pollinations' keyless tier 402s on images, so it is text-only. With no
+		// Gemini/OpenRouter key there is NO eligible vision leg — the request must
+		// fail clearly (not silently hit a paid/keyless dead end).
 		vi.stubEnv("GEMINI_API_KEY", "");
 		vi.stubEnv("OPENROUTER_API_KEY", "");
-
-		const fetchMock = vi.fn<typeof fetch>().mockImplementation(async (url) => {
-			if (String(url).includes("text.pollinations.ai")) {
-				return new Response(
-					JSON.stringify({
-						choices: [{ message: { content: "vision-fallback" } }],
-					}),
-					{ status: 200, headers: { "Content-Type": "application/json" } },
-				);
-			}
-			throw new Error(`unexpected call to ${String(url)}`);
-		});
+		const fetchMock = vi.fn<typeof fetch>();
 		vi.stubGlobal("fetch", fetchMock);
 
 		const res = makeRes();
@@ -177,23 +166,12 @@ describe("/api/ai free provider chain", () => {
 			res,
 		);
 
-		expect(res.statusCode).toBe(200);
-		expect(res.payload).toMatchObject({
-			success: true,
-			provider: "pollinations",
-		});
-
-		// The image was formatted as an OpenAI-style image_url content part.
-		const pollCall = fetchMock.mock.calls.find(([u]) =>
-			String(u).includes("pollinations"),
+		expect(res.statusCode).toBe(502);
+		expect(String((res.payload as { error?: string }).error)).toContain(
+			"Gemini or OpenRouter",
 		);
-		const body = JSON.parse(String(pollCall?.[1]?.body)) as {
-			messages: Array<{ role: string; content: unknown }>;
-		};
-		const userMsg = body.messages.find((m) => m.role === "user");
-		expect(userMsg?.content).toEqual(
-			expect.arrayContaining([expect.objectContaining({ type: "image_url" })]),
-		);
+		// No vision-capable leg was available, so no upstream call was made.
+		expect(fetchMock).not.toHaveBeenCalled();
 	});
 
 	it("rejects malformed image payloads with 400", async () => {

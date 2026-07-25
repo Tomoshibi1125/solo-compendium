@@ -1,118 +1,17 @@
 /**
- * Vercel Serverless AI Proxy — best-in-class, 100% FREE provider chain.
+ * Vercel Serverless AI Proxy — HTTP shell around the shared FREE provider chain
+ * in ./_aiProviders.js (the single source of truth shared with the Vite dev
+ * middleware in vite.config.ts, so dev and prod can never drift).
  *
- * Tries an ordered list of FREE providers and returns the first success, so the
- * embedded AI is best-in-class without being tied to any single vendor. All keys
- * stay server-side; users never see or manage them. The keyless Pollinations leg
- * guarantees the app still works with ZERO configuration (no owner key at all).
- *
- * Order is configurable via AI_PROVIDER_ORDER (comma-separated). Default favours
- * the best-in-class free model first, then alternatives, then a keyless fallback:
- *     gemini, openrouter, pollinations
- * Gemini flash-latest leads (Google AI Studio free-tier flagship alias; vision,
- * 1M context, no card), with the lite Flash model as an in-leg fallback. OpenRouter adds the
- * strongest current :free models (Nemotron 3 Ultra 550B, Gemma 4 31B) plus a free
- * VISION ladder for multimodal. Pollinations is the keyless zero-config fallback
- * (text + vision), so the app works with ZERO configuration. (Groq intentionally
- * excluded.)
+ * This file owns only the HTTP concerns: CORS, method guard, optional auth /
+ * shared-secret, per-instance rate limiting, body parsing, and response shaping.
+ * All provider/model logic lives in ./_aiProviders.js.
  *
  * Request:  { prompt, systemPrompt?, maxTokens?, provider?, model?, images? }
- *   images: optional base64 image data-URLs (or { mimeType, data } pairs) for
- *   multimodal analysis — routed down the vision ladder (Gemini → OpenRouter
- *   VLM → keyless Pollinations); text-only legs are skipped.
- * Response: { success: true, text, model, usage } | { error, available }
+ * Response: { success: true, text, model, usage, provider } | { error, available }
  */
 
-const MAX_OUTPUT_TOKENS = 4096;
-const REQUEST_TIMEOUT_MS = 30000;
-
-// ── Best-in-class FREE model ladders (web-verified July 2026) ───────────────
-// Each leg tries its models in order and falls through on any per-model error
-// (404 model-not-found, rate limit, empty response), so accounts without the
-// newest model still work. GEMINI_MODEL / OPENROUTER_MODEL env vars prepend.
-const DEFAULT_GEMINI_MODELS = [
-	// Google's rolling alias to the latest stable free Flash (vision, 1M ctx).
-	// Verified live against the API — exact-version IDs like "gemini-3.5-flash"
-	// 404 on the free tier, so we lead with the alias and keep an explicit
-	// lite fallback for when the flagship is throttled.
-	"gemini-flash-latest",
-	"gemini-3.1-flash-lite",
-];
-// Refreshed against OpenRouter's live free roster (Jul 2026): the previous
-// hermes-3-405b / gpt-oss-120b / llama-3.3-70b:free listings were pulled, so
-// they only wasted a round-trip. These are the current best-in-class :free IDs.
-const DEFAULT_OPENROUTER_MODELS = [
-	"nvidia/nemotron-3-ultra-550b-a55b:free", // strongest free general/reasoning
-	"google/gemma-4-31b-it:free", // top free general quality (also vision)
-	"nvidia/nemotron-3-super-120b-a12b:free", // strong long-context generation
-	"openai/gpt-oss-20b:free",
-	"nvidia/nemotron-nano-9b-v2:free",
-];
-// Free VISION/multimodal models (image input). Gemini leads; these give the
-// OpenRouter leg a best-first→next-best vision ladder so multimodal degrades
-// gracefully instead of dying when Gemini is unavailable.
-const DEFAULT_OPENROUTER_VISION_MODELS = [
-	"google/gemma-4-31b-it:free", // best free VLM (262K ctx, 140+ languages)
-	"nvidia/nemotron-nano-12b-v2-vl:free", // strong dedicated vision model
-	"nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free", // omni text+image+video
-];
-
-// ── Optional multimodal input ───────────────────────────────────────────────
-// `images` accepts base64 image data-URLs ("data:image/png;base64,…") or
-// { mimeType, data } pairs. The handler skips any leg without `supportsImages`,
-// so images only reach the vision ladder (Gemini, OpenRouter VLMs, Pollinations).
-const MAX_IMAGES = 4;
-const MAX_IMAGE_BASE64_CHARS = 6_000_000; // ≈4.5MB binary per image
-
-function normalizeImages(raw) {
-	if (raw === undefined || raw === null) return { images: [] };
-	if (!Array.isArray(raw)) return { error: "images must be an array" };
-	if (raw.length > MAX_IMAGES) {
-		return { error: `At most ${MAX_IMAGES} images per request` };
-	}
-	const images = [];
-	for (const entry of raw) {
-		let mimeType;
-		let data;
-		if (typeof entry === "string") {
-			const match = /^data:(image\/[\w.+-]+);base64,(.+)$/s.exec(entry);
-			if (!match) {
-				return { error: "Image strings must be base64 image data-URLs" };
-			}
-			mimeType = match[1];
-			data = match[2];
-		} else if (entry && typeof entry === "object") {
-			mimeType = entry.mimeType;
-			data = entry.data;
-		}
-		if (
-			typeof mimeType !== "string" ||
-			!mimeType.startsWith("image/") ||
-			typeof data !== "string" ||
-			!data
-		) {
-			return { error: "Each image needs an image/* mimeType and base64 data" };
-		}
-		if (data.length > MAX_IMAGE_BASE64_CHARS) {
-			return { error: "Image too large (max ~4.5MB each)" };
-		}
-		images.push({ mimeType, data });
-	}
-	return { images };
-}
-
-/** Ordered, deduped model attempt list: override → env → defaults. */
-function buildModelAttempts(override, envModel, defaults) {
-	const seen = new Set();
-	const out = [];
-	for (const model of [override, envModel, ...defaults]) {
-		const trimmed = typeof model === "string" ? model.trim() : "";
-		if (!trimmed || seen.has(trimmed)) continue;
-		seen.add(trimmed);
-		out.push(trimmed);
-	}
-	return out;
-}
+import { normalizeImages, runProviderChain } from "./_aiProviders.js";
 
 // ── Rate limiting (per Vercel cold-start instance) ──────────────────────────
 const rateBuckets = new Map();
@@ -135,263 +34,6 @@ function isRateLimited(ip, userId) {
 	bucket.count += 1;
 	const limit = userId ? RATE_LIMIT_MAX_AUTH : RATE_LIMIT_MAX;
 	return bucket.count > limit;
-}
-
-function fetchWithTimeout(url, options, timeoutMs = REQUEST_TIMEOUT_MS) {
-	const controller = new AbortController();
-	const timer = setTimeout(() => controller.abort(), timeoutMs);
-	return fetch(url, { ...options, signal: controller.signal }).finally(() =>
-		clearTimeout(timer),
-	);
-}
-
-// ── Free provider adapters ──────────────────────────────────────────────────
-// Each adapter returns { text, model, usage } or throws. `available()` lets the
-// chain skip a provider whose (free-tier) key is not configured. Pollinations is
-// keyless, so it is always available.
-
-/** OpenRouter free models — OpenAI-compatible. Best-in-class free quality.
- *  Vision-capable: with images, it uses the free VLM ladder and OpenAI-style
- *  multimodal content parts. */
-async function callOpenRouter({
-	prompt,
-	systemPrompt,
-	maxTokens,
-	model: modelOverride,
-	images = [],
-}) {
-	const apiKey = process.env.OPENROUTER_API_KEY;
-	const hasImages = images.length > 0;
-	const models = buildModelAttempts(
-		modelOverride,
-		hasImages
-			? process.env.OPENROUTER_VISION_MODEL
-			: process.env.OPENROUTER_MODEL,
-		hasImages ? DEFAULT_OPENROUTER_VISION_MODELS : DEFAULT_OPENROUTER_MODELS,
-	);
-	const messages = [];
-	if (systemPrompt) messages.push({ role: "system", content: systemPrompt });
-	messages.push({
-		role: "user",
-		content: hasImages
-			? [
-					{ type: "text", text: prompt },
-					...images.map(({ mimeType, data }) => ({
-						type: "image_url",
-						image_url: { url: `data:${mimeType};base64,${data}` },
-					})),
-				]
-			: prompt,
-	});
-
-	const errors = [];
-	for (const model of models) {
-		try {
-			const response = await fetchWithTimeout(
-				"https://openrouter.ai/api/v1/chat/completions",
-				{
-					method: "POST",
-					headers: {
-						"Content-Type": "application/json",
-						Authorization: `Bearer ${apiKey}`,
-						// Optional attribution headers (recommended by OpenRouter).
-						"HTTP-Referer":
-							process.env.PUBLIC_SITE_URL || "https://rift-ascendant.app",
-						"X-Title": "Rift Ascendant",
-					},
-					body: JSON.stringify({
-						model,
-						messages,
-						max_tokens: Math.min(
-							maxTokens || MAX_OUTPUT_TOKENS,
-							MAX_OUTPUT_TOKENS,
-						),
-						temperature: 0.8,
-					}),
-				},
-			);
-			if (!response.ok) {
-				const err = await response.json().catch(() => ({}));
-				throw new Error(
-					err?.error?.message || `OpenRouter error ${response.status}`,
-				);
-			}
-			const data = await response.json();
-			const text = data?.choices?.[0]?.message?.content || "";
-			if (!text.trim()) throw new Error("OpenRouter returned empty response");
-			return {
-				text,
-				model: data?.model || model,
-				usage: {
-					promptTokens: data?.usage?.prompt_tokens,
-					completionTokens: data?.usage?.completion_tokens,
-					totalTokens: data?.usage?.total_tokens,
-				},
-			};
-		} catch (err) {
-			errors.push(`${model}: ${err?.message || "error"}`);
-			// fall through to the next free model
-		}
-	}
-	throw new Error(errors.join(" | ") || "OpenRouter: no models attempted");
-}
-callOpenRouter.available = () => Boolean(process.env.OPENROUTER_API_KEY);
-callOpenRouter.supportsImages = true;
-
-/** Google Gemini free tier (generous, strong). Vision-capable. */
-async function callGemini({
-	prompt,
-	systemPrompt,
-	maxTokens,
-	model: modelOverride,
-	images = [],
-}) {
-	const apiKey = process.env.GEMINI_API_KEY;
-	const models = buildModelAttempts(
-		modelOverride,
-		process.env.GEMINI_MODEL,
-		DEFAULT_GEMINI_MODELS,
-	);
-
-	const parts = [
-		{ text: prompt },
-		...images.map(({ mimeType, data }) => ({
-			inlineData: { mimeType, data },
-		})),
-	];
-	const geminiBody = {
-		contents: [{ role: "user", parts }],
-		generationConfig: {
-			maxOutputTokens: Math.min(
-				maxTokens || MAX_OUTPUT_TOKENS,
-				MAX_OUTPUT_TOKENS,
-			),
-			temperature: 0.8,
-		},
-		// Relaxed for TTRPG fantasy combat content.
-		safetySettings: [
-			{ category: "HARM_CATEGORY_HARASSMENT", threshold: "BLOCK_ONLY_HIGH" },
-			{ category: "HARM_CATEGORY_HATE_SPEECH", threshold: "BLOCK_ONLY_HIGH" },
-			{
-				category: "HARM_CATEGORY_SEXUALLY_EXPLICIT",
-				threshold: "BLOCK_MEDIUM_AND_ABOVE",
-			},
-			{
-				category: "HARM_CATEGORY_DANGEROUS_CONTENT",
-				threshold: "BLOCK_ONLY_HIGH",
-			},
-		],
-	};
-	if (systemPrompt)
-		geminiBody.systemInstruction = { parts: [{ text: systemPrompt }] };
-
-	const errors = [];
-	for (const model of models) {
-		const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`;
-		try {
-			const response = await fetchWithTimeout(`${endpoint}?key=${apiKey}`, {
-				method: "POST",
-				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify(geminiBody),
-			});
-			if (!response.ok) {
-				const err = await response.json().catch(() => ({}));
-				throw new Error(
-					err?.error?.message || `Gemini error ${response.status}`,
-				);
-			}
-			const data = await response.json();
-			const text = data?.candidates?.[0]?.content?.parts?.[0]?.text || "";
-			if (!text.trim()) throw new Error("Gemini returned empty response");
-			return {
-				text,
-				model,
-				usage: {
-					promptTokens: data?.usageMetadata?.promptTokenCount,
-					completionTokens: data?.usageMetadata?.candidatesTokenCount,
-					totalTokens: data?.usageMetadata?.totalTokenCount,
-				},
-			};
-		} catch (err) {
-			errors.push(`${model}: ${err?.message || "error"}`);
-			// fall through to the next free model
-		}
-	}
-	throw new Error(errors.join(" | ") || "Gemini: no models attempted");
-}
-callGemini.available = () => Boolean(process.env.GEMINI_API_KEY);
-callGemini.supportsImages = true;
-
-/** Pollinations — keyless and free. Always-on last-resort fallback. The default
- *  "openai" model is vision-capable, so this doubles as the keyless vision floor. */
-async function callPollinations({
-	prompt,
-	systemPrompt,
-	model: modelOverride,
-	images = [],
-}) {
-	const model = modelOverride || process.env.POLLINATIONS_MODEL || "openai";
-	const hasImages = images.length > 0;
-	const messages = [];
-	if (systemPrompt) messages.push({ role: "system", content: systemPrompt });
-	messages.push({
-		role: "user",
-		content: hasImages
-			? [
-					{ type: "text", text: prompt },
-					...images.map(({ mimeType, data }) => ({
-						type: "image_url",
-						image_url: { url: `data:${mimeType};base64,${data}` },
-					})),
-				]
-			: prompt,
-	});
-
-	const response = await fetchWithTimeout(
-		"https://text.pollinations.ai/openai",
-		{
-			method: "POST",
-			headers: { "Content-Type": "application/json" },
-			body: JSON.stringify({ model, messages }),
-		},
-	);
-	if (!response.ok) {
-		throw new Error(`Pollinations error ${response.status}`);
-	}
-	// Pollinations may return OpenAI-shaped JSON or plain text.
-	const raw = await response.text();
-	let text = raw;
-	try {
-		const data = JSON.parse(raw);
-		text = data?.choices?.[0]?.message?.content ?? raw;
-	} catch {
-		// plain text body — use as-is
-	}
-	if (!text?.trim()) throw new Error("Pollinations returned empty response");
-	return { text, model: `pollinations:${model}`, usage: {} };
-}
-callPollinations.available = () => true;
-callPollinations.supportsImages = true;
-
-const PROVIDERS = {
-	openrouter: callOpenRouter,
-	gemini: callGemini,
-	pollinations: callPollinations,
-};
-
-function getProviderOrder(preferred) {
-	const raw = process.env.AI_PROVIDER_ORDER || "gemini,openrouter,pollinations";
-	let order = raw
-		.split(",")
-		.map((name) => name.trim().toLowerCase())
-		.filter((name) => PROVIDERS[name]);
-	if (order.length === 0) order = ["pollinations"];
-	// User-selected provider is tried FIRST, but the rest of the chain stays as
-	// fallback so a rate-limited/blocked choice still gets an answer.
-	if (preferred && PROVIDERS[preferred]) {
-		order = [preferred, ...order.filter((name) => name !== preferred)];
-	}
-	return order;
 }
 
 export default async function handler(req, res) {
@@ -456,56 +98,25 @@ export default async function handler(req, res) {
 	if (normalizedImages.error) {
 		return res.status(400).json({ error: normalizedImages.error });
 	}
-	const images = normalizedImages.images;
 
-	// Optional user-selected provider/model (e.g. when one is rate-limited).
-	const normalizedPreferred =
-		typeof preferredProvider === "string"
-			? preferredProvider.trim().toLowerCase()
-			: undefined;
-	const requestedModel =
-		typeof preferredModel === "string" && preferredModel.trim()
-			? preferredModel.trim()
-			: undefined;
+	const result = await runProviderChain({
+		prompt,
+		systemPrompt,
+		maxTokens,
+		provider: preferredProvider,
+		model: preferredModel,
+		images: normalizedImages.images,
+	});
 
-	const order = getProviderOrder(normalizedPreferred);
-	const errors = [];
-	for (const name of order) {
-		const provider = PROVIDERS[name];
-		if (!provider.available()) continue;
-		// Vision requests only run on vision-capable legs (Gemini).
-		if (images.length > 0 && !provider.supportsImages) continue;
-		try {
-			// The model override applies only to the provider the user chose.
-			const model = name === normalizedPreferred ? requestedModel : undefined;
-			const result = await provider({
-				prompt,
-				systemPrompt,
-				maxTokens,
-				model,
-				images,
-			});
-			return res.status(200).json({
-				success: true,
-				text: result.text,
-				model: result.model,
-				usage: result.usage || {},
-				provider: name,
-			});
-		} catch (err) {
-			errors.push(`${name}: ${err?.message || "error"}`);
-			// try the next free provider
-		}
+	if (!result.ok) {
+		return res.status(502).json({ error: result.error, available: false });
 	}
 
-	// Every configured free provider failed (or none available).
-	return res.status(502).json({
-		error:
-			errors.length > 0
-				? `All free AI providers failed. ${errors.join(" | ")}`
-				: images.length > 0
-					? "Image analysis needs the Gemini leg (set GEMINI_API_KEY)."
-					: "No free AI provider is configured.",
-		available: false,
+	return res.status(200).json({
+		success: true,
+		text: result.text,
+		model: result.model,
+		usage: result.usage || {},
+		provider: result.provider,
 	});
 }

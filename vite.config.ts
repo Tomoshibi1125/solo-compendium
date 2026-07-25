@@ -1,315 +1,44 @@
 import path from "node:path";
-import { GoogleGenAI } from "@google/genai";
 import react from "@vitejs/plugin-react";
 import { config as dotenvConfig } from "dotenv";
 import { visualizer } from "rollup-plugin-visualizer";
 import { defineConfig, type Plugin } from "vite";
 import { VitePWA } from "vite-plugin-pwa";
 import wasm from "vite-plugin-wasm";
+import { normalizeImages, runProviderChain } from "./api/_aiProviders.js";
 
 // Load .env for server-side use (GEMINI_API_KEY is not VITE_ prefixed)
 // quiet: suppress dotenv v17's promotional banner in every tool run.
 dotenvConfig({ quiet: true });
 
 /**
- * Vite dev middleware plugin that mimics the Vercel serverless function
- * at /api/ai so AI features work during local development.
+ * Vite dev middleware that mimics the Vercel /api/ai serverless function during
+ * local development. It calls the SAME shared free-provider chain as the Vercel
+ * function (api/_aiProviders.js) — one source of truth, so dev and prod never
+ * drift. Owns only the HTTP glue (CORS, body parse, response shaping).
  */
-// Dev mirror of the production /api/ai free provider chain (api/ai.js), so local
-// dev gets the same best-in-class free model AND works with zero config via the
-// keyless Pollinations fallback. Model ladders mirror api/ai.js (July 2026):
-// each leg tries its models in order and falls through on any per-model error.
-const DEV_GEMINI_MODELS = [
-	"gemini-3.5-flash",
-	"gemini-3-flash-preview",
-	"gemini-2.5-flash",
-];
-const DEV_OPENROUTER_MODELS = [
-	"nvidia/nemotron-3-ultra-550b-a55b:free",
-	"nousresearch/hermes-3-llama-3.1-405b:free",
-	"nvidia/nemotron-3-super-120b-a12b:free",
-	"openai/gpt-oss-120b:free",
-	"meta-llama/llama-3.3-70b-instruct:free",
-];
-const DEV_POLLINATIONS_MODEL = process.env.POLLINATIONS_MODEL || "openai";
-const DEV_AI_TIMEOUT_MS = 30_000;
-
-/** Ordered, deduped model attempt list: override → env → defaults. */
-function devBuildModelAttempts(
-	override: string | undefined,
-	envModel: string | undefined,
-	defaults: string[],
-): string[] {
-	const seen = new Set<string>();
-	const out: string[] = [];
-	for (const model of [override, envModel, ...defaults]) {
-		const trimmed = typeof model === "string" ? model.trim() : "";
-		if (!trimmed || seen.has(trimmed)) continue;
-		seen.add(trimmed);
-		out.push(trimmed);
-	}
-	return out;
-}
-
-type DevAIResult = {
-	text: string;
-	model: string;
-	usage?: Record<string, unknown>;
-};
-type DevAIImage = { mimeType: string; data: string };
-type DevAIArgs = {
-	prompt: string;
-	systemPrompt?: string;
-	maxTokens?: number;
-	model?: string;
-	images?: DevAIImage[];
-};
-
-// Mirror of api/ai.js normalizeImages: data-URLs or {mimeType,data} pairs;
-// only the Gemini leg is vision-capable, so image requests skip other legs.
-const DEV_MAX_IMAGES = 4;
-const DEV_MAX_IMAGE_BASE64_CHARS = 6_000_000;
-
-function devNormalizeImages(raw: unknown): {
-	images?: DevAIImage[];
-	error?: string;
-} {
-	if (raw === undefined || raw === null) return { images: [] };
-	if (!Array.isArray(raw)) return { error: "images must be an array" };
-	if (raw.length > DEV_MAX_IMAGES) {
-		return { error: `At most ${DEV_MAX_IMAGES} images per request` };
-	}
-	const images: DevAIImage[] = [];
-	for (const entry of raw) {
-		let mimeType: unknown;
-		let data: unknown;
-		if (typeof entry === "string") {
-			const match = /^data:(image\/[\w.+-]+);base64,(.+)$/s.exec(entry);
-			if (!match) {
-				return { error: "Image strings must be base64 image data-URLs" };
-			}
-			mimeType = match[1];
-			data = match[2];
-		} else if (entry && typeof entry === "object") {
-			mimeType = (entry as { mimeType?: unknown }).mimeType;
-			data = (entry as { data?: unknown }).data;
-		}
-		if (
-			typeof mimeType !== "string" ||
-			!mimeType.startsWith("image/") ||
-			typeof data !== "string" ||
-			!data
-		) {
-			return { error: "Each image needs an image/* mimeType and base64 data" };
-		}
-		if (data.length > DEV_MAX_IMAGE_BASE64_CHARS) {
-			return { error: "Image too large (max ~4.5MB each)" };
-		}
-		images.push({ mimeType, data });
-	}
-	return { images };
-}
-
-async function devCallGemini({
-	prompt,
-	systemPrompt,
-	maxTokens,
-	model: modelOverride,
-	images = [],
-}: DevAIArgs): Promise<DevAIResult> {
-	const apiKey = process.env.GEMINI_API_KEY;
-	if (!apiKey) throw new Error("GEMINI_API_KEY not set");
-	const models = devBuildModelAttempts(
-		modelOverride,
-		process.env.GEMINI_MODEL,
-		DEV_GEMINI_MODELS,
-	);
-	const ai = new GoogleGenAI({ apiKey });
-	const contents =
-		images.length > 0
-			? [
-					{
-						role: "user",
-						parts: [
-							{ text: prompt },
-							...images.map(({ mimeType, data }) => ({
-								inlineData: { mimeType, data },
-							})),
-						],
-					},
-				]
-			: prompt;
-	const errors: string[] = [];
-	for (const model of models) {
-		const controller = new AbortController();
-		const timer = setTimeout(() => controller.abort(), DEV_AI_TIMEOUT_MS);
-		try {
-			const response = await ai.models.generateContent({
-				model,
-				contents,
-				config: {
-					systemInstruction: systemPrompt,
-					maxOutputTokens: Math.min(maxTokens || 4096, 4096),
-					temperature: 0.8,
-					abortSignal: controller.signal,
-				},
-			});
-			const text = response.text || "";
-			if (!text.trim()) throw new Error("Gemini empty response");
-			return {
-				text,
-				model,
-				usage: {
-					promptTokens: response.usageMetadata?.promptTokenCount,
-					completionTokens: response.usageMetadata?.candidatesTokenCount,
-					totalTokens: response.usageMetadata?.totalTokenCount,
-				},
-			};
-		} catch (err) {
-			errors.push(`${model}: ${err instanceof Error ? err.message : "error"}`);
-			// fall through to the next free model
-		} finally {
-			clearTimeout(timer);
-		}
-	}
-	throw new Error(errors.join(" | ") || "Gemini: no models attempted");
-}
-
-async function devCallOpenRouter({
-	prompt,
-	systemPrompt,
-	maxTokens,
-	model: modelOverride,
-}: DevAIArgs): Promise<DevAIResult> {
-	const apiKey = process.env.OPENROUTER_API_KEY;
-	if (!apiKey) throw new Error("OPENROUTER_API_KEY not set");
-	const models = devBuildModelAttempts(
-		modelOverride,
-		process.env.OPENROUTER_MODEL,
-		DEV_OPENROUTER_MODELS,
-	);
-	const messages: Array<{ role: string; content: string }> = [];
-	if (systemPrompt) messages.push({ role: "system", content: systemPrompt });
-	messages.push({ role: "user", content: prompt });
-	const errors: string[] = [];
-	for (const model of models) {
-		try {
-			const response = await fetch(
-				"https://openrouter.ai/api/v1/chat/completions",
-				{
-					method: "POST",
-					headers: {
-						"Content-Type": "application/json",
-						Authorization: `Bearer ${apiKey}`,
-						"X-Title": "Rift Ascendant",
-					},
-					body: JSON.stringify({
-						model,
-						messages,
-						max_tokens: Math.min(maxTokens || 4096, 4096),
-						temperature: 0.8,
-					}),
-				},
-			);
-			if (!response.ok) throw new Error(`OpenRouter error ${response.status}`);
-			const data = (await response.json()) as {
-				model?: string;
-				choices?: Array<{ message?: { content?: string } }>;
-			};
-			const text = data?.choices?.[0]?.message?.content || "";
-			if (!text.trim()) throw new Error("OpenRouter empty response");
-			return { text, model: data?.model || model };
-		} catch (err) {
-			errors.push(`${model}: ${err instanceof Error ? err.message : "error"}`);
-			// fall through to the next free model
-		}
-	}
-	throw new Error(errors.join(" | ") || "OpenRouter: no models attempted");
-}
-
-async function devCallPollinations({
-	prompt,
-	systemPrompt,
-	model: modelOverride,
-}: DevAIArgs): Promise<DevAIResult> {
-	const model = modelOverride || DEV_POLLINATIONS_MODEL;
-	const messages: Array<{ role: string; content: string }> = [];
-	if (systemPrompt) messages.push({ role: "system", content: systemPrompt });
-	messages.push({ role: "user", content: prompt });
-	const response = await fetch("https://text.pollinations.ai/openai", {
-		method: "POST",
-		headers: { "Content-Type": "application/json" },
-		body: JSON.stringify({ model, messages }),
-	});
-	if (!response.ok) throw new Error(`Pollinations error ${response.status}`);
-	const raw = await response.text();
-	let text = raw;
-	try {
-		const data = JSON.parse(raw) as {
-			choices?: Array<{ message?: { content?: string } }>;
-		};
-		text = data?.choices?.[0]?.message?.content ?? raw;
-	} catch {
-		// plain text body — use as-is
-	}
-	if (!text.trim()) throw new Error("Pollinations empty response");
-	return { text, model: `pollinations:${model}` };
-}
-
-const DEV_AI_PROVIDERS: Record<
-	string,
-	(args: DevAIArgs) => Promise<DevAIResult>
-> = {
-	gemini: devCallGemini,
-	openrouter: devCallOpenRouter,
-	pollinations: devCallPollinations,
-};
-
-function devProviderOrder(preferred?: string): string[] {
-	const raw = process.env.AI_PROVIDER_ORDER || "gemini,openrouter,pollinations";
-	let order = raw
-		.split(",")
-		.map((s) => s.trim().toLowerCase())
-		.filter((s) => DEV_AI_PROVIDERS[s]);
-	if (order.length === 0) order = ["pollinations"];
-	if (preferred && DEV_AI_PROVIDERS[preferred]) {
-		order = [preferred, ...order.filter((s) => s !== preferred)];
-	}
-	return order;
-}
-
-function devProviderAvailable(name: string): boolean {
-	if (name === "gemini") return Boolean(process.env.GEMINI_API_KEY);
-	if (name === "openrouter") return Boolean(process.env.OPENROUTER_API_KEY);
-	return true; // pollinations is keyless
-}
-
 function devAIProxy(): Plugin {
 	return {
 		name: "dev-ai-proxy",
 		configureServer(server) {
 			server.middlewares.use("/api/ai", async (req, res) => {
-				// CORS
 				res.setHeader("Access-Control-Allow-Origin", "*");
 				res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
 				res.setHeader(
 					"Access-Control-Allow-Headers",
 					"Content-Type, Authorization",
 				);
-
 				if (req.method === "OPTIONS") {
 					res.statusCode = 204;
 					res.end();
 					return;
 				}
-
 				if (req.method !== "POST") {
 					res.statusCode = 405;
 					res.end(JSON.stringify({ error: "Method not allowed" }));
 					return;
 				}
 
-				// Read body
 				let rawBody = "";
 				await new Promise<void>((resolve) => {
 					req.on("data", (chunk: Buffer) => {
@@ -331,8 +60,8 @@ function devAIProxy(): Plugin {
 					prompt,
 					systemPrompt,
 					maxTokens,
-					provider: preferredProvider,
-					model: preferredModel,
+					provider,
+					model,
 					images: rawImages,
 				} = body as {
 					prompt?: string;
@@ -342,75 +71,41 @@ function devAIProxy(): Plugin {
 					model?: string;
 					images?: unknown;
 				};
-
 				if (!prompt || typeof prompt !== "string") {
 					res.statusCode = 400;
 					res.end(JSON.stringify({ error: "Missing required field: prompt" }));
 					return;
 				}
 
-				const normalizedImages = devNormalizeImages(rawImages);
+				const normalizedImages = normalizeImages(rawImages);
 				if (normalizedImages.error) {
 					res.statusCode = 400;
 					res.end(JSON.stringify({ error: normalizedImages.error }));
 					return;
 				}
-				const images = normalizedImages.images ?? [];
 
-				// Honor a user-selected provider/model (first), still falling back
-				// across the free chain if it's rate-limited or blocked. The keyless
-				// Pollinations leg guarantees a response even with no keys set.
-				const normalizedPreferred =
-					typeof preferredProvider === "string"
-						? preferredProvider.trim().toLowerCase()
-						: undefined;
-				const requestedModel =
-					typeof preferredModel === "string" && preferredModel.trim()
-						? preferredModel.trim()
-						: undefined;
-				const order = devProviderOrder(normalizedPreferred);
-				const errors: string[] = [];
-				for (const name of order) {
-					if (!devProviderAvailable(name)) continue;
-					// Vision requests only run on the vision-capable Gemini leg.
-					if (images.length > 0 && name !== "gemini") continue;
-					try {
-						const result = await DEV_AI_PROVIDERS[name]({
-							prompt,
-							systemPrompt,
-							maxTokens: maxTokens as number | undefined,
-							model: name === normalizedPreferred ? requestedModel : undefined,
-							images,
-						});
-						res.statusCode = 200;
-						res.setHeader("Content-Type", "application/json");
-						res.end(
-							JSON.stringify({
-								success: true,
-								text: result.text,
-								model: result.model,
-								usage: result.usage || {},
-								provider: name,
-							}),
-						);
-						return;
-					} catch (err: unknown) {
-						errors.push(
-							`${name}: ${err instanceof Error ? err.message : "error"}`,
-						);
-					}
+				const result = await runProviderChain({
+					prompt,
+					systemPrompt,
+					maxTokens: maxTokens as number | undefined,
+					provider,
+					model,
+					images: normalizedImages.images ?? [],
+				});
+				if (!result.ok) {
+					res.statusCode = 502;
+					res.end(JSON.stringify({ error: result.error, available: false }));
+					return;
 				}
-
-				res.statusCode = 502;
+				res.statusCode = 200;
+				res.setHeader("Content-Type", "application/json");
 				res.end(
 					JSON.stringify({
-						error:
-							errors.length > 0
-								? `All free AI providers failed. ${errors.join(" | ")}`
-								: images.length > 0
-									? "Image analysis needs the Gemini leg (set GEMINI_API_KEY)."
-									: "No free AI provider configured.",
-						available: false,
+						success: true,
+						text: result.text,
+						model: result.model,
+						usage: result.usage || {},
+						provider: result.provider,
 					}),
 				);
 			});
