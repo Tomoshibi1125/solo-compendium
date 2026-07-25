@@ -185,7 +185,9 @@ export function ArtGenerator({
 				mood: result.mood || prev.mood,
 			}));
 			if (Array.isArray(result.tags) && result.tags.length > 0) {
-				setSelectedTags((prev) => Array.from(new Set([...prev, ...result.tags])));
+				setSelectedTags((prev) =>
+					Array.from(new Set([...prev, ...result.tags])),
+				);
 			}
 		} catch (error) {
 			logger.error("Failed to analyze reference image:", error);

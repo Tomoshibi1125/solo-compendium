@@ -280,7 +280,7 @@ describe("useCharacterImport", () => {
 		);
 		expect(vehicleInsert).toBeDefined();
 		expect(
-			(vehicleInsert?.payload as Record<string, unknown>[])[0],
+			(vehicleInsert?.payload as unknown as Record<string, unknown>[])[0],
 		).toMatchObject({
 			character_id: "imported-character",
 			vehicle_id: "rift-skiff",
@@ -308,12 +308,12 @@ describe("useCharacterImport", () => {
 		expect(slotUpsert?.options).toMatchObject({
 			onConflict: "character_id,spell_level",
 		});
-		expect((slotUpsert?.payload as Record<string, unknown>[])[0]).toMatchObject(
-			{
-				character_id: "imported-character",
-				spell_level: 1,
-				slots_current: 2,
-			},
-		);
+		expect(
+			(slotUpsert?.payload as unknown as Record<string, unknown>[])[0],
+		).toMatchObject({
+			character_id: "imported-character",
+			spell_level: 1,
+			slots_current: 2,
+		});
 	});
 });
