@@ -4,6 +4,7 @@ import {
 	ArrowLeft,
 	BookOpen,
 	CalendarClock,
+	Car,
 	Crown,
 	FileText,
 	Loader2,
@@ -29,6 +30,7 @@ import { CampaignRegentOversight } from "@/components/campaign/CampaignRegentOve
 import { CampaignRollFeed } from "@/components/campaign/CampaignRollFeed";
 import { CampaignSessionsPanel } from "@/components/campaign/CampaignSessionsPanel";
 import { CampaignSettings } from "@/components/campaign/CampaignSettings";
+import { CampaignVehiclesPanel } from "@/components/campaign/CampaignVehiclesPanel";
 import { CampaignWiki } from "@/components/campaign/CampaignWiki";
 import { SessionReplayPanel } from "@/components/campaign/SessionReplayPanel";
 import { Layout } from "@/components/layout/Layout";
@@ -419,6 +421,13 @@ const CampaignDetail = () => {
 								<Activity className="w-3 h-3 sm:w-4 sm:h-4 shrink-0" />
 								<span>Activity</span>
 							</TabsTrigger>
+							<TabsTrigger
+								value="vehicles"
+								className="flex-1 gap-1.5 text-xs sm:text-sm min-h-[44px] px-2"
+							>
+								<Car className="w-3 h-3 sm:w-4 sm:h-4 shrink-0" />
+								<span>Fleet</span>
+							</TabsTrigger>
 							{hasWardenAccess && (
 								<TabsTrigger
 									value="settings"
@@ -672,6 +681,12 @@ const CampaignDetail = () => {
 
 						<TabsContent value="activity">
 							<CampaignActivityPanel campaignId={id || ""} />
+						</TabsContent>
+						<TabsContent value="vehicles">
+							<CampaignVehiclesPanel
+								campaignId={id || ""}
+								isWarden={hasWardenAccess}
+							/>
 						</TabsContent>
 
 						{hasWardenAccess && (
