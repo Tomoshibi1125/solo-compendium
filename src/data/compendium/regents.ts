@@ -110,7 +110,7 @@ export const regents: Regent[] = [
 				level: 3,
 				name: "Legion of the Veil",
 				description:
-					"As an action, summon 2d6 umbral legionnaires that fight for you for 1 hour. They have the stats of shadows but obey your commands.",
+					"As an action, summon 2d6 umbral legionnaires that fight for you until dismissed. They have the stats of umbral shades but obey your commands.",
 				type: "action",
 				frequency: "once-per-day",
 			},

@@ -46,6 +46,7 @@ import {
 } from "@/hooks/useShadowSoldiers";
 import type { Json } from "@/integrations/supabase/types";
 import { shadowGradeBadgeClass } from "@/lib/rankColors";
+import { umbralEnergyCost, umbralEnergyMax } from "@/lib/umbralEnergy";
 import { cn } from "@/lib/utils";
 import {
 	formatRegentVernacular,
@@ -128,6 +129,17 @@ export function ShadowSoldiersPanel({
 
 	const summonedCount = mySoldiers.filter((s) => s.is_summoned).length;
 
+	// Umbral energy — derived summoning-capacity pool (members persist until
+	// dismissed, so capacity is a pool, not a timer). Full power (200) at L20.
+	const energyMax = umbralEnergyMax(characterLevel);
+	const energyUsed = mySoldiers.reduce(
+		(sum, s) => sum + (s.is_summoned ? umbralEnergyCost(s.soldier?.rank) : 0),
+		0,
+	);
+	const energyAvailable = energyMax - energyUsed;
+	const energyPct =
+		energyMax > 0 ? Math.round((energyUsed / energyMax) * 100) : 0;
+
 	const handleHPChange = (
 		soldierId: string,
 		currentHp: number,
@@ -187,6 +199,19 @@ export function ShadowSoldiersPanel({
 					>
 						{summonedCount} Summoned
 					</Badge>
+				</div>
+
+				{/* Umbral energy — summoning-capacity pool */}
+				<div className="mt-1">
+					<div className="flex items-center justify-between text-xs mb-1">
+						<span className="text-muted-foreground font-heading uppercase tracking-wider">
+							Umbral Energy
+						</span>
+						<span className="font-mono text-resurge-violet">
+							{energyAvailable} / {energyMax} free
+						</span>
+					</div>
+					<Progress value={energyPct} className="h-2" />
 				</div>
 
 				<Separator className="bg-shadow-purple/20" />
@@ -267,7 +292,22 @@ export function ShadowSoldiersPanel({
 										<Button
 											size="sm"
 											variant={css.is_summoned ? "default" : "outline"}
+											disabled={
+												!css.is_summoned &&
+												energyAvailable < umbralEnergyCost(soldier.rank)
+											}
 											onClick={() => {
+												if (
+													!css.is_summoned &&
+													energyAvailable < umbralEnergyCost(soldier.rank)
+												) {
+													toast({
+														title: "Not enough umbral energy",
+														description: `${soldier.name} needs ${umbralEnergyCost(soldier.rank)} energy; ${energyAvailable} free.`,
+														variant: "destructive",
+													});
+													return;
+												}
 												toggleSummon.mutate({
 													characterId,
 													shadowSoldierId: css.id,
