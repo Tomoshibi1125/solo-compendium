@@ -9,6 +9,7 @@ import {
 	FileText,
 	Loader2,
 	MessageSquare,
+	ScrollText,
 	Settings,
 	Share2,
 	Shield,
@@ -26,6 +27,7 @@ import { CampaignInviteModal } from "@/components/campaign/CampaignInviteModal";
 import { CampaignNotes } from "@/components/campaign/CampaignNotes";
 import { CampaignPresenceBadge } from "@/components/campaign/CampaignPresenceBadge";
 import { CampaignProtocolControls } from "@/components/campaign/CampaignProtocolControls";
+import { CampaignQuestsPanel } from "@/components/campaign/CampaignQuestsPanel";
 import { CampaignRegentOversight } from "@/components/campaign/CampaignRegentOversight";
 import { CampaignRelicsPanel } from "@/components/campaign/CampaignRelicsPanel";
 import { CampaignRollFeed } from "@/components/campaign/CampaignRollFeed";
@@ -430,6 +432,13 @@ const CampaignDetail = () => {
 								<Car className="w-3 h-3 sm:w-4 sm:h-4 shrink-0" />
 								<span>Assets</span>
 							</TabsTrigger>
+							<TabsTrigger
+								value="quests"
+								className="flex-1 gap-1.5 text-xs sm:text-sm min-h-[44px] px-2"
+							>
+								<ScrollText className="w-3 h-3 sm:w-4 sm:h-4 shrink-0" />
+								<span>Quests</span>
+							</TabsTrigger>
 							{hasWardenAccess && (
 								<TabsTrigger
 									value="settings"
@@ -712,6 +721,12 @@ const CampaignDetail = () => {
 									isWarden={hasWardenAccess}
 								/>
 							</div>
+						</TabsContent>
+						<TabsContent value="quests">
+							<CampaignQuestsPanel
+								campaignId={id || ""}
+								isWarden={hasWardenAccess}
+							/>
 						</TabsContent>
 
 						{hasWardenAccess && (

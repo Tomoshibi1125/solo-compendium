@@ -8422,6 +8422,7 @@ export type Database = {
 			};
 			session_quests: {
 				Row: {
+					campaign_id: string;
 					completion_notes: string | null;
 					created_at: string | null;
 					created_by: string;
@@ -8429,12 +8430,12 @@ export type Database = {
 					id: string;
 					objectives: string[];
 					rewards: Json;
-					session_id: string;
 					status: string;
 					title: string;
 					updated_at: string | null;
 				};
 				Insert: {
+					campaign_id: string;
 					completion_notes?: string | null;
 					created_at?: string | null;
 					created_by: string;
@@ -8442,12 +8443,12 @@ export type Database = {
 					id?: string;
 					objectives?: string[];
 					rewards?: Json;
-					session_id: string;
 					status?: string;
 					title: string;
 					updated_at?: string | null;
 				};
 				Update: {
+					campaign_id?: string;
 					completion_notes?: string | null;
 					created_at?: string | null;
 					created_by?: string;
@@ -8455,17 +8456,30 @@ export type Database = {
 					id?: string;
 					objectives?: string[];
 					rewards?: Json;
-					session_id?: string;
 					status?: string;
 					title?: string;
 					updated_at?: string | null;
 				};
 				Relationships: [
 					{
-						foreignKeyName: "session_quests_session_id_fkey";
-						columns: ["session_id"];
+						foreignKeyName: "session_quests_campaign_id_fkey";
+						columns: ["campaign_id"];
 						isOneToOne: false;
-						referencedRelation: "active_sessions";
+						referencedRelation: "campaign_details";
+						referencedColumns: ["id"];
+					},
+					{
+						foreignKeyName: "session_quests_campaign_id_fkey";
+						columns: ["campaign_id"];
+						isOneToOne: false;
+						referencedRelation: "campaigns";
+						referencedColumns: ["id"];
+					},
+					{
+						foreignKeyName: "session_quests_campaign_id_fkey";
+						columns: ["campaign_id"];
+						isOneToOne: false;
+						referencedRelation: "campaigns_public_listings";
 						referencedColumns: ["id"];
 					},
 				];
@@ -9035,10 +9049,10 @@ export type Database = {
 			};
 			create_session_quest: {
 				Args: {
+					p_campaign_id: string;
 					p_description: string;
-					p_objectives?: string[];
-					p_rewards: Json;
-					p_session_id: string;
+					p_objectives: string[];
+					p_rewards?: Json;
 					p_title: string;
 				};
 				Returns: string;
