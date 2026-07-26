@@ -27,6 +27,7 @@ import { CampaignNotes } from "@/components/campaign/CampaignNotes";
 import { CampaignPresenceBadge } from "@/components/campaign/CampaignPresenceBadge";
 import { CampaignProtocolControls } from "@/components/campaign/CampaignProtocolControls";
 import { CampaignRegentOversight } from "@/components/campaign/CampaignRegentOversight";
+import { CampaignRelicsPanel } from "@/components/campaign/CampaignRelicsPanel";
 import { CampaignRollFeed } from "@/components/campaign/CampaignRollFeed";
 import { CampaignSessionsPanel } from "@/components/campaign/CampaignSessionsPanel";
 import { CampaignSettings } from "@/components/campaign/CampaignSettings";
@@ -422,11 +423,11 @@ const CampaignDetail = () => {
 								<span>Activity</span>
 							</TabsTrigger>
 							<TabsTrigger
-								value="vehicles"
+								value="assets"
 								className="flex-1 gap-1.5 text-xs sm:text-sm min-h-[44px] px-2"
 							>
 								<Car className="w-3 h-3 sm:w-4 sm:h-4 shrink-0" />
-								<span>Fleet</span>
+								<span>Assets</span>
 							</TabsTrigger>
 							{hasWardenAccess && (
 								<TabsTrigger
@@ -682,11 +683,25 @@ const CampaignDetail = () => {
 						<TabsContent value="activity">
 							<CampaignActivityPanel campaignId={id || ""} />
 						</TabsContent>
-						<TabsContent value="vehicles">
-							<CampaignVehiclesPanel
-								campaignId={id || ""}
-								isWarden={hasWardenAccess}
-							/>
+						<TabsContent value="assets" className="space-y-6">
+							<div>
+								<h2 className="font-heading text-sm uppercase tracking-widest text-muted-foreground mb-3">
+									Relic Vault
+								</h2>
+								<CampaignRelicsPanel
+									campaignId={id || ""}
+									isWarden={hasWardenAccess}
+								/>
+							</div>
+							<div>
+								<h2 className="font-heading text-sm uppercase tracking-widest text-muted-foreground mb-3">
+									Vehicle Fleet
+								</h2>
+								<CampaignVehiclesPanel
+									campaignId={id || ""}
+									isWarden={hasWardenAccess}
+								/>
+							</div>
 						</TabsContent>
 
 						{hasWardenAccess && (
