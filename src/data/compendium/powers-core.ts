@@ -364,14 +364,14 @@ export const powers_core: CompendiumPower[] = [
 		description:
 			"Reweaves spent lattice threads back into the caster's reserves. Recovers 2d10 + 4 HP worth of ability resource (modeled as HP for audit purposes).",
 		lore: {
-			origin: "A relic of the Shadow Legion.",
+			origin: "A relic of the Umbral Legion.",
 			history:
-				"Pieced together from Shadow Legion field notes on lattice-thread reclamation.",
+				"Pieced together from Umbral Legion field notes on lattice-thread reclamation.",
 			curse: "",
 			personality: "Unobtrusive while not being used.",
 			current_owner: "Favored by casters who fight long past their reserves.",
 			prior_owners: [
-				"The Shadow Legion remnant",
+				"The Umbral Legion remnant",
 				"Ascendant Academy Reference Collection",
 			],
 		},

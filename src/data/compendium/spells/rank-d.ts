@@ -1221,7 +1221,7 @@ export const spells_d: CompendiumSpell[] = [
 			"Reach out and discharge the caster's stored lattice as a grounded arc. Make a melee spell attack using Sense for 1d8 lightning damage, and the target must succeed on a DC 12 Strength save or take full damage (no effect on a success). Concentration, lasts 10 minutes.",
 		lore: {
 			origin:
-				"A grounded variant of the Shadow Legion's mid-tier lattice discharge, adapted for Bureau safety standards.",
+				"A grounded variant of the Umbral Legion's mid-tier lattice discharge, adapted for Bureau safety standards.",
 			history:
 				"Allowed only after the Bureau confirmed the lance cannot arc to unintended targets through a metal floor.",
 			curse:
@@ -1230,7 +1230,7 @@ export const spells_d: CompendiumSpell[] = [
 				"Deliberate; the cast only completes once the caster has fully grounded themselves with at least one foot flat.",
 			current_owner: "Rank D Bureau close-combat specialists.",
 			prior_owners: [
-				"Shadow Legion Adjutant (unnamed)",
+				"Umbral Legion Adjutant (unnamed)",
 				"Bureau Standards Office",
 			],
 		},

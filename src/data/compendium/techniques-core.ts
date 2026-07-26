@@ -18,7 +18,7 @@ export const techniques_core: CompendiumTechnique[] = [
 		description:
 			"Drops the caster into a defensive stance that channels incoming blows into their resource pool. Grants 4d6 temporary HP to the caster for 1 minute or until struck at 0 HP.",
 		lore: {
-			origin: "A relic of the Shadow Legion.",
+			origin: "A relic of the Umbral Legion.",
 			history:
 				"Standardized from a Guild Vanguard bracing drill used to anchor a collapsing front line.",
 			curse: "",

@@ -68,7 +68,7 @@ export interface Item {
 	essence_cost?: number; // Essence cost to use/attune
 	ascendant_level_required?: number; // Minimum Ascendant level
 	system_awakening_required?: boolean; // Requires Ascendant Awakening
-	shadow_soldier_compatible?: boolean; // Can be used by Shadow Soldiers (Umbral Regent only)
+	shadow_soldier_compatible?: boolean; // Can be used by Umbral Legionnaires (Umbral Regent only)
 	legendary_crafted?: boolean; // Legendary crafted item
 
 	// Enhanced properties

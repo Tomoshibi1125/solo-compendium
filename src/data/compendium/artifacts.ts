@@ -277,7 +277,7 @@ export const artifacts: Item[] = [
 			current_owner: "",
 			curse: "Slowly drains ambient stamina from the wielder.",
 			history:
-				"It cloaked a lone infiltrator who walked out of a Shadow Legion muster-ground with the Legion's own deployment ledgers, seen by no one and recorded on no feed.",
+				"It cloaked a lone infiltrator who walked out of a Umbral Legion muster-ground with the Legion's own deployment ledgers, seen by no one and recorded on no feed.",
 			origin:
 				"Woven strand by strand over eleven months by the Bureau's lead Technomancer, who drew the material directly from the event horizon of a stabilized Threshold.",
 			personality: "",
@@ -899,7 +899,7 @@ export const artifacts: Item[] = [
 			history:
 				"A guild used it to turn an entire A-Rank monster horde against its own gate-boss, an exploit the Bureau banned from sanctioned Clears within the month.",
 			origin:
-				"Lifted from the personal effects of a Shadow Legion field-commander during a raid on the Legion's armory, still logged in the Legion's own manifest as a Regent's requisition awaiting collection.",
+				"Lifted from the personal effects of a Umbral Legion field-commander during a raid on the Legion's armory, still logged in the Legion's own manifest as a Regent's requisition awaiting collection.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -1152,7 +1152,7 @@ export const artifacts: Item[] = [
 			current_owner: "",
 			curse: "Slowly drains ambient stamina from the wielder.",
 			history:
-				"Recovered from a Shadow Legion armory raid where it had been mounted as a trophy, its inner face still scored with the killing blows of the guild raid it had outlasted.",
+				"Recovered from a Umbral Legion armory raid where it had been mounted as a trophy, its inner face still scored with the killing blows of the guild raid it had outlasted.",
 			origin:
 				"Cut from the shed carapace of a calamity-class anomaly that had grown immune to its own environment, the plating still adapting to threats months after the creature that grew it was slain.",
 			personality: "",
@@ -1905,7 +1905,7 @@ export const artifacts: Item[] = [
 		requires_attunement: true,
 		effects: {
 			passive: [
-				"This blade bears a specific Regent's signet; while attuned, shadow-creatures and Shadow Legion units have disadvantage on attack rolls against you.",
+				"This blade bears a specific Regent's signet; while attuned, shadow-creatures and Umbral Legion units have disadvantage on attack rolls against you.",
 				"On a hit against a creature below its hit point maximum, this weapon deals an extra 1d12 necrotic damage.",
 			],
 		},
@@ -1914,7 +1914,7 @@ export const artifacts: Item[] = [
 			current_owner: "",
 			curse: "Slowly drains ambient stamina from the wielder.",
 			history:
-				"A defector wielded it to walk unopposed through a Shadow Legion checkpoint, the sentries reading the signet and standing aside before they understood the hand holding it was no longer their master's.",
+				"A defector wielded it to walk unopposed through a Umbral Legion checkpoint, the sentries reading the signet and standing aside before they understood the hand holding it was no longer their master's.",
 			origin:
 				"Forged by the Bureau's lead Technomancer as a reproduction of a slain Regent's signature weapon, then rendered authentic when the Regent's residual essence recognized the signet and bonded to the steel.",
 			personality: "",
@@ -1938,7 +1938,7 @@ export const artifacts: Item[] = [
 		},
 		mechanics: {
 			special: [
-				"This blade bears a specific Regent's signet; while attuned, shadow-creatures and Shadow Legion units have disadvantage on attack rolls against you.",
+				"This blade bears a specific Regent's signet; while attuned, shadow-creatures and Umbral Legion units have disadvantage on attack rolls against you.",
 				"On a hit against a creature below its hit point maximum, this weapon deals an extra 1d12 necrotic damage.",
 			],
 			ability_modifiers: {
@@ -1980,7 +1980,7 @@ export const artifacts: Item[] = [
 				theme: "standard",
 			},
 			passive_rules: [
-				"This blade bears a specific Regent's signet; while attuned, shadow-creatures and Shadow Legion units have disadvantage on attack rolls against you.",
+				"This blade bears a specific Regent's signet; while attuned, shadow-creatures and Umbral Legion units have disadvantage on attack rolls against you.",
 				"On a hit against a creature below its hit point maximum, this weapon deals an extra 1d12 necrotic damage.",
 			],
 			resolution: {
@@ -1991,7 +1991,7 @@ export const artifacts: Item[] = [
 				damage_formula: "3d8 + STR modifier",
 				damage_roll: true,
 				on_hit: [
-					"This blade bears a specific Regent's signet; while attuned, shadow-creatures and Shadow Legion units have disadvantage on attack rolls against you.",
+					"This blade bears a specific Regent's signet; while attuned, shadow-creatures and Umbral Legion units have disadvantage on attack rolls against you.",
 					"On a hit against a creature below its hit point maximum, this weapon deals an extra 1d12 necrotic damage.",
 				],
 			},
@@ -2041,7 +2041,7 @@ export const artifacts: Item[] = [
 			history:
 				"It changed hands twice in a single night during a Guild Vault heist, each thief killed by the shadow the previous one had raised, until the third simply left it where it lay and walked out empty-handed.",
 			origin:
-				"Smuggled out of the Shadow Legion's armory where it had been kept as a regalia piece, its inner band still bearing the ash-mark of the fallen Regent from whose remains it was rewoven.",
+				"Smuggled out of the Umbral Legion's armory where it had been kept as a regalia piece, its inner band still bearing the ash-mark of the fallen Regent from whose remains it was rewoven.",
 			personality: "",
 			prior_owners: [],
 		},

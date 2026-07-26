@@ -1,4 +1,4 @@
-// Umbral Legion — Shadow Soldier Compendium
+// Umbral Legion — Umbral Legionnaire Compendium
 // Full stat blocks for Umbral Regent's raised army.
 export interface ShadowSoldier {
 	id: string;

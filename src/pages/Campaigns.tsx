@@ -511,7 +511,7 @@ const Campaigns = () => {
 									id="campaign-name"
 									value={campaignName}
 									onChange={(e) => setCampaignName(e.target.value)}
-									placeholder="The Shadow Legion"
+									placeholder="The Umbral Legion"
 									className="mt-1 border-resurge/30 focus:border-resurge/50"
 								/>
 							</div>

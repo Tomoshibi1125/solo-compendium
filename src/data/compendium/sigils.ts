@@ -1375,7 +1375,7 @@ export const sigils: CompendiumSigil[] = [
 		},
 		flavor: "Serve me in death.",
 		discovery_lore:
-			"A forbidden artifact from the Shadow Legion Archives, recovered by Bureau agents after its previous wielder lost their mind to the whispering dark.",
+			"A forbidden artifact from the Umbral Legion Archives, recovered by Bureau agents after its previous wielder lost their mind to the whispering dark.",
 		tags: ["sigil", "weapon", "necrotic", "summoning"],
 		active_feature:
 			"Void Step: As a bonus action, teleport up to 30 feet to an unoccupied space you can see that is in dim light or darkness. (Proficiency/long rest)",

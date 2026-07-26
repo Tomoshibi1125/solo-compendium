@@ -1,5 +1,5 @@
 /**
- * CompanionSheet — full sub-sheet view for an extracted Shadow Soldier.
+ * CompanionSheet — full sub-sheet view for an extracted Umbral Legionnaire.
  *
  * Q3 of Round 3 (R7). Mirrors the DDB Companion Sheet UX: dedicated
  * route, per-companion ability scores, AC + HP + initiative bar, action

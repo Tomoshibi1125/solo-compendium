@@ -43,14 +43,14 @@ export const NINE_REGENTS: RegentPath[] = [
 		description:
 			"Exarch of death and the abyssal realm. Command an eternal army extracted from fallen foes. Your System displays [SHADOW REGENT PROTOCOL]. Ascendant Bureau: S-Rank necromancy threat.",
 		abilities: [
-			"Shadow Extraction",
+			"Umbral Extraction",
 			"Shadow Storage Dimension",
 			"Shadow Exchange",
 			"Eternal Army Command",
 		],
 		features: [
 			{
-				name: "Shadow Extraction",
+				name: "Umbral Extraction",
 				description:
 					"Extract shadow from defeated enemy (CR ≤ level) as bonus action. Shadow soldier retains original abilities at 50% power. Max army = 2x level. Permanent until destroyed. Aether-sight shows army roster with 3D models.",
 				type: "necromancy",
