@@ -304,9 +304,6 @@ export function createLocalCharacter(
 		rift_favor_max: data.rift_favor_max ?? 0,
 		rift_favor_die: data.rift_favor_die ?? 4,
 
-		shadow_energy_current: data.shadow_energy_current ?? 0,
-		shadow_energy_max: data.shadow_energy_max ?? 0,
-
 		saving_throw_proficiencies: data.saving_throw_proficiencies ?? null,
 		skill_proficiencies: data.skill_proficiencies ?? null,
 		skill_expertise: data.skill_expertise ?? null,

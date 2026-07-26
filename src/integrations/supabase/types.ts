@@ -3872,8 +3872,6 @@ export type Database = {
 						| null;
 					sense: number | null;
 					senses: string[] | null;
-					shadow_energy_current: number;
-					shadow_energy_max: number;
 					share_token: string | null;
 					sheet_accent: string | null;
 					sheet_backdrop: string | null;
@@ -3943,8 +3941,6 @@ export type Database = {
 						| null;
 					sense?: number | null;
 					senses?: string[] | null;
-					shadow_energy_current?: number;
-					shadow_energy_max?: number;
 					share_token?: string | null;
 					sheet_accent?: string | null;
 					sheet_backdrop?: string | null;
@@ -4014,8 +4010,6 @@ export type Database = {
 						| null;
 					sense?: number | null;
 					senses?: string[] | null;
-					shadow_energy_current?: number;
-					shadow_energy_max?: number;
 					share_token?: string | null;
 					sheet_accent?: string | null;
 					sheet_backdrop?: string | null;
@@ -8821,8 +8815,6 @@ export type Database = {
 						| null;
 					sense: number | null;
 					senses: string[] | null;
-					shadow_energy_current: number | null;
-					shadow_energy_max: number | null;
 					share_token: string | null;
 					sheet_accent: string | null;
 					sheet_backdrop: string | null;

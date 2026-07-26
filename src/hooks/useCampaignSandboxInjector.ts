@@ -878,8 +878,6 @@ export function useCampaignSandboxInjector(campaignId: string | null) {
 								rift_favor_current: 0,
 								rift_favor_max: 0,
 								rift_favor_die: 0,
-								shadow_energy_current: 0,
-								shadow_energy_max: 0,
 								hit_dice_current: npc.level,
 								hit_dice_max: npc.level,
 								hit_dice_size: 8,
