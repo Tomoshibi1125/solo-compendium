@@ -31,6 +31,7 @@ import { CampaignRelicsPanel } from "@/components/campaign/CampaignRelicsPanel";
 import { CampaignRollFeed } from "@/components/campaign/CampaignRollFeed";
 import { CampaignSessionsPanel } from "@/components/campaign/CampaignSessionsPanel";
 import { CampaignSettings } from "@/components/campaign/CampaignSettings";
+import { CampaignTamedAnomaliesPanel } from "@/components/campaign/CampaignTamedAnomaliesPanel";
 import { CampaignVehiclesPanel } from "@/components/campaign/CampaignVehiclesPanel";
 import { CampaignWiki } from "@/components/campaign/CampaignWiki";
 import { SessionReplayPanel } from "@/components/campaign/SessionReplayPanel";
@@ -698,6 +699,15 @@ const CampaignDetail = () => {
 									Vehicle Fleet
 								</h2>
 								<CampaignVehiclesPanel
+									campaignId={id || ""}
+									isWarden={hasWardenAccess}
+								/>
+							</div>
+							<div>
+								<h2 className="font-heading text-sm uppercase tracking-widest text-muted-foreground mb-3">
+									Tamed Anomalies
+								</h2>
+								<CampaignTamedAnomaliesPanel
 									campaignId={id || ""}
 									isWarden={hasWardenAccess}
 								/>
