@@ -127,19 +127,19 @@ export function useCharacterShadowSoldiers(characterId: string | undefined) {
 		queryFn: async () => {
 			if (!characterId)
 				return [] as Array<
-					Database["public"]["Tables"]["character_shadow_soldiers"]["Row"] & {
+					Database["public"]["Tables"]["character_umbral_legionnaires"]["Row"] & {
 						soldier?: ShadowSoldier;
 					}
 				>;
 
 			const { data, error } = await supabase
-				.from("character_shadow_soldiers")
+				.from("character_umbral_legionnaires")
 				.select("*")
 				.eq("character_id", characterId);
 
 			if (error) throw error;
 			const rows = (data || []) as Array<
-				Database["public"]["Tables"]["character_shadow_soldiers"]["Row"]
+				Database["public"]["Tables"]["character_umbral_legionnaires"]["Row"]
 			>;
 
 			const entries = await listCanonicalEntries("shadow-soldiers");
@@ -183,7 +183,7 @@ export function useExtractShadowSoldier() {
 			);
 
 			const { data, error } = await supabase
-				.from("character_shadow_soldiers")
+				.from("character_umbral_legionnaires")
 				.insert({
 					character_id: params.characterId,
 					soldier_id: params.soldierId,
@@ -232,7 +232,7 @@ export function useToggleSummon() {
 			summon: boolean;
 		}) => {
 			const { data, error } = await supabase
-				.from("character_shadow_soldiers")
+				.from("character_umbral_legionnaires")
 				.update({ is_summoned: params.summon })
 				.eq("id", params.shadowSoldierId)
 				.select("*")
@@ -275,7 +275,7 @@ export function useUpdateSoldierHP() {
 			currentHp: number;
 		}) => {
 			const { data, error } = await supabase
-				.from("character_shadow_soldiers")
+				.from("character_umbral_legionnaires")
 				.update({ current_hp: params.currentHp })
 				.eq("id", params.shadowSoldierId)
 				.select()
@@ -312,7 +312,7 @@ export function useUpdateSoldierConditions() {
 			conditions: SoldierCondition[];
 		}) => {
 			const { data, error } = await (supabase
-				.from("character_shadow_soldiers")
+				.from("character_umbral_legionnaires")
 				.update({
 					conditions: params.conditions as unknown as never,
 				} as never)
@@ -342,7 +342,7 @@ export function useUpdateSoldierInitiative() {
 			initiative: number | null;
 		}) => {
 			const { data, error } = await (supabase
-				.from("character_shadow_soldiers")
+				.from("character_umbral_legionnaires")
 				.update({ initiative: params.initiative } as never)
 				.eq("id", params.shadowSoldierId)
 				.select()
@@ -370,7 +370,7 @@ export function useUpdateSoldierNotes() {
 			notes: string;
 		}) => {
 			const { data, error } = await (supabase
-				.from("character_shadow_soldiers")
+				.from("character_umbral_legionnaires")
 				.update({ notes: params.notes } as never)
 				.eq("id", params.shadowSoldierId)
 				.select()
@@ -398,7 +398,7 @@ export function useUpdateSoldierMaxHp() {
 			maxHpOverride: number | null;
 		}) => {
 			const { data, error } = await (supabase
-				.from("character_shadow_soldiers")
+				.from("character_umbral_legionnaires")
 				.update({
 					max_hp_override: params.maxHpOverride,
 				} as never)

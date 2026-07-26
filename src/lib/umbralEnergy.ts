@@ -4,8 +4,9 @@
  * Umbral Legion members summoned by an Umbral Regent persist UNTIL DISMISSED
  * (not a duration), so capacity is gated by a pool rather than a timer. Each
  * summoned member occupies energy by its rank; the pool scales with level and
- * reaches full power (200) at level 20 — mirroring the DB
- * `calculate_shadow_energy_max` ladder. Energy is DERIVED from which members
+ * reaches full power (200) at level 20. This 10/25/50/100/200 ladder is the sole
+ * source of truth — it superseded a dead SECURITY DEFINER `calculate_shadow_energy_max`
+ * placeholder (dropped in 20260726120000). Energy is DERIVED from which members
  * are currently summoned (no separate persisted counter), so it can never drift.
  */
 

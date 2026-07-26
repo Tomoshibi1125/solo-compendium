@@ -61,7 +61,7 @@ type SigilInscriptionInsert =
 	Database["public"]["Tables"]["character_sigil_inscriptions"]["Insert"];
 type RegentInsert = Database["public"]["Tables"]["character_regents"]["Insert"];
 type ShadowSoldierInsert =
-	Database["public"]["Tables"]["character_shadow_soldiers"]["Insert"];
+	Database["public"]["Tables"]["character_umbral_legionnaires"]["Insert"];
 type JournalInsert =
 	Database["public"]["Tables"]["character_journal"]["Insert"];
 type BackupInsert = Database["public"]["Tables"]["character_backups"]["Insert"];
@@ -896,7 +896,7 @@ async function importRelatedCharacterRows(
 		);
 		if (shadowSoldiers.length > 0) {
 			await supabase
-				.from("character_shadow_soldiers")
+				.from("character_umbral_legionnaires")
 				.insert(shadowSoldiers)
 				.throwOnError();
 		}
@@ -1254,11 +1254,11 @@ export function useCharacterExport() {
 						.select("*")
 						.eq("character_id", characterId),
 					supabase
-						.from("character_shadow_soldiers")
+						.from("character_umbral_legionnaires")
 						.select("*")
 						.eq("character_id", characterId),
 					// `character_shadow_army` holds bulk/anonymous summons (distinct
-					// from named `character_shadow_soldiers`, which render as
+					// from named `character_umbral_legionnaires`, which render as
 					// Companions on the sheet). It is intentionally export/import-only
 					// today — carried in the portable package for round-trip fidelity
 					// but not surfaced as its own on-sheet panel.

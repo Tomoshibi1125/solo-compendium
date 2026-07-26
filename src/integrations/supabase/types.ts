@@ -3207,7 +3207,7 @@ export type Database = {
 					},
 				];
 			};
-			character_shadow_soldiers: {
+			character_umbral_legionnaires: {
 				Row: {
 					bond_level: number;
 					character_id: string;
@@ -8988,9 +8988,6 @@ export type Database = {
 				Returns: number;
 			};
 			calculate_proficiency_bonus: { Args: { level: number }; Returns: number };
-			calculate_shadow_energy_max:
-				| { Args: { character_level: number }; Returns: number }
-				| { Args: { p_character_id: string }; Returns: number };
 			can_manage_homebrew_content: {
 				Args: { p_homebrew_id: string; p_user_id?: string };
 				Returns: boolean;
