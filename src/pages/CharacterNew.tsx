@@ -105,6 +105,18 @@ import {
 	initializeProtocolData,
 } from "@/lib/ProtocolDataManager";
 import { getEffectiveMaxAbilityLevel } from "@/lib/pathAbilityAccess";
+import { getPathEligibility } from "@/lib/pathEligibility";
+import {
+	buildCharacterCreationWorkflowPlanV1,
+	type CharacterCreationWorkflowInputV1,
+	type CharacterWorkflowChoiceInputV1,
+	type CharacterWorkflowFeatureInputV1,
+	type CharacterWorkflowFixedGrantInputV1,
+	type CharacterWorkflowIdentityV1,
+	createCharacterWorkflowHandoffV1,
+	createCharacterWorkflowSourceAddressV1,
+	summarizeCharacterWorkflowBlockersV1,
+} from "@/lib/planning/adapters/characterWorkflowAdapter";
 import { resolvePowerActionFormula } from "@/lib/powerActionFormulas";
 import {
 	dedupeProficiencies,
@@ -122,14 +134,23 @@ import type {
 } from "@/types/character";
 import { type AbilityScore, SKILLS } from "@/types/core-rules";
 
+type StaticPathFeatureSource = {
+	name: string;
+	description?: string | null;
+	level?: number | null;
+};
+
 type StaticPathSource = {
 	id: string;
 	name: string;
+	aliases?: string[];
 	description: string;
 	jobId?: string;
 	jobName?: string;
 	requirements?: {
 		level?: number | null;
+		skills?: string[];
+		prerequisites?: string[];
 	};
 	source?: string;
 };
@@ -327,6 +348,7 @@ const buildCreatorProfileNotes = (profile: {
 };
 
 type StaticJobCreationLedger = StaticJob & {
+	skillChoiceCount?: number;
 	levelChoices?: LedgerChoice[];
 	powersKnown?: number[];
 	techniquesKnown?: number[];
@@ -337,6 +359,36 @@ type StaticJobCreationLedger = StaticJob & {
 		startLevel?: number;
 	};
 };
+
+const canonicalWorkflowIdentity = (
+	id: string | null | undefined,
+	label: string,
+	collection: string,
+	sourceBook?: string | null,
+): CharacterWorkflowIdentityV1 => ({
+	id: id?.trim() || null,
+	label,
+	sourceKind: "canonical",
+	collection,
+	canonicalType: collection,
+	sourceBook: sourceBook ?? null,
+	persistence: "id",
+});
+
+const homebrewWorkflowIdentity = (
+	id: string | null | undefined,
+	label: string,
+	collection: string,
+	sourcePath: string,
+	persistence: CharacterWorkflowIdentityV1["persistence"] = "id",
+): CharacterWorkflowIdentityV1 => ({
+	id: id?.trim() || null,
+	label,
+	sourceKind: "homebrew",
+	collection,
+	sourcePath,
+	persistence,
+});
 
 const CharacterNew = () => {
 	const navigate = useNavigate();
@@ -472,9 +524,9 @@ const CharacterNew = () => {
 		queryFn: async () => {
 			const staticJobSource =
 				staticJobCatalog.length > 0
-					? staticJobCatalog
+					? (staticJobCatalog as StaticJobCreationLedger[])
 					: ((await import("@/data/compendium/jobs"))
-							.jobs as unknown as StaticJob[]);
+							.jobs as unknown as StaticJobCreationLedger[]);
 
 			return staticJobSource.map((job) => ({
 				...job,
@@ -500,7 +552,7 @@ const CharacterNew = () => {
 					job.toolProficiencies ||
 					[]) as string[],
 				skill_choices: (job.skillChoices || []) as string[],
-				skill_choice_count: 2,
+				skill_choice_count: job.skillChoiceCount ?? 2,
 				source_book: job.source || "Rift Ascendant Canon",
 				class_features: (job.classFeatures || null) as Json,
 				spellcasting: (job.spellcasting || null) as Json,
@@ -654,7 +706,7 @@ const CharacterNew = () => {
 		enabled: !!selectedJob,
 	});
 
-	const pathsAvailableAtCreation = useMemo(() => {
+	const pathsUnlockingAtCreation = useMemo(() => {
 		return paths.filter(
 			(path) =>
 				((path as { path_level?: number | null }).path_level ??
@@ -666,8 +718,6 @@ const CharacterNew = () => {
 					)) === 1,
 		);
 	}, [paths]);
-
-	const isPathRequiredAtCreation = pathsAvailableAtCreation.length > 0;
 
 	const { data: backgrounds = [] } = useQuery({
 		queryKey: ["backgrounds"],
@@ -697,11 +747,45 @@ const CharacterNew = () => {
 	const selectedBackgroundData = allBackgrounds.find(
 		(background) => background.id === selectedBackground,
 	);
+	const pathSkillProficiencies = useMemo(
+		() => [
+			...selectedSkills,
+			...(((
+				selectedBackgroundData as { skill_proficiencies?: string[] } | undefined
+			)?.skill_proficiencies ?? []) as string[]),
+		],
+		[selectedSkills, selectedBackgroundData],
+	);
+	const pathsAvailableAtCreation = useMemo(
+		() =>
+			pathsUnlockingAtCreation.map((path) => ({
+				...path,
+				eligibility: getPathEligibility(
+					path as unknown as Parameters<typeof getPathEligibility>[0],
+					{
+						jobId: selectedJob,
+						jobName: jobData?.name,
+						level: 1,
+						skillProficiencies: pathSkillProficiencies,
+					},
+				),
+			})),
+		[
+			pathsUnlockingAtCreation,
+			selectedJob,
+			jobData?.name,
+			pathSkillProficiencies,
+		],
+	);
+	const isPathRequiredAtCreation = pathsUnlockingAtCreation.length > 0;
 
 	const totalChoices = useMemo(() => {
 		const selectedPathRow =
 			selectedPath && selectedPath !== "none"
-				? pathsAvailableAtCreation.find((p: Path) => p.id === selectedPath)
+				? pathsAvailableAtCreation.find(
+						(p: Path & { eligibility?: { eligible: boolean } }) =>
+							p.id === selectedPath && p.eligibility?.eligible !== false,
+					)
 				: null;
 		const combinedJobData =
 			jobData || staticJobData
@@ -750,6 +834,16 @@ const CharacterNew = () => {
 		if (!selectedPath || selectedPath === "none") return null;
 		return paths.find((path) => path.id === selectedPath)?.name ?? null;
 	}, [paths, selectedPath]);
+
+	useEffect(() => {
+		if (!selectedPath || selectedPath === "none") return;
+		const selected = pathsAvailableAtCreation.find(
+			(path) => path.id === selectedPath,
+		);
+		if (!selected || selected.eligibility?.eligible === false) {
+			setSelectedPath("");
+		}
+	}, [pathsAvailableAtCreation, selectedPath]);
 
 	const requiredPowerChoices = Math.max(0, totalChoices.powers);
 	const requiredTechniqueChoices = Math.max(0, totalChoices.techniques);
@@ -1080,6 +1174,7 @@ const CharacterNew = () => {
 	const steps: { id: Step; name: string }[] = [
 		{ id: "concept", name: "Concept" },
 		{ id: "job", name: "Job" },
+		{ id: "background", name: "Background" },
 		...(isPathRequiredAtCreation
 			? ([{ id: "path", name: "Path" }] as const)
 			: []),
@@ -1087,7 +1182,6 @@ const CharacterNew = () => {
 			? ([{ id: "imprints", name: "Imprints" }] as const)
 			: []),
 		{ id: "abilities", name: "Abilities" },
-		{ id: "background", name: "Background" },
 		{ id: "persona", name: "Persona" },
 		{ id: "equipment", name: "Equipment" },
 		{ id: "review", name: "Review" },
@@ -1240,6 +1334,23 @@ const CharacterNew = () => {
 			});
 			return;
 		}
+		const selectedEligiblePath = pathsAvailableAtCreation.find(
+			(path) =>
+				path.id === selectedPath && path.eligibility?.eligible !== false,
+		);
+		if (isPathRequiredAtCreation && !selectedEligiblePath) {
+			const selectedRequirement = pathsAvailableAtCreation.find(
+				(path) => path.id === selectedPath,
+			)?.eligibility;
+			toast({
+				title: "Path requirements not met",
+				description:
+					selectedRequirement?.reason ??
+					"Select a path whose level and skill requirements are satisfied.",
+				variant: "destructive",
+			});
+			return;
+		}
 
 		setLoading(true);
 		let createdCharacterId: string | null = null;
@@ -1346,6 +1457,473 @@ const CharacterNew = () => {
 				bond,
 				flaw,
 			});
+			const baseArmorClass = 10 + getAbilityModifier(effectiveAbilities.AGI);
+			const jobWorkflowIdentity = selectedHomebrewJob
+				? homebrewWorkflowIdentity(
+						selectedHomebrewJob.id,
+						selectedHomebrewJob.name,
+						"jobs",
+						`publishedHomebrew.jobs.${selectedHomebrewJob.homebrew_id}`,
+					)
+				: canonicalWorkflowIdentity(
+						job.id,
+						job.name,
+						"jobs",
+						job.source ?? null,
+					);
+			const backgroundWorkflowIdentity = canonicalWorkflowIdentity(
+				bgData.id,
+				bgData.name,
+				"backgrounds",
+				bgData.source ?? null,
+			);
+			const workflowHomebrewPath = homebrewPaths.find(
+				(path) => path.id === selectedPath,
+			);
+			const workflowPathRow = paths.find((path) => path.id === selectedPath);
+			const pathWorkflowIdentity =
+				selectedPath && selectedPath !== "none"
+					? workflowHomebrewPath
+						? homebrewWorkflowIdentity(
+								workflowHomebrewPath.id,
+								workflowHomebrewPath.name,
+								"paths",
+								`publishedHomebrew.paths.${workflowHomebrewPath.homebrew_id}`,
+							)
+						: canonicalWorkflowIdentity(
+								workflowPathRow?.id ?? null,
+								workflowPathRow?.name ?? "Selected path",
+								"paths",
+								(workflowPathRow as { source_book?: string | null } | undefined)
+									?.source_book ?? null,
+							)
+					: null;
+			const creationWorkflowFeatures: CharacterWorkflowFeatureInputV1[] = [];
+			const addAddressedFeatures = (
+				entries: ReadonlyArray<{
+					name: string;
+					description?: string | null;
+					level?: number | null;
+				}>,
+				owner: CharacterWorkflowIdentityV1,
+				collection: string,
+				sourceRoot: string,
+				defaultLevel = 1,
+			) => {
+				for (const [index, feature] of entries.entries()) {
+					const featureLevel = feature.level ?? defaultLevel;
+					if (featureLevel !== 1) continue;
+					creationWorkflowFeatures.push({
+						identity: createCharacterWorkflowSourceAddressV1({
+							ownerId: owner.id ?? "missing-owner-id",
+							collection,
+							sourcePath: `${sourceRoot}[${index}]`,
+							label: feature.name,
+							payload: { description: feature.description ?? null },
+						}),
+						owner,
+						level: 1,
+					});
+				}
+			};
+			if (selectedHomebrewJob) {
+				for (const [sourceRoot, features] of [
+					["classFeatures", selectedHomebrewJob.classFeatures],
+					["awakeningFeatures", selectedHomebrewJob.awakeningFeatures],
+					["jobTraits", selectedHomebrewJob.jobTraits],
+				] as const) {
+					for (const [index, feature] of features.entries()) {
+						if (feature.level !== 1) continue;
+						creationWorkflowFeatures.push({
+							identity: homebrewWorkflowIdentity(
+								feature.id,
+								feature.name,
+								"homebrew-features",
+								`publishedHomebrew.jobs.${selectedHomebrewJob.homebrew_id}.${sourceRoot}[${index}]`,
+							),
+							owner: jobWorkflowIdentity,
+							level: 1,
+							payload: {
+								description: feature.description ?? null,
+								homebrewId: feature.homebrew_id ?? null,
+							},
+						});
+					}
+				}
+			} else {
+				const canonicalWorkflowJob = job as StaticJob;
+				addAddressedFeatures(
+					canonicalWorkflowJob.classFeatures ?? [],
+					jobWorkflowIdentity,
+					"job-features",
+					"classFeatures",
+				);
+				addAddressedFeatures(
+					canonicalWorkflowJob.awakeningFeatures ?? [],
+					jobWorkflowIdentity,
+					"job-awakening-features",
+					"awakeningFeatures",
+				);
+				addAddressedFeatures(
+					canonicalWorkflowJob.jobTraits ?? [],
+					jobWorkflowIdentity,
+					"job-traits",
+					"jobTraits",
+				);
+				addAddressedFeatures(
+					canonicalWorkflowJob.racialTraits ?? [],
+					jobWorkflowIdentity,
+					"racial-traits",
+					"racialTraits",
+				);
+				addAddressedFeatures(
+					canonicalWorkflowJob.naturalWeapons ?? [],
+					jobWorkflowIdentity,
+					"natural-weapons",
+					"naturalWeapons",
+				);
+				if (canonicalWorkflowJob.naturalArmor) {
+					creationWorkflowFeatures.push({
+						identity: createCharacterWorkflowSourceAddressV1({
+							ownerId: jobWorkflowIdentity.id ?? "missing-owner-id",
+							collection: "natural-armor",
+							sourcePath: "naturalArmor",
+							label: "Natural Armor",
+							payload: {
+								baseArmorClass: canonicalWorkflowJob.naturalArmor.baseAC,
+							},
+						}),
+						owner: jobWorkflowIdentity,
+						level: 1,
+					});
+				}
+			}
+			if (workflowHomebrewPath && pathWorkflowIdentity) {
+				for (const [
+					index,
+					feature,
+				] of workflowHomebrewPath.features.entries()) {
+					if (feature.level !== 1) continue;
+					creationWorkflowFeatures.push({
+						identity: homebrewWorkflowIdentity(
+							feature.id,
+							feature.name,
+							"homebrew-features",
+							`publishedHomebrew.paths.${workflowHomebrewPath.homebrew_id}.features[${index}]`,
+						),
+						owner: pathWorkflowIdentity,
+						level: 1,
+						payload: {
+							description: feature.description ?? null,
+							homebrewId: feature.homebrew_id ?? null,
+						},
+					});
+				}
+			} else if (pathWorkflowIdentity && selectedEligiblePath) {
+				addAddressedFeatures(
+					((selectedEligiblePath as { features?: StaticPathFeatureSource[] })
+						.features ?? []) as StaticPathFeatureSource[],
+					pathWorkflowIdentity,
+					"path-features",
+					"features",
+				);
+			}
+
+			const creationWorkflowFixedGrants: CharacterWorkflowFixedGrantInputV1[] =
+				[];
+			if (Object.keys(jobASI).length > 0) {
+				creationWorkflowFixedGrants.push({
+					kind: "ability-increase",
+					identity: createCharacterWorkflowSourceAddressV1({
+						ownerId: jobWorkflowIdentity.id ?? "missing-owner-id",
+						collection: "ability-increases",
+						sourcePath: "abilityScoreImprovements",
+						label: "Creation ability increase",
+					}),
+					owner: jobWorkflowIdentity,
+					level: 1,
+					grantType: "ability-increase",
+					payload: {
+						points: Object.fromEntries(
+							Object.entries(jobASI).sort(([left], [right]) =>
+								left.localeCompare(right),
+							),
+						),
+					},
+				});
+			}
+			if (takeStartingCredits) {
+				creationWorkflowFixedGrants.push({
+					kind: "equipment",
+					identity: createCharacterWorkflowSourceAddressV1({
+						ownerId: jobWorkflowIdentity.id ?? "missing-owner-id",
+						collection: "starting-wealth",
+						sourcePath: "startingCredits",
+						label: "Rift Credits",
+					}),
+					owner: jobWorkflowIdentity,
+					level: 1,
+					grantType: "equipment",
+					payload: { quantity: getStartingCreditsForJob(staticJobData) },
+				});
+			}
+			for (const [index, equipment] of (
+				bgData.equipment ??
+				bgData.starting_equipment ??
+				[]
+			).entries()) {
+				creationWorkflowFixedGrants.push({
+					kind: "equipment",
+					identity: createCharacterWorkflowSourceAddressV1({
+						ownerId: backgroundWorkflowIdentity.id ?? "missing-owner-id",
+						collection: "background-equipment",
+						sourcePath: `equipment[${index}]`,
+						label: equipment,
+					}),
+					owner: backgroundWorkflowIdentity,
+					level: 1,
+					grantType: "equipment",
+				});
+			}
+
+			const creationWorkflowChoices: CharacterWorkflowChoiceInputV1[] = [];
+			const addCatalogChoice = (input: {
+				kind: CharacterWorkflowChoiceInputV1["kind"];
+				sourceIndex: number;
+				count: number;
+				prompt: string;
+				entries: ReadonlyArray<{
+					id: string;
+					name: string;
+					_homebrew?: boolean;
+				}>;
+				selectedIds: readonly string[];
+				collection: string;
+				grantType: CharacterWorkflowChoiceInputV1["grantType"];
+			}) => {
+				if (input.count <= 0) return;
+				creationWorkflowChoices.push({
+					kind: input.kind,
+					source: jobWorkflowIdentity,
+					sourceIndex: input.sourceIndex,
+					level: 1,
+					count: input.count,
+					prompt: input.prompt,
+					options: input.entries.map((entry, index) =>
+						entry._homebrew
+							? homebrewWorkflowIdentity(
+									entry.id,
+									entry.name,
+									input.collection,
+									`publishedHomebrew.spells.${entry.id}.selection[${index}]`,
+									"display-only",
+								)
+							: canonicalWorkflowIdentity(
+									entry.id,
+									entry.name,
+									input.collection,
+								),
+					),
+					selectedOptionIds: [...input.selectedIds],
+					grantType: input.grantType,
+				});
+			};
+			addCatalogChoice({
+				kind: "power",
+				sourceIndex: 0,
+				count: requiredPowerChoices,
+				prompt: "Choose creation power imprints.",
+				entries: availablePowers,
+				selectedIds: selectedPowerIds,
+				collection: "powers",
+				grantType: "power",
+			});
+			addCatalogChoice({
+				kind: "technique",
+				sourceIndex: 1,
+				count: requiredTechniqueChoices,
+				prompt: "Choose creation technique protocols.",
+				entries: availableTechniques,
+				selectedIds: selectedTechniqueIds,
+				collection: "techniques",
+				grantType: "technique",
+			});
+			addCatalogChoice({
+				kind: "cantrip",
+				sourceIndex: 2,
+				count: requiredCantripChoices,
+				prompt: "Choose creation cantrips.",
+				entries: availableCantrips,
+				selectedIds: selectedCantripIds,
+				collection: "spells",
+				grantType: "spell",
+			});
+			addCatalogChoice({
+				kind: "spell",
+				sourceIndex: 3,
+				count: requiredSpellChoices,
+				prompt: "Choose creation power inscriptions.",
+				entries: availableSpells,
+				selectedIds: selectedSpellIds,
+				collection: "spells",
+				grantType: "spell",
+			});
+			addCatalogChoice({
+				kind: "spellbook",
+				sourceIndex: 4,
+				count: requiredSpellbookInscriptions,
+				prompt: "Choose creation spellbook inscriptions.",
+				entries: availableSpellbookSpells,
+				selectedIds: selectedSpellbookIds,
+				collection: "spells",
+				grantType: "spell",
+			});
+			addCatalogChoice({
+				kind: "fighting-style",
+				sourceIndex: 5,
+				count: requiredFightingStyleChoices,
+				prompt: "Choose creation fighting styles.",
+				entries: availableFightingStyles,
+				selectedIds: selectedFightingStyleIds,
+				collection: "fighting-styles",
+				grantType: "feature",
+			});
+			const skillOptions = (job.skillChoices ?? []).map((skill) =>
+				canonicalWorkflowIdentity(normalizeSkillId(skill), skill, "skills"),
+			);
+			if (totalChoices.skills > 0) {
+				creationWorkflowChoices.push({
+					kind: "skill",
+					source: jobWorkflowIdentity,
+					sourceIndex: 6,
+					level: 1,
+					count: totalChoices.skills,
+					prompt: "Choose starting skill proficiencies.",
+					options: skillOptions,
+					selectedOptionIds: selectedSkills.map(normalizeSkillId),
+					grantType: "proficiency",
+				});
+			}
+			const specialistIdentities = specialistTrainingOptions.map(
+				(option, index) =>
+					option.kind === "skill"
+						? canonicalWorkflowIdentity(
+								normalizeSkillId(option.id),
+								option.label,
+								"skills",
+							)
+						: createCharacterWorkflowSourceAddressV1({
+								ownerId: jobWorkflowIdentity.id ?? "missing-owner-id",
+								collection: "specialist-training-options",
+								sourcePath: `specialistTrainingOptions[${index}]`,
+								label: option.label,
+								payload: { originalOptionId: option.id },
+							}),
+			);
+			const specialistIdByOriginal = new Map(
+				specialistTrainingOptions.map((option, index) => [
+					option.id,
+					specialistIdentities[index]?.id ?? "",
+				]),
+			);
+			if (requiredSpecialistTrainingChoices > 0) {
+				creationWorkflowChoices.push({
+					kind: "ledger",
+					source: jobWorkflowIdentity,
+					sourceIndex: 7,
+					level: 1,
+					count: requiredSpecialistTrainingChoices,
+					prompt: "Choose specialist training.",
+					options: specialistIdentities,
+					selectedOptionIds: selectedSpecialistTraining.map(
+						(selection) => specialistIdByOriginal.get(selection) ?? "",
+					),
+					grantType: "feature",
+				});
+			}
+			const terrainIdentities = STALKER_FAVORED_TERRAINS.map((terrain, index) =>
+				createCharacterWorkflowSourceAddressV1({
+					ownerId: jobWorkflowIdentity.id ?? "missing-owner-id",
+					collection: "favored-terrain-options",
+					sourcePath: `favoredTerrains[${index}]`,
+					label: terrain,
+					payload: { originalOptionId: terrain },
+				}),
+			);
+			const terrainIdByLabel = new Map(
+				STALKER_FAVORED_TERRAINS.map((terrain, index) => [
+					terrain,
+					terrainIdentities[index]?.id ?? "",
+				]),
+			);
+			if (requiredFavoredTerrainChoices > 0) {
+				creationWorkflowChoices.push({
+					kind: "ledger",
+					source: jobWorkflowIdentity,
+					sourceIndex: 8,
+					level: 1,
+					count: requiredFavoredTerrainChoices,
+					prompt: "Choose favored terrains.",
+					options: terrainIdentities,
+					selectedOptionIds: selectedFavoredTerrains.map(
+						(terrain) => terrainIdByLabel.get(terrain) ?? "",
+					),
+					grantType: "feature",
+				});
+			}
+			if (!takeStartingCredits) {
+				for (const [groupIndex, group] of (
+					job.startingEquipment ?? []
+				).entries()) {
+					const optionIdentities = group.map((option, optionIndex) =>
+						createCharacterWorkflowSourceAddressV1({
+							ownerId: jobWorkflowIdentity.id ?? "missing-owner-id",
+							collection: "starting-equipment-options",
+							sourcePath: `startingEquipment[${groupIndex}][${optionIndex}]`,
+							label: option,
+							payload: { originalOptionId: option },
+						}),
+					);
+					const selectedEquipment = equipmentChoices[groupIndex] ?? group[0];
+					const selectedOptionIndex = group.indexOf(selectedEquipment);
+					creationWorkflowChoices.push({
+						kind: "equipment",
+						source: jobWorkflowIdentity,
+						sourceIndex: groupIndex,
+						level: 1,
+						count: 1,
+						prompt: `Choose starting equipment package ${groupIndex + 1}.`,
+						options: optionIdentities,
+						selectedOptionIds:
+							selectedOptionIndex >= 0
+								? [optionIdentities[selectedOptionIndex]?.id ?? ""]
+								: [],
+						grantType: "equipment",
+					});
+				}
+			}
+			const creationWorkflowInput: CharacterCreationWorkflowInputV1 = {
+				characterId: "draft:character-new",
+				job: jobWorkflowIdentity,
+				background: backgroundWorkflowIdentity,
+				path: pathWorkflowIdentity,
+				features: creationWorkflowFeatures,
+				fixedGrants: creationWorkflowFixedGrants,
+				choices: creationWorkflowChoices,
+			};
+			const draftCreationPlan = buildCharacterCreationWorkflowPlanV1(
+				creationWorkflowInput,
+			);
+			if (!draftCreationPlan.canApply) {
+				toast({
+					title: "Creation plan blocked",
+					description: summarizeCharacterWorkflowBlockersV1(
+						draftCreationPlan.blockers,
+					),
+					variant: "destructive",
+				});
+				return;
+			}
 
 			const character = await createCharacterMutation.mutateAsync({
 				name: name.trim(),
@@ -1354,6 +1932,7 @@ const CharacterNew = () => {
 				base_class: dbJob.name,
 				portrait_url: jobImage || dbJob.image_url || null,
 				path: paths.find((p) => p.id === selectedPath)?.name || null,
+				path_id: selectedPath && selectedPath !== "none" ? selectedPath : null,
 				background: dbBg.name,
 				appearance: appearance.trim() || null,
 				backstory: backstory.trim() || null,
@@ -1365,7 +1944,7 @@ const CharacterNew = () => {
 				sense: creationAbilities.SENSE,
 				pre: creationAbilities.PRE,
 				proficiency_bonus: 2,
-				armor_class: 10 + getAbilityModifier(effectiveAbilities.AGI),
+				armor_class: baseArmorClass,
 				hp_current: hpMax,
 				hp_max: hpMax,
 				hit_dice_current: 1,
@@ -1384,6 +1963,15 @@ const CharacterNew = () => {
 				speed: jobSpeed,
 			});
 			createdCharacterId = character.id;
+			const boundCreationPlan = buildCharacterCreationWorkflowPlanV1({
+				...creationWorkflowInput,
+				characterId: character.id,
+			});
+			if (!boundCreationPlan.canApply) {
+				throw new Error(
+					`Created character could not be bound to its lifecycle plan: ${summarizeCharacterWorkflowBlockersV1(boundCreationPlan.blockers)}`,
+				);
+			}
 			const creationAbilityContext: CharacterAbilityAccessContext = {
 				campaignId: homebrewCampaignId,
 				accessContext: { campaignId: homebrewCampaignId },
@@ -1631,6 +2219,7 @@ const CharacterNew = () => {
 			);
 			for (const style of selectedFightingStyles) {
 				await insertCharacterFeature(character.id, {
+					feature_id: style.id,
 					name: `Fighting Style: ${style.name}`,
 					source: "Creation Fighting Style",
 					level_acquired: 1,
@@ -1642,6 +2231,7 @@ const CharacterNew = () => {
 
 			for (const selection of selectedSpecialistTraining) {
 				await insertCharacterFeature(character.id, {
+					feature_id: specialistIdByOriginal.get(selection) ?? null,
 					name: `Specialist Training: ${selection}`,
 					source: "Creation Specialist Training",
 					level_acquired: 1,
@@ -1670,6 +2260,7 @@ const CharacterNew = () => {
 				);
 				for (const terrain of selectedFavoredTerrains) {
 					await insertCharacterFeature(character.id, {
+						feature_id: terrainIdByLabel.get(terrain) ?? null,
 						name: `Favored Terrain: ${terrain}`,
 						source: "Creation Favored Terrain",
 						level_acquired: 1,
@@ -1694,6 +2285,56 @@ const CharacterNew = () => {
 				logErrorWithContext(slotError, "CharacterNew: spell slot seeding");
 			}
 
+			const creationHandoff = createCharacterWorkflowHandoffV1({
+				workflowKind: "creation",
+				plan: boundCreationPlan,
+				displayName: character.name ?? name.trim(),
+				storedBases: {
+					level: 1,
+					experience:
+						typeof character.experience === "number" ? character.experience : 0,
+					abilityScores: {
+						strength: effectiveAbilities.STR,
+						agility: effectiveAbilities.AGI,
+						vitality: effectiveAbilities.VIT,
+						intelligence: effectiveAbilities.INT,
+						sense: effectiveAbilities.SENSE,
+						presence: effectiveAbilities.PRE,
+					},
+					hitPointsMaximum: hpMax,
+					baseArmorClass,
+					baseSpeed: { land: jobSpeed },
+					proficiencyBonus: 2,
+					hitDice: { maximum: 1, size: hitDieSize },
+					additional: {
+						jobId: jobWorkflowIdentity.id,
+						pathId: pathWorkflowIdentity?.id ?? null,
+						backgroundId: backgroundWorkflowIdentity.id,
+					},
+				},
+				transient: {
+					resources:
+						typeof character.rift_favor_current === "number"
+							? [
+									{
+										version: 1,
+										resourceId: "rift-favor",
+										key: "rift-favor",
+										current: character.rift_favor_current,
+										maximum:
+											typeof character.rift_favor_max === "number"
+												? character.rift_favor_max
+												: null,
+										temporary: 0,
+										custom: false,
+										manual: false,
+										sourceEvidence: [],
+									},
+								]
+							: [],
+				},
+			});
+
 			ascendantTools
 				.trackCustomFeatureUsage(
 					character.id,
@@ -1712,10 +2353,11 @@ const CharacterNew = () => {
 			// pre-ASI ability scores for its full staleTime (5 min) — every
 			// list-fed surface (combat action cards, HUD) reads stale numbers.
 			// Invalidate again now that the pipeline is complete.
-			await queryClient.invalidateQueries({ queryKey: ["characters"] });
-			await queryClient.invalidateQueries({
-				queryKey: ["character", character.id],
-			});
+			await Promise.all(
+				creationHandoff.cacheInvalidationKeys.map((queryKey) =>
+					queryClient.invalidateQueries({ queryKey: [...queryKey] }),
+				),
+			);
 			navigate(safeNext ?? `/characters/${character.id}`);
 		} catch (error) {
 			logErrorWithContext(error, "CharacterNew: initialization failed");
@@ -1764,7 +2406,13 @@ const CharacterNew = () => {
 			case "abilities":
 				return pointBuyRemaining >= 0;
 			case "path":
-				return !isPathRequiredAtCreation || selectedPath.length > 0;
+				return (
+					!isPathRequiredAtCreation ||
+					pathsAvailableAtCreation.some(
+						(path) =>
+							path.id === selectedPath && path.eligibility?.eligible !== false,
+					)
+				);
 			case "background":
 				return selectedBackground.length > 0;
 			case "imprints":

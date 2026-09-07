@@ -290,6 +290,49 @@ const _FEAT_EFFECTS: Record<string, (level: number) => FeatEffect[]> = {
 	],
 };
 
+export type ImmutableFeatEffect = Readonly<FeatEffect>;
+export type FeatEffectLookupResult = readonly ImmutableFeatEffect[];
+
+const EMPTY_EFFECTS: FeatEffectLookupResult = Object.freeze([]);
+
+function freezeEffects(effects: readonly FeatEffect[]): FeatEffectLookupResult {
+	return Object.freeze(effects.map((effect) => Object.freeze({ ...effect })));
+}
+
+const FIGHTING_STYLE_EFFECTS: Readonly<Record<string, FeatEffectLookupResult>> =
+	Object.freeze(
+		Object.fromEntries(
+			Object.entries(_FIGHTING_STYLE_EFFECTS).map(([name, effects]) => [
+				name,
+				freezeEffects(effects),
+			]),
+		),
+	);
+
+const normalizeEffectName = (name: string) => name.trim().toLowerCase();
+
+/** Return immutable fighting-style effects using trim/case-normalized names. */
+export function getFightingStyleEffects(
+	name: string | null | undefined,
+): FeatEffectLookupResult {
+	if (!name?.trim()) return EMPTY_EFFECTS;
+	return FIGHTING_STYLE_EFFECTS[normalizeEffectName(name)] ?? EMPTY_EFFECTS;
+}
+
+/** Return immutable feat effects using trim/case-normalized names. */
+export function getFeatEffects(
+	name: string | null | undefined,
+	level = 1,
+): FeatEffectLookupResult {
+	if (!name?.trim()) return EMPTY_EFFECTS;
+	const factory = _FEAT_EFFECTS[normalizeEffectName(name)];
+	return factory ? freezeEffects(factory(level)) : EMPTY_EFFECTS;
+}
+
+/** Lookup-style aliases for callers that prefer verb-first naming. */
+export const lookupFightingStyleEffects = getFightingStyleEffects;
+export const lookupFeatEffects = getFeatEffects;
+
 // ─── Parser Functions ───────────────────────────────────────
 
 /**

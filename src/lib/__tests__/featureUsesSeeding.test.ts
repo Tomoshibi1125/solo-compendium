@@ -1,6 +1,13 @@
 import { describe, expect, it } from "vitest";
 import { jobs } from "@/data/compendium/jobs";
 import { calculateFeatureUses } from "@/lib/characterEngine";
+import {
+	buildFeatureUseModifiers,
+	readFeatureUseMetadata,
+	resolveFeatureRecharge,
+	resolveFeatureUsesMax,
+	resolveStoredFeatureRecharge,
+} from "@/lib/featureUses";
 
 // Representative ability spread used to resolve ability-modifier uses formulas.
 // getAbilityModifier: (score - 10) / 2, floored. PRE 16 → +3, SENSE 14 → +2,
@@ -82,6 +89,101 @@ describe("job classFeatures limited-use annotations (Phase D)", () => {
 			).not.toBeNull();
 			expect(value ?? -1).toBeGreaterThanOrEqual(0);
 		}
+	});
+
+	it("encodes the exact Task 5 resource unlocks, scaling, cadence, and capstones", () => {
+		const feature = (jobId: string, name: string) => {
+			const match = jobs
+				.find((job) => job.id === jobId)
+				?.classFeatures?.find((entry) => entry.name === name);
+			if (!match?.uses) throw new Error(`Missing ${jobId} / ${name} uses`);
+			return { ...match, uses: match.uses };
+		};
+
+		const flux = feature("esper", "Flux Pool");
+		expect(flux.level).toBe(2);
+		expect(resolveFeatureUsesMax(flux.uses, 2, 2, SAMPLE_ABILITIES)).toBe(2);
+		expect(resolveFeatureRecharge(flux.uses, 2)).toBe("short-rest");
+
+		const hype = feature("idol", "Hype");
+		expect(hype.level).toBe(1);
+		expect(resolveFeatureUsesMax(hype.uses, 1, 2, SAMPLE_ABILITIES)).toBe(3);
+		expect(resolveFeatureRecharge(hype.uses, 4)).toBe("long-rest");
+		expect(resolveFeatureRecharge(hype.uses, 5)).toBe("short-rest");
+		const storedHype = readFeatureUseMetadata(
+			buildFeatureUseModifiers(hype.uses, hype.name),
+		);
+		expect(resolveStoredFeatureRecharge(storedHype, 4)).toBe("long-rest");
+		expect(resolveStoredFeatureRecharge(storedHype, 5)).toBe("short-rest");
+
+		const shift = feature("summoner", "Entity Shift");
+		expect(shift.level).toBe(2);
+		expect(resolveFeatureUsesMax(shift.uses, 2, 2, SAMPLE_ABILITIES)).toBe(2);
+		expect(resolveFeatureRecharge(shift.uses, 2)).toBe("short-rest");
+		expect(
+			resolveFeatureUsesMax(shift.uses, 20, 6, SAMPLE_ABILITIES),
+		).toBeNull();
+		expect(resolveFeatureRecharge(shift.uses, 20)).toBeNull();
+
+		const biome = feature("summoner", "Biome Command");
+		expect(biome.level).toBe(8);
+		expect(resolveFeatureUsesMax(biome.uses, 8, 3, SAMPLE_ABILITIES)).toBe(1);
+		expect(resolveFeatureUsesMax(biome.uses, 14, 5, SAMPLE_ABILITIES)).toBe(2);
+		expect(
+			resolveFeatureUsesMax(biome.uses, 20, 6, SAMPLE_ABILITIES),
+		).toBeNull();
+	});
+
+	it("encodes the exact Task 6 formulas and recovery cadences", () => {
+		const findFeature = (
+			jobId: string,
+			collection: "classFeatures" | "awakeningFeatures",
+			name: string,
+		) => {
+			const match = jobs
+				.find((job) => job.id === jobId)
+				?.[collection]?.find((entry) => entry.name === name);
+			if (!match) throw new Error(`Missing ${jobId} / ${name}`);
+			return match;
+		};
+
+		for (const name of ["Borrowed Breath", "Zenith Mandate"]) {
+			expect(findFeature("revenant", "classFeatures", name)).toMatchObject({
+				uses: { formula: "1", recharge: "long-rest" },
+				tracking: "uses",
+			});
+		}
+		expect(
+			findFeature("stalker", "awakeningFeatures", "Pursuit Burst"),
+		).toMatchObject({
+			actionType: "Bonus action",
+			uses: { formula: "1", recharge: "short-rest" },
+			tracking: "uses",
+		});
+		expect(findFeature("stalker", "classFeatures", "Prey Lock")).toMatchObject({
+			actionType: "Bonus action",
+			tracking: "manual",
+		});
+
+		const assist = findFeature(
+			"technomancer",
+			"classFeatures",
+			"Absolute Assist",
+		);
+		if (!assist.uses) throw new Error("Missing Absolute Assist uses");
+		expect(resolveFeatureUsesMax(assist.uses, 7, 3, SAMPLE_ABILITIES)).toBe(4);
+		expect(resolveFeatureRecharge(assist.uses, 7)).toBe("long-rest");
+
+		const capacitor = findFeature(
+			"technomancer",
+			"classFeatures",
+			"Spell Capacitor",
+		);
+		if (!capacitor.uses) throw new Error("Missing Spell Capacitor uses");
+		expect(resolveFeatureUsesMax(capacitor.uses, 11, 4, SAMPLE_ABILITIES)).toBe(
+			8,
+		);
+		expect(resolveFeatureRecharge(capacitor.uses, 11)).toBe("long-rest");
 	});
 
 	it("every annotated recharge is a valid rest cadence", () => {

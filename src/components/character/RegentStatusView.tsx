@@ -123,7 +123,7 @@ export function RegentStatusView({
 			<RegentFeaturesDisplay
 				characterId={characterId}
 				characterLevel={characterLevel}
-				regentId={primaryRegent?.id ?? primary?.regent_id}
+				regentId={primaryRegent?.id ?? primary?.regent_id ?? undefined}
 			/>
 		</div>
 	);

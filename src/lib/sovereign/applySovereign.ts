@@ -14,6 +14,7 @@
 // custom-modifier pipeline, not through a character-engine aggregation.
 
 import type { GeneratedSovereign } from "@/lib/geminiProtocol";
+import { requireDistinctCanonicalRegents } from "@/lib/regentIdentity";
 
 /** Persisted Sovereign overlay block (shape-compatible with CharacterJob["gemini"]). */
 export interface SovereignOverlayPayload {
@@ -45,6 +46,10 @@ export function buildSovereignGeminiState(
 	sovereign: GeneratedSovereign,
 	sovereignId: string,
 ): SovereignGeminiState {
+	const [regent1Id, regent2Id] = requireDistinctCanonicalRegents(
+		sovereign.regentA?.id,
+		sovereign.regentB?.id,
+	);
 	const features = sovereign.abilities.map((ability) => ({
 		name: ability.name,
 		description: ability.description,
@@ -59,8 +64,8 @@ export function buildSovereignGeminiState(
 		fusionTheme: sovereign.fusion_theme ?? null,
 		fusionStability: sovereign.fusion_stability ?? null,
 		powerMultiplier: sovereign.power_multiplier ?? null,
-		regent1Id: sovereign.regentA?.id ?? null,
-		regent2Id: sovereign.regentB?.id ?? null,
+		regent1Id,
+		regent2Id,
 		features,
 		traits: [],
 		statBonuses: {},

@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import {
+	AlertTriangle,
 	CheckCircle,
 	Crown,
 	Flame,
@@ -32,6 +33,7 @@ import {
 	useRegentUnlocks,
 } from "@/hooks/useRegentUnlocks";
 import { listCanonicalEntries } from "@/lib/canonicalCompendium";
+import { resolveCanonicalRegentId } from "@/lib/regentIdentity";
 import { cn } from "@/lib/utils";
 import {
 	formatRegentVernacular,
@@ -44,7 +46,6 @@ interface RegentUnlocksPanelProps {
 	campaignId?: string;
 }
 
-// Enhanced theme colors with Rift Ascendant aesthetic
 const themeColors: Record<
 	string,
 	{ bg: string; text: string; border: string; glow: string }
@@ -137,8 +138,6 @@ export function RegentUnlocksPanel({
 }: RegentUnlocksPanelProps) {
 	const [open, setOpen] = useState(false);
 	const [selectedRegentId, setSelectedRegentId] = useState("");
-	// After a player spends a credit, drive the one-time retroactive catch-up
-	// picker for the newly-attuned regent.
 	const [catchUpFor, setCatchUpFor] = useState<{
 		regentId: string;
 		unlockId: string;
@@ -147,15 +146,14 @@ export function RegentUnlocksPanel({
 	const { data: character } = useCharacter(characterId);
 	const {
 		unlocks = [],
-		updateUnlock,
+		setPrimary,
 		consumeGrantAsync,
 		isConsuming,
+		isSettingPrimary,
 	} = useRegentUnlocks(characterId);
 	const { grants, availableCredits } = useRegentUnlockGrants(characterId);
-
 	const ascendantTools = useAscendantTools();
 
-	// Fetch all regents from canonical static with entitlement filtering.
 	const { data: allRegents = [] } = useQuery({
 		queryKey: ["all-regents", characterId, campaignId],
 		queryFn: async () => {
@@ -165,47 +163,47 @@ export function RegentUnlocksPanel({
 			return entries
 				.slice()
 				.sort((a, b) => a.name.localeCompare(b.name))
-				.map((r) => ({
-					id: r.id,
-					name: r.name,
-					title: r.title ?? null,
-					theme: r.theme ?? null,
-					source_book: r.source_book ?? "Rift Ascendant Canon",
-				}));
+				.flatMap((entry) => {
+					const canonicalId = resolveCanonicalRegentId(entry.id);
+					if (!canonicalId) return [];
+					return [
+						{
+							id: canonicalId,
+							name: entry.name,
+							title: entry.title ?? null,
+							theme: entry.theme ?? null,
+							source_book: entry.source_book ?? "Rift Ascendant Canon",
+						},
+					];
+				});
 		},
 	});
 
+	const canonicalUnlocks = unlocks.filter(
+		(unlock) => unlock.resolved_regent_id !== null,
+	);
 	const unlockedIds = new Set(
-		unlocks.map((u: { regent_id: string }) => u.regent_id),
+		canonicalUnlocks.flatMap((unlock) =>
+			unlock.resolved_regent_id ? [unlock.resolved_regent_id] : [],
+		),
 	);
 	const availableLockedRegents = allRegents.filter(
-		(r) => !unlockedIds.has(r.id),
+		(regent) => !unlockedIds.has(regent.id),
 	);
 	const hasJob = !!character?.job;
 	const hasPath = !!character?.path;
-	const canUnlockSovereign = hasJob && hasPath && unlocks.length >= 2;
+	const canUnlockSovereign = hasJob && hasPath && canonicalUnlocks.length >= 2;
 
-	// --- ADAPTIVE 3-CHOICE LOGIC ---
-	// The system analyzes character stats to offer exactly 3 regent choices.
 	const adaptiveChoices = useMemo(() => {
 		if (availableLockedRegents.length <= 3) return availableLockedRegents;
 
-		// Safely extract abilities with fallbacks
 		const abilities = character?.abilities as
 			| Record<string, number>
 			| undefined;
 		if (!abilities) return availableLockedRegents.slice(0, 3);
 
-		// D3: thematic matching. Each regent theme has an ability affinity;
-		// score a candidate by the SUM of the character's scores in its
-		// affine abilities, plus a bonus when the theme aligns with the
-		// character's job emphasis. This surfaces regents that actually fit
-		// the build (a high-STR Berserker sees Strength/War/Titan themes
-		// first) instead of the previous char-code noise.
 		const abilityOf = (key: string) => abilities[key] || 10;
-
-		// theme (lowercased) → abilities it draws on
-		const THEME_AFFINITY: Record<string, string[]> = {
+		const themeAffinity: Record<string, string[]> = {
 			shadow: ["AGI", "PRE"],
 			umbral: ["AGI", "PRE"],
 			dragon: ["STR", "PRE"],
@@ -222,8 +220,6 @@ export function RegentUnlocksPanel({
 			blood: ["VIT", "STR"],
 			titan: ["STR", "VIT"],
 		};
-
-		// Job → thematic keywords it favors (bonus when a regent matches).
 		const jobThemeBonus: Record<string, string[]> = {
 			berserker: ["war", "titan", "beast", "destruction"],
 			destroyer: ["destruction", "war", "titan"],
@@ -242,14 +238,11 @@ export function RegentUnlocksPanel({
 		};
 		const job = (character?.job ?? "").trim().toLowerCase();
 		const favored = new Set(jobThemeBonus[job] ?? []);
-
 		const scoreOf = (theme: string | null): number => {
-			const t = (theme ?? "").trim().toLowerCase();
-			const affinity = THEME_AFFINITY[t];
-			// Base: sum of affine ability scores (or overall average for
-			// unknown themes so they still rank sensibly).
+			const normalizedTheme = (theme ?? "").trim().toLowerCase();
+			const affinity = themeAffinity[normalizedTheme];
 			const base = affinity
-				? affinity.reduce((sum, ab) => sum + abilityOf(ab), 0)
+				? affinity.reduce((sum, ability) => sum + abilityOf(ability), 0)
 				: (abilityOf("STR") +
 						abilityOf("AGI") +
 						abilityOf("VIT") +
@@ -257,38 +250,35 @@ export function RegentUnlocksPanel({
 						abilityOf("SENSE") +
 						abilityOf("PRE")) /
 					3;
-			// Job alignment bonus.
-			return base + (favored.has(t) ? 12 : 0);
+			return base + (favored.has(normalizedTheme) ? 12 : 0);
 		};
 
-		const ranked = [...availableLockedRegents].sort((a, b) => {
-			const diff = scoreOf(b.theme) - scoreOf(a.theme);
-			// Stable tie-break by name so the list is deterministic.
-			return diff !== 0 ? diff : (a.name || "").localeCompare(b.name || "");
-		});
-
-		return ranked.slice(0, 3);
+		return [...availableLockedRegents]
+			.sort((a, b) => {
+				const scoreDifference = scoreOf(b.theme) - scoreOf(a.theme);
+				return scoreDifference !== 0
+					? scoreDifference
+					: (a.name || "").localeCompare(b.name || "");
+			})
+			.slice(0, 3);
 	}, [availableLockedRegents, character]);
 
-	// Spend a Warden-granted credit on the chosen regent. Players can only reach
-	// here when they hold an unspent credit (availableCredits > 0) — there is no
-	// self-unlock. The Warden grants the opportunity; the player picks 1-of-3.
 	const handleConsume = async () => {
-		if (!selectedRegentId) return;
+		const canonicalId = resolveCanonicalRegentId(selectedRegentId);
 		const grant = grants[0];
-		if (!grant) return;
+		if (!canonicalId || !grant) return;
 
-		const regent = allRegents.find((r) => r.id === selectedRegentId);
-		const regentName = regent
-			? formatRegentVernacular(regent.title || regent.name)
+		const selectedRegent = allRegents.find(
+			(regent) => regent.id === canonicalId,
+		);
+		const regentName = selectedRegent
+			? formatRegentVernacular(selectedRegent.title || selectedRegent.name)
 			: "A Regent";
 
 		try {
 			const unlock = await consumeGrantAsync({
 				grantId: grant.id,
-				regentId: selectedRegentId,
-				questTitle: grant.quest_title,
-				isPrimary: unlocks.length === 0,
+				regentId: canonicalId,
 			});
 
 			await ascendantTools
@@ -302,24 +292,28 @@ export function RegentUnlocksPanel({
 
 			setOpen(false);
 			setSelectedRegentId("");
-			// Open the one-time catch-up picker for the accumulated regent picks.
-			if (unlock?.id) {
-				setCatchUpFor({ regentId: selectedRegentId, unlockId: unlock.id });
+			if (unlock.resolved_regent_id) {
+				setCatchUpFor({
+					regentId: unlock.resolved_regent_id,
+					unlockId: unlock.id,
+				});
 			}
-		} catch (err) {
-			console.error(err);
+		} catch (error) {
+			console.error(error);
 		}
 	};
 
-	// Show the catch-up picker for a freshly-attuned regent, or for any existing
-	// unlock whose retroactive picks were never granted (caught_up_at_level null).
 	const pendingCatchUp = unlocks.find(
-		(u: { caught_up_at_level: number | null }) => u.caught_up_at_level == null,
+		(unlock) =>
+			unlock.resolved_regent_id !== null && unlock.caught_up_at_level === null,
 	);
 	const catchUpTarget =
 		catchUpFor ??
-		(pendingCatchUp
-			? { regentId: pendingCatchUp.regent_id, unlockId: pendingCatchUp.id }
+		(pendingCatchUp?.resolved_regent_id
+			? {
+					regentId: pendingCatchUp.resolved_regent_id,
+					unlockId: pendingCatchUp.id,
+				}
 			: null);
 
 	return (
@@ -329,7 +323,6 @@ export function RegentUnlocksPanel({
 			className="border-regent-gold/30"
 		>
 			<div className="space-y-4">
-				{/* Status Header */}
 				<div className="flex items-center justify-between">
 					<div className="flex items-center gap-3">
 						<div className="w-10 h-10 rounded-lg bg-regent-gold/20 flex items-center justify-center">
@@ -337,10 +330,10 @@ export function RegentUnlocksPanel({
 						</div>
 						<div>
 							<p className="font-heading text-sm text-muted-foreground">
-								{REGENT_LABEL_PLURAL} Unlocked
+								{REGENT_LABEL_PLURAL} Resolved
 							</p>
 							<p className="font-display text-lg text-regent-gold">
-								{unlocks.length} / 2 Required
+								{canonicalUnlocks.length} / 2 Required
 							</p>
 						</div>
 					</div>
@@ -355,15 +348,43 @@ export function RegentUnlocksPanel({
 				{unlocks.length > 0 && (
 					<>
 						<Separator className="bg-regent-gold/20" />
-
 						<div className="space-y-3">
 							{unlocks.map((unlock, index) => {
 								const regent = unlock.regent;
-								if (!regent) return null;
+								if (!regent) {
+									const preservedIdentity =
+										unlock.regent_id ?? unlock.legacy_regent_uuid ?? "unknown";
+									return (
+										<div
+											key={unlock.id}
+											className="p-4 rounded-lg border border-regent-gold/40 bg-regent-gold/5"
+										>
+											<div className="flex items-start gap-3">
+												<AlertTriangle className="h-5 w-5 text-regent-gold shrink-0 mt-0.5" />
+												<div className="space-y-1 min-w-0">
+													<p className="font-heading font-semibold text-regent-gold">
+														Unresolved legacy {REGENT_LABEL} unlock
+													</p>
+													<p className="text-xs text-muted-foreground break-all">
+														Preserved identity: {preservedIdentity}
+													</p>
+													<p className="text-xs text-muted-foreground">
+														This row remains visible but cannot grant abilities
+														or start catch-up until Task 19 reconciliation maps
+														it to a canonical Regent identity.
+													</p>
+													<p className="text-xs text-muted-foreground">
+														Quest: {formatRegentVernacular(unlock.quest_name)}
+													</p>
+												</div>
+											</div>
+										</div>
+									);
+								}
 
 								const themeStyle =
-									themeColors[regent.theme as string] || themeColors.Shadow;
-								const icon = themeIcons[regent.theme as string] || (
+									themeColors[regent.theme ?? ""] || themeColors.Shadow;
+								const icon = themeIcons[regent.theme ?? ""] || (
 									<Crown className="h-4 w-4" />
 								);
 								const displayTitle = formatRegentVernacular(
@@ -419,7 +440,7 @@ export function RegentUnlocksPanel({
 															themeStyle.border,
 														)}
 													>
-														{regent.theme as string} Theme
+														{regent.theme} Theme
 													</Badge>
 												</div>
 											</div>
@@ -428,12 +449,8 @@ export function RegentUnlocksPanel({
 												<Button
 													size="sm"
 													variant="ghost"
-													onClick={() =>
-														updateUnlock({
-															unlockId: unlock.id,
-															updates: { is_primary: true },
-														})
-													}
+													onClick={() => setPrimary(unlock.id)}
+													disabled={isSettingPrimary}
 													className="text-xs hover:bg-regent-gold/10"
 												>
 													<Star className="h-3 w-3 mr-1" />
@@ -474,7 +491,6 @@ export function RegentUnlocksPanel({
 					</div>
 				)}
 
-				{/* Sovereign Status */}
 				{canUnlockSovereign && (
 					<div className="p-4 rounded-lg border border-resurge-violet/40 bg-resurge-violet/5">
 						<div className="flex items-center gap-2 mb-2">
@@ -491,7 +507,6 @@ export function RegentUnlocksPanel({
 					</div>
 				)}
 
-				{/* Awaiting a Warden grant: no self-unlock, no credit yet. */}
 				{unlocks.length < 2 && availableCredits === 0 && (
 					<div className="flex items-start gap-3 p-3 rounded-lg border border-border/60 bg-muted/20">
 						<Lock className="h-4 w-4 text-muted-foreground mt-0.5 shrink-0" />
@@ -504,7 +519,6 @@ export function RegentUnlocksPanel({
 					</div>
 				)}
 
-				{/* Spend a Warden-granted credit - Caps at 2 regents */}
 				{unlocks.length < 2 &&
 					availableCredits > 0 &&
 					adaptiveChoices.length > 0 && (
@@ -542,50 +556,47 @@ export function RegentUnlocksPanel({
 											Adaptive Choices
 										</Label>
 										<div className="grid grid-cols-1 gap-2">
-											{adaptiveChoices.map((regent) => {
-												if (!regent.id) return null;
-												return (
-													<button
-														type="button"
-														key={regent.id}
-														className={cn(
-															"w-full text-left p-3 rounded-lg border cursor-pointer transition-all duration-200 flex items-center justify-between",
-															selectedRegentId === regent.id
-																? "border-regent-gold bg-regent-gold/10 shadow-[0_0_10px_hsl(var(--regent-gold)/0.2)]"
-																: "border-border hover:border-regent-gold/50 bg-background/50",
-														)}
-														onClick={() => setSelectedRegentId(regent.id)}
-													>
-														<div className="flex items-center gap-3">
-															<div
-																className={cn(
-																	"w-8 h-8 rounded-full flex items-center justify-center",
-																	selectedRegentId === regent.id
-																		? "bg-regent-gold text-background"
-																		: "bg-muted text-muted-foreground",
-																)}
-															>
-																{themeIcons[regent.theme as string] || (
-																	<Crown className="h-4 w-4" />
+											{adaptiveChoices.map((regent) => (
+												<button
+													type="button"
+													key={regent.id}
+													className={cn(
+														"w-full text-left p-3 rounded-lg border cursor-pointer transition-all duration-200 flex items-center justify-between",
+														selectedRegentId === regent.id
+															? "border-regent-gold bg-regent-gold/10 shadow-[0_0_10px_hsl(var(--regent-gold)/0.2)]"
+															: "border-border hover:border-regent-gold/50 bg-background/50",
+													)}
+													onClick={() => setSelectedRegentId(regent.id)}
+												>
+													<div className="flex items-center gap-3">
+														<div
+															className={cn(
+																"w-8 h-8 rounded-full flex items-center justify-center",
+																selectedRegentId === regent.id
+																	? "bg-regent-gold text-background"
+																	: "bg-muted text-muted-foreground",
+															)}
+														>
+															{themeIcons[regent.theme ?? ""] || (
+																<Crown className="h-4 w-4" />
+															)}
+														</div>
+														<div>
+															<div className="font-heading font-semibold text-sm">
+																{formatRegentVernacular(
+																	regent.title || regent.name,
 																)}
 															</div>
-															<div>
-																<div className="font-heading font-semibold text-sm">
-																	{formatRegentVernacular(
-																		regent.title || regent.name,
-																	)}
-																</div>
-																<div className="text-xs text-muted-foreground">
-																	{regent.theme} Theme
-																</div>
+															<div className="text-xs text-muted-foreground">
+																{regent.theme} Theme
 															</div>
 														</div>
-														{selectedRegentId === regent.id && (
-															<CheckCircle className="h-4 w-4 text-regent-gold" />
-														)}
-													</button>
-												);
-											})}
+													</div>
+													{selectedRegentId === regent.id && (
+														<CheckCircle className="h-4 w-4 text-regent-gold" />
+													)}
+												</button>
+											))}
 										</div>
 									</div>
 

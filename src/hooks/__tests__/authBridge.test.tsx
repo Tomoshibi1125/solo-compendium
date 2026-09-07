@@ -8,6 +8,7 @@ vi.mock("@/integrations/supabase/client", () => ({
 		auth: {
 			getSession: vi.fn(),
 			onAuthStateChange: vi.fn(),
+			reauthenticate: vi.fn(),
 			signOut: vi.fn(),
 			updateUser: vi.fn(),
 		},
@@ -28,6 +29,8 @@ type Snapshot = ReturnType<typeof useAuth>;
 
 const getSessionMock = vi.mocked(supabase.auth.getSession);
 const onAuthStateChangeMock = vi.mocked(supabase.auth.onAuthStateChange);
+const reauthenticateMock = vi.mocked(supabase.auth.reauthenticate);
+const updateUserMock = vi.mocked(supabase.auth.updateUser);
 const fromMock = vi.mocked(supabase.from);
 
 let profileResult: { data: unknown; error: unknown } = {
@@ -35,13 +38,25 @@ let profileResult: { data: unknown; error: unknown } = {
 	error: null,
 };
 
-const sessionWith = (opts?: { metadataRole?: string }) =>
+const sessionWith = (opts?: {
+	metadataRole?: string;
+	appMetadataAccountRole?: string;
+	userMetadataAccountRole?: string;
+}) =>
 	({
 		access_token: "tok",
 		user: {
 			id: "user-1",
 			email: "hero@example.com",
-			user_metadata: opts?.metadataRole ? { role: opts.metadataRole } : {},
+			user_metadata: {
+				...(opts?.metadataRole ? { role: opts.metadataRole } : {}),
+				...(opts?.userMetadataAccountRole
+					? { account_role: opts.userMetadataAccountRole }
+					: {}),
+			},
+			app_metadata: opts?.appMetadataAccountRole
+				? { account_role: opts.appMetadataAccountRole }
+				: {},
 			created_at: "2026-01-01T00:00:00.000Z",
 		},
 	}) as never;
@@ -93,6 +108,11 @@ describe("AuthProvider <-> authStore bridge", () => {
 		useAuthStore.getState().reset();
 		profileResult = { data: null, error: null };
 		getSessionMock.mockResolvedValue({ data: { session: null } } as never);
+		reauthenticateMock.mockResolvedValue({ data: {}, error: null } as never);
+		updateUserMock.mockResolvedValue({
+			data: { user: null },
+			error: null,
+		} as never);
 		onAuthStateChangeMock.mockReturnValue({
 			data: { subscription: { unsubscribe: vi.fn() } },
 		} as never);
@@ -258,11 +278,148 @@ describe("AuthProvider <-> authStore bridge", () => {
 			expect(typeof snap.signIn).toBe("function");
 			expect(typeof snap.signUp).toBe("function");
 			expect(typeof snap.signOut).toBe("function");
+			expect(typeof snap.beginPasswordChange).toBe("function");
+			expect(typeof snap.confirmPasswordChange).toBe("function");
+			expect(typeof snap.completePasswordRecovery).toBe("function");
 			expect(typeof snap.updateProfile).toBe("function");
 			expect(snap.isWarden()).toBe(true);
 			expect(snap.isPlayer()).toBe(false);
 			expect(snap.hasPermission("manage:campaigns")).toBe(true);
 			expect(snap.hasPermission("view:character_sheet")).toBe(false);
+		} finally {
+			unmount();
+		}
+	});
+
+	it("derives account administration only from trusted app_metadata", async () => {
+		getSessionMock.mockResolvedValue({
+			data: {
+				session: sessionWith({
+					metadataRole: "ascendant",
+					appMetadataAccountRole: "admin",
+				}),
+			},
+		} as never);
+		profileResult = {
+			data: {
+				id: "user-1",
+				role: "ascendant",
+				created_at: "2026-01-01T00:00:00.000Z",
+			},
+			error: null,
+		};
+
+		let latest: Snapshot | null = null;
+		const unmount = renderApp((snapshot) => {
+			latest = snapshot;
+		});
+		try {
+			await waitUntil(() => (latest as Snapshot | null)?.user !== null);
+			expect((latest as unknown as Snapshot).user?.isAccountAdmin).toBe(true);
+		} finally {
+			unmount();
+		}
+	});
+
+	it("does not trust a forged user_metadata account role or Warden mode", async () => {
+		getSessionMock.mockResolvedValue({
+			data: {
+				session: sessionWith({
+					metadataRole: "warden",
+					userMetadataAccountRole: "admin",
+				}),
+			},
+		} as never);
+		profileResult = {
+			data: {
+				id: "user-1",
+				role: "warden",
+				created_at: "2026-01-01T00:00:00.000Z",
+			},
+			error: null,
+		};
+
+		let latest: Snapshot | null = null;
+		const unmount = renderApp((snapshot) => {
+			latest = snapshot;
+		});
+		try {
+			await waitUntil(() => (latest as Snapshot | null)?.user !== null);
+			const user = (latest as unknown as Snapshot).user;
+			expect(user?.role).toBe("warden");
+			expect(user?.isAccountAdmin).toBe(false);
+		} finally {
+			unmount();
+		}
+	});
+
+	it("reauthenticates before beginning a Profile password change", async () => {
+		const session = sessionWith();
+		getSessionMock.mockResolvedValue({ data: { session } } as never);
+		profileResult = {
+			data: {
+				id: "user-1",
+				role: "ascendant",
+				created_at: "2026-01-01T00:00:00.000Z",
+			},
+			error: null,
+		};
+
+		let latest: Snapshot | null = null;
+		const unmount = renderApp((snapshot) => {
+			latest = snapshot;
+		});
+		try {
+			await waitUntil(() => (latest as Snapshot | null)?.user !== null);
+			let result: Awaited<ReturnType<Snapshot["beginPasswordChange"]>> | null =
+				null;
+			await act(async () => {
+				result = await (latest as unknown as Snapshot).beginPasswordChange();
+			});
+			expect(result).toEqual({ success: true });
+			expect(reauthenticateMock).toHaveBeenCalledTimes(1);
+		} finally {
+			unmount();
+		}
+	});
+
+	it("requires and forwards a trimmed reauthentication nonce", async () => {
+		getSessionMock.mockResolvedValue({
+			data: { session: sessionWith() },
+		} as never);
+		profileResult = {
+			data: {
+				id: "user-1",
+				role: "ascendant",
+				created_at: "2026-01-01T00:00:00.000Z",
+			},
+			error: null,
+		};
+
+		let latest: Snapshot | null = null;
+		const unmount = renderApp((snapshot) => {
+			latest = snapshot;
+		});
+		try {
+			await waitUntil(() => (latest as Snapshot | null)?.user !== null);
+			updateUserMock.mockClear();
+			const auth = latest as unknown as Snapshot;
+			const missing = await auth.confirmPasswordChange({
+				password: "new-password-123",
+				nonce: "   ",
+			});
+			expect(missing.errorKind).toBe("reauthentication-required");
+			expect(updateUserMock).not.toHaveBeenCalled();
+
+			const success = await auth.confirmPasswordChange({
+				password: "new-password-123",
+				nonce: "  123456  ",
+			});
+			expect(success).toEqual({ success: true });
+			expect(updateUserMock).toHaveBeenCalledWith({
+				password: "new-password-123",
+				nonce: "123456",
+			});
 		} finally {
 			unmount();
 		}

@@ -129,8 +129,8 @@ dist-sourcebook/
 sourcebook-payload/
 sourcebook-payload.zip
 
-# Book build workspace - never tracked (PDFs, renders, assets, renderer cache)
-books/
+# Authored book sources are tracked. books/.gitignore excludes generated
+# PDFs, rendered samples, optimized assets, caches, chunks, and reports.
 
 # Bundle-analysis and audit output (ANALYZE=1 npm run build)
 audit-artifacts/

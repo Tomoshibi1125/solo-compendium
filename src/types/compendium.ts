@@ -13,6 +13,189 @@ export type CompendiumRange = CompendiumValue | string;
 export type CompendiumDuration = CompendiumValue | string;
 export type CompendiumActivation = CompendiumValue | string;
 
+export type CanonicalActionEconomy =
+	| "action"
+	| "bonus-action"
+	| "reaction"
+	| "free-action"
+	| "movement"
+	| "passive"
+	| "special"
+	| "manual";
+
+export type CanonicalResolutionKind =
+	| "attack"
+	| "save"
+	| "damage"
+	| "healing"
+	| "effect";
+
+export interface CanonicalActivationSpec {
+	economy: CanonicalActionEconomy;
+	value?: number;
+	unit?: "round" | "minute" | "hour";
+	trigger?: string;
+	raw?: string;
+}
+
+export interface CanonicalRangeSpec {
+	kind:
+		| "self"
+		| "touch"
+		| "distance"
+		| "sight"
+		| "unlimited"
+		| "special"
+		| "manual";
+	distance?: number;
+	unit?: "feet" | "miles";
+	raw?: string;
+}
+
+export interface CanonicalTargetSpec {
+	kind:
+		| "self"
+		| "creature"
+		| "object"
+		| "point"
+		| "area"
+		| "special"
+		| "manual";
+	count?: number | string;
+	range?: CanonicalRangeSpec;
+	area?: {
+		shape:
+			| "cone"
+			| "cube"
+			| "cylinder"
+			| "line"
+			| "radius"
+			| "sphere"
+			| "special";
+		size?: number;
+		unit?: "feet" | "miles";
+	};
+	raw?: string;
+}
+
+export interface CanonicalDurationSpec {
+	kind:
+		| "instantaneous"
+		| "round"
+		| "minute"
+		| "hour"
+		| "until-rest"
+		| "permanent"
+		| "special"
+		| "manual";
+	value?: number;
+	concentration?: boolean;
+	ends?: string;
+	raw?: string;
+}
+
+export interface CanonicalAttackSpec {
+	kind: "melee" | "ranged" | "spell" | "weapon" | "special";
+	ability?: string;
+	roll?: string;
+	modifierFormula?: string;
+	critical?: "standard" | "none" | "manual";
+}
+
+export interface CanonicalSaveSpec {
+	ability: string;
+	dc: number | string;
+	onSuccess: "none" | "half-damage" | "reduced-effect" | "custom" | "manual";
+	successText?: string;
+	failureText?: string;
+}
+
+export interface CanonicalScalingSpec {
+	basis: "character-level" | "ability-level" | "resource-spent" | "custom";
+	formula?: string;
+	levels?: Record<string, string>;
+	raw?: string;
+}
+
+export interface CanonicalDamageSpec {
+	formula: string;
+	type?: string;
+	when?: "hit" | "failed-save" | "always" | "manual";
+	scaling?: CanonicalScalingSpec;
+}
+
+export interface CanonicalHealingSpec {
+	formula: string;
+	type?: "healing" | "temporary-hit-points" | "special";
+	scaling?: CanonicalScalingSpec;
+}
+
+export interface CanonicalUseSpec {
+	tracking: "unlimited" | "uses" | "resource" | "manual";
+	formula?: string;
+	recharge?:
+		| "turn"
+		| "encounter"
+		| "short-rest"
+		| "long-rest"
+		| "day"
+		| "special";
+	resourceId?: string;
+	cost?: number | string;
+	raw?: string;
+}
+
+export interface CanonicalEffectSource {
+	canonicalType: string;
+	canonicalId: string;
+	featureId?: string;
+}
+
+export interface CanonicalConditionApplication {
+	conditionId: string;
+	duration: CanonicalDurationSpec;
+	source: CanonicalEffectSource;
+	save?: CanonicalSaveSpec;
+	stacking: "replace" | "refresh" | "stack" | "highest" | "manual";
+}
+
+interface CanonicalAbilityResolutionBase {
+	version: 1;
+	activation: CanonicalActivationSpec;
+	target: CanonicalTargetSpec;
+	duration: CanonicalDurationSpec;
+	attack?: CanonicalAttackSpec;
+	save?: CanonicalSaveSpec;
+	damage?: CanonicalDamageSpec[];
+	healing?: CanonicalHealingSpec[];
+	scaling?: CanonicalScalingSpec[];
+	uses: CanonicalUseSpec;
+	conditions?: CanonicalConditionApplication[];
+	provenance: {
+		canonicalType: "spell" | "power" | "technique";
+		canonicalId: string;
+		sourceBook?: string | null;
+		sourceFieldPaths: string[];
+	};
+}
+
+export type CanonicalAbilityResolutionV1 =
+	| (CanonicalAbilityResolutionBase & {
+			status: "automated";
+			resolutionKinds: [CanonicalResolutionKind, ...CanonicalResolutionKind[]];
+	  })
+	| (CanonicalAbilityResolutionBase & {
+			status: "manual";
+			resolutionKinds: CanonicalResolutionKind[];
+			manual: { reason: string; instructions?: string };
+	  })
+	| (CanonicalAbilityResolutionBase & {
+			status: "review-blocked";
+			resolutionKinds: CanonicalResolutionKind[];
+			manual: { reason: string; instructions?: string };
+			reviewBlockerId: string;
+	  });
+
 export interface CompendiumComponents {
 	verbal?: boolean;
 	somatic?: boolean;
@@ -159,6 +342,8 @@ export interface BaseCompendiumItem {
 	tags?: string[] | null;
 	system_interaction?: string | null;
 	mechanics?: CompendiumMechanics | Json | null;
+	/** Versioned, source-preserving runtime resolution; absent means unresolved. */
+	ability_resolution?: CanonicalAbilityResolutionV1 | null;
 	limitations?: CompendiumLimitations | Json | null;
 	effects?: CompendiumEffects | string[] | Json | null;
 	rarity?: null | string;
@@ -726,6 +911,18 @@ export interface CompendiumJob extends BaseCompendiumItem {
 		name: string;
 		description: string;
 		level: number;
+		actionType?: string;
+		uses?: {
+			formula: string;
+			recharge: "short-rest" | "long-rest";
+			rechargeChanges?: Array<{
+				level: number;
+				recharge: "short-rest" | "long-rest";
+			}>;
+			unlimitedAtLevel?: number;
+		};
+		resource?: string;
+		tracking?: "uses" | "resource" | "manual";
 	}>;
 	job_traits: Array<{
 		name: string;
@@ -734,7 +931,23 @@ export interface CompendiumJob extends BaseCompendiumItem {
 		frequency: string;
 		dc: number;
 	}>;
-	class_features: Array<{ level: number; name: string; description: string }>;
+	class_features: Array<{
+		level: number;
+		name: string;
+		description: string;
+		actionType?: string;
+		uses?: {
+			formula: string;
+			recharge: "short-rest" | "long-rest";
+			rechargeChanges?: Array<{
+				level: number;
+				recharge: "short-rest" | "long-rest";
+			}>;
+			unlimitedAtLevel?: number;
+		};
+		resource?: string;
+		tracking?: "uses" | "resource" | "manual";
+	}>;
 	abilities: Array<{
 		name: string;
 		description: string;
@@ -769,6 +982,26 @@ export interface CompendiumJob extends BaseCompendiumItem {
 		spellsKnown?: number[];
 		spellSlots?: Record<string, number[]>;
 	};
+	level_choices?: Array<{
+		level: number;
+		type: string;
+		count: number;
+		source: string;
+		options?: string[];
+		filter?: {
+			maxPowerLevel?: number;
+			maxLevel?: number;
+			restrictTo?: string;
+		};
+	}>;
+	powers_known?: number[];
+	techniques_known?: number[];
+	spellbook?: {
+		atCreation: number;
+		perLevel: number;
+		label: string;
+		startLevel?: number;
+	};
 	starting_equipment?: string[][];
 	regent_requirements?: {
 		quest_completion: string;
@@ -779,21 +1012,43 @@ export interface CompendiumJob extends BaseCompendiumItem {
 }
 
 export interface CompendiumPath extends BaseCompendiumItem {
+	aliases?: string[];
 	level: number;
 	job_id: string;
 	job_name?: string;
 	path_tier?: number;
 	pathType?: string;
+	requirements?: {
+		level: number;
+		abilities?: string[];
+		skills?: string[];
+		prerequisites?: string[];
+	};
 	features: Array<{
 		level: number;
 		name: string;
 		description: string;
+		actionType?: string;
+		uses?: {
+			formula: string;
+			recharge: "short-rest" | "long-rest";
+		};
+		resource?: string;
+		tracking?: "uses" | "resource" | "manual";
 	}>;
 	abilities?: Array<{
 		name: string;
 		description: string;
 		recharge?: number;
 		cost?: string;
+		level?: number;
+		actionType?: string;
+		uses?: {
+			formula: string;
+			recharge: "short-rest" | "long-rest";
+		};
+		resource?: string;
+		tracking?: "uses" | "resource" | "manual";
 	}>;
 	stats?: {
 		primaryAttribute: string;
@@ -821,11 +1076,34 @@ export interface CompendiumRegent extends BaseCompendiumItem {
 		warden_approval: boolean;
 	};
 	class_features: Array<{
+		id?: string;
 		level: number;
 		name: string;
 		description: string;
 		type: string;
-		frequency: string;
+		frequency?: string;
+		actionType?: string;
+		uses?: {
+			formula: string;
+			recharge: "short-rest" | "long-rest";
+		};
+		resource?: string;
+		tracking?: "uses" | "resource" | "manual";
+		canonStatus?: "source-backed" | "review-blocked";
+		provenance?: {
+			levelSource: "progression_table" | "class_features";
+			mechanicsSource:
+				| "class_features"
+				| "abilities"
+				| "features"
+				| "progression_table";
+			sourcePath: string;
+			fieldPath: string;
+			sourceName?: string;
+			sourceLevel?: number;
+			conflict?: string;
+		};
+		reviewBlockerId?: string;
 	}>;
 	features: Array<{
 		name: string;

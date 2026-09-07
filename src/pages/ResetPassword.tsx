@@ -1,7 +1,7 @@
 /**
- * Reset Password — landing page for the Supabase recovery email link.
- * The link establishes a recovery session (handled by supabase-js from the
- * URL hash); this page then sets the new password via auth.updateUser.
+ * Reset Password — landing page for a Supabase recovery email link.
+ * A normal authenticated session is intentionally insufficient: the page also
+ * requires the PASSWORD_RECOVERY event or an explicit recovery URL marker.
  */
 
 import { ShieldCheck } from "lucide-react";
@@ -14,58 +14,82 @@ import {
 	RiftHeading,
 } from "@/components/ui/AscendantText";
 import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/lib/auth/authContext";
+import { validateNewPassword } from "@/lib/auth/authErrors";
+
+const hasRecoveryUrlMarker = (): boolean => {
+	if (typeof window === "undefined") return false;
+	const search = new URLSearchParams(window.location.search);
+	const hash = new URLSearchParams(window.location.hash.replace(/^#/, ""));
+	return search.get("type") === "recovery" || hash.get("type") === "recovery";
+};
 
 export default function ResetPassword() {
 	const navigate = useNavigate();
+	const { completePasswordRecovery } = useAuth();
 	const [password, setPassword] = useState("");
 	const [confirm, setConfirm] = useState("");
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState("");
-	const [hasSession, setHasSession] = useState<boolean | null>(null);
+	const [hasRecoverySession, setHasRecoverySession] = useState<boolean | null>(
+		null,
+	);
 
 	useEffect(() => {
-		// The recovery link puts tokens in the URL hash; supabase-js consumes
-		// them and emits a session. Poll once after mount so deep links work.
 		let mounted = true;
-		void supabase.auth.getSession().then(({ data }) => {
-			if (mounted) setHasSession(Boolean(data.session));
-		});
+		let recoveryEventSeen = false;
+		const recoveryMarker = hasRecoveryUrlMarker();
 		const {
 			data: { subscription },
-		} = supabase.auth.onAuthStateChange((_event, session) => {
-			if (mounted) setHasSession(Boolean(session));
+		} = supabase.auth.onAuthStateChange((event, session) => {
+			if (!mounted) return;
+			if (event === "PASSWORD_RECOVERY") {
+				recoveryEventSeen = true;
+				setHasRecoverySession(Boolean(session));
+			} else if (!session) {
+				setHasRecoverySession(false);
+			}
 		});
+
+		void supabase.auth.getSession().then(({ data, error: sessionError }) => {
+			if (!mounted) return;
+			setHasRecoverySession(
+				!sessionError &&
+					Boolean(data.session) &&
+					(recoveryEventSeen || recoveryMarker),
+			);
+		});
+
 		return () => {
 			mounted = false;
 			subscription.unsubscribe();
 		};
 	}, []);
 
-	const handleSubmit = async (e: React.FormEvent) => {
-		e.preventDefault();
+	const handleSubmit = async (event: React.FormEvent) => {
+		event.preventDefault();
 		setError("");
 
-		if (password.length < 8) {
-			setError("Password must be at least 8 characters.");
+		if (hasRecoverySession !== true) {
+			setError("Request a new recovery link before changing your password.");
 			return;
 		}
-		if (password !== confirm) {
-			setError("Passwords do not match.");
+		const validation = validateNewPassword(password, confirm);
+		if (!validation.valid) {
+			setError(validation.message);
 			return;
 		}
 
 		setLoading(true);
 		try {
-			const { error: updateError } = await supabase.auth.updateUser({
-				password,
-			});
-			if (updateError) {
-				setError(updateError.message);
+			const result = await completePasswordRecovery(password);
+			if (result.error) {
+				setError(result.error);
 				return;
 			}
+			setPassword("");
+			setConfirm("");
 			navigate("/login", { replace: true });
-		} catch {
-			setError("An unexpected error occurred");
 		} finally {
 			setLoading(false);
 		}
@@ -92,7 +116,7 @@ export default function ResetPassword() {
 				</div>
 
 				<div className="ra-card p-8 ascendant-materialize">
-					{hasSession === false ? (
+					{hasRecoverySession === false ? (
 						<div className="space-y-6 text-center">
 							<div className="bg-destructive/20 border border-destructive/50 text-destructive-foreground px-4 py-3 rounded-[2px] font-heading text-sm">
 								This page only works from a recovery email link. Request a new
@@ -119,9 +143,11 @@ export default function ResetPassword() {
 									data-testid="new-password-input"
 									type="password"
 									value={password}
-									onChange={(e) => setPassword(e.target.value)}
+									onChange={(event) => setPassword(event.target.value)}
+									autoComplete="new-password"
 									className="w-full px-4 py-3 bg-black/40 backdrop-blur-md border border-primary/30 rounded-[2px] text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/60 shadow-[inset_0_0_8px_rgba(0,0,0,0.5)] transition-all font-body"
 									placeholder="At least 8 characters"
+									minLength={8}
 									required
 								/>
 							</div>
@@ -138,22 +164,27 @@ export default function ResetPassword() {
 									data-testid="confirm-password-input"
 									type="password"
 									value={confirm}
-									onChange={(e) => setConfirm(e.target.value)}
+									onChange={(event) => setConfirm(event.target.value)}
+									autoComplete="new-password"
 									className="w-full px-4 py-3 bg-black/40 backdrop-blur-md border border-primary/30 rounded-[2px] text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/60 shadow-[inset_0_0_8px_rgba(0,0,0,0.5)] transition-all font-body"
 									placeholder="Repeat the new password"
+									minLength={8}
 									required
 								/>
 							</div>
 
 							{error && (
-								<div className="bg-destructive/20 border border-destructive/50 text-destructive-foreground px-4 py-3 rounded-[2px] font-heading text-sm">
+								<div
+									role="alert"
+									className="bg-destructive/20 border border-destructive/50 text-destructive-foreground px-4 py-3 rounded-[2px] font-heading text-sm"
+								>
 									{error}
 								</div>
 							)}
 
 							<button
 								type="submit"
-								disabled={loading || hasSession !== true}
+								disabled={loading || hasRecoverySession !== true}
 								className="w-full bg-gradient-to-r from-primary to-shadow-blue text-primary-foreground font-heading font-bold py-3 px-4 rounded-[2px] hover:from-primary/90 hover:to-shadow-blue/90 transition-all duration-200 shadow-lg shadow-primary/40 disabled:opacity-50 disabled:cursor-not-allowed tracking-wider uppercase ra-btn-glow"
 							>
 								<span className="flex items-center justify-center gap-2">
@@ -166,7 +197,7 @@ export default function ResetPassword() {
 
 					<div className="mt-6 text-center">
 						<AscendantText className="block text-xs text-muted-foreground">
-							Once updated you'll sign in with the new password.
+							Once updated you will sign in with the new password.
 						</AscendantText>
 					</div>
 				</div>

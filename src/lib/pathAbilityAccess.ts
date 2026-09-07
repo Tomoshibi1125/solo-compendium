@@ -18,7 +18,7 @@ export interface PathAbilityGrant {
 	leveledSchoolsOnly?: boolean;
 }
 
-export const PATH_ABILITY_GRANTS: readonly PathAbilityGrant[] = [
+const pathAbilityGrantCandidates: readonly PathAbilityGrant[] = [
 	{
 		jobName: "Destroyer",
 		pathName: "Path of the Spell Breaker",
@@ -1867,6 +1867,63 @@ export const PATH_ABILITY_GRANTS: readonly PathAbilityGrant[] = [
 		progression: "base",
 	},
 ];
+
+const RECONCILED_JOB_IDS = new Set([
+	"destroyer",
+	"mage",
+	"contractor",
+	"holy-knight",
+	"berserker",
+	"assassin",
+	"striker",
+	"esper",
+	"summoner",
+	"herald",
+	"revenant",
+	"stalker",
+	"technomancer",
+	"idol",
+]);
+
+const isSourceBackedReconciledGrant = (grant: PathAbilityGrant): boolean => {
+	const jobId = normalizeJobAccessToken(grant.jobName);
+	const pathId = normalizeJobAccessToken(grant.pathName);
+	return (
+		(jobId === "destroyer" &&
+			pathId === "path-of-the-spell-breaker" &&
+			grant.kind === "spell") ||
+		(jobId === "assassin" &&
+			pathId === "path-of-the-weave-infiltrator" &&
+			grant.kind === "spell") ||
+		(jobId === "assassin" &&
+			pathId === "path-of-the-blade-dancer" &&
+			grant.kind === "technique")
+	);
+};
+
+/**
+ * Derived grant claims rejected during completed job reconciliation. They
+ * remain inspectable evidence, but cannot affect eligibility unless the
+ * authoritative path catalog names the granted entries or a reviewed
+ * resolution is added.
+ */
+export const rejectedReconciledPathAbilityGrantCandidates =
+	pathAbilityGrantCandidates.filter(
+		(grant) =>
+			RECONCILED_JOB_IDS.has(normalizeJobAccessToken(grant.jobName)) &&
+			!isSourceBackedReconciledGrant(grant),
+	);
+
+/** @deprecated Use rejectedReconciledPathAbilityGrantCandidates instead. */
+export const rejectedTask3PathAbilityGrantCandidates =
+	rejectedReconciledPathAbilityGrantCandidates;
+
+export const PATH_ABILITY_GRANTS: readonly PathAbilityGrant[] =
+	pathAbilityGrantCandidates.filter(
+		(grant) =>
+			!RECONCILED_JOB_IDS.has(normalizeJobAccessToken(grant.jobName)) ||
+			isSourceBackedReconciledGrant(grant),
+	);
 
 function matchesName(
 	a: string | null | undefined,

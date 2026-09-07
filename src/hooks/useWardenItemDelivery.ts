@@ -184,13 +184,7 @@ export function useWardenItemDelivery() {
 				buildEquipmentInsert(characterId, item, quantity),
 			);
 
-			const rpcResult = await tryGrantViaRpc(campaignId, payloads);
-			if (!rpcResult) {
-				const { error } = await supabase
-					.from("character_equipment")
-					.insert(payloads);
-				if (error) throw error;
-			}
+			await grantViaRpc(campaignId, payloads);
 
 			await supabase.from("campaign_session_logs").insert({
 				campaign_id: campaignId,
@@ -339,10 +333,10 @@ function buildEquipmentInsert(
 	};
 }
 
-async function tryGrantViaRpc(
+async function grantViaRpc(
 	campaignId: string,
 	items: CharacterEquipmentInsert[],
-): Promise<boolean> {
+): Promise<void> {
 	const rpcClient = supabase.rpc as unknown as (
 		fn: string,
 		args: Record<string, unknown>,
@@ -351,15 +345,7 @@ async function tryGrantViaRpc(
 		p_campaign_id: campaignId,
 		p_items: items,
 	});
-	if (!error) return true;
-	const message = error.message.toLowerCase();
-	if (
-		message.includes("warden_grant_character_equipment") &&
-		(message.includes("does not exist") || message.includes("not found"))
-	) {
-		return false;
-	}
-	throw error;
+	if (error) throw error;
 }
 
 function normalizeInventoryType(type?: string | null): string {

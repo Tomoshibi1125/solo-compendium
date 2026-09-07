@@ -1,5 +1,5 @@
 import type { Json } from "@/integrations/supabase/types";
-import { resolveCanonicalReference } from "@/lib/canonicalCompendium";
+import { resolveCanonicalRegentId } from "@/lib/regentIdentity";
 
 const OVERLAY_KEYS = ["monarch_overlays", "regent_overlays"] as const;
 const GEMINI_OVERLAY_KEYS = [
@@ -58,13 +58,7 @@ export async function normalizeRegentOverlayIds(
 	const seen = new Set<string>();
 
 	for (const raw of value) {
-		const ref = stringOrNull(raw);
-		if (!ref) continue;
-		const resolution = await resolveCanonicalReference("regents", {
-			id: ref,
-			name: ref,
-		});
-		const id = resolution.entry?.id;
+		const id = resolveCanonicalRegentId(raw);
 		if (!id || seen.has(id)) continue;
 		seen.add(id);
 		normalized.push(id);

@@ -39,7 +39,15 @@ interface PathRow {
 	description?: string | null;
 	display_name?: string | null;
 	path_level?: number | null;
-	requirements?: { level?: number | null } | null;
+	requirements?: {
+		level?: number | null;
+		skills?: string[] | null;
+	} | null;
+	eligibility?: {
+		eligible: boolean;
+		reason: string;
+		missingSkills: string[];
+	} | null;
 	stats?: PathStats | null;
 	features?: PathFeature[] | null;
 	abilities?: PathAbility[] | null;
@@ -218,12 +226,28 @@ export const PathStep: React.FC<PathStepProps> = ({
 							</SelectTrigger>
 							<SelectContent>
 								{paths.map((path) => (
-									<SelectItem key={path.id} value={path.id}>
-										{formatRegentVernacular(path.display_name || path.name)}
+									<SelectItem
+										key={path.id}
+										value={path.id}
+										disabled={path.eligibility?.eligible === false}
+									>
+										<span>
+											{formatRegentVernacular(path.display_name || path.name)}
+											{path.eligibility?.eligible === false
+												? ` — ${path.eligibility.reason}`
+												: ""}
+										</span>
 									</SelectItem>
 								))}
 							</SelectContent>
 						</Select>
+						{paths.length > 0 &&
+							!paths.some((path) => path.eligibility?.eligible !== false) && (
+								<p className="text-xs text-destructive">
+									No path requirements are currently met. Return to Job or
+									Background and choose the required skill proficiencies.
+								</p>
+							)}
 					</div>
 
 					{selectedPathData && (

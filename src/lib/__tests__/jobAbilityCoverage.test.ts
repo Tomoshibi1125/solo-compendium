@@ -21,14 +21,55 @@ import { resolveRuneGrant } from "../runeAutomation";
 // job naturally and are not granted by any path. They remain in the catalog so
 // they stay rune-target-able (see runeAutomation / useAbsorbRune).
 const RUNE_ONLY_POWER_IDS = new Set<string>([
-	"power-sup-6-89-idol-s-magnum-opus",
+	// Contractor's supplemental pact package is not granted by the authored
+	// Cursed Blade path. Empty classes[] keeps it available only through Runes.
+	"power-sup-1-26-cursed-blade-edge",
+	"power-sup-2-27-pact-retaliation",
+	"power-sup-2-71-tether-of-binding",
+	"power-sup-3-106-sacrifice-engine",
+	"power-sup-4-81-blood-pact-escalation",
+	"power-sup-6-90-patron-s-embrace",
+	"power-sup-7-122-patron-sacrifice",
+	// Task 5 supplemental entries rejected as native Esper/Summoner/Herald/Idol
+	// path grants. They remain available only through explicit Rune absorption.
+	"power-sup-1-22-dissonant-strike",
+	"power-sup-1-24-guided-strike",
+	"power-sup-2-25-retributive-ward",
+	"power-sup-4-80-encore-performance",
+	"power-sup-9-101-absolute-pact",
+	"power-sup-3-110-herald-s-intervention",
+	"power-sup-4-115-summoner-s-pack",
+	"power-sup-6-118-runic-detonation",
+	"power-sup-8-121-esper-ascension",
+	"power-sup-8-125-summoner-s-leviathan",
+	"power-sup-9-126-divine-mandate",
 	// Idol (spell-caster) signature powers with no path grant — Idol cannot
 	// natively learn powers, so these are reachable only via the Rune system.
 	"power-sup-2-23-tempo-shift",
 	"power-sup-2-70-harmonic-ward",
 	"power-sup-2-107-resonance-counter",
+	"power-sup-6-89-idol-s-magnum-opus",
+	"power-sup-9-100-final-chorus",
 ]);
 const RUNE_ONLY_TECHNIQUE_IDS = new Set<string>([
+	// Contractor's rejected Cursed Blade package remains Rune-targetable.
+	"tech-sup-1-36-pact-blade",
+	"tech-sup-3-37-eldritch-riposte",
+	"tech-sup-4-61-pact-weapon-manifest",
+	"tech-sup-5-38-patron-s-fury",
+	// Task 5 supplemental entries rejected as native path grants.
+	"tech-sup-1-30-rhythmic-strike",
+	"tech-sup-1-33-sacred-weapon",
+	"tech-sup-3-34-spiritual-hammer",
+	"tech-sup-5-35-war-god-s-blessing",
+	"tech-sup-2-50-resonance-slash",
+	"tech-sup-6-97-summoner-s-bond-strike",
+	"tech-sup-9-105-summoner-s-convergence",
+	"tech-sup-9-107-esper-singularity",
+	// Idol signatures are not native martial techniques for a spell-caster.
+	"tech-sup-4-90-idol-s-duel",
+	"tech-sup-5-32-crescendo-finale",
+	"tech-sup-9-77-resonance-apocalypse",
 	"tech-sup-3-31-dance-of-blades",
 	"tech-sup-6-68-resonance-blade-dance",
 ]);
@@ -318,77 +359,104 @@ describe("Job ability coverage — archetype contract", () => {
 });
 
 describe("Job ability access — hybrid path grant coverage", () => {
-	it("Idol on Path of the Dance Resonance at level 17 unlocks the full granted entry list", async () => {
-		const powersList = await listLearnablePowers({
-			jobName: "Idol",
-			pathName: "Path of the Dance Resonance",
-			characterLevel: 17,
-		});
-		const techniquesList = await listLearnableTechniques({
-			jobName: "Idol",
-			pathName: "Path of the Dance Resonance",
-			characterLevel: 17,
-		});
-		const powerNames = new Set(powersList.map((p) => p.name));
-		const techniqueNames = new Set(techniquesList.map((t) => t.name));
-		const expectedPowers = [
-			"Adrenaline Surge",
-			"Berserker's Fury",
-			"Absolute Smite",
-			"Absolute Ascension",
-			"Absolute Pact",
-		];
-		const expectedTechniques = [
-			"Anchor Strike",
-			"Arterial Cut",
-			"Anchor Slam",
-			"Absolute Cleave",
-			"Absolute Execution",
-		];
-		for (const name of expectedPowers) {
-			expect(
-				powerNames.has(name),
-				`Dance Resonance L17 missing power "${name}"`,
-			).toBe(true);
-		}
-		for (const name of expectedTechniques) {
-			expect(
-				techniqueNames.has(name),
-				`Dance Resonance L17 missing technique "${name}"`,
-			).toBe(true);
+	it("reconciled Task 5-6 paths do not infer supplemental catalog access", async () => {
+		for (const jobName of [
+			"Esper",
+			"Summoner",
+			"Herald",
+			"Idol",
+			"Revenant",
+			"Stalker",
+			"Technomancer",
+		]) {
+			const [basePowers, baseTechniques, baseSpells] = await Promise.all([
+				listLearnablePowers({ jobName, characterLevel: 20 }),
+				listLearnableTechniques({ jobName, characterLevel: 20 }),
+				listLearnableSpells({ jobName, characterLevel: 20 }),
+			]);
+			const baseIds = {
+				power: new Set(basePowers.map((entry) => entry.id)),
+				technique: new Set(baseTechniques.map((entry) => entry.id)),
+				spell: new Set(baseSpells.map((entry) => entry.id)),
+			};
+
+			for (const path of paths.filter((entry) => entry.jobName === jobName)) {
+				const [pathPowers, pathTechniques, pathSpells] = await Promise.all([
+					listLearnablePowers({
+						jobName,
+						pathName: path.name,
+						characterLevel: 20,
+					}),
+					listLearnableTechniques({
+						jobName,
+						pathName: path.name,
+						characterLevel: 20,
+					}),
+					listLearnableSpells({
+						jobName,
+						pathName: path.name,
+						characterLevel: 20,
+					}),
+				]);
+				expect(
+					pathPowers.filter((entry) => !baseIds.power.has(entry.id)),
+					`${path.name} inferred power access`,
+				).toEqual([]);
+				expect(
+					pathTechniques.filter((entry) => !baseIds.technique.has(entry.id)),
+					`${path.name} inferred technique access`,
+				).toEqual([]);
+				expect(
+					pathSpells.filter((entry) => !baseIds.spell.has(entry.id)),
+					`${path.name} inferred spell access`,
+				).toEqual([]);
+			}
 		}
 	});
 
-	it("Contractor on Path of the Cursed Blade unlocks pact-themed powers and techniques", async () => {
-		const powersList = await listLearnablePowers({
-			jobName: "Contractor",
-			pathName: "Path of the Cursed Blade",
+	it("retains reviewed Assassin path grants with canonical level gates", async () => {
+		const beforeWeaveGrant = await listLearnableSpells({
+			jobName: "Assassin",
+			pathName: "Path of the Weave Infiltrator",
+			characterLevel: 2,
+		});
+		const weaveSpells = await listLearnableSpells({
+			jobName: "Assassin",
+			pathName: "Path of the Weave Infiltrator",
+			characterLevel: 3,
+		});
+		expect(beforeWeaveGrant).toHaveLength(0);
+		expect(weaveSpells.some((spell) => spell.power_level === 1)).toBe(true);
+		expect(weaveSpells.every((spell) => spell.power_level <= 1)).toBe(true);
+		expect(
+			weaveSpells
+				.filter((spell) => spell.power_level > 0)
+				.every((spell) => {
+					const school = (spell as { school?: unknown }).school;
+					return school === "Enchantment" || school === "Illusion";
+				}),
+		).toBe(true);
+
+		const beforeBladeDancerGrant = await listLearnableTechniques({
+			jobName: "Assassin",
+			pathName: "Path of the Blade Dancer",
+			characterLevel: 16,
+		});
+		const bladeDancerTechniques = await listLearnableTechniques({
+			jobName: "Assassin",
+			pathName: "Path of the Blade Dancer",
 			characterLevel: 17,
 		});
-		const techniquesList = await listLearnableTechniques({
-			jobName: "Contractor",
-			pathName: "Path of the Cursed Blade",
-			characterLevel: 17,
-		});
-		const powerNames = new Set(powersList.map((p) => p.name));
-		const techniqueNames = new Set(techniquesList.map((t) => t.name));
-		const expectedPowers = [
-			"Cursed Blade Edge",
-			"Pact Retaliation",
-			"Absolute Pact",
-		];
-		const expectedTechniques = ["Pact Blade", "Eldritch Riposte"];
-		for (const name of expectedPowers) {
-			expect(powerNames.has(name), `Cursed Blade missing power "${name}"`).toBe(
-				true,
-			);
-		}
-		for (const name of expectedTechniques) {
-			expect(
-				techniqueNames.has(name),
-				`Cursed Blade missing technique "${name}"`,
-			).toBe(true);
-		}
+		expect(
+			beforeBladeDancerGrant.some(
+				(technique) => technique.name === "Harmonic Counter",
+			),
+		).toBe(false);
+		expect(
+			bladeDancerTechniques.some(
+				(technique) => technique.name === "Harmonic Counter",
+			),
+		).toBe(true);
 	});
 });
 
@@ -417,27 +485,47 @@ describe("Job ability owner-gate — signatures are owner + Rune only", () => {
 		}
 	});
 
-	it("keeps the martial signature 'Berserker's Fury' off every non-owner's base list", async () => {
-		// Owned by Berserker; also granted via Berserker's Path of the Escalating
-		// Resonance, so it is path-gated even for Berserker's base list. No other
-		// martial job may natively learn it — they use the Rune system.
-		for (const job of MARTIAL_CAPABLE_JOBS) {
+	it("keeps 'Berserker's Fury' owner-only without granting it from Escalating Resonance", async () => {
+		for (const job of MARTIAL_CAPABLE_JOBS.filter(
+			(job) => job !== "Berserker",
+		)) {
 			const powersList = await listLearnablePowers({
 				jobName: job,
 				characterLevel: 20,
 			});
 			expect(
-				powersList.some((p) => p.name === "Berserker's Fury"),
-				`${job} must not natively learn Berserker's Fury without its path`,
+				powersList.some((power) => power.name === "Berserker's Fury"),
+				`${job} must not natively learn Berserker's Fury`,
 			).toBe(false);
 		}
-		// Berserker earns it by selecting the granting path.
-		const viaPath = await listLearnablePowers({
+
+		const ownerBase = await listLearnablePowers({
+			jobName: "Berserker",
+			characterLevel: 20,
+		});
+		expect(ownerBase.some((power) => power.name === "Berserker's Fury")).toBe(
+			true,
+		);
+
+		const viaRejectedPath = await listLearnablePowers({
 			jobName: "Berserker",
 			pathName: "Path of the Escalating Resonance",
 			characterLevel: 20,
 		});
-		expect(viaPath.some((p) => p.name === "Berserker's Fury")).toBe(true);
+		const ownerBaseIds = new Set(ownerBase.map((power) => power.id));
+		expect(
+			viaRejectedPath
+				.filter((power) => !ownerBaseIds.has(power.id))
+				.map((power) => power.name),
+		).toEqual([]);
+		expect(
+			PATH_ABILITY_GRANTS.some(
+				(grant) =>
+					grant.jobName === "Berserker" &&
+					grant.pathName === "Path of the Escalating Resonance" &&
+					grant.entryNames?.includes("Berserker's Fury"),
+			),
+		).toBe(false);
 	});
 
 	it("restricts the signature spell 'Pact Shield' to Contractor among casters", async () => {

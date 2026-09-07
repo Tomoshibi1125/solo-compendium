@@ -63,77 +63,15 @@ export function RegentFeaturesDisplay({
 		);
 	}
 
-	const getRegentFeatures = () => {
-		if (!regentData) return [];
-
-		// The static regents (src/data/compendium/regents.ts) carry richer fields
-		// (`abilities`, `features`) that the supabase-derived `CompendiumRegent`
-		// type does not expose — cast for the additional surface so the UI can
-		// render martial-themed regents (Radiant/Steel/Destruction/War).
-		const extended = regentData as typeof regentData & {
-			abilities?: Array<{
-				name: string;
-				description: string;
-				type: "passive" | "active" | "action" | "bonus-action" | "reaction";
-				frequency?: string;
-				power_level?: number;
-			}>;
-			features?: Array<{
-				name: string;
-				description: string;
-				power_level?: number;
-			}>;
-		};
-
-		const classFeatureEntries =
-			regentData.class_features
-				?.filter((f) => f.level <= effectiveRegentLevel)
-				.map((f) => ({
-					name: f.name,
-					description: f.description,
-					type: f.type,
-					frequency: f.frequency,
-					level: f.level,
-					power_level: undefined as number | undefined,
-				})) ?? [];
-
-		// Many non-spellcasting regents (radiant/steel/destruction/war/etc.) store
-		// content in `abilities[]` (level-agnostic, gated by power_level instead)
-		// and/or `features[]` (passive trait descriptions). Surface both so those
-		// regents don't render as empty cards.
-		const abilityEntries =
-			extended.abilities?.map((a) => ({
-				name: a.name,
-				description: a.description,
-				type: a.type,
-				frequency: a.frequency,
-				level: 0,
-				power_level: a.power_level,
+	const regentFeatures =
+		regentData?.class_features
+			?.filter((feature) => feature.level <= effectiveRegentLevel)
+			.map((feature) => ({
+				...feature,
+				id:
+					feature.id ??
+					`regent-feature:${regentData.id}:${feature.level}:${feature.name}`,
 			})) ?? [];
-
-		const featureEntries =
-			extended.features?.map((f) => ({
-				name: f.name,
-				description: f.description,
-				type: "passive" as const,
-				frequency: undefined,
-				level: 0,
-				power_level: f.power_level,
-			})) ?? [];
-
-		const seen = new Set<string>();
-		return [
-			...classFeatureEntries,
-			...abilityEntries,
-			...featureEntries,
-		].filter((entry) => {
-			if (seen.has(entry.name)) return false;
-			seen.add(entry.name);
-			return true;
-		});
-	};
-
-	const regentFeatures = getRegentFeatures();
 	const additionalSpells = regentData?.spellcasting?.additional_spells ?? [];
 
 	return (
@@ -225,47 +163,66 @@ export function RegentFeaturesDisplay({
 					<div className="space-y-3">
 						{regentFeatures.map((feature) => (
 							<button
-								key={feature.name}
+								key={feature.id}
 								type="button"
 								className="w-full text-left p-4 border rounded-lg bg-background hover:bg-muted/30 transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary"
 								onClick={() =>
 									onSelectDetail?.({
 										title: feature.name,
-										description: feature.description || "",
+										description: feature.description,
 										payload: {
 											level: feature.level,
 											frequency: feature.frequency,
-											type: feature.type,
+											actionType: feature.actionType,
+											uses: feature.uses,
+											resource: feature.resource,
+											tracking: feature.tracking,
+											canonStatus: feature.canonStatus,
 										},
 									})
 								}
 							>
-								<div className="flex items-center gap-2 mb-2">
+								<div className="flex items-center gap-2 mb-2 flex-wrap">
 									<span className="font-medium">{feature.name}</span>
-									<Badge variant="outline" className="text-xs">
-										{feature.type}
-									</Badge>
-									{feature.frequency && (
+									{feature.actionType && (
+										<Badge variant="outline" className="text-xs">
+											{feature.actionType}
+										</Badge>
+									)}
+									{feature.uses && (
+										<Badge variant="secondary" className="text-xs">
+											{feature.uses.formula} / {feature.uses.recharge}
+										</Badge>
+									)}
+									{!feature.uses && feature.frequency && (
 										<Badge variant="secondary" className="text-xs">
 											{feature.frequency}
 										</Badge>
 									)}
-									{feature.level > 0 && (
+									{feature.resource && (
 										<Badge variant="outline" className="text-xs">
-											Lvl {feature.level}
+											Cost: {feature.resource}
 										</Badge>
 									)}
-									{feature.power_level !== undefined && (
-										<Badge variant="secondary" className="text-xs">
-											PL {feature.power_level}
+									{feature.tracking === "manual" && (
+										<Badge variant="outline" className="text-xs">
+											Manual
 										</Badge>
 									)}
+									{feature.canonStatus === "review-blocked" && (
+										<Badge variant="destructive" className="text-xs">
+											Canon Review Required
+										</Badge>
+									)}
+									<Badge variant="outline" className="text-xs">
+										Lvl {feature.level}
+									</Badge>
 								</div>
 								<ExpandableText
 									className="text-sm text-muted-foreground"
 									lines={2}
 								>
-									<AutoLinkText text={feature.description || ""} />
+									<AutoLinkText text={feature.description} />
 								</ExpandableText>
 							</button>
 						))}

@@ -4958,6 +4958,7 @@ export const items_part2: Item[] = [
 		value: { currency: "gate", amount: 238 },
 		item_type: "weapon",
 		weapon_type: "martial melee",
+		range: "20/60",
 		damage: "2d4",
 		damage_type: "piercing",
 		simple_properties: ["reach", "two-handed", "thrown"],

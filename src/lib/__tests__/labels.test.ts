@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import {
 	formatActionType,
 	formatEnumLabel,
+	formatRankMarkup,
 	formatRarityLabel,
 	formatRecharge,
 	getRarityBadgeClass,
@@ -84,6 +85,18 @@ describe("formatActionType", () => {
 		expect(formatActionType("Press your palm against the design")).toBe(
 			"Press your palm against the design",
 		);
+	});
+});
+
+describe("formatRankMarkup", () => {
+	it("renders internal rank annotations as readable unbracketed prose", () => {
+		expect(
+			formatRankMarkup(
+				"Recognized globally at [RANK: S — ABSOLUTE SINGULARITY].",
+			),
+		).toBe("Recognized globally at Rank: S — ABSOLUTE SINGULARITY.");
+		expect(formatRankMarkup("No marker")).toBe("No marker");
+		expect(formatRankMarkup(null)).toBe("");
 	});
 });
 

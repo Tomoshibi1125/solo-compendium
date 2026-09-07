@@ -17,7 +17,7 @@ export const REGENT_EXPECTATIONS = {
 		powerLevel: 5,
 		featureCount: 39,
 		frequencies: COMMON_FOUR_CADENCES,
-		grants: { spell: true, power: true, technique: false },
+		grants: { spell: true, power: false, technique: false },
 		progression: {
 			1: ["Umbral Command", "Veilstep Supreme", "Umbral Dominion"],
 			2: ["Essence Harvest", "Regent's Presence"],
@@ -36,7 +36,7 @@ export const REGENT_EXPECTATIONS = {
 		powerLevel: 10,
 		featureCount: 8,
 		frequencies: COMMON_FOUR_CADENCES,
-		grants: { spell: true, power: true, technique: false },
+		grants: { spell: true, power: false, technique: false },
 		progression: {
 			1: ["White Flame Mastery", "Immolation Aura", "Flame Dominion"],
 			2: ["Regent Power Resonance"],
@@ -74,7 +74,7 @@ export const REGENT_EXPECTATIONS = {
 		powerLevel: 10,
 		featureCount: 8,
 		frequencies: COMMON_FOUR_CADENCES,
-		grants: { spell: true, power: true, technique: false },
+		grants: { spell: true, power: false, technique: false },
 		progression: {
 			1: ["Breath of Annihilation", "Destruction Step", "Destruction Dominion"],
 			2: ["Regent Power Resonance"],
@@ -112,7 +112,7 @@ export const REGENT_EXPECTATIONS = {
 		powerLevel: 10,
 		featureCount: 26,
 		frequencies: COMMON_FOUR_CADENCES,
-		grants: { spell: true, power: true, technique: false },
+		grants: { spell: true, power: false, technique: false },
 		progression: {
 			1: ["Ice Age Decree", "Frost Dominion"],
 			2: ["Regent Power Resonance"],
@@ -149,8 +149,8 @@ export const REGENT_EXPECTATIONS = {
 		prerequisiteJob: COMMON_QUEST_PREREQUISITE,
 		powerLevel: 10,
 		featureCount: 4,
-		frequencies: ["at-will", "long-rest"],
-		grants: { spell: true, power: true, technique: false },
+		frequencies: ["at-will", "long-rest", "once-per-day"],
+		grants: { spell: true, power: false, technique: false },
 		progression: {
 			1: ["Typhoid Incarnate", "Insect God"],
 			2: ["Pandemic Decree"],
@@ -169,7 +169,7 @@ export const REGENT_EXPECTATIONS = {
 		powerLevel: 10,
 		featureCount: 26,
 		frequencies: ["at-will", "long-rest", "once-per-day"],
-		grants: { spell: true, power: true, technique: false },
+		grants: { spell: true, power: false, technique: false },
 		progression: {
 			1: ["Void Singularity", "Planar Blink"],
 			2: ["Spatial Anchors"],
@@ -188,7 +188,7 @@ export const REGENT_EXPECTATIONS = {
 		powerLevel: 10,
 		featureCount: 5,
 		frequencies: ["at-will", "long-rest"],
-		grants: { spell: true, power: true, technique: true },
+		grants: { spell: false, power: true, technique: true },
 		progression: {
 			1: ["Perfect Imitation", "Power Theft"],
 			2: ["Reactive Evolution"],
@@ -207,7 +207,7 @@ export const REGENT_EXPECTATIONS = {
 		powerLevel: 10,
 		featureCount: 26,
 		frequencies: COMMON_FOUR_CADENCES,
-		grants: { spell: true, power: true, technique: false },
+		grants: { spell: true, power: false, technique: false },
 		progression: {
 			1: ["Sanguine Command", "Blood Shield"],
 			2: ["Crimson Lance"],
@@ -226,7 +226,7 @@ export const REGENT_EXPECTATIONS = {
 		powerLevel: 10,
 		featureCount: 26,
 		frequencies: COMMON_FOUR_CADENCES,
-		grants: { spell: true, power: true, technique: true },
+		grants: { spell: true, power: false, technique: false },
 		progression: {
 			1: ["Gravity Well", "Weightless Step"],
 			2: ["Crushing Blows"],

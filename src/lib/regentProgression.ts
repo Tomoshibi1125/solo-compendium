@@ -1,200 +1,335 @@
 import type { ChoiceSourceData, LedgerChoice } from "@/lib/choiceCalculations";
-import type { Regent } from "@/lib/regentTypes";
+import type {
+	Regent,
+	RegentClassFeature,
+	RegentFeatureCanonStatus,
+	RegentFeatureFrequency,
+	RegentFeatureProvenance,
+	RegentFeatureSourceKind,
+	RegentFeatureTracking,
+	RegentFeatureType,
+	RegentFeatureUseDefinition,
+} from "@/lib/regentTypes";
 
-/**
- * Regent leveled-feature normalization.
- *
- * Regents are Warden-unlocked class overlays that should be as mechanically
- * comprehensive as jobs — including a leveled `class_features` list spanning
- * levels 1-20 that every consumer (the level-up wizard's per-level regent
- * display, `RegentUnlocksPanel`, `canonicalRegentToPath`) can read.
- *
- * Some regents already carry a curated `class_features` set (Umbral, Frost,
- * Beast, Spatial, Blood, Gravity). Others (Radiant, Steel, Destruction, War,
- * and the truncated Plague / Mimic) keep the same content in the flatter
- * `abilities` + `features` arrays plus a full `progression_table` that maps each
- * level to the feature names it grants. This module joins those back together so
- * ALL regents expose a complete, level-indexed feature list without duplicating
- * content into the data file.
- */
+export type {
+	RegentFeatureFrequency,
+	RegentFeatureType,
+} from "@/lib/regentTypes";
 
-export type RegentFeatureType =
-	| "passive"
-	| "active"
-	| "action"
-	| "bonus-action"
-	| "reaction";
+export interface RegentLeveledFeature extends RegentClassFeature {
+	id: string;
+	canonStatus: RegentFeatureCanonStatus;
+	provenance: RegentFeatureProvenance;
+}
 
-export type RegentFeatureFrequency =
-	| "at-will"
-	| "short-rest"
-	| "long-rest"
-	| "once-per-day"
-	| "once-per-long-rest";
+const SOURCE_PATH = "src/data/compendium/regents.ts" as const;
+const REVIEW_DESCRIPTION =
+	"Canon review required: the progression names this feature, but the current repository source does not author its mechanics. No automated gameplay effect is applied.";
 
-export interface RegentLeveledFeature {
-	level: number;
+/** Cadence text conflicts or abbreviations that cannot safely seed charges. */
+const MANUAL_CADENCE_KEYS = new Set([
+	"beast_regent:1:apex-form",
+	"beast_regent:2:beast-king-s-call",
+	"plague_regent:2:pandemic-decree",
+	"frost_regent:3:glacial-eternity",
+	"spatial_regent:9:reality-rewrite",
+	"mimic_regent:1:power-theft",
+	"blood_regent:5:sanguine-rebirth",
+	"blood_regent:9:blood-apocalypse",
+]);
+
+const normalizeName = (name: string): string =>
+	name
+		.trim()
+		.toLowerCase()
+		.replace(/\s*\((?:active|passive)\)\s*$/i, "")
+		.replace(/\s+/g, " ");
+
+const slug = (value: string): string =>
+	value
+		.trim()
+		.toLowerCase()
+		.replace(/[^a-z0-9]+/g, "-")
+		.replace(/(^-|-$)/g, "");
+
+export const buildRegentFeatureId = (
+	regentId: string,
+	level: number,
+	name: string,
+): string => `regent-feature:${regentId}:${level}:${slug(name)}`;
+
+const toActionType = (type: RegentFeatureType): string => {
+	switch (type) {
+		case "bonus-action":
+			return "Bonus action";
+		case "reaction":
+			return "Reaction";
+		case "action":
+			return "Action";
+		case "active":
+			return "Active";
+		default:
+			return "Passive";
+	}
+};
+
+const toUses = (
+	frequency: RegentFeatureFrequency | undefined,
+	manualCadence: boolean,
+): RegentFeatureUseDefinition | undefined => {
+	if (manualCadence) return undefined;
+	if (frequency === "short-rest") {
+		return { formula: "1", recharge: "short-rest" };
+	}
+	if (frequency === "long-rest" || frequency === "once-per-long-rest") {
+		return { formula: "1", recharge: "long-rest" };
+	}
+	// A day is not guaranteed to equal a long rest. Daily features remain manual
+	// until the shared duration/recovery lifecycle can represent calendar cadence.
+	return undefined;
+};
+
+type SourceFeature = {
 	name: string;
 	description: string;
-	type: RegentFeatureType;
+	type?: RegentFeatureType;
 	frequency?: RegentFeatureFrequency;
-}
-
-// A curated set is treated as authoritative once it reaches the high tiers; the
-// progression_table derivation is only used to fill regents that lack one.
-const CURATED_AUTHORITATIVE_MIN_MAX_LEVEL = 15;
-
-// Generic progression markers referenced by progression_table.features_gained
-// that aren't defined as a named ability/feature. Given sensible descriptions so
-// the level-up display never shows a bare name.
-const GENERIC_MARKER_DESCRIPTIONS: Record<string, string> = {
-	"regent attribute enhancement":
-		"Your bond with the Regent deepens: increase one ability score by 2, or two ability scores by 1 (to a maximum of 20).",
-	"regent power resonance":
-		"The Regent's authority resonates more strongly through you — the save DCs and effect scaling of your Regent features rise with your attunement.",
+	level?: number;
+	power_level?: number;
+	actionType?: string;
+	uses?: RegentFeatureUseDefinition;
+	resource?: string;
+	tracking?: RegentFeatureTracking;
+	sourceKind: Exclude<RegentFeatureSourceKind, "progression_table">;
+	sourceIndex: number;
 };
 
-function normalizeName(name: string): string {
-	return name.trim().toLowerCase();
-}
+const collectSourceFeatures = (regent: Regent): SourceFeature[] => [
+	...(regent.class_features ?? []).flatMap((feature, sourceIndex) =>
+		feature.canonStatus === "review-blocked"
+			? []
+			: [
+					{
+						...feature,
+						sourceKind: "class_features" as const,
+						sourceIndex,
+					},
+				],
+	),
+	...(regent.abilities ?? []).map((feature, sourceIndex) => ({
+		...feature,
+		sourceKind: "abilities" as const,
+		sourceIndex,
+	})),
+	...(regent.features ?? []).map((feature, sourceIndex) => ({
+		...feature,
+		type: feature.type ?? ("passive" as const),
+		sourceKind: "features" as const,
+		sourceIndex,
+	})),
+];
 
-type LookupEntry = {
-	description: string;
-	type: RegentFeatureType;
-	frequency?: RegentFeatureFrequency;
+const sourcePriority: Record<SourceFeature["sourceKind"], number> = {
+	class_features: 0,
+	abilities: 1,
+	features: 2,
 };
 
-function buildNameLookup(regent: Regent): Map<string, LookupEntry> {
-	const lookup = new Map<string, LookupEntry>();
-	// Curated class_features first (richest source, carries an explicit type).
-	for (const f of regent.class_features ?? []) {
-		if (f?.name && f?.description) {
-			lookup.set(normalizeName(f.name), {
-				description: f.description,
-				type: f.type ?? "passive",
-				frequency: f.frequency,
-			});
-		}
-	}
-	// Named abilities carry an action economy type + frequency.
-	for (const a of regent.abilities ?? []) {
-		if (a?.name && a?.description && !lookup.has(normalizeName(a.name))) {
-			lookup.set(normalizeName(a.name), {
-				description: a.description,
-				type: a.type ?? "passive",
-				frequency:
-					a.frequency === "once-per-day" ||
-					a.frequency === "short-rest" ||
-					a.frequency === "long-rest" ||
-					a.frequency === "at-will"
-						? a.frequency
-						: undefined,
-			});
-		}
-	}
-	// Flat features are passive descriptors.
-	for (const f of regent.features ?? []) {
-		if (f?.name && f?.description && !lookup.has(normalizeName(f.name))) {
-			lookup.set(normalizeName(f.name), {
-				description: f.description,
-				type: "passive",
-			});
-		}
-	}
-	return lookup;
+function selectSourceFeature(
+	sources: SourceFeature[],
+	name: string,
+	level: number,
+): SourceFeature | undefined {
+	const candidates = sources.filter(
+		(source) => normalizeName(source.name) === normalizeName(name),
+	);
+	return candidates.sort((left, right) => {
+		const leftExactLevel = left.level === level ? 0 : 1;
+		const rightExactLevel = right.level === level ? 0 : 1;
+		if (leftExactLevel !== rightExactLevel)
+			return leftExactLevel - rightExactLevel;
+		const leftExactPower = left.power_level === level ? 0 : 1;
+		const rightExactPower = right.power_level === level ? 0 : 1;
+		if (leftExactPower !== rightExactPower)
+			return leftExactPower - rightExactPower;
+		const priority =
+			sourcePriority[left.sourceKind] - sourcePriority[right.sourceKind];
+		if (priority !== 0) return priority;
+		return left.sourceIndex - right.sourceIndex;
+	})[0];
 }
 
-function maxCuratedLevel(regent: Regent): number {
-	const levels = (regent.class_features ?? []).map((f) => f.level);
-	return levels.length ? Math.max(...levels) : 0;
+function selectMetadataFeature(
+	sources: SourceFeature[],
+	name: string,
+	level: number,
+	fallback: SourceFeature | undefined,
+): SourceFeature | undefined {
+	const candidates = sources.filter(
+		(source) => normalizeName(source.name) === normalizeName(name),
+	);
+	return (
+		candidates.find(
+			(source) =>
+				source.sourceKind === "class_features" && source.level === level,
+		) ??
+		candidates.find((source) => source.sourceKind === "abilities") ??
+		fallback
+	);
 }
 
-function sortDedupe(features: RegentLeveledFeature[]): RegentLeveledFeature[] {
-	const seen = new Set<string>();
-	const out: RegentLeveledFeature[] = [];
-	for (const f of features) {
-		const key = `${f.level}:${normalizeName(f.name)}`;
-		if (seen.has(key)) continue;
-		seen.add(key);
-		out.push(f);
-	}
-	return out.sort((a, b) => a.level - b.level || a.name.localeCompare(b.name));
-}
+const sourceFieldPath = (source: SourceFeature): string =>
+	`${source.sourceKind}[${source.sourceIndex}]`;
 
-function deriveFromProgressionTable(regent: Regent): RegentLeveledFeature[] {
-	const table = regent.progression_table;
-	if (!table) return [];
-	const lookup = buildNameLookup(regent);
-	const theme = regent.theme ?? "Regent";
-	const derived: RegentLeveledFeature[] = [];
-	for (const [levelKey, entry] of Object.entries(table)) {
-		const level = Number.parseInt(levelKey, 10);
-		if (!Number.isFinite(level)) continue;
-		for (const name of entry.features_gained ?? []) {
-			const norm = normalizeName(name);
-			const match = lookup.get(norm);
-			const description =
-				match?.description ??
-				GENERIC_MARKER_DESCRIPTIONS[norm] ??
-				`${name}. A manifestation of the ${theme} Regent's authority gained at this tier.`;
-			derived.push({
-				level,
-				name,
-				description,
-				type: match?.type ?? "passive",
-				frequency: match?.frequency,
-			});
-		}
-	}
-	return derived;
+function materializeProgressionFeature(
+	regent: Regent,
+	sources: SourceFeature[],
+	level: number,
+	name: string,
+	progressionIndex: number,
+): RegentLeveledFeature {
+	const source = selectSourceFeature(sources, name, level);
+	const metadataSource = selectMetadataFeature(sources, name, level, source);
+	const id = buildRegentFeatureId(regent.id, level, name);
+	const manualCadence = MANUAL_CADENCE_KEYS.has(
+		`${regent.id}:${level}:${slug(name)}`,
+	);
+	const type = metadataSource?.type ?? source?.type ?? "passive";
+	const frequency = metadataSource?.frequency ?? source?.frequency;
+	const uses =
+		metadataSource?.uses ?? source?.uses ?? toUses(frequency, manualCadence);
+	const resource = metadataSource?.resource ?? source?.resource;
+	const explicitTracking = metadataSource?.tracking ?? source?.tracking;
+	const tracking: RegentFeatureTracking | undefined = explicitTracking
+		? explicitTracking
+		: resource
+			? "resource"
+			: uses
+				? "uses"
+				: !source || manualCadence || type !== "passive"
+					? "manual"
+					: undefined;
+	const sourceLevel = source?.level ?? source?.power_level;
+	const conflict =
+		sourceLevel !== undefined && sourceLevel !== level
+			? `progression_table grants level ${level}; ${source?.sourceKind} labels the matching source row ${sourceLevel}`
+			: undefined;
+	const provenance: RegentFeatureProvenance = source
+		? {
+				levelSource: "progression_table",
+				mechanicsSource: source.sourceKind,
+				sourcePath: SOURCE_PATH,
+				fieldPath: sourceFieldPath(source),
+				sourceName: source.name,
+				sourceLevel,
+				conflict,
+			}
+		: {
+				levelSource: "progression_table",
+				mechanicsSource: "progression_table",
+				sourcePath: SOURCE_PATH,
+				fieldPath: `progression_table.${level}.features_gained[${progressionIndex}]`,
+				sourceName: name,
+			};
+
+	return {
+		id,
+		level,
+		name,
+		description: source?.description ?? REVIEW_DESCRIPTION,
+		type,
+		frequency,
+		actionType:
+			metadataSource?.actionType ?? source?.actionType ?? toActionType(type),
+		uses,
+		resource,
+		tracking,
+		canonStatus: source ? "source-backed" : "review-blocked",
+		provenance,
+		reviewBlockerId: !source
+			? `task7:${regent.id}:progression-mechanics`
+			: manualCadence
+				? `task7:${regent.id}:progression-mechanics`
+				: undefined,
+	};
 }
 
 /**
- * Returns a complete, level-indexed feature list for a regent (spanning its full
- * progression, 1-20 where the source data supports it). Curated `class_features`
- * are authoritative once they reach the high tiers; otherwise the list is derived
- * from `progression_table` joined with `abilities`/`features`, with any curated
- * class_features overlaid (curated descriptions win by level+name).
+ * Materialize one direct canonical ledger from the authored progression table.
+ * Levels and names come only from progression_table; mechanics come only from
+ * exact-name source rows. Missing mechanics remain explicit review blockers —
+ * no power-level remapping, thematic fallback, aliases, or invented prose.
  */
+export function materializeCanonicalRegentLedger(
+	regent: Regent,
+): RegentLeveledFeature[] {
+	const sources = collectSourceFeatures(regent);
+	const table = regent.progression_table;
+	if (!table) {
+		return (regent.class_features ?? []).map((feature, index) => ({
+			...feature,
+			id:
+				feature.id ??
+				buildRegentFeatureId(regent.id, feature.level, feature.name),
+			canonStatus: feature.canonStatus ?? "source-backed",
+			provenance: feature.provenance ?? {
+				levelSource: "class_features",
+				mechanicsSource: "class_features",
+				sourcePath: SOURCE_PATH,
+				fieldPath: `class_features[${index}]`,
+				sourceName: feature.name,
+				sourceLevel: feature.level,
+			},
+		}));
+	}
+
+	return Object.entries(table)
+		.map(([levelKey, row]) => [Number(levelKey), row] as const)
+		.filter(([level]) => Number.isInteger(level) && level >= 1 && level <= 20)
+		.sort(([left], [right]) => left - right)
+		.flatMap(([level, row]) =>
+			(row.features_gained ?? []).map((name, index) =>
+				materializeProgressionFeature(regent, sources, level, name, index),
+			),
+		);
+}
+
+/** Return only the already-materialized canonical Regent ledger. */
 export function getRegentLeveledFeatures(
 	regent: Regent,
 ): RegentLeveledFeature[] {
-	const curated: RegentLeveledFeature[] = (regent.class_features ?? []).map(
-		(f) => ({
-			level: f.level,
-			name: f.name,
-			description: f.description,
-			type: f.type ?? "passive",
-			frequency: f.frequency,
-		}),
-	);
-
-	if (maxCuratedLevel(regent) >= CURATED_AUTHORITATIVE_MIN_MAX_LEVEL) {
-		return sortDedupe(curated);
-	}
-
-	// Derive full coverage, then overlay curated entries so their (level, name)
-	// descriptions take precedence over the derived ones.
-	const derived = deriveFromProgressionTable(regent);
-	return sortDedupe([...curated, ...derived]);
+	return (regent.class_features ?? [])
+		.map(
+			(feature, index): RegentLeveledFeature => ({
+				...feature,
+				id:
+					feature.id ??
+					buildRegentFeatureId(regent.id, feature.level, feature.name),
+				canonStatus: feature.canonStatus ?? "source-backed",
+				provenance: feature.provenance ?? {
+					levelSource: "class_features",
+					mechanicsSource: "class_features",
+					sourcePath: SOURCE_PATH,
+					fieldPath: `class_features[${index}]`,
+					sourceName: feature.name,
+					sourceLevel: feature.level,
+				},
+			}),
+		)
+		.sort((left, right) => left.level - right.level);
 }
 
-/** Features a regent grants at exactly the given level. */
+/** Features a Regent grants at exactly the given character level. */
 export function getRegentFeaturesAtLevel(
 	regent: Regent,
 	level: number,
 ): RegentLeveledFeature[] {
-	return getRegentLeveledFeatures(regent).filter((f) => f.level === level);
+	return getRegentLeveledFeatures(regent).filter(
+		(feature) => feature.level === level,
+	);
 }
 
-/**
- * Adapt a regent into a {@link ChoiceSourceData} so the shared ledger engine
- * (`calculateTotalChoices` / `getLevelUpChoiceDeltas`) counts its full
- * independent progression — casters via `spellcasting.cantrips_known` /
- * `spells_known`, martials via `powersKnown` / `techniquesKnown`, plus any
- * `levelChoices`. The regent's spellcasting already uses snake_case keys that
- * match ChoiceSourceData directly.
- */
+/** Adapt a Regent's declared pick-count ledger to the shared choice engine. */
 export function regentToChoiceSource(regent: Regent): ChoiceSourceData {
 	return {
 		name: regent.name,

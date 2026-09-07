@@ -79,6 +79,21 @@ export type AbilityName =
 	| "Sense"
 	| "Presence";
 
+export type FeatureRestRecharge = "short-rest" | "long-rest";
+export type FeatureTracking = "uses" | "resource" | "manual";
+
+export interface FeatureUseDefinition {
+	formula: string;
+	recharge: FeatureRestRecharge;
+	/** Canonical cadence changes that take effect at the listed job level. */
+	rechargeChanges?: Array<{
+		level: number;
+		recharge: FeatureRestRecharge;
+	}>;
+	/** Level at which the feature becomes at-will and no longer tracks charges. */
+	unlimitedAtLevel?: number;
+}
+
 export interface StaticJob {
 	id: string;
 	name: string;
@@ -106,12 +121,15 @@ export interface StaticJob {
 		name: string;
 		description: string;
 		type?: string;
+		actionType?: string;
 		/**
 		 * Structured limited-use resource. When present, creation/level-up seeds
 		 * uses_max/uses_current/recharge + a uses_formula modifier so the feature
 		 * shows in the Resources tab and rescales on level-up.
 		 */
-		uses?: { formula: string; recharge: "short-rest" | "long-rest" };
+		uses?: FeatureUseDefinition;
+		resource?: string;
+		tracking?: FeatureTracking;
 	}>;
 	spellcasting?: {
 		ability: string;
@@ -170,6 +188,10 @@ export interface StaticJob {
 		level: number;
 		name: string;
 		description: string;
+		actionType?: string;
+		uses?: FeatureUseDefinition;
+		resource?: string;
+		tracking?: FeatureTracking;
 	}>;
 	racialTraits?: Array<{
 		name: string;
@@ -181,6 +203,7 @@ export interface StaticJob {
 			| "social"
 			| "innate-magic"
 			| string;
+		uses?: FeatureUseDefinition;
 	}>;
 	jobTraits?: Array<{
 		name: string;
@@ -193,6 +216,7 @@ export interface StaticJob {
 			| "once-per-day"
 			| string;
 		dc?: number;
+		uses?: FeatureUseDefinition;
 	}>;
 	damageResistances?: string[];
 	damage_resistances?: string[];

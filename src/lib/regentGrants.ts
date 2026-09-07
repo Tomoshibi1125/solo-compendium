@@ -6,19 +6,24 @@ export interface RegentGrantProfile {
 	technique: boolean;
 }
 
+/**
+ * Declared progression kinds only. This matrix mirrors spellcasting,
+ * powersKnown, and techniquesKnown in regents.ts; it does not imply access to a
+ * thematic Job list or grant catalog identities that the source never names.
+ */
 export const REGENT_GRANTS = {
-	umbral_regent: { spell: true, power: true, technique: false },
-	radiant_regent: { spell: true, power: true, technique: false },
+	umbral_regent: { spell: true, power: false, technique: false },
+	radiant_regent: { spell: true, power: false, technique: false },
 	steel_regent: { spell: false, power: true, technique: true },
-	destruction_regent: { spell: true, power: true, technique: false },
+	destruction_regent: { spell: true, power: false, technique: false },
 	war_regent: { spell: false, power: true, technique: true },
-	frost_regent: { spell: true, power: true, technique: false },
+	frost_regent: { spell: true, power: false, technique: false },
 	beast_regent: { spell: false, power: true, technique: true },
-	plague_regent: { spell: true, power: true, technique: false },
-	spatial_regent: { spell: true, power: true, technique: false },
-	mimic_regent: { spell: true, power: true, technique: true },
-	blood_regent: { spell: true, power: true, technique: false },
-	gravity_regent: { spell: true, power: true, technique: true },
+	plague_regent: { spell: true, power: false, technique: false },
+	spatial_regent: { spell: true, power: false, technique: false },
+	mimic_regent: { spell: false, power: true, technique: true },
+	blood_regent: { spell: true, power: false, technique: false },
+	gravity_regent: { spell: true, power: false, technique: false },
 } as const satisfies Record<string, RegentGrantProfile>;
 
 export type RegentGrantId = keyof typeof REGENT_GRANTS;

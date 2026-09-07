@@ -36,6 +36,15 @@ export interface Campaign {
 	discord_public_key?: string | null;
 }
 
+/** Minimal anonymous campaign lookup contract. Never treat this as a full row. */
+export interface CampaignPreview {
+	id: string;
+	name: string;
+	description: string | null;
+	share_code: string;
+	is_active: boolean;
+}
+
 export interface CampaignMember {
 	id: string;
 	campaign_id: string;
@@ -124,23 +133,27 @@ const createShareCode = () => {
 const isLocalMode = () => !isSupabaseConfigured;
 const guestEnabled = import.meta.env.VITE_GUEST_ENABLED !== "false";
 
-const isMissingRpc = (error: unknown, functionName: string): boolean => {
-	if (!error || typeof error !== "object") return false;
-	const message = String(
-		(error as { message?: string }).message ?? "",
-	).toLowerCase();
-	return (
-		message.includes(functionName.toLowerCase()) &&
-		(message.includes("does not exist") ||
-			message.includes("no function matches") ||
-			message.includes("could not find function") ||
-			message.includes("schema cache"))
-	);
-};
+const toCampaignPreview = (value: unknown): CampaignPreview | null => {
+	if (!value || typeof value !== "object") return null;
+	const candidate = value as Record<string, unknown>;
+	if (
+		typeof candidate.id !== "string" ||
+		typeof candidate.name !== "string" ||
+		typeof candidate.share_code !== "string" ||
+		typeof candidate.is_active !== "boolean"
+	) {
+		return null;
+	}
 
-const isMissingAddCharacterRpc = (error: unknown): boolean =>
-	isMissingRpc(error, "add_ascendant_character_to_campaign") ||
-	isMissingRpc(error, "add_player_character_to_campaign");
+	return {
+		id: candidate.id,
+		name: candidate.name,
+		description:
+			typeof candidate.description === "string" ? candidate.description : null,
+		share_code: candidate.share_code,
+		is_active: candidate.is_active,
+	};
+};
 
 // Fetch campaigns where user is Warden
 export const useMyCampaigns = () => {
@@ -404,53 +417,27 @@ export const useCampaignByCharacterId = (characterId?: string) => {
 	});
 };
 
-// Fetch campaign by share code
-// Uses the SECURITY DEFINER RPC which bypasses RLS and is granted to both
-// authenticated and anon roles, so even unauthenticated visitors can look up
-// a campaign by its share code to join.
+// Fetch the intentionally minimal public campaign preview by share code.
 export const useCampaignByShareCode = (shareCode: string) => {
 	return useQuery({
 		queryKey: ["campaigns", "share-code", shareCode],
-		queryFn: async () => {
+		queryFn: async (): Promise<CampaignPreview | null> => {
 			const upperCode = shareCode.toUpperCase();
-
-			if (isLocalMode()) {
-				return (
-					loadLocalCampaigns().find(
-						(campaign) => campaign.share_code === upperCode,
-					) || null
-				);
-			}
-
-			// Check local cache first for offline/guest scenarios
-			const localMatch = loadLocalCampaigns().find(
-				(campaign) => campaign.share_code === upperCode,
+			const localPreview = toCampaignPreview(
+				loadLocalCampaigns().find(
+					(campaign) => campaign.share_code === upperCode,
+				),
 			);
 
-			// Always attempt the RPC — it is SECURITY DEFINER with row_security=off
-			// and is granted to both authenticated AND anon roles, so it works for
-			// unauthenticated visitors looking up a campaign to join.
-			const rpcResult = await supabase.rpc("get_campaign_by_share_code", {
+			if (isLocalMode()) return localPreview;
+
+			const { data, error } = await supabase.rpc("get_campaign_by_share_code", {
 				p_share_code: upperCode,
 			});
+			if (error) throw error;
 
-			if (rpcResult.error) {
-				const msg = String(rpcResult.error.message ?? "").toLowerCase();
-				const isRpcMissing =
-					msg.includes("does not exist") || msg.includes("no function matches");
-
-				if (!isRpcMissing) throw rpcResult.error;
-
-				// RPC doesn't exist — return local cache match if available.
-				// A direct SELECT on campaigns table would fail for non-members
-				// due to RLS, so we do NOT attempt it.
-				return localMatch || null;
-			}
-
-			const campaign = Array.isArray(rpcResult.data)
-				? rpcResult.data[0]
-				: rpcResult.data;
-			return (campaign || localMatch || null) as unknown as Campaign | null;
+			const response = Array.isArray(data) ? data[0] : data;
+			return toCampaignPreview(response) ?? localPreview;
 		},
 		enabled: !!shareCode && shareCode.length === 6,
 	});
@@ -641,67 +628,17 @@ export const useCreateCampaign = () => {
 				throw new AppError("Not authenticated", "AUTH_REQUIRED");
 			}
 
-			// Try the RPC first; fall back to direct INSERT if the function
-			// doesn't exist (e.g. newly provisioned Supabase project).
-			const shareCode = createShareCode();
-			let campaignId: string;
-
 			const rpcResult = await supabase.rpc("create_campaign_with_code", {
 				p_name: name,
 				p_description: description || "",
 				p_warden_id: user.id,
 			});
-
 			if (rpcResult.error) {
-				const msg = String(rpcResult.error.message ?? "").toLowerCase();
-				const isRpcMissing =
-					msg.includes("does not exist") || msg.includes("no function matches");
-
-				if (!isRpcMissing) {
-					console.error("[useCreateCampaign] RPC failed:", rpcResult.error);
-					throw rpcResult.error;
-				}
-
-				// Fallback: direct INSERT when RPC doesn't exist
-				const now = new Date().toISOString();
-				const { data: inserted, error: insertError } = await supabase
-					.from("campaigns")
-					.insert({
-						name,
-						description: description || null,
-						warden_id: user.id,
-						share_code: shareCode,
-						is_active: true,
-						settings: {
-							leveling_mode: "milestone",
-						} as unknown as Database["public"]["Tables"]["campaigns"]["Row"]["settings"],
-						created_at: now,
-						updated_at: now,
-					})
-					.select("id")
-					.single();
-
-				if (insertError || !inserted) {
-					console.error(
-						"[useCreateCampaign] Direct INSERT failed:",
-						insertError,
-					);
-					throw (
-						insertError ?? new AppError("Failed to create campaign", "UNKNOWN")
-					);
-				}
-
-				campaignId = inserted.id;
-
-				// Add the warden as a member
-				await supabase.from("campaign_members").insert({
-					campaign_id: campaignId,
-					user_id: user.id,
-					role: "warden",
-				});
-			} else {
-				campaignId = rpcResult.data as string;
+				console.error("[useCreateCampaign] RPC failed:", rpcResult.error);
+				throw rpcResult.error;
 			}
+
+			const campaignId = rpcResult.data as string;
 
 			// Dual persistence constraint for Warden account:
 			// Ensure it saves to local cache simultaneously so offline mode and guest cache remains synced
@@ -711,32 +648,20 @@ export const useCreateCampaign = () => {
 				.eq("id", campaignId)
 				.maybeSingle();
 
-			let resolvedCampaign: Campaign;
-
-			if (!fetchError && latestCampaign) {
-				resolvedCampaign = latestCampaign as Campaign;
-				const localCampaigns = loadLocalCampaigns();
-				const filtered = localCampaigns.filter((c) => c.id !== campaignId);
-				saveLocalCampaigns([resolvedCampaign, ...filtered]);
-			} else {
-				// Optimistic local save if DB read fails (e.g., RLS propagation delay)
-				// Always use the generated shareCode — never a placeholder
-				const now = new Date().toISOString();
-				resolvedCampaign = {
-					id: campaignId,
-					name,
-					description: description || null,
-					warden_id: user.id,
-					share_code: shareCode,
-					is_active: true,
-					settings: { leveling_mode: "milestone" },
-					created_at: now,
-					updated_at: now,
-				};
-				const localCampaigns = loadLocalCampaigns();
-				const filtered = localCampaigns.filter((c) => c.id !== campaignId);
-				saveLocalCampaigns([resolvedCampaign, ...filtered]);
+			if (fetchError || !latestCampaign) {
+				throw (
+					fetchError ??
+					new AppError(
+						"Campaign was created but could not be loaded",
+						"UNKNOWN",
+					)
+				);
 			}
+
+			const resolvedCampaign = latestCampaign as Campaign;
+			const localCampaigns = loadLocalCampaigns();
+			const filtered = localCampaigns.filter((c) => c.id !== campaignId);
+			saveLocalCampaigns([resolvedCampaign, ...filtered]);
 
 			// Update the per-campaign React Query cache with real data
 			// so CampaignDetail and invite modals show the actual share code
@@ -876,9 +801,11 @@ export const useJoinCampaign = () => {
 	return useMutation({
 		mutationFn: async ({
 			campaignId,
+			shareCode,
 			characterId,
 		}: {
 			campaignId: string;
+			shareCode: string;
 			characterId?: string;
 		}) => {
 			if (isLocalMode()) {
@@ -939,75 +866,12 @@ export const useJoinCampaign = () => {
 				throw new AppError("Not authenticated", "AUTH_REQUIRED");
 			}
 
-			const joinResult = await supabase.rpc("join_campaign_by_id", {
-				p_campaign_id: campaignId,
+			const joinResult = await supabase.rpc("join_campaign_by_code", {
+				p_code: shareCode,
 				p_character_id: characterId ?? undefined,
 			});
 
-			if (joinResult.error) {
-				if (!isMissingRpc(joinResult.error, "join_campaign_by_id")) {
-					throw joinResult.error;
-				}
-
-				const { data: existingMember, error: existingMemberError } =
-					await supabase
-						.from("campaign_members")
-						.select("id")
-						.eq("campaign_id", campaignId)
-						.eq("user_id", user.id)
-						.maybeSingle();
-
-				if (existingMemberError) throw existingMemberError;
-
-				if (!existingMember) {
-					const { error } = await supabase.from("campaign_members").insert({
-						campaign_id: campaignId,
-						user_id: user.id,
-						character_id: null,
-						role: "ascendant",
-					});
-
-					if (error) throw error;
-				}
-
-				if (characterId) {
-					const attachResult = await supabase.rpc(
-						"add_ascendant_character_to_campaign",
-						{
-							p_campaign_id: campaignId,
-							p_character_id: characterId,
-						},
-					);
-
-					if (attachResult.error) {
-						if (!isMissingAddCharacterRpc(attachResult.error)) {
-							throw attachResult.error as Error;
-						}
-
-						const legacyAttachResult = await supabase.rpc(
-							"add_player_character_to_campaign",
-							{
-								p_campaign_id: campaignId,
-								p_character_id: characterId,
-							},
-						);
-
-						if (legacyAttachResult.error) {
-							if (!isMissingAddCharacterRpc(legacyAttachResult.error)) {
-								throw legacyAttachResult.error as Error;
-							}
-
-							const { error: legacyError } = await supabase
-								.from("campaign_members")
-								.update({ character_id: characterId })
-								.eq("campaign_id", campaignId)
-								.eq("user_id", user.id);
-
-							if (legacyError) throw legacyError;
-						}
-					}
-				}
-			}
+			if (joinResult.error) throw joinResult.error;
 
 			// Dual persistence constraint for joining:
 			const { data: joinedCampaign, error: fetchError } = await supabase
@@ -1147,33 +1011,7 @@ export const useLinkCampaignCharacter = () => {
 				},
 			);
 
-			if (attachResult.error) {
-				if (!isMissingAddCharacterRpc(attachResult.error)) {
-					throw attachResult.error as Error;
-				}
-
-				const legacyAttachResult = await supabase.rpc(
-					"add_player_character_to_campaign",
-					{
-						p_campaign_id: campaignId,
-						p_character_id: characterId,
-					},
-				);
-
-				if (legacyAttachResult.error) {
-					if (!isMissingAddCharacterRpc(legacyAttachResult.error)) {
-						throw legacyAttachResult.error as Error;
-					}
-
-					const { error: legacyError } = await supabase
-						.from("campaign_members")
-						.update({ character_id: characterId })
-						.eq("campaign_id", campaignId)
-						.eq("user_id", user.id);
-
-					if (legacyError) throw legacyError;
-				}
-			}
+			if (attachResult.error) throw attachResult.error;
 		},
 		onSuccess: (_, variables) => {
 			queryClient.invalidateQueries({ queryKey: ["campaigns", "joined"] });

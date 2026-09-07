@@ -17,6 +17,7 @@ import { useDrag } from "@use-gesture/react";
 import {
 	ArrowLeft,
 	Heart,
+	LockKeyhole,
 	PawPrint,
 	Shield,
 	Sparkles,
@@ -41,6 +42,7 @@ import {
 	effectiveCompanionAc,
 	equipmentAcBonus,
 	parseAbilities,
+	parseCanonicalCompanionSource,
 	parseConditions,
 	parseEquipment,
 } from "@/lib/companions";
@@ -56,7 +58,7 @@ export default function CompanionExtraSheet() {
 	const { toast } = useToast();
 
 	const { extras, updateExtra, isLoading } = useCharacterExtras(characterId);
-	const extra = extras.find((e) => e.id === extraId);
+	const extra = extras.find((entry) => entry.id === extraId);
 
 	// Local seed state for notes + initiative (mirrors CompanionSheet).
 	const [notes, setNotes] = useState(extra?.notes ?? "");
@@ -98,7 +100,7 @@ export default function CompanionExtraSheet() {
 			return (
 				<Layout>
 					<div className="container mx-auto py-12 text-center text-muted-foreground">
-						<p>Loading companion…</p>
+						<p role="status">Loading companion…</p>
 					</div>
 				</Layout>
 			);
@@ -118,6 +120,7 @@ export default function CompanionExtraSheet() {
 	const equipment = parseEquipment(extra.equipment);
 	const abilities = parseAbilities(extra.abilities);
 	const conditions = parseConditions(extra.conditions);
+	const canonicalSource = parseCanonicalCompanionSource(extra.npc_data);
 	const baseAc = extra.ac ?? 10;
 	const effectiveAc = effectiveCompanionAc(baseAc, equipment);
 	const acBonus = equipmentAcBonus(equipment);
@@ -173,7 +176,7 @@ export default function CompanionExtraSheet() {
 	};
 
 	const handleRemoveEquipment = (index: number) => {
-		persistEquipment(equipment.filter((_, i) => i !== index));
+		persistEquipment(equipment.filter((_, itemIndex) => itemIndex !== index));
 	};
 
 	const persistConditions = (next: CompanionCondition[]) => {
@@ -196,7 +199,7 @@ export default function CompanionExtraSheet() {
 	};
 
 	const handleRemoveCondition = (id: string) => {
-		persistConditions(conditions.filter((c) => c.id !== id));
+		persistConditions(conditions.filter((condition) => condition.id !== id));
 	};
 
 	const handleAddToInitiative = () => {
@@ -206,7 +209,7 @@ export default function CompanionExtraSheet() {
 			maxHp: extra.hp_max,
 			ac: effectiveAc,
 			isHunter: false,
-			initiative: 0,
+			initiative: extra.initiative ?? 0,
 			conditions: [],
 		});
 		toast({
@@ -219,73 +222,183 @@ export default function CompanionExtraSheet() {
 		<Layout>
 			<div
 				{...bindSwipeBack()}
-				className="container mx-auto py-6 touch-pan-y"
+				className="container mx-auto touch-pan-y px-3 py-4 sm:px-4 sm:py-6"
 				data-testid="companion-extra-sheet-root"
 			>
-				<div className="mb-6 flex items-center justify-between flex-wrap gap-3">
-					<div className="flex items-center gap-3">
-						<Button asChild variant="ghost" size="sm">
+				<header className="mb-6 flex flex-col items-stretch gap-3 sm:flex-row sm:items-center sm:justify-between">
+					<div className="flex min-w-0 flex-col gap-3 sm:flex-row sm:items-center">
+						<Button asChild variant="ghost" size="sm" className="self-start">
 							<Link to={`/characters/${characterId}`} className="gap-2">
-								<ArrowLeft className="w-4 h-4" />
+								<ArrowLeft className="w-4" aria-hidden="true" />
 								Back to Ascendant
 							</Link>
 						</Button>
-						<div className="flex items-center gap-2">
-							<PawPrint className="w-5 h-5 text-system-green" />
-							<h1 className="font-display text-2xl">{extra.name}</h1>
+						<div className="flex min-w-0 flex-wrap items-center gap-2">
+							<PawPrint
+								className="w-5 shrink-0 text-system-green"
+								aria-hidden="true"
+							/>
+							<h1 className="break-words font-display text-2xl">
+								{extra.name}
+							</h1>
 							<Badge variant="outline" className="text-xs uppercase">
 								{extra.extra_type}
 							</Badge>
 						</div>
 					</div>
-					<Button size="sm" onClick={handleAddToInitiative} className="gap-2">
-						<Swords className="w-4 h-4" />
+					<Button
+						type="button"
+						size="sm"
+						onClick={handleAddToInitiative}
+						className="w-full gap-2 sm:w-auto"
+					>
+						<Swords className="w-4" aria-hidden="true" />
 						Add to Initiative
 					</Button>
-				</div>
+				</header>
+
+				{canonicalSource && (
+					<section
+						className="mb-4 rounded-lg border border-primary/30 bg-primary/5 p-3 sm:p-4"
+						aria-labelledby="canonical-companion-source-heading"
+						data-testid="canonical-companion-source"
+					>
+						<div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
+							<div>
+								<h2
+									id="canonical-companion-source-heading"
+									className="font-heading text-sm font-semibold uppercase tracking-wide"
+								>
+									Canonical source
+								</h2>
+								<p className="mt-1 text-xs text-muted-foreground">
+									Identity and source-derived base fields from the selected
+									compendium entry.
+								</p>
+							</div>
+							<Badge variant="outline" className="w-fit gap-1 text-[10px]">
+								<LockKeyhole className="w-3" aria-hidden="true" /> Read-only
+							</Badge>
+						</div>
+						<dl className="mt-3 grid grid-cols-1 gap-3 text-xs sm:grid-cols-2 lg:grid-cols-4">
+							<div className="min-w-0">
+								<dt className="uppercase tracking-wide text-muted-foreground">
+									Canonical type
+								</dt>
+								<dd className="mt-0.5 font-medium capitalize">
+									{canonicalSource.provenance.canonicalType}
+								</dd>
+							</div>
+							<div className="min-w-0">
+								<dt className="uppercase tracking-wide text-muted-foreground">
+									Canonical ID
+								</dt>
+								<dd className="mt-0.5 break-all font-mono">
+									{canonicalSource.provenance.canonicalId}
+								</dd>
+							</div>
+							{canonicalSource.provenance.sourceBook && (
+								<div className="min-w-0">
+									<dt className="uppercase tracking-wide text-muted-foreground">
+										Source book
+									</dt>
+									<dd className="mt-0.5 break-words font-medium">
+										{canonicalSource.provenance.sourceBook}
+									</dd>
+								</div>
+							)}
+							{canonicalSource.provenance.source && (
+								<div className="min-w-0">
+									<dt className="uppercase tracking-wide text-muted-foreground">
+										Source
+									</dt>
+									<dd className="mt-0.5 break-words font-medium">
+										{canonicalSource.provenance.source}
+									</dd>
+								</div>
+							)}
+							{canonicalSource.provenance.entryType && (
+								<div className="min-w-0">
+									<dt className="uppercase tracking-wide text-muted-foreground">
+										Entry type
+									</dt>
+									<dd className="mt-0.5 break-words font-medium capitalize">
+										{canonicalSource.provenance.entryType}
+									</dd>
+								</div>
+							)}
+							{canonicalSource.sourceFields.rank && (
+								<div className="min-w-0">
+									<dt className="uppercase tracking-wide text-muted-foreground">
+										Rank
+									</dt>
+									<dd className="mt-0.5 font-medium">
+										{canonicalSource.sourceFields.rank}
+									</dd>
+								</div>
+							)}
+						</dl>
+						<p className="mt-3 border-t border-primary/20 pt-3 text-xs text-muted-foreground">
+							Name, maximum HP, base AC, speed, and source abilities are locked
+							to this saved snapshot. Current HP, initiative, equipment,
+							conditions, and notes remain editable instance state.
+						</p>
+					</section>
+				)}
 
 				{/* Vitals */}
 				<AscendantWindow title="VITALS">
 					<div className="space-y-4">
 						{/* HP Bar */}
 						<div className="space-y-2">
-							<div className="flex items-center justify-between">
+							<div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
 								<div className="flex items-center gap-2">
-									<Heart className="w-4 h-4 text-destructive" />
-									<span className="font-mono text-sm">
-										HP {extra.hp_current} / {hpMax}
-									</span>
+									<Heart className="w-4 text-destructive" aria-hidden="true" />
+									<div>
+										<div className="font-mono text-sm">
+											Current HP {extra.hp_current} / {hpMax}
+										</div>
+										{canonicalSource && (
+											<div className="text-[10px] uppercase tracking-wide text-muted-foreground">
+												Maximum HP is source-locked
+											</div>
+										)}
+									</div>
 								</div>
-								<div className="flex items-center gap-1">
+								<div className="grid grid-cols-4 gap-1 sm:flex sm:items-center">
 									<Button
+										type="button"
 										size="sm"
 										variant="outline"
 										onClick={() => handleAdjustHp(-1)}
-										aria-label="Decrement HP"
+										aria-label="Decrement current HP"
 									>
 										-1
 									</Button>
 									<Button
+										type="button"
 										size="sm"
 										variant="outline"
 										onClick={() => handleAdjustHp(-5)}
-										aria-label="Damage 5"
+										aria-label="Damage current HP by 5"
 									>
 										-5
 									</Button>
 									<Button
+										type="button"
 										size="sm"
 										variant="outline"
 										onClick={() => handleAdjustHp(5)}
-										aria-label="Heal 5"
+										aria-label="Heal current HP by 5"
 									>
 										+5
 									</Button>
 									<Button
+										type="button"
 										size="sm"
 										variant="outline"
 										onClick={() => handleAdjustHp(1)}
-										aria-label="Increment HP"
+										aria-label="Increment current HP"
 									>
 										+1
 									</Button>
@@ -293,6 +406,7 @@ export default function CompanionExtraSheet() {
 							</div>
 							<Progress
 								value={hpPercent}
+								aria-label={`${extra.name} current hit points`}
 								className={cn(
 									"h-2",
 									hpPercent < 25
@@ -305,44 +419,60 @@ export default function CompanionExtraSheet() {
 						</div>
 
 						{/* AC / Speed / Initiative */}
-						<div className="grid grid-cols-3 gap-3">
+						<div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
 							<div className="rounded border border-border/40 bg-black/30 p-3 text-center">
-								<div className="text-[10px] uppercase tracking-wider text-muted-foreground mb-1">
-									AC
+								<div className="mb-1 text-[10px] uppercase tracking-wider text-muted-foreground">
+									Armor Class
 								</div>
 								<div className="flex items-center justify-center gap-1">
-									<Shield className="w-4 h-4 text-shadow-blue" />
-									<span className="text-xl font-display font-bold">
+									<Shield className="w-4 text-shadow-blue" aria-hidden="true" />
+									<span className="font-display text-xl font-bold">
 										{effectiveAc}
 									</span>
 								</div>
-								{acBonus !== 0 && (
-									<div className="text-xs text-muted-foreground mt-1">
-										(base {baseAc})
+								{canonicalSource ? (
+									<div className="mt-1 text-xs text-muted-foreground">
+										Source base {baseAc} · read-only
+										{acBonus !== 0 &&
+											` · gear ${acBonus >= 0 ? "+" : ""}${acBonus}`}
+									</div>
+								) : (
+									acBonus !== 0 && (
+										<div className="mt-1 text-xs text-muted-foreground">
+											(base {baseAc})
+										</div>
+									)
+								)}
+							</div>
+							<div className="rounded border border-border/40 bg-black/30 p-3 text-center">
+								<div className="mb-1 text-[10px] uppercase tracking-wider text-muted-foreground">
+									Speed
+								</div>
+								<div className="font-display text-xl font-bold">
+									{extra.speed ?? 30} ft
+								</div>
+								{canonicalSource && (
+									<div className="mt-1 text-xs text-muted-foreground">
+										Source · read-only
 									</div>
 								)}
 							</div>
 							<div className="rounded border border-border/40 bg-black/30 p-3 text-center">
-								<div className="text-[10px] uppercase tracking-wider text-muted-foreground mb-1">
-									Speed
-								</div>
-								<div className="text-xl font-display font-bold">
-									{extra.speed ?? 30} ft
-								</div>
-							</div>
-							<div className="rounded border border-border/40 bg-black/30 p-3 text-center">
-								<div className="text-[10px] uppercase tracking-wider text-muted-foreground mb-1">
+								<label
+									htmlFor="companion-initiative"
+									className="mb-1 block text-[10px] uppercase tracking-wider text-muted-foreground"
+								>
 									Initiative
-								</div>
+								</label>
 								<div className="flex items-center justify-center gap-1">
-									<Zap className="w-4 h-4 text-gate-s" />
+									<Zap className="w-4 text-gate-s" aria-hidden="true" />
 									<Input
+										id="companion-initiative"
 										type="number"
 										value={initiative}
-										onChange={(e) => setInitiative(e.target.value)}
+										onChange={(event) => setInitiative(event.target.value)}
 										onBlur={handleSaveInit}
-										className="h-8 w-16 text-center font-display text-lg"
-										aria-label="Initiative"
+										className="h-8 w-20 text-center font-display text-lg"
 										placeholder="—"
 									/>
 								</div>
@@ -370,7 +500,10 @@ export default function CompanionExtraSheet() {
 											className="rounded border border-border/40 bg-black/20 p-3"
 										>
 											<div className="flex items-center gap-2">
-												<Shield className="w-3.5 h-3.5 text-shadow-blue" />
+												<Shield
+													className="w-3.5 text-shadow-blue"
+													aria-hidden="true"
+												/>
 												<span className="font-display text-sm font-semibold">
 													{item.name}
 												</span>
@@ -381,23 +514,24 @@ export default function CompanionExtraSheet() {
 													</Badge>
 												)}
 												<Button
+													type="button"
 													size="sm"
 													variant="ghost"
 													className="ml-auto h-7"
 													onClick={() => handleRemoveEquipment(index)}
 													aria-label={`Remove ${item.name}`}
 												>
-													✕
+													<span aria-hidden="true">✕</span>
 												</Button>
 											</div>
 											{(item.attack || item.damage) && (
-												<div className="text-xs text-muted-foreground mt-1 flex flex-wrap gap-x-3">
+												<div className="mt-1 flex flex-wrap gap-x-3 text-xs text-muted-foreground">
 													{item.attack && <span>Attack: {item.attack}</span>}
 													{item.damage && <span>Damage: {item.damage}</span>}
 												</div>
 											)}
 											{item.notes && (
-												<p className="text-xs text-muted-foreground mt-1">
+												<p className="mt-1 text-xs text-muted-foreground">
 													{item.notes}
 												</p>
 											)}
@@ -407,10 +541,10 @@ export default function CompanionExtraSheet() {
 							)}
 
 							{/* Add gear */}
-							<div className="grid grid-cols-1 sm:grid-cols-2 gap-2 border-t border-border/40 pt-3">
+							<div className="grid grid-cols-1 gap-2 border-t border-border/40 pt-3 sm:grid-cols-2">
 								<Input
 									value={newName}
-									onChange={(e) => setNewName(e.target.value)}
+									onChange={(event) => setNewName(event.target.value)}
 									placeholder="Name (required)"
 									className="h-8"
 									aria-label="Gear name"
@@ -418,33 +552,34 @@ export default function CompanionExtraSheet() {
 								<Input
 									type="number"
 									value={newAcBonus}
-									onChange={(e) => setNewAcBonus(e.target.value)}
+									onChange={(event) => setNewAcBonus(event.target.value)}
 									placeholder="AC bonus"
 									className="h-8"
 									aria-label="Gear AC bonus"
 								/>
 								<Input
 									value={newAttack}
-									onChange={(e) => setNewAttack(e.target.value)}
+									onChange={(event) => setNewAttack(event.target.value)}
 									placeholder="Attack (optional)"
 									className="h-8"
 									aria-label="Gear attack"
 								/>
 								<Input
 									value={newDamage}
-									onChange={(e) => setNewDamage(e.target.value)}
+									onChange={(event) => setNewDamage(event.target.value)}
 									placeholder="Damage (optional)"
 									className="h-8"
 									aria-label="Gear damage"
 								/>
 								<Input
 									value={newNotes}
-									onChange={(e) => setNewNotes(e.target.value)}
+									onChange={(event) => setNewNotes(event.target.value)}
 									placeholder="Notes (optional)"
 									className="h-8 sm:col-span-2"
 									aria-label="Gear notes"
 								/>
 								<Button
+									type="button"
 									size="sm"
 									onClick={handleAddEquipment}
 									disabled={!newName.trim()}
@@ -461,6 +596,11 @@ export default function CompanionExtraSheet() {
 				<div className="mt-4">
 					<AscendantWindow title="ACTIONS & ABILITIES">
 						<div className="space-y-2">
+							{canonicalSource && (
+								<p className="text-[10px] uppercase tracking-wide text-muted-foreground">
+									Source abilities · read-only
+								</p>
+							)}
 							{abilities.length === 0 ? (
 								<p className="text-xs text-muted-foreground">
 									No actions recorded.
@@ -468,11 +608,14 @@ export default function CompanionExtraSheet() {
 							) : (
 								abilities.map((ability) => (
 									<div
-										key={ability.name}
+										key={`${ability.name}-${ability.action_type ?? ""}`}
 										className="rounded border border-border/40 bg-black/20 p-3"
 									>
 										<div className="flex items-center gap-2">
-											<Sparkles className="w-3.5 h-3.5 text-system-green" />
+											<Sparkles
+												className="w-3.5 text-system-green"
+												aria-hidden="true"
+											/>
 											<span className="font-display text-sm font-semibold">
 												{ability.name}
 											</span>
@@ -483,7 +626,7 @@ export default function CompanionExtraSheet() {
 											)}
 										</div>
 										{ability.description && (
-											<p className="text-xs text-muted-foreground mt-1">
+											<p className="mt-1 text-xs text-muted-foreground">
 												{ability.description}
 											</p>
 										)}
@@ -498,18 +641,20 @@ export default function CompanionExtraSheet() {
 				<div className="mt-4">
 					<AscendantWindow title="CONDITIONS">
 						<div className="space-y-2">
-							<div className="flex items-center gap-2">
+							<div className="flex flex-col items-stretch gap-2 sm:flex-row sm:items-center">
 								<Input
 									value={newCondition}
-									onChange={(e) => setNewCondition(e.target.value)}
+									onChange={(event) => setNewCondition(event.target.value)}
 									placeholder="e.g. Frightened"
 									className="h-8"
 									aria-label="New condition"
 								/>
 								<Button
+									type="button"
 									size="sm"
 									onClick={handleAddCondition}
 									disabled={!newCondition.trim()}
+									aria-label="Add condition"
 								>
 									Add
 								</Button>
@@ -520,16 +665,18 @@ export default function CompanionExtraSheet() {
 								</p>
 							) : (
 								<div className="flex flex-wrap gap-1.5">
-									{conditions.map((c) => (
-										<Badge
-											key={c.id}
+									{conditions.map((condition) => (
+										<Button
+											key={condition.id}
+											type="button"
 											variant="outline"
-											className="gap-1 text-xs cursor-pointer hover:bg-destructive/10"
-											onClick={() => handleRemoveCondition(c.id)}
-											title="Click to remove"
+											size="sm"
+											className="gap-1 text-xs hover:bg-destructive/10"
+											onClick={() => handleRemoveCondition(condition.id)}
+											aria-label={`Remove ${condition.name} condition`}
 										>
-											{c.name} ✕
-										</Badge>
+											{condition.name} <span aria-hidden="true">✕</span>
+										</Button>
 									))}
 								</div>
 							)}
@@ -540,9 +687,13 @@ export default function CompanionExtraSheet() {
 				{/* Notes */}
 				<div className="mt-4">
 					<AscendantWindow title="NOTES">
+						<label htmlFor="companion-extra-notes" className="sr-only">
+							Companion notes
+						</label>
 						<Textarea
+							id="companion-extra-notes"
 							value={notes}
-							onChange={(e) => setNotes(e.target.value)}
+							onChange={(event) => setNotes(event.target.value)}
 							onBlur={handleSaveNotes}
 							placeholder="Companion notes, lore, tactical reminders…"
 							rows={4}

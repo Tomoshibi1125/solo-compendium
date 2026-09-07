@@ -40,7 +40,7 @@ export interface JobResourceDef {
 	label: string;
 	description: string;
 	maxFromCharacter: (character: JobPoolCharacterShape) => number;
-	recovery: "short-rest" | "long-rest";
+	recovery: "short-rest" | "long-rest" | "none";
 }
 
 /**
@@ -85,24 +85,6 @@ const mod = (score: number | null | undefined): number =>
 // on character_features and are tracked there.
 export const JOB_RESOURCES: JobResourceDef[] = [
 	{
-		jobMatch: (job) => job.toLowerCase() === "esper",
-		id: "flux-pool",
-		label: "Flux Pool",
-		description:
-			"Internal flux reactor. Overcharge spells, absorb slots into flux, or manifest slots from flux.",
-		maxFromCharacter: (c) => Math.max(1, c.level ?? 1),
-		recovery: "long-rest",
-	},
-	{
-		jobMatch: (job) => job.toLowerCase() === "idol",
-		id: "hype-dice",
-		label: "Hype Dice",
-		description:
-			"Amplifying frequency broadcast. Grant a hype die to allies' rolls.",
-		maxFromCharacter: (c) => Math.max(1, mod(c.presence)),
-		recovery: "long-rest",
-	},
-	{
 		jobMatch: (job) => job.toLowerCase() === "herald",
 		id: "mantra-reservoir",
 		label: "Mantra Reservoir",
@@ -122,85 +104,32 @@ export const JOB_RESOURCES: JobResourceDef[] = [
 			const prof = getProficiencyBonus(lvl);
 			return Math.max(1, mod(c.intelligence) + prof);
 		},
-		recovery: "long-rest",
-	},
-	{
-		jobMatch: (job) => job.toLowerCase() === "summoner",
-		id: "biome-charges",
-		label: "Biome Command",
-		description: "Reshape local environment in a 60-ft radius.",
-		maxFromCharacter: (c) => ((c.level ?? 1) >= 14 ? 2 : 1),
-		recovery: "long-rest",
-	},
-	{
-		jobMatch: (job) =>
-			job.toLowerCase() === "holy-knight" ||
-			job.toLowerCase() === "holy knight",
-		id: "oath-channel",
-		label: "Channel Oath",
-		description: "Once per short rest, invoke your oath's authority.",
-		maxFromCharacter: () => 1,
-		recovery: "short-rest",
-	},
-	{
-		// Berserker — Overload State (2/long rest, scaling toward unlimited at
-		// 20th per the class feature). Stored Feedback rides on top in play.
-		jobMatch: (job) => job.toLowerCase() === "berserker",
-		id: "overload-charges",
-		label: "Overload",
-		description:
-			"Trigger an Absolute Surge: melee bonus, damage resistance, and temporary HP while overloaded. Stored Feedback releases on your next hit.",
-		maxFromCharacter: (c) => {
-			const lvl = c.level ?? 1;
-			if (lvl >= 20) return 99;
-			return lvl >= 17 ? 4 : lvl >= 6 ? 3 : 2;
-		},
-		recovery: "long-rest",
-	},
-	{
-		// Striker — Impulse points = Striker level, recharged on a short rest
-		// (Rite of Speed / Force / Iron each spend 1).
-		jobMatch: (job) => job.toLowerCase() === "striker",
-		id: "impulse-points",
-		label: "Impulse Points",
-		description:
-			"Channel kinetic force through your nerve gates — spend on Rites of Speed, Force, or Iron.",
-		maxFromCharacter: (c) => Math.max(1, c.level ?? 1),
-		recovery: "short-rest",
-	},
-	{
-		// Destroyer — Adrenaline (Adrenal Flux / Adrenaline Burst, recovered on a
-		// short rest). Proficiency-bonus uses approximates the once/short-rest
-		// surge that scales with tier.
-		jobMatch: (job) => job.toLowerCase() === "destroyer",
-		id: "adrenaline-surge",
-		label: "Adrenaline",
-		description:
-			"Overclock your spirit-fueled adrenal core: surge damage and absorb impact as built-in spirit armor.",
-		maxFromCharacter: (c) => 2 + Math.floor(((c.level ?? 1) - 1) / 4),
-		recovery: "short-rest",
-	},
-	{
-		// Assassin — Killing Focus. The class has no single named pool; this
-		// models the Aetheric-Mark / Essence-Harvest economy as an AGI-scaled
-		// short-rest focus (flagged for review).
-		jobMatch: (job) => job.toLowerCase() === "assassin",
-		id: "killing-focus",
-		label: "Killing Focus",
-		description:
-			"Predatory focus spent to apply Aetheric Marks and convert kills into renewed lethality.",
-		maxFromCharacter: (c) => Math.max(1, mod(c.agility)),
-		recovery: "short-rest",
+		recovery: "none",
 	},
 ];
 
 export const jobPoolSourceKey = (defId: string): string => `job-pool:${defId}`;
+
+const DEPRECATED_JOB_POOL_SOURCE_KEYS = new Set([
+	jobPoolSourceKey("oath-channel"),
+	jobPoolSourceKey("adrenaline-surge"),
+	jobPoolSourceKey("overload-charges"),
+	jobPoolSourceKey("impulse-points"),
+	jobPoolSourceKey("killing-focus"),
+	// These finite Task 5 features are canonical character_feature rows. Remove
+	// only their exact legacy automatic custom-resource duplicates.
+	jobPoolSourceKey("flux-pool"),
+	jobPoolSourceKey("hype-dice"),
+	jobPoolSourceKey("biome-charges"),
+]);
 
 export interface JobPoolReconcileResult {
 	/** New rows to append to custom_resources. */
 	additions: CustomResource[];
 	/** Patches to existing rows, keyed by row id. */
 	updates: Array<Partial<CustomResource> & { id: string }>;
+	/** Exact automatic rows to remove, keyed by row id. */
+	removals: string[];
 }
 
 /**
@@ -216,10 +145,20 @@ export function reconcileJobPools(
 	customResources: readonly CustomResource[],
 ): JobPoolReconcileResult | null {
 	const jobName = (job ?? "").trim();
-	if (!jobName) return null;
-
 	const additions: CustomResource[] = [];
 	const updates: JobPoolReconcileResult["updates"] = [];
+	const removals = customResources
+		.filter(
+			(resource) =>
+				resource.origin === "job-pool" &&
+				resource.sourceKey !== undefined &&
+				DEPRECATED_JOB_POOL_SOURCE_KEYS.has(resource.sourceKey),
+		)
+		.map((resource) => resource.id);
+
+	if (!jobName) {
+		return removals.length > 0 ? { additions, updates, removals } : null;
+	}
 
 	for (const def of JOB_RESOURCES.filter((d) => d.jobMatch(jobName))) {
 		const sourceKey = jobPoolSourceKey(def.id);
@@ -253,6 +192,9 @@ export function reconcileJobPools(
 		if (existing.sourceKey !== sourceKey) {
 			patch.sourceKey = sourceKey;
 			patch.origin = "job-pool";
+			dirty = true;
+		}
+		if (existing.recharge !== def.recovery) {
 			patch.recharge = def.recovery;
 			dirty = true;
 		}
@@ -264,8 +206,9 @@ export function reconcileJobPools(
 		if (dirty) updates.push(patch);
 	}
 
-	if (additions.length === 0 && updates.length === 0) return null;
-	return { additions, updates };
+	if (additions.length === 0 && updates.length === 0 && removals.length === 0)
+		return null;
+	return { additions, updates, removals };
 }
 
 /** Apply a reconcile result to a custom_resources array (pure). */
@@ -273,11 +216,14 @@ export function applyJobPoolReconcile(
 	customResources: readonly CustomResource[],
 	result: JobPoolReconcileResult,
 ): CustomResource[] {
+	const removalIds = new Set(result.removals);
 	const patchById = new Map(result.updates.map((u) => [u.id, u]));
-	const patched = customResources.map((row) => {
-		const patch = patchById.get(row.id);
-		return patch ? { ...row, ...patch } : row;
-	});
+	const patched = customResources
+		.filter((row) => !removalIds.has(row.id))
+		.map((row) => {
+			const patch = patchById.get(row.id);
+			return patch ? { ...row, ...patch } : row;
+		});
 	return [...patched, ...result.additions];
 }
 

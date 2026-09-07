@@ -47,6 +47,18 @@ import {
 	filterPublishedHomebrewRecords,
 	mapHomebrewAnomalyForRuntime,
 } from "@/lib/homebrewRuntime";
+import {
+	buildEncounterWorkflowPlanV1,
+	createEncounterWorkflowEntryId,
+	createEncounterWorkflowSourceIdentityV1,
+	describeEncounterWorkflowBlockers,
+	type EncounterWorkflowInputV1,
+	type EncounterWorkflowSourceIdentityV1,
+	encounterWorkflowSourceKey,
+	prepareEncounterInitiativeHandoffV1,
+	restoreSavedEncounterWorkflowV1,
+} from "@/lib/planning/adapters/encounterWorkflow";
+import type { EncounterHandoffPlanV1 } from "@/lib/planning/encounterHandoffPlan";
 import { downloadJson, downloadMarkdown } from "@/lib/toolExport";
 import { cn } from "@/lib/utils";
 import { normalizeRegentSearch } from "@/lib/vernacular";
@@ -62,6 +74,13 @@ interface EncounterAnomaly {
 	id: string;
 	Anomaly: Anomaly;
 	quantity: number;
+	/** Absent only on pre-workflow persisted state. Such entries fail closed. */
+	source?: EncounterWorkflowSourceIdentityV1;
+}
+
+interface EncounterCatalogAnomaly {
+	anomaly: Anomaly;
+	source: EncounterWorkflowSourceIdentityV1;
 }
 
 /** A lightweight, serializable snapshot of a built encounter for save/restore/export. */
@@ -79,6 +98,8 @@ interface SavedEncounter {
 	}[];
 	totalXP: number;
 	difficulty: string;
+	/** Present on new saves; absent on legacy settings-only saves. */
+	workflowPlan?: EncounterHandoffPlanV1;
 }
 
 interface EncounterToolState {
@@ -176,13 +197,16 @@ const mapStaticAnomaly = (Anomaly: CompendiumAnomaly): Anomaly => {
 const loadCanonicalAnomalies = async (
 	searchQuery: string,
 	campaignId?: string | null,
-): Promise<Anomaly[]> => {
+): Promise<EncounterCatalogAnomaly[]> => {
 	const query = normalizeRegentSearch(searchQuery.trim().toLowerCase());
 	const entries = await listCanonicalEntries("anomalies", query || undefined, {
 		campaignId,
 	});
 	const asAnomalies = entries as unknown as CompendiumAnomaly[];
-	return asAnomalies.slice(0, 50).map(mapStaticAnomaly);
+	return asAnomalies.slice(0, 50).map((entry) => ({
+		anomaly: mapStaticAnomaly(entry),
+		source: createEncounterWorkflowSourceIdentityV1("canonical", entry.id),
+	}));
 };
 
 const encounterToMarkdown = (e: SavedEncounter): string => {
@@ -350,9 +374,15 @@ export function EncounterBuilder({
 			publishedAnomalyHomebrew,
 			"anomaly",
 		)
-			.map(mapHomebrewAnomalyForRuntime)
-			.filter((a) => !q || a.name.toLowerCase().includes(q))
-			.map((a) => a as unknown as Anomaly);
+			.map((record) => ({
+				anomaly: mapHomebrewAnomalyForRuntime(record) as unknown as Anomaly,
+				source: createEncounterWorkflowSourceIdentityV1(
+					"homebrew",
+					record.id,
+					record.version,
+				),
+			}))
+			.filter(({ anomaly }) => !q || anomaly.name.toLowerCase().includes(q));
 		return [...homebrew, ...anomalies];
 	}, [publishedAnomalyHomebrew, anomalies, searchQuery]);
 
@@ -410,6 +440,23 @@ export function EncounterBuilder({
 		],
 	);
 
+	const createWorkflowInput = (name: string): EncounterWorkflowInputV1 => ({
+		campaignId: campaignId ?? null,
+		name,
+		hunterLevel,
+		hunterCount,
+		objectives,
+		totalXP,
+		difficulty: difficulty || "minimal",
+		roster: encounterAnomalies.map((entry) => ({
+			entryId: entry.id,
+			displayName: entry.Anomaly.name,
+			quantity: entry.quantity,
+			runtimeState: entry.Anomaly,
+			source: entry.source ?? null,
+		})),
+	});
+
 	// Bureau Field Calibration: project how the fight tips if the party drops to
 	// `projectedStress` HP while enemies stay full — a forward-looking read using
 	// the live combat scaler against a synthetic mid-fight snapshot.
@@ -444,10 +491,14 @@ export function EncounterBuilder({
 		analyzeCalibration,
 	]);
 
-	const addAnomaly = (Anomaly: Anomaly) => {
+	const addAnomaly = (
+		Anomaly: Anomaly,
+		source: EncounterWorkflowSourceIdentityV1,
+	) => {
 		hasUserInteractedRef.current = true;
+		const sourceKey = encounterWorkflowSourceKey(source);
 		const existing = encounterAnomalies.find(
-			(em) => em.Anomaly.id === Anomaly.id,
+			(em) => em.source && encounterWorkflowSourceKey(em.source) === sourceKey,
 		);
 		if (existing) {
 			setEncounterAnomalies(
@@ -458,7 +509,12 @@ export function EncounterBuilder({
 		} else {
 			setEncounterAnomalies([
 				...encounterAnomalies,
-				{ id: `${Anomaly.id}-${Date.now()}`, Anomaly, quantity: 1 },
+				{
+					id: createEncounterWorkflowEntryId(source),
+					Anomaly,
+					quantity: 1,
+					source,
+				},
 			]);
 		}
 	};
@@ -483,7 +539,10 @@ export function EncounterBuilder({
 		hasUserInteractedRef.current = true;
 		const m = await getRandomAnomaly(randomRank);
 		if (m) {
-			addAnomaly(m as Anomaly);
+			addAnomaly(
+				m as Anomaly,
+				createEncounterWorkflowSourceIdentityV1("canonical", m.id),
+			);
 		} else {
 			toast({
 				title: "No match",
@@ -500,9 +559,20 @@ export function EncounterBuilder({
 			window.prompt("Name this encounter", defaultName) ?? ""
 		).trim();
 		if (!name) return;
+		const workflowPlan = buildEncounterWorkflowPlanV1(
+			createWorkflowInput(name),
+		);
+		if (!workflowPlan.canApply) {
+			toast({
+				title: "Encounter save blocked",
+				description: describeEncounterWorkflowBlockers(workflowPlan.blockers),
+				variant: "destructive",
+			});
+			return;
+		}
 		const next = pushGeneration(
 			{ current: null, history: savedEncounters },
-			{ ...currentSnapshot, name },
+			{ ...currentSnapshot, name, workflowPlan },
 			name,
 		);
 		setSavedEncounters(next.history);
@@ -511,12 +581,40 @@ export function EncounterBuilder({
 
 	const restoreSavedEncounter = (entry: HistoryEntry<SavedEncounter>) => {
 		hasUserInteractedRef.current = true;
-		setHunterLevel(entry.record.hunterLevel);
-		setHunterCount(entry.record.hunterCount);
-		setObjectives(entry.record.objectives ?? "");
+		const restored = restoreSavedEncounterWorkflowV1(entry.record);
+		if (restored.mode === "blocked") {
+			toast({
+				title: "Encounter restore blocked",
+				description: describeEncounterWorkflowBlockers(restored.blockers),
+				variant: "destructive",
+			});
+			return;
+		}
+		if (restored.mode === "legacy") {
+			setHunterLevel(restored.hunterLevel);
+			setHunterCount(restored.hunterCount);
+			setObjectives(restored.objectives);
+			toast({
+				title: "Restored settings",
+				description: `${entry.label} — party + objectives loaded. Re-add Anomalies from the registry.`,
+			});
+			return;
+		}
+
+		setHunterLevel(restored.state.hunterLevel);
+		setHunterCount(restored.state.hunterCount);
+		setObjectives(restored.state.objectives);
+		setEncounterAnomalies(
+			restored.state.roster.map((rosterEntry) => ({
+				id: rosterEntry.entryId,
+				Anomaly: rosterEntry.runtimeState as unknown as Anomaly,
+				quantity: rosterEntry.quantity,
+				source: rosterEntry.source,
+			})),
+		);
 		toast({
-			title: "Restored settings",
-			description: `${entry.label} — party + objectives loaded. Re-add Anomalies from the registry.`,
+			title: "Encounter restored",
+			description: `${entry.label} — full roster and runtime state loaded.`,
 		});
 	};
 
@@ -546,31 +644,22 @@ export function EncounterBuilder({
 
 	const sendToInitiativeTracker = async () => {
 		if (encounterAnomalies.length === 0) return;
-		const combatants = encounterAnomalies.flatMap((em) => {
-			const qty = Math.max(1, em.quantity || 1);
-			return Array.from({ length: qty }, (_, i) => ({
-				id: `${em.Anomaly.id}-${Date.now()}-${Math.random()}-${i}`,
-				name: qty > 1 ? `${em.Anomaly.name} #${i + 1}` : em.Anomaly.name,
-				initiative: 0,
-				hp: em.Anomaly.hit_points_average || undefined,
-				maxHp: em.Anomaly.hit_points_average || undefined,
-				ac: em.Anomaly.armor_class || undefined,
-				conditions: [],
-				// The tracker's roster render requires this array on every
-				// combatant (its hydration also backfills, but write it right).
-				advancedConditions: [],
-				isHunter: false,
-			}));
-		});
+		const handoff = prepareEncounterInitiativeHandoffV1(
+			createWorkflowInput(
+				currentSnapshot.name || `encounter-${currentSnapshot.difficulty}`,
+			),
+			new Date().toISOString(),
+		);
+		if (handoff.status === "blocked") {
+			toast({
+				title: "Combat sync blocked",
+				description: describeEncounterWorkflowBlockers(handoff.blockers),
+				variant: "destructive",
+			});
+			return;
+		}
 
-		const initiativeState = {
-			version: 1,
-			savedAt: new Date().toISOString(),
-			combatants,
-			currentTurn: 0,
-			round: 1,
-		};
-		writeLocalToolState(initiativeStorageKey, initiativeState);
+		writeLocalToolState(initiativeStorageKey, handoff.state);
 
 		toast({
 			title: "Injected to Tracker",
@@ -621,9 +710,9 @@ export function EncounterBuilder({
 									<Loader2 className="w-8 h-8 animate-spin mx-auto text-primary/60" />
 								</div>
 							) : (
-								combinedAnomalies.map((Anomaly) => (
+								combinedAnomalies.map(({ anomaly: Anomaly, source }) => (
 									<div
-										key={Anomaly.id}
+										key={encounterWorkflowSourceKey(source)}
 										className="group p-3 rounded-lg border border-primary/10 bg-primary/5 hover:bg-primary/10 transition-colors flex justify-between items-center"
 									>
 										<div>
@@ -644,7 +733,7 @@ export function EncounterBuilder({
 											type="button"
 											variant="ghost"
 											size="sm"
-											onClick={() => addAnomaly(Anomaly)}
+											onClick={() => addAnomaly(Anomaly, source)}
 											aria-label={`Add ${Anomaly.name}`}
 											className="h-8 w-8 p-0 opacity-100 md:opacity-20 md:group-hover:opacity-100 transition-opacity focus-within:opacity-100"
 										>
@@ -913,7 +1002,11 @@ export function EncounterBuilder({
 												type="button"
 												onClick={() => restoreSavedEncounter(entry)}
 												className="flex-1 text-left truncate hover:text-primary transition-colors"
-												title="Restore party + objectives"
+												title={
+													entry.record.workflowPlan
+														? "Restore full encounter"
+														: "Restore party + objectives"
+												}
 											>
 												<span className="text-xs font-bold truncate flex items-center gap-1">
 													{entry.pinned && (

@@ -11,13 +11,18 @@ interface RegentDetailProps {
 }
 
 interface CombinedFeature {
-	id?: string;
+	id: string;
 	name: string;
-	description?: string;
+	description: string;
 	level: number;
 	is_signature: boolean;
 	type?: string;
-	recharge?: string;
+	actionType?: string;
+	frequency?: string;
+	uses?: { formula: string; recharge: string };
+	resource?: string;
+	tracking?: "uses" | "resource" | "manual";
+	canonStatus?: "source-backed" | "review-blocked";
 }
 
 export const RegentDetail = ({ data }: RegentDetailProps) => {
@@ -27,39 +32,32 @@ export const RegentDetail = ({ data }: RegentDetailProps) => {
 	);
 	const displayTheme = formatRegentVernacular(data.tags?.join(", ") || "");
 
-	const classFeatures: CombinedFeature[] = (data.class_features || []).map(
-		(f) => ({
-			id: `cf-${f.level}-${f.name}`,
-			name: f.name,
-			description: f.description || "",
-			level: f.level,
-			is_signature: f.level >= 11,
-			type: f.type,
-			recharge: f.frequency,
-		}),
+	// class_features is the single canonical Regent ledger. Flat abilities and
+	// features remain source evidence only and must not create duplicate or
+	// power-level-remapped display rows.
+	const allFeatures: CombinedFeature[] = (data.class_features || [])
+		.map((feature) => ({
+			id: feature.id ?? `regent-feature:${feature.level}:${feature.name}`,
+			name: feature.name,
+			description: feature.description,
+			level: feature.level,
+			is_signature: feature.level >= 11,
+			type: feature.type,
+			actionType: feature.actionType,
+			frequency: feature.frequency,
+			uses: feature.uses,
+			resource: feature.resource,
+			tracking: feature.tracking,
+			canonStatus: feature.canonStatus,
+		}))
+		.sort((left, right) => left.level - right.level);
+
+	const signatureFeatures = allFeatures.filter(
+		(feature) => feature.is_signature,
 	);
-
-	const abilities: CombinedFeature[] = []; // CompendiumRegent uses class_features/features now
-
-	const dataFeatures: CombinedFeature[] = (data.features || []).map((f) => ({
-		id: `feature-${f.name}`,
-		name: f.name,
-		description: f.description || "",
-		level: f.power_level || 0,
-		is_signature: (f.power_level || 0) >= 11,
-		type: f.type,
-		recharge: f.frequency,
-	}));
-
-	const allFeatures = [...classFeatures, ...abilities, ...dataFeatures]
-		.filter(
-			(feature, index, self) =>
-				index === self.findIndex((t) => t.name === feature.name),
-		)
-		.sort((a, b) => a.level - b.level);
-
-	const signatureFeatures = allFeatures.filter((f) => f.is_signature);
-	const regularFeatures = allFeatures.filter((f) => !f.is_signature);
+	const regularFeatures = allFeatures.filter(
+		(feature) => !feature.is_signature,
+	);
 
 	return (
 		<div className="space-y-6">
@@ -241,9 +239,34 @@ export const RegentDetail = ({ data }: RegentDetailProps) => {
 											Level {feature.level}
 										</Badge>
 									)}
-									{feature.type && (
+									{feature.actionType && (
 										<Badge variant="secondary" className="text-xs">
-											{feature.type}
+											{feature.actionType}
+										</Badge>
+									)}
+									{feature.uses && (
+										<Badge variant="outline" className="text-xs">
+											{feature.uses.formula} / {feature.uses.recharge}
+										</Badge>
+									)}
+									{!feature.uses && feature.frequency && (
+										<Badge variant="outline" className="text-xs">
+											{feature.frequency}
+										</Badge>
+									)}
+									{feature.resource && (
+										<Badge variant="outline" className="text-xs">
+											Cost: {feature.resource}
+										</Badge>
+									)}
+									{feature.tracking === "manual" && (
+										<Badge variant="secondary" className="text-xs">
+											Manual
+										</Badge>
+									)}
+									{feature.canonStatus === "review-blocked" && (
+										<Badge variant="destructive" className="text-xs">
+											Canon Review Required
 										</Badge>
 									)}
 								</div>
@@ -276,9 +299,34 @@ export const RegentDetail = ({ data }: RegentDetailProps) => {
 											Level {feature.level}
 										</Badge>
 									)}
-									{feature.type && (
+									{feature.actionType && (
 										<Badge variant="secondary" className="text-xs">
-											{feature.type}
+											{feature.actionType}
+										</Badge>
+									)}
+									{feature.uses && (
+										<Badge variant="outline" className="text-xs">
+											{feature.uses.formula} / {feature.uses.recharge}
+										</Badge>
+									)}
+									{!feature.uses && feature.frequency && (
+										<Badge variant="outline" className="text-xs">
+											{feature.frequency}
+										</Badge>
+									)}
+									{feature.resource && (
+										<Badge variant="outline" className="text-xs">
+											Cost: {feature.resource}
+										</Badge>
+									)}
+									{feature.tracking === "manual" && (
+										<Badge variant="secondary" className="text-xs">
+											Manual
+										</Badge>
+									)}
+									{feature.canonStatus === "review-blocked" && (
+										<Badge variant="destructive" className="text-xs">
+											Canon Review Required
 										</Badge>
 									)}
 								</div>

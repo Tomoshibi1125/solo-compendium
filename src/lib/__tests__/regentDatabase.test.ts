@@ -1,46 +1,101 @@
 import { describe, expect, it } from "vitest";
 import { regents as CANONICAL_REGENTS } from "@/data/compendium/regents";
 import { ALL_REGENTS, canonicalRegentToPath } from "@/lib/regentDatabase";
+import { CANONICAL_REGENT_IDS } from "@/lib/regentIdentity";
+import { getRegentLeveledFeatures } from "@/lib/regentProgression";
+import type { Regent } from "@/lib/regentTypes";
 
-describe("REGENT_DATABASE completeness", () => {
-	it("contains EVERY canonical regent by its canonical id", () => {
-		// Guards the LIVE canonical source (regentDatabase.ALL_REGENTS), which
-		// fusion overlays read — not the retired regentGeminiSystem duplicate.
-		const ids = new Set(ALL_REGENTS.map((r) => r.id));
-		const missing = CANONICAL_REGENTS.filter((r) => !ids.has(r.id)).map(
-			(r) => r.id,
+describe("canonical Regent database projections", () => {
+	it("contains exactly the twelve canonical projections in identity order", () => {
+		expect(ALL_REGENTS).toHaveLength(12);
+		expect(ALL_REGENTS.map((regent) => regent.id)).toEqual(
+			CANONICAL_REGENT_IDS,
 		);
-		expect(missing).toEqual([]);
-	});
-
-	it("resolves a saved sovereign's canonical monarch_a_id / monarch_b_id", () => {
-		// monarch ids stored on saved_sovereigns are canonical regent ids.
-		for (const id of ["umbral_regent", "steel_regent", "gravity_regent"]) {
-			expect(ALL_REGENTS.find((r) => r.id === id)).toBeTruthy();
-		}
-	});
-
-	it("maps canonical class_features into the RegentPath feature shape", () => {
-		const withFeatures = CANONICAL_REGENTS.find(
-			(r) => (r.class_features?.length ?? 0) > 0,
+		expect(ALL_REGENTS.some((regent) => regent.id === "shadow_regent")).toBe(
+			false,
 		);
-		expect(withFeatures).toBeTruthy();
-		if (!withFeatures) return;
-		const path = canonicalRegentToPath(withFeatures);
-		expect(path.id).toBe(withFeatures.id);
-		expect(path.features.length).toBeGreaterThan(0);
-		expect(path.features[0]).toHaveProperty("name");
-		expect(path.features[0]).toHaveProperty("description");
 	});
 
-	it("preserves legacy nine-regent ids for backward compatibility", () => {
-		const ids = new Set(ALL_REGENTS.map((r) => r.id));
-		// 'shadow_regent' exists only in the legacy NINE_REGENTS table.
-		expect(ids.has("shadow_regent")).toBe(true);
+	it("preserves every direct Task 7 ledger row and its metadata", () => {
+		const canonical = CANONICAL_REGENTS.find(
+			(regent) => getRegentLeveledFeatures(regent).length > 0,
+		);
+		expect(canonical).toBeTruthy();
+		if (!canonical) return;
+
+		const ledger = getRegentLeveledFeatures(canonical);
+		const path = canonicalRegentToPath(canonical);
+		expect(path.features).toEqual(ledger);
+		expect(path.features).toHaveLength(ledger.length);
+		expect(path.features[0]).toMatchObject({
+			id: ledger[0].id,
+			level: ledger[0].level,
+			canonStatus: ledger[0].canonStatus,
+			provenance: ledger[0].provenance,
+		});
+		expect(path.abilities).toEqual(ledger.map((feature) => feature.name));
 	});
 
-	it("has no duplicate ids", () => {
-		const ids = ALL_REGENTS.map((r) => r.id);
-		expect(new Set(ids).size).toBe(ids.length);
+	it("does not re-append raw feature or ability arrays", () => {
+		const fixture = {
+			id: "umbral_regent",
+			name: "Ledger Fixture",
+			class_features: [
+				{
+					id: "regent-feature:umbral_regent:1:echo",
+					level: 1,
+					name: "Echo",
+					description: "First grant",
+					type: "passive",
+				},
+				{
+					id: "regent-feature:umbral_regent:5:echo",
+					level: 5,
+					name: "Echo",
+					description: "Later improvement",
+					type: "active",
+				},
+			],
+			abilities: [
+				{
+					name: "Raw Ability",
+					description: "Evidence only",
+					type: "active",
+				},
+			],
+			features: [
+				{
+					name: "Raw Feature",
+					description: "Evidence only",
+				},
+			],
+		} as Regent;
+
+		const path = canonicalRegentToPath(fixture);
+		expect(path.features.map((feature) => feature.id)).toEqual([
+			"regent-feature:umbral_regent:1:echo",
+			"regent-feature:umbral_regent:5:echo",
+		]);
+		expect(path.features.map((feature) => feature.level)).toEqual([1, 5]);
+		expect(path.abilities).toEqual(["Echo", "Echo"]);
+	});
+
+	it("derives statThreshold from authored ability requirements, not unlock level", () => {
+		const fixture = {
+			id: "war_regent",
+			name: "Requirement Fixture",
+			class_features: [],
+			regent_requirements: {
+				level: 20,
+				abilities: { STR: 15, PRE: 13 },
+				quest_completion: "Complete the trial",
+				warden_approval: true,
+			},
+		} as Regent;
+
+		const path = canonicalRegentToPath(fixture);
+		expect(path.requirements.statThreshold).toBe(15);
+		expect(path.requirements.statThreshold).not.toBe(20);
+		expect(path.requirements.questCompleted).toBe("Complete the trial");
 	});
 });

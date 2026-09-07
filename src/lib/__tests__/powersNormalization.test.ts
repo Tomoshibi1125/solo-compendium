@@ -1,7 +1,22 @@
 import { describe, expect, it } from "vitest";
+import { isCanonicalEntryQuarantined } from "@/data/compendium/conflict-resolutions";
 import { powers } from "@/data/compendium/powers";
 import { powers_supplemental } from "@/data/compendium/powers-supplemental";
 import { computePowerUses } from "@/lib/perRestCharges";
+
+describe("Power catalog — reviewed conflict dispositions", () => {
+	it.each([
+		"power-sup-7-93-fortress-mode",
+		"power-sup-5-87-absolute-smite",
+		"power-sup-4-111-parallel-processing",
+		"power-sup-1-7-shadow-strike",
+		"power-sup-2-29-entropic-counter",
+	])("preserves %s as source evidence while quarantining it", (id) => {
+		expect(powers_supplemental.some((power) => power.id === id)).toBe(true);
+		expect(isCanonicalEntryQuarantined("powers", id)).toBe(true);
+		expect(powers.some((power) => power.id === id)).toBe(false);
+	});
+});
 
 const CANONICAL_SCHOOLS = new Set([
 	"Abjuration",

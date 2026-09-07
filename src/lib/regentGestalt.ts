@@ -31,7 +31,11 @@ import {
 	type AbilityScore,
 	SKILLS,
 } from "@/lib/5eRulesEngine";
-import { getRegentLeveledFeatures } from "@/lib/regentProgression";
+import { resolveCanonicalRegentId } from "@/lib/regentIdentity";
+import {
+	getRegentLeveledFeatures,
+	type RegentLeveledFeature,
+} from "@/lib/regentProgression";
 import type { Regent } from "@/lib/regentTypes";
 
 // ── Reverse lookup maps (display name → canonical key) ──────────────────
@@ -73,21 +77,55 @@ export function normalizeSkillToId(
 
 // ── Resolution ──────────────────────────────────────────────────────────
 
+/** Return each supported Regent identity once, preserving first-seen order. */
+function uniqueCanonicalRegents(regents: readonly Regent[]): Regent[] {
+	const seen = new Set<string>();
+	const unique: Regent[] = [];
+	for (const regent of regents) {
+		const canonicalId = resolveCanonicalRegentId(regent.id);
+		if (!canonicalId || seen.has(canonicalId)) continue;
+		seen.add(canonicalId);
+		unique.push(
+			regent.id === canonicalId ? regent : { ...regent, id: canonicalId },
+		);
+	}
+	return unique;
+}
+
 /**
- * Resolve persisted regent ids (canonical `regents.ts` ids, e.g.
- * "umbral_regent") to their rich `Regent` class definitions. Unknown ids are
- * skipped. Optionally pass a custom dataset (for tests / homebrew).
+ * Resolve persisted Regent IDs through the locked canonical identity boundary.
+ * Explicit legacy IDs normalize to their canonical identity; unsupported IDs
+ * are skipped and each canonical Regent is returned at most once.
  */
 export function resolveRegents(
 	regentIds: readonly string[] | null | undefined,
 	dataset: readonly Regent[] = CANONICAL_REGENTS,
 ): Regent[] {
 	if (!regentIds || regentIds.length === 0) return [];
-	const byId = new Map(dataset.map((r) => [r.id, r]));
+
+	const byId = new Map<string, Regent>();
+	for (const regent of dataset) {
+		const canonicalId = resolveCanonicalRegentId(regent.id);
+		if (!canonicalId) continue;
+		const existing = byId.get(canonicalId);
+		// If a compatibility dataset contains both an alias and its canonical row,
+		// the canonical row is authoritative regardless of input order.
+		if (!existing || regent.id.trim() === canonicalId) {
+			byId.set(canonicalId, regent);
+		}
+	}
+
 	const resolved: Regent[] = [];
-	for (const id of regentIds) {
-		const r = byId.get(id);
-		if (r) resolved.push(r);
+	const seen = new Set<string>();
+	for (const rawId of regentIds) {
+		const canonicalId = resolveCanonicalRegentId(rawId);
+		if (!canonicalId || seen.has(canonicalId)) continue;
+		const regent = byId.get(canonicalId);
+		if (!regent) continue;
+		seen.add(canonicalId);
+		resolved.push(
+			regent.id === canonicalId ? regent : { ...regent, id: canonicalId },
+		);
 	}
 	return resolved;
 }
@@ -109,7 +147,10 @@ export function parseHitDieSize(hitDice: string | null | undefined): number {
 export function getRegentHitDieContribution(
 	regents: readonly Regent[],
 ): number {
-	return regents.reduce((sum, r) => sum + parseHitDieSize(r.hit_dice), 0);
+	return uniqueCanonicalRegents(regents).reduce(
+		(sum, regent) => sum + parseHitDieSize(regent.hit_dice),
+		0,
+	);
 }
 
 /**
@@ -197,26 +238,16 @@ export function getGestaltProficiencies(
 
 // ── Leveled class features ─────────────────────────────────────────────────
 
-export interface GestaltFeature {
+export interface GestaltFeature extends RegentLeveledFeature {
 	regentId: string;
 	regentName: string;
-	level: number;
-	name: string;
-	description: string;
-	type: string;
-	frequency?: string;
 }
 
 /**
- * All gestalt features granted by the unlocked regents at `characterLevel`.
- *
- * Delegates to `getRegentLeveledFeatures` — the SAME normalizer the level-up
- * wizard uses for its per-tier regent display (`getRegentFeaturesAtLevel`) — so
- * the sheet and the wizard never disagree. That normalizer joins each regent's
- * curated `class_features` with the `progression_table` + `abilities`/`features`
- * derivation, giving every regent (caster and martial) a complete 1..20 leveled
- * list. Here we surface everything with `level <= characterLevel`. De-duped by
- * name per regent, sorted by level then name.
+ * All canonical Task 7 ledger rows granted by the Regents at
+ * `characterLevel`. Stable feature ID + authoritative level is the identity;
+ * repeated names at different levels remain distinct. Full ledger metadata is
+ * preserved and same-level source order remains stable.
  */
 export function getGestaltClassFeatures(
 	regents: readonly Regent[],
@@ -225,24 +256,20 @@ export function getGestaltClassFeatures(
 	const out: GestaltFeature[] = [];
 	const seen = new Set<string>();
 
-	for (const r of regents) {
-		for (const f of getRegentLeveledFeatures(r)) {
-			if (f.level > characterLevel) continue;
-			const key = `${r.id}::${f.name.toLowerCase()}`;
+	for (const regent of uniqueCanonicalRegents(regents)) {
+		for (const feature of getRegentLeveledFeatures(regent)) {
+			if (feature.level > characterLevel) continue;
+			const key = `${feature.id}::${feature.level}`;
 			if (seen.has(key)) continue;
 			seen.add(key);
 			out.push({
-				regentId: r.id,
-				regentName: r.name,
-				level: f.level,
-				name: f.name,
-				description: f.description,
-				type: f.type,
-				frequency: f.frequency,
+				...feature,
+				regentId: regent.id,
+				regentName: regent.name,
 			});
 		}
 	}
-	out.sort((a, b) => a.level - b.level || a.name.localeCompare(b.name));
+	out.sort((left, right) => left.level - right.level);
 	return out;
 }
 
@@ -333,9 +360,9 @@ export function getGestaltSpellSlots(
 	};
 
 	let combined = casterLevelContribution(jobFraction, characterLevel);
-	for (const r of regents) {
+	for (const regent of uniqueCanonicalRegents(regents)) {
 		combined += casterLevelContribution(
-			getRegentCasterFraction(r),
+			getRegentCasterFraction(regent),
 			characterLevel,
 		);
 	}

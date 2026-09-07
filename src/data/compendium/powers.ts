@@ -1,4 +1,5 @@
 import type { CompendiumPower } from "../../types/compendium";
+import { isCanonicalEntryQuarantined } from "./conflict-resolutions";
 import { powers_archetype } from "./powers-archetype";
 import { powers_core } from "./powers-core";
 import { powers_supplemental } from "./powers-supplemental";
@@ -31,8 +32,12 @@ function normalizePowerMechanics(power: CompendiumPower): CompendiumPower {
 	};
 }
 
-export const powers: CompendiumPower[] = [
+const powerCandidates: CompendiumPower[] = [
 	...powers_core,
 	...powers_supplemental,
 	...powers_archetype,
-].map(normalizePowerMechanics);
+];
+
+export const powers: CompendiumPower[] = powerCandidates
+	.filter((power) => !isCanonicalEntryQuarantined("powers", power.id))
+	.map(normalizePowerMechanics);

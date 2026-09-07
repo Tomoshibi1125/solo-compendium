@@ -1,14 +1,17 @@
 /**
- * Companion substrate tests — pure HP/AC math + JSON normalization helpers.
+ * Companion substrate tests — pure HP/AC math, provenance, and JSON helpers.
  */
 import { describe, expect, it } from "vitest";
 import type { SandboxNPC } from "@/data/compendium/sandbox-npcs";
 import {
+	abilitiesFromCanonicalSource,
 	abilitiesFromNpc,
+	createCanonicalCompanionSource,
 	effectiveCompanionAc,
 	equipmentAcBonus,
 	leveledCompanionHp,
 	parseAbilities,
+	parseCanonicalCompanionSource,
 	parseEquipment,
 } from "@/lib/companions";
 
@@ -79,6 +82,82 @@ describe("abilitiesFromNpc", () => {
 		expect(abilitiesFromNpc(npc)).toEqual([
 			{ name: "Guard Stance", action_type: "action" },
 			{ name: "Riposte", action_type: "action" },
+		]);
+	});
+});
+
+describe("canonical companion provenance", () => {
+	it.each([
+		{
+			canonicalId: "anomaly-ember-hound",
+			canonicalType: "anomaly" as const,
+			canonicalCollection: "anomalies" as const,
+			entryType: "beast",
+		},
+		{
+			canonicalId: "mount-bureau-warhorse",
+			canonicalType: "vehicle" as const,
+			canonicalCollection: "vehicles" as const,
+			entryType: "mount",
+		},
+	])("round-trips the selected $canonicalType id, type, source, and snapshot fields", ({
+		canonicalId,
+		canonicalType,
+		canonicalCollection,
+		entryType,
+	}) => {
+		const snapshot = createCanonicalCompanionSource({
+			canonicalId,
+			canonicalType,
+			canonicalCollection,
+			entryType,
+			source: "authored-catalog",
+			sourceBook: "Rift Ascendant Canon",
+			name: "Selected Companion",
+			hpMax: 37,
+			baseAc: 15,
+			speed: 45,
+			rank: "B",
+		});
+
+		expect(parseCanonicalCompanionSource(snapshot)).toEqual(snapshot);
+		expect(snapshot.provenance).toEqual({
+			canonicalId,
+			canonicalType,
+			canonicalCollection,
+			entryType,
+			source: "authored-catalog",
+			sourceBook: "Rift Ascendant Canon",
+		});
+	});
+
+	it("does not mistake a legacy raw guild NPC snapshot for canonical provenance", () => {
+		expect(
+			parseCanonicalCompanionSource({
+				id: "npc-1",
+				name: "Glassline Scout",
+				leveling: { maxLevel: 10 },
+			}),
+		).toBeNull();
+	});
+
+	it("preserves only authored canonical ability text and drops nameless rows", () => {
+		expect(
+			abilitiesFromCanonicalSource(
+				[
+					{ name: "Pounce", description: "Move, then strike." },
+					{ name: "Shadow Step", action_type: "bonus" },
+					{ description: "No authored name." },
+				],
+				"trait",
+			),
+		).toEqual([
+			{
+				name: "Pounce",
+				description: "Move, then strike.",
+				action_type: "trait",
+			},
+			{ name: "Shadow Step", action_type: "bonus" },
 		]);
 	});
 });

@@ -270,30 +270,146 @@ describe("resolveRuneGrant native strict eligibility", () => {
 		expect(grant?.isUnderLevel).toBe(false);
 	});
 
-	it("treats exact path-granted powers as native only for the selected path", async () => {
-		const matchingPathGrant = await resolveRuneGrant(
-			{ kind: "power", ref: "Cursed Blade Edge" },
+	it("keeps the rejected Cursed Blade package cross-class for Rune access", async () => {
+		for (const pathName of [
+			"Path of the Cursed Blade",
+			"Path of the Forgotten Star",
+		]) {
+			const grant = await resolveRuneGrant(
+				{ kind: "power", ref: "Cursed Blade Edge" },
+				{
+					jobName: "Contractor",
+					pathName,
+					characterLevel: 1,
+					regentNames: [],
+				},
+			);
+
+			expect(grant).not.toBeNull();
+			expect(grant?.isNative).toBe(false);
+			expect(grant?.isUnderLevel).toBe(false);
+		}
+	});
+
+	it("keeps rejected Task 5 supplemental candidates Rune-only", async () => {
+		const runeOnlyGroups = [
 			{
+				kind: "power",
+				jobName: "Idol",
+				pathName: "Path of the Dance Resonance",
+				refs: ["power-sup-1-22-dissonant-strike"],
+			},
+			{
+				kind: "power",
+				jobName: "Idol",
+				pathName: "Path of the Hypnotic Resonance",
+				refs: ["power-sup-4-80-encore-performance"],
+			},
+			{
+				kind: "power",
 				jobName: "Contractor",
 				pathName: "Path of the Cursed Blade",
-				characterLevel: 1,
-				regentNames: [],
+				refs: ["power-sup-9-101-absolute-pact"],
 			},
-		);
-		const missingPathGrant = await resolveRuneGrant(
-			{ kind: "power", ref: "Cursed Blade Edge" },
 			{
-				jobName: "Contractor",
-				pathName: "Path of the Forgotten Star",
-				characterLevel: 1,
-				regentNames: [],
+				kind: "power",
+				jobName: "Esper",
+				pathName: "Path of the Aetheric Cascade",
+				refs: ["power-sup-6-118-runic-detonation"],
 			},
-		);
+			{
+				kind: "power",
+				jobName: "Esper",
+				pathName: "Path of the Psionic Breach",
+				refs: ["power-sup-8-121-esper-ascension"],
+			},
+			{
+				kind: "technique",
+				jobName: "Esper",
+				pathName: "Path of the Psionic Breach",
+				refs: ["tech-sup-9-107-esper-singularity"],
+			},
+			{
+				kind: "power",
+				jobName: "Summoner",
+				pathName: "Path of the Apex Shifter",
+				refs: ["power-sup-8-125-summoner-s-leviathan"],
+			},
+			{
+				kind: "power",
+				jobName: "Summoner",
+				pathName: "Path of the Pack Commander",
+				refs: ["power-sup-4-115-summoner-s-pack"],
+			},
+			{
+				kind: "technique",
+				jobName: "Summoner",
+				pathName: "Path of the Pack Commander",
+				refs: [
+					"tech-sup-6-97-summoner-s-bond-strike",
+					"tech-sup-9-105-summoner-s-convergence",
+				],
+			},
+			{
+				kind: "power",
+				jobName: "Herald",
+				pathName: "Path of the Combat Mandate",
+				refs: [
+					"power-sup-1-24-guided-strike",
+					"power-sup-9-126-divine-mandate",
+				],
+			},
+			{
+				kind: "technique",
+				jobName: "Herald",
+				pathName: "Path of the Combat Mandate",
+				refs: [
+					"tech-sup-1-33-sacred-weapon",
+					"tech-sup-3-34-spiritual-hammer",
+					"tech-sup-5-35-war-god-s-blessing",
+				],
+			},
+			{
+				kind: "power",
+				jobName: "Herald",
+				pathName: "Path of the Storm Mandate",
+				refs: ["power-sup-2-25-retributive-ward"],
+			},
+			{
+				kind: "power",
+				jobName: "Herald",
+				pathName: "Path of the Triage Mandate",
+				refs: ["power-sup-3-110-herald-s-intervention"],
+			},
+			{
+				kind: "technique",
+				jobName: "Idol",
+				pathName: "Path of the Dance Resonance",
+				refs: ["tech-sup-1-30-rhythmic-strike"],
+			},
+			{
+				kind: "technique",
+				jobName: "Idol",
+				pathName: "Path of the Blade Resonance",
+				refs: ["tech-sup-2-50-resonance-slash"],
+			},
+		] as const;
 
-		expect(matchingPathGrant).not.toBeNull();
-		expect(matchingPathGrant?.isNative).toBe(true);
-		expect(matchingPathGrant?.isUnderLevel).toBe(false);
-		expect(missingPathGrant).not.toBeNull();
-		expect(missingPathGrant?.isNative).toBe(false);
+		for (const group of runeOnlyGroups) {
+			for (const ref of group.refs) {
+				const grant = await resolveRuneGrant(
+					{ kind: group.kind, ref },
+					{
+						jobName: group.jobName,
+						pathName: group.pathName,
+						characterLevel: 20,
+						regentNames: [],
+					},
+				);
+				expect(grant, ref).not.toBeNull();
+				expect(grant?.isNative, ref).toBe(false);
+				expect(grant?.isUnderLevel, ref).toBe(false);
+			}
+		}
 	});
 });

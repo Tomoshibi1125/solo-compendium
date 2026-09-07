@@ -1,4 +1,5 @@
 import { getRegentPortraitUrl } from "@/data/compendium/regentPortraits";
+import { materializeCanonicalRegentLedger } from "@/lib/regentProgression";
 import type { Regent } from "@/lib/regentTypes";
 
 // --- Shared rank-S regent progressions (full independent overlay, à la Umbral) ---
@@ -4725,3 +4726,10 @@ export const regents: Regent[] = [
 		},
 	},
 ];
+
+// Materialize the single runtime ledger at the data boundary. Every consumer
+// receives exact progression-table levels with authored mechanics or an
+// explicit review-blocked row; no downstream adapter may invent replacements.
+for (const regent of regents) {
+	regent.class_features = materializeCanonicalRegentLedger(regent);
+}

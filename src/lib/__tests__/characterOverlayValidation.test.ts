@@ -6,22 +6,27 @@ import {
 } from "@/lib/characterOverlayValidation";
 
 describe("normalizeRegentOverlayIds", () => {
-	it("canonicalizes regent overlay names and IDs while dropping invalid entries", async () => {
+	it("normalizes explicit IDs and aliases while deduplicating by canonical ID", async () => {
 		await expect(
 			normalizeRegentOverlayIds([
 				"umbral_regent",
+				" shadow_regent ",
+				"radiant_regent",
+				"architect_regent",
+				"spatial_regent",
 				"Radiant Regent",
-				" umbral_regent ",
-				"Not A Regent",
+				"UMBRAL_REGENT",
+				"umbral-regent",
+				"550e8400-e29b-41d4-a716-446655440000",
 				42,
 			]),
-		).resolves.toEqual(["umbral_regent", "radiant_regent"]);
+		).resolves.toEqual(["umbral_regent", "radiant_regent", "spatial_regent"]);
 	});
 
 	it("returns null for missing or fully invalid overlay arrays", async () => {
 		await expect(normalizeRegentOverlayIds(null)).resolves.toBeNull();
 		await expect(
-			normalizeRegentOverlayIds(["Unknown Regent"]),
+			normalizeRegentOverlayIds(["Unknown Regent", "Umbral Regent"]),
 		).resolves.toBeNull();
 	});
 });
@@ -38,7 +43,7 @@ describe("normalizeGeminiState", () => {
 				powerMultiplier: "Critical",
 				corruptionRisk: 140,
 				conditions: ["poisoned"],
-				regent_overlays: ["Umbral Regent", "missing"],
+				regent_overlays: ["shadow_regent", "umbral_regent", "Umbral Regent"],
 				modifiers: [
 					{
 						stat: "ac",
@@ -83,11 +88,11 @@ describe("normalizeGeminiState", () => {
 });
 
 describe("normalizeCharacterOverlayFields", () => {
-	it("normalizes only overlay fields that are present on character data", async () => {
+	it("normalizes only present overlay fields through the ID-only policy", async () => {
 		const normalized = await normalizeCharacterOverlayFields({
 			name: "Overlay Test",
-			regent_overlays: ["Radiant Regent", "unknown"],
-			monarch_overlays: ["umbral_regent"],
+			regent_overlays: ["radiant_regent", "Radiant Regent"],
+			monarch_overlays: ["shadow_regent"],
 		});
 
 		expect(normalized).toEqual({

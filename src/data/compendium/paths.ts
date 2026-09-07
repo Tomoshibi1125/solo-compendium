@@ -1,9 +1,38 @@
 // Job Paths Compendium - Ascendant Compendium (84 Paths)
 // 14 Jobs × 6 Paths each, unique SA identities with 5e-compatible mechanical backbone
 
-interface Path {
+export type PathRestRecharge = "short-rest" | "long-rest";
+export type PathAbilityTracking = "uses" | "resource" | "manual";
+
+export interface PathFeature {
+	name: string;
+	description: string;
+	level: number;
+	actionType?: string;
+	uses?: { formula: string; recharge: PathRestRecharge };
+	resource?: string;
+	tracking?: PathAbilityTracking;
+}
+
+export interface PathAbility {
+	name: string;
+	description: string;
+	/** Legacy authored cadence code retained for non-reconciled paths. */
+	recharge?: number;
+	cost?: string;
+	/** Canonical unlock is the parent path's unlock level unless stated otherwise. */
+	level?: number;
+	actionType?: string;
+	uses?: { formula: string; recharge: PathRestRecharge };
+	resource?: string;
+	tracking?: PathAbilityTracking;
+}
+
+export interface Path {
 	id: string;
 	name: string;
+	/** Stable legacy names/ids accepted by canonical resolution. */
+	aliases?: string[];
 	jobId: string;
 	jobName: string;
 	tier: 1 | 2 | 3;
@@ -15,13 +44,8 @@ interface Path {
 		prerequisites?: string[];
 	};
 	description: string;
-	features: { name: string; description: string; level: number }[];
-	abilities: {
-		name: string;
-		description: string;
-		recharge?: number;
-		cost?: string;
-	}[];
+	features: PathFeature[];
+	abilities: PathAbility[];
 	stats: {
 		primaryAttribute: string;
 		secondaryAttribute?: string;
@@ -38,7 +62,7 @@ interface Path {
 	image?: string;
 }
 
-export const paths: Path[] = [
+const pathCatalog: Path[] = [
 	{
 		id: "destroyer--apex-predator",
 		name: "Path of the Apex Predator",
@@ -80,7 +104,7 @@ export const paths: Path[] = [
 			{
 				name: "Auto-Repair Rite",
 				description:
-					"Start of each turn, the Absolute channels restorative mana: regain 5+VIT mod HP if at â‰¤ half HP and at least 1 HP.",
+					"Start of each turn, the Absolute channels restorative mana: regain 5+VIT mod HP if at ≤ half HP and at least 1 HP.",
 				level: 18,
 			},
 		],
@@ -143,7 +167,7 @@ export const paths: Path[] = [
 			{
 				name: "Relentless Analysis",
 				description:
-					"Roll initiative with 0 tactical dice â†’ regain 1. The Absolute never stops observing.",
+					"Roll initiative with 0 tactical dice → regain 1. The Absolute never stops observing.",
 				level: 15,
 			},
 			{
@@ -201,7 +225,7 @@ export const paths: Path[] = [
 			{
 				name: "Aetheric-Strike Integration",
 				description:
-					"Cast a cantrip â†’ make one weapon attack as bonus action. Your Mandate syncs the two actions.",
+					"Cast a cantrip → make one weapon attack as bonus action. Your Mandate syncs the two actions.",
 				level: 7,
 			},
 			{
@@ -219,7 +243,7 @@ export const paths: Path[] = [
 			{
 				name: "Absolute Integration",
 				description:
-					"Cast a spell â†’ make one weapon attack as bonus action. Spell and blade become one harmonic resonance.",
+					"Cast a spell → make one weapon attack as bonus action. Spell and blade become one harmonic resonance.",
 				level: 18,
 			},
 		],
@@ -265,19 +289,19 @@ export const paths: Path[] = [
 			{
 				name: "Reactive Shield",
 				description:
-					"Reaction: you or adjacent ally hit â†’ add 1d8 to AC. If still hit, target resists that damage. VIT mod uses/long rest.",
+					"Reaction: you or adjacent ally hit → add 1d8 to AC. If still hit, target resists that damage. VIT mod uses/long rest.",
 				level: 7,
 			},
 			{
 				name: "Lockdown Zone",
 				description:
-					"Creatures provoke opportunity attacks when moving within your reach. Hit â†’ speed becomes 0. Nothing escapes your zone.",
+					"Creatures provoke opportunity attacks when moving within your reach. Hit → speed becomes 0. Nothing escapes your zone.",
 				level: 10,
 			},
 			{
 				name: "Battering Ram",
 				description:
-					"Move 10+ ft straight then attack â†’ STR save or knocked prone. Bonus action attack on prone.",
+					"Move 10+ ft straight then attack → STR save or knocked prone. Bonus action attack on prone.",
 				level: 15,
 			},
 			{
@@ -335,7 +359,7 @@ export const paths: Path[] = [
 			{
 				name: "Emergency Reserves",
 				description:
-					"Roll initiative with 0 Limit Break uses â†’ regain 1. The Absolute always has one more in reserve.",
+					"Roll initiative with 0 Limit Break uses → regain 1. The Absolute always has one more in reserve.",
 				level: 10,
 			},
 			{
@@ -411,7 +435,7 @@ export const paths: Path[] = [
 			{
 				name: "Force Feedback",
 				description:
-					"Hologram destroyed by damage â†’ stored kinetic energy feeds back to you. Gain 2d6+VIT mod temp HP. VIT mod uses/long rest.",
+					"Hologram destroyed by damage → stored kinetic energy feeds back to you. Gain 2d6+VIT mod temp HP. VIT mod uses/long rest.",
 				level: 15,
 			},
 			{
@@ -463,7 +487,7 @@ export const paths: Path[] = [
 			{
 				name: "Aetheric Static",
 				description:
-					"In Overload, the mana static in your body disruptions all external manipulation—psychic influences and supernatural charms can't penetrate the noise of your inner storm. Can't be charmed or frightened; existing effects suspended.",
+					"In Overload, the mana static in your body disrupts all external manipulation—psychic influences and supernatural charms can't penetrate the noise of your inner storm. Can't be charmed or frightened; existing effects suspended.",
 				level: 6,
 			},
 			{
@@ -579,7 +603,7 @@ export const paths: Path[] = [
 			{
 				name: "Luminous Barrier",
 				description:
-					"In Overload, ally within 30 ft takes damage â†’ reaction: your scars project an aetheric barrier, reducing damage by 2d6 (3d6 at 10th, 4d6 at 14th).",
+					"In Overload, ally within 30 ft takes damage → reaction: your scars project an aetheric barrier, reducing damage by 2d6 (3d6 at 10th, 4d6 at 14th).",
 				level: 6,
 			},
 			{
@@ -701,7 +725,7 @@ export const paths: Path[] = [
 			{
 				name: "Unwavering Devotion",
 				description:
-					"Fail a save while in Overload â†’ reroll, must use new result. Your focus on the Absolute overrides failure. Once per Overload.",
+					"Fail a save while in Overload → reroll, must use new result. Your focus on the Absolute overrides failure. Once per Overload.",
 				level: 6,
 			},
 			{
@@ -709,6 +733,9 @@ export const paths: Path[] = [
 				description:
 					"Bonus action: up to 10 creatures in 60 ft gain advantage on attacks and saves until start of your next turn. Once/long rest.",
 				level: 10,
+				actionType: "Bonus action",
+				uses: { formula: "1", recharge: "long-rest" },
+				tracking: "uses",
 			},
 			{
 				name: "Overload Beyond Death",
@@ -753,25 +780,31 @@ export const paths: Path[] = [
 			{
 				name: "Aetheric Detection",
 				description:
-					"Action: sense aetheric disturbancs, spells, or artifacts within 60 ft, identifying the fundamental resonance. Your anomalous connection reads ambient mana like a radar. Prof uses/long rest.",
+					"Action: sense aetheric disturbances, spells, or artifacts within 60 ft, identifying the fundamental resonance. Your anomalous connection reads ambient mana like a radar. Prof uses/long rest.",
 				level: 3,
+				actionType: "Action",
+				uses: { formula: "PB", recharge: "long-rest" },
+				tracking: "uses",
 			},
 			{
 				name: "Anomaly Surge",
 				description:
-					"Enter Overload â†’ consult the Anomaly Surge Chart. Manifestations: shadow tendrils (1d12 force), teleport 30 ft, mana explosion, crystallized force weapon, or size increase.",
+					"Enter Overload → consult the Anomaly Surge Chart. Manifestations: shadow tendrils (1d12 force), teleport 30 ft, mana explosion, crystallized force weapon, or size increase.",
 				level: 3,
 			},
 			{
 				name: "Mana Transfusion",
 				description:
-					"Action touch: +1d3 to attacks/checks for 10 min, OR restore a spell slot â‰¤ d3 level. Your unstable core leaks utility. Prof uses/long rest.",
+					"Action touch: +1d3 to attacks/checks for 10 min, OR restore a spell slot ≤ d3 level. Your unstable core leaks utility. Prof uses/long rest.",
 				level: 6,
+				actionType: "Action",
+				uses: { formula: "PB", recharge: "long-rest" },
+				tracking: "uses",
 			},
 			{
 				name: "Cascade Resonance",
 				description:
-					"Take damage or fail save while in Overload â†’ reaction to reroll the Anomaly Surge, replacing the current distortion with a new one.",
+					"Take damage or fail save while in Overload → reaction to reroll the Anomaly Surge, replacing the current distortion with a new one.",
 				level: 10,
 			},
 			{
@@ -905,7 +938,7 @@ export const paths: Path[] = [
 			{
 				name: "The Final Rite",
 				description:
-					"Hit a surprised creature â†’ VIT save (8+AGI mod+prof) or damage is doubled. The Absolute confirms the termination.",
+					"Hit a surprised creature → VIT save (8+AGI mod+prof) or damage is doubled. The Absolute confirms the termination.",
 				level: 17,
 			},
 		],
@@ -957,27 +990,30 @@ export const paths: Path[] = [
 			{
 				name: "Phase Ambush",
 				description:
-					"Hidden when you cast â†’ target has disadvantage on saves vs that spell. You manifest your resonance from between dimensions.",
+					"Hidden when you cast → target has disadvantage on saves vs that spell. You manifest your resonance from between dimensions.",
 				level: 9,
 			},
 			{
 				name: "Harmonic Distraction",
 				description:
-					"Bonus action: Aetheric hand distracts creature within 5 ft of it â†’ advantage on attacks vs that creature until end of turn.",
+					"Bonus action: Aetheric hand distracts creature within 5 ft of it → advantage on attacks vs that creature until end of turn.",
 				level: 13,
 			},
 			{
 				name: "Resonance Reclamation",
 				description:
-					"Reaction when targeted by spell: force INT save. Fail â†’ negate effect, steal the aetheric routine for 8 hours. Once/long rest.",
+					"Reaction when targeted by spell: force INT save. Fail → negate effect, steal the aetheric routine for 8 hours. Once/long rest.",
 				level: 17,
+				actionType: "Reaction",
+				uses: { formula: "1", recharge: "long-rest" },
+				tracking: "uses",
 			},
 		],
 		abilities: [
 			{
 				name: "Shadow Casting",
 				description:
-					"Cast a cantrip while hidden without revealing position. Add Exploit Weakness if it deals damage. Once/short rest.",
+					"Cast a cantrip while hidden without revealing position. Add Vulnerability Analysis if it deals damage. Once/short rest.",
 				recharge: 1,
 				cost: "Action",
 			},
@@ -1015,7 +1051,7 @@ export const paths: Path[] = [
 			{
 				name: "Aetheric Coordination",
 				description:
-					"Help as bonus action. Help an ally attack â†’ target can be within 30 ft. You whisper tactical echoes through the primordial weave.",
+					"Help as bonus action. Help an ally attack → target can be within 30 ft. You whisper tactical echoes through the primordial weave.",
 				level: 3,
 			},
 			{
@@ -1041,7 +1077,7 @@ export const paths: Path[] = [
 			{
 				name: "Coordinated Exploit",
 				description:
-					"Bonus action: designate target in 60 ft. Next ally to hit it adds your Exploit Weakness damage. Once/short rest.",
+					"Bonus action: designate target in 60 ft. Next ally to hit it adds your Vulnerability Analysis damage. Once/short rest.",
 				recharge: 1,
 				cost: "Bonus action",
 			},
@@ -1073,13 +1109,13 @@ export const paths: Path[] = [
 			{
 				name: "Aetheric Footwork",
 				description:
-					"Melee attack a creature â†’ it can't make OAs against you for the rest of your turn. You phase-step past their guard effortlessly.",
+					"Melee attack a creature → it can't make OAs against you for the rest of your turn. You phase-step past their guard effortlessly.",
 				level: 3,
 			},
 			{
 				name: "Mandated Audacity",
 				description:
-					"Add PRE mod to initiative. Exploit Weakness without advantage if no other creature within 5 ft of you (no disadvantage required).",
+					"Add PRE mod to initiative. Vulnerability Analysis without advantage if no other creature within 5 ft of you (no disadvantage required).",
 				level: 3,
 			},
 			{
@@ -1097,15 +1133,17 @@ export const paths: Path[] = [
 			{
 				name: "Harmonic Counter",
 				description:
-					"Miss with attack â†’ reroll with advantage. Your Aetheric Sight shows you the correct angle of insertion. Once/short rest.",
+					"Miss with attack → reroll with advantage. Your Aetheric Sight shows you the correct angle of insertion. Once/short rest.",
 				level: 17,
+				uses: { formula: "1", recharge: "short-rest" },
+				tracking: "uses",
 			},
 		],
 		abilities: [
 			{
 				name: "Aetheric Riposte",
 				description:
-					"Reaction when creature misses you: phase-strike with Exploit Weakness damage. Once/short rest.",
+					"Reaction when creature misses you: phase-strike with Vulnerability Analysis damage. Once/short rest.",
 				recharge: 1,
 				cost: "Reaction",
 			},
@@ -1137,7 +1175,7 @@ export const paths: Path[] = [
 			{
 				name: "Aetheric Skirmish",
 				description:
-					"Enemy ends turn within 5 ft â†’ reaction: phase-step half speed without provoking OAs.",
+					"Enemy ends turn within 5 ft → reaction: phase-step half speed without provoking OAs.",
 				level: 3,
 			},
 			{
@@ -1161,7 +1199,7 @@ export const paths: Path[] = [
 			{
 				name: "Recursive Phase Strike",
 				description:
-					"Bonus action: deliver one additional attack from a phase-shifted angle. Can apply Exploit Weakness to a different target even if already used this turn.",
+					"Bonus action: deliver one additional attack from a phase-shifted angle. Can apply Vulnerability Analysis to a different target even if already used this turn.",
 				level: 17,
 			},
 		],
@@ -1209,6 +1247,9 @@ export const paths: Path[] = [
 				description:
 					"Action: channel aetheric energy inward to realign your physical vessel. Regain HP = 3 × Striker level. Once/long rest.",
 				level: 6,
+				actionType: "Action",
+				uses: { formula: "1", recharge: "long-rest" },
+				tracking: "uses",
 			},
 			{
 				name: "Aetheric Deterrence",
@@ -1393,7 +1434,7 @@ export const paths: Path[] = [
 			{
 				name: "Cascade Assault",
 				description:
-					"Aetheric Pulse (Rapid Barrage): up to 3 additional attacks (5 total), each must target a different creature. Your displace body appears everywhere at once.",
+					"Aetheric Pulse (Rapid Barrage): up to 3 additional attacks (5 total), each must target a different creature. Your displaced body appears everywhere at once.",
 				level: 17,
 			},
 		],
@@ -1451,7 +1492,7 @@ export const paths: Path[] = [
 			{
 				name: "Aetheric Alignment",
 				description:
-					"Miss with a bonded weapon on your turn â†’ your essence auto-adjusts. Reroll the attack. Once/turn.",
+					"Miss with a bonded weapon on your turn → your essence auto-adjusts. Reroll the attack. Once/turn.",
 				level: 17,
 			},
 		],
@@ -1522,6 +1563,9 @@ export const paths: Path[] = [
 				description:
 					"Touch a creature that died within 24 hours: spend 5 Impulse to restart its internal resonance. Returns to life with 4d10+SENSE mod HP, cured of all physical conditions. Once/long rest.",
 				level: 17,
+				uses: { formula: "1", recharge: "long-rest" },
+				resource: "5 Impulse points",
+				tracking: "uses",
 			},
 		],
 		abilities: [
@@ -1850,7 +1894,7 @@ export const paths: Path[] = [
 			{
 				name: "Material Realignment",
 				description:
-					"Spend 10 min to rewrite one material into another (woodâ†’stone, etc.). Reverts after 1 hour or if you use this again.",
+					"Spend 10 min to rewrite one material into another (wood→stone, etc.). Reverts after 1 hour or if you use this again.",
 				level: 2,
 			},
 			{
@@ -3224,7 +3268,7 @@ export const paths: Path[] = [
 			{
 				name: "Absolute Resonance: Allied Blessing",
 				description:
-					"Reaction: ally within 30 ft strikes â†’ +10 to their roll as you realign their path.",
+					"Reaction: ally within 30 ft strikes → +10 to their roll as you realign their path.",
 				level: 6,
 			},
 			{
@@ -5309,7 +5353,7 @@ export const paths: Path[] = [
 			{
 				name: "Resonance of Creation",
 				description:
-					"Action: create one nonmagical item (Medium or smaller, worth â‰¤ 20× Idol level gp). Lasts for hours = prof bonus. One at a time. Once per long rest.",
+					"Action: create one nonmagical item (Medium or smaller, worth ≤ 20× Idol level gp). Lasts for hours = prof bonus. One at a time. Once per long rest.",
 				level: 3,
 			},
 			{
@@ -5345,3 +5389,1096 @@ export const paths: Path[] = [
 		source: "Rift Ascendant Canon",
 	},
 ];
+
+type ReconciledPathAbility = Pick<
+	PathAbility,
+	"actionType" | "level" | "resource" | "tracking" | "uses"
+> & { abilityName: string };
+
+const RECONCILED_PATH_ALIASES: Readonly<Record<string, readonly string[]>> = {
+	"destroyer--phantom-blade": [
+		"destroyer--aftershock",
+		"Path of the Phantom Blade",
+	],
+	"mage--shield-compiler": [
+		"mage--shield-architect",
+		"Path of the Shield Compiler",
+	],
+	"assassin--gate-runner": ["assassin--shadow-thief"],
+	"assassin--terminus": [
+		"assassin--silent-knife",
+		"Path of the Terminus-Scythe",
+		"Path of the Silent Knife",
+	],
+	"assassin--weave-infiltrator": [
+		"assassin--spell-thief",
+		"Path of the Lattice-Breaker",
+	],
+	"assassin--shadow-herald": [
+		"assassin--shadow-broker",
+		"Path of the Telemetry-Architect",
+	],
+	"assassin--blade-dancer": [
+		"assassin--duellist",
+		"Path of the Resonance-Dancer",
+	],
+	"assassin--vanguard-outrider": [
+		"assassin--outrider",
+		"Path of the Threshold-Surveyor",
+	],
+	"striker--kinetic-core": ["Path of the Kinetic Fist"],
+	"striker--aetheric-channeler": ["Path of the Force Channeler"],
+	"striker--entropic-flow": ["Path of the Glitch Step"],
+	"striker--harmonic-surgeon": ["Path of the Nerve Surgeon"],
+	"revenant--void-lord": ["Path of the Void Lord"],
+	"revenant--entropy-drinker": ["Path of the Entropy Drinker"],
+	"revenant--wither-guard": ["Path of the Wither Guard"],
+	"revenant--entropy-blade": ["Path of the Entropy Blade"],
+	"revenant--plague-weaver": ["Path of the Plague Weaver"],
+	"stalker--apex-hunter": ["Path of the Apex Hunter"],
+	"stalker--umbral-hunter": ["Path of the Umbral Hunter"],
+};
+
+/**
+ * Structured cadence for canon-reconciled path abilities. Numeric `recharge`
+ * values were legacy display codes, not d6 recharge mechanics. Claims without
+ * an authored cadence remain explicitly manual.
+ */
+const RECONCILED_PATH_ABILITY_MECHANICS: Readonly<
+	Record<string, ReconciledPathAbility>
+> = {
+	"destroyer--apex-predator": {
+		abilityName: "Predator's Focus",
+		level: 3,
+		actionType: "Bonus action",
+		uses: { formula: "1", recharge: "short-rest" },
+		tracking: "uses",
+	},
+	"destroyer--tactician": {
+		abilityName: "Combat Scan",
+		level: 3,
+		actionType: "Bonus action",
+		resource: "Tactical die",
+		tracking: "resource",
+	},
+	"destroyer--spell-breaker": {
+		abilityName: "Mana Strike",
+		level: 3,
+		actionType: "Action",
+		tracking: "manual",
+	},
+	"destroyer--bulwark": {
+		abilityName: "Fortress Mode",
+		level: 3,
+		actionType: "Bonus action",
+		tracking: "manual",
+	},
+	"destroyer--last-stand": {
+		abilityName: "Piercing Blow",
+		level: 3,
+		actionType: "Bonus action",
+		uses: { formula: "1", recharge: "short-rest" },
+		tracking: "uses",
+	},
+	"destroyer--phantom-blade": {
+		abilityName: "Kinetic Replay",
+		level: 3,
+		actionType: "Reaction",
+		tracking: "manual",
+	},
+	"mage--detonation-specialist": {
+		abilityName: "Absolute Yield",
+		level: 2,
+		actionType: "Free",
+		tracking: "manual",
+	},
+	"mage--shield-compiler": {
+		abilityName: "Barrier Restoration",
+		level: 2,
+		actionType: "Action",
+		uses: { formula: "1", recharge: "long-rest" },
+		tracking: "uses",
+	},
+	"mage--probability-mandate": {
+		abilityName: "Mandate Override",
+		level: 2,
+		actionType: "Reaction",
+		uses: { formula: "1", recharge: "short-rest" },
+		tracking: "uses",
+	},
+	"mage--phantasmist": {
+		abilityName: "Phantasmal Terrain",
+		level: 2,
+		actionType: "Action",
+		tracking: "manual",
+	},
+	"mage--rift-caller": {
+		abilityName: "Emergency Rift",
+		level: 2,
+		actionType: "Bonus action",
+		uses: { formula: "PB", recharge: "long-rest" },
+		tracking: "uses",
+	},
+	"mage--matter-weaver": {
+		abilityName: "Molecular Override",
+		level: 2,
+		actionType: "Action",
+		uses: { formula: "1", recharge: "short-rest" },
+		tracking: "uses",
+	},
+	"contractor--glamour-weaver": {
+		abilityName: "Absolute Glow",
+		level: 1,
+		actionType: "Action",
+		tracking: "manual",
+	},
+	"contractor--infernal-conduit": {
+		abilityName: "Entropic Blast",
+		level: 1,
+		actionType: "Free",
+		uses: { formula: "1", recharge: "short-rest" },
+		tracking: "uses",
+	},
+	"contractor--void-whisperer": {
+		abilityName: "Void Scream",
+		level: 1,
+		actionType: "Action",
+		uses: { formula: "1", recharge: "short-rest" },
+		tracking: "uses",
+	},
+	"contractor--radiant-vessel": {
+		abilityName: "Radiant Discharge",
+		level: 1,
+		actionType: "Action",
+		uses: { formula: "1", recharge: "long-rest" },
+		tracking: "uses",
+	},
+	"contractor--cursed-blade": {
+		abilityName: "Shadow Manifest",
+		level: 1,
+		resource: "Pact slot",
+		tracking: "resource",
+	},
+	"contractor--deep-dweller": {
+		abilityName: "Crushing Resonance",
+		level: 1,
+		actionType: "Action",
+		uses: { formula: "1", recharge: "long-rest" },
+		tracking: "uses",
+	},
+	"holy-knight--absolute-devotion": {
+		abilityName: "Absolute Smite",
+		level: 3,
+		actionType: "Bonus action",
+		uses: { formula: "1", recharge: "short-rest" },
+		tracking: "uses",
+	},
+	"holy-knight--retribution-mandate": {
+		abilityName: "Relentless Pursuit",
+		level: 3,
+		actionType: "Bonus action",
+		uses: { formula: "1", recharge: "long-rest" },
+		tracking: "uses",
+	},
+	"holy-knight--verdant-mandate": {
+		abilityName: "Verdant Bulwark",
+		level: 3,
+		actionType: "Action",
+		uses: { formula: "1", recharge: "long-rest" },
+		tracking: "uses",
+	},
+	"holy-knight--dominance-mandate": {
+		abilityName: "Absolute Presence",
+		level: 3,
+		actionType: "Action",
+		uses: { formula: "1", recharge: "long-rest" },
+		tracking: "uses",
+	},
+	"holy-knight--atonement-mandate": {
+		abilityName: "Harmonic Shield",
+		level: 3,
+		actionType: "Bonus action",
+		uses: { formula: "1", recharge: "long-rest" },
+		tracking: "uses",
+	},
+	"holy-knight--exaltation-mandate": {
+		abilityName: "Heroic Manifestation",
+		level: 3,
+		actionType: "Action",
+		uses: { formula: "1", recharge: "short-rest" },
+		tracking: "uses",
+	},
+	"berserker--escalating-resonance": {
+		abilityName: "Runaway Resonance",
+		level: 3,
+		actionType: "Free (while in Overload)",
+		uses: { formula: "1", recharge: "long-rest" },
+		tracking: "uses",
+	},
+	"berserker--gate-beast": {
+		abilityName: "Territorial Roar",
+		level: 3,
+		actionType: "Action",
+		uses: { formula: "1", recharge: "long-rest" },
+		tracking: "uses",
+	},
+	"berserker--mana-scars": {
+		abilityName: "Scar Eruption",
+		level: 3,
+		actionType: "Action",
+		uses: { formula: "1", recharge: "long-rest" },
+		tracking: "uses",
+	},
+	"berserker--rift-storm": {
+		abilityName: "Storm Detonation",
+		level: 3,
+		actionType: "Action",
+		uses: { formula: "1", recharge: "long-rest" },
+		tracking: "uses",
+	},
+	"berserker--absolute-zealot": {
+		abilityName: "Radiant Overload",
+		level: 3,
+		actionType: "Bonus action",
+		uses: { formula: "1", recharge: "long-rest" },
+		tracking: "uses",
+	},
+	"berserker--aetheric-anomaly": {
+		abilityName: "Anomalous Detonation",
+		level: 3,
+		actionType: "Action",
+		uses: { formula: "1", recharge: "long-rest" },
+		tracking: "uses",
+	},
+	"assassin--gate-runner": {
+		abilityName: "Phase Grab",
+		level: 3,
+		actionType: "Bonus action",
+		tracking: "manual",
+	},
+	"assassin--terminus": {
+		abilityName: "Phase Termination",
+		level: 3,
+		actionType: "Free",
+		uses: { formula: "1", recharge: "short-rest" },
+		tracking: "uses",
+	},
+	"assassin--weave-infiltrator": {
+		abilityName: "Shadow Casting",
+		level: 3,
+		actionType: "Action",
+		uses: { formula: "1", recharge: "short-rest" },
+		tracking: "uses",
+	},
+	"assassin--shadow-herald": {
+		abilityName: "Coordinated Exploit",
+		level: 3,
+		actionType: "Bonus action",
+		uses: { formula: "1", recharge: "short-rest" },
+		tracking: "uses",
+	},
+	"assassin--blade-dancer": {
+		abilityName: "Aetheric Riposte",
+		level: 3,
+		actionType: "Reaction",
+		uses: { formula: "1", recharge: "short-rest" },
+		tracking: "uses",
+	},
+	"assassin--vanguard-outrider": {
+		abilityName: "Phase Reconnaissance",
+		level: 3,
+		actionType: "Action",
+		uses: { formula: "1", recharge: "short-rest" },
+		tracking: "uses",
+	},
+	"striker--kinetic-core": {
+		abilityName: "Essence Lockdown",
+		level: 3,
+		resource: "Impulse points",
+		tracking: "resource",
+	},
+	"striker--phantom-step": {
+		abilityName: "Phantom Barrage",
+		level: 3,
+		resource: "Impulse points",
+		tracking: "resource",
+	},
+	"striker--aetheric-channeler": {
+		abilityName: "Omni-Burst",
+		level: 3,
+		resource: "Impulse points",
+		tracking: "resource",
+	},
+	"striker--entropic-flow": {
+		abilityName: "Entropic Counter",
+		level: 3,
+		actionType: "Reaction",
+		uses: { formula: "PB", recharge: "short-rest" },
+		tracking: "uses",
+	},
+	"striker--blade-conductor": {
+		abilityName: "Blade Tempest",
+		level: 3,
+		resource: "Impulse points",
+		tracking: "resource",
+	},
+	"striker--harmonic-surgeon": {
+		abilityName: "Aetheric Heal",
+		level: 3,
+		resource: "Impulse points",
+		tracking: "resource",
+	},
+	"esper--draconic-lineage": {
+		abilityName: "Dragon Breath",
+		level: 1,
+		resource: "3 Flux",
+		tracking: "resource",
+	},
+	"esper--aetheric-cascade": {
+		abilityName: "Cascade Bolt",
+		level: 1,
+		resource: "1st-level spell slot",
+		tracking: "resource",
+	},
+	"esper--shadow-magic": {
+		abilityName: "Void Lance",
+		level: 1,
+		resource: "2 Flux",
+		tracking: "resource",
+	},
+	"esper--storm-sorcery": {
+		abilityName: "Thunder Rift",
+		level: 1,
+		resource: "3rd-level spell slot",
+		tracking: "resource",
+	},
+	"esper--absolute-spark": {
+		abilityName: "Absolute Healing Surge",
+		level: 1,
+		resource: "2 Flux",
+		tracking: "resource",
+	},
+	"esper--aberrant-mind": {
+		abilityName: "Psionic Lance",
+		level: 1,
+		resource: "2nd-level spell slot or 2 Flux",
+		tracking: "resource",
+	},
+	"summoner--biome-architect": {
+		abilityName: "Biome Surge",
+		level: 2,
+		actionType: "Action",
+		uses: { formula: "1", recharge: "long-rest" },
+		tracking: "uses",
+	},
+	"summoner--apex-shifter": {
+		abilityName: "Apex Manifestation",
+		level: 2,
+		actionType: "Bonus action",
+		uses: { formula: "1", recharge: "long-rest" },
+		tracking: "uses",
+	},
+	"summoner--dream-weaver": {
+		abilityName: "Lush Blessing",
+		level: 2,
+		actionType: "Action",
+		uses: { formula: "1", recharge: "long-rest" },
+		tracking: "uses",
+	},
+	"summoner--pack-commander": {
+		abilityName: "Absolute Alpha",
+		level: 2,
+		actionType: "Bonus action",
+		uses: { formula: "1", recharge: "short-rest" },
+		tracking: "uses",
+	},
+	"summoner--symbiotic-host": {
+		abilityName: "Spore Eruption",
+		level: 2,
+		actionType: "Action",
+		uses: { formula: "1", recharge: "long-rest" },
+		tracking: "uses",
+	},
+	"summoner--cosmic-conduit": {
+		abilityName: "Starfall Manifestation",
+		level: 2,
+		actionType: "Action",
+		uses: { formula: "1", recharge: "long-rest" },
+		tracking: "uses",
+	},
+	"herald--restoration-mandate": {
+		abilityName: "Mass Restoration",
+		level: 1,
+		actionType: "Action",
+		uses: { formula: "1", recharge: "long-rest" },
+		tracking: "uses",
+	},
+	"herald--radiance-mandate": {
+		abilityName: "Solar Burst",
+		level: 1,
+		actionType: "Action",
+		uses: { formula: "1", recharge: "short-rest" },
+		tracking: "uses",
+	},
+	"herald--combat-mandate": {
+		abilityName: "Refined Weapon",
+		level: 1,
+		actionType: "Bonus action",
+		uses: { formula: "1", recharge: "long-rest" },
+		tracking: "uses",
+	},
+	"herald--knowledge-mandate": {
+		abilityName: "Aetheric Query",
+		level: 1,
+		actionType: "Action (1 minute)",
+		uses: { formula: "1", recharge: "long-rest" },
+		tracking: "uses",
+	},
+	"herald--storm-mandate": {
+		abilityName: "Call Lightning Manifestation",
+		level: 1,
+		actionType: "Action",
+		uses: { formula: "1", recharge: "short-rest" },
+		tracking: "uses",
+	},
+	"herald--triage-mandate": {
+		abilityName: "Absolute Safeguard",
+		level: 1,
+		actionType: "Action",
+		uses: { formula: "1", recharge: "long-rest" },
+		tracking: "uses",
+	},
+	"idol--lore-resonance": {
+		abilityName: "Words of Absolute Truth",
+		level: 3,
+		actionType: "Action",
+		uses: { formula: "1", recharge: "short-rest" },
+		tracking: "uses",
+	},
+	"idol--dance-resonance": {
+		abilityName: "Showstopper Finale",
+		level: 3,
+		actionType: "Action",
+		uses: { formula: "1", recharge: "short-rest" },
+		tracking: "uses",
+	},
+	"idol--hypnotic-resonance": {
+		abilityName: "Absolute Charm",
+		level: 3,
+		actionType: "Action",
+		uses: { formula: "1", recharge: "long-rest" },
+		tracking: "uses",
+	},
+	"idol--blade-resonance": {
+		abilityName: "Dance of a Thousand Blades",
+		level: 3,
+		actionType: "Action",
+		uses: { formula: "1", recharge: "short-rest" },
+		tracking: "uses",
+	},
+	"idol--shadow-resonance": {
+		abilityName: "Psychic Overload",
+		level: 3,
+		actionType: "Action",
+		uses: { formula: "1", recharge: "long-rest" },
+		tracking: "uses",
+	},
+	"idol--genesis-resonance": {
+		abilityName: "Absolute Magnum Opus",
+		level: 3,
+		actionType: "Action",
+		uses: { formula: "1", recharge: "long-rest" },
+		tracking: "uses",
+	},
+	"revenant--void-lord": {
+		abilityName: "Devour the Remnant",
+		level: 2,
+		actionType: "Action",
+		uses: { formula: "1", recharge: "long-rest" },
+		tracking: "uses",
+	},
+	"revenant--entropy-drinker": {
+		abilityName: "Hemorrhage",
+		level: 2,
+		actionType: "Action",
+		uses: { formula: "1", recharge: "long-rest" },
+		tracking: "uses",
+	},
+	"revenant--wither-guard": {
+		abilityName: "Entropy Carapace",
+		level: 2,
+		actionType: "Bonus action",
+		uses: { formula: "1", recharge: "long-rest" },
+		tracking: "uses",
+	},
+	"revenant--entropy-blade": {
+		abilityName: "Reaping Decree",
+		level: 2,
+		actionType: "Action",
+		uses: { formula: "1", recharge: "long-rest" },
+		tracking: "uses",
+	},
+	"revenant--plague-weaver": {
+		abilityName: "Maw of the Void",
+		level: 2,
+		actionType: "Action",
+		uses: { formula: "1", recharge: "long-rest" },
+		tracking: "uses",
+	},
+	"revenant--threshold-walker": {
+		abilityName: "Threshold Pulse",
+		level: 2,
+		actionType: "Action",
+		uses: { formula: "1", recharge: "long-rest" },
+		tracking: "uses",
+	},
+	"stalker--apex-hunter": {
+		abilityName: "Prey Manifest",
+		level: 3,
+		actionType: "Bonus action",
+		uses: { formula: "1", recharge: "short-rest" },
+		tracking: "uses",
+	},
+	"stalker--pack-leader": {
+		abilityName: "Coordinated Strike",
+		level: 3,
+		actionType: "Action",
+		uses: { formula: "1", recharge: "short-rest" },
+		tracking: "uses",
+	},
+	"stalker--umbral-hunter": {
+		abilityName: "Shadow Strike",
+		level: 3,
+		actionType: "Bonus action",
+		uses: { formula: "1", recharge: "short-rest" },
+		tracking: "uses",
+	},
+	"stalker--rift-strider": {
+		abilityName: "Planar Collapse",
+		level: 3,
+		actionType: "Action",
+		uses: { formula: "1", recharge: "long-rest" },
+		tracking: "uses",
+	},
+	"stalker--apex-slayer": {
+		abilityName: "Exploit Vulnerability",
+		level: 3,
+		actionType: "Free",
+		uses: { formula: "1", recharge: "long-rest" },
+		tracking: "uses",
+	},
+	"stalker--hive-synchronist": {
+		abilityName: "Hive Eruption",
+		level: 3,
+		actionType: "Action",
+		uses: { formula: "1", recharge: "short-rest" },
+		tracking: "uses",
+	},
+	"technomancer--aether-chemist-design": {
+		abilityName: "Volatile Burst",
+		level: 3,
+		actionType: "Action",
+		uses: { formula: "1", recharge: "long-rest" },
+		tracking: "uses",
+	},
+	"technomancer--aether-vessel-design": {
+		abilityName: "Pulse Overdrive",
+		level: 3,
+		actionType: "Bonus action",
+		uses: { formula: "1", recharge: "long-rest" },
+		tracking: "uses",
+	},
+	"technomancer--resonance-siege-design": {
+		abilityName: "Absolute Salvo",
+		level: 3,
+		actionType: "Bonus action",
+		uses: { formula: "1", recharge: "short-rest" },
+		tracking: "uses",
+	},
+	"technomancer--synchronist-binary-design": {
+		abilityName: "Absolute Overdrive",
+		level: 3,
+		actionType: "Bonus action",
+		uses: { formula: "1", recharge: "long-rest" },
+		tracking: "uses",
+	},
+	"technomancer--swarm-conduit-design": {
+		abilityName: "Absolute Convergence",
+		level: 3,
+		actionType: "Action",
+		uses: { formula: "1", recharge: "short-rest" },
+		tracking: "uses",
+	},
+	"technomancer--aether-breacher-design": {
+		abilityName: "Absolute Lockdown",
+		level: 3,
+		actionType: "Action",
+		uses: { formula: "1", recharge: "long-rest" },
+		tracking: "uses",
+	},
+};
+
+type ReconciledPathFeature = Pick<
+	PathFeature,
+	"actionType" | "resource" | "tracking" | "uses"
+> & { featureName: string };
+
+/** Source-explicit activation, cadence, and resource metadata for reconciled paths. */
+const RECONCILED_PATH_FEATURE_MECHANICS: Readonly<
+	Record<string, readonly ReconciledPathFeature[]>
+> = {
+	"esper--draconic-lineage": [
+		{
+			featureName: "Elemental Affinity",
+			resource: "1 Flux",
+			tracking: "resource",
+		},
+		{ featureName: "Wings of the Absolute", actionType: "Bonus action" },
+		{
+			featureName: "regent-tier Mandate",
+			actionType: "Action",
+			resource: "5 Flux",
+			tracking: "resource",
+		},
+	],
+	"esper--aetheric-cascade": [
+		{
+			featureName: "Probability Realignment",
+			actionType: "Reaction",
+			resource: "2 Flux",
+			tracking: "resource",
+		},
+	],
+	"esper--shadow-magic": [
+		{
+			featureName: "Void Anchor",
+			uses: { formula: "1", recharge: "long-rest" },
+			tracking: "uses",
+		},
+		{
+			featureName: "Void Hound",
+			actionType: "Bonus action",
+			resource: "3 Flux",
+			tracking: "resource",
+		},
+		{ featureName: "Void Step", actionType: "Bonus action" },
+		{
+			featureName: "Void Form",
+			actionType: "Bonus action",
+			resource: "6 Flux",
+			tracking: "resource",
+		},
+	],
+	"esper--storm-sorcery": [
+		{ featureName: "Storm Discharge", actionType: "Bonus action" },
+		{ featureName: "Weather Control", actionType: "Bonus action" },
+		{ featureName: "Storm Retaliation", actionType: "Reaction" },
+		{ featureName: "Eye of the Storm", actionType: "Action" },
+	],
+	"esper--absolute-spark": [
+		{
+			featureName: "Absolute Favor",
+			uses: { formula: "1", recharge: "short-rest" },
+			tracking: "uses",
+		},
+		{
+			featureName: "Healing Amplification",
+			resource: "1 Flux",
+			tracking: "resource",
+		},
+		{ featureName: "Aetheric Wings", actionType: "Bonus action" },
+		{
+			featureName: "Emergency Restoration",
+			actionType: "Bonus action",
+			uses: { formula: "1", recharge: "long-rest" },
+			tracking: "uses",
+		},
+	],
+	"esper--aberrant-mind": [
+		{ featureName: "Telepathic Link", actionType: "Bonus action" },
+		{
+			featureName: "Psionic Casting",
+			resource: "Flux equal to spell level",
+			tracking: "resource",
+		},
+		{
+			featureName: "Psionic Metamorphosis",
+			actionType: "Bonus action",
+			resource: "1+ Flux",
+			tracking: "resource",
+		},
+		{
+			featureName: "Psionic Implosion",
+			actionType: "Action",
+			tracking: "manual",
+		},
+	],
+	"summoner--biome-architect": [
+		{
+			featureName: "Biome Absorption",
+			uses: { formula: "1", recharge: "long-rest" },
+			tracking: "uses",
+		},
+	],
+	"summoner--apex-shifter": [
+		{ featureName: "Absolute Entity Shift", actionType: "Bonus action" },
+	],
+	"summoner--dream-weaver": [
+		{ featureName: "Balm of the Absolute", actionType: "Bonus action" },
+		{
+			featureName: "Phantasmal Path",
+			actionType: "Bonus action",
+			uses: { formula: "SENSE mod", recharge: "long-rest" },
+			tracking: "uses",
+		},
+	],
+	"summoner--pack-commander": [
+		{ featureName: "Aetheric Totem", actionType: "Bonus action" },
+		{
+			featureName: "Faithful Call",
+			uses: { formula: "1", recharge: "long-rest" },
+			tracking: "uses",
+		},
+	],
+	"summoner--symbiotic-host": [
+		{
+			featureName: "Absolute Spore Cloud",
+			actionType: "Reaction",
+			tracking: "manual",
+		},
+		{
+			featureName: "Host Fusion",
+			resource: "Entity Shift use",
+			tracking: "resource",
+		},
+		{
+			featureName: "Colony Expansion",
+			actionType: "Reaction",
+			uses: { formula: "SENSE mod", recharge: "long-rest" },
+			tracking: "uses",
+		},
+		{
+			featureName: "Projected Spore Zone",
+			actionType: "Bonus action",
+		},
+	],
+	"summoner--cosmic-conduit": [
+		{
+			featureName: "Absolute Cosmic Map",
+			uses: { formula: "PB", recharge: "long-rest" },
+			tracking: "uses",
+		},
+		{
+			featureName: "Aetheric Starlight Form",
+			resource: "Entity Shift use",
+			tracking: "resource",
+		},
+		{
+			featureName: "Cosmic Prophecy",
+			actionType: "Reaction",
+			uses: { formula: "PB", recharge: "long-rest" },
+			tracking: "uses",
+		},
+	],
+	"herald--restoration-mandate": [
+		{
+			featureName: "Absolute Resonance: Preserve Life",
+			actionType: "Action",
+		},
+	],
+	"herald--radiance-mandate": [
+		{
+			featureName: "Warding Spark",
+			actionType: "Reaction",
+			uses: { formula: "SENSE mod", recharge: "long-rest" },
+			tracking: "uses",
+		},
+		{
+			featureName: "Absolute Resonance: Radiance",
+			actionType: "Action",
+		},
+		{ featureName: "Corona of the Absolute", actionType: "Action" },
+	],
+	"herald--combat-mandate": [
+		{
+			featureName: "Combat Herald",
+			actionType: "Bonus action",
+			uses: { formula: "SENSE mod", recharge: "long-rest" },
+			tracking: "uses",
+		},
+		{
+			featureName: "Absolute Resonance: Allied Blessing",
+			actionType: "Reaction",
+		},
+	],
+	"herald--knowledge-mandate": [
+		{
+			featureName: "Absolute Resonance: Ancient Insight",
+			actionType: "Action",
+		},
+		{
+			featureName: "Absolute Resonance: Aetheric Reader",
+			actionType: "Action",
+		},
+	],
+	"herald--storm-mandate": [
+		{
+			featureName: "Wrath of the Absolute",
+			actionType: "Reaction",
+			uses: { formula: "SENSE mod", recharge: "long-rest" },
+			tracking: "uses",
+		},
+	],
+	"herald--triage-mandate": [
+		{
+			featureName: "Aetheric Scanner",
+			uses: { formula: "SENSE mod", recharge: "long-rest" },
+			tracking: "uses",
+		},
+		{
+			featureName: "Absolute Resonance: Essential Target",
+			actionType: "Action",
+		},
+		{
+			featureName: "Realignment Intervention",
+			actionType: "Reaction",
+			uses: { formula: "SENSE mod", recharge: "long-rest" },
+			tracking: "uses",
+		},
+	],
+	"idol--lore-resonance": [
+		{
+			featureName: "Cutting Remarks",
+			actionType: "Reaction",
+			resource: "1 Hype die",
+			tracking: "resource",
+		},
+		{
+			featureName: "Peerless Insight",
+			resource: "1 Hype die",
+			tracking: "resource",
+		},
+	],
+	"idol--dance-resonance": [
+		{
+			featureName: "Dance Combat",
+			resource: "1 Hype die",
+			tracking: "resource",
+		},
+	],
+	"idol--hypnotic-resonance": [
+		{
+			featureName: "Mantle of Awe",
+			actionType: "Bonus action",
+			resource: "1 Hype die",
+			tracking: "resource",
+		},
+		{
+			featureName: "Mantle of the Absolute",
+			actionType: "Bonus action",
+			uses: { formula: "1", recharge: "long-rest" },
+			tracking: "uses",
+		},
+		{
+			featureName: "Unbreakable Presence",
+			actionType: "Bonus action",
+			uses: { formula: "1", recharge: "short-rest" },
+			tracking: "uses",
+		},
+	],
+	"idol--blade-resonance": [
+		{
+			featureName: "Blade Flourish",
+			resource: "1 Hype die",
+			tracking: "resource",
+		},
+	],
+	"idol--shadow-resonance": [
+		{
+			featureName: "Psychic Blades",
+			resource: "1 Hype die",
+			tracking: "resource",
+		},
+		{
+			featureName: "Words of Terror",
+			uses: { formula: "1", recharge: "short-rest" },
+			tracking: "uses",
+		},
+		{
+			featureName: "Mantle of Whispers",
+			actionType: "Reaction / action",
+			uses: { formula: "1", recharge: "short-rest" },
+			tracking: "uses",
+		},
+		{
+			featureName: "Absolute Shadow Lore",
+			actionType: "Action",
+			uses: { formula: "1", recharge: "long-rest" },
+			tracking: "uses",
+		},
+	],
+	"idol--genesis-resonance": [
+		{
+			featureName: "Resonance of Creation",
+			actionType: "Action",
+			uses: { formula: "1", recharge: "long-rest" },
+			tracking: "uses",
+		},
+		{
+			featureName: "Animating Rite",
+			actionType: "Action",
+			uses: { formula: "1", recharge: "long-rest" },
+			tracking: "uses",
+		},
+	],
+	"revenant--void-lord": [
+		{
+			featureName: "Execute the Withering",
+			actionType: "Bonus action",
+			resource: "2 Remnants",
+			tracking: "resource",
+		},
+	],
+	"revenant--wither-guard": [
+		{ featureName: "Decree of the Hollow Throne", actionType: "Bonus action" },
+		{ featureName: "Throne Ward", actionType: "Reaction" },
+	],
+	"revenant--entropy-blade": [
+		{
+			featureName: "Command the Risen",
+			actionType: "Action",
+			resource: "3 Remnants",
+			tracking: "resource",
+		},
+		{ featureName: "Shepherd's Bond", actionType: "Reaction" },
+		{
+			featureName: "Corpse Harvest",
+			actionType: "Bonus action",
+			resource: "1 Remnant",
+			tracking: "resource",
+		},
+	],
+	"revenant--plague-weaver": [
+		{ featureName: "Shroud of the Veil", actionType: "Bonus action" },
+		{
+			featureName: "Paralytic Dread",
+			actionType: "Bonus action",
+			resource: "1 Remnant",
+			tracking: "resource",
+		},
+	],
+	"revenant--threshold-walker": [
+		{
+			featureName: "Threshold Pull",
+			actionType: "Reaction",
+			resource: "1 Remnant",
+			tracking: "resource",
+		},
+		{
+			featureName: "Arbiter's Decree",
+			actionType: "Action",
+			uses: { formula: "1", recharge: "long-rest" },
+			tracking: "uses",
+		},
+	],
+	"stalker--umbral-hunter": [
+		{ featureName: "Umbral Reflex", actionType: "Reaction" },
+	],
+	"stalker--rift-strider": [
+		{ featureName: "Aetheric Striker", actionType: "Bonus action" },
+		{
+			featureName: "Ethereal Step",
+			actionType: "Bonus action",
+			uses: { formula: "1", recharge: "short-rest" },
+			tracking: "uses",
+		},
+		{ featureName: "Absolute Defense (Rift)", actionType: "Reaction" },
+	],
+	"stalker--apex-slayer": [
+		{
+			featureName: "Absolute Sense",
+			actionType: "Action",
+			uses: { formula: "SENSE mod", recharge: "long-rest" },
+			tracking: "uses",
+		},
+		{ featureName: "Slayer's Focus", actionType: "Bonus action" },
+		{
+			featureName: "Entity's Nemesis",
+			actionType: "Reaction",
+			uses: { formula: "1", recharge: "short-rest" },
+			tracking: "uses",
+		},
+		{ featureName: "Slayer's Counter", actionType: "Reaction" },
+	],
+	"stalker--hive-synchronist": [
+		{ featureName: "Writhing Tide", actionType: "Bonus action" },
+		{
+			featureName: "Hive Dispersal",
+			actionType: "Reaction",
+			uses: { formula: "1", recharge: "long-rest" },
+			tracking: "uses",
+		},
+	],
+	"technomancer--resonance-siege-design": [
+		{ featureName: "Aetheric Resonator", actionType: "Action" },
+	],
+	"technomancer--synchronist-binary-design": [
+		{
+			featureName: "Aetheric Feedback",
+			uses: { formula: "1", recharge: "short-rest" },
+			tracking: "uses",
+		},
+	],
+	"technomancer--aether-breacher-design": [
+		{ featureName: "Absolute Suppression", actionType: "Action" },
+		{
+			featureName: "Mandate Realignment",
+			actionType: "Reaction",
+			uses: { formula: "1", recharge: "short-rest" },
+			tracking: "uses",
+		},
+		{
+			featureName: "Resonance Collapse",
+			uses: { formula: "1", recharge: "long-rest" },
+			tracking: "uses",
+		},
+	],
+};
+
+export const paths: Path[] = pathCatalog.map((path) => {
+	const aliases = RECONCILED_PATH_ALIASES[path.id];
+	const abilityMechanics = RECONCILED_PATH_ABILITY_MECHANICS[path.id];
+	const featureMechanics = RECONCILED_PATH_FEATURE_MECHANICS[path.id];
+	if (!aliases && !abilityMechanics && !featureMechanics) return path;
+
+	return {
+		...path,
+		...(aliases ? { aliases: [...aliases] } : {}),
+		features: path.features.map((feature) => {
+			const mechanics = featureMechanics?.find(
+				(candidate) => candidate.featureName === feature.name,
+			);
+			if (!mechanics) return feature;
+			return {
+				...feature,
+				actionType: mechanics.actionType,
+				uses: mechanics.uses,
+				resource: mechanics.resource,
+				tracking: mechanics.tracking,
+			};
+		}),
+		abilities: path.abilities.map((ability) =>
+			abilityMechanics && ability.name === abilityMechanics.abilityName
+				? {
+						...ability,
+						recharge: undefined,
+						level: abilityMechanics.level,
+						actionType: abilityMechanics.actionType,
+						uses: abilityMechanics.uses,
+						resource: abilityMechanics.resource,
+						tracking: abilityMechanics.tracking,
+					}
+				: ability,
+		),
+	};
+});

@@ -129,7 +129,12 @@ export const useSpellSlots = (
 	// zero signature churn. When a casting Regent is unlocked its caster level
 	// merges with the Job's (PHB p.164). React Query dedupes by characterId.
 	const { unlocks: regentUnlocks = [] } = useRegentUnlocks(characterId);
-	const regentIds = regentUnlocks.map((u) => u.regent_id);
+	const regentIds = regentUnlocks
+		.map((unlock) => unlock.regent_id)
+		.filter(
+			(regentId): regentId is string =>
+				typeof regentId === "string" && regentId.length > 0,
+		);
 
 	return useQuery({
 		queryKey: ["spell-slots", characterId, [...regentIds].sort().join(",")],

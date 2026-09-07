@@ -4,16 +4,12 @@ import { logger } from "@/lib/logger";
 
 // Core canonical source books that are always accessible to all users —
 // they are part of the base system, not gated behind entitlements.
-const CANONICAL_SOURCE_BOOKS = new Set([
-	"Rift Ascendant Canon",
-	"rift ascendant canon",
+const CANONICAL_SOURCE_BOOK_KEYS = new Set([
 	"rift-ascendant-canon",
-	"Ascendant Core Rulebook",
-	"ascendant core rulebook",
 	"ascendant-core-rulebook",
 ]);
 
-type SourcebookAccessContext = {
+export type SourcebookAccessContext = {
 	campaignId?: string | null;
 };
 
@@ -46,6 +42,14 @@ const normalizeSourcebookKey = (value: string): string =>
 		.toLowerCase()
 		.replace(/[^a-z0-9]+/g, "-")
 		.replace(/^-+|-+$/g, "");
+
+export const isCanonicalSourcebook = (
+	sourceBook: string | null | undefined,
+): boolean =>
+	Boolean(
+		sourceBook &&
+			CANONICAL_SOURCE_BOOK_KEYS.has(normalizeSourcebookKey(sourceBook)),
+	);
 
 const isRpcUnavailableError = (message?: string): boolean => {
 	const normalized = (message || "").toLowerCase();
@@ -99,7 +103,7 @@ const fetchAccessibleSourcebooks = async (
 ): Promise<RpcResponse> => {
 	const { data, error } = await supabase.rpc("get_accessible_sourcebooks", {
 		p_campaign_id: campaignId ?? undefined,
-		puser_id: userId,
+		p_user_id: userId,
 	});
 	return { data, error };
 };
@@ -139,7 +143,7 @@ export function filterRowsByAccessibleSourcebooks<T>(
 		}
 		// Always allow canonical RA source books — they are base-system content,
 		// not gated behind purchased entitlements.
-		if (CANONICAL_SOURCE_BOOKS.has(sourceBook.trim())) {
+		if (isCanonicalSourcebook(sourceBook)) {
 			return true;
 		}
 
@@ -213,6 +217,9 @@ export async function isSourcebookAccessible(
 	context: SourcebookAccessContext = {},
 ): Promise<boolean> {
 	if (!sourceBook || sourceBook.trim().length === 0) {
+		return true;
+	}
+	if (isCanonicalSourcebook(sourceBook)) {
 		return true;
 	}
 

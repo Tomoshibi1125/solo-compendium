@@ -5,27 +5,66 @@ import { DetailMetaFooter } from "@/components/compendium/DetailMetaFooter";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { listCanonicalEntries } from "@/lib/canonicalCompendium";
+import { formatActionType, formatRecharge } from "@/lib/labels";
 import { formatRegentVernacular } from "@/lib/vernacular";
-
 import type { CompendiumPath } from "@/types/compendium";
 
 interface PathData extends CompendiumPath {}
 
-interface PathFeature {
+interface PathMechanics {
+	action_type?: string | null;
+	cost?: string | null;
+	recharge?: string | null;
+	resource?: string | null;
+	uses_formula?: string | null;
+}
+
+interface PathFeature extends PathMechanics {
 	id: string;
 	name: string;
 	display_name?: string | null;
 	description: string;
 	level: number;
-	action_type?: string | null;
-	recharge?: string | null;
-	uses_formula?: string | null;
 	prerequisites?: string | null;
 }
+
+const formatRestRecharge = (recharge: "short-rest" | "long-rest") =>
+	recharge === "long-rest" ? "Long Rest" : "Short Rest";
+
+const sameMechanic = (
+	left: string | null | undefined,
+	right: string | null | undefined,
+) =>
+	Boolean(
+		left && right && left.trim().toLowerCase() === right.trim().toLowerCase(),
+	);
+
+const MechanicDetails = ({ mechanics }: { mechanics: PathMechanics }) => {
+	const {
+		action_type: actionType,
+		cost,
+		recharge,
+		resource,
+		uses_formula: usesFormula,
+	} = mechanics;
+	if (!actionType && !cost && !resource && !usesFormula && !recharge)
+		return null;
+
+	return (
+		<div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-muted-foreground mt-2">
+			{actionType && <span>Action: {formatActionType(actionType)}</span>}
+			{cost && <span>Cost: {formatRegentVernacular(cost)}</span>}
+			{resource && <span>Resource: {formatRegentVernacular(resource)}</span>}
+			{usesFormula && <span>Uses: {formatRegentVernacular(usesFormula)}</span>}
+			{recharge && <span>Cadence: {formatRecharge(recharge)}</span>}
+		</div>
+	);
+};
 
 export const PathDetail = ({ data }: { data: PathData }) => {
 	const displayName = formatRegentVernacular(data.display_name || data.name);
 	const pathLevel = data.level;
+	const pathTier = data.path_tier ?? (data as { tier?: number }).tier;
 	const [features, setFeatures] = useState<PathFeature[]>([]);
 	const [jobName, setJobName] = useState<string | null>(null);
 
@@ -33,7 +72,6 @@ export const PathDetail = ({ data }: { data: PathData }) => {
 		let isCancelled = false;
 
 		const loadPathData = async () => {
-			// Features come directly from the canonical static path.
 			const staticFeatures: PathFeature[] = (data.features || [])
 				.slice()
 				.sort((a, b) => (a.level ?? 0) - (b.level ?? 0))
@@ -42,6 +80,16 @@ export const PathDetail = ({ data }: { data: PathData }) => {
 					name: feature.name,
 					description: feature.description,
 					level: feature.level,
+					action_type: feature.actionType ?? null,
+					recharge: feature.uses
+						? formatRestRecharge(feature.uses.recharge)
+						: null,
+					resource: feature.resource ?? null,
+					uses_formula:
+						feature.uses?.formula ??
+						(feature.tracking === "manual"
+							? "Manual tracking (source cadence unspecified)"
+							: null),
 				}));
 
 			if (!isCancelled) setFeatures(staticFeatures);
@@ -51,7 +99,7 @@ export const PathDetail = ({ data }: { data: PathData }) => {
 				const canonicalJobs = await listCanonicalEntries("jobs");
 				const jobIdKey = jobId.trim().toLowerCase();
 				const match = canonicalJobs.find(
-					(j) => j.id.trim().toLowerCase() === jobIdKey,
+					(job) => job.id.trim().toLowerCase() === jobIdKey,
 				);
 				if (!isCancelled) {
 					setJobName(match?.display_name || match?.name || null);
@@ -66,20 +114,44 @@ export const PathDetail = ({ data }: { data: PathData }) => {
 		};
 	}, [data.id, data.job_id, data.features, jobName]);
 
-	const coreFeatures = features;
-
 	const abilityFeatures = useMemo(
 		() =>
-			(data.abilities || []).map((ability, idx) => ({
-				id: `${data.id}-ability-${idx}`,
-				name: ability.name,
-				display_name: ability.name,
-				description: ability.description,
-				recharge: ability.recharge ? `Recharge ${ability.recharge}-6` : null,
-				uses_formula: ability.cost,
-				action_type: null,
-			})),
-		[data.abilities, data.id],
+			(data.abilities || []).map((ability, idx): PathFeature => {
+				const description = ability.description.toLowerCase();
+				const recharge = ability.uses
+					? formatRestRecharge(ability.uses.recharge)
+					: description.includes("long rest")
+						? "Long Rest"
+						: description.includes("short rest")
+							? "Short Rest"
+							: null;
+				const actionType = ability.actionType ?? null;
+				const resource = ability.resource ?? null;
+				const authoredCost = ability.cost?.trim() || null;
+				const cost =
+					authoredCost &&
+					!sameMechanic(authoredCost, actionType) &&
+					!sameMechanic(authoredCost, resource)
+						? authoredCost
+						: null;
+				return {
+					id: `${data.id}-ability-${idx}`,
+					name: ability.name,
+					display_name: ability.name,
+					description: ability.description,
+					level: ability.level ?? pathLevel,
+					action_type: actionType,
+					cost,
+					recharge,
+					resource,
+					uses_formula:
+						ability.uses?.formula ??
+						(ability.tracking === "manual"
+							? "Manual tracking (source cadence unspecified)"
+							: null),
+				};
+			}),
+		[data.abilities, data.id, pathLevel],
 	);
 
 	const getTierIcon = (tier?: number) => {
@@ -110,11 +182,10 @@ export const PathDetail = ({ data }: { data: PathData }) => {
 
 	return (
 		<div className="space-y-6">
-			{/* Header */}
 			<div className="flex items-start justify-between">
 				<div>
 					<h2 className="text-2xl font-bold font-heading flex items-center gap-2">
-						{getTierIcon(data.level)}
+						{getTierIcon(pathTier)}
 						{displayName}
 					</h2>
 					{jobName && (
@@ -127,13 +198,13 @@ export const PathDetail = ({ data }: { data: PathData }) => {
 					)}
 				</div>
 				<div className="flex flex-wrap items-center gap-2">
-					{data.level && (
-						<Badge className={getTierColor(data.level)}>
-							Tier {data.level}
-						</Badge>
+					{pathLevel > 0 && (
+						<Badge variant="outline">Unlock Level {pathLevel}</Badge>
 					)}
-					{data.path_tier !== undefined && data.path_tier !== data.level && (
-						<Badge variant="outline">Path Tier {data.path_tier}</Badge>
+					{pathTier !== undefined && (
+						<Badge className={getTierColor(pathTier)}>
+							Path Tier {pathTier}
+						</Badge>
 					)}
 					{data.pathType && (
 						<Badge variant="secondary">
@@ -145,7 +216,6 @@ export const PathDetail = ({ data }: { data: PathData }) => {
 
 			<Separator />
 
-			{/* Description */}
 			<div>
 				<h3 className="text-lg font-semibold mb-3 font-heading">Overview</h3>
 				{data.flavor && (
@@ -175,39 +245,68 @@ export const PathDetail = ({ data }: { data: PathData }) => {
 			</div>
 
 			{/* Requirements */}
-			{(pathLevel || data.prerequisites) && (
+			{(pathLevel || data.prerequisites || data.requirements) && (
 				<div>
 					<h3 className="text-lg font-semibold mb-3 font-heading">
 						Requirements
 					</h3>
-					<div className="space-y-2">
-						{pathLevel && (
+					<div className="space-y-2 text-sm">
+						{pathLevel > 0 && (
 							<div className="flex items-center gap-2">
 								<Swords className="w-4 h-4" />
 								<span>Level {pathLevel}</span>
 							</div>
 						)}
-						{data.prerequisites && (
-							<div className="text-sm text-muted-foreground">
-								Prerequisites: {formatRegentVernacular(data.prerequisites)}
-							</div>
-						)}
+						{data.requirements?.skills &&
+							data.requirements.skills.length > 0 && (
+								<div>
+									<span className="text-muted-foreground">Skills: </span>
+									{data.requirements.skills
+										.map(formatRegentVernacular)
+										.join(", ")}
+								</div>
+							)}
+						{data.requirements?.abilities &&
+							data.requirements.abilities.length > 0 && (
+								<div>
+									<span className="text-muted-foreground">Abilities: </span>
+									{data.requirements.abilities
+										.map(formatRegentVernacular)
+										.join(", ")}
+								</div>
+							)}
+						{data.requirements?.prerequisites &&
+							data.requirements.prerequisites.length > 0 && (
+								<div>
+									<span className="text-muted-foreground">Other: </span>
+									{data.requirements.prerequisites
+										.map(formatRegentVernacular)
+										.join(", ")}
+								</div>
+							)}
+						{data.prerequisites &&
+							!data.requirements?.skills?.length &&
+							!data.requirements?.abilities?.length &&
+							!data.requirements?.prerequisites?.length && (
+								<div className="text-muted-foreground">
+									Prerequisites: {formatRegentVernacular(data.prerequisites)}
+								</div>
+							)}
 					</div>
 				</div>
 			)}
 
-			{/* Features */}
 			<div>
 				<h3 className="text-lg font-semibold mb-3 font-heading">
 					Path Features
 				</h3>
-				{coreFeatures.length === 0 ? (
+				{features.length === 0 ? (
 					<div className="text-sm text-muted-foreground">
 						No path features available yet.
 					</div>
 				) : (
 					<div className="space-y-4">
-						{coreFeatures.map((feature) => (
+						{features.map((feature) => (
 							<div key={feature.id} className="p-4 bg-card border rounded-lg">
 								<div className="flex items-center gap-2 mb-2">
 									<span className="text-sm font-medium text-primary">
@@ -222,34 +321,13 @@ export const PathDetail = ({ data }: { data: PathData }) => {
 								<p className="text-sm text-muted-foreground">
 									<AutoLinkText text={feature.description} />
 								</p>
-								{(feature.action_type ||
-									feature.recharge ||
-									feature.uses_formula) && (
-									<div className="flex gap-4 text-xs text-muted-foreground mt-2">
-										{feature.action_type && (
-											<span>
-												Action: {formatRegentVernacular(feature.action_type)}
-											</span>
-										)}
-										{feature.recharge && (
-											<span>
-												Recharge: {formatRegentVernacular(feature.recharge)}
-											</span>
-										)}
-										{feature.uses_formula && (
-											<span>
-												Uses: {formatRegentVernacular(feature.uses_formula)}
-											</span>
-										)}
-									</div>
-								)}
+								<MechanicDetails mechanics={feature} />
 							</div>
 						))}
 					</div>
 				)}
 			</div>
 
-			{/* Abilities */}
 			{abilityFeatures.length > 0 && (
 				<div>
 					<h3 className="text-lg font-semibold mb-3 font-heading">
@@ -264,30 +342,13 @@ export const PathDetail = ({ data }: { data: PathData }) => {
 								<p className="text-sm text-muted-foreground mb-3">
 									<AutoLinkText text={ability.description} />
 								</p>
-								<div className="flex flex-wrap gap-4 text-xs text-muted-foreground">
-									{ability.action_type && (
-										<span>
-											Action: {formatRegentVernacular(ability.action_type)}
-										</span>
-									)}
-									{ability.recharge && (
-										<span>
-											Recharge: {formatRegentVernacular(ability.recharge)}
-										</span>
-									)}
-									{ability.uses_formula && (
-										<span>
-											Uses: {formatRegentVernacular(ability.uses_formula)}
-										</span>
-									)}
-								</div>
+								<MechanicDetails mechanics={ability} />
 							</div>
 						))}
 					</div>
 				</div>
 			)}
 
-			{/* Stats */}
 			{data.stats && (
 				<div>
 					<h3 className="text-lg font-semibold mb-3 font-heading">
@@ -331,12 +392,11 @@ export const PathDetail = ({ data }: { data: PathData }) => {
 				</div>
 			)}
 
-			{/* Tags */}
 			{data.tags && data.tags.length > 0 && (
 				<div>
 					<h3 className="text-lg font-semibold mb-3 font-heading">Tags</h3>
 					<div className="flex flex-wrap gap-2">
-						{[...new Set(data.tags ?? [])].map((tag, _index) => (
+						{[...new Set(data.tags)].map((tag) => (
 							<Badge key={tag} variant="secondary" className="capitalize">
 								{formatRegentVernacular(tag.replace("-", " "))}
 							</Badge>
@@ -345,7 +405,6 @@ export const PathDetail = ({ data }: { data: PathData }) => {
 				</div>
 			)}
 
-			{/* Source */}
 			{data.source_book && (
 				<div className="text-sm text-muted-foreground">
 					Source: {formatRegentVernacular(data.source_book)}

@@ -40,22 +40,24 @@ function tagAt(txt: string, idx: number): string {
 }
 
 describe("icon button accessible names", () => {
-	it("every <Button size=\"icon\"> has aria-label / aria-labelledby / title", () => {
+	it('every <Button size="icon"> has aria-label / aria-labelledby / title', () => {
 		const offenders: string[] = [];
 		for (const root of ROOTS) {
 			for (const file of walk(root, [])) {
 				const txt = readFileSync(file, "utf8");
-				let i = 0;
-				while ((i = txt.indexOf("<Button", i)) !== -1) {
-					const tag = tagAt(txt, i);
+				let index = txt.indexOf("<Button");
+				while (index !== -1) {
+					const tag = tagAt(txt, index);
 					if (
 						/size=["']icon["']/.test(tag) &&
 						!/aria-label|aria-labelledby|(?<!data-)title=/.test(tag)
 					) {
-						const line = txt.slice(0, i).split("\n").length;
-						offenders.push(`${file.split(/[\\/]/).slice(-2).join("/")}:${line}`);
+						const line = txt.slice(0, index).split("\n").length;
+						offenders.push(
+							`${file.split(/[\\/]/).slice(-2).join("/")}:${line}`,
+						);
 					}
-					i += 7;
+					index = txt.indexOf("<Button", index + 7);
 				}
 			}
 		}

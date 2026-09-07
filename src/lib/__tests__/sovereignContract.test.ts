@@ -8,33 +8,28 @@ import {
 	type SovereignInputs,
 } from "@/lib/sovereign/sovereignContract";
 
-// Minimal canonical fixtures (only the fields the contract reads).
 const job = {
 	id: "job-destroyer",
 	name: "Destroyer",
 	hit_die: "d12",
 	primary_abilities: ["STR"],
 } as unknown as Job;
-
 const path = {
 	id: "path-frost",
 	name: "Path of the Frostwarden",
 } as unknown as Path;
-
 const regentA = {
-	id: "regent-shadow",
-	name: "Shadow Regent",
-	theme: "Shadow",
+	id: "umbral_regent",
+	name: "Umbral Regent",
+	theme: "Umbral and Death",
 	damage_type: "Necrotic",
 } as unknown as Regent;
-
 const regentB = {
-	id: "regent-frost",
+	id: "frost_regent",
 	name: "Frost Regent",
-	theme: "Frost",
+	theme: "Eternal Winter & absolute Zero",
 	damage_type: "Cold",
 } as unknown as Regent;
-
 const inputs: SovereignInputs = { job, path, regentA, regentB };
 
 const validPayload = {
@@ -59,18 +54,40 @@ const validPayload = {
 };
 
 describe("buildSovereignExport", () => {
-	it("embeds the fusion inputs and JSON contract in the prompt", () => {
+	it("embeds canonical ordered inputs and the exact JSON contract", () => {
 		const { prompt, bundle } = buildSovereignExport(inputs);
 		expect(prompt).toContain("Destroyer");
 		expect(prompt).toContain("Frostwarden");
-		expect(prompt).toContain("Shadow Regent");
+		expect(prompt).toContain("Umbral Regent");
 		expect(prompt).toContain("Frost Regent");
 		expect(prompt).toContain("EXACTLY 8");
-		// Strips the "Path of the" prefix in the prompt body.
 		expect(prompt).not.toContain("Path of the Frostwarden");
 		expect(bundle.kind).toBe("rift-sovereign-request");
-		expect(bundle.inputs.jobId).toBe("job-destroyer");
-		expect(bundle.inputs.regentBId).toBe("regent-frost");
+		expect(bundle.inputs.regentAId).toBe("umbral_regent");
+		expect(bundle.inputs.regentBId).toBe("frost_regent");
+		expect(bundle.responseShape.abilities).toHaveLength(8);
+	});
+
+	it("normalizes an explicit alias without swapping A/B", () => {
+		const aliasInputs = {
+			...inputs,
+			regentA: { ...regentA, id: "shadow_regent" } as Regent,
+		};
+		const { bundle } = buildSovereignExport(aliasInputs);
+		expect([bundle.inputs.regentAId, bundle.inputs.regentBId]).toEqual([
+			"umbral_regent",
+			"frost_regent",
+		]);
+	});
+
+	it("rejects normalized self-fusion", () => {
+		expect(() =>
+			buildSovereignExport({
+				...inputs,
+				regentA: { ...regentA, id: "shadow_regent" } as Regent,
+				regentB: regentA,
+			}),
+		).toThrow(/distinct canonical Regents/i);
 	});
 });
 
@@ -91,100 +108,154 @@ describe("extractJsonObject", () => {
 });
 
 describe("parseImportedSovereign", () => {
-	it("round-trips a valid payload and re-attaches canonical inputs", () => {
-		const res = parseImportedSovereign(JSON.stringify(validPayload), inputs);
-		expect(res.ok).toBe(true);
-		if (!res.ok) return;
-		expect(res.sovereign.name).toBe("Frostvoid Sovereign");
-		expect(res.sovereign.abilities).toHaveLength(8);
-		expect(res.sovereign.fusion_method).toBe(
+	it("round-trips exactly one ordered ability per milestone", () => {
+		const result = parseImportedSovereign(JSON.stringify(validPayload), inputs);
+		expect(result.ok).toBe(true);
+		if (!result.ok) return;
+		expect(result.sovereign.abilities.map((ability) => ability.level)).toEqual(
+			SOVEREIGN_ABILITY_LEVELS,
+		);
+		expect(result.sovereign.fusion_method).toBe(
 			"Gemini Protocol (External Fusion)",
 		);
-		// Canonical objects come from inputs, not the imported text.
-		expect(res.sovereign.job).toBe(job);
-		expect(res.sovereign.regentA).toBe(regentA);
-		expect(res.sovereign.regentB).toBe(regentB);
+		expect(result.sovereign.job).toBe(job);
+		expect(result.sovereign.regentA).toBe(regentA);
+		expect(result.sovereign.regentB).toBe(regentB);
 	});
 
 	it("tolerates a code-fenced reply with surrounding prose", () => {
-		const raw = `Absolutely — here is the fusion:\n\`\`\`json\n${JSON.stringify(validPayload)}\n\`\`\`\nEnjoy!`;
-		const res = parseImportedSovereign(raw, inputs);
-		expect(res.ok).toBe(true);
+		const raw = `Absolutely:\n\`\`\`json\n${JSON.stringify(validPayload)}\n\`\`\`\nEnjoy!`;
+		expect(parseImportedSovereign(raw, inputs).ok).toBe(true);
 	});
 
-	it("coerces loose types (string level/boolean, single origin string)", () => {
+	it("coerces loose fields without weakening the complete ladder", () => {
 		const loose = {
 			...validPayload,
-			abilities: [
-				{
-					name: "Solo",
-					description: "Does a thing for 1d8 force.",
-					level: "5",
-					action_type: "1 bonus action",
-					recharge: "",
-					is_capstone: "false",
-					origin_sources: "RegentA+RegentB",
-					fusion_type: "",
-				},
-			],
+			abilities: validPayload.abilities.map((ability) =>
+				ability.level === 5
+					? {
+							...ability,
+							level: "5",
+							is_capstone: "false",
+							origin_sources: "RegentA+RegentB",
+							recharge: "",
+							fusion_type: "",
+						}
+					: ability,
+			),
 		};
-		const res = parseImportedSovereign(JSON.stringify(loose), inputs);
-		expect(res.ok).toBe(true);
-		if (!res.ok) return;
-		const a = res.sovereign.abilities[0];
-		expect(a.level).toBe(5);
-		expect(a.is_capstone).toBe(false);
-		expect(a.recharge).toBeNull();
-		expect(a.origin_sources).toEqual(["RegentA+RegentB"]);
-		expect(a.fusion_type).toBe("fusion");
+		const result = parseImportedSovereign(JSON.stringify(loose), inputs);
+		expect(result.ok).toBe(true);
+		if (!result.ok) return;
+		const ability = result.sovereign.abilities[2];
+		expect(ability.level).toBe(5);
+		expect(ability.is_capstone).toBe(false);
+		expect(ability.recharge).toBeNull();
+		expect(ability.origin_sources).toEqual(["RegentA+RegentB"]);
+		expect(ability.fusion_type).toBe("fusion");
 	});
 
-	it("ignores attacker-supplied job/path bodies (re-attaches canonical)", () => {
-		const tampered = {
-			...validPayload,
-			job: { id: "evil", name: "Backdoor", hit_die: "d20" },
-			path: { id: "evil-path", name: "Exploit" },
-		};
-		const res = parseImportedSovereign(JSON.stringify(tampered), inputs);
-		expect(res.ok).toBe(true);
-		if (!res.ok) return;
-		expect(res.sovereign.job).toBe(job);
-		expect(res.sovereign.path).toBe(path);
+	it.each([
+		[
+			"missing milestone",
+			{ ...validPayload, abilities: validPayload.abilities.slice(0, -1) },
+		],
+		[
+			"extra milestone",
+			{
+				...validPayload,
+				abilities: [
+					...validPayload.abilities,
+					{ ...validPayload.abilities[0], level: 2 },
+				],
+			},
+		],
+		[
+			"duplicate milestone",
+			{
+				...validPayload,
+				abilities: validPayload.abilities.map((ability, index) =>
+					index === 1 ? { ...ability, level: 1 } : ability,
+				),
+			},
+		],
+		[
+			"out-of-order milestones",
+			{
+				...validPayload,
+				abilities: [
+					validPayload.abilities[1],
+					validPayload.abilities[0],
+					...validPayload.abilities.slice(2),
+				],
+			},
+		],
+		[
+			"non-capstone marked capstone",
+			{
+				...validPayload,
+				abilities: validPayload.abilities.map((ability) =>
+					ability.level === 14 ? { ...ability, is_capstone: true } : ability,
+				),
+			},
+		],
+		[
+			"required capstone cleared",
+			{
+				...validPayload,
+				abilities: validPayload.abilities.map((ability) =>
+					ability.level === 17 ? { ...ability, is_capstone: false } : ability,
+				),
+			},
+		],
+	])("rejects a malformed ladder: %s", (_label, payload) => {
+		const result = parseImportedSovereign(JSON.stringify(payload), inputs);
+		expect(result.ok).toBe(false);
 	});
 
-	it("rejects malformed JSON", () => {
-		const res = parseImportedSovereign("{ not valid json ", inputs);
-		expect(res.ok).toBe(false);
-		if (res.ok) return;
-		expect(res.errors[0]).toMatch(/no json object|invalid json/i);
+	it("rejects normalized self-fusion inputs", () => {
+		const result = parseImportedSovereign(validPayload, {
+			...inputs,
+			regentA: { ...regentA, id: "shadow_regent" } as Regent,
+			regentB: regentA,
+		});
+		expect(result.ok).toBe(false);
+		if (result.ok) return;
+		expect(result.errors.join(" ")).toMatch(/distinct canonical Regents/i);
 	});
 
-	it("rejects a missing required field with a field-pathed error", () => {
-		const { name: _omit, ...noName } = validPayload;
-		const res = parseImportedSovereign(JSON.stringify(noName), inputs);
-		expect(res.ok).toBe(false);
-		if (res.ok) return;
-		expect(res.errors.join(" ")).toMatch(/name/i);
-	});
-
-	it("rejects an empty abilities array", () => {
-		const res = parseImportedSovereign(
-			JSON.stringify({ ...validPayload, abilities: [] }),
+	it("ignores attacker-supplied job/path bodies", () => {
+		const result = parseImportedSovereign(
+			JSON.stringify({
+				...validPayload,
+				job: { id: "evil", name: "Backdoor", hit_die: "d20" },
+				path: { id: "evil-path", name: "Exploit" },
+			}),
 			inputs,
 		);
-		expect(res.ok).toBe(false);
+		expect(result.ok).toBe(true);
+		if (!result.ok) return;
+		expect(result.sovereign.job).toBe(job);
+		expect(result.sovereign.path).toBe(path);
 	});
 
-	it("detects an accidentally-uploaded request bundle", () => {
+	it("rejects malformed JSON and missing required fields", () => {
+		expect(parseImportedSovereign("{ not valid json ", inputs).ok).toBe(false);
+		const { name: _omit, ...withoutName } = validPayload;
+		expect(parseImportedSovereign(JSON.stringify(withoutName), inputs).ok).toBe(
+			false,
+		);
+	});
+
+	it("detects an accidentally uploaded request bundle", () => {
 		const { bundle } = buildSovereignExport(inputs);
-		const res = parseImportedSovereign(JSON.stringify(bundle), inputs);
-		expect(res.ok).toBe(false);
-		if (res.ok) return;
-		expect(res.errors[0]).toMatch(/request file/i);
+		const result = parseImportedSovereign(JSON.stringify(bundle), inputs);
+		expect(result.ok).toBe(false);
+		if (result.ok) return;
+		expect(result.errors[0]).toMatch(/request file/i);
 	});
 
-	it("accepts a pre-parsed object (file-upload transport)", () => {
-		const res = parseImportedSovereign(validPayload, inputs);
-		expect(res.ok).toBe(true);
+	it("accepts a pre-parsed object transport", () => {
+		expect(parseImportedSovereign(validPayload, inputs).ok).toBe(true);
 	});
 });

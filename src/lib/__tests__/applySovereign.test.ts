@@ -58,6 +58,26 @@ describe("buildSovereignGeminiState", () => {
 		expect(state.statBonuses).toEqual({});
 		expect(state.modifiers).toEqual([]);
 	});
+
+	it("normalizes explicit aliases and rejects normalized self-fusion", () => {
+		const legacy = {
+			...sovereign,
+			regentA: { ...sovereign.regentA, id: "shadow_regent" },
+		} as GeneratedSovereign;
+		const state = buildSovereignGeminiState(legacy, "sov-row-alias");
+		expect([state.regent1Id, state.regent2Id]).toEqual([
+			"umbral_regent",
+			"frost_regent",
+		]);
+
+		const selfFusion = {
+			...legacy,
+			regentB: sovereign.regentA,
+		} as GeneratedSovereign;
+		expect(() => buildSovereignGeminiState(selfFusion, "sov-row-self")).toThrow(
+			/distinct canonical Regents/i,
+		);
+	});
 });
 
 describe("geminiOverlayFromState", () => {

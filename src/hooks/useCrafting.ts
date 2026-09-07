@@ -1,9 +1,16 @@
 ﻿import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import type { Json } from "@/integrations/supabase/types";
 import { AppError } from "@/lib/appError";
+import {
+	buildCraftingMutationPlanV1,
+	type CraftingMutationReceiptV1,
+	type CraftingSourceOwnershipProofV1,
+	executeCraftingMutationV1,
+} from "@/lib/planning/adapters/campaignWorkflow";
+import type { SerializableRecord } from "@/lib/planning/contracts";
 import { clientChannelName } from "@/lib/realtimeChannel";
 
 export type CraftingProjectStatus =
@@ -60,6 +67,23 @@ const craftingKeys = {
 		["character-crafting-projects", characterId] as const,
 };
 
+const SINGLE_DIRECT_WRITE_COMPENSATION = {
+	kind: "not-required",
+	reason: "The mutation boundary performs one direct table write.",
+} as const;
+
+type CraftingMutationName =
+	| "learnRecipe"
+	| "adjustMaterial"
+	| "startProject"
+	| "advanceProject"
+	| "setProjectStatus"
+	| "deleteProject";
+
+type CraftingPlanningReceipts = Partial<
+	Record<CraftingMutationName, CraftingMutationReceiptV1 | null>
+>;
+
 function invalidateCrafting(
 	queryClient: ReturnType<typeof useQueryClient>,
 	characterId: string,
@@ -94,6 +118,31 @@ function normalizeMaterialsCommitted(
 		);
 }
 
+function normalizeProjectRow(
+	row: CharacterCraftingProjectRow,
+): CharacterCraftingProjectRow {
+	return {
+		...row,
+		materials_committed: normalizeMaterialsCommitted(
+			row.materials_committed as unknown as Json,
+		),
+	};
+}
+
+async function getRecipeRow(
+	characterId: string,
+	recipeId: string,
+): Promise<CharacterRecipeRow | null> {
+	const { data, error } = await supabase
+		.from(RECIPES_TABLE)
+		.select("*")
+		.eq("character_id", characterId)
+		.eq("recipe_id", recipeId)
+		.maybeSingle();
+	if (error) throw error;
+	return (data as unknown as CharacterRecipeRow | null) ?? null;
+}
+
 async function getMaterialRow(
 	characterId: string,
 	materialId: string,
@@ -109,26 +158,99 @@ async function getMaterialRow(
 }
 
 async function getProjectRow(
+	characterId: string,
 	projectId: string,
 ): Promise<CharacterCraftingProjectRow> {
 	const { data, error } = await supabase
 		.from(PROJECTS_TABLE)
 		.select("*")
+		.eq("character_id", characterId)
 		.eq("id", projectId)
 		.single();
 	if (error) throw error;
-	const row = data as unknown as CharacterCraftingProjectRow;
+	return normalizeProjectRow(data as unknown as CharacterCraftingProjectRow);
+}
+
+function recipePlanningValue(
+	characterId: string,
+	recipeId: string,
+	notes: string | null,
+): SerializableRecord {
 	return {
-		...row,
-		materials_committed: normalizeMaterialsCommitted(
-			row.materials_committed as unknown as Json,
-		),
+		character_id: characterId,
+		recipe_id: recipeId,
+		notes,
 	};
+}
+
+function materialPlanningValue(
+	characterId: string,
+	materialId: string,
+	quantity: number,
+): SerializableRecord {
+	return {
+		character_id: characterId,
+		material_id: materialId,
+		quantity,
+	};
+}
+
+function projectPlanningValue(
+	row: CharacterCraftingProjectRow,
+): SerializableRecord {
+	return {
+		id: row.id,
+		character_id: row.character_id,
+		recipe_id: row.recipe_id,
+		name: row.name,
+		status: row.status,
+		progress: row.progress,
+		progress_required: row.progress_required,
+		materials_committed: row.materials_committed.map(
+			(entry): SerializableRecord => ({
+				material_id: entry.material_id,
+				quantity: entry.quantity,
+			}),
+		),
+		notes: row.notes,
+		started_at: row.started_at,
+		completed_at: row.completed_at,
+		created_at: row.created_at,
+		updated_at: row.updated_at,
+	};
+}
+
+function sourceOwnershipFor(
+	current: SerializableRecord | null,
+): CraftingSourceOwnershipProofV1 {
+	return current ? { kind: "stored-scope" } : { kind: "new-record" };
+}
+
+function requireFreshWrite<T>(data: T | null, target: string): T {
+	if (data === null) {
+		throw new AppError(
+			`${target} changed after planning; reload and retry`,
+			"UNKNOWN",
+		);
+	}
+	return data;
 }
 
 export function useCrafting(characterId: string | undefined) {
 	const queryClient = useQueryClient();
 	const { toast } = useToast();
+	const [planningReceipts, setPlanningReceipts] =
+		useState<CraftingPlanningReceipts>({});
+
+	const clearPlanningReceipt = (mutation: CraftingMutationName) => {
+		setPlanningReceipts((current) => ({ ...current, [mutation]: null }));
+	};
+	const retainPlanningReceipt = (
+		mutation: CraftingMutationName,
+		receipt: CraftingMutationReceiptV1,
+	) => {
+		setPlanningReceipts((current) => ({ ...current, [mutation]: receipt }));
+	};
 
 	useEffect(() => {
 		if (!characterId || !isSupabaseConfigured) return;
@@ -221,12 +343,7 @@ export function useCrafting(characterId: string | undefined) {
 				.order("updated_at", { ascending: false });
 			if (error) throw error;
 			return ((data ?? []) as unknown as CharacterCraftingProjectRow[]).map(
-				(row) => ({
-					...row,
-					materials_committed: normalizeMaterialsCommitted(
-						row.materials_committed as unknown as Json,
-					),
-				}),
+				normalizeProjectRow,
 			);
 		},
 		enabled: !!characterId,
@@ -242,24 +359,64 @@ export function useCrafting(characterId: string | undefined) {
 
 	const learnRecipe = useMutation({
 		mutationFn: async (input: { recipeId: string; notes?: string }) => {
+			clearPlanningReceipt("learnRecipe");
 			if (!characterId)
 				throw new AppError("Character is required", "INVALID_INPUT");
 			if (!isSupabaseConfigured)
 				throw new AppError("Supabase not configured", "CONFIG");
-			const { data, error } = await supabase
-				.from(RECIPES_TABLE)
-				.upsert(
-					{
-						character_id: characterId,
-						recipe_id: input.recipeId,
-						notes: input.notes ?? null,
-					} as never,
-					{ onConflict: "character_id,recipe_id" },
-				)
-				.select("*")
-				.single();
-			if (error) throw error;
-			return data as unknown as CharacterRecipeRow;
+			const existing = await getRecipeRow(characterId, input.recipeId);
+			const current = existing
+				? recipePlanningValue(characterId, existing.recipe_id, existing.notes)
+				: null;
+			const desired = recipePlanningValue(
+				characterId,
+				input.recipeId,
+				input.notes ?? null,
+			);
+			const plan = buildCraftingMutationPlanV1({
+				characterId,
+				recordKey: `recipe:${input.recipeId}`,
+				referenceType: "recipe",
+				referenceId: input.recipeId,
+				current,
+				desired,
+				sourceOwnership: sourceOwnershipFor(current),
+				compensation: SINGLE_DIRECT_WRITE_COMPENSATION,
+			});
+			const execution = await executeCraftingMutationV1(
+				plan,
+				current,
+				async () => {
+					if (existing) {
+						const { data, error } = await supabase
+							.from(RECIPES_TABLE)
+							.update({ notes: input.notes ?? null } as never)
+							.eq("id", existing.id)
+							.eq("character_id", characterId)
+							.eq("updated_at", existing.updated_at)
+							.select("*")
+							.maybeSingle();
+						if (error) throw error;
+						return requireFreshWrite(
+							(data as unknown as CharacterRecipeRow | null) ?? null,
+							"Recipe",
+						);
+					}
+					const { data, error } = await supabase
+						.from(RECIPES_TABLE)
+						.insert({
+							character_id: characterId,
+							recipe_id: input.recipeId,
+							notes: input.notes ?? null,
+						} as never)
+						.select("*")
+						.single();
+					if (error) throw error;
+					return data as unknown as CharacterRecipeRow;
+				},
+			);
+			retainPlanningReceipt("learnRecipe", execution.receipt);
+			return execution.result;
 		},
 		onSuccess: () => {
 			if (characterId) invalidateCrafting(queryClient, characterId);
@@ -270,36 +427,86 @@ export function useCrafting(characterId: string | undefined) {
 
 	const adjustMaterial = useMutation({
 		mutationFn: async (input: { materialId: string; delta: number }) => {
+			clearPlanningReceipt("adjustMaterial");
 			if (!characterId)
 				throw new AppError("Character is required", "INVALID_INPUT");
 			if (!isSupabaseConfigured)
 				throw new AppError("Supabase not configured", "CONFIG");
 			const existing = await getMaterialRow(characterId, input.materialId);
 			const nextQuantity = Math.max(0, (existing?.quantity ?? 0) + input.delta);
+			const current = existing
+				? materialPlanningValue(
+						characterId,
+						existing.material_id,
+						existing.quantity,
+					)
+				: null;
+			const desired =
+				existing && nextQuantity === 0
+					? null
+					: materialPlanningValue(characterId, input.materialId, nextQuantity);
+			const plan = buildCraftingMutationPlanV1({
+				characterId,
+				recordKey: `material:${input.materialId}`,
+				referenceType: "material",
+				referenceId: input.materialId,
+				current,
+				desired,
+				sourceOwnership: sourceOwnershipFor(current),
+				compensation: SINGLE_DIRECT_WRITE_COMPENSATION,
+			});
+			const execution = await executeCraftingMutationV1(
+				plan,
+				current,
+				async () => {
+					if (existing && nextQuantity === 0) {
+						const { data, error } = await supabase
+							.from(MATERIALS_TABLE)
+							.delete()
+							.eq("id", existing.id)
+							.eq("character_id", characterId)
+							.eq("updated_at", existing.updated_at)
+							.select("id")
+							.maybeSingle();
+						if (error) throw error;
+						requireFreshWrite(
+							data as unknown as { id: string } | null,
+							"Material",
+						);
+						return null;
+					}
 
-			if (existing && nextQuantity === 0) {
-				const { error } = await supabase
-					.from(MATERIALS_TABLE)
-					.delete()
-					.eq("id", existing.id);
-				if (error) throw error;
-				return null;
-			}
+					if (existing) {
+						const { data, error } = await supabase
+							.from(MATERIALS_TABLE)
+							.update({ quantity: nextQuantity } as never)
+							.eq("id", existing.id)
+							.eq("character_id", characterId)
+							.eq("updated_at", existing.updated_at)
+							.select("*")
+							.maybeSingle();
+						if (error) throw error;
+						return requireFreshWrite(
+							(data as unknown as CharacterMaterialRow | null) ?? null,
+							"Material",
+						);
+					}
 
-			const { data, error } = await supabase
-				.from(MATERIALS_TABLE)
-				.upsert(
-					{
-						character_id: characterId,
-						material_id: input.materialId,
-						quantity: nextQuantity,
-					} as never,
-					{ onConflict: "character_id,material_id" },
-				)
-				.select("*")
-				.single();
-			if (error) throw error;
-			return data as unknown as CharacterMaterialRow;
+					const { data, error } = await supabase
+						.from(MATERIALS_TABLE)
+						.insert({
+							character_id: characterId,
+							material_id: input.materialId,
+							quantity: nextQuantity,
+						} as never)
+						.select("*")
+						.single();
+					if (error) throw error;
+					return data as unknown as CharacterMaterialRow;
+				},
+			);
+			retainPlanningReceipt("adjustMaterial", execution.receipt);
+			return execution.result;
 		},
 		onSuccess: () => {
 			if (characterId) invalidateCrafting(queryClient, characterId);
@@ -314,23 +521,62 @@ export function useCrafting(characterId: string | undefined) {
 			progressRequired: number;
 			materialsCommitted?: Array<{ material_id: string; quantity: number }>;
 		}) => {
+			clearPlanningReceipt("startProject");
 			if (!characterId)
 				throw new AppError("Character is required", "INVALID_INPUT");
 			if (!isSupabaseConfigured)
 				throw new AppError("Supabase not configured", "CONFIG");
-			const { data, error } = await supabase
-				.from(PROJECTS_TABLE)
-				.insert({
-					character_id: characterId,
-					recipe_id: input.recipeId,
-					name: input.name ?? null,
-					progress_required: input.progressRequired,
-					materials_committed: input.materialsCommitted ?? [],
-				} as never)
-				.select("*")
-				.single();
-			if (error) throw error;
-			return data as unknown as CharacterCraftingProjectRow;
+			const desired: SerializableRecord = {
+				character_id: characterId,
+				recipe_id: input.recipeId,
+				name: input.name ?? null,
+				status: "active",
+				progress: 0,
+				progress_required: input.progressRequired,
+				materials_committed: (input.materialsCommitted ?? []).map(
+					(entry): SerializableRecord => ({
+						material_id: entry.material_id,
+						quantity: entry.quantity,
+					}),
+				),
+				notes: null,
+			};
+			const plan = buildCraftingMutationPlanV1({
+				characterId,
+				recordKey: `project:new:${input.recipeId}`,
+				referenceType: "recipe",
+				referenceId: input.recipeId,
+				referenceLabel: input.name ?? null,
+				relatedReferences: (input.materialsCommitted ?? []).map((entry) => ({
+					referenceType: "material" as const,
+					id: entry.material_id,
+				})),
+				current: null,
+				desired,
+				sourceOwnership: { kind: "new-record" },
+				compensation: SINGLE_DIRECT_WRITE_COMPENSATION,
+			});
+			const execution = await executeCraftingMutationV1(
+				plan,
+				null,
+				async () => {
+					const { data, error } = await supabase
+						.from(PROJECTS_TABLE)
+						.insert({
+							character_id: characterId,
+							recipe_id: input.recipeId,
+							name: input.name ?? null,
+							progress_required: input.progressRequired,
+							materials_committed: input.materialsCommitted ?? [],
+						} as never)
+						.select("*")
+						.single();
+					if (error) throw error;
+					return data as unknown as CharacterCraftingProjectRow;
+				},
+			);
+			retainPlanningReceipt("startProject", execution.receipt);
+			return execution.result;
 		},
 		onSuccess: () => {
 			if (characterId) invalidateCrafting(queryClient, characterId);
@@ -341,27 +587,60 @@ export function useCrafting(characterId: string | undefined) {
 
 	const advanceProject = useMutation({
 		mutationFn: async (input: { projectId: string; delta: number }) => {
+			clearPlanningReceipt("advanceProject");
 			if (!characterId)
 				throw new AppError("Character is required", "INVALID_INPUT");
 			if (!isSupabaseConfigured)
 				throw new AppError("Supabase not configured", "CONFIG");
-			const project = await getProjectRow(input.projectId);
+			const project = await getProjectRow(characterId, input.projectId);
 			const nextProgress = Math.max(0, project.progress + input.delta);
 			const isComplete = nextProgress >= project.progress_required;
-			const { data, error } = await supabase
-				.from(PROJECTS_TABLE)
-				.update({
-					progress: nextProgress,
-					status: isComplete ? "completed" : project.status,
-					completed_at: isComplete
-						? (project.completed_at ?? new Date().toISOString())
-						: null,
-				} as never)
-				.eq("id", input.projectId)
-				.select("*")
-				.single();
-			if (error) throw error;
-			return data as unknown as CharacterCraftingProjectRow;
+			const completedAt = isComplete
+				? (project.completed_at ?? new Date().toISOString())
+				: null;
+			const current = projectPlanningValue(project);
+			const desired: SerializableRecord = {
+				...current,
+				progress: nextProgress,
+				status: isComplete ? "completed" : project.status,
+				completed_at: completedAt,
+			};
+			const plan = buildCraftingMutationPlanV1({
+				characterId,
+				recordKey: `project:${input.projectId}`,
+				referenceType: "project",
+				referenceId: input.projectId,
+				current,
+				desired,
+				sourceOwnership: { kind: "stored-scope" },
+				compensation: SINGLE_DIRECT_WRITE_COMPENSATION,
+			});
+			const execution = await executeCraftingMutationV1(
+				plan,
+				current,
+				async () => {
+					const { data, error } = await supabase
+						.from(PROJECTS_TABLE)
+						.update({
+							progress: nextProgress,
+							status: isComplete ? "completed" : project.status,
+							completed_at: completedAt,
+						} as never)
+						.eq("id", input.projectId)
+						.eq("character_id", characterId)
+						.eq("updated_at", project.updated_at)
+						.select("*")
+						.maybeSingle();
+					if (error) throw error;
+					const row = requireFreshWrite(
+						(data as unknown as CharacterCraftingProjectRow | null) ?? null,
+						"Crafting project",
+					);
+					return normalizeProjectRow(row);
+				},
+			);
+			retainPlanningReceipt("advanceProject", execution.receipt);
+			return execution.result;
 		},
 		onSuccess: () => {
 			if (characterId) invalidateCrafting(queryClient, characterId);
@@ -374,23 +653,55 @@ export function useCrafting(characterId: string | undefined) {
 			projectId: string;
 			status: CraftingProjectStatus;
 		}) => {
+			clearPlanningReceipt("setProjectStatus");
 			if (!characterId)
 				throw new AppError("Character is required", "INVALID_INPUT");
 			if (!isSupabaseConfigured)
 				throw new AppError("Supabase not configured", "CONFIG");
+			const project = await getProjectRow(characterId, input.projectId);
 			const completedAt =
 				input.status === "completed" ? new Date().toISOString() : null;
-			const { data, error } = await supabase
-				.from(PROJECTS_TABLE)
-				.update({
-					status: input.status,
-					completed_at: completedAt,
-				} as never)
-				.eq("id", input.projectId)
-				.select("*")
-				.single();
-			if (error) throw error;
-			return data as unknown as CharacterCraftingProjectRow;
+			const current = projectPlanningValue(project);
+			const desired: SerializableRecord = {
+				...current,
+				status: input.status,
+				completed_at: completedAt,
+			};
+			const plan = buildCraftingMutationPlanV1({
+				characterId,
+				recordKey: `project:${input.projectId}`,
+				referenceType: "project",
+				referenceId: input.projectId,
+				current,
+				desired,
+				sourceOwnership: { kind: "stored-scope" },
+				compensation: SINGLE_DIRECT_WRITE_COMPENSATION,
+			});
+			const execution = await executeCraftingMutationV1(
+				plan,
+				current,
+				async () => {
+					const { data, error } = await supabase
+						.from(PROJECTS_TABLE)
+						.update({
+							status: input.status,
+							completed_at: completedAt,
+						} as never)
+						.eq("id", input.projectId)
+						.eq("character_id", characterId)
+						.eq("updated_at", project.updated_at)
+						.select("*")
+						.maybeSingle();
+					if (error) throw error;
+					const row = requireFreshWrite(
+						(data as unknown as CharacterCraftingProjectRow | null) ?? null,
+						"Crafting project",
+					);
+					return normalizeProjectRow(row);
+				},
+			);
+			retainPlanningReceipt("setProjectStatus", execution.receipt);
+			return execution.result;
 		},
 		onSuccess: () => {
 			if (characterId) invalidateCrafting(queryClient, characterId);
@@ -400,15 +711,43 @@ export function useCrafting(characterId: string | undefined) {
 
 	const deleteProject = useMutation({
 		mutationFn: async (input: { projectId: string }) => {
+			clearPlanningReceipt("deleteProject");
 			if (!characterId)
 				throw new AppError("Character is required", "INVALID_INPUT");
 			if (!isSupabaseConfigured)
 				throw new AppError("Supabase not configured", "CONFIG");
-			const { error } = await supabase
-				.from(PROJECTS_TABLE)
-				.delete()
-				.eq("id", input.projectId);
-			if (error) throw error;
+			const project = await getProjectRow(characterId, input.projectId);
+			const current = projectPlanningValue(project);
+			const plan = buildCraftingMutationPlanV1({
+				characterId,
+				recordKey: `project:${input.projectId}`,
+				referenceType: "project",
+				referenceId: input.projectId,
+				current,
+				desired: null,
+				sourceOwnership: { kind: "stored-scope" },
+				compensation: SINGLE_DIRECT_WRITE_COMPENSATION,
+			});
+			const execution = await executeCraftingMutationV1(
+				plan,
+				current,
+				async () => {
+					const { data, error } = await supabase
+						.from(PROJECTS_TABLE)
+						.delete()
+						.eq("id", input.projectId)
+						.eq("character_id", characterId)
+						.eq("updated_at", project.updated_at)
+						.select("id")
+						.maybeSingle();
+					if (error) throw error;
+					requireFreshWrite(
+						data as unknown as { id: string } | null,
+						"Crafting project",
+					);
+				},
+			);
+			retainPlanningReceipt("deleteProject", execution.receipt);
 		},
 		onSuccess: () => {
 			if (characterId) invalidateCrafting(queryClient, characterId);
@@ -430,5 +769,6 @@ export function useCrafting(characterId: string | undefined) {
 		advanceProject,
 		setProjectStatus,
 		deleteProject,
+		planningReceipts,
 	};
 }

@@ -64,5 +64,7 @@ for (const t of TABLES) {
 		console.log(`  [${t}] purged ${count ?? "?"} rows`);
 	}
 }
-console.log(failed === 0 ? "PURGE COMPLETE (0 errors)" : `PURGE had ${failed} errors`);
+console.log(
+	failed === 0 ? "PURGE COMPLETE (0 errors)" : `PURGE had ${failed} errors`,
+);
 process.exit(failed === 0 ? 0 : 1);

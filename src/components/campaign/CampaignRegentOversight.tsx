@@ -1,4 +1,4 @@
-import { Plus, ScrollText, Trash2, User } from "lucide-react";
+import { AlertTriangle, Plus, ScrollText, Trash2, User } from "lucide-react";
 import { useMemo, useState } from "react";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
@@ -22,11 +22,10 @@ import {
 import { getRegentUnlockQuests } from "@/data/compendium/quest-contracts";
 import { useCampaignSharedCharacters } from "@/hooks/useCampaignCharacters";
 import {
-	type RegentUnlock,
 	useCampaignRegentUnlockGrants,
 	useCampaignRegentUnlocks,
 	useRegentUnlockGrants,
-	useRegentUnlocks,
+	useRemoveRegentUnlock,
 } from "@/hooks/useRegentUnlocks";
 import { REGENT_LABEL } from "@/lib/vernacular";
 
@@ -38,49 +37,75 @@ export function CampaignRegentOversight({
 	campaignId,
 }: CampaignRegentOversightProps) {
 	const [grantDialogOpen, setGrantDialogOpen] = useState(false);
-	const [selectedCharId, setSelectedCharId] = useState<string>("");
-	const [selectedQuestId, setSelectedQuestId] = useState<string>("");
+	const [selectedCharId, setSelectedCharId] = useState("");
+	const [selectedQuestId, setSelectedQuestId] = useState("");
 
-	const { data: sharedCharacters = [], isLoading: loadingChars } =
-		useCampaignSharedCharacters(campaignId);
-	const { campaignUnlocks, isLoading: loadingUnlocks } =
-		useCampaignRegentUnlocks(campaignId);
-	const { campaignGrants } = useCampaignRegentUnlockGrants(campaignId);
-
-	// The grant/remove mutations are keyed to the selected character.
+	const {
+		data: sharedCharacters = [],
+		isLoading: loadingChars,
+		error: sharedCharacterError,
+	} = useCampaignSharedCharacters(campaignId);
+	const {
+		campaignUnlocks,
+		isLoading: loadingUnlocks,
+		error: campaignUnlockError,
+	} = useCampaignRegentUnlocks(campaignId, sharedCharacters);
+	const unlockError = sharedCharacterError ?? campaignUnlockError;
+	const {
+		campaignGrants,
+		isLoading: loadingGrants,
+		error: grantReadError,
+	} = useCampaignRegentUnlockGrants(campaignId, sharedCharacters);
 	const { grantRegentUnlockAsync, isGranting } =
 		useRegentUnlockGrants(selectedCharId);
-	const { removeUnlock } = useRegentUnlocks(selectedCharId);
-
+	const { removeUnlock, isRemoving } = useRemoveRegentUnlock();
 	const regentQuests = useMemo(() => getRegentUnlockQuests(), []);
 
 	const handleGrant = async () => {
 		if (!selectedCharId || !selectedQuestId) return;
-		const quest = regentQuests.find((q) => q.id === selectedQuestId);
+		const quest = regentQuests.find(
+			(candidate) => candidate.id === selectedQuestId,
+		);
 		if (!quest) return;
 
-		await grantRegentUnlockAsync({
-			questId: quest.id,
-			questTitle: quest.title,
-		});
-
-		setGrantDialogOpen(false);
-		setSelectedQuestId("");
-	};
-
-	const handleDelete = (unlockId: string, charId: string) => {
-		if (
-			confirm(`Are you sure you want to remove this ${REGENT_LABEL} unlock?`)
-		) {
-			setSelectedCharId(charId);
-			setTimeout(() => removeUnlock(unlockId), 0);
+		try {
+			await grantRegentUnlockAsync({
+				questId: quest.id,
+				questTitle: quest.title,
+			});
+			setGrantDialogOpen(false);
+			setSelectedQuestId("");
+		} catch {
+			// The hook owns the destructive toast and keeps the dialog open for retry.
 		}
 	};
 
-	if (loadingChars || loadingUnlocks) {
+	const handleDelete = (unlockId: string, characterId: string) => {
+		if (
+			confirm(`Are you sure you want to remove this ${REGENT_LABEL} unlock?`)
+		) {
+			removeUnlock({ unlockId, characterId });
+		}
+	};
+
+	if (loadingChars || loadingUnlocks || loadingGrants) {
 		return (
 			<div className="flex items-center justify-center py-12">
 				<div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary" />
+			</div>
+		);
+	}
+
+	const readError = unlockError ?? grantReadError;
+	if (readError) {
+		return (
+			<div className="flex items-start gap-3 rounded-lg border border-destructive/40 bg-destructive/5 p-4 text-sm text-destructive">
+				<AlertTriangle className="h-5 w-5 shrink-0" />
+				<span>
+					{readError instanceof Error
+						? readError.message
+						: `Could not load ${REGENT_LABEL} oversight.`}
+				</span>
 			</div>
 		);
 	}
@@ -102,23 +127,27 @@ export function CampaignRegentOversight({
 
 				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
 					{sharedCharacters.map((share) => {
-						const char = share.characters;
-						if (!char) return null;
+						const character = share.characters;
+						if (!character) return null;
 
-						const charUnlocks = (campaignUnlocks as RegentUnlock[]).filter(
-							(u) => u.character_id === char.id,
+						const characterUnlocks = campaignUnlocks.filter(
+							(unlock) => unlock.character_id === character.id,
 						);
 						const pendingCredits = campaignGrants.filter(
-							(g) => g.character_id === char.id,
+							(grant) => grant.character_id === character.id,
 						).length;
 
 						return (
-							<AscendantWindow key={char.id} title={char.name} variant="quest">
+							<AscendantWindow
+								key={character.id}
+								title={character.name}
+								variant="quest"
+							>
 								<div className="space-y-3">
 									<div className="flex items-center justify-between gap-2 text-xs text-muted-foreground mb-2">
 										<span className="flex items-center gap-1">
 											<User className="w-3 h-3" />
-											Level {char.level} {char.job}
+											Level {character.level} {character.job}
 										</span>
 										{pendingCredits > 0 && (
 											<Badge
@@ -131,40 +160,45 @@ export function CampaignRegentOversight({
 										)}
 									</div>
 
-									{charUnlocks.length === 0 ? (
+									{characterUnlocks.length === 0 ? (
 										<p className="text-xs italic text-muted-foreground py-2">
 											No {REGENT_LABEL}s unlocked.
 										</p>
 									) : (
 										<div className="space-y-2">
-											{charUnlocks.map((unlock) => {
-												return (
-													<div
-														key={unlock.id}
-														className="flex items-center justify-between p-2 rounded bg-muted/30 border border-border/50 group"
-													>
-														<div className="flex flex-col">
-															<div className="flex items-center gap-2">
-																<span className="font-semibold text-sm">
-																	{unlock.regent?.name}
-																</span>
-															</div>
-															<span className="text-[11px] text-muted-foreground">
-																via: {unlock.quest_name}
+											{characterUnlocks.map((unlock) => (
+												<div
+													key={unlock.id}
+													className="flex items-center justify-between p-2 rounded bg-muted/30 border border-border/50 group"
+												>
+													<div className="flex flex-col min-w-0">
+														<span className="font-semibold text-sm">
+															{unlock.regent?.name ??
+																"Unresolved legacy Regent"}
+														</span>
+														<span className="text-[11px] text-muted-foreground">
+															via: {unlock.quest_name}
+														</span>
+														{!unlock.regent && (
+															<span className="text-[10px] text-regent-gold">
+																Awaiting Task 19 identity reconciliation
 															</span>
-														</div>
-														<Button
-															variant="ghost"
-															size="icon"
-															aria-label="Delete"
-															className="h-7 w-7 opacity-0 group-hover:opacity-100 transition-opacity"
-															onClick={() => handleDelete(unlock.id, char.id)}
-														>
-															<Trash2 className="w-3 h-3 text-destructive" />
-														</Button>
+														)}
 													</div>
-												);
-											})}
+													<Button
+														variant="ghost"
+														size="icon"
+														aria-label="Delete"
+														className="h-7 w-7 opacity-0 group-hover:opacity-100 transition-opacity"
+														onClick={() =>
+															handleDelete(unlock.id, character.id)
+														}
+														disabled={isRemoving}
+													>
+														<Trash2 className="w-3 h-3 text-destructive" />
+													</Button>
+												</div>
+											))}
 										</div>
 									)}
 								</div>

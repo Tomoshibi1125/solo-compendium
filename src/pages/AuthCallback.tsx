@@ -5,12 +5,12 @@ import { ManaFlowText, RiftHeading } from "@/components/ui/AscendantText";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { RaLogo } from "@/components/ui/RaLogo";
 import { supabase } from "@/integrations/supabase/client";
+import { normalizeAuthError } from "@/lib/auth/authErrors";
 import { isSafeNextPath } from "@/lib/campaignInviteUtils";
 import { logger } from "@/lib/logger";
 
 const normalizeRole = (value: string | null): "warden" | "ascendant" | null => {
-	if (value === "warden" || value === "Warden" || value === "admin")
-		return "warden";
+	if (value === "warden" || value === "Warden") return "warden";
 	if (value === "ascendant" || value === "player") return "ascendant";
 	return null;
 };
@@ -28,9 +28,11 @@ export default function AuthCallback() {
 
 			if (error) {
 				logger.error("Auth callback error:", error, errorDescription);
-				navigate(
-					`/login?error=${encodeURIComponent(errorDescription || error)}`,
+				const safeError = normalizeAuthError(
+					{ code: error, message: errorDescription },
+					"callback",
 				);
+				navigate(`/login?error=${encodeURIComponent(safeError.message)}`);
 				return;
 			}
 

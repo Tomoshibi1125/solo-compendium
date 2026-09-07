@@ -402,42 +402,7 @@ export const useCreateGuild = () => {
 				p_character_id: params.characterId,
 			});
 
-			if (rpcResult.error) {
-				const msg = String(rpcResult.error.message ?? "").toLowerCase();
-				const isRpcMissing =
-					msg.includes("does not exist") || msg.includes("no function matches");
-
-				if (!isRpcMissing) {
-					throw rpcResult.error;
-				}
-
-				// Fallback: direct INSERT when RPC doesn't exist
-				const id = crypto.randomUUID();
-				const now = new Date().toISOString();
-				const { error: insertError } = await supabase.from("guilds").insert({
-					id,
-					name: params.name,
-					description: params.description ?? null,
-					motto: params.motto ?? null,
-					leader_user_id: user.id,
-					campaign_id: params.campaignId ?? null,
-					share_code: shareCode,
-					is_active: true,
-					settings: {},
-					created_at: now,
-					updated_at: now,
-				});
-				if (insertError) throw insertError;
-
-				await supabase.from("guild_members").insert({
-					guild_id: id,
-					user_id: user.id,
-					character_id: params.characterId ?? null,
-					role: "leader",
-				});
-
-				return id;
-			}
+			if (rpcResult.error) throw rpcResult.error;
 
 			return rpcResult.data as string;
 		},

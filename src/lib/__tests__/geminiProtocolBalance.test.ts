@@ -1,16 +1,14 @@
 /**
- * Fusion deep-balance guards.
- *
- * Sovereign fusion abilities are display+action features (modifiers: null),
- * so their generated TEXT is the table-facing rule. These tests pin the
- * balance-relevant invariants of the generator: the 8-ability level ladder,
- * capstone flagging, and that no template bakes a stale numeric proficiency
- * bonus into permanent feature text.
+ * Fusion deep-balance and canonical identity guards.
  */
 
 import { describe, expect, it } from "vitest";
 import type { Job, Path, Regent } from "@/lib/geminiProtocol";
-import { generateSovereign } from "@/lib/geminiProtocol";
+import {
+	generateSovereign,
+	generateSovereignWithAI,
+	mergeSources,
+} from "@/lib/geminiProtocol";
 
 const job = { id: "job-1", name: "Destroyer" } as unknown as Job;
 const path = {
@@ -21,48 +19,110 @@ const regentA = {
 	id: "umbral_regent",
 	name: "Umbral Regent",
 	title: "Regent of Shadow",
-	theme: "Shadow",
+	theme: "Umbral and Death",
 	damage_type: "Necrotic",
 } as unknown as Regent;
 const regentB = {
 	id: "frost_regent",
 	name: "Frost Regent",
 	title: "Regent of Frost",
-	theme: "Frost",
+	theme: "Eternal Winter & absolute Zero",
 	damage_type: "Cold",
 } as unknown as Regent;
 
 describe("generateSovereign — balance invariants", () => {
 	const sovereign = generateSovereign(job, path, regentA, regentB);
 
-	it("emits exactly the 8-ability level ladder 1/3/5/7/10/14/17/20", () => {
-		expect(sovereign.abilities.map((a) => a.level)).toEqual([
+	it("emits exactly the ordered 8-ability ladder", () => {
+		expect(sovereign.abilities.map((ability) => ability.level)).toEqual([
 			1, 3, 5, 7, 10, 14, 17, 20,
 		]);
 	});
 
 	it("flags only the 17/20 abilities as capstones", () => {
-		const capstoneLevels = sovereign.abilities
-			.filter((a) => a.is_capstone)
-			.map((a) => a.level);
-		expect(capstoneLevels).toEqual([17, 20]);
+		expect(
+			sovereign.abilities
+				.filter((ability) => ability.is_capstone)
+				.map((ability) => ability.level),
+		).toEqual([17, 20]);
 	});
 
 	it("never bakes a stale numeric proficiency bonus into feature text", () => {
-		// The L3 class-integration text once hardcoded "+2 bonus" — correct at
-		// level 3, wrong from level 5 on. Feature text persists for the life of
-		// the character, so it must reference the scaling stat, not a snapshot.
 		for (const ability of sovereign.abilities) {
 			expect(ability.description, ability.name).not.toMatch(/\+\d+\s+bonus/i);
 		}
-		const classIntegration = sovereign.abilities.find((a) => a.level === 3);
-		expect(classIntegration?.description).toMatch(/proficiency bonus/i);
+		expect(
+			sovereign.abilities.find((ability) => ability.level === 3)?.description,
+		).toMatch(/proficiency bonus/i);
 	});
 
-	it("leaves no unresolved {placeholder} tokens in generated text", () => {
+	it("leaves no unresolved placeholder tokens", () => {
 		for (const ability of sovereign.abilities) {
 			expect(ability.name, ability.name).not.toMatch(/\{[a-zA-Z]+\}/);
 			expect(ability.description, ability.name).not.toMatch(/\{[a-zA-Z]+\}/);
 		}
+	});
+
+	it("normalizes explicit aliases while preserving A/B dominance and order", () => {
+		const legacyA = { ...regentA, id: "shadow_regent" } as Regent;
+		const forward = generateSovereign(job, path, legacyA, regentB);
+		const reverse = generateSovereign(job, path, regentB, legacyA);
+
+		expect([forward.regentA.id, forward.regentB.id]).toEqual([
+			"umbral_regent",
+			"frost_regent",
+		]);
+		expect([reverse.regentA.id, reverse.regentB.id]).toEqual([
+			"frost_regent",
+			"umbral_regent",
+		]);
+		expect(forward.name).not.toBe(reverse.name);
+	});
+
+	it("rejects normalized self-fusion at deterministic and AI boundaries", async () => {
+		const legacyA = { ...regentA, id: "shadow_regent" } as Regent;
+		expect(() => generateSovereign(job, path, legacyA, regentA)).toThrow(
+			/distinct canonical Regents/i,
+		);
+		await expect(
+			generateSovereignWithAI(job, path, legacyA, regentA),
+		).rejects.toThrow(/distinct canonical Regents/i);
+	});
+
+	it("generates safely for canonical Regents with no theme or damage type", () => {
+		const noThemeA = {
+			...regentA,
+			theme: null,
+			damage_type: null,
+		} as unknown as Regent;
+		const noThemeB = {
+			...regentB,
+			theme: null,
+			damage_type: null,
+		} as unknown as Regent;
+		const generated = generateSovereign(job, path, noThemeA, noThemeB);
+		const authoredText = [
+			generated.name,
+			generated.title,
+			generated.fusion_theme,
+			generated.fusion_description,
+			...generated.abilities.flatMap((ability) => [
+				ability.name,
+				ability.description,
+			]),
+		].join(" ");
+
+		expect(authoredText).not.toMatch(/\b(?:undefined|null)\b/i);
+		expect(authoredText).not.toMatch(/\bForce\b/);
+		expect(authoredText).toContain("originating features");
+	});
+
+	it("deduplicates sources by normalized vernacular identity", () => {
+		expect(
+			mergeSources(
+				["Shadow Monarch", "  Destroyer  "],
+				["shadow regent", "Destroyer", "Frost Regent"],
+			),
+		).toEqual(["Shadow Regent", "Destroyer", "Frost Regent"]);
 	});
 });

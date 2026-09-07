@@ -2866,6 +2866,13 @@ export type Database = {
 						referencedRelation: "user_characters";
 						referencedColumns: ["id"];
 					},
+					{
+						foreignKeyName: "character_regent_unlock_grants_consumed_unlock_fkey";
+						columns: ["consumed_unlock_id", "character_id"];
+						isOneToOne: false;
+						referencedRelation: "character_regent_unlocks";
+						referencedColumns: ["id", "character_id"];
+					},
 				];
 			};
 			character_regent_unlocks: {
@@ -2875,8 +2882,9 @@ export type Database = {
 					dm_notes: string | null;
 					id: string;
 					is_primary: boolean;
+					legacy_regent_uuid: string | null;
 					quest_name: string;
-					regent_id: string;
+					regent_id: string | null;
 					unlocked_at: string;
 				};
 				Insert: {
@@ -2885,8 +2893,9 @@ export type Database = {
 					dm_notes?: string | null;
 					id?: string;
 					is_primary?: boolean;
+					legacy_regent_uuid?: string | null;
 					quest_name: string;
-					regent_id: string;
+					regent_id?: string | null;
 					unlocked_at?: string;
 				};
 				Update: {
@@ -2895,11 +2904,34 @@ export type Database = {
 					dm_notes?: string | null;
 					id?: string;
 					is_primary?: boolean;
+					legacy_regent_uuid?: string | null;
 					quest_name?: string;
-					regent_id?: string;
+					regent_id?: string | null;
 					unlocked_at?: string;
 				};
-				Relationships: [];
+				Relationships: [
+					{
+						foreignKeyName: "character_regent_unlocks_character_id_fkey";
+						columns: ["character_id"];
+						isOneToOne: false;
+						referencedRelation: "characters";
+						referencedColumns: ["id"];
+					},
+					{
+						foreignKeyName: "character_regent_unlocks_character_id_fkey";
+						columns: ["character_id"];
+						isOneToOne: false;
+						referencedRelation: "user_characters";
+						referencedColumns: ["id"];
+					},
+					{
+						foreignKeyName: "character_regent_unlocks_legacy_regent_uuid_fkey";
+						columns: ["legacy_regent_uuid"];
+						isOneToOne: false;
+						referencedRelation: "compendium_regents";
+						referencedColumns: ["id"];
+					},
+				];
 			};
 			character_regents: {
 				Row: {
@@ -2934,6 +2966,13 @@ export type Database = {
 						isOneToOne: false;
 						referencedRelation: "user_characters";
 						referencedColumns: ["id"];
+					},
+					{
+						foreignKeyName: "character_regents_unlock_projection_fkey";
+						columns: ["character_id", "regent_id"];
+						isOneToOne: true;
+						referencedRelation: "character_regent_unlocks";
+						referencedColumns: ["character_id", "regent_id"];
 					},
 				];
 			};
@@ -8287,11 +8326,13 @@ export type Database = {
 					is_public: boolean;
 					job_id: string;
 					likes_count: number;
-					monarch_a_id: string;
-					monarch_b_id: string;
+					monarch_a_id: string | null;
+					monarch_b_id: string | null;
 					name: string;
 					path_id: string;
 					power_multiplier: string;
+					regent_a_id: string | null;
+					regent_b_id: string | null;
 					title: string;
 				};
 				Insert: {
@@ -8307,11 +8348,13 @@ export type Database = {
 					is_public?: boolean;
 					job_id: string;
 					likes_count?: number;
-					monarch_a_id: string;
-					monarch_b_id: string;
+					monarch_a_id?: string | null;
+					monarch_b_id?: string | null;
 					name: string;
 					path_id: string;
 					power_multiplier: string;
+					regent_a_id?: string | null;
+					regent_b_id?: string | null;
 					title: string;
 				};
 				Update: {
@@ -8327,11 +8370,13 @@ export type Database = {
 					is_public?: boolean;
 					job_id?: string;
 					likes_count?: number;
-					monarch_a_id?: string;
-					monarch_b_id?: string;
+					monarch_a_id?: string | null;
+					monarch_b_id?: string | null;
 					name?: string;
 					path_id?: string;
 					power_multiplier?: string;
+					regent_a_id?: string | null;
+					regent_b_id?: string | null;
 					title?: string;
 				};
 				Relationships: [
@@ -8996,9 +9041,17 @@ export type Database = {
 				Args: { p_character_id: string; p_quest_id: string };
 				Returns: undefined;
 			};
+			complete_regent_catch_up: {
+				Args: { p_unlock_id: string };
+				Returns: number;
+			};
 			complete_session_quest: {
 				Args: { p_completion_notes?: string; p_quest_id: string };
 				Returns: undefined;
+			};
+			consume_regent_unlock_grant: {
+				Args: { p_grant_id: string; p_regent_id: string };
+				Returns: string;
 			};
 			create_campaign_invite: {
 				Args: {
@@ -9058,7 +9111,6 @@ export type Database = {
 				Args: { p_session_id: string };
 				Returns: undefined;
 			};
-			exec_sql: { Args: { sql_string: string }; Returns: undefined };
 			export_campaign_bundle: {
 				Args: { p_campaign_id: string };
 				Returns: Json;
@@ -9088,16 +9140,11 @@ export type Database = {
 			get_campaign_by_share_code: {
 				Args: { p_share_code: string };
 				Returns: {
-					created_at: string;
 					description: string;
 					id: string;
 					is_active: boolean;
 					name: string;
-					party_gold: Json;
-					settings: Json;
 					share_code: string;
-					updated_at: string;
-					warden_id: string;
 				}[];
 			};
 			get_campaign_invite_by_token: {
@@ -9107,12 +9154,8 @@ export type Database = {
 					campaign_id: string;
 					campaign_name: string;
 					expires_at: string;
-					invite_email: string;
-					join_code: string;
-					max_uses: number;
 					role: string;
 					status: string;
-					used_count: number;
 				}[];
 			};
 			get_campaign_linked_characters: {
@@ -9214,6 +9257,10 @@ export type Database = {
 			release_anomaly_controller: {
 				Args: { p_tamed_id: string };
 				Returns: undefined;
+			};
+			remove_regent_unlock: {
+				Args: { p_unlock_id: string };
+				Returns: string;
 			};
 			request_to_join_guild: {
 				Args: {
@@ -9348,6 +9395,10 @@ export type Database = {
 					p_status: string;
 					p_visibility_scope?: string;
 				};
+				Returns: string;
+			};
+			set_primary_regent_unlock: {
+				Args: { p_unlock_id: string };
 				Returns: string;
 			};
 			start_active_session: {

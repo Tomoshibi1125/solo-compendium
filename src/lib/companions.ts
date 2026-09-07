@@ -42,6 +42,162 @@ export interface CompanionCondition {
 /** Companion `extra_type` used for a guild NPC carried onto a sheet. */
 export const GUILD_ALLY_EXTRA_TYPE = "ally";
 
+/** Stable discriminator for canonical source snapshots stored in `npc_data`. */
+export const CANONICAL_COMPANION_SOURCE_KIND = "canonical-compendium" as const;
+export const CANONICAL_COMPANION_SOURCE_VERSION = 1 as const;
+
+export type CanonicalCompanionType = "anomaly" | "vehicle";
+export type CanonicalCompanionCollection = "anomalies" | "vehicles";
+
+/**
+ * Versioned, self-describing source metadata for a companion selected from the
+ * canonical compendium. `npc_data` is the only existing JSON snapshot column
+ * on `character_extras`; the discriminator keeps these records distinct from
+ * the legacy raw `SandboxNPC` snapshots used by guild allies.
+ */
+export interface CanonicalCompanionSource {
+	kind: typeof CANONICAL_COMPANION_SOURCE_KIND;
+	version: typeof CANONICAL_COMPANION_SOURCE_VERSION;
+	provenance: {
+		canonicalId: string;
+		canonicalType: CanonicalCompanionType;
+		canonicalCollection: CanonicalCompanionCollection;
+		entryType: string | null;
+		source: string | null;
+		sourceBook: string | null;
+	};
+	sourceFields: {
+		name: string;
+		hpMax: number;
+		baseAc: number;
+		speed: number;
+		rank: string | null;
+	};
+}
+
+export function createCanonicalCompanionSource(input: {
+	canonicalId: string;
+	canonicalType: CanonicalCompanionType;
+	canonicalCollection: CanonicalCompanionCollection;
+	entryType?: string | null;
+	source?: string | null;
+	sourceBook?: string | null;
+	name: string;
+	hpMax: number;
+	baseAc: number;
+	speed: number;
+	rank?: string | null;
+}): CanonicalCompanionSource {
+	return {
+		kind: CANONICAL_COMPANION_SOURCE_KIND,
+		version: CANONICAL_COMPANION_SOURCE_VERSION,
+		provenance: {
+			canonicalId: input.canonicalId,
+			canonicalType: input.canonicalType,
+			canonicalCollection: input.canonicalCollection,
+			entryType: input.entryType ?? null,
+			source: input.source ?? null,
+			sourceBook: input.sourceBook ?? null,
+		},
+		sourceFields: {
+			name: input.name,
+			hpMax: input.hpMax,
+			baseAc: input.baseAc,
+			speed: input.speed,
+			rank: input.rank ?? null,
+		},
+	};
+}
+
+/** Parse only tagged canonical snapshots; raw guild-NPC `npc_data` stays valid. */
+export function parseCanonicalCompanionSource(
+	raw: unknown,
+): CanonicalCompanionSource | null {
+	if (!raw || typeof raw !== "object" || Array.isArray(raw)) return null;
+	const value = raw as Record<string, unknown>;
+	if (
+		value.kind !== CANONICAL_COMPANION_SOURCE_KIND ||
+		value.version !== CANONICAL_COMPANION_SOURCE_VERSION
+	) {
+		return null;
+	}
+
+	const provenance = value.provenance;
+	const sourceFields = value.sourceFields;
+	if (
+		!provenance ||
+		typeof provenance !== "object" ||
+		Array.isArray(provenance) ||
+		!sourceFields ||
+		typeof sourceFields !== "object" ||
+		Array.isArray(sourceFields)
+	) {
+		return null;
+	}
+
+	const p = provenance as Record<string, unknown>;
+	const fields = sourceFields as Record<string, unknown>;
+	const canonicalType = p.canonicalType;
+	const canonicalCollection = p.canonicalCollection;
+	if (
+		typeof p.canonicalId !== "string" ||
+		p.canonicalId.length === 0 ||
+		(canonicalType !== "anomaly" && canonicalType !== "vehicle") ||
+		(canonicalCollection !== "anomalies" &&
+			canonicalCollection !== "vehicles") ||
+		typeof fields.name !== "string" ||
+		fields.name.length === 0 ||
+		typeof fields.hpMax !== "number" ||
+		!Number.isFinite(fields.hpMax) ||
+		typeof fields.baseAc !== "number" ||
+		!Number.isFinite(fields.baseAc) ||
+		typeof fields.speed !== "number" ||
+		!Number.isFinite(fields.speed)
+	) {
+		return null;
+	}
+
+	const nullableString = (candidate: unknown): string | null =>
+		typeof candidate === "string" ? candidate : null;
+
+	return createCanonicalCompanionSource({
+		canonicalId: p.canonicalId,
+		canonicalType,
+		canonicalCollection,
+		entryType: nullableString(p.entryType),
+		source: nullableString(p.source),
+		sourceBook: nullableString(p.sourceBook),
+		name: fields.name,
+		hpMax: fields.hpMax,
+		baseAc: fields.baseAc,
+		speed: fields.speed,
+		rank: nullableString(fields.rank),
+	});
+}
+
+/** Normalize authored canonical actions/traits without synthesizing content. */
+export function abilitiesFromCanonicalSource(
+	raw: unknown,
+	fallbackActionType: string,
+): CompanionAbility[] {
+	if (!Array.isArray(raw)) return [];
+	return raw
+		.filter(
+			(entry): entry is Record<string, unknown> =>
+				typeof entry === "object" && entry !== null,
+		)
+		.map((entry) => ({
+			name: typeof entry.name === "string" ? entry.name : "",
+			description:
+				typeof entry.description === "string" ? entry.description : undefined,
+			action_type:
+				typeof entry.action_type === "string"
+					? entry.action_type
+					: fallbackActionType,
+		}))
+		.filter((entry) => entry.name.length > 0);
+}
+
 /**
  * Effective HP for a guild NPC at a given level. Mirrors the formula used in
  * the guild roster (`GuildDetail.tsx`): base HP plus per-level HP for every

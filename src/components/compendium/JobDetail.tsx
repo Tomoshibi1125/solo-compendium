@@ -14,8 +14,17 @@ import { CompendiumImage } from "@/components/compendium/CompendiumImage";
 import { DetailMetaFooter } from "@/components/compendium/DetailMetaFooter";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
-import { listCanonicalEntries } from "@/lib/canonicalCompendium";
-import { formatActionType, formatEnumLabel } from "@/lib/labels";
+import {
+	listCanonicalEntries,
+	listLearnablePowers,
+	listLearnableTechniques,
+} from "@/lib/canonicalCompendium";
+import {
+	formatActionType,
+	formatEnumLabel,
+	formatRankMarkup,
+	formatRecharge,
+} from "@/lib/labels";
 import { formatRegentVernacular } from "@/lib/vernacular";
 import type { CompendiumJob } from "@/types/compendium";
 import { DetailHeader } from "./DetailHeader";
@@ -33,6 +42,12 @@ export interface JobFeature {
 	description?: string;
 	level: number;
 	action_type?: string;
+	uses?: {
+		formula: string;
+		recharge: "short-rest" | "long-rest";
+	};
+	resource?: string;
+	tracking?: "uses" | "resource" | "manual";
 	is_path_feature: boolean;
 }
 
@@ -43,6 +58,55 @@ export interface JobPath {
 	description?: string;
 	path_level: number;
 }
+
+interface JobFeatureMechanics {
+	actionType?: string | null;
+	uses?: {
+		formula: string;
+		recharge: "short-rest" | "long-rest";
+	} | null;
+	resource?: string | null;
+	tracking?: "uses" | "resource" | "manual" | null;
+}
+
+const FeatureMechanicBadges = ({
+	actionType,
+	uses,
+	resource,
+	tracking,
+}: JobFeatureMechanics) => {
+	if (!actionType && !uses && !resource && tracking !== "manual") return null;
+
+	return (
+		<div className="flex flex-wrap gap-2 mt-2">
+			{actionType && (
+				<Badge variant="secondary" className="text-xs">
+					Action: {formatActionType(actionType)}
+				</Badge>
+			)}
+			{uses && (
+				<>
+					<Badge variant="outline" className="text-xs">
+						Uses: {formatRegentVernacular(uses.formula)}
+					</Badge>
+					<Badge variant="outline" className="text-xs">
+						Cadence: {formatRecharge(uses.recharge)}
+					</Badge>
+				</>
+			)}
+			{resource && (
+				<Badge variant="outline" className="text-xs">
+					Resource: {formatRegentVernacular(resource)}
+				</Badge>
+			)}
+			{tracking === "manual" && !uses && (
+				<Badge variant="outline" className="text-xs">
+					Tracking: Manual
+				</Badge>
+			)}
+		</div>
+	);
+};
 
 export const JobDetail = ({ data }: { data: JobData }) => {
 	const [features, setFeatures] = useState<JobFeature[]>([]);
@@ -76,7 +140,10 @@ export const JobDetail = ({ data }: { data: JobData }) => {
 					description: feature.description,
 					level: feature.level,
 					is_path_feature: false,
-					action_type: undefined,
+					action_type: feature.actionType,
+					uses: feature.uses,
+					resource: feature.resource,
+					tracking: feature.tracking,
 				}),
 			);
 
@@ -107,39 +174,33 @@ export const JobDetail = ({ data }: { data: JobData }) => {
 					path_level: p.path_level ?? p.level ?? 3,
 				}));
 
-			// Canonical static powers tagged with this job name (its signatures).
-			const powers = await listCanonicalEntries("powers");
-			const matchedPowers = powers
-				.filter((power) => {
-					const tags = (power.tags || []).map((t) => t.toLowerCase());
-					return tags.includes(jobKey);
-				})
-				.slice(0, 10)
-				.map((power) => ({
-					id: power.id,
-					name: power.name,
-					display_name: power.display_name ?? null,
-					power_level: power.power_level ?? power.level ?? 0,
-				}));
-
-			// Canonical static techniques tagged with this job name.
-			const techniques = await listCanonicalEntries("techniques");
-			const matchedTechniques = techniques
-				.filter((technique) => {
-					const tags = (technique.tags || []).map((t) => t.toLowerCase());
-					return tags.includes(jobKey);
-				})
-				.slice(0, 10)
-				.map((technique) => ({
-					id: technique.id,
-					name: technique.name,
-					display_name: technique.display_name ?? null,
-					level_requirement:
-						(technique as { level_requirement?: number | null })
-							.level_requirement ??
-						technique.level ??
-						0,
-				}));
+			// Canonical learnability is authoritative; raw supplemental tags are not.
+			const [powers, techniques] = await Promise.all([
+				listLearnablePowers({
+					jobName: data.name,
+					characterLevel: 20,
+				}),
+				listLearnableTechniques({
+					jobName: data.name,
+					characterLevel: 20,
+				}),
+			]);
+			const matchedPowers = powers.slice(0, 10).map((power) => ({
+				id: power.id,
+				name: power.name,
+				display_name: power.display_name ?? null,
+				power_level: power.power_level ?? power.level ?? 0,
+			}));
+			const matchedTechniques = techniques.slice(0, 10).map((technique) => ({
+				id: technique.id,
+				name: technique.name,
+				display_name: technique.display_name ?? null,
+				level_requirement:
+					(technique as { level_requirement?: number | null })
+						.level_requirement ??
+					technique.level ??
+					0,
+			}));
 
 			setFeatures(staticFeatures);
 			setPaths(matchedPaths);
@@ -409,8 +470,16 @@ export const JobDetail = ({ data }: { data: JobData }) => {
 										</Badge>
 									</div>
 									<p className="text-sm text-muted-foreground">
-										<AutoLinkText text={feature.description || ""} />
+										<AutoLinkText
+											text={formatRankMarkup(feature.description || "")}
+										/>
 									</p>
+									<FeatureMechanicBadges
+										actionType={feature.actionType}
+										uses={feature.uses}
+										resource={feature.resource}
+										tracking={feature.tracking}
+									/>
 								</div>
 							))}
 					</div>
@@ -587,6 +656,76 @@ export const JobDetail = ({ data }: { data: JobData }) => {
 								<span className="font-heading">
 									{formatRegentVernacular(data.spellcasting.focus)}
 								</span>
+							</div>
+						)}
+					</div>
+				</AscendantWindow>
+			)}
+
+			{(data.level_choices?.length ||
+				data.powers_known?.length ||
+				data.techniques_known?.length ||
+				data.spellbook) && (
+				<AscendantWindow title="ABILITY PROGRESSION">
+					<div className="space-y-3 text-sm">
+						{data.spellbook && (
+							<div>
+								<span className="font-heading font-semibold">
+									{formatRegentVernacular(data.spellbook.label)}:
+								</span>{" "}
+								{data.spellbook.atCreation} inscriptions at level{" "}
+								{data.spellbook.startLevel ?? 1}, then {data.spellbook.perLevel}{" "}
+								per level.
+							</div>
+						)}
+						{data.powers_known && data.powers_known.length > 0 && (
+							<div>
+								<span className="font-heading font-semibold">
+									Powers Known:
+								</span>{" "}
+								{data.powers_known
+									.map((count, index, values) =>
+										index === 0 || count !== values[index - 1]
+											? `L${index + 1}: ${count}`
+											: null,
+									)
+									.filter(Boolean)
+									.join(" · ")}
+							</div>
+						)}
+						{data.techniques_known && data.techniques_known.length > 0 && (
+							<div>
+								<span className="font-heading font-semibold">
+									Techniques Known:
+								</span>{" "}
+								{data.techniques_known
+									.map((count, index, values) =>
+										index === 0 || count !== values[index - 1]
+											? `L${index + 1}: ${count}`
+											: null,
+									)
+									.filter(Boolean)
+									.join(" · ")}
+							</div>
+						)}
+						{data.level_choices && data.level_choices.length > 0 && (
+							<div>
+								<h4 className="font-heading font-semibold mb-1">
+									Choice Ledger
+								</h4>
+								<ul className="space-y-1 text-muted-foreground">
+									{data.level_choices.map((choice) => (
+										<li
+											key={`${choice.level}-${choice.type}-${choice.source}-${choice.options?.join("-") ?? choice.count}`}
+										>
+											Level {choice.level}: choose {choice.count}{" "}
+											{formatEnumLabel(choice.type)} ({choice.source})
+											{choice.options?.length
+												? ` — ${choice.options.join(", ")}`
+												: ""}
+										</li>
+									))}
+								</ul>
 							</div>
 						)}
 					</div>
@@ -952,15 +1091,18 @@ export const JobDetail = ({ data }: { data: JobData }) => {
 									<Badge variant="outline" className="text-xs">
 										Level {feature.level}
 									</Badge>
-									{feature.action_type && (
-										<Badge variant="secondary" className="text-xs">
-											{formatActionType(feature.action_type)}
-										</Badge>
-									)}
 								</div>
 								<p className="text-sm text-muted-foreground">
-									<AutoLinkText text={feature.description || ""} />
+									<AutoLinkText
+										text={formatRankMarkup(feature.description || "")}
+									/>
 								</p>
+								<FeatureMechanicBadges
+									actionType={feature.action_type}
+									uses={feature.uses}
+									resource={feature.resource}
+									tracking={feature.tracking}
+								/>
 							</div>
 						))}
 					</div>
@@ -1012,7 +1154,9 @@ export const JobDetail = ({ data }: { data: JobData }) => {
 												)}
 											</td>
 											<td className="py-2 px-3 text-sm text-muted-foreground">
-												<AutoLinkText text={cf.description || ""} />
+												<AutoLinkText
+													text={formatRankMarkup(cf.description || "")}
+												/>
 											</td>
 										</tr>
 									))}

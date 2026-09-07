@@ -521,7 +521,12 @@ export function useAbsorbRune() {
 					.from("character_regent_unlocks")
 					.select("regent_id")
 					.eq("character_id", characterId);
-				unlockedRegents = (regentRows ?? []).map((row) => row.regent_id);
+				unlockedRegents = (regentRows ?? [])
+					.map((row) => row.regent_id)
+					.filter(
+						(regentId): regentId is string =>
+							typeof regentId === "string" && regentId.length > 0,
+					);
 			}
 
 			const abilityContext =

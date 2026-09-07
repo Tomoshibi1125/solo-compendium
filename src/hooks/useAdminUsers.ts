@@ -1,12 +1,13 @@
-// React Query hooks for the Rift Console user registry + admin audit log.
-// Warden/admin-only surface: profiles RLS exposes all rows to wardens, and
-// the mutations go through SECURITY DEFINER RPCs that audit atomically.
-// No local/guest mode — user management only exists against the real backend.
+// React Query hooks for the account registry and immutable admin audit log.
+// The UI claim is defense in depth only; database RLS and RPC checks remain
+// authoritative and read canonical auth.users app_metadata server-side.
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useToast } from "@/hooks/use-toast";
 import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import type { Json } from "@/integrations/supabase/types";
+import { AppError } from "@/lib/appError";
+import { useAuth } from "@/lib/auth/authContext";
 
 export interface AdminUserRow {
 	id: string;
@@ -26,11 +27,13 @@ export interface AdminAuditRow {
 	created_at: string | null;
 }
 
-/** Every registered account, newest first (warden RLS shows all profiles). */
+/** Every registered account, newest first (account-admin RLS only). */
 export const useAdminUsers = () => {
+	const { user } = useAuth();
+	const accountAdminId = user?.isAccountAdmin ? user.id : null;
 	return useQuery({
-		queryKey: ["admin", "users"],
-		enabled: isSupabaseConfigured,
+		queryKey: ["account-admin", accountAdminId, "users"],
+		enabled: isSupabaseConfigured && accountAdminId !== null,
 		queryFn: async (): Promise<AdminUserRow[]> => {
 			const { data, error } = await supabase
 				.from("profiles")
@@ -42,11 +45,13 @@ export const useAdminUsers = () => {
 	});
 };
 
-/** The immutable admin action trail (who/what/when), newest first. */
+/** The immutable account-admin action trail, newest first. */
 export const useAdminAuditLog = (limit = 50) => {
+	const { user } = useAuth();
+	const accountAdminId = user?.isAccountAdmin ? user.id : null;
 	return useQuery({
-		queryKey: ["admin", "audit-log", limit],
-		enabled: isSupabaseConfigured,
+		queryKey: ["account-admin", accountAdminId, "audit-log", limit],
+		enabled: isSupabaseConfigured && accountAdminId !== null,
 		queryFn: async (): Promise<AdminAuditRow[]> => {
 			const { data, error } = await supabase
 				.from("admin_audit_log")
@@ -68,10 +73,21 @@ const useAdminMutation = (
 ) => {
 	const queryClient = useQueryClient();
 	const { toast } = useToast();
+	const { user } = useAuth();
 	return useMutation({
-		mutationFn: action,
+		mutationFn: async (params: { userId: string; value: string | boolean }) => {
+			if (!user?.isAccountAdmin) {
+				throw new AppError(
+					"Account administrator access is required.",
+					"FORBIDDEN",
+				);
+			}
+			await action(params);
+		},
 		onSuccess: (_, variables) => {
-			queryClient.invalidateQueries({ queryKey: ["admin"] });
+			queryClient.invalidateQueries({
+				queryKey: ["account-admin", user?.id],
+			});
 			toast({ title: successTitle(variables.value) });
 		},
 		onError: (error: Error) => {
@@ -84,7 +100,7 @@ const useAdminMutation = (
 	});
 };
 
-/** Warden: change an account's role (audited server-side). */
+/** Account administrator: change an account's gameplay role (audited server-side). */
 export const useSetUserRole = () =>
 	useAdminMutation(
 		async ({ userId, value }) => {
@@ -94,10 +110,10 @@ export const useSetUserRole = () =>
 			});
 			if (error) throw error;
 		},
-		(value) => `Role changed to ${value}`,
+		(value) => `Gameplay role changed to ${value}`,
 	);
 
-/** Warden: suspend / reinstate an account (audited server-side). */
+/** Account administrator: suspend or reinstate an account (audited server-side). */
 export const useSetUserBan = () =>
 	useAdminMutation(
 		async ({ userId, value }) => {

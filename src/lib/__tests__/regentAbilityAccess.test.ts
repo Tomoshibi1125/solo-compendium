@@ -1,13 +1,3 @@
-/**
- * Regent ability-access grants must resolve to REAL compendium entries.
- *
- * The user chose "full independent progression" for regents. That only works if
- * a regent's granted spell/power/technique picks resolve to options — otherwise
- * the level-up wizard would demand N picks with 0 available (the Revenant-class
- * hard block). These tests prove the additive regent grant layer surfaces
- * options that a bare (non-caster) base job would not.
- */
-
 import { describe, expect, it } from "vitest";
 import { regents } from "@/data/compendium/regents";
 import {
@@ -15,123 +5,73 @@ import {
 	listLearnableSpells,
 	listLearnableTechniques,
 } from "@/lib/canonicalCompendium";
-import { getActiveRegentAbilityGrants } from "@/lib/regentAbilityAccess";
+import {
+	getActiveRegentAbilityGrants,
+	REGENT_ABILITY_GRANTS,
+} from "@/lib/regentAbilityAccess";
 
-const CASTER_REGENTS = [
-	"Umbral Regent",
-	"Radiant Regent",
-	"Destruction Regent",
-	"Frost Regent",
-	"Plague Regent",
-	"Spatial Regent",
-	"Blood Regent",
-	"Gravity Regent",
-];
-const MARTIAL_REGENTS = [
-	"Steel Regent",
-	"War Regent",
-	"Beast Regent",
-	"Mimic Regent",
-];
-
-describe("regent ability-access grant coverage", () => {
-	it("every canonical regent has at least one ability grant", () => {
+describe("Task 7 Regent ability access is explicit-only", () => {
+	it("quarantines all inferred school and Job-list grants", () => {
+		expect(REGENT_ABILITY_GRANTS).toEqual([]);
 		for (const regent of regents) {
-			const grants = getActiveRegentAbilityGrants({
-				regentNames: [regent.name],
-				characterLevel: 20,
-			});
 			expect(
-				grants.length,
-				`${regent.name}: needs at least one ability grant`,
-			).toBeGreaterThan(0);
+				getActiveRegentAbilityGrants({
+					regentNames: [regent.name],
+					characterLevel: 20,
+				}),
+			).toEqual([]);
 		}
 	});
 
-	it("caster regents grant spells; martial regents grant powers + techniques", () => {
-		for (const name of CASTER_REGENTS) {
-			const spellGrants = getActiveRegentAbilityGrants({
-				regentNames: [name],
-				characterLevel: 20,
-				kind: "spell",
-			});
-			expect(spellGrants.length, `${name}: caster spell grant`).toBeGreaterThan(
-				0,
-			);
-		}
-		for (const name of MARTIAL_REGENTS) {
-			const powerGrants = getActiveRegentAbilityGrants({
-				regentNames: [name],
-				characterLevel: 20,
-				kind: "power",
-			});
-			const techGrants = getActiveRegentAbilityGrants({
-				regentNames: [name],
-				characterLevel: 20,
-				kind: "technique",
-			});
+	it("returns nothing for empty, unknown, or legacy alias tokens", () => {
+		for (const regentNames of [
+			[],
+			["Not A Regent"],
+			["Shadow Regent"],
+			["Dragon Regent"],
+		]) {
 			expect(
-				powerGrants.length,
-				`${name}: martial power grant`,
-			).toBeGreaterThan(0);
-			expect(
-				techGrants.length,
-				`${name}: martial technique grant`,
-			).toBeGreaterThan(0);
+				getActiveRegentAbilityGrants({ regentNames, characterLevel: 20 }),
+			).toEqual([]);
 		}
 	});
 
-	it("returns nothing without a matching regent name", () => {
-		expect(
-			getActiveRegentAbilityGrants({ regentNames: [], characterLevel: 20 }),
-		).toHaveLength(0);
-		expect(
-			getActiveRegentAbilityGrants({
-				regentNames: ["Not A Regent"],
-				characterLevel: 20,
-			}),
-		).toHaveLength(0);
-	});
-});
-
-describe("regent grants resolve to real compendium entries (no empty picks)", () => {
-	it("a caster regent lets a non-caster base job learn themed leveled spells", async () => {
-		// Berserker is a pure martial job — it learns no spells on its own.
+	it("does not broaden a Job's canonical spell options by theme", async () => {
 		const withoutRegent = await listLearnableSpells({
 			jobName: "Berserker",
 			characterLevel: 12,
 		});
-		const withUmbral = await listLearnableSpells({
+		const withRegent = await listLearnableSpells({
 			jobName: "Berserker",
 			regentNames: ["Umbral Regent"],
 			characterLevel: 12,
 		});
-		const leveledFromRegent = withUmbral.filter((s) => s.power_level > 0);
-		expect(
-			leveledFromRegent.length,
-			"Umbral overlay must surface leveled spells for a Berserker",
-		).toBeGreaterThan(0);
-		expect(withUmbral.length).toBeGreaterThan(withoutRegent.length);
+		expect(withRegent.map((entry) => entry.id)).toEqual(
+			withoutRegent.map((entry) => entry.id),
+		);
 	});
 
-	it("a martial regent lets a caster base job learn themed powers + techniques", async () => {
-		const powers = await listLearnablePowers({
-			jobName: "Mage",
-			regentNames: ["Beast Regent"],
-			characterLevel: 12,
-		});
-		const techniques = await listLearnableTechniques({
-			jobName: "Mage",
-			regentNames: ["Beast Regent"],
-			characterLevel: 12,
-		});
-		expect(
-			powers.length,
-			"Beast overlay must surface powers for a Mage",
-		).toBeGreaterThan(0);
-		expect(
-			techniques.length,
-			"Beast overlay must surface techniques for a Mage",
-		).toBeGreaterThan(0);
+	it("does not broaden a Job's canonical martial options by theme", async () => {
+		const [basePowers, regentPowers, baseTechniques, regentTechniques] =
+			await Promise.all([
+				listLearnablePowers({ jobName: "Mage", characterLevel: 12 }),
+				listLearnablePowers({
+					jobName: "Mage",
+					regentNames: ["Beast Regent"],
+					characterLevel: 12,
+				}),
+				listLearnableTechniques({ jobName: "Mage", characterLevel: 12 }),
+				listLearnableTechniques({
+					jobName: "Mage",
+					regentNames: ["Beast Regent"],
+					characterLevel: 12,
+				}),
+			]);
+		expect(regentPowers.map((entry) => entry.id)).toEqual(
+			basePowers.map((entry) => entry.id),
+		);
+		expect(regentTechniques.map((entry) => entry.id)).toEqual(
+			baseTechniques.map((entry) => entry.id),
+		);
 	});
 });

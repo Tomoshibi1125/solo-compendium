@@ -1,4 +1,7 @@
-import type { StaticJob as AuthoritativeStaticJob } from "@/types/character";
+import type {
+	StaticJob as AuthoritativeStaticJob,
+	FeatureUseDefinition,
+} from "@/types/character";
 
 // Each Job functions simultaneously as LINEAGE (race) and MANDATE (class).
 // racialTraits = physiological/lineage identity granted at Awakening (race equivalent).
@@ -8,6 +11,7 @@ export interface Job extends AuthoritativeStaticJob {
 		name: string;
 		description: string;
 		type: "lineage" | "physiology" | "sense" | "social" | "innate-magic";
+		uses?: FeatureUseDefinition;
 	}[];
 	type: string;
 	rank: string;
@@ -31,13 +35,22 @@ export interface Job extends AuthoritativeStaticJob {
 	weaponChoices?: string[][];
 	tool_proficiencies: string[];
 	toolProficiencies?: string[];
-	awakeningFeatures: { name: string; description: string; level: number }[];
+	awakeningFeatures: {
+		name: string;
+		description: string;
+		level: number;
+		actionType?: string;
+		uses?: FeatureUseDefinition;
+		resource?: string;
+		tracking?: "uses" | "resource" | "manual";
+	}[];
 	jobTraits: {
 		name: string;
 		description: string;
 		type: "passive" | "active" | "resistance" | "immunity" | "bonus";
 		frequency?: "at-will" | "short-rest" | "long-rest" | "once-per-day";
 		dc?: number;
+		uses?: FeatureUseDefinition;
 	}[];
 	abilityScoreImprovements: {
 		strength?: number;
@@ -120,6 +133,7 @@ export interface Job extends AuthoritativeStaticJob {
 		level: number;
 		name: string;
 		description: string;
+		actionType?: string;
 		/**
 		 * Structured limited-use resource. When present, character creation /
 		 * level-up seeds the feature's `uses_max`/`uses_current`/`recharge` and a
@@ -127,7 +141,9 @@ export interface Job extends AuthoritativeStaticJob {
 		 * rescales as the character levels (see addLevel1Features /
 		 * autoUpdateFeatureUses in characterCreation.ts).
 		 */
-		uses?: { formula: string; recharge: "short-rest" | "long-rest" };
+		uses?: FeatureUseDefinition;
+		resource?: string;
+		tracking?: "uses" | "resource" | "manual";
 	}[];
 	abilities: string[];
 	stats: {
@@ -201,6 +217,7 @@ export const jobs: Job[] = [
 				description:
 					"Your Awakening hardened your skeleton with crystallized mana — X-rays show bones denser than titanium. When reduced to 0 HP but not killed outright, drop to 1 HP instead. Once per long rest.",
 				level: 1,
+				uses: { formula: "1", recharge: "long-rest" },
 			},
 			{
 				name: "Aetheric-Sight Resonance",
@@ -213,6 +230,7 @@ export const jobs: Job[] = [
 				description:
 					"Your Awakening manifested a mana-fueled adrenal core near your kidneys. During the heat of battle, your essence overclocks: below half HP, attacks deal extra 1d4 force damage for 1 minute (1d6 at 11th). Once per short rest.",
 				level: 5,
+				uses: { formula: "1", recharge: "short-rest" },
 			},
 			{
 				name: "Weapon Essence Bond",
@@ -238,7 +256,7 @@ export const jobs: Job[] = [
 			{
 				name: "Damage Absorber",
 				description:
-					"Your crystallized mana skeleton absorbs impact like built-in spirit armor. When you use Adrenaline Burst, also gain temp HP equal to your Destroyer level.",
+					"Your crystallized mana skeleton absorbs impact like built-in spirit armor. When you use Adrenal Flux, also gain temp HP equal to your Destroyer level.",
 				type: "passive",
 			},
 		],
@@ -429,7 +447,7 @@ export const jobs: Job[] = [
 		type: "Job",
 		rank: "C",
 		description:
-			"The Berserker is an Awakened identity that specializes in the Overload Tank and Unstable Resonance mandate. As an Ascendant of this lineage, their core is defined by an unstable connection to the Absolute, flooding their physiology with raw energy under stress. In the modern world, Berserkers are walking spectacles of power—visible mana veins flare across their skin as their muscles swell with crystallized essence. The Ascendant Bureau classifies them as high-risk but indispensable assets who specialized in the controlled demolition of high-rank Rifts.",
+			"The Berserker is an Awakened identity that specializes in the Overload Tank and Unstable Resonance mandate. As an Ascendant of this lineage, their core is defined by an unstable connection to the Absolute, flooding their physiology with raw energy under stress. In the modern world, Berserkers are walking spectacles of power—visible mana veins flare across their skin as their muscles swell with crystallized essence. The Ascendant Bureau classifies them as high-risk but indispensable assets who specialize in the controlled demolition of high-rank Rifts.",
 		hitDie: "1d12",
 		primaryAbility: "Strength",
 		saving_throws: ["Strength", "Vitality"],
@@ -499,6 +517,7 @@ export const jobs: Job[] = [
 					"Your visible mana veins flare with threat — bystanders back away, animals flee, and smartphone cameras auto-focus on you. Frighten a creature within 30 ft (Sense save). Prof bonus uses per long rest.",
 				type: "active",
 				frequency: "long-rest",
+				uses: { formula: "PB", recharge: "long-rest" },
 			},
 		],
 		abilityScoreImprovements: { strength: 2, agility: 1 },
@@ -734,11 +753,12 @@ export const jobs: Job[] = [
 				description:
 					"Step sideways through the dimensional membrane — security cameras capture you vanishing from one spot and appearing 30 ft away in a single frame. Teleport to dim light/darkness. Advantage on next melee attack after phasing. Prof bonus uses per long rest.",
 				level: 3,
+				uses: { formula: "PB", recharge: "long-rest" },
 			},
 			{
 				name: "Lethal Geometry",
 				description:
-					"You see kill-angles that don't exist in normal three-dimensional space — your strikes arrive from directions that are physically impossible. When you Exploit Weakness with advantage, deal extra 1d6 damage (2d6 at 13th).",
+					"You see kill-angles that don't exist in normal three-dimensional space — your strikes arrive from directions that are physically impossible. When you use Vulnerability Analysis with advantage, deal extra 1d6 damage (2d6 at 13th).",
 				level: 7,
 			},
 			{
@@ -746,6 +766,7 @@ export const jobs: Job[] = [
 				description:
 					"Bonus action: your Aetheric-Sight identifies your quarry: [RANK: S — LETHAL MANDATE AUTHORIZED]. Crits on 19-20 against it for 1 minute. Once per long rest.",
 				level: 14,
+				uses: { formula: "1", recharge: "long-rest" },
 			},
 		],
 		jobTraits: [
@@ -761,6 +782,7 @@ export const jobs: Job[] = [
 					"Reaction: your body flickers out of sync with reality for a split second — bullets pass through where you were. Halve attack damage from an attacker you can see. Agility mod uses per long rest.",
 				type: "active",
 				frequency: "long-rest",
+				uses: { formula: "AGI mod", recharge: "long-rest" },
 			},
 			{
 				name: "Ghost Walk",
@@ -884,6 +906,7 @@ export const jobs: Job[] = [
 			{
 				level: 20,
 				name: "Zenith Strike",
+				uses: { formula: "1", recharge: "short-rest" },
 				description:
 					"Once per short rest: the Aetheric-Weave bends probability around your strikes — your Aetheric-Sight displays [OUTCOME: GUARANTEED]. Turn any missed attack into a hit, or treat any failed check as a natural 20. Classified ascendants have used this to bypass bank vaults, dodge point-blank gunfire, and land impossible shots.",
 			},
@@ -900,6 +923,7 @@ export const jobs: Job[] = [
 				description:
 					"Innate ability. Once per short rest, when you take damage, you can phase out of reality for a microsecond. Halve the damage taken, and instantly teleport up to 10 ft.",
 				type: "innate-magic",
+				uses: { formula: "1", recharge: "short-rest" },
 			},
 			{
 				name: "Apex Sensory Array",
@@ -1153,7 +1177,7 @@ export const jobs: Job[] = [
 				level: 20,
 				name: "Zenith Ascension",
 				description:
-					"Your status as an Ascendant is recognized globally at the Zenith Rank: [RANK: S — PERFECTED ABSOLUTE BIOLOGY]. Roll initiative with 0 impulse â†’ regain 4. Velocity Chain adds full speed ÷ 5. The Ascendant Bureau ensures your secrets stay guarded from the reach of pharmaceutical giants.",
+					"Your status as an Ascendant is recognized globally at the Zenith Rank: [RANK: S — PERFECTED ABSOLUTE BIOLOGY]. Roll initiative with 0 impulse → regain 4. Velocity Chain adds full speed ÷ 5. The Ascendant Bureau ensures your secrets stay guarded from the reach of pharmaceutical giants.",
 			},
 		],
 		racialTraits: [
@@ -1188,7 +1212,7 @@ export const jobs: Job[] = [
 		abilities: [
 			"Kinetic Barrier",
 			"Impulse Combat",
-			"Impulse Rifts",
+			"Impulse Rites",
 			"Velocity Chain",
 			"Combat Doctrine",
 			"Nerve Strike",
@@ -1288,7 +1312,7 @@ export const jobs: Job[] = [
 				frequency: "long-rest",
 			},
 		],
-		abilityScoreImprovements: { intelligence: 2, presence: 1 },
+		abilityScoreImprovements: { intelligence: 2, sense: 1 },
 		size: "medium",
 		speed: 30,
 		languages: ["English", "Sanskrit"],
@@ -1825,24 +1849,36 @@ export const jobs: Job[] = [
 			{
 				level: 5,
 				name: "Mortal Harvest",
+				actionType: "Free",
+				resource: "1+ Remnants",
+				tracking: "resource",
 				description:
 					"You convert harvested death into endurance. When you deal necrotic or force damage, you can spend Remnants (no action required): each Remnant restores 1d8 + your Intelligence modifier hit points to you, or grants that many temporary hit points to you or an ally within 5 feet. You may spend a number of Remnants this way each turn up to your proficiency bonus.",
 			},
 			{
 				level: 7,
 				name: "Entropic Bulwark",
+				actionType: "Reaction",
+				resource: "1 Remnant",
+				tracking: "resource",
 				description:
 					"The decay around you blunts incoming force. As a reaction when you or a creature within 5 feet takes damage, you can spend 1 Remnant to reduce that damage by 1d8 + your Vitality modifier, and the attacker (if within reach) becomes marked for the reaping.",
 			},
 			{
 				level: 9,
 				name: "Aetheric Realignment",
+				resource: "1 Remnant",
+				tracking: "resource",
 				description:
 					"You bend the fraying Aetheric-Weave back into your favor. When you fail a saving throw, you can spend 1 Remnant to reroll it and must take the new result. You can use this only once per turn.",
 			},
 			{
 				level: 11,
 				name: "Borrowed Breath",
+				actionType: "Triggered",
+				uses: { formula: "1", recharge: "long-rest" },
+				resource: "2 Remnants",
+				tracking: "uses",
 				description:
 					"You have died before; it holds no authority over you. Once per long rest, when you would drop to 0 hit points, you can spend 2 Remnants to drop to 1 hit point instead and immediately mark every creature within 10 feet for the reaping.",
 			},
@@ -1855,6 +1891,9 @@ export const jobs: Job[] = [
 			{
 				level: 20,
 				name: "Zenith Mandate",
+				actionType: "Action",
+				uses: { formula: "1", recharge: "long-rest" },
+				tracking: "uses",
 				description:
 					"You are recognized at the Zenith Rank as a living instrument of Marthos, Harbinger of Annihilation [RANK: S - AVATAR OF THE END-CYCLE]. As an action, channel the End-Cycle mandate for 1 minute: Remnant Harvest ignores its per-turn limit, all healing and temporary hit points from Mortal Harvest are maximized, and any creature that dies within 30 feet of you grants you a Remnant even beyond your normal maximum. Once per long rest.",
 			},
@@ -2053,6 +2092,11 @@ export const jobs: Job[] = [
 			{
 				level: 2,
 				name: "Entity Shift",
+				uses: {
+					formula: "2",
+					recharge: "short-rest",
+					unlimitedAtLevel: 20,
+				},
 				description:
 					"Absorb biome data from Rift creatures you've studied — field researchers document each form in your growing catalogue. Assume their form 2/short rest. Max CR 1/4 at 2nd (1/2 swim at 4th, CR 1 fly at 8th). You permanently retain one sensory ability from each form (e.g., wolf scent enhances your nose even in human form). Biologists are fascinated.",
 			},
@@ -2075,6 +2119,11 @@ export const jobs: Job[] = [
 			{
 				level: 8,
 				name: "Biome Command",
+				uses: {
+					formula: "1 + level / 14",
+					recharge: "long-rest",
+					unlimitedAtLevel: 20,
+				},
 				description:
 					"Once per long rest, reshape the local environment in a 60-ft radius — concrete cracks as roots erupt, temperature shifts 40 degrees in seconds, fog rolls in from nowhere. Create difficult terrain, change temperature (1d6 cold/fire per turn), create concealment, or purify the area. At 14th level, use twice per long rest.",
 			},
@@ -2247,7 +2296,7 @@ export const jobs: Job[] = [
 		languages: ["English", "Ancient Hebrew"],
 		darkvision: 60,
 		specialSenses: [
-			"Divine Sense (detect the presence of celestials, anomaly, and anomaly within 60 ft; 1/short rest)",
+			"Oath Sense (detect celestials and anomaly entities within 60 ft and know their type and location; 1 + Presence modifier uses per long rest)",
 		],
 		damage_resistances: ["radiant"],
 		startingEquipment: [
@@ -2616,7 +2665,9 @@ export const jobs: Job[] = [
 			{
 				level: 7,
 				name: "Absolute Assist",
+				actionType: "Reaction",
 				uses: { formula: "INT mod", recharge: "long-rest" },
+				tracking: "uses",
 				description:
 					"Reaction: feed Absolute telemetry to an ally. Add INT mod to a creature's check or save within 30 ft. INT mod uses per long rest. If the check/save succeeds, regain one use.",
 			},
@@ -2634,6 +2685,8 @@ export const jobs: Job[] = [
 			{
 				level: 11,
 				name: "Spell Capacitor",
+				uses: { formula: "2 * INT mod", recharge: "long-rest" },
+				tracking: "uses",
 				description:
 					"Store a 1st or 2nd-level spell in a constructed device. Any creature holding it can discharge the spell using your save DC and spell attack bonus. 2 × INT mod charges, recharges on long rest.",
 			},
@@ -2879,7 +2932,11 @@ export const jobs: Job[] = [
 			{
 				level: 1,
 				name: "Hype",
-				uses: { formula: "PRE mod", recharge: "long-rest" },
+				uses: {
+					formula: "PRE mod",
+					recharge: "long-rest",
+					rechargeChanges: [{ level: 5, recharge: "short-rest" }],
+				},
 				description:
 					"Bonus action: broadcast an amplifying frequency — a shout, a riff, a motivational one-liner that literally makes your teammate better at what they're doing. Grant a Hype die (d6â†’d8â†’d10â†’d12 at 5th/10th/15th). Add to one attack/check/save within 10 min. On success, you gain temp HP = die roll (the crowd's energy feeds you back). PRE mod uses per long rest (short rest at 5th).",
 			},
@@ -3399,6 +3456,7 @@ export const jobs: Job[] = [
 				description:
 					"At 10th level, you can wrap yourself in your patron's resonance as a reaction: resistance to all damage until the start of your next turn. Once per short rest.",
 				level: 10,
+				uses: { formula: "1", recharge: "short-rest" },
 			},
 		],
 		jobTraits: [
@@ -3455,7 +3513,7 @@ export const jobs: Job[] = [
 				level: 1,
 				name: "Pact Bargain",
 				description:
-					"Choose your patron: Archfey (glamour), Anomaly (infernal), Great Old One (void), or Celestial (radiant). Patron features at 1st, 6th, 10th, and 14th level.",
+					"Choose the patron bargain that defines your Path: Glamour Weaver, Infernal Conduit, Void Whisperer, Radiant Vessel, Cursed Blade, or Deep Dweller. Patron features are gained at 1st, 6th, 10th, and 14th level.",
 			},
 			{
 				level: 1,
@@ -3726,6 +3784,9 @@ export const jobs: Job[] = [
 				description:
 					"At 6th level, once per short rest as a bonus action, your speed doubles until the end of your next turn and opportunity attacks against you have disadvantage while you are moving toward your Prey Lock target.",
 				level: 6,
+				actionType: "Bonus action",
+				uses: { formula: "1", recharge: "short-rest" },
+				tracking: "uses",
 			},
 			{
 				name: "Terminal Sight",
@@ -3780,6 +3841,8 @@ export const jobs: Job[] = [
 			{
 				level: 1,
 				name: "Prey Lock",
+				actionType: "Bonus action",
+				tracking: "manual",
 				description:
 					"As a bonus action, mark a creature you can see as your prey. Track their location within 1 mile until you rest. Deal +1d6 damage on the first hit each turn against the marked prey.",
 			},

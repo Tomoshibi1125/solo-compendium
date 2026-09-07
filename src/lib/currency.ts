@@ -1,3 +1,5 @@
+import type { Database } from "@/integrations/supabase/types";
+
 export type RaCurrencyId = "core" | "gate" | "crystal" | "mana";
 
 type LegacyCurrencyId = "pp" | "gp" | "ep" | "sp" | "cp";
@@ -391,4 +393,499 @@ export function formatWallet(wallet: Partial<RaWallet>): string {
 	if (wallet.crystal) parts.push(`${wallet.crystal} CrC`);
 	if (wallet.mana) parts.push(`${wallet.mana} MC`);
 	return parts.length > 0 ? parts.join(" ") : "0 MC";
+}
+
+// ─────────────────────────────────────────────────────────────────────────
+// Safe character-equipment wallet decoding and update planning (Task 11)
+// ─────────────────────────────────────────────────────────────────────────
+
+export const RA_CURRENCY_WALLET_PLAN_VERSION = 1 as const;
+
+/** The persisted fields needed to identify and safely update a wallet row. */
+export type RaCurrencyEquipmentRow = Pick<
+	Database["public"]["Tables"]["character_equipment"]["Row"],
+	"id" | "item_type" | "name" | "quantity"
+>;
+
+type RaCurrencyEquipmentIdentity = Pick<
+	RaCurrencyEquipmentRow,
+	"item_type" | "name"
+>;
+
+export type RaCurrencyWalletIssueCode =
+	| "currency-row-id-invalid"
+	| "currency-denomination-unknown"
+	| "currency-quantity-invalid"
+	| "currency-denomination-duplicate"
+	| "currency-total-unsafe"
+	| "currency-total-mismatch";
+
+export interface RaCurrencyWalletIssue {
+	code: RaCurrencyWalletIssueCode;
+	message: string;
+	blocking: true;
+	currencyId: RaCurrencyId | null;
+	rowIds: string[];
+}
+
+export type RaCurrencyEquipmentRowDecodeResult =
+	| {
+			version: typeof RA_CURRENCY_WALLET_PLAN_VERSION;
+			status: "automated";
+			outcome: "decoded";
+			rowId: string;
+			currencyId: RaCurrencyId;
+			quantity: number;
+			matchedAlias: string;
+			issues: [];
+	  }
+	| {
+			version: typeof RA_CURRENCY_WALLET_PLAN_VERSION;
+			status: "ignored";
+			outcome: "not-currency";
+			rowId: string;
+			issues: [];
+	  }
+	| {
+			version: typeof RA_CURRENCY_WALLET_PLAN_VERSION;
+			status: "manual";
+			outcome: "blocked";
+			rowId: string;
+			issues: [RaCurrencyWalletIssue];
+	  };
+
+export interface DecodedRaCurrencyEquipmentRow {
+	rowId: string;
+	currencyId: RaCurrencyId;
+	quantity: number;
+	matchedAlias: string;
+}
+
+interface RaCurrencyWalletDecodeBase {
+	version: typeof RA_CURRENCY_WALLET_PLAN_VERSION;
+	entries: DecodedRaCurrencyEquipmentRow[];
+	ignoredRowIds: string[];
+}
+
+export type RaCurrencyEquipmentWalletDecodeResult =
+	| (RaCurrencyWalletDecodeBase & {
+			status: "automated";
+			outcome: "decoded";
+			canApply: true;
+			requiresManualReview: false;
+			wallet: RaWallet;
+			totalBaseUnits: number;
+			issues: [];
+	  })
+	| (RaCurrencyWalletDecodeBase & {
+			status: "manual";
+			outcome: "blocked";
+			canApply: false;
+			requiresManualReview: true;
+			wallet: null;
+			totalBaseUnits: null;
+			issues: RaCurrencyWalletIssue[];
+	  });
+
+export interface RaCurrencyEquipmentFields {
+	name: string;
+	item_type: "currency";
+	quantity: number;
+	weight: number;
+	description: string;
+}
+
+export type RaCurrencyWalletUpdateOperation =
+	| {
+			kind: "update";
+			operationId: string;
+			currencyId: RaCurrencyId;
+			rowId: string;
+			expectedQuantity: number;
+			quantity: number;
+	  }
+	| {
+			kind: "create";
+			operationId: string;
+			currencyId: RaCurrencyId;
+			/** The denomination must still have no row when this is applied. */
+			expectedDenominationAbsent: true;
+			quantity: number;
+			equipment: RaCurrencyEquipmentFields;
+	  };
+
+export type RaCurrencyWalletUpdatePlan =
+	| {
+			version: typeof RA_CURRENCY_WALLET_PLAN_VERSION;
+			status: "automated";
+			outcome: "ready" | "noop";
+			canApply: true;
+			requiresManualReview: false;
+			/** All operations and expectations must be committed atomically. */
+			applicationMode: "atomic";
+			sourceWallet: RaWallet;
+			targetWallet: RaWallet;
+			sourceTotalBaseUnits: number;
+			targetTotalBaseUnits: number;
+			operations: RaCurrencyWalletUpdateOperation[];
+			issues: [];
+	  }
+	| {
+			version: typeof RA_CURRENCY_WALLET_PLAN_VERSION;
+			status: "manual";
+			outcome: "blocked";
+			canApply: false;
+			requiresManualReview: true;
+			applicationMode: "blocked";
+			sourceWallet: null;
+			targetWallet: null;
+			sourceTotalBaseUnits: null;
+			targetTotalBaseUnits: null;
+			operations: [];
+			issues: RaCurrencyWalletIssue[];
+	  };
+
+function compareText(left: string, right: string): number {
+	if (left < right) return -1;
+	if (left > right) return 1;
+	return 0;
+}
+
+function currencyWalletIssue(
+	code: RaCurrencyWalletIssueCode,
+	message: string,
+	rowIds: readonly string[],
+	currencyId: RaCurrencyId | null = null,
+): RaCurrencyWalletIssue {
+	return {
+		code,
+		message,
+		blocking: true,
+		currencyId,
+		rowIds: [...rowIds].sort(compareText),
+	};
+}
+
+/**
+ * Resolve only an exact persisted alias after trimming and case-folding.
+ * Substrings are deliberately rejected (for example, `"gp pouch"` is not
+ * `"gp"`). Non-currency equipment is ignored.
+ */
+export function getRaCurrencyIdFromEquipmentRow(
+	row: RaCurrencyEquipmentIdentity,
+): RaCurrencyId | null {
+	if (row.item_type !== "currency") return null;
+	return normalizeCurrencyId(row.name);
+}
+
+/** Find the first exact-alias row. This preserves the legacy lookup API shape. */
+export function findRaCurrencyEquipmentRow<
+	TRow extends RaCurrencyEquipmentIdentity,
+>(rows: readonly TRow[], currencyId: RaCurrencyId): TRow | null {
+	return (
+		rows.find((row) => getRaCurrencyIdFromEquipmentRow(row) === currencyId) ??
+		null
+	);
+}
+
+/** Decode and validate one equipment row without coercing its quantity. */
+export function decodeRaCurrencyEquipmentRow(
+	row: RaCurrencyEquipmentRow,
+): RaCurrencyEquipmentRowDecodeResult {
+	const rowId = row.id.trim();
+	if (row.item_type !== "currency") {
+		return {
+			version: RA_CURRENCY_WALLET_PLAN_VERSION,
+			status: "ignored",
+			outcome: "not-currency",
+			rowId,
+			issues: [],
+		};
+	}
+	if (!rowId) {
+		return {
+			version: RA_CURRENCY_WALLET_PLAN_VERSION,
+			status: "manual",
+			outcome: "blocked",
+			rowId,
+			issues: [
+				currencyWalletIssue(
+					"currency-row-id-invalid",
+					"Currency equipment rows require a stable persisted ID before they can be updated.",
+					[rowId],
+				),
+			],
+		};
+	}
+
+	const currencyId = normalizeCurrencyId(row.name);
+	if (!currencyId) {
+		return {
+			version: RA_CURRENCY_WALLET_PLAN_VERSION,
+			status: "manual",
+			outcome: "blocked",
+			rowId,
+			issues: [
+				currencyWalletIssue(
+					"currency-denomination-unknown",
+					`Currency row ${rowId} uses unknown denomination alias "${row.name}".`,
+					[rowId],
+				),
+			],
+		};
+	}
+	if (!Number.isSafeInteger(row.quantity) || row.quantity < 0) {
+		return {
+			version: RA_CURRENCY_WALLET_PLAN_VERSION,
+			status: "manual",
+			outcome: "blocked",
+			rowId,
+			issues: [
+				currencyWalletIssue(
+					"currency-quantity-invalid",
+					`Currency row ${rowId} must have a nonnegative safe-integer quantity.`,
+					[rowId],
+					currencyId,
+				),
+			],
+		};
+	}
+
+	return {
+		version: RA_CURRENCY_WALLET_PLAN_VERSION,
+		status: "automated",
+		outcome: "decoded",
+		rowId,
+		currencyId,
+		quantity: row.quantity,
+		matchedAlias: row.name.trim().toLowerCase(),
+		issues: [],
+	};
+}
+
+function exactWalletTotalBaseUnits(wallet: RaWallet): bigint {
+	return (
+		BigInt(wallet.core) * 1000n +
+		BigInt(wallet.gate) * 100n +
+		BigInt(wallet.crystal) * 10n +
+		BigInt(wallet.mana)
+	);
+}
+
+/**
+ * Decode character-equipment rows into one wallet. Unknown aliases, invalid
+ * quantities, and duplicate denominations are blocking rather than guessed or
+ * silently aggregated.
+ */
+export function decodeRaCurrencyEquipmentWallet(
+	rows: readonly RaCurrencyEquipmentRow[],
+): RaCurrencyEquipmentWalletDecodeResult {
+	const sortedRows = [...rows].sort(
+		(left, right) =>
+			compareText(left.id, right.id) ||
+			compareText(left.name, right.name) ||
+			compareText(left.item_type, right.item_type) ||
+			compareText(String(left.quantity), String(right.quantity)),
+	);
+	const entries: DecodedRaCurrencyEquipmentRow[] = [];
+	const ignoredRowIds: string[] = [];
+	const issues: RaCurrencyWalletIssue[] = [];
+
+	for (const row of sortedRows) {
+		const decoded = decodeRaCurrencyEquipmentRow(row);
+		if (decoded.status === "ignored") {
+			ignoredRowIds.push(decoded.rowId);
+		} else if (decoded.status === "manual") {
+			issues.push(...decoded.issues);
+		} else {
+			entries.push({
+				rowId: decoded.rowId,
+				currencyId: decoded.currencyId,
+				quantity: decoded.quantity,
+				matchedAlias: decoded.matchedAlias,
+			});
+		}
+	}
+
+	for (const currency of RA_CURRENCY_TYPES) {
+		const duplicates = entries.filter(
+			(entry) => entry.currencyId === currency.id,
+		);
+		if (duplicates.length > 1) {
+			issues.push(
+				currencyWalletIssue(
+					"currency-denomination-duplicate",
+					`${currency.name} has multiple equipment rows and must be reconciled manually.`,
+					duplicates.map((entry) => entry.rowId),
+					currency.id,
+				),
+			);
+		}
+	}
+
+	if (issues.length > 0) {
+		return {
+			version: RA_CURRENCY_WALLET_PLAN_VERSION,
+			status: "manual",
+			outcome: "blocked",
+			canApply: false,
+			requiresManualReview: true,
+			wallet: null,
+			totalBaseUnits: null,
+			entries,
+			ignoredRowIds,
+			issues,
+		};
+	}
+
+	const wallet: RaWallet = { core: 0, gate: 0, crystal: 0, mana: 0 };
+	for (const entry of entries) wallet[entry.currencyId] = entry.quantity;
+	const exactTotal = exactWalletTotalBaseUnits(wallet);
+	if (exactTotal > BigInt(Number.MAX_SAFE_INTEGER)) {
+		return {
+			version: RA_CURRENCY_WALLET_PLAN_VERSION,
+			status: "manual",
+			outcome: "blocked",
+			canApply: false,
+			requiresManualReview: true,
+			wallet: null,
+			totalBaseUnits: null,
+			entries,
+			ignoredRowIds,
+			issues: [
+				currencyWalletIssue(
+					"currency-total-unsafe",
+					"Wallet total exceeds JavaScript's exact integer range and cannot be safely normalized.",
+					entries.map((entry) => entry.rowId),
+				),
+			],
+		};
+	}
+
+	return {
+		version: RA_CURRENCY_WALLET_PLAN_VERSION,
+		status: "automated",
+		outcome: "decoded",
+		canApply: true,
+		requiresManualReview: false,
+		wallet,
+		totalBaseUnits: Number(exactTotal),
+		entries,
+		ignoredRowIds,
+		issues: [],
+	};
+}
+
+/** Canonical equipment fields for a newly persisted denomination row. */
+export function buildRaCurrencyEquipmentFields(
+	currencyId: RaCurrencyId,
+	quantity: number,
+): RaCurrencyEquipmentFields {
+	const currency = getRaCurrencyDefinition(currencyId);
+	if (!currency) {
+		throw new TypeError(`Unknown RA currency denomination: ${currencyId}`);
+	}
+	return {
+		name: currency.name,
+		item_type: "currency",
+		quantity,
+		weight: 0.02,
+		description: buildRaCurrencyItemDescription(currency.id),
+	};
+}
+
+/**
+ * Build a deterministic, optimistic wallet-normalization plan. Operations are
+ * always ordered core → gate → crystal → mana and never delete or merge rows.
+ * An applier must verify every expectation and commit the complete operation
+ * list atomically; sequential row writes cannot guarantee total preservation.
+ */
+export function planRaCurrencyWalletUpdate(
+	rows: readonly RaCurrencyEquipmentRow[],
+): RaCurrencyWalletUpdatePlan {
+	const decoded = decodeRaCurrencyEquipmentWallet(rows);
+	if (decoded.status === "manual") {
+		return {
+			version: RA_CURRENCY_WALLET_PLAN_VERSION,
+			status: "manual",
+			outcome: "blocked",
+			canApply: false,
+			requiresManualReview: true,
+			applicationMode: "blocked",
+			sourceWallet: null,
+			targetWallet: null,
+			sourceTotalBaseUnits: null,
+			targetTotalBaseUnits: null,
+			operations: [],
+			issues: decoded.issues,
+		};
+	}
+
+	const targetWallet = normalizeWallet(decoded.wallet);
+	const targetExactTotal = exactWalletTotalBaseUnits(targetWallet);
+	if (targetExactTotal !== BigInt(decoded.totalBaseUnits)) {
+		return {
+			version: RA_CURRENCY_WALLET_PLAN_VERSION,
+			status: "manual",
+			outcome: "blocked",
+			canApply: false,
+			requiresManualReview: true,
+			applicationMode: "blocked",
+			sourceWallet: null,
+			targetWallet: null,
+			sourceTotalBaseUnits: null,
+			targetTotalBaseUnits: null,
+			operations: [],
+			issues: [
+				currencyWalletIssue(
+					"currency-total-mismatch",
+					"Wallet normalization did not preserve the exact base-unit total.",
+					decoded.entries.map((entry) => entry.rowId),
+				),
+			],
+		};
+	}
+
+	const entriesByCurrency = new Map(
+		decoded.entries.map((entry) => [entry.currencyId, entry] as const),
+	);
+	const operations: RaCurrencyWalletUpdateOperation[] = [];
+	for (const currency of RA_CURRENCY_TYPES) {
+		const entry = entriesByCurrency.get(currency.id);
+		const quantity = targetWallet[currency.id];
+		if (entry && entry.quantity !== quantity) {
+			operations.push({
+				kind: "update",
+				operationId: `currency:update:${currency.id}:${entry.rowId}`,
+				currencyId: currency.id,
+				rowId: entry.rowId,
+				expectedQuantity: entry.quantity,
+				quantity,
+			});
+		} else if (!entry && quantity > 0) {
+			operations.push({
+				kind: "create",
+				operationId: `currency:create:${currency.id}`,
+				currencyId: currency.id,
+				expectedDenominationAbsent: true,
+				quantity,
+				equipment: buildRaCurrencyEquipmentFields(currency.id, quantity),
+			});
+		}
+	}
+
+	return {
+		version: RA_CURRENCY_WALLET_PLAN_VERSION,
+		status: "automated",
+		outcome: operations.length > 0 ? "ready" : "noop",
+		canApply: true,
+		requiresManualReview: false,
+		applicationMode: "atomic",
+		sourceWallet: decoded.wallet,
+		targetWallet,
+		sourceTotalBaseUnits: decoded.totalBaseUnits,
+		targetTotalBaseUnits: Number(targetExactTotal),
+		operations,
+		issues: [],
+	};
 }

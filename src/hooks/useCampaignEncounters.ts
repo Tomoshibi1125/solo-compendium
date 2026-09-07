@@ -1,9 +1,15 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import type { Database } from "@/integrations/supabase/types";
 import { AppError } from "@/lib/appError";
 import { readLocalEncounters } from "@/lib/guestStore";
+import {
+	buildCampaignWorkflowRpcPreflightV1,
+	type CampaignWorkflowRpcReceiptV1,
+	executeCampaignWorkflowRpcV1,
+} from "@/lib/planning/adapters/campaignWorkflow";
 
 const guestEnabled = import.meta.env.VITE_GUEST_ENABLED !== "false";
 
@@ -93,14 +99,18 @@ export const useDeleteCampaignEncounter = () => {
 export const useDeployCampaignEncounter = () => {
 	const queryClient = useQueryClient();
 	const { toast } = useToast();
+	const [planningReceipt, setPlanningReceipt] =
+		useState<CampaignWorkflowRpcReceiptV1 | null>(null);
 
-	return useMutation({
+	const mutation = useMutation({
 		mutationFn: async ({
+			campaignId,
 			encounterId,
 		}: {
 			campaignId: string;
 			encounterId: string;
 		}) => {
+			setPlanningReceipt(null);
 			if (!isSupabaseConfigured) {
 				throw new AppError("Supabase not configured", "CONFIG");
 			}
@@ -109,12 +119,26 @@ export const useDeployCampaignEncounter = () => {
 			} = await supabase.auth.getUser();
 			if (!user) throw new AppError("Not authenticated", "AUTH_REQUIRED");
 
-			const { data, error } = await supabase.rpc("deploy_campaign_encounter", {
-				p_encounter_id: encounterId,
+			const preflight = buildCampaignWorkflowRpcPreflightV1({
+				operation: "deploy-campaign-encounter",
+				campaignId,
+				encounterId,
 			});
-
-			if (error) throw error;
-			return data as string;
+			const execution = await executeCampaignWorkflowRpcV1(
+				preflight,
+				async () => {
+					const { data, error } = await supabase.rpc(
+						"deploy_campaign_encounter",
+						{
+							p_encounter_id: encounterId,
+						},
+					);
+					if (error) throw error;
+					return data as string;
+				},
+			);
+			setPlanningReceipt(execution.receipt);
+			return execution.result;
 		},
 		onSuccess: (sessionId, variables) => {
 			queryClient.invalidateQueries({
@@ -134,4 +158,6 @@ export const useDeployCampaignEncounter = () => {
 			});
 		},
 	});
+
+	return { ...mutation, planningReceipt };
 };

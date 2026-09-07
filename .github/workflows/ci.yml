@@ -5,19 +5,88 @@ on:
     branches: [main]
   pull_request:
     branches: [main]
+  workflow_dispatch:
+  workflow_call:
+
+permissions:
+  contents: read
 
 concurrency:
-  group: ci-${{ github.ref }}
+  group: ci-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
 env:
-  # Dummy Supabase target so the client boots in tests/build without secrets;
-  # nothing in CI talks to a real backend.
+  # Dummy Supabase target so builds and browser checks boot without secrets.
+  # Linked/production Supabase operations are intentionally excluded from CI.
   VITE_SUPABASE_URL: https://ci-placeholder.supabase.co
   VITE_SUPABASE_ANON_KEY: ci-placeholder-key
 
 jobs:
-  gates:
+  install:
+    name: Dependency install
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Verify clean lockfile install
+        run: npm ci
+
+  typecheck:
+    name: TypeScript
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+      - name: Typecheck
+        run: npm run typecheck
+
+  biome:
+    name: Biome
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+      - name: Check formatting and lint rules
+        run: npm run lint:check
+
+  knip:
+    name: Unused code (knip)
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+      - name: Find unused files, exports, and dependencies
+        run: npx knip
+
+  vitest:
+    name: Vitest
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
@@ -28,20 +97,886 @@ jobs:
           node-version: 22
           cache: npm
 
-      - name: Install dependencies
-        run: npm ci
+      - run: npm ci
+      - name: Unit, property, and integration tests
+        run: npm run test:run
 
-      - name: Typecheck
-        run: npm run typecheck
+  app-build:
+    name: Application build
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
 
-      - name: Lint (Biome)
-        run: npm run lint:check
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
 
-      - name: Unused code (knip)
-        run: npx knip
-
-      - name: Unit tests
-        run: npx vitest run
-
-      - name: Build
+      - run: npm ci
+      - name: Build application and bundle report
+        env:
+          ANALYZE: "1"
         run: npm run build
+
+      - name: Upload application build
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-build
+          path: |
+            dist
+            audit-artifacts/bundle-stats.html
+          if-no-files-found: error
+          retention-days: 7
+
+  compendium-audit:
+    name: Compendium and asset audit
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+      - name: Audit compendium and referenced assets
+        run: npm run audit:compendium
+
+      - name: Upload compendium audit evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: compendium-audit
+          path: |
+            audit/assets-report.json
+            audit/SUMMARY.md
+            docs/generated-image-review.html
+            docs/generated-image-review.md
+            docs/rift-image-replacement-plan.md
+            data/rift-image-replacement-plan.json
+            data/rift-image-prompts.json
+          if-no-files-found: warn
+          retention-days: 14
+
+  chunk-verification:
+    name: Built chunk initialization
+    needs: app-build
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+      - name: Install Chromium runtime
+        run: npx playwright install --with-deps chromium
+
+      - name: Download application build
+        uses: actions/download-artifact@v4
+        with:
+          name: app-build
+          path: .
+
+      - name: Verify every generated JavaScript chunk initializes
+        run: npm run verify:chunks
+
+  playwright:
+    name: Playwright desktop E2E
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+      - name: Install Chromium runtime
+        run: npx playwright install --with-deps chromium
+      - name: Run the existing Playwright suite
+        run: npm run test:e2e
+
+      - name: Upload Playwright report and failure evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-desktop
+          path: |
+            playwright-report
+            test-results
+          if-no-files-found: warn
+          retention-days: 14
+
+  mobile:
+    name: Playwright mobile smoke
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+      - name: Install Chromium runtime
+        run: npx playwright install --with-deps chromium
+
+      # There is no repository mobile Playwright project yet. Keep this explicit
+      # smoke in the workflow so mobile rendering is still a required gate.
+      - name: Exercise guest surfaces with a Pixel 7 context
+        run: |
+          set -euo pipefail
+          mkdir -p test-results/mobile
+          npm run dev >test-results/mobile/dev-server.log 2>&1 &
+          server_pid=$!
+          cleanup() {
+            kill "$server_pid" 2>/dev/null || true
+            wait "$server_pid" 2>/dev/null || true
+          }
+          trap cleanup EXIT
+
+          ready=0
+          for _ in $(seq 1 60); do
+            if curl --fail --silent http://127.0.0.1:8080/ >/dev/null; then
+              ready=1
+              break
+            fi
+            sleep 2
+          done
+          if [[ "$ready" != "1" ]]; then
+            echo "::error::The mobile smoke server did not become ready."
+            exit 1
+          fi
+
+          cat >"$RUNNER_TEMP/mobile-smoke.cjs" <<'NODE'
+          const fs = require("node:fs");
+          const path = require("node:path");
+          const { createRequire } = require("node:module");
+
+          const root = process.env.GITHUB_WORKSPACE;
+          const requireFromRepo = createRequire(path.join(root, "package.json"));
+          const { chromium, devices } = requireFromRepo("@playwright/test");
+          const device = devices["Pixel 7"];
+          const outputDir = path.join(root, "test-results", "mobile");
+          const reportPath = path.join(outputDir, "mobile-smoke.json");
+          const report = { device: "Pixel 7", routes: [], failures: [] };
+
+          async function main() {
+            if (!device) throw new Error("Installed Playwright does not provide the Pixel 7 device descriptor.");
+            const browser = await chromium.launch({ headless: true });
+            try {
+              const context = await browser.newContext({ ...device });
+              const page = await context.newPage();
+              let routeErrors = [];
+              page.on("pageerror", (error) => routeErrors.push(error.message));
+
+              const routes = [
+                { path: "/landing", marker: null },
+                { path: "/source-book/intro", marker: "The Awakening Event" },
+                { path: "/legal", marker: null },
+              ];
+
+              for (const route of routes) {
+                routeErrors = [];
+                const response = await page.goto(`http://127.0.0.1:8080${route.path}`, {
+                  waitUntil: "domcontentloaded",
+                  timeout: 30_000,
+                });
+                await page.locator("body").waitFor({ state: "visible" });
+                if (route.marker) {
+                  await page.getByText(route.marker, { exact: false }).first().waitFor({
+                    state: "visible",
+                    timeout: 20_000,
+                  });
+                }
+                await page.waitForTimeout(750);
+                const metrics = await page.evaluate(() => ({
+                  width: window.innerWidth,
+                  height: window.innerHeight,
+                  bodyTextLength: document.body.innerText.trim().length,
+                }));
+                const failures = [];
+                if (response && response.status() >= 400) failures.push(`HTTP ${response.status()}`);
+                if (metrics.width !== device.viewport.width) {
+                  failures.push(`expected viewport width ${device.viewport.width}, received ${metrics.width}`);
+                }
+                if (metrics.bodyTextLength < 20) failures.push("page body did not render meaningful text");
+                failures.push(...routeErrors.map((error) => `pageerror: ${error}`));
+                await page.screenshot({
+                  path: path.join(outputDir, `${route.path.replace(/[^a-z0-9]+/gi, "-") || "root"}.png`),
+                  fullPage: true,
+                });
+                report.routes.push({ ...route, status: response?.status() ?? null, metrics, failures });
+                report.failures.push(...failures.map((failure) => `${route.path}: ${failure}`));
+              }
+            } finally {
+              await browser.close();
+            }
+          }
+
+          main()
+            .catch((error) => report.failures.push(`fatal: ${error.stack || error.message}`))
+            .finally(() => {
+              fs.writeFileSync(reportPath, `${JSON.stringify(report, null, 2)}\n`);
+              if (report.failures.length) {
+                console.error(report.failures.join("\n"));
+                process.exitCode = 1;
+              }
+            });
+          NODE
+
+          node "$RUNNER_TEMP/mobile-smoke.cjs"
+
+      - name: Upload mobile smoke evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-mobile
+          path: test-results/mobile
+          if-no-files-found: warn
+          retention-days: 14
+
+  accessibility:
+    name: Accessibility smoke
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+      - name: Run the existing icon-button accessible-name regression
+        run: |
+          test -f src/lib/__tests__/iconButtonAccessibleName.test.ts || {
+            echo "::error::Missing the focused accessibility regression test."
+            exit 1
+          }
+          npx vitest run src/lib/__tests__/iconButtonAccessibleName.test.ts
+
+      - name: Install Chromium runtime
+        run: npx playwright install --with-deps chromium
+
+      # No axe dependency or browser a11y suite exists in the repository. This
+      # required smoke catches severe DOM-level regressions without downloading
+      # an unpinned package. A full WCAG/axe suite remains a follow-up blocker.
+      - name: Audit severe browser accessibility regressions
+        run: |
+          set -euo pipefail
+          mkdir -p test-results/accessibility
+          npm run dev >test-results/accessibility/dev-server.log 2>&1 &
+          server_pid=$!
+          cleanup() {
+            kill "$server_pid" 2>/dev/null || true
+            wait "$server_pid" 2>/dev/null || true
+          }
+          trap cleanup EXIT
+
+          ready=0
+          for _ in $(seq 1 60); do
+            if curl --fail --silent http://127.0.0.1:8080/ >/dev/null; then
+              ready=1
+              break
+            fi
+            sleep 2
+          done
+          if [[ "$ready" != "1" ]]; then
+            echo "::error::The accessibility smoke server did not become ready."
+            exit 1
+          fi
+
+          cat >"$RUNNER_TEMP/accessibility-smoke.cjs" <<'NODE'
+          const fs = require("node:fs");
+          const path = require("node:path");
+          const { createRequire } = require("node:module");
+
+          const root = process.env.GITHUB_WORKSPACE;
+          const requireFromRepo = createRequire(path.join(root, "package.json"));
+          const { chromium } = requireFromRepo("@playwright/test");
+          const outputDir = path.join(root, "test-results", "accessibility");
+          const reportPath = path.join(outputDir, "accessibility-smoke.json");
+          const report = { scope: "severe DOM-level smoke (not a full WCAG audit)", routes: [], failures: [] };
+
+          async function auditPage(page, route) {
+            await page.goto(`http://127.0.0.1:8080${route}`, {
+              waitUntil: "domcontentloaded",
+              timeout: 30_000,
+            });
+            await page.locator("body").waitFor({ state: "visible" });
+            await page.waitForTimeout(750);
+            return page.evaluate(() => {
+              const visible = (element) => {
+                const style = getComputedStyle(element);
+                const rect = element.getBoundingClientRect();
+                return style.display !== "none" && style.visibility !== "hidden" && rect.width > 0 && rect.height > 0;
+              };
+              const text = (element) => (element.textContent || "").replace(/\s+/g, " ").trim();
+              const accessibleName = (element) => {
+                const labelledBy = (element.getAttribute("aria-labelledby") || "")
+                  .split(/\s+/)
+                  .filter(Boolean)
+                  .map((id) => document.getElementById(id))
+                  .filter(Boolean)
+                  .map(text)
+                  .join(" ")
+                  .trim();
+                const labels = element.labels ? Array.from(element.labels).map(text).join(" ").trim() : "";
+                const imageAlt = element.querySelector?.("img[alt]")?.getAttribute("alt") || "";
+                return (
+                  element.getAttribute("aria-label") ||
+                  labelledBy ||
+                  labels ||
+                  element.getAttribute("title") ||
+                  element.getAttribute("alt") ||
+                  element.getAttribute("value") ||
+                  imageAlt ||
+                  text(element)
+                ).trim();
+              };
+
+              const violations = [];
+              if (!(document.documentElement.getAttribute("lang") || "").trim()) {
+                violations.push("document is missing a non-empty html[lang]");
+              }
+
+              const ids = new Map();
+              for (const element of document.querySelectorAll("[id]")) {
+                const id = element.id;
+                ids.set(id, (ids.get(id) || 0) + 1);
+              }
+              for (const [id, count] of ids) {
+                if (id && count > 1) violations.push(`duplicate id '${id}' appears ${count} times`);
+              }
+
+              for (const image of document.querySelectorAll("img")) {
+                if (!visible(image)) continue;
+                const decorative = image.getAttribute("role") === "presentation" || image.getAttribute("aria-hidden") === "true";
+                if (!decorative && !image.hasAttribute("alt")) {
+                  violations.push(`visible image is missing alt text: ${image.getAttribute("src") || "unknown source"}`);
+                }
+              }
+
+              for (const control of document.querySelectorAll("button, a[href], input:not([type='hidden']), select, textarea")) {
+                if (!visible(control) || control.getAttribute("aria-hidden") === "true") continue;
+                if (!accessibleName(control)) {
+                  const selector = `${control.tagName.toLowerCase()}${control.id ? `#${control.id}` : ""}`;
+                  violations.push(`visible interactive control has no accessible name: ${selector}`);
+                }
+              }
+
+              return violations.slice(0, 100);
+            });
+          }
+
+          async function main() {
+            const browser = await chromium.launch({ headless: true });
+            try {
+              const page = await browser.newPage({ viewport: { width: 1280, height: 800 } });
+              for (const route of ["/landing", "/source-book/intro", "/legal"]) {
+                const violations = await auditPage(page, route);
+                report.routes.push({ route, violations });
+                report.failures.push(...violations.map((violation) => `${route}: ${violation}`));
+                await page.screenshot({
+                  path: path.join(outputDir, `${route.replace(/[^a-z0-9]+/gi, "-") || "root"}.png`),
+                  fullPage: true,
+                });
+              }
+            } finally {
+              await browser.close();
+            }
+          }
+
+          main()
+            .catch((error) => report.failures.push(`fatal: ${error.stack || error.message}`))
+            .finally(() => {
+              fs.writeFileSync(reportPath, `${JSON.stringify(report, null, 2)}\n`);
+              if (report.failures.length) {
+                console.error(report.failures.join("\n"));
+                process.exitCode = 1;
+              }
+            });
+          NODE
+
+          node "$RUNNER_TEMP/accessibility-smoke.cjs"
+
+      - name: Upload accessibility smoke evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: accessibility-smoke
+          path: test-results/accessibility
+          if-no-files-found: warn
+          retention-days: 14
+
+  standalone-sourcebook:
+    name: Standalone sourcebook build and parity
+    needs: app-build
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+      - name: Validate authored publication inventory and app/book canon parity
+        run: |
+          npx --no-install tsx scripts/validate-sourcebook-build-output.ts --source-only
+          npx --no-install tsx scripts/validate-sourcebook-canon-parity.ts
+
+      - name: Install Chromium runtime
+        run: npx playwright install --with-deps chromium
+
+      - name: Download normal application build
+        uses: actions/download-artifact@v4
+        with:
+          name: app-build
+          path: .
+
+      - name: Build portable sourcebook
+        run: npx vite build --config vite.sourcebook.config.ts
+
+      # No repository parity command exists. Compare the rendered sourcebook
+      # content from the normal app artifact with the standalone artifact.
+      - name: Verify standalone artifact structure and rendered parity
+        run: |
+          set -euo pipefail
+          test -s dist/index.html || {
+            echo "::error::Downloaded application artifact is missing dist/index.html."
+            exit 1
+          }
+          test -s dist-sourcebook/source-book.html || {
+            echo "::error::Standalone build is missing dist-sourcebook/source-book.html."
+            exit 1
+          }
+          find dist-sourcebook/assets -type f -name '*.js' -print -quit | grep -q . || {
+            echo "::error::Standalone sourcebook emitted no JavaScript assets."
+            exit 1
+          }
+
+          mkdir -p test-results/sourcebook-parity
+          npx vite preview --host 127.0.0.1 --port 4173 >test-results/sourcebook-parity/app-preview.log 2>&1 &
+          app_pid=$!
+          npx vite preview --config vite.sourcebook.config.ts --host 127.0.0.1 --port 4174 >test-results/sourcebook-parity/standalone-preview.log 2>&1 &
+          sourcebook_pid=$!
+          cleanup() {
+            kill "$app_pid" "$sourcebook_pid" 2>/dev/null || true
+            wait "$app_pid" "$sourcebook_pid" 2>/dev/null || true
+          }
+          trap cleanup EXIT
+
+          for endpoint in http://127.0.0.1:4173/ http://127.0.0.1:4174/source-book.html; do
+            ready=0
+            for _ in $(seq 1 60); do
+              if curl --fail --silent "$endpoint" >/dev/null; then
+                ready=1
+                break
+              fi
+              sleep 2
+            done
+            if [[ "$ready" != "1" ]]; then
+              echo "::error::Preview endpoint did not become ready: $endpoint"
+              exit 1
+            fi
+          done
+
+          cat >"$RUNNER_TEMP/sourcebook-parity.cjs" <<'NODE'
+          const crypto = require("node:crypto");
+          const fs = require("node:fs");
+          const path = require("node:path");
+          const { createRequire } = require("node:module");
+
+          const root = process.env.GITHUB_WORKSPACE;
+          const requireFromRepo = createRequire(path.join(root, "package.json"));
+          const { chromium } = requireFromRepo("@playwright/test");
+          const outputDir = path.join(root, "test-results", "sourcebook-parity");
+          const reportPath = path.join(outputDir, "parity.json");
+          const report = { failures: [] };
+          const normalize = (value) => value.replace(/\s+/g, " ").trim();
+          const hash = (value) => crypto.createHash("sha256").update(value).digest("hex");
+
+          async function capture(browser, name, url) {
+            const page = await browser.newPage({ viewport: { width: 1440, height: 1000 } });
+            const pageErrors = [];
+            page.on("pageerror", (error) => pageErrors.push(error.message));
+            await page.goto(url, { waitUntil: "domcontentloaded", timeout: 30_000 });
+            await page.getByText("The Awakening Event", { exact: false }).first().waitFor({ timeout: 20_000 });
+            const payload = await page.locator(".source-book-container main").evaluate((element) => ({
+              text: element.innerText,
+              headings: Array.from(element.querySelectorAll("h1, h2, h3")).map((heading) => heading.textContent || ""),
+            }));
+            await page.screenshot({ path: path.join(outputDir, `${name}.png`), fullPage: true });
+            await page.close();
+            return {
+              text: normalize(payload.text),
+              headings: payload.headings.map(normalize),
+              pageErrors,
+            };
+          }
+
+          async function main() {
+            const browser = await chromium.launch({ headless: true });
+            try {
+              const normal = await capture(browser, "normal-app", "http://127.0.0.1:4173/source-book/intro");
+              const standalone = await capture(browser, "standalone", "http://127.0.0.1:4174/source-book.html");
+              const matches = normal.text === standalone.text;
+              const firstDifference = matches
+                ? -1
+                : Array.from({ length: Math.max(normal.text.length, standalone.text.length) })
+                    .findIndex((_, index) => normal.text[index] !== standalone.text[index]);
+              Object.assign(report, {
+                matches,
+                normal: { hash: hash(normal.text), length: normal.text.length, headings: normal.headings, pageErrors: normal.pageErrors },
+                standalone: { hash: hash(standalone.text), length: standalone.text.length, headings: standalone.headings, pageErrors: standalone.pageErrors },
+                firstDifference,
+              });
+              if (!matches) report.failures.push(`rendered sourcebook content differs at character ${firstDifference}`);
+              report.failures.push(...normal.pageErrors.map((error) => `normal app pageerror: ${error}`));
+              report.failures.push(...standalone.pageErrors.map((error) => `standalone pageerror: ${error}`));
+            } finally {
+              await browser.close();
+            }
+          }
+
+          main()
+            .catch((error) => report.failures.push(`fatal: ${error.stack || error.message}`))
+            .finally(() => {
+              fs.writeFileSync(reportPath, `${JSON.stringify(report, null, 2)}\n`);
+              if (report.failures.length) {
+                console.error(report.failures.join("\n"));
+                process.exitCode = 1;
+              }
+            });
+          NODE
+
+          node "$RUNNER_TEMP/sourcebook-parity.cjs"
+
+      - name: Upload standalone sourcebook and parity evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: standalone-sourcebook
+          path: |
+            dist-sourcebook
+            test-results/sourcebook-parity
+          if-no-files-found: warn
+          retention-days: 14
+
+  books-pdf:
+    name: Eight sourcebooks and PDF QA
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    env:
+      USERPROFILE: ${{ runner.temp }}/book-tools
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Require authored book build and validation sources
+        run: |
+          test -f books/scripts/build-books.ts || {
+            echo "::error::Missing tracked authored book builder books/scripts/build-books.ts."
+            exit 1
+          }
+          test -f books/scripts/qa-checks.ts || {
+            echo "::error::Missing tracked authored PDF QA script books/scripts/qa-checks.ts."
+            exit 1
+          }
+          test -f books/data/canonical-publication-manifest.json || {
+            echo "::error::Missing canonical publication manifest."
+            exit 1
+          }
+          test -f scripts/validate-sourcebook-build-output.ts || {
+            echo "::error::Missing sourcebook output validator."
+            exit 1
+          }
+          test -f scripts/validate-sourcebook-canon-parity.ts || {
+            echo "::error::Missing sourcebook canon parity validator."
+            exit 1
+          }
+          node -e 'const scripts = require("./package.json").scripts; if (!scripts?.["books:build"]) process.exit(1)' || {
+            echo "::error::Missing the books:build package script."
+            exit 1
+          }
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - run: npm ci
+      - name: Install Chromium runtime
+        run: npx playwright install --with-deps chromium
+      - name: Install pinned PDF inspection tools
+        run: |
+          set -euo pipefail
+          python -m pip install --disable-pip-version-check pypdf==5.4.0 pdfplumber==0.11.6
+          sudo apt-get update
+          sudo apt-get install --yes poppler-utils
+
+          # The current book scripts search Codex/Windows-shaped tool paths.
+          # Populate those paths with the runner's pinned Python and Poppler
+          # executables until native cross-platform discovery is implemented.
+          python_dir="$USERPROFILE/.cache/codex-runtimes/codex-primary-runtime/dependencies/python"
+          poppler_dir="$USERPROFILE/.cache/codex-runtimes/codex-primary-runtime/dependencies/native/poppler/Library/bin"
+          mkdir -p "$python_dir" "$poppler_dir"
+          ln -s "$(command -v python)" "$python_dir/python.exe"
+          ln -s "$(command -v pdfinfo)" "$poppler_dir/pdfinfo.exe"
+          ln -s "$(command -v pdftoppm)" "$poppler_dir/pdftoppm.exe"
+
+          "$python_dir/python.exe" -c 'import pdfplumber, pypdf'
+          "$poppler_dir/pdfinfo.exe" -v
+
+      - name: Build all eight books and run repository PDF QA
+        env:
+          # build-books.ts otherwise downloads the latest unpinned Vivliostyle.
+          # Offline mode makes that optional attempt fail closed into the
+          # already-installed Playwright PDF renderer.
+          npm_config_offline: "true"
+        run: |
+          set -euo pipefail
+          mkdir -p books/exports
+          npm run books:build 2>&1 | tee books/exports/build-output.log
+
+      # The authored validator is the publication/output authority. The shell
+      # and independent pypdf checks below provide defense-in-depth evidence.
+      - name: Require all eight PDFs and enforce QA reports
+        run: |
+          set -euo pipefail
+          npx --no-install tsx scripts/validate-sourcebook-build-output.ts
+
+          expected=(
+            "Rift Ascendant - Ascendant Guide"
+            "Rift Ascendant - Warden Guide"
+            "Rift Ascendant - Rift Age Worldbook"
+            "Rift Ascendant - Awakened Arts"
+            "Rift Ascendant - Vaults of the Rift"
+            "Rift Ascendant - Anomaly Manual"
+            "Rift Ascendant - Run Silent Campaign"
+            "Rift Ascendant - The Glassline Claim"
+          )
+
+          for base in "${expected[@]}"; do
+            pdf="books/exports/$base.pdf"
+            if [[ ! -s "$pdf" ]]; then
+              echo "::error::Missing or empty required PDF: $pdf"
+              exit 1
+            fi
+          done
+
+          actual_count=$(find books/exports -maxdepth 1 -type f -name '*.pdf' | wc -l | tr -d ' ')
+          if [[ "$actual_count" != "8" ]]; then
+            echo "::error::Expected exactly eight PDFs, found $actual_count."
+            exit 1
+          fi
+
+          test -s books/shared/validation_report.md || {
+            echo "::error::Book build did not produce validation_report.md."
+            exit 1
+          }
+          if grep -n 'FAIL:' books/shared/validation_report.md; then
+            echo "::error::The book validation report contains required failures."
+            exit 1
+          fi
+          if grep -nE '(^|[[:space:]])FAIL(:|[[:space:]]|$)' books/exports/build-output.log; then
+            echo "::error::The repository PDF QA printed a failure but did not return a failing status."
+            exit 1
+          fi
+
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          from pypdf import PdfReader
+
+          export_root = Path("books/exports")
+          expected = [
+              "Rift Ascendant - Ascendant Guide",
+              "Rift Ascendant - Warden Guide",
+              "Rift Ascendant - Rift Age Worldbook",
+              "Rift Ascendant - Awakened Arts",
+              "Rift Ascendant - Vaults of the Rift",
+              "Rift Ascendant - Anomaly Manual",
+              "Rift Ascendant - Run Silent Campaign",
+              "Rift Ascendant - The Glassline Claim",
+          ]
+          hard_limit = 100 * 1024 * 1024
+          failures = []
+          results = []
+          for base in expected:
+              path = export_root / f"{base}.pdf"
+              size = path.stat().st_size
+              try:
+                  pages = len(PdfReader(path).pages)
+              except Exception as error:
+                  failures.append(f"{path}: unreadable PDF: {error}")
+                  pages = 0
+              if pages < 1:
+                  failures.append(f"{path}: no readable pages")
+              if size > hard_limit:
+                  failures.append(f"{path}: {size} bytes exceeds the 100 MiB hard limit")
+              results.append({"path": str(path), "bytes": size, "pages": pages})
+
+          report = {"expectedCount": 8, "results": results, "failures": failures}
+          report_path = Path("books/shared/ci-pdf-verification.json")
+          report_path.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
+          if failures:
+              raise SystemExit("\n".join(failures))
+          PY
+
+      - name: Upload generated PDFs and QA evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sourcebook-pdfs
+          path: |
+            books/exports/*.pdf
+            books/exports/build-output.log
+            books/exports/rendered-samples
+            books/shared/pdf_build_report.md
+            books/shared/validation_report.md
+            books/shared/ci-pdf-verification.json
+          if-no-files-found: warn
+          compression-level: 0
+          retention-days: 7
+
+  supabase-edge:
+    name: Supabase Edge Function typecheck
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - uses: denoland/setup-deno@v2
+        with:
+          deno-version: "2.2.12"
+
+      - run: npm ci
+      - name: Typecheck all Edge Functions with Deno
+        run: |
+          mkdir -p test-results/supabase-edge
+          npm run check:deno 2>&1 | tee test-results/supabase-edge/deno-check.log
+
+      - name: Upload Edge Function check log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: supabase-edge-check
+          path: test-results/supabase-edge
+          if-no-files-found: warn
+          retention-days: 14
+
+  supabase-db-security:
+    name: Supabase local DB and security contracts
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+      - name: Require local database test infrastructure
+        run: |
+          docker info >/dev/null || {
+            echo "::error::A Docker daemon is required for local Supabase checks."
+            exit 1
+          }
+          test -f supabase/tests/security_hardening.sql || {
+            echo "::error::Missing supabase/tests/security_hardening.sql."
+            exit 1
+          }
+          npm run | grep -q 'test:db:security' || {
+            echo "::error::Missing the test:db:security package script."
+            exit 1
+          }
+
+      - name: Start local Supabase and apply migrations
+        run: |
+          set -euo pipefail
+          mkdir -p test-results/supabase-db
+          npx supabase start
+          npx supabase migration up --local 2>&1 | tee test-results/supabase-db/migrations.log
+
+      # No package script exists for DB lint, so keep the local-only CLI command
+      # explicit. Warning-level findings are required failures.
+      - name: Lint the migrated local database
+        run: npx supabase db lint --local --level warning --fail-on warning 2>&1 | tee test-results/supabase-db/db-lint.log
+
+      - name: Run pgTAP security hardening contracts
+        run: npm run test:db:security 2>&1 | tee test-results/supabase-db/security-contracts.log
+
+      - name: Stop local Supabase
+        if: always()
+        run: |
+          if ! npx supabase stop --no-backup; then
+            echo "::warning::Local Supabase cleanup failed; required check results above remain authoritative."
+          fi
+
+      - name: Upload local database check logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: supabase-db-security
+          path: test-results/supabase-db
+          if-no-files-found: warn
+          retention-days: 14
+
+  required-gates:
+    name: Required gates
+    if: always()
+    needs:
+      - install
+      - typecheck
+      - biome
+      - knip
+      - vitest
+      - app-build
+      - compendium-audit
+      - chunk-verification
+      - playwright
+      - mobile
+      - accessibility
+      - standalone-sourcebook
+      - books-pdf
+      - supabase-edge
+      - supabase-db-security
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      NEEDS_JSON: ${{ toJSON(needs) }}
+    steps:
+      - name: Require every gate to succeed
+        run: |
+          echo "$NEEDS_JSON" | jq .
+          if ! echo "$NEEDS_JSON" | jq --exit-status 'all(.[]; .result == "success")' >/dev/null; then
+            echo "::error::At least one required CI gate failed, was cancelled, or was skipped."
+            exit 1
+          fi

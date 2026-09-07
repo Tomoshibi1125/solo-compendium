@@ -8,6 +8,7 @@ const PROFICIENCY_BONUS_1_TO_20 = [
 ];
 
 const STANDARD_ASI_LEVELS = [4, 8, 12, 16, 19];
+const DESTROYER_ASI_LEVELS = [4, 6, 8, 12, 14, 16, 19];
 const ASSASSIN_ASI_LEVELS = [4, 8, 10, 12, 16, 19];
 const NO_CANTRIPS = Array.from({ length: 20 }, () => null);
 const NO_MAX_POWER = Array.from({ length: 20 }, () => 0);
@@ -127,7 +128,7 @@ export const JOB_PROGRESSION_FIXTURES = {
 		proficiencyBonusByLevel: PROFICIENCY_BONUS_1_TO_20,
 		maxPowerLevelByLevel: NO_MAX_POWER,
 		cantripsKnownByLevel: NO_CANTRIPS,
-		asiLevels: STANDARD_ASI_LEVELS,
+		asiLevels: DESTROYER_ASI_LEVELS,
 		pathUnlockLevel: 3,
 		pathCount: 6,
 		pathNames: [

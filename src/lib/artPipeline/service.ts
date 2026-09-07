@@ -67,6 +67,18 @@ class ArtPipelineService {
 			throw new AppError("Art generation is disabled", "FEATURE_DISABLED");
 		}
 
+		const {
+			data: { user },
+			error: userError,
+		} = await supabase.auth.getUser();
+		if (userError || !user) {
+			throw new AppError(
+				"Sign in to generate and store art.",
+				"AUTH_REQUIRED",
+				userError,
+			);
+		}
+		const ownerId = user.id;
 		const startTime = Date.now();
 		let queueId: string | null = null;
 
@@ -103,6 +115,7 @@ class ArtPipelineService {
 			try {
 				const imageBlob = await this.fetchImage(imageUrl, controller.signal);
 				asset = await this.processAndSave(
+					ownerId,
 					request,
 					imageBlob,
 					preset,
@@ -119,6 +132,7 @@ class ArtPipelineService {
 					logger.warn("Falling back to external image URL:", error);
 				}
 				asset = await this.processAndSaveExternal(
+					ownerId,
 					request,
 					imageUrl,
 					preset,
@@ -153,6 +167,7 @@ class ArtPipelineService {
 	 * Process generated image and save to storage.
 	 */
 	private async processAndSave(
+		ownerId: string,
 		request: ArtRequest,
 		imageBlob: Blob,
 		preset: GenerationPreset,
@@ -163,13 +178,15 @@ class ArtPipelineService {
 	): Promise<ArtAsset> {
 		const cacheKey = generateCacheKey(request);
 		const assetId = `art_${cacheKey}_${Date.now()}`;
+		const safeOwnerId = this.sanitizePathSegment(ownerId);
 		const safeEntityType = this.sanitizePathSegment(request.entityType);
 		const safeEntityId = this.sanitizePathSegment(request.entityId);
 		const safeVariant = this.sanitizePathSegment(request.variant);
 		const safeAssetId = this.sanitizePathSegment(assetId);
+		const entityFolder = `${safeEntityType}--${safeEntityId}`;
 
 		const extension = imageBlob.type === "image/png" ? "png" : "jpg";
-		const basePath = `${safeEntityType}/${safeEntityId}/${safeAssetId}_${safeVariant}`;
+		const basePath = `${safeOwnerId}/${entityFolder}/${safeAssetId}_${safeVariant}`;
 		const originalPath = `${basePath}_original.${extension}`;
 
 		let uploadResult: { bucket: string; publicUrl: string };
@@ -191,6 +208,7 @@ class ArtPipelineService {
 					);
 				}
 				return this.processAndSaveExternal(
+					ownerId,
 					request,
 					imageUrl,
 					preset,
@@ -258,18 +276,24 @@ class ArtPipelineService {
 			paths.token = buildSizedUrl(256);
 		}
 
-		// Save metadata
-		let metadataPath = `${safeEntityType}/${safeEntityId}/${safeAssetId}_metadata.json`;
+		// Save metadata beside the image under the same owner-scoped directory.
+		const metadataObjectPath = `${safeOwnerId}/${entityFolder}/${safeAssetId}_metadata.json`;
+		let metadataPath = this.buildExternalMetadataPath(
+			ownerId,
+			request,
+			assetId,
+		);
 		const metadataBlob = new Blob([JSON.stringify(metadata, null, 2)], {
 			type: "application/json",
 		});
 		try {
-			await this.uploadToBucket(
+			const metadataUpload = await this.uploadToBucket(
 				bucket,
-				metadataPath,
+				metadataObjectPath,
 				metadataBlob,
 				"application/json",
 			);
+			metadataPath = metadataUpload.publicUrl;
 		} catch (error) {
 			if (
 				this.isStorageNonFatal(error) ||
@@ -281,7 +305,6 @@ class ArtPipelineService {
 						error,
 					);
 				}
-				metadataPath = this.buildExternalMetadataPath(request, assetId);
 			} else {
 				throw new AppError(
 					`Failed to upload art metadata: ${this.formatStorageError(error)}`,
@@ -316,6 +339,7 @@ class ArtPipelineService {
 	}
 
 	private async processAndSaveExternal(
+		ownerId: string,
 		request: ArtRequest,
 		imageUrl: string,
 		preset: GenerationPreset,
@@ -326,9 +350,11 @@ class ArtPipelineService {
 	): Promise<ArtAsset> {
 		const cacheKey = generateCacheKey(request);
 		const assetId = `art_${cacheKey}_${Date.now()}`;
+		const safeOwnerId = this.sanitizePathSegment(ownerId);
 		const safeEntityType = this.sanitizePathSegment(request.entityType);
 		const safeEntityId = this.sanitizePathSegment(request.entityId);
 		const safeAssetId = this.sanitizePathSegment(assetId);
+		const entityFolder = `${safeEntityType}--${safeEntityId}`;
 		const paths: {
 			original: string;
 			thumb: string;
@@ -368,18 +394,23 @@ class ArtPipelineService {
 			mimeType: "image/jpeg",
 		};
 
-		let metadataPath = this.buildExternalMetadataPath(request, assetId);
+		const metadataObjectPath = `${safeOwnerId}/${entityFolder}/${safeAssetId}_metadata.json`;
+		let metadataPath = this.buildExternalMetadataPath(
+			ownerId,
+			request,
+			assetId,
+		);
 		if (storeMetadata) {
 			const metadataBlob = new Blob([JSON.stringify(metadata, null, 2)], {
 				type: "application/json",
 			});
 			try {
-				const { bucket } = await this.uploadWithFallback(
-					`${safeEntityType}/${safeEntityId}/${safeAssetId}_metadata.json`,
+				const { bucket, publicUrl } = await this.uploadWithFallback(
+					metadataObjectPath,
 					metadataBlob,
 					"application/json",
 				);
-				metadataPath = `${safeEntityType}/${safeEntityId}/${safeAssetId}_metadata.json`;
+				metadataPath = publicUrl;
 				if (import.meta.env.DEV && bucket !== this.primaryBucket) {
 					logger.warn(`Art metadata stored in fallback bucket: ${bucket}`);
 				}
@@ -556,13 +587,15 @@ class ArtPipelineService {
 	}
 
 	private buildExternalMetadataPath(
+		ownerId: string,
 		request: ArtRequest,
 		assetId: string,
 	): string {
+		const safeOwnerId = this.sanitizePathSegment(ownerId);
 		const safeEntityType = this.sanitizePathSegment(request.entityType);
 		const safeEntityId = this.sanitizePathSegment(request.entityId);
 		const safeAssetId = this.sanitizePathSegment(assetId);
-		return `external://${safeEntityType}/${safeEntityId}/${safeAssetId}_metadata.json`;
+		return `external://${safeOwnerId}/${safeEntityType}--${safeEntityId}/${safeAssetId}_metadata.json`;
 	}
 
 	private sanitizePathSegment(value: string): string {

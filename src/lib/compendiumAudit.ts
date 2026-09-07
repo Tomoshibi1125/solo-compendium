@@ -1,4 +1,9 @@
-import { rollableTables } from "@/data/compendium/rollableTables";
+import { canonicalReviewBlockers } from "@/data/compendium/canon-review-blockers";
+import {
+	type CanonicalRegistrySnapshot,
+	compendiumSourceRegistry,
+	type MergeConflict,
+} from "@/data/compendium/registry";
 import srdItemManifest from "@/data/srd-item-manifest.json";
 import type { Json } from "@/integrations/supabase/types";
 import {
@@ -66,16 +71,20 @@ type AuditProvider = {
 	getArtifacts: (search?: string) => Promise<AuditEntry[]>;
 	getBackgrounds: (search?: string) => Promise<AuditEntry[]>;
 	getConditions: (search?: string) => Promise<AuditEntry[]>;
+	getCrafting?: (search?: string) => Promise<AuditEntry[]>;
 	getFeats: (search?: string) => Promise<AuditEntry[]>;
 	getFightingStyles: (search?: string) => Promise<AuditEntry[]>;
+	getGuildBase?: (search?: string) => Promise<AuditEntry[]>;
 	getItems: (search?: string) => Promise<AuditEntry[]>;
 	getJobs: (search?: string) => Promise<AuditEntry[]>;
 	getLocations: (search?: string) => Promise<AuditEntry[]>;
+	getNpcs?: (search?: string) => Promise<AuditEntry[]>;
 	getPantheon: (search?: string) => Promise<AuditEntry[]>;
 	getPaths: (search?: string) => Promise<AuditEntry[]>;
 	getPowers: (search?: string) => Promise<AuditEntry[]>;
 	getRegents: (search?: string) => Promise<AuditEntry[]>;
 	getRelics: (search?: string) => Promise<AuditEntry[]>;
+	getRollableTables?: (search?: string) => Promise<AuditEntry[]>;
 	getRunes: (search?: string) => Promise<AuditEntry[]>;
 	getShadowSoldiers: (search?: string) => Promise<AuditEntry[]>;
 	getSigils: (search?: string) => Promise<AuditEntry[]>;
@@ -97,12 +106,28 @@ export interface CompendiumAuditIssue {
 	entryName?: string;
 }
 
+export interface CompendiumRegistryAuditStats {
+	registeredSources: number;
+	loadedSources: number;
+	candidates: number;
+	entries: number;
+	references: number;
+	blockingConflicts: number;
+}
+
 export interface CompendiumAuditSummary {
 	datasets: Record<string, number>;
 	totalEntries: number;
 	issues: CompendiumAuditIssue[];
 	errors: CompendiumAuditIssue[];
 	warnings: CompendiumAuditIssue[];
+	registryConflicts: MergeConflict[];
+	blockingConflicts: MergeConflict[];
+	registry: CompendiumRegistryAuditStats;
+}
+
+export interface RunCompendiumAuditOptions {
+	registry?: CanonicalRegistrySnapshot | null;
 }
 
 const templatedPhrasePatterns: RegExp[] = [
@@ -348,6 +373,68 @@ const addIssue = (
 	issues.push(issue);
 };
 
+const emptyRegistryStats = (): CompendiumRegistryAuditStats => ({
+	registeredSources: compendiumSourceRegistry.length,
+	loadedSources: 0,
+	candidates: 0,
+	entries: 0,
+	references: 0,
+	blockingConflicts: 0,
+});
+
+function auditCanonicalRegistry(
+	registry: CanonicalRegistrySnapshot,
+	issues: CompendiumAuditIssue[],
+): CompendiumRegistryAuditStats {
+	const loadedSourceIds = new Set(registry.loadedSourceIds);
+	for (const source of compendiumSourceRegistry) {
+		if (source.loadPolicy === "deferred" || loadedSourceIds.has(source.id)) {
+			continue;
+		}
+		const alreadyReported = registry.conflicts.some(
+			(conflict) =>
+				conflict.kind === "source-load-failure" &&
+				conflict.candidates.some(
+					(candidate) => candidate.sourceId === source.id,
+				),
+		);
+		if (!alreadyReported) {
+			addIssue(issues, {
+				severity: "error",
+				dataset: source.category,
+				code: "missing_registered_source",
+				message: `Registered eager source "${source.id}" was not loaded.`,
+			});
+		}
+	}
+
+	for (const conflict of registry.blockingConflicts) {
+		const evidence = [
+			...new Set(conflict.candidates.map((candidate) => candidate.sourceId)),
+		].join(", ");
+		addIssue(issues, {
+			severity: "error",
+			dataset: conflict.category,
+			code: `registry_${conflict.kind.replaceAll("-", "_")}`,
+			message: `${conflict.message} Conflict: ${conflict.id}. Evidence: ${evidence || "none"}.`,
+			entryId: conflict.canonicalKey,
+		});
+	}
+
+	return {
+		registeredSources: compendiumSourceRegistry.length,
+		loadedSources: registry.loadedSourceIds.length,
+		candidates: registry.candidateCount,
+		entries: registry.entryCount,
+		references: registry.references.length,
+		blockingConflicts: registry.blockingConflicts.length,
+	};
+}
+
+const loadOptionalAuditDataset = (
+	loader: ((search?: string) => Promise<AuditEntry[]>) | undefined,
+): Promise<AuditEntry[]> => (loader ? loader("") : Promise.resolve([]));
+
 async function loadAuditDatasets(
 	provider: AuditProvider,
 ): Promise<Record<string, AuditEntry[]>> {
@@ -356,16 +443,20 @@ async function loadAuditDatasets(
 		artifacts,
 		backgrounds,
 		conditions,
+		crafting,
 		feats,
 		fightingStyles,
+		guildBase,
 		items,
 		jobs,
 		locations,
+		npcs,
 		pantheon,
 		paths,
 		powers,
 		regents,
 		relics,
+		rollableTables,
 		runes,
 		shadowSoldiers,
 		sigils,
@@ -379,16 +470,20 @@ async function loadAuditDatasets(
 		provider.getArtifacts(""),
 		provider.getBackgrounds(""),
 		provider.getConditions(""),
+		loadOptionalAuditDataset(provider.getCrafting),
 		provider.getFeats(""),
 		provider.getFightingStyles(""),
+		loadOptionalAuditDataset(provider.getGuildBase),
 		provider.getItems(""),
 		provider.getJobs(""),
 		provider.getLocations(""),
+		loadOptionalAuditDataset(provider.getNpcs),
 		provider.getPantheon(""),
 		provider.getPaths(""),
 		provider.getPowers(""),
 		provider.getRegents(""),
 		provider.getRelics(""),
+		loadOptionalAuditDataset(provider.getRollableTables),
 		provider.getRunes(""),
 		provider.getShadowSoldiers(""),
 		provider.getSigils(""),
@@ -404,17 +499,21 @@ async function loadAuditDatasets(
 		artifacts,
 		backgrounds,
 		conditions,
+		crafting,
 		equipment: items.filter((entry) => isEquipmentLikeEntry(entry as never)),
 		feats,
 		fighting_styles: fightingStyles,
+		guild_base: guildBase,
 		items: items.filter((entry) => !isEquipmentLikeEntry(entry as never)),
 		jobs,
 		locations,
+		npcs,
 		pantheon,
 		paths,
 		powers,
 		regents,
 		relics,
+		rollable_tables: rollableTables,
 		runes,
 		shadow_soldiers: shadowSoldiers,
 		sigils,
@@ -1982,9 +2081,13 @@ function auditSrdCompleteness(
 
 export async function runCompendiumAudit(
 	provider: AuditProvider,
+	options: RunCompendiumAuditOptions = {},
 ): Promise<CompendiumAuditSummary> {
 	const datasets = await loadAuditDatasets(provider);
 	const issues: CompendiumAuditIssue[] = [];
+	const registryStats = options.registry
+		? auditCanonicalRegistry(options.registry, issues)
+		: emptyRegistryStats();
 
 	for (const [dataset, entries] of Object.entries(datasets)) {
 		auditDuplicates(dataset, entries, issues);
@@ -2069,12 +2172,23 @@ export async function runCompendiumAudit(
 	auditSrdCompleteness(datasets, issues);
 	auditBoilerplateRepetition(datasets, issues);
 	auditShallowMagicEffect(datasets, issues);
-	auditRollableTableSources(rollableTables, issues);
 	auditVehicleBondedReferences(
 		datasets.vehicles ?? [],
 		datasets.anomalies ?? [],
 		issues,
 	);
+
+	if (options.registry) {
+		for (const blocker of canonicalReviewBlockers) {
+			addIssue(issues, {
+				severity: "error",
+				dataset: blocker.dataset,
+				code: "canon_review_blocker",
+				entryId: blocker.entryId,
+				message: `${blocker.id} at ${blocker.fieldPath}: ${blocker.message} Resolve in Task ${blocker.dependsOnTask}.`,
+			});
+		}
+	}
 
 	const errors = issues.filter((issue) => issue.severity === "error");
 	const warnings = issues.filter((issue) => issue.severity === "warning");
@@ -2095,6 +2209,9 @@ export async function runCompendiumAudit(
 		issues,
 		errors,
 		warnings,
+		registryConflicts: options.registry?.conflicts ?? [],
+		blockingConflicts: options.registry?.blockingConflicts ?? [],
+		registry: registryStats,
 	};
 }
 
@@ -2117,6 +2234,7 @@ export function formatCompendiumAuditReport(
 			.map(([dataset, count]) => `${dataset}=${count}`)
 			.join(", ")}`,
 		`Total entries: ${summary.totalEntries}`,
+		`Registry: sources=${summary.registry.loadedSources}/${summary.registry.registeredSources}, candidates=${summary.registry.candidates}, entries=${summary.registry.entries}, references=${summary.registry.references}, blocking-conflicts=${summary.registry.blockingConflicts}`,
 		`Errors: ${summary.errors.length}`,
 		`Warnings: ${summary.warnings.length}`,
 	];

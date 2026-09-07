@@ -1,7 +1,7 @@
 import { expect } from "vitest";
+import { canonicalReviewBlockers } from "@/data/compendium/canon-review-blockers";
 import { regents } from "@/data/compendium/regents";
 import { REGENT_GRANTS, type RegentGrantProfile } from "@/lib/regentGrants";
-import type { Regent } from "@/lib/regentTypes";
 
 const VALID_TYPES = new Set([
 	"action",
@@ -17,6 +17,7 @@ const VALID_FREQUENCIES = new Set([
 	"once-per-day",
 	"once-per-long-rest",
 ]);
+const VALID_TRACKING = new Set(["uses", "resource", "manual"]);
 const LOCKED_LEVELS = [1, 2, 3, 4, 5, 7, 10] as const;
 const HIGH_TIER_PATTERN =
 	/absolute|eternal|cosmic|supreme|regent|god|omnipotence|transcendence|apocalypse|authority/i;
@@ -33,12 +34,6 @@ export interface RegentLockExpectation {
 	grants: Readonly<RegentGrantProfile>;
 }
 
-function getRegentFeatures(regent: Regent) {
-	return regent.abilities?.length
-		? regent.abilities
-		: (regent.class_features ?? []);
-}
-
 export function assertRegentLock(expected: RegentLockExpectation): void {
 	const regent = regents.find((entry) => entry.id === expected.id);
 	expect(regent).toBeDefined();
@@ -51,18 +46,40 @@ export function assertRegentLock(expected: RegentLockExpectation): void {
 	expect(regent.requirements?.power_level).toBe(expected.powerLevel);
 	expect(REGENT_GRANTS[expected.id]).toEqual(expected.grants);
 
-	const features = getRegentFeatures(regent);
-	expect(features).toHaveLength(expected.featureCount);
+	const features = regent.class_features ?? [];
+	const progressionFeatureCount = Object.values(
+		regent.progression_table ?? {},
+	).reduce((total, row) => total + (row.features_gained?.length ?? 0), 0);
+	expect(features).toHaveLength(progressionFeatureCount);
+	expect(new Set(features.map((feature) => feature.id)).size).toBe(
+		features.length,
+	);
 	for (const feature of features) {
+		expect(feature.id).toBe(
+			`regent-feature:${regent.id}:${feature.level}:${feature.name
+				.toLowerCase()
+				.replace(/[^a-z0-9]+/g, "-")
+				.replace(/(^-|-$)/g, "")}`,
+		);
 		expect(feature.name.trim().length).toBeGreaterThan(0);
+		expect(feature.description.trim().length).toBeGreaterThan(0);
 		expect(VALID_TYPES.has(feature.type)).toBe(true);
+		expect(feature.provenance?.sourcePath).toBe(
+			"src/data/compendium/regents.ts",
+		);
+		expect(["source-backed", "review-blocked"]).toContain(feature.canonStatus);
 		if (feature.frequency) {
 			expect(VALID_FREQUENCIES.has(feature.frequency)).toBe(true);
 		}
-		const powerLevel =
-			"power_level" in feature ? feature.power_level : undefined;
-		if (powerLevel !== undefined) {
-			expect(typeof powerLevel).toBe("number");
+		if (feature.tracking) {
+			expect(VALID_TRACKING.has(feature.tracking)).toBe(true);
+		}
+		if (feature.canonStatus === "review-blocked") {
+			expect(
+				canonicalReviewBlockers.some(
+					(blocker) => blocker.id === feature.reviewBlockerId,
+				),
+			).toBe(true);
 		}
 	}
 
@@ -75,6 +92,11 @@ export function assertRegentLock(expected: RegentLockExpectation): void {
 		expect(regent.progression_table?.[level]?.features_gained).toEqual(
 			expected.progression[level],
 		);
+		expect(
+			features
+				.filter((feature) => feature.level === level)
+				.map((feature) => feature.name),
+		).toEqual(expected.progression[level]);
 	}
 
 	const highTierText = [

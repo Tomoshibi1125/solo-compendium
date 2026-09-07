@@ -11,6 +11,17 @@ export interface Feature {
 	name: string;
 	description: string;
 	type: string;
+	/** Canonical Task 7 ledger metadata; absent on evidence-only legacy rows. */
+	id?: string;
+	level?: number;
+	frequency?: RegentFeatureFrequency;
+	actionType?: string;
+	uses?: RegentFeatureUseDefinition;
+	resource?: string;
+	tracking?: RegentFeatureTracking;
+	canonStatus?: RegentFeatureCanonStatus;
+	provenance?: RegentFeatureProvenance;
+	reviewBlockerId?: string;
 }
 
 export interface StructuredSpell {
@@ -40,9 +51,70 @@ export interface RegentPath {
 	};
 }
 
+export type RegentFeatureType =
+	| "passive"
+	| "active"
+	| "action"
+	| "bonus-action"
+	| "reaction";
+
+export type RegentFeatureFrequency =
+	| "at-will"
+	| "short-rest"
+	| "long-rest"
+	| "once-per-day"
+	| "once-per-long-rest";
+
+export type RegentFeatureTracking = "uses" | "resource" | "manual";
+export type RegentFeatureCanonStatus = "source-backed" | "review-blocked";
+export type RegentFeatureSourceKind =
+	| "class_features"
+	| "abilities"
+	| "features"
+	| "progression_table";
+
+export interface RegentFeatureUseDefinition {
+	formula: string;
+	recharge: "short-rest" | "long-rest";
+}
+
+/** Repository-local evidence for the feature's level and mechanic text. */
+export interface RegentFeatureProvenance {
+	levelSource: "progression_table" | "class_features";
+	mechanicsSource: RegentFeatureSourceKind;
+	sourcePath: "src/data/compendium/regents.ts";
+	fieldPath: string;
+	sourceName?: string;
+	sourceLevel?: number;
+	/** Records a source disagreement without choosing an unauthored resolution. */
+	conflict?: string;
+}
+
+/**
+ * The shared Regent overlay row consumed by compendium, sheet, progression, and
+ * persistence code. Raw source rows may omit normalization fields; regents.ts
+ * materializes them synchronously before exporting the canonical roster.
+ */
+export interface RegentClassFeature {
+	id?: string;
+	level: number;
+	name: string;
+	description: string;
+	type: RegentFeatureType;
+	frequency?: RegentFeatureFrequency;
+	actionType?: string;
+	uses?: RegentFeatureUseDefinition;
+	resource?: string;
+	tracking?: RegentFeatureTracking;
+	canonStatus?: RegentFeatureCanonStatus;
+	provenance?: RegentFeatureProvenance;
+	reviewBlockerId?: string;
+}
+
 export interface Regent {
 	id: string;
 	name: string;
+	aliases?: string[];
 	title?: string;
 	theme?: string;
 	description?: string;
@@ -63,18 +135,7 @@ export interface Regent {
 	weapon_proficiencies?: string[];
 	tool_proficiencies?: string[];
 
-	class_features?: {
-		level: number;
-		name: string;
-		description: string;
-		type: "passive" | "active" | "action" | "bonus-action" | "reaction";
-		frequency?:
-			| "at-will"
-			| "short-rest"
-			| "long-rest"
-			| "once-per-day"
-			| "once-per-long-rest";
-	}[];
+	class_features?: RegentClassFeature[];
 
 	spellcasting?: {
 		ability: string;
@@ -94,13 +155,8 @@ export interface Regent {
 		};
 	};
 
-	// --- Job-parity choice/progression systems (all optional). ---
-	// Regents are Warden-unlocked overlays, NOT chosen at creation. These mirror
-	// the job ledger (see choiceCalculations.ts) so a regent can grant structured
-	// power/technique/cantrip/spell picks as an overlay, scaled to its theme and
-	// rank-S power tier. `level` on a ledger entry is the regent-internal tier;
-	// because regents aren't level-gated, unlocking grants every tier up to the
-	// character's level at once (see regent level-up wiring).
+	// Regents are post-creation overlays. These ledgers describe declared pick
+	// counts only; option identities remain unavailable until explicitly authored.
 	levelChoices?: {
 		level: number;
 		type: string;
@@ -113,8 +169,6 @@ export interface Regent {
 			restrictTo?: "job-list" | "any-list";
 		};
 	}[];
-	// Cumulative known-counts per regent tier (index = tier - 1), for regents that
-	// grant martial powers / techniques as an overlay.
 	powersKnown?: number[];
 	techniquesKnown?: number[];
 
@@ -135,16 +189,26 @@ export interface Regent {
 	abilities?: {
 		name: string;
 		description: string;
-		type: "passive" | "active" | "action" | "bonus-action" | "reaction";
-		frequency?: "at-will" | "short-rest" | "long-rest" | "once-per-day";
+		type: RegentFeatureType;
+		frequency?: RegentFeatureFrequency;
 		dc?: number;
 		power_level?: number;
+		actionType?: string;
+		uses?: RegentFeatureUseDefinition;
+		resource?: string;
+		tracking?: RegentFeatureTracking;
 	}[];
 
 	features?: {
 		name: string;
 		description: string;
 		power_level?: number;
+		type?: RegentFeatureType;
+		frequency?: RegentFeatureFrequency;
+		actionType?: string;
+		uses?: RegentFeatureUseDefinition;
+		resource?: string;
+		tracking?: RegentFeatureTracking;
 	}[];
 
 	mechanics?: {

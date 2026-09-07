@@ -10,6 +10,7 @@ import {
 	listLocalFeatures,
 	removeLocalFeature,
 } from "@/lib/guestStore";
+import { requireDistinctCanonicalRegents } from "@/lib/regentIdentity";
 import {
 	buildSovereignGeminiState,
 	SOVEREIGN_FEATURE_SOURCE_PREFIX,
@@ -28,8 +29,8 @@ export interface SavedSovereign {
 	fusion_stability: string;
 	job_id: string;
 	path_id: string;
-	monarch_a_id: string;
-	monarch_b_id: string;
+	regent_a_id: string;
+	regent_b_id: string;
 	abilities: FusionAbility[];
 	created_by: string;
 	created_at: string;
@@ -86,6 +87,21 @@ export function useSaveSovereign() {
 			sovereign: GeneratedSovereign;
 			characterId?: string;
 		}) => {
+			const [regentAId, regentBId] = requireDistinctCanonicalRegents(
+				sovereign.regentA?.id,
+				sovereign.regentB?.id,
+			);
+			const canonicalSovereign: GeneratedSovereign = {
+				...sovereign,
+				regentA:
+					sovereign.regentA.id === regentAId
+						? sovereign.regentA
+						: { ...sovereign.regentA, id: regentAId },
+				regentB:
+					sovereign.regentB.id === regentBId
+						? sovereign.regentB
+						: { ...sovereign.regentB, id: regentBId },
+			};
 			const {
 				data: { user },
 			} = await supabase.auth.getUser();
@@ -96,25 +112,28 @@ export function useSaveSovereign() {
 				);
 
 			const insertData = {
-				name: sovereign.name,
-				title: sovereign.title,
-				description: sovereign.description,
-				fusion_theme: sovereign.fusion_theme,
-				fusion_description: sovereign.fusion_description,
-				fusion_method: sovereign.fusion_method,
-				power_multiplier: sovereign.power_multiplier,
-				fusion_stability: sovereign.fusion_stability,
-				job_id: sovereign.job.id,
-				path_id: sovereign.path.id,
-				monarch_a_id: sovereign.regentA.id,
-				monarch_b_id: sovereign.regentB.id,
-				abilities: JSON.parse(JSON.stringify(sovereign.abilities)),
+				name: canonicalSovereign.name,
+				title: canonicalSovereign.title,
+				description: canonicalSovereign.description,
+				fusion_theme: canonicalSovereign.fusion_theme,
+				fusion_description: canonicalSovereign.fusion_description,
+				fusion_method: canonicalSovereign.fusion_method,
+				power_multiplier: canonicalSovereign.power_multiplier,
+				fusion_stability: canonicalSovereign.fusion_stability,
+				job_id: canonicalSovereign.job.id,
+				path_id: canonicalSovereign.path.id,
+				regent_a_id: regentAId,
+				regent_b_id: regentBId,
+				abilities: JSON.parse(JSON.stringify(canonicalSovereign.abilities)),
 				created_by: user.id,
 			};
 
+			// The deployed table uses canonical Regent columns. Local generated types
+			// still describe the retired Monarch columns and are intentionally not
+			// hand-edited; constrain the compatibility cast to this insert boundary.
 			const { data, error } = await supabase
 				.from("saved_sovereigns")
-				.insert(insertData)
+				.insert(insertData as never)
 				.select()
 				.single();
 
@@ -127,7 +146,10 @@ export function useSaveSovereign() {
 			// This path is identical for embedded-AI and externally-imported
 			// Sovereigns, so an imported fusion lands exactly like a generated one.
 			if (characterId && data?.id) {
-				const overlayState = buildSovereignGeminiState(sovereign, data.id);
+				const overlayState = buildSovereignGeminiState(
+					canonicalSovereign,
+					data.id,
+				);
 
 				// Merge into any existing gemini_state (preserve leveling_type,
 				// conditions, and other runtime keys set elsewhere).
@@ -158,7 +180,7 @@ export function useSaveSovereign() {
 				// "Sovereign") and — for active abilities — the Actions tab, exactly
 				// like a class overlay. Idempotent: clear prior Sovereign features
 				// first so a re-lock never duplicates rows.
-				const featureRows = sovereignAbilitiesToFeatureRows(sovereign);
+				const featureRows = sovereignAbilitiesToFeatureRows(canonicalSovereign);
 				if (isLocalCharacterId(characterId)) {
 					for (const existingFeature of listLocalFeatures(characterId)) {
 						const src = (existingFeature as { source?: string }).source;

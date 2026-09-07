@@ -1,11 +1,92 @@
 import { Image as ImageIcon, Upload, X } from "lucide-react";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { OptimizedImage } from "@/components/ui/OptimizedImage";
 import { useToast } from "@/hooks/use-toast";
-// import removed as unused here
 import { supabase } from "@/integrations/supabase/client";
 import { compressImage } from "@/lib/imageOptimization";
+import { logger } from "@/lib/logger";
+
+const PORTRAIT_BUCKET = "character-portraits";
+const PUBLIC_OBJECT_MARKER = `/storage/v1/object/public/${PORTRAIT_BUCKET}/`;
+const getPortraitStorageOrigin = (): string => {
+	const { data } = supabase.storage.from(PORTRAIT_BUCKET).getPublicUrl("");
+	return new URL(data.publicUrl).origin;
+};
+
+const decodeSafePathSegment = (segment: string): string | null => {
+	if (!segment || /%2f|%5c/i.test(segment)) return null;
+	try {
+		const decoded = decodeURIComponent(segment);
+		if (
+			!decoded ||
+			decoded === "." ||
+			decoded === ".." ||
+			decoded.includes("/") ||
+			decoded.includes("\\")
+		) {
+			return null;
+		}
+		return decoded;
+	} catch {
+		return null;
+	}
+};
+
+/**
+ * Extract only portrait object paths created for this character. Both the new
+ * owner-first layout and the legacy portraits/<file> layout are understood;
+ * unrelated URLs are never converted into local deletion targets.
+ */
+export const parsePortraitObjectPath = (
+	publicUrl: string,
+	characterId: string,
+	ownerId: string,
+	storageOrigin: string,
+): string | null => {
+	try {
+		const url = new URL(publicUrl);
+		if (url.origin !== new URL(storageOrigin).origin) return null;
+		const pathname = url.pathname;
+		const markerIndex = pathname.indexOf(PUBLIC_OBJECT_MARKER);
+		if (markerIndex < 0) return null;
+
+		const encodedPath = pathname.slice(
+			markerIndex + PUBLIC_OBJECT_MARKER.length,
+		);
+		if (!encodedPath) return null;
+		const segments = encodedPath.split("/").map(decodeSafePathSegment);
+		if (segments.some((segment) => segment === null)) return null;
+
+		const decodedSegments = segments as string[];
+		const escapedCharacterId = characterId.replace(
+			/[.*+?^${}()|[\]\\]/g,
+			"\\$&",
+		);
+		const expectedFileName = new RegExp(
+			`^${escapedCharacterId}-\\d+\\.webp$`,
+			"i",
+		);
+		const fileName = decodedSegments.at(-1);
+		if (!fileName || !expectedFileName.test(fileName)) return null;
+
+		if (
+			decodedSegments.length === 3 &&
+			decodedSegments[0] === ownerId &&
+			decodedSegments[1] === "portraits"
+		) {
+			return decodedSegments.join("/");
+		}
+
+		if (decodedSegments.length === 2 && decodedSegments[0] === "portraits") {
+			return decodedSegments.join("/");
+		}
+	} catch {
+		return null;
+	}
+
+	return null;
+};
 
 export function PortraitUpload({
 	characterId,
@@ -17,18 +98,25 @@ export function PortraitUpload({
 	onUploadComplete?: (url: string) => void;
 }) {
 	const [uploading, setUploading] = useState(false);
+	const [storedPortraitUrl, setStoredPortraitUrl] = useState<string | null>(
+		currentPortraitUrl || null,
+	);
 	const [preview, setPreview] = useState<string | null>(
 		currentPortraitUrl || null,
 	);
 	const fileInputRef = useRef<HTMLInputElement>(null);
 	const { toast } = useToast();
-	// playerTools removed as unused here
+
+	useEffect(() => {
+		const nextUrl = currentPortraitUrl || null;
+		setStoredPortraitUrl(nextUrl);
+		setPreview(nextUrl);
+	}, [currentPortraitUrl]);
 
 	const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const file = e.target.files?.[0];
 		if (!file) return;
 
-		// Validate file type
 		if (!file.type.startsWith("image/")) {
 			toast({
 				title: "Invalid file type",
@@ -38,7 +126,6 @@ export function PortraitUpload({
 			return;
 		}
 
-		// Validate file size (max 5MB)
 		if (file.size > 5 * 1024 * 1024) {
 			toast({
 				title: "File too large",
@@ -48,12 +135,21 @@ export function PortraitUpload({
 			return;
 		}
 
-		// Create preview
 		const reader = new FileReader();
-		reader.onload = (e) => {
-			setPreview(e.target?.result as string);
+		reader.onload = (event) => {
+			setPreview(event.target?.result as string);
 		};
 		reader.readAsDataURL(file);
+	};
+
+	const removeObject = async (path: string, context: string) => {
+		const { error } = await supabase.storage
+			.from(PORTRAIT_BUCKET)
+			.remove([path]);
+		if (error) {
+			logger.warn(`Could not remove ${context} portrait object`, error);
+		}
+		return error;
 	};
 
 	const handleUpload = async () => {
@@ -63,7 +159,16 @@ export function PortraitUpload({
 		setUploading(true);
 
 		try {
-			// Compress image before uploading
+			const {
+				data: { user },
+				error: userError,
+			} = await supabase.auth.getUser();
+			if (userError || !user) {
+				throw (
+					userError ?? new Error("You must be signed in to upload a portrait.")
+				);
+			}
+
 			const compressedBlob = await compressImage(file, {
 				maxWidth: 512,
 				maxHeight: 512,
@@ -71,42 +176,54 @@ export function PortraitUpload({
 				format: "webp",
 			});
 
-			// Generate unique filename with .webp extension
 			const fileName = `${characterId}-${Date.now()}.webp`;
-			const filePath = `portraits/${fileName}`;
+			const filePath = `${user.id}/portraits/${fileName}`;
+			const previousPath = storedPortraitUrl
+				? parsePortraitObjectPath(
+						storedPortraitUrl,
+						characterId,
+						user.id,
+						getPortraitStorageOrigin(),
+					)
+				: null;
 
-			// Upload compressed image to Supabase Storage
 			const { error: uploadError } = await supabase.storage
-				.from("character-portraits")
+				.from(PORTRAIT_BUCKET)
 				.upload(filePath, compressedBlob, {
 					cacheControl: "3600",
 					upsert: false,
 					contentType: "image/webp",
 				});
-
 			if (uploadError) throw uploadError;
 
-			// Get public URL
 			const {
 				data: { publicUrl },
-			} = supabase.storage.from("character-portraits").getPublicUrl(filePath);
+			} = supabase.storage.from(PORTRAIT_BUCKET).getPublicUrl(filePath);
 
-			// Update character with portrait URL
 			const { error: updateError } = await supabase
 				.from("characters")
 				.update({ portrait_url: publicUrl })
 				.eq("id", characterId);
 
-			if (updateError) throw updateError;
+			if (updateError) {
+				await removeObject(filePath, "rolled-back");
+				throw updateError;
+			}
+
+			setStoredPortraitUrl(publicUrl);
+			setPreview(publicUrl);
+			if (fileInputRef.current) fileInputRef.current.value = "";
+			onUploadComplete?.(publicUrl);
+
+			if (previousPath && previousPath !== filePath) {
+				await removeObject(previousPath, "superseded");
+			}
 
 			toast({
 				title: "Portrait uploaded",
 				description: "Character portrait has been updated.",
 			});
-
-			onUploadComplete?.(publicUrl);
 		} catch {
-			// Error is handled by toast notification
 			toast({
 				title: "Upload failed",
 				description: "Could not upload portrait. Please try again.",
@@ -118,37 +235,66 @@ export function PortraitUpload({
 	};
 
 	const handleRemove = async () => {
-		if (!currentPortraitUrl) return;
+		if (preview !== storedPortraitUrl) {
+			setPreview(storedPortraitUrl);
+			if (fileInputRef.current) fileInputRef.current.value = "";
+			return;
+		}
+		if (!storedPortraitUrl) return;
 
+		setUploading(true);
 		try {
-			// Extract file path from URL
-			const urlParts = currentPortraitUrl.split("/");
-			const fileName = urlParts[urlParts.length - 1];
-			const filePath = `portraits/${fileName}`;
+			const {
+				data: { user },
+				error: userError,
+			} = await supabase.auth.getUser();
+			if (userError || !user) {
+				throw (
+					userError ?? new Error("You must be signed in to remove a portrait.")
+				);
+			}
 
-			// Delete from storage
-			await supabase.storage.from("character-portraits").remove([filePath]);
-
-			// Update character
-			await supabase
+			const objectPath = parsePortraitObjectPath(
+				storedPortraitUrl,
+				characterId,
+				user.id,
+				getPortraitStorageOrigin(),
+			);
+			const { error: updateError } = await supabase
 				.from("characters")
 				.update({ portrait_url: null })
 				.eq("id", characterId);
+			if (updateError) throw updateError;
 
+			const cleanupError = objectPath
+				? await removeObject(objectPath, "removed")
+				: null;
+			setStoredPortraitUrl(null);
 			setPreview(null);
-			toast({
-				title: "Portrait removed",
-				description: "Character portrait has been removed.",
-			});
-
+			if (fileInputRef.current) fileInputRef.current.value = "";
 			onUploadComplete?.("");
+
+			toast(
+				cleanupError
+					? {
+							title: "Portrait reference removed",
+							description:
+								"The portrait was cleared, but its legacy file could not be deleted automatically.",
+							variant: "destructive",
+						}
+					: {
+							title: "Portrait removed",
+							description: "Character portrait has been removed.",
+						},
+			);
 		} catch {
-			// Error is handled by toast notification
 			toast({
 				title: "Remove failed",
 				description: "Could not remove portrait.",
 				variant: "destructive",
 			});
+		} finally {
+			setUploading(false);
 		}
 	};
 
@@ -169,6 +315,7 @@ export function PortraitUpload({
 							aria-label="Remove"
 							className="absolute -top-2 -right-2 h-6 w-6"
 							onClick={handleRemove}
+							disabled={uploading}
 						>
 							<X className="w-3 h-3" />
 						</Button>
@@ -195,11 +342,12 @@ export function PortraitUpload({
 							size="sm"
 							onClick={() => fileInputRef.current?.click()}
 							className="gap-2"
+							disabled={uploading}
 						>
 							<Upload className="w-4 h-4" />
-							{preview && preview !== currentPortraitUrl ? "Change" : "Upload"}
+							{storedPortraitUrl ? "Change" : "Upload"}
 						</Button>
-						{preview && preview !== currentPortraitUrl && (
+						{preview && preview !== storedPortraitUrl && (
 							<Button
 								variant="default"
 								size="sm"

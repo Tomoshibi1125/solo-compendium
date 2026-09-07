@@ -66,7 +66,10 @@ describe("campaign invite/linking hardening invariants", () => {
 			"useAddPlayerCharacterToCampaign",
 		);
 		expect(useAddPlayerCharacterToCampaign).toEqual(expect.any(Function));
-		expect(campaignHooksSource).toContain("join_campaign_by_id");
+		expect(campaignHooksSource).toContain("join_campaign_by_code");
+		expect(campaignHooksSource).not.toContain(
+			'supabase.rpc("join_campaign_by_id"',
+		);
 		expect(campaignHooksSource).toContain(
 			"add_ascendant_character_to_campaign",
 		);

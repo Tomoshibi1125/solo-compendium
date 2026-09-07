@@ -9,8 +9,14 @@
  * migration to drop the casts.
  */
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
+import {
+	buildCampaignWorkflowRpcPreflightV1,
+	type CampaignWorkflowRpcReceiptV1,
+	executeCampaignWorkflowRpcV1,
+} from "@/lib/planning/adapters/campaignWorkflow";
 
 export interface QuestRewards {
 	xp?: number;
@@ -56,7 +62,9 @@ export function useSessionQuests(campaignId: string | undefined) {
 export function useCreateQuest() {
 	const qc = useQueryClient();
 	const { toast } = useToast();
-	return useMutation({
+	const [planningReceipt, setPlanningReceipt] =
+		useState<CampaignWorkflowRpcReceiptV1 | null>(null);
+	const mutation = useMutation({
 		mutationFn: async (input: {
 			campaignId: string;
 			title: string;
@@ -64,18 +72,29 @@ export function useCreateQuest() {
 			objectives: string[];
 			rewards: QuestRewards;
 		}) => {
+			setPlanningReceipt(null);
 			if (!isSupabaseConfigured) throw new Error("Backend not configured.");
-			const { error } = await (supabase.rpc as unknown as RpcClient)(
-				"create_session_quest",
-				{
-					p_campaign_id: input.campaignId,
-					p_title: input.title,
-					p_description: input.description,
-					p_objectives: input.objectives,
-					p_rewards: input.rewards,
+			const preflight = buildCampaignWorkflowRpcPreflightV1({
+				operation: "create-quest",
+				campaignId: input.campaignId,
+			});
+			const execution = await executeCampaignWorkflowRpcV1(
+				preflight,
+				async () => {
+					const { error } = await (supabase.rpc as unknown as RpcClient)(
+						"create_session_quest",
+						{
+							p_campaign_id: input.campaignId,
+							p_title: input.title,
+							p_description: input.description,
+							p_objectives: input.objectives,
+							p_rewards: input.rewards,
+						},
+					);
+					if (error) throw new Error(error.message);
 				},
 			);
-			if (error) throw new Error(error.message);
+			setPlanningReceipt(execution.receipt);
 		},
 		onSuccess: (_, v) => {
 			qc.invalidateQueries({ queryKey: KEY(v.campaignId) });
@@ -88,22 +107,40 @@ export function useCreateQuest() {
 				variant: "destructive",
 			}),
 	});
+	return { ...mutation, planningReceipt };
 }
 
 export function useCompleteQuest() {
 	const qc = useQueryClient();
 	const { toast } = useToast();
-	return useMutation({
+	const [planningReceipt, setPlanningReceipt] =
+		useState<CampaignWorkflowRpcReceiptV1 | null>(null);
+	const mutation = useMutation({
 		mutationFn: async (input: {
 			campaignId: string;
 			questId: string;
 			notes?: string;
 		}) => {
-			const { error } = await (supabase.rpc as unknown as RpcClient)(
-				"complete_session_quest",
-				{ p_quest_id: input.questId, p_completion_notes: input.notes ?? null },
+			setPlanningReceipt(null);
+			const preflight = buildCampaignWorkflowRpcPreflightV1({
+				operation: "complete-quest",
+				campaignId: input.campaignId,
+				questId: input.questId,
+			});
+			const execution = await executeCampaignWorkflowRpcV1(
+				preflight,
+				async () => {
+					const { error } = await (supabase.rpc as unknown as RpcClient)(
+						"complete_session_quest",
+						{
+							p_quest_id: input.questId,
+							p_completion_notes: input.notes ?? null,
+						},
+					);
+					if (error) throw new Error(error.message);
+				},
 			);
-			if (error) throw new Error(error.message);
+			setPlanningReceipt(execution.receipt);
 		},
 		onSuccess: (_, v) => {
 			qc.invalidateQueries({ queryKey: KEY(v.campaignId) });
@@ -116,22 +153,41 @@ export function useCompleteQuest() {
 				variant: "destructive",
 			}),
 	});
+	return { ...mutation, planningReceipt };
 }
 
 export function useClaimQuestRewards() {
 	const qc = useQueryClient();
 	const { toast } = useToast();
-	return useMutation({
+	const [planningReceipt, setPlanningReceipt] =
+		useState<CampaignWorkflowRpcReceiptV1 | null>(null);
+	const mutation = useMutation({
 		mutationFn: async (input: {
 			campaignId: string;
 			questId: string;
 			characterId: string;
 		}) => {
-			const { error } = await (supabase.rpc as unknown as RpcClient)(
-				"claim_quest_rewards",
-				{ p_quest_id: input.questId, p_character_id: input.characterId },
+			setPlanningReceipt(null);
+			const preflight = buildCampaignWorkflowRpcPreflightV1({
+				operation: "claim-quest-rewards",
+				campaignId: input.campaignId,
+				questId: input.questId,
+				characterId: input.characterId,
+			});
+			const execution = await executeCampaignWorkflowRpcV1(
+				preflight,
+				async () => {
+					const { error } = await (supabase.rpc as unknown as RpcClient)(
+						"claim_quest_rewards",
+						{
+							p_quest_id: input.questId,
+							p_character_id: input.characterId,
+						},
+					);
+					if (error) throw new Error(error.message);
+				},
 			);
-			if (error) throw new Error(error.message);
+			setPlanningReceipt(execution.receipt);
 		},
 		onSuccess: (_, v) => {
 			qc.invalidateQueries({ queryKey: KEY(v.campaignId) });
@@ -145,6 +201,7 @@ export function useClaimQuestRewards() {
 				variant: "destructive",
 			}),
 	});
+	return { ...mutation, planningReceipt };
 }
 
 export function useDeleteQuest() {

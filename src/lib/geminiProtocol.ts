@@ -5,6 +5,11 @@
 import type { Tables } from "@/integrations/supabase/types";
 import { aiService } from "@/lib/ai/aiService";
 import {
+	type CanonicalRegentId,
+	requireDistinctCanonicalRegents,
+	resolveCanonicalRegentId,
+} from "@/lib/regentIdentity";
+import {
 	formatRegentVernacular,
 	REGENT_LABEL,
 	REGENT_LABEL_PLURAL,
@@ -41,6 +46,87 @@ export interface GeneratedSovereign {
 	fusion_stability: string;
 }
 
+// Exact canonical vocabulary copied from the authored Regent source. It is
+// used only as a null-safe fallback when a canonical DB projection omits theme.
+const SOURCE_BACKED_CANONICAL_THEMES: Record<CanonicalRegentId, string> = {
+	umbral_regent: "Umbral and Death",
+	radiant_regent: "White Flames and Purification",
+	steel_regent: "Conceptual Invulnerability & Absolutist Defense",
+	destruction_regent: "Primordial Destruction and Draconic Apocalypse",
+	war_regent: "Tactical Battlefield Supremacy & Absolute Command",
+	frost_regent: "Eternal Winter & absolute Zero",
+	beast_regent: "Primal Evolution & Apex Regentty",
+	plague_regent: "Pandemic Incarnate",
+	spatial_regent: "Cosmic Weaving & Dimensional Void",
+	mimic_regent: "Infinite Forms",
+	blood_regent: "Hemomancy & Sanguine Regentty",
+	gravity_regent: "Gravitational Mastery & Fundamental Force",
+};
+
+// Map into the legacy lattice only where the canonical source directly names
+// that domain (theme, name, or title). Unmapped Regents use canonical fallback.
+const SOURCE_BACKED_LATTICE_THEME: Partial<Record<CanonicalRegentId, string>> =
+	{
+		umbral_regent: "Shadow",
+		radiant_regent: "White Flames",
+		steel_regent: "Iron",
+		destruction_regent: "Destruction",
+		frost_regent: "Frost",
+		beast_regent: "Beast",
+		plague_regent: "Plague",
+	};
+
+const nonEmptyString = (value: unknown): string | null =>
+	typeof value === "string" && value.trim() ? value.trim() : null;
+
+function normalizeFusionRegents(
+	regentA: Regent,
+	regentB: Regent,
+): [Regent, Regent] {
+	const [regentAId, regentBId] = requireDistinctCanonicalRegents(
+		regentA?.id,
+		regentB?.id,
+	);
+	return [
+		regentA.id === regentAId ? regentA : { ...regentA, id: regentAId },
+		regentB.id === regentBId ? regentB : { ...regentB, id: regentBId },
+	];
+}
+
+function getSourceBackedTheme(regent: Regent): string {
+	const canonicalId = resolveCanonicalRegentId(regent.id);
+	if (!canonicalId) {
+		throw new Error("Fusion Regent must use a supported canonical Regent ID");
+	}
+	return (
+		nonEmptyString(regent.theme) ?? SOURCE_BACKED_CANONICAL_THEMES[canonicalId]
+	);
+}
+
+function getLatticeTheme(regent: Regent): string | null {
+	const canonicalId = resolveCanonicalRegentId(regent.id);
+	return canonicalId
+		? (SOURCE_BACKED_LATTICE_THEME[canonicalId] ?? null)
+		: null;
+}
+
+function getAuthoredDamageType(regent: Regent): string | null {
+	return nonEmptyString(regent.damage_type);
+}
+
+function getDamageDescription(regent: Regent, position: "A" | "B"): string {
+	return (
+		getAuthoredDamageType(regent) ??
+		`damage specified by Regent ${position}'s originating features`
+	);
+}
+
+const themeElementSlug = (value: string): string =>
+	value
+		.toLowerCase()
+		.replace(/[^a-z0-9]+/g, "-")
+		.replace(/(^-|-$)/g, "");
+
 const escapeRegExp = (value: string) =>
 	value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
@@ -61,12 +147,16 @@ const generateUnifiedFusionName = (a: string, b: string): string => {
 	return `${a.slice(0, midA)}${b.slice(midB)}`;
 };
 
-// Generate fusion name based on unified approach
-export function generateFusionName(regentA: Regent, regentB: Regent): string {
+const buildFusionName = (regentA: Regent, regentB: Regent): string => {
 	const nameA = stripRegentTerm(regentA.name);
 	const nameB = stripRegentTerm(regentB.name);
-
 	return generateUnifiedFusionName(nameA, nameB);
+};
+
+// Generate fusion name while enforcing canonical, ordered, distinct inputs.
+export function generateFusionName(regentA: Regent, regentB: Regent): string {
+	const [canonicalA, canonicalB] = normalizeFusionRegents(regentA, regentB);
+	return buildFusionName(canonicalA, canonicalB);
 }
 
 // Fusion Theme Lattice with Dual Class-style power combinations
@@ -499,22 +589,33 @@ const themeLattice: Record<
 	},
 };
 
-export function getFusionTheme(
+function buildFusionTheme(
 	regentA: Regent,
 	regentB: Regent,
 ): { theme: string; element: string; concept: string } {
-	const themeA = regentA.theme;
-	const themeB = regentB.theme;
+	const themeA = getSourceBackedTheme(regentA);
+	const themeB = getSourceBackedTheme(regentB);
+	const latticeA = getLatticeTheme(regentA);
+	const latticeB = getLatticeTheme(regentB);
 
+	// Directional lookup only: A remains dominant and B remains merged.
 	const result =
-		themeLattice[themeA]?.[themeB] || themeLattice[themeB]?.[themeA];
+		latticeA && latticeB ? themeLattice[latticeA]?.[latticeB] : undefined;
 	if (result) return result;
 
 	return {
 		theme: `${themeA}-${themeB} Convergence`,
-		element: `${themeA.toLowerCase()}-${themeB.toLowerCase()}`,
+		element: `${themeElementSlug(themeA)}-${themeElementSlug(themeB)}`,
 		concept: `fusion of ${themeA} and ${themeB} domains`,
 	};
+}
+
+export function getFusionTheme(
+	regentA: Regent,
+	regentB: Regent,
+): { theme: string; element: string; concept: string } {
+	const [canonicalA, canonicalB] = normalizeFusionRegents(regentA, regentB);
+	return buildFusionTheme(canonicalA, canonicalB);
 }
 
 // Unified Power Multiplier - Single comprehensive approach
@@ -632,9 +733,17 @@ export function mergeSources(primary: string[], required: string[]): string[] {
 	const seen = new Set<string>();
 	const result: string[] = [];
 	for (const value of [...primary, ...required]) {
-		if (!value || seen.has(value)) continue;
-		seen.add(value);
-		result.push(value);
+		const normalizedVernacular = value
+			.replace(/\bmonarchs\b/gi, REGENT_LABEL_PLURAL)
+			.replace(/\bmonarch\b/gi, REGENT_LABEL);
+		const display = formatRegentVernacular(normalizedVernacular)
+			.trim()
+			.replace(/\s+/g, " ");
+		if (!display) continue;
+		const identity = display.toLowerCase();
+		if (seen.has(identity)) continue;
+		seen.add(identity);
+		result.push(display);
 	}
 	return result;
 }
@@ -642,11 +751,12 @@ export function mergeSources(primary: string[], required: string[]): string[] {
 export function generateSovereign(
 	job: Job,
 	path: Path,
-	regentA: Regent,
-	regentB: Regent,
+	_regentA: Regent,
+	_regentB: Regent,
 ): GeneratedSovereign {
-	const fusionName = generateFusionName(regentA, regentB);
-	const fusionTheme = getFusionTheme(regentA, regentB);
+	const [regentA, regentB] = normalizeFusionRegents(_regentA, _regentB);
+	const fusionName = buildFusionName(regentA, regentB);
+	const fusionTheme = buildFusionTheme(regentA, regentB);
 	const powerMultiplier = getPowerMultiplier();
 	const fusionStability = "Stable (Unified, Sovereign-Grade)";
 
@@ -666,10 +776,10 @@ export function generateSovereign(
 		fusionName,
 		fusionTheme: fusionTheme.theme,
 		element: fusionTheme.element,
-		themeA: formatRegentVernacular(regentA.theme),
-		themeB: formatRegentVernacular(regentB.theme),
-		damageA: formatRegentVernacular(regentA.damage_type || "Force"),
-		damageB: formatRegentVernacular(regentB.damage_type || "Force"),
+		themeA: formatRegentVernacular(getSourceBackedTheme(regentA)),
+		themeB: formatRegentVernacular(getSourceBackedTheme(regentB)),
+		damageA: formatRegentVernacular(getDamageDescription(regentA, "A")),
+		damageB: formatRegentVernacular(getDamageDescription(regentB, "B")),
 		job: formatRegentVernacular(job.name),
 		path: formatRegentVernacular(path.name.replace("Path of the ", "")),
 		regentA: formatRegentVernacular(regentA.name),
@@ -798,9 +908,10 @@ export function generateSovereign(
 export async function generateSovereignWithAI(
 	job: Job,
 	path: Path,
-	regentA: Regent,
-	regentB: Regent,
+	_regentA: Regent,
+	_regentB: Regent,
 ): Promise<GeneratedSovereign> {
+	const [regentA, regentB] = normalizeFusionRegents(_regentA, _regentB);
 	try {
 		const config = aiService.getConfiguration();
 
@@ -815,8 +926,8 @@ This is a TRUE ZENITH FUSION. The components do not just "work together"—they 
 FUSION INPUTS:
 - Job: ${job.name} (${job.hit_die} hit die, ${(job.primary_abilities || []).join("/")} primary)
 - Path: ${pathShortName}
-- Regent A (Dominant): ${regentA.name} — Theme: ${regentA.theme}, Damage: ${regentA.damage_type || "Force"}
-- Regent B (Merged): ${regentB.name} — Theme: ${regentB.theme}, Damage: ${regentB.damage_type || "Force"}
+- Regent A (Dominant): ${regentA.name} — Theme: ${getSourceBackedTheme(regentA)}, Damage: ${getAuthoredDamageType(regentA) ?? "not authored in canonical Regent data"}
+- Regent B (Merged): ${regentB.name} — Theme: ${getSourceBackedTheme(regentB)}, Damage: ${getAuthoredDamageType(regentB) ?? "not authored in canonical Regent data"}
 
 Generate a COMPLETE sovereign with these EXACT sections. Be creative — every sovereign must feel unique:
 
@@ -880,9 +991,10 @@ export function parseAISovereignText(
 	fallback: GeneratedSovereign,
 	job: Job,
 	path: Path,
-	regentA: Regent,
-	regentB: Regent,
+	_regentA: Regent,
+	_regentB: Regent,
 ): GeneratedSovereign {
+	const [regentA, regentB] = normalizeFusionRegents(_regentA, _regentB);
 	const extractSection = (header: string): string => {
 		const pattern = new RegExp(
 			`(?:^|\\n)\\s*\\d*\\.?\\s*${header}[:\\s]*([\\s\\S]*?)(?=\\n\\s*\\d+\\.\\s+[A-Z]|$)`,

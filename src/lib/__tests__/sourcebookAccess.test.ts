@@ -23,6 +23,7 @@ vi.mock("@/integrations/supabase/client", () => ({
 
 import {
 	filterRowsByAccessibleSourcebooks,
+	isCanonicalSourcebook,
 	sourcebookCandidates,
 } from "@/lib/sourcebookAccess";
 
@@ -42,6 +43,13 @@ describe("sourcebookAccess helpers", () => {
 				"rift-ascendant-canon",
 			]),
 		);
+	});
+
+	it("recognizes canonical core sourcebooks after normalization", () => {
+		expect(isCanonicalSourcebook(" Rift Ascendant Canon ")).toBe(true);
+		expect(isCanonicalSourcebook("ascendant-core-rulebook")).toBe(true);
+		expect(isCanonicalSourcebook("Locked Deluxe Tome")).toBe(false);
+		expect(isCanonicalSourcebook(null)).toBe(false);
 	});
 
 	it("keeps sourceless rows and allows rows with matching accessible sourcebook", () => {

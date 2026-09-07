@@ -13,6 +13,7 @@ export const CUSTOM_MODIFIER_TYPES = [
 	"save_bonus",
 	"skill_bonus",
 	"attack_bonus",
+	"extra_attack",
 	"damage_bonus",
 	"ac_bonus",
 	"expertise",

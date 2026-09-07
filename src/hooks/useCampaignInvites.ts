@@ -8,7 +8,7 @@ import {
 	saveLocalMembers,
 } from "@/hooks/useCampaigns";
 import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
-import type { Database, Json } from "@/integrations/supabase/types";
+import type { Json } from "@/integrations/supabase/types";
 import { AppError } from "@/lib/appError";
 import {
 	deriveCampaignInviteStatus,
@@ -39,17 +39,13 @@ interface CampaignInviteRecord {
 	status?: "active" | "expired" | "revoked" | "used_up" | "unknown";
 }
 
-interface CampaignInviteSummary {
+export interface CampaignInvitePreview {
 	campaign_id: string;
 	campaign_name: string;
 	campaign_description: string | null;
 	role: "ascendant" | "co-warden";
 	expires_at: string | null;
-	max_uses: number;
-	used_count: number;
-	join_code: string | null;
-	invite_email: string | null;
-	status?: "active" | "expired" | "revoked" | "used_up" | "unknown";
+	status: "active" | "expired" | "revoked" | "used_up" | "unknown";
 }
 
 interface CampaignInviteCreateResult {
@@ -88,6 +84,13 @@ type CreateInviteArgs = {
 	inviteEmail?: string;
 };
 
+class InviteApiUnavailableError extends Error {
+	constructor(message = "Invite email API is unavailable") {
+		super(message);
+		this.name = "InviteApiUnavailableError";
+	}
+}
+
 const normalizeInviteRecord = (
 	invite: CampaignInviteRecord,
 ): CampaignInviteRecord => {
@@ -98,36 +101,37 @@ const normalizeInviteRecord = (
 	};
 };
 
-const shouldFallbackToLegacyInviteRpc = (error: unknown): boolean => {
-	if (!error || typeof error !== "object") return false;
-	const message = String(
-		(error as { message?: unknown }).message ?? "",
-	).toLowerCase();
-	return (
-		(message.includes("create_campaign_invite") &&
-			(message.includes("does not exist") ||
-				message.includes("no function matches") ||
-				message.includes("could not find function") ||
-				message.includes("schema cache"))) ||
-		message.includes("invalid invite role")
-	);
-};
+const toCampaignInvitePreview = (
+	value: unknown,
+): CampaignInvitePreview | null => {
+	if (!value || typeof value !== "object") return null;
+	const candidate = value as Record<string, unknown>;
+	if (
+		typeof candidate.campaign_id !== "string" ||
+		typeof candidate.campaign_name !== "string" ||
+		(candidate.role !== "ascendant" && candidate.role !== "co-warden")
+	) {
+		return null;
+	}
 
-const toLegacyInviteRole = (role: "ascendant" | "co-warden") =>
-	role === "co-warden" ? "co-system" : "hunter";
+	const status = deriveCampaignInviteStatus({
+		status: typeof candidate.status === "string" ? candidate.status : null,
+		expires_at:
+			typeof candidate.expires_at === "string" ? candidate.expires_at : null,
+	});
 
-const shouldFallbackToLegacyRevokeRpc = (error: unknown): boolean => {
-	if (!error || typeof error !== "object") return false;
-	const message = String(
-		(error as { message?: unknown }).message ?? "",
-	).toLowerCase();
-	return (
-		message.includes("revoke_campaign_invite") &&
-		(message.includes("does not exist") ||
-			message.includes("no function matches") ||
-			message.includes("could not find function") ||
-			message.includes("schema cache"))
-	);
+	return {
+		campaign_id: candidate.campaign_id,
+		campaign_name: candidate.campaign_name,
+		campaign_description:
+			typeof candidate.campaign_description === "string"
+				? candidate.campaign_description
+				: null,
+		role: candidate.role,
+		expires_at:
+			typeof candidate.expires_at === "string" ? candidate.expires_at : null,
+		status,
+	};
 };
 
 const createInviteViaApi = async ({
@@ -159,12 +163,17 @@ const createInviteViaApi = async ({
 	});
 
 	if (!response.ok) {
+		if (response.status === 404 || response.status === 405) {
+			throw new InviteApiUnavailableError();
+		}
 		const payload = (await response.json().catch(() => ({}))) as {
 			error?: string;
 		};
 		throw new AppError(
 			payload.error || "Failed to create invite via API",
-			"UNKNOWN",
+			response.status === 401 || response.status === 403
+				? "FORBIDDEN"
+				: "UNKNOWN",
 		);
 	}
 
@@ -252,35 +261,22 @@ export const useCreateCampaignInvite = () => {
 						maxUses,
 						inviteEmail: normalizedInviteEmail,
 					});
-				} catch {
-					// Fallback to direct RPC in local/dev if API endpoint is unavailable.
+				} catch (error) {
+					const canUseLocalFallback =
+						import.meta.env.DEV &&
+						(error instanceof InviteApiUnavailableError ||
+							error instanceof TypeError);
+					if (!canUseLocalFallback) throw error;
 				}
 			}
 
-			let { data, error } = await supabase.rpc(
-				"create_campaign_invite" as keyof Database["public"]["Functions"],
-				{
-					p_campaign_id: campaignId,
-					p_role: role,
-					p_expires_at: expiresAt ?? undefined,
-					p_max_uses: maxUses,
-					p_invite_email: normalizedInviteEmail,
-				},
-			);
-
-			if (error && shouldFallbackToLegacyInviteRpc(error)) {
-				const legacyResult = await supabase.rpc(
-					"create_campaign_invite" as keyof Database["public"]["Functions"],
-					{
-						p_campaign_id: campaignId,
-						p_role: toLegacyInviteRole(role),
-						p_expires_at: expiresAt ?? undefined,
-						p_max_uses: maxUses,
-					},
-				);
-				data = legacyResult.data;
-				error = legacyResult.error;
-			}
+			const { data, error } = await supabase.rpc("create_campaign_invite", {
+				p_campaign_id: campaignId,
+				p_role: role,
+				p_expires_at: expiresAt ?? undefined,
+				p_max_uses: maxUses,
+				p_invite_email: normalizedInviteEmail,
+			});
 
 			if (error) throw error;
 			const invite = Array.isArray(data) ? data[0] : data;
@@ -331,37 +327,14 @@ export const useAddAscendantCharacterToCampaign = () => {
 				throw new AppError("Supabase not configured", "CONFIG");
 			}
 
-			let { data, error } = await supabase.rpc(
-				"add_ascendant_character_to_campaign" as keyof Database["public"]["Functions"],
+			const { data, error } = await supabase.rpc(
+				"add_ascendant_character_to_campaign",
 				{
 					p_campaign_id: campaignId,
 					p_character_id: characterId,
 					p_invite_token: inviteToken ?? undefined,
 				},
 			);
-
-			if (error) {
-				const message = error.message.toLowerCase();
-				const isMissingCanonical =
-					message.includes("add_ascendant_character_to_campaign") &&
-					(message.includes("does not exist") ||
-						message.includes("no function matches") ||
-						message.includes("could not find function") ||
-						message.includes("schema cache"));
-
-				if (isMissingCanonical) {
-					const legacyResult = await supabase.rpc(
-						"add_player_character_to_campaign" as keyof Database["public"]["Functions"],
-						{
-							p_campaign_id: campaignId,
-							p_character_id: characterId,
-							p_invite_token: inviteToken ?? undefined,
-						},
-					);
-					data = legacyResult.data;
-					error = legacyResult.error;
-				}
-			}
 
 			if (error) throw error;
 			return data as string;
@@ -436,22 +409,10 @@ export const useDeleteCampaignInvite = () => {
 			if (!isSupabaseConfigured) {
 				throw new AppError("Supabase not configured", "CONFIG");
 			}
-			let { data, error } = await supabase.rpc(
-				"revoke_campaign_invite" as keyof Database["public"]["Functions"],
-				{
-					p_invite_id: inviteId,
-					p_reason: reason ?? undefined,
-				},
-			);
-
-			if (error && shouldFallbackToLegacyRevokeRpc(error)) {
-				const deleteResult = await supabase
-					.from("campaign_invites")
-					.delete()
-					.eq("id", inviteId);
-				data = deleteResult.error ? null : true;
-				error = deleteResult.error;
-			}
+			const { data, error } = await supabase.rpc("revoke_campaign_invite", {
+				p_invite_id: inviteId,
+				p_reason: reason ?? undefined,
+			});
 
 			if (error) throw error;
 			if (!data) {
@@ -486,20 +447,16 @@ export const useDeleteCampaignInvite = () => {
 export const useCampaignInviteByToken = (token: string) => {
 	return useQuery({
 		queryKey: ["campaigns", "invite", token],
-		queryFn: async (): Promise<CampaignInviteSummary | null> => {
+		queryFn: async (): Promise<CampaignInvitePreview | null> => {
 			const accessKey = normalizeInviteAccessKey(token);
 			if (!accessKey || !isSupabaseConfigured) return null;
 			const { data, error } = await supabase.rpc(
-				"get_campaign_invite_by_token" as keyof Database["public"]["Functions"],
+				"get_campaign_invite_by_token",
 				{ p_token: accessKey },
 			);
 			if (error) throw error;
-			const invite = Array.isArray(data) ? data[0] : data;
-			if (!invite) return null;
-			return {
-				...(invite as CampaignInviteSummary),
-				status: deriveCampaignInviteStatus(invite as CampaignInviteSummary),
-			};
+			const response = Array.isArray(data) ? data[0] : data;
+			return toCampaignInvitePreview(response);
 		},
 		enabled: !!token,
 	});
@@ -529,13 +486,10 @@ export const useRedeemCampaignInvite = () => {
 			} = await supabase.auth.getUser();
 			if (!user) throw new AppError("Not authenticated", "AUTH_REQUIRED");
 
-			const { data, error } = await supabase.rpc(
-				"redeem_campaign_invite" as keyof Database["public"]["Functions"],
-				{
-					p_token: accessKey,
-					p_character_id: characterId ?? undefined,
-				},
-			);
+			const { data, error } = await supabase.rpc("redeem_campaign_invite", {
+				p_token: accessKey,
+				p_character_id: characterId ?? undefined,
+			});
 
 			if (error) throw error;
 			const campaignId = data as string;
@@ -596,6 +550,7 @@ export const useRedeemCampaignInvite = () => {
 						? `"${joinedCampaign.name}" has a new member.`
 						: "Your campaign has a new member.",
 					category: "campaign",
+					payload: { campaign_id: campaignId },
 					link: `/campaigns/${campaignId}`,
 				});
 			}

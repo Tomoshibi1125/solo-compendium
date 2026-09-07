@@ -486,12 +486,27 @@ export function useCharacterPageModel() {
 	// D&D Beyond parity inputs for Extra Attack detection.
 	const { unlocks: regentUnlocks = [] } = useRegentUnlocks(character?.id || "");
 	const regentIds = useMemo(
-		() => regentUnlocks.map((u) => u.regent_id),
+		() =>
+			regentUnlocks
+				.map((unlock) => unlock.regent_id)
+				.filter(
+					(regentId): regentId is string =>
+						typeof regentId === "string" && regentId.length > 0,
+				),
 		[regentUnlocks],
 	);
 	const hasExtraAttackFeature = useMemo(
 		() =>
-			charFeatures.some((f) => f.name?.toLowerCase().includes("extra attack")),
+			charFeatures.some((feature) => {
+				const name = feature.name?.trim().toLowerCase();
+				if (name === "extra attack" || name === "absolute multi-strike") {
+					return true;
+				}
+				return (
+					Array.isArray(feature.modifiers) &&
+					feature.modifiers.some((modifier) => modifier.type === "extra_attack")
+				);
+			}),
 		[charFeatures],
 	);
 

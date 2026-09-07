@@ -15,6 +15,7 @@ import type {
 	Path,
 	Regent,
 } from "@/lib/geminiProtocol";
+import { requireDistinctCanonicalRegents } from "@/lib/regentIdentity";
 
 /** Bump when the wire format changes in a backward-incompatible way. */
 export const SOVEREIGN_CONTRACT_VERSION = 1 as const;
@@ -74,6 +75,37 @@ const FusionAbilitySchema = z.object({
 	),
 });
 
+const SovereignAbilitiesSchema = z
+	.array(FusionAbilitySchema)
+	.length(
+		SOVEREIGN_ABILITY_LEVELS.length,
+		`exactly ${SOVEREIGN_ABILITY_LEVELS.length} fusion abilities are required`,
+	)
+	.superRefine((abilities, context) => {
+		for (let index = 0; index < SOVEREIGN_ABILITY_LEVELS.length; index++) {
+			const ability = abilities[index];
+			const expectedLevel = SOVEREIGN_ABILITY_LEVELS[index];
+			if (!ability) continue;
+			if (ability.level !== expectedLevel) {
+				context.addIssue({
+					code: z.ZodIssueCode.custom,
+					path: [index, "level"],
+					message: `expected the ordered level-${expectedLevel} milestone`,
+				});
+			}
+			const expectedCapstone = expectedLevel === 17 || expectedLevel === 20;
+			if (ability.is_capstone !== expectedCapstone) {
+				context.addIssue({
+					code: z.ZodIssueCode.custom,
+					path: [index, "is_capstone"],
+					message: expectedCapstone
+						? `level ${expectedLevel} must be a capstone`
+						: `level ${expectedLevel} must not be a capstone`,
+				});
+			}
+		}
+	});
+
 export const SovereignPayloadSchema = z.object({
 	name: requiredString("name is required"),
 	title: requiredString("title is required"),
@@ -84,9 +116,7 @@ export const SovereignPayloadSchema = z.object({
 	),
 	power_multiplier: requiredString("power_multiplier is required"),
 	fusion_stability: requiredString("fusion_stability is required"),
-	abilities: z
-		.array(FusionAbilitySchema)
-		.min(1, "at least one fusion ability is required"),
+	abilities: SovereignAbilitiesSchema,
 });
 
 export type SovereignPayload = z.infer<typeof SovereignPayloadSchema>;
@@ -138,23 +168,42 @@ const RESPONSE_EXAMPLE: Record<string, unknown> = {
 		"The fused martial style — how this Sovereign fights in a way neither component could alone.",
 	power_multiplier: "Zenith-Tier",
 	fusion_stability: "Stable (Unified, Sovereign-Grade)",
-	abilities: [
-		{
-			name: "Fusion Awakening",
-			description:
-				"2-3 sentences describing a MERGED effect with concrete mechanics (dice, DCs, ranges).",
-			level: 1,
-			action_type: "Passive",
-			recharge: null,
-			is_capstone: false,
-			origin_sources: ["RegentA+RegentB"],
-			fusion_type: "fusion",
-		},
-	],
+	abilities: SOVEREIGN_ABILITY_LEVELS.map((level) => ({
+		name: `Fusion Milestone ${level}`,
+		description:
+			"2-3 sentences describing a MERGED effect with concrete mechanics (dice, DCs, ranges).",
+		level,
+		action_type: level === 1 ? "Passive" : "1 action",
+		recharge: level >= 14 ? "Long Rest" : null,
+		is_capstone: level === 17 || level === 20,
+		origin_sources: ["Job+Path+RegentA+RegentB"],
+		fusion_type: "fusion",
+	})),
 };
 
 const pathShort = (name: string): string =>
 	name.replace(/^Path of the\s*/i, "").replace(/\s*Path$/i, "");
+
+const promptField = (value: unknown, fallback: string): string =>
+	typeof value === "string" && value.trim() ? value.trim() : fallback;
+
+function normalizeSovereignInputs(inputs: SovereignInputs): SovereignInputs {
+	const [regentAId, regentBId] = requireDistinctCanonicalRegents(
+		inputs.regentA?.id,
+		inputs.regentB?.id,
+	);
+	return {
+		...inputs,
+		regentA:
+			inputs.regentA.id === regentAId
+				? inputs.regentA
+				: { ...inputs.regentA, id: regentAId },
+		regentB:
+			inputs.regentB.id === regentBId
+				? inputs.regentB
+				: { ...inputs.regentB, id: regentBId },
+	};
+}
 
 /**
  * Build the export prompt + downloadable bundle for the outside-AI path.
@@ -162,7 +211,7 @@ const pathShort = (name: string): string =>
  * demands STRICT JSON output matching {@link SovereignPayloadSchema}.
  */
 export function buildSovereignExport(inputs: SovereignInputs): SovereignExport {
-	const { job, path, regentA, regentB } = inputs;
+	const { job, path, regentA, regentB } = normalizeSovereignInputs(inputs);
 	const levels = SOVEREIGN_ABILITY_LEVELS.join(", ");
 
 	const prompt = `You are the Gemini Protocol — the sovereign fusion engine of Rift Ascendant. Fuse two Regents with a Job and Path into a UNIQUE sovereign class overlay.
@@ -173,8 +222,8 @@ This is a TRUE ZENITH FUSION. The components do not merely "work together" — t
 FUSION INPUTS:
 - Job: ${job.name} (${job.hit_die ?? "d8"} hit die, ${(job.primary_abilities || []).join("/") || "varies"} primary)
 - Path: ${pathShort(path.name)}
-- Regent A (Dominant): ${regentA.name} — Theme: ${regentA.theme}, Damage: ${regentA.damage_type || "Force"}
-- Regent B (Merged): ${regentB.name} — Theme: ${regentB.theme}, Damage: ${regentB.damage_type || "Force"}
+- Regent A (Dominant): ${regentA.name} — Theme: ${promptField(regentA.theme, "not authored")}, Damage: ${promptField(regentA.damage_type, "not authored in canonical Regent data")}
+- Regent B (Merged): ${regentB.name} — Theme: ${promptField(regentB.theme, "not authored")}, Damage: ${promptField(regentB.damage_type, "not authored in canonical Regent data")}
 
 OUTPUT FORMAT — CRITICAL:
 Return ONLY a single valid JSON object. No markdown, no code fences, no commentary before or after. It MUST match this exact shape and key names:
@@ -277,6 +326,20 @@ export function parseImportedSovereign(
 	raw: string | unknown,
 	inputs: SovereignInputs,
 ): SovereignImportResult {
+	let canonicalInputs: SovereignInputs;
+	try {
+		canonicalInputs = normalizeSovereignInputs(inputs);
+	} catch (error) {
+		return {
+			ok: false,
+			errors: [
+				error instanceof Error
+					? error.message
+					: "Fusion requires two distinct canonical Regents",
+			],
+		};
+	}
+
 	let candidate: unknown = raw;
 
 	if (typeof raw === "string") {
@@ -337,7 +400,7 @@ export function parseImportedSovereign(
 	}
 
 	const payload = parsed.data;
-	const { job, path, regentA, regentB } = inputs;
+	const { job, path, regentA, regentB } = canonicalInputs;
 
 	const sovereign: GeneratedSovereign = {
 		name: payload.name,

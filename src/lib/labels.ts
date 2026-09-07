@@ -110,3 +110,12 @@ export function getRarityBadgeClass(rarity: string | null | undefined): string {
 	const key = rarity.toLowerCase().replace(/_/g, "-");
 	return RARITY_BADGE_CLASS[key] ?? "";
 }
+
+/** Replace internal rank annotations with readable prose before UI rendering. */
+export function formatRankMarkup(value: string | null | undefined): string {
+	if (!value) return "";
+	return value.replace(
+		/\[RANK:\s*([^\]]+)\]/gi,
+		(_match, rank: string) => `Rank: ${rank.trim()}`,
+	);
+}

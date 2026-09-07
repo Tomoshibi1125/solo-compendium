@@ -47,23 +47,25 @@ import { supabase } from "@/integrations/supabase/client";
 import type { Json } from "@/integrations/supabase/types";
 import {
 	type ActionResolutionPayload,
+	type ActionStateChangeIntent,
 	clearPendingResolution,
 	getPendingResolution,
 	type ResolutionOutcome,
-	resolveAttack,
-	resolveDamage,
-	resolveEffect,
-	resolveHealing,
-	resolveSave,
+	resolveAction,
 } from "@/lib/actionResolution";
 import { useAuth } from "@/lib/auth/authContext";
 import { publishSessionEvent } from "@/lib/campaignSessionEvents";
 import {
+	CONDITION_CATALOG_IDS,
+	CONDITION_EFFECTS,
+} from "@/lib/conditionEffects";
+import {
 	advanceConditionRound,
 	applyCondition,
+	breakConcentration,
+	type ConditionApplicationV1,
 	type ConditionEntry,
 	getActiveConditionNames,
-	migrateLegacyConditions,
 	normalizeCombatConditions,
 	removeCondition as removeAdvancedCondition,
 } from "@/lib/conditionSystem";
@@ -124,6 +126,7 @@ interface Combatant {
 	initiative: number;
 	hp?: number;
 	maxHp?: number;
+	tempHp?: number;
 	ac?: number;
 	conditions: string[];
 	condition_timers?: Record<string, number>;
@@ -131,6 +134,8 @@ interface Combatant {
 	damage_resistances?: string[];
 	damage_immunities?: string[];
 	damage_vulnerabilities?: string[];
+	condition_immunities?: string[];
+	concentrationId?: string | null;
 	advancedConditions: ConditionEntry[];
 	/** Dex modifier used for auto-rolled anomaly initiative (P1-6). */
 	dexMod?: number;
@@ -181,38 +186,15 @@ const toStringArray = (value: unknown): string[] | undefined => {
 	return entries.length > 0 ? entries : undefined;
 };
 
-const normalizeDamageType = (value: string) => value.trim().toLowerCase();
-
-const applyDamageMitigation = (
-	amount: number,
-	damageType: string | undefined,
-	target: Combatant,
-): number => {
-	if (!damageType) return amount;
-	const dt = normalizeDamageType(damageType);
-
-	const immunities = (target.damage_immunities ?? []).map(normalizeDamageType);
-	if (immunities.includes(dt)) return 0;
-
-	const vulnerabilities = (target.damage_vulnerabilities ?? []).map(
-		normalizeDamageType,
-	);
-	if (vulnerabilities.includes(dt)) return amount * 2;
-
-	const resistances = (target.damage_resistances ?? []).map(
-		normalizeDamageType,
-	);
-	if (resistances.includes(dt)) return Math.ceil(amount / 2);
-
-	return amount;
-};
-
 const mapCampaignCombatantToTracker = (
 	combatant: CampaignCombatantRow,
 ): Combatant => {
 	const stats = toRecord(combatant.stats);
 	const flags = toRecord(combatant.flags);
-	const rawLegacyConditions = toConditionArray(combatant.conditions);
+	const normalizedConditions = normalizeCombatConditions({
+		conditions: toConditionArray(combatant.conditions),
+		advancedConditions: stats.advancedConditions,
+	});
 
 	return {
 		id: combatant.id,
@@ -220,8 +202,9 @@ const mapCampaignCombatantToTracker = (
 		initiative: combatant.initiative,
 		hp: toNumber(stats.hp),
 		maxHp: toNumber(stats.max_hp ?? stats.maxHp),
+		tempHp: toNumber(stats.temp_hp ?? stats.tempHp),
 		ac: toNumber(stats.ac),
-		conditions: toConditionArray(combatant.conditions),
+		conditions: normalizedConditions.conditions,
 		condition_timers: toConditionTimers(
 			stats.condition_timers ?? stats.conditionTimers,
 		),
@@ -238,9 +221,14 @@ const mapCampaignCombatantToTracker = (
 		damage_vulnerabilities: toStringArray(
 			stats.damage_vulnerabilities ?? stats.damageVulnerabilities,
 		),
-		advancedConditions: Array.isArray(stats.advancedConditions)
-			? (stats.advancedConditions as ConditionEntry[])
-			: migrateLegacyConditions(rawLegacyConditions),
+		condition_immunities: toStringArray(
+			stats.condition_immunities ?? stats.conditionImmunities,
+		),
+		concentrationId:
+			typeof (stats.concentration_id ?? stats.concentrationId) === "string"
+				? String(stats.concentration_id ?? stats.concentrationId)
+				: null,
+		advancedConditions: normalizedConditions.advancedConditions,
 		dexMod: toNumber(stats.dex_mod ?? stats.dexMod),
 	};
 };
@@ -258,23 +246,22 @@ const normalizeStoredCombatant = (combatant: Combatant): Combatant => ({
 
 const STORAGE_KEY = "solo-compendium.Warden-tools.initiative.v1";
 
-const CONDITION_OPTIONS = [
-	"Blinded",
-	"Charmed",
-	"Deafened",
-	"Exhaustion",
-	"Frightened",
-	"Grappled",
-	"Incapacitated",
-	"Invisible",
-	"Paralyzed",
-	"Petrified",
-	"Poisoned",
-	"Prone",
-	"Restrained",
-	"Stunned",
-	"Unconscious",
-];
+const CONDITION_OPTIONS = CONDITION_CATALOG_IDS.map(
+	(conditionId) => CONDITION_EFFECTS[conditionId].name,
+);
+
+const hasManualConditionDuration = (
+	payload: ActionResolutionPayload,
+): boolean => {
+	if (payload.version === 1) {
+		return Boolean(payload.appliesConditions?.length);
+	}
+	return Boolean(
+		payload.conditionIntents?.some(
+			(intent) => intent.legacy || intent.duration.unit === "manual",
+		),
+	);
+};
 
 const InitiativeTracker = () => {
 	const navigate = useNavigate();
@@ -547,11 +534,14 @@ const InitiativeTracker = () => {
 					stats: {
 						hp: combatant.hp ?? null,
 						max_hp: combatant.maxHp ?? null,
+						temp_hp: combatant.tempHp ?? null,
 						ac: combatant.ac ?? null,
 						dex_mod: combatant.dexMod ?? null,
 						damage_resistances: combatant.damage_resistances ?? null,
 						damage_immunities: combatant.damage_immunities ?? null,
 						damage_vulnerabilities: combatant.damage_vulnerabilities ?? null,
+						condition_immunities: combatant.condition_immunities ?? null,
+						concentration_id: combatant.concentrationId ?? null,
 						condition_timers: combatant.condition_timers ?? null,
 						advancedConditions: combatant.advancedConditions.map((cond) => ({
 							...cond,
@@ -712,8 +702,8 @@ const InitiativeTracker = () => {
 	};
 
 	const adjustHP = (id: string, delta: number) => {
-		setCombatants(
-			combatants.map((c) => {
+		setCombatants((previous) =>
+			previous.map((c) => {
 				if (c.id !== id) return c;
 				const base = typeof c.hp === "number" ? c.hp : 0;
 				const maxHp =
@@ -737,32 +727,87 @@ const InitiativeTracker = () => {
 		);
 	};
 
+	const adjustTemporaryHP = (id: string, delta: number) => {
+		setCombatants((prev) =>
+			prev.map((combatant) =>
+				combatant.id === id
+					? {
+							...combatant,
+							tempHp: Math.max(0, (combatant.tempHp ?? 0) + delta),
+						}
+					: combatant,
+			),
+		);
+	};
+
+	const setCombatantConcentration = (
+		id: string,
+		concentrationId: string,
+		previousConcentrationId: string | null,
+	) => {
+		setCombatants((prev) =>
+			prev.map((combatant) => {
+				const lifecycle = previousConcentrationId
+					? breakConcentration(
+							combatant.advancedConditions,
+							previousConcentrationId,
+						)
+					: null;
+				const isConcentratingActor = combatant.id === id;
+				if (!isConcentratingActor && !lifecycle?.changes.length)
+					return combatant;
+				const advancedConditions =
+					lifecycle?.conditions ?? combatant.advancedConditions;
+				return {
+					...combatant,
+					advancedConditions,
+					conditions: getActiveConditionNames(advancedConditions),
+					concentrationId: isConcentratingActor
+						? concentrationId
+						: combatant.concentrationId,
+				};
+			}),
+		);
+	};
+
 	const addCondition = (
 		id: string,
-		condition: string,
+		condition: string | ConditionApplicationV1,
 		durationRounds?: number,
 	) => {
 		setCombatants((prev) =>
-			prev.map((c) => {
-				if (c.id !== id) return c;
+			prev.map((combatant) => {
+				if (combatant.id !== id) return combatant;
+				const conditionName =
+					typeof condition === "string" ? condition : condition.conditionId;
+				const advNext =
+					typeof condition === "string"
+						? applyCondition(
+								combatant.advancedConditions,
+								condition,
+								"manual",
+								"Warden",
+								{ durationRounds },
+							)
+						: applyCondition(combatant.advancedConditions, condition);
 
-				const advNext = applyCondition(
-					c.advancedConditions,
-					condition,
-					"manual",
-					"Warden",
-					{ durationRounds },
-				);
-
-				// DDB Parity: Broadcast Condition Added
-				if (!c.conditions.includes(condition)) {
+				if (
+					!combatant.conditions.some(
+						(existing) =>
+							existing.toLowerCase() === conditionName.toLowerCase(),
+					)
+				) {
 					ascendantTools
-						.trackConditionChange(c.id || c.name, condition, "add")
+						.trackConditionChange(
+							combatant.id || combatant.name,
+							conditionName,
+							"add",
+						)
 						.catch(console.error);
 				}
 
 				return {
-					...c,
+					...combatant,
 					advancedConditions: advNext.conditions,
 					conditions: getActiveConditionNames(advNext.conditions),
 				};
@@ -1075,155 +1120,106 @@ const InitiativeTracker = () => {
 	const applyResolutionToTarget = () => {
 		const pending = getPendingResolution();
 		if (!pending) return;
-		const target = combatants.find((c) => c.id === resolutionTargetId);
-		const targetAC = target?.ac ?? 10;
-
+		const target = combatants.find(
+			(combatant) => combatant.id === resolutionTargetId,
+		);
 		if (!target) return;
-
-		const inferAttackRollMode = (targetConditions: string[]) => {
-			const normalized = targetConditions.map((c) => c.toLowerCase());
-			const grantsAdvantage = normalized.some((c) =>
-				[
-					"blinded",
-					"restrained",
-					"paralyzed",
-					"unconscious",
-					"stunned",
-					"prone",
-				].includes(c),
-			);
-			const grantsDisadvantage = normalized.some((c) =>
-				["invisible"].includes(c),
-			);
-			if (grantsAdvantage && !grantsDisadvantage) return "advantage" as const;
-			if (grantsDisadvantage && !grantsAdvantage)
-				return "disadvantage" as const;
-			return "normal" as const;
-		};
-
-		const inferSaveRollMode = (
-			targetConditions: string[],
-			ability: string | undefined,
-		) => {
-			if (!ability) return "normal" as const;
-			const normalized = targetConditions.map((c) => c.toLowerCase());
-			const ab = ability.toLowerCase();
-			const hasDisadv =
-				normalized.some((c) => c === "restrained") &&
-				(ab === "agi" || ab === "agility" || ab === "dex" || ab === "agility");
-			return hasDisadv ? ("disadvantage" as const) : ("normal" as const);
-		};
-
-		const attackRollMode = inferAttackRollMode(target.conditions);
-		const saveRollMode =
-			pending.kind === "save"
-				? inferSaveRollMode(target.conditions, pending.save?.ability)
-				: "normal";
-
-		const pendingWithMode =
-			pending.kind === "attack" && pending.attack
+		const actor = pending.actor?.id
+			? combatants.find((combatant) => combatant.id === pending.actor?.id)
+			: undefined;
+		const resolved = resolveAction(pending, {
+			actor: actor
 				? {
-						...pending,
-						attack: {
-							...pending.attack,
-							rollMode: attackRollMode,
-						},
+						id: actor.id,
+						name: actor.name,
+						conditions: actor.advancedConditions,
+						concentrationId: actor.concentrationId,
 					}
-				: pending.kind === "save" && pending.save
-					? {
-							...pending,
-							save: {
-								...pending.save,
-								rollMode: saveRollMode,
-							},
-						}
-					: pending;
+				: pending.actor
+					? { id: pending.actor.id, name: pending.actor.name }
+					: null,
+			target: {
+				id: target.id,
+				name: target.name,
+				armorClass: target.ac,
+				hitPoints: target.hp,
+				maxHitPoints: target.maxHp,
+				temporaryHitPoints: target.tempHp,
+				conditions: target.advancedConditions,
+				damageResistances: target.damage_resistances,
+				damageImmunities: target.damage_immunities,
+				damageVulnerabilities: target.damage_vulnerabilities,
+				conditionImmunities: target.condition_immunities,
+			},
+		});
 
-		let outcome =
-			pendingWithMode.kind === "attack"
-				? resolveAttack(pendingWithMode, targetAC)
-				: pendingWithMode.kind === "save"
-					? resolveSave(pendingWithMode)
-					: pending.kind === "healing"
-						? resolveHealing(pending)
-						: pending.kind === "effect"
-							? resolveEffect(pending)
-							: resolveDamage(pending);
-
-		if (outcome.kind === "save" && pending.save?.ability) {
-			const ability = pending.save.ability.toLowerCase();
-			const normalized = target.conditions.map((c) => c.toLowerCase());
-			const autoFail =
-				(ability === "agi" || ability === "dex" || ability === "str") &&
-				normalized.some((c) => c === "paralyzed" || c === "unconscious");
-			if (autoFail) {
-				outcome = {
-					...outcome,
-					success: false,
-				};
-			}
+		if (resolved.application.blockers.length > 0) {
+			toast({
+				title: "Manual resolution required",
+				description: resolved.application.blockers.join(" "),
+			});
+			return;
 		}
 
 		setPendingResolution(pending);
-		setResolutionOutcome(outcome);
-		logEvent(summarizeOutcome(outcome, target.name), round, currentTurn);
+		setResolutionOutcome(resolved.outcome);
+		logEvent(
+			summarizeOutcome(resolved.outcome, target.name),
+			round,
+			currentTurn,
+		);
 
-		const pendingDamageType = pending.damage?.type;
-
-		if (outcome.kind === "attack") {
-			if (outcome.hit && typeof outcome.damageTotal === "number") {
-				const mitigated = applyDamageMitigation(
-					outcome.damageTotal,
-					pendingDamageType,
-					target,
-				);
-				adjustHP(target.id, -mitigated);
+		const manualDuration =
+			Number.isFinite(resolutionConditionDuration) &&
+			resolutionConditionDuration > 0
+				? Math.floor(resolutionConditionDuration)
+				: null;
+		const applyIntent = (intent: ActionStateChangeIntent) => {
+			switch (intent.type) {
+				case "hit-points":
+					adjustHP(intent.targetId, intent.delta);
+					break;
+				case "temporary-hit-points":
+					adjustTemporaryHP(intent.targetId, intent.delta);
+					break;
+				case "condition": {
+					const canOverrideDuration =
+						intent.legacy || intent.application.duration.unit === "manual";
+					const application =
+						canOverrideDuration && manualDuration !== null
+							? {
+									...intent.application,
+									duration: {
+										unit: "round" as const,
+										anchor: "round" as const,
+										value: manualDuration,
+										remaining: manualDuration,
+									},
+								}
+							: intent.application;
+					addCondition(intent.targetId, application);
+					recordSessionEvent("effect:applied", {
+						effectName: application.conditionId,
+						targetName: target.name,
+						tokenId: target.id ?? null,
+						round,
+					});
+					break;
+				}
+				case "concentration":
+					setCombatantConcentration(
+						intent.actorId,
+						intent.concentrationId,
+						intent.previousConcentrationId,
+					);
+					break;
+				case "resource-cost":
+					// Tracker combatants do not own character resource ledgers. The
+					// resolver keeps this as an explicit intent instead of guessing.
+					break;
 			}
-		}
-
-		if (outcome.kind === "save") {
-			if (!outcome.success && typeof outcome.damageTotal === "number") {
-				const mitigated = applyDamageMitigation(
-					outcome.damageTotal,
-					pendingDamageType,
-					target,
-				);
-				adjustHP(target.id, -mitigated);
-			}
-		}
-
-		if (outcome.kind === "healing") {
-			adjustHP(target.id, outcome.healingTotal);
-		}
-
-		if (outcome.kind === "damage") {
-			const mitigated = applyDamageMitigation(
-				outcome.damageTotal,
-				pendingDamageType,
-				target,
-			);
-			adjustHP(target.id, -mitigated);
-		}
-
-		if (
-			Array.isArray(pending.appliesConditions) &&
-			pending.appliesConditions.length > 0
-		) {
-			const durationRounds =
-				Number.isFinite(resolutionConditionDuration) &&
-				resolutionConditionDuration > 0
-					? Math.floor(resolutionConditionDuration)
-					: undefined;
-			for (const condition of pending.appliesConditions) {
-				addCondition(target.id, condition, durationRounds);
-				recordSessionEvent("effect:applied", {
-					effectName: condition,
-					targetName: target.name,
-					tokenId: target.id ?? null,
-					round,
-				});
-			}
-		}
+		};
+		resolved.stateChangeIntents.forEach(applyIntent);
 	};
 
 	return (
@@ -1333,25 +1329,24 @@ const InitiativeTracker = () => {
 												</SelectContent>
 											</Select>
 										</div>
-										{Array.isArray(pendingResolution.appliesConditions) &&
-											pendingResolution.appliesConditions.length > 0 && (
-												<div className="space-y-1">
-													<Label htmlFor="resolution-duration">
-														Condition duration (rounds)
-													</Label>
-													<Input
-														id="resolution-duration"
-														type="number"
-														min={0}
-														value={resolutionConditionDuration}
-														onChange={(e) =>
-															setResolutionConditionDuration(
-																parseInt(e.target.value, 10) || 0,
-															)
-														}
-													/>
-												</div>
-											)}
+										{hasManualConditionDuration(pendingResolution) && (
+											<div className="space-y-1">
+												<Label htmlFor="resolution-duration">
+													Condition duration (rounds)
+												</Label>
+												<Input
+													id="resolution-duration"
+													type="number"
+													min={0}
+													value={resolutionConditionDuration}
+													onChange={(e) =>
+														setResolutionConditionDuration(
+															parseInt(e.target.value, 10) || 0,
+														)
+													}
+												/>
+											</div>
+										)}
 										<div className="flex flex-wrap gap-2">
 											<Button
 												variant="outline"

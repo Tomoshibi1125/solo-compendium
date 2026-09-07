@@ -213,34 +213,42 @@ describe("canonicalCompendium resolver", () => {
 		expect(cantrips.every((entry) => entry.power_level === 0)).toBe(true);
 	});
 
-	it("gates exact path-granted powers by selected path and character level", async () => {
-		const shadowStrike = (await listCanonicalPowers()).find(
-			(entry) => entry.name === "Shadow Strike",
-		);
+	it("quarantines supplemental Shadow Strike while preserving the path-local ability", async () => {
+		const [canonicalPowers, canonicalPaths] = await Promise.all([
+			listCanonicalPowers(),
+			listCanonicalEntries("paths"),
+		]);
+		expect(
+			canonicalPowers.some(
+				(entry) =>
+					entry.id === "power-sup-1-7-shadow-strike" ||
+					entry.name === "Shadow Strike",
+			),
+		).toBe(false);
 
-		if (!shadowStrike) {
-			throw new Error("Expected canonical Shadow Strike power.");
-		}
-		expect(
-			isCanonicalPowerLearnable(shadowStrike, {
-				jobName: "Stalker",
-				characterLevel: 3,
-			}),
-		).toBe(false);
-		expect(
-			isCanonicalPowerLearnable(shadowStrike, {
-				jobName: "Stalker",
-				pathName: "Path of the Umbral Ascendant",
-				characterLevel: 2,
-			}),
-		).toBe(false);
-		expect(
-			isCanonicalPowerLearnable(shadowStrike, {
-				jobName: "Stalker",
-				pathName: "Path of the Umbral Ascendant",
-				characterLevel: 3,
-			}),
-		).toBe(true);
+		const umbralAscendant = canonicalPaths.find(
+			(entry) => entry.id === "stalker--umbral-hunter",
+		) as
+			| ((typeof canonicalPaths)[number] & {
+					abilities?: Array<{
+						name: string;
+						level?: number;
+						actionType?: string;
+						uses?: { formula: string; recharge: string };
+						tracking?: string;
+					}>;
+			  })
+			| undefined;
+		const shadowStrike = umbralAscendant?.abilities?.find(
+			(ability) => ability.name === "Shadow Strike",
+		);
+		expect(shadowStrike).toMatchObject({
+			name: "Shadow Strike",
+			level: 3,
+			actionType: "Bonus action",
+			uses: { formula: "1", recharge: "short-rest" },
+			tracking: "uses",
+		});
 	});
 
 	it("gates exact path-granted techniques by selected path and level", async () => {
@@ -273,7 +281,7 @@ describe("canonicalCompendium resolver", () => {
 		).toBe(true);
 	});
 
-	it("gates Contractor Cursed Blade powers and techniques by selected path and level", async () => {
+	it("keeps the unauthored Cursed Blade package out of native path access", async () => {
 		const powers = await listCanonicalPowers();
 		const cursedBladeEdge = powers.find(
 			(entry) => entry.name === "Cursed Blade Edge",
@@ -293,152 +301,86 @@ describe("canonicalCompendium resolver", () => {
 			!pactBlade ||
 			!eldritchRiposte
 		) {
-			throw new Error("Expected Contractor path-granted catalog entries.");
+			throw new Error("Expected Rune-targetable Contractor catalog entries.");
 		}
-		expect(
-			isCanonicalPowerLearnable(cursedBladeEdge, {
-				jobName: "Contractor",
-				characterLevel: 1,
-			}),
-		).toBe(false);
-		expect(
-			isCanonicalPowerLearnable(cursedBladeEdge, {
-				jobName: "Contractor",
-				pathName: "Path of the Glamour Weaver",
-				characterLevel: 1,
-			}),
-		).toBe(false);
-		expect(
-			isCanonicalPowerLearnable(cursedBladeEdge, {
-				jobName: "Contractor",
-				pathName: "Path of the Cursed Blade",
-				characterLevel: 1,
-			}),
-		).toBe(true);
-		expect(
-			isCanonicalPowerLearnable(sacrificeEngine, {
-				jobName: "Contractor",
-				pathName: "Path of the Cursed Blade",
-				characterLevel: 3,
-			}),
-		).toBe(false);
-		expect(
-			isCanonicalPowerLearnable(sacrificeEngine, {
-				jobName: "Contractor",
-				pathName: "Path of the Cursed Blade",
-				characterLevel: 5,
-			}),
-		).toBe(true);
-		expect(
-			isCanonicalTechniqueLearnable(pactBlade, {
-				jobName: "Contractor",
-				pathName: "Path of the Cursed Blade",
-				characterLevel: 1,
-			}),
-		).toBe(true);
-		expect(
-			isCanonicalTechniqueLearnable(eldritchRiposte, {
-				jobName: "Contractor",
-				pathName: "Path of the Cursed Blade",
-				characterLevel: 2,
-			}),
-		).toBe(false);
-		expect(
-			isCanonicalTechniqueLearnable(eldritchRiposte, {
-				jobName: "Contractor",
-				pathName: "Path of the Cursed Blade",
-				characterLevel: 3,
-			}),
-		).toBe(true);
+
+		for (const [entry, level] of [
+			[cursedBladeEdge, 1],
+			[sacrificeEngine, 20],
+		] as const) {
+			expect(
+				isCanonicalPowerLearnable(entry, {
+					jobName: "Contractor",
+					pathName: "Path of the Cursed Blade",
+					characterLevel: level,
+				}),
+			).toBe(false);
+		}
+		for (const [entry, level] of [
+			[pactBlade, 1],
+			[eldritchRiposte, 20],
+		] as const) {
+			expect(
+				isCanonicalTechniqueLearnable(entry, {
+					jobName: "Contractor",
+					pathName: "Path of the Cursed Blade",
+					characterLevel: level,
+				}),
+			).toBe(false);
+		}
 	});
 
-	it("gates Idol powers and techniques to the matching resonance path", async () => {
+	it("keeps unsupported supplemental Idol entries out of native resonance path access", async () => {
 		const powers = await listCanonicalPowers();
-		const dissonantStrike = powers.find(
-			(entry) => entry.name === "Dissonant Strike",
-		);
-		const encorePerformance = powers.find(
-			(entry) => entry.name === "Encore Performance",
-		);
 		const techniques = await listCanonicalEntries("techniques");
-		const rhythmicStrike = techniques.find(
-			(entry) => entry.name === "Rhythmic Strike",
-		);
-		const resonanceSlash = techniques.find(
-			(entry) => entry.name === "Resonance Slash",
-		);
+		const cases = [
+			{
+				entry: powers.find((entry) => entry.name === "Dissonant Strike"),
+				kind: "power",
+				pathName: "Path of the Dance Resonance",
+				level: 3,
+			},
+			{
+				entry: powers.find((entry) => entry.name === "Encore Performance"),
+				kind: "power",
+				pathName: "Path of the Hypnotic Resonance",
+				level: 7,
+			},
+			{
+				entry: techniques.find((entry) => entry.name === "Rhythmic Strike"),
+				kind: "technique",
+				pathName: "Path of the Dance Resonance",
+				level: 3,
+			},
+			{
+				entry: techniques.find((entry) => entry.name === "Resonance Slash"),
+				kind: "technique",
+				pathName: "Path of the Blade Resonance",
+				level: 3,
+			},
+		] as const;
 
-		if (
-			!dissonantStrike ||
-			!encorePerformance ||
-			!rhythmicStrike ||
-			!resonanceSlash
-		) {
-			throw new Error("Expected Idol path-granted catalog entries.");
+		for (const testCase of cases) {
+			if (!testCase.entry) {
+				throw new Error(`Expected supplemental Idol ${testCase.kind} entry.`);
+			}
+			const learnable =
+				testCase.kind === "power"
+					? isCanonicalPowerLearnable(testCase.entry, {
+							jobName: "Idol",
+							pathName: testCase.pathName,
+							characterLevel: testCase.level,
+						})
+					: isCanonicalTechniqueLearnable(testCase.entry, {
+							jobName: "Idol",
+							pathName: testCase.pathName,
+							characterLevel: testCase.level,
+						});
+			expect(
+				learnable,
+				`${testCase.pathName} must not infer access to ${testCase.entry.name}`,
+			).toBe(false);
 		}
-		expect(
-			isCanonicalPowerLearnable(dissonantStrike, {
-				jobName: "Idol",
-				pathName: "Path of the Dance Resonance",
-				characterLevel: 2,
-			}),
-		).toBe(false);
-		expect(
-			isCanonicalPowerLearnable(dissonantStrike, {
-				jobName: "Idol",
-				pathName: "Path of the Dance Resonance",
-				characterLevel: 3,
-			}),
-		).toBe(true);
-		expect(
-			isCanonicalPowerLearnable(dissonantStrike, {
-				jobName: "Idol",
-				pathName: "Path of the Hypnotic Resonance",
-				characterLevel: 3,
-			}),
-		).toBe(false);
-		expect(
-			isCanonicalPowerLearnable(encorePerformance, {
-				jobName: "Idol",
-				pathName: "Path of the Hypnotic Resonance",
-				characterLevel: 3,
-			}),
-		).toBe(false);
-		expect(
-			isCanonicalPowerLearnable(encorePerformance, {
-				jobName: "Idol",
-				pathName: "Path of the Hypnotic Resonance",
-				characterLevel: 7,
-			}),
-		).toBe(true);
-		expect(
-			isCanonicalTechniqueLearnable(rhythmicStrike, {
-				jobName: "Idol",
-				pathName: "Path of the Dance Resonance",
-				characterLevel: 3,
-			}),
-		).toBe(true);
-		expect(
-			isCanonicalTechniqueLearnable(rhythmicStrike, {
-				jobName: "Idol",
-				pathName: "Path of the Blade Resonance",
-				characterLevel: 3,
-			}),
-		).toBe(false);
-		expect(
-			isCanonicalTechniqueLearnable(resonanceSlash, {
-				jobName: "Idol",
-				pathName: "Path of the Blade Resonance",
-				characterLevel: 3,
-			}),
-		).toBe(true);
-		expect(
-			isCanonicalTechniqueLearnable(resonanceSlash, {
-				jobName: "Idol",
-				pathName: "Path of the Dance Resonance",
-				characterLevel: 3,
-			}),
-		).toBe(false);
 	});
 
 	it("marks hard-incomplete abilities as incomplete", () => {

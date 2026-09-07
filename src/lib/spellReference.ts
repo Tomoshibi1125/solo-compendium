@@ -5,7 +5,7 @@ import {
 
 export interface NormalizedSpellReference {
 	spell_id: string | null;
-	matchedBy: "id" | "name" | "none";
+	matchedBy: "id" | "name" | "none" | "inaccessible";
 }
 
 export async function normalizeSpellReference(

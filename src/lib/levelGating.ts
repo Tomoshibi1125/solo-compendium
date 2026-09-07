@@ -63,6 +63,7 @@ const STANDARD_ASI_LEVELS = [4, 8, 12, 16, 19];
 
 // Job-specific ASI level overrides
 const JOB_ASI_OVERRIDES: Record<string, number[]> = {
+	Destroyer: [4, 6, 8, 12, 14, 16, 19],
 	Vanguard: [4, 6, 8, 12, 14, 16, 19],
 	Striker: [4, 8, 12, 16, 19],
 	Assassin: [4, 8, 10, 12, 16, 19],

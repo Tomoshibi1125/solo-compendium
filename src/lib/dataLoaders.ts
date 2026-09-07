@@ -117,12 +117,25 @@ export const loadPaths = (): Promise<CompendiumPath[]> =>
 			(p): CompendiumPath => ({
 				id: p.id,
 				name: p.name,
+				aliases: p.aliases,
 				description: p.description,
 				source: p.source,
 				level: p.requirements.level,
 				job_id: p.jobId,
+				job_name: p.jobName,
+				path_tier: p.tier,
+				pathType: p.pathType,
+				requirements: p.requirements,
 				features: p.features,
-				prerequisites: p.requirements.skills?.join(", "),
+				abilities: p.abilities,
+				stats: p.stats,
+				prerequisites:
+					[
+						...(p.requirements.prerequisites ?? []),
+						...(p.requirements.skills ?? []).map((skill) => `Skill: ${skill}`),
+					]
+						.filter(Boolean)
+						.join(", ") || undefined,
 			}),
 		),
 	);

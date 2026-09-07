@@ -112,7 +112,8 @@ describe("racial ASI at level 1", () => {
 
 		const after = getLocalCharacterWithAbilities(row.id);
 		expect(after?.int).toBe(17); // 15 + 2, NOT 15 + 6
-		expect(after?.pre).toBe(11); // 10 + 1, NOT 10 + 3
+		expect(after?.sense).toBe(13); // 12 + 1, NOT 12 + 3
+		expect(after?.pre).toBe(10); // unchanged
 	});
 
 	it("maps camelCase and snake_case job ASI sources for creator preview", () => {

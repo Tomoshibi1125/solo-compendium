@@ -1,117 +1,166 @@
-﻿import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+﻿import {
+	type QueryClient,
+	useMutation,
+	useQuery,
+	useQueryClient,
+} from "@tanstack/react-query";
 import { useEffect } from "react";
+import { regents } from "@/data/compendium/regents";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import type { Database } from "@/integrations/supabase/types";
 import { isLocalCharacterId } from "@/lib/guestStore";
 import { clientChannelName } from "@/lib/realtimeChannel";
+import {
+	type CanonicalRegentId,
+	resolveCanonicalRegentId,
+} from "@/lib/regentIdentity";
+import type { Regent } from "@/lib/regentTypes";
 import { REGENT_LABEL } from "@/lib/vernacular";
 
-export interface RegentUnlock {
-	id: string;
-	character_id: string;
-	regent_id: string;
-	unlocked_at: string;
-	quest_name: string;
-	dm_notes: string | null;
-	is_primary: boolean;
-	caught_up_at_level: number | null;
+type RegentUnlockRow =
+	Database["public"]["Tables"]["character_regent_unlocks"]["Row"];
+type RegentUnlockGrantRow =
+	Database["public"]["Tables"]["character_regent_unlock_grants"]["Row"];
+
+export type RegentIdentityIssue =
+	| "legacy_uuid"
+	| "unsupported_regent_id"
+	| "missing_static_regent"
+	| "missing_identity";
+
+export type RegentUnlock = RegentUnlockRow & {
+	/** The strict canonical identity used by all actionable client workflows. */
+	resolved_regent_id: CanonicalRegentId | null;
+	/** Canonical static metadata only; unresolved legacy rows intentionally stay null. */
+	regent: Regent | null;
+	identity_issue: RegentIdentityIssue | null;
 	character?: {
 		id: string;
 		name: string;
 	};
-	regent?: {
-		id: string;
-		name: string;
-		title: string;
-		theme: string;
-		description: string;
-		image?: string;
-		tags?: string[];
+};
+
+export type RegentUnlockGrant = RegentUnlockGrantRow;
+
+const REGENTS_BY_ID = new Map(regents.map((regent) => [regent.id, regent]));
+
+/**
+ * Hydrate a flat unlock row without using the retired compendium relationship.
+ * `legacy_regent_uuid` is preserved for Task 19 reconciliation, but is never
+ * interpreted as a name/slug/canonical identity by the Task 8 client.
+ */
+export function hydrateRegentUnlock(
+	row: RegentUnlockRow,
+	character?: { id: string; name: string },
+): RegentUnlock {
+	const resolvedId = resolveCanonicalRegentId(row.regent_id);
+	const regent = resolvedId ? (REGENTS_BY_ID.get(resolvedId) ?? null) : null;
+	const canonicalId = regent ? resolvedId : null;
+
+	let identityIssue: RegentIdentityIssue | null = null;
+	if (!regent) {
+		if (row.regent_id && resolvedId) identityIssue = "missing_static_regent";
+		else if (row.regent_id) identityIssue = "unsupported_regent_id";
+		else if (row.legacy_regent_uuid) identityIssue = "legacy_uuid";
+		else identityIssue = "missing_identity";
+	}
+
+	return {
+		...row,
+		resolved_regent_id: canonicalId,
+		regent,
+		identity_issue: identityIssue,
+		...(character ? { character } : {}),
 	};
 }
 
-/**
- * Bridge the canonical unlock (`character_regent_unlocks.regent_id`, e.g.
- * "umbral_regent") into `characters.regent_overlays` — the field the level-up
- * wizard's regent choice sources + ability grants and the Add* dialogs read.
- * Without this, a Warden-granted unlock would never surface regent picks.
- */
-async function appendRegentOverlay(characterId: string, regentId: string) {
-	const { data: char } = await supabase
-		.from("characters")
-		.select("regent_overlays")
-		.eq("id", characterId)
-		.single();
-	const current = Array.isArray(char?.regent_overlays)
-		? (char.regent_overlays as string[])
-		: [];
-	if (current.includes(regentId)) return;
-	await supabase
-		.from("characters")
-		.update({ regent_overlays: [...current, regentId] })
-		.eq("id", characterId);
+function isRemoteId(id: string): boolean {
+	return id.length > 0 && !isLocalCharacterId(id);
 }
 
-async function removeRegentOverlay(characterId: string, regentId: string) {
-	const { data: char } = await supabase
-		.from("characters")
-		.select("regent_overlays")
-		.eq("id", characterId)
+function assertRemoteCharacter(characterId: string): void {
+	if (!isRemoteId(characterId)) {
+		throw new Error(
+			`${REGENT_LABEL} unlocks are unavailable for local characters.`,
+		);
+	}
+}
+
+async function invalidateCharacterRegentWorkflow(
+	queryClient: QueryClient,
+	characterId: string,
+): Promise<void> {
+	await Promise.all([
+		queryClient.invalidateQueries({
+			queryKey: ["regent-unlocks", characterId],
+		}),
+		queryClient.invalidateQueries({
+			queryKey: ["regent-unlock-grants", characterId],
+		}),
+		queryClient.invalidateQueries({ queryKey: ["character", characterId] }),
+		queryClient.invalidateQueries({ queryKey: ["characters"] }),
+		queryClient.invalidateQueries({
+			queryKey: ["character-features", characterId],
+		}),
+		queryClient.invalidateQueries({ queryKey: ["features", characterId] }),
+		queryClient.invalidateQueries({ queryKey: ["powers", characterId] }),
+		queryClient.invalidateQueries({
+			queryKey: ["character-techniques", characterId],
+		}),
+		queryClient.invalidateQueries({
+			queryKey: ["character-spells", characterId],
+		}),
+		queryClient.invalidateQueries({
+			queryKey: ["campaign-regent-unlocks"],
+		}),
+		queryClient.invalidateQueries({
+			queryKey: ["campaign-regent-unlock-grants"],
+		}),
+	]);
+}
+
+async function fetchUnlockById(
+	unlockId: string,
+	characterId: string,
+): Promise<RegentUnlock> {
+	const { data, error } = await supabase
+		.from("character_regent_unlocks")
+		.select("*")
+		.eq("id", unlockId)
+		.eq("character_id", characterId)
 		.single();
-	const current = Array.isArray(char?.regent_overlays)
-		? (char.regent_overlays as string[])
-		: [];
-	if (!current.includes(regentId)) return;
-	await supabase
-		.from("characters")
-		.update({ regent_overlays: current.filter((id) => id !== regentId) })
-		.eq("id", characterId);
+	if (error) throw error;
+	if (!data) throw new Error("The consumed Regent unlock could not be loaded.");
+	return hydrateRegentUnlock(data);
 }
 
 export function useRegentUnlocks(characterId: string) {
 	const { toast } = useToast();
-
 	const queryClient = useQueryClient();
+	const remoteCharacter = isRemoteId(characterId);
+
 	const {
 		data: unlocks = [],
 		isLoading,
 		error,
 	} = useQuery({
 		queryKey: ["regent-unlocks", characterId],
-		queryFn: async () => {
-			// Regent unlocks are Warden-granted (cloud campaigns only). Guest
-			// characters can't receive them — return empty instead of hitting
-			// the server with a `local_` id (400 + retry spam).
-			if (isLocalCharacterId(characterId)) return [] as RegentUnlock[];
-			const { data, error } = await supabase
+		queryFn: async (): Promise<RegentUnlock[]> => {
+			if (!remoteCharacter) return [];
+			const { data, error: queryError } = await supabase
 				.from("character_regent_unlocks")
-				.select(`
-          *,
-          regent:compendium_regents(
-            id,
-            name,
-            title,
-            theme,
-            description,
-            rank,
-            image,
-            tags
-          )
-        `)
+				.select("*")
 				.eq("character_id", characterId)
 				.order("unlocked_at", { ascending: false });
-
-			if (error) throw error;
-			return JSON.parse(JSON.stringify(data)) as RegentUnlock[];
+			if (queryError) throw queryError;
+			return (data ?? []).map((row) => hydrateRegentUnlock(row));
 		},
-		enabled: !!characterId,
+		enabled: remoteCharacter,
 	});
 
-	// Realtime: when a Warden unlocks a regent for this character, it must appear
-	// on the player's open sheet without a refresh. character_regent_unlocks is
-	// added to the supabase_realtime publication in migration 20260627*.
 	useEffect(() => {
-		if (!characterId || isLocalCharacterId(characterId)) return;
+		if (!remoteCharacter) return;
 		const channel = supabase
 			.channel(clientChannelName(`regent-unlocks-${characterId}`))
 			.on(
@@ -132,202 +181,86 @@ export function useRegentUnlocks(characterId: string) {
 		return () => {
 			supabase.removeChannel(channel);
 		};
-	}, [characterId, queryClient]);
+	}, [characterId, queryClient, remoteCharacter]);
 
-	const unlockRegentMutation = useMutation({
-		mutationFn: async ({
-			regentId,
-			questName,
-			dmNotes,
-			isPrimary = false,
-		}: {
-			regentId: string;
-			questName: string;
-			dmNotes?: string;
-			isPrimary?: boolean;
-		}) => {
-			const { data, error } = await supabase
-				.from("character_regent_unlocks")
-				.insert({
-					character_id: characterId,
-					regent_id: regentId,
-					quest_name: questName,
-					dm_notes: dmNotes || null,
-					is_primary: isPrimary,
-				})
-				.select()
-				.single();
-
-			if (error) throw error;
-			// Bridge into regent_overlays so the level-up wizard + Add* dialogs see it.
-			await appendRegentOverlay(characterId, regentId);
-			return data;
-		},
-		onSuccess: () => {
-			queryClient.invalidateQueries({
-				queryKey: ["regent-unlocks", characterId],
-			});
-			queryClient.invalidateQueries({ queryKey: ["character", characterId] });
-			queryClient.invalidateQueries({ queryKey: ["characters"] });
-			toast({
-				title: `${REGENT_LABEL} Unlocked`,
-				description: "The regent has been successfully unlocked.",
-			});
-		},
-		onError: (error: Error) => {
-			toast({
-				title: "Failed to Unlock",
-				description:
-					error.message || "An error occurred while unlocking the regent.",
-				variant: "destructive",
-			});
-		},
-	});
-
-	const removeUnlockMutation = useMutation({
-		mutationFn: async (unlockId: string) => {
-			// Read the regent_id first so we can also drop it from regent_overlays.
-			const { data: row } = await supabase
-				.from("character_regent_unlocks")
-				.select("regent_id")
-				.eq("id", unlockId)
-				.single();
-
-			const { error } = await supabase
-				.from("character_regent_unlocks")
-				.delete()
-				.eq("id", unlockId);
-
-			if (error) throw error;
-			if (row?.regent_id) {
-				await removeRegentOverlay(characterId, row.regent_id);
-			}
-		},
-		onSuccess: () => {
-			queryClient.invalidateQueries({
-				queryKey: ["regent-unlocks", characterId],
-			});
-			queryClient.invalidateQueries({ queryKey: ["character", characterId] });
-			queryClient.invalidateQueries({ queryKey: ["characters"] });
-			toast({
-				title: "Unlock Removed",
-				description: "The regent unlock has been removed.",
-			});
-		},
-		onError: (error: Error) => {
-			toast({
-				title: "Failed to Remove",
-				description:
-					error.message || "An error occurred while removing the unlock.",
-				variant: "destructive",
-			});
-		},
-	});
-
-	const updateUnlockMutation = useMutation({
-		mutationFn: async ({
-			unlockId,
-			updates,
-		}: {
-			unlockId: string;
-			updates: Partial<RegentUnlock>;
-		}) => {
-			// `regent`/`character` are client-side joins, not columns — the typed
-			// client rejects them as excess properties on update.
-			const {
-				regent: _regent,
-				character: _character,
-				...columnUpdates
-			} = updates;
-			const { data, error } = await supabase
-				.from("character_regent_unlocks")
-				.update(columnUpdates)
-				.eq("id", unlockId)
-				.select()
-				.single();
-
-			if (error) throw error;
-			return data;
-		},
-		onSuccess: () => {
-			queryClient.invalidateQueries({
-				queryKey: ["regent-unlocks", characterId],
-			});
-			toast({
-				title: "Unlock Updated",
-				description: "The regent unlock has been updated.",
-			});
-		},
-		onError: (error: Error) => {
-			toast({
-				title: "Failed to Update",
-				description:
-					error.message || "An error occurred while updating the unlock.",
-				variant: "destructive",
-			});
-		},
-	});
-
-	// Player spends a Warden-granted opportunity: pick a Regent (from three
-	// stat-ranked candidates), create the unlock, bridge the overlay, and mark
-	// the grant consumed. The grant credit is what gates this — players cannot
-	// self-unlock without one (enforced by RLS on the grants table too).
 	const consumeGrantMutation = useMutation({
 		mutationFn: async ({
 			grantId,
 			regentId,
-			questTitle,
-			isPrimary = false,
 		}: {
 			grantId: string;
 			regentId: string;
-			questTitle: string;
-			isPrimary?: boolean;
-		}) => {
-			const { data: unlock, error: unlockError } = await supabase
-				.from("character_regent_unlocks")
-				.insert({
-					character_id: characterId,
-					regent_id: regentId,
-					quest_name: questTitle,
-					is_primary: isPrimary,
-				})
-				.select()
-				.single();
-			if (unlockError) throw unlockError;
+		}): Promise<RegentUnlock> => {
+			assertRemoteCharacter(characterId);
+			const canonicalId = resolveCanonicalRegentId(regentId);
+			if (!canonicalId) {
+				throw new Error("Choose a supported canonical Regent identity.");
+			}
+			const { data: unlockId, error: consumeError } = await supabase.rpc(
+				"consume_regent_unlock_grant",
+				{
+					p_grant_id: grantId,
+					p_regent_id: canonicalId,
+				},
+			);
+			if (consumeError) throw consumeError;
+			if (typeof unlockId !== "string" || !unlockId) {
+				throw new Error("The Regent grant did not return an unlock identity.");
+			}
 
-			await appendRegentOverlay(characterId, regentId);
-
-			const { error: grantError } = await supabase
-				.from("character_regent_unlock_grants")
-				.update({
-					consumed_at: new Date().toISOString(),
-					consumed_unlock_id: unlock.id,
-				})
-				.eq("id", grantId);
-			if (grantError) throw grantError;
-
+			const unlock = await fetchUnlockById(unlockId, characterId);
+			if (unlock.resolved_regent_id !== canonicalId) {
+				throw new Error(
+					"The consumed unlock did not resolve to the selected canonical Regent.",
+				);
+			}
 			return unlock;
 		},
-		onSuccess: () => {
-			queryClient.invalidateQueries({
-				queryKey: ["regent-unlocks", characterId],
-			});
-			queryClient.invalidateQueries({
-				queryKey: ["regent-unlock-grants", characterId],
-			});
-			queryClient.invalidateQueries({ queryKey: ["character", characterId] });
-			queryClient.invalidateQueries({ queryKey: ["characters"] });
+		onSuccess: async () => {
+			await invalidateCharacterRegentWorkflow(queryClient, characterId);
 			toast({
 				title: `${REGENT_LABEL} Attuned`,
 				description: "Your chosen regent has awakened.",
 			});
 		},
-		onError: (error: Error) => {
+		onError: (mutationError: Error) => {
 			toast({
 				title: "Failed to Attune",
 				description:
-					error.message || "An error occurred while attuning the regent.",
+					mutationError.message ||
+					"An error occurred while attuning the regent.",
+				variant: "destructive",
+			});
+		},
+	});
+
+	const setPrimaryMutation = useMutation({
+		mutationFn: async (unlockId: string): Promise<string> => {
+			assertRemoteCharacter(characterId);
+			const { data, error: rpcError } = await supabase.rpc(
+				"set_primary_regent_unlock",
+				{ p_unlock_id: unlockId },
+			);
+			if (rpcError) throw rpcError;
+			if (data !== unlockId) {
+				throw new Error(
+					"The server did not confirm the primary Regent unlock.",
+				);
+			}
+			return data;
+		},
+		onSuccess: async () => {
+			await invalidateCharacterRegentWorkflow(queryClient, characterId);
+			toast({
+				title: "Primary Regent Updated",
+				description: "The primary regent has been updated.",
+			});
+		},
+		onError: (mutationError: Error) => {
+			toast({
+				title: "Failed to Set Primary",
+				description:
+					mutationError.message || "The primary regent could not be updated.",
 				variant: "destructive",
 			});
 		},
@@ -337,129 +270,189 @@ export function useRegentUnlocks(characterId: string) {
 		unlocks,
 		isLoading,
 		error,
-		unlockRegent: unlockRegentMutation.mutate,
-		removeUnlock: removeUnlockMutation.mutate,
-		updateUnlock: updateUnlockMutation.mutate,
-		consumeGrant: consumeGrantMutation.mutate,
 		consumeGrantAsync: consumeGrantMutation.mutateAsync,
-		isUnlocking: unlockRegentMutation.isPending,
-		isRemoving: removeUnlockMutation.isPending,
-		isUpdating: updateUnlockMutation.isPending,
 		isConsuming: consumeGrantMutation.isPending,
+		setPrimary: setPrimaryMutation.mutate,
+		setPrimaryAsync: setPrimaryMutation.mutateAsync,
+		isSettingPrimary: setPrimaryMutation.isPending,
 	};
 }
 
-// Hook for Wardens to manage regent unlocks for their campaign characters
-export function useCampaignRegentUnlocks(campaignId: string) {
-	const {
-		data: campaignUnlocks = [],
-		isLoading,
-		error,
-	} = useQuery({
-		queryKey: ["campaign-regent-unlocks", campaignId],
+export interface CampaignRegentRosterEntry {
+	character_id: string;
+	characters?: { id: string; name: string } | null;
+}
+
+function getCampaignRosterDetails(
+	roster: readonly CampaignRegentRosterEntry[],
+): {
+	characterIds: string[];
+	characterById: Map<string, { id: string; name: string }>;
+} {
+	const characterIds = Array.from(
+		new Set(
+			roster
+				.map((entry) => entry.character_id)
+				.filter((characterId) => isRemoteId(characterId)),
+		),
+	).sort();
+	const allowedIds = new Set(characterIds);
+	const characterById = new Map<string, { id: string; name: string }>();
+	for (const entry of roster) {
+		if (allowedIds.has(entry.character_id) && entry.characters) {
+			characterById.set(entry.character_id, entry.characters);
+		}
+	}
+	return { characterIds, characterById };
+}
+
+// Hook for Wardens to view Regent unlocks for the exact authoritative roster
+// already rendered by CampaignRegentOversight: campaign_character_shares.
+export function useCampaignRegentUnlocks(
+	campaignId: string,
+	roster: readonly CampaignRegentRosterEntry[],
+) {
+	const remoteCampaign = isRemoteId(campaignId);
+	const { characterIds, characterById } = getCampaignRosterDetails(roster);
+	const rosterKey = characterIds.join(",");
+
+	const unlockQuery = useQuery<RegentUnlockRow[]>({
+		queryKey: ["campaign-regent-unlocks", campaignId, rosterKey],
 		queryFn: async () => {
+			if (!remoteCampaign || characterIds.length === 0) return [];
 			const { data, error } = await supabase
 				.from("character_regent_unlocks")
-				.select(`
-          *,
-          character:characters(id, name),
-          regent:compendium_regents(
-            id,
-            name,
-            title,
-            theme,
-            description,
-            rank,
-            image,
-            tags
-          )
-        `)
-				.filter(
-					"character_id",
-					"in",
-					`(select id from characters where campaign_id = '${campaignId}')`,
-				)
+				.select("*")
+				.in("character_id", characterIds)
 				.order("unlocked_at", { ascending: false });
-
 			if (error) throw error;
-			return JSON.parse(JSON.stringify(data || [])) as RegentUnlock[];
+			return data ?? [];
 		},
-		enabled: !!campaignId,
+		enabled: remoteCampaign && characterIds.length > 0,
 	});
 
 	return {
-		campaignUnlocks,
-		isLoading,
-		error,
+		campaignUnlocks: (unlockQuery.data ?? []).map((row) =>
+			hydrateRegentUnlock(row, characterById.get(row.character_id)),
+		),
+		isLoading: unlockQuery.isLoading,
+		error: unlockQuery.error,
 	};
 }
 
-// Warden view: all UNSPENT regent-unlock credits across a campaign's characters.
-export function useCampaignRegentUnlockGrants(campaignId: string) {
-	const { data: campaignGrants = [], isLoading } = useQuery({
-		queryKey: ["campaign-regent-unlock-grants", campaignId],
-		queryFn: async () => {
+// Warden view: all unspent Regent-unlock credits for the rendered shared roster.
+export function useCampaignRegentUnlockGrants(
+	campaignId: string,
+	roster: readonly CampaignRegentRosterEntry[],
+) {
+	const remoteCampaign = isRemoteId(campaignId);
+	const { characterIds } = getCampaignRosterDetails(roster);
+	const rosterKey = characterIds.join(",");
+
+	const grantsQuery = useQuery({
+		queryKey: ["campaign-regent-unlock-grants", campaignId, rosterKey],
+		queryFn: async (): Promise<RegentUnlockGrant[]> => {
+			if (!remoteCampaign || characterIds.length === 0) return [];
 			const { data, error } = await supabase
 				.from("character_regent_unlock_grants")
 				.select("*")
+				.in("character_id", characterIds)
 				.is("consumed_at", null)
-				.filter(
-					"character_id",
-					"in",
-					`(select id from characters where campaign_id = '${campaignId}')`,
-				)
 				.order("granted_at", { ascending: false });
 			if (error) throw error;
-			return JSON.parse(JSON.stringify(data || [])) as RegentUnlockGrant[];
+			return data ?? [];
 		},
-		enabled: !!campaignId,
+		enabled: remoteCampaign && characterIds.length > 0,
 	});
 
-	return { campaignGrants, isLoading };
+	return {
+		campaignGrants: grantsQuery.data ?? [],
+		isLoading: grantsQuery.isLoading,
+		error: grantsQuery.error,
+	};
 }
 
-export interface RegentUnlockGrant {
-	id: string;
-	character_id: string;
-	quest_id: string | null;
-	quest_title: string;
-	granted_by: string | null;
-	granted_at: string;
-	consumed_at: string | null;
-	consumed_unlock_id: string | null;
+/** Warden-only, actor-bound removal. Character ID is an invalidation target. */
+export function useRemoveRegentUnlock() {
+	const { toast } = useToast();
+	const queryClient = useQueryClient();
+	const mutation = useMutation({
+		mutationFn: async ({
+			unlockId,
+			characterId,
+		}: {
+			unlockId: string;
+			characterId: string;
+		}): Promise<string> => {
+			assertRemoteCharacter(characterId);
+			const { data, error } = await supabase.rpc("remove_regent_unlock", {
+				p_unlock_id: unlockId,
+			});
+			if (error) throw error;
+			if (data !== unlockId) {
+				throw new Error("The server did not confirm Regent unlock removal.");
+			}
+			return data;
+		},
+		onSuccess: async (_, variables) => {
+			await invalidateCharacterRegentWorkflow(
+				queryClient,
+				variables.characterId,
+			);
+			toast({
+				title: "Unlock Removed",
+				description: "The regent unlock has been removed.",
+			});
+		},
+		onError: (mutationError: Error) => {
+			toast({
+				title: "Failed to Remove",
+				description:
+					mutationError.message || "The Regent unlock could not be removed.",
+				variant: "destructive",
+			});
+		},
+	});
+
+	return {
+		removeUnlock: mutation.mutate,
+		removeUnlockAsync: mutation.mutateAsync,
+		isRemoving: mutation.isPending,
+	};
 }
 
 /**
- * Warden-granted Regent-unlock opportunities ("credits") for a character.
- *
- * A regent unlocks only when the Warden confirms a generic regent-tagged quest
- * is complete: `grantRegentUnlock` inserts a credit (Warden-only, enforced by
- * RLS). The player then spends it via `useRegentUnlocks().consumeGrant`, picking
- * one of three stat-ranked regents. `grants` is the list of UNSPENT credits.
+ * Warden-granted Regent-unlock opportunities (credits) for a character. Direct
+ * insert/delete remains intentionally permitted by Task 8 RLS; consuming a
+ * credit is handled only by consume_regent_unlock_grant above.
  */
 export function useRegentUnlockGrants(characterId: string) {
 	const { toast } = useToast();
 	const queryClient = useQueryClient();
+	const remoteCharacter = isRemoteId(characterId);
 
-	const { data: grants = [], isLoading } = useQuery({
+	const {
+		data: grants = [],
+		isLoading,
+		error,
+	} = useQuery({
 		queryKey: ["regent-unlock-grants", characterId],
-		queryFn: async () => {
-			const { data, error } = await supabase
+		queryFn: async (): Promise<RegentUnlockGrant[]> => {
+			if (!remoteCharacter) return [];
+			const { data, error: queryError } = await supabase
 				.from("character_regent_unlock_grants")
 				.select("*")
 				.eq("character_id", characterId)
 				.is("consumed_at", null)
 				.order("granted_at", { ascending: false });
-			if (error) throw error;
-			return JSON.parse(JSON.stringify(data || [])) as RegentUnlockGrant[];
+			if (queryError) throw queryError;
+			return data ?? [];
 		},
-		enabled: !!characterId,
+		enabled: remoteCharacter,
 	});
 
-	// Realtime: a Warden grant must appear on the player's open sheet without a
-	// refresh (grants table is in the supabase_realtime publication).
 	useEffect(() => {
-		if (!characterId) return;
+		if (!remoteCharacter) return;
 		const channel = supabase
 			.channel(clientChannelName(`regent-unlock-grants-${characterId}`))
 			.on(
@@ -480,7 +473,7 @@ export function useRegentUnlockGrants(characterId: string) {
 		return () => {
 			supabase.removeChannel(channel);
 		};
-	}, [characterId, queryClient]);
+	}, [characterId, queryClient, remoteCharacter]);
 
 	const grantMutation = useMutation({
 		mutationFn: async ({
@@ -490,50 +483,44 @@ export function useRegentUnlockGrants(characterId: string) {
 			questId?: string | null;
 			questTitle: string;
 		}) => {
-			const { data: authData } = await supabase.auth.getUser();
-			const { data, error } = await supabase
+			assertRemoteCharacter(characterId);
+			const { data: authData, error: authError } =
+				await supabase.auth.getUser();
+			if (authError) throw authError;
+			const { data, error: insertError } = await supabase
 				.from("character_regent_unlock_grants")
 				.insert({
 					character_id: characterId,
 					quest_id: questId ?? null,
 					quest_title: questTitle,
-					granted_by: authData?.user?.id ?? null,
+					granted_by: authData.user?.id ?? null,
 				})
 				.select()
 				.single();
-			if (error) throw error;
+			if (insertError) throw insertError;
 			return data;
 		},
-		onSuccess: () => {
-			queryClient.invalidateQueries({
-				queryKey: ["regent-unlock-grants", characterId],
-			});
+		onSuccess: async () => {
+			await Promise.all([
+				queryClient.invalidateQueries({
+					queryKey: ["regent-unlock-grants", characterId],
+				}),
+				queryClient.invalidateQueries({
+					queryKey: ["campaign-regent-unlock-grants"],
+				}),
+			]);
 			toast({
 				title: "Regent Quest Completed",
 				description: `The character may now attune a ${REGENT_LABEL}.`,
 			});
 		},
-		onError: (error: Error) => {
+		onError: (mutationError: Error) => {
 			toast({
 				title: "Failed to Grant",
 				description:
-					error.message || "An error occurred while granting the unlock.",
+					mutationError.message ||
+					"An error occurred while granting the unlock.",
 				variant: "destructive",
-			});
-		},
-	});
-
-	const rescindMutation = useMutation({
-		mutationFn: async (grantId: string) => {
-			const { error } = await supabase
-				.from("character_regent_unlock_grants")
-				.delete()
-				.eq("id", grantId);
-			if (error) throw error;
-		},
-		onSuccess: () => {
-			queryClient.invalidateQueries({
-				queryKey: ["regent-unlock-grants", characterId],
 			});
 		},
 	});
@@ -542,9 +529,8 @@ export function useRegentUnlockGrants(characterId: string) {
 		grants,
 		availableCredits: grants.length,
 		isLoading,
-		grantRegentUnlock: grantMutation.mutate,
+		error,
 		grantRegentUnlockAsync: grantMutation.mutateAsync,
 		isGranting: grantMutation.isPending,
-		rescindGrant: rescindMutation.mutate,
 	};
 }

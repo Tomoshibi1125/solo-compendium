@@ -5,11 +5,10 @@
  * comprehensive as jobs — a complete level-1..20 feature progression — while
  * remaining OUT of character creation (they are a post-creation unlock).
  *
- * `getRegentLeveledFeatures` normalizes each regent to a leveled feature list,
- * deriving from `progression_table` + `abilities`/`features` for regents whose
- * content isn't already curated into `class_features`. These tests fail loudly
- * if a regent regresses to partial coverage or if a regent leaks into the
- * job-selectable pool used at creation.
+ * `regents.ts` materializes a single direct canonical ledger from each authored
+ * progression table. Consumers may read that ledger but must not remap flat
+ * power levels or synthesize descriptions for mechanic-less rows. These tests
+ * fail loudly if coverage, provenance, or post-creation isolation regresses.
  */
 
 import { describe, expect, it } from "vitest";
@@ -34,44 +33,40 @@ describe("regent roster", () => {
 
 describe("regent leveled-feature parity (comprehensive as jobs, 1-20)", () => {
 	for (const regent of regents) {
-		it(`${regent.name}: leveled features span 1..20 with no empty descriptions`, () => {
+		it(`${regent.name}: direct canonical ledger spans 1..20`, () => {
 			const features = getRegentLeveledFeatures(regent);
 			expect(
 				features.length,
 				`${regent.name}: must have leveled features`,
 			).toBeGreaterThan(0);
 
-			const levels = new Set(features.map((f) => f.level));
-			expect(
-				levels.has(1),
-				`${regent.name}: must grant a level-1 feature`,
-			).toBe(true);
-			expect(
-				Math.max(...features.map((f) => f.level)),
-				`${regent.name}: progression must reach level 20`,
-			).toBe(20);
+			const levels = [...new Set(features.map((feature) => feature.level))];
+			expect(levels, `${regent.name}: every level must be represented`).toEqual(
+				Array.from({ length: 20 }, (_, index) => index + 1),
+			);
 
-			for (const f of features) {
-				expect(
-					f.level,
-					`${regent.name}: level in 1..20`,
-				).toBeGreaterThanOrEqual(1);
-				expect(f.level).toBeLessThanOrEqual(20);
-				expect(
-					f.description.trim().length,
-					`${regent.name}: "${f.name}" needs a description`,
-				).toBeGreaterThan(0);
-				expect(
-					["passive", "active", "action", "bonus-action", "reaction"],
-					`${regent.name}: "${f.name}" valid type`,
-				).toContain(f.type);
+			for (const feature of features) {
+				expect(feature.level).toBeGreaterThanOrEqual(1);
+				expect(feature.level).toBeLessThanOrEqual(20);
+				expect(feature.description.trim().length).toBeGreaterThan(0);
+				expect([
+					"passive",
+					"active",
+					"action",
+					"bonus-action",
+					"reaction",
+				]).toContain(feature.type);
+				expect(feature.id).toMatch(/^regent-feature:/);
+				expect(feature.provenance.sourcePath).toBe(
+					"src/data/compendium/regents.ts",
+				);
+				expect(feature.description).not.toContain("A manifestation of");
 			}
 		});
 	}
 
-	it("resolves derived feature names to their real ability/feature descriptions (join works)", () => {
-		// Radiant keeps its content in `features`/`abilities` + progression_table.
-		const radiant = regents.find((r) => r.id === "radiant_regent");
+	it("uses exact source mechanic text when a progression name resolves", () => {
+		const radiant = regents.find((regent) => regent.id === "radiant_regent");
 		expect(radiant).toBeDefined();
 		if (!radiant) return;
 		const l1 = getRegentFeaturesAtLevel(radiant, 1);

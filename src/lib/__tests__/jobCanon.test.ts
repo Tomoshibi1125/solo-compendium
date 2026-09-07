@@ -111,12 +111,15 @@ describe("Job canon — spellcasting ability", () => {
 describe("Job canon — ASI cadence", () => {
 	const standardAsi = [4, 8, 12, 16, 19];
 
+	it("Destroyer follows its authored seven-ASI combat chassis", () => {
+		expect(getASILevels("Destroyer")).toEqual([4, 6, 8, 12, 14, 16, 19]);
+	});
+
 	it("Assassin retains the canonical six-ASI cadence at L10", () => {
 		expect(getASILevels("Assassin")).toEqual([4, 8, 10, 12, 16, 19]);
 	});
 
 	it.each([
-		"Destroyer",
 		"Berserker",
 		"Striker",
 		"Mage",

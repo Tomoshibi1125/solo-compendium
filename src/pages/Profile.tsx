@@ -3,9 +3,11 @@ import {
 	BellOff,
 	BellRing,
 	Camera,
+	KeyRound,
 	LogOut,
 	RefreshCw,
 	Save,
+	ShieldCheck,
 	Type,
 	User,
 } from "lucide-react";
@@ -21,8 +23,8 @@ import { Label } from "@/components/ui/label";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { useToast } from "@/hooks/use-toast";
 import { usePushNotifications } from "@/hooks/usePushNotifications";
-import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth/authContext";
+import { validateNewPassword } from "@/lib/auth/authErrors";
 import { cn } from "@/lib/utils";
 
 // Font size preference stored in localStorage
@@ -35,7 +37,14 @@ const FONT_SIZES = [
 
 export default function Profile() {
 	const navigate = useNavigate();
-	const { user, signOut, updateProfile } = useAuth();
+	const {
+		user,
+		session,
+		signOut,
+		updateProfile,
+		beginPasswordChange,
+		confirmPasswordChange,
+	} = useAuth();
 	const { toast } = useToast();
 	const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -54,6 +63,12 @@ export default function Profile() {
 	const [selectedFontSize, setSelectedFontSize] = useState<string>(
 		() => localStorage.getItem(FONT_SIZE_KEY) || "text-base",
 	);
+	const [passwordStep, setPasswordStep] = useState<"idle" | "verify">("idle");
+	const [verificationCode, setVerificationCode] = useState("");
+	const [newPassword, setNewPassword] = useState("");
+	const [confirmPassword, setConfirmPassword] = useState("");
+	const [passwordBusy, setPasswordBusy] = useState(false);
+	const [passwordError, setPasswordError] = useState("");
 
 	const {
 		isSupported: pushSupported,
@@ -93,10 +108,10 @@ export default function Profile() {
 		if (!nameInput.trim()) return;
 		setSavingName(true);
 		try {
-			const { error } = await supabase.auth.updateUser({
-				data: { display_name: nameInput.trim() },
+			const { error } = await updateProfile({
+				displayName: nameInput.trim(),
 			});
-			if (error) throw error;
+			if (error) throw new Error(error);
 			toast({
 				title: "Display name updated",
 				description: `Now showing as "${nameInput.trim()}"`,
@@ -131,12 +146,10 @@ export default function Profile() {
 			const dataUrl = ev.target?.result as string;
 			setAvatarPreview(dataUrl);
 
-			// Save base64 avatar to user metadata
+			// Save avatar to user metadata through the normalized Auth context.
 			try {
-				const { error } = await supabase.auth.updateUser({
-					data: { avatar_url: dataUrl },
-				});
-				if (error) throw error;
+				const { error } = await updateProfile({ avatar: dataUrl });
+				if (error) throw new Error(error);
 				toast({ title: "Avatar updated" });
 			} catch (err) {
 				toast({
@@ -181,7 +194,6 @@ export default function Profile() {
 				title: "Role updated",
 				description: `Successfully switched to ${newRole} mode.`,
 			});
-			// Navigate to the respective dashboard based on the new role
 			setTimeout(() => {
 				if (newRole === "warden") {
 					navigate("/warden-directives");
@@ -189,6 +201,58 @@ export default function Profile() {
 					navigate("/ascendant-tools");
 				}
 			}, 300);
+		}
+	};
+
+	const handleBeginPasswordChange = async () => {
+		setPasswordBusy(true);
+		setPasswordError("");
+		try {
+			const result = await beginPasswordChange();
+			if (result.error) {
+				setPasswordError(result.error);
+				return;
+			}
+			setPasswordStep("verify");
+			setVerificationCode("");
+			toast({
+				title: "Verification code sent",
+				description: "Check your account email before continuing.",
+			});
+		} finally {
+			setPasswordBusy(false);
+		}
+	};
+
+	const handlePasswordChange = async (event: React.FormEvent) => {
+		event.preventDefault();
+		setPasswordError("");
+		const validation = validateNewPassword(newPassword, confirmPassword);
+		if (!validation.valid) {
+			setPasswordError(validation.message);
+			return;
+		}
+
+		setPasswordBusy(true);
+		try {
+			const result = await confirmPasswordChange({
+				password: newPassword,
+				nonce: verificationCode,
+			});
+			if (result.error) {
+				setPasswordError(result.error);
+				return;
+			}
+			setPasswordStep("idle");
+			setVerificationCode("");
+			setNewPassword("");
+			setConfirmPassword("");
+			toast({
+				title: "Password updated",
+				description: "Your new password is active.",
+			});
+		} finally {
+			setPasswordBusy(false);
 		}
 	};
 
@@ -352,22 +416,169 @@ export default function Profile() {
 
 				{/* Account Actions */}
 				<AscendantWindow title="ACCOUNT">
-					<div className="flex flex-col sm:flex-row gap-3">
-						<Button
-							onClick={handleRoleToggle}
-							variant="outline"
-							className="font-heading tracking-widest uppercase"
-						>
-							Switch to {user?.role === "warden" ? "Ascendant" : "Warden"} Mode
-						</Button>
-						<Button
-							variant="destructive"
-							onClick={handleSignOut}
-							className="gap-2 font-heading tracking-widest uppercase"
-						>
-							<LogOut className="w-4 h-4" />
-							Sign Out
-						</Button>
+					<div className="space-y-5">
+						{user && session ? (
+							<div className="space-y-3 border-b border-primary/20 pb-5">
+								<div className="flex items-center gap-2">
+									<KeyRound className="w-4 h-4 text-primary/80" />
+									<Label className="font-heading text-xs uppercase tracking-widest text-primary/80">
+										Password
+									</Label>
+								</div>
+								{passwordStep === "idle" ? (
+									<div className="space-y-2">
+										<AscendantText className="block text-xs text-muted-foreground">
+											We will email a one-time verification code before changing
+											your password.
+										</AscendantText>
+										<Button
+											type="button"
+											variant="outline"
+											onClick={handleBeginPasswordChange}
+											disabled={passwordBusy}
+											className="gap-2 font-heading tracking-widest uppercase"
+										>
+											{passwordBusy ? (
+												<RefreshCw className="w-4 h-4 animate-spin" />
+											) : (
+												<KeyRound className="w-4 h-4" />
+											)}
+											Change Password
+										</Button>
+									</div>
+								) : (
+									<form onSubmit={handlePasswordChange} className="space-y-3">
+										<div className="space-y-1">
+											<Label htmlFor="password-verification-code">
+												Email verification code
+											</Label>
+											<Input
+												id="password-verification-code"
+												value={verificationCode}
+												onChange={(event) =>
+													setVerificationCode(event.target.value)
+												}
+												autoComplete="one-time-code"
+												inputMode="numeric"
+												required
+											/>
+										</div>
+										<div className="grid gap-3 sm:grid-cols-2">
+											<div className="space-y-1">
+												<Label htmlFor="profile-new-password">
+													New password
+												</Label>
+												<Input
+													id="profile-new-password"
+													type="password"
+													value={newPassword}
+													onChange={(event) =>
+														setNewPassword(event.target.value)
+													}
+													autoComplete="new-password"
+													minLength={8}
+													required
+												/>
+											</div>
+											<div className="space-y-1">
+												<Label htmlFor="profile-confirm-password">
+													Confirm password
+												</Label>
+												<Input
+													id="profile-confirm-password"
+													type="password"
+													value={confirmPassword}
+													onChange={(event) =>
+														setConfirmPassword(event.target.value)
+													}
+													autoComplete="new-password"
+													minLength={8}
+													required
+												/>
+											</div>
+										</div>
+										<div className="flex flex-wrap gap-2">
+											<Button
+												type="submit"
+												disabled={passwordBusy}
+												className="gap-2 font-heading tracking-widest uppercase"
+											>
+												{passwordBusy ? (
+													<RefreshCw className="w-4 h-4 animate-spin" />
+												) : (
+													<ShieldCheck className="w-4 h-4" />
+												)}
+												Update Password
+											</Button>
+											<Button
+												type="button"
+												variant="outline"
+												disabled={passwordBusy}
+												onClick={handleBeginPasswordChange}
+											>
+												Resend Code
+											</Button>
+											<Button
+												type="button"
+												variant="ghost"
+												disabled={passwordBusy}
+												onClick={() => {
+													setPasswordStep("idle");
+													setPasswordError("");
+													setVerificationCode("");
+													setNewPassword("");
+													setConfirmPassword("");
+												}}
+											>
+												Cancel
+											</Button>
+										</div>
+									</form>
+								)}
+								{passwordError && (
+									<div
+										role="alert"
+										className="rounded-[2px] border border-destructive/50 bg-destructive/20 px-3 py-2 text-sm text-destructive-foreground"
+									>
+										{passwordError}
+									</div>
+								)}
+							</div>
+						) : (
+							<div className="space-y-2 border-b border-primary/20 pb-5">
+								<AscendantText className="block text-sm text-muted-foreground">
+									Sign in to manage your password and account.
+								</AscendantText>
+								<Button
+									type="button"
+									variant="outline"
+									onClick={() => navigate("/login")}
+								>
+									Sign In
+								</Button>
+							</div>
+						)}
+
+						{user && session && (
+							<div className="flex flex-col sm:flex-row gap-3">
+								<Button
+									onClick={handleRoleToggle}
+									variant="outline"
+									className="font-heading tracking-widest uppercase"
+								>
+									Switch to {user.role === "warden" ? "Ascendant" : "Warden"}{" "}
+									Mode
+								</Button>
+								<Button
+									variant="destructive"
+									onClick={handleSignOut}
+									className="gap-2 font-heading tracking-widest uppercase"
+								>
+									<LogOut className="w-4 h-4" />
+									Sign Out
+								</Button>
+							</div>
+						)}
 					</div>
 				</AscendantWindow>
 			</div>

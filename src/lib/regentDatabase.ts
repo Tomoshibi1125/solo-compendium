@@ -1,22 +1,15 @@
-// Complete Regent database for the Gemini Protocol fusion engine.
+// Canonical Regent projections used by the Gemini/Sovereign runtime.
 //
-// The Sovereign fusion lookup resolves a saved sovereign's
-// `monarch_a_id` / `monarch_b_id` against this list. Those ids are
-// the CANONICAL compendium regent ids (e.g. "umbral_regent"), produced by
-// `listCanonicalEntries("regents")` → `regents.ts`. The legacy `NINE_REGENTS`
-// table used different ids ("shadow_regent", …), so AI/imported sovereigns
-// referencing canonical regents could not be resolved and their fusion
-// abilities were silently dropped.
-//
-// This module guarantees EVERY canonical regent is present in the database (by
-// its canonical id), unioned with any legacy-only entries for backward compat.
-// `regents.ts` is already in the character-sheet bundle (via regentGestalt), so
-// this adds no new code-split cost.
+// NINE_REGENTS is retained as historical evidence only. Runtime identity and
+// projections are locked to the twelve canonical compendium Regents.
 
 import { regents as CANONICAL_REGENTS } from "@/data/compendium/regents";
-import { NINE_REGENTS } from "@/lib/nineRegents";
 import {
-	type Feature,
+	CANONICAL_REGENT_IDS,
+	resolveCanonicalRegentId,
+} from "@/lib/regentIdentity";
+import { getRegentLeveledFeatures } from "@/lib/regentProgression";
+import {
 	type Regent,
 	type RegentPath,
 	RegentType,
@@ -42,66 +35,48 @@ function inferRegentType(regent: Regent): RegentType {
 	return ABILITY_TO_REGENT_TYPE[first] ?? RegentType.PRESENCE_REGENT;
 }
 
-function toFeatures(regent: Regent): Feature[] {
-	const features: Feature[] = [];
-	for (const f of regent.class_features ?? []) {
-		if (f?.name && f?.description) {
-			features.push({
-				name: f.name,
-				description: f.description,
-				type: f.type ?? "passive",
-			});
-		}
-	}
-	for (const f of regent.features ?? []) {
-		if (f?.name && f?.description) {
-			features.push({
-				name: f.name,
-				description: f.description,
-				type: "passive",
-			});
-		}
-	}
-	return features;
+function getStatThreshold(regent: Regent): number {
+	const thresholds = Object.values(
+		regent.regent_requirements?.abilities ?? {},
+	).filter((value): value is number => Number.isFinite(value));
+	return thresholds.length > 0 ? Math.max(...thresholds) : 0;
 }
 
-function toAbilityNames(regent: Regent): string[] {
-	const names = new Set<string>();
-	for (const a of regent.abilities ?? []) if (a?.name) names.add(a.name);
-	for (const f of regent.class_features ?? []) if (f?.name) names.add(f.name);
-	return [...names];
-}
-
-/** Map a canonical compendium {@link Regent} into the {@link RegentPath} shape. */
+/** Map one canonical compendium Regent into the legacy RegentPath shape. */
 export function canonicalRegentToPath(regent: Regent): RegentPath {
+	const canonicalId = resolveCanonicalRegentId(regent.id);
+	if (!canonicalId) {
+		throw new Error(`Unsupported Regent projection ID: ${regent.id}`);
+	}
+	const canonicalRegent =
+		regent.id === canonicalId ? regent : { ...regent, id: canonicalId };
+	// Task 7 already materialized this ledger at the data boundary. Read it once
+	// and project that same array; do not re-append raw abilities/features.
+	const ledger = getRegentLeveledFeatures(canonicalRegent);
+
 	return {
-		id: regent.id,
-		name: regent.name,
-		type: inferRegentType(regent),
-		description: regent.description ?? "",
-		abilities: toAbilityNames(regent),
-		features: toFeatures(regent),
-		spells: (regent.spellcasting?.additional_spells ?? []) as Spell[],
-		compendiumId: regent.id,
+		id: canonicalId,
+		name: canonicalRegent.name,
+		type: inferRegentType(canonicalRegent),
+		description: canonicalRegent.description ?? "",
+		abilities: ledger.map((feature) => feature.name),
+		features: ledger,
+		spells: (canonicalRegent.spellcasting?.additional_spells ?? []) as Spell[],
+		compendiumId: canonicalId,
 		requirements: {
-			statThreshold: regent.regent_requirements?.level ?? 0,
-			questCompleted: regent.regent_requirements?.quest_completion,
+			statThreshold: getStatThreshold(canonicalRegent),
+			questCompleted: canonicalRegent.regent_requirements?.quest_completion,
 		},
 	};
 }
 
-/**
- * Every regent the fusion engine can encounter: all canonical regents (keyed by
- * canonical id, authoritative) plus any legacy nine-regent entries whose ids are
- * not already covered. Deduped by id with canonical entries taking precedence.
- */
-export const ALL_REGENTS: RegentPath[] = (() => {
-	const byId = new Map<string, RegentPath>();
-	for (const regent of CANONICAL_REGENTS) {
-		byId.set(regent.id, canonicalRegentToPath(regent));
-	}
-	for (const legacy of NINE_REGENTS) {
-		if (!byId.has(legacy.id)) byId.set(legacy.id, legacy);
-	}
-	return [...byId.values()];
-})();
+const CANONICAL_BY_ID = new Map(
+	CANONICAL_REGENTS.map((regent) => [regent.id, regent] as const),
+);
+
+/** Exactly the twelve locked canonical projections, in canonical identity order. */
+export const ALL_REGENTS: RegentPath[] = CANONICAL_REGENT_IDS.map((id) => {
+	const regent = CANONICAL_BY_ID.get(id);
+	if (!regent) throw new Error(`Missing canonical Regent data for ${id}`);
+	return canonicalRegentToPath(regent);
+});

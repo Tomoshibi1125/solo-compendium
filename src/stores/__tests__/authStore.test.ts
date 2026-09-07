@@ -6,6 +6,7 @@ const sampleUser: AuthUser = {
 	id: "u1",
 	email: "ascendant@example.com",
 	role: "ascendant",
+	isAccountAdmin: false,
 	createdAt: "2026-01-01T00:00:00.000Z",
 };
 

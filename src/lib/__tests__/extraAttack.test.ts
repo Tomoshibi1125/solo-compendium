@@ -1,5 +1,9 @@
 import { describe, expect, it } from "vitest";
-import { computeAttacksPerAction } from "@/lib/featEffectParser";
+import {
+	computeAttacksPerAction,
+	getFeatEffects,
+	getFightingStyleEffects,
+} from "@/lib/featEffectParser";
 
 describe("computeAttacksPerAction (Extra Attack DDB parity)", () => {
 	describe("base case", () => {
@@ -82,5 +86,44 @@ describe("computeAttacksPerAction (Extra Attack DDB parity)", () => {
 		it("is idempotent with martial extra attack at L5", () => {
 			expect(computeAttacksPerAction("Destroyer", 5, [], true)).toBe(2);
 		});
+	});
+});
+
+describe("feat and fighting-style effect lookups", () => {
+	it("normalizes case and surrounding whitespace", () => {
+		expect(getFightingStyleEffects("  ARCHERY  ")).toEqual([
+			expect.objectContaining({
+				source: "Fighting Style: Archery",
+				target: "ranged_attack",
+				value: 2,
+			}),
+		]);
+		expect(getFeatEffects("  ToUgH ", 7)).toEqual([
+			expect.objectContaining({
+				source: "Feat: Tough",
+				target: "hp_max",
+				value: 14,
+			}),
+		]);
+	});
+
+	it("returns immutable arrays and immutable effect objects", () => {
+		const effects = getFeatEffects("Alert");
+		expect(Object.isFrozen(effects)).toBe(true);
+		expect(Object.isFrozen(effects[0])).toBe(true);
+		expect(() => {
+			(effects as unknown as Array<{ value: number }>).push({ value: 999 });
+		}).toThrow();
+		expect(() => {
+			(effects[0] as { value: number }).value = 999;
+		}).toThrow();
+		expect(getFeatEffects("alert")[0]?.value).toBe(5);
+	});
+
+	it("returns a shared immutable empty result for unknown or blank names", () => {
+		const unknown = getFightingStyleEffects("Unpublished Style");
+		expect(unknown).toEqual([]);
+		expect(Object.isFrozen(unknown)).toBe(true);
+		expect(getFeatEffects(" ")).toBe(unknown);
 	});
 });

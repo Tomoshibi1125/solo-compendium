@@ -77,8 +77,37 @@ describe("characterRowToJobPoolShape (DB row → pool formula shape)", () => {
 		);
 		expect(result?.additions[0]?.name).toBe("Remnants");
 		expect(result?.additions[0]?.max).toBe(4);
+		expect(result?.additions[0]?.recharge).toBe("none");
 		// The un-mapped row reproduces the old bug — pinned as distinct.
 		expect(reconcileJobPools("Revenant", row, [])?.additions[0]?.max).toBe(2);
+	});
+
+	it("repairs stale Remnant recovery without refilling spent Remnants", () => {
+		const stale = customResource({
+			id: "remnants",
+			name: "Remnants",
+			current: 1,
+			max: 4,
+			recharge: "long-rest",
+			origin: "job-pool",
+			sourceKey: jobPoolSourceKey("remnant-pool"),
+		});
+		const result = reconcileJobPools(
+			"Revenant",
+			{ level: 1, intelligence: 15 },
+			[stale],
+		);
+		expect(result).toEqual({
+			additions: [],
+			updates: [{ id: "remnants", recharge: "none" }],
+			removals: [],
+		});
+		expect(
+			applyJobPoolReconcile(
+				[stale],
+				result ?? { additions: [], updates: [], removals: [] },
+			)[0],
+		).toMatchObject({ current: 1, max: 4, recharge: "none" });
 	});
 
 	it("passes through rows that already use full-name fields", () => {
@@ -88,80 +117,239 @@ describe("characterRowToJobPoolShape (DB row → pool formula shape)", () => {
 });
 
 describe("reconcileJobPools", () => {
-	const assassin = { level: 5, agility: 18 }; // AGI mod +4
+	const herald = { level: 4 };
 
-	it("seeds a missing pool at full, tagged with origin and sourceKey", () => {
-		const result = reconcileJobPools("Assassin", assassin, []);
+	it("does not duplicate feature-backed Task 5 resources as custom pools", () => {
+		for (const job of ["Esper", "Idol", "Summoner"]) {
+			expect(
+				reconcileJobPools(job, { level: 20, presence: 18 }, []),
+			).toBeNull();
+		}
+	});
+
+	it("seeds a standalone missing pool at full, tagged with origin and sourceKey", () => {
+		const result = reconcileJobPools("Herald", herald, []);
 		expect(result).not.toBeNull();
 		expect(result?.additions).toHaveLength(1);
 		const pool = result?.additions[0];
-		expect(pool?.name).toBe("Killing Focus");
-		expect(pool?.max).toBe(4);
-		expect(pool?.current).toBe(4);
-		expect(pool?.recharge).toBe("short-rest");
+		expect(pool?.name).toBe("Mantra Reservoir");
+		expect(pool?.max).toBe(20);
+		expect(pool?.current).toBe(20);
+		expect(pool?.recharge).toBe("long-rest");
 		expect(pool?.origin).toBe("job-pool");
-		expect(pool?.sourceKey).toBe(jobPoolSourceKey("killing-focus"));
+		expect(pool?.sourceKey).toBe(jobPoolSourceKey("mantra-reservoir"));
 	});
 
-	it("returns null when the pool already matches (idempotent)", () => {
-		const seeded = reconcileJobPools("Assassin", assassin, []);
+	it("returns null when a supported pool already matches (idempotent)", () => {
+		const seeded = reconcileJobPools("Herald", herald, []);
 		const pools = applyJobPoolReconcile(
 			[],
-			seeded ?? { additions: [], updates: [] },
+			seeded ?? { additions: [], updates: [], removals: [] },
 		);
-		expect(reconcileJobPools("Assassin", assassin, pools)).toBeNull();
+		expect(reconcileJobPools("Herald", herald, pools)).toBeNull();
 	});
 
-	it("re-derives max on level/ability change and clamps current", () => {
+	it("re-derives a supported pool max on level change and clamps current", () => {
 		const pools = [
 			customResource({
 				id: "p1",
+				name: "Mantra Reservoir",
+				current: 15,
+				max: 20,
+				recharge: "long-rest",
+				origin: "job-pool",
+				sourceKey: jobPoolSourceKey("mantra-reservoir"),
+			}),
+		];
+		const up = reconcileJobPools("Herald", { level: 7 }, pools);
+		expect(up?.updates).toEqual([{ id: "p1", max: 35, current: 15 }]);
+
+		const down = reconcileJobPools("Herald", { level: 2 }, pools);
+		expect(down?.updates).toEqual([{ id: "p1", max: 10, current: 10 }]);
+	});
+
+	it("does not automatically seed Berserker, Striker, or Assassin pools", () => {
+		for (const job of ["Berserker", "Striker", "Assassin"]) {
+			expect(reconcileJobPools(job, { level: 20, agility: 20 }, [])).toBeNull();
+		}
+	});
+
+	it("removes only exact deprecated automatic rows, including Task 3 keys", () => {
+		const automaticRows = [
+			customResource({
+				id: "old-oath",
+				name: "Oath Channel",
+				origin: "job-pool",
+				sourceKey: jobPoolSourceKey("oath-channel"),
+			}),
+			customResource({
+				id: "old-adrenaline",
+				name: "Adrenaline Surge",
+				origin: "job-pool",
+				sourceKey: jobPoolSourceKey("adrenaline-surge"),
+			}),
+			customResource({
+				id: "old-overload",
+				name: "Overload",
+				origin: "job-pool",
+				sourceKey: jobPoolSourceKey("overload-charges"),
+			}),
+			customResource({
+				id: "old-impulse",
 				name: "Impulse Points",
-				current: 3,
-				max: 3,
-				recharge: "short-rest",
 				origin: "job-pool",
 				sourceKey: jobPoolSourceKey("impulse-points"),
 			}),
+			customResource({
+				id: "old-killing-focus",
+				name: "Killing Focus",
+				origin: "job-pool",
+				sourceKey: jobPoolSourceKey("killing-focus"),
+			}),
+			customResource({
+				id: "old-flux",
+				name: "Flux Pool",
+				origin: "job-pool",
+				sourceKey: jobPoolSourceKey("flux-pool"),
+			}),
+			customResource({
+				id: "old-hype",
+				name: "Hype Dice",
+				origin: "job-pool",
+				sourceKey: jobPoolSourceKey("hype-dice"),
+			}),
+			customResource({
+				id: "old-biome",
+				name: "Biome Command",
+				origin: "job-pool",
+				sourceKey: jobPoolSourceKey("biome-charges"),
+			}),
 		];
-		// Striker pool max = level; leveling 3 → 7 raises max, keeps current.
-		const up = reconcileJobPools("Striker", { level: 7 }, pools);
-		expect(up?.updates).toEqual([{ id: "p1", max: 7, current: 3 }]);
+		const nearMatches = [
+			customResource({
+				id: "near-source-key",
+				name: "Overload",
+				origin: "job-pool",
+				sourceKey: jobPoolSourceKey("overload-charges-v2"),
+			}),
+			customResource({
+				id: "name-only",
+				name: "Impulse Points",
+				origin: "job-pool",
+			}),
+		];
+		const rows = [...automaticRows, ...nearMatches];
+		const result = reconcileJobPools("Mage", {}, rows);
 
-		// Leveling down clamps current to the new max.
-		const down = reconcileJobPools("Striker", { level: 2 }, pools);
-		expect(down?.updates).toEqual([{ id: "p1", max: 2, current: 2 }]);
+		expect(result).toEqual({
+			additions: [],
+			updates: [],
+			removals: [
+				"old-oath",
+				"old-adrenaline",
+				"old-overload",
+				"old-impulse",
+				"old-killing-focus",
+				"old-flux",
+				"old-hype",
+				"old-biome",
+			],
+		});
+		expect(
+			applyJobPoolReconcile(
+				rows,
+				result ?? { additions: [], updates: [], removals: [] },
+			).map((row) => row.id),
+		).toEqual(["near-source-key", "name-only"]);
 	});
 
-	it("adopts a legacy same-name row instead of duplicating", () => {
+	it("leaves same-named manual and migrated rows untouched and untagged", () => {
+		const cases = [
+			{
+				job: "Berserker",
+				name: "Overload",
+				defId: "overload-charges",
+			},
+			{
+				job: "Striker",
+				name: "Impulse Points",
+				defId: "impulse-points",
+			},
+			{
+				job: "Assassin",
+				name: "Killing Focus",
+				defId: "killing-focus",
+			},
+		];
+
+		for (const { job, name, defId } of cases) {
+			const manual = customResource({
+				id: `${defId}-manual`,
+				name,
+				current: 7,
+				max: 9,
+				origin: "manual",
+				sourceKey: jobPoolSourceKey(defId),
+			});
+			const migrated = customResource({
+				id: `${defId}-migrated`,
+				name,
+				current: 5,
+				max: 8,
+				origin: "migrated",
+			});
+			const cleanupTrigger = customResource({
+				id: `${defId}-cleanup-trigger`,
+				name: "Oath Channel",
+				origin: "job-pool",
+				sourceKey: jobPoolSourceKey("oath-channel"),
+			});
+			const rows = [cleanupTrigger, manual, migrated];
+			const result = reconcileJobPools(job, { level: 20, agility: 20 }, rows);
+
+			expect(result).toEqual({
+				additions: [],
+				updates: [],
+				removals: [cleanupTrigger.id],
+			});
+			expect(
+				applyJobPoolReconcile(
+					rows,
+					result ?? { additions: [], updates: [], removals: [] },
+				),
+			).toEqual([manual, migrated]);
+		}
+	});
+
+	it("still adopts a legacy same-name row for a supported pool", () => {
 		const legacy = [
 			customResource({
 				id: "old",
-				name: "Killing Focus",
+				name: "Mantra Reservoir",
 				current: 1,
-				max: 4,
-				recharge: "short-rest",
+				max: 20,
+				recharge: "long-rest",
 				origin: "migrated",
 			}),
 		];
-		const result = reconcileJobPools("Assassin", assassin, legacy);
+		const result = reconcileJobPools("Herald", herald, legacy);
 		expect(result?.additions).toEqual([]);
 		expect(result?.updates).toHaveLength(1);
 		expect(result?.updates[0]).toMatchObject({
 			id: "old",
-			sourceKey: jobPoolSourceKey("killing-focus"),
+			sourceKey: jobPoolSourceKey("mantra-reservoir"),
 			origin: "job-pool",
 		});
 	});
 
-	it("returns null for jobs without pools (slot casters) and blank jobs", () => {
+	it("returns null for slot casters and blank jobs", () => {
 		expect(reconcileJobPools("Mage", { level: 5 }, [])).toBeNull();
 		expect(reconcileJobPools("", { level: 5 }, [])).toBeNull();
 		expect(reconcileJobPools(null, { level: 5 }, [])).toBeNull();
 	});
 
-	it("seeded pools recharge through applyResourceRest", () => {
-		const seeded = reconcileJobPools("Striker", { level: 4 }, []);
+	it("supported standalone pools recharge according to their canonical rest type", () => {
+		const seeded = reconcileJobPools("Herald", herald, []);
 		const resources = {
 			...initializeCharacterResources(),
 			custom_resources: applyJobPoolReconcile(
@@ -169,11 +357,15 @@ describe("reconcileJobPools", () => {
 				seeded ?? {
 					additions: [],
 					updates: [],
+					removals: [],
 				},
-			).map((r) => ({ ...r, current: 0 })), // fully spent
+			).map((resource) => ({ ...resource, current: 0 })),
 		};
 		const afterShort = applyResourceRest(resources, "short");
-		expect(afterShort.custom_resources[0].current).toBe(4); // short-rest pool
+		expect(afterShort.custom_resources[0].current).toBe(0);
+
+		const afterLong = applyResourceRest(afterShort, "long");
+		expect(afterLong.custom_resources[0].current).toBe(20);
 	});
 });
 

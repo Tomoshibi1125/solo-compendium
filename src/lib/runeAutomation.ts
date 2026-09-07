@@ -120,7 +120,7 @@ const PRIMARY_ABILITIES_BY_JOB: Record<string, AbilityScore[]> = {
 	mage: ["INT", "SENSE"],
 	revenant: ["PRE", "VIT"],
 	stalker: ["AGI", "SENSE"],
-	striker: ["STR", "AGI"],
+	striker: ["AGI", "SENSE"],
 	summoner: ["SENSE", "INT"],
 	technomancer: ["INT", "AGI"],
 };

@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { staticDataProvider } from "@/data/compendium/providers";
+import { loadCanonicalRegistry } from "@/data/compendium/registry";
 import {
 	formatCompendiumAuditReport,
 	runCompendiumAudit,
@@ -15,17 +16,21 @@ describe("compendium audit (provider-backed)", () => {
 				"artifacts",
 				"backgrounds",
 				"conditions",
+				"crafting",
 				"equipment",
 				"feats",
 				"fighting_styles",
+				"guild_base",
 				"items",
 				"jobs",
 				"locations",
+				"npcs",
 				"pantheon",
 				"paths",
 				"powers",
 				"regents",
 				"relics",
+				"rollable_tables",
 				"runes",
 				"shadow_soldiers",
 				"sigils",
@@ -41,6 +46,27 @@ describe("compendium audit (provider-backed)", () => {
 		expect(report).toContain("COMPENDIUM AUDIT START");
 		expect(report).toContain("COMPENDIUM AUDIT COMPLETE");
 	}, 15000);
+
+	it("turns every unresolved registry conflict into a blocking audit error with source evidence", async () => {
+		const registry = await loadCanonicalRegistry();
+		const summary = await runCompendiumAudit(staticDataProvider, { registry });
+		expect(summary.registry.registeredSources).toBeGreaterThan(0);
+		expect(summary.registry.loadedSources).toBe(
+			registry.loadedSourceIds.length,
+		);
+		expect(summary.blockingConflicts).toEqual(registry.blockingConflicts);
+		const registryErrors = summary.errors.filter((issue) =>
+			issue.code.startsWith("registry_"),
+		);
+		expect(registryErrors).toHaveLength(registry.blockingConflicts.length);
+		expect(registryErrors.length).toBeGreaterThan(0);
+		expect(
+			registryErrors.every(
+				(issue) =>
+					issue.dataset === "items" && issue.message.includes("Evidence:"),
+			),
+		).toBe(true);
+	}, 30_000);
 
 	it("never has duplicate ids in canonical datasets", async () => {
 		const summary = await runCompendiumAudit(staticDataProvider);

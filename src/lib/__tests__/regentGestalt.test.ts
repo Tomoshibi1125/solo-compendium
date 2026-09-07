@@ -26,10 +26,21 @@ describe("regentGestalt — resolution", () => {
 		expect(resolved[0].class_features?.length ?? 0).toBeGreaterThan(0);
 	});
 
-	it("skips unknown ids and handles empty input", () => {
+	it("skips unsupported ids and handles empty input", () => {
 		expect(resolveRegents(["does_not_exist"])).toHaveLength(0);
+		expect(resolveRegents(["Umbral Regent", "UMBRAL_REGENT"])).toHaveLength(0);
 		expect(resolveRegents([])).toHaveLength(0);
 		expect(resolveRegents(null)).toHaveLength(0);
+	});
+
+	it("canonicalizes aliases and returns each canonical Regent only once", () => {
+		const resolved = resolveRegents([
+			"shadow_regent",
+			"umbral_regent",
+			" shadow_regent ",
+		]);
+		expect(resolved).toHaveLength(1);
+		expect(resolved[0].id).toBe("umbral_regent");
 	});
 });
 
@@ -62,9 +73,9 @@ describe("regentGestalt — additive hit dice", () => {
 		expect(getRegentHitDieContribution([umbral])).toBe(
 			parseHitDieSize(umbral.hit_dice),
 		);
-		// Two regents stack additively.
+		// A repeated identity contributes only once; distinct Regents still stack.
 		expect(getRegentHitDieContribution([umbral, umbral])).toBe(
-			parseHitDieSize(umbral.hit_dice) * 2,
+			parseHitDieSize(umbral.hit_dice),
 		);
 	});
 });
@@ -102,6 +113,43 @@ describe("regentGestalt — leveled class features (regent level == char level)"
 			expect(atL20[i].level).toBeGreaterThanOrEqual(atL20[i - 1].level);
 		}
 	});
+
+	it("preserves repeated feature names at distinct stable ledger IDs and levels", () => {
+		const fixture = {
+			id: "umbral_regent",
+			name: "Ledger Fixture",
+			class_features: [
+				{
+					id: "regent-feature:umbral_regent:1:echo",
+					level: 1,
+					name: "Echo",
+					description: "Initial grant",
+					type: "passive",
+				},
+				{
+					id: "regent-feature:umbral_regent:5:echo",
+					level: 5,
+					name: "Echo",
+					description: "Improved grant",
+					type: "active",
+					actionType: "Action",
+					tracking: "manual",
+				},
+			],
+		} as Regent;
+
+		const features = getGestaltClassFeatures([fixture, fixture], 5);
+		expect(features.map((feature) => feature.id)).toEqual([
+			"regent-feature:umbral_regent:1:echo",
+			"regent-feature:umbral_regent:5:echo",
+		]);
+		expect(features.map((feature) => feature.level)).toEqual([1, 5]);
+		expect(features[1]).toMatchObject({
+			name: "Echo",
+			actionType: "Action",
+			tracking: "manual",
+		});
+	});
 });
 
 describe("regentGestalt — spellcasting merge (Job + Regent only)", () => {
@@ -114,7 +162,7 @@ describe("regentGestalt — spellcasting merge (Job + Regent only)", () => {
 
 	it("non-casting job + non-casting regent yields no slots", () => {
 		const martialRegent = {
-			id: "martial_test",
+			id: "war_regent",
 			name: "Martial Test",
 			hit_dice: "1d12",
 			// no spellcasting block → contributes no caster levels
@@ -220,7 +268,7 @@ describe("regentGestalt — summary", () => {
 	it("accepts a custom dataset for homebrew / tests", () => {
 		const fake: Regent[] = [
 			{
-				id: "test_regent",
+				id: "umbral_regent",
 				name: "Test Regent",
 				hit_dice: "1d10",
 				saving_throws: ["Strength"],
@@ -231,7 +279,7 @@ describe("regentGestalt — summary", () => {
 				],
 			} as Regent,
 		];
-		const s = computeGestaltSummary(["test_regent"], 3, fake);
+		const s = computeGestaltSummary(["umbral_regent"], 3, fake);
 		expect(s.active).toBe(true);
 		expect(s.regentHitDieContribution).toBe(10);
 		expect(s.proficiencies.savingThrows).toContain("STR");

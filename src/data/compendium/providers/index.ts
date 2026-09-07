@@ -7,6 +7,7 @@
  * Authoritative source: internal compendium data packs already ingested into the app.
  */
 
+import type { CompendiumProviderMethod } from "@/data/compendium/registry";
 import type { RegentExtended } from "@/integrations/supabase/supabaseExtended";
 import type { Json } from "@/integrations/supabase/types";
 import {
@@ -21,7 +22,10 @@ import { numericCrToLabel } from "@/lib/monster5eTable";
 import { getDefaultSigilSlotsBaseForEquipment } from "@/lib/sigilAutomation";
 import { deriveSpellResolution } from "@/lib/spellMechanicsDerivation";
 import { normalizeRegentSearch } from "@/lib/vernacular";
-import type { CompendiumDeity } from "@/types/compendium";
+import type {
+	CanonicalAbilityResolutionV1,
+	CompendiumDeity,
+} from "@/types/compendium";
 import type { FeatureEffect } from "@/types/featureEffects";
 
 type DataLoader<T> = () => Promise<T[]>;
@@ -79,6 +83,7 @@ export interface StaticCompendiumEntry {
 	id: string;
 	name: string;
 	display_name?: string | null;
+	aliases?: string[] | null;
 	description?: string | null;
 	created_at?: string | null;
 	tags?: string[] | null;
@@ -109,6 +114,7 @@ export interface StaticCompendiumEntry {
 	item_type?: string | null;
 	artifact_type?: string | null;
 	technique_type?: string | null;
+	class_requirement?: string | null;
 	spell_type?: string | null;
 	location_type?: string | null;
 	rank?: string | null;
@@ -132,6 +138,7 @@ export interface StaticCompendiumEntry {
 	components?: Record<string, Json> | null;
 	effects?: Record<string, Json> | null;
 	mechanics?: Record<string, Json> | null;
+	ability_resolution?: CanonicalAbilityResolutionV1 | null;
 	limitations?: Record<string, Json> | null;
 	flavor?: string | null;
 	discovery_lore?: string | null;
@@ -214,6 +221,18 @@ export interface StaticCompendiumEntry {
 		name: string;
 		description: string;
 		level: number;
+		actionType?: string;
+		uses?: {
+			formula: string;
+			recharge: "short-rest" | "long-rest";
+			rechargeChanges?: Array<{
+				level: number;
+				recharge: "short-rest" | "long-rest";
+			}>;
+			unlimitedAtLevel?: number;
+		};
+		resource?: string;
+		tracking?: "uses" | "resource" | "manual";
 	}> | null;
 	job_traits?: Array<{
 		name: string;
@@ -268,6 +287,18 @@ export interface StaticCompendiumEntry {
 		level: number;
 		name: string;
 		description: string;
+		actionType?: string;
+		uses?: {
+			formula: string;
+			recharge: "short-rest" | "long-rest";
+			rechargeChanges?: Array<{
+				level: number;
+				recharge: "short-rest" | "long-rest";
+			}>;
+			unlimitedAtLevel?: number;
+		};
+		resource?: string;
+		tracking?: "uses" | "resource" | "manual";
 	}> | null;
 	spellcasting?: {
 		ability: string;
@@ -276,6 +307,10 @@ export interface StaticCompendiumEntry {
 		spellsKnown?: number[];
 		spellSlots?: Record<string, number[]>;
 	} | null;
+	level_choices?: Array<Record<string, Json>> | null;
+	powers_known?: number[] | null;
+	techniques_known?: number[] | null;
+	spellbook?: Record<string, Json> | null;
 	// Condition detail support (static fallback)
 	condition_effects?: string[] | null;
 	condition_duration?: string | null;
@@ -334,7 +369,7 @@ export interface StaticCompendiumEntry {
 	speed?: number | null;
 	sigil_type?: string | null;
 	sigil_rank?: string | null;
-	can_inscribe_on?: string[] | string | null;
+	can_inscribe_on?: string[] | null;
 	relic_type?: string | null;
 	value_credits?: number | null;
 	flavor_text?: string | null;
@@ -428,34 +463,10 @@ export interface StaticCompendiumEntry {
 	is_lot?: boolean | null;
 }
 
-interface StaticDataProvider {
-	getJobs: (search?: string) => Promise<StaticCompendiumEntry[]>;
-	getPaths: (search?: string) => Promise<StaticCompendiumEntry[]>;
-	getAnomalies: (search?: string) => Promise<StaticCompendiumEntry[]>;
-	getItems: (search?: string) => Promise<StaticCompendiumEntry[]>;
-	getSpells: (search?: string) => Promise<StaticCompendiumEntry[]>;
-	getLocations: (search?: string) => Promise<StaticCompendiumEntry[]>;
-	getRunes: (search?: string) => Promise<StaticCompendiumEntry[]>;
-	getBackgrounds: (search?: string) => Promise<StaticCompendiumEntry[]>;
-	getRelics: (search?: string) => Promise<StaticCompendiumEntry[]>;
-	getConditions: (search?: string) => Promise<StaticCompendiumEntry[]>;
-	getRegents: (search?: string) => Promise<StaticCompendiumEntry[]>;
-	getFeats: (search?: string) => Promise<StaticCompendiumEntry[]>;
-	getSkills: (search?: string) => Promise<StaticCompendiumEntry[]>;
-	getPowers: (search?: string) => Promise<StaticCompendiumEntry[]>;
-	getTechniques: (search?: string) => Promise<StaticCompendiumEntry[]>;
-	getArtifacts: (search?: string) => Promise<StaticCompendiumEntry[]>;
-	getSigils: (search?: string) => Promise<StaticCompendiumEntry[]>;
-	getTattoos: (search?: string) => Promise<StaticCompendiumEntry[]>;
-	getRollableTables: (search?: string) => Promise<StaticCompendiumEntry[]>;
-	getPantheon: (search?: string) => Promise<StaticCompendiumEntry[]>;
-	getShadowSoldiers: (search?: string) => Promise<StaticCompendiumEntry[]>;
-	getVehicles: (search?: string) => Promise<StaticCompendiumEntry[]>;
-	getCrafting: (search?: string) => Promise<StaticCompendiumEntry[]>;
-	getGuildBase: (search?: string) => Promise<StaticCompendiumEntry[]>;
-	getNpcs: (search?: string) => Promise<StaticCompendiumEntry[]>;
-	getFightingStyles: (search?: string) => Promise<StaticCompendiumEntry[]>;
-}
+type StaticDataProvider = Record<
+	CompendiumProviderMethod,
+	(search?: string) => Promise<StaticCompendiumEntry[]>
+>;
 
 type StaticRollableTableSource = {
 	id: string;
@@ -596,11 +607,32 @@ type StaticJobSource = {
 		spellsKnown?: number[];
 		spellSlots?: Record<string, number[]>;
 	};
+	levelChoices?: Array<Record<string, Json>>;
+	powersKnown?: number[];
+	techniquesKnown?: number[];
+	spellbook?: {
+		atCreation: number;
+		perLevel: number;
+		label: string;
+		startLevel?: number;
+	};
 	// Rift Ascendant features
 	awakeningFeatures?: Array<{
 		name: string;
 		description: string;
 		level: number;
+		actionType?: string;
+		uses?: {
+			formula: string;
+			recharge: "short-rest" | "long-rest";
+			rechargeChanges?: Array<{
+				level: number;
+				recharge: "short-rest" | "long-rest";
+			}>;
+			unlimitedAtLevel?: number;
+		};
+		resource?: string;
+		tracking?: "uses" | "resource" | "manual";
 	}>;
 	jobTraits?: Array<{
 		name: string;
@@ -609,7 +641,23 @@ type StaticJobSource = {
 		frequency?: string;
 	}>;
 	abilityScoreImprovements?: Record<string, number>;
-	classFeatures?: Array<{ level: number; name: string; description: string }>;
+	classFeatures?: Array<{
+		level: number;
+		name: string;
+		description: string;
+		actionType?: string;
+		uses?: {
+			formula: string;
+			recharge: "short-rest" | "long-rest";
+			rechargeChanges?: Array<{
+				level: number;
+				recharge: "short-rest" | "long-rest";
+			}>;
+			unlimitedAtLevel?: number;
+		};
+		resource?: string;
+		tracking?: "uses" | "resource" | "manual";
+	}>;
 	// Racial-parity extensions (Jobs-as-race+class).
 	racialTraits?: Array<{
 		name: string;
@@ -1197,6 +1245,37 @@ function deriveItemProperties(
 	return null;
 }
 
+function deriveItemRange(item: StaticItemSource): string | null {
+	if (typeof item.range === "string" && item.range.trim()) {
+		return item.range.trim();
+	}
+	const properties =
+		item.properties && !Array.isArray(item.properties)
+			? (item.properties as Record<string, Json>)
+			: null;
+	const weapon =
+		properties?.weapon &&
+		typeof properties.weapon === "object" &&
+		!Array.isArray(properties.weapon)
+			? (properties.weapon as Record<string, Json>)
+			: null;
+	if (typeof weapon?.range === "string" && weapon.range.trim()) {
+		return weapon.range.trim();
+	}
+
+	// Some authored thrown weapons encode an exact range only in their structured
+	// effect/mechanics prose. Promote that explicit value rather than inventing a
+	// generic thrown range or dropping it during canonical hydration.
+	const evidence = JSON.stringify([
+		item.description,
+		item.effects,
+		item.mechanics,
+		item.properties,
+	]);
+	const match = evidence.match(/\brange\s+(\d+)\s*\/\s*(\d+)\b/i);
+	return match ? `${match[1]}/${match[2]}` : null;
+}
+
 function transformItem(item: StaticItemSource): StaticCompendiumEntry {
 	const itemType = item.item_type || item.type;
 	return {
@@ -1259,7 +1338,7 @@ function transformItem(item: StaticItemSource): StaticCompendiumEntry {
 		damage: item.damage ?? null,
 		damage_type: item.damage_type ?? null,
 		weapon_type: item.weapon_type ?? null,
-		range: item.range ?? null,
+		range: deriveItemRange(item),
 		stealth_disadvantage: item.stealth_disadvantage ?? null,
 		strength_requirement: item.strength_requirement ?? null,
 	};
@@ -1410,6 +1489,11 @@ function transformJob(job: StaticJobSource): StaticCompendiumEntry {
 		fly_speed: typeof job.fly_speed === "number" ? job.fly_speed : null,
 		class_features: job.classFeatures || null,
 		spellcasting: job.spellcasting || null,
+		level_choices:
+			(job.levelChoices as Array<Record<string, Json>> | undefined) ?? null,
+		powers_known: job.powersKnown ?? null,
+		techniques_known: job.techniquesKnown ?? null,
+		spellbook: (job.spellbook as Record<string, Json> | undefined) ?? null,
 		level: undefined,
 	};
 }
@@ -1780,69 +1864,19 @@ function transformBackground(
 	};
 }
 
-// Derive class_features for regents that only have features[] + abilities[] with power_level
-function deriveRegentClassFeatures(
+// Regent data is materialized once at the source boundary. Providers must not
+// remap power levels, append cadence prose, or synthesize missing mechanics.
+function getCanonicalRegentClassFeatures(
 	regent: StaticRegentSource,
-): Array<{ level: number; name: string; description: string }> | null {
-	// If the regent already has class_features (like Umbral Regent), use them
+): NonNullable<StaticCompendiumEntry["class_features"]> | null {
 	const raw = (regent as RegentExtended).class_features;
-	if (Array.isArray(raw) && raw.length > 0)
-		return raw as Array<{ level: number; name: string; description: string }>;
-
-	const features = (regent as RegentExtended).features as
-		| Array<{ name: string; description: string; power_level?: number }>
-		| undefined;
-	const abilities = regent.abilities as
-		| Array<{
-				name: string;
-				description: string;
-				power_level?: number;
-				type?: string;
-				frequency?: string;
-		  }>
-		| undefined;
-	if (!features && !abilities) return null;
-
-	// Power level â†’ character level mapping (regent power 1-10 â†’ character level 1-20)
-	const powerToLevel: Record<number, number> = {
-		1: 1,
-		2: 3,
-		3: 5,
-		4: 7,
-		5: 9,
-		6: 11,
-		7: 13,
-		8: 15,
-		9: 17,
-		10: 20,
-	};
-	const result: Array<{ level: number; name: string; description: string }> =
-		[];
-
-	for (const f of features ?? []) {
-		const pl = f.power_level ?? 1;
-		result.push({
-			level: powerToLevel[pl] ?? pl * 2 - 1,
-			name: f.name,
-			description: f.description,
-		});
-	}
-	for (const a of abilities ?? []) {
-		const pl = a.power_level ?? 1;
-		const suffix = a.frequency ? ` (${a.frequency.replace(/-/g, " ")})` : "";
-		result.push({
-			level: powerToLevel[pl] ?? pl * 2 - 1,
-			name: a.name,
-			description: a.description + suffix,
-		});
-	}
-
-	result.sort((a, b) => a.level - b.level);
-	return result.length > 0 ? result : null;
+	return Array.isArray(raw) && raw.length > 0
+		? (raw as NonNullable<StaticCompendiumEntry["class_features"]>)
+		: null;
 }
 
 function transformRegent(regent: StaticRegentSource): StaticCompendiumEntry {
-	const classFeatures = deriveRegentClassFeatures(regent);
+	const classFeatures = getCanonicalRegentClassFeatures(regent);
 
 	return {
 		id: regent.id || regent.name.toLowerCase().replace(/\s+/g, "-"),
@@ -1895,6 +1929,7 @@ export const staticDataProvider: StaticDataProvider = {
 		const paths = await loadData<{
 			id: string;
 			name: string;
+			aliases?: string[];
 			description: string;
 			jobId: string;
 			jobName: string;
@@ -1906,12 +1941,27 @@ export const staticDataProvider: StaticDataProvider = {
 				level: number;
 				name: string;
 				description: string;
+				actionType?: string;
+				uses?: {
+					formula: string;
+					recharge: "short-rest" | "long-rest";
+				};
+				resource?: string;
+				tracking?: "uses" | "resource" | "manual";
 			}>;
 			abilities?: Array<{
 				name: string;
 				description: string;
 				recharge?: number;
 				cost?: string;
+				level?: number;
+				actionType?: string;
+				uses?: {
+					formula: string;
+					recharge: "short-rest" | "long-rest";
+				};
+				resource?: string;
+				tracking?: "uses" | "resource" | "manual";
 			}>;
 			stats?: {
 				primaryAttribute: string;
@@ -1929,6 +1979,7 @@ export const staticDataProvider: StaticDataProvider = {
 			id: path.id,
 			name: path.name,
 			display_name: path.name,
+			aliases: path.aliases ?? null,
 			description: path.description,
 			created_at:
 				(path as { created_at?: string }).created_at ||
@@ -1950,7 +2001,14 @@ export const staticDataProvider: StaticDataProvider = {
 			abilities:
 				(path.abilities as unknown as Array<Record<string, Json>>) || [],
 			stats: path.stats as unknown as Record<string, Json>,
-			prerequisites: path.requirements.prerequisites?.join(", "),
+			requirements: path.requirements as unknown as Record<string, Json>,
+			prerequisites:
+				[
+					...(path.requirements.prerequisites ?? []),
+					...(path.requirements.skills ?? []).map((skill) => `Skill: ${skill}`),
+				]
+					.filter(Boolean)
+					.join(", ") || null,
 			// Paths are class progressions, not items — no rarity. Their
 			// classifier is tier/level (surfaced above), not a rarity tier.
 			jobId: path.jobId,

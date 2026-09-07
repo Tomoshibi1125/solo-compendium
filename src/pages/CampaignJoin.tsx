@@ -113,6 +113,7 @@ const CampaignJoin = () => {
 			if (!campaign) return;
 			await joinCampaign.mutateAsync({
 				campaignId: campaign.id,
+				shareCode,
 				characterId:
 					selectedCharacter !== "none" ? selectedCharacter : undefined,
 			});
@@ -339,16 +340,6 @@ const CampaignJoin = () => {
 									{campaignInviteStatusLabel(inviteStatus || "unknown")}
 								</Badge>
 							</div>
-							{invite.join_code && (
-								<div className="flex items-center justify-between p-2 bg-muted/50 rounded">
-									<span className="text-xs font-display text-muted-foreground">
-										JOIN CODE
-									</span>
-									<span className="font-mono text-sm text-primary">
-										{invite.join_code}
-									</span>
-								</div>
-							)}
 							{inviteStatus && (
 								<AscendantText className="block text-sm text-muted-foreground">
 									{campaignInviteStatusMessage(inviteStatus)}

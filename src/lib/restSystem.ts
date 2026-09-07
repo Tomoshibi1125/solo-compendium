@@ -6,6 +6,11 @@
 import { supabase } from "@/integrations/supabase/client";
 import { normalizeGeminiState } from "@/lib/characterOverlayValidation";
 import {
+	clearConditionsOnLongRest,
+	getActiveConditionNames,
+	normalizeCombatConditions,
+} from "@/lib/conditionSystem";
+import {
 	buildCorePayload,
 	DomainEventBus,
 	type RestLongEvent,
@@ -28,6 +33,69 @@ import {
 } from "@/lib/guestStore";
 import { AppError } from "./appError";
 import { logger } from "./logger";
+
+function asRecord(value: unknown): Record<string, unknown> {
+	return value && typeof value === "object" && !Array.isArray(value)
+		? (value as Record<string, unknown>)
+		: {};
+}
+
+/** Apply the shared long-rest lifecycle to whichever advanced state exists. */
+export function buildLongRestConditionState(
+	characterState: Record<string, unknown>,
+	legacyValue: unknown,
+): {
+	geminiState: Record<string, unknown>;
+	legacyConditions: string[];
+	conditionsCleared: string[];
+} {
+	const resources = asRecord(characterState.resources);
+	const legacyConditions = Array.isArray(legacyValue)
+		? legacyValue.filter(
+				(value): value is string =>
+					typeof value === "string" && value.trim().length > 0,
+			)
+		: [];
+	const topLevel = Array.isArray(characterState.conditions)
+		? characterState.conditions
+		: undefined;
+	const resourceConditions = Array.isArray(resources.conditions)
+		? resources.conditions
+		: undefined;
+	const advancedCandidate =
+		resourceConditions ??
+		(topLevel?.some((value) => typeof value === "object")
+			? topLevel
+			: undefined);
+	const normalized = normalizeCombatConditions({
+		conditions: legacyConditions,
+		advancedConditions: advancedCandidate,
+	});
+	const beforeConditions = getActiveConditionNames(
+		normalized.advancedConditions,
+	);
+	const advancedConditions = clearConditionsOnLongRest(
+		normalized.advancedConditions,
+	);
+	const nextLegacyConditions = getActiveConditionNames(advancedConditions);
+	const retained = new Set(
+		nextLegacyConditions.map((condition) => condition.trim().toLowerCase()),
+	);
+	const conditionsCleared = beforeConditions.filter(
+		(condition) => !retained.has(condition.trim().toLowerCase()),
+	);
+	return {
+		geminiState: {
+			...characterState,
+			conditions: advancedConditions,
+			...(Object.keys(resources).length > 0
+				? { resources: { ...resources, conditions: advancedConditions } }
+				: {}),
+		},
+		legacyConditions: nextLegacyConditions,
+		conditionsCleared,
+	};
+}
 
 /**
  * Restore uses_current → uses_max for tracked per-ability power/technique rows
@@ -248,11 +316,11 @@ async function executeLongRestLocal(
 
 	const characterState =
 		(character.gemini_state as Record<string, unknown>) || {};
-	const { clearConditionsOnLongRest } = await import("@/lib/conditionSystem");
-	const geminiState = await normalizeGeminiState({
-		...characterState,
-		conditions: clearConditionsOnLongRest(),
-	});
+	const conditionState = buildLongRestConditionState(
+		characterState,
+		character.conditions,
+	);
+	const geminiState = await normalizeGeminiState(conditionState.geminiState);
 
 	updateLocalCharacter(characterId, {
 		hp_current: character.hp_max,
@@ -263,7 +331,7 @@ async function executeLongRestLocal(
 		),
 		rift_favor_current: character.rift_favor_max,
 		exhaustion_level: Math.max(0, character.exhaustion_level - 1),
-		conditions: [], // Legacy sync
+		conditions: conditionState.legacyConditions, // Legacy sync
 		gemini_state: geminiState as never,
 		death_save_successes: 0,
 		death_save_failures: 0,
@@ -328,7 +396,7 @@ async function executeLongRestLocal(
 			featuresRecharged: rechargedFeatures,
 			slotsRecovered: [],
 			exhaustionReduced: character.exhaustion_level > 0,
-			conditionsCleared: character.conditions || [],
+			conditionsCleared: conditionState.conditionsCleared,
 		};
 		DomainEventBus.emit(longRestEvent);
 	} catch {
@@ -365,11 +433,11 @@ export async function executeLongRest(
 	// Update character
 	const characterState =
 		(character.gemini_state as Record<string, unknown>) || {};
-	const { clearConditionsOnLongRest } = await import("@/lib/conditionSystem");
-	const geminiState = await normalizeGeminiState({
-		...characterState,
-		conditions: clearConditionsOnLongRest(),
-	});
+	const conditionState = buildLongRestConditionState(
+		characterState,
+		character.conditions,
+	);
+	const geminiState = await normalizeGeminiState(conditionState.geminiState);
 
 	await supabase
 		.from("characters")
@@ -382,7 +450,7 @@ export async function executeLongRest(
 			),
 			rift_favor_current: character.rift_favor_max,
 			exhaustion_level: Math.max(0, character.exhaustion_level - 1),
-			conditions: [], // Legacy sync
+			conditions: conditionState.legacyConditions, // Legacy sync
 			gemini_state: geminiState as never,
 			death_save_successes: 0,
 			death_save_failures: 0,
@@ -512,7 +580,7 @@ export async function executeLongRest(
 				],
 				slotsRecovered: [],
 				exhaustionReduced: character.exhaustion_level > 0,
-				conditionsCleared: character.conditions || [],
+				conditionsCleared: conditionState.conditionsCleared,
 			};
 			DomainEventBus.emit(longRestEvent);
 		} catch {
@@ -541,7 +609,7 @@ export async function executeLongRest(
 			],
 			slotsRecovered: [],
 			exhaustionReduced: character.exhaustion_level > 0,
-			conditionsCleared: character.conditions || [],
+			conditionsCleared: conditionState.conditionsCleared,
 		};
 		DomainEventBus.emit(longRestEvent);
 	} catch {

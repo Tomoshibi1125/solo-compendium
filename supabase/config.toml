@@ -1,10 +1,5 @@
 project_id = "rhqrtowjgocwkncqcerm"
 
-
-
-[functions.signup]
-verify_jwt = false
-
 [storage.buckets.compendium-images]
 public = true
 file_size_limit = 5242880

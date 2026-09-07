@@ -2,6 +2,11 @@ import type {
 	StaticCompendiumEntry,
 	StaticDataProvider,
 } from "@/data/compendium/providers/types";
+import {
+	type CanonicalPublicEntryType,
+	canonicalProviderMethodByType,
+	canonicalPublicEntryTypes,
+} from "@/data/compendium/registry";
 import type { Json } from "@/integrations/supabase/types";
 import { getMaxAbilityLevelForJobAtLevel } from "@/lib/abilityProgression";
 import {
@@ -27,41 +32,12 @@ import { getActiveRegentAbilityGrants } from "@/lib/regentAbilityAccess";
 import {
 	filterRowsBySourcebookAccess,
 	isSourcebookAccessible,
+	type SourcebookAccessContext,
 } from "@/lib/sourcebookAccess";
 
-export const staticCanonicalEntryTypes = [
-	"jobs",
-	"paths",
-	"powers",
-	"runes",
-	"relics",
-	"anomalies",
-	"backgrounds",
-	"conditions",
-	"regents",
-	// Q4 of Round 3 — vehicles & mounts registry (44 entries).
-	"vehicles",
-	"crafting",
-	"guild-base",
-	"feats",
-	"skills",
-	"equipment",
-	"shadow-soldiers",
-	"items",
-	"spells",
-	"techniques",
-	"artifacts",
-	"locations",
-	"sigils",
-	"tattoos",
-	"rollable-tables",
-	"deities",
-	"pantheon",
-	"npcs",
-] as const;
+export const staticCanonicalEntryTypes = canonicalPublicEntryTypes;
 
-export type StaticCanonicalEntryType =
-	(typeof staticCanonicalEntryTypes)[number];
+export type StaticCanonicalEntryType = CanonicalPublicEntryType;
 
 const equipmentItemTypes = new Set([
 	"weapon",
@@ -74,35 +50,7 @@ const equipmentItemTypes = new Set([
 const providerMethodByType: Record<
 	StaticCanonicalEntryType,
 	keyof StaticDataProvider
-> = {
-	jobs: "getJobs",
-	paths: "getPaths",
-	powers: "getPowers",
-	runes: "getRunes",
-	relics: "getRelics",
-	anomalies: "getAnomalies",
-	backgrounds: "getBackgrounds",
-	conditions: "getConditions",
-	regents: "getRegents",
-	vehicles: "getVehicles",
-	crafting: "getCrafting",
-	"guild-base": "getGuildBase",
-	feats: "getFeats",
-	skills: "getSkills",
-	equipment: "getItems",
-	"shadow-soldiers": "getShadowSoldiers",
-	items: "getItems",
-	spells: "getSpells",
-	techniques: "getTechniques",
-	artifacts: "getArtifacts",
-	locations: "getLocations",
-	sigils: "getSigils",
-	tattoos: "getTattoos",
-	"rollable-tables": "getRollableTables",
-	deities: "getPantheon",
-	pantheon: "getPantheon",
-	npcs: "getNpcs",
-};
+> = canonicalProviderMethodByType;
 
 let staticProviderPromise: Promise<StaticDataProvider> | null = null;
 
@@ -129,10 +77,9 @@ export function isEquipmentLikeEntry(entry: StaticCompendiumEntry): boolean {
 	return equipmentItemTypes.has(itemType);
 }
 
-export async function listCanonicalEntries(
+async function listCanonicalEntriesUnfiltered(
 	type: StaticCanonicalEntryType,
 	search?: string,
-	accessContext?: { campaignId?: string | null },
 ): Promise<StaticCompendiumEntry[]> {
 	const provider = await loadStaticProvider();
 	const methodName = providerMethodByType[type];
@@ -144,6 +91,52 @@ export async function listCanonicalEntries(
 		entries = entries.filter((entry) => !isEquipmentLikeEntry(entry));
 	}
 
+	return entries;
+}
+
+const normalizedLookup = (value: string): string => value.trim().toLowerCase();
+
+function entryMatchesName(
+	entry: StaticCompendiumEntry,
+	lookup: string,
+): boolean {
+	return [entry.name, entry.display_name, ...(entry.aliases ?? [])]
+		.filter((value): value is string => typeof value === "string")
+		.some((value) => normalizedLookup(value) === lookup);
+}
+
+function entryMatchesId(entry: StaticCompendiumEntry, lookup: string): boolean {
+	return [entry.id, ...(entry.aliases ?? [])]
+		.filter((value): value is string => typeof value === "string")
+		.some((value) => normalizedLookup(value) === lookup);
+}
+
+async function findCanonicalEntryByNameUnfiltered(
+	type: StaticCanonicalEntryType,
+	name: string,
+): Promise<StaticCompendiumEntry | null> {
+	if (!name) return null;
+	const lookup = normalizedLookup(name);
+	const entries = await listCanonicalEntriesUnfiltered(type);
+	return entries.find((entry) => entryMatchesName(entry, lookup)) ?? null;
+}
+
+async function findCanonicalEntryByIdUnfiltered(
+	type: StaticCanonicalEntryType,
+	id: string | null | undefined,
+): Promise<StaticCompendiumEntry | null> {
+	if (!id) return null;
+	const lookup = normalizedLookup(id);
+	const entries = await listCanonicalEntriesUnfiltered(type);
+	return entries.find((entry) => entryMatchesId(entry, lookup)) ?? null;
+}
+
+export async function listCanonicalEntries(
+	type: StaticCanonicalEntryType,
+	search?: string,
+	accessContext?: SourcebookAccessContext,
+): Promise<StaticCompendiumEntry[]> {
+	const entries = await listCanonicalEntriesUnfiltered(type, search);
 	return filterRowsBySourcebookAccess(
 		entries,
 		(entry) => entry.source_book,
@@ -154,27 +147,25 @@ export async function listCanonicalEntries(
 export async function findCanonicalEntryByName(
 	type: StaticCanonicalEntryType,
 	name: string,
+	accessContext?: SourcebookAccessContext,
 ): Promise<StaticCompendiumEntry | null> {
-	if (!name) return null;
-	const provider = await loadStaticProvider();
-	const methodName = providerMethodByType[type];
-	const entries = await provider[methodName]();
-	const lookup = name.trim().toLowerCase();
-	const match = entries.find((entry) => entry.name.toLowerCase() === lookup);
-	if (match && type === "equipment" && !isEquipmentLikeEntry(match))
-		return null;
-	if (match && type === "items" && isEquipmentLikeEntry(match)) return null;
-	return match ?? null;
+	const entry = await findCanonicalEntryByNameUnfiltered(type, name);
+	if (!entry) return null;
+	return (await isSourcebookAccessible(entry.source_book, accessContext))
+		? entry
+		: null;
 }
 
 export async function findCanonicalEntryById(
 	type: StaticCanonicalEntryType,
 	id: string | null | undefined,
-	accessContext?: { campaignId?: string | null },
+	accessContext?: SourcebookAccessContext,
 ): Promise<StaticCompendiumEntry | null> {
-	if (!id) return null;
-	const entries = await listCanonicalEntries(type, undefined, accessContext);
-	return entries.find((entry) => entry.id === id) ?? null;
+	const entry = await findCanonicalEntryByIdUnfiltered(type, id);
+	if (!entry) return null;
+	return (await isSourcebookAccessible(entry.source_book, accessContext))
+		? entry
+		: null;
 }
 
 export interface CanonicalCharacterRefInput {
@@ -188,19 +179,19 @@ export interface CanonicalCharacterRefInput {
 
 export async function resolveCharacterCanonicalIds<
 	T extends CanonicalCharacterRefInput,
->(data: T): Promise<T> {
+>(data: T, accessContext?: SourcebookAccessContext): Promise<T> {
 	const hasJob = Object.hasOwn(data, "job");
 	const hasPath = Object.hasOwn(data, "path");
 	const hasBackground = Object.hasOwn(data, "background");
 	const [jobEntry, pathEntry, backgroundEntry] = await Promise.all([
 		data.job && !data.job_id
-			? findCanonicalEntryByName("jobs", data.job)
+			? findCanonicalEntryByName("jobs", data.job, accessContext)
 			: Promise.resolve(null),
 		data.path && !data.path_id
-			? findCanonicalEntryByName("paths", data.path)
+			? findCanonicalEntryByName("paths", data.path, accessContext)
 			: Promise.resolve(null),
 		data.background && !data.background_id
-			? findCanonicalEntryByName("backgrounds", data.background)
+			? findCanonicalEntryByName("backgrounds", data.background, accessContext)
 			: Promise.resolve(null),
 	]);
 
@@ -1424,47 +1415,59 @@ export function isCanonicalPowerLearnable(
 	return jobOwnsAbility(options.jobName, entry);
 }
 
-export async function findCanonicalCastableByName(
+async function findCanonicalCastableByNameUnfiltered(
 	name: string,
-	accessContext?: { campaignId?: string | null },
 	preferredTypes: readonly CanonicalCastableType[] = canonicalCastableTypes,
 ): Promise<CanonicalCastableEntry | null> {
 	if (!name) return null;
-	const lookup = name.trim().toLowerCase();
-	const results = await listCanonicalEntriesBatch(
-		preferredTypes,
-		undefined,
-		accessContext,
-	);
-
+	const lookup = normalizedLookup(name);
 	for (const type of preferredTypes) {
-		const match = (results.get(type) ?? []).find(
-			(entry) => entry.name.toLowerCase() === lookup,
-		);
+		const entries = await listCanonicalEntriesUnfiltered(type);
+		const match = entries.find((entry) => entryMatchesName(entry, lookup));
 		if (match) return normalizeCastableEntry(match, type);
 	}
-
 	return null;
+}
+
+async function findCanonicalCastableByIdUnfiltered(
+	id: string | null | undefined,
+	preferredTypes: readonly CanonicalCastableType[] = canonicalCastableTypes,
+): Promise<CanonicalCastableEntry | null> {
+	if (!id) return null;
+	const lookup = normalizedLookup(id);
+	for (const type of preferredTypes) {
+		const entries = await listCanonicalEntriesUnfiltered(type);
+		const match = entries.find((entry) => entryMatchesId(entry, lookup));
+		if (match) return normalizeCastableEntry(match, type);
+	}
+	return null;
+}
+
+export async function findCanonicalCastableByName(
+	name: string,
+	accessContext?: SourcebookAccessContext,
+	preferredTypes: readonly CanonicalCastableType[] = canonicalCastableTypes,
+): Promise<CanonicalCastableEntry | null> {
+	const entry = await findCanonicalCastableByNameUnfiltered(
+		name,
+		preferredTypes,
+	);
+	if (!entry) return null;
+	return (await isSourcebookAccessible(entry.source_book, accessContext))
+		? entry
+		: null;
 }
 
 export async function findCanonicalCastableById(
 	id: string | null | undefined,
-	accessContext?: { campaignId?: string | null },
+	accessContext?: SourcebookAccessContext,
 	preferredTypes: readonly CanonicalCastableType[] = canonicalCastableTypes,
 ): Promise<CanonicalCastableEntry | null> {
-	if (!id) return null;
-	const results = await listCanonicalEntriesBatch(
-		preferredTypes,
-		undefined,
-		accessContext,
-	);
-
-	for (const type of preferredTypes) {
-		const match = (results.get(type) ?? []).find((entry) => entry.id === id);
-		if (match) return normalizeCastableEntry(match, type);
-	}
-
-	return null;
+	const entry = await findCanonicalCastableByIdUnfiltered(id, preferredTypes);
+	if (!entry) return null;
+	return (await isSourcebookAccessible(entry.source_book, accessContext))
+		? entry
+		: null;
 }
 
 export interface CanonicalReferenceLookup {
@@ -1475,6 +1478,13 @@ export interface CanonicalReferenceLookup {
 export type CanonicalReferenceResolution<T> =
 	| { matchedBy: "id"; entry: T }
 	| { matchedBy: "name"; entry: T }
+	| {
+			matchedBy: "inaccessible";
+			entry: null;
+			attemptedBy: "id" | "name";
+			canonicalId: string;
+			sourceBook: string | null;
+	  }
 	| { matchedBy: "none"; entry: null };
 
 /**
@@ -1486,15 +1496,37 @@ export type CanonicalReferenceResolution<T> =
 export async function resolveCanonicalReference(
 	type: StaticCanonicalEntryType,
 	ref: CanonicalReferenceLookup,
-	accessContext?: { campaignId?: string | null },
+	accessContext?: SourcebookAccessContext,
 ): Promise<CanonicalReferenceResolution<StaticCompendiumEntry>> {
 	if (ref.id) {
-		const byId = await findCanonicalEntryById(type, ref.id, accessContext);
-		if (byId) return { matchedBy: "id", entry: byId };
+		const byId = await findCanonicalEntryByIdUnfiltered(type, ref.id);
+		if (byId) {
+			if (await isSourcebookAccessible(byId.source_book, accessContext)) {
+				return { matchedBy: "id", entry: byId };
+			}
+			return {
+				matchedBy: "inaccessible",
+				entry: null,
+				attemptedBy: "id",
+				canonicalId: byId.id,
+				sourceBook: byId.source_book ?? null,
+			};
+		}
 	}
 	if (ref.name) {
-		const byName = await findCanonicalEntryByName(type, ref.name);
-		if (byName) return { matchedBy: "name", entry: byName };
+		const byName = await findCanonicalEntryByNameUnfiltered(type, ref.name);
+		if (byName) {
+			if (await isSourcebookAccessible(byName.source_book, accessContext)) {
+				return { matchedBy: "name", entry: byName };
+			}
+			return {
+				matchedBy: "inaccessible",
+				entry: null,
+				attemptedBy: "name",
+				canonicalId: byName.id,
+				sourceBook: byName.source_book ?? null,
+			};
+		}
 	}
 	return { matchedBy: "none", entry: null };
 }
@@ -1507,24 +1539,44 @@ export async function resolveCanonicalReference(
  */
 export async function resolveCanonicalCastableReference(
 	ref: CanonicalReferenceLookup,
-	accessContext?: { campaignId?: string | null },
+	accessContext?: SourcebookAccessContext,
 	preferredTypes: readonly CanonicalCastableType[] = canonicalCastableTypes,
 ): Promise<CanonicalReferenceResolution<CanonicalCastableEntry>> {
 	if (ref.id) {
-		const byId = await findCanonicalCastableById(
+		const byId = await findCanonicalCastableByIdUnfiltered(
 			ref.id,
-			accessContext,
 			preferredTypes,
 		);
-		if (byId) return { matchedBy: "id", entry: byId };
+		if (byId) {
+			if (await isSourcebookAccessible(byId.source_book, accessContext)) {
+				return { matchedBy: "id", entry: byId };
+			}
+			return {
+				matchedBy: "inaccessible",
+				entry: null,
+				attemptedBy: "id",
+				canonicalId: byId.id,
+				sourceBook: byId.source_book ?? null,
+			};
+		}
 	}
 	if (ref.name) {
-		const byName = await findCanonicalCastableByName(
+		const byName = await findCanonicalCastableByNameUnfiltered(
 			ref.name,
-			accessContext,
 			preferredTypes,
 		);
-		if (byName) return { matchedBy: "name", entry: byName };
+		if (byName) {
+			if (await isSourcebookAccessible(byName.source_book, accessContext)) {
+				return { matchedBy: "name", entry: byName };
+			}
+			return {
+				matchedBy: "inaccessible",
+				entry: null,
+				attemptedBy: "name",
+				canonicalId: byName.id,
+				sourceBook: byName.source_book ?? null,
+			};
+		}
 	}
 	return { matchedBy: "none", entry: null };
 }
@@ -1538,12 +1590,13 @@ export async function resolveCanonicalCastableReference(
 export async function isCanonicalEntryAccessible(
 	type: StaticCanonicalEntryType,
 	id: string | null | undefined,
-	accessContext?: { campaignId?: string | null },
+	accessContext?: SourcebookAccessContext,
 ): Promise<boolean> {
-	const entry = await findCanonicalEntryById(type, id, accessContext);
+	if (!id) return true;
+	const entry = await findCanonicalEntryByIdUnfiltered(type, id);
 	if (!entry) {
-		// Either no id supplied, or the id is unknown (custom entry). Custom
-		// entries are not gated by sourcebook entitlements.
+		// Unknown IDs are custom entries. Known canonical IDs are always checked
+		// against their unfiltered identity so denied content cannot fail open.
 		return true;
 	}
 	return isSourcebookAccessible(entry.source_book, accessContext);
@@ -1551,14 +1604,11 @@ export async function isCanonicalEntryAccessible(
 
 export async function isCanonicalCastableAccessible(
 	id: string | null | undefined,
-	accessContext?: { campaignId?: string | null },
+	accessContext?: SourcebookAccessContext,
 	preferredTypes: readonly CanonicalCastableType[] = canonicalCastableTypes,
 ): Promise<boolean> {
-	const entry = await findCanonicalCastableById(
-		id,
-		accessContext,
-		preferredTypes,
-	);
+	if (!id) return true;
+	const entry = await findCanonicalCastableByIdUnfiltered(id, preferredTypes);
 	if (!entry) return true;
 	return isSourcebookAccessible(entry.source_book, accessContext);
 }

@@ -747,7 +747,7 @@ export default function CharacterSheetV2() {
 			<RegentFeaturesDisplay
 				characterId={character.id}
 				characterLevel={character.level || 1}
-				regentId={primaryRegent?.regent_id}
+				regentId={primaryRegent?.regent_id ?? undefined}
 				// Gestalt: a Regent is a full class overlay leveling alongside the
 				// Job — regent level == character level (not a fixed subclass tier).
 				regentLevel={character.level || 1}

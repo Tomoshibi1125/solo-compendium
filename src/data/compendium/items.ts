@@ -141,6 +141,46 @@ export interface Item {
 	[key: string]: unknown;
 }
 
+export function hasCoherentItemRange(item: Item): boolean {
+	const simpleProperties = Array.isArray(item.simple_properties)
+		? item.simple_properties
+		: [];
+	const isRanged =
+		/(?:^|\s)ranged(?:$|\s)/i.test(item.weapon_type ?? "") ||
+		simpleProperties.some((property) => /thrown/i.test(property));
+	if (!isRanged) return true;
+	if (typeof item.range === "string" && item.range.trim()) return true;
+	if (typeof item.properties?.weapon?.range === "number") return true;
+	const evidence = JSON.stringify([
+		item.description,
+		item.effects,
+		item.properties,
+		item.mechanics,
+	]);
+	return /\brange\s+\d+\s*\/\s*\d+\b/i.test(evidence);
+}
+
+/**
+ * When unresolved duplicate names exist, exclude mechanically incomplete
+ * ranged/thrown variants only if the same name has a coherent alternative.
+ * Nothing is discarded from the canonical candidate registry; this controls
+ * only the temporary compatibility projection consumed by legacy callers.
+ */
+export function retainCoherentItemCompatibilityCandidates(
+	items: readonly Item[],
+): Item[] {
+	const coherentNames = new Set(
+		items
+			.filter(hasCoherentItemRange)
+			.map((item) => item.name.trim().toLocaleLowerCase()),
+	);
+	return items.filter(
+		(item) =>
+			hasCoherentItemRange(item) ||
+			!coherentNames.has(item.name.trim().toLocaleLowerCase()),
+	);
+}
+
 // NOTE: the combined `items` array moved to items-lazy.ts (loadCoreItems),
 // which assembles the same parts via dynamic imports so each part stays its
 // own independently-cacheable chunk. This module now only hosts the shared

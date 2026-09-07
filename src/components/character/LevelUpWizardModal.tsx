@@ -52,6 +52,7 @@ import {
 	listLearnablePowers,
 	listLearnableSpells,
 	listLearnableTechniques,
+	resolveCanonicalReference,
 } from "@/lib/canonicalCompendium";
 import {
 	assertCanonicalPowerLearnable,
@@ -81,6 +82,7 @@ import {
 	DomainEventBus,
 } from "@/lib/domainEvents";
 import { parseFeatureMetadata } from "@/lib/featureDescriptionParser";
+import { resolveFeatureRecharge } from "@/lib/featureUses";
 import {
 	addLocalPower,
 	addLocalSpell,
@@ -118,6 +120,18 @@ import { getSwappableKinds, type SwapKind } from "@/lib/levelUpSwap";
 import { logger } from "@/lib/logger";
 import { getStaticPaths, getStaticRegents } from "@/lib/ProtocolDataManager";
 import { getEffectiveMaxAbilityLevel } from "@/lib/pathAbilityAccess";
+import { getPathEligibility } from "@/lib/pathEligibility";
+import {
+	buildCharacterLevelDownPreflightV1,
+	buildCharacterLevelUpWorkflowPlanV1,
+	type CharacterLevelUpWorkflowInputV1,
+	type CharacterWorkflowChoiceInputV1,
+	type CharacterWorkflowFeatureInputV1,
+	type CharacterWorkflowIdentityV1,
+	createCharacterWorkflowHandoffV1,
+	createCharacterWorkflowSourceAddressV1,
+	summarizeCharacterWorkflowBlockersV1,
+} from "@/lib/planning/adapters/characterWorkflowAdapter";
 import { rankToGateToken } from "@/lib/rankColors";
 import {
 	getRegentFeaturesAtLevel,
@@ -136,6 +150,19 @@ const XP_THRESHOLDS = [
 	120000, 140000, 165000, 195000, 225000, 265000, 305000, 355000,
 ];
 
+type StaticPathFeatureSource = {
+	name: string;
+	description: string;
+	level: number;
+	actionType?: string | null;
+	uses?: {
+		formula: string;
+		recharge: "short-rest" | "long-rest";
+	} | null;
+	resource?: string | null;
+	tracking?: "uses" | "resource" | "manual" | null;
+};
+
 type StaticPathSource = {
 	id: string;
 	name: string;
@@ -149,13 +176,10 @@ type StaticPathSource = {
 	source?: string;
 	source_book?: string | null;
 	prerequisites?: string | null;
-	features?: Array<{
-		name: string;
-		description: string;
-		level: number;
-	}>;
+	features?: StaticPathFeatureSource[];
 	requirements?: {
 		level?: number | null;
+		skills?: string[] | null;
 	};
 };
 
@@ -166,7 +190,9 @@ type LevelUpPathOption = {
 	display_name?: string | null;
 	path_level: number;
 	source_book?: string | null;
-	features?: Array<{ level: number; description: string; name: string }>;
+	features?: StaticPathFeatureSource[];
+	requirements?: StaticPathSource["requirements"];
+	eligibility?: ReturnType<typeof getPathEligibility>;
 };
 
 type LevelUpFeatureRow = {
@@ -181,6 +207,9 @@ type LevelUpFeatureRow = {
 	recharge?: string | null;
 	source_name?: string | null;
 	homebrew_id?: string | null;
+	workflow_source_kind: "source-address" | "homebrew";
+	workflow_source_path: string;
+	workflow_owner_id: string;
 	modifiers?: Database["public"]["Tables"]["character_features"]["Insert"]["modifiers"];
 };
 
@@ -198,6 +227,7 @@ type StaticJobWithLedger = StaticJob & {
 
 type LedgerOptionPanel = {
 	key: string;
+	ledgerIndex: number;
 	label: string;
 	count: number;
 	type: LedgerChoice["type"];
@@ -220,6 +250,36 @@ const normalizeCompendiumKey = (value?: string | null) =>
 		?.trim()
 		.toLowerCase()
 		.replace(/[-\s]+/g, "") ?? "";
+
+const canonicalWorkflowIdentity = (
+	id: string | null | undefined,
+	label: string,
+	collection: string,
+	sourceBook?: string | null,
+): CharacterWorkflowIdentityV1 => ({
+	id: id?.trim() || null,
+	label,
+	sourceKind: "canonical",
+	collection,
+	canonicalType: collection,
+	sourceBook: sourceBook ?? null,
+	persistence: "id",
+});
+
+const homebrewWorkflowIdentity = (
+	id: string | null | undefined,
+	label: string,
+	collection: string,
+	sourcePath: string,
+	persistence: CharacterWorkflowIdentityV1["persistence"] = "id",
+): CharacterWorkflowIdentityV1 => ({
+	id: id?.trim() || null,
+	label,
+	sourceKind: "homebrew",
+	collection,
+	sourcePath,
+	persistence,
+});
 
 const formatOptionLabel = (value: string) =>
 	value
@@ -351,21 +411,23 @@ export const LevelUpWizardModal = ({
 
 	const staticJobObj = useMemo(
 		() =>
-			(staticJobs || []).find(
-				(j) =>
-					normalizeCompendiumKey(j.name) ===
-					normalizeCompendiumKey(character?.job),
+			(staticJobs || []).find((job) =>
+				character?.job_id
+					? job.id === character.job_id
+					: normalizeCompendiumKey(job.name) ===
+						normalizeCompendiumKey(character?.job),
 			) as StaticJobWithLedger | undefined,
-		[staticJobs, character?.job],
+		[staticJobs, character?.job, character?.job_id],
 	);
 	const homebrewJobObj = useMemo(
 		() =>
-			homebrewJobs.find(
-				(j) =>
-					normalizeCompendiumKey(j.name) ===
-					normalizeCompendiumKey(character?.job),
+			homebrewJobs.find((job) =>
+				character?.job_id
+					? job.id === character.job_id
+					: normalizeCompendiumKey(job.name) ===
+						normalizeCompendiumKey(character?.job),
 			),
-		[homebrewJobs, character?.job],
+		[homebrewJobs, character?.job, character?.job_id],
 	);
 	const jobObj =
 		staticJobObj ??
@@ -388,13 +450,33 @@ export const LevelUpWizardModal = ({
 	const canLevelUp =
 		!!character && (isMilestone || currentExperience >= experienceNeeded);
 
-	// Path selection: fetch available paths if character has no path and this is a path unlock level
-	const needsPathSelection = !!character && !character.path;
+	// Path selection: resolve existing canonical references ID-first, then fetch
+	// choices only when the character truly has no path reference.
+	const { data: resolvedCanonicalPath = null } =
+		useQuery<StaticPathSource | null>({
+			queryKey: [
+				"level-up-canonical-path",
+				character?.path_id,
+				character?.path,
+			],
+			queryFn: async () => {
+				const resolution = await resolveCanonicalReference("paths", {
+					id: character?.path_id,
+					name: character?.path,
+				});
+				return resolution.entry as unknown as StaticPathSource | null;
+			},
+			enabled: !!(character?.path_id || character?.path),
+			staleTime: Number.POSITIVE_INFINITY,
+		});
+	const needsPathSelection =
+		!!character && !character.path && !character.path_id;
 	const { data: availablePaths = [] } = useQuery<LevelUpPathOption[]>({
 		queryKey: [
 			"level-up-paths",
 			character?.job,
 			newLevel,
+			(character?.skill_proficiencies ?? []).join(","),
 			campaignId,
 			homebrewPaths.map((path) => path.id).join(","),
 		],
@@ -419,16 +501,25 @@ export const LevelUpWizardModal = ({
 					const unlockLevel = path.path_level ?? getStaticPathUnlockLevel(path);
 					return matchesJob && unlockLevel <= newLevel;
 				})
-				.map((path) => ({
-					id: path.id,
-					name: path.name,
-					description: path.description,
-					display_name: path.display_name || path.name,
-					path_level: path.path_level ?? getStaticPathUnlockLevel(path),
-					source_book:
-						path.source_book ?? path.source ?? "Rift Ascendant Canon",
-					features: path.features ?? [],
-				}));
+				.map((path) => {
+					const eligibility = getPathEligibility(path, {
+						jobName: characterJobName,
+						level: newLevel,
+						skillProficiencies: character.skill_proficiencies ?? [],
+					});
+					return {
+						id: path.id,
+						name: path.name,
+						description: path.description,
+						display_name: path.display_name || path.name,
+						path_level: path.path_level ?? getStaticPathUnlockLevel(path),
+						source_book:
+							path.source_book ?? path.source ?? "Rift Ascendant Canon",
+						features: path.features ?? [],
+						requirements: path.requirements,
+						eligibility,
+					};
+				});
 			const homebrewCandidates: LevelUpPathOption[] = homebrewPaths
 				.filter((path) =>
 					runtimePathMatchesJob(path, undefined, characterJobName),
@@ -455,10 +546,18 @@ export const LevelUpWizardModal = ({
 		enabled: needsPathSelection && !!newLevel,
 	});
 	const selectedPathRow = useMemo(
-		() => availablePaths.find((path) => path.id === selectedPath) ?? null,
+		() =>
+			availablePaths.find(
+				(path) =>
+					path.id === selectedPath && path.eligibility?.eligible !== false,
+			) ?? null,
 		[availablePaths, selectedPath],
 	);
-	const effectivePathName = character?.path ?? selectedPathRow?.name ?? null;
+	const effectivePathName =
+		resolvedCanonicalPath?.name ??
+		character?.path ??
+		selectedPathRow?.name ??
+		null;
 	const characterRegentNames = useMemo(() => {
 		const overlays = Array.isArray(character?.regent_overlays)
 			? character.regent_overlays.filter(
@@ -490,6 +589,12 @@ export const LevelUpWizardModal = ({
 		if (selectedPathRow) {
 			return toPathChoiceSourceData(selectedPathRow, effectivePathName);
 		}
+		if (resolvedCanonicalPath) {
+			return toPathChoiceSourceData(
+				resolvedCanonicalPath as Pick<ChoiceSourceData, "features" | "name">,
+				effectivePathName,
+			);
+		}
 		const jobNameKey = normalizeCompendiumKey(character.job);
 		const pathNameKey = normalizeCompendiumKey(effectivePathName);
 		const staticPath = (getStaticPaths() as unknown as StaticPathSource[]).find(
@@ -509,7 +614,13 @@ export const LevelUpWizardModal = ({
 			staticPath ?? homebrewPath,
 			effectivePathName,
 		);
-	}, [character?.job, effectivePathName, homebrewPaths, selectedPathRow]);
+	}, [
+		character?.job,
+		effectivePathName,
+		homebrewPaths,
+		resolvedCanonicalPath,
+		selectedPathRow,
+	]);
 
 	// Active regent overlays as choice sources so their full independent
 	// progression (casters: cantrips/spells known; martials: powers/techniques
@@ -546,7 +657,7 @@ export const LevelUpWizardModal = ({
 			regentChoiceSources,
 			character.level,
 			newLevel,
-			character.path ? pathChoiceSource : null,
+			character.path || character.path_id ? pathChoiceSource : null,
 		);
 	}, [
 		character,
@@ -916,12 +1027,13 @@ export const LevelUpWizardModal = ({
 
 	const ledgerOptionPanels = useMemo<LedgerOptionPanel[]>(() => {
 		const panels: LedgerOptionPanel[] = [];
-		for (const entry of levelUpLedgerEntries) {
+		for (const [ledgerIndex, entry] of levelUpLedgerEntries.entries()) {
 			const key = `${entry.level}:${entry.type}:${entry.source}`;
 			if (entry.type === "fighting-style") continue;
 			if (entry.type === "favored-terrain") {
 				panels.push({
 					key,
+					ledgerIndex,
 					label: entry.source,
 					count: entry.count,
 					type: entry.type,
@@ -948,6 +1060,7 @@ export const LevelUpWizardModal = ({
 				);
 				panels.push({
 					key,
+					ledgerIndex,
 					label: entry.source,
 					count: entry.count,
 					type: entry.type,
@@ -958,6 +1071,7 @@ export const LevelUpWizardModal = ({
 			if (entry.options && entry.options.length > 0) {
 				panels.push({
 					key,
+					ledgerIndex,
 					label: entry.source,
 					count: entry.count,
 					type: entry.type,
@@ -1010,22 +1124,14 @@ export const LevelUpWizardModal = ({
 	// lives in the flat `abilities`/`features` + `progression_table` (Radiant,
 	// Steel, Destruction, War, and the truncated Plague/Mimic) surface their
 	// per-level features here just like the curated ones (Umbral, Frost, …).
-	const newRegentFeatures: JobFeature[] = regentData
-		? getRegentFeaturesAtLevel(regentData as unknown as Regent, newLevel).map(
-				(f, idx) => ({
-					id: `regent-lvl-${newLevel}-${idx}`,
-					name: f.name,
-					description: f.description,
-					level: f.level,
-					type: f.type,
-					frequency: f.frequency,
-					is_path_feature: false,
-				}),
-			)
+	const newRegentFeatures = regentData
+		? getRegentFeaturesAtLevel(regentData as unknown as Regent, newLevel)
 		: [];
 
 	// Fetch features for the new level (DB first, static fallback)
-	const { data: newFeatures = [] } = useQuery<LevelUpFeatureRow[]>({
+	const { data: newFeatures = [], isLoading: newFeaturesLoading } = useQuery<
+		LevelUpFeatureRow[]
+	>({
 		queryKey: [
 			"job-features",
 			character?.job,
@@ -1043,25 +1149,41 @@ export const LevelUpWizardModal = ({
 			const staticJob = staticJobs?.find(
 				(job) => job.name === characterJobName,
 			);
-			const staticJobFeatures: LevelUpFeatureRow[] = (
-				staticJob?.classFeatures ?? []
-			)
-				.filter((feature) => feature.level === newLevel)
-				.map((feature, index) => {
-					const parsed = parseFeatureMetadata(feature.description);
-					return {
-						id: `static-job-${characterJobName.toLowerCase().replace(/\s+/g, "-")}-${feature.name.toLowerCase().replace(/\s+/g, "-")}-${index}`,
-						name: feature.name,
-						description: feature.description,
-						level: feature.level,
-						is_path_feature: false,
-						action_type: parsed.action_type,
-						uses_formula: parsed.uses_formula,
-						prerequisites: null,
-						recharge: parsed.recharge,
-						source_name: null,
-					};
-				});
+			const staticJobId = staticJob?.id ?? null;
+			const staticJobClassFeatures = staticJob?.classFeatures ?? [];
+			const staticJobFeatures: LevelUpFeatureRow[] = staticJobId
+				? staticJobClassFeatures
+						.filter((feature) => feature.level === newLevel)
+						.map((feature, index) => {
+							const parsed = parseFeatureMetadata(feature.description);
+							const sourceIndex =
+								staticJobClassFeatures.indexOf(feature) ?? index;
+							const workflowSourcePath = `classFeatures[${sourceIndex}]`;
+							return {
+								id:
+									createCharacterWorkflowSourceAddressV1({
+										ownerId: staticJobId,
+										collection: "job-features",
+										sourcePath: workflowSourcePath,
+										label: feature.name,
+									}).id ?? "",
+								name: feature.name,
+								description: feature.description,
+								level: feature.level,
+								is_path_feature: false,
+								action_type: parsed.action_type,
+								uses_formula: feature.uses?.formula ?? parsed.uses_formula,
+								prerequisites: null,
+								recharge: feature.uses
+									? resolveFeatureRecharge(feature.uses, newLevel)
+									: parsed.recharge,
+								source_name: null,
+								workflow_source_kind: "source-address" as const,
+								workflow_source_path: workflowSourcePath,
+								workflow_owner_id: staticJobId,
+							};
+						})
+				: [];
 
 			const protocolStaticPaths =
 				getStaticPaths() as unknown as StaticPathSource[];
@@ -1088,17 +1210,41 @@ export const LevelUpWizardModal = ({
 								.filter((feature) => feature.level === newLevel)
 								.map((feature, index) => {
 									const parsed = parseFeatureMetadata(feature.description);
+									const hasStructuredTracking =
+										feature.tracking != null || feature.resource != null;
+									const tracksUses =
+										feature.tracking === "uses" ||
+										(!hasStructuredTracking && feature.uses != null);
+									const structuredUses = tracksUses ? feature.uses : null;
+									const sourceIndex = path.features?.indexOf(feature) ?? index;
+									const workflowSourcePath = `features[${sourceIndex}]`;
 									return {
-										id: `static-path-${path.name.toLowerCase().replace(/\s+/g, "-")}-${feature.name.toLowerCase().replace(/\s+/g, "-")}-${index}`,
+										id:
+											createCharacterWorkflowSourceAddressV1({
+												ownerId: path.id,
+												collection: "path-features",
+												sourcePath: workflowSourcePath,
+												label: feature.name,
+											}).id ?? "",
 										name: feature.name,
 										description: feature.description,
 										level: feature.level,
 										is_path_feature: true,
-										action_type: parsed.action_type,
-										uses_formula: parsed.uses_formula,
+										action_type:
+											feature.actionType !== undefined
+												? feature.actionType
+												: parsed.action_type,
+										uses_formula:
+											structuredUses?.formula ??
+											(hasStructuredTracking ? null : parsed.uses_formula),
 										prerequisites: path.prerequisites ?? null,
-										recharge: parsed.recharge,
+										recharge:
+											structuredUses?.recharge ??
+											(hasStructuredTracking ? null : parsed.recharge),
 										source_name: null,
+										workflow_source_kind: "source-address" as const,
+										workflow_source_path: workflowSourcePath,
+										workflow_owner_id: path.id,
 									};
 								}),
 						)
@@ -1122,6 +1268,9 @@ export const LevelUpWizardModal = ({
 							recharge: feature.recharge,
 							source_name: feature.source_name,
 							homebrew_id: feature.homebrew_id,
+							workflow_source_kind: "homebrew" as const,
+							workflow_source_path: `publishedHomebrew.jobs.${homebrewJobObj.homebrew_id}.features.${feature.id}`,
+							workflow_owner_id: homebrewJobObj.id,
 							modifiers: feature.modifiers
 								? (feature.modifiers as Database["public"]["Tables"]["character_features"]["Insert"]["modifiers"])
 								: null,
@@ -1149,6 +1298,9 @@ export const LevelUpWizardModal = ({
 									recharge: feature.recharge,
 									source_name: feature.source_name,
 									homebrew_id: feature.homebrew_id,
+									workflow_source_kind: "homebrew" as const,
+									workflow_source_path: `publishedHomebrew.paths.${path.homebrew_id}.features.${feature.id}`,
+									workflow_owner_id: path.id,
 									modifiers: feature.modifiers
 										? (feature.modifiers as Database["public"]["Tables"]["character_features"]["Insert"]["modifiers"])
 										: null,
@@ -1301,6 +1453,24 @@ export const LevelUpWizardModal = ({
 
 	const handleLevelDown = async () => {
 		if (!character || newLevel >= character.level || newLevel < 1) return;
+		const levelDownPreflight = buildCharacterLevelDownPreflightV1({
+			characterId: character.id,
+			fromLevel: character.level,
+			toLevel: newLevel,
+			sourceKey: `character-progression:${character.id}`,
+			records: [],
+			ownershipAndHistoryComplete: false,
+		});
+		if (!levelDownPreflight.canRemoveProgression) {
+			toast({
+				title: "Level down requires recorded history",
+				description: summarizeCharacterWorkflowBlockersV1(
+					levelDownPreflight.blockers,
+				),
+				variant: "destructive",
+			});
+			return;
+		}
 		setLoading(true);
 		try {
 			const levelsLost = character.level - newLevel;
@@ -1436,9 +1606,16 @@ export const LevelUpWizardModal = ({
 		}
 
 		if (showPathSelection && !selectedPathRow) {
+			const requirement = availablePaths.find(
+				(path) => path.id === selectedPath,
+			)?.eligibility;
 			toast({
-				title: "Path selection required",
-				description: "Choose a path before completing this level up.",
+				title: requirement
+					? "Path requirements not met"
+					: "Path selection required",
+				description:
+					requirement?.reason ??
+					"Choose a path before completing this level up.",
 				variant: "destructive",
 			});
 			return;
@@ -1507,6 +1684,338 @@ export const LevelUpWizardModal = ({
 			});
 			return;
 		}
+		if (newFeaturesLoading) {
+			toast({
+				title: "Progression data still resolving",
+				description:
+					"Wait for canonical and homebrew level features to finish loading, then try again.",
+				variant: "destructive",
+			});
+			return;
+		}
+
+		const jobWorkflowIdentity = homebrewJobObj
+			? homebrewWorkflowIdentity(
+					character.job_id,
+					homebrewJobObj.name,
+					"jobs",
+					`publishedHomebrew.jobs.${homebrewJobObj.homebrew_id}`,
+				)
+			: canonicalWorkflowIdentity(
+					character.job_id,
+					character.job ?? "Current job",
+					"jobs",
+					staticJobObj?.source ?? null,
+				);
+		const selectedHomebrewPath = selectedPathRow
+			? homebrewPaths.find((path) => path.id === selectedPathRow.id)
+			: null;
+		const selectedPathWorkflowIdentity = selectedPathRow
+			? selectedHomebrewPath
+				? homebrewWorkflowIdentity(
+						selectedHomebrewPath.id,
+						selectedHomebrewPath.name,
+						"paths",
+						`publishedHomebrew.paths.${selectedHomebrewPath.homebrew_id}`,
+					)
+				: canonicalWorkflowIdentity(
+						selectedPathRow.id,
+						selectedPathRow.name,
+						"paths",
+						selectedPathRow.source_book ?? null,
+					)
+			: null;
+		const persistedHomebrewPath = character.path_id
+			? homebrewPaths.find((path) => path.id === character.path_id)
+			: null;
+		const activePathWorkflowIdentity =
+			selectedPathWorkflowIdentity ??
+			(character.path || character.path_id
+				? persistedHomebrewPath
+					? homebrewWorkflowIdentity(
+							character.path_id,
+							persistedHomebrewPath.name,
+							"paths",
+							`publishedHomebrew.paths.${persistedHomebrewPath.homebrew_id}`,
+						)
+					: canonicalWorkflowIdentity(
+							character.path_id,
+							effectivePathName ?? "Current path",
+							"paths",
+						)
+				: null);
+		const levelWorkflowFeatures: CharacterWorkflowFeatureInputV1[] =
+			newFeatures.map((feature) => {
+				const owner = feature.is_path_feature
+					? (activePathWorkflowIdentity ??
+						canonicalWorkflowIdentity(null, "Current path", "paths"))
+					: jobWorkflowIdentity;
+				const identity =
+					feature.workflow_source_kind === "homebrew"
+						? homebrewWorkflowIdentity(
+								feature.id,
+								feature.name,
+								"homebrew-features",
+								feature.workflow_source_path,
+							)
+						: createCharacterWorkflowSourceAddressV1({
+								ownerId: feature.workflow_owner_id,
+								collection: feature.is_path_feature
+									? "path-features"
+									: "job-features",
+								sourcePath: feature.workflow_source_path,
+								label: feature.name,
+							});
+				return {
+					identity,
+					owner,
+					level: feature.level,
+					payload: {
+						description: feature.description ?? null,
+						homebrewId: feature.homebrew_id ?? null,
+					},
+				};
+			});
+		if (regentData) {
+			const regentWorkflowIdentity = canonicalWorkflowIdentity(
+				regentData.id,
+				regentData.name,
+				"regents",
+				regentData.source_book ?? null,
+			);
+			for (const feature of newRegentFeatures) {
+				const reviewBlocked =
+					feature.canonStatus === "review-blocked" ||
+					Boolean(feature.reviewBlockerId);
+				levelWorkflowFeatures.push({
+					identity: canonicalWorkflowIdentity(
+						feature.id,
+						feature.name,
+						"regent-features",
+						regentData.source_book ?? null,
+					),
+					owner: regentWorkflowIdentity,
+					level: feature.level,
+					payload: {
+						description: feature.description,
+						canonStatus: feature.canonStatus,
+						tracking: feature.tracking ?? null,
+						provenancePath: feature.provenance.fieldPath,
+					},
+					disposition: reviewBlocked
+						? "review-blocked"
+						: feature.tracking === "manual"
+							? "manual"
+							: "automatic",
+					reviewBlockerId: reviewBlocked
+						? (feature.reviewBlockerId ?? null)
+						: null,
+					instructions: reviewBlocked
+						? "Resolve the authored Regent mechanics review before applying this level."
+						: feature.tracking === "manual"
+							? "Record this Regent feature through the manual mechanics workflow."
+							: null,
+				});
+			}
+		}
+
+		const levelWorkflowChoices: CharacterWorkflowChoiceInputV1[] = [];
+		const addCatalogChoice = (input: {
+			kind: CharacterWorkflowChoiceInputV1["kind"];
+			sourceIndex: number;
+			count: number;
+			prompt: string;
+			entries: ReadonlyArray<{
+				id: string;
+				name: string;
+				_homebrew?: boolean;
+			}>;
+			selectedIds: readonly string[];
+			collection: string;
+			grantType: CharacterWorkflowChoiceInputV1["grantType"];
+		}) => {
+			if (input.count <= 0) return;
+			levelWorkflowChoices.push({
+				kind: input.kind,
+				source: jobWorkflowIdentity,
+				sourceIndex: input.sourceIndex,
+				level: newLevel,
+				count: input.count,
+				prompt: input.prompt,
+				options: input.entries.map((entry, index) =>
+					entry._homebrew
+						? homebrewWorkflowIdentity(
+								entry.id,
+								entry.name,
+								input.collection,
+								`publishedHomebrew.spells.${entry.id}.selection[${index}]`,
+								"display-only",
+							)
+						: canonicalWorkflowIdentity(entry.id, entry.name, input.collection),
+				),
+				selectedOptionIds: [...input.selectedIds],
+				grantType: input.grantType,
+			});
+		};
+		addCatalogChoice({
+			kind: "power",
+			sourceIndex: 0,
+			count: requiredPowerChoices,
+			prompt: "Choose powers unlocked by this level.",
+			entries: availablePowers,
+			selectedIds: selectedPowerIds,
+			collection: "powers",
+			grantType: "power",
+		});
+		addCatalogChoice({
+			kind: "technique",
+			sourceIndex: 1,
+			count: requiredTechniqueChoices,
+			prompt: "Choose techniques unlocked by this level.",
+			entries: availableTechniques,
+			selectedIds: selectedTechniqueIds,
+			collection: "techniques",
+			grantType: "technique",
+		});
+		addCatalogChoice({
+			kind: "cantrip",
+			sourceIndex: 2,
+			count: requiredCantripChoices,
+			prompt: "Choose cantrips unlocked by this level.",
+			entries: availableCantrips,
+			selectedIds: selectedCantripIds,
+			collection: "spells",
+			grantType: "spell",
+		});
+		addCatalogChoice({
+			kind: "spell",
+			sourceIndex: 3,
+			count: requiredSpellChoices,
+			prompt: "Choose power inscriptions unlocked by this level.",
+			entries: availableSpells,
+			selectedIds: selectedSpellIds,
+			collection: "spells",
+			grantType: "spell",
+		});
+		addCatalogChoice({
+			kind: "spellbook",
+			sourceIndex: 4,
+			count: requiredSpellbookInscriptions,
+			prompt: "Choose spellbook inscriptions unlocked by this level.",
+			entries: availableSpellbookSpells,
+			selectedIds: selectedSpellbookIds,
+			collection: "spells",
+			grantType: "spell",
+		});
+		addCatalogChoice({
+			kind: "feat",
+			sourceIndex: 5,
+			count: showFeatSelection ? availableChoices.feats : 0,
+			prompt: "Choose feats unlocked by this level.",
+			entries: availableFeats,
+			selectedIds: selectedFeats,
+			collection: "feats",
+			grantType: "feat",
+		});
+		addCatalogChoice({
+			kind: "fighting-style",
+			sourceIndex: 6,
+			count: requiredFightingStyleChoices,
+			prompt: "Choose fighting styles unlocked by this level.",
+			entries: availableFightingStyles,
+			selectedIds: selectedFightingStyleIds,
+			collection: "fighting-styles",
+			grantType: "feature",
+		});
+		for (const panel of ledgerOptionPanels) {
+			const identities = panel.options.map((option, optionIndex) =>
+				createCharacterWorkflowSourceAddressV1({
+					ownerId: jobWorkflowIdentity.id ?? "missing-owner-id",
+					collection: "ledger-options",
+					sourcePath: `levelChoices[${panel.ledgerIndex}].options[${optionIndex}]`,
+					label: option.label,
+					payload: { originalOptionId: option.id, ledgerType: panel.type },
+				}),
+			);
+			const identityIdByOriginal = new Map(
+				panel.options.map((option, optionIndex) => [
+					option.id,
+					identities[optionIndex]?.id ?? "",
+				]),
+			);
+			levelWorkflowChoices.push({
+				kind: "ledger",
+				source: jobWorkflowIdentity,
+				sourceIndex: panel.ledgerIndex,
+				level: newLevel,
+				count: panel.count,
+				prompt: panel.label,
+				options: identities,
+				selectedOptionIds: (selectedLedgerOptions[panel.key] ?? []).map(
+					(value) => identityIdByOriginal.get(value) ?? "",
+				),
+				grantType: "feature",
+			});
+		}
+		const selectedSwapOut = swapOutOptions.find((row) => row.id === swapOutId);
+		const selectedSwapIn = swapInOptions.find((entry) => entry.id === swapInId);
+		const levelWorkflowInput: CharacterLevelUpWorkflowInputV1 = {
+			characterId: character.id,
+			fromLevel: character.level,
+			toLevel: newLevel,
+			job: jobWorkflowIdentity,
+			pathSelection: selectedPathWorkflowIdentity,
+			features: levelWorkflowFeatures,
+			choices: levelWorkflowChoices,
+			abilityIncrease: showASISection
+				? {
+						source: createCharacterWorkflowSourceAddressV1({
+							ownerId: jobWorkflowIdentity.id ?? "missing-owner-id",
+							collection: "ability-increases",
+							sourcePath: `abilityScoreImprovements.level.${newLevel}`,
+							label: `Level ${newLevel} ability increase`,
+						}),
+						points: asiChoices,
+						expectedPoints: 2,
+					}
+				: null,
+			retrain:
+				swapKind !== "none"
+					? {
+							kind: swapKind,
+							ownedRowId: swapOutId,
+							currentReferenceId: selectedSwapOut?.refId ?? null,
+							replacement: canonicalWorkflowIdentity(
+								swapInId || null,
+								selectedSwapIn?.name ?? "Selected retrain replacement",
+								swapKind === "spell"
+									? "spells"
+									: swapKind === "power"
+										? "powers"
+										: "techniques",
+							),
+						}
+					: null,
+			unresolvedLedger: unresolvedLedgerEntries.map((entry) => ({
+				owner: jobWorkflowIdentity,
+				ledgerIndex: levelUpLedgerEntries.indexOf(entry),
+				level: entry.level,
+				type: entry.type,
+				count: entry.count,
+			})),
+		};
+		const levelTransitionPlan =
+			buildCharacterLevelUpWorkflowPlanV1(levelWorkflowInput);
+		if (!levelTransitionPlan.canApply) {
+			toast({
+				title: "Level transition blocked",
+				description: summarizeCharacterWorkflowBlockersV1(
+					levelTransitionPlan.blockers,
+				),
+				variant: "destructive",
+			});
+			return;
+		}
 
 		setLoading(true);
 		try {
@@ -1541,76 +2050,81 @@ export const LevelUpWizardModal = ({
 					rift_favor_current: newRiftFavorMax,
 				};
 
+			const nextAbilityScores = { ...character.abilities };
+
 			// Apply path selection if chosen during this level-up
 			if (showPathSelection && selectedPathRow) {
 				characterUpdates.path = selectedPathRow.name;
+				characterUpdates.path_id = selectedPathRow.id;
 			}
 
-			// Apply ASI ability score changes if this is an ASI level
+			// Apply ASI ability score changes if this is an ASI level. Keep the
+			// legacy character columns and the per-ability authority synchronized;
+			// guest characters use the existing local update helper below.
 			if (showASISection && Object.keys(asiChoices).length > 0) {
-				const totalPoints = Object.values(asiChoices).reduce(
-					(sum, v) => sum + v,
-					0,
-				);
-				if (totalPoints <= 2) {
-					type AbilityKey = "STR" | "AGI" | "VIT" | "INT" | "SENSE" | "PRE";
-					const abilityUpdates: Array<{
-						character_id: string;
-						ability: AbilityKey;
-						score: number;
-					}> = [];
-					for (const [ability, bonus] of Object.entries(asiChoices)) {
-						if (bonus > 0) {
-							const currentScore =
-								(character.abilities as Record<string, number>)[ability] ?? 10;
-							abilityUpdates.push({
-								character_id: character.id,
-								ability: ability as AbilityKey,
-								score: Math.min(20, currentScore + bonus),
-							});
-						}
-					}
-					if (abilityUpdates.length > 0) {
-						await supabase
-							.from("character_abilities")
-							.upsert(abilityUpdates, { onConflict: "character_id,ability" });
-					}
+				type AbilityKey = "STR" | "AGI" | "VIT" | "INT" | "SENSE" | "PRE";
+				const abilityColumn: Record<
+					AbilityKey,
+					"str" | "agi" | "vit" | "int" | "sense" | "pre"
+				> = {
+					STR: "str",
+					AGI: "agi",
+					VIT: "vit",
+					INT: "int",
+					SENSE: "sense",
+					PRE: "pre",
+				};
+				const abilityUpdates: Array<{
+					character_id: string;
+					ability: AbilityKey;
+					score: number;
+				}> = [];
+				for (const [ability, bonus] of Object.entries(asiChoices)) {
+					if (bonus <= 0) continue;
+					const key = ability as AbilityKey;
+					const currentScore =
+						(character.abilities as Record<string, number>)[ability] ?? 10;
+					const score = Math.min(20, currentScore + bonus);
+					nextAbilityScores[key] = score;
+					characterUpdates[abilityColumn[key]] = score;
+					abilityUpdates.push({
+						character_id: character.id,
+						ability: key,
+						score,
+					});
+				}
+				if (abilityUpdates.length > 0 && !isLocalCharacterId(character.id)) {
+					const { error: abilityError } = await supabase
+						.from("character_abilities")
+						.upsert(abilityUpdates, {
+							onConflict: "character_id,ability",
+						});
+					if (abilityError) throw abilityError;
 				}
 			}
 
-			// Apply feat selections if feats are available from awakening features
+			// Apply feat selections through the existing local/cloud feature helper.
 			if (showFeatSelection && selectedFeats.length > 0) {
-				// Add selected feats as character features
-				const featFeatures = selectedFeats
-					.map((featId, index) => {
-						const feat = availableFeats.find(
-							(f: { id?: string }) => f.id === featId,
-						) as { name?: string; description?: string } | undefined;
-						if (!feat) return null;
-
-						return {
-							character_id: character.id,
-							feat_id: featId,
-							name: feat.name || "Unknown Feat",
-							source: "Feat Selection",
-							level_acquired: newLevel,
-							description: feat.description || "",
-							uses_current: null,
-							uses_max: null,
-							recharge: null,
-							action_type: null,
-							is_active: true,
-							modifiers: null,
-							homebrew_id: null,
-							display_order: index,
-						};
-					})
-					.filter(Boolean);
-
-				if (featFeatures.length > 0) {
-					await supabase
-						.from("character_features")
-						.insert(featFeatures as never[]);
+				for (const [index, featId] of selectedFeats.entries()) {
+					const feat = availableFeats.find(
+						(candidate: { id?: string }) => candidate.id === featId,
+					);
+					if (!feat) continue;
+					await insertCharacterFeature(character.id, {
+						feat_id: featId,
+						name: feat.name || "Unknown Feat",
+						source: `Level ${newLevel} Feat Selection`,
+						level_acquired: newLevel,
+						description: feat.description || "",
+						uses_current: null,
+						uses_max: null,
+						recharge: null,
+						action_type: null,
+						is_active: true,
+						modifiers: null,
+						homebrew_id: null,
+						display_order: index,
+					});
 				}
 			}
 
@@ -1929,6 +2443,7 @@ export const LevelUpWizardModal = ({
 			);
 			for (const style of selectedFightingStyles) {
 				await insertCharacterFeature(character.id, {
+					feature_id: style.id,
 					name: `Fighting Style: ${style.name}`,
 					source: `Level ${newLevel} Fighting Style`,
 					level_acquired: newLevel,
@@ -1952,6 +2467,12 @@ export const LevelUpWizardModal = ({
 						specialistTrainingSelections.push(option.id);
 					}
 					await insertCharacterFeature(character.id, {
+						feature_id: createCharacterWorkflowSourceAddressV1({
+							ownerId: jobWorkflowIdentity.id ?? "missing-owner-id",
+							collection: "ledger-options",
+							sourcePath: `levelChoices[${panel.ledgerIndex}].options[${panel.options.indexOf(option)}]`,
+							label: option.label,
+						}).id,
 						name: `${panel.label}: ${option.label}`,
 						source: `Level ${newLevel} ${panel.label}`,
 						level_acquired: newLevel,
@@ -2115,6 +2636,74 @@ export const LevelUpWizardModal = ({
 				logger.error("Failed to auto-update feature uses:", error);
 			}
 
+			const transitionHandoff = createCharacterWorkflowHandoffV1({
+				workflowKind: "transition",
+				plan: levelTransitionPlan,
+				displayName: character.name,
+				storedBases: {
+					level: newLevel,
+					experience: !isMilestone
+						? Math.max(0, currentExperience - experienceNeeded)
+						: typeof character.experience === "number"
+							? character.experience
+							: null,
+					abilityScores: {
+						strength: Math.min(
+							20,
+							character.abilities.STR + (asiChoices.STR ?? 0),
+						),
+						agility: Math.min(
+							20,
+							character.abilities.AGI + (asiChoices.AGI ?? 0),
+						),
+						vitality: Math.min(
+							20,
+							character.abilities.VIT + (asiChoices.VIT ?? 0),
+						),
+						intelligence: Math.min(
+							20,
+							character.abilities.INT + (asiChoices.INT ?? 0),
+						),
+						sense: Math.min(
+							20,
+							character.abilities.SENSE + (asiChoices.SENSE ?? 0),
+						),
+						presence: Math.min(
+							20,
+							character.abilities.PRE + (asiChoices.PRE ?? 0),
+						),
+					},
+					hitPointsMaximum: newHP,
+					baseArmorClass: null,
+					baseSpeed: {},
+					proficiencyBonus: newProficiencyBonus,
+					hitDice: {
+						maximum: newHitDiceMax,
+						size: character.hit_dice_size,
+					},
+					additional: {
+						jobId: jobWorkflowIdentity.id,
+						pathId: selectedPathRow?.id ?? character.path_id ?? null,
+						regentId: regentData?.id ?? null,
+					},
+				},
+				transient: {
+					resources: [
+						{
+							version: 1,
+							resourceId: "rift-favor",
+							key: "rift-favor",
+							current: newRiftFavorMax,
+							maximum: newRiftFavorMax,
+							temporary: 0,
+							custom: false,
+							manual: false,
+							sourceEvidence: [],
+						},
+					],
+				},
+			});
+
 			// D&D Beyond parity: derived stats (spell save DC, passive perception, etc.)
 			// are now handled dynamically by the system via characterEngine.ts
 
@@ -2157,28 +2746,11 @@ export const LevelUpWizardModal = ({
 				)
 				.catch(console.error);
 
-			await Promise.all([
-				queryClient.invalidateQueries({ queryKey: ["powers", character.id] }),
-				queryClient.invalidateQueries({
-					queryKey: ["character-spells", character.id],
-				}),
-				queryClient.invalidateQueries({ queryKey: ["features", character.id] }),
-				queryClient.invalidateQueries({
-					queryKey: ["character-features", character.id],
-				}),
-				queryClient.invalidateQueries({
-					queryKey: ["character-techniques", character.id],
-				}),
-				queryClient.invalidateQueries({
-					queryKey: ["character", character.id],
-				}),
-				// The plural list feeds useCombatActions/HUD — without this the
-				// action cards read pre-level-up scores for the query staleTime.
-				queryClient.invalidateQueries({ queryKey: ["characters"] }),
-				queryClient.invalidateQueries({
-					queryKey: ["combat-actions", character.id],
-				}),
-			]);
+			await Promise.all(
+				transitionHandoff.cacheInvalidationKeys.map((queryKey) =>
+					queryClient.invalidateQueries({ queryKey: [...queryKey] }),
+				),
+			);
 
 			onClose();
 		} catch {
@@ -2544,15 +3116,29 @@ export const LevelUpWizardModal = ({
 											</SelectTrigger>
 											<SelectContent>
 												{availablePaths.map((path) => (
-													<SelectItem key={path.id} value={path.id}>
+													<SelectItem
+														key={path.id}
+														value={path.id}
+														disabled={path.eligibility?.eligible === false}
+													>
 														{formatRegentVernacular(
-															(path as { display_name?: string | null })
-																.display_name || path.name,
+															path.display_name || path.name,
 														)}
+														{path.eligibility?.eligible === false
+															? ` — ${path.eligibility.reason}`
+															: ""}
 													</SelectItem>
 												))}
 											</SelectContent>
 										</Select>
+										{!availablePaths.some(
+											(path) => path.eligibility?.eligible !== false,
+										) && (
+											<p className="mt-2 text-xs text-destructive">
+												No path requirements are met. Gain the listed skill
+												proficiencies before choosing a specialization.
+											</p>
+										)}
 										{selectedPath && (
 											<div className="mt-3 p-3 rounded-lg bg-muted/30 border border-resurge/10">
 												<h4 className="font-heading font-semibold text-resurge mb-1">
@@ -3482,46 +4068,44 @@ export const LevelUpWizardModal = ({
 											ABILITIES
 										</Label>
 										<div className="space-y-3">
-											{newRegentFeatures.map(
-												(feature: JobFeature, idx: number) => {
-													return (
-														<div
-															key={
-																feature.id ||
-																`regent-feature-${idx}-${feature.name}`
-															}
-															className="p-4 rounded-lg border border-regent-gold/10 bg-muted/30"
-														>
-															<div className="flex items-center gap-2 mb-1 flex-wrap">
-																<span className="font-resurge font-semibold text-regent-gold tracking-wide">
-																	{formatRegentVernacular(feature.name)}
-																</span>
-																{feature.type && (
-																	<Badge
-																		variant="secondary"
-																		className="text-xs font-heading"
-																	>
-																		{feature.type}
-																	</Badge>
-																)}
-																{feature.frequency && (
-																	<Badge
-																		variant="outline"
-																		className="text-xs font-heading border-regent-gold/30 text-regent-gold"
-																	>
-																		{feature.frequency}
-																	</Badge>
-																)}
-															</div>
-															<p className="text-sm text-muted-foreground font-heading">
-																{formatRegentVernacular(
-																	feature.description || "",
-																)}
-															</p>
+											{newRegentFeatures.map((feature, idx) => {
+												return (
+													<div
+														key={
+															feature.id ||
+															`regent-feature-${idx}-${feature.name}`
+														}
+														className="p-4 rounded-lg border border-regent-gold/10 bg-muted/30"
+													>
+														<div className="flex items-center gap-2 mb-1 flex-wrap">
+															<span className="font-resurge font-semibold text-regent-gold tracking-wide">
+																{formatRegentVernacular(feature.name)}
+															</span>
+															{feature.type && (
+																<Badge
+																	variant="secondary"
+																	className="text-xs font-heading"
+																>
+																	{feature.type}
+																</Badge>
+															)}
+															{feature.frequency && (
+																<Badge
+																	variant="outline"
+																	className="text-xs font-heading border-regent-gold/30 text-regent-gold"
+																>
+																	{feature.frequency}
+																</Badge>
+															)}
 														</div>
-													);
-												},
-											)}
+														<p className="text-sm text-muted-foreground font-heading">
+															{formatRegentVernacular(
+																feature.description || "",
+															)}
+														</p>
+													</div>
+												);
+											})}
 										</div>
 									</div>
 								)}

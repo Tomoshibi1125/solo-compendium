@@ -14,6 +14,12 @@ import {
 import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import { AppError } from "@/lib/appError";
 import {
+	type AuthErrorKind,
+	type AuthOperation,
+	normalizeAuthError,
+	validateNewPassword,
+} from "@/lib/auth/authErrors";
+import {
 	buildAuthCallbackUrl,
 	buildPasswordResetRedirectUrl,
 } from "@/lib/authRedirect";
@@ -26,17 +32,29 @@ export interface AuthUser {
 	id: string;
 	email: string;
 	role: UserRole;
+	/** UI capability hint derived only from Supabase app_metadata. */
+	isAccountAdmin: boolean;
 	displayName?: string;
 	avatar?: string;
 	createdAt: string;
 	user_metadata?: Record<string, unknown>;
 }
 
+export type AuthProfileUpdates = Partial<
+	Pick<AuthUser, "displayName" | "avatar" | "role">
+>;
+
 export type AuthResult = {
 	error?: string;
+	errorKind?: AuthErrorKind;
 	success?: boolean;
 	needsEmailConfirmation?: boolean;
 };
+
+export interface PasswordChangeInput {
+	password: string;
+	nonce: string;
+}
 
 interface AuthContextType {
 	user: AuthUser | null;
@@ -56,8 +74,11 @@ interface AuthContextType {
 	signOut: () => Promise<void>;
 	requestPasswordReset: (email: string) => Promise<AuthResult>;
 	resendConfirmationEmail: (email: string) => Promise<AuthResult>;
+	beginPasswordChange: () => Promise<AuthResult>;
+	confirmPasswordChange: (input: PasswordChangeInput) => Promise<AuthResult>;
+	completePasswordRecovery: (password: string) => Promise<AuthResult>;
 	updateProfile: (
-		updates: Partial<AuthUser>,
+		updates: AuthProfileUpdates,
 	) => Promise<{ error?: string; success?: boolean }>;
 	hasPermission: (permission: string) => boolean;
 	isWarden: () => boolean;
@@ -67,12 +88,7 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 const normalizeRole = (value?: string | null): UserRole => {
-	if (
-		value === "warden" ||
-		value === "Warden" ||
-		value === "admin" ||
-		value === "dm"
-	)
+	if (value === "warden" || value === "Warden" || value === "dm")
 		return "warden";
 	if (value === "ascendant" || value === "player") return "ascendant";
 	if (value) {
@@ -102,6 +118,7 @@ const buildFallbackUser = (authUser: User): AuthUser => {
 		role: normalizeRole(
 			typeof metadata.role === "string" ? metadata.role : undefined,
 		),
+		isAccountAdmin: authUser.app_metadata?.account_role === "admin",
 		displayName,
 		avatar,
 		createdAt: authUser.created_at ?? new Date().toISOString(),
@@ -109,54 +126,17 @@ const buildFallbackUser = (authUser: User): AuthUser => {
 	};
 };
 
-const isEmailRateLimitError = (error: unknown): boolean => {
-	if (!error || typeof error !== "object") return false;
-	const message =
-		typeof (error as { message?: string }).message === "string"
-			? (error as { message: string }).message
-			: "";
-	const status = (error as { status?: number }).status;
-	if (typeof status === "number" && status === 429) return true;
-	const normalized = message.toLowerCase();
-	return (
-		normalized.includes("rate limit") ||
-		normalized.includes("too many requests") ||
-		normalized.includes("email rate")
-	);
+const toAuthFailure = (
+	error: unknown,
+	operation: AuthOperation,
+): AuthResult => {
+	const normalizedError = normalizeAuthError(error, operation);
+	return {
+		error: normalizedError.message,
+		errorKind: normalizedError.kind,
+	};
 };
 
-const signUpViaEdgeFunction = async (
-	email: string,
-	password: string,
-	displayName: string,
-	role: UserRole,
-): Promise<{ error?: string; success?: boolean }> => {
-	try {
-		const { data, error } = await supabase.functions.invoke<{
-			userId?: string;
-		}>("signup", {
-			body: {
-				email,
-				password,
-				displayName,
-				role,
-			},
-		});
-
-		if (error) {
-			return { error: error.message };
-		}
-
-		if (!data?.userId) {
-			return { error: "Signup failed (missing user id)" };
-		}
-
-		return { success: true };
-	} catch (error) {
-		const message = error instanceof Error ? error.message : String(error);
-		return { error: message };
-	}
-};
 const withTimeout = async <T,>(
 	promise: PromiseLike<T>,
 	timeoutMs: number,
@@ -236,9 +216,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 					id: data.id,
 					email: authUser.email ?? "",
 					role: resolvedRole,
+					isAccountAdmin: fallbackUser.isAccountAdmin,
 					displayName: fallbackUser.displayName,
 					avatar: fallbackUser.avatar,
 					createdAt: data.created_at,
+					user_metadata: fallbackUser.user_metadata,
 				});
 			} else {
 				useAuthStore.getState().setUser(fallbackUser);
@@ -303,10 +285,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
 	const signIn = async (email: string, password: string, role: UserRole) => {
 		if (!isSupabaseConfigured) {
-			return {
-				error:
-					"Backend is not configured. Please check your Supabase environment variables.",
-			};
+			return toAuthFailure(
+				{ code: "CONFIG", message: "Backend is not configured" },
+				"sign-in",
+			);
 		}
 
 		try {
@@ -315,17 +297,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 				password,
 			});
 
-			if (error) {
-				const msg = error.message;
-				// Guard against numeric-only or empty error messages (e.g. status codes)
-				if (!msg || /^\d+$/.test(msg)) {
-					return {
-						error:
-							"Unable to sign in. Please check your credentials and try again.",
-					};
-				}
-				return { error: msg };
-			}
+			if (error) return toAuthFailure(error, "sign-in");
 
 			if (data.user) {
 				// App-level suspension (admin_set_user_ban): banned accounts are
@@ -337,9 +309,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 					.maybeSingle();
 				if (profileRow?.banned_at) {
 					await supabase.auth.signOut();
-					return {
-						error: "This account has been suspended. Contact your Warden.",
-					};
+					return toAuthFailure(
+						{ code: "user_banned", message: "Account has been suspended" },
+						"sign-in",
+					);
 				}
 
 				// Existing users logging in already have a profile due to the handle_new_user trigger.
@@ -354,20 +327,23 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
 				if (upsertError) {
 					await supabase.auth.signOut();
-					return {
-						error: `Unable to update account role: ${upsertError.message || "Unknown db error"} ${upsertError.details || ""}`,
-					};
+					return toAuthFailure(upsertError, "profile-update");
 				}
 
-				// Keep metadata updated so it stays in sync
-				await supabase.auth.updateUser({
+				// Keep mutable gameplay metadata synchronized; account authority is
+				// never written here and comes only from app_metadata.
+				const { error: metadataError } = await supabase.auth.updateUser({
 					data: { role },
 				});
+				if (metadataError) {
+					await supabase.auth.signOut();
+					return toAuthFailure(metadataError, "profile-update");
+				}
 			}
 
 			return { success: true };
-		} catch {
-			return { error: "An unexpected error occurred" };
+		} catch (error) {
+			return toAuthFailure(error, "sign-in");
 		}
 	};
 
@@ -378,9 +354,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 		role: UserRole,
 	) => {
 		if (!isSupabaseConfigured) {
+			return toAuthFailure(
+				{ code: "CONFIG", message: "Backend is not configured" },
+				"sign-up",
+			);
+		}
+		const passwordValidation = validateNewPassword(password);
+		if (!passwordValidation.valid) {
 			return {
-				error:
-					"Backend is not configured. Please check your Supabase environment variables.",
+				error: passwordValidation.message,
+				errorKind: "weak-password" as const,
 			};
 		}
 
@@ -399,25 +382,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 				},
 			});
 
-			if (error) {
-				if (isEmailRateLimitError(error)) {
-					const fallback = await signUpViaEdgeFunction(
-						email,
-						password,
-						displayName,
-						role,
-					);
-					if (!fallback.error) {
-						return await signIn(email, password, role);
-					}
-					logError("Signup email rate limit fallback failed:", fallback.error);
-					return {
-						error:
-							"Signups are temporarily rate limited. Please try again in a few minutes.",
-					};
-				}
-				return { error: error.message };
-			}
+			if (error) return toAuthFailure(error, "sign-up");
 
 			if (!data.session) {
 				return { success: true, needsEmailConfirmation: true };
@@ -436,13 +401,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 				);
 
 				if (profileError) {
-					return { error: "Failed to create user profile" };
+					return toAuthFailure(profileError, "profile-update");
 				}
 			}
 
 			return { success: true };
-		} catch {
-			return { error: "An unexpected error occurred" };
+		} catch (error) {
+			return toAuthFailure(error, "sign-up");
 		}
 	};
 
@@ -454,20 +419,20 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
 	const requestPasswordReset = async (email: string): Promise<AuthResult> => {
 		if (!isSupabaseConfigured) {
-			return {
-				error:
-					"Backend is not configured. Please check your Supabase environment variables.",
-			};
+			return toAuthFailure(
+				{ code: "CONFIG", message: "Backend is not configured" },
+				"reset-request",
+			);
 		}
 
 		try {
 			const { error } = await supabase.auth.resetPasswordForEmail(email, {
 				redirectTo: buildPasswordResetRedirectUrl(),
 			});
-			if (error) return { error: error.message };
+			if (error) return toAuthFailure(error, "reset-request");
 			return { success: true };
-		} catch {
-			return { error: "An unexpected error occurred" };
+		} catch (error) {
+			return toAuthFailure(error, "reset-request");
 		}
 	};
 
@@ -475,10 +440,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 		email: string,
 	): Promise<AuthResult> => {
 		if (!isSupabaseConfigured) {
-			return {
-				error:
-					"Backend is not configured. Please check your Supabase environment variables.",
-			};
+			return toAuthFailure(
+				{ code: "CONFIG", message: "Backend is not configured" },
+				"resend-confirmation",
+			);
 		}
 
 		try {
@@ -487,23 +452,104 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 				email,
 				options: { emailRedirectTo: buildAuthCallbackUrl() },
 			});
-			if (error) {
-				if (isEmailRateLimitError(error)) {
-					return {
-						error:
-							"Emails are temporarily rate limited. Please try again in a few minutes.",
-					};
-				}
-				return { error: error.message };
-			}
+			if (error) return toAuthFailure(error, "resend-confirmation");
 			return { success: true };
-		} catch {
-			return { error: "An unexpected error occurred" };
+		} catch (error) {
+			return toAuthFailure(error, "resend-confirmation");
 		}
 	};
 
-	const updateProfile = async (updates: Partial<AuthUser>) => {
-		if (!user) return { error: "No user logged in" };
+	const beginPasswordChange = async (): Promise<AuthResult> => {
+		if (!isSupabaseConfigured) {
+			return toAuthFailure(
+				{ code: "CONFIG", message: "Backend is not configured" },
+				"reauthenticate",
+			);
+		}
+
+		try {
+			const { data, error: sessionError } = await supabase.auth.getSession();
+			if (sessionError) return toAuthFailure(sessionError, "reauthenticate");
+			if (!data.session) {
+				return toAuthFailure(
+					{ code: "session_not_found", message: "Auth session missing" },
+					"reauthenticate",
+				);
+			}
+			const { error } = await supabase.auth.reauthenticate();
+			if (error) return toAuthFailure(error, "reauthenticate");
+			return { success: true };
+		} catch (error) {
+			return toAuthFailure(error, "reauthenticate");
+		}
+	};
+
+	const confirmPasswordChange = async ({
+		password,
+		nonce,
+	}: PasswordChangeInput): Promise<AuthResult> => {
+		const passwordValidation = validateNewPassword(password);
+		if (!passwordValidation.valid) {
+			return {
+				error: passwordValidation.message,
+				errorKind: "weak-password",
+			};
+		}
+		if (!nonce.trim()) {
+			return toAuthFailure(
+				{ code: "reauth_nonce_missing", message: "Missing nonce" },
+				"password-change",
+			);
+		}
+
+		try {
+			const { error } = await supabase.auth.updateUser({
+				password,
+				nonce: nonce.trim(),
+			});
+			if (error) return toAuthFailure(error, "password-change");
+			return { success: true };
+		} catch (error) {
+			return toAuthFailure(error, "password-change");
+		}
+	};
+
+	const completePasswordRecovery = async (
+		password: string,
+	): Promise<AuthResult> => {
+		const passwordValidation = validateNewPassword(password);
+		if (!passwordValidation.valid) {
+			return {
+				error: passwordValidation.message,
+				errorKind: "weak-password",
+			};
+		}
+
+		try {
+			const { error } = await supabase.auth.updateUser({ password });
+			if (error) return toAuthFailure(error, "reset-complete");
+
+			const { error: signOutError } = await supabase.auth.signOut({
+				scope: "local",
+			});
+			if (signOutError) {
+				logError("Password changed but local sign-out failed:", signOutError);
+			}
+			useAuthStore.getState().setUser(null);
+			useAuthStore.getState().setSession(null);
+			return { success: true };
+		} catch (error) {
+			return toAuthFailure(error, "reset-complete");
+		}
+	};
+
+	const updateProfile = async (updates: AuthProfileUpdates) => {
+		if (!user) {
+			return toAuthFailure(
+				{ code: "session_not_found", message: "Auth session missing" },
+				"profile-update",
+			);
+		}
 
 		try {
 			const metadataUpdates: Record<string, unknown> = {};
@@ -517,7 +563,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 					data: metadataUpdates,
 				});
 				if (authError) {
-					return { error: authError.message };
+					return toAuthFailure(authError, "profile-update");
 				}
 			}
 
@@ -534,14 +580,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 				.eq("id", user.id);
 
 			if (error) {
-				return { error: error.message };
+				return toAuthFailure(error, "profile-update");
 			}
 
 			// Update local state
 			useAuthStore.getState().patchUser(updates);
 			return { success: true };
-		} catch {
-			return { error: "An unexpected error occurred" };
+		} catch (error) {
+			return toAuthFailure(error, "profile-update");
 		}
 	};
 
@@ -566,6 +612,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 		signOut,
 		requestPasswordReset,
 		resendConfirmationEmail,
+		beginPasswordChange,
+		confirmPasswordChange,
+		completePasswordRecovery,
 		updateProfile,
 		hasPermission,
 		isWarden,

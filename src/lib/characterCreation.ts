@@ -14,8 +14,18 @@ import {
 	type AbilityUseKind,
 	deriveAbilityUseGrant,
 } from "@/lib/abilityUseEconomy";
-import { findCanonicalCastableByName } from "@/lib/canonicalCompendium";
+import {
+	findCanonicalCastableByName,
+	resolveCanonicalReference,
+} from "@/lib/canonicalCompendium";
 import { calculateFeatureUses } from "@/lib/characterEngine";
+import {
+	buildFeatureUseModifiers,
+	readFeatureUseMetadata,
+	resolveFeatureRecharge,
+	resolveFeatureUsesMax,
+	resolveStoredFeatureRecharge,
+} from "@/lib/featureUses";
 import {
 	addLocalEquipment,
 	addLocalFeature,
@@ -31,11 +41,7 @@ import {
 	updateLocalFeature,
 } from "@/lib/guestStore";
 import { getStaticPathUnlockLevel } from "@/lib/levelGating";
-import {
-	getStaticItems,
-	getStaticJobs,
-	getStaticPaths,
-} from "@/lib/ProtocolDataManager";
+import { getStaticItems, getStaticJobs } from "@/lib/ProtocolDataManager";
 import {
 	getCharacterCampaignId,
 	isSourcebookAccessible,
@@ -374,36 +380,49 @@ export async function autoUpdateFeatureUses(
 	if (!features) return;
 
 	for (const feature of features) {
-		// `modifiers` is a Json column; fighting styles and rune grants store
-		// object-shaped payloads, so only array-shaped values carry uses formulas.
-		const modifiers = Array.isArray(feature.modifiers)
-			? (feature.modifiers as Array<{
-					type: string;
-					target: string;
-					value: string | number | boolean;
-				}>)
-			: null;
-		const usesFormula = modifiers?.find(
-			(m) => m.type === "resource" && m.target === "uses_formula",
-		)?.value as string | undefined;
+		const metadata = readFeatureUseMetadata(feature.modifiers);
+		if (!metadata.formula) continue;
 
-		if (usesFormula) {
-			const newMax = calculateFeatureUses(
-				usesFormula,
-				character.level,
-				proficiencyBonus,
-				abilities,
-			);
+		const isUnlimited =
+			metadata.unlimitedAtLevel !== null &&
+			character.level >= metadata.unlimitedAtLevel;
+		const newMax = isUnlimited
+			? null
+			: calculateFeatureUses(
+					metadata.formula,
+					character.level,
+					proficiencyBonus,
+					abilities,
+				);
+		const newRecharge = resolveStoredFeatureRecharge(metadata, character.level);
+		const patch: Database["public"]["Tables"]["character_features"]["Update"] =
+			{};
 
-			if (newMax !== null && feature.uses_max !== newMax) {
-				await supabase
-					.from("character_features")
-					.update({
-						uses_max: newMax,
-						uses_current: Math.min(feature.uses_current ?? newMax, newMax),
-					})
-					.eq("id", feature.id);
+		if (isUnlimited) {
+			if (
+				feature.uses_max !== null ||
+				feature.uses_current !== null ||
+				feature.recharge !== null
+			) {
+				patch.uses_max = null;
+				patch.uses_current = null;
+				patch.recharge = null;
 			}
+		} else {
+			if (newMax !== null && feature.uses_max !== newMax) {
+				patch.uses_max = newMax;
+				patch.uses_current = Math.min(feature.uses_current ?? newMax, newMax);
+			}
+			if (newRecharge !== undefined && feature.recharge !== newRecharge) {
+				patch.recharge = newRecharge;
+			}
+		}
+
+		if (Object.keys(patch).length > 0) {
+			await supabase
+				.from("character_features")
+				.update(patch)
+				.eq("id", feature.id);
 		}
 	}
 }
@@ -649,6 +668,174 @@ export type FeatureModifier = {
 	source: string;
 };
 
+type ReconciledCharacterFeature = {
+	id: string;
+	feature_id?: string | null;
+	feat_id?: string | null;
+	name: string;
+	source?: string | null;
+	level_acquired?: number | null;
+	description?: string | null;
+	action_type?: string | null;
+	uses_max?: number | null;
+	uses_current?: number | null;
+	recharge?: string | null;
+	is_active?: boolean | null;
+	modifiers?: Json | null;
+	homebrew_id?: string | null;
+};
+
+type CanonicalFeaturePayload = Omit<
+	Database["public"]["Tables"]["character_features"]["Insert"],
+	"character_id"
+>;
+
+const normalizeFeatureIdentity = (value: string | null | undefined): string =>
+	(value ?? "")
+		.trim()
+		.toLowerCase()
+		.replace(/[^a-z0-9]+/g, "-")
+		.replace(/(^-|-$)/g, "");
+
+const buildCanonicalFeatureId = (
+	kind:
+		| "job-awakening"
+		| "job-feature"
+		| "path-feature"
+		| "path-ability"
+		| "regent-feature",
+	ownerId: string,
+	featureName: string,
+): string =>
+	`${kind}:${normalizeFeatureIdentity(ownerId)}:${normalizeFeatureIdentity(featureName)}`;
+
+async function listCharacterFeatureRows(
+	characterId: string,
+): Promise<ReconciledCharacterFeature[]> {
+	if (isLocalCharacterId(characterId)) {
+		return listLocalFeatures(
+			characterId,
+		) as unknown as ReconciledCharacterFeature[];
+	}
+	const { data, error } = await supabase
+		.from("character_features")
+		.select("*")
+		.eq("character_id", characterId);
+	if (error) {
+		console.warn("listCharacterFeatureRows: failed to read features", error);
+		return [];
+	}
+	return (data ?? []) as ReconciledCharacterFeature[];
+}
+
+async function updateCharacterFeatureById(
+	characterId: string,
+	featureId: string,
+	patch: Database["public"]["Tables"]["character_features"]["Update"],
+): Promise<void> {
+	if (isLocalCharacterId(characterId)) {
+		updateLocalFeature(featureId, patch as never);
+		return;
+	}
+	const { error } = await supabase
+		.from("character_features")
+		.update(patch)
+		.eq("character_id", characterId)
+		.eq("id", featureId);
+	if (error) {
+		console.warn("updateCharacterFeatureById: failed to update feature", error);
+	}
+}
+
+function mergeCanonicalFeatureModifiers(
+	existing: Json | null | undefined,
+	canonical: Array<Record<string, Json>>,
+	featureName: string,
+): Json | null {
+	const featureKey = normalizeFeatureIdentity(featureName);
+	const retained = Array.isArray(existing)
+		? existing.filter((value) => {
+				if (!value || typeof value !== "object" || Array.isArray(value)) {
+					return true;
+				}
+				const modifier = value as Record<string, Json>;
+				const isFormula =
+					modifier.type === "resource" && modifier.target === "uses_formula";
+				const isOwned =
+					typeof modifier.source === "string" &&
+					normalizeFeatureIdentity(modifier.source) === featureKey;
+				return !isFormula && !isOwned;
+			})
+		: [];
+	const merged = [...retained, ...canonical];
+	return merged.length > 0 ? (merged as Json) : null;
+}
+
+async function reconcileCanonicalFeatureRow(
+	characterId: string,
+	rows: ReconciledCharacterFeature[],
+	matchLegacy: (row: ReconciledCharacterFeature) => boolean,
+	payload: CanonicalFeaturePayload,
+	featureName: string,
+): Promise<void> {
+	const existing = rows.find(
+		(row) =>
+			(payload.feature_id !== null &&
+				payload.feature_id !== undefined &&
+				row.feature_id === payload.feature_id) ||
+			matchLegacy(row),
+	);
+	const canonicalModifiers = Array.isArray(payload.modifiers)
+		? (payload.modifiers as Array<Record<string, Json>>)
+		: [];
+	const modifiers = mergeCanonicalFeatureModifiers(
+		existing?.modifiers,
+		canonicalModifiers,
+		featureName,
+	);
+
+	if (!existing) {
+		await insertCharacterFeature(characterId, {
+			...payload,
+			modifiers,
+		});
+		rows.push({
+			id: payload.feature_id ?? crypto.randomUUID(),
+			...payload,
+			modifiers,
+		} as ReconciledCharacterFeature);
+		return;
+	}
+
+	const patch: Database["public"]["Tables"]["character_features"]["Update"] = {
+		feature_id: payload.feature_id,
+		name: payload.name,
+		source: payload.source,
+		level_acquired: payload.level_acquired,
+		description: payload.description,
+		modifiers,
+	};
+	if (payload.action_type !== undefined)
+		patch.action_type = payload.action_type;
+	if (payload.recharge !== undefined) patch.recharge = payload.recharge;
+	if (payload.uses_max !== undefined) {
+		patch.uses_max = payload.uses_max;
+		patch.uses_current =
+			payload.uses_max === null
+				? null
+				: Math.min(existing.uses_current ?? payload.uses_max, payload.uses_max);
+	}
+
+	const changed = Object.entries(patch).some(
+		([key, value]) =>
+			JSON.stringify(existing[key as keyof ReconciledCharacterFeature]) !==
+			JSON.stringify(value),
+	);
+	if (!changed) return;
+	await updateCharacterFeatureById(characterId, existing.id, patch);
+	Object.assign(existing, patch);
+}
+
 /**
  * Get the engine-facing modifiers for a job's racial trait (the "race" half of
  * the race+class fused job). Unlike `getJobTraitModifiers` (class-layer traits),
@@ -671,12 +858,6 @@ export function getRacialTraitModifiers(
 					type: "advantage",
 					value: 0,
 					target: "STR_saves:prone",
-					source: traitName,
-				},
-				{
-					type: "skill_prof",
-					value: 0,
-					target: "Athletics",
 					source: traitName,
 				},
 			];
@@ -732,11 +913,16 @@ export function getRacialTraitModifiers(
 	if (job === "assassin") {
 		if (trait === "partial dimensional existence") {
 			return [
-				{ type: "skill_prof", value: 0, target: "Stealth", source: traitName },
 				{
-					type: "tool_prof",
+					type: "biometric_no_trace",
 					value: 0,
-					target: "Thieves' Tools",
+					target: "fingerprints|retinas|biological_trace",
+					source: traitName,
+				},
+				{
+					type: "squeeze_gap",
+					value: 1,
+					target: "width_inches_without_penalty",
 					source: traitName,
 				},
 			];
@@ -758,11 +944,10 @@ export function getRacialTraitModifiers(
 	if (job === "striker") {
 		if (trait === "hyper-twitch fibers") {
 			return [
-				{ type: "speed", value: 10, target: "walking", source: traitName },
 				{
-					type: "skill_prof",
+					type: "difficult_terrain_immunity",
 					value: 0,
-					target: "Acrobatics",
+					target: "urban",
 					source: traitName,
 				},
 			];
@@ -810,12 +995,6 @@ export function getRacialTraitModifiers(
 		}
 		if (trait === "arcane optic mutation") {
 			return [
-				{
-					type: "skill_prof",
-					value: 0,
-					target: "Mana Flow",
-					source: traitName,
-				},
 				{
 					type: "see_invisible",
 					value: 30,
@@ -923,12 +1102,6 @@ export function getRacialTraitModifiers(
 		if (trait === "pact brand physiology") {
 			return [
 				{
-					type: "skill_prof",
-					value: 0,
-					target: "Deception",
-					source: traitName,
-				},
-				{
 					type: "advantage",
 					value: 0,
 					target: "save:charm:non_patron",
@@ -989,12 +1162,6 @@ export function getRacialTraitModifiers(
 		}
 		if (trait === "aura of command") {
 			return [
-				{
-					type: "skill_prof",
-					value: 0,
-					target: "Dimensional Lore",
-					source: traitName,
-				},
 				{
 					type: "advantage",
 					value: 0,
@@ -1089,18 +1256,18 @@ export function getJobTraitModifiers(
 
 	// 1. DESTROYER
 	if (job === "destroyer") {
-		if (trait === "gate breaker") {
+		if (trait === "rift breaker") {
 			return [
-				{ type: "advantage", value: 0, target: "save:fear", source: traitName },
-			];
-		}
-		if (trait === "combat telemetry") {
-			// Bonus action scan: advantage on Investigation checks
-			return [
+				{
+					type: "damage_multiplier",
+					value: 2,
+					target: "objects|structures",
+					source: traitName,
+				},
 				{
 					type: "advantage",
 					value: 0,
-					target: "skill:investigation",
+					target: "save:fear:gate_born_anomaly",
 					source: traitName,
 				},
 			];
@@ -1194,14 +1361,14 @@ export function getJobTraitModifiers(
 		if (trait === "arcane sight") {
 			return [
 				{
-					type: "advantage",
+					type: "magic_detection",
 					value: 0,
-					target: "skill:arcana",
+					target: "school|power_level|enchanted_item",
 					source: traitName,
 				},
 			];
 		}
-		if (trait === "spell resistance lattice") {
+		if (trait === "aetheric-sanctum mind") {
 			return [
 				{ type: "resistance", value: 0, target: "psychic", source: traitName },
 			];
@@ -1324,22 +1491,22 @@ export function getJobTraitModifiers(
 
 	// 10. CONTRACTOR
 	if (job === "contractor") {
-		if (trait === "pact resilience") {
+		if (trait === "aetheric bandwidth") {
 			return [
 				{
-					type: "advantage",
+					type: "pact_slot_recovery",
 					value: 0,
-					target: "save:charm",
+					target: "short-rest",
 					source: traitName,
 				},
 			];
 		}
-		if (trait === "contract vision") {
+		if (trait === "patron's shield") {
 			return [
 				{
-					type: "advantage",
-					value: 0,
-					target: "skill:insight",
+					type: "save_reroll_advantage",
+					value: 1,
+					target: "per_long_rest",
 					source: traitName,
 				},
 			];
@@ -1474,19 +1641,25 @@ export function getJobAwakeningFeatureModifiers(
 		if (feature === "reinforced frame") {
 			return [
 				{
-					type: "death_save_success_regain_hp",
+					type: "death_prevention",
 					value: 1,
-					target: "self",
+					target: "drop_to_1_hp:per_long_rest",
 					source: featureName,
 				},
 			];
 		}
-		if (feature === "system targeting hud") {
+		if (feature === "aetheric-sight resonance") {
 			return [
 				{
-					type: "advantage",
+					type: "surprise_immunity",
 					value: 0,
-					target: "initiative",
+					target: "while_conscious",
+					source: featureName,
+				},
+				{
+					type: "hostile_intent_sense",
+					value: 30,
+					target: "range_ft",
 					source: featureName,
 				},
 				{
@@ -1497,18 +1670,32 @@ export function getJobAwakeningFeatureModifiers(
 				},
 			];
 		}
-		if (feature === "adrenal regulator") {
+		if (feature === "adrenal flux") {
 			return [
-				{ type: "damage", value: 0, target: "force:1d4", source: featureName },
+				{
+					type: "conditional_damage",
+					value: 0,
+					target:
+						level >= 11 ? "below_half_hp:force:1d6" : "below_half_hp:force:1d4",
+					source: featureName,
+				},
 			];
 		}
-		if (feature === "weapon neural bond") {
+		if (feature === "weapon essence bond") {
 			const bonus = level >= 17 ? 2 : 1;
 			return [
-				{ type: "attack", value: bonus, target: "melee", source: featureName },
-				{ type: "damage", value: bonus, target: "melee", source: featureName },
-				{ type: "attack", value: bonus, target: "ranged", source: featureName },
-				{ type: "damage", value: bonus, target: "ranged", source: featureName },
+				{
+					type: "attack",
+					value: bonus,
+					target: "proficient_weapon",
+					source: featureName,
+				},
+				{
+					type: "damage",
+					value: bonus,
+					target: "proficient_weapon",
+					source: featureName,
+				},
 				{
 					type: "disarm_immunity",
 					value: 0,
@@ -1596,7 +1783,7 @@ export function getJobAwakeningFeatureModifiers(
 				},
 			];
 		}
-		if (feature === "shadow phase") {
+		if (feature === "umbral phase") {
 			return [
 				{
 					type: "advantage",
@@ -1631,7 +1818,7 @@ export function getJobAwakeningFeatureModifiers(
 
 	// 4. STRIKER
 	if (job === "striker") {
-		if (feature === "neural overclock") {
+		if (feature === "aetheric overclock") {
 			return [
 				{ type: "reroll_ones", value: 0, target: "self", source: featureName },
 			];
@@ -1654,7 +1841,12 @@ export function getJobAwakeningFeatureModifiers(
 		}
 		if (feature === "impulse sense") {
 			return [
-				{ type: "blindsight", value: 120, target: "self", source: featureName },
+				{
+					type: "bioelectric_sense",
+					value: 120,
+					target: "living_creatures:range_ft",
+					source: featureName,
+				},
 			];
 		}
 		if (feature === "autonomic mastery") {
@@ -1667,11 +1859,7 @@ export function getJobAwakeningFeatureModifiers(
 				},
 			];
 		}
-		if (feature === "force channeling") {
-			return [
-				{ type: "damage", value: 0, target: "force:1d4", source: featureName },
-			];
-		}
+		if (feature === "force channeling") return [];
 	}
 
 	// 5. MAGE
@@ -1681,39 +1869,39 @@ export function getJobAwakeningFeatureModifiers(
 				{
 					type: "advantage",
 					value: 0,
-					target: "save:INT",
+					target: "save:INT:magic",
 					source: featureName,
 				},
 				{
 					type: "advantage",
 					value: 0,
-					target: "save:SENSE",
+					target: "save:SENSE:magic",
 					source: featureName,
 				},
 				{
 					type: "advantage",
 					value: 0,
-					target: "save:PRE",
-					source: featureName,
-				},
-			];
-		}
-		if (feature === "system read access") {
-			return [
-				{
-					type: "advantage",
-					value: 0,
-					target: "skill:arcana",
+					target: "save:PRE:magic",
 					source: featureName,
 				},
 			];
 		}
-		if (feature === "real-time decompilation") {
+		if (feature === "aetheric-sight resonance") {
 			return [
 				{
-					type: "advantage",
+					type: "magic_detection",
 					value: 0,
-					target: "save:spells",
+					target: "school|magical_energy",
+					source: featureName,
+				},
+			];
+		}
+		if (feature === "aetheric-parsing") {
+			return [
+				{
+					type: "counter_rite_analysis",
+					value: 0,
+					target: "enemy_spell",
 					source: featureName,
 				},
 			];
@@ -1905,36 +2093,14 @@ export function getJobAwakeningFeatureModifiers(
 
 	// 10. CONTRACTOR
 	if (job === "contractor") {
-		if (feature === "contract magic" || feature === "pact-warded mind") {
+		if (feature === "rift mantle") {
 			return [
 				{
-					type: "slot_recovery_on_kill",
-					value: 1,
-					target: "self",
-					source: featureName,
-				},
-			];
-		}
-		if (feature === "entity manifestation" || feature === "entity awareness") {
-			return [
-				{ type: "speed_fly", value: 30, target: "self", source: featureName },
-				{ type: "aura_fear", value: 10, target: "radius", source: featureName },
-			];
-		}
-		if (feature === "empowered conduit") {
-			return [
-				{
-					type: "damage",
+					type: "resistance",
 					value: 0,
-					target: "force:PRE_mod",
+					target: "all_until_start_of_next_turn",
 					source: featureName,
 				},
-				{ type: "push", value: 10, target: "target", source: featureName },
-			];
-		}
-		if (feature === "patron's boon") {
-			return [
-				{ type: "resistance", value: 0, target: "choice", source: featureName },
 			];
 		}
 	}
@@ -1980,7 +2146,17 @@ export function getJobAwakeningFeatureModifiers(
 
 	// 12. HOLY KNIGHT
 	if (job === "holy knight" || job === "holy-knight") {
-		if (feature === "covenant strike" || feature === "covenant bond") {
+		if (feature === "covenant bond") {
+			return [
+				{
+					type: "death_save_success_regain_hp",
+					value: 1,
+					target: "self|ally_within_10_ft",
+					source: featureName,
+				},
+			];
+		}
+		if (feature === "covenant strike") {
 			return [
 				{
 					type: "speed_reduction_on_hit",
@@ -1990,12 +2166,22 @@ export function getJobAwakeningFeatureModifiers(
 				},
 			];
 		}
-		if (feature === "radiant conduit" || feature === "oath sense") {
+		if (feature === "oath sense") {
+			return [
+				{
+					type: "entity_detection",
+					value: 60,
+					target: "celestial|anomaly",
+					source: featureName,
+				},
+			];
+		}
+		if (feature === "radiant conduit") {
 			return [
 				{
 					type: "hp-regain-aura",
 					value: 0,
-					target: "allies",
+					target: "allies:30_ft:PRE_mod:on_kill",
 					source: featureName,
 				},
 			];
@@ -2024,7 +2210,7 @@ export function getJobAwakeningFeatureModifiers(
 
 	// 13. TECHNOMANCER
 	if (job === "technomancer") {
-		if (feature === "blueprint vision") {
+		if (feature === "mandate vision") {
 			return [
 				{
 					type: "expertise",
@@ -2045,7 +2231,7 @@ export function getJobAwakeningFeatureModifiers(
 			];
 		}
 		if (feature === "infusion optimization") {
-			const bonus = level >= 14 ? 2 : 1;
+			const bonus = level >= 14 ? 6 : 3;
 			return [
 				{
 					type: "item_bonus",
@@ -2159,6 +2345,36 @@ function getRawJobASI(job: unknown): JobASIValue {
 	return source?.ability_score_improvements ?? source?.abilityScoreImprovements;
 }
 
+const MAGE_ASI_V1_FEATURE_ID = "content-migration:mage-asi:int2-sense1:v1";
+const MAGE_ASI_CURRENT_DESCRIPTION = "Racial ASI applied: INT +2, SENSE +1.";
+const MAGE_ASI_LEGACY_PATTERN = /^Racial ASI applied:\s*INT \+2,\s*PRE \+1\.$/i;
+const MAGE_ASI_PENDING_PATTERN =
+	/^Mage ASI migration pending:\s*PRE=(\d+),\s*SENSE=(\d+)\.$/i;
+
+function getMageAsiMigrationTargets(
+	description: string | null | undefined,
+	currentPre: number,
+	currentSense: number,
+): { pre: number; sense: number; pendingDescription: string } | null {
+	const pending = description?.match(MAGE_ASI_PENDING_PATTERN);
+	if (pending) {
+		return {
+			pre: Number(pending[1]),
+			sense: Number(pending[2]),
+			pendingDescription: pending[0],
+		};
+	}
+	if (!description || !MAGE_ASI_LEGACY_PATTERN.test(description)) return null;
+	if (currentPre <= 0 || currentSense >= 20) return null;
+	const pre = currentPre - 1;
+	const sense = currentSense + 1;
+	return {
+		pre,
+		sense,
+		pendingDescription: `Mage ASI migration pending: PRE=${pre}, SENSE=${sense}.`,
+	};
+}
+
 /**
  * Get the ability score improvements for a job, mapped to Rift Ascendant ability names.
  * Returns a Record like { STR: 2, VIT: 1 }.
@@ -2201,7 +2417,7 @@ export function getPathFeatureModifiers(
 	// 1. DESTROYER PATHS
 	if (job === "destroyer") {
 		if (path === "path of the apex predator") {
-			if (feature === "optimized lethality")
+			if (feature === "absolute lethality")
 				return [
 					{
 						type: "crit_threshold",
@@ -2228,7 +2444,7 @@ export function getPathFeatureModifiers(
 						source: featureName,
 					},
 				];
-			if (feature === "auto-repair protocol")
+			if (feature === "auto-repair rite")
 				return [
 					{
 						type: "hp_regain_start_of_turn",
@@ -2250,7 +2466,7 @@ export function getPathFeatureModifiers(
 				];
 		}
 		if (path === "path of the spell breaker") {
-			if (feature === "lattice combat flow")
+			if (feature === "weave-combat attunement")
 				return [
 					{
 						type: "caster_level",
@@ -2275,8 +2491,8 @@ export function getPathFeatureModifiers(
 
 	// 2. BERSERKER PATHS
 	if (job === "berserker") {
-		if (path === "path of the feedback loop") {
-			if (feature === "escalating loop")
+		if (path === "path of the escalating resonance") {
+			if (feature === "escalating harmony")
 				return [
 					{
 						type: "bonus_action_attack",
@@ -2286,23 +2502,12 @@ export function getPathFeatureModifiers(
 					},
 				];
 		}
-		if (path === "path of the gate beast") {
-			if (feature === "bonded aspect" && feature.includes("tank-beast"))
-				return [
-					{
-						type: "resistance",
-						value: 0,
-						target: "all_but_psychic",
-						source: featureName,
-					},
-				];
-		}
 	}
 
 	// 3. ASSASSIN PATHS
 	if (job === "assassin") {
 		if (path === "path of the gate runner") {
-			if (feature === "wall runner")
+			if (feature === "veil runner")
 				return [
 					{
 						type: "climb_speed",
@@ -2313,7 +2518,7 @@ export function getPathFeatureModifiers(
 				];
 		}
 		if (path === "path of the terminus") {
-			if (feature === "first strike protocol")
+			if (feature === "initial strike rite")
 				return [
 					{
 						type: "advantage",
@@ -2327,17 +2532,17 @@ export function getPathFeatureModifiers(
 
 	// 4. STRIKER PATHS
 	if (job === "striker") {
-		if (path === "path of the kinetic fist") {
-			if (feature === "impact technique")
+		if (path === "path of the kinetic core") {
+			if (feature === "kinetic technique")
 				return [
 					{
 						type: "impact_effect",
 						value: 0,
-						target: "gate_of_force",
+						target: "Rapid Barrage",
 						source: featureName,
 					},
 				];
-			if (feature === "neural repair")
+			if (feature === "harmonic repair")
 				return [
 					{
 						type: "hp_regain_action",
@@ -2348,7 +2553,7 @@ export function getPathFeatureModifiers(
 				];
 		}
 		if (path === "path of the phantom step") {
-			if (feature === "shadow impulse")
+			if (feature === "shadow resonance")
 				return [
 					{
 						type: "at_will_spell",
@@ -2385,67 +2590,55 @@ export function getPathFeatureModifiers(
 	}
 
 	// 6. ESPER PATHS
-	if (job === "esper") {
-		if (path === "draconic bloodline" || path === "path of the mana dragon") {
-			if (feature === "dragon hide")
-				return [
-					{ type: "ac_base", value: 13, target: "AGI", source: featureName },
-				];
-			if (feature === "draconic resilience")
-				return [
-					{
-						type: "hp-max",
-						value: level,
-						target: "hp_max",
-						source: featureName,
-					},
-				];
-		}
+	if (
+		job === "esper" &&
+		path === "path of the aetheric dragon" &&
+		feature === "aetheric scale armor"
+	) {
+		return [
+			{ type: "ac_base", value: 13, target: "AGI", source: featureName },
+			{
+				type: "hp-max",
+				value: level,
+				target: "hp_max",
+				source: featureName,
+			},
+		];
 	}
 
 	// 7. REVENANT PATHS
-	if (job === "revenant") {
-		if (path === "grave lord" || path === "path of the soul reaper") {
-			if (feature === "grim harvest")
-				return [
-					{
-						type: "hp_regain_on_kill",
-						value: 2,
-						target: "spell_level",
-						source: featureName,
-					},
-				];
-		}
-	}
+	// No source-explicit flat modifiers are safe to automate yet.
 
 	// 8. SUMMONER PATHS
-	if (job === "summoner") {
-		if (path === "circle of the moon" || path === "path of the entity shift") {
-			if (feature === "combat shift")
-				return [
-					{
-						type: "bonus_action_shift",
-						value: 0,
-						target: "self",
-						source: featureName,
-					},
-				];
-		}
+	if (
+		job === "summoner" &&
+		path === "path of the apex shifter" &&
+		feature === "absolute entity shift"
+	) {
+		return [
+			{
+				type: "bonus_action_shift",
+				value: 0,
+				target: "Entity Shift",
+				source: featureName,
+			},
+		];
 	}
 
 	// 9. HERALD PATHS
-	if (job === "herald") {
-		if (path === "life domain" || path === "path of the restorer") {
-			if (feature === "disciple of life")
-				return [
-					{
-						type: "healing_bonus",
-						value: 2,
-						target: "spell_level",
-						source: featureName,
-					},
-				];
-		}
+	if (
+		job === "herald" &&
+		path === "path of the restoration mandate" &&
+		feature === "anchor of life"
+	) {
+		return [
+			{
+				type: "healing_bonus",
+				value: 2,
+				target: "spell_level",
+				source: featureName,
+			},
+		];
 	}
 
 	// 10. CONTRACTOR PATHS
@@ -2464,18 +2657,19 @@ export function getPathFeatureModifiers(
 	}
 
 	// 11. STALKER PATHS
-	if (job === "stalker") {
-		if (path === "ascendant" || path === "path of the apex stalker") {
-			if (feature === "ascendant's prey")
-				return [
-					{
-						type: "choice:1",
-						value: 0,
-						target: "prey_type",
-						source: featureName,
-					},
-				];
-		}
+	if (
+		job === "stalker" &&
+		path === "path of the umbral ascendant" &&
+		feature === "void-minded"
+	) {
+		return [
+			{
+				type: "proficiency",
+				value: 0,
+				target: "save:SENSE",
+				source: featureName,
+			},
+		];
 	}
 
 	// 12. HOLY KNIGHT PATHS
@@ -2494,33 +2688,37 @@ export function getPathFeatureModifiers(
 	}
 
 	// 13. TECHNOMANCER PATHS
-	if (job === "technomancer") {
-		if (path === "alchemist" || path === "path of the bio-architect") {
-			if (feature === "experimental elixir")
-				return [
-					{
-						type: "resource_max",
-						value: 1,
-						target: "elixirs",
-						source: featureName,
-					},
-				];
-		}
+	if (
+		job === "technomancer" &&
+		(path === "design: the aether vessel" ||
+			path === "design: synchronist binary") &&
+		feature === "absolute multi-strike" &&
+		level >= 5
+	) {
+		return [
+			{
+				type: "extra_attack",
+				value: 1,
+				target: "attack_action",
+				source: featureName,
+			},
+		];
 	}
 
 	// 14. IDOL PATHS
-	if (job === "idol") {
-		if (path === "college of lore" || path === "path of the chronicler") {
-			if (feature === "cutting words")
-				return [
-					{
-						type: "dissonance_effect",
-						value: 0,
-						target: "hype_die",
-						source: featureName,
-					},
-				];
-		}
+	if (
+		job === "idol" &&
+		path === "path of the lore resonance" &&
+		feature === "cutting remarks"
+	) {
+		return [
+			{
+				type: "dissonance_effect",
+				value: 0,
+				target: "hype_die",
+				source: featureName,
+			},
+		];
 	}
 
 	return [];
@@ -3257,14 +3455,18 @@ export async function applyJobAwakeningTraitsToCharacter(
 		const existing = getLocalCharacterWithAbilities(characterId);
 		if (!existing) return;
 
-		// Idempotent ASI apply (guest): track via a marker feature.
+		// Idempotent ASI apply (guest): track via a marker feature. Mage markers
+		// authored before Task 3 are value-aware migrated from PRE +1 to SENSE +1.
 		const existingFeatures = listLocalFeatures(characterId);
-		const asiAlreadyApplied = existingFeatures.some(
+		const asiMarker = existingFeatures.find(
 			(f) =>
 				(f?.source ?? "") === asiApplyKey || (f?.name ?? "") === asiApplyKey,
 		);
+		const asiAlreadyApplied = Boolean(asiMarker);
 		const statsPatch: Record<string, number> = {};
 		const nextAbilities = { ...(existing.abilities ?? {}) };
+		let mageMigrationTargets: ReturnType<typeof getMageAsiMigrationTargets> =
+			null;
 		if (!asiAlreadyApplied) {
 			for (const { db, delta } of asiEntries) {
 				const current =
@@ -3274,6 +3476,26 @@ export async function applyJobAwakeningTraitsToCharacter(
 				statsPatch[db] = Number(current) + delta;
 				const ability = JOB_DB_TO_SYSTEM[db];
 				nextAbilities[ability] = Number(current) + delta;
+			}
+		} else if (jobName.trim().toLowerCase() === "mage" && asiMarker) {
+			mageMigrationTargets = getMageAsiMigrationTargets(
+				asiMarker.description,
+				existing.pre ?? 0,
+				existing.sense ?? 0,
+			);
+			if (mageMigrationTargets) {
+				updateLocalFeature(asiMarker.id, {
+					feature_id: MAGE_ASI_V1_FEATURE_ID,
+					description: mageMigrationTargets.pendingDescription,
+				});
+				statsPatch.pre = mageMigrationTargets.pre;
+				statsPatch.sense = mageMigrationTargets.sense;
+				nextAbilities.PRE = mageMigrationTargets.pre;
+				nextAbilities.SENSE = mageMigrationTargets.sense;
+			} else if (MAGE_ASI_CURRENT_DESCRIPTION === asiMarker.description) {
+				updateLocalFeature(asiMarker.id, {
+					feature_id: MAGE_ASI_V1_FEATURE_ID,
+				});
 			}
 		}
 
@@ -3304,9 +3526,15 @@ export async function applyJobAwakeningTraitsToCharacter(
 			...statsPatch,
 		} as never);
 
-		if (!asiAlreadyApplied && asiEntries.length > 0) {
+		if ((!asiAlreadyApplied && asiEntries.length > 0) || mageMigrationTargets) {
 			setLocalAbilities(characterId, nextAbilities);
+		}
+		if (!asiAlreadyApplied && asiEntries.length > 0) {
 			addLocalFeature(characterId, {
+				feature_id:
+					jobName.trim().toLowerCase() === "mage"
+						? MAGE_ASI_V1_FEATURE_ID
+						: null,
 				name: asiApplyKey,
 				source: asiApplyKey,
 				level_acquired: 1,
@@ -3318,6 +3546,11 @@ export async function applyJobAwakeningTraitsToCharacter(
 				uses_current: null,
 				recharge: null,
 				is_active: false,
+			});
+		} else if (asiMarker && mageMigrationTargets) {
+			updateLocalFeature(asiMarker.id, {
+				feature_id: MAGE_ASI_V1_FEATURE_ID,
+				description: `${MAGE_ASI_CURRENT_DESCRIPTION} Migrated from PRE +1.`,
 			});
 		}
 		return;
@@ -3357,15 +3590,18 @@ export async function applyJobAwakeningTraitsToCharacter(
 		existing = fetched as AwakeningTraitsRow;
 	}
 
-	// Idempotent ASI apply (supabase): check marker feature.
+	// Idempotent ASI apply (supabase): check the value-aware marker feature.
 	const { data: asiMarkerRows } = await supabase
 		.from("character_features")
-		.select("id")
+		.select("id, description, feature_id")
 		.eq("character_id", characterId)
 		.eq("source", asiApplyKey)
 		.limit(1);
-	const asiAlreadyApplied = !!(asiMarkerRows && asiMarkerRows.length > 0);
+	const asiMarker = asiMarkerRows?.[0] ?? null;
+	const asiAlreadyApplied = Boolean(asiMarker);
 	const statsPatch: Record<string, number> = {};
+	let mageMigrationTargets: ReturnType<typeof getMageAsiMigrationTargets> =
+		null;
 	if (!asiAlreadyApplied) {
 		for (const { db, delta } of asiEntries) {
 			const current =
@@ -3373,6 +3609,35 @@ export async function applyJobAwakeningTraitsToCharacter(
 					db
 				] ?? 0;
 			statsPatch[db] = Number(current) + delta;
+		}
+	} else if (jobName.trim().toLowerCase() === "mage" && asiMarker) {
+		mageMigrationTargets = getMageAsiMigrationTargets(
+			asiMarker.description,
+			existing.pre ?? 0,
+			existing.sense ?? 0,
+		);
+		if (mageMigrationTargets) {
+			if (!MAGE_ASI_PENDING_PATTERN.test(asiMarker.description ?? "")) {
+				const { error: pendingError } = await supabase
+					.from("character_features")
+					.update({
+						feature_id: MAGE_ASI_V1_FEATURE_ID,
+						description: mageMigrationTargets.pendingDescription,
+					})
+					.eq("id", asiMarker.id)
+					.eq("character_id", characterId);
+				if (pendingError) {
+					console.warn(
+						"applyJobAwakeningTraitsToCharacter: failed to stage Mage ASI migration",
+						pendingError,
+					);
+					mageMigrationTargets = null;
+				}
+			}
+			if (mageMigrationTargets) {
+				statsPatch.pre = mageMigrationTargets.pre;
+				statsPatch.sense = mageMigrationTargets.sense;
+			}
 		}
 	}
 
@@ -3410,49 +3675,34 @@ export async function applyJobAwakeningTraitsToCharacter(
 			"applyJobAwakeningTraitsToCharacter: failed to persist job traits",
 			writeErr,
 		);
+		return;
+	}
+
+	const scoreUpdates = Object.entries(statsPatch).flatMap(([rawDb, score]) => {
+		const db = rawDb as keyof typeof JOB_DB_TO_SYSTEM;
+		const ability = JOB_DB_TO_SYSTEM[db];
+		return ability
+			? [{ character_id: characterId, ability, score: Number(score) }]
+			: [];
+	});
+	if (scoreUpdates.length > 0) {
+		const { error: abilityWriteErr } = await supabase
+			.from("character_abilities")
+			.upsert(scoreUpdates, { onConflict: "character_id,ability" });
+		if (abilityWriteErr) {
+			console.warn(
+				"applyJobAwakeningTraitsToCharacter: failed to persist job ASI abilities",
+				abilityWriteErr,
+			);
+			return;
+		}
 	}
 
 	if (!asiAlreadyApplied && asiEntries.length > 0) {
-		const { data: abilityRows, error: abilityReadErr } = await supabase
-			.from("character_abilities")
-			.select("ability, score")
-			.eq("character_id", characterId);
-		if (!abilityReadErr) {
-			const currentByAbility = new Map<string, number>();
-			for (const row of abilityRows ?? []) {
-				currentByAbility.set(row.ability, row.score);
-			}
-			const abilityUpdates = asiEntries.map(({ db, delta }) => {
-				const ability = JOB_DB_TO_SYSTEM[db];
-				const rowCurrent =
-					(existing as unknown as Record<string, number | null | undefined>)[
-						db
-					] ??
-					currentByAbility.get(ability) ??
-					10;
-				return {
-					character_id: characterId,
-					ability,
-					score: Number(rowCurrent) + delta,
-				};
-			});
-			const { error: abilityWriteErr } = await supabase
-				.from("character_abilities")
-				.upsert(abilityUpdates, { onConflict: "character_id,ability" });
-			if (abilityWriteErr) {
-				console.warn(
-					"applyJobAwakeningTraitsToCharacter: failed to persist job ASI abilities",
-					abilityWriteErr,
-				);
-			}
-		} else {
-			console.warn(
-				"applyJobAwakeningTraitsToCharacter: failed to read job ASI abilities",
-				abilityReadErr,
-			);
-		}
 		await supabase.from("character_features").insert({
 			character_id: characterId,
+			feature_id:
+				jobName.trim().toLowerCase() === "mage" ? MAGE_ASI_V1_FEATURE_ID : null,
 			name: asiApplyKey,
 			source: asiApplyKey,
 			level_acquired: 1,
@@ -3461,6 +3711,23 @@ export async function applyJobAwakeningTraitsToCharacter(
 				.join(", ")}.`,
 			is_active: false,
 		});
+	} else if (asiMarker && jobName.trim().toLowerCase() === "mage") {
+		const markerPatch = mageMigrationTargets
+			? {
+					feature_id: MAGE_ASI_V1_FEATURE_ID,
+					description: `${MAGE_ASI_CURRENT_DESCRIPTION} Migrated from PRE +1.`,
+				}
+			: asiMarker.description === MAGE_ASI_CURRENT_DESCRIPTION &&
+					asiMarker.feature_id !== MAGE_ASI_V1_FEATURE_ID
+				? { feature_id: MAGE_ASI_V1_FEATURE_ID }
+				: null;
+		if (markerPatch) {
+			await supabase
+				.from("character_features")
+				.update(markerPatch)
+				.eq("id", asiMarker.id)
+				.eq("character_id", characterId);
+		}
 	}
 }
 
@@ -3471,15 +3738,15 @@ export async function addJobAwakeningBenefitsForLevel(
 	characterId: string,
 	job: JobReference, // Standardized
 	level: number,
-	knownFeatureNames?: Set<string> | null,
+	_knownFeatureNames?: Set<string> | null,
 ): Promise<void> {
 	if (!job) {
 		console.warn("Cannot add awakening benefits: job missing");
 		return;
 	}
 	const jobName = typeof job === "string" ? job : job?.name;
-	const existingNames =
-		knownFeatureNames ?? (await getExistingFeatureNames(characterId));
+	const featureRows = await listCharacterFeatureRows(characterId);
+	const existingNames = new Set(featureRows.map((feature) => feature.name));
 
 	// Handle scaling awakening features that need to update with character level.
 	if (
@@ -3498,82 +3765,209 @@ export async function addJobAwakeningBenefitsForLevel(
 		);
 	}
 
-	// Canonical static awakening features at the target level.
+	// Canonical static awakening features earned by the current level. This is a
+	// cumulative reconciliation pass so missed or stale rows self-heal on any
+	// later creation/level-up run without refilling spent uses.
 	if (isStaticJob(job) && job.awakeningFeatures) {
-		const awakeningAtLevel = job.awakeningFeatures.filter(
-			(f) => f.level === level,
+		const earnedAwakenings = job.awakeningFeatures.filter(
+			(feature) => feature.level <= level,
 		);
-		for (const feature of awakeningAtLevel) {
-			if (existingNames.has(feature.name)) continue;
-
-			const modifiers = getJobAwakeningFeatureModifiers(
+		const abilities = await getCharacterAbilityScores(characterId);
+		const proficiencyBonus = getProficiencyBonus(level);
+		const jobOwnerId = job.id || jobName;
+		const canonicalSource = `Job Awakening: ${jobName}`;
+		for (const feature of earnedAwakenings) {
+			const featureModifiers = getJobAwakeningFeatureModifiers(
 				jobName,
 				feature.name,
 				level,
 			);
-			await insertCharacterFeature(characterId, {
-				name: feature.name,
-				source: `Job Awakening: ${jobName}`,
-				level_acquired: level,
-				description: feature.description,
-				is_active: true,
-				modifiers: modifiers.length > 0 ? (modifiers as Json) : null,
-			});
-		}
-	}
-
-	// Canonical static classFeatures gained at this level (level > 1; level 1 is
-	// seeded at creation by addLevel1Features). This is the level-up counterpart:
-	// it grants the feature AND seeds any structured limited-use resource so the
-	// Resources tab populates (e.g. Striker Impulse at L2, Herald Channel at L2).
-	if (isStaticJob(job) && level > 1 && job.classFeatures) {
-		const abilities = await getCharacterAbilityScores(characterId);
-		const proficiencyBonus = getProficiencyBonus(level);
-		const classFeaturesAtLevel = job.classFeatures.filter(
-			(cf) => cf.level === level,
-		);
-		for (const cf of classFeaturesAtLevel) {
-			if (existingNames.has(cf.name)) continue;
-			const usesMax = cf.uses
-				? calculateFeatureUses(
-						cf.uses.formula,
-						level,
-						proficiencyBonus,
-						abilities,
-					)
+			const tracksUses =
+				feature.tracking === "uses" ||
+				(feature.tracking == null &&
+					feature.resource == null &&
+					feature.uses != null);
+			const featureUses = tracksUses ? feature.uses : null;
+			const usesMax = featureUses
+				? resolveFeatureUsesMax(featureUses, level, proficiencyBonus, abilities)
 				: null;
-			await insertCharacterFeature(characterId, {
-				name: cf.name,
-				source: `Job: Level ${level}`,
-				level_acquired: level,
-				description: cf.description,
-				action_type: null,
-				uses_max: usesMax,
-				uses_current: usesMax,
-				recharge: cf.uses?.recharge ?? null,
-				modifiers: cf.uses
-					? ([
+			const recharge = featureUses
+				? resolveFeatureRecharge(featureUses, level)
+				: null;
+			const modifiers = [
+				...featureModifiers,
+				...(featureUses
+					? buildFeatureUseModifiers(featureUses, feature.name)
+					: []),
+				...(feature.resource
+					? [
 							{
 								type: "resource",
-								target: "uses_formula",
-								value: cf.uses.formula,
+								target: "resource_cost",
+								value: feature.resource,
+								source: feature.name,
 							},
-						] as unknown as Json)
-					: null,
-				is_active: true,
-			});
+						]
+					: []),
+			] as unknown as Array<Record<string, Json>>;
+			const canonicalFeatureId = buildCanonicalFeatureId(
+				"job-awakening",
+				jobOwnerId,
+				feature.name,
+			);
+			await reconcileCanonicalFeatureRow(
+				characterId,
+				featureRows,
+				(row) => {
+					if (row.homebrew_id) return false;
+					if (
+						normalizeFeatureIdentity(row.name) !==
+						normalizeFeatureIdentity(feature.name)
+					)
+						return false;
+					const source = normalizeFeatureIdentity(row.source);
+					return (
+						source.startsWith("job-awakening-") ||
+						(source.startsWith("job-") &&
+							source.includes(normalizeFeatureIdentity(jobName)))
+					);
+				},
+				{
+					feature_id: canonicalFeatureId,
+					name: feature.name,
+					source: canonicalSource,
+					level_acquired: feature.level,
+					description: feature.description,
+					action_type: feature.actionType ?? null,
+					uses_max: usesMax,
+					uses_current: usesMax,
+					recharge,
+					is_active: true,
+					modifiers: modifiers.length > 0 ? (modifiers as Json) : null,
+				},
+				feature.name,
+			);
+			existingNames.add(feature.name);
 		}
 	}
 
-	// Path benefits
+	// Canonical structured class-feature resources are reconciled cumulatively so
+	// missed unlocks, cadence transitions, and at-will capstones self-heal without
+	// refilling charges that the character has already spent. Unstructured class
+	// features are still inserted only when first earned.
+	if (isStaticJob(job) && job.classFeatures) {
+		const abilities = await getCharacterAbilityScores(characterId);
+		const proficiencyBonus = getProficiencyBonus(level);
+		const ownerId = job.id || jobName;
+		const canonicalSource = `Job Feature: ${jobName}`;
+		const structuredFeatures = job.classFeatures.filter(
+			(cf) =>
+				cf.level <= level &&
+				Boolean(cf.uses || cf.actionType || cf.resource || cf.tracking),
+		);
+
+		for (const cf of structuredFeatures) {
+			const tracksUses =
+				cf.tracking === "uses" ||
+				(cf.tracking == null && cf.resource == null && cf.uses != null);
+			const featureUses = tracksUses ? cf.uses : null;
+			const usesMax = featureUses
+				? resolveFeatureUsesMax(featureUses, level, proficiencyBonus, abilities)
+				: null;
+			const recharge = featureUses
+				? resolveFeatureRecharge(featureUses, level)
+				: null;
+			const canonicalFeatureId = buildCanonicalFeatureId(
+				"job-feature",
+				ownerId,
+				cf.name,
+			);
+			const modifiers = [
+				...(featureUses ? buildFeatureUseModifiers(featureUses, cf.name) : []),
+				...(cf.resource
+					? [
+							{
+								type: "resource",
+								target: "resource_cost",
+								value: cf.resource,
+								source: cf.name,
+							},
+						]
+					: []),
+			] as unknown as Array<Record<string, Json>>;
+			await reconcileCanonicalFeatureRow(
+				characterId,
+				featureRows,
+				(row) => {
+					if (row.homebrew_id) return false;
+					if (
+						normalizeFeatureIdentity(row.name) !==
+						normalizeFeatureIdentity(cf.name)
+					)
+						return false;
+					const source = normalizeFeatureIdentity(row.source);
+					return (
+						source === normalizeFeatureIdentity(`Job: ${jobName}`) ||
+						source === normalizeFeatureIdentity(`Job: Level ${cf.level}`) ||
+						source === normalizeFeatureIdentity(canonicalSource)
+					);
+				},
+				{
+					feature_id: canonicalFeatureId,
+					name: cf.name,
+					source: canonicalSource,
+					level_acquired: cf.level,
+					description: cf.description,
+					action_type: cf.actionType ?? null,
+					uses_max: usesMax,
+					uses_current: usesMax,
+					recharge,
+					modifiers: modifiers.length > 0 ? (modifiers as Json) : null,
+					is_active: true,
+				},
+				cf.name,
+			);
+			existingNames.add(cf.name);
+		}
+
+		for (const cf of job.classFeatures.filter(
+			(cf) =>
+				cf.level === level &&
+				!cf.uses &&
+				!cf.actionType &&
+				!cf.resource &&
+				!cf.tracking,
+		)) {
+			if (existingNames.has(cf.name)) continue;
+			await insertCharacterFeature(characterId, {
+				feature_id: buildCanonicalFeatureId("job-feature", ownerId, cf.name),
+				name: cf.name,
+				source: canonicalSource,
+				level_acquired: cf.level,
+				description: cf.description,
+				action_type: null,
+				uses_max: null,
+				uses_current: null,
+				recharge: null,
+				modifiers: null,
+				is_active: true,
+			});
+			existingNames.add(cf.name);
+		}
+	}
+
+	// Path benefits: resolve the persisted ID first and legacy name/aliases second,
+	// then cumulatively enrich every earned canonical feature.
 	let characterPath: string | null = null;
+	let characterPathId: string | null = null;
 	if (isLocalCharacterId(characterId)) {
 		const localChar = getLocalCharacterState(characterId);
 		characterPath = localChar?.character?.path ?? null;
+		characterPathId = localChar?.character?.path_id ?? null;
 	} else {
 		const { data: character, error: pathReadErr } = await supabase
 			.from("characters")
-			.select("path")
+			.select("path, path_id")
 			.eq("id", characterId)
 			.maybeSingle();
 		if (pathReadErr) {
@@ -3583,33 +3977,209 @@ export async function addJobAwakeningBenefitsForLevel(
 			);
 		}
 		characterPath = character?.path ?? null;
+		characterPathId = character?.path_id ?? null;
 	}
-	if (characterPath) {
-		const staticPaths = getStaticPaths();
-		const pathData = staticPaths.find((p) => p.name === characterPath);
+	if (characterPath || characterPathId) {
+		const resolution = await resolveCanonicalReference("paths", {
+			id: characterPathId,
+			name: characterPath,
+		});
+		const pathData = resolution.entry as {
+			id: string;
+			name: string;
+			aliases?: string[] | null;
+			level?: number | null;
+			requirements?: { level?: number | null } | null;
+			features?: Array<{
+				name: string;
+				description: string;
+				level: number;
+				actionType?: string | null;
+				uses?: {
+					formula: string;
+					recharge: "short-rest" | "long-rest";
+				} | null;
+				resource?: string | null;
+				tracking?: "uses" | "resource" | "manual" | null;
+			}> | null;
+			abilities?: Array<{
+				name: string;
+				description: string;
+				level?: number | null;
+				actionType?: string | null;
+				uses?: {
+					formula: string;
+					recharge: "short-rest" | "long-rest";
+				} | null;
+				resource?: string | null;
+				tracking?: "uses" | "resource" | "manual" | null;
+			}> | null;
+		} | null;
 		const pathUnlockLevel = pathData
 			? getStaticPathUnlockLevel(pathData)
 			: null;
-		if (pathData && pathUnlockLevel === 1) {
-			const pathFeaturesAtLevel = (pathData.features ?? []).filter(
-				(f: { level: number }) => f.level === level,
+		if (pathData && pathUnlockLevel !== null && level >= pathUnlockLevel) {
+			const ownerKeys = [pathData.name, ...(pathData.aliases ?? [])].map(
+				normalizeFeatureIdentity,
 			);
-			for (const feature of pathFeaturesAtLevel) {
-				if (existingNames.has(feature.name)) continue;
-				const modifiers = getPathFeatureModifiers(
+			const earnedPathFeatures = (pathData.features ?? []).filter(
+				(feature) => feature.level <= level,
+			);
+			const abilities = await getCharacterAbilityScores(characterId);
+			const proficiencyBonus = getProficiencyBonus(level);
+			for (const feature of earnedPathFeatures) {
+				const tracksUses =
+					feature.tracking === "uses" ||
+					(feature.tracking == null &&
+						feature.resource == null &&
+						feature.uses != null);
+				const featureUses = tracksUses ? feature.uses : null;
+				const usesMax = featureUses
+					? calculateFeatureUses(
+							featureUses.formula,
+							level,
+							proficiencyBonus,
+							abilities,
+						)
+					: null;
+				const featureModifiers = getPathFeatureModifiers(
 					jobName,
 					pathData.name,
 					feature.name,
 					level,
 				);
-				await insertCharacterFeature(characterId, {
-					name: feature.name,
-					source: `Path Feature: ${pathData.name}`,
-					level_acquired: level,
-					description: feature.description,
-					is_active: true,
-					modifiers: modifiers.length > 0 ? (modifiers as never) : null,
-				});
+				const modifiers = [
+					...featureModifiers,
+					...(featureUses
+						? buildFeatureUseModifiers(featureUses, feature.name)
+						: []),
+					...(feature.resource
+						? [
+								{
+									type: "resource",
+									target: "resource_cost",
+									value: feature.resource,
+									source: feature.name,
+								},
+							]
+						: []),
+				] as unknown as Array<Record<string, Json>>;
+				const canonicalFeatureId = buildCanonicalFeatureId(
+					"path-feature",
+					pathData.id,
+					feature.name,
+				);
+				await reconcileCanonicalFeatureRow(
+					characterId,
+					featureRows,
+					(row) => {
+						if (row.homebrew_id) return false;
+						if (
+							normalizeFeatureIdentity(row.name) !==
+							normalizeFeatureIdentity(feature.name)
+						)
+							return false;
+						const source = normalizeFeatureIdentity(row.source);
+						if (!source.startsWith("path-")) return false;
+						return ownerKeys.some((ownerKey) => source.includes(ownerKey));
+					},
+					{
+						feature_id: canonicalFeatureId,
+						name: feature.name,
+						source: `Path Feature: ${pathData.name}`,
+						level_acquired: feature.level,
+						description: feature.description,
+						...(feature.actionType !== undefined
+							? { action_type: feature.actionType }
+							: {}),
+						...(featureUses
+							? {
+									uses_max: usesMax,
+									uses_current: usesMax,
+									recharge: featureUses.recharge,
+								}
+							: {}),
+						is_active: true,
+						modifiers: modifiers.length > 0 ? (modifiers as Json) : null,
+					},
+					feature.name,
+				);
+				existingNames.add(feature.name);
+			}
+
+			const earnedPathAbilities = (pathData.abilities ?? []).filter(
+				(ability) => (ability.level ?? pathUnlockLevel) <= level,
+			);
+			for (const ability of earnedPathAbilities) {
+				const abilityLevel = ability.level ?? pathUnlockLevel;
+				const tracksUses =
+					ability.tracking === "uses" ||
+					(ability.tracking == null &&
+						ability.resource == null &&
+						ability.uses != null);
+				const abilityUses = tracksUses ? ability.uses : null;
+				const usesMax = abilityUses
+					? calculateFeatureUses(
+							abilityUses.formula,
+							level,
+							proficiencyBonus,
+							abilities,
+						)
+					: null;
+				const modifiers = [
+					...(abilityUses
+						? buildFeatureUseModifiers(abilityUses, ability.name)
+						: []),
+					...(ability.resource
+						? [
+								{
+									type: "resource",
+									target: "resource_cost",
+									value: ability.resource,
+									source: ability.name,
+								},
+							]
+						: []),
+				] as unknown as Array<Record<string, Json>>;
+				const canonicalFeatureId = buildCanonicalFeatureId(
+					"path-ability",
+					pathData.id,
+					ability.name,
+				);
+				await reconcileCanonicalFeatureRow(
+					characterId,
+					featureRows,
+					(row) => {
+						if (row.homebrew_id) return false;
+						if (
+							normalizeFeatureIdentity(row.name) !==
+							normalizeFeatureIdentity(ability.name)
+						)
+							return false;
+						const source = normalizeFeatureIdentity(row.source);
+						if (!source.startsWith("path-ability-")) return false;
+						return ownerKeys.some((ownerKey) => source.includes(ownerKey));
+					},
+					{
+						feature_id: canonicalFeatureId,
+						name: ability.name,
+						source: `Path Ability: ${pathData.name}`,
+						level_acquired: abilityLevel,
+						description: ability.description,
+						action_type: ability.actionType ?? null,
+						...(abilityUses
+							? {
+									uses_max: usesMax,
+									uses_current: usesMax,
+									recharge: abilityUses.recharge,
+								}
+							: {}),
+						is_active: true,
+						modifiers: modifiers.length > 0 ? (modifiers as Json) : null,
+					},
+					ability.name,
+				);
+				existingNames.add(ability.name);
 			}
 		}
 	}
@@ -3633,28 +4203,94 @@ export async function addJobAwakeningBenefitsForLevel(
 		const { regents: staticRegents } = await import(
 			"@/data/compendium/regents"
 		);
-		for (const choice of regentChoices as Array<{ regent_id: string }>) {
-			const regentData = staticRegents.find((r) => r.id === choice.regent_id);
-			if (regentData) {
-				const regentFeaturesAtLevel = (regentData.class_features || []).filter(
-					(f) => f.level === level,
-				);
-				for (const feature of regentFeaturesAtLevel) {
-					if (existingNames.has(feature.name)) continue;
-					const modifiers = getRegentFeatureModifiers(
-						regentData.name,
+		const abilities = await getCharacterAbilityScores(characterId);
+		const proficiencyBonus = getProficiencyBonus(level);
+		for (const choice of regentChoices) {
+			const regentData = staticRegents.find(
+				(regent) => regent.id === choice.regent_id,
+			);
+			if (!regentData) continue;
+			const canonicalSource = `Regent Feature: ${regentData.name}`;
+			const earnedFeatures = (regentData.class_features ?? []).filter(
+				(feature) => feature.level <= level,
+			);
+			for (const feature of earnedFeatures) {
+				const tracksUses =
+					feature.tracking === "uses" ||
+					(feature.tracking == null &&
+						feature.resource == null &&
+						feature.uses != null);
+				const featureUses = tracksUses ? feature.uses : undefined;
+				const usesMax = featureUses
+					? resolveFeatureUsesMax(
+							featureUses,
+							level,
+							proficiencyBonus,
+							abilities,
+						)
+					: null;
+				const recharge = featureUses
+					? resolveFeatureRecharge(featureUses, level)
+					: null;
+				const modifiers = [
+					...getRegentFeatureModifiers(regentData.name, feature.name, level),
+					...(featureUses
+						? buildFeatureUseModifiers(featureUses, feature.name)
+						: []),
+					...(feature.resource
+						? [
+								{
+									type: "resource",
+									target: "resource_cost",
+									value: feature.resource,
+									source: feature.name,
+								},
+							]
+						: []),
+				] as unknown as Array<Record<string, Json>>;
+				const canonicalFeatureId =
+					feature.id ??
+					buildCanonicalFeatureId(
+						"regent-feature",
+						`${regentData.id}-${feature.level}`,
 						feature.name,
-						level,
 					);
-					await insertCharacterFeature(characterId, {
+				await reconcileCanonicalFeatureRow(
+					characterId,
+					featureRows,
+					(row) => {
+						if (row.homebrew_id) return false;
+						if (
+							normalizeFeatureIdentity(row.name) !==
+							normalizeFeatureIdentity(feature.name)
+						)
+							return false;
+						if (
+							row.level_acquired != null &&
+							row.level_acquired !== feature.level
+						)
+							return false;
+						const source = normalizeFeatureIdentity(row.source);
+						return (
+							source.startsWith("regent-feature-") &&
+							source.includes(normalizeFeatureIdentity(regentData.name))
+						);
+					},
+					{
+						feature_id: canonicalFeatureId,
 						name: feature.name,
-						source: `Regent Feature: ${regentData.name}`,
-						level_acquired: level,
+						source: canonicalSource,
+						level_acquired: feature.level,
 						description: feature.description,
+						action_type: feature.actionType ?? null,
+						uses_max: usesMax,
+						uses_current: usesMax,
+						recharge,
 						is_active: true,
 						modifiers: modifiers.length > 0 ? (modifiers as Json) : null,
-					});
-				}
+					},
+					feature.name,
+				);
 			}
 		}
 	}
@@ -3916,65 +4552,48 @@ export async function addLevel1Features(
 		// Ability scores let us resolve ability-modifier uses formulas (e.g. Idol
 		// Hype = "PRE mod", Holy Knight Oath Sense = "1 + PRE mod").
 		const abilities = await getCharacterAbilityScores(characterId);
+		const proficiencyBonus = getProficiencyBonus(1);
+		const ownerId = job.id || jobName;
 		const level1Features = job.classFeatures.filter((cf) => cf.level === 1);
 		for (const cf of level1Features) {
 			if (existingNames.has(cf.name)) continue;
-			// Seed structured limited-use resources so charged features show up in
-			// the Resources tab and rescale on level-up (via autoUpdateFeatureUses).
-			const usesMax = cf.uses
-				? calculateFeatureUses(
-						cf.uses.formula,
-						1,
-						getProficiencyBonus(1),
-						abilities,
-					)
+			const tracksUses =
+				cf.tracking === "uses" ||
+				(cf.tracking == null && cf.resource == null && cf.uses != null);
+			const featureUses = tracksUses ? cf.uses : null;
+			const usesMax = featureUses
+				? resolveFeatureUsesMax(featureUses, 1, proficiencyBonus, abilities)
 				: null;
-			const recharge = cf.uses?.recharge ?? null;
-			const modifiers = cf.uses
-				? ([
-						{
-							type: "resource",
-							target: "uses_formula",
-							value: cf.uses.formula,
-						},
-					] as unknown as Json)
+			const recharge = featureUses
+				? resolveFeatureRecharge(featureUses, 1)
 				: null;
-			if (isLocalCharacterId(characterId)) {
-				addLocalFeature(characterId, {
-					name: cf.name,
-					source: "Job: Level 1",
-					level_acquired: 1,
-					description: cf.description,
-					action_type: null,
-					uses_max: usesMax,
-					uses_current: usesMax,
-					recharge,
-					modifiers,
-					is_active: true,
-				});
-			} else {
-				const { error: featErr } = await supabase
-					.from("character_features")
-					.insert({
-						character_id: characterId,
-						name: cf.name,
-						source: "Job: Level 1",
-						level_acquired: 1,
-						description: cf.description,
-						action_type: null,
-						uses_max: usesMax,
-						uses_current: usesMax,
-						recharge,
-						modifiers,
-						is_active: true,
-					});
-				if (featErr)
-					console.warn(
-						"addLevel1Features: insert failed for",
-						cf.name,
-						featErr,
-					);
-			}
+			const modifiers = [
+				...(featureUses ? buildFeatureUseModifiers(featureUses, cf.name) : []),
+				...(cf.resource
+					? [
+							{
+								type: "resource",
+								target: "resource_cost",
+								value: cf.resource,
+								source: cf.name,
+							},
+						]
+					: []),
+			] as unknown as Array<Record<string, Json>>;
+			await insertCharacterFeature(characterId, {
+				feature_id: buildCanonicalFeatureId("job-feature", ownerId, cf.name),
+				name: cf.name,
+				source: "Job: Level 1",
+				level_acquired: 1,
+				description: cf.description,
+				action_type: cf.actionType ?? null,
+				uses_max: usesMax,
+				uses_current: usesMax,
+				recharge,
+				modifiers: modifiers.length > 0 ? (modifiers as Json) : null,
+				is_active: true,
+			});
+			existingNames.add(cf.name);
 		}
 	}
 }

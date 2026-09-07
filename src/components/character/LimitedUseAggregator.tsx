@@ -12,6 +12,8 @@ import {
 } from "@/components/ui/card";
 import { ExpandableText } from "@/components/ui/ExpandableText";
 import { useCharacter } from "@/hooks/useCharacters";
+import { resolveCanonicalReference } from "@/lib/canonicalCompendium";
+import { resolveFeatureRecharge } from "@/lib/featureUses";
 import { getStaticRegents } from "@/lib/ProtocolDataManager";
 import { cn } from "@/lib/utils";
 
@@ -44,6 +46,16 @@ function normalizeFrequency(value: unknown): Frequency | null {
 	if (RESTING_FREQUENCIES.has(v as Frequency)) return v as Frequency;
 	if (v === "at-will") return "at-will";
 	return null;
+}
+
+interface LimitedUsePath {
+	name: string;
+	abilities?: Array<{
+		name: string;
+		description: string;
+		level?: number;
+		uses?: { recharge: "short-rest" | "long-rest" };
+	}>;
 }
 
 interface LimitedUseAggregatorProps {
@@ -87,14 +99,21 @@ export function LimitedUseAggregator({
 		enabled: !!character?.job,
 	});
 
-	const { data: paths } = useQuery({
-		queryKey: ["static-paths-limited-use"],
+	const { data: canonicalPath } = useQuery<LimitedUsePath | null>({
+		queryKey: [
+			"canonical-path-limited-use",
+			character?.path_id,
+			character?.path,
+		],
 		queryFn: async () => {
-			const module = await import("@/data/compendium/paths");
-			return module.paths;
+			const resolution = await resolveCanonicalReference("paths", {
+				id: character?.path_id,
+				name: character?.path,
+			});
+			return resolution.entry as LimitedUsePath | null;
 		},
 		staleTime: Number.POSITIVE_INFINITY,
-		enabled: !!character?.path,
+		enabled: !!(character?.path_id || character?.path),
 	});
 
 	const entries = useMemo<LimitedUseEntry[]>(() => {
@@ -117,21 +136,20 @@ export function LimitedUseAggregator({
 					frequency: freq,
 				});
 			}
-			// 2. Class features whose description mentions rest cadence (best-effort
-			// surface — already covered by other panels if structured frequency
-			// is absent).
+			// 2. Class features use authored structured cadence first. Legacy prose
+			// parsing remains a fallback only for records without structured uses.
 			for (const feature of job.classFeatures ?? []) {
 				if (feature.level > characterLevel) continue;
 				const lower = (feature.description ?? "").toLowerCase();
-				let freq: Frequency | null = null;
-				// Long rest wins over short rest when both are mentioned (a feature
-				// that fully resets on a long rest but partially on a short rest is
-				// bucketed by its full-reset cadence). Covers the common RA phrasings:
-				// "recharges on a long rest", "short rest recharge", "per long rest".
-				if (lower.includes("long rest")) freq = "long-rest";
-				else if (lower.includes("short rest")) freq = "short-rest";
-				else if (lower.includes("per day") || lower.includes("once per day"))
-					freq = "once-per-day";
+				let freq: Frequency | null = feature.uses
+					? resolveFeatureRecharge(feature.uses, characterLevel)
+					: null;
+				if (!feature.uses) {
+					if (lower.includes("long rest")) freq = "long-rest";
+					else if (lower.includes("short rest")) freq = "short-rest";
+					else if (lower.includes("per day") || lower.includes("once per day"))
+						freq = "once-per-day";
+				}
 				if (!freq) continue;
 				collected.push({
 					id: `job-feature:${feature.name}`,
@@ -145,31 +163,28 @@ export function LimitedUseAggregator({
 		}
 
 		// 3. Path abilities with recharge.
-		const path = paths?.find(
-			(p) => normalize(p.name) === normalize(character.path),
-		);
-		if (path) {
-			for (const ability of path.abilities ?? []) {
-				const recharge = ability.recharge;
+		if (canonicalPath) {
+			for (const ability of canonicalPath.abilities ?? []) {
+				if (ability.level && ability.level > characterLevel) continue;
 				const lower = (ability.description ?? "").toLowerCase();
-				let freq: Frequency | null = null;
-				if (typeof recharge === "number") {
-					// Numeric recharge (5-6 style) — treat as short rest.
-					freq = "short-rest";
-				} else if (lower.includes("long rest")) freq = "long-rest";
-				else if (lower.includes("short rest")) freq = "short-rest";
+				let freq: Frequency | null = ability.uses?.recharge ?? null;
+				if (!freq && lower.includes("long rest")) freq = "long-rest";
+				else if (!freq && lower.includes("short rest")) freq = "short-rest";
 				if (!freq) continue;
 				collected.push({
 					id: `path-ability:${ability.name}`,
 					name: ability.name,
 					description: ability.description,
-					source: `Path: ${path.name}`,
+					source: `Path: ${canonicalPath.name}`,
 					frequency: freq,
+					level: ability.level,
 				});
 			}
 		}
 
-		// 4. Regent class_features / abilities with frequency.
+		// 4. Regent limited-use entries come only from the shared canonical
+		// class_features ledger. Structured uses win; explicit daily/manual cadence
+		// remains display-only and is never coerced to a rest recharge.
 		const overlays = Array.isArray(
 			(character as { regent_overlays?: string[] }).regent_overlays,
 		)
@@ -177,39 +192,27 @@ export function LimitedUseAggregator({
 					.regent_overlays as string[])
 			: [];
 		if (overlays.length > 0) {
-			const regents = getStaticRegents().filter((r) => overlays.includes(r.id));
+			const regents = getStaticRegents().filter((regent) =>
+				overlays.includes(regent.id),
+			);
 			for (const regent of regents) {
-				// Static regents carry abilities/features that the supabase shape
-				// doesn't surface — cast to read them.
-				const extended = regent as typeof regent & {
-					abilities?: Array<{
-						name: string;
-						description: string;
-						frequency?: string;
-					}>;
-				};
 				for (const feature of regent.class_features ?? []) {
-					if (feature.level && feature.level > characterLevel) continue;
-					const freq = normalizeFrequency(feature.frequency);
-					if (!freq || freq === "at-will") continue;
+					if (feature.level > characterLevel) continue;
+					const structuredRecharge = feature.uses
+						? resolveFeatureRecharge(feature.uses, characterLevel)
+						: null;
+					const frequency =
+						structuredRecharge ?? normalizeFrequency(feature.frequency);
+					if (!frequency || frequency === "at-will") continue;
 					collected.push({
-						id: `regent-feature:${regent.id}:${feature.name}`,
+						id:
+							feature.id ??
+							`regent-feature:${regent.id}:${feature.level}:${feature.name}`,
 						name: feature.name,
 						description: feature.description,
 						source: `Regent: ${regent.name}`,
-						frequency: freq,
+						frequency,
 						level: feature.level,
-					});
-				}
-				for (const ability of extended.abilities ?? []) {
-					const freq = normalizeFrequency(ability.frequency);
-					if (!freq || freq === "at-will") continue;
-					collected.push({
-						id: `regent-ability:${regent.id}:${ability.name}`,
-						name: ability.name,
-						description: ability.description,
-						source: `Regent: ${regent.name}`,
-						frequency: freq,
 					});
 				}
 			}
@@ -222,7 +225,7 @@ export function LimitedUseAggregator({
 			seen.add(entry.id);
 			return true;
 		});
-	}, [character, jobs, paths, characterLevel]);
+	}, [character, jobs, canonicalPath, characterLevel]);
 
 	const grouped = useMemo(() => {
 		const buckets: Record<Frequency, LimitedUseEntry[]> = {
