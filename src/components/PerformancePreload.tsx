@@ -8,7 +8,7 @@ const warmModules = () =>
 			initThreeLoaders(),
 		),
 		import("@/components/dice/Dice3DScene"),
-		import("@/pages/DiceRoller"),
+		import("@/components/dice/DiceTrayProvider"),
 	]);
 
 export default function PerformancePreload() {

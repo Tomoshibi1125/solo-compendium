@@ -12,6 +12,8 @@ import {
 } from "react-router-dom";
 import { PageViewTracker } from "@/components/analytics/PageViewTracker";
 import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
+import { DiceTrayProvider } from "@/components/dice/DiceTrayProvider";
+import { DiceTrayRoute } from "@/components/dice/DiceTrayRoute";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { MainLayout } from "@/components/layout/MainLayout";
 import {
@@ -143,7 +145,6 @@ const PartyStash = lazy(() => import("./pages/PartyStash"));
 const ArtGeneratorWarden = lazy(
 	() => import("./pages/warden-directives/ArtGenerator"),
 );
-const DiceRoller = lazy(() => import("./pages/DiceRoller"));
 const Favorites = lazy(() => import("./pages/Favorites"));
 const Campaigns = lazy(() => import("./pages/Campaigns"));
 const CampaignDetail = lazy(() => import("./pages/CampaignDetail"));
@@ -714,14 +715,7 @@ const AppContent = () => {
 						</Suspense>
 					}
 				/>
-				<Route
-					path="/dice"
-					element={
-						<Suspense fallback={<PageLoader />}>
-							<DiceRoller />
-						</Suspense>
-					}
-				/>
+				<Route path="/dice" element={<DiceTrayRoute />} />
 				<Route
 					path="/favorites"
 					element={
@@ -896,11 +890,13 @@ const App = () => {
 									<Toaster />
 									<Sonner />
 									<BrowserRouter basename={routerBase}>
-										<RouteEffects />
-										<PageViewTracker />
-										<ErrorBoundary>
-											<AppContent />
-										</ErrorBoundary>
+										<DiceTrayProvider>
+											<RouteEffects />
+											<PageViewTracker />
+											<ErrorBoundary>
+												<AppContent />
+											</ErrorBoundary>
+										</DiceTrayProvider>
 									</BrowserRouter>
 									<ServiceWorkerUpdatePrompt />
 									<OfflineIndicator />

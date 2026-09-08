@@ -1,6 +1,7 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useCallback, useEffect, useMemo, useRef } from "react";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { useDiceTray } from "@/components/dice/DiceTrayContext";
 import { useToast } from "@/hooks/use-toast";
 import { useCampaignByCharacterId } from "@/hooks/useCampaigns";
 import { useCanonicalEquipmentMap } from "@/hooks/useCanonicalEquipmentMap";
@@ -96,6 +97,7 @@ export function useCharacterPageModel() {
 	const navigate = useNavigate();
 	const queryClient = useQueryClient();
 	const { toast } = useToast();
+	const { presentRoll } = useDiceTray();
 	const { user } = useAuth();
 
 	const [searchParams] = useSearchParams();
@@ -723,6 +725,15 @@ export function useCharacterPageModel() {
 					context: options.context,
 					rolls: roll.rolls,
 				});
+			presentRoll({
+				source: "character",
+				formula: roll.dice,
+				context: options.context || options.title,
+				modifier: roll.modifier,
+				total: roll.result,
+				rolls: roll.rolls,
+				droppedRolls: dropped ?? [],
+			});
 		} catch {
 			toast({
 				title: "Roll failed",

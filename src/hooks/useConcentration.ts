@@ -12,6 +12,7 @@
  */
 
 import { useCallback, useMemo, useState } from "react";
+import { useDiceTray } from "@/components/dice/DiceTrayContext";
 import { rollCheck } from "@/lib/rollEngine";
 import {
 	type ConcentrationEffect,
@@ -91,6 +92,7 @@ export function useConcentration(
 	saveProficiencies: string[],
 	options?: UseConcentrationOptions,
 ): UseConcentrationReturn {
+	const { presentRoll } = useDiceTray();
 	const [state, setState] = useState<ConcentrationState>(
 		initializeConcentration,
 	);
@@ -149,11 +151,24 @@ export function useConcentration(
 			const success = total >= dc;
 
 			const spellName = state.currentEffect.name;
+			const formula = `1d20${saveModifier === 0 ? "" : saveModifier > 0 ? `+${saveModifier}` : saveModifier}`;
 
 			if (!success) {
 				setState((prev) => endConcentration(prev));
 				if (onConcentrationLost) onConcentrationLost(spellName, "damage");
 			}
+
+			presentRoll({
+				source: "character",
+				formula,
+				context: `Concentration: ${spellName} (DC ${dc})`,
+				modifier: saveModifier,
+				total,
+				rolls: [roll],
+				droppedRolls: rollResult.droppedRolls ?? [],
+				isCritical: rollResult.isNatural20,
+				isFumble: rollResult.isNatural1,
+			});
 
 			return {
 				success,
@@ -166,7 +181,7 @@ export function useConcentration(
 				concentrationLost: !success,
 			};
 		},
-		[state, saveModifier, onConcentrationLost],
+		[state, saveModifier, onConcentrationLost, presentRoll],
 	);
 
 	const advanceRound = useCallback(() => {

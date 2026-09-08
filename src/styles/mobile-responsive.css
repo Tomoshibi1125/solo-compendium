@@ -1934,63 +1934,6 @@
 }
 
 /* ========================================
-   DICE ROLLER MOBILE STYLES
-   ======================================== */
-
-@media (max-width: 640px) {
-	.dice-roller-container {
-		padding: 1rem;
-	}
-
-	.dice-roller-header {
-		margin-bottom: 1.5rem;
-	}
-
-	.dice-roller-title {
-		font-size: 1.5rem;
-	}
-
-	.dice-roller-description {
-		font-size: 0.875rem;
-	}
-
-	.dice-roller-controls {
-		flex-direction: column;
-		gap: 1rem;
-	}
-
-	.dice-roller-input {
-		font-size: 1rem;
-		padding: 0.75rem;
-		min-height: 44px;
-	}
-
-	.dice-roller-button {
-		min-height: 44px;
-		font-size: 0.875rem;
-	}
-
-	.dice-roller-dice-grid {
-		grid-template-columns: repeat(3, 1fr);
-		gap: 0.5rem;
-	}
-
-	.dice-roller-dice-button {
-		min-height: 60px;
-		font-size: 0.75rem;
-	}
-
-	.dice-roller-results {
-		gap: 0.75rem;
-	}
-
-	.dice-roller-result {
-		padding: 0.75rem;
-		font-size: 0.875rem;
-	}
-}
-
-/* ========================================
    COMPARISON PAGE MOBILE STYLES
    ======================================== */
 

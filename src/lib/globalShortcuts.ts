@@ -70,9 +70,9 @@ export const GLOBAL_SHORTCUTS: GlobalShortcut[] = [
 		key: "d",
 		ctrl: true,
 		action: () => {
-			window.location.href = "/dice";
+			window.dispatchEvent(new Event("open-dice-tray"));
 		},
-		description: "Open dice roller",
+		description: "Open dice tray",
 		category: "navigation",
 		global: true,
 	},

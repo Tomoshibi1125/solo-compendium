@@ -1,6 +1,7 @@
 import type { LucideIcon } from "lucide-react";
 import { ChevronLeft, ChevronRight, LogOut, Sparkles } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
+import { useDiceTray } from "@/components/dice/DiceTrayContext";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { RaLogo } from "@/components/ui/RaLogo";
@@ -14,6 +15,7 @@ import { navigationConfig } from "./navigationConfig";
 
 export function AppSidebar() {
 	const location = useLocation();
+	const { openManual } = useDiceTray();
 	const { user, signOut } = useAuth();
 	const {
 		sidebarOpen,
@@ -53,33 +55,55 @@ export function AppSidebar() {
 							const Icon = (item.icon as LucideIcon) || Sparkles;
 							const isActive = isItemActive(item.href);
 
+							const buttonClassName = cn(
+								"w-full justify-start gap-4 transition-all duration-300 relative group overflow-hidden",
+								collapsed ? "px-2 justify-center" : "px-4",
+								isActive
+									? "bg-primary/10 text-primary border-r-2 border-primary"
+									: "text-foreground/70 hover:text-foreground hover:bg-primary/5",
+							);
+							const buttonContents = (
+								<>
+									<Icon
+										className={cn(
+											"h-5 w-5 transition-transform group-hover:scale-110",
+											isActive ? "text-primary shadow-glow" : "",
+										)}
+									/>
+									{!collapsed && (
+										<span className="font-heading font-medium truncate">
+											{item.title}
+										</span>
+									)}
+									{isActive && (
+										<div className="absolute inset-0 bg-primary/5 animate-pulse-glow pointer-events-none" />
+									)}
+								</>
+							);
+							if (item.href === "/dice") {
+								return (
+									<Button
+										key={item.title}
+										variant="ghost"
+										className={buttonClassName}
+										title={collapsed ? item.title : undefined}
+										onClick={() => {
+											openManual();
+											setSidebarOpen(false);
+										}}
+									>
+										{buttonContents}
+									</Button>
+								);
+							}
 							return (
 								<Link key={item.title} to={item.href}>
 									<Button
 										variant="ghost"
-										className={cn(
-											"w-full justify-start gap-4 transition-all duration-300 relative group overflow-hidden",
-											collapsed ? "px-2 justify-center" : "px-4",
-											isActive
-												? "bg-primary/10 text-primary border-r-2 border-primary"
-												: "text-foreground/70 hover:text-foreground hover:bg-primary/5",
-										)}
+										className={buttonClassName}
 										title={collapsed ? item.title : undefined}
 									>
-										<Icon
-											className={cn(
-												"h-5 w-5 transition-transform group-hover:scale-110",
-												isActive ? "text-primary shadow-glow" : "",
-											)}
-										/>
-										{!collapsed && (
-											<span className="font-heading font-medium truncate">
-												{item.title}
-											</span>
-										)}
-										{isActive && (
-											<div className="absolute inset-0 bg-primary/5 animate-pulse-glow pointer-events-none" />
-										)}
+										{buttonContents}
 									</Button>
 								</Link>
 							);

@@ -13,6 +13,7 @@
  */
 
 import { useCallback, useState } from "react";
+import { useDiceTray } from "@/components/dice/DiceTrayContext";
 import { supabase } from "@/integrations/supabase/client";
 import {
 	applyDamageAtZero,
@@ -59,6 +60,7 @@ export function useDeathSaves(
 	initialSuccesses = 0,
 	initialFailures = 0,
 ): UseDeathSavesReturn {
+	const { presentRoll } = useDiceTray();
 	const [state, setState] = useState<DeathSaveState>({
 		...INITIAL_DEATH_SAVE_STATE,
 		successes: initialSuccesses,
@@ -70,6 +72,16 @@ export function useDeathSaves(
 		const roll = result.rolls[0] ?? 0;
 		const transition = applyDeathSaveRoll(state, roll);
 		setState(transition.newState);
+		presentRoll({
+			source: "character",
+			formula: "1d20",
+			context: "Death saving throw",
+			modifier: 0,
+			total: roll,
+			rolls: [roll],
+			isCritical: transition.isNat20,
+			isFumble: transition.isNat1,
+		});
 		return {
 			roll,
 			isNat20: transition.isNat20,
@@ -78,7 +90,7 @@ export function useDeathSaves(
 			newState: transition.newState,
 			message: transition.message,
 		};
-	}, [state]);
+	}, [presentRoll, state]);
 
 	const takeDamageAtZero = useCallback(
 		(damage: number, hpMax: number, isCritical = false): DeathSaveState => {

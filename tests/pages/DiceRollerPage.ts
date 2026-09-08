@@ -1,68 +1,64 @@
 import { expect, type Page } from "@playwright/test";
 
 /**
- * Page Object Model for the Dice Roller at /dice.
+ * Page Object Model for the global Dice Tray compatibility route at /dice.
  *
  * Selector strategy:
- *   1. data-testid – quick-roll-1d20, dice-roll-button
+ *   1. data-testid – dice-tray-roll-button, dice-tray-result-total
  *   2. role + name for toast/result verification
  */
 export class DiceRollerPage {
 	constructor(public page: Page) {}
 
+	private async openManualPanel() {
+		const rollTab = this.page.getByRole("tab", { name: /^roll$/i });
+		if (await rollTab.isVisible({ timeout: 3_000 }).catch(() => false)) {
+			await rollTab.click();
+		}
+	}
+
 	async goto() {
 		await this.page.goto("/dice");
-		// Wait for the page to be interactive
+		// `/dice` opens the global tray and then returns to the app surface.
 		await this.page
-			.getByTestId("dice-roll-button")
+			.getByTestId("dice-tray-roll-button")
 			.waitFor({ state: "visible", timeout: 10_000 });
 	}
 
 	/** Perform a quick d20 roll using the preset button. */
 	async quickRollD20() {
-		await this.page.getByTestId("quick-roll-1d20").click();
+		await this.page
+			.getByRole("button", { name: "d20", exact: true })
+			.first()
+			.click();
+		await this.rollCustom();
 	}
 
 	/**
-	 * Verify a roll result appeared in the ROLL HISTORY panel.
-	 * The dice roller page shows results in a "ROLL HISTORY" section, not as a toast.
+	 * Verify the tray settled the current result. Persistence is separately
+	 * exercised through the History panel.
 	 */
 	async expectRollResult() {
-		// The ROLL HISTORY panel contains the formula "1d20" alongside the numeric result
-		const historyPanel = this.page.getByText(/ROLL HISTORY/i);
-		await expect(historyPanel).toBeVisible({ timeout: 10_000 });
-
-		// Verify at least one roll entry with "1d20" text exists
-		const rollEntry = this.page.locator("text=1d20").first();
-		await expect(rollEntry).toBeVisible({ timeout: 10_000 });
+		await expect(this.page.getByTestId("dice-tray-result-total")).toBeVisible({
+			timeout: 10_000,
+		});
 	}
 
 	/** Select a dice type by clicking the corresponding button. */
 	async selectDiceType(diceLabel: string) {
-		// Look for button with exact text content (d4, d6, d8, d10, d12, d20, etc.)
-		const btn = this.page
-			.getByRole("button", { name: new RegExp(`^${diceLabel}$`, "i") })
-			.first();
-		if (await btn.isVisible({ timeout: 5_000 }).catch(() => false)) {
-			await btn.click();
-			await this.page.waitForTimeout(300);
-		} else {
-			// Try alternative selector - button containing the dice label
-			const altBtn = this.page
-				.getByText(new RegExp(`^${diceLabel}$`, "i"))
-				.first();
-			if (await altBtn.isVisible({ timeout: 3_000 }).catch(() => false)) {
-				await altBtn.click();
-				await this.page.waitForTimeout(300);
-			}
-		}
+		await this.openManualPanel();
+		await this.page.getByRole("button", { name: `Add ${diceLabel}` }).click();
+		await this.page.waitForTimeout(150);
 	}
 
 	/** Set the dice modifier (+ or -). */
 	async setModifier(value: number) {
+		await this.openManualPanel();
 		// Modifier is typically adjusted with +/- buttons or an input
 		if (value > 0) {
-			const plusBtn = this.page.getByRole("button", { name: /\+/ }).first();
+			const plusBtn = this.page.getByRole("button", {
+				name: "Increase modifier",
+			});
 			for (let i = 0; i < value; i++) {
 				if (await plusBtn.isVisible({ timeout: 3_000 }).catch(() => false)) {
 					await plusBtn.click();
@@ -74,7 +70,8 @@ export class DiceRollerPage {
 
 	/** Click the main Roll button. */
 	async rollCustom() {
-		const rollBtn = this.page.getByTestId("dice-roll-button");
+		await this.openManualPanel();
+		const rollBtn = this.page.getByTestId("dice-tray-roll-button");
 		await expect(rollBtn).toBeVisible({ timeout: 5_000 });
 		await rollBtn.click({ force: true });
 		await this.page.waitForTimeout(1_000);
@@ -82,23 +79,17 @@ export class DiceRollerPage {
 
 	/** Change the dice theme via the theme selector. */
 	async changeTheme() {
-		const themeSelect = this.page.locator('button[role="combobox"]').first();
-		if (await themeSelect.isVisible({ timeout: 5_000 }).catch(() => false)) {
-			await themeSelect.click();
-			const option = this.page.getByRole("option").nth(1); // pick second theme
-			if (await option.isVisible({ timeout: 3_000 }).catch(() => false)) {
-				await option.click();
-				await this.page.waitForTimeout(300);
-			} else {
-				await this.page.keyboard.press("Escape");
-			}
-		}
+		const collection = this.page.getByRole("tab", { name: /sets/i });
+		await collection.click();
+		await this.page.getByRole("button", { name: "Frost Regent" }).click();
 	}
 
 	/** Verify the roll history panel has at least N entries. */
 	async verifyHistoryCount(minEntries: number) {
-		const historyPanel = this.page.getByText(/ROLL HISTORY/i);
-		await expect(historyPanel).toBeVisible({ timeout: 10_000 });
+		await this.page.getByRole("tab", { name: /history/i }).click();
+		await expect(this.page.getByText(/Recent rolls/i)).toBeVisible({
+			timeout: 10_000,
+		});
 		// Each roll entry typically has a dice formula like "1d20", "2d6", etc.
 		const entries = this.page.locator("text=/\\d+d\\d+/");
 		const count = await entries.count();
@@ -107,11 +98,10 @@ export class DiceRollerPage {
 
 	/** Verify all standard dice type buttons are visible. */
 	async verifyAllDiceTypesVisible() {
+		await this.openManualPanel();
 		const diceTypes = ["d4", "d6", "d8", "d10", "d12", "d20"];
 		for (const die of diceTypes) {
-			const btn = this.page
-				.getByRole("button", { name: new RegExp(die, "i") })
-				.first();
+			const btn = this.page.getByRole("button", { name: `Add ${die}` }).first();
 			const visible = await btn
 				.isVisible({ timeout: 3_000 })
 				.catch(() => false);
@@ -178,10 +168,8 @@ export class DiceRollerPage {
 
 	/** Adjust dice quantity up using the + button. */
 	async adjustQuantityUp() {
-		const quantityUp = this.page
-			.locator("button")
-			.filter({ hasText: /\+/ })
-			.first();
+		await this.openManualPanel();
+		const quantityUp = this.page.getByRole("button", { name: "Add d6" });
 		if (await quantityUp.isVisible({ timeout: 3_000 }).catch(() => false)) {
 			await quantityUp.click();
 			await this.page.waitForTimeout(200);

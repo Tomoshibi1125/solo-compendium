@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { BookOpen, Dice6, FileText, Home, Settings, User } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDiceTray } from "@/components/dice/DiceTrayContext";
 import {
 	CommandDialog,
 	CommandEmpty,
@@ -26,6 +27,7 @@ interface CommandPaletteProps {
 
 export function CommandPalette({ open, onOpenChange }: CommandPaletteProps) {
 	const navigate = useNavigate();
+	const { openManual } = useDiceTray();
 	const { data: characters } = useCharacters();
 	const [search, setSearch] = useState("");
 	const canonicalSearch = normalizeRegentSearch(search.toLowerCase());
@@ -120,7 +122,6 @@ export function CommandPalette({ open, onOpenChange }: CommandPaletteProps) {
 			href: "/characters",
 			icon: User,
 		},
-		{ id: "dice", name: "Dice Roller", href: "/dice", icon: Dice6 },
 		{
 			id: "Warden-tools",
 			name: "Warden Tools",
@@ -131,6 +132,11 @@ export function CommandPalette({ open, onOpenChange }: CommandPaletteProps) {
 
 	const handleSelect = (href: string) => {
 		navigate(href);
+		onOpenChange(false);
+		setSearch("");
+	};
+	const handleDiceSelect = () => {
+		openManual();
 		onOpenChange(false);
 		setSearch("");
 	};
@@ -158,6 +164,11 @@ export function CommandPalette({ open, onOpenChange }: CommandPaletteProps) {
 								<CommandShortcut>⌘K</CommandShortcut>
 							</CommandItem>
 						))}
+						<CommandItem onSelect={handleDiceSelect}>
+							<Dice6 className="mr-2 h-4 w-4" />
+							Open Dice Tray
+							<CommandShortcut>⌘D</CommandShortcut>
+						</CommandItem>
 					</CommandGroup>
 				)}
 

@@ -124,10 +124,12 @@ const DEFAULT_RENDER_QUALITY: DiceRenderQuality = {
 };
 
 const DICE_PHYSICS = {
-	maxRollDuration: 2.4,
-	calmLinear: 0.12,
-	calmAngular: 0.16,
-	calmTime: 0.44,
+	// Keep the result reveal sharp: a complete throw, settle, and face alignment
+	// lands in the 1.2–1.8s presentation window.
+	maxRollDuration: 1.55,
+	calmLinear: 0.18,
+	calmAngular: 0.22,
+	calmTime: 0.26,
 	impulseBase: 8.0,
 	impulseJitter: 3.0,
 	torqueBase: 7.0,
@@ -139,8 +141,8 @@ const DICE_PHYSICS = {
 	floorRestitution: 0.28,
 	floorFriction: 0.78,
 	gravity: -26,
-	settleDelayMs: 70,
-	alignDurationMs: 260,
+	settleDelayMs: 35,
+	alignDurationMs: 180,
 };
 
 const clamp = (value: number, min: number, max: number) =>
@@ -1000,7 +1002,6 @@ function DieFlair({
 
 interface DieProps extends Dice3DProps {
 	bounds: DiceBounds;
-	rollId: number;
 	onImpact?: (position: [number, number, number], intensity: number) => void;
 	quality: DiceRenderQuality;
 }
@@ -1487,14 +1488,15 @@ function Die({
 }
 
 interface Dice3DSceneProps {
-	dice: Array<{
+	sessionId: string;
+	dice: ReadonlyArray<{
+		id?: string;
 		sides: number;
 		value: number | null;
 		displayValue?: number | null;
 		displayMode?: DiceDisplayMode;
 	}>;
 	isRolling: boolean;
-	rollId: number;
 	onRollComplete?: (index: number, value: number) => void;
 	theme?: DiceTheme;
 	onDieImpact?: (position: [number, number, number], intensity: number) => void;
@@ -1503,9 +1505,9 @@ interface Dice3DSceneProps {
 }
 
 function Dice3DScene({
+	sessionId,
 	dice,
 	isRolling,
-	rollId,
 	onRollComplete,
 	theme = "umbral-ascendant",
 	onDieImpact,
@@ -1693,7 +1695,7 @@ function Dice3DScene({
 
 				{dice.map((die, index) => (
 					<Die
-						key={JSON.stringify(die)}
+						key={`${sessionId}-${die.id ?? index}`}
 						sides={die.sides}
 						value={die.value}
 						displayValue={die.displayValue ?? die.value}
@@ -1703,7 +1705,6 @@ function Dice3DScene({
 						position={positions[index] || [0, bounds.spawnY, 0]}
 						theme={theme}
 						bounds={bounds}
-						rollId={rollId}
 						onImpact={handleImpact}
 						quality={resolvedQuality}
 					/>
@@ -1716,15 +1717,17 @@ function Dice3DScene({
 				enableRotate={true}
 				minDistance={controlLimits.minDistance}
 				maxDistance={controlLimits.maxDistance}
-				autoRotate={!isRolling && !reducedMotion}
-				autoRotateSpeed={0.4}
+				autoRotate={false}
 			/>
 		</>
 	);
 }
 
 export interface Dice3DRollerProps {
-	dice: Array<{
+	/** Stable identity for one immutable roll session. */
+	sessionId?: string;
+	dice: ReadonlyArray<{
+		id?: string;
 		sides: number;
 		value: number | null;
 		displayValue?: number | null;
@@ -1737,6 +1740,7 @@ export interface Dice3DRollerProps {
 }
 
 export function Dice3DRoller({
+	sessionId = "dice-session",
 	dice,
 	isRolling,
 	onRollComplete,
@@ -1747,8 +1751,6 @@ export function Dice3DRoller({
 	const { reducedMotion, dpr, three } = usePerformanceProfile();
 	const audioEngine = useMemo(() => new DiceAudioEngine(), []);
 	const [audioEnabled, setAudioEnabled] = useState(true);
-	const [rollId, setRollId] = useState(0);
-	const rollingRef = useRef(false);
 	const containerRef = useRef<HTMLDivElement | null>(null);
 	const quality = useMemo(
 		() => ({
@@ -1758,7 +1760,7 @@ export function Dice3DRoller({
 		}),
 		[dpr, three],
 	);
-	const _themeStyle = useMemo(() => {
+	const themeStyle = useMemo(() => {
 		const glowStrength = clamp(
 			0.14 + themeConfig.glowIntensity * 0.18,
 			0.14,
@@ -1788,13 +1790,6 @@ export function Dice3DRoller({
 	useEffect(() => {
 		audioEngine.setEnabled(audioEnabled);
 	}, [audioEnabled, audioEngine]);
-
-	useEffect(() => {
-		if (isRolling && !rollingRef.current) {
-			setRollId((prev) => prev + 1);
-		}
-		rollingRef.current = isRolling;
-	}, [isRolling]);
 
 	useEffect(() => {
 		if (!isRolling) return;
@@ -1836,6 +1831,7 @@ export function Dice3DRoller({
 		<div
 			ref={containerRef}
 			className={cn("dice-3d-roller", className)}
+			style={themeStyle}
 			onPointerDown={() => {
 				void audioEngine.resume();
 			}}
@@ -1846,8 +1842,9 @@ export function Dice3DRoller({
 			</div>
 
 			<Canvas
-				shadows={quality.enableShadows}
+				shadows={quality.enableShadows ? "percentage" : false}
 				className="relative z-10"
+				frameloop={isRolling ? "always" : "demand"}
 				dpr={quality.dpr}
 				gl={{
 					alpha: true,
@@ -1863,9 +1860,9 @@ export function Dice3DRoller({
 				}}
 			>
 				<Dice3DScene
+					sessionId={sessionId}
 					dice={dice}
 					isRolling={isRolling}
-					rollId={rollId}
 					onRollComplete={handleRollComplete}
 					onDieImpact={handleImpact}
 					theme={theme}

@@ -1,4 +1,5 @@
 import { useCallback } from "react";
+import { useDiceTray } from "@/components/dice/DiceTrayContext";
 import { useToast } from "@/hooks/use-toast";
 import { useCampaignDice } from "@/hooks/useCampaignDice";
 import { useRecordRoll } from "@/hooks/useRollHistory";
@@ -24,6 +25,7 @@ export function useCharacterRoll({
 	proficiencyBonus,
 }: CharacterRollProps) {
 	const { toast } = useToast();
+	const { presentRoll } = useDiceTray();
 
 	const recordRoll = useRecordRoll();
 	const { rollInCampaign } = useCampaignDice();
@@ -58,6 +60,7 @@ export function useCharacterRoll({
 			const result = rollCheck(modifier, advantage);
 			const d20 = result.rolls[0] ?? 0;
 			const total = result.total;
+			const formula = `1d20${modifier >= 0 ? "+" : ""}${modifier}`;
 
 			// Determine if it's a critical success/failure
 			const isCritical = result.isNatural20;
@@ -78,7 +81,7 @@ export function useCharacterRoll({
 			recordRoll.mutate({
 				character_id: characterId,
 				campaign_id: campaignId || null,
-				dice_formula: `1d20+${modifier}`,
+				dice_formula: formula,
 				result: total,
 				roll_type: kind,
 				rolls: result.droppedRolls
@@ -95,7 +98,7 @@ export function useCharacterRoll({
 
 			if (campaignId) {
 				rollInCampaign(campaignId, {
-					dice_formula: `1d20+${modifier}`,
+					dice_formula: formula,
 					result: total,
 					roll_type: kind,
 					rolls: result.droppedRolls
@@ -113,6 +116,18 @@ export function useCharacterRoll({
 				});
 			}
 
+			presentRoll({
+				source: "character",
+				formula,
+				context: `${characterName} · ${rollDescription}`,
+				modifier,
+				total,
+				rolls: [d20],
+				droppedRolls: result.droppedRolls ?? [],
+				isCritical,
+				isFumble,
+			});
+
 			// Show toast notification
 			toast({
 				title: `${characterName} - ${rollType}`,
@@ -126,6 +141,7 @@ export function useCharacterRoll({
 			characterId,
 			characterName,
 			proficiencyBonus,
+			presentRoll,
 			recordRoll,
 			rollInCampaign,
 			toast,

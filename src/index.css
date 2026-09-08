@@ -164,7 +164,7 @@
 }
 
 /* Radial-gradient utility (Tailwind v3-style API; v4 doesn't ship it).
-   Consumed by RaLogo aura + DiceRoller ambience. */
+   Consumed by the RaLogo aura and digital-dice ambience. */
 @utility bg-gradient-radial {
 	background-image: radial-gradient(circle, var(--tw-gradient-stops));
 }
