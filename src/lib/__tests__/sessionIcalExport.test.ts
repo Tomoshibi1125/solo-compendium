@@ -10,7 +10,7 @@ describe("buildIcsForCampaignSessions", () => {
 		title: "Session 1: Yongsan Gate",
 		description: "Investigate the breach in Yongsan District.",
 		scheduled_for: "2026-06-01T18:00:00.000Z",
-		location: "Discord / Table",
+		location: "Table, venue, or online room",
 	};
 
 	it("emits a valid VCALENDAR envelope with the campaign name", () => {
@@ -23,7 +23,7 @@ describe("buildIcsForCampaignSessions", () => {
 		expect(ics).toMatch(/X-WR-CALNAME:Yongsan Vigil/);
 		expect(ics).toMatch(/BEGIN:VEVENT/);
 		expect(ics).toMatch(/SUMMARY:Session 1: Yongsan Gate/);
-		expect(ics).toMatch(/LOCATION:Discord/);
+		expect(ics).toMatch(/LOCATION:Table/);
 	});
 
 	it("emits an empty but valid calendar when there are no sessions", () => {

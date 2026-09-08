@@ -1,5 +1,6 @@
 import type {
 	StaticJob as AuthoritativeStaticJob,
+	CanonicalJobRules,
 	FeatureUseDefinition,
 } from "@/types/character";
 
@@ -81,6 +82,11 @@ export interface Job extends AuthoritativeStaticJob {
 		spellsKnown?: number[];
 		spellSlots?: Record<string, number[]>;
 	};
+	/**
+	 * Machine-readable progression/access rules.  Keep this alongside the Job
+	 * record so every companion workflow resolves the same catalog entry.
+	 */
+	canonicalRules: CanonicalJobRules;
 	// RA-canonical choice ledger (level-up + creator pickers). Transcribed from
 	// existing classFeatures "Choose ..." prose. See §2 of the DDB parity plan.
 	levelChoices?: Array<{
@@ -183,6 +189,8 @@ const PACT_CASTER_SLOTS: Record<string, number[]> = {
 	"5th": [0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4],
 };
 
+const STANDARD_JOB_ASI_LEVELS = [4, 8, 12, 16, 19];
+
 export const jobs: Job[] = [
 	{
 		id: "destroyer",
@@ -193,6 +201,12 @@ export const jobs: Job[] = [
 			"The Destroyer is an Awakened identity that specializes in the Living Siege Engine mandate. As an Ascendant of this lineage, their physiology is fundamentally restructured with crystallized mana, granting them bone density and combat instincts that surpass the human limit. They possess an innate Aetheric-Sight that perceives the structural weaknesses of enemies and Rifts alike. In the modern world, the Destroyer is the premier frontline asset of the Ascendant Bureau, their presence stabilizing the absolute order during Rift eruptions.",
 		hitDie: "1d10",
 		primaryAbility: "Strength",
+		canonicalRules: {
+			casterType: "none",
+			asiLevels: [4, 6, 8, 12, 14, 16, 19],
+			powerAccess: "at-will",
+			techniqueAccess: "known",
+		},
 		saving_throws: ["Strength", "Vitality"],
 		skillChoices: [
 			"Acrobatics",
@@ -450,6 +464,19 @@ export const jobs: Job[] = [
 			"The Berserker is an Awakened identity that specializes in the Overload Tank and Unstable Resonance mandate. As an Ascendant of this lineage, their core is defined by an unstable connection to the Absolute, flooding their physiology with raw energy under stress. In the modern world, Berserkers are walking spectacles of power—visible mana veins flare across their skin as their muscles swell with crystallized essence. The Ascendant Bureau classifies them as high-risk but indispensable assets who specialize in the controlled demolition of high-rank Rifts.",
 		hitDie: "1d12",
 		primaryAbility: "Strength",
+		canonicalRules: {
+			casterType: "none",
+			asiLevels: STANDARD_JOB_ASI_LEVELS,
+			powerAccess: "at-will",
+			techniqueAccess: "known",
+			unarmoredDefense: {
+				id: "berserker_ud",
+				name: "Berserker Unarmored Defense",
+				baseAC: 10,
+				abilities: ["STR", "VIT"],
+				requiresNoArmor: true,
+			},
+		},
 		saving_throws: ["Strength", "Vitality"],
 		skillChoices: [
 			"Beast Taming",
@@ -713,6 +740,12 @@ export const jobs: Job[] = [
 			"The Assassin is an Awakened identity that specializes in the Dimensional Phase Operative and Umbral Walker mandate. As an Ascendant of this lineage, their consciousness partially exists between realities, granting them the ability to phase through the physical world and strike from impossible angles. In the modern era, the Assassin is the supreme specialist in surgical rift-clearing and high-value target extraction within high-rank Rifts.",
 		hitDie: "1d8",
 		primaryAbility: "Agility",
+		canonicalRules: {
+			casterType: "none",
+			asiLevels: [4, 8, 10, 12, 16, 19],
+			powerAccess: "at-will",
+			techniqueAccess: "known",
+		},
 		saving_throws: ["Agility", "Intelligence"],
 		skillChoices: [
 			"Acrobatics",
@@ -982,6 +1015,20 @@ export const jobs: Job[] = [
 			"The Striker is an Awakened identity that specializes in the Neural Overdrive and Impulse Channeling mandate. As an Ascendant of this lineage, their entire nervous system was rewired into a mana-conductive network, allowing them to channel kinetic force through their limbs like living railguns. In modern society, Strikers are the premier rapid-response assets for urban Rift eruptions, utilizing their impossible speed to neutralize threats with absolute precision.",
 		hitDie: "1d8",
 		primaryAbility: "Agility",
+		canonicalRules: {
+			casterType: "none",
+			asiLevels: STANDARD_JOB_ASI_LEVELS,
+			powerAccess: "at-will",
+			techniqueAccess: "known",
+			unarmoredDefense: {
+				id: "striker_ud",
+				name: "Striker Unarmored Defense",
+				baseAC: 10,
+				abilities: ["AGI", "SENSE"],
+				requiresNoArmor: true,
+				excludesShield: true,
+			},
+		},
 		saving_throws: ["Strength", "Agility"],
 		skillChoices: [
 			"Acrobatics",
@@ -1246,6 +1293,12 @@ export const jobs: Job[] = [
 			"The Mage is an Awakened identity that specializes in the Arcane Custodian and Aetheric Scholar mandate. As an Ascendant of this lineage, their Awakening provides a direct attunement to the Aetheric-Weave—the fundamental tapestry of absolute magical phenomena. In the modern world, Mages treat magic with the analytical rigor of higher mathematics, optimizing their rites with a precision that defines the modern era of aetheric research.",
 		hitDie: "1d6",
 		primaryAbility: "Intelligence",
+		canonicalRules: {
+			casterType: "full",
+			asiLevels: STANDARD_JOB_ASI_LEVELS,
+			spellAccess: "prepared",
+			spellSchools: ["*"],
+		},
 		saving_throws: ["Intelligence", "Sense"],
 		skillChoices: [
 			"Mana Flow",
@@ -1471,6 +1524,12 @@ export const jobs: Job[] = [
 			"The Esper is an Awakened identity that specializes in the Reality Distorter and Unfiltered Vessel mandate. As the SA version of an Esper, their connection to the Aetheric-Weave is raw and volatile—mana bleeds from their body like radiation, reshaping reality through sheer willpower. In modern society, Espers are celebrities and pariahs in equal measure; their aetheric flares reshape the tapestry of existence with absolute authority.",
 		hitDie: "1d6",
 		primaryAbility: "Presence",
+		canonicalRules: {
+			casterType: "full",
+			asiLevels: STANDARD_JOB_ASI_LEVELS,
+			spellAccess: "known",
+			spellSchools: ["evocation", "transmutation", "divination", "enchantment"],
+		},
 		saving_throws: ["Vitality", "Presence"],
 		skillChoices: [
 			"Mana Flow",
@@ -1725,6 +1784,21 @@ export const jobs: Job[] = [
 			"The Revenant is an Awakened identity bound to the End-Cycle mandate of Marthos, the Dragon-King of Void and Harbinger of Annihilation. As an Ascendant of this lineage, their body no longer runs on life - it runs on death. Sustained by the Void-Breath and by Remnants (fragments of severed life-essence reclaimed at the instant a creature dies), the Revenant is an unarmored drain tank that holds the line by feeding on the dying around it. They wear no armor and need none; entropy itself sheathes them, and the wounds that would fell others only deepen the harvest. The Ascendant Bureau deploys Revenants as immovable anchors at the worst Rift breaks - the figure who walks into annihilation and walks back out, fuller than before.",
 		hitDie: "1d8",
 		primaryAbility: "Intelligence",
+		canonicalRules: {
+			casterType: "half",
+			asiLevels: STANDARD_JOB_ASI_LEVELS,
+			spellAccess: "prepared",
+			powerAccess: "prepared",
+			techniqueAccess: "known",
+			spellSchools: ["necromancy", "abjuration", "transmutation"],
+			unarmoredDefense: {
+				id: "revenant_ud",
+				name: "Revenant Unarmored Requiem",
+				baseAC: 10,
+				abilities: ["INT", "VIT"],
+				requiresNoArmor: true,
+			},
+		},
 		saving_throws: ["Intelligence", "Vitality"],
 		skillChoices: [
 			"Mana Flow",
@@ -1973,6 +2047,12 @@ export const jobs: Job[] = [
 			"The Summoner is an Awakened identity granted the mandate of the Hive-Mother. As an Ascendant of this lineage, their mana is harmonized with the extraterrestrial ecosystems that bleed through the Rifts. They do not merely fight; they command the very flora and fauna of the Rift dimensions. In modern society, Summoners are the premier ecologists of the Ascendant Bureau, serving as the bridge between human civilization and the rapidly evolving lifeforms of the Rift-Era. They shapeshift into Rift creatures, command Rift environments, and are the only ascendants who can predict boss spawns by reading resonance markers.",
 		hitDie: "1d8",
 		primaryAbility: "Sense",
+		canonicalRules: {
+			casterType: "full",
+			asiLevels: STANDARD_JOB_ASI_LEVELS,
+			spellAccess: "prepared",
+			spellSchools: ["conjuration", "transmutation", "divination"],
+		},
 		saving_throws: ["Intelligence", "Sense"],
 		skillChoices: [
 			"Mana Flow",
@@ -2227,6 +2307,14 @@ export const jobs: Job[] = [
 			"The Holy Knight is an Awakened identity that specializes in the Oath-Bound Enforcer and Absolute Covenant mandate. As an Ascendant of this lineage, they serve as the ultimate guardians of modern society, their power fueled by a binding oath to the Absolute itself—a literal covenant inscribed into their mana pathways. They work as guild leaders, Ascendant Bureau enforcement officers, and public defenders against Rift threats. The oath grants devastating combat power, but break its tenets and the power is revoked painfully. They channel radiant Absolute energy through weapons, heal allies, and project protective auras.",
 		hitDie: "1d10",
 		primaryAbility: "Presence",
+		canonicalRules: {
+			casterType: "half",
+			asiLevels: STANDARD_JOB_ASI_LEVELS,
+			spellAccess: "prepared",
+			powerAccess: "prepared",
+			techniqueAccess: "known",
+			spellSchools: ["abjuration", "evocation"],
+		},
 		saving_throws: ["Sense", "Presence"],
 		skillChoices: [
 			"Athletics",
@@ -2508,6 +2596,14 @@ export const jobs: Job[] = [
 			"The Technomancer is an Awakened identity that specializes in the Absolute Architect and Aetheric Design mandate. As an Ascendant of this lineage, their Awakening provides architectural access to the Weave-Resonance layer—the fundamental interface between magic and physical matter. In the modern world, Technomancers are the most commercially valuable ascendants, turning Silicon Valley and Shenzhen into hubs of Aetheric innovation. They build devices that redefine reality: mana-powered drones, self-repairing gear, and resonance-enabled technologies.",
 		hitDie: "1d8",
 		primaryAbility: "Intelligence",
+		canonicalRules: {
+			casterType: "artificer",
+			asiLevels: STANDARD_JOB_ASI_LEVELS,
+			spellAccess: "prepared",
+			powerAccess: "prepared",
+			techniqueAccess: "known",
+			spellSchools: ["transmutation", "evocation", "abjuration", "divination"],
+		},
 		saving_throws: ["Vitality", "Intelligence"],
 		skillChoices: [
 			"Mana Flow",
@@ -2805,6 +2901,12 @@ export const jobs: Job[] = [
 			"The Idol is an Awakened identity that specializes in the Frequency Manipulator and Resonance Caster mandate. As an Ascendant of this lineage, their power is attuned to the Absolute's harmonic frequencies, allowing them to broadcast buffs and hype with absolute presence. In modern society, Idols are the most publicly visible ascendants — they have millions of followers, record albums infused with mana, headline gate-clearance livestreams, and their Hype abilities make them the ultimate party buffers.",
 		hitDie: "1d8",
 		primaryAbility: "Presence",
+		canonicalRules: {
+			casterType: "full",
+			asiLevels: STANDARD_JOB_ASI_LEVELS,
+			spellAccess: "known",
+			spellSchools: ["enchantment", "illusion", "evocation"],
+		},
 		saving_throws: ["Agility", "Presence"],
 		skillChoices: [
 			"Acrobatics",
@@ -3143,6 +3245,12 @@ export const jobs: Job[] = [
 			"The Herald is an Awakened identity that specializes in the Absolute Transmission mandate. As an Ascendant of this lineage, their nervous system was restructured at Awakening into a living antenna — a receiver tuned to the Absolute's broadcast, translating sanctified resonance into restorative, radiant, and reality-correcting mantras. In the modern world, Heralds are the Ascendant Bureau's field chaplains and raid medics; their very presence re-anchors an ally's vitals, and their mantras can mend shattered bones or incinerate unholy anomalies with equal authority. They are the bridge between civilians and the Absolute's will.",
 		hitDie: "1d8",
 		primaryAbility: "Presence",
+		canonicalRules: {
+			casterType: "full",
+			asiLevels: STANDARD_JOB_ASI_LEVELS,
+			spellAccess: "prepared",
+			spellSchools: ["abjuration", "evocation", "divination"],
+		},
 		saving_throws: ["Sense", "Presence"],
 		skillChoices: [
 			"Dimensional Lore",
@@ -3418,6 +3526,12 @@ export const jobs: Job[] = [
 			"The Contractor is an Awakened identity that specializes in the Rift-Pact Vessel mandate. As an Ascendant of this lineage, their Awakening was not a gift from the Absolute — it was a bargain with an extraplanar entity whose sigil is literally branded onto their vessel. They draw power through an aetheric umbilical to their patron, trading autonomy for aetheric bandwidth that vastly exceeds their rank. In the modern world, Contractors are both the Bureau's most flexible pact-specialists and its most-watched liability; every pact is registered with Extraplanar Affairs, and every Contractor is subject to monthly resonance audits.",
 		hitDie: "1d8",
 		primaryAbility: "Presence",
+		canonicalRules: {
+			casterType: "pact",
+			asiLevels: STANDARD_JOB_ASI_LEVELS,
+			spellAccess: "known",
+			spellSchools: ["conjuration", "necromancy", "enchantment", "illusion"],
+		},
 		saving_throws: ["Sense", "Presence"],
 		skillChoices: [
 			"Mana Flow",
@@ -3748,6 +3862,14 @@ export const jobs: Job[] = [
 			"The Stalker is an Awakened identity that specializes in the Dimensional Predator mandate. As an Ascendant of this lineage, their body was restructured for pursuit — their leg musculature, lung capacity, and cardiovascular system are optimized for sustained high-speed chase, and their aetheric sense is permanently tuned to dimensional anomalies. In the modern world, Stalkers are the Bureau's preferred bounty and extraction specialists; they work alone, they always catch their mark, and when their name appears on a contract the global bounty network goes quiet.",
 		hitDie: "1d10",
 		primaryAbility: "Agility",
+		canonicalRules: {
+			casterType: "half",
+			asiLevels: STANDARD_JOB_ASI_LEVELS,
+			spellAccess: "known",
+			powerAccess: "known",
+			techniqueAccess: "known",
+			spellSchools: ["conjuration", "transmutation", "divination"],
+		},
 		saving_throws: ["Strength", "Agility"],
 		skillChoices: [
 			"Beast Taming",
@@ -3835,6 +3957,9 @@ export const jobs: Job[] = [
 		spellcasting: {
 			ability: "Sense",
 			focus: "Primal focus",
+			spellsKnown: [
+				0, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10, 11, 11,
+			],
 			spellSlots: HALF_CASTER_SLOTS,
 		},
 		classFeatures: [

@@ -650,8 +650,6 @@ function sourceCategoryForFile(relFile) {
 	if (file.includes("sigils")) return "sigil";
 	if (file.includes("tattoos")) return "tattoo";
 	if (file.includes("pantheon")) return "pantheon";
-	if (file.includes("vttassetmanifest")) return "vtt-manifest";
-	if (file.includes("vttassetlibrary")) return "vtt-library";
 	if (file.includes("premademaps")) return "map";
 	if (file.includes("tokens")) return "token";
 	return "compendium";
@@ -1303,7 +1301,7 @@ function positivePrompt(record) {
 		return `Rift Ascendant app asset, lore-accurate single-character portrait of ${subject}, one primary subject only, waist-up or three-quarter portrait, not a landscape, not a group scene, ${lore}, modern supernatural urban fantasy, early normalized Rift Age, ${RIFT_ASCENDANT_ART_STYLE}, cinematic dark atmosphere, subtle rift energy, Essence glow, contemporary clothing and gear, clean readable face, strong silhouette, no text, no logo, no celebrity likeness, no copyrighted character`;
 	}
 	if (kind === "token") {
-		return `Rift Ascendant VTT token asset, ${subject}, lore-accurate token subject, ${lore}, ${RIFT_ASCENDANT_ART_STYLE}, centered full-body or bust token composition as appropriate to the subject, strong readable silhouette at small size, simple transparent-friendly or dark neutral background, Rift energy accents only where supported by lore, no baked-in text, no logo`;
+		return `Rift Ascendant character reference asset, ${subject}, lore-accurate character subject, ${lore}, ${RIFT_ASCENDANT_ART_STYLE}, centered full-body or bust composition as appropriate to the subject, strong readable silhouette at small size, simple transparent-friendly or dark neutral background, Rift energy accents only where supported by lore, no baked-in text, no logo`;
 	}
 	if (kind === "anomaly") {
 		return `Rift Ascendant app asset, ${subject}, single centered full-body creature or entity from a Rift Interior, not a landscape, not a location, ${anomalyDesignCue(record)}, ${lore}, ${RIFT_ASCENDANT_ART_STYLE}, uncanny biology, Essence-touched form, dangerous but readable silhouette, modern dark fantasy horror, cinematic lighting, polished monster concept art, dark atmosphere, rift glow accents, simple background, no text, no logo`;
@@ -1333,7 +1331,7 @@ function positivePrompt(record) {
 		return `Rift Ascendant app asset, ${subject}, abstract but readable supernatural effect icon, ${lore}, ${RIFT_ASCENDANT_ART_STYLE}, rift energy, Essence particles, strong silhouette, centered action shape, high contrast, simple background, usable at small size, no text, no logo`;
 	}
 	if (kind === "map") {
-		return `Rift Ascendant VTT map asset, ${subject}, lore-accurate tactical environment map, readable overhead or isometric layout, not a character portrait, not a single item, ${lore}, ${RIFT_ASCENDANT_ART_STYLE}, modern supernatural urban fantasy or Rift Interior dark fantasy depending on context, clear paths and encounter spaces, coherent architecture, atmospheric but playable, no baked-in labels, no text, no logo`;
+		return `Rift Ascendant reference map illustration, ${subject}, lore-accurate environment map, readable overhead or isometric layout, not a character portrait, not a single item, ${lore}, ${RIFT_ASCENDANT_ART_STYLE}, modern supernatural urban fantasy or Rift Interior dark fantasy depending on context, clear geography and locations, coherent architecture, atmospheric and informative, no baked-in labels, no text, no logo`;
 	}
 	return `Rift Ascendant app asset, ${subject}, ${lore}, ${RIFT_ASCENDANT_ART_STYLE}, modern supernatural urban fantasy or Rift Interior dark fantasy depending on context, cinematic environment concept art, strong readable composition, safe negative space for UI overlay, atmospheric depth, rift energy, Essence glow, coherent architecture, polished game background, no text, no logo`;
 }
@@ -2080,15 +2078,11 @@ async function main() {
 	);
 
 	const manifestFiles = existingFiles([
-		join(ROOT, "src", "lib", "vtt", "vttAssetManifest.ts"),
-		join(ROOT, "src", "data", "vttAssetLibrary.ts"),
 		join(ROOT, "src", "data", "premadeMaps.ts"),
 		join(ROOT, "src", "data", "tokens.ts"),
 		join(ROOT, "src", "lib", "audio", "hooks.ts"),
 		join(ROOT, "src", "pages", "AscendantTools.tsx"),
 		join(ROOT, "src", "components", "ui", "AscendantWindow.tsx"),
-		join(ROOT, "src", "components", "vtt", "AscendantToolsPanel.tsx"),
-		join(ROOT, "src", "components", "vtt", "RiftNotificationOverlay.tsx"),
 		join(ROOT, "src", "lib", "riftGenerator.ts"),
 		join(ROOT, "src", "lib", "riftFavor.ts"),
 	]);

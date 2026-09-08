@@ -10,7 +10,7 @@ export type Database = {
 	// Allows to automatically instantiate createClient with right options
 	// instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
 	__InternalSupabase: {
-		PostgrestVersion: "14.1";
+		PostgrestVersion: "14.5";
 	};
 	public: {
 		Tables: {
@@ -1954,9 +1954,6 @@ export type Database = {
 				Row: {
 					created_at: string;
 					description: string | null;
-					discord_app_id: string | null;
-					discord_public_key: string | null;
-					discord_webhook_url: string | null;
 					id: string;
 					is_active: boolean;
 					name: string;
@@ -1970,9 +1967,6 @@ export type Database = {
 				Insert: {
 					created_at?: string;
 					description?: string | null;
-					discord_app_id?: string | null;
-					discord_public_key?: string | null;
-					discord_webhook_url?: string | null;
 					id?: string;
 					is_active?: boolean;
 					name: string;
@@ -1986,9 +1980,6 @@ export type Database = {
 				Update: {
 					created_at?: string;
 					description?: string | null;
-					discord_app_id?: string | null;
-					discord_public_key?: string | null;
-					discord_webhook_url?: string | null;
 					id?: string;
 					is_active?: boolean;
 					name?: string;
@@ -2970,7 +2961,7 @@ export type Database = {
 					{
 						foreignKeyName: "character_regents_unlock_projection_fkey";
 						columns: ["character_id", "regent_id"];
-						isOneToOne: true;
+						isOneToOne: false;
 						referencedRelation: "character_regent_unlocks";
 						referencedColumns: ["character_id", "regent_id"];
 					},
@@ -3240,76 +3231,6 @@ export type Database = {
 					{
 						foreignKeyName: "character_shadow_army_shadow_soldier_id_fkey";
 						columns: ["shadow_soldier_id"];
-						isOneToOne: false;
-						referencedRelation: "compendium_shadow_soldiers";
-						referencedColumns: ["id"];
-					},
-				];
-			};
-			character_umbral_legionnaires: {
-				Row: {
-					bond_level: number;
-					character_id: string;
-					conditions: Json;
-					created_at: string;
-					current_hp: number;
-					id: string;
-					initiative: number | null;
-					is_summoned: boolean;
-					max_hp_override: number | null;
-					nickname: string | null;
-					notes: string | null;
-					soldier_id: string;
-					updated_at: string;
-				};
-				Insert: {
-					bond_level?: number;
-					character_id: string;
-					conditions?: Json;
-					created_at?: string;
-					current_hp: number;
-					id?: string;
-					initiative?: number | null;
-					is_summoned?: boolean;
-					max_hp_override?: number | null;
-					nickname?: string | null;
-					notes?: string | null;
-					soldier_id: string;
-					updated_at?: string;
-				};
-				Update: {
-					bond_level?: number;
-					character_id?: string;
-					conditions?: Json;
-					created_at?: string;
-					current_hp?: number;
-					id?: string;
-					initiative?: number | null;
-					is_summoned?: boolean;
-					max_hp_override?: number | null;
-					nickname?: string | null;
-					notes?: string | null;
-					soldier_id?: string;
-					updated_at?: string;
-				};
-				Relationships: [
-					{
-						foreignKeyName: "character_shadow_soldiers_character_id_fkey";
-						columns: ["character_id"];
-						isOneToOne: false;
-						referencedRelation: "characters";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "character_shadow_soldiers_character_id_fkey";
-						columns: ["character_id"];
-						isOneToOne: false;
-						referencedRelation: "user_characters";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "character_shadow_soldiers_soldier_id_fkey";
-						columns: ["soldier_id"];
 						isOneToOne: false;
 						referencedRelation: "compendium_shadow_soldiers";
 						referencedColumns: ["id"];
@@ -3788,6 +3709,76 @@ export type Database = {
 						columns: ["character_id"];
 						isOneToOne: false;
 						referencedRelation: "user_characters";
+						referencedColumns: ["id"];
+					},
+				];
+			};
+			character_umbral_legionnaires: {
+				Row: {
+					bond_level: number;
+					character_id: string;
+					conditions: Json;
+					created_at: string;
+					current_hp: number;
+					id: string;
+					initiative: number | null;
+					is_summoned: boolean;
+					max_hp_override: number | null;
+					nickname: string | null;
+					notes: string | null;
+					soldier_id: string;
+					updated_at: string;
+				};
+				Insert: {
+					bond_level?: number;
+					character_id: string;
+					conditions?: Json;
+					created_at?: string;
+					current_hp: number;
+					id?: string;
+					initiative?: number | null;
+					is_summoned?: boolean;
+					max_hp_override?: number | null;
+					nickname?: string | null;
+					notes?: string | null;
+					soldier_id: string;
+					updated_at?: string;
+				};
+				Update: {
+					bond_level?: number;
+					character_id?: string;
+					conditions?: Json;
+					created_at?: string;
+					current_hp?: number;
+					id?: string;
+					initiative?: number | null;
+					is_summoned?: boolean;
+					max_hp_override?: number | null;
+					nickname?: string | null;
+					notes?: string | null;
+					soldier_id?: string;
+					updated_at?: string;
+				};
+				Relationships: [
+					{
+						foreignKeyName: "character_shadow_soldiers_character_id_fkey";
+						columns: ["character_id"];
+						isOneToOne: false;
+						referencedRelation: "characters";
+						referencedColumns: ["id"];
+					},
+					{
+						foreignKeyName: "character_shadow_soldiers_character_id_fkey";
+						columns: ["character_id"];
+						isOneToOne: false;
+						referencedRelation: "user_characters";
+						referencedColumns: ["id"];
+					},
+					{
+						foreignKeyName: "character_shadow_soldiers_soldier_id_fkey";
+						columns: ["soldier_id"];
+						isOneToOne: false;
+						referencedRelation: "compendium_shadow_soldiers";
 						referencedColumns: ["id"];
 					},
 				];
@@ -8696,76 +8687,12 @@ export type Database = {
 				};
 				Relationships: [];
 			};
-			vtt_journal_entries: {
-				Row: {
-					campaign_id: string;
-					category: string;
-					content: string | null;
-					created_at: string;
-					id: string;
-					tags: string[];
-					title: string;
-					updated_at: string;
-					user_id: string;
-					visible_to_players: boolean;
-				};
-				Insert: {
-					campaign_id: string;
-					category?: string;
-					content?: string | null;
-					created_at?: string;
-					id?: string;
-					tags?: string[];
-					title: string;
-					updated_at?: string;
-					user_id: string;
-					visible_to_players?: boolean;
-				};
-				Update: {
-					campaign_id?: string;
-					category?: string;
-					content?: string | null;
-					created_at?: string;
-					id?: string;
-					tags?: string[];
-					title?: string;
-					updated_at?: string;
-					user_id?: string;
-					visible_to_players?: boolean;
-				};
-				Relationships: [
-					{
-						foreignKeyName: "vtt_journal_entries_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
-						referencedRelation: "campaign_details";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "vtt_journal_entries_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
-						referencedRelation: "campaigns";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "vtt_journal_entries_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
-						referencedRelation: "campaigns_public_listings";
-						referencedColumns: ["id"];
-					},
-				];
-			};
 		};
 		Views: {
 			campaign_details: {
 				Row: {
 					created_at: string | null;
 					description: string | null;
-					discord_app_id: string | null;
-					discord_public_key: string | null;
-					discord_webhook_url: string | null;
 					dm_email: string | null;
 					dm_id: string | null;
 					dm_name: string | null;
@@ -8945,6 +8872,20 @@ export type Database = {
 				};
 				Returns: string;
 			};
+			add_user_notification_unchecked: {
+				Args: {
+					p_category?: string;
+					p_expires_at?: string;
+					p_link?: string;
+					p_message?: string;
+					p_payload?: Json;
+					p_priority?: string;
+					p_title: string;
+					p_type: string;
+					p_user_id: string;
+				};
+				Returns: string;
+			};
 			admin_set_user_ban: {
 				Args: { p_banned: boolean; p_target: string };
 				Returns: undefined;
@@ -8972,7 +8913,30 @@ export type Database = {
 				};
 				Returns: string;
 			};
+			assign_campaign_loot_unchecked: {
+				Args: {
+					p_assigned_to_member_id?: string;
+					p_campaign_id: string;
+					p_encounter_id?: string;
+					p_items: Json;
+					p_session_id?: string;
+				};
+				Returns: string;
+			};
 			assign_campaign_relic: {
+				Args: {
+					p_bound_to_member_id?: string;
+					p_campaign_id: string;
+					p_name?: string;
+					p_properties?: Json;
+					p_rarity?: string;
+					p_relic_id?: string;
+					p_tradeable?: boolean;
+					p_value_credits?: number;
+				};
+				Returns: string;
+			};
+			assign_campaign_relic_unchecked: {
 				Args: {
 					p_bound_to_member_id?: string;
 					p_campaign_id: string;
@@ -8989,6 +8953,10 @@ export type Database = {
 				Args: { p_character_id: string };
 				Returns: undefined;
 			};
+			assign_daily_quests_unchecked: {
+				Args: { p_character_id: string };
+				Returns: undefined;
+			};
 			attach_campaign_member_character: {
 				Args: {
 					p_campaign_id: string;
@@ -8998,6 +8966,19 @@ export type Database = {
 				Returns: undefined;
 			};
 			attempt_taming: {
+				Args: {
+					p_anomaly_id: string;
+					p_bond_initial?: number;
+					p_campaign_id: string;
+					p_character_id: string;
+					p_dc: number;
+					p_initial_hp: number;
+					p_nickname?: string;
+					p_roll_total: number;
+				};
+				Returns: string;
+			};
+			attempt_taming_unchecked: {
 				Args: {
 					p_anomaly_id: string;
 					p_bond_initial?: number;
@@ -9038,6 +9019,10 @@ export type Database = {
 				Returns: boolean;
 			};
 			claim_quest_rewards: {
+				Args: { p_character_id: string; p_quest_id: string };
+				Returns: undefined;
+			};
+			claim_quest_rewards_unchecked: {
 				Args: { p_character_id: string; p_quest_id: string };
 				Returns: undefined;
 			};
@@ -9179,6 +9164,84 @@ export type Database = {
 				Args: { p_campaign_id: string };
 				Returns: number;
 			};
+			get_character_by_share_token: {
+				Args: { p_character_id: string; p_share_token: string };
+				Returns: {
+					active_sovereign_id: string | null;
+					agi: number | null;
+					appearance: string | null;
+					armor_class: number;
+					armor_proficiencies: string[] | null;
+					background: string | null;
+					background_id: string | null;
+					backstory: string | null;
+					base_class: string | null;
+					condition_immunities: string[] | null;
+					conditions: string[] | null;
+					created_at: string;
+					death_save_failures: number | null;
+					death_save_successes: number | null;
+					derived_stats_cached_at: string | null;
+					exhaustion_level: number;
+					experience: number;
+					gemini_state: Json | null;
+					hit_dice_current: number;
+					hit_dice_max: number;
+					hit_dice_size: number;
+					hp_current: number;
+					hp_max: number;
+					hp_max_override: number | null;
+					hp_temp: number;
+					id: string;
+					immunities: string[] | null;
+					initiative: number;
+					int: number | null;
+					job: string | null;
+					job_id: string | null;
+					languages: string[];
+					level: number;
+					monarch_overlays: string[] | null;
+					name: string;
+					notes: string | null;
+					path: string | null;
+					path_id: string | null;
+					portrait_url: string | null;
+					pre: number | null;
+					proficiency_bonus: number;
+					regent_overlays: string[] | null;
+					resistances: string[] | null;
+					rift_favor_current: number;
+					rift_favor_die: number;
+					rift_favor_max: number;
+					saving_throw_proficiencies:
+						| Database["public"]["Enums"]["ability_score"][]
+						| null;
+					sense: number | null;
+					senses: string[] | null;
+					share_token: string | null;
+					sheet_accent: string | null;
+					sheet_backdrop: string | null;
+					sheet_theme: string | null;
+					skill_expertise: string[] | null;
+					skill_proficiencies: string[] | null;
+					sovereign_id: string | null;
+					speed: number;
+					stable: boolean | null;
+					str: number | null;
+					tool_proficiencies: string[] | null;
+					updated_at: string;
+					user_id: string;
+					vit: number | null;
+					vulnerabilities: string[] | null;
+					weapon_proficiencies: string[] | null;
+				}[];
+				SetofOptions: {
+					from: "*";
+					to: "characters";
+					isOneToOne: false;
+					isSetofReturn: true;
+				};
+			};
 			gift_marketplace_item: {
 				Args: {
 					p_item_id: string;
@@ -9245,8 +9308,16 @@ export type Database = {
 				Args: { p_character_id: string };
 				Returns: undefined;
 			};
+			on_long_rest_assign_quests_unchecked: {
+				Args: { p_character_id: string };
+				Returns: undefined;
+			};
 			prepare_search_text: { Args: { p_text: string }; Returns: string };
 			record_marketplace_download: {
+				Args: { p_item_id: string; p_user_id?: string };
+				Returns: undefined;
+			};
+			record_marketplace_download_unchecked: {
 				Args: { p_item_id: string; p_user_id?: string };
 				Returns: undefined;
 			};
@@ -9254,14 +9325,15 @@ export type Database = {
 				Args: { p_character_id?: string; p_token: string };
 				Returns: string;
 			};
+			redeem_campaign_invite_unchecked: {
+				Args: { p_character_id?: string; p_token: string };
+				Returns: string;
+			};
 			release_anomaly_controller: {
 				Args: { p_tamed_id: string };
 				Returns: undefined;
 			};
-			remove_regent_unlock: {
-				Args: { p_unlock_id: string };
-				Returns: string;
-			};
+			remove_regent_unlock: { Args: { p_unlock_id: string }; Returns: string };
 			request_to_join_guild: {
 				Args: {
 					p_character_id?: string;
@@ -9291,6 +9363,10 @@ export type Database = {
 				}[];
 			};
 			resolve_guild_quest: {
+				Args: { p_quest_id: string; p_success: boolean };
+				Returns: undefined;
+			};
+			resolve_guild_quest_unchecked: {
 				Args: { p_quest_id: string; p_success: boolean };
 				Returns: undefined;
 			};
@@ -9441,7 +9517,30 @@ export type Database = {
 				};
 				Returns: string;
 			};
+			upsert_campaign_session_unchecked: {
+				Args: {
+					p_campaign_id: string;
+					p_description?: string;
+					p_location?: string;
+					p_recurrence_parent_id?: string;
+					p_recurrence_rule?: string;
+					p_scheduled_for?: string;
+					p_session_id?: string;
+					p_status?: string;
+					p_title?: string;
+				};
+				Returns: string;
+			};
 			upsert_marketplace_review: {
+				Args: {
+					p_comment?: string;
+					p_item_id: string;
+					p_rating: number;
+					p_user_id?: string;
+				};
+				Returns: string;
+			};
+			upsert_marketplace_review_unchecked: {
 				Args: {
 					p_comment?: string;
 					p_item_id: string;

@@ -108,6 +108,20 @@ const FeatureMechanicBadges = ({
 	);
 };
 
+const casterProgressionLabel = {
+	none: "No spell-slot progression",
+	full: "Full caster",
+	half: "Half caster",
+	pact: "Pact caster",
+	artificer: "Artificer progression",
+} as const;
+
+const abilityAccessLabel = {
+	prepared: "Prepared",
+	known: "Known",
+	"at-will": "At will",
+} as const;
+
 export const JobDetail = ({ data }: { data: JobData }) => {
 	const [features, setFeatures] = useState<JobFeature[]>([]);
 	const [paths, setPaths] = useState<JobPath[]>([]);
@@ -658,6 +672,87 @@ export const JobDetail = ({ data }: { data: JobData }) => {
 								</span>
 							</div>
 						)}
+					</div>
+				</AscendantWindow>
+			)}
+
+			{/* This is the same authored rule contract used by creation, level-up,
+			    sheets, and action automation. It intentionally presents rules only,
+			    never sourcebook/PDF citations. */}
+			{data.canonical_rules && (
+				<AscendantWindow title="PROGRESSION & ACCESS">
+					<div className="grid gap-3 text-sm sm:grid-cols-2">
+						<div>
+							<span className="text-muted-foreground">
+								Caster progression:{" "}
+							</span>
+							<span className="font-heading font-semibold">
+								{casterProgressionLabel[data.canonical_rules.casterType]}
+							</span>
+						</div>
+						<div>
+							<span className="text-muted-foreground">ASI / feat levels: </span>
+							<span className="font-heading font-semibold">
+								{data.canonical_rules.asiLevels.join(", ")}
+							</span>
+						</div>
+						{data.canonical_rules.unarmoredDefense && (
+							<div className="sm:col-span-2">
+								<span className="text-muted-foreground">
+									Unarmored defense:{" "}
+								</span>
+								<span className="font-heading font-semibold">
+									{data.canonical_rules.unarmoredDefense.name} —{" "}
+									{data.canonical_rules.unarmoredDefense.baseAC} +{" "}
+									{data.canonical_rules.unarmoredDefense.abilities
+										.map((ability) => `${ability} mod`)
+										.join(" + ")}
+									{data.canonical_rules.unarmoredDefense.requiresNoArmor
+										? " (no armor)"
+										: ""}
+									{data.canonical_rules.unarmoredDefense.excludesShield
+										? " (no shield)"
+										: ""}
+								</span>
+							</div>
+						)}
+						{data.canonical_rules.spellAccess && (
+							<div>
+								<span className="text-muted-foreground">Spells: </span>
+								<span className="font-heading font-semibold">
+									{abilityAccessLabel[data.canonical_rules.spellAccess]}
+								</span>
+							</div>
+						)}
+						{data.canonical_rules.powerAccess && (
+							<div>
+								<span className="text-muted-foreground">Powers: </span>
+								<span className="font-heading font-semibold">
+									{abilityAccessLabel[data.canonical_rules.powerAccess]}
+								</span>
+							</div>
+						)}
+						{data.canonical_rules.techniqueAccess && (
+							<div>
+								<span className="text-muted-foreground">Techniques: </span>
+								<span className="font-heading font-semibold">
+									{abilityAccessLabel[data.canonical_rules.techniqueAccess]}
+								</span>
+							</div>
+						)}
+						{data.canonical_rules.spellSchools &&
+							data.canonical_rules.spellSchools.length > 0 && (
+								<div className="sm:col-span-2">
+									<span className="text-muted-foreground">Spell schools: </span>
+									<span className="font-heading">
+										{data.canonical_rules.spellSchools.includes("*")
+											? "All"
+											: data.canonical_rules.spellSchools
+													.map(formatEnumLabel)
+													.join(", ")}
+									</span>
+								</div>
+							)}
 					</div>
 				</AscendantWindow>
 			)}

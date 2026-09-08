@@ -1,9 +1,8 @@
 /**
  * Session recurrence generator (F4 of May 2026 remediation plan).
  *
- * Closes the Session Planner 🟡 finding from
- * `docs/warden-tools-vtt-audit.md:62`. Pure functions — no DB, no
- * library dependency (RA only needs weekly / bi-weekly / monthly
+ * Closes the Session Planner finding. Pure functions — no DB, no library
+ * dependency (RA only needs weekly / bi-weekly / monthly
  * patterns, no full RRULE).
  */
 

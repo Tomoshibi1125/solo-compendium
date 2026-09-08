@@ -18,22 +18,6 @@ export interface Campaign {
 	created_at: string;
 	updated_at: string;
 	settings: Record<string, unknown>;
-	/**
-	 * Misty Pearl E3 — optional Discord webhook URL for cross-channel
-	 * notifications. Warden-only-editable via the campaign settings UI;
-	 * relayed by the `notify-discord` edge function. NULL = disabled.
-	 */
-	discord_webhook_url?: string | null;
-	/**
-	 * Misty Pearl G2 — Discord Application id for the two-way bot
-	 * (slash commands). NULL = bot disabled.
-	 */
-	discord_app_id?: string | null;
-	/**
-	 * Misty Pearl G2 — Discord Application public key (hex). Used to
-	 * Ed25519-verify incoming interaction webhooks. NULL = bot disabled.
-	 */
-	discord_public_key?: string | null;
 }
 
 /** Minimal anonymous campaign lookup contract. Never treat this as a full row. */
@@ -59,11 +43,6 @@ type CampaignUpdate = {
 	description?: string | null;
 	is_active?: boolean;
 	settings?: Record<string, unknown>;
-	/** Misty Pearl E3 — Discord webhook bridge. Null clears the value. */
-	discord_webhook_url?: string | null;
-	/** Misty Pearl G2 — Discord two-way bot. */
-	discord_app_id?: string | null;
-	discord_public_key?: string | null;
 };
 
 const CAMPAIGNS_KEY = "solo-compendium.campaigns.v1";
@@ -744,25 +723,12 @@ export const useUpdateCampaign = () => {
 				throw new AppError("Not authenticated", "AUTH_REQUIRED");
 			}
 
-			// Misty Pearl E3 — Discord webhook bridge: the column exists per
-			// migration `20260528000000_add_campaign_discord_webhook.sql` but
-			// the Supabase types haven't been regenerated yet, so we widen the
-			// update payload via cast for that one field.
 			const updatePayload: Record<string, unknown> = {
 				name: updates.name,
 				description: updates.description,
 				is_active: updates.is_active,
 				settings: updates.settings,
 			};
-			if (updates.discord_webhook_url !== undefined) {
-				updatePayload.discord_webhook_url = updates.discord_webhook_url;
-			}
-			if (updates.discord_app_id !== undefined) {
-				updatePayload.discord_app_id = updates.discord_app_id;
-			}
-			if (updates.discord_public_key !== undefined) {
-				updatePayload.discord_public_key = updates.discord_public_key;
-			}
 			const { data, error } = await supabase
 				.from("campaigns")
 				.update(updatePayload as never)

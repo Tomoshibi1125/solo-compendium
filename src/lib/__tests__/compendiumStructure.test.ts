@@ -4,6 +4,7 @@ import { jobs } from "@/data/compendium/jobs";
 import { paths } from "@/data/compendium/paths";
 import { staticDataProvider } from "@/data/compendium/providers";
 import { regents } from "@/data/compendium/regents";
+import { getRegisteredSource } from "@/data/compendium/registry";
 
 /**
  * Structural content-coverage audit (audit findings M11/M12/M13).
@@ -48,6 +49,51 @@ describe("content structure — paths (M11)", () => {
 			}
 		}
 		expect(bad, `malformed path features: ${bad.join(", ")}`).toEqual([]);
+	});
+});
+
+describe("official job and path catalogs", () => {
+	it("marks both authoritative catalogs as official sourcebook content", () => {
+		expect(getRegisteredSource("jobs/catalog")).toMatchObject({
+			origin: "official-sourcebook",
+			role: "authoritative",
+			modulePath: "src/data/compendium/jobs.ts",
+		});
+		expect(getRegisteredSource("paths/catalog")).toMatchObject({
+			origin: "official-sourcebook",
+			role: "authoritative",
+			modulePath: "src/data/compendium/paths.ts",
+		});
+	});
+
+	it("provider-normalized jobs and paths preserve every canonical record and link", async () => {
+		const [normalizedJobs, normalizedPaths] = await Promise.all([
+			staticDataProvider.getJobs(),
+			staticDataProvider.getPaths(),
+		]);
+		expect(normalizedJobs).toHaveLength(jobs.length);
+		expect(normalizedPaths).toHaveLength(paths.length);
+
+		const jobsById = new Map(normalizedJobs.map((job) => [job.id, job]));
+		for (const job of jobs) {
+			expect(jobsById.get(job.id)).toMatchObject({
+				name: job.name,
+				source_book: job.source,
+			});
+		}
+
+		const pathsById = new Map(normalizedPaths.map((path) => [path.id, path]));
+		for (const path of paths) {
+			expect(pathsById.get(path.id)).toMatchObject({
+				name: path.name,
+				job_id: path.jobId,
+				job_name: path.jobName,
+				path_tier: path.tier,
+				requirements: path.requirements,
+				features: path.features,
+				abilities: path.abilities,
+			});
+		}
 	});
 });
 

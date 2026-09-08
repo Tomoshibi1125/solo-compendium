@@ -8,7 +8,7 @@
  * Directive Bus so any live listener (module host, future surfaces) can
  * reconstruct the moment; the panel itself renders the readable timeline.
  *
- * VTT kinds (`token:*`, `scene:*`) are out of scope — the VTT was retired.
+ * Map-scene kinds (`token:*`, `scene:*`) are intentionally out of scope.
  */
 import { useEffect, useMemo, useRef, useState } from "react";
 import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";

@@ -17,7 +17,7 @@ Unreferenced in src **and** supabase/migrations (grep-verified):
 - `public/generated/rift-ascendant-candidates/` (~1 GB, git-tracked ×1,925)
 - `public/generated/original-backups/`
 - `public/generated/maps/premade/` (56 files) — no manifest, no consumer
-- `public/generated/maps/tilesets/` (70 PNGs, dungeon-pack) — VTT leftovers
+- `public/generated/maps/tilesets/` (70 PNGs, dungeon-pack) — obsolete map-play assets
 
 Referenced and kept: `/generated/compendium/**` (2,260 refs), `/generated/maps/Meridian` (meridian.ts:70), `/ui-art/*` (webp/avif variants; PNGs are `<picture>` fallbacks only), `adventures/glassline-claim` (books pipeline input — do not recompress).
 

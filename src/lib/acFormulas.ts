@@ -20,6 +20,8 @@
  * - Revenant → Unarmored Requiem (10 + INT + VIT), the entropy-sheathed drain tank
  */
 
+import { type Job, jobs } from "@/data/compendium/jobs";
+import { getCanonicalJob } from "@/lib/jobRules";
 import type { AbilityScore } from "./5eRulesEngine";
 import { getAbilityModifier } from "./5eRulesEngine";
 
@@ -82,54 +84,39 @@ const UNARMORED_BASE: ACFormula = {
 	},
 };
 
-const BERSERKER_UNARMORED: ACFormula = {
-	id: "berserker_ud",
-	name: "Berserker Unarmored Defense",
-	source: "job:berserker",
-	description: "10 + STR modifier + VIT modifier (no armor)",
-	calculate: (ctx) => {
-		if (ctx.equippedArmor) return null;
-		if (ctx.job.toLowerCase() !== "berserker") return null;
-		return (
-			10 +
-			getAbilityModifier(ctx.abilities.STR) +
-			getAbilityModifier(ctx.abilities.VIT)
-		);
-	},
-};
+function createJobUnarmoredFormula(job: Job): ACFormula | null {
+	const defense = job.canonicalRules.unarmoredDefense;
+	if (!defense) return null;
+	const modifiers = defense.abilities
+		.map((ability) => `${ability} modifier`)
+		.join(" + ");
+	const restrictions = [
+		defense.requiresNoArmor ? "no armor" : null,
+		defense.excludesShield ? "no shield" : null,
+	]
+		.filter(Boolean)
+		.join(", ");
 
-const STRIKER_UNARMORED: ACFormula = {
-	id: "striker_ud",
-	name: "Striker Unarmored Defense",
-	source: "job:striker",
-	description: "10 + AGI modifier + SENSE modifier (no armor, no shield)",
-	calculate: (ctx) => {
-		if (ctx.equippedArmor) return null;
-		if (ctx.equippedShield) return null; // Monks lose UD with shield
-		if (ctx.job.toLowerCase() !== "striker") return null;
-		return (
-			10 +
-			getAbilityModifier(ctx.abilities.AGI) +
-			getAbilityModifier(ctx.abilities.SENSE)
-		);
-	},
-};
+	return {
+		id: defense.id,
+		name: defense.name,
+		source: `job:${job.id}`,
+		description: `${defense.baseAC} + ${modifiers}${restrictions ? ` (${restrictions})` : ""}`,
+		calculate: (ctx) => {
+			if (getCanonicalJob(ctx.job)?.id !== job.id) return null;
+			if (defense.requiresNoArmor && ctx.equippedArmor) return null;
+			if (defense.excludesShield && ctx.equippedShield) return null;
+			return defense.abilities.reduce(
+				(total, ability) => total + getAbilityModifier(ctx.abilities[ability]),
+				defense.baseAC,
+			);
+		},
+	};
+}
 
-const REVENANT_UNARMORED: ACFormula = {
-	id: "revenant_ud",
-	name: "Revenant Unarmored Requiem",
-	source: "job:revenant",
-	description: "10 + INT modifier + VIT modifier (no armor)",
-	calculate: (ctx) => {
-		if (ctx.equippedArmor) return null;
-		if (ctx.job.toLowerCase() !== "revenant") return null;
-		return (
-			10 +
-			getAbilityModifier(ctx.abilities.INT) +
-			getAbilityModifier(ctx.abilities.VIT)
-		);
-	},
-};
+const JOB_UNARMORED_FORMULAS = jobs
+	.map(createJobUnarmoredFormula)
+	.filter((formula): formula is ACFormula => formula !== null);
 
 const ARMORED: ACFormula = {
 	id: "armored",
@@ -177,9 +164,7 @@ const MAGE_ARMOR: ACFormula = {
 /** All built-in AC formulas */
 export const AC_FORMULAS: ACFormula[] = [
 	UNARMORED_BASE,
-	BERSERKER_UNARMORED,
-	STRIKER_UNARMORED,
-	REVENANT_UNARMORED,
+	...JOB_UNARMORED_FORMULAS,
 	ARMORED,
 	MAGE_ARMOR,
 ];

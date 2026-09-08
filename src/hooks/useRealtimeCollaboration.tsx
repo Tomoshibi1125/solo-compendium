@@ -8,8 +8,8 @@ import { freshSharedChannel } from "@/lib/realtimeChannel";
  * Campaign real-time presence + shared dice.
  *
  * Scope note (2026-07): the collaboration channel once carried cursor / text /
- * character-update / map / combat-state broadcasts, but those were VTT-era or
- * superseded scaffolding with no producers or listeners and were removed.
+ * character-update / map / combat-state broadcasts, but those were obsolete
+ * scaffolding with no producers or listeners and were removed.
  * Cross-client sync now rides durable DB tables + `postgres_changes`
  * subscriptions instead: combat via `useCampaignCombat`, character HP/state via
  * `useCharacterRealtime`. This hook keeps the two things that are actually

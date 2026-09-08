@@ -10,6 +10,13 @@ import {
 	getRiftFavorDie,
 	getRiftFavorMax,
 } from "./5eRulesEngine";
+import {
+	getCanonicalJob,
+	getCanonicalJobAbilityAccessMode,
+	getCanonicalJobCasterType,
+	getCanonicalJobPrimaryAbility,
+	getCanonicalJobSpellcastingAbility,
+} from "./jobRules";
 import { computePassiveScore } from "./sensesEngine";
 
 // Re-export for convenience
@@ -279,14 +286,11 @@ export function getCasterType(
 ): CasterType {
 	const jobName = typeof job === "string" ? job : job?.name;
 	if (!jobName) return "none";
+	const authoredCasterType = getCanonicalJobCasterType(job);
+	if (authoredCasterType) return authoredCasterType;
 
-	// Revenant is a hybrid half-caster (spells + martial powers/techniques),
-	// reclassified from full-caster as part of the unarmored-drain-tank rework.
-	// This early return takes precedence over the Revenant→Wizard identity map
-	// below (which is now unreached for caster-type purposes).
-	if (jobName === "Revenant") return "half";
-
-	// Full casters (standard 5e)
+	// Compatibility fallback for legacy 5e-named saved data. All Rift
+	// Ascendant Jobs resolve above through jobs.ts instead of this table.
 	const fullCasters = ["Wizard", "Cleric", "Druid", "Sorcerer", "Bard"];
 	// Half casters (standard 5e)
 	const halfCasters = ["Paladin", "Ranger"];
@@ -295,27 +299,8 @@ export function getCasterType(
 	// Artificer special case
 	const artificers = ["Artificer"];
 
-	// Map Rift Ascendant canonical 14 jobs to 5e equivalents
-	const jobMapping: Record<string, string> = {
-		Destroyer: "Fighter",
-		Berserker: "Barbarian",
-		Assassin: "Rogue",
-		Striker: "Monk",
-		Mage: "Wizard",
-		Esper: "Sorcerer",
-		Revenant: "Wizard",
-		Summoner: "Druid",
-		Herald: "Cleric",
-		Contractor: "Warlock",
-		Stalker: "Ranger",
-		"Holy Knight": "Paladin",
-		Technomancer: "Artificer",
-		Idol: "Bard",
-	};
-
 	const pactCasters = ["Warlock"];
-
-	const standardJob = jobMapping[jobName] || jobName;
+	const standardJob = jobName;
 
 	if (nonCasters.includes(standardJob)) return "none";
 	if (fullCasters.includes(standardJob)) return "full";
@@ -479,24 +464,7 @@ export function getSpellSlotsPerLevel(
 export function getSpellcastingAbility(
 	job: string | { name: string } | null | undefined,
 ): AbilityScore | null {
-	const jobName = typeof job === "string" ? job : job?.name;
-	if (!jobName) return null;
-
-	// Map canonical 14 SA jobs to spellcasting abilities
-	const jobAbilityMap: Record<string, AbilityScore> = {
-		Mage: "INT",
-		Revenant: "INT",
-		Technomancer: "INT",
-		Herald: "SENSE",
-		Summoner: "SENSE",
-		Stalker: "SENSE",
-		Esper: "PRE",
-		Contractor: "PRE",
-		"Holy Knight": "PRE",
-		Idol: "PRE",
-	};
-
-	return jobAbilityMap[jobName] || null;
+	return getCanonicalJobSpellcastingAbility(job);
 }
 
 /**
@@ -516,77 +484,19 @@ export function getSpellcastingAbility(
 export function getJobPrimaryAbility(
 	job: string | { name: string } | null | undefined,
 ): AbilityScore | null {
-	const jobName = typeof job === "string" ? job : job?.name;
-	if (!jobName) return null;
-
-	const jobPrimaryAbilityMap: Record<string, AbilityScore> = {
-		Destroyer: "STR",
-		Berserker: "STR",
-		Assassin: "AGI",
-		Striker: "AGI",
-		Mage: "INT",
-		Revenant: "INT",
-		Technomancer: "INT",
-		Herald: "SENSE",
-		Summoner: "SENSE",
-		Stalker: "SENSE",
-		Esper: "PRE",
-		Contractor: "PRE",
-		"Holy Knight": "PRE",
-		Idol: "PRE",
-	};
-
-	return jobPrimaryAbilityMap[jobName] || null;
+	return getCanonicalJobPrimaryAbility(job);
 }
 
-// Canonical SRD "Spells Known" tables for RA's known casters, indexed by
-// character level 1–20. These MIRROR the static per-Job arrays in
-// `data/compendium/jobs.ts` (the creation / level-up wizard reads those arrays;
-// this function feeds the sheet's known-spells badge). They are bound together
-// by a guard test so the badge can never again drift from the creation limit —
-// the badge previously used a rough `level + 1`, which mis-counted (e.g. an Idol
-// at L1 showed 2 but could actually learn 4; an Esper at L12 showed 13 vs 12).
-const SPELLS_KNOWN_TABLES: Record<string, number[]> = {
-	// Esper → Sorcerer
-	Esper: [
-		2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 12, 13, 13, 14, 14, 15, 15, 15, 15,
-	],
-	// Idol → Bard
-	Idol: [
-		4, 5, 6, 7, 8, 9, 10, 11, 12, 14, 15, 15, 16, 18, 19, 19, 20, 22, 22, 22,
-	],
-	// Contractor → Warlock
-	Contractor: [
-		2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 11, 11, 12, 12, 13, 13, 14, 15, 15, 15,
-	],
-};
-
-// Calculate spells known limit (standard 5e)
+/** Read a known-caster's authored spell table from its Job record. */
 export function getSpellsKnownLimit(
 	job: string | { name: string } | null | undefined,
 	level: number,
 ): number | null {
-	const jobName = typeof job === "string" ? job : job?.name;
-	if (!jobName) return null;
-
-	// Stalker → Ranger: a KNOWN half-caster (not prepared). Ranger knows no
-	// spells at level 1 and thereafter follows the SRD Ranger "Spells Known"
-	// column = ceil(level/2)+1 (2→2, 3→3, 5→4, 9→6, … 20→11). The earlier
-	// floor(level/2)+1 under-counted at every odd level ≥3.
-	if (jobName === "Stalker") {
-		return level < 2 ? 0 : Math.ceil(level / 2) + 1;
-	}
-
-	// Known full/pact casters (Sorcerer/Warlock/Bard analogs) use their exact
-	// SRD tables so the sheet badge matches the creation-wizard limit.
-	const table = SPELLS_KNOWN_TABLES[jobName];
-	if (table) {
-		const idx = Math.max(0, Math.min(level - 1, 19));
-		return table[idx];
-	}
-
-	// Other classes are prepared casters
-	return null;
+	if (getCanonicalJobAbilityAccessMode(job, "spell") !== "known") return null;
+	const table = getCanonicalJob(job)?.spellcasting?.spellsKnown;
+	if (!table?.length) return null;
+	const idx = Math.max(0, Math.min(level - 1, table.length - 1));
+	return table[idx] ?? null;
 }
 
 // Calculate spells prepared limit (standard 5e)
@@ -595,11 +505,9 @@ export function getSpellsPreparedLimit(
 	level: number,
 	abilityModifier: number,
 ): number | null {
-	const jobName = typeof job === "string" ? job : job?.name;
-	if (!jobName) return null;
-
-	const spellcastingAbility = getSpellcastingAbility(job);
-	if (!spellcastingAbility) return null;
+	if (getCanonicalJobAbilityAccessMode(job, "spell") !== "prepared") {
+		return null;
+	}
 
 	// Preparation requires slots to cast from. Delayed casters (the
 	// half-casters below gain Spellcasting at level 2 — Revenant's Reaper's
@@ -609,27 +517,16 @@ export function getSpellsPreparedLimit(
 	// audit). Deriving the gate from the slot table keeps this in lockstep
 	// with the progression instead of forking a second "when casting starts"
 	// source of truth.
-	const casterType = getCasterType(jobName);
+	const casterType = getCasterType(job);
 	const slotsAtLevel = getSpellSlotsPerLevel(casterType, level);
 	const hasAnySlot = Object.values(slotsAtLevel).some((count) => count > 0);
 	if (!hasAnySlot) return null;
 
-	// Half-caster prepared casters use ability modifier + half level (min 1):
-	//   Revenant (drain-tank rework), Holy Knight → Paladin, and Technomancer →
-	//   Artificer. All three have half-caster spell slots, so — matching
-	//   Paladin/Artificer RAW — they prepare mod + floor(level/2), not the
-	//   full-caster mod + level. (Holy Knight and Technomancer were previously
-	//   over-counted with the full-caster formula.)
-	const halfCasterPrepared = ["Revenant", "Holy Knight", "Technomancer"];
-	if (halfCasterPrepared.includes(jobName)) {
+	if (casterType === "half" || casterType === "artificer") {
 		return Math.max(1, abilityModifier + Math.floor(level / 2));
 	}
 
-	// Full-caster prepared casters: ability modifier + level (minimum 1) - SRD.
-	// Stalker is intentionally excluded — its 5e counterpart (Ranger) is a KNOWN
-	// caster, so it uses getSpellsKnownLimit instead of a prepared limit.
-	const preparedCasters = ["Mage", "Herald", "Summoner"];
-	if (preparedCasters.includes(jobName)) {
+	if (casterType === "full") {
 		return Math.max(1, abilityModifier + level);
 	}
 
@@ -650,29 +547,8 @@ export function getCantripsKnownLimit(
 	job: string | { name: string } | null | undefined,
 	level: number,
 ): number | null {
-	const jobName = typeof job === "string" ? job : job?.name;
-	if (!jobName) return null;
-	const j = jobName.toLowerCase();
-
-	// Full casters: Mage (Wizard), Herald (Cleric), Esper (Sorcerer), Idol (Bard), Summoner (Druid)
-	const fullCasterCantrips: Record<string, number[]> = {
-		// [levels 1-20] cantrips known
-		mage: [3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5],
-		herald: [3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5],
-		esper: [4, 4, 4, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6],
-		idol: [2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
-		summoner: [2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
-	};
-
-	// Pactcasters: Contractor (Warlock)
-	const pactcasterCantrips: Record<string, number[]> = {
-		contractor: [2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
-		technomancer: [2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
-	};
-
-	const table = fullCasterCantrips[j] ?? pactcasterCantrips[j];
-	if (!table) return null; // Martial jobs don't get cantrips
-
-	const idx = Math.max(0, Math.min(level - 1, 19));
-	return table[idx];
+	const table = getCanonicalJob(job)?.spellcasting?.cantripsKnown;
+	if (!table?.length) return null;
+	const idx = Math.max(0, Math.min(level - 1, table.length - 1));
+	return table[idx] ?? null;
 }

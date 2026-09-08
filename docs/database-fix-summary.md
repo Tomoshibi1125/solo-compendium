@@ -21,7 +21,7 @@ Successfully implemented a comprehensive database optimization and security fix 
   - Compendium-related indexes (13 removed)
   - Campaign-related indexes (25 removed)
   - User and other indexes (5 removed)
-  - VTT-related indexes (7 removed)
+  - Legacy map-play indexes (7 removed)
 
 ### ✅ **Multiple Permissive RLS Policies (1 issue)**
 - **Fixed**: Consolidated duplicate policies on `compendium_powers` table

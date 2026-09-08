@@ -33,9 +33,7 @@ export function preventDoubleTapZoom() {
 			const shouldGuard =
 				typeof Element !== "undefined" &&
 				target instanceof Element &&
-				target.closest(
-					"button,a,[role='button'],[role='tab'],.vtt-shell,.vtt-map-container,.vtt-mobile-toolbar",
-				) !== null;
+				target.closest("button,a,[role='button'],[role='tab']") !== null;
 			if (!shouldGuard) {
 				lastTouchEnd = Date.now();
 				return;

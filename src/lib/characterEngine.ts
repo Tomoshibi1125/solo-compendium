@@ -78,6 +78,7 @@ export interface Effect {
 	priority?: number;
 }
 
+import { getCanonicalJobSpellcastingAbility } from "@/lib/jobRules";
 import { getStaticJobs } from "@/lib/ProtocolDataManager";
 
 // ============================================================================
@@ -524,23 +525,7 @@ export function parseJobTraitEffects(
  * Get spellcasting ability for a Rift Ascendant job
  */
 export function getSpellcastingAbilityForJob(job: string): AbilityScore | null {
-	const abilityMap: Record<string, AbilityScore> = {
-		// INT casters
-		Mage: "INT",
-		Revenant: "INT",
-		Technomancer: "INT",
-		// SENSE (Sense) casters
-		Herald: "SENSE",
-		Summoner: "SENSE",
-		Stalker: "SENSE",
-		// PRE (Presence) casters
-		Esper: "PRE",
-		Contractor: "PRE",
-		"Holy Knight": "PRE",
-		Idol: "PRE",
-	};
-
-	return abilityMap[job] || null;
+	return getCanonicalJobSpellcastingAbility(job);
 }
 
 /**

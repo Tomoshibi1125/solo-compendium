@@ -24,6 +24,7 @@ import {
 	getMaxPowerLevelForJobAtLevel,
 	type JobReference,
 } from "@/lib/characterCreation";
+import { getCanonicalJobRules } from "@/lib/jobRules";
 import { getStaticPaths } from "@/lib/ProtocolDataManager";
 
 // ---------------------------------------------------------------------------
@@ -58,15 +59,12 @@ export interface PowerGateMeta {
 	jobNames: string[];
 }
 
-// Standard 5e ASI/Feat levels (applies to most classes)
-const STANDARD_ASI_LEVELS = [4, 8, 12, 16, 19];
+const DEFAULT_ASI_LEVELS = [4, 8, 12, 16, 19];
 
-// Job-specific ASI level overrides
-const JOB_ASI_OVERRIDES: Record<string, number[]> = {
-	Destroyer: [4, 6, 8, 12, 14, 16, 19],
+// Kept only for existing legacy saved data. Rift Ascendant Jobs resolve from
+// their authored `canonicalRules.asiLevels` record before this fallback.
+const LEGACY_ASI_OVERRIDES: Record<string, number[]> = {
 	Vanguard: [4, 6, 8, 12, 14, 16, 19],
-	Striker: [4, 8, 12, 16, 19],
-	Assassin: [4, 8, 10, 12, 16, 19],
 };
 
 // ---------------------------------------------------------------------------
@@ -284,9 +282,11 @@ export function filterAccessiblePowers(
  */
 export function getASILevels(job: JobReference): number[] {
 	const jobName = typeof job === "string" ? job : job?.name;
-	if (!jobName) return STANDARD_ASI_LEVELS;
+	const authoredLevels = getCanonicalJobRules(job)?.asiLevels;
+	if (authoredLevels?.length) return [...authoredLevels];
+	if (!jobName) return [...DEFAULT_ASI_LEVELS];
 	const normalized = jobName.trim();
-	return JOB_ASI_OVERRIDES[normalized] ?? STANDARD_ASI_LEVELS;
+	return [...(LEGACY_ASI_OVERRIDES[normalized] ?? DEFAULT_ASI_LEVELS)];
 }
 
 /**

@@ -649,7 +649,7 @@ The `canonicalCompendium.test.ts:476 "only returns complete entries through lear
 ### Cross-reference findings
 
 - **Persistence-audit overlap (RA-canonical-persistence-audit-2026):** flagged that `characters.job/path/background` columns store raw names instead of IDs. Phase 2 of this audit does NOT touch persistence; mentioned for awareness.
-- **DnD Beyond parity overlap (dndbeyond-parity-audit-feb2026):** flagged the level-up, multiclass, VTT, and homebrew flows. Phase 2 here corrects mechanical-display bugs in those flows but does not extend the feature set.
+- **D&D Beyond parity overlap:** flagged the level-up, multiclass, and homebrew flows. Phase 2 here corrects mechanical-display bugs in those flows but does not extend the feature set.
 
 ---
 
@@ -661,7 +661,7 @@ Goal: the UI reflects ALL data, 100%, app-wide (D&D-Beyond-style) — both **tru
 - **HP inflation (data corruption):** the derived write-through persisted display HP (base+gestalt+custom) into `characters.hp_max`, which the engine re-read as the base → runaway inflation. Fixed: `persistDerivedStats` no longer writes `hp_max`; write-through drops it; added `getEffectiveHpMax(character, regentHpContribution)` (override-aware base + gestalt).
 - **Sheet HP:** `CharacterSheetV2` HP display + damage/heal/death-save clamps now use `effectiveHpMax` (= `stats.calculatedStats.hpMax`), not the raw cache — honors override + gestalt, no lag.
 - **Rift Favor:** sheet max/die from `getRiftFavorMax/Die(level)` (not stale columns).
-- **External readers:** `VTTCharacterPanel` + `PartyDashboardPanel` show gestalt-true HP via `getEffectiveHpMax` + (batched) regent unlocks; party Rift Favor max from level.
+- **External readers:** `PartyDashboardPanel` shows gestalt-true HP via `getEffectiveHpMax` + (batched) regent unlocks; party Rift Favor max from level.
 - **SpellSlotsDisplay:** spell DC/attack via `calculateSpellSaveDC/AttackBonus` (barrel-exported).
 - **Level-up:** Rift die preview via `calculateRiftFavorDie(level/newLevel)`.
 

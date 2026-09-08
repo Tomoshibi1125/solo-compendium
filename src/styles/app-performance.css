@@ -66,8 +66,7 @@ img {
 /* Portrait / avatar images: high quality bicubic */
 img[class*="avatar"],
 img[class*="portrait"],
-img[class*="token"],
-.vtt-token img {
+img[class*="token"] {
 	image-rendering: auto;
 	will-change: transform;
 }
@@ -84,7 +83,6 @@ img[loading="lazy"] {
 [class*="overflow-auto"],
 [class*="overflow-x-auto"],
 .mobile-scroll-x,
-.vtt-tabs,
 .character-sheet-tabs,
 .ascendant-tools-tabs {
 	@supports (overscroll-behavior: contain) {
@@ -96,13 +94,11 @@ img[loading="lazy"] {
 }
 
 /* Scroll snap for horizontal carousels / tab lists */
-.vtt-tab-list,
 .ascendant-tools-tab-list,
 .character-sheet-tab-list {
 	scroll-snap-type: x mandatory;
 }
 
-.vtt-tab-trigger,
 .ascendant-tools-tab-trigger,
 .character-sheet-tab-trigger {
 	scroll-snap-align: start;

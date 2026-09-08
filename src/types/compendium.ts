@@ -1,5 +1,6 @@
 import type { Json } from "@/integrations/supabase/types";
 import type { RaCurrencyValue } from "@/lib/currency";
+import type { CanonicalJobRules } from "@/types/character";
 
 interface CompendiumValue {
 	type?: string;
@@ -851,6 +852,8 @@ export interface CompendiumBackground extends BaseCompendiumItem {
 }
 
 export interface CompendiumJob extends BaseCompendiumItem {
+	/** Provider-normalized copy of the authored Job automation contract. */
+	canonical_rules?: CanonicalJobRules;
 	primary_abilities: string[];
 	rank: string | number;
 	hit_dice: string;

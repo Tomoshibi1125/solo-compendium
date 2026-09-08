@@ -102,125 +102,6 @@
    CAMPAIGN MOBILE STYLES
    ======================================== */
 
-@media (max-width: 768px) {
-	.vtt-container {
-		padding: 1rem;
-	}
-
-	.vtt-header {
-		flex-direction: column;
-		gap: 0.75rem;
-	}
-
-	.vtt-title {
-		font-size: 1.25rem;
-	}
-
-	.vtt-controls {
-		flex-wrap: wrap;
-		gap: 0.5rem;
-	}
-
-	.vtt-control-button {
-		min-height: 44px;
-		font-size: 0.875rem;
-	}
-
-	.vtt-main-grid {
-		grid-template-columns: 1fr;
-		min-height: calc(100dvh - 8rem);
-	}
-
-	.vtt-sidebar {
-		display: none;
-	}
-
-	.vtt-map-container {
-		min-height: 60vh;
-		touch-action: none; /* Prevent default pan/zoom — handled by JS gestures */
-		@supports (overscroll-behavior: contain) {
-			overscroll-behavior: contain;
-		}
-	}
-
-	/* Safe area insets for notched phones */
-	.vtt-container {
-		padding-left: max(1rem, env(safe-area-inset-left));
-		padding-right: max(1rem, env(safe-area-inset-right));
-		padding-bottom: max(0.5rem, env(safe-area-inset-bottom));
-	}
-
-	.vtt-tool-grid {
-		grid-template-columns: repeat(3, 1fr);
-		gap: 0.5rem;
-	}
-
-	.vtt-tool-button {
-		padding: 0.75rem;
-		font-size: 0.75rem;
-		min-height: 44px;
-	}
-
-	.vtt-measurement-shapes {
-		grid-template-columns: repeat(4, 1fr);
-		gap: 0.25rem;
-	}
-
-	.vtt-measurement-shape-button {
-		padding: 0.5rem;
-		font-size: 0.875rem;
-	}
-
-	.vtt-zoom-controls {
-		gap: 0.5rem;
-	}
-
-	.vtt-zoom-button {
-		min-height: 36px;
-		min-width: 36px;
-	}
-
-	.vtt-token-list {
-		max-height: 12rem;
-	}
-
-	.vtt-token-item {
-		padding: 0.75rem;
-		font-size: 0.75rem;
-	}
-
-	.vtt-token-avatar {
-		width: 2rem;
-		height: 2rem;
-	}
-
-	.vtt-tabs {
-		overflow-x: auto;
-	}
-
-	@supports (scrollbar-width: none) {
-		.vtt-tabs {
-			scrollbar-width: none;
-			-ms-overflow-style: none;
-		}
-	}
-
-	.vtt-tabs::-webkit-scrollbar {
-		display: none;
-	}
-
-	.vtt-tab-list {
-		width: max-content;
-		min-width: 100%;
-	}
-
-	.vtt-tab-trigger {
-		padding: 0.5rem 1rem;
-		font-size: 0.75rem;
-		white-space: nowrap;
-	}
-}
-
 /* ========================================
    COMPENDIUM MOBILE STYLES
    ======================================== */
@@ -581,18 +462,6 @@
    ======================================== */
 
 @media (max-width: 896px) and (orientation: landscape) {
-	.vtt-container {
-		padding: 0.5rem;
-	}
-
-	.vtt-header {
-		margin-bottom: 0.5rem;
-	}
-
-	.vtt-main-grid {
-		min-height: calc(100dvh - 8rem);
-	}
-
 	.character-sheet-container {
 		padding: 0.5rem;
 	}
@@ -614,10 +483,6 @@
 
 	.warden-directive-title {
 		font-size: 1rem;
-	}
-
-	.vtt-control-button {
-		font-size: 0.75rem;
 	}
 
 	.character-sheet-stat-value {
@@ -1431,20 +1296,6 @@
 		padding: 0.75rem;
 	}
 
-	.campaign-handouts-container {
-		padding: 1rem;
-	}
-
-	.campaign-handouts-grid {
-		grid-template-columns: 1fr;
-		gap: 0.75rem;
-	}
-
-	.campaign-handouts-handout {
-		padding: 0.75rem;
-		font-size: 0.875rem;
-	}
-
 	.campaign-notes-container {
 		padding: 1rem;
 	}
@@ -1590,14 +1441,6 @@
 
 	.generator-result {
 		padding: 0.75rem;
-	}
-
-	.vtt-container {
-		padding: 0.5rem;
-	}
-
-	.vtt-header {
-		margin-bottom: 0.5rem;
 	}
 
 	.compendium-container {
@@ -1804,40 +1647,6 @@
 
 	.campaign-detail-tab-text {
 		display: none;
-	}
-
-	.campaign-detail-vtt-content {
-		padding: 1rem;
-	}
-
-	.campaign-detail-vtt-title {
-		font-size: 1.25rem;
-	}
-
-	.campaign-detail-vtt-description {
-		font-size: 0.875rem;
-	}
-
-	.campaign-detail-vtt-button {
-		min-height: 44px;
-		font-size: 0.875rem;
-	}
-
-	.campaign-detail-vtt-features {
-		grid-template-columns: 1fr;
-		gap: 0.75rem;
-	}
-
-	.campaign-detail-vtt-feature {
-		padding: 0.75rem;
-	}
-
-	.campaign-detail-vtt-feature-title {
-		font-size: 0.875rem;
-	}
-
-	.campaign-detail-vtt-feature-description {
-		font-size: 0.75rem;
 	}
 }
 

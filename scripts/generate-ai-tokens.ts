@@ -60,7 +60,7 @@ async function generateToken(item: {
 	}
 
 	console.log(`[Generating] ${item.name}...`);
-	const prompt = `VTT Token art, portrait style, of a fantasy creature called "${item.name}". Description: ${item.desc?.substring(0, 200)}. High quality fantasy digital painting, detailed, vibrant colors, dark atmospheric background, suitable for a tabletop RPG token.`;
+	const prompt = `Character reference portrait, of a fantasy creature called "${item.name}". Description: ${item.desc?.substring(0, 200)}. High quality fantasy digital painting, detailed, vibrant colors, dark atmospheric background, suitable for a tabletop RPG companion.`;
 
 	try {
 		const response = await ai.models.generateContent({

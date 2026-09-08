@@ -1218,13 +1218,6 @@ export function addLocalRollHistory(
 
 type CampaignWikiArticleRow =
 	Database["public"]["Tables"]["campaign_wiki_articles"]["Row"];
-type CampaignHandoutEntryRow =
-	Database["public"]["Tables"]["vtt_journal_entries"]["Row"];
-
-const handoutStorageKey = (campaignId: string) =>
-	`solo-compendium.handouts.${campaignId}`;
-const legacyJournalStorageKey = (campaignId: string) =>
-	`vtt-journal-${campaignId}`;
 
 export function readLocalWikiArticles(
 	campaignId: string,
@@ -1250,34 +1243,6 @@ export function saveLocalWikiArticles(
 			`solo-compendium.wiki.${campaignId}`,
 			JSON.stringify(articles),
 		);
-	} catch {}
-}
-
-export function readLocalJournals(
-	campaignId: string,
-): CampaignHandoutEntryRow[] {
-	if (typeof window === "undefined") return [];
-	try {
-		const raw =
-			window.localStorage.getItem(handoutStorageKey(campaignId)) ??
-			window.localStorage.getItem(legacyJournalStorageKey(campaignId));
-		return raw ? (JSON.parse(raw) as CampaignHandoutEntryRow[]) : [];
-	} catch {
-		return [];
-	}
-}
-
-export function saveLocalJournals(
-	campaignId: string,
-	entries: CampaignHandoutEntryRow[],
-): void {
-	if (typeof window === "undefined") return;
-	try {
-		window.localStorage.setItem(
-			handoutStorageKey(campaignId),
-			JSON.stringify(entries),
-		);
-		window.localStorage.removeItem(legacyJournalStorageKey(campaignId));
 	} catch {}
 }
 

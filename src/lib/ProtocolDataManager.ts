@@ -147,6 +147,7 @@ export async function initializeProtocolData(): Promise<void> {
 			awakening_features:
 				rawJob.awakeningFeatures || rawJob.awakening_features || null,
 			job_traits: rawJob.jobTraits || rawJob.job_traits || null,
+			canonical_rules: j.canonicalRules ?? null,
 		} as unknown as CompendiumJob;
 	});
 

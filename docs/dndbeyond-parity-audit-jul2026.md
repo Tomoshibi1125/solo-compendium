@@ -7,12 +7,10 @@
 production caller chain, not merely an existing file. Runtime golden paths were
 exercised in the dev-server browser preview.
 
-**Supersedes** [`dndbeyond-parity-audit-feb2026-updated.md`](dndbeyond-parity-audit-feb2026-updated.md),
-which claimed "100% / 72-of-72" but was stale and unreliable: its own Round-2
-correction admitted Round-1 helpers were *library-only* (unit-tested, never
-called from UI); it still listed the deliberately-removed VTT (V1–V4) as ✅; and
-it cited a `verifyDDBeyondParity()` function that no longer exists in `src`.
-Treat the Feb doc as historical only.
+**Supersedes an archived February 2026 audit** that claimed "100% / 72-of-72"
+but was stale and unreliable: its own Round-2 correction admitted Round-1
+helpers were *library-only* (unit-tested, never called from UI), and it cited a
+`verifyDDBeyondParity()` function that no longer exists in `src`.
 
 ---
 
@@ -34,16 +32,12 @@ Web research (July 2026) confirms DDB's companion-app pillars for 5e:
   private → campaign → public; use them on character sheets.
 - **Digital dice** — 3D dice, roll history, shared rolls.
 - **Mobile / offline** — mobile app + offline access to sheets.
-- **Maps (VTT)** — DDB's flagship 2024–26 push (tokens, fog, initiative on the
-  map).
 
 Sources: [DDB Player Tools](https://www.dndbeyond.com/en/players) ·
 [Builder Sections](https://dndbeyond-support.wizards.com/hc/en-us/articles/7747202748436-Builder-Sections) ·
 [Sheet Sections](https://dndbeyond-support.wizards.com/hc/en-us/articles/7747193946388-Sheet-Sections) ·
 [Encounters](https://dndbeyond-support.wizards.com/hc/en-us/articles/7747237485716-Encounters) ·
 [Homebrew Basics](https://dndbeyond-support.wizards.com/hc/en-us/articles/7747238519700-Homebrew-Creation-and-Collection-Basics) ·
-[Maps VTT](https://www.dndbeyond.com/games) ·
-[Combat tracking in Maps](https://www.dndbeyond.com/posts/1841-roll-for-initiative-combat-tracking-comes-to-the) ·
 [D&D Beyond — Wikipedia](https://en.wikipedia.org/wiki/D&D_Beyond)
 
 ---
@@ -79,7 +73,7 @@ Sources: [DDB Player Tools](https://www.dndbeyond.com/en/players) ·
 
 ### Campaign management — ✅ **(gap found + fixed this pass)**
 - Create/join (share codes), member management, chat, notes, sessions,
-  calendar, wiki, handouts, presence, activity — all present under
+  calendar, presence, activity, and campaign logs — all present under
   `src/pages/CampaignDetail.tsx` + `src/components/campaign/*`.
 - **The Game Log (shared roll feed) was broken:** `CampaignRollFeed` +
   `CampaignActivityPanel` subscribe to the `campaign_roll_events` table (+ a
@@ -155,7 +149,7 @@ Sources: [DDB Player Tools](https://www.dndbeyond.com/en/players) ·
 
 | DDB feature | RA stance |
 |---|---|
-| **Maps / VTT** | Deliberately scraped June 2026 ([[vtt-scrape-complete]]); Pixi/renderer removed. `vtt_journal_entries` retained (Handouts) + LiveKit/CommNet. The Feb doc's V1–V4 ✅ rows are obsolete. |
+| **Maps** | Outside the companion product scope. No map, token, fog, handout, or external relay surface is retained. |
 | **Multiclass** | RA is single-Job by design → N/A, not deferred. |
 | **Sourcebook entitlement / paywall** | RA is a free app ([[guild-economy-ttrpg-not-sim]]); `sourcebookAccess` gates by campaign sharing, not purchase. |
 | **Marketplace as storefront** | Present as content-sharing, not paid distribution. |
@@ -219,16 +213,15 @@ free-tier feature set against RA and hunted the same "reader exists, producer
 doesn't" class app-wide. Two hard product constraints were locked: **100% free
 forever — no paid anything** (all DDB subscription/Marketplace-paywall/Drops
 features are accepted divergences; verified no stripe/checkout/billing in src);
-and **no VTT or VTT-adjacent anything** (both DDB VTTs — 2D Maps, 3D Sigil —
-plus tokens/fog/map-DM-tools stay out).
+and **no live map-play surface** (tokens, fog, and map-DM tools stay out).
 
 ### Findings + resolutions
 
 | # | Finding (evidence) | Class | Resolution |
 |---|---|---|---|
-| 1 | **Session Replay was a dead reader** — `SessionReplayPanel` (mounted `CampaignDetail.tsx`) + `useSessionReplay` read `campaign_session_events`, but **nothing wrote it** (no src insert/trigger/RPC); the whole `hooks` bus had no live producers either. | unwired | **WIRED.** New single-writer `src/lib/campaignSessionEvents.ts` (`publishSessionEvent`, cloud+guest, never throws). `InitiativeTracker` now emits `combat:turnStart/turnEnd/roundStart` on turn/round advance and `effect:applied` on condition application. `useSessionReplay` merges `campaign_session_events` + `campaign_roll_events` into one ordered timeline; the panel renders a readable, scrubbable event log. VTT-only `token:*`/`scene:*` kinds dropped. |
+| 1 | **Session Replay was a dead reader** — `SessionReplayPanel` (mounted `CampaignDetail.tsx`) + `useSessionReplay` read `campaign_session_events`, but **nothing wrote it** (no src insert/trigger/RPC); the whole `hooks` bus had no live producers either. | unwired | **WIRED.** New single-writer `src/lib/campaignSessionEvents.ts` (`publishSessionEvent`, cloud+guest, never throws). `InitiativeTracker` now emits `combat:turnStart/turnEnd/roundStart` on turn/round advance and `effect:applied` on condition application. `useSessionReplay` merges `campaign_session_events` + `campaign_roll_events` into one ordered timeline; the panel renders a readable, scrubbable event log. Map-scene `token:*`/`scene:*` kinds are out of scope. |
 | 2 | **Character HP/state not live in shared views** — `useCampaignCharacters` is a plain `useQuery`; no realtime subscription on the core `characters` table anywhere. A DM watching a player's shared sheet saw stale HP/conditions. | unwired | **WIRED.** New `useCharacterRealtime(characterId, enabled)` subscribes to `postgres_changes` on the character row and invalidates the sheet query; mounted in `useCharacterPageModel` for campaign-scoped, non-local sheets. (Combat already synced via `useCampaignCombat` DB subscription — so this used the same DB+subscription pattern, per decision.) |
-| 3 | **Dead realtime scaffolding** — 5 of 6 `broadcast*` in `useRealtimeCollaboration.tsx` had zero callers and no `collaboration:*` listeners existed. | dead code | **REMOVED.** Deleted `broadcastCombatState` (redundant — combat syncs via DB), `broadcastCharacterUpdate` (replaced by #2), and VTT-era `broadcastMapUpdate/TextChange/CursorMove` + handlers + event types. Kept presence + `broadcastDiceRoll`. Knip clean. |
+| 3 | **Dead realtime scaffolding** — 5 of 6 `broadcast*` in `useRealtimeCollaboration.tsx` had zero callers and no `collaboration:*` listeners existed. | dead code | **REMOVED.** Deleted `broadcastCombatState` (redundant — combat syncs via DB), `broadcastCharacterUpdate` (replaced by #2), and obsolete `broadcastMapUpdate/TextChange/CursorMove` + handlers + event types. Kept presence + `broadcastDiceRoll`. Knip clean. |
 | 4 | **No secret/hidden rolls** — DDB's Game Log lets a roller hide a roll (roller + DM only); RA had no visibility control (no column, no UI). | missing feature | **WIRED.** Migration `20260722000000_roll_visibility.sql` adds a `visibility` column + visibility-aware SELECT RLS to `campaign_roll_events`. `publishCampaignRollEvent` carries visibility (omits it for public rolls so it stays safe pre-migration); a "🔒 Secret" toggle sits in the sheet Roll-Mode bar (campaign-only); the feed shows a lock and secret rolls skip the ephemeral broadcast. |
 | 5 | **No homebrew creature type** — DDB supports homebrew monsters; RA's homebrew was job/path/relic/spell/power/feat/item, and `EncounterBuilder` offered only canonical anomalies. | missing feature | **WIRED.** Added `"anomaly"` to `HomebrewContentType` + the Workbench; new `mapHomebrewAnomalyForRuntime` (rank→CR/XP defaults, full stat block); `EncounterBuilder` merges published homebrew anomalies into the selectable list. Migration `20260722010000_homebrew_anomaly_type.sql` expands the `content_type` CHECK to the full set (also reconciling pre-existing `power`/`feat` drift). |
 | 6 | **Latent roll dual-stack** (from Pass 1) — `useCharacterRoll`'s `rollAbilityCheck/SavingThrow/SkillCheck` (+ own skill→ability map) were consumed by no UI. | dead code / trap | **REMOVED.** Trimmed the three convenience methods + their modifier helpers + the props that fed them, from the hook and `CharacterSheetEnhancements`. `roll` (the live path, always fed a derived modifier) is unchanged. |
@@ -236,10 +229,10 @@ plus tokens/fog/map-DM-tools stay out).
 | — | **Notes sections** — DDB has Allies/Enemies/Backstory/Other. | parity check | **Met differently, no change.** The Bio tab has Description (backstory), Ideals/Bonds/Flaws, Freeform Notes, a Journal, plus Companions (allies) — an equivalent-or-richer surface. |
 
 ### Accepted divergences reaffirmed (hard rules)
-Both VTTs (2D Maps, 3D Sigil) + tokens/fog/map-DM-tools; and **all** paid
-features — subscription tiers, Marketplace paywalls, content entitlement as
-revenue, weekly Drops. RA is free forever; its Marketplace is free content-
-sharing only.
+Live map play (tokens, fog, and map-DM tools) and **all** paid features —
+subscription tiers, Marketplace paywalls, content entitlement as revenue, weekly
+Drops — remain outside the product. RA is free forever; its Marketplace is free
+content-sharing only.
 
 ### Verification (Pass 2)
 - `typecheck`, `lint:check` (1157 files), `knip` → clean.

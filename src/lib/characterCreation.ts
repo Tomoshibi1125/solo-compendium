@@ -9,6 +9,7 @@ import type { AbilityScore } from "@/lib/5eRulesEngine";
 import {
 	type AbilityProgressionKind,
 	getMaxAbilityLevelForJobAtLevel as getMaxAbilityProgressionLevelForJobAtLevel,
+	getSpellProgressionForAbilityJob,
 } from "@/lib/abilityProgression";
 import {
 	type AbilityUseKind,
@@ -552,21 +553,7 @@ export function isStaticJob(job: JobReference): job is StaticJob {
 }
 
 export function getSpellProgressionForJob(job: JobReference): SpellProgression {
-	const jobName = typeof job === "string" ? job : job?.name;
-	const normalized = normalizeJobName(jobName);
-
-	// Full casters
-	const fullCasters = ["mage", "herald", "esper", "summoner", "idol"];
-	if (fullCasters.includes(normalized)) return "full";
-
-	// Half casters (Revenant reclassified fullâ†’half in the drain-tank rework)
-	const halfCasters = ["holy knight", "stalker", "technomancer", "revenant"];
-	if (halfCasters.includes(normalized)) return "half";
-
-	// Pact caster
-	if (normalized === "contractor") return "pact";
-
-	return "none";
+	return getSpellProgressionForAbilityJob(job);
 }
 
 /**

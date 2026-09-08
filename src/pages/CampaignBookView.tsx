@@ -2,9 +2,7 @@ import {
 	BookOpen,
 	ChevronLeft,
 	Download,
-	FileText,
 	Loader2,
-	Lock,
 	Search,
 	ShieldAlert,
 	ShieldX,
@@ -21,7 +19,6 @@ import { getSandboxNpcPortraitUrl } from "@/data/compendium/sandbox/sandbox-asse
 import { sandboxRecruitableNPCs } from "@/data/compendium/sandbox-npcs";
 import { useToast } from "@/hooks/use-toast";
 import { useCampaignEncounters } from "@/hooks/useCampaignEncounters";
-import { useCampaignHandouts } from "@/hooks/useCampaignHandouts";
 import { useCampaignSandboxInjector } from "@/hooks/useCampaignSandboxInjector";
 import {
 	useCampaignSessionLogs,
@@ -41,7 +38,6 @@ type SectionType = {
 	type:
 		| "static"
 		| "wiki"
-		| "handout"
 		| "npc-roster"
 		| "session"
 		| "encounter"
@@ -93,7 +89,6 @@ const CampaignBookView = () => {
 	const { data: hasWardenAccess = false, isLoading: loadingAccess } =
 		useHasWardenAccess(id || "");
 	const { articles: wikiPages = [] } = useCampaignWiki(id || "");
-	const { entries: handoutEntries = [] } = useCampaignHandouts(id || "");
 	const { data: sessions = [] } = useCampaignSessions(id || "");
 	const { data: sessionLogs = [] } = useCampaignSessionLogs(id || "");
 	const { data: encounters = [] } = useCampaignEncounters(id || "");
@@ -202,14 +197,6 @@ const CampaignBookView = () => {
 				type: "wiki" as const,
 			}),
 		),
-		// Handouts section
-		...handoutEntries.map((h) => ({
-			id: `handout-${h.id}`,
-			title: h.title,
-			content: h.content,
-			type: "handout" as const,
-			meta: { visibleToPlayers: h.visibleToPlayers, category: h.category },
-		})),
 		...sessions.map((session) => {
 			const logs = sessionLogs.filter((log) => log.session_id === session.id);
 			return {
@@ -495,37 +482,6 @@ const CampaignBookView = () => {
 								</div>
 							)}
 
-							{/* Handouts */}
-							{handoutEntries.length > 0 && (
-								<div className="space-y-2">
-									<h3 className="px-2 text-[10px] font-bold text-cyan-400/60 uppercase tracking-[0.2em] mb-3 font-display flex items-center gap-1.5">
-										<FileText className="w-3 h-3" />
-										Handouts & Documents ({handoutEntries.length})
-									</h3>
-									<div className="space-y-1">
-										{sections
-											.filter((s) => s.type === "handout")
-											.map((section) => (
-												<button
-													key={section.id}
-													type="button"
-													onClick={() => setActiveSectionId(section.id)}
-													className={`w-full text-left p-2 pl-3 rounded transition-all font-display uppercase text-[10px] tracking-widest flex items-center gap-1.5 ${
-														activeSectionId === section.id
-															? "bg-cyan-500/10 border-l-2 border-cyan-500 text-white shadow-inner"
-															: "text-slate-500 hover:bg-cyan-500/5 hover:text-cyan-300"
-													}`}
-												>
-													{!section.meta?.visibleToPlayers && (
-														<Lock className="w-2.5 h-2.5 text-gate-s/60 shrink-0" />
-													)}
-													<span className="truncate">{section.title}</span>
-												</button>
-											))}
-									</div>
-								</div>
-							)}
-
 							{/* NPC Roster */}
 							{npcArticles.length > 0 && (
 								<div className="space-y-2">
@@ -622,8 +578,8 @@ const CampaignBookView = () => {
 								</h3>
 								<p className="text-sm font-mono text-slate-400 mb-4">
 									This digital campaign book synchronizes directly with the
-									Warden's Wiki and Handouts. Updates made in the dashboard are
-									automatically reflected here.
+									Warden's Wiki and session records. Updates made in the
+									dashboard are automatically reflected here.
 								</p>
 
 								{/* Import Manifest */}
@@ -634,14 +590,6 @@ const CampaignBookView = () => {
 										</div>
 										<div className="text-[10px] text-slate-500 uppercase tracking-wider">
 											Lore Chapters
-										</div>
-									</div>
-									<div className="bg-cyan-950/40 border border-cyan-500/20 rounded p-3 text-center">
-										<div className="text-2xl font-bold text-cyan-400">
-											{handoutEntries.length}
-										</div>
-										<div className="text-[10px] text-slate-500 uppercase tracking-wider">
-											Handouts
 										</div>
 									</div>
 									<div className="bg-system-green/25 border border-system-green/20 rounded p-3 text-center">
@@ -716,48 +664,6 @@ const CampaignBookView = () => {
 								</div>
 							</div>
 						)}
-
-					{/* Handout Renderer */}
-					{activeSection?.type === "handout" && (
-						<div className="space-y-6">
-							<div className="flex items-center justify-between">
-								<h1 className="text-4xl font-display text-white uppercase tracking-wider pb-4 flex-1">
-									{activeSection.title}
-								</h1>
-							</div>
-							<div className="flex items-center gap-2 pb-4 border-b border-cyan-500/20 not-prose">
-								<Badge
-									variant="outline"
-									className="text-cyan-400 border-cyan-500/30 text-[10px]"
-								>
-									{String(
-										activeSection.meta?.category || "handout",
-									).toUpperCase()}
-								</Badge>
-								{activeSection.meta?.visibleToPlayers ? (
-									<Badge
-										variant="outline"
-										className="text-green-400 border-green-500/30 text-[10px]"
-									>
-										Shared with Players
-									</Badge>
-								) : (
-									<Badge
-										variant="outline"
-										className="text-gate-s border-gate-s/30 text-[10px]"
-									>
-										<Lock className="w-3 h-3 mr-1" />
-										Warden Only
-									</Badge>
-								)}
-							</div>
-							<div className="font-serif text-lg leading-loose">
-								<BookMarkdown>
-									{activeSection.content || "*No content recorded.*"}
-								</BookMarkdown>
-							</div>
-						</div>
-					)}
 
 					{/* NPC Roster Renderer */}
 					{activeSection?.type === "npc-roster" && (

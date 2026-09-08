@@ -7,7 +7,7 @@ import { ScaleBar } from "./ScaleBar";
  * A single district reference map with a static, table-ready overlay: numbered
  * facility markers, a title cartouche, a compass, and a scale bar — paired with
  * a numbered "Key facilities" legend. Marker positions are representative over
- * the illustrated art, not surveyed. No VTT interaction.
+ * the illustrated art, not surveyed. It is a reference view, not a play surface.
  */
 export function DistrictMapFigure({
 	district,

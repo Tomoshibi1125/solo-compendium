@@ -13,11 +13,11 @@ import { logger } from "@/lib/logger";
  * guest/local mode. Never throws: recording a session event must not fail the
  * combat action that produced it.
  *
- * VTT event kinds (`token:*`, `scene:*`) are intentionally out of scope — the
- * VTT was retired; only combat/effect kinds are recorded.
+ * Map-scene event kinds are intentionally out of scope; only combat/effect
+ * kinds are recorded.
  */
 
-/** Recordable, non-VTT session-event kinds. */
+/** Recordable session-event kinds. */
 export type SessionEventKind =
 	| "combat:turnStart"
 	| "combat:turnEnd"

@@ -22,6 +22,7 @@ import { numericCrToLabel } from "@/lib/monster5eTable";
 import { getDefaultSigilSlotsBaseForEquipment } from "@/lib/sigilAutomation";
 import { deriveSpellResolution } from "@/lib/spellMechanicsDerivation";
 import { normalizeRegentSearch } from "@/lib/vernacular";
+import type { CanonicalJobRules } from "@/types/character";
 import type {
 	CanonicalAbilityResolutionV1,
 	CompendiumDeity,
@@ -217,6 +218,7 @@ export interface StaticCompendiumEntry {
 	regent_prerequisites?: string | null;
 	spellcasting_ability?: string | null;
 	spellcasting_focus?: string | null;
+	canonical_rules?: CanonicalJobRules | null;
 	awakening_features?: Array<{
 		name: string;
 		description: string;
@@ -607,6 +609,7 @@ type StaticJobSource = {
 		spellsKnown?: number[];
 		spellSlots?: Record<string, number[]>;
 	};
+	canonicalRules?: CanonicalJobRules;
 	levelChoices?: Array<Record<string, Json>>;
 	powersKnown?: number[];
 	techniquesKnown?: number[];
@@ -1411,6 +1414,7 @@ function transformJob(job: StaticJobSource): StaticCompendiumEntry {
 		regent_prerequisites: null,
 		spellcasting_ability: job.spellcasting?.ability || null,
 		spellcasting_focus: job.spellcasting?.focus || null,
+		canonical_rules: job.canonicalRules ?? null,
 		// ── Display-name aliases for the compendium JobDetail page ──────────────
 		// JobDetail reads these display names; the DB-shaped names above stay for
 		// the character builder/engine. Additive — no consumer loses a field.

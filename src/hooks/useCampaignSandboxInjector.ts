@@ -22,7 +22,6 @@ import {
 	readLocalCampaignNotes,
 	readLocalEncounterEntries,
 	readLocalEncounters,
-	readLocalJournals,
 	readLocalNpcCharacters,
 	readLocalSessionLogs,
 	readLocalSessions,
@@ -30,7 +29,6 @@ import {
 	saveLocalCampaignNotes,
 	saveLocalEncounterEntries,
 	saveLocalEncounters,
-	saveLocalJournals,
 	saveLocalNpcCharacters,
 	saveLocalSessionLogs,
 	saveLocalSessions,
@@ -43,7 +41,6 @@ const SANDBOX_LOOT_TOOL_KEY = "sandbox_loot_tables";
 const sandboxSectionKeys = [
 	"wiki",
 	"npcs",
-	"handouts",
 	"sessions",
 	"timeline",
 	"warden_notes",
@@ -116,7 +113,6 @@ export function useCampaignSandboxInjector(campaignId: string | null) {
 
 		let wikiCount = 0;
 		let npcCount = 0;
-		let handoutCount = 0;
 		let sessionCount = 0;
 		let sessionLogCount = 0;
 		let wardenNoteCount = 0;
@@ -433,81 +429,7 @@ export function useCampaignSandboxInjector(campaignId: string | null) {
 				console.error("[SandboxInjector] NPC section error:", npcErr);
 			}
 
-			// 4. Inject Handouts
-			try {
-				setInjectionState({
-					isInjecting: true,
-					progressString: `Sowing Campaign Handouts (0/${massiveSandboxModule.handouts?.length ?? 0})...`,
-				});
-
-				if (
-					massiveSandboxModule.handouts &&
-					massiveSandboxModule.handouts.length > 0
-				) {
-					if (isLocalMode()) {
-						const existingJournals = readLocalJournals(targetId);
-						for (let i = 0; i < massiveSandboxModule.handouts.length; i++) {
-							const h = massiveSandboxModule.handouts[i];
-							// Normalize double-escaped newlines from static sandbox data
-							const normalizedContent = h.content.replace(/\\n/g, "\n");
-							if (!existingJournals.find((j) => j.title === h.title)) {
-								existingJournals.push({
-									id: crypto.randomUUID(),
-									campaign_id: targetId,
-									title: h.title,
-									content: normalizedContent,
-									category: h.category,
-									tags: [],
-									visible_to_players: h.visibleToPlayers,
-									created_at: new Date().toISOString(),
-									updated_at: new Date().toISOString(),
-									user_id: "guest",
-								});
-								handoutCount++;
-							}
-						}
-						if (handoutCount > 0) saveLocalJournals(targetId, existingJournals);
-					} else {
-						for (let i = 0; i < massiveSandboxModule.handouts.length; i++) {
-							const h = massiveSandboxModule.handouts[i];
-							// Normalize double-escaped newlines from static sandbox data
-							const normalizedContent = h.content.replace(/\\n/g, "\n");
-							const { data: existingHandout } = await supabase
-								.from("vtt_journal_entries")
-								.select("id")
-								.eq("campaign_id", targetId)
-								.eq("title", h.title)
-								.maybeSingle();
-
-							if (!existingHandout) {
-								const { error: handoutError } = await supabase
-									.from("vtt_journal_entries")
-									.insert({
-										campaign_id: targetId,
-										user_id: user?.id || "guest",
-										title: h.title,
-										content: normalizedContent,
-										visible_to_players: h.visibleToPlayers,
-										category: h.category,
-									});
-
-								if (handoutError) {
-									failedInserts++;
-									console.error(
-										"[SandboxInjector] Handout insert failed:",
-										h.title,
-										handoutError,
-									);
-								} else handoutCount++;
-							}
-						}
-					}
-				}
-			} catch (handoutErr) {
-				console.error("[SandboxInjector] Handout section error:", handoutErr);
-			}
-
-			// 5. Inject Campaign Sessions (Day Zero + Sessions 1-5)
+			// 4. Inject Campaign Sessions (Day Zero + Sessions 1-5)
 			//
 			// Each SandboxSession becomes a `campaign_sessions` row, then each
 			// `session.logs[]` entry becomes a `campaign_session_logs` row
@@ -1406,7 +1328,6 @@ export function useCampaignSandboxInjector(campaignId: string | null) {
 						...manifest.completed_sections,
 						wiki: { completed_at: nowIso(), counts: { wikiCount } },
 						npcs: { completed_at: nowIso(), counts: { npcCount } },
-						handouts: { completed_at: nowIso(), counts: { handoutCount } },
 						sessions: {
 							completed_at: nowIso(),
 							counts: { sessionCount, sessionLogCount },
@@ -1441,7 +1362,6 @@ export function useCampaignSandboxInjector(campaignId: string | null) {
 			const summary = [
 				wikiCount > 0 ? `${wikiCount} wiki chapters` : null,
 				npcCount > 0 ? `${npcCount} NPC wiki entries` : null,
-				handoutCount > 0 ? `${handoutCount} handouts` : null,
 				sessionCount > 0 ? `${sessionCount} sessions` : null,
 				sessionLogCount > 0 ? `${sessionLogCount} session logs` : null,
 				wardenNoteCount > 0 ? `${wardenNoteCount} warden notes` : null,
@@ -1465,7 +1385,7 @@ export function useCampaignSandboxInjector(campaignId: string | null) {
 						: "";
 				toast({
 					title: "Module Import Complete ✦ Run Silent",
-					description: `${summary}. All content is now available in the Wiki and Handouts tabs.${failSuffix}`,
+					description: `${summary}. All content is now available in the campaign tools.${failSuffix}`,
 					variant: failedInserts > 0 ? "destructive" : undefined,
 				});
 			} else if (failedInserts > 0) {
@@ -1478,19 +1398,16 @@ export function useCampaignSandboxInjector(campaignId: string | null) {
 				toast({
 					title: "Sandbox Already Imported",
 					description:
-						"All module content is already present. Check the Wiki and Handouts tabs to view imported data.",
+						"All module content is already present. Check the campaign tools to view imported data.",
 				});
 			}
 
 			// Invalidate queries with campaign-scoped keys so every Campaign
-			// Management tab refetches immediately post-import: Wiki, Handouts,
+			// Management tab refetches immediately post-import: Wiki,
 			// Notes, Sessions + Session Logs, Encounters, Characters, and campaign
 			// tool-state.
 			queryClient.invalidateQueries({
 				queryKey: ["campaign_wiki_articles", targetId],
-			});
-			queryClient.invalidateQueries({
-				queryKey: ["campaign_handouts", targetId],
 			});
 			queryClient.invalidateQueries({
 				queryKey: ["campaign_tool_states", targetId],

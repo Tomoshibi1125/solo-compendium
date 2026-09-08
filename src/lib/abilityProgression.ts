@@ -1,4 +1,5 @@
 import { jobCanLearnPowers } from "@/lib/jobAbilityAccess";
+import { getCanonicalJobSpellProgression } from "@/lib/jobRules";
 
 export type AbilityProgressionKind = "spell" | "power";
 export type SpellProgression = "none" | "full" | "half" | "pact";
@@ -17,22 +18,7 @@ export function normalizeAbilityProgressionJobName(
 export function getSpellProgressionForAbilityJob(
 	job: AbilityProgressionJobReference,
 ): SpellProgression {
-	const jobName = typeof job === "string" ? job : job?.name;
-	const normalized = normalizeAbilityProgressionJobName(jobName);
-
-	const fullCasters = ["mage", "herald", "esper", "summoner", "idol"];
-	if (fullCasters.includes(normalized)) return "full";
-
-	// Revenant is a half-caster (drain-tank rework): this half progression caps
-	// SPELL tiers at 5th level. It does NOT govern martial power tiers — powers
-	// are martial abilities and use the martial curve (see
-	// getMaxAbilityLevelForJobAtLevel below), so they are learnable from level 1.
-	const halfCasters = ["holy knight", "stalker", "technomancer", "revenant"];
-	if (halfCasters.includes(normalized)) return "half";
-
-	if (normalized === "contractor") return "pact";
-
-	return "none";
+	return getCanonicalJobSpellProgression(job) ?? "none";
 }
 
 function getMaxLevelForProgression(

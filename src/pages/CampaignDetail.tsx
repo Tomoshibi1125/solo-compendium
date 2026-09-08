@@ -22,7 +22,6 @@ import { CampaignActivityPanel } from "@/components/campaign/CampaignActivityPan
 import { CampaignCalendarPanel } from "@/components/campaign/CampaignCalendarPanel";
 import { CampaignCharacters } from "@/components/campaign/CampaignCharacters";
 import { CampaignChat } from "@/components/campaign/CampaignChat";
-import { CampaignHandouts } from "@/components/campaign/CampaignHandouts";
 import { CampaignInviteModal } from "@/components/campaign/CampaignInviteModal";
 import { CampaignNotes } from "@/components/campaign/CampaignNotes";
 import { CampaignPresenceBadge } from "@/components/campaign/CampaignPresenceBadge";
@@ -398,13 +397,6 @@ const CampaignDetail = () => {
 								<span>Notes</span>
 							</TabsTrigger>
 							<TabsTrigger
-								value="handouts"
-								className="flex-1 gap-1.5 text-xs sm:text-sm min-h-[44px] px-2"
-							>
-								<FileText className="w-3 h-3 sm:w-4 sm:h-4 shrink-0" />
-								<span>Handouts</span>
-							</TabsTrigger>
-							<TabsTrigger
 								value="characters"
 								className="flex-1 gap-1.5 text-xs sm:text-sm min-h-[44px] px-2"
 							>
@@ -636,10 +628,6 @@ const CampaignDetail = () => {
 
 						<TabsContent value="notes">
 							<CampaignNotes campaignId={id || ""} />
-						</TabsContent>
-
-						<TabsContent value="handouts">
-							<CampaignHandouts campaignId={id || ""} />
 						</TabsContent>
 
 						<TabsContent value="characters">

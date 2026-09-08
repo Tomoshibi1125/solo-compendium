@@ -25,11 +25,11 @@ This document tracks what state is persisted, where it lives (account-backed, ca
   - **Local mirror**: Partial
   - **Notes**: Live sync depends on `sessionId`; when live sync unavailable, tool-state persistence acts as fallback.
 
-- **Campaign journal / handouts / session logs**
+- **Campaign sessions and logs**
   - **Scope**: Campaign-backed
-  - **Remote**: `vtt_journal_entries`
-  - **Local mirror**: Yes (`localStorage` key `vtt-journal-${campaignId}` in `VTTJournal.tsx`)
-  - **Notes**: Visibility gating is enforced client-side (`visible_to_players`), and entries hydrate local.
+  - **Remote**: `campaign_sessions`, `campaign_session_logs`
+  - **Local mirror**: Yes for guest campaigns (`guestStore`)
+  - **Notes**: Recurrence, calendar export, and campaign chat remain native companion workflows.
 
 ### Player character state
 
@@ -86,11 +86,10 @@ This document tracks what state is persisted, where it lives (account-backed, ca
 ## Prioritization Notes (parity)
 
 - **High priority**
-  - Player-facing campaign handouts UI (if missing) that reads `vtt_journal_entries` with player visibility
   - _(Spell slots local mirror — closed; see entry above.)_
 
 - **Medium priority**
-  - Broader offline queue support for journal mutations (optional) using `offlineSync`
+- Broader offline queue support for campaign-note mutations (optional) using `offlineSync`
 
 ## Canonical persistence (Apr 2026 remediation)
 

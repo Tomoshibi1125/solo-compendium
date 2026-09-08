@@ -39,9 +39,9 @@ yellow-green ≠ RA teal 160; Tailwind red 0 ≠ RA crimson 350). **◆ Fixed th
   (61 raw HSL values → `hsl(var(--token))`) so the cards render RA colors with zero
   logic risk.
 - **Guard:** new `src/lib/__tests__/coolColorClasses.test.ts` fails on raw
-  `red/blue/green/purple/cyan-\d{3}` utilities in `components/`+`pages/` (book/VTT/`ui`
+  `red/blue/green/purple/cyan-\d{3}` utilities in `components/`+`pages/` (book/`ui`
   excluded, matching the codemod). Negative-probed. Sits alongside `warmColorClasses`.
-- **Excluded by owner scope:** book-rendering tree, VTT, shadcn `ui/` kit, print CSS.
+- **Excluded by owner scope:** book-rendering tree, shadcn `ui/` kit, print CSS.
 - **Browser-verified:** all 5 token utilities compute to RA hues (destructive
   `rgb(240,66,95)`, success teal, shadow-blue stellar, resurge amethyst, mana-cyan icy),
   token gradients paint, and the recolored hub shims render the tokens (`.from-red-500/20`

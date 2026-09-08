@@ -38,7 +38,6 @@ import {
 	useUpsertCampaignSession,
 } from "@/hooks/useCampaignSessions";
 import { useCampaign } from "@/hooks/useCampaigns";
-import { useNotifyDiscord } from "@/hooks/useNotifyDiscord";
 import {
 	buildIcsForCampaignSessions,
 	downloadIcsBlob,
@@ -117,7 +116,6 @@ export function CampaignSessionsPanel({
 	const addLog = useAddCampaignSessionLog();
 	const sendMessage = useSendCampaignMessage();
 	const { injectSandbox, isInjecting } = useCampaignSandboxInjector(campaignId);
-	const { notify: notifyDiscord } = useNotifyDiscord();
 
 	const [sessionTitle, setSessionTitle] = useState("");
 	const [sessionDescription, setSessionDescription] = useState("");
@@ -206,16 +204,6 @@ export function CampaignSessionsPanel({
 					content: `**Campaign**: ${schedule.length} recurring "${titleTrim}" sessions scheduled (${recurringFrequency}).`,
 				})
 				.catch(console.error);
-
-			// Misty Pearl E3 — fire-and-forget Discord relay for the seed.
-			notifyDiscord({
-				campaignId,
-				kind: "session_scheduled",
-				payload: {
-					title: titleTrim,
-					date: new Date(seedIso).toLocaleString(),
-				},
-			}).catch(console.error);
 		} else {
 			await upsertSession.mutateAsync({
 				campaignId,
@@ -232,18 +220,6 @@ export function CampaignSessionsPanel({
 					content: `**Campaign**: A new session has been scheduled - "${titleTrim}"`,
 				})
 				.catch(console.error);
-
-			// Misty Pearl E3 — fire-and-forget Discord relay.
-			if (seedIso) {
-				notifyDiscord({
-					campaignId,
-					kind: "session_scheduled",
-					payload: {
-						title: titleTrim,
-						date: new Date(seedIso).toLocaleString(),
-					},
-				}).catch(console.error);
-			}
 		}
 
 		setSessionTitle("");
@@ -349,7 +325,7 @@ export function CampaignSessionsPanel({
 									id="session-location"
 									value={sessionLocation}
 									onChange={(event) => setSessionLocation(event.target.value)}
-									placeholder="Discord / Table"
+									placeholder="Table, venue, or online room"
 								/>
 							</div>
 							<div>

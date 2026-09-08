@@ -106,4 +106,18 @@ describe("Job detail display parity (transformJob → JobDetail contract)", () =
 		expect(mage.spellcasting).toBeTruthy();
 		expect((mage.spellcasting as { ability?: string }).ability).toBeTruthy();
 	});
+
+	it("exposes the authored progression/access contract for every Job", async () => {
+		const jobs = await listCanonicalEntries("jobs");
+		for (const job of jobs) {
+			const rules = (job as unknown as JobEntry).canonical_rules as
+				| { casterType?: string }
+				| null
+				| undefined;
+			expect(
+				rules?.casterType,
+				`${job.id} has canonical progression`,
+			).toBeTruthy();
+		}
+	});
 });

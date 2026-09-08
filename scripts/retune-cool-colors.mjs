@@ -1,6 +1,6 @@
 /**
  * Track D sweep: cool raw-Tailwind semantic classes → RA Amethyst-Void tokens,
- * scoped to the CORE companion/character app (book + VTT surfaces excluded).
+ * scoped to the core companion/character app (book-rendering surfaces excluded).
  *
  * The earlier `retune-raw-colors.mjs` retuned WARM strays but deliberately left
  * red/blue/green/purple/cyan "already on-brand". They aren't on-brand for an
@@ -8,7 +8,7 @@
  * yellow-green ≠ RA teal-green 160; Tailwind red 0 ≠ RA crimson 350), so this
  * folds them onto the token vocabulary while preserving each color's meaning.
  *
- * SCOPE: core UI only. Excludes the book-rendering component tree, VTT, the
+ * SCOPE: core UI only. Excludes the book-rendering component tree, the
  * shadcn `ui/` kit, and tests — those are intentionally left as-is.
  *
  * Dry-run by default (prints per-file summary); pass --apply to write.
@@ -42,7 +42,7 @@ const CLASS_RE = new RegExp(
 	"g",
 );
 
-// Book-rendering + VTT + shadcn-kit surfaces are out of scope (owner-classified
+// Book-rendering + shadcn-kit surfaces are out of scope (owner-classified
 // as "not the companion app"), plus tests.
 const SKIP_DIRS = new Set([
 	"__tests__",
@@ -52,7 +52,6 @@ const SKIP_DIRS = new Set([
 	"wardens-directive",
 	"anomaly-manifest",
 	"meridian",
-	"vtt",
 ]);
 const SKIP_FILES = new Set([
 	"CampaignBookView.tsx",

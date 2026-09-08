@@ -3,7 +3,7 @@ import {
 	sandboxRecruitableNPCs,
 } from "@/data/compendium/sandbox-npcs";
 
-// Sub-module imports - 39 chapters, 24 handouts, 20 campaign scenes
+// Sub-module imports - chapters, printable handouts, and campaign content.
 import { riftAscendantWorldLoreChapter } from "./sandbox/rift-ascendant-world-lore";
 import { chaptersPart1 } from "./sandbox/sandbox-chapters-part1";
 import { chaptersPart2 } from "./sandbox/sandbox-chapters-part2";
@@ -48,7 +48,7 @@ import {
 // Levels 1-15: a first-entry Ascendant team, trapped behind a sealed threshold,
 // hunted by an unseen apex predator (the Quiet) it cannot fight — only survive,
 // learn the natives' rules and wards, and escape (or, gated and late, kill).
-// Automatically populates the Campaign Wiki and Handouts.
+// Supplies compendium material and native companion campaign content.
 // ============================================================================
 
 interface SandboxModule {

@@ -9,7 +9,7 @@
  *
  * Scope mirrors the codemod: `src/components` + `src/pages`, `.ts`/`.tsx` only.
  * Deliberately NOT guarded (and so not walked here):
- *   - the book-rendering tree + VTT + the shadcn `ui/` kit (owner-classified as
+ *   - the book-rendering tree + the shadcn `ui/` kit (owner-classified as
  *     "not the companion app");
  *   - `src/data/toolCatalogs.ts`, whose category classes are private names paired
  *     with recolored CSS shims in AscendantTools.css / WardenProtocols.css;
@@ -38,7 +38,6 @@ const SKIP_DIRS = new Set([
 	"wardens-directive",
 	"anomaly-manifest",
 	"meridian",
-	"vtt",
 ]);
 const ALLOWLIST = new Set([
 	"CampaignBookView.tsx",

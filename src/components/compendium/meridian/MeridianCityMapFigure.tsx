@@ -7,7 +7,7 @@ import { ScaleBar } from "./ScaleBar";
  * The Meridian city overview map with a static vector overlay: an always-on
  * numbered marker per district, the district footprint highlighted on hover /
  * focus, plus a compass and scale bar. Clicking a marker focuses that district's
- * section. This is reference furniture only — no VTT tokens, grid, or panning.
+ * section. This is reference furniture only — no tokens, grid, or panning.
  */
 export function MeridianCityMapFigure({
 	showLabels,
@@ -64,7 +64,7 @@ export function MeridianCityMapFigure({
 					</svg>
 				)}
 
-				{/* Numbered district markers — real buttons over the map (no VTT) */}
+				{/* Numbered district markers — real buttons over the map. */}
 				{showLabels &&
 					MERIDIAN.districts.map((d) => {
 						const active = d.id === activeId;

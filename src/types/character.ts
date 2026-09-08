@@ -82,6 +82,37 @@ export type AbilityName =
 export type FeatureRestRecharge = "short-rest" | "long-rest";
 export type FeatureTracking = "uses" | "resource" | "manual";
 
+/**
+ * Runtime progression metadata authored beside a Job's published mechanics.
+ *
+ * This is deliberately data, rather than a second collection of job-name
+ * switches in calculators.  Creation, level-up, sheet displays, and action
+ * resolution can all resolve the same Job record through this contract.
+ */
+export type JobCasterType = "none" | "full" | "half" | "pact" | "artificer";
+export type JobAbilityAccessMode = "prepared" | "known" | "at-will";
+
+export interface JobUnarmoredDefense {
+	id: string;
+	name: string;
+	baseAC: number;
+	abilities: AbilityScore[];
+	requiresNoArmor: boolean;
+	excludesShield?: boolean;
+}
+
+export interface CanonicalJobRules {
+	casterType: JobCasterType;
+	/** Levels where this Job earns an ASI or feat choice. */
+	asiLevels: number[];
+	spellAccess?: Extract<JobAbilityAccessMode, "prepared" | "known">;
+	powerAccess?: JobAbilityAccessMode;
+	techniqueAccess?: JobAbilityAccessMode;
+	/** "*" permits every spell school; other values are normalized school ids. */
+	spellSchools?: string[];
+	unarmoredDefense?: JobUnarmoredDefense;
+}
+
 export interface FeatureUseDefinition {
 	formula: string;
 	recharge: FeatureRestRecharge;
@@ -138,6 +169,7 @@ export interface StaticJob {
 		spellsKnown?: number[];
 		spellSlots?: Record<string, number[]>;
 	};
+	canonicalRules?: CanonicalJobRules;
 	spellbook?: {
 		atCreation: number;
 		perLevel: number;

@@ -1,3 +1,9 @@
+import {
+	getCanonicalJobAbilityAccessMode,
+	getCanonicalJobRules,
+	getCanonicalJobSpellSchools,
+} from "@/lib/jobRules";
+
 type JobAccessKind = "full-caster" | "half-caster" | "pact-caster" | "martial";
 
 interface JobAbilityAccess {
@@ -9,12 +15,14 @@ interface JobAbilityAccess {
 	techniqueTags: string[];
 }
 
-const JOB_ACCESS: Record<string, JobAbilityAccess> = {
+/** Additive filter tags only; core access comes from jobs.ts canonicalRules. */
+interface JobTagAccess {
+	powerTags: string[];
+	techniqueTags: string[];
+}
+
+const JOB_TAGS: Record<string, JobTagAccess> = {
 	destroyer: {
-		kind: "martial",
-		spells: false,
-		powers: true,
-		techniques: true,
 		powerTags: [
 			"destroyer",
 			"aetheric-sight",
@@ -32,10 +40,6 @@ const JOB_ACCESS: Record<string, JobAbilityAccess> = {
 		],
 	},
 	berserker: {
-		kind: "martial",
-		spells: false,
-		powers: true,
-		techniques: true,
 		powerTags: [
 			"berserker",
 			"overload",
@@ -54,10 +58,6 @@ const JOB_ACCESS: Record<string, JobAbilityAccess> = {
 		],
 	},
 	assassin: {
-		kind: "martial",
-		spells: false,
-		powers: true,
-		techniques: true,
 		powerTags: [
 			"assassin",
 			"phase",
@@ -77,10 +77,6 @@ const JOB_ACCESS: Record<string, JobAbilityAccess> = {
 		],
 	},
 	striker: {
-		kind: "martial",
-		spells: false,
-		powers: true,
-		techniques: true,
 		powerTags: [
 			"striker",
 			"neural-overdrive",
@@ -99,18 +95,10 @@ const JOB_ACCESS: Record<string, JobAbilityAccess> = {
 		],
 	},
 	mage: {
-		kind: "full-caster",
-		spells: true,
-		powers: false,
-		techniques: false,
 		powerTags: [],
 		techniqueTags: [],
 	},
 	esper: {
-		kind: "full-caster",
-		spells: true,
-		powers: false,
-		techniques: false,
 		powerTags: [],
 		techniqueTags: [],
 	},
@@ -120,42 +108,22 @@ const JOB_ACCESS: Record<string, JobAbilityAccess> = {
 		// Technomancer). Under the archetype model it inherits the whole martial
 		// pool via membership; the tags below only feed the additive path/regent
 		// layer and dialog "access" badges.
-		kind: "half-caster",
-		spells: true,
-		powers: true,
-		techniques: true,
 		powerTags: ["revenant", "entropy", "guard"],
 		techniqueTags: ["revenant", "entropy", "vanguard"],
 	},
 	summoner: {
-		kind: "full-caster",
-		spells: true,
-		powers: false,
-		techniques: false,
 		powerTags: [],
 		techniqueTags: [],
 	},
 	idol: {
-		kind: "full-caster",
-		spells: true,
-		powers: false,
-		techniques: false,
 		powerTags: [],
 		techniqueTags: [],
 	},
 	herald: {
-		kind: "full-caster",
-		spells: true,
-		powers: false,
-		techniques: false,
 		powerTags: [],
 		techniqueTags: [],
 	},
 	"holy knight": {
-		kind: "half-caster",
-		spells: true,
-		powers: true,
-		techniques: true,
 		powerTags: ["holy-knight", "covenant", "radiant", "oath", "guard"],
 		techniqueTags: [
 			"holy-knight",
@@ -167,10 +135,6 @@ const JOB_ACCESS: Record<string, JobAbilityAccess> = {
 		],
 	},
 	technomancer: {
-		kind: "half-caster",
-		spells: true,
-		powers: true,
-		techniques: true,
 		powerTags: [
 			"technomancer",
 			"lattice-interface",
@@ -189,10 +153,6 @@ const JOB_ACCESS: Record<string, JobAbilityAccess> = {
 		],
 	},
 	stalker: {
-		kind: "half-caster",
-		spells: true,
-		powers: true,
-		techniques: true,
 		powerTags: [
 			"stalker",
 			"prey-lock",
@@ -212,32 +172,9 @@ const JOB_ACCESS: Record<string, JobAbilityAccess> = {
 		],
 	},
 	contractor: {
-		kind: "pact-caster",
-		spells: true,
-		powers: false,
-		techniques: false,
 		powerTags: [],
 		techniqueTags: [],
 	},
-};
-
-// ─────────────────────────────────────────────────────────────────────────
-// Archetype model — caster spell access is gated by SCHOOL, not by job-name
-// token. Every spellcasting job sees a generous, thematic set of schools;
-// Mage (the arcane generalist) sees every school via the "*" sentinel.
-// Keyed by the same normalized job-lookup form as JOB_ACCESS.
-// ─────────────────────────────────────────────────────────────────────────
-const CASTER_SCHOOLS: Record<string, string[]> = {
-	mage: ["*"],
-	esper: ["evocation", "transmutation", "divination", "enchantment"],
-	revenant: ["necromancy", "abjuration", "transmutation"],
-	summoner: ["conjuration", "transmutation", "divination"],
-	idol: ["enchantment", "illusion", "evocation"],
-	herald: ["abjuration", "evocation", "divination"],
-	contractor: ["conjuration", "necromancy", "enchantment", "illusion"],
-	"holy knight": ["abjuration", "evocation"],
-	technomancer: ["transmutation", "evocation", "abjuration", "divination"],
-	stalker: ["conjuration", "transmutation", "divination"],
 };
 
 export function normalizeJobAccessToken(
@@ -257,7 +194,27 @@ function normalizeJobLookup(value: string | null | undefined): string {
 export function getJobAbilityAccess(
 	jobName: string | null | undefined,
 ): JobAbilityAccess | null {
-	return JOB_ACCESS[normalizeJobLookup(jobName)] ?? null;
+	const rules = getCanonicalJobRules(jobName);
+	if (!rules) return null;
+	const tagAccess = JOB_TAGS[normalizeJobLookup(jobName)] ?? {
+		powerTags: [],
+		techniqueTags: [],
+	};
+	const kind: JobAccessKind =
+		rules.casterType === "full"
+			? "full-caster"
+			: rules.casterType === "pact"
+				? "pact-caster"
+				: rules.casterType === "half" || rules.casterType === "artificer"
+					? "half-caster"
+					: "martial";
+	return {
+		kind,
+		spells: Boolean(rules.spellAccess),
+		powers: Boolean(rules.powerAccess),
+		techniques: Boolean(rules.techniqueAccess),
+		...tagAccess,
+	};
 }
 
 export function getPowerAccessTokens(
@@ -337,40 +294,18 @@ export function entryHasAccessToken(
 // ─────────────────────────────────────────────────────────────────────────
 export type AbilityAccessMode = "prepared" | "known" | "at-will";
 
-const POWER_ACCESS_MODE: Record<string, AbilityAccessMode> = {
-	destroyer: "at-will",
-	berserker: "at-will",
-	assassin: "at-will",
-	striker: "at-will",
-	"holy knight": "prepared",
-	technomancer: "prepared",
-	revenant: "prepared",
-	stalker: "known",
-};
-
-const TECHNIQUE_ACCESS_MODE: Record<string, AbilityAccessMode> = {
-	destroyer: "known",
-	berserker: "known",
-	assassin: "known",
-	striker: "known",
-	"holy knight": "known",
-	technomancer: "known",
-	revenant: "known",
-	stalker: "known",
-};
-
 /** Access mode a job uses for POWERS (defaults to at-will for non-power jobs). */
 export function getJobPowerMode(
 	jobName: string | null | undefined,
 ): AbilityAccessMode {
-	return POWER_ACCESS_MODE[normalizeJobLookup(jobName)] ?? "at-will";
+	return getCanonicalJobAbilityAccessMode(jobName, "power") ?? "at-will";
 }
 
 /** Access mode a job uses for TECHNIQUES (defaults to at-will). */
 export function getJobTechniqueMode(
 	jobName: string | null | undefined,
 ): AbilityAccessMode {
-	return TECHNIQUE_ACCESS_MODE[normalizeJobLookup(jobName)] ?? "at-will";
+	return getCanonicalJobAbilityAccessMode(jobName, "technique") ?? "at-will";
 }
 
 export function jobCanLearnPowers(jobName: string | null | undefined): boolean {
@@ -394,9 +329,7 @@ export function jobCanLearnSpells(jobName: string | null | undefined): boolean {
 export function getCasterSchools(
 	jobName: string | null | undefined,
 ): string[] | null {
-	const access = getJobAbilityAccess(jobName);
-	if (!access?.spells) return null;
-	return CASTER_SCHOOLS[normalizeJobLookup(jobName)] ?? [];
+	return getCanonicalJobSpellSchools(jobName);
 }
 
 /**

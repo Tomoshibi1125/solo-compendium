@@ -29,7 +29,6 @@ const replacements = [
 	[/variant='system'/g, "variant='rift'"],
 	[/warden-protocol/g, "warden-directive"],
 	[/Warden \(System\)/g, "Warden"],
-	[/VTT System/g, "VTT Interface"],
 	[/system-rules/g, "core-rules"],
 	[/system-console/g, "rift-console"],
 	[/category: "system"/g, 'category: "rift"'], // For WardenProtocols.tsx
