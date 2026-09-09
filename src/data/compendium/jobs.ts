@@ -3244,7 +3244,7 @@ export const jobs: Job[] = [
 		description:
 			"The Herald is an Awakened identity that specializes in the Absolute Transmission mandate. As an Ascendant of this lineage, their nervous system was restructured at Awakening into a living antenna — a receiver tuned to the Absolute's broadcast, translating sanctified resonance into restorative, radiant, and reality-correcting mantras. In the modern world, Heralds are the Ascendant Bureau's field chaplains and raid medics; their very presence re-anchors an ally's vitals, and their mantras can mend shattered bones or incinerate unholy anomalies with equal authority. They are the bridge between civilians and the Absolute's will.",
 		hitDie: "1d8",
-		primaryAbility: "Presence",
+		primaryAbility: "Sense",
 		canonicalRules: {
 			casterType: "full",
 			asiLevels: STANDARD_JOB_ASI_LEVELS,
@@ -3861,7 +3861,7 @@ export const jobs: Job[] = [
 		description:
 			"The Stalker is an Awakened identity that specializes in the Dimensional Predator mandate. As an Ascendant of this lineage, their body was restructured for pursuit — their leg musculature, lung capacity, and cardiovascular system are optimized for sustained high-speed chase, and their aetheric sense is permanently tuned to dimensional anomalies. In the modern world, Stalkers are the Bureau's preferred bounty and extraction specialists; they work alone, they always catch their mark, and when their name appears on a contract the global bounty network goes quiet.",
 		hitDie: "1d10",
-		primaryAbility: "Agility",
+		primaryAbility: "Sense",
 		canonicalRules: {
 			casterType: "half",
 			asiLevels: STANDARD_JOB_ASI_LEVELS,

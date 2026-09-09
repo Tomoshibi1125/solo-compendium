@@ -132,9 +132,15 @@ describe("jobs racial parity", () => {
 		// top-level `},` marker for that job (very coarse but effective here).
 		const objectStarts: Array<{ idValue: string; start: number }> = [];
 		const idRegex = /\{\s*\n?\s*id:\s*"([^"]+)"/g;
+		// Only anchor on catalog job ids — nested rule objects also carry `id:`
+		// (e.g. canonicalRules.unarmoredDefense's "berserker_ud") and would
+		// otherwise be misparsed as job objects with bogus slice bounds.
+		const jobIdSet = new Set<string>(EXPECTED_JOB_IDS);
 		let match: RegExpExecArray | null = idRegex.exec(text);
 		while (match !== null) {
-			objectStarts.push({ idValue: match[1], start: match.index });
+			if (jobIdSet.has(match[1])) {
+				objectStarts.push({ idValue: match[1], start: match.index });
+			}
 			match = idRegex.exec(text);
 		}
 		for (let i = 0; i < objectStarts.length; i++) {
@@ -261,11 +267,11 @@ describe("jobs racial parity", () => {
 		}
 	});
 
-	it("Herald is a cleric analog (Sense+Presence saves, Presence primary)", () => {
+	it("Herald is a cleric analog (Sense+Presence saves, Sense primary)", () => {
 		const herald = jobs.find((j) => j.id === "herald");
 		expect(herald).toBeDefined();
 		expect(herald?.saving_throws).toEqual(["Sense", "Presence"]);
-		expect(herald?.primaryAbility).toBe("Presence");
+		expect(herald?.primaryAbility).toBe("Sense");
 	});
 
 	it("Contractor is a warlock analog (Sense+Presence saves, pact caster)", () => {
@@ -275,11 +281,11 @@ describe("jobs racial parity", () => {
 		expect(contractor?.primaryAbility).toBe("Presence");
 	});
 
-	it("Stalker is a ranger analog (Strength+Agility saves, half caster)", () => {
+	it("Stalker is a ranger analog (Strength+Agility saves, Sense primary, half caster)", () => {
 		const stalker = jobs.find((j) => j.id === "stalker");
 		expect(stalker).toBeDefined();
 		expect(stalker?.saving_throws).toEqual(["Strength", "Agility"]);
-		expect(stalker?.primaryAbility).toBe("Agility");
+		expect(stalker?.primaryAbility).toBe("Sense");
 	});
 
 	it("Idol is a bard analog (Agility+Presence saves, Hype die)", () => {

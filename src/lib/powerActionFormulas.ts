@@ -12,7 +12,8 @@
  *   attackBonus = proficiency_bonus + primary_ability_modifier + extra_bonus
  *   saveDC      = 8 + proficiency_bonus + primary_ability_modifier + extra_bonus
  *
- * Per-job primary abilities:
+ * Per-job primary abilities (authored in data/compendium/jobs.ts — the
+ * single source of truth; this list is documentation only):
  *   STR:   Destroyer, Berserker
  *   AGI:   Assassin, Striker
  *   INT:   Mage, Revenant, Technomancer

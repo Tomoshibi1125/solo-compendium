@@ -68,7 +68,9 @@ const CANTRIPS_IDOL = [
 ] as const;
 const CANTRIPS_SUMMONER = CANTRIPS_IDOL;
 const CANTRIPS_CONTRACTOR = CANTRIPS_IDOL;
-const CANTRIPS_TECHNOMANCER = CANTRIPS_IDOL;
+const CANTRIPS_TECHNOMANCER = [
+	2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4,
+] as const;
 
 const FULL_CASTER_SLOTS_AT_LEVELS = {
 	1: { 1: 2, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0 },
