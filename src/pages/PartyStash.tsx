@@ -15,9 +15,11 @@ import { Label } from "@/components/ui/label";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { useCampaignGold } from "@/hooks/useCampaignGold";
 import { useCampaignInventory } from "@/hooks/useCampaignInventory";
+import { useHasWardenAccess } from "@/hooks/useCampaigns";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth/authContext";
 import { RA_CURRENCY_TYPES } from "@/lib/currency";
+import { WardenItemDeliveryDialog } from "@/components/warden-directives/WardenItemDeliveryDialog";
 
 export default function PartyStash() {
 	const navigate = useNavigate();
@@ -56,9 +58,11 @@ export default function PartyStash() {
 		isLoading: isGoldLoading,
 		updateCredits,
 	} = useCampaignGold(campaignId);
+	const { data: hasWardenAccess } = useHasWardenAccess(campaignId || "");
 
 	const [newItemName, setNewItemName] = useState("");
 	const [newItemQuantity, setNewItemQuantity] = useState(1);
+	const [deliveryDialogOpen, setDeliveryDialogOpen] = useState(false);
 
 	// State for local Credit edits before saving
 	const [creditEdits, setCreditEdits] = useState(partyCredits);
@@ -124,30 +128,43 @@ export default function PartyStash() {
 				</div>
 
 				<AscendantWindow title="ADD LOOT">
-					<div className="flex items-end gap-4">
-						<div className="flex-1 space-y-2">
-							<Label>Item Name</Label>
-							<Input
-								placeholder="e.g. Bureau salvage voucher, Healing Ampoule"
-								value={newItemName}
-								onChange={(e) => setNewItemName(e.target.value)}
-							/>
+					{hasWardenAccess ? (
+						<div className="flex flex-col items-center justify-center py-6 text-center">
+							<Package className="w-10 h-10 mb-4 opacity-50" />
+							<p className="text-muted-foreground mb-4">
+								Wardens can grant any item, artifact, or relic from the full compendium to the party stash.
+							</p>
+							<Button onClick={() => setDeliveryDialogOpen(true)} size="lg">
+								<Package className="w-4 h-4 mr-2" />
+								Browse Full Catalog
+							</Button>
 						</div>
-						<div className="w-24 space-y-2">
-							<Label>QTY</Label>
-							<Input
-								type="number"
-								min={1}
-								value={newItemQuantity}
-								onChange={(e) =>
-									setNewItemQuantity(parseInt(e.target.value, 10) || 1)
-								}
-							/>
+					) : (
+						<div className="flex items-end gap-4">
+							<div className="flex-1 space-y-2">
+								<Label>Item Name</Label>
+								<Input
+									placeholder="e.g. Bureau salvage voucher, Healing Ampoule"
+									value={newItemName}
+									onChange={(e) => setNewItemName(e.target.value)}
+								/>
+							</div>
+							<div className="w-24 space-y-2">
+								<Label>QTY</Label>
+								<Input
+									type="number"
+									min={1}
+									value={newItemQuantity}
+									onChange={(e) =>
+										setNewItemQuantity(parseInt(e.target.value, 10) || 1)
+									}
+								/>
+							</div>
+							<Button onClick={handleAdd}>
+								<Plus className="w-4 h-4 mr-2" /> Add
+							</Button>
 						</div>
-						<Button onClick={handleAdd}>
-							<Plus className="w-4 h-4 mr-2" /> Add
-						</Button>
-					</div>
+					)}
 				</AscendantWindow>
 
 				<AscendantWindow title="PARTY WEALTH" className="relative">
@@ -289,6 +306,14 @@ export default function PartyStash() {
 					)}
 				</AscendantWindow>
 			</div>
+			{hasWardenAccess && (
+				<WardenItemDeliveryDialog
+					open={deliveryDialogOpen}
+					onOpenChange={setDeliveryDialogOpen}
+					campaignId={campaignId}
+					title="Deliver to Party Stash"
+				/>
+			)}
 		</Layout>
 	);
 }
