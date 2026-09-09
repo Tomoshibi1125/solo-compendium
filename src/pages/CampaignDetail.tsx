@@ -1,4 +1,4 @@
-﻿import { useQueryClient } from "@tanstack/react-query";
+import { useQueryClient } from "@tanstack/react-query";
 import {
 	Activity,
 	ArrowLeft,
@@ -10,6 +10,7 @@ import {
 	FileText,
 	Loader2,
 	MessageSquare,
+	Package,
 	ScrollText,
 	Settings,
 	Share2,
@@ -23,6 +24,7 @@ import { CampaignActivityPanel } from "@/components/campaign/CampaignActivityPan
 import { CampaignCalendarPanel } from "@/components/campaign/CampaignCalendarPanel";
 import { CampaignCharacters } from "@/components/campaign/CampaignCharacters";
 import { CampaignChat } from "@/components/campaign/CampaignChat";
+import { CampaignExtrasPanel } from "@/components/campaign/CampaignExtrasPanel";
 import { CampaignInviteModal } from "@/components/campaign/CampaignInviteModal";
 import { CampaignNotes } from "@/components/campaign/CampaignNotes";
 import { CampaignPresenceBadge } from "@/components/campaign/CampaignPresenceBadge";
@@ -38,6 +40,7 @@ import { CampaignVehiclesPanel } from "@/components/campaign/CampaignVehiclesPan
 import { CampaignWiki } from "@/components/campaign/CampaignWiki";
 import { SessionReplayPanel } from "@/components/campaign/SessionReplayPanel";
 import { Layout } from "@/components/layout/Layout";
+import { WardenItemDeliveryDialog } from "@/components/warden-directives/WardenItemDeliveryDialog";
 import {
 	AscendantText,
 	ManaFlowText,
@@ -113,6 +116,7 @@ const CampaignDetail = () => {
 	const [activeTab, setActiveTab] = useState("overview");
 	const [inviteModalOpen, setInviteModalOpen] = useState(false);
 	const [attachDialogOpen, setAttachDialogOpen] = useState(false);
+	const [deliveryDialogOpen, setDeliveryDialogOpen] = useState(false);
 	const [selectedCharacterToAttach, setSelectedCharacterToAttach] =
 		useState("");
 	const [loadingTimedOut, setLoadingTimedOut] = useState(false);
@@ -756,6 +760,37 @@ const CampaignDetail = () => {
 							<CampaignActivityPanel campaignId={id || ""} />
 						</TabsContent>
 						<TabsContent value="assets" className="space-y-6">
+							{hasWardenAccess && (
+								<div className="flex flex-col sm:flex-row gap-3 p-4 border border-primary/20 bg-primary/5 rounded-lg mb-4">
+									<Button
+										onClick={() => setDeliveryDialogOpen(true)}
+										className="flex-1 gap-2"
+										variant="default"
+									>
+										<Package className="w-4 h-4" />
+										Deliver Item / Grant Content
+									</Button>
+									<Button
+										asChild
+										variant="outline"
+										className="flex-1 gap-2"
+									>
+										<Link to={`/party-stash?campaignId=${id}`}>
+											<Shield className="w-4 h-4" />
+											Open Party Stash
+										</Link>
+									</Button>
+								</div>
+							)}
+							<div>
+								<h2 className="font-heading text-sm uppercase tracking-widest text-muted-foreground mb-3">
+									Campaign Extras
+								</h2>
+								<CampaignExtrasPanel
+									campaignId={id || ""}
+									isWarden={hasWardenAccess}
+								/>
+							</div>
 							<div>
 								<h2 className="font-heading text-sm uppercase tracking-widest text-muted-foreground mb-3">
 									Relic Vault
@@ -894,6 +929,13 @@ const CampaignDetail = () => {
 					campaign={campaign as Campaign}
 					open={inviteModalOpen}
 					onOpenChange={setInviteModalOpen}
+				/>
+			)}
+			{hasWardenAccess && (
+				<WardenItemDeliveryDialog
+					open={deliveryDialogOpen}
+					onOpenChange={setDeliveryDialogOpen}
+					campaignId={id || ""}
 				/>
 			)}
 		</>

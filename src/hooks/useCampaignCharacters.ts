@@ -68,7 +68,7 @@ export const useCampaignSharedCharacters = (campaignId: string) => {
 
 			if (error) throw error;
 			return (data || [])
-				.filter((entry) => entry.is_shared && entry.character_id !== null)
+				.filter((entry) => entry.character_id !== null)
 				.map((entry) => ({
 					id: entry.campaign_member_id || `shared:${entry.character_id}`,
 					campaign_id: campaignId,

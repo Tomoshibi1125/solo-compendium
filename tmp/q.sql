@@ -1,0 +1,1 @@
+SELECT jsonb_build_object('plan_ext', to_regprocedure('extensions.plan(integer)') IS NOT NULL, 'pgtap_version', (SELECT extversion FROM pg_extension WHERE extname='pgtap'), 'plan_funcs', (SELECT jsonb_agg(DISTINCT pronamespace::regnamespace::text) FROM pg_proc WHERE proname = 'plan')) AS r;
