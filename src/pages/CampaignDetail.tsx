@@ -24,7 +24,6 @@ import { CampaignActivityPanel } from "@/components/campaign/CampaignActivityPan
 import { CampaignCalendarPanel } from "@/components/campaign/CampaignCalendarPanel";
 import { CampaignCharacters } from "@/components/campaign/CampaignCharacters";
 import { CampaignChat } from "@/components/campaign/CampaignChat";
-import { CampaignExtrasPanel } from "@/components/campaign/CampaignExtrasPanel";
 import { CampaignInviteModal } from "@/components/campaign/CampaignInviteModal";
 import { CampaignNotes } from "@/components/campaign/CampaignNotes";
 import { CampaignPresenceBadge } from "@/components/campaign/CampaignPresenceBadge";
@@ -782,15 +781,6 @@ const CampaignDetail = () => {
 									</Button>
 								</div>
 							)}
-							<div>
-								<h2 className="font-heading text-sm uppercase tracking-widest text-muted-foreground mb-3">
-									Campaign Extras
-								</h2>
-								<CampaignExtrasPanel
-									campaignId={id || ""}
-									isWarden={hasWardenAccess}
-								/>
-							</div>
 							<div>
 								<h2 className="font-heading text-sm uppercase tracking-widest text-muted-foreground mb-3">
 									Relic Vault

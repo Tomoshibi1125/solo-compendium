@@ -1,40 +1,17 @@
 import {
 	Crown,
 	ExternalLink,
-	EyeOff,
 	Loader2,
 	PackagePlus,
-	Share2,
 } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Button } from "@/components/ui/button";
-import {
-	Dialog,
-	DialogContent,
-	DialogDescription,
-	DialogFooter,
-	DialogHeader,
-	DialogTitle,
-} from "@/components/ui/dialog";
-import {
-	Select,
-	SelectContent,
-	SelectItem,
-	SelectTrigger,
-	SelectValue,
-} from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import { WardenItemDeliveryDialog } from "@/components/warden-directives/WardenItemDeliveryDialog";
-import {
-	useCampaignSharedCharacters,
-	useShareCharacter,
-	useUnshareCharacter,
-} from "@/hooks/useCampaignCharacters";
-import { useSendCampaignMessage } from "@/hooks/useCampaignChat";
+import { useCampaignSharedCharacters } from "@/hooks/useCampaignCharacters";
 import { useHasWardenAccess } from "@/hooks/useCampaigns";
-import { useCharacters } from "@/hooks/useCharacters";
 import { useAuth } from "@/lib/auth/authContext";
 import { isSandboxNpcCharacter } from "@/lib/characterScope";
 import {
@@ -49,28 +26,22 @@ interface CampaignCharactersProps {
 }
 
 export function CampaignCharacters({ campaignId }: CampaignCharactersProps) {
-	const [shareDialogOpen, setShareDialogOpen] = useState(false);
-	const [selectedCharacter, setSelectedCharacter] = useState("");
 	const [showWardenNpcs, setShowWardenNpcs] = useState(true);
 	const [deliveryDialogOpen, setDeliveryDialogOpen] = useState(false);
 	const [deliveryCharacterId, setDeliveryCharacterId] = useState<string | null>(
 		null,
 	);
 
-	const { data: sharedCharacters = [], isLoading: loadingShared } =
+	const { data: rosterCharacters = [], isLoading: loadingRoster } =
 		useCampaignSharedCharacters(campaignId);
 	const { user } = useAuth();
-	const { data: myCharacters = [] } = useCharacters();
 	const { data: hasWardenAccess = false } = useHasWardenAccess(campaignId);
-	const shareCharacter = useShareCharacter();
-	const unshareCharacter = useUnshareCharacter();
-	const sendMessage = useSendCampaignMessage();
 	const currentUserId = user?.id ?? getLocalUserId();
 
 	// Warden-only NPC roster (guest mode). Sandbox-injected NPCs live under
 	// `solo-compendium.npc-characters.${campaignId}` with a `[SANDBOX_NPC]`
 	// marker in their notes. Hidden from players entirely; rendered as a
-	// separate Warden-only window below Shared Characters.
+	// separate Warden-only window below Campaign Ascendants.
 	const [wardenNpcs, setWardenNpcs] = useState<LocalCharacterRow[]>([]);
 	useEffect(() => {
 		if (!hasWardenAccess) {
@@ -108,48 +79,6 @@ export function CampaignCharacters({ campaignId }: CampaignCharactersProps) {
 		[wardenNpcs],
 	);
 
-	const sharedCharacterIds = new Set(
-		sharedCharacters.map((sc) => sc.character_id),
-	);
-	const availableCharacters = myCharacters.filter(
-		(c) => !sharedCharacterIds.has(c.id),
-	);
-
-	const handleShare = async () => {
-		if (!selectedCharacter) return;
-		const char = availableCharacters.find((c) => c.id === selectedCharacter);
-		await shareCharacter.mutateAsync({
-			campaignId,
-			characterId: selectedCharacter,
-		});
-
-		if (char) {
-			await sendMessage.mutateAsync({
-				campaignId,
-				content: `**Campaign**: ${char.name} has joined the campaign.`,
-			});
-		}
-
-		setShareDialogOpen(false);
-		setSelectedCharacter("");
-	};
-
-	const handleUnshare = async (characterId: string) => {
-		if (confirm("Stop sharing this character with the campaign?")) {
-			const char = sharedCharacters.find(
-				(sc) => sc.character_id === characterId,
-			)?.characters;
-			await unshareCharacter.mutateAsync({ campaignId, characterId });
-
-			if (char) {
-				await sendMessage.mutateAsync({
-					campaignId,
-					content: `**Campaign**: ${char.name} has left the campaign.`,
-				});
-			}
-		}
-	};
-
 	const openDeliveryDialog = (characterId: string) => {
 		setDeliveryCharacterId(characterId);
 		setDeliveryDialogOpen(true);
@@ -157,7 +86,7 @@ export function CampaignCharacters({ campaignId }: CampaignCharactersProps) {
 
 	return (
 		<>
-			{/* Warden-only NPC roster. Rendered above Shared Characters so the
+			{/* Warden-only NPC roster. Rendered above Campaign Ascendants so the
 			    Warden sees module-imported NPCs prominently. Hidden from
 			    players via the hasWardenAccess gate. */}
 			{hasWardenAccess && filteredWardenNpcs.length > 0 && (
@@ -216,87 +145,69 @@ export function CampaignCharacters({ campaignId }: CampaignCharactersProps) {
 			)}
 
 			<AscendantWindow
-				title="SHARED ASCENDANTS"
+				title="CAMPAIGN ASCENDANTS"
 				className="h-[400px] flex flex-col"
 			>
 				<div className="flex justify-between items-center mb-4">
 					<p className="text-sm text-muted-foreground">
-						Members see roster summaries; Wardens can open linked sheets.
+						Characters linked to this campaign. Wardens can open sheets and grant items.
 					</p>
-					<Button
-						size="sm"
-						onClick={() => setShareDialogOpen(true)}
-						disabled={availableCharacters.length === 0}
-					>
-						<Share2 className="w-4 h-4 mr-2" />
-						Share Character
-					</Button>
 				</div>
 				<div className="flex-1 overflow-y-auto space-y-2">
-					{loadingShared ? (
+					{loadingRoster ? (
 						<div className="flex items-center justify-center py-8">
 							<Loader2 className="w-6 h-6 animate-spin text-primary" />
 						</div>
-					) : sharedCharacters.length === 0 ? (
+					) : rosterCharacters.length === 0 ? (
 						<p className="text-center text-muted-foreground py-8">
-							No characters shared yet. Share one to get started!
+							No Ascendants linked yet. Members can attach a character from the
+							Overview tab.
 						</p>
 					) : (
-						sharedCharacters.map((share) => {
+						rosterCharacters.map((entry) => {
 							const isOwner =
-								share.owner_user_id === currentUserId ||
-								share.shared_by === currentUserId;
+								entry.owner_user_id === currentUserId ||
+								entry.shared_by === currentUserId;
 							const canViewSheet = hasWardenAccess || isOwner;
 							return (
 								<div
-									key={share.id}
+									key={entry.id}
 									className="flex items-center justify-between p-3 bg-muted/50 rounded-lg border border-border hover:border-primary/30 transition-colors"
 								>
 									<div className="flex items-center gap-3">
 										<div>
 											<p className="font-heading font-semibold">
-												{share.characters?.name || "Unknown Character"}
+												{entry.characters?.name || "Unknown Character"}
 											</p>
-											{share.characters && (
+											{entry.characters && (
 												<p className="text-xs text-muted-foreground">
-													Level {share.characters.level}{" "}
-													{formatRegentVernacular(share.characters.job)}
+													Level {entry.characters.level}{" "}
+													{formatRegentVernacular(entry.characters.job)}
 												</p>
 											)}
 										</div>
 									</div>
 									<div className="flex items-center gap-2">
-										{hasWardenAccess && share.characters && (
+										{hasWardenAccess && entry.characters && (
 											<Button
 												variant="outline"
 												size="sm"
 												onClick={() => {
-													if (share.characters)
-														openDeliveryDialog(share.characters.id);
+													if (entry.characters)
+														openDeliveryDialog(entry.characters.id);
 												}}
 											>
 												<PackagePlus className="w-3 h-3 mr-1" />
 												Grant Item
 											</Button>
 										)}
-										{canViewSheet && share.characters && (
-											<Link to={`/characters/${share.characters.id}`}>
+										{canViewSheet && entry.characters && (
+											<Link to={`/characters/${entry.characters.id}`}>
 												<Button variant="outline" size="sm">
 													<ExternalLink className="w-3 h-3 mr-1" />
 													View
 												</Button>
 											</Link>
-										)}
-										{isOwner && (
-											<Button
-												variant="ghost"
-												size="icon"
-												aria-label="Hide"
-												className="h-8 w-8"
-												onClick={() => handleUnshare(share.character_id)}
-											>
-												<EyeOff className="w-4 h-4" />
-											</Button>
 										)}
 									</div>
 								</div>
@@ -306,56 +217,6 @@ export function CampaignCharacters({ campaignId }: CampaignCharactersProps) {
 				</div>
 			</AscendantWindow>
 
-			<Dialog open={shareDialogOpen} onOpenChange={setShareDialogOpen}>
-				<DialogContent>
-					<DialogHeader>
-						<DialogTitle>Share Ascendant</DialogTitle>
-						<DialogDescription>
-							Select an Ascendant to add to the campaign roster. Members see its
-							summary; Wardens can review the linked sheet.
-						</DialogDescription>
-					</DialogHeader>
-					<div className="py-4">
-						<Select
-							value={selectedCharacter}
-							onValueChange={setSelectedCharacter}
-						>
-							<SelectTrigger>
-								<SelectValue placeholder="Select an Ascendant" />
-							</SelectTrigger>
-							<SelectContent>
-								{availableCharacters.map((char) => (
-									<SelectItem key={char.id} value={char.id}>
-										{char.name} - Level {char.level}{" "}
-										{formatRegentVernacular(char.job ?? "")}
-									</SelectItem>
-								))}
-							</SelectContent>
-						</Select>
-					</div>
-					<DialogFooter>
-						<Button variant="outline" onClick={() => setShareDialogOpen(false)}>
-							Cancel
-						</Button>
-						<Button
-							onClick={handleShare}
-							disabled={!selectedCharacter || shareCharacter.isPending}
-						>
-							{shareCharacter.isPending ? (
-								<>
-									<Loader2 className="w-4 h-4 mr-2 animate-spin" />
-									Sharing...
-								</>
-							) : (
-								<>
-									<Share2 className="w-4 h-4 mr-2" />
-									Share
-								</>
-							)}
-						</Button>
-					</DialogFooter>
-				</DialogContent>
-			</Dialog>
 			{hasWardenAccess && (
 				<WardenItemDeliveryDialog
 					open={deliveryDialogOpen}
