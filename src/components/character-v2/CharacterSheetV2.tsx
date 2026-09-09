@@ -822,14 +822,17 @@ export default function CharacterSheetV2() {
 				onChange={(v) => handleSectionNote("notes", v)}
 				readOnly={isReadOnly}
 			/>
-			<CharacterBackupPanel characterId={character.id} />
+			{!isReadOnly && <CharacterBackupPanel characterId={character.id} />}
 			<RollHistoryPanel characterId={character.id} />
 		</>
 	);
 	const quests = <QuestLog characterId={character.id} />;
 	const extras = (
 		<>
-			<CharacterExtrasPanel characterId={character.id} />
+			<CharacterExtrasPanel
+				characterId={character.id}
+				isReadOnly={isReadOnly}
+			/>
 			<VehiclesPanel characterId={character.id} readOnly={isReadOnly} />
 			<CraftingPanel characterId={character.id} readOnly={isReadOnly} />
 			<ShadowSoldiersPanel

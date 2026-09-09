@@ -9088,6 +9088,14 @@ export type Database = {
 				Args: { p_encounter_id: string };
 				Returns: string;
 			};
+			detach_campaign_member_character: {
+				Args: {
+					p_campaign_id: string;
+					p_character_id: string;
+					p_member_id: string;
+				};
+				Returns: undefined;
+			};
 			end_active_session: {
 				Args: { p_session_id: string };
 				Returns: undefined;
@@ -9163,6 +9171,22 @@ export type Database = {
 			get_campaign_member_count: {
 				Args: { p_campaign_id: string };
 				Returns: number;
+			};
+			get_campaign_roster: {
+				Args: { p_campaign_id: string };
+				Returns: {
+					campaign_member_id: string;
+					character_id: string;
+					character_job: string;
+					character_level: number;
+					character_name: string;
+					display_name: string;
+					is_shared: boolean;
+					joined_at: string;
+					portrait_url: string;
+					role: string;
+					user_id: string;
+				}[];
 			};
 			get_character_by_share_token: {
 				Args: { p_character_id: string; p_share_token: string };
@@ -9333,6 +9357,10 @@ export type Database = {
 				Args: { p_tamed_id: string };
 				Returns: undefined;
 			};
+			remove_campaign_member: {
+				Args: { p_campaign_id: string; p_member_id: string };
+				Returns: undefined;
+			};
 			remove_regent_unlock: { Args: { p_unlock_id: string }; Returns: string };
 			request_to_join_guild: {
 				Args: {
@@ -9463,6 +9491,10 @@ export type Database = {
 					source_book: string;
 					tags: string[];
 				}[];
+			};
+			set_campaign_member_role: {
+				Args: { p_campaign_id: string; p_member_id: string; p_role: string };
+				Returns: undefined;
 			};
 			set_homebrew_content_status: {
 				Args: {

@@ -6,6 +6,7 @@ import {
 	CalendarClock,
 	Car,
 	Crown,
+	ExternalLink,
 	FileText,
 	Loader2,
 	MessageSquare,
@@ -82,7 +83,9 @@ import {
 	useCampaign,
 	useCampaignMembers,
 	useCampaignRole,
+	useDetachCampaignMemberCharacter,
 	useLinkCampaignCharacter,
+	useRemoveCampaignMember,
 	useUpdateCampaignMemberRole,
 } from "@/hooks/useCampaigns";
 import { useCharacters } from "@/hooks/useCharacters";
@@ -149,6 +152,8 @@ const CampaignDetail = () => {
 	const { data: myCharacters = [] } = useCharacters();
 	const linkCharacter = useLinkCampaignCharacter();
 	const updateMemberRole = useUpdateCampaignMemberRole();
+	const removeMember = useRemoveCampaignMember();
+	const detachMemberCharacter = useDetachCampaignMemberCharacter();
 	const sendMessage = useSendCampaignMessage();
 	const campaignActivity = useActivityFeed({
 		toolKey: "campaign-activity",
@@ -203,6 +208,31 @@ const CampaignDetail = () => {
 	}: PendingRoleChange) => {
 		if (currentRole === nextRole) return;
 		setPendingRoleChange({ memberId, memberName, currentRole, nextRole });
+	};
+
+	const handleRemoveMember = async (memberId: string, memberName: string) => {
+		if (
+			!id ||
+			!confirm(
+				`Remove ${memberName} from this campaign? Their linked access will be revoked.`,
+			)
+		)
+			return;
+		await removeMember.mutateAsync({ campaignId: id, memberId });
+	};
+
+	const handleDetachMemberCharacter = async (
+		memberId: string,
+		characterId: string,
+		memberName: string,
+	) => {
+		if (!id || !confirm(`Detach ${memberName}'s Ascendant from this campaign?`))
+			return;
+		await detachMemberCharacter.mutateAsync({
+			campaignId: id,
+			memberId,
+			characterId,
+		});
 	};
 
 	// Real-time updates for campaign members
@@ -513,14 +543,15 @@ const CampaignDetail = () => {
 												const isWarden = campaign.warden_id === member.user_id;
 												const isMe = member.user_id === user?.id;
 												const memberName =
-													member.characters?.name || "No Ascendant linked";
+													member.display_name ||
+													(isMe ? "You" : "Unnamed member");
 												const managedRole: ManagedCampaignRole =
 													member.role === "co-warden"
 														? "co-warden"
 														: "ascendant";
 												return (
 													<div
-														key={member.id}
+														key={`${member.id}:${member.character_id || "unlinked"}`}
 														className="flex items-center justify-between p-3 bg-muted/50 rounded"
 													>
 														<div className="flex items-center gap-3">
@@ -536,10 +567,16 @@ const CampaignDetail = () => {
 																</p>
 																{member.characters && (
 																	<AscendantText className="block text-xs text-foreground/70">
-																		Level {member.characters.level}{" "}
+																		{member.characters.name} · Level{" "}
+																		{member.characters.level}{" "}
 																		{formatRegentVernacular(
 																			member.characters.job || "Unknown",
 																		)}
+																	</AscendantText>
+																)}
+																{!member.characters && (
+																	<AscendantText className="block text-xs text-foreground/70">
+																		No Ascendant linked
 																	</AscendantText>
 																)}
 																{isMe && !member.characters && (
@@ -554,36 +591,73 @@ const CampaignDetail = () => {
 																)}
 															</div>
 														</div>
-														{isPrimaryWarden && !isWarden && (
-															<Select
-																value={managedRole}
-																onValueChange={(value) =>
-																	queueRoleChange({
-																		memberId: member.id,
-																		memberName,
-																		currentRole: managedRole,
-																		nextRole: value as ManagedCampaignRole,
-																	})
-																}
-																disabled={updateMemberRole.isPending}
-															>
-																<SelectTrigger
-																	className="w-[120px] h-8 text-[11px]"
-																	aria-label={`Change ${memberName} campaign role`}
+														{hasWardenAccess && !isWarden ? (
+															<div className="flex flex-wrap items-center justify-end gap-1.5">
+																<Select
+																	value={managedRole}
+																	onValueChange={(value) =>
+																		queueRoleChange({
+																			memberId: member.id,
+																			memberName,
+																			currentRole: managedRole,
+																			nextRole: value as ManagedCampaignRole,
+																		})
+																	}
+																	disabled={updateMemberRole.isPending}
 																>
-																	<SelectValue />
-																</SelectTrigger>
-																<SelectContent>
-																	<SelectItem value="ascendant">
-																		Ascendant
-																	</SelectItem>
-																	<SelectItem value="co-warden">
-																		Co-Warden
-																	</SelectItem>
-																</SelectContent>
-															</Select>
-														)}
-														{!isPrimaryWarden || isWarden ? (
+																	<SelectTrigger
+																		className="w-[120px] h-8 text-[11px]"
+																		aria-label={`Change ${memberName} campaign role`}
+																	>
+																		<SelectValue />
+																	</SelectTrigger>
+																	<SelectContent>
+																		<SelectItem value="ascendant">
+																			Ascendant
+																		</SelectItem>
+																		<SelectItem value="co-warden">
+																			Co-Warden
+																		</SelectItem>
+																	</SelectContent>
+																</Select>
+																{member.characters && (
+																	<Button variant="outline" size="sm" asChild>
+																		<Link
+																			to={`/characters/${member.characters.id}`}
+																		>
+																			<ExternalLink className="w-3 h-3 mr-1" />
+																			View
+																		</Link>
+																	</Button>
+																)}
+																{member.characters && (
+																	<Button
+																		variant="outline"
+																		size="sm"
+																		disabled={detachMemberCharacter.isPending}
+																		onClick={() =>
+																			handleDetachMemberCharacter(
+																				member.id,
+																				member.characters?.id || "",
+																				memberName,
+																			)
+																		}
+																	>
+																		Detach
+																	</Button>
+																)}
+																<Button
+																	variant="destructive"
+																	size="sm"
+																	disabled={removeMember.isPending}
+																	onClick={() =>
+																		handleRemoveMember(member.id, memberName)
+																	}
+																>
+																	Remove
+																</Button>
+															</div>
+														) : (
 															<span className="text-xs font-display text-foreground/70">
 																{isWarden || member.role === "warden"
 																	? "Warden"
@@ -591,7 +665,7 @@ const CampaignDetail = () => {
 																		? "Co-Warden"
 																		: "Ascendant"}
 															</span>
-														) : null}
+														)}
 													</div>
 												);
 											})}

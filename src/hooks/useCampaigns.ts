@@ -33,9 +33,11 @@ export interface CampaignMember {
 	id: string;
 	campaign_id: string;
 	user_id: string;
+	display_name?: string | null;
 	character_id: string | null;
 	role: "ascendant" | "warden" | "co-warden";
 	joined_at: string;
+	is_shared?: boolean;
 }
 
 type CampaignUpdate = {
@@ -111,6 +113,22 @@ const createShareCode = () => {
 
 const isLocalMode = () => !isSupabaseConfigured;
 const guestEnabled = import.meta.env.VITE_GUEST_ENABLED !== "false";
+
+const isLocalCampaignManager = (campaignId: string, userId: string) => {
+	const campaign = loadLocalCampaigns().find(
+		(entry) => entry.id === campaignId,
+	);
+	if (!campaign) return false;
+	return (
+		campaign.warden_id === userId ||
+		loadLocalMembers().some(
+			(member) =>
+				member.campaign_id === campaignId &&
+				member.user_id === userId &&
+				member.role === "co-warden",
+		)
+	);
+};
 
 const toCampaignPreview = (value: unknown): CampaignPreview | null => {
 	if (!value || typeof value !== "object") return null;
@@ -507,24 +525,34 @@ export const useCampaignMembers = (campaignId: string) => {
 				}
 				return [];
 			}
-			const { data, error } = await supabase
-				.from("campaign_members")
-				.select(`
-          *,
-          characters (id, name, level, job)
-        `)
-				.eq("campaign_id", campaignId)
-				.order("joined_at", { ascending: true });
+			const { data, error } = await supabase.rpc("get_campaign_roster", {
+				p_campaign_id: campaignId,
+			});
 
 			if (error) throw error;
-			return (data || []) as (CampaignMember & {
-				characters: {
-					id: string;
-					name: string;
-					level: number;
-					job: string;
-				} | null;
-			})[];
+			return (data || [])
+				.filter((entry) => entry.campaign_member_id !== null)
+				.map((entry) => ({
+					id: entry.campaign_member_id as string,
+					campaign_id: campaignId,
+					user_id: entry.user_id,
+					display_name: entry.display_name,
+					character_id: entry.character_id,
+					role:
+						entry.role === "warden" || entry.role === "co-warden"
+							? entry.role
+							: "ascendant",
+					joined_at: entry.joined_at,
+					is_shared: entry.is_shared,
+					characters: entry.character_id
+						? {
+								id: entry.character_id,
+								name: entry.character_name || "Unnamed Ascendant",
+								level: entry.character_level || 1,
+								job: entry.character_job || "Unknown",
+							}
+						: null,
+				}));
 		},
 		enabled: !!campaignId && !loading,
 	});
@@ -1022,13 +1050,13 @@ export const useUpdateCampaignMemberRole = () => {
 					(entry) => entry.id === campaignId,
 				);
 				if (!campaign) throw new AppError("Campaign not found", "NOT_FOUND");
-				if (campaign.warden_id !== userId) {
+				const members = loadLocalMembers();
+				if (!isLocalCampaignManager(campaignId, userId)) {
 					throw new AppError(
-						"Only the primary Warden can manage roles",
+						"Campaign manager access required",
 						"FORBIDDEN" as AppErrorCode,
 					);
 				}
-				const members = loadLocalMembers();
 				const idx = members.findIndex((m) => m.id === memberId);
 				if (idx === -1) throw new AppError("Member not found", "NOT_FOUND");
 				if (
@@ -1055,13 +1083,13 @@ export const useUpdateCampaignMemberRole = () => {
 						(entry) => entry.id === campaignId,
 					);
 					if (!campaign) throw new AppError("Campaign not found", "NOT_FOUND");
-					if (campaign.warden_id !== userId) {
+					const members = loadLocalMembers();
+					if (!isLocalCampaignManager(campaignId, userId)) {
 						throw new AppError(
-							"Only the primary Warden can manage roles",
+							"Campaign manager access required",
 							"FORBIDDEN" as AppErrorCode,
 						);
 					}
-					const members = loadLocalMembers();
 					const idx = members.findIndex((m) => m.id === memberId);
 					if (idx === -1) throw new AppError("Member not found", "NOT_FOUND");
 					if (
@@ -1080,67 +1108,13 @@ export const useUpdateCampaignMemberRole = () => {
 				throw new AppError("Not authenticated", "AUTH_REQUIRED");
 			}
 
-			// Only the Warden can update roles
-			const { data: campaign, error: campaignError } = await supabase
-				.from("campaigns")
-				.select("warden_id")
-				.eq("id", campaignId)
-				.single();
-
-			if (campaignError || !campaign)
-				throw new AppError("Campaign not found", "NOT_FOUND");
-			if (campaign.warden_id !== user.id) {
-				throw new AppError(
-					"Only the primary Warden can manage roles",
-					"FORBIDDEN" as AppErrorCode,
-				);
-			}
-
-			const { data: member, error: memberError } = await supabase
-				.from("campaign_members")
-				.select("id, user_id, role")
-				.eq("id", memberId)
-				.eq("campaign_id", campaignId)
-				.maybeSingle();
-
-			if (memberError || !member) {
-				throw new AppError("Member not found", "NOT_FOUND");
-			}
-			if (member.user_id === campaign.warden_id || member.role === "warden") {
-				throw new AppError(
-					"The primary Warden role cannot be changed",
-					"FORBIDDEN" as AppErrorCode,
-				);
-			}
-
-			const { error } = await supabase
-				.from("campaign_members")
-				.update({ role })
-				.eq("id", memberId)
-				.eq("campaign_id", campaignId);
+			const { error } = await supabase.rpc("set_campaign_member_role", {
+				p_campaign_id: campaignId,
+				p_member_id: memberId,
+				p_role: role,
+			});
 
 			if (error) throw error;
-
-			const { error: auditError } = await supabase
-				.from("campaign_invite_audit_logs")
-				.insert({
-					campaign_id: campaignId,
-					actor_id: user.id,
-					invite_id: null,
-					action: "member_role_updated",
-					details: {
-						member_id: member.id,
-						target_user_id: member.user_id,
-						previous_role: member.role,
-						next_role: role,
-					},
-				});
-			if (auditError) {
-				console.warn(
-					"[useUpdateCampaignMemberRole] Audit log failed:",
-					auditError,
-				);
-			}
 
 			// Sync local cache
 			const members = loadLocalMembers();
@@ -1170,6 +1144,131 @@ export const useUpdateCampaignMemberRole = () => {
 		onError: (error: Error) => {
 			toast({
 				title: "Failed to update role",
+				description: error.message,
+				variant: "destructive",
+			});
+		},
+	});
+};
+
+export const useRemoveCampaignMember = () => {
+	const queryClient = useQueryClient();
+	const { toast } = useToast();
+
+	return useMutation({
+		mutationFn: async ({
+			campaignId,
+			memberId,
+		}: {
+			campaignId: string;
+			memberId: string;
+		}) => {
+			if (isLocalMode()) {
+				const userId = getLocalUserId();
+				const campaign = loadLocalCampaigns().find(
+					(entry) => entry.id === campaignId,
+				);
+				if (!campaign || !isLocalCampaignManager(campaignId, userId)) {
+					throw new AppError("Campaign manager access required", "FORBIDDEN");
+				}
+				const target = loadLocalMembers().find(
+					(entry) => entry.id === memberId,
+				);
+				if (!target || target.user_id === campaign.warden_id) {
+					throw new AppError("Primary Warden cannot be removed", "FORBIDDEN");
+				}
+				saveLocalMembers(
+					loadLocalMembers().filter((entry) => entry.id !== memberId),
+				);
+				return;
+			}
+
+			const { error } = await supabase.rpc("remove_campaign_member", {
+				p_campaign_id: campaignId,
+				p_member_id: memberId,
+			});
+			if (error) throw error;
+		},
+		onSuccess: (_, { campaignId }) => {
+			queryClient.invalidateQueries({
+				queryKey: ["campaigns", campaignId, "members"],
+			});
+			queryClient.invalidateQueries({ queryKey: ["campaigns", "joined"] });
+			toast({
+				title: "Member removed",
+				description: "The roster has been updated.",
+			});
+		},
+		onError: (error: Error) => {
+			toast({
+				title: "Failed to remove member",
+				description: error.message,
+				variant: "destructive",
+			});
+		},
+	});
+};
+
+export const useDetachCampaignMemberCharacter = () => {
+	const queryClient = useQueryClient();
+	const { toast } = useToast();
+
+	return useMutation({
+		mutationFn: async ({
+			campaignId,
+			memberId,
+			characterId,
+		}: {
+			campaignId: string;
+			memberId: string;
+			characterId: string;
+		}) => {
+			if (isLocalMode()) {
+				const userId = getLocalUserId();
+				const campaign = loadLocalCampaigns().find(
+					(entry) => entry.id === campaignId,
+				);
+				const members = loadLocalMembers();
+				const index = members.findIndex((entry) => entry.id === memberId);
+				if (index === -1 || members[index].character_id !== characterId) {
+					throw new AppError("Character link not found", "NOT_FOUND");
+				}
+				if (
+					!campaign ||
+					(members[index].user_id !== userId &&
+						!isLocalCampaignManager(campaignId, userId)) ||
+					(members[index].user_id === campaign.warden_id &&
+						members[index].user_id !== userId)
+				) {
+					throw new AppError("Campaign manager access required", "FORBIDDEN");
+				}
+				members[index] = { ...members[index], character_id: null };
+				saveLocalMembers(members);
+				return;
+			}
+
+			const { error } = await supabase.rpc("detach_campaign_member_character", {
+				p_campaign_id: campaignId,
+				p_member_id: memberId,
+				p_character_id: characterId,
+			});
+			if (error) throw error;
+		},
+		onSuccess: (_, { campaignId }) => {
+			queryClient.invalidateQueries({
+				queryKey: ["campaigns", campaignId, "members"],
+			});
+			queryClient.invalidateQueries({
+				queryKey: ["campaigns", campaignId, "shared-characters"],
+			});
+			toast({
+				title: "Character detached",
+				description: "The character is no longer linked to this campaign.",
+			});
+		},
+		onError: (error: Error) => {
+			toast({
+				title: "Failed to detach character",
 				description: error.message,
 				variant: "destructive",
 			});

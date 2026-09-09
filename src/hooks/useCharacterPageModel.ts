@@ -104,8 +104,10 @@ export function useCharacterPageModel() {
 	const isPrintMode = searchParams.get("print") === "true";
 	const shareToken = searchParams.get("token") || undefined;
 	const activeTabParam = searchParams.get("tab") || "actions";
-	const isReadOnly = !!shareToken;
 	const { data: character, isLoading } = useCharacter(id || "", shareToken);
+	const isLocal = !!character && isLocalCharacterId(character.id);
+	const isReadOnly =
+		!!shareToken || (!isLocal && !!character && character.user_id !== user?.id);
 
 	// Note: prior code ran an `autoLearnRunes(character)` effect on every
 	// character refresh, but the underlying helper short-circuits to `[]`
@@ -113,7 +115,6 @@ export function useCharacterPageModel() {
 	// existed). Removed the no-op effect — call sites that explicitly pass
 	// runeIds (e.g. quest rewards, rune absorption) still work normally.
 
-	const isLocal = !!character && isLocalCharacterId(character.id);
 	const { data: characterCampaign } = useCampaignByCharacterId(
 		character?.id || "",
 	);

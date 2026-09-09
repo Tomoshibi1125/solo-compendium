@@ -2,7 +2,7 @@
 
 ## Purpose and authority
 
-This register documents every reviewed application `SECURITY DEFINER` function that remains executable by an API role after `supabase/migrations/20260906000000_supabase_security_hardening.sql`. The migration's **final exact-signature grant reset** is authoritative; the earlier name-based grant loop is transitional only.
+This register documents every reviewed application `SECURITY DEFINER` function that remains executable by an API role after `supabase/migrations/20260906000000_supabase_security_hardening.sql` and `supabase/migrations/20260908000000_campaign_roster_security.sql`. The migrations' **final exact-signature grant reset** is authoritative; the earlier name-based grant loop is transitional only.
 
 The migrated local catalog is the implementation baseline. It is not evidence that staging or production has the same objects, owners, overloads, ACLs, policies, or Auth settings. Reconcile each live environment with `supabase/snippets/security_surface_inventory.sql` before and after rollout. Keep inventory output in restricted deployment evidence, not in Git.
 
@@ -33,6 +33,7 @@ No other `public` or `app_private` function may be executable by `anon`.
 | Exact signature | Caller | Authorization and contract | Why definer is retained |
 | --- | --- | --- | --- |
 | `app_private.is_account_admin()` | RLS policies and guarded account-admin/homebrew functions; no frontend RPC | Binds to `auth.uid()` and returns whether that Auth user has `app_metadata.account_role = 'admin'`. `anon` has neither schema usage nor execution. `authenticated` receives schema usage and execution only so policies can evaluate it. `app_private` is not a PostgREST-exposed schema. | Must read `auth.users.raw_app_meta_data`, which ordinary users cannot query, without exposing an account-directory RPC. |
+| `app_private.can_read_campaign_character(uuid,uuid)` | Character-sheet RLS policies; no frontend RPC | Requires the asserted actor to equal `auth.uid()`, requires primary/co-Warden authority, and confirms the character is actually linked or shared with that campaign. It has no `anon` grant. | Lets sheet tables check a campaign relationship without recursive policy reads or exposing a raw-character lookup routine. |
 
 ## Authenticated exceptions
 
@@ -64,6 +65,10 @@ All signatures in this section are granted to `authenticated` only unless they a
 | `public.add_ascendant_character_to_campaign(uuid,uuid,text)` | `src/hooks/useCampaigns.ts` and `src/hooks/useCampaignInvites.ts` | Character ownership and existing membership required; an optional invite may establish membership only for the same campaign. Links the character and returns member UUID. | Controlled membership/link writes across character and campaign RLS. |
 | `public.add_player_character_to_campaign(uuid,uuid,text)` | Backward-compatibility wrapper; no current direct caller found | Delegates to `add_ascendant_character_to_campaign` and inherits all checks and return behavior. | Temporary compatibility contract for older clients. |
 | `public.get_campaign_linked_characters(uuid)` | Compatibility/read model; no current direct caller found | Caller must be a campaign member or primary Warden. Returns a curated member/character combat projection, not arbitrary character rows. | Membership-scoped read of other users' linked characters through RLS. |
+| `public.get_campaign_roster(uuid)` | `src/hooks/useCampaigns.ts` and `src/hooks/useCampaignCharacters.ts` | Requires campaign membership or primary/co-Warden authority. Returns only member IDs, account display name, role, join time, and linked-character summary fields; it excludes email, profile metadata, notes, tokens, and full character rows. | Provides the member-visible campaign roster without widening `profiles` or raw-character access. |
+| `public.set_campaign_member_role(uuid,uuid,text)` | `src/hooks/useCampaigns.ts` | Primary/co-Warden required. Limits roles to `ascendant` and `co-warden`, locks the campaign/member, and rejects any primary-Warden change. Writes an audit record. | Controlled cross-user membership-role update through a precise capability. |
+| `public.remove_campaign_member(uuid,uuid)` | `src/hooks/useCampaigns.ts` | Primary/co-Warden required. Locks the campaign/member, rejects removal of the primary Warden, clears member links and member-created campaign shares, and writes an audit record. | Controlled cross-user membership removal with related-access cleanup. |
+| `public.detach_campaign_member_character(uuid,uuid,uuid)` | `src/hooks/useCampaigns.ts` | The link owner may detach their own character; otherwise primary/co-Warden authority is required. The primary Warden may not be detached by another manager. It only removes the specified campaign-character relationship and writes an audit record. | Controlled unlinking without granting broad membership or character writes. |
 
 ### Campaign sessions, encounters, rewards, and equipment
 
@@ -172,6 +177,7 @@ These signatures are authenticated and exact-granted because RLS expressions dep
 - Character share lookup is authenticated-only and returns the full character row. If anonymous sharing is ever required, add a new minimal DTO instead of granting the current function to `anon`.
 - Session quest creation/completion currently requires the primary Warden, while many other campaign operations include co-Wardens.
 - Compendium search projections need future row-level entitlement and maximum-limit review.
+- Supabase Auth leaked-password protection remains intentionally deferred as an operational follow-up; it is not an RLS or RPC exception and must be enabled/reviewed separately before a production security milestone.
 
 ## Inventory reconciliation
 

@@ -35,8 +35,10 @@ import {
 import { useSendCampaignMessage } from "@/hooks/useCampaignChat";
 import { useHasWardenAccess } from "@/hooks/useCampaigns";
 import { useCharacters } from "@/hooks/useCharacters";
+import { useAuth } from "@/lib/auth/authContext";
 import { isSandboxNpcCharacter } from "@/lib/characterScope";
 import {
+	getLocalUserId,
 	type LocalCharacterRow,
 	readLocalNpcCharacters,
 } from "@/lib/guestStore";
@@ -57,11 +59,13 @@ export function CampaignCharacters({ campaignId }: CampaignCharactersProps) {
 
 	const { data: sharedCharacters = [], isLoading: loadingShared } =
 		useCampaignSharedCharacters(campaignId);
+	const { user } = useAuth();
 	const { data: myCharacters = [] } = useCharacters();
 	const { data: hasWardenAccess = false } = useHasWardenAccess(campaignId);
 	const shareCharacter = useShareCharacter();
 	const unshareCharacter = useUnshareCharacter();
 	const sendMessage = useSendCampaignMessage();
+	const currentUserId = user?.id ?? getLocalUserId();
 
 	// Warden-only NPC roster (guest mode). Sandbox-injected NPCs live under
 	// `solo-compendium.npc-characters.${campaignId}` with a `[SANDBOX_NPC]`
@@ -217,7 +221,7 @@ export function CampaignCharacters({ campaignId }: CampaignCharactersProps) {
 			>
 				<div className="flex justify-between items-center mb-4">
 					<p className="text-sm text-muted-foreground">
-						Characters visible to all campaign members
+						Members see roster summaries; Wardens can open linked sheets.
 					</p>
 					<Button
 						size="sm"
@@ -238,58 +242,66 @@ export function CampaignCharacters({ campaignId }: CampaignCharactersProps) {
 							No characters shared yet. Share one to get started!
 						</p>
 					) : (
-						sharedCharacters.map((share) => (
-							<div
-								key={share.id}
-								className="flex items-center justify-between p-3 bg-muted/50 rounded-lg border border-border hover:border-primary/30 transition-colors"
-							>
-								<div className="flex items-center gap-3">
-									<div>
-										<p className="font-heading font-semibold">
-											{share.characters?.name || "Unknown Character"}
-										</p>
-										{share.characters && (
-											<p className="text-xs text-muted-foreground">
-												Level {share.characters.level}{" "}
-												{formatRegentVernacular(share.characters.job)}
+						sharedCharacters.map((share) => {
+							const isOwner =
+								share.owner_user_id === currentUserId ||
+								share.shared_by === currentUserId;
+							const canViewSheet = hasWardenAccess || isOwner;
+							return (
+								<div
+									key={share.id}
+									className="flex items-center justify-between p-3 bg-muted/50 rounded-lg border border-border hover:border-primary/30 transition-colors"
+								>
+									<div className="flex items-center gap-3">
+										<div>
+											<p className="font-heading font-semibold">
+												{share.characters?.name || "Unknown Character"}
 											</p>
+											{share.characters && (
+												<p className="text-xs text-muted-foreground">
+													Level {share.characters.level}{" "}
+													{formatRegentVernacular(share.characters.job)}
+												</p>
+											)}
+										</div>
+									</div>
+									<div className="flex items-center gap-2">
+										{hasWardenAccess && share.characters && (
+											<Button
+												variant="outline"
+												size="sm"
+												onClick={() => {
+													if (share.characters)
+														openDeliveryDialog(share.characters.id);
+												}}
+											>
+												<PackagePlus className="w-3 h-3 mr-1" />
+												Grant Item
+											</Button>
+										)}
+										{canViewSheet && share.characters && (
+											<Link to={`/characters/${share.characters.id}`}>
+												<Button variant="outline" size="sm">
+													<ExternalLink className="w-3 h-3 mr-1" />
+													View
+												</Button>
+											</Link>
+										)}
+										{isOwner && (
+											<Button
+												variant="ghost"
+												size="icon"
+												aria-label="Hide"
+												className="h-8 w-8"
+												onClick={() => handleUnshare(share.character_id)}
+											>
+												<EyeOff className="w-4 h-4" />
+											</Button>
 										)}
 									</div>
 								</div>
-								<div className="flex items-center gap-2">
-									{hasWardenAccess && share.characters && (
-										<Button
-											variant="outline"
-											size="sm"
-											onClick={() => {
-												if (share.characters)
-													openDeliveryDialog(share.characters.id);
-											}}
-										>
-											<PackagePlus className="w-3 h-3 mr-1" />
-											Grant Item
-										</Button>
-									)}
-									{share.characters && (
-										<Link to={`/characters/${share.characters.id}`}>
-											<Button variant="outline" size="sm">
-												<ExternalLink className="w-3 h-3 mr-1" />
-												View
-											</Button>
-										</Link>
-									)}
-									<Button
-										variant="ghost"
-										size="icon"
-										aria-label="Hide"
-										className="h-8 w-8"
-										onClick={() => handleUnshare(share.character_id)}
-									>
-										<EyeOff className="w-4 h-4" />
-									</Button>
-								</div>
-							</div>
-						))
+							);
+						})
 					)}
 				</div>
 			</AscendantWindow>
@@ -299,8 +311,8 @@ export function CampaignCharacters({ campaignId }: CampaignCharactersProps) {
 					<DialogHeader>
 						<DialogTitle>Share Ascendant</DialogTitle>
 						<DialogDescription>
-							Select an Ascendant to share with all campaign members. They'll be
-							able to view the Ascendant's sheet.
+							Select an Ascendant to add to the campaign roster. Members see its
+							summary; Wardens can review the linked sheet.
 						</DialogDescription>
 					</DialogHeader>
 					<div className="py-4">

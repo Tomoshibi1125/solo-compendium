@@ -1,5 +1,9 @@
 BEGIN;
 
+-- pgTAP lives in the extensions schema on hosted Supabase; SET LOCAL keeps
+-- this visible for the test transaction only and rolls back with it.
+SET LOCAL search_path = extensions, public, pg_catalog;
+
 SELECT plan(31);
 
 SELECT set_eq(

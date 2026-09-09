@@ -20,6 +20,7 @@
 		"gen:types": "supabase gen types typescript --linked --schema public > src/integrations/supabase/types.ts && npx @biomejs/biome format --write src/integrations/supabase/types.ts",
 		"gen:types:local": "supabase gen types typescript --db-url postgresql://postgres:postgres@127.0.0.1:54322/postgres --schema public > src/integrations/supabase/types.ts && npx @biomejs/biome format --write src/integrations/supabase/types.ts",
 		"test:db:security": "supabase test db --local supabase/tests/security_hardening.sql",
+		"test:db:campaign-roster-security": "supabase test db --local supabase/tests/campaign_roster_security.sql",
 		"test:db:security:linked": "supabase test db --linked supabase/tests/security_hardening.sql",
 		"test:db:legacy-removal": "supabase test db --local supabase/tests/legacy_integration_removal.sql",
 		"audit:compendium": "tsx scripts/audit-compendium.ts && node scripts/audit-assets.mjs",

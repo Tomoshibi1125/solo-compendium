@@ -11,6 +11,7 @@ interface CampaignCharacterShare {
 	campaign_id: string;
 	character_id: string;
 	shared_by: string;
+	owner_user_id: string;
 	permissions: "view" | "edit";
 	shared_at: string;
 	characters?: {
@@ -56,20 +57,33 @@ export const useCampaignSharedCharacters = (campaignId: string) => {
 			const {
 				data: { user },
 			} = await supabase.auth.getUser();
-			if (!user && guestEnabled) {
-				return loadLocalShares(campaignId);
+			if (!user) {
+				if (guestEnabled) return loadLocalShares(campaignId);
+				throw new AppError("Not authenticated", "AUTH_REQUIRED");
 			}
 
-			const { data, error } = await supabase
-				.from("campaign_character_shares")
-				.select(`
-          *,
-          characters:character_id (id, name, level, job)
-        `)
-				.eq("campaign_id", campaignId);
+			const { data, error } = await supabase.rpc("get_campaign_roster", {
+				p_campaign_id: campaignId,
+			});
 
 			if (error) throw error;
-			return (data || []) as CampaignCharacterShare[];
+			return (data || [])
+				.filter((entry) => entry.is_shared && entry.character_id !== null)
+				.map((entry) => ({
+					id: entry.campaign_member_id || `shared:${entry.character_id}`,
+					campaign_id: campaignId,
+					character_id: entry.character_id as string,
+					shared_by: entry.user_id,
+					owner_user_id: entry.user_id,
+					permissions: "view" as const,
+					shared_at: entry.joined_at,
+					characters: {
+						id: entry.character_id as string,
+						name: entry.character_name || "Unnamed Ascendant",
+						level: entry.character_level || 1,
+						job: entry.character_job || "Unknown",
+					},
+				}));
 		},
 		enabled: !!campaignId,
 	});
@@ -97,6 +111,7 @@ export const useShareCharacter = () => {
 					campaign_id: campaignId,
 					character_id: characterId,
 					shared_by: getLocalUserId(),
+					owner_user_id: getLocalUserId(),
 					permissions,
 					shared_at: now,
 				};
@@ -116,6 +131,7 @@ export const useShareCharacter = () => {
 						campaign_id: campaignId,
 						character_id: characterId,
 						shared_by: getLocalUserId(),
+						owner_user_id: getLocalUserId(),
 						permissions,
 						shared_at: now,
 					};

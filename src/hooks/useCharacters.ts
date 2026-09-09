@@ -197,7 +197,6 @@ export const useCharacter = (characterId: string, shareToken?: string) => {
 				.from("characters")
 				.select("*")
 				.eq("id", characterId)
-				.eq("user_id", user.id)
 				.maybeSingle();
 
 			if (charError) {
