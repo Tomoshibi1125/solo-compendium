@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 export interface UsePushNotificationsReturn {
 	isSupported: boolean;
@@ -22,7 +22,7 @@ export function usePushNotifications(): UsePushNotificationsReturn {
 		}
 	}, []);
 
-	const requestPermission = async (): Promise<NotificationPermission> => {
+	const requestPermission = useCallback(async (): Promise<NotificationPermission> => {
 		if (!isSupported) {
 			console.warn("Push notifications are not supported in this browser.");
 			return "denied";
@@ -36,9 +36,9 @@ export function usePushNotifications(): UsePushNotificationsReturn {
 			console.error("Error requesting notification permission:", error);
 			return "denied";
 		}
-	};
+	}, [isSupported]);
 
-	const sendNotification = (title: string, options?: NotificationOptions) => {
+	const sendNotification = useCallback((title: string, options?: NotificationOptions) => {
 		if (!isSupported) {
 			console.warn("Push notifications are not supported.");
 			return;
@@ -71,7 +71,7 @@ export function usePushNotifications(): UsePushNotificationsReturn {
 				permission,
 			);
 		}
-	};
+	}, [isSupported, permission]);
 
 	return {
 		isSupported,

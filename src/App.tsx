@@ -264,8 +264,10 @@ const AppContent = () => {
 
 	// Prompt for push notifications when user logs in
 	useEffect(() => {
-		if (user && isSupported && permission === "default") {
+		const hasPrompted = localStorage.getItem("push-prompted");
+		if (user && isSupported && permission === "default" && !hasPrompted) {
 			const timeout = setTimeout(() => {
+				localStorage.setItem("push-prompted", "true");
 				requestPermission();
 			}, 5000); // Wait 5 seconds after login before prompting
 			return () => clearTimeout(timeout);
