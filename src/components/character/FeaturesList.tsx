@@ -27,9 +27,11 @@ import { AddFeatDialog } from "./AddFeatDialog";
 export function FeaturesList({
 	characterId,
 	onSelectDetail,
+	readOnly = false,
 }: {
 	characterId: string;
 	onSelectDetail?: (detail: DetailData) => void;
+	readOnly?: boolean;
 }) {
 	const [isAddFeatDialogOpen, setIsAddFeatDialogOpen] = useState(false);
 	const { features, updateFeature, reorderFeatures } = useFeatures(characterId);
@@ -79,6 +81,7 @@ export function FeaturesList({
 
 	const handleReorderGroup = useCallback(
 		async (_source: string, newOrder: typeof features) => {
+			if (readOnly) return;
 			try {
 				const updates = newOrder.map((feature, index) => ({
 					id: feature.id,
@@ -89,13 +92,14 @@ export function FeaturesList({
 				// Error handled by hook
 			}
 		},
-		[reorderFeatures],
+		[readOnly, reorderFeatures],
 	);
 
 	const handleUseFeature = async (
 		feature: (typeof features)[0],
 		delta: number,
 	) => {
+		if (readOnly) return;
 		if (feature.uses_max === null) return;
 
 		const newUses = Math.max(
@@ -185,6 +189,7 @@ export function FeaturesList({
 						variant="outline"
 						className="gap-2 border-solar-glow/30 hover:bg-solar-glow/10 text-xs"
 						onClick={() => setIsAddFeatDialogOpen(true)}
+						disabled={readOnly}
 					>
 						<Plus className="h-4 w-4" />
 						Add Feat
@@ -265,6 +270,7 @@ export function FeaturesList({
 							<SortableList
 								items={sourceFeatures}
 								onReorder={(newOrder) => handleReorderGroup(source, newOrder)}
+								disabled={readOnly}
 								renderItem={(feature) => (
 									<div
 										key={feature.id}
@@ -319,6 +325,7 @@ export function FeaturesList({
 																className="h-6 w-6"
 																onClick={() => handleUseFeature(feature, -1)}
 																disabled={
+																	readOnly ||
 																	!feature.uses_current ||
 																	feature.uses_current <= 0
 																}
@@ -335,6 +342,7 @@ export function FeaturesList({
 																className="h-6 w-6"
 																onClick={() => handleUseFeature(feature, 1)}
 																disabled={
+																	readOnly ||
 																	!feature.uses_current ||
 																	feature.uses_current >= feature.uses_max
 																}
@@ -352,7 +360,9 @@ export function FeaturesList({
 														size="sm"
 														onClick={() => handleUseFeature(feature, -1)}
 														disabled={
-															!feature.uses_current || feature.uses_current <= 0
+															readOnly ||
+															!feature.uses_current ||
+															feature.uses_current <= 0
 														}
 														className="h-8 text-xs gap-1.5 border-primary/20 hover:bg-primary/10"
 													>

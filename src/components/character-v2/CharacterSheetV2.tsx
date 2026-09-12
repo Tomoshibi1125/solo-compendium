@@ -729,6 +729,7 @@ export default function CharacterSheetV2() {
 			<FeaturesList
 				characterId={character.id}
 				onSelectDetail={(detail) => onSelectDetail(detail, "Feature", Zap)}
+				readOnly={isReadOnly}
 			/>
 			<GuildBenefitsDisplay characterId={character.id} />
 			<InlineSectionNote
@@ -738,8 +739,11 @@ export default function CharacterSheetV2() {
 				onChange={(v) => handleSectionNote("features", v)}
 				readOnly={isReadOnly}
 			/>
-			<FeatureChoicesPanel characterId={character.id} />
-			<HomebrewFeatureApplicator characterId={character.id} />
+			<FeatureChoicesPanel characterId={character.id} readOnly={isReadOnly} />
+			<HomebrewFeatureApplicator
+				characterId={character.id}
+				readOnly={isReadOnly}
+			/>
 			<PathFeaturesDisplay
 				characterId={character.id}
 				onSelectDetail={(detail) => onSelectDetail(detail, "Path", Sparkles)}
@@ -761,6 +765,7 @@ export default function CharacterSheetV2() {
 				characterId={character.id}
 				campaignId={campaignId ?? undefined}
 				onSelectDetail={(detail) => onSelectDetail(detail, "Rune", Sparkles)}
+				readOnly={isReadOnly}
 			/>
 		</div>
 	);

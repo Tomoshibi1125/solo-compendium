@@ -155,6 +155,9 @@ async function resolveStaticReferenceId(
 	return refs.find((ref) => ref.id)?.id ?? null;
 }
 
+const isCanonicalRuneKey = (value: string): boolean =>
+	/^rune-[a-z0-9]+(?:-[a-z0-9]+)*$/.test(value);
+
 async function buildImportedCharacterInsert(
 	charData: Record<string, unknown>,
 	userId: string,
@@ -417,21 +420,21 @@ async function buildImportedRuneKnowledgeRows(
 ): Promise<RuneKnowledgeInsert[]> {
 	const built = await Promise.all(
 		rows.map(async (knowledge) => {
-			const runeId = await resolveStaticReferenceId(
-				knowledge,
-				"rune_id",
-				"runes",
-				["rune"],
-			);
+			const runeId =
+				stringOrNull(knowledge.rune_key) ??
+				(await resolveStaticReferenceId(knowledge, "rune_id", "runes", [
+					"rune",
+				]));
 
-			if (!runeId) return null;
+			if (!runeId || !isCanonicalRuneKey(runeId)) return null;
 
 			return {
 				...stripImportOnlyFields(knowledge, ["rune"]),
 				character_id: characterId,
 				id: undefined,
 				learned_from_character_id: null,
-				rune_id: runeId,
+				rune_id: null,
+				rune_key: runeId,
 			} as RuneKnowledgeInsert;
 		}),
 	);
@@ -450,21 +453,21 @@ async function buildImportedRuneInscriptionRows(
 			const equipmentId = oldEquipmentId
 				? equipmentIdMap.get(oldEquipmentId)
 				: null;
-			const runeId = await resolveStaticReferenceId(
-				inscription,
-				"rune_id",
-				"runes",
-				["rune"],
-			);
+			const runeId =
+				stringOrNull(inscription.rune_key) ??
+				(await resolveStaticReferenceId(inscription, "rune_id", "runes", [
+					"rune",
+				]));
 
-			if (!equipmentId || !runeId) return null;
+			if (!equipmentId || !runeId || !isCanonicalRuneKey(runeId)) return null;
 
 			return {
 				...stripImportOnlyFields(inscription, ["equipment", "rune"]),
 				character_id: characterId,
 				id: undefined,
 				equipment_id: equipmentId,
-				rune_id: runeId,
+				rune_id: null,
+				rune_key: runeId,
 			} as RuneInscriptionInsert;
 		}),
 	);

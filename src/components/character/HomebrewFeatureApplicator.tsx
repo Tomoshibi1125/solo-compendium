@@ -25,6 +25,7 @@ import type { CustomModifierType } from "@/lib/customModifiers";
 
 interface HomebrewFeatureApplicatorProps {
 	characterId: string;
+	readOnly?: boolean;
 }
 
 function parseHomebrewModifiers(
@@ -96,6 +97,7 @@ function formatModifier(mod: FeatureModifier): string {
 
 export function HomebrewFeatureApplicator({
 	characterId,
+	readOnly = false,
 }: HomebrewFeatureApplicatorProps) {
 	const [open, setOpen] = useState(false);
 	const [search, setSearch] = useState("");
@@ -122,6 +124,8 @@ export function HomebrewFeatureApplicator({
 	);
 
 	const handleApply = async (item: (typeof homebrewItems)[0]) => {
+		if (readOnly) return;
+
 		const modifiers = parseHomebrewModifiers(
 			item.data as Record<string, unknown>,
 		);
@@ -143,6 +147,8 @@ export function HomebrewFeatureApplicator({
 	};
 
 	const handleRemove = async (featureId: string) => {
+		if (readOnly) return;
+
 		await removeFeature.mutateAsync({ featureId, characterId });
 		ascendantTools
 			.trackCustomFeatureUsage(
@@ -199,6 +205,7 @@ export function HomebrewFeatureApplicator({
 								<Button
 									variant="ghost"
 									size="sm"
+									disabled={readOnly || removeFeature.isPending}
 									onClick={() => handleRemove(feature.id)}
 									className="shrink-0 text-destructive hover:text-destructive"
 								>
@@ -208,11 +215,17 @@ export function HomebrewFeatureApplicator({
 						))
 					)}
 
-					<Dialog open={open} onOpenChange={setOpen}>
+					<Dialog
+						open={open}
+						onOpenChange={(nextOpen) => {
+							if (!readOnly) setOpen(nextOpen);
+						}}
+					>
 						<DialogTrigger asChild>
 							<Button
 								variant="outline"
 								size="sm"
+								disabled={readOnly}
 								className="w-full gap-2"
 								data-testid="homebrew-feature-add"
 							>
@@ -289,7 +302,9 @@ export function HomebrewFeatureApplicator({
 													<Button
 														variant={isApplied ? "secondary" : "default"}
 														size="sm"
-														disabled={isApplied || applyFeature.isPending}
+														disabled={
+															readOnly || isApplied || applyFeature.isPending
+														}
 														onClick={() => handleApply(item)}
 														className="shrink-0"
 														data-testid={`homebrew-apply-${item.id}`}

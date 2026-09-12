@@ -37,6 +37,7 @@ import {
 	isCanonicalTechniqueLearnable,
 	listCanonicalEntries,
 } from "@/lib/canonicalCompendium";
+import { getErrorMessage } from "@/lib/errorHandling";
 import { getCharacterCampaignId } from "@/lib/sourcebookAccess";
 import {
 	formatRegentVernacular,
@@ -219,6 +220,15 @@ export function AddRuneDialog({
 		}
 		return count;
 	}, [runeAccessByRuneId]);
+	const knownRuneKeys = useMemo(
+		() =>
+			new Set(
+				runeKnowledge
+					.map((entry) => entry.canonical_rune_key)
+					.filter((key): key is string => Boolean(key)),
+			),
+		[runeKnowledge],
+	);
 
 	const handleAdd = async (rune: (typeof runes)[0]) => {
 		const displayName = formatRegentVernacular(rune.name);
@@ -245,10 +255,10 @@ export function AddRuneDialog({
 
 			onOpenChange(false);
 			setSearchQuery("");
-		} catch {
+		} catch (error) {
 			toast({
 				title: "Error",
-				description: "Failed to add rune.",
+				description: getErrorMessage(error),
 				variant: "destructive",
 			});
 		}
@@ -316,8 +326,14 @@ export function AddRuneDialog({
 							</div>
 						) : (
 							visibleRunes.map((rune) => {
-								const TypeIcon = RUNE_TYPE_ICONS[rune.rune_type] || BookOpen;
+								const TypeIcon =
+									(rune.rune_type &&
+										RUNE_TYPE_ICONS[
+											rune.rune_type as keyof typeof RUNE_TYPE_ICONS
+										]) ||
+									BookOpen;
 								const access = runeAccessByRuneId.get(rune.id);
+								const alreadyKnown = knownRuneKeys.has(rune.id);
 								return (
 									<div
 										key={rune.id}
@@ -380,9 +396,9 @@ export function AddRuneDialog({
 											<Button
 												size="sm"
 												onClick={() => handleAdd(rune)}
-												disabled={learnRune.isPending}
+												disabled={learnRune.isPending || alreadyKnown}
 											>
-												Add
+												{alreadyKnown ? "Known" : "Add"}
 											</Button>
 										</div>
 									</div>

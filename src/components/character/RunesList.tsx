@@ -22,6 +22,7 @@ import { useAscendantTools } from "@/hooks/useGlobalDDBeyondIntegration";
 import { useRegentUnlocks } from "@/hooks/useRegentUnlocks";
 import { useRecordRoll } from "@/hooks/useRollHistory";
 import { useAbsorbRune, useCharacterRuneKnowledge } from "@/hooks/useRunes";
+import { getErrorMessage } from "@/lib/errorHandling";
 import {
 	getRunePrimaryStatModifier,
 	inferRuneAbilityKind,
@@ -58,10 +59,12 @@ export function RunesList({
 	characterId,
 	campaignId,
 	onSelectDetail,
+	readOnly = false,
 }: {
 	characterId: string;
 	campaignId?: string;
 	onSelectDetail?: (detail: DetailData) => void;
+	readOnly?: boolean;
 }) {
 	const { data: runeKnowledge = [] } = useCharacterRuneKnowledge(characterId);
 	const { data: character } = useCharacter(characterId);
@@ -76,8 +79,12 @@ export function RunesList({
 
 	const unabsorbedRunes = useMemo(() => {
 		return runeKnowledge.filter(
-			(rk): rk is typeof rk & { rune: NonNullable<typeof rk.rune> } =>
-				(rk.mastery_level || 0) < 5 && !!rk.rune,
+			(
+				rk,
+			): rk is typeof rk & {
+				rune: NonNullable<typeof rk.rune>;
+				canonical_rune_key: string;
+			} => (rk.mastery_level || 0) < 5 && !!rk.rune && !!rk.canonical_rune_key,
 		);
 	}, [runeKnowledge]);
 	const absorbedFeatures = features.filter((f) =>
@@ -106,7 +113,7 @@ export function RunesList({
 				teaches?: { kind: "spell" | "power" | "technique"; ref: string };
 				rank?: string | null;
 			};
-			previews[rk.rune_id] = resolveRuneAbsorption({
+			previews[rk.canonical_rune_key] = resolveRuneAbsorption({
 				abilityKind: inferRuneAbilityKind({
 					teaches: canonicalRune.teaches,
 					rank: canonicalRune.rank ?? null,
@@ -121,13 +128,14 @@ export function RunesList({
 				primaryStatModifier,
 				runeRarity: rk.rune.rarity,
 				unlockedRegents,
-				nativeRecharge: rk.rune.recharge,
+				nativeRecharge: rk.rune.recharge?.toString(),
 			});
 		}
 		return previews;
 	}, [character, unabsorbedRunes, regentUnlocks]);
 
 	const handleAbsorb = async (runeId: string, runeName: string) => {
+		if (readOnly) return;
 		const displayName = formatRegentVernacular(runeName);
 		try {
 			const result = await absorbRune.mutateAsync({ characterId, runeId });
@@ -170,8 +178,7 @@ export function RunesList({
 		} catch (error) {
 			toast({
 				title: "Absorption Failed",
-				description:
-					error instanceof Error ? error.message : "Could not absorb rune.",
+				description: getErrorMessage(error),
 				variant: "destructive",
 			});
 		}
@@ -187,6 +194,7 @@ export function RunesList({
 					size="sm"
 					className="h-8 gap-1 text-resurge hover:text-resurge hover:bg-resurge/20 font-heading tracking-widest"
 					onClick={() => setAddRuneOpen(true)}
+					disabled={readOnly}
 				>
 					<Plus className="w-4 h-4" />
 					Add Rune
@@ -201,7 +209,10 @@ export function RunesList({
 						</h3>
 						<div className="space-y-2">
 							{unabsorbedRunes.map((rk) => {
-								const Icon = RUNE_TYPE_ICONS[rk.rune.rune_type] || BookOpen;
+								const runeTypeKey = rk.rune
+									.rune_type as keyof typeof RUNE_TYPE_ICONS;
+								const Icon =
+									(runeTypeKey && RUNE_TYPE_ICONS[runeTypeKey]) || BookOpen;
 								const displayName = formatRegentVernacular(rk.rune.name);
 								const runeDescription =
 									rk.rune.effect_description || rk.rune.description || "";
@@ -223,9 +234,9 @@ export function RunesList({
 												<Icon
 													className={cn(
 														"w-5 h-5 mt-0.5",
-														RUNE_TYPE_COLORS[rk.rune.rune_type]?.split(
-															" ",
-														)[1] || "text-primary",
+														(runeTypeKey &&
+															RUNE_TYPE_COLORS[runeTypeKey]?.split(" ")[1]) ||
+															"text-primary",
 													)}
 												/>
 												<div className="flex-1">
@@ -237,7 +248,9 @@ export function RunesList({
 															variant="outline"
 															className={cn(
 																"text-xs",
-																RUNE_TYPE_COLORS[rk.rune.rune_type] || "",
+																(runeTypeKey &&
+																	RUNE_TYPE_COLORS[runeTypeKey]) ||
+																	"",
 															)}
 														>
 															{rk.rune.rune_type}
@@ -254,22 +267,27 @@ export function RunesList({
 															<AutoLinkText text={runeDescription} />
 														</ExpandableText>
 													)}
-													{absorptionPreviews[rk.rune_id]?.isCrossType && (
+													{absorptionPreviews[rk.canonical_rune_key]
+														?.isCrossType && (
 														<div className="flex items-center gap-1.5 mt-1.5">
 															<AlertTriangle className="w-3 h-3 text-gate-s flex-shrink-0" />
 															<span className="text-[10px] text-gate-s">
-																{absorptionPreviews[rk.rune_id]?.adaptationNote}
+																{
+																	absorptionPreviews[rk.canonical_rune_key]
+																		?.adaptationNote
+																}
 															</span>
 														</div>
 													)}
-													{absorptionPreviews[rk.rune_id] &&
-														!absorptionPreviews[rk.rune_id]?.isCrossType && (
+													{absorptionPreviews[rk.canonical_rune_key] &&
+														!absorptionPreviews[rk.canonical_rune_key]
+															?.isCrossType && (
 															<div className="flex items-center gap-1.5 mt-1.5">
 																<span className="text-[10px] text-success">
-																	{absorptionPreviews[rk.rune_id]?.usesMax ===
-																	null
+																	{absorptionPreviews[rk.canonical_rune_key]
+																		?.usesMax === null
 																		? "At-will"
-																		: `${absorptionPreviews[rk.rune_id]?.usesMax} uses / ${absorptionPreviews[rk.rune_id]?.recharge}`}
+																		: `${absorptionPreviews[rk.canonical_rune_key]?.usesMax} uses / ${absorptionPreviews[rk.canonical_rune_key]?.recharge}`}
 																</span>
 															</div>
 														)}
@@ -280,9 +298,9 @@ export function RunesList({
 												variant="default"
 												onClick={(e) => {
 													e.stopPropagation();
-													handleAbsorb(rk.rune_id, rk.rune.name);
+													handleAbsorb(rk.canonical_rune_key, rk.rune.name);
 												}}
-												disabled={absorbRune.isPending}
+												disabled={readOnly || absorbRune.isPending}
 												className="font-resurge tracking-wider bg-resurge-violet hover:bg-resurge-violet/80 shadow-[0_0_10px_hsl(var(--resurge-violet)/0.3)]"
 											>
 												<Flame className="w-3 h-3 mr-1" />

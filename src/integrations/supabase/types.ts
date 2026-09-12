@@ -3027,7 +3027,8 @@ export type Database = {
 					inscription_date: string;
 					inscription_quality: number | null;
 					is_active: boolean;
-					rune_id: string;
+					rune_id: string | null;
+					rune_key: string | null;
 					times_used: number | null;
 					uses_current: number | null;
 					uses_max: number | null;
@@ -3043,7 +3044,8 @@ export type Database = {
 					inscription_date?: string;
 					inscription_quality?: number | null;
 					is_active?: boolean;
-					rune_id: string;
+					rune_id?: string | null;
+					rune_key?: string | null;
 					times_used?: number | null;
 					uses_current?: number | null;
 					uses_max?: number | null;
@@ -3059,7 +3061,8 @@ export type Database = {
 					inscription_date?: string;
 					inscription_quality?: number | null;
 					is_active?: boolean;
-					rune_id?: string;
+					rune_id?: string | null;
+					rune_key?: string | null;
 					times_used?: number | null;
 					uses_current?: number | null;
 					uses_max?: number | null;
@@ -3105,7 +3108,8 @@ export type Database = {
 					learned_from: string | null;
 					learned_from_character_id: string | null;
 					mastery_level: number | null;
-					rune_id: string;
+					rune_id: string | null;
+					rune_key: string | null;
 				};
 				Insert: {
 					can_teach?: boolean | null;
@@ -3116,7 +3120,8 @@ export type Database = {
 					learned_from?: string | null;
 					learned_from_character_id?: string | null;
 					mastery_level?: number | null;
-					rune_id: string;
+					rune_id?: string | null;
+					rune_key?: string | null;
 				};
 				Update: {
 					can_teach?: boolean | null;
@@ -3127,7 +3132,8 @@ export type Database = {
 					learned_from?: string | null;
 					learned_from_character_id?: string | null;
 					mastery_level?: number | null;
-					rune_id?: string;
+					rune_id?: string | null;
+					rune_key?: string | null;
 				};
 				Relationships: [
 					{
@@ -9087,6 +9093,26 @@ export type Database = {
 			deploy_campaign_encounter: {
 				Args: { p_encounter_id: string };
 				Returns: string;
+			};
+			discover_character_rune: {
+				Args: {
+					p_character_id: string;
+					p_is_mastered?: boolean;
+					p_learned_from?: string;
+					p_rune_key: string;
+				};
+				Returns: {
+					can_teach: boolean | null;
+					character_id: string;
+					created_at: string;
+					id: string;
+					learned_date: string;
+					learned_from: string | null;
+					learned_from_character_id: string | null;
+					mastery_level: number | null;
+					rune_id: string | null;
+					rune_key: string | null;
+				}[];
 			};
 			detach_campaign_member_character: {
 				Args: {

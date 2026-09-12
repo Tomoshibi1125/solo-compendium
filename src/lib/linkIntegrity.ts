@@ -125,6 +125,7 @@ async function checkLinkIntegrity(characterId: string): Promise<BrokenLink[]> {
 
 	if (runeInscriptions) {
 		for (const inscription of runeInscriptions) {
+			if (!inscription.rune_id) continue;
 			const rune = await resolveRef("runes", inscription.rune_id);
 			if (!rune) {
 				brokenLinks.push({
@@ -148,6 +149,7 @@ async function checkLinkIntegrity(characterId: string): Promise<BrokenLink[]> {
 
 	if (runeKnowledge) {
 		for (const knowledge of runeKnowledge) {
+			if (!knowledge.rune_id) continue;
 			const rune = await resolveRef("runes", knowledge.rune_id);
 			if (!rune) {
 				brokenLinks.push({

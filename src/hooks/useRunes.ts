@@ -1,4 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import type { StaticCompendiumEntry } from "@/data/compendium/providers/types";
 import { supabase } from "@/integrations/supabase/client";
 import type { Database } from "@/integrations/supabase/types";
 import { AppError } from "@/lib/appError";
@@ -38,6 +39,8 @@ import {
 } from "@/lib/sourcebookAccess";
 import { getProficiencyBonus } from "@/types/core-rules";
 
+type Rune = StaticCompendiumEntry;
+
 async function loadCanonicalRunes(campaignId?: string | null): Promise<Rune[]> {
 	const entries = await listCanonicalEntries("runes", undefined, {
 		campaignId,
@@ -58,7 +61,6 @@ async function hydrateRunesById(
 	return byId;
 }
 
-type Rune = Database["public"]["Tables"]["compendium_runes"]["Row"];
 type _RuneInscription =
 	Database["public"]["Tables"]["character_rune_inscriptions"]["Row"] & {
 		rune?: Rune;
@@ -68,8 +70,22 @@ export type RuneKnowledge =
 	Database["public"]["Tables"]["character_rune_knowledge"]["Row"];
 type EquipmentRow = Database["public"]["Tables"]["character_equipment"]["Row"];
 
+export type RuneKnowledgeWithRune = RuneKnowledge & {
+	/** Always the static canonical rune key when this row can be hydrated. */
+	canonical_rune_key: string | null;
+	rune?: Rune;
+};
+
+/**
+ * `rune_key` is the stable identity for the static canonical catalog.  The
+ * nullable UUID is retained only to render pre-migration legacy rows.
+ */
+function getRuneKnowledgeKey(entry: RuneKnowledge): string | null {
+	return entry.rune_key ?? entry.rune_id ?? null;
+}
+
 const buildRuneKnowledgeCacheKey = (userId: string, characterId: string) => {
-	return `solo-compendium.cache.rune-knowledge.${userId}.char:${characterId}.v1`;
+	return `solo-compendium.cache.rune-knowledge.${userId}.char:${characterId}.v2`;
 };
 
 const _buildRuneInscriptionsCacheKey = (
@@ -126,11 +142,19 @@ export function useCharacterRuneKnowledge(characterId: string | undefined) {
 			if (!characterId) return [];
 			if (isLocalCharacterId(characterId)) {
 				const localEntries = listLocalRuneKnowledge(characterId);
-				const byId = await hydrateRunesById(localEntries.map((e) => e.rune_id));
-				return localEntries.map((e) => ({
-					...e,
-					rune: byId.get(e.rune_id),
-				}));
+				const byId = await hydrateRunesById(
+					localEntries
+						.map(getRuneKnowledgeKey)
+						.filter((key): key is string => Boolean(key)),
+				);
+				return localEntries.map((entry) => {
+					const key = getRuneKnowledgeKey(entry);
+					return {
+						...entry,
+						canonical_rune_key: key,
+						rune: key ? byId.get(key) : undefined,
+					};
+				});
 			}
 
 			const {
@@ -147,8 +171,7 @@ export function useCharacterRuneKnowledge(characterId: string | undefined) {
 
 			if (error) {
 				if (cacheKey) {
-					const cached =
-						readCachedData<Array<RuneKnowledge & { rune: Rune }>>(cacheKey);
+					const cached = readCachedData<RuneKnowledgeWithRune[]>(cacheKey);
 					if (cached) return cached;
 				}
 				throw error;
@@ -157,12 +180,18 @@ export function useCharacterRuneKnowledge(characterId: string | undefined) {
 			const campaignId = await getCharacterCampaignId(characterId);
 			const rows = (data || []) as RuneKnowledge[];
 			const byId = await hydrateRunesById(
-				rows.map((r) => r.rune_id),
+				rows
+					.map(getRuneKnowledgeKey)
+					.filter((key): key is string => Boolean(key)),
 				campaignId,
 			);
 			const knowledgeEntries = rows.map((rk) => ({
 				...rk,
-				rune: byId.get(rk.rune_id) as Rune,
+				canonical_rune_key: getRuneKnowledgeKey(rk),
+				rune: (() => {
+					const key = getRuneKnowledgeKey(rk);
+					return key ? byId.get(key) : undefined;
+				})(),
 			}));
 
 			const filtered = await filterRowsBySourcebookAccess(
@@ -175,7 +204,7 @@ export function useCharacterRuneKnowledge(characterId: string | undefined) {
 				writeCachedData(cacheKey, filtered);
 			}
 
-			return filtered;
+			return filtered as RuneKnowledgeWithRune[];
 		},
 		enabled: !!characterId,
 	});
@@ -400,6 +429,50 @@ async function ensureRemoteRuneAbilityGrant(
 	await ensureRemoteRuneTechniqueGrant(characterId, runeSourceLabel, grant);
 }
 
+/**
+ * Remote rune absorption has dependent writes that cannot be wrapped in a
+ * client-side transaction.  If the final knowledge commit fails, remove the
+ * rows created for this attempt so the feature is not left in a state where it
+ * blocks a retry while the rune remains unabsorbed.
+ */
+async function rollbackRemoteRuneAbsorption(
+	characterId: string,
+	featureId: string,
+	runeSourceLabel: string,
+	grant: RuneGrantResolution | null,
+): Promise<void> {
+	const abilitySource = getRuneAbilitySourceLabel(runeSourceLabel, grant);
+	const rollbacks: PromiseLike<unknown>[] = [
+		supabase.from("character_features").delete().eq("id", featureId),
+	];
+	if (grant?.abilityKind === "spell") {
+		rollbacks.push(
+			supabase
+				.from("character_spells")
+				.delete()
+				.eq("character_id", characterId)
+				.eq("source", abilitySource),
+		);
+	} else if (grant?.abilityKind === "power") {
+		rollbacks.push(
+			supabase
+				.from("character_powers")
+				.delete()
+				.eq("character_id", characterId)
+				.eq("source", abilitySource),
+		);
+	} else if (grant) {
+		rollbacks.push(
+			supabase
+				.from("character_techniques")
+				.delete()
+				.eq("character_id", characterId)
+				.eq("source", abilitySource),
+		);
+	}
+	await Promise.allSettled(rollbacks);
+}
+
 function ensureLocalRuneAbilityGrant(
 	characterId: string,
 	runeSourceLabel: string,
@@ -611,7 +684,7 @@ export function useAbsorbRune() {
 				primaryStatModifier,
 				runeRarity: rune.rarity,
 				unlockedRegents,
-				nativeRecharge: rune.recharge,
+				nativeRecharge: rune.recharge?.toString(),
 				forceCrossClassAdaptation: grant ? !grant.isNative : undefined,
 			});
 
@@ -654,28 +727,40 @@ export function useAbsorbRune() {
 					can_teach: false,
 				});
 			} else {
-				const { error: insertError } = await supabase
+				const { data: insertedFeature, error: insertError } = await supabase
 					.from("character_features")
-					.insert({ ...featurePayload, character_id: characterId });
-				if (insertError) throw insertError;
-				await ensureRemoteRuneAbilityGrant(
-					characterId,
-					runeSourceLabel,
-					absorption,
-					grant,
-				);
-				await supabase.from("character_rune_knowledge").upsert(
-					{
-						character_id: characterId,
-						rune_id: runeId,
-						mastery_level: 5,
-						can_teach: false,
-						learned_from: "absorbed",
-					},
-					{
-						onConflict: "character_id,rune_id",
-					},
-				);
+					.insert({ ...featurePayload, character_id: characterId })
+					.select("id")
+					.single();
+				if (insertError || !insertedFeature) {
+					throw insertError ?? new AppError("Could not create rune feature");
+				}
+				try {
+					await ensureRemoteRuneAbilityGrant(
+						characterId,
+						runeSourceLabel,
+						absorption,
+						grant,
+					);
+					const { error: knowledgeError } = await supabase.rpc(
+						"discover_character_rune",
+						{
+							p_character_id: characterId,
+							p_rune_key: runeId,
+							p_is_mastered: true,
+							p_learned_from: "absorbed",
+						},
+					);
+					if (knowledgeError) throw knowledgeError;
+				} catch (error) {
+					await rollbackRemoteRuneAbsorption(
+						characterId,
+						insertedFeature.id,
+						runeSourceLabel,
+						grant,
+					);
+					throw error;
+				}
 			}
 
 			return { runeName: rune.name, absorption, grant };

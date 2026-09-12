@@ -39,17 +39,16 @@ export async function autoLearnRunes(
 	const characterId = character.id;
 	try {
 		for (const runeId of targetIds) {
-			await supabase.from("character_rune_knowledge").upsert(
-				{
-					character_id: characterId,
-					rune_id: runeId,
-					mastery_level: isMastered ? 5 : 1,
-					can_teach: isMastered,
-				},
-				{
-					onConflict: "character_id,rune_id",
-				},
-			);
+			const { error } = await supabase.rpc("discover_character_rune", {
+				p_character_id: characterId,
+				p_rune_key: runeId,
+				p_is_mastered: isMastered,
+			});
+
+			if (error) {
+				logger.error("Failed to auto-learn rune:", error);
+				throw error;
+			}
 		}
 		return targetIds;
 	} catch (error) {

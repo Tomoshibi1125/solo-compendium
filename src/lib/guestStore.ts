@@ -1058,6 +1058,7 @@ export function addLocalRuneKnowledge(
 		id: createLocalId("local_rk"),
 		character_id: characterId,
 		rune_id: data.rune_id,
+		rune_key: null,
 		mastery_level: data.mastery_level ?? 1,
 		can_teach: data.can_teach ?? false,
 		learned_date: now,
