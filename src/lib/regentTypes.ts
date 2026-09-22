@@ -1,3 +1,5 @@
+import type { CompendiumMechanics } from "@/types/compendium";
+
 export enum RegentType {
 	STRENGTH_REGENT = "Strength Regent",
 	AGILITY_REGENT = "Agility Regent",
@@ -22,6 +24,7 @@ export interface Feature {
 	canonStatus?: RegentFeatureCanonStatus;
 	provenance?: RegentFeatureProvenance;
 	reviewBlockerId?: string;
+	mechanics?: CompendiumMechanics;
 }
 
 export interface StructuredSpell {
@@ -109,6 +112,7 @@ export interface RegentClassFeature {
 	canonStatus?: RegentFeatureCanonStatus;
 	provenance?: RegentFeatureProvenance;
 	reviewBlockerId?: string;
+	mechanics?: CompendiumMechanics;
 }
 
 export interface Regent {

@@ -1,4 +1,4 @@
-import { BookOpen, Clock, Target, Timer, Zap } from "lucide-react";
+import { BookOpen, Clock, Target, Timer, Zap, Swords, Shield, Footprints } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { AutoLinkText } from "@/components/compendium/AutoLinkText";
 import { CompendiumImage } from "@/components/compendium/CompendiumImage";
@@ -320,24 +320,90 @@ export const PowerDetail = ({ data }: { data: PowerData }) => {
 						})}
 						{(() => {
 							const typedMechanics = mechanics as CompendiumMechanics;
+							const attack = typedMechanics.attack;
+							if (!attack) return null;
+							const damageRoll =
+								typeof attack.damage === "string"
+									? attack.damage
+									: typeof attack.damage === "object" &&
+											attack.damage !== null &&
+											"dice" in attack.damage
+										? String(attack.damage.dice ?? "")
+										: "";
+							const damageType =
+								typeof attack.damage === "object" &&
+								attack.damage !== null &&
+								"type" in attack.damage
+									? String((attack.damage as { type?: unknown }).type ?? "")
+									: "";
+							return (
+								<div className="flex items-start gap-2">
+									<Swords className="w-5 h-5 text-gate-a flex-shrink-0 mt-0.5" />
+									<div>
+										<p className="font-heading capitalize">
+											{formatRegentVernacular(attack.type || "")} attack
+										</p>
+										<p className="text-sm text-muted-foreground">
+											{damageRoll
+												? formatRegentVernacular(
+														`Damage: ${damageRoll}${damageType ? ` ${damageType}` : ""}`,
+													)
+												: "Damage varies"}
+											{attack.modifier
+												? formatRegentVernacular(
+														` | Modifier: ${attack.modifier}`,
+													)
+												: ""}
+										</p>
+									</div>
+								</div>
+							);
+						})()}
+						{(() => {
+							const typedMechanics = mechanics as CompendiumMechanics;
 							const save = typedMechanics.saving_throw;
 							if (!save) return null;
 							return (
-								<div className="rounded border border-border p-3">
-									<p className="font-heading">
-										{formatRegentVernacular(save.ability || "")} Save DC{" "}
-										{save.dc}
-									</p>
-									{save.success && (
-										<p className="text-xs text-muted-foreground">
-											Success: {formatRegentVernacular(save.success)}
+								<div className="flex items-start gap-2">
+									<Shield className="w-5 h-5 text-system-green flex-shrink-0 mt-0.5" />
+									<div>
+										<p className="font-heading">
+											{formatRegentVernacular(save.ability || "")} Save
 										</p>
-									)}
-									{save.failure && (
-										<p className="text-xs text-muted-foreground">
-											Failure: {formatRegentVernacular(save.failure)}
+										<p className="text-sm text-muted-foreground">
+											DC {save.dc}
 										</p>
-									)}
+										{save.success && (
+											<p className="text-xs text-muted-foreground">
+												Success: {formatRegentVernacular(save.success)}
+											</p>
+										)}
+										{save.failure && (
+											<p className="text-xs text-muted-foreground">
+												Failure: {formatRegentVernacular(save.failure)}
+											</p>
+										)}
+									</div>
+								</div>
+							);
+						})()}
+						{(() => {
+							const typedMechanics = mechanics as CompendiumMechanics;
+							const movement = typedMechanics.movement;
+							if (!movement || typeof movement !== "object") return null;
+							return (
+								<div className="flex items-start gap-2">
+									<Footprints className="w-5 h-5 text-shadow-blue flex-shrink-0 mt-0.5" />
+									<div>
+										<p className="font-heading capitalize">
+											{formatRegentVernacular(movement.type || "")} movement
+										</p>
+										{movement.distance !== undefined && (
+											<p className="text-sm text-muted-foreground">
+												{movement.distance} ft
+											</p>
+										)}
+									</div>
 								</div>
 							);
 						})()}

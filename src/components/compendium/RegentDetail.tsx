@@ -23,6 +23,7 @@ interface CombinedFeature {
 	resource?: string;
 	tracking?: "uses" | "resource" | "manual";
 	canonStatus?: "source-backed" | "review-blocked";
+	mechanics?: CompendiumMechanics;
 }
 
 export const RegentDetail = ({ data }: RegentDetailProps) => {
@@ -49,6 +50,7 @@ export const RegentDetail = ({ data }: RegentDetailProps) => {
 			resource: feature.resource,
 			tracking: feature.tracking,
 			canonStatus: feature.canonStatus,
+			mechanics: feature.mechanics,
 		}))
 		.sort((left, right) => left.level - right.level);
 
@@ -273,6 +275,15 @@ export const RegentDetail = ({ data }: RegentDetailProps) => {
 								<p className="text-sm text-muted-foreground">
 									<AutoLinkText text={feature.description || ""} />
 								</p>
+								{feature.mechanics?.stat_bonuses && (
+									<div className="flex flex-wrap gap-2 mt-2">
+										{Object.entries(feature.mechanics.stat_bonuses).map(([stat, val]) => (
+											<Badge key={stat} variant="outline" className="border-gate-s/30 text-gate-s text-xs">
+												{formatRegentVernacular(stat)} +{String(val)}
+											</Badge>
+										))}
+									</div>
+								)}
 							</div>
 						))}
 					</div>
@@ -333,6 +344,15 @@ export const RegentDetail = ({ data }: RegentDetailProps) => {
 								<p className="text-sm text-muted-foreground">
 									{formatRegentVernacular(feature.description || "")}
 								</p>
+								{feature.mechanics?.stat_bonuses && (
+									<div className="flex flex-wrap gap-2 mt-2">
+										{Object.entries(feature.mechanics.stat_bonuses).map(([stat, val]) => (
+											<Badge key={stat} variant="outline" className="border-gate-s/30 text-gate-s text-xs">
+												{formatRegentVernacular(stat)} +{String(val)}
+											</Badge>
+										))}
+									</div>
+								)}
 							</div>
 						))}
 					</div>
