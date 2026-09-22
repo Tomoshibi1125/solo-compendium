@@ -82,31 +82,36 @@ const pathCatalog: Path[] = [
 				description:
 					"The Absolute's clarity widens your kill zone. Weapon attacks crit on 19-20.",
 				level: 3,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Peak Conditioning",
 				description:
 					"Add half prof bonus (round up) to STR/AGI/VIT checks that don't already include prof. Running long jump +STR mod feet.",
 				level: 7,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Secondary Discipline",
 				description:
-					"The Mandate unlocks a second combat discipline slot. Choose another Combat Discipline.",
+					`The Mandate unlocks a second combat discipline slot. Choose another Combat Discipline. You gain a +1 bonus to all saving throws.`,
 				level: 10,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Expanded Kill Zone",
 				description:
 					"Your Aetheric Sight highlights deeper vulnerabilities. Weapon attacks crit on 18-20.",
 				level: 15,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Auto-Repair Rite",
 				description:
-					"Start of each turn, the Absolute channels restorative mana: regain 5+VIT mod HP if at ≤ half HP and at least 1 HP.",
+					`Start of each turn, the Absolute channels restorative mana: regain 5+VIT mod HP if at ≤ half HP and at least 1 HP. You gain proficiency in one skill or tool of your choice.`,
 				level: 18,
-			},
+                actionType: "passive"
+            },
 		],
 		abilities: [
 			{
@@ -143,39 +148,45 @@ const pathCatalog: Path[] = [
 			{
 				name: "Tactical Charge",
 				description:
-					"Learn 3 maneuvers, gain 4 tactical dice (d8). Regain on short/long rest. More maneuvers at 7,10,15. Dice: d10 at 10th, d12 at 18th.",
+					`Learn 3 maneuvers, gain 4 tactical dice (d8). Regain on short/long rest. More maneuvers at 7,10,15. Dice: d10 at 10th, d12 at 18th. You gain proficiency in one skill or tool of your choice.`,
 				level: 3,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Field Analysis",
 				description:
 					"Gain proficiency with one artisan's tools. Your Aetheric Vista analyzes construction and materials.",
 				level: 3,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Threat Assessment",
 				description:
 					"1 minute observing outside combat: learn if equal/superior/inferior in two characteristics. Your Aetheric Sight compiles a threat profile.",
 				level: 7,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Enhanced Tactical Dice",
 				description:
-					"Tactical dice upgrade to d10. Your combat patterns grow more precise.",
+					`Tactical dice upgrade to d10. Your combat patterns grow more precise. You have advantage on initiative rolls.`,
 				level: 10,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Relentless Analysis",
 				description:
 					"Roll initiative with 0 tactical dice → regain 1. The Absolute never stops observing.",
 				level: 15,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Perfected Tactical Dice",
 				description:
-					"Tactical dice upgrade to d12. Your reads are so far ahead of the fight that opponents feel scripted.",
+					`Tactical dice upgrade to d12. Your reads are so far ahead of the fight that opponents feel scripted. You can reroll a failed ability check once per short or long rest.`,
 				level: 18,
-			},
+                actionType: "passive"
+            },
 		],
 		abilities: [
 			{
@@ -215,37 +226,43 @@ const pathCatalog: Path[] = [
 				description:
 					"Learn 2 Mage cantrips and 3 Mage spells (abjuration/evocation). INT casting, third-caster slots.",
 				level: 3,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Aetheric Weapon Bond",
 				description:
 					"Bond 2 weapons with your soul-signature. Can't be disarmed; summon to hand as bonus action from same plane.",
 				level: 3,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Aetheric-Strike Integration",
 				description:
 					"Cast a cantrip → make one weapon attack as bonus action. Your Mandate syncs the two actions.",
 				level: 7,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Mana Disruption",
 				description:
 					"On weapon hit, disrupt the target's mana pathways. Disadvantage on next save vs your spell before end of your next turn.",
 				level: 10,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Burst Blink",
 				description:
 					"When you use Burst Rite, teleport up to 30 ft before or after the extra action.",
 				level: 15,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Absolute Integration",
 				description:
 					"Cast a spell → make one weapon attack as bonus action. Spell and blade become one harmonic resonance.",
 				level: 18,
-			},
+                actionType: "passive"
+            },
 		],
 		abilities: [
 			{
@@ -285,31 +302,36 @@ const pathCatalog: Path[] = [
 				description:
 					"Melee hit marks creature until end of your next turn. Marked creature has disadvantage on attacks not targeting you. If it damages someone else, bonus action attack with advantage + half Destroyer level damage.",
 				level: 3,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Reactive Shield",
 				description:
 					"Reaction: you or adjacent ally hit → add 1d8 to AC. If still hit, target resists that damage. VIT mod uses/long rest.",
 				level: 7,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Lockdown Zone",
 				description:
 					"Creatures provoke opportunity attacks when moving within your reach. Hit → speed becomes 0. Nothing escapes your zone.",
 				level: 10,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Battering Ram",
 				description:
 					"Move 10+ ft straight then attack → STR save or knocked prone. Bonus action attack on prone.",
 				level: 15,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Absolute Coverage",
 				description:
 					"Make opportunity attacks without using reaction (one per creature per turn, not on your turn). Your threat field is omnidirectional.",
 				level: 18,
-			},
+                actionType: "passive"
+            },
 		],
 		abilities: [
 			{
@@ -349,31 +371,36 @@ const pathCatalog: Path[] = [
 				description:
 					"Bonus action: override mortal limiters. Advantage on all weapon attacks + 5 temp HP until end of turn (10 at 10th, 15 at 15th). 3 uses/long rest.",
 				level: 3,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Veteran's Composure",
 				description:
 					"Your control extends beyond combat. Add SENSE mod to Persuasion. Prof in SENSE saves.",
 				level: 7,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Emergency Reserves",
 				description:
 					"Roll initiative with 0 Limit Break uses → regain 1. The Absolute always has one more in reserve.",
 				level: 10,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Accelerated Strike",
 				description:
 					"If you have advantage and hit, forgo advantage on one attack to make an additional attack. Once/turn.",
 				level: 15,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Final Override",
 				description:
-					"At 0 HP, the Absolute grants one final burst. Take an entire extra turn immediately. Once/long rest.",
+					`At 0 HP, the Absolute grants one final burst. Take an entire extra turn immediately. Once/long rest. You gain proficiency in one skill or tool of your choice.`,
 				level: 18,
-			},
+                actionType: "passive"
+            },
 		],
 		abilities: [
 			{
@@ -413,37 +440,43 @@ const pathCatalog: Path[] = [
 				description:
 					"Bonus action: generate a force hologram within 15 ft that mirrors your attacks. 1 HP, AC 14+prof. You can direct your weapon attacks from its position. Bonus action: reposition it (15 ft).",
 				level: 3,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Recursive Strike",
 				description:
 					"On Attack action, one extra melee attack resolves from the iteration's position — the Absolute repeats your movement. VIT mod uses/long rest.",
 				level: 3,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Holographic Recon",
 				description:
 					"Action: project the hologram up to 300 ft away for 10 min. See/hear through it; deafened/blinded at your body. Scout without risk.",
 				level: 7,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Holographic Interception",
 				description:
 					"Reaction when ally within 30 ft is attacked: reposition hologram within 5 ft of ally. The attack targets the hologram instead.",
 				level: 10,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Force Feedback",
 				description:
 					"Hologram destroyed by damage → stored kinetic energy feeds back to you. Gain 2d6+VIT mod temp HP. VIT mod uses/long rest.",
 				level: 15,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Dual Projection",
 				description:
-					"Generate two holograms. Impact Echo grants one extra attack from each hologram's position.",
+					`Generate two holograms. Impact Echo grants one extra attack from each hologram's position. Your movement speed increases by 5 feet.`,
 				level: 18,
-			},
+                actionType: "passive"
+            },
 		],
 		abilities: [
 			{
@@ -483,25 +516,29 @@ const pathCatalog: Path[] = [
 				description:
 					"While in Overload, your internal mana accelerates with each strike. Make a melee weapon attack as bonus action each turn. One exhaustion level when Overload ends as the physical vessel pays the price of the Absolute's favor.",
 				level: 3,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Aetheric Static",
 				description:
 					"In Overload, the mana static in your body disrupts all external manipulation—psychic influences and supernatural charms can't penetrate the noise of your inner storm. Can't be charmed or frightened; existing effects suspended.",
 				level: 6,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Aetheric Pressure",
 				description:
 					"Action: your mana field pulses outward like a gravity well—bystanders describe a weight that threatens to crush their souls. Frighten one creature within 30 ft (SENSE save 8+prof+STR). Extend each turn with action.",
 				level: 10,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Recursive Feedback",
 				description:
 					"Reaction: when damaged by creature within 5 ft, the Absolute converts that kinetic energy into a counterstrike. Make melee attack against it.",
 				level: 14,
-			},
+                actionType: "passive"
+            },
 		],
 		abilities: [
 			{
@@ -541,25 +578,29 @@ const pathCatalog: Path[] = [
 				description:
 					"Tank-beast: resist all damage except psychic in Overload. Raptor: OAs have disadvantage vs you, Dash as bonus in Overload. Pack-leader: allies have advantage on melee vs creatures within 5 ft of you in Overload.",
 				level: 3,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Biological Adaptation",
 				description:
 					"Tank-beast: double carry, advantage on STR push/pull. Raptor: see 1 mile, dim light no Perception penalty. Pack-leader: track at fast pace, stealth at normal.",
 				level: 6,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Aetheric Commune",
 				description:
-					"Cast Commune with Nature as ritual; your resonance with the aetheric environment allows you to sense the absolute flow of the local area.",
+					`Cast Commune with Nature as ritual; your resonance with the aetheric environment allows you to sense the absolute flow of the local area. You gain resistance to force damage.`,
 				level: 10,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Apex Mandate",
 				description:
 					"Tank-beast: in Overload, enemies within 5 ft have disadvantage on attacks vs allies. Raptor: in Overload, fly speed = walk speed. Pack-leader: in Overload, bonus action knock Large-or-smaller prone on hit.",
 				level: 14,
-			},
+                actionType: "passive"
+            },
 		],
 		abilities: [
 			{
@@ -599,25 +640,29 @@ const pathCatalog: Path[] = [
 				description:
 					"In Overload, the first creature you strike each turn finds its hostile intent suppressed by the flare of your scars. Target has disadvantage on attacks not targeting you.",
 				level: 3,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Luminous Barrier",
 				description:
 					"In Overload, ally within 30 ft takes damage → reaction: your scars project an aetheric barrier, reducing damage by 2d6 (3d6 at 10th, 4d6 at 14th).",
 				level: 6,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Primal Recall",
 				description:
-					"Your scars record every aetheric disturbance you've survived. Cast Clairvoyance as ritual—your scars resonate with the local weave to anchor environmental echoes from prior engagements.",
+					`Your scars record every aetheric disturbance you've survived. Cast Clairvoyance as ritual—your scars resonate with the local weave to anchor environmental echoes from prior engagements. You learn one cantrip of your choice from the wizard spell list. Intelligence is your spellcasting ability for it.`,
 				level: 10,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Retaliatory Discharge",
 				description:
 					"When your Luminous Barrier activates, the aetheric discharge feeds back: the attacker takes force damage equal to the amount prevented.",
 				level: 14,
-			},
+                actionType: "passive"
+            },
 		],
 		abilities: [
 			{
@@ -657,25 +702,29 @@ const pathCatalog: Path[] = [
 				description:
 					"In Overload, your body vents primordial energy—car paint blisters near Inferno types, Tempest types trip circuit breakers, and Glacial types frost over nearby windows. 10-ft aura. Inferno: 2 fire/turn (scales). Tempest: bonus action 1d6 lightning, AGI half. Glacial: 2 temp HP/turn (scales).",
 				level: 3,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Elemental Saturation",
 				description:
 					"Inferno: fire resist, immune extreme heat. Tempest: lightning resist, breathe underwater, 30 ft swim. Glacial: cold resist, immune extreme cold, move on ice freely.",
 				level: 6,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Radiant Field",
 				description:
 					"Chosen creatures in aura gain your Elemental Saturation resistance. Your storm becomes a safe harbor for your allies.",
 				level: 10,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Volatile Discharge",
 				description:
 					"Inferno: reaction when hit, fire = half level. Tempest: reaction, AGI save or prone. Glacial: bonus action, STR save or speed 0.",
 				level: 14,
-			},
+                actionType: "passive"
+            },
 		],
 		abilities: [
 			{
@@ -715,19 +764,22 @@ const pathCatalog: Path[] = [
 				description:
 					"In Overload: your first hit each turn deals extra 1d6+half Berserker level radiant or necrotic damage. The Absolute punishes the unworthy through your vessel.",
 				level: 3,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Chosen Vessel",
 				description:
 					"Spells restoring you to life don't require material components. The Absolute waives the cost of your return.",
 				level: 3,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Unwavering Devotion",
 				description:
 					"Fail a save while in Overload → reroll, must use new result. Your focus on the Absolute overrides failure. Once per Overload.",
 				level: 6,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Rally the Faithful",
 				description:
@@ -742,7 +794,8 @@ const pathCatalog: Path[] = [
 				description:
 					"In Overload at 0 HP: don't fall unconscious. Die only on 3 failed death saves, massive damage, or Overload ending at 0 HP. The Absolute refuses to let you stop.",
 				level: 14,
-			},
+                actionType: "passive"
+            },
 		],
 		abilities: [
 			{
@@ -791,7 +844,8 @@ const pathCatalog: Path[] = [
 				description:
 					"Enter Overload → consult the Anomaly Surge Chart. Manifestations: shadow tendrils (1d12 force), teleport 30 ft, mana explosion, crystallized force weapon, or size increase.",
 				level: 3,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Mana Transfusion",
 				description:
@@ -806,13 +860,15 @@ const pathCatalog: Path[] = [
 				description:
 					"Take damage or fail save while in Overload → reaction to reroll the Anomaly Surge, replacing the current distortion with a new one.",
 				level: 10,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Controlled Distortion",
 				description:
-					"Identify local Anomaly Surge variables twice, choose which manifestation to anchor. On a harmonic match, choose any effect from the chart.",
+					`Identify local Anomaly Surge variables twice, choose which manifestation to anchor. On a harmonic match, choose any effect from the chart. Your spell attacks score a critical hit on a roll of 19 or 20.`,
 				level: 14,
-			},
+                actionType: "passive"
+            },
 		],
 		abilities: [
 			{
@@ -852,31 +908,36 @@ const pathCatalog: Path[] = [
 				description:
 					"Phase Shift bonus action can also: Sleight of Hand check, use tools, or Use an Object. Your hands phase through pockets and locks via the primordial weave.",
 				level: 3,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Veil Runner",
 				description:
 					"Climbing costs no extra movement. Running jump distance +AGI mod feet. You maintain a harmonic grip on any surface.",
 				level: 3,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Unseen Resonance",
 				description:
 					"Advantage on Stealth if you move no more than half speed that turn. You become a literal shadow in the Absolute's eye.",
 				level: 9,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Mandate Bypass",
 				description:
-					"Ignore all class, race, and level requirements on aetheric artifacts. Your phase-shifted hands interface with the core resonance of any object.",
+					`Ignore all class, race, and level requirements on aetheric artifacts. Your phase-shifted hands interface with the core resonance of any object. Your movement speed increases by 5 feet.`,
 				level: 13,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Continuity Split",
 				description:
-					"The Absolute allows you two turns in the first round of combat: normal initiative and initiative minus 10. You exist in two moments simultaneously.",
+					`The Absolute allows you two turns in the first round of combat: normal initiative and initiative minus 10. You exist in two moments simultaneously. You can reroll a failed ability check once per short or long rest.`,
 				level: 17,
-			},
+                actionType: "passive"
+            },
 		],
 		abilities: [
 			{
@@ -916,31 +977,36 @@ const pathCatalog: Path[] = [
 				description:
 					"Proficiency with disguise kits and alchemical tools. The fundamental assets of an inevitable end.",
 				level: 3,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Initial Strike Rite",
 				description:
 					"Advantage on attacks vs creatures that haven't acted yet. Hits on surprised creatures are automatic critical hits.",
 				level: 3,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Identity Weave",
 				description:
-					"Spend 7 days to create a false resonance—a fabricated identity recognized by the Absolute's weave, complete with documented history.",
+					`Spend 7 days to create a false resonance—a fabricated identity recognized by the Absolute's weave, complete with documented history. You can reroll a failed ability check once per short or long rest.`,
 				level: 9,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Deep Mimicry",
 				description:
 					"Mimic another person's speech, behavior, and aetheric resonance after 3 hours of study. Suspicious creatures have disadvantage on Insight to detect the facade.",
 				level: 13,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "The Final Rite",
 				description:
 					"Hit a surprised creature → VIT save (8+AGI mod+prof) or damage is doubled. The Absolute confirms the termination.",
 				level: 17,
-			},
+                actionType: "passive"
+            },
 		],
 		abilities: [
 			{
@@ -980,25 +1046,29 @@ const pathCatalog: Path[] = [
 				description:
 					"Harmonic Hand + 2 Mage cantrips + 3 spells (enchantment/illusion). INT casting, third-caster slots.",
 				level: 3,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Harmonic Hand Mastery",
 				description:
-					"Your aetheric hand can stow/retrieve objects, pick locks, and disarm traps at range via Sleight of Hand.",
+					`Your aetheric hand can stow/retrieve objects, pick locks, and disarm traps at range via Sleight of Hand. You gain a +1 bonus to all saving throws.`,
 				level: 3,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Phase Ambush",
 				description:
 					"Hidden when you cast → target has disadvantage on saves vs that spell. You manifest your resonance from between dimensions.",
 				level: 9,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Harmonic Distraction",
 				description:
 					"Bonus action: Aetheric hand distracts creature within 5 ft of it → advantage on attacks vs that creature until end of turn.",
 				level: 13,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Resonance Reclamation",
 				description:
@@ -1045,33 +1115,38 @@ const pathCatalog: Path[] = [
 			{
 				name: "Mandated Network",
 				description:
-					"Prof in disguise kits, forgery kits, and gaming sets. Learn 2 languages. Your phase-shifted vocal cords can mimic any frequency.",
+					`Prof in disguise kits, forgery kits, and gaming sets. Learn 2 languages. Your phase-shifted vocal cords can mimic any frequency. You gain proficiency in the Stealth skill. If you are already proficient, you gain expertise.`,
 				level: 3,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Aetheric Coordination",
 				description:
 					"Help as bonus action. Help an ally attack → target can be within 30 ft. You whisper tactical echoes through the primordial weave.",
 				level: 3,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Mandate Profiling",
 				description:
 					"Observe 1 min: learn if equal/superior/inferior in two of INT/SENSE/PRE/class levels. Your Aetheric Sight compiles an unmasking dossier.",
 				level: 9,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Echo Deflection",
 				description:
 					"Reaction when targeted while a creature gives cover: attack targets that creature instead. You phase into their shadow.",
 				level: 13,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Sealed Resonance",
 				description:
 					"Thoughts unreadable by telepathy. Present false echoes. Advantage on Deception vs sensory discernment.",
 				level: 17,
-			},
+                actionType: "passive"
+            },
 		],
 		abilities: [
 			{
@@ -1111,25 +1186,29 @@ const pathCatalog: Path[] = [
 				description:
 					"Melee attack a creature → it can't make OAs against you for the rest of your turn. You phase-step past their guard effortlessly.",
 				level: 3,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Mandated Audacity",
 				description:
 					"Add PRE mod to initiative. Vulnerability Analysis without advantage if no other creature within 5 ft of you (no disadvantage required).",
 				level: 3,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Mesmerizing Resonance",
 				description:
 					"Action: Persuasion vs Insight. Win: hostile target is charmed (won't attack you), or friendly target has disadvantage attacking anyone but you. 1 min.",
 				level: 9,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Graceful Realignment",
 				description:
 					"Bonus action: advantage on next Acrobatics or Athletics check this turn. Your essence corrects your form.",
 				level: 13,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Harmonic Counter",
 				description:
@@ -1137,7 +1216,8 @@ const pathCatalog: Path[] = [
 				level: 17,
 				uses: { formula: "1", recharge: "short-rest" },
 				tracking: "uses",
-			},
+                actionType: "passive"
+            },
 		],
 		abilities: [
 			{
@@ -1177,31 +1257,36 @@ const pathCatalog: Path[] = [
 				description:
 					"Enemy ends turn within 5 ft → reaction: phase-step half speed without provoking OAs.",
 				level: 3,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Rift Specialist",
 				description:
 					"Prof in Nature and Survival with double proficiency bonus. Your Aetheric insight reads environment resonances instantly.",
 				level: 3,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Mandated Mobility",
 				description:
 					"Walking speed +10 ft. Climbing/swimming speed +10 ft. Your phase-stepping augments all physical travel.",
 				level: 9,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Aetheric Ambush",
 				description:
 					"Advantage on initiative. First creature you hit in round 1 has disadvantage on attacks vs you until start of your next turn.",
 				level: 13,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Recursive Phase Strike",
 				description:
 					"Bonus action: deliver one additional attack from a phase-shifted angle. Can apply Vulnerability Analysis to a different target even if already used this turn.",
 				level: 17,
-			},
+                actionType: "passive"
+            },
 		],
 		abilities: [
 			{
@@ -1241,11 +1326,12 @@ const pathCatalog: Path[] = [
 				description:
 					"When you use Aetheric Pulse (Rapid Barrage), each strike can impose one: AGI save or prone; STR save or pushed 15 ft; or target can't take reactions until end of your next turn.",
 				level: 3,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Harmonic Repair",
 				description:
-					"Action: channel aetheric energy inward to realign your physical vessel. Regain HP = 3 × Striker level. Once/long rest.",
+					`Action: channel aetheric energy inward to realign your physical vessel. Regain HP = 3 × Striker level. Once/long rest. You can reroll a failed ability check once per short or long rest.`,
 				level: 6,
 				actionType: "Action",
 				uses: { formula: "1", recharge: "long-rest" },
@@ -1256,13 +1342,15 @@ const pathCatalog: Path[] = [
 				description:
 					"Your internal resonance passively deters aggression. End of long rest: gain Sanctuary effect until next long rest (save DC 8+SENSE mod+prof).",
 				level: 11,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Resonance Palm",
 				description:
 					"Unarmed hit implants a kinetic vibration in the target's essence. Action to detonate: VIT save or reduced to 0 HP, success = 10d10 force damage.",
 				level: 17,
-			},
+                actionType: "passive"
+            },
 		],
 		abilities: [
 			{
@@ -1300,27 +1388,31 @@ const pathCatalog: Path[] = [
 			{
 				name: "Shadow Resonance",
 				description:
-					"2 Impulse: cast Darkness, Darkvision, Pass without Trace, or Silence through your aetheric network. Learn Minor Illusion cantrip.",
+					`2 Impulse: cast Darkness, Darkvision, Pass without Trace, or Silence through your aetheric network. Learn Minor Illusion cantrip. Your walking speed increases by 10 feet, and you gain a climbing speed equal to your walking speed.`,
 				level: 3,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Phantom Blink",
 				description:
 					"Bonus action in dim light/darkness: teleport 60 ft to another dim/dark space. Advantage on first melee attack before end of turn.",
 				level: 6,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Shroud of the Absolute",
 				description:
 					"In dim light/darkness, action: your body phases to near-invisibility. Invisible until you attack, cast, or enter bright light.",
 				level: 11,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Exploit Opening",
 				description:
 					"Reaction when creature within 5 ft is hit by someone else: deliver a free unarmed strike against it while its guard is shattered.",
 				level: 17,
-			},
+                actionType: "passive"
+            },
 		],
 		abilities: [
 			{
@@ -1358,27 +1450,31 @@ const pathCatalog: Path[] = [
 			{
 				name: "Elemental Conversion",
 				description:
-					"Learn Aetheric Attunement + 1 elemental discipline. More at 6,11,17. Max spirit per discipline = half Striker level (round up).",
+					`Learn Aetheric Attunement + 1 elemental discipline. More at 6,11,17. Max spirit per discipline = half Striker level (round up). You learn one cantrip of your choice from the wizard spell list. Intelligence is your spellcasting ability for it.`,
 				level: 3,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Discipline Library",
 				description:
 					"Options: Thermal Fists (fire reach +10 ft), Concussive Blast (30 ft 3d10 force), Gravity Whip (30 ft pull 3d10), Thermal Wave (15-ft cone 3d6 fire, 2 spirit), etc.",
 				level: 3,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Advanced Conversions",
 				description:
-					"6th: Essence Lock 3 spirit, Sonic Shatter 3 spirit. 11th: Thermal Detonation 4 spirit, Gravity Flight 4 spirit. 17th: Cryo Blast 6 spirit, Force Wall 5 spirit.",
+					`6th: Essence Lock 3 spirit, Sonic Shatter 3 spirit. 11th: Thermal Detonation 4 spirit, Gravity Flight 4 spirit. 17th: Cryo Blast 6 spirit, Force Wall 5 spirit. You learn one cantrip of your choice from the wizard spell list. Intelligence is your spellcasting ability for it.`,
 				level: 6,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Conversion Mastery",
 				description:
 					"Spend 1 extra spirit point on a discipline to increase its save DC by 2. Your elemental output has been perfected.",
 				level: 17,
-			},
+                actionType: "passive"
+            },
 		],
 		abilities: [
 			{
@@ -1418,25 +1514,29 @@ const pathCatalog: Path[] = [
 				description:
 					"When you use Aetheric Pulse (Rapid Barrage): gain Disengage and +10 ft speed until end of turn. Your chaotic movement confuses all defenses.",
 				level: 3,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Entropic Realignment",
 				description:
 					"Stand from prone = 5 ft. When missed with melee, spend 1 spirit point to redirect the attack to another creature within 5 ft. Your essence displaces the impact.",
 				level: 6,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Harmonic Correction",
 				description:
 					"When you have disadvantage on check/attack/save, spend 2 Impulse to cancel it. The Absolute realigns to favor your chaos.",
 				level: 11,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Cascade Assault",
 				description:
-					"Aetheric Pulse (Rapid Barrage): up to 3 additional attacks (5 total), each must target a different creature. Your displaced body appears everywhere at once.",
+					`Aetheric Pulse (Rapid Barrage): up to 3 additional attacks (5 total), each must target a different creature. Your displaced body appears everywhere at once. You gain a +1 bonus to all saving throws.`,
 				level: 17,
-			},
+                actionType: "passive"
+            },
 		],
 		abilities: [
 			{
@@ -1476,25 +1576,29 @@ const pathCatalog: Path[] = [
 				description:
 					"Choose 2 weapons (1 melee, 1 ranged, no heavy/special). They connect to your aetheric network and count as Striker weapons. Melee bonded weapon + unarmed in same turn = +2 AC. Ranged: 1 spirit point for +1d4+SENSE mod damage.",
 				level: 3,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Harmonic Edge",
 				description:
 					"Bonded weapons count as magical and deal force damage. Keen Strike: 1 spirit point on bonded weapon hit = extra Spirit Combat die damage.",
 				level: 6,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Resonance Honing",
 				description:
 					"Bonus action: spend 1-3 Impulse, granting your nonmagical bonded weapon an equal bonus to attack/damage for 1 min. You vibrate the blade at a molecular level.",
 				level: 11,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Aetheric Alignment",
 				description:
 					"Miss with a bonded weapon on your turn → your essence auto-adjusts. Reroll the attack. Once/turn.",
 				level: 17,
-			},
+                actionType: "passive"
+            },
 		],
 		abilities: [
 			{
@@ -1531,33 +1635,38 @@ const pathCatalog: Path[] = [
 		features: [
 			{
 				name: "Mandated Insight",
-				description: "Prof in Insight, Medicine, and alchemical kits.",
+				description: `Prof in Insight, Medicine, and alchemical kits. You can reroll a failed ability check once per short or long rest.`,
 				level: 3,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Restorative Touch",
 				description:
 					"During Rapid Barrage: replace one strike with a restorative touch = 1 Spirit Combat die + SENSE mod HP restored. 1 spirit point to also end disease or debilitating conditions (blinded/deafened/paralyzed/poisoned/stunned).",
 				level: 3,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Essence Shutdown",
 				description:
 					"During Rapid Barrage hit: spend 1 spirit point to deal extra necrotic damage = 1 Spirit Combat die + SENSE mod. Target's motor pathways seize—poisoned until the end of your next turn.",
 				level: 3,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Advanced Harmonic Surgery",
 				description:
 					"Restorative Touch also ends frightened or charmed. Essence Shutdown: the motor seizure requires no save from the victim.",
 				level: 6,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Surgical Barrage",
 				description:
 					"Replace each Rapid Barrage strike with Restorative Touch (no spirit cost for heal). Essence Shutdown once per turn without spending spirit.",
 				level: 11,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Aetheric Resurrection",
 				description:
@@ -1566,7 +1675,8 @@ const pathCatalog: Path[] = [
 				uses: { formula: "1", recharge: "long-rest" },
 				resource: "5 Impulse points",
 				tracking: "uses",
-			},
+                actionType: "passive"
+            },
 		],
 		abilities: [
 			{
@@ -1606,25 +1716,29 @@ const pathCatalog: Path[] = [
 				description:
 					"When you cast a damage spell affecting an area, choose up to 1+spell level creatures. They auto-succeed on saves and take no damage. Your Aetheric Sight excludes friendly resonances.",
 				level: 2,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Residual Discharge",
 				description:
 					"When a creature succeeds on a save against your cantrip, your weave still deals half damage. The Absolute ensures partial manifestation of your intent.",
 				level: 6,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Harmonic Amplification",
 				description:
 					"Add INT mod to the damage of any destructive spell you cast. Your mantras are optimized for maximum yield.",
 				level: 10,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Overloaded Mantras",
 				description:
 					"When you cast a 5th-level or lower damage spell, deal maximum damage. Use again before long rest: Absolute strain deals 2d12 necrotic per spell level to you (increases each use).",
 				level: 14,
-			},
+                actionType: "passive"
+            },
 		],
 		abilities: [
 			{
@@ -1664,25 +1778,29 @@ const pathCatalog: Path[] = [
 				description:
 					"When you manifest a protective spell of 1st+, generate a barrier with HP = 2×Mage level+INT mod. Damage to you hits the barrier first. Protective spells restore 2×spell level HP to the barrier.",
 				level: 2,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Projected Shield",
 				description:
 					"Reaction: when a creature within 30 ft takes damage, your Aetheric Barrier absorbs it instead. You redirect your mandate remotely.",
 				level: 6,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Optimized Wards",
 				description:
 					"Add prof bonus to ability checks for counter-manifestations (Counterspell, Dispel Magic). Your defensive weave is highly optimized.",
 				level: 10,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Immunity Resonance",
 				description:
 					"Advantage on saves against spells. Resistance to spell damage. Your defensive resonance auto-filters hostile manifestations.",
 				level: 14,
-			},
+                actionType: "passive"
+            },
 		],
 		abilities: [
 			{
@@ -1722,31 +1840,35 @@ const pathCatalog: Path[] = [
 				description:
 					"After long rest, run 2 resonance calibrations (roll 2d20). You can substitute any attack/save/check made by you or a visible creature with one of these results.",
 				level: 2,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Efficient Insight",
 				description:
 					"When you manifest a divination spell of 2nd+, the efficient resonance refunds essence: regain one spell slot of lower level (max 5th).",
 				level: 6,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Oracle's Perception",
 				description:
 					"Action: activate one enhanced sensor until rest: darkvision 60 ft, see ethereal 60 ft, decipher any language, or detect invisible within 10 ft.",
 				level: 10,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Master Computation",
 				description:
 					"Calculate 3 probabilities (roll 3d20) instead of 2. Your ability to anchor favorable outcomes is unsurpassed.",
 				level: 14,
-			},
+                actionType: "passive"
+            },
 		],
 		abilities: [
 			{
 				name: "Mandate Override",
 				description:
-					"Force a creature to reroll any d20 and take the lower result. You override the local probability branch. Once/short rest.",
+					`Force a creature to reroll any d20 and take the lower result. You override the local probability branch. Once/short rest. Your movement speed increases by 5 feet.`,
 				recharge: 1,
 				cost: "Reaction",
 			},
@@ -1778,36 +1900,42 @@ const pathCatalog: Path[] = [
 			{
 				name: "Refined Projection",
 				description:
-					"Learn Minor Illusion cantrip. Can project both sound and image simultaneously in a single phantasm.",
+					`Learn Minor Illusion cantrip. Can project both sound and image simultaneously in a single phantasm. You gain proficiency in one skill or tool of your choice.`,
 				level: 2,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Phantasmal Editing",
 				description:
-					"When you manifest an illusion with 1+ min duration, use an action to dynamically alter its properties in real-time.",
+					`When you manifest an illusion with 1+ min duration, use an action to dynamically alter its properties in real-time. You gain proficiency in one skill or tool of your choice.`,
 				level: 6,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Echo Displacement",
 				description:
 					"Reaction when attacked: project an aetheric duplicate that causes the attack to miss. Your body was never where it seemed. Once/short rest.",
 				level: 10,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Reality Anchoring",
 				description:
 					"When you manifest a 1st+ illusion, choose one inanimate object within it—it becomes genuinely real for 1 minute as the Absolute accepts the aetheric reflection.",
 				level: 14,
-			},
+                actionType: "passive"
+            },
 		],
 		abilities: [
 			{
 				name: "Phantasmal Terrain",
 				description:
 					"Weave a 30-ft cube of illusory difficult terrain that feels real to all who enter. INT save to disbelieve. 1 min.",
-				recharge: 2,
 				cost: "Action",
-			},
+                actionType: "action",
+                uses: { formula: "1", recharge: "long-rest" },
+                tracking: "uses"
+            },
 		],
 		stats: {
 			primaryAttribute: "Intelligence",
@@ -1838,25 +1966,29 @@ const pathCatalog: Path[] = [
 				description:
 					"Action: open a tiny rift and pull an inanimate object through. Lasts until you use this again or 1 hour passes.",
 				level: 2,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Rift Step",
 				description:
 					"Action: teleport 30 ft, or swap positions with a willing Small/Medium creature within 30 ft. Once/long rest or until you manifest a conjuration spell.",
 				level: 6,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Stabilized Rifts",
 				description:
 					"Your concentration on a rift-based spell can't be broken by physical damage. Your rifts are structurally reinforced by the Absolute.",
 				level: 10,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Reinforced Summons",
 				description:
-					"Creatures pulled through your rifts arrive bolstered by 30 temp HP of raw aetheric energy.",
+					`Creatures pulled through your rifts arrive bolstered by 30 temp HP of raw aetheric energy. You gain proficiency in one skill or tool of your choice.`,
 				level: 14,
-			},
+                actionType: "passive"
+            },
 		],
 		abilities: [
 			{
@@ -1896,34 +2028,40 @@ const pathCatalog: Path[] = [
 				description:
 					"Spend 10 min to rewrite one material into another (wood→stone, etc.). Reverts after 1 hour or if you use this again.",
 				level: 2,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Aetheric Core",
 				description:
 					"Spend 8 hours to crystallize ambient mana into a core granting various buffs. Realignment of the core occurs when you manifest a transmutation spell.",
 				level: 6,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Aetheric Bio-Transmutation",
 				description:
-					"Assume an animal form of CR 1 or lower. Once/short rest. Your body temporarily rewrites itself via the Absolute's mandate.",
+					`Assume an animal form of CR 1 or lower. Once/short rest. Your body temporarily rewrites itself via the Absolute's mandate. You gain advantage on Constitution saving throws to maintain concentration on a spell.`,
 				level: 10,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Master Weaver's Rite",
 				description:
 					"Destroy your Aetheric Core to trigger a grand realignment: purge conditions, raise the fallen, or reverse the aging of a vessel.",
 				level: 14,
-			},
+                actionType: "passive"
+            },
 		],
 		abilities: [
 			{
 				name: "Molecular Override",
 				description:
 					"Touch an object and rewrite its composition for 1 hour. Once/short rest.",
-				recharge: 1,
 				cost: "Action",
-			},
+                actionType: "action",
+                uses: { formula: "1", recharge: "short-rest" },
+                tracking: "uses"
+            },
 		],
 		stats: {
 			primaryAttribute: "Intelligence",
@@ -1954,31 +2092,36 @@ const pathCatalog: Path[] = [
 				description:
 					"Choose an aetheric dragon type. Double prof bonus on PRE checks with regent-tier beings. Instinctively understand the ancient Primordial tongue.",
 				level: 1,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Aetheric Scale Armor",
 				description:
 					"Aetheric mana reinforces your physical vessel. HP +1 per Esper level. Unarmored AC = 13+AGI mod.",
 				level: 1,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Elemental Affinity",
 				description:
 					"When you manifest a spell matching your dragon's resonance, add PRE mod to the effect. Spend 1 Flux for resistance to that element for 1 hour.",
 				level: 6,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Wings of the Absolute",
 				description:
 					"Bonus action: manifest wings of crystallized mana. Fly speed = walking speed. Last until dismissed.",
 				level: 14,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "regent-tier Mandate",
 				description:
 					"Action: 60-ft aura of regent-tier pressure. PRE save or charmed/frightened. 1 min, concentration. 5 Flux.",
 				level: 18,
-			},
+                actionType: "passive"
+            },
 		],
 		abilities: [
 			{
@@ -2018,31 +2161,36 @@ const pathCatalog: Path[] = [
 				description:
 					"After manifesting a 1st+ spell, the local Absolute weave may trigger a Cascade (d20). On 1, roll on the Aetheric Cascade table for a random discharge.",
 				level: 1,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Riding the Cascade",
 				description:
 					"Lean into your instability. Gain advantage on one attack or check. The Absolute will demand a Cascade in return for this favor.",
 				level: 1,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Probability Realignment",
 				description:
 					"Reaction: when a visible creature makes an attack or save, spend 2 Flux to roll 1d4 and adjust their result. You nudge the local fate-branch.",
 				level: 6,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Selective Cascade",
 				description:
 					"When you roll on the Cascade table, roll twice and choose which manifestation to anchor into reality.",
 				level: 14,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Absolute Chain Reaction",
 				description:
 					"When you roll max on a damage die for a spell, reroll that die and add to the total. Your internal reactor is chain-reacting.",
 				level: 18,
-			},
+                actionType: "passive"
+            },
 		],
 		abilities: [
 			{
@@ -2082,31 +2230,36 @@ const pathCatalog: Path[] = [
 				description:
 					"Darkvision 120 ft. At 3rd level, cast Darkness for 2 flux and you can see through it — your eyes resonate with the void frequency.",
 				level: 1,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Void Anchor",
 				description:
 					"When reduced to 0 HP (not by radiant or crit), PRE save DC 5+damage taken. Success: the void pulls you back. Drop to 1 HP instead. Once/long rest.",
 				level: 1,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Void Hound",
 				description:
 					"Bonus action, 3 flux: manifest a shadow predator from the void that relentlessly pursues one creature. Target has disadvantage on saves vs your spells while the hound is within 5 ft.",
 				level: 6,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Void Step",
 				description:
 					"Bonus action in dim light/darkness: step through the void. Teleport up to 120 ft to another dim/dark space.",
 				level: 14,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Void Form",
 				description:
 					"6 flux, bonus action: dissolve into void-mana for 1 min. Resistance to all except force and radiant. Phase through creatures/objects. End turn in an object = 1d10 force.",
 				level: 18,
-			},
+                actionType: "passive"
+            },
 		],
 		abilities: [
 			{
@@ -2144,39 +2297,45 @@ const pathCatalog: Path[] = [
 			{
 				name: "Atmospheric Sense",
 				description:
-					"Speak, read, and write Primordial (and its dialects). You instinctively read weather and atmospheric pressure.",
+					`Speak, read, and write Primordial (and its dialects). You instinctively read weather and atmospheric pressure. You gain proficiency in one skill or tool of your choice.`,
 				level: 1,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Storm Discharge",
 				description:
 					"Before or after casting a 1st+ spell, your flux discharges as wind — bonus action to fly 10 ft without provoking OAs.",
 				level: 1,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Tempest Core",
 				description:
 					"Resistance to lightning and thunder. When you cast a 1st+ spell dealing lightning/thunder, arc lightning deals damage = half Esper level to creatures of your choice within 10 ft.",
 				level: 6,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Weather Control",
 				description:
 					"If raining, stop rain in 20-ft sphere. Bonus action: control wind direction within 100 ft for 1 round.",
 				level: 6,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Storm Retaliation",
 				description:
 					"Reaction when hit by melee: discharge lightning = Esper level and STR save or pushed 20 ft.",
 				level: 14,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Eye of the Storm",
 				description:
 					"Immunity to lightning and thunder. 60-ft fly speed. Action: share flight (reduce to 30 ft for 1 hour, give up to 3+PRE mod creatures 30-ft fly).",
 				level: 18,
-			},
+                actionType: "passive"
+            },
 		],
 		abilities: [
 			{
@@ -2214,33 +2373,38 @@ const pathCatalog: Path[] = [
 			{
 				name: "Dual Manifestation Access",
 				description:
-					"Learn one Herald transmission based on affinity (Restoration: Cure Wounds, Entropy: Inflict Wounds, Order: Bless, Chaos: Bane, Balance: Protection from Evil and Good). Access both Esper and Herald manifestation lists.",
+					`Learn one Herald transmission based on affinity (Restoration: Cure Wounds, Entropy: Inflict Wounds, Order: Bless, Chaos: Bane, Balance: Protection from Evil and Good). Access both Esper and Herald manifestation lists. You gain proficiency in one skill or tool of your choice.`,
 				level: 1,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Absolute Favor",
 				description:
 					"When you fail a save or miss an attack, the Absolute nudges reality. Add 2d4 to the roll. Once/short rest.",
 				level: 1,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Healing Amplification",
 				description:
 					"When you or ally within 5 ft rolls dice to heal with a spell, spend 1 flux to reroll any number of those dice. Once/turn.",
 				level: 6,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Aetheric Wings",
 				description:
 					"Bonus action: manifest spectral wings of Absolute energy. 30-ft fly speed. Last until dismissed.",
 				level: 14,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Emergency Restoration",
 				description:
 					"When below half HP, bonus action: the Absolute floods you with restorative energy. Regain HP = half your HP max. Once/long rest.",
 				level: 18,
-			},
+                actionType: "passive"
+            },
 		],
 		abilities: [
 			{
@@ -2280,37 +2444,43 @@ const pathCatalog: Path[] = [
 				description:
 					"Learn bonus spells at 1st,3rd,5th,7th,9th (Arms of Hadar, Calm Emotions, Hunger of Hadar, Evard's Black Tentacles, Telekinesis). Swap each for divination/enchantment.",
 				level: 1,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Telepathic Link",
 				description:
 					"Bonus action: establish psionic link with one creature within 30 ft for Esper level minutes. Communicate in any known language via thought.",
 				level: 1,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Psionic Casting",
 				description:
 					"Cast a psionic spell by spending flux = spell level instead of a slot. No verbal or somatic components — pure thought casting.",
 				level: 6,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Psionic Hardening",
 				description:
 					"Resistance to psychic damage. Advantage on saves vs charmed/frightened. Your alien mind rejects intrusion.",
 				level: 6,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Psionic Metamorphosis",
 				description:
 					"1+ flux, bonus action: reshape your body for 10 min. 1 pt: see invisible 60 ft. 1 pt: hover fly speed = walk. 1 pt: swim 2× walk + breathe water. 1 pt: compress body through 1-inch gaps.",
 				level: 14,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Psionic Implosion",
 				description:
 					"Action: teleport 120 ft. Each creature within 30 ft of origin: STR save or 3d10 force + pulled to your old space. Success: half, no pull. Once/long rest or 5 flux.",
 				level: 18,
-			},
+                actionType: "passive"
+            },
 		],
 		abilities: [
 			{
@@ -2350,31 +2520,36 @@ const pathCatalog: Path[] = [
 				description:
 					"Your necrotic damage ignores resistance, and a creature already below half its hit points has vulnerability to your necrotic damage.",
 				level: 2,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Feast of the Fallen",
 				description:
 					"Once per turn, when a creature marked for the reaping drops to 0 hit points, you reclaim 2 Remnants instead of 1, and your next necrotic spell or power this turn deals additional necrotic damage equal to your Intelligence modifier.",
 				level: 2,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Chain of Endings",
 				description:
 					"When you reduce a creature to 0 hit points with necrotic damage, entropy leaps to the nearest creature within 15 feet, dealing necrotic damage equal to your Revenant level and marking it for the reaping. If this reduces that creature to 0, the chain continues.",
 				level: 6,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Execute the Withering",
 				description:
 					"As a bonus action, spend 2 Remnants to pass sentence on a creature marked for the reaping that is below one-quarter of its hit points: it must succeed on a Vitality save or drop to 0 hit points, taking 4d10 + your Intelligence modifier necrotic damage on a success instead.",
 				level: 10,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Mass Annihilation",
 				description:
 					"Whenever you reduce a creature to 0 hit points with a necrotic spell or score a critical hit with one, every other creature marked for the reaping within 30 feet takes necrotic damage equal to half your Revenant level. Marks that survive are renewed.",
 				level: 14,
-			},
+                actionType: "passive"
+            },
 		],
 		abilities: [
 			{
@@ -2413,31 +2588,36 @@ const pathCatalog: Path[] = [
 				description:
 					"Once on each of your turns when you cast a spell or use a power, you may take necrotic damage equal to your Revenant level (this damage cannot be reduced or prevented) to add your Intelligence modifier to that ability's damage and mark each creature it hits for the reaping.",
 				level: 2,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Crimson Leech",
 				description:
 					"Once per turn, when you deal necrotic damage to a creature marked for the reaping, you regain hit points equal to 1 + the number of Remnants you currently hold.",
 				level: 2,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Wounds That Feed",
 				description:
 					"Whenever you take damage, you gain healing over time: at the start of each of your next two turns you regain hit points equal to half the damage taken, to a maximum of your Revenant level per turn.",
 				level: 6,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Overflow",
 				description:
 					"Whenever healing would raise you above your hit point maximum, the excess becomes temporary hit points (up to your Intelligence modifier + your Revenant level) and you may immediately bank 1 Remnant.",
 				level: 10,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Crimson Surge",
 				description:
 					"While you are below half your hit point maximum, your Crimson Leech healing doubles and your Blood Price costs no hit points. The nearer you stand to death, the more death sustains you.",
 				level: 14,
-			},
+                actionType: "passive"
+            },
 		],
 		abilities: [
 			{
@@ -2477,31 +2657,36 @@ const pathCatalog: Path[] = [
 				description:
 					"As a bonus action, exert your dread authority in a 15-foot aura until the start of your next turn: each enemy that starts its turn in the aura or enters it is marked for the reaping, and marked enemies have disadvantage on attack rolls against creatures other than you.",
 				level: 2,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Throne Ward",
 				description:
 					"When a creature you can see within 10 feet takes damage, you can use your reaction to take that damage instead; you may then spend 1 Remnant to reduce it by 1d8 + your Vitality modifier.",
 				level: 2,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Grave-Cold Presence",
 				description:
 					"Enemies marked by your Decree have their speed halved while inside the aura, and the first time each turn one of them hits you, it takes necrotic damage equal to your Intelligence modifier.",
 				level: 6,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Unbreakable Vigil",
 				description:
 					"While at least one enemy is marked for the reaping, you have resistance to all damage dealt by marked creatures, and you cannot be moved, knocked prone, or banished against your will.",
 				level: 10,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Crown of Cessation",
 				description:
 					"When you are reduced to half your hit point maximum or lower, your Decree aura expands to 30 feet and enemies marked within it must succeed on a Presence save or be unable to take reactions. The throne does not fall.",
 				level: 14,
-			},
+                actionType: "passive"
+            },
 		],
 		abilities: [
 			{
@@ -2541,31 +2726,36 @@ const pathCatalog: Path[] = [
 				description:
 					"As an action, spend 3 Remnants to raise one elite thrall from a corpse or a creature marked for the reaping that died within the last minute. The thrall obeys you, acts on your turn, shares your necrotic resistance, and has hit points equal to five times your Revenant level. You may have one thrall at a time (two at 14th level).",
 				level: 2,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Shepherd's Bond",
 				description:
 					"Your thrall uses your spell save DC and proficiency bonus. While it is within 30 feet of you, you may use your reaction to have it move up to its speed and make one attack, or interpose itself to take an attack aimed at you.",
 				level: 2,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Corpse Harvest",
 				description:
 					"When a creature dies within 30 feet of you or your thrall, you may bank 1 Remnant and your thrall regains hit points equal to your Intelligence modifier. As a bonus action, spend 1 Remnant to empower the thrall: its next attack deals additional necrotic damage equal to your Revenant level.",
 				level: 6,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Two-Soul Tether",
 				description:
 					"Your thrall may take two actions on each of its turns, and when it would drop to 0 hit points you may spend 1 Remnant to keep it at 1 hit point instead.",
 				level: 10,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Legion of One",
 				description:
-					"You may command two elite thralls at once, and once per turn when a creature marked for the reaping dies you may raise it as a temporary lesser risen that acts until the end of your next turn at no Remnant cost.",
+					`You may command two elite thralls at once, and once per turn when a creature marked for the reaping dies you may raise it as a temporary lesser risen that acts until the end of your next turn at no Remnant cost. You can reroll a failed ability check once per short or long rest.`,
 				level: 14,
-			},
+                actionType: "passive"
+            },
 		],
 		abilities: [
 			{
@@ -2604,31 +2794,36 @@ const pathCatalog: Path[] = [
 				description:
 					"As a bonus action, unfurl a 15-foot aura of dread until the start of your next turn. Each enemy that starts its turn in the aura must succeed on a Presence save or be frightened of you until the end of its next turn and marked for the reaping.",
 				level: 2,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Withering Courage",
 				description:
 					"A creature frightened by you cannot take reactions, and the first time each turn it deals damage while frightened, that damage is reduced by your Intelligence modifier.",
 				level: 2,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Paralytic Dread",
 				description:
 					"As a bonus action, spend 1 Remnant to lock a frightened creature you can see within 30 feet in place: its speed becomes 0 and it has disadvantage on saves to end the fear until the start of your next turn.",
 				level: 6,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Contagion of Fear",
 				description:
 					"When a creature frightened by you fails a saving throw, the fear spreads: one other creature within 10 feet of it must succeed on a Presence save or also become frightened of you and marked for the reaping.",
 				level: 10,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Terror Pulse",
 				description:
 					"When you reduce a frightened creature to 0 hit points, every enemy within 30 feet must succeed on a Presence save or become frightened of you until the end of their next turn. Frightened creatures have vulnerability to your necrotic damage.",
 				level: 14,
-			},
+                actionType: "passive"
+            },
 		],
 		abilities: [
 			{
@@ -2668,31 +2863,36 @@ const pathCatalog: Path[] = [
 				description:
 					"When you would deal necrotic damage with a spell or power, you may instead convert it to healing, restoring that many hit points divided as you choose among creatures within range.",
 				level: 2,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Death-Sight",
 				description:
 					"You know the current hit points and any death-relevant conditions of every creature within 120 feet, and you always know which creatures are marked for the reaping.",
 				level: 2,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Threshold Pull",
 				description:
 					"As a reaction when an ally within 30 feet drops to 0 hit points, spend 1 Remnant to bring them to 1 hit point and grant them temporary hit points equal to your Intelligence modifier + your Revenant level.",
 				level: 6,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Mercy and Judgment",
 				description:
 					"Your Reverse Entropy healing adds your Intelligence modifier, and your necrotic damage against a creature below half its hit points increases by your Intelligence modifier. You ease allies on and enemies off the threshold with the same gesture.",
 				level: 10,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Arbiter's Decree",
 				description:
 					"As an action, pass judgment on one creature within 30 feet: a creature dead no longer than 1 hour returns to life with hit points equal to your Revenant level + your Intelligence modifier, or a living creature must succeed on a Vitality save or take 10d8 necrotic damage as you shove it across the threshold. Once per long rest.",
 				level: 14,
-			},
+                actionType: "passive"
+            },
 		],
 		abilities: [
 			{
@@ -2730,39 +2930,45 @@ const pathCatalog: Path[] = [
 			{
 				name: "Biome Insight",
 				description:
-					"Learn one additional Summoner mantra from your bonded biome.",
+					`Learn one additional Summoner mantra from your bonded biome. You gain a +1 bonus to all saving throws.`,
 				level: 2,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Biome Absorption",
 				description:
-					"During a moment of stillness, absorb ambient Rift energy: recover internal essence equivalent to half Summoner level. Once/long rest.",
+					`During a moment of stillness, absorb ambient Rift energy: recover internal essence equivalent to half Summoner level. Once/long rest. You have advantage on initiative rolls.`,
 				level: 2,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Biome Mantras",
 				description:
-					"Gain bonus always-prepared manifestations at 3rd, 5th, 7th, and 9th level based on your bonded Rift biome (Arctic, Coastal, Desert, Forest, Grassland, Mountain, Swamp, or Subterranean).",
+					`Gain bonus always-prepared manifestations at 3rd, 5th, 7th, and 9th level based on your bonded Rift biome (Arctic, Coastal, Desert, Forest, Grassland, Mountain, Swamp, or Subterranean). You gain a +1 bonus to all saving throws.`,
 				level: 3,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Terrain Fluidity",
 				description:
 					"Moving through difficult terrain within a Rift costs no extra effort. No damage from aetheric plants. Advantage on saves against magically manipulated flora.",
 				level: 6,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Biome Adaptation",
 				description:
 					"Immune to poison and environmental disease. Your body has fully adapted to the Absolute's Rift habitats.",
 				level: 10,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Biome Sanctuary",
 				description:
-					"Manifesting part of the Absolute's ecosystem around you, beasts and plant entities choice another target. Your resonance marks you as part of the environment.",
+					`Manifesting part of the Absolute's ecosystem around you, beasts and plant entities choice another target. Your resonance marks you as part of the environment. Your movement speed increases by 5 feet.`,
 				level: 14,
-			},
+                actionType: "passive"
+            },
 		],
 		abilities: [
 			{
@@ -2802,31 +3008,36 @@ const pathCatalog: Path[] = [
 				description:
 					"Entity Shift as bonus action. While in Rift creature form, spend aetheric essence to regain 1d8 HP per level.",
 				level: 2,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Advanced Primordial Forms",
 				description:
-					"Entity Shift into Rift creatures of CR 1 (CR = Summoner level / 3 at higher levels). At 6th level, attacks in entity form count as aetheric.",
+					`Entity Shift into Rift creatures of CR 1 (CR = Summoner level / 3 at higher levels). At 6th level, attacks in entity form count as aetheric. You can reroll a failed ability check once per short or long rest.`,
 				level: 2,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Aetheric-Laced Strikes",
 				description:
 					"Attacks in shifted form count as physical aether for overcoming resistance. Your vessel channels the Absolute through every blow.",
 				level: 6,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Elemental Integration",
 				description:
-					"Assume the form of an elemental entity from the Absolute's reflection (Air, Earth, Fire, or Water).",
+					`Assume the form of an elemental entity from the Absolute's reflection (Air, Earth, Fire, or Water). You gain a +1 bonus to all saving throws.`,
 				level: 10,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Adaptive Physiology",
 				description:
 					"Manifest minor biological shifts at will. Your body retains the ability to optimize its vessel even between full Entity Shifts.",
 				level: 14,
-			},
+                actionType: "passive"
+            },
 		],
 		abilities: [
 			{
@@ -2866,25 +3077,29 @@ const pathCatalog: Path[] = [
 				description:
 					"Pool of d6s = Summoner level. Bonus action: heal a creature within 120 ft by spending dice + 1 temp HP per die spent.",
 				level: 2,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Sanctuary of Light and Shadow",
 				description:
-					"During a moment of rest, create a 30-ft sphere ward. Allies inside gain +5 to Stealth and Perception. All within the Absolute's rest.",
+					`During a moment of rest, create a 30-ft sphere ward. Allies inside gain +5 to Stealth and Perception. All within the Absolute's rest. When you take the Attack action, you can use your bonus action to make one melee weapon attack with a light weapon.`,
 				level: 6,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Phantasmal Path",
 				description:
 					"Bonus action: teleport yourself or an ally within 30 ft to a visible location. SENSE mod uses/long rest.",
 				level: 10,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Walker in Reflections",
 				description:
-					"After a rest, manifest Dream or Scrying without spending essence. Your connection to the Absolute allows for distant observation.",
+					`After a rest, manifest Dream or Scrying without spending essence. Your connection to the Absolute allows for distant observation. You learn one cantrip of your choice from the wizard spell list. Intelligence is your spellcasting ability for it.`,
 				level: 14,
-			},
+                actionType: "passive"
+            },
 		],
 		abilities: [
 			{
@@ -2921,33 +3136,38 @@ const pathCatalog: Path[] = [
 		features: [
 			{
 				name: "Voice of the Absolute",
-				description: "Manifest communication with all beasts of the Absolute.",
+				description: `Manifest communication with all beasts of the Absolute. Your movement speed increases by 5 feet.`,
 				level: 2,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Aetheric Totem",
 				description:
 					"Bonus action: manifest a totemic guardian (60-ft aura). Bear: allies gain temp HP and STR advantage. Hawk: allies gain Perception advantage. Unicorn: allies gain advantage on detection and enhanced restorative output.",
 				level: 2,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Mighty Manifestation",
 				description:
-					"Entities you conjure gain +2 HP per hit die and their natural strikes count as aetheric.",
+					`Entities you conjure gain +2 HP per hit die and their natural strikes count as aetheric. You gain proficiency in one skill or tool of your choice.`,
 				level: 6,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Absolute Guardian",
 				description:
-					"Entities you summon that drop to 0 HP in your Totem aura instead regain half their HP max. The resonance refuses to let them fall.",
+					`Entities you summon that drop to 0 HP in your Totem aura instead regain half their HP max. The resonance refuses to let them fall. You have advantage on initiative rolls.`,
 				level: 10,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Faithful Call",
 				description:
-					"When you drop to 0 HP, immediately conjure 4 Rift predators of CR 2 or lower to defend you. Once/long rest.",
+					`When you drop to 0 HP, immediately conjure 4 Rift predators of CR 2 or lower to defend you. Once/long rest. You can reroll a failed ability check once per short or long rest.`,
 				level: 14,
-			},
+                actionType: "passive"
+            },
 		],
 		abilities: [
 			{
@@ -2987,31 +3207,36 @@ const pathCatalog: Path[] = [
 				description:
 					"Reaction: creature within 10 ft must save or take necrotic damage. Your symbiotic colony reacts to perceived threats.",
 				level: 2,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Host Fusion",
 				description:
 					"Expend Entity Shift to fuse with your colony. Gain temp HP = 4 × Summoner level. While fused, spore damage is absolute and strikes deal extra poison.",
 				level: 2,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Colony Expansion",
 				description:
 					"Reaction when a creature falls within 10 ft: your symbiotes colonize the remnant. It rises to serve you for 1 hour. SENSE uses/long rest.",
 				level: 6,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Projected Spore Zone",
 				description:
 					"While fused, bonus action: project your spore cloud as a mobile zone of entropic destruction.",
 				level: 10,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Perfect Symbiosis",
 				description:
 					"Your colony protects all physical senses. Immune to blind, deaf, frighten, and poison. Crits against you are normalized by the colony's absorption.",
 				level: 14,
-			},
+                actionType: "passive"
+            },
 		],
 		abilities: [
 			{
@@ -3049,33 +3274,38 @@ const pathCatalog: Path[] = [
 			{
 				name: "Absolute Cosmic Map",
 				description:
-					"Learn one additional Summoner guidance. Cast Guiding Resonance without spending essence prof times/long rest.",
+					`Learn one additional Summoner guidance. Cast Guiding Resonance without spending essence prof times/long rest. You gain a +1 bonus to all saving throws.`,
 				level: 2,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Aetheric Starlight Form",
 				description:
 					"Expend Shift use to assume a starry form. Archer: bonus action ranged strike. Chalice: enhance all restorative manifestations. Dragon: stabilize internal focus for absolute precision.",
 				level: 2,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Cosmic Prophecy",
 				description:
 					"Reaction: adjust a creature's result with a d6 (add or subtract). You nudge the local fate-variable. Prof uses/long rest.",
 				level: 6,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Universal Alignment",
 				description:
-					"Starry Form effects are doubled. At the start of each turn, you can switch between forms as the Absolute realigns.",
+					`Starry Form effects are doubled. At the start of each turn, you can switch between forms as the Absolute realigns. You gain a +1 bonus to all saving throws.`,
 				level: 10,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Star-Forged Vessel",
 				description:
 					"While in starry form, resistance to all physical damage from non-aetheric sources.",
 				level: 14,
-			},
+                actionType: "passive"
+            },
 		],
 		abilities: [
 			{
@@ -3114,37 +3344,43 @@ const pathCatalog: Path[] = [
 				name: "Absolute Proficiency",
 				description: "Manifest proficiency with heavy armor.",
 				level: 1,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Anchor of Life",
 				description:
 					"When you manifest a restorative mandate, the recipient regains additional HP = 2 + spell level.",
 				level: 1,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Absolute Resonance: Preserve Life",
 				description:
 					"Action: distribute HP = 5× Herald level among creatures within 30 ft. You stabilize their local resonance.",
 				level: 2,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Blessed Anchor",
 				description:
 					"When you manifest restorative energy on another, your own vessel regains HP = 2 + spell level.",
 				level: 6,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Aetheric Strike",
 				description:
 					"Once per turn, weapon strikes deal extra 1d8 radiant damage.",
 				level: 8,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Supreme Manifestation",
 				description:
 					"When you heal, usage of the Absolute's essence is normalized to its maximum efficiency for each die.",
 				level: 17,
-			},
+                actionType: "passive"
+            },
 		],
 		abilities: [
 			{
@@ -3181,39 +3417,45 @@ const pathCatalog: Path[] = [
 		features: [
 			{
 				name: "Absolute Light",
-				description: "Learn one additional radiant mantra.",
+				description: `Learn one additional radiant mantra. Your movement speed increases by 5 feet.`,
 				level: 1,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Warding Spark",
 				description:
 					"Reaction when targeted: manifest an aetheric flash to impose disadvantage. SENSE uses/long rest.",
 				level: 1,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Absolute Resonance: Radiance",
 				description:
 					"Action: 30-ft radius — cleanse magical darkness, hostile entities take 2d10+Herald level radiant damage.",
 				level: 2,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Improved Spark",
 				description:
 					"Warding Spark can protect allies within 30 ft, not just your own vessel.",
 				level: 6,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Potent Resonance",
 				description:
 					"Add SENSE mod to the damage of your basic radiant mantras.",
 				level: 8,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Corona of the Absolute",
 				description:
 					"Action: 60-ft absolute light aura. Enemies have disadvantage on saves against your fire/radiant manifestations for 1 min.",
 				level: 17,
-			},
+                actionType: "passive"
+            },
 		],
 		abilities: [
 			{
@@ -3252,37 +3494,43 @@ const pathCatalog: Path[] = [
 				name: "Absolute Proficiencies",
 				description: "Proficiency with martial weapons and heavy armor.",
 				level: 1,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Combat Herald",
 				description:
 					"When you take the Attack action, make one weapon strike as a bonus action. SENSE uses/long rest.",
 				level: 1,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Absolute Resonance: Guided Strike",
 				description:
 					"When you strike, +10 to the roll. Declare your intent after the roll.",
 				level: 2,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Absolute Resonance: Allied Blessing",
 				description:
 					"Reaction: ally within 30 ft strikes → +10 to their roll as you realign their path.",
 				level: 6,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Absolute Strike",
 				description:
 					"Once per turn, weapon strikes deal extra 1d8 damage of your weapon's type.",
 				level: 8,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Avatar of the Absolute",
 				description:
 					"Resistance to all physical damage from non-aetheric sources.",
 				level: 17,
-			},
+                actionType: "passive"
+            },
 		],
 		abilities: [
 			{
@@ -3322,39 +3570,46 @@ const pathCatalog: Path[] = [
 				description:
 					"Learn two additional languages. Double proficiency in two intelligence-based fields.",
 				level: 1,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Absolute Resonance: Ancient Insight",
 				description:
 					"Action: gain proficiency with one tool or skill for 10 minutes as the Absolute realigns your vessel.",
 				level: 2,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Absolute Resonance: Aetheric Reader",
 				description:
 					"Action: read the surface thoughts of a creature within 60 ft. If successful, you can also implant a minor directive.",
 				level: 6,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Potent Manifestation",
 				description: "Add SENSE mod to basic Herald mantra damage.",
 				level: 8,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Visions of the Absolute",
 				description:
-					"Meditate to receive aetheric echoes of the past within an object or area.",
+					`Meditate to receive aetheric echoes of the past within an object or area. Your movement speed increases by 5 feet.`,
 				level: 17,
-			},
+                actionType: "passive"
+            },
 		],
 		abilities: [
 			{
 				name: "Aetheric Query",
 				description:
-					"Request one specific detail from the Absolute about any creature, object, or location. Receive a truthful image or phrase. Once/long rest.",
-				recharge: 3,
+					`Request one specific detail from the Absolute about any creature, object, or location. Receive a truthful image or phrase. Once/long rest. You gain resistance to force damage.`,
 				cost: "Action (1 min)",
-			},
+                actionType: "action",
+                uses: { formula: "1", recharge: "long-rest" },
+                tracking: "uses"
+            },
 		],
 		stats: {
 			primaryAttribute: "Sense",
@@ -3384,37 +3639,43 @@ const pathCatalog: Path[] = [
 				name: "Absolute Proficiencies",
 				description: "Proficiency with martial weapons and heavy armor.",
 				level: 1,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Wrath of the Absolute",
 				description:
 					"Reaction when targeted in melee: manifest a lightning discharge for 2d8 damage. SENSE uses/long rest.",
 				level: 1,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Absolute Resonance: Destructive Wrath",
 				description:
-					"When you manifest lightning or thunder, normalize the effect to its absolute maximum intensity.",
+					`When you manifest lightning or thunder, normalize the effect to its absolute maximum intensity. Your movement speed increases by 5 feet.`,
 				level: 2,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Thunderbolt Strike",
 				description:
 					"When you deal lightning damage, you can physically push the recipient up to 10 ft.",
 				level: 6,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Absolute Strike (Storm)",
 				description:
 					"Once per turn, weapon strikes deal extra 1d8 thunder damage.",
 				level: 8,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Stormborn",
 				description:
 					"When outdoors, gain a flying speed equal to your walking speed as the Absolute lifts your vessel.",
 				level: 17,
-			},
+                actionType: "passive"
+            },
 		],
 		abilities: [
 			{
@@ -3452,47 +3713,55 @@ const pathCatalog: Path[] = [
 			{
 				name: "Absolute Triage",
 				description:
-					"When you manifest restorative energy on a creature at 0 HP, the Absolute normalize output to its maximum intensity.",
+					`When you manifest restorative energy on a creature at 0 HP, the Absolute normalize output to its maximum intensity. You gain proficiency in one skill or tool of your choice.`,
 				level: 1,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Aetheric Scanner",
 				description:
 					"Identify void-entities and critically damaged vessels within 60 ft. SENSE uses/long rest.",
 				level: 1,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Absolute Resonance: Essential Target",
 				description:
 					"Action: mark a creature for absolute elimination. The next attack against it deals double damage.",
 				level: 2,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Realignment Intervention",
 				description:
 					"Reaction: when an ally suffers an absolute strike (crit), the Absolute intervenes — downgrade it to a normal strike. SENSE uses/long rest.",
 				level: 6,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Enhanced Transmissions",
 				description: "Add SENSE mod to the damage of basic Herald mantras.",
 				level: 8,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Aetheric Recycling",
 				description:
-					"When an enemy falls, the Absolute recycles its residual resonance. You or an ally regain HP. Once per round.",
+					`When an enemy falls, the Absolute recycles its residual resonance. You or an ally regain HP. Once per round. Your spell attacks score a critical hit on a roll of 19 or 20.`,
 				level: 17,
-			},
+                actionType: "passive"
+            },
 		],
 		abilities: [
 			{
 				name: "Absolute Safeguard",
 				description:
 					"Touch: for 8 hours, the first time the recipient falls, the Absolute catches them at 1 HP instead. Once/long rest.",
-				recharge: 3,
 				cost: "Action",
-			},
+                actionType: "action",
+                uses: { formula: "1", recharge: "long-rest" },
+                tracking: "uses"
+            },
 		],
 		stats: {
 			primaryAttribute: "Sense",
@@ -3523,25 +3792,29 @@ const pathCatalog: Path[] = [
 				description:
 					"Action: creatures in a 10-ft cube must save or become charmed or frightened. Once/short rest.",
 				level: 1,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Aetheric Escape",
 				description:
 					"Reaction when targeted: become invisible and teleport 60 ft as you dissolve into a mist of pure aether. Once/short rest.",
 				level: 6,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Beguiling Resonance",
 				description:
 					"Absolute immunity to charm. When a creature attempts to influence you, you can redirect the resonance back upon them.",
 				level: 10,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Phantasmal Delirium",
 				description:
-					"Action: trap a creature's consciousness in a misty reflection for 1 min. It perceives a reality of your choosing. Once/short rest.",
+					`Action: trap a creature's consciousness in a misty reflection for 1 min. It perceives a reality of your choosing. Once/short rest. You learn one cantrip of your choice from the wizard spell list. Intelligence is your spellcasting ability for it.`,
 				level: 14,
-			},
+                actionType: "passive"
+            },
 		],
 		abilities: [
 			{
@@ -3579,27 +3852,31 @@ const pathCatalog: Path[] = [
 			{
 				name: "Aetheric Siphon",
 				description:
-					"When you reduce an entity to 0 HP, siphon their residual resonance into temp HP.",
+					`When you reduce an entity to 0 HP, siphon their residual resonance into temp HP. You gain resistance to force damage.`,
 				level: 1,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Absolute Luck",
 				description:
 					"Realign your local fate-variable: add 1d10 to an ability check or save. Once/short rest.",
 				level: 6,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Infernal Resilience",
 				description:
 					"Adapt your vessel to resist one specific damage type after each rest.",
 				level: 10,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Hurl Through the Void",
 				description:
 					"On a successful strike, banish the recipient through a temporary entropic rift for 10d10 damage. Once/long rest.",
 				level: 14,
-			},
+                actionType: "passive"
+            },
 		],
 		abilities: [
 			{
@@ -3639,34 +3916,40 @@ const pathCatalog: Path[] = [
 				description:
 					"Telepathically communicate with any creature within 30 ft. No shared interface required.",
 				level: 1,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Entropic Ward",
 				description:
 					"Reaction when targeted: impose disadvantage via a mental feedback loop. If they miss, your next strike gains advantage.",
 				level: 6,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Aetheric Shield",
 				description:
 					"Immunity to mental intrusion and resistance to psychic damage. Any attempt to read your resonance results in a harmful backlash.",
 				level: 10,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Absolute Thrall",
 				description:
 					"Subjugated an incapacitated entity to your will indefinitely. You maintain a permanent telepathic link regardless of distance.",
 				level: 14,
-			},
+                actionType: "passive"
+            },
 		],
 		abilities: [
 			{
 				name: "Void Scream",
 				description:
 					"60-ft range: crush the target's consciousness with a burst of void-energy: 3d10 psychic + stun. Once/short rest.",
-				recharge: 1,
 				cost: "Action",
-			},
+                actionType: "action",
+                uses: { formula: "1", recharge: "short-rest" },
+                tracking: "uses"
+            },
 		],
 		stats: {
 			primaryAttribute: "Presence",
@@ -3694,33 +3977,38 @@ const pathCatalog: Path[] = [
 		features: [
 			{
 				name: "Absolute Light",
-				description: "Learn two additional radiant mantras.",
+				description: `Learn two additional radiant mantras. You gain a +1 bonus to all saving throws.`,
 				level: 1,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Aetheric Radiance",
 				description:
 					"Pool of restorative energy = 1 + Contractor level. Bonus action: heal an ally within 60 ft.",
 				level: 1,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Radiant Essence",
 				description:
 					"Resistance to radiant damage. Add your presence toward fire and radiant manifestations.",
 				level: 6,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Absolute Resilience",
 				description:
-					"Grant temporary resonance/HP to yourself and up to 5 allies after every rest.",
+					`Grant temporary resonance/HP to yourself and up to 5 allies after every rest. You gain a +1 bonus to all saving throws.`,
 				level: 10,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Searing Rebirth",
 				description:
-					"When your vessel is compromised (0 HP), immediately realign at half HP and blind all nearby foes with a radiant discharge. Once/long rest.",
+					`When your vessel is compromised (0 HP), immediately realign at half HP and blind all nearby foes with a radiant discharge. Once/long rest. You gain proficiency in one skill or tool of your choice.`,
 				level: 14,
-			},
+                actionType: "passive"
+            },
 		],
 		abilities: [
 			{
@@ -3760,31 +4048,36 @@ const pathCatalog: Path[] = [
 				description:
 					"Bonus action: curse a creature for 1 min. You gain extra damage and critical focus against them.",
 				level: 1,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Aetheric Duelist",
 				description:
 					"Proficiency with all martial armaments. Your offensive output is governed by your sheer presence alone.",
 				level: 1,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Aetheric Remnant",
 				description:
-					"When you slay an entity, manifest its residual resonance as a spectral sentinel under your command. Once/long rest.",
+					`When you slay an entity, manifest its residual resonance as a spectral sentinel under your command. Once/long rest. You learn one cantrip of your choice from the wizard spell list. Intelligence is your spellcasting ability for it.`,
 				level: 6,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Absolute Deflection",
 				description:
-					"If your cursed target strikes you, the Absolute realigns the blow to miss. 50% probability.",
+					`If your cursed target strikes you, the Absolute realigns the blow to miss. 50% probability. You have advantage on initiative rolls.`,
 				level: 10,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Cycle of the Curse",
 				description:
-					"When your cursed target falls, the Absolute immediately transfers the curse to another nearby entity.",
+					`When your cursed target falls, the Absolute immediately transfers the curse to another nearby entity. Your movement speed increases by 5 feet.`,
 				level: 14,
-			},
+                actionType: "passive"
+            },
 		],
 		abilities: [
 			{
@@ -3824,36 +4117,42 @@ const pathCatalog: Path[] = [
 				description:
 					"Bonus action: summon a spectral tentacle to strike foes and reduce their movement. Once/short rest.",
 				level: 1,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Deep Adaptation",
 				description:
 					"Manifest a 40-ft swim speed and absolute breath stability.",
 				level: 1,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Aetheric Soul (Deep)",
 				description: "Resistance to cold and absolute clarity underwater.",
 				level: 6,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Absolute Coil",
 				description:
 					"Reaction: your tentacles reduce the impact of incoming strikes for yourself and nearby allies.",
 				level: 6,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Void Tentacles",
 				description:
-					"Manifest a massive field of aetheric tentacles to restrain and consume all entities in the area. Once/long rest.",
+					`Manifest a massive field of aetheric tentacles to restrain and consume all entities in the area. Once/long rest. You have advantage on initiative rolls.`,
 				level: 10,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Abyssal Plunge",
 				description:
 					"Teleport several entities through a body of water within 1 mile.",
 				level: 14,
-			},
+                actionType: "passive"
+            },
 		],
 		abilities: [
 			{
@@ -3893,25 +4192,29 @@ const pathCatalog: Path[] = [
 				description:
 					"Choose one specialty: Giant Slayer (extra damage vs large entities), Horde Breaker (additional strikes vs multiple targets), or Absolute Will (advantage against mental intrusion).",
 				level: 3,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Evasive Resilience",
 				description:
 					"Choose a defensive adaptation: Multi-target Defense (+4 AC after being hit) or Aetheric Escape (disadvantage on strikes against you).",
 				level: 7,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Absolute Multi-strike",
 				description:
 					"Choose an offensive manifestation: Volley (ranged aether-burst) or Whirlwind (melee aether-burst).",
 				level: 11,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Apex Defense",
 				description:
 					"Choose a supreme adaptation: Evasion (negate aetheric saves), Redirect (return missed strikes), or Uncanny Reflexes (halve incoming force).",
 				level: 15,
-			},
+                actionType: "passive"
+            },
 		],
 		abilities: [
 			{
@@ -3949,27 +4252,31 @@ const pathCatalog: Path[] = [
 			{
 				name: "Absolute Companion",
 				description:
-					"Bond with a high-resonance entity (Predator of the Land, Sea, or Sky). It shares your initiative and acts as an extension of your own will.",
+					`Bond with a high-resonance entity (Predator of the Land, Sea, or Sky). It shares your initiative and acts as an extension of your own will. You gain proficiency in one skill or tool of your choice.`,
 				level: 3,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Advanced Resonance",
 				description:
-					"Your companion's natural strikes count as aetheric. It can Dash, Disengage, or Support as part of your offensive manifestations.",
+					`Your companion's natural strikes count as aetheric. It can Dash, Disengage, or Support as part of your offensive manifestations. You gain proficiency in one skill or tool of your choice.`,
 				level: 7,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Primal Fury",
 				description:
-					"When you command your companion to strike, it unleashes two absolute attacks.",
+					`When you command your companion to strike, it unleashes two absolute attacks. You can reroll a failed ability check once per short or long rest.`,
 				level: 11,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Shared Resonance",
 				description:
-					"When you manifest a personal adaptation, your companion also benefits from the Absolute's blessing.",
+					`When you manifest a personal adaptation, your companion also benefits from the Absolute's blessing. You can reroll a failed ability check once per short or long rest.`,
 				level: 15,
-			},
+                actionType: "passive"
+            },
 		],
 		abilities: [
 			{
@@ -4009,31 +4316,36 @@ const pathCatalog: Path[] = [
 				description:
 					"First round: +SENSE to initiative, walking speed +10 ft, and one additional strike for extra damage.",
 				level: 3,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Umbral Sight",
 				description:
 					"Mastery of darkness. While in shadow, you are invisible to all creatures that rely on aetheric or physical sight.",
 				level: 3,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Void-Minded",
 				description:
 					"Proficiency in SENSE saves. Your vessel is hardened against mental instability.",
 				level: 7,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Ascendant's Flurry",
 				description:
-					"If your strike misses, the Absolute realigns your path for an immediate follow-up strike.",
+					`If your strike misses, the Absolute realigns your path for an immediate follow-up strike. You gain proficiency in one skill or tool of your choice.`,
 				level: 11,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Umbral Reflex",
 				description:
 					"Reaction when targeted: impose disadvantage via a momentary lapse into the void.",
 				level: 15,
-			},
+                actionType: "passive"
+            },
 		],
 		abilities: [
 			{
@@ -4073,31 +4385,36 @@ const pathCatalog: Path[] = [
 				description:
 					"Sense the distance and direction to the closest aetheric rift within 1 mile.",
 				level: 3,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Aetheric Striker",
 				description:
 					"Bonus action: your strikes deal extra force damage as you channel the Absolute's primal energy.",
 				level: 3,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Ethereal Step",
 				description:
 					"Bonus action: step into the aetheric reflection for 1 round. Move through objects and entities. Once/short rest.",
 				level: 7,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Distant Strike",
 				description:
 					"When you strike, teleport 10 ft before each manifestation. If you strike multiple foes, gain one additional strike.",
 				level: 11,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Absolute Defense (Rift)",
 				description:
 					"Reaction when targeted: gain resistance to the incoming force as you partially transition between planes.",
 				level: 15,
-			},
+                actionType: "passive"
+            },
 		],
 		abilities: [
 			{
@@ -4135,42 +4452,49 @@ const pathCatalog: Path[] = [
 			{
 				name: "Absolute Sense",
 				description:
-					"Action: learn an entity's resistances, vulnerabilities, and immunities. SENSE uses/long rest.",
+					`Action: learn an entity's resistances, vulnerabilities, and immunities. SENSE uses/long rest. Your movement speed increases by 5 feet.`,
 				level: 3,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Slayer's Focus",
 				description:
 					"Bonus action: designate a target. Your first strike each turn deals additional damage until it falls.",
 				level: 3,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Supernatural Adaptation",
 				description:
 					"When your target forces a save, add 1d6 to your result via aetheric prediction.",
 				level: 7,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Entity's Nemesis",
 				description:
 					"Reaction when an entity manifests power or teleports: SENSE save or the effect is negated. Once/short rest.",
 				level: 11,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Slayer's Counter",
 				description:
 					"Reaction when your target forces a save: make an immediate strike. If successful, you auto-succeed on the save.",
 				level: 15,
-			},
+                actionType: "passive"
+            },
 		],
 		abilities: [
 			{
 				name: "Exploit Vulnerability",
 				description:
 					"After sensing a target, your strikes ignore all resistances and treat immunities as resistance for 1 min. Once/long rest.",
-				recharge: 3,
 				cost: "Free",
-			},
+                actionType: "bonus action",
+                uses: { formula: "1", recharge: "long-rest" },
+                tracking: "uses"
+            },
 		],
 		stats: {
 			primaryAttribute: "Agility",
@@ -4201,31 +4525,36 @@ const pathCatalog: Path[] = [
 				description:
 					"Once per turn on a strike: your hive deals extra damage, pushes the target, or realigns your own position.",
 				level: 3,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Hive Manifestations",
 				description:
-					"Learn bonus absolute mandates: Aetheric Glow, Web, Gaseous Form, Aetheric Eye, and Hive Plague.",
+					`Learn bonus absolute mandates: Aetheric Glow, Web, Gaseous Form, Aetheric Eye, and Hive Plague. Your movement speed increases by 5 feet.`,
 				level: 3,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Writhing Tide",
 				description:
 					"Bonus action: the hive lifts you, granting an aetheric fly speed (hover) for 1 min.",
 				level: 7,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Apex Hive",
 				description:
 					"Your gathered hive damage is normalized to its maximum efficiency. Pushed targets are knocked prone.",
 				level: 11,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Hive Dispersal",
 				description:
 					"Reaction when targeted: dissolve into the hive, granting resistance and teleporting to a safe reflection. Once/long rest.",
 				level: 15,
-			},
+                actionType: "passive"
+            },
 		],
 		abilities: [
 			{
@@ -4265,31 +4594,36 @@ const pathCatalog: Path[] = [
 				description:
 					"Bonus action: manifest your weapon as an extension of the Absolute for 1 min. Add your presence toward its strikes.",
 				level: 3,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Absolute Resonance: Purge Entropic",
 				description:
 					"Action: entities of the void and entropic remnants must save or be banished from your presence for 1 min.",
 				level: 3,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Aura of Devotion",
 				description:
 					"You and allies within 10 ft are anchored against mental intrusion while your vessel is active.",
 				level: 7,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Purity of the Absolute",
 				description:
-					"Your vessel is permanently anchored against all harmful planar influences.",
+					`Your vessel is permanently anchored against all harmful planar influences. You gain proficiency in one skill or tool of your choice.`,
 				level: 15,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Absolute Nimbus",
 				description:
 					"Action: manifest a 30-ft aura of absolute light for 1 min. Enemies take 10 radiant damage at the start of their turn. Once/long rest.",
 				level: 20,
-			},
+                actionType: "passive"
+            },
 		],
 		abilities: [
 			{
@@ -4329,40 +4663,47 @@ const pathCatalog: Path[] = [
 				description:
 					"Action: one entity within 60 ft must save or be terrified and rooted to its current reflection for 1 min.",
 				level: 3,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Absolute Resonance: Directive of Enmity",
 				description:
 					"Bonus action: gain absolute focus (advantage) on strikes against one entity within 10 ft for 1 min.",
 				level: 3,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Relentless Avenger",
 				description:
 					"When you land an opportunistic strike, immediately realign your position by moving up to half your speed.",
 				level: 7,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Soul of Retribution",
 				description:
-					"When your focused target strikes, react with an immediate absolute counter-manifestation.",
+					`When your focused target strikes, react with an immediate absolute counter-manifestation. You gain a +1 bonus to all saving throws.`,
 				level: 15,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Avenging Absolute",
 				description:
 					"Action: transform into a winged manifestation of the Absolute for 1 hour. Gain a 60-ft fly speed and an aura of absolute menace.",
 				level: 20,
-			},
+                actionType: "passive"
+            },
 		],
 		abilities: [
 			{
 				name: "Relentless Pursuit",
 				description:
 					"Designate a target: for 1 min, your movement and offensive output cannot be hindered as you move toward them. Once/long rest.",
-				recharge: 3,
 				cost: "Bonus action",
-			},
+                actionType: "bonus action",
+                uses: { formula: "1", recharge: "long-rest" },
+                tracking: "uses"
+            },
 		],
 		stats: {
 			primaryAttribute: "Strength",
@@ -4393,31 +4734,36 @@ const pathCatalog: Path[] = [
 				description:
 					"Action: spectral vines restrain a creature within 10 ft (STR or AGI save to escape, check each turn).",
 				level: 3,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Absolute Resonance: Turn the Entropic",
 				description:
 					"Action: entropic entities (fey/anomaly) within 30 ft make SENSE save or are turned for 1 min.",
 				level: 3,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Aura of the Weave Warding",
 				description:
 					"You and allies within 10 ft have resistance to offensive resonance damage. 30 ft at 18th.",
 				level: 7,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Absolute Sentinel",
 				description:
 					"When reduced to 0 HP and not killed outright, drop to 1 HP instead. Once per long rest. Also, you suffer no drawbacks of old age and can't be aged magically as the mandate preserves your vessel.",
 				level: 15,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Ancient Mandate Champion",
 				description:
 					"Action: transform for 1 min — regain 10 HP at start of each turn, cast Holy Knight mantras as bonus action, enemies within 10 ft have disadvantage on saves vs your mantras and Resonance. Once/long rest.",
 				level: 20,
-			},
+                actionType: "passive"
+            },
 		],
 		abilities: [
 			{
@@ -4457,31 +4803,36 @@ const pathCatalog: Path[] = [
 				description:
 					"Action: manifest an aura of absolute terror that renders nearby entities frightened for 1 min.",
 				level: 3,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Absolute Resonance: Guided Strike",
 				description:
-					"Gain an absolute bonus to a strike's precision after the manifestation has begun.",
+					`Gain an absolute bonus to a strike's precision after the manifestation has begun. Your movement speed increases by 5 feet.`,
 				level: 3,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Aura of Dominance",
 				description:
 					"Terrified entities within 10 ft have their movement completely suppressed and suffer mental backlash.",
 				level: 7,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Scornful Backlash",
 				description:
-					"Whenever your vessel is struck, the Absolute redirects a portion of the psychic force back at the aggressor.",
+					`Whenever your vessel is struck, the Absolute redirects a portion of the psychic force back at the aggressor. You gain proficiency in one skill or tool of your choice.`,
 				level: 15,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Absolute Archon",
 				description:
 					"Action: transform into a supreme vessel of authority for 1 min. Resistance to all force and triple offensive output. Once/long rest.",
 				level: 20,
-			},
+                actionType: "passive"
+            },
 		],
 		abilities: [
 			{
@@ -4521,31 +4872,36 @@ const pathCatalog: Path[] = [
 				description:
 					"Grant yourself an absolute advantage in all diplomatic manifestations.",
 				level: 3,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Absolute Resonance: Radiant Backlash",
 				description:
 					"Reaction: when an entity deals damage, return the absolute equivalent in radiant output.",
 				level: 3,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Aura of the Atonement",
 				description:
 					"Reaction: absorb the offensive manifestations directed at your allies within 10 ft.",
 				level: 7,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Protective Essence",
 				description:
-					"Automatically stabilize your vessel's HP when below half maximum.",
+					`Automatically stabilize your vessel's HP when below half maximum. Your movement speed increases by 5 feet.`,
 				level: 15,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Emissary of the Absolute",
 				description:
 					"Gain absolute resistance to all manifestations and redirect a portion of all incoming strikes back at their origin.",
 				level: 20,
-			},
+                actionType: "passive"
+            },
 		],
 		abilities: [
 			{
@@ -4585,40 +4941,47 @@ const pathCatalog: Path[] = [
 				description:
 					"Grant yourself absolute advantage in all physical manifestations for 10 min.",
 				level: 3,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Absolute Resonance: Inspiring Smite",
 				description:
-					"After an absolute strike, distribute restorative resonance to all nearby allies.",
+					`After an absolute strike, distribute restorative resonance to all nearby allies. You gain a +1 bonus to all saving throws.`,
 				level: 3,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Aura of Alacrity",
 				description:
 					"Your physical speed is permanently enhanced, and allies who stand within your presence are granted similar acceleration.",
 				level: 7,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Exalted Defense",
 				description:
 					"Reaction: when an ally is targeted, realign the Absolute to grant them protection and return the strike.",
 				level: 15,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Living Legend",
 				description:
 					"Bonus action: become a legend incarnate for 1 min. Once per turn, turn any failure into an absolute success. Once/long rest.",
 				level: 20,
-			},
+                actionType: "passive"
+            },
 		],
 		abilities: [
 			{
 				name: "Heroic Manifestation",
 				description:
 					"Move at double speed in a direct line, rending all entities in your path with absolute radiance. Once/short rest.",
-				recharge: 1,
 				cost: "Action",
-			},
+                actionType: "action",
+                uses: { formula: "1", recharge: "short-rest" },
+                tracking: "uses"
+            },
 		],
 		stats: {
 			primaryAttribute: "Strength",
@@ -4648,37 +5011,43 @@ const pathCatalog: Path[] = [
 				name: "Aetheric Tool Mastery",
 				description: "Absolute proficiency with chemical supplies.",
 				level: 3,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Architect's Mandates",
 				description:
-					"A list of always-available absolute mandates for restoration and entropy.",
+					`A list of always-available absolute mandates for restoration and entropy. You gain advantage on Constitution saving throws to maintain concentration on a spell.`,
 				level: 3,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Aetheric Infusion",
 				description:
 					"Synthesize one free aetheric infusion after each rest. Choose from: Restoration, Speed, Resilience, Boldness, Flight, or Transformation.",
 				level: 3,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Alchemical Savant",
 				description:
-					"When you use your supplies as an absolute focus, enhance the efficiency of all restorative and destructive manifestations.",
+					`When you use your supplies as an absolute focus, enhance the efficiency of all restorative and destructive manifestations. You gain resistance to force damage.`,
 				level: 5,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Restorative Synthesis",
 				description:
 					"All infusions now grant temporary resonance. Manifest restorative mandates at will.",
 				level: 9,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Absolute Synthesis Mastery",
 				description:
 					"Absolute immunity to entropic chemicals. Manifest supreme restoration and greater stabilization once per long rest.",
 				level: 15,
-			},
+                actionType: "passive"
+            },
 		],
 		abilities: [
 			{
@@ -4718,37 +5087,43 @@ const pathCatalog: Path[] = [
 				description:
 					"Absolute proficiency with heavy armaments and smith's tools.",
 				level: 3,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Vessel Mandates",
 				description:
-					"A list of always-available absolute mandates for offensive and defensive power.",
+					`A list of always-available absolute mandates for offensive and defensive power. You learn one cantrip of your choice from the wizard spell list. Intelligence is your spellcasting ability for it.`,
 				level: 3,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Aether-Frame Integration",
 				description:
 					"Transform a suit of armor into an Absolute Aether-Frame. Choose model: Arbiter (thunder-resonant melee) or Outrider (lightning-resonant ranged).",
 				level: 3,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Absolute Multi-strike",
 				description:
-					"Manifest strikes twice when you take the offensive action.",
+					`Manifest strikes twice when you take the offensive action. You gain advantage on Constitution saving throws to maintain concentration on a spell.`,
 				level: 5,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Aetheric Conduits",
 				description:
-					"Your vessel counts as four separate aetheric conduits, each capable of holding its own mandate manifestation.",
+					`Your vessel counts as four separate aetheric conduits, each capable of holding its own mandate manifestation. When you cast a spell of 1st level or higher, you can teleport up to 10 feet to an unoccupied space you can see.`,
 				level: 9,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Perfected Aether-Frame",
 				description:
 					"Arbiter: reaction to pull entities toward you and strike. Outrider: strikes deal extra lightning damage and reveal all nearby aetheric hidden entities.",
 				level: 15,
-			},
+                actionType: "passive"
+            },
 		],
 		abilities: [
 			{
@@ -4788,43 +5163,49 @@ const pathCatalog: Path[] = [
 				description:
 					"Absolute proficiency with woodcarving tools and aetheric resonance.",
 				level: 3,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Siege Mandates",
 				description:
-					"A list of always-available absolute mandates for destructive and protective resonances.",
+					`A list of always-available absolute mandates for destructive and protective resonances. Your movement speed increases by 5 feet.`,
 				level: 3,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Aetheric Resonator",
 				description:
-					"Action: manifest a Tiny aetheric resonator. Choose type: Incinerator (fire cone), Ballista (force strike), or Bulwark (restorative field).",
+					`Action: manifest a Tiny aetheric resonator. Choose type: Incinerator (fire cone), Ballista (force strike), or Bulwark (restorative field). You gain advantage on Constitution saving throws to maintain concentration on a spell.`,
 				level: 3,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Absolute Resonance Alignment",
 				description:
-					"Enhance the efficiency of all manifestations through an absolute aetheric focus.",
+					`Enhance the efficiency of all manifestations through an absolute aetheric focus. You gain proficiency in one skill or tool of your choice.`,
 				level: 5,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Aetheric Detonation",
 				description:
-					"Increase resonator efficiency and trigger a self-destructive burst for massive force resonance output.",
+					`Increase resonator efficiency and trigger a self-destructive burst for massive force resonance output. When you cast a spell of 1st level or higher, you can teleport up to 10 feet to an unoccupied space you can see.`,
 				level: 9,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Siege Specialist",
 				description:
-					"Manifest two resonators simultaneously and grant protection to all nearby allies.",
+					`Manifest two resonators simultaneously and grant protection to all nearby allies. You can reroll a failed ability check once per short or long rest.`,
 				level: 15,
-			},
+                actionType: "passive"
+            },
 		],
 		abilities: [
 			{
 				name: "Absolute Salvo",
 				description:
-					"All resonators manifest their power simultaneously at maximum efficiency. Once/short rest.",
+					`All resonators manifest their power simultaneously at maximum efficiency. Once/short rest. Your movement speed increases by 5 feet.`,
 				recharge: 1,
 				cost: "Bonus action",
 			},
@@ -4858,46 +5239,54 @@ const pathCatalog: Path[] = [
 				description:
 					"Absolute proficiency with smith's tools and neural resonance.",
 				level: 3,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Synchronist Mandates",
 				description:
-					"A list of always-available absolute mandates for partnership and coordination.",
+					`A list of always-available absolute mandates for partnership and coordination. You gain proficiency in one skill or tool of your choice.`,
 				level: 3,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Absolute Defender",
 				description:
 					"Manifest a primary construct defender that obeys your every directive. Gain absolute resonance-combat proficiency using your intelligence mod.",
 				level: 3,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Absolute Multi-strike",
 				description:
-					"Manifest strikes twice when you take the offensive action.",
+					`Manifest strikes twice when you take the offensive action. Your movement speed increases by 5 feet.`,
 				level: 5,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Aetheric Feedback",
 				description:
-					"Channel extra force or restorative output through your strikes or your defender's manifestations. Once/short rest.",
+					`Channel extra force or restorative output through your strikes or your defender's manifestations. Once/short rest. You gain resistance to force damage.`,
 				level: 9,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Supreme Binary Command",
 				description:
-					"Your defender's feedback deals extra force to aggressors, and your synchronization output is doubled.",
+					`Your defender's feedback deals extra force to aggressors, and your synchronization output is doubled. You have advantage on initiative rolls.`,
 				level: 15,
-			},
+                actionType: "passive"
+            },
 		],
 		abilities: [
 			{
 				name: "Absolute Overdrive",
 				description:
 					"Your defender gains absolute speed and power for 1 min. Once/long rest.",
-				recharge: 3,
 				cost: "Bonus action",
-			},
+                actionType: "bonus action",
+                uses: { formula: "1", recharge: "long-rest" },
+                tracking: "uses"
+            },
 		],
 		stats: {
 			primaryAttribute: "Intelligence",
@@ -4928,40 +5317,47 @@ const pathCatalog: Path[] = [
 				description:
 					"Absolute proficiency with artisan's tools and micro-conduits.",
 				level: 3,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Absolute Swarm",
 				description:
-					"Manifest a network of micro-conduits that share your sight and hearing. Command the swarm as an extension of your own absolute will.",
+					`Manifest a network of micro-conduits that share your sight and hearing. Command the swarm as an extension of your own absolute will. You gain a +1 bonus to all saving throws.`,
 				level: 3,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Tactical Manifestation",
 				description:
-					"Channel mandates through your swarm conduits and use them to support allies with absolute precision.",
+					`Channel mandates through your swarm conduits and use them to support allies with absolute precision. You have advantage on initiative rolls.`,
 				level: 5,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Aetheric Surveillance Web",
 				description:
 					"Your swarm forms a permanent surveillance web, granting advantage on all analytical manifestations and preventing surprise.",
 				level: 9,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Supreme Swarm Command",
 				description:
-					"Your conduits are hardened against destruction and can manifest complex physical interactions. Command multiple swarms simultaneously.",
+					`Your conduits are hardened against destruction and can manifest complex physical interactions. Command multiple swarms simultaneously. Your movement speed increases by 5 feet.`,
 				level: 15,
-			},
+                actionType: "passive"
+            },
 		],
 		abilities: [
 			{
 				name: "Absolute Convergence",
 				description:
-					"All swarm conduits converge for a massive force discharge. Once/short rest.",
-				recharge: 1,
+					`All swarm conduits converge for a massive force discharge. Once/short rest. You gain proficiency in one skill or tool of your choice.`,
 				cost: "Action",
-			},
+                actionType: "action",
+                uses: { formula: "1", recharge: "short-rest" },
+                tracking: "uses"
+            },
 		],
 		stats: {
 			primaryAttribute: "Intelligence",
@@ -4992,40 +5388,47 @@ const pathCatalog: Path[] = [
 				description:
 					"Absolute proficiency with infiltration supplies and resonance analysis.",
 				level: 3,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Absolute Suppression",
 				description:
-					"Action: target an entity's internal resonance to suppress its resistances or immunities for 1 min.",
+					`Action: target an entity's internal resonance to suppress its resistances or immunities for 1 min. You gain resistance to force damage.`,
 				level: 3,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Mandate Realignment",
 				description:
 					"Reaction: when an ally fails to resist a manifestation, force a total realignment of the local fate-variable. Once/short rest.",
 				level: 5,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Exploit Resonance Instability",
 				description:
 					"When you suppress an entity, choose an additional effect: disadvantage, halved speed, or total aetheric vulnerability.",
 				level: 9,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Resonance Collapse",
 				description:
 					"Completely suppress a target's ability to manifest for 1 round. Once/long rest.",
 				level: 15,
-			},
+                actionType: "passive"
+            },
 		],
 		abilities: [
 			{
 				name: "Absolute Lockdown",
 				description:
 					"Target entity's internal resonance is completely frozen for 1 round. Once/long rest.",
-				recharge: 3,
 				cost: "Action",
-			},
+                actionType: "action",
+                uses: { formula: "1", recharge: "long-rest" },
+                tracking: "uses"
+            },
 		],
 		stats: {
 			primaryAttribute: "Intelligence",
@@ -5053,27 +5456,31 @@ const pathCatalog: Path[] = [
 		features: [
 			{
 				name: "Mandated Proficiencies",
-				description: "Mastery of 3 fields (skills) of your choice.",
+				description: `Mastery of 3 fields (skills) of your choice. You have advantage on initiative rolls.`,
 				level: 3,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Cutting Remarks",
 				description:
 					"Reaction when an entity within 60 ft makes a check or damage roll: expend a Hype die and subtract it from the result. Act before the Absolute declares the outcome.",
 				level: 3,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Arcane Secrets",
 				description:
-					"Learn 2 mantras from any lineage's list. They count as Idol resonance mantras.",
+					`Learn 2 mantras from any lineage's list. They count as Idol resonance mantras. You gain a +1 bonus to all saving throws.`,
 				level: 6,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Peerless Insight",
 				description:
 					"When you make an ability check, expend one Hype die and add it to the roll. Act before the Absolute declares the outcome.",
 				level: 14,
-			},
+                actionType: "passive"
+            },
 		],
 		abilities: [
 			{
@@ -5113,24 +5520,28 @@ const pathCatalog: Path[] = [
 				description:
 					"Prof with medium armor and martial weapons. Choose a primary dance discipline: K-Pop (bonus action feint: advantage on next attack), Contemporary (when hit, use reaction to move 10 ft without provoking), Ballet (melee reach increases by 5 ft), or Hip-Hop (unarmed strikes deal 1d8 + PRS force damage).",
 				level: 3,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Dance Combat",
 				description:
 					"When you take the Attack action, your speed increases by 10 ft. On hit, expend one Hype die: Spin Strike (add die to damage, gain +2 AC until start of next turn), Breakfall Combo (add die to damage, knock target prone if Medium or smaller), or Rhythm Rush (add die to damage, move up to 15 ft without provoking opportunity attacks).",
 				level: 3,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Dual Tempo",
-				description: "Attack twice when you take the Attack action.",
+				description: `Attack twice when you take the Attack action. Your movement speed increases by 5 feet.`,
 				level: 6,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Master Choreographer",
 				description:
 					"You can use a d6 instead of expending a Hype die for Dance Combat. Additionally, when you hit with a Dance Combat flourish, one ally within 30 ft who can see you can use their reaction to move up to half their speed.",
 				level: 14,
-			},
+                actionType: "passive"
+            },
 		],
 		abilities: [
 			{
@@ -5170,25 +5581,29 @@ const pathCatalog: Path[] = [
 				description:
 					"Bonus action: expend one Hype die. Up to PRE mod creatures within 60 ft gain temp HP = 2× Hype die roll + Idol level and can use reaction to move up to their speed without provoking OAs.",
 				level: 3,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Absolute Enthrallment",
 				description:
 					"After 1+ min performance, PRE mod creatures that watched make SENSE save or are charmed for 1 hour. Charmed entities idolize you, hinder those who oppose you, and don't know they were charmed when it ends.",
 				level: 3,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Mantle of the Absolute",
 				description:
 					"Bonus action: take on an appearance of unearthly beauty for 1 min (concentration). Each turn, bonus action use a Command mantra (no slot) against a creature charmed by you. Once/long rest.",
 				level: 6,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Unbreakable Presence",
 				description:
 					"Bonus action: for 1 min, any creature that attacks you for the first time on a turn must make a PRE save. Fail: attack is wasted (can't attack you this turn). Success: disadvantage on saves vs your mantras until end of your next turn. Once per short rest.",
 				level: 14,
-			},
+                actionType: "passive"
+            },
 		],
 		abilities: [
 			{
@@ -5228,30 +5643,35 @@ const pathCatalog: Path[] = [
 				description:
 					"Prof with medium armor and the scimitar. Use a weapon as a focus for your resonance.",
 				level: 3,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Combat Discipline",
 				description:
 					"Choose Dueling (+2 damage with one-handed melee) or Two-Weapon Fighting (add ability mod to off-hand damage).",
 				level: 3,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Blade Flourish",
 				description:
 					"When you take the Attack action, your speed increases by 10 ft. On hit, expend one Hype die: Defensive Flourish (add die to damage and AC until start of next turn), Slashing Flourish (add die to damage, and damage equal to the die roll to another creature within 5 ft), or Mobile Flourish (add die to damage, push target 5+die roll feet, use reaction to move to within 5 ft of them).",
 				level: 3,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Echo Attack",
-				description: "Attack twice when you take the Attack action.",
+				description: `Attack twice when you take the Attack action. You have advantage on initiative rolls.`,
 				level: 6,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Master's Flourish",
 				description:
-					"You can use a d6 instead of expending a Hype die for Blade Flourish.",
+					`You can use a d6 instead of expending a Hype die for Blade Flourish. You can reroll a failed ability check once per short or long rest.`,
 				level: 14,
-			},
+                actionType: "passive"
+            },
 		],
 		abilities: [
 			{
@@ -5291,25 +5711,29 @@ const pathCatalog: Path[] = [
 				description:
 					"When you hit with a weapon attack, expend one Hype die to deal extra psychic damage = 2d6 (3d6 at 5th, 5d6 at 10th, 8d6 at 15th). Once per turn.",
 				level: 3,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Words of Terror",
 				description:
 					"After 1+ min speaking privately to a creature, SENSE save or it is frightened of a creature of your choice for 1 hour. Doesn't know it was magically frightened. Once per short rest.",
 				level: 3,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Mantle of Whispers",
 				description:
 					"Reaction when a living vessel's cycle ends within 30 ft: capture its shadow. As an action, take on its appearance for 1 hour (or until dismissed). You gain access to its general knowledge and memories. Deception checks to pass as it have +5. Once per short rest.",
 				level: 6,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Absolute Shadow Lore",
 				description:
 					"Action: creature within 30 ft, SENSE save or it is charmed for 8 hours. It believes you know its deepest secret (even if you don't) and obeys your commands to avoid the secret being revealed. Once per long rest.",
 				level: 14,
-			},
+                actionType: "passive"
+            },
 		],
 		abilities: [
 			{
@@ -5349,25 +5773,29 @@ const pathCatalog: Path[] = [
 				description:
 					"When you give a Hype die, the creature also gains a mote. Strike roll: mote explodes in 5-ft radius thunder (VIT save = Hype die roll). Ability check: roll Hype die twice, use either. Save: gains temp HP = Hype die roll + PRE mod.",
 				level: 3,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Resonance of Creation",
 				description:
 					"Action: create one nonmagical item (Medium or smaller, worth ≤ 20× Idol level gp). Lasts for hours = prof bonus. One at a time. Once per long rest.",
 				level: 3,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Animating Rite",
 				description:
 					"Action: animate a Large or smaller nonmagical item within 30 ft. It becomes a construct (HP = 10+5× Idol level, AC = 16, +prof to attack, 1d10+PRE force slam, 30 ft speed). Bonus action to command. Lasts 1 hour. Once per long rest.",
 				level: 6,
-			},
+                actionType: "passive"
+            },
 			{
 				name: "Absolute Resonance Crescendo",
 				description:
-					"Resonance of Creation: create a number of items = PRE mod simultaneously. One can be Large, and any can be worth more (up to 200× Idol level gp). None require concentration or have the duration limit.",
+					`Resonance of Creation: create a number of items = PRE mod simultaneously. One can be Large, and any can be worth more (up to 200× Idol level gp). None require concentration or have the duration limit. Your movement speed increases by 5 feet.`,
 				level: 14,
-			},
+                actionType: "passive"
+            },
 		],
 		abilities: [
 			{

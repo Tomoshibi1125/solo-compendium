@@ -13,7 +13,7 @@ export const spells_d: CompendiumSpell[] = [
 		name: "Chill Lance",
 		display_name: "Chill Lance",
 		description:
-			"Draw a spike of crystallized mana from the caster's palm and hurl it at a target within 30 feet. Make a ranged spell attack using Sense to deal 1d10 cold damage, or the target must succeed on a DC 14 Sense saving throw, taking full damage and becoming Frightened for 1 minute on a failure (half damage and no condition on a success).",
+			"As an action, you draw a spike of crystallized mana from your palm and hurl it at a target within 30 feet. Make a ranged spell attack using your Sense modifier. On a hit, the target takes 1d10 cold damage. Alternatively, the target must succeed on a DC 14 Sense saving throw, taking 1d10 cold damage and becoming frightened for 1 minute on a failed save, or taking half as much damage and suffering no condition on a successful one.",
 		lore: {
 			origin:
 				"Reverse-engineered from the frost plating of a Class-B Beast anomaly pulled from the Harbin Rift.",
@@ -108,7 +108,7 @@ export const spells_d: CompendiumSpell[] = [
 		name: "Thunder Shackle",
 		display_name: "Thunder Shackle",
 		description:
-			"Slam the lattice beneath a creature's feet; a 100-foot line erupts with percussive force. The primary target takes a ranged spell attack for 1d10 thunder damage (Presence), and each creature in the line must succeed on a DC 13 Agility save or take full damage and be Stunned until the end of its next turn (on a success, it is pushed 10 feet away instead).",
+			"As an action, you slam the lattice beneath a creature's feet, causing a 100-foot line of percussive force to erupt. The primary target is subjected to a ranged spell attack using your Presence modifier, taking 1d10 thunder damage on a hit. Each creature in the line must succeed on a DC 13 Agility saving throw. On a failed save, a creature takes 1d10 thunder damage and is stunned until the end of its next turn. On a successful save, it takes no damage and is pushed 10 feet away instead.",
 		lore: {
 			origin:
 				"First observed in the collapse of the Meridian City Mid-Tier Rift, where the caster arrived with no memory of how he learned it.",
@@ -397,7 +397,7 @@ export const spells_d: CompendiumSpell[] = [
 		name: "Sanguine Strike",
 		display_name: "Sanguine Strike",
 		description:
-			"Bleed a thin lattice of the caster's own mana into the air around them. Make a ranged spell attack using Presence within a 10-foot cube centered on the caster for 1d8 necrotic damage, and the target must succeed on a DC 14 Intelligence save or take full damage and be Frightened for 1 minute (half damage, no condition on success).",
+			"As an action, you bleed a thin lattice of your own mana into the air around you. Make a ranged spell attack using your Presence modifier against a target within a 10-foot cube centered on you. On a hit, the target takes 1d8 necrotic damage. Additionally, the target must succeed on a DC 14 Intelligence saving throw or take full damage and become frightened for 1 minute (or half damage and no condition on a successful save).",
 		lore: {
 			origin:
 				"Taught only in Bureau-adjacent Ascendant orders that track Awakened bloodline inheritance.",
@@ -777,7 +777,7 @@ export const spells_d: CompendiumSpell[] = [
 		name: "Blood Tear",
 		display_name: "Blood Tear",
 		description:
-			"Thread the caster's own lattice through an echo of their next swing. Make a ranged spell attack using Intelligence against a target within 20 feet for 2d6 necrotic damage. No saving throw; the caster takes 1 point of necrotic damage as the cast resolves.",
+			"As an action, you thread your own lattice through an echo of your next swing. Make a ranged spell attack using your Intelligence modifier against a target within 20 feet. On a hit, the target takes 2d6 necrotic damage. There is no saving throw for this effect, but you take 1 necrotic damage as the cast resolves.",
 		lore: {
 			origin:
 				"Developed by mid-career Ascendants whose casting stat outpaces their physical combat training.",
@@ -1218,7 +1218,7 @@ export const spells_d: CompendiumSpell[] = [
 		name: "Lightning Lance",
 		display_name: "Lightning Lance",
 		description:
-			"Reach out and discharge the caster's stored lattice as a grounded arc. Make a melee spell attack using Sense for 1d8 lightning damage, and the target must succeed on a DC 12 Strength save or take full damage (no effect on a success). Concentration, lasts 10 minutes.",
+			"As an action, you reach out and discharge stored lattice as a grounded arc. Make a melee spell attack using your Sense modifier against a target within your reach. On a hit, the target takes 1d8 lightning damage. Additionally, the target must succeed on a DC 12 Strength saving throw or take full damage (taking no effect on a successful save). This spell requires concentration and lasts up to 10 minutes.",
 		lore: {
 			origin:
 				"A grounded variant of the Umbral Legion's mid-tier lattice discharge, adapted for Bureau safety standards.",

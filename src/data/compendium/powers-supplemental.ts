@@ -1366,7 +1366,7 @@ export const powers_supplemental: CompendiumPower[] = [
 		name: "Terrain Ghost",
 		display_name: "Terrain Ghost",
 		description:
-			"Adapt to your environment. For 1 hour, you ignore difficult terrain, can't be tracked except by magical means, and have advantage on Stealth checks. If you are in natural terrain within a Rift, you also gain +10 feet movement speed.",
+			"As an action, you adapt to your environment for 1 hour. For the duration, you ignore difficult terrain, cannot be tracked except by magical means, and have advantage on Dexterity (Stealth) checks. If you are in natural terrain within a Rift, your walking speed also increases by 10 feet.",
 		lore: {
 			origin:
 				"Bureau field tests showed a Stalker using Terrain Ghost crossed a B-Rank Rift's obstacle course in half the time of any other job.",
@@ -1567,7 +1567,7 @@ export const powers_supplemental: CompendiumPower[] = [
 		name: "Tempo Shift",
 		display_name: "Tempo Shift",
 		description:
-			"Alter your personal rhythm to move with supernatural speed. Until the end of your turn, your movement speed doubles, you don't provoke opportunity attacks, and your next melee attack has advantage.",
+			"As a bonus action, you alter your personal rhythm to move with supernatural speed. Until the end of your turn, your walking speed is doubled, your movement does not provoke opportunity attacks, and your next melee weapon attack roll has advantage.",
 		lore: {
 			origin:
 				"K-pop dance fighting styles emphasize tempo changes. This power is the combat expression of that principle.",
@@ -1634,7 +1634,7 @@ export const powers_supplemental: CompendiumPower[] = [
 		name: "Guided Strike",
 		display_name: "Guided Strike",
 		description:
-			"Channel the Absolute's guidance into your weapon. As a bonus action, gain +5 to your next attack roll made before the end of your turn. If the attack hits, it deals an additional 1d6 radiant damage.",
+			"As a bonus action, you channel the Absolute's guidance into your weapon. You gain a +5 bonus to the next attack roll you make before the end of your turn. If that attack hits, it deals an extra 1d6 radiant damage.",
 		lore: {
 			origin:
 				"Combat Mandate Heralds use this as their primary engagement tool. Miss rates drop to near zero.",
@@ -3458,7 +3458,7 @@ export const powers_supplemental: CompendiumPower[] = [
 		name: "Immovable Aegis",
 		display_name: "Immovable Aegis",
 		description:
-			"Become an immovable defensive bastion for 1 minute. You can't be moved against your will, have immunity to prone, and reduce all damage by your STR modifier + 10. As a reaction, redirect any attack targeting an ally within 15 feet to yourself.",
+			"As an action, you become an immovable defensive bastion for 1 minute. For the duration, you cannot be moved against your will, you are immune to the prone condition, and all damage you take is reduced by an amount equal to 10 + your Strength modifier. Additionally, you can use your reaction to redirect any attack roll targeting an ally within 15 feet of you to target yourself instead.",
 		lore: {
 			origin:
 				"An A-Rank Destroyer absorbed 47 attacks in a single encounter while maintaining this power. Zero reached the team behind her.",
@@ -4702,7 +4702,7 @@ export const powers_supplemental: CompendiumPower[] = [
 		name: "Pressure Point Cascade",
 		display_name: "Pressure Point Cascade",
 		description:
-			"After hitting with an unarmed strike, trigger a cascade of mana-pressure through the target's body. Deal normal damage + 1d6 force and push the target 10 feet. If it collides with a wall or creature, both take 1d6 bludgeoning.",
+			"When you hit a creature with an unarmed strike, you can trigger a cascade of mana-pressure as a bonus action. The attack deals an extra 1d6 force damage, and you can push the target up to 10 feet away from you. If the target collides with a solid surface or another creature, both take 1d6 bludgeoning damage.",
 		lore: {
 			origin:
 				"The Bureau training dummy budget tripled after Strikers joined. They go through walls.",
@@ -4924,7 +4924,7 @@ export const powers_supplemental: CompendiumPower[] = [
 		name: "Prey Sense",
 		display_name: "Prey Sense",
 		description:
-			"Attune to a creature you've damaged within the last hour. For 10 minutes, you know its exact location within 1 mile, its remaining HP percentage, and whether it's moving. Your first attack against it each turn deals +1d6 damage.",
+			"As an action, you attune to a creature you have damaged within the last hour. For 10 minutes, you know its exact location as long as it is within 1 mile of you, you know its remaining hit point percentage, and whether it is moving. Additionally, the first attack you make against it on each of your turns deals an extra 1d6 damage on a hit.",
 		lore: {
 			origin:
 				"A Stalker tracked an A-Rank anomaly through 4 Rift floors using Prey Sense alone. It took 6 hours. She was patient.",
@@ -5192,7 +5192,7 @@ export const powers_supplemental: CompendiumPower[] = [
 		name: "Seismic Anchor",
 		display_name: "Seismic Anchor",
 		description:
-			"Plant yourself as an immovable point. For 1 minute, you can't be moved against your will, knocked prone, or pushed. Your AC increases by +2. As a reaction, when an ally within 10 feet is targeted by an attack, you can force the attack to target you instead.",
+			"As a bonus action, you plant yourself as an immovable point for 1 minute. For the duration, you cannot be moved against your will, knocked prone, or pushed, and you gain a +2 bonus to AC. Additionally, when an ally within 10 feet of you is targeted by an attack, you can use your reaction to force the attack to target you instead.",
 		lore: {
 			origin:
 				"A Destroyer held Seismic Anchor for 4 minutes while an S-Rank Rift boss tried to push her off a bridge. The bridge broke. She didn't.",
@@ -5755,7 +5755,7 @@ export const powers_supplemental: CompendiumPower[] = [
 		name: "Blood Pact Escalation",
 		display_name: "Blood Pact Escalation",
 		description:
-			"Offer your own HP to your patron for increased power. Spend up to 30 HP (can't be reduced). For the next minute, all your pact spells deal +1d8 bonus damage per 10 HP spent, and your spell save DC increases by 1 per 10 HP spent.",
+			"As a bonus action, you offer your own hit points to your patron for increased power. You can spend up to 30 hit points (this cannot reduce you below 1 hit point). For the next minute, your pact spells deal an extra 1d8 damage for every 10 hit points spent, and your spell save DC increases by 1 for every 10 hit points spent.",
 		lore: {
 			origin:
 				"Bureau pact oversight flags this as 'high-risk self-modification.' Contractors consider it 'an investment.'",
@@ -6185,7 +6185,7 @@ export const powers_supplemental: CompendiumPower[] = [
 		name: "Absolute Smite",
 		display_name: "Absolute Smite",
 		description:
-			"Channel the Absolute's full judgment through your weapon. Next melee hit deals +6d8 radiant damage (+8d8 vs anomaly/anomaly). The target must make a DC 17 PRS save or be stunned for 1 round. If the target is killed, it cannot be raised by any means below 7th level.",
+			"As a bonus action, you channel the Absolute's full judgment through your weapon. The next time you hit a creature with a melee weapon attack, the attack deals an extra 6d8 radiant damage (or 8d8 radiant damage if the target is an Anomaly). Additionally, the target must succeed on a DC 17 Presence saving throw or be stunned until the end of its next turn. If this attack reduces the target to 0 hit points, it dies and cannot be restored to life by any means short of a 7th-level spell.",
 		lore: {
 			origin:
 				"Three confirmed kills using Absolute Smite have resulted in permanent termination of S-Rank anomaly anomalies. The Absolute doesn't allow encores.",
@@ -6544,7 +6544,7 @@ export const powers_supplemental: CompendiumPower[] = [
 		name: "Quarry Annihilation",
 		display_name: "Quarry Annihilation",
 		description:
-			"Lock onto a creature you've tracked for at least 1 minute. For the next minute, all your attacks against it have advantage, you deal +3d6 bonus damage per hit, and it can't benefit from invisibility, cover, or teleportation against you.",
+			"As an action, you lock onto a creature you have been tracking for at least 1 minute. For the next minute, you have advantage on all attack rolls against it, your attacks against it deal an extra 3d6 damage on a hit, and it cannot benefit from being invisible, half cover, three-quarters cover, or teleportation against you.",
 		lore: {
 			origin:
 				"A Stalker used Quarry Annihilation on an S-Rank Rift boss that had been fleeing for 40 minutes. The boss lasted 18 seconds.",
@@ -6907,7 +6907,7 @@ export const powers_supplemental: CompendiumPower[] = [
 		name: "S-Rank Smite",
 		display_name: "S-Rank Smite",
 		description:
-			"The ultimate expression of the Absolute's judgment. Next melee hit deals +12d8 radiant. The target's mana circuit is permanently scarred: it loses access to its highest-level ability permanently. Anomalies are instantly destroyed regardless of HP.",
+			"As an action, you unleash the ultimate expression of the Absolute's judgment. The next time you hit a creature with a melee weapon attack, the attack deals an extra 12d8 radiant damage. Additionally, the target's mana circuit is permanently scarred, causing it to lose access to its highest-level ability permanently. Any Anomaly hit by this attack is instantly destroyed regardless of its remaining hit points.",
 		lore: {
 			origin:
 				"Bureau records: one confirmed S-Rank Smite. The Holy Knight collapsed after. The S-Rank Rift boss was already dust.",
@@ -7061,7 +7061,7 @@ export const powers_supplemental: CompendiumPower[] = [
 		name: "Predator Supremacy",
 		display_name: "Predator Supremacy",
 		description:
-			"Enter the ultimate tracking state. For 1 hour: you automatically know the location of every creature within 1 mile, can't be surprised, have advantage on all attacks, and your first hit each turn deals +4d8 damage. You can track a creature across dimensional boundaries.",
+			"As an action, you enter the ultimate tracking state for 1 hour. For the duration, you automatically know the exact location of every creature within 1 mile of you, you cannot be surprised, you have advantage on all attack rolls, and the first time you hit a creature on each of your turns it takes an extra 4d8 damage. You can also track creatures across dimensional boundaries.",
 		lore: {
 			origin:
 				"Bureau S-Rank operations deploy Stalkers in Predator Supremacy state as 'primary acquisition assets.' Nothing escapes.",
@@ -7482,7 +7482,7 @@ export const powers_supplemental: CompendiumPower[] = [
 		name: "Gate Reader",
 		display_name: "Gate Reader",
 		description:
-			"Touch a Rift surface and read its dimensional frequency. Learn the Rift's rank, number of floors remaining, boss type category, and dominant element. Also learn if any other Awakened have entered in the last 24 hours.",
+			"As an action, you touch a Rift surface to read its dimensional frequency. You learn the Rift's rank, the number of floors remaining, the boss type category, and its dominant element. You also learn if any other Awakened have entered the Rift within the last 24 hours.",
 		lore: {
 			origin:
 				"Bureau recon protocols require Gate Reader before any entry. The intelligence it provides has a 98% accuracy rate.",
@@ -7556,7 +7556,7 @@ export const powers_supplemental: CompendiumPower[] = [
 		name: "Sacrifice Engine",
 		display_name: "Sacrifice Engine",
 		description:
-			"Sacrifice a summoned creature, familiar, or willing ally's temporary HP to fuel a devastating patron attack. For every 10 HP sacrificed, deal 3d8 patron-element damage to one creature within 60 feet (no save, no attack roll).",
+			"As an action, you sacrifice a summoned creature, familiar, or a willing ally's temporary hit points to fuel a devastating patron attack. For every 10 hit points sacrificed, you deal 3d8 damage of your patron's element to one creature you can see within 60 feet of you. This damage requires no attack roll or saving throw.",
 		lore: {
 			origin:
 				"Bureau pact oversight classifies this as 'morally complex.' Contractors classify it as 'efficient.'",
@@ -8117,7 +8117,7 @@ export const powers_supplemental: CompendiumPower[] = [
 		name: "Radiant Martyr",
 		display_name: "Radiant Martyr",
 		description:
-			"When you would be reduced to 0 HP, you can instead drop to 1 HP and release a burst of the Absolute's radiance. All enemies within 30 feet: DC 17 PRS save, 6d8 radiant on failure, half on success. All allies regain 3d8 HP.",
+			"When you would be reduced to 0 hit points, you can use your reaction to instead drop to 1 hit point and release a burst of the Absolute's radiance. Each enemy within 30 feet of you must make a DC 17 Presence saving throw, taking 6d8 radiant damage on a failed save, or half as much damage on a successful one. Additionally, all allies within 30 feet of you regain 3d8 hit points.",
 		lore: {
 			origin:
 				"Bureau combat chaplains call this 'the Absolute's last gift.' Holy Knights who use it typically require 48 hours of recovery.",
@@ -8998,7 +8998,7 @@ export const powers_supplemental: CompendiumPower[] = [
 		name: "Divine Mandate",
 		display_name: "Divine Mandate",
 		description:
-			"Speak with the Absolute's voice. All creatures within 120 feet that can hear you must make DC 20 PRS save. On failure: they must follow one complex command (up to 25 words) for 1 hour. On success: they are frightened of you for 1 minute. Allies are immune.",
+			"As an action, you speak with the Absolute's voice. Each creature of your choice within 120 feet of you that can hear you must make a DC 20 Presence saving throw. On a failed save, the creature must follow one complex command (up to 25 words) for 1 hour. On a successful save, the creature is frightened of you for 1 minute. Allies are immune to this effect.",
 		lore: {
 			origin:
 				"Bureau Director classification: ABSOLUTE AUTHORITY. One confirmed use. The Director authorized it personally. The S-Rank gate-boss and its entire army knelt.",

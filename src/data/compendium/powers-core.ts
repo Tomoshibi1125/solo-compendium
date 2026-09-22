@@ -362,7 +362,7 @@ export const powers_core: CompendiumPower[] = [
 		name: "Arcane Recovery",
 		display_name: "Arcane Recovery",
 		description:
-			"Reweaves spent lattice threads back into the caster's reserves. Recovers 2d10 + 4 HP worth of ability resource (modeled as HP for audit purposes).",
+			"As an action, you reweave spent lattice threads back into your reserves. You recover an amount of ability resource (modeled as hit points) equal to 2d10 + 4.",
 		lore: {
 			origin: "A relic of the Umbral Legion.",
 			history:

@@ -209,8 +209,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		classes: ["Destroyer"],
 		name: "Unyielding Fortress",
 		display_name: "Unyielding Fortress",
-		description:
-			"Enter an immovable stance for 1 minute. You can't be moved, you have advantage on all Strength and Vitality saves, reduce all damage by 5, and can use your reaction to impose disadvantage on any attack targeting an ally within 10 feet.",
+		description: "As a bonus action, you enter an immovable stance for 1 minute. You cannot be moved against your will, you have advantage on all Strength and Vitality saving throws, bludgeoning, piercing, and slashing damage that you take is reduced by 5, and you can use your reaction to impose disadvantage on any attack roll targeting an ally within 10 feet of you.",
 		lore: {
 			origin:
 				"Developed through Destroyer combat doctrine and field-tested in Rift operations.",
@@ -275,8 +274,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		classes: ["Destroyer"],
 		name: "World Anchor",
 		display_name: "World Anchor",
-		description:
-			"Drive your weapon into the earth and become one with the battlefield. For 1 minute: you can't move but gain immunity to all conditions, reduce all damage by 15, and any creature that attacks an ally within 30 feet of you takes 5d10 force damage automatically. After the effect ends, gain 2 exhaustion.",
+		description: "As an action, you drive your weapon into the earth and become one with the battlefield. For 1 minute, your speed becomes 0, you gain immunity to all conditions, bludgeoning, piercing, and slashing damage that you take is reduced by 15, and any creature that makes an attack against an ally within 30 feet of you takes 5d10 force damage. When this effect ends, you suffer 2 levels of exhaustion.",
 		lore: {
 			origin:
 				"Developed through Destroyer combat doctrine and field-tested in Rift operations.",
@@ -806,7 +804,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		name: "Organ Failure",
 		display_name: "Organ Failure",
 		description:
-			"Target a creature's internal mana node. If you have advantage, on a hit deal weapon damage plus 6d6 necrotic. The target must make DC 16 VIT save or be poisoned for 1 minute (its speed halved, disadvantage on attacks). Save ends.",
+			"As an action, you target a creature's internal mana node. Make a melee weapon attack with advantage. On a hit, the target takes normal weapon damage plus 6d6 necrotic damage, and it must make a DC 16 Constitution saving throw or be poisoned for 1 minute. While poisoned in this way, its speed is halved, and it has disadvantage on attack rolls. The target can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success.",
 		lore: {
 			origin:
 				"Developed through Assassin combat doctrine and field-tested in Rift operations.",
@@ -1746,7 +1744,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		name: "Hamstring",
 		display_name: "Hamstring",
 		description:
-			"Target a creature's mobility. On a weapon hit, deal weapon damage plus 1d6 slashing. The target's speed is reduced by 15 feet until the end of its next turn. If the target's speed is already reduced, it's also knocked prone.",
+			"As an action, you make a melee weapon attack targeting a creature's mobility. On a hit, the target takes normal weapon damage plus 1d6 slashing damage, and its speed is reduced by 15 feet until the end of its next turn. If the target's speed has already been reduced by any other effect, it is also knocked prone.",
 		lore: {
 			origin:
 				"Developed through Stalker combat doctrine and field-tested in Rift operations.",
@@ -2145,7 +2143,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		name: "Sacred Weapon",
 		display_name: "Sacred Weapon",
 		description:
-			"Bless your weapon with the Absolute's light for 1 minute. Your weapon attacks deal an extra 1d4 radiant damage and count as magical. You shed bright light in a 20-foot radius.",
+			"As a bonus action, you bless your weapon with the Absolute's light for 1 minute. Until the effect ends, your weapon attacks deal an extra 1d4 radiant damage, and the weapon is considered magical for the purpose of overcoming resistances and immunities. Additionally, the weapon sheds bright light in a 20-foot radius and dim light for an additional 20 feet.",
 		lore: {
 			origin:
 				"Developed through Herald combat doctrine and field-tested in Rift operations.",
@@ -2343,7 +2341,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		name: "Pact Blade",
 		display_name: "Pact Blade",
 		description:
-			"Summon a weapon forged from your patron's essence. The pact blade uses PRS for attack and damage, deals 1d8+PRS force damage, counts as magical, and can be dismissed/resummoned as a bonus action.",
+			"As a bonus action, you summon a weapon forged from your patron's essence into your empty hand. You can choose the form of this melee weapon each time you create it. You can use your Presence modifier, instead of Strength or Dexterity, for the attack and damage rolls of melee attacks using this weapon. It deals 1d8 + your Presence modifier force damage on a hit, and counts as magical for the purpose of overcoming resistance and immunity to nonmagical attacks and damage. You can dismiss the weapon as a bonus action, and it disappears if it is more than 5 feet away from you for 1 minute or more.",
 		lore: {
 			origin:
 				"Developed through Contractor combat doctrine and field-tested in Rift operations.",
@@ -2475,7 +2473,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		name: "Patron's Fury",
 		display_name: "Patron's Fury",
 		description:
-			"Channel your patron's wrath through your blade. Make 3 pact blade attacks. Each hit deals weapon damage plus 2d6 force. If all 3 hit the same target, your patron manifests briefly: the target must make DC 17 PRS save or be frightened for 1 minute.",
+			"As an action, you channel your patron's wrath. Make three melee spell attacks with your pact blade. On a hit, each attack deals its normal weapon damage plus 2d6 force damage. If all three attacks hit the same target, your patron manifests briefly; the target must succeed on a DC 17 Presence saving throw or become frightened of you for 1 minute. The frightened target can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success.",
 		lore: {
 			origin:
 				"Developed through Contractor combat doctrine and field-tested in Rift operations.",
@@ -2607,7 +2605,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		name: "Death's Reach",
 		display_name: "Death's Reach",
 		description:
-			"Extend your weapon's reach with a tendril of necrotic energy. Make a melee weapon attack with 15-foot reach. On a hit, weapon damage plus 3d6 necrotic. The target can't regain HP until the start of your next turn.",
+			"As an action, you extend your weapon's reach with a tendril of necrotic energy. Make a melee weapon attack against a creature within 15 feet of you. On a hit, the target takes normal weapon damage plus 3d6 necrotic damage, and it cannot regain hit points until the start of your next turn.",
 		lore: {
 			origin:
 				"Developed through Revenant combat doctrine and field-tested in Rift operations.",
@@ -2739,7 +2737,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		name: "Rift Breaker Chop",
 		display_name: "Rift Breaker Chop",
 		description:
-			"A devastating overhead strike that channels mana through the weapon's edge. Melee attack: normal damage + 1d8 force. If the target is a construct or gate-structure, deals double bonus damage. Can be used to destroy gate-crystal locks.",
+			"As an action, you deliver a devastating overhead strike. Make a melee weapon attack. On a hit, the target takes normal weapon damage plus 1d8 force damage. If the target is a construct or a gate-structure, this attack deals double the bonus force damage. This attack automatically deals maximum damage to gate-crystal locks.",
 		lore: {
 			origin:
 				"Developed through Destroyer combat doctrine and field-tested in Rift operations.",
@@ -3257,7 +3255,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		name: "Vital Point Strike",
 		display_name: "Vital Point Strike",
 		description:
-			"Target a creature's mana-circuit junction point with a surgical strike. On hit: normal damage + 2d6 necrotic. Target's mana recovery is suppressed: it can't regain HP from any source until the end of its next turn.",
+			"As an action, you make a surgical strike against a creature's mana-circuit junction point. Make a melee weapon attack. On a hit, the target takes normal weapon damage plus 2d6 necrotic damage. Additionally, the target's mana recovery is suppressed: it cannot regain hit points from any source until the end of its next turn.",
 		lore: {
 			origin:
 				"Developed through Assassin combat doctrine and field-tested in Rift operations.",
@@ -3675,7 +3673,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		name: "Iron Pillar Stance",
 		display_name: "Iron Pillar Stance",
 		description:
-			"Plant your feet and become an immovable defender. For 1 minute: you can't be moved, gain +3 AC, and as a reaction can make a melee attack against any creature that enters your reach. Movement speed becomes 0.",
+			"As a bonus action, you plant your feet and adopt an immovable defensive stance that lasts for 1 minute. While in this stance, your speed becomes 0, you cannot be moved against your will, and you gain a +3 bonus to AC. Additionally, you can use your reaction to make a melee weapon attack against any creature that enters your reach.",
 		lore: {
 			origin:
 				"Developed through Destroyer combat doctrine and field-tested in Rift operations.",
@@ -4088,7 +4086,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		name: "Pact Weapon Manifest",
 		display_name: "Pact Weapon Manifest",
 		description:
-			"Manifest a weapon from your patron's dimension. Choose any melee weapon form. It counts as magical, uses Presence for attack/damage, deals +2d6 damage of your patron's element, and can't be disarmed. Lasts 1 hour or until dismissed.",
+			"As an action, you manifest a weapon from your patron's dimension. Choose any melee weapon form. The weapon counts as magical, uses your Presence modifier for attack and damage rolls, and cannot be disarmed. It deals an extra 2d6 damage of a type associated with your patron. The weapon lasts for 1 hour, or until you dismiss it as a bonus action.",
 		lore: {
 			origin:
 				"Developed through Contractor combat doctrine and field-tested in Rift operations.",
@@ -4292,7 +4290,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		name: "Mark of the Absolute",
 		display_name: "Mark of the Absolute",
 		description:
-			"Brand a creature with the Absolute's mark. On hit: normal damage + 5d8 radiant. For 1 minute, the marked creature takes 2d8 radiant at the start of each of its turns, sheds bright light 10 feet (can't hide), and all attacks against it from allies deal +1d6 radiant.",
+			"As an action, you make a melee weapon attack against a creature to brand it with the Absolute's mark. On a hit, the target takes normal weapon damage plus 5d8 radiant damage. For 1 minute, the marked creature takes 2d8 radiant damage at the start of each of its turns, sheds bright light in a 10-foot radius (it cannot benefit from being invisible or hide), and any attack roll made against it by an ally deals an extra 1d6 radiant damage on a hit.",
 		lore: {
 			origin:
 				"Developed through Holy Knight combat doctrine and field-tested in Rift operations.",
@@ -5349,7 +5347,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		name: "Serpent Lash",
 		display_name: "Serpent Lash",
 		description:
-			"Extend your weapon's reach by channeling mana into a whip-like extension. Your melee attack gains 10 feet of additional reach for this strike. On hit: normal damage + 1d6 force, and you can pull the target 5 feet toward you.",
+			"As an action, you channel mana into your weapon, transforming it into a whip-like extension. Make a melee weapon attack with an additional 10 feet of reach. On a hit, the target takes normal weapon damage plus 1d6 force damage, and you can choose to pull the target up to 5 feet toward you.",
 		lore: {
 			origin:
 				"Developed through Stalker combat doctrine and field-tested in Rift operations.",
@@ -5722,7 +5720,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		name: "Flickering Blade",
 		display_name: "Flickering Blade",
 		description:
-			"Your weapon flickers between visible and invisible as you strike. Make 2 melee attacks; the target can't use reactions against these attacks (shield spells, parries, etc.). Each hit deals normal damage + 1d6 force.",
+			"As an action, you make two melee weapon attacks as your weapon flickers between visible and invisible. The target cannot take reactions (such as casting shield or parrying) in response to these attacks. Each hit deals normal weapon damage plus 1d6 force damage.",
 		lore: {
 			origin:
 				"Developed through Assassin combat doctrine and field-tested in Rift operations.",
@@ -6225,7 +6223,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		name: "Circuit Breaker Slash",
 		display_name: "Circuit Breaker Slash",
 		description:
-			"Strike a creature's mana circuit junction with a calibrated blade. On hit: normal damage + 4d8 force. Target must make DC 17 INT save or lose access to one random spell slot (1st-3rd level) for 1 minute.",
+			"As an action, you make a melee weapon attack with a calibrated blade against a creature's mana circuit. On a hit, the target takes normal weapon damage plus 4d8 force damage. The target must also succeed on a DC 17 Intelligence saving throw or lose access to one randomly determined spell slot of 1st, 2nd, or 3rd level for 1 minute.",
 		lore: {
 			origin:
 				"Developed through Assassin combat doctrine and field-tested in Rift operations.",
@@ -6440,7 +6438,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		name: "Shadow Harvest",
 		display_name: "Shadow Harvest",
 		description:
-			"Strike a creature's shadow, causing its mana circuit to hemorrhage. On hit: normal damage + 5d6 necrotic. For 1 minute, the target bleeds mana: at the start of each of its turns, you gain 1d8 temporary HP.",
+			"As an action, you make a melee weapon attack against a creature's shadow, disrupting its mana circuit. On a hit, the target takes normal weapon damage plus 5d6 necrotic damage. For 1 minute, the target bleeds mana: at the start of each of its turns, you gain 1d8 temporary hit points.",
 		lore: {
 			origin:
 				"Developed through Revenant combat doctrine and field-tested in Rift operations.",
@@ -6789,7 +6787,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		name: "Absolute Cleave",
 		display_name: "Absolute Cleave",
 		description:
-			"Deliver a sweeping attack infused with the Absolute's judgment. All creatures in a 15-foot cone: melee attack roll, 6d10 radiant on hit. Anomalies that are hit by this attack and have 50 HP or fewer are instantly destroyed.",
+			"As an action, you deliver a sweeping attack infused with the Absolute's judgment. Make a melee weapon attack against all creatures in a 15-foot cone. On a hit, a target takes 6d10 radiant damage. Any Anomaly hit by this attack that is reduced to 50 hit points or fewer is instantly destroyed.",
 		lore: {
 			origin:
 				"Developed through Holy Knight combat doctrine and field-tested in Rift operations.",
@@ -6937,7 +6935,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		name: "Mana Engine Overdrive",
 		display_name: "Mana Engine Overdrive",
 		description:
-			"Overclock your focus device's mana engine to critical. For 3 rounds: all device attacks deal triple damage, you can fire two Payload Deployments per turn, and your constructs gain +100% HP. When it ends, device is disabled for 1 hour.",
+			"As a bonus action, you overclock your focus device's mana engine for 3 rounds. For the duration, all of your device attacks deal triple damage, you can fire two Payload Deployments per turn, and your constructs gain temporary hit points equal to their maximum hit points. When this effect ends, your device is disabled for 1 hour, preventing you from using it.",
 		lore: {
 			origin:
 				"Developed through Technomancer combat doctrine and field-tested in Rift operations.",
@@ -7076,7 +7074,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		name: "Berserker's Requiem",
 		display_name: "Berserker's Requiem",
 		description:
-			"The final overload. For 1 minute: all stats become 24, you can't be killed (stay at 1 HP minimum), all melee attacks deal +6d12 force, and you have advantage on everything. When it ends: you die. Only Full Revival or equivalent can bring you back.",
+			"As an action, you unleash the final overload. For 1 minute, all of your ability scores become 24, you cannot drop below 1 hit point, all of your melee weapon attacks deal an extra 6d12 force damage, and you have advantage on all attack rolls, ability checks, and saving throws. When the effect ends, you die instantly. Only a Full Revival or equivalent magic can restore you to life.",
 		lore: {
 			origin:
 				"Developed through Berserker combat doctrine and field-tested in Rift operations.",
@@ -7211,7 +7209,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		name: "Summoner's Convergence",
 		display_name: "Summoner's Convergence",
 		description:
-			"Summon every gate-creature you've ever bonded with simultaneously. Up to 8 creatures appear (total CR cannot exceed 20). They all act on your initiative, obey mental commands, and remain for 1 minute. You can't cast spells while maintaining.",
+			"As an action, you summon up to 8 gate-creatures you have bonded with (their total Challenge Rating cannot exceed 20). The summoned creatures appear in unoccupied spaces you can see within 60 feet of you. They act on your initiative, obey your mental commands (no action required), and remain for 1 minute. While maintaining this effect, you cannot cast other spells.",
 		lore: {
 			origin:
 				"Developed through Summoner combat doctrine and field-tested in Rift operations.",

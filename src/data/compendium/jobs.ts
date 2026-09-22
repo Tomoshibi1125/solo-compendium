@@ -49,9 +49,12 @@ export interface Job extends AuthoritativeStaticJob {
 		name: string;
 		description: string;
 		type: "passive" | "active" | "resistance" | "immunity" | "bonus";
+		actionType?: string;
 		frequency?: "at-will" | "short-rest" | "long-rest" | "once-per-day";
 		dc?: number;
 		uses?: FeatureUseDefinition;
+		resource?: string;
+		tracking?: "uses" | "resource" | "manual";
 	}[];
 	abilityScoreImprovements: {
 		strength?: number;
@@ -270,8 +273,11 @@ export const jobs: Job[] = [
 			{
 				name: "Damage Absorber",
 				description:
-					"Your crystallized mana skeleton absorbs impact like built-in spirit armor. When you use Adrenal Flux, also gain temp HP equal to your Destroyer level.",
-				type: "passive",
+					"Your thick musculature and latent mana-shielding act as a physical buffer. When you take damage, you can use your reaction to halve the damage. Once you use this trait, you can't use it again until you finish a short or long rest.",
+				type: "active",
+				actionType: "reaction",
+				uses: { formula: "1", recharge: "short-rest" },
+				tracking: "uses",
 			},
 		],
 		abilityScoreImprovements: { strength: 2, vitality: 1 },
@@ -497,8 +503,9 @@ export const jobs: Job[] = [
 			{
 				name: "Mana-Dense Physiology",
 				description:
-					"Your cells are saturated with raw mana — hospital scales read 50% heavier than your frame should weigh. HP maximum increases by 1 per Berserker level. Normal chairs break under you.",
+					"Your body is saturated with unrefined mana. While you are not wearing any armor, your Armor Class equals 10 + your Agility modifier + your Vitality modifier. You can use a shield and still gain this benefit.",
 				level: 1,
+				actionType: "passive",
 			},
 			{
 				name: "Toxin Purge",
@@ -778,8 +785,9 @@ export const jobs: Job[] = [
 			{
 				name: "Phase-Shifted Mind",
 				description:
-					"Your consciousness partially exists between dimensions — brain scans show activity in regions that shouldn't exist. Lie detectors, interrogation drugs, and telepathy all fail. Advantage on saves against being charmed. Magic cannot put you to sleep.",
-				level: 1,
+					"Your consciousness exists slightly out of sync with baseline reality — polygraphs flatline when you lie, and telepaths get headaches trying to read you. You have advantage on initiative rolls and cannot be surprised while you are conscious.",
+				level: 3,
+				actionType: "passive",
 			},
 			{
 				name: "Umbral Phase",
@@ -791,8 +799,9 @@ export const jobs: Job[] = [
 			{
 				name: "Lethal Geometry",
 				description:
-					"You see kill-angles that don't exist in normal three-dimensional space — your strikes arrive from directions that are physically impossible. When you use Vulnerability Analysis with advantage, deal extra 1d6 damage (2d6 at 13th).",
+					"You see kill-angles that don't exist in normal three-dimensional space — your strikes arrive from directions that are physically impossible. Once per turn, you can deal an extra 1d6 damage to one creature you hit with an attack if you have advantage on the attack roll. The attack must use a finesse or a ranged weapon. This extra damage increases to 2d6 at 13th level.",
 				level: 7,
+				actionType: "passive",
 			},
 			{
 				name: "Kill Designation",
@@ -806,8 +815,9 @@ export const jobs: Job[] = [
 			{
 				name: "Dimensional Sight",
 				description:
-					"Your phase-shifted eyes see through walls, around corners, and into dark rooms — optometrists can't explain the extra pupil layer. See in dim light as bright within 60 ft. Advantage on hearing-based Perception. Superior darkvision 120 ft.",
+					"Your phase-shifted eyes see through walls, around corners, and into dark rooms — optometrists can't explain the extra pupil layer. You have superior darkvision out to a range of 120 feet, and you have advantage on Wisdom (Perception) checks that rely on hearing.",
 				type: "passive",
+				actionType: "passive",
 			},
 			{
 				name: "Phase Dodge",
@@ -820,8 +830,9 @@ export const jobs: Job[] = [
 			{
 				name: "Ghost Walk",
 				description:
-					"You leave no footprints, trigger no motion sensors, and make no sound — even on gravel or broken glass. Security systems and guard dogs can't detect you. Advantage on Stealth in all conditions.",
+					"You leave no footprints, trigger no motion sensors, and make no sound — even on gravel or broken glass. Security systems and guard dogs can't detect you. You have advantage on Dexterity (Stealth) checks. Additionally, you can move through other creatures and solid objects as if they were difficult terrain. If you end your turn inside an object, you take 1d10 force damage and are shunted to the nearest unoccupied space.",
 				type: "passive",
+				actionType: "passive",
 			},
 		],
 		abilityScoreImprovements: { agility: 2, intelligence: 1 },
@@ -1055,8 +1066,9 @@ export const jobs: Job[] = [
 			{
 				name: "Fluid Physiology",
 				description:
-					"Your joints and muscles restructured for impossible flexibility — you can fold through car windows, slide under closing garage doors, and bend in ways that make physical therapists cry. Move through the space of any creature one size larger. Cannot be knocked prone.",
+					"Your joints and muscles restructured for impossible flexibility — you can fold through car windows, slide under closing garage doors, and bend in ways that make physical therapists cry. You can move through the space of any creature that is of a size larger than yours. You have advantage on Dexterity (Acrobatics) checks and cannot be knocked prone.",
 				level: 1,
+				actionType: "passive",
 			},
 			{
 				name: "Impulse Sense",
@@ -1067,8 +1079,9 @@ export const jobs: Job[] = [
 			{
 				name: "Autonomic Mastery",
 				description:
-					"Total control over your body's involuntary functions — you can stop your own heart to fool medical scanners, regulate your temperature in a blizzard, and suppress pain entirely. Walk on any surface including liquids while moving.",
+					"Total control over your body's involuntary functions — you can stop your own heart to fool medical scanners, regulate your temperature in a blizzard, and suppress pain entirely. You can walk on any surface including liquids while moving. When you are subjected to an effect that allows a Dexterity saving throw to take only half damage, you instead take no damage if you succeed on the saving throw, and only half damage if you fail.",
 				level: 3,
+				actionType: "passive",
 			},
 			{
 				name: "Force Channeling",
@@ -1087,8 +1100,9 @@ export const jobs: Job[] = [
 			{
 				name: "Gyroscopic Core",
 				description:
-					"Your rewired vestibular system grants perfect balance — you can fight on a moving train, run across telephone wires, and stand still in a hurricane. Cannot be knocked prone. Walk on any surface including liquids while moving.",
+					"Your rewired vestibular system grants perfect balance — you can fight on a moving train, run across telephone wires, and stand still in a hurricane. You can stand up from being prone by spending 5 feet of movement. You have advantage on saving throws against being knocked prone, and you can walk on any liquid surface as if it were solid ground as long as you keep moving.",
 				type: "resistance",
+				actionType: "passive",
 			},
 			{
 				name: "Kinetic Deflection",
@@ -1322,34 +1336,41 @@ export const jobs: Job[] = [
 			{
 				name: "Mana-Shielded Cortex",
 				description:
-					"Your brain restructured to process the raw flow of the Aetheric-Weave — EEGs show neural activity patterns that don't match any known brain architecture. Advantage on INT, Sense, and Presence saves against spells and magical effects.",
+					"Your brain restructured to process the raw flow of the Aetheric-Weave — EEGs show neural activity patterns that don't match any known brain architecture. You have advantage on Intelligence, Sense, and Presence saving throws against spells and other magical effects.",
 				level: 1,
+				actionType: "passive",
 			},
 			{
 				name: "Aetheric-Sight Resonance",
 				description:
-					"Your vision perceives the flows of the Aetheric-Weave as visible streams of light. Sense magical energy, and automatically identify the school of any spell. Other Mages describe it as 'perceiving the architecture of creation.'",
+					"Your vision perceives the flows of the Aetheric-Weave as visible streams of light. You can cast the detect magic spell at will, without expending a spell slot or material components. Other Mages describe it as 'perceiving the architecture of creation.'",
 				level: 1,
+				actionType: "action",
+				uses: { formula: "at-will", recharge: "short-rest" },
+				tracking: "uses",
 			},
 			{
 				name: "Parallel Processing",
 				description:
-					"Your mind runs multiple spell compilations simultaneously like a multi-core processor — Global Aetheric research divisions have clocked your cognitive throughput at 47x baseline human. Weave spell effects together and amplify power through sustained focus.",
+					"Your mind runs multiple spell compilations simultaneously like a multi-core processor — Global Aetheric research divisions have clocked your cognitive throughput at 47x baseline human. You can maintain concentration on two spells simultaneously. If you take damage, you must make a single Constitution saving throw to maintain concentration on both spells. If you fail, you lose concentration on both spells.",
 				level: 3,
+				actionType: "passive",
 			},
 			{
 				name: "Aetheric-Parsing",
 				description:
-					"Analyze enemy spells as they're cast — your vision identifies structural flaws in an enemy's spellcraft as it manifests. Create counter-rites on the fly: instant-cast defenses and live resonance analysis.",
+					"Analyze enemy spells as they're cast — your vision identifies structural flaws in an enemy's spellcraft as it manifests. You have advantage on Intelligence (Arcana) checks. Additionally, you automatically know what spell a creature is casting before you use your reaction to cast counterspell or a similar defense.",
 				level: 11,
+				actionType: "passive",
 			},
 		],
 		jobTraits: [
 			{
 				name: "Arcane Sight",
 				description:
-					"Perceive magical auras as shifting spectra of light, tuned to the resonance of the Aetheric-Weave. Auto-identify spell power levels. You can spot enchanted items in a pawn shop from across the room.",
+					"Perceive magical auras as shifting spectra of light, tuned to the resonance of the Aetheric-Weave. You have truesight out to a range of 30 feet, allowing you to spot invisible creatures, illusions, and enchanted items instantly.",
 				type: "passive",
+				actionType: "passive",
 			},
 			{
 				name: "Aetheric-Sanctum Mind",
@@ -1553,14 +1574,18 @@ export const jobs: Job[] = [
 			{
 				name: "Mana-Saturated Body",
 				description:
-					"Your cells leak ambient magic — Geiger counters spike near you, compasses spin, and your skin faintly glows in dark rooms. HP maximum increases by 1 per Esper level.",
+					"Your cells leak ambient magic — Geiger counters spike near you, compasses spin, and your skin faintly glows in dark rooms. Your hit point maximum increases by 1, and it increases by 1 every time you gain a level in this class.",
 				level: 1,
+				actionType: "passive",
 			},
 			{
 				name: "Unstable Reactor",
 				description:
-					"Your mana output is volatile — you've accidentally set off car alarms, shattered windows, and crashed Wi-Fi networks just by sneezing. After casting a 1st+ spell, roll d20; on a 1, a random mana surge erupts from your body.",
+					"Your mana output is volatile. When you take damage, you can use your reaction to unleash a blast of raw mana. Each creature within 10 feet of you must make a Dexterity saving throw. A creature takes 2d6 force damage on a failed save, or half as much on a successful one. Once you use this ability, you can't use it again until you finish a short or long rest.",
 				level: 1,
+				actionType: "reaction",
+				uses: { formula: "1", recharge: "short-rest" },
+				tracking: "uses",
 			},
 			{
 				name: "Willpower Amplifier",
@@ -1571,16 +1596,20 @@ export const jobs: Job[] = [
 			{
 				name: "Reality Distortion",
 				description:
-					"Your mana field warps probability in a 10-ft radius — coins land on edge, dice roll sixes, and weather changes when you're emotional. Reroll all damage dice for a spell and take the higher result per die. Once per long rest.",
+					"Your mana field warps probability in a 10-ft radius — coins land on edge, dice roll sixes, and weather changes when you're emotional. As a bonus action, you create an aura of distorted reality for 1 minute. While the aura is active, ranged attacks against you have disadvantage. Once you use this ability, you can't use it again until you finish a long rest.",
 				level: 14,
+				actionType: "bonus action",
+				uses: { formula: "1", recharge: "long-rest" },
+				tracking: "uses",
 			},
 		],
 		jobTraits: [
 			{
 				name: "Mana Sensitivity",
 				description:
-					"Your open mana pathways work like a passive radar — enchanted objects hum when you walk by, hidden Rifts tingle at the back of your skull, and you can tell if someone's an awakened ascendant from across a crowded subway car. Sense magical effects within 30 ft. Identify any observed spell's school.",
+					"Your open mana pathways work like a passive radar. You automatically sense the presence of any magical effect or spell within 30 feet of you, and you can identify its school of magic if you can see it.",
 				type: "passive",
+				actionType: "passive",
 			},
 			{
 				name: "Anomalous Resistance",
@@ -1591,9 +1620,11 @@ export const jobs: Job[] = [
 			{
 				name: "Focused Discharge",
 				description:
-					"Spend 1 flux when casting to spike your mana output — the air crackles, hair stands on end, and the target's defenses overload. Force disadvantage on the first save against your spell.",
+					"Spend 1 flux when casting a spell to spike your mana output — the air crackles, hair stands on end, and the target's defenses overload. You can force one creature targeted by the spell to make its first saving throw against the spell with disadvantage.",
 				type: "active",
-				frequency: "at-will",
+				actionType: "passive",
+				resource: "1 flux",
+				tracking: "resource",
 			},
 		],
 		abilityScoreImprovements: { sense: 2, intelligence: 1 },
@@ -1833,8 +1864,11 @@ export const jobs: Job[] = [
 			{
 				name: "Voice of the Reaped",
 				description:
-					"The recently dead recognize you as a Mandated Reaper of Marthos. You can speak with the lingering echoes of any creature that died within the past day; they answer truthfully and treat you as their rightful warden, which Bureau investigators often exploit.",
+					"The recently dead recognize you as a Mandated Reaper of Marthos. You can speak with the lingering echoes of any creature that died within the past day; they answer truthfully and treat you as their rightful warden, which Bureau investigators often exploit. You can cast speak with dead at will, without expending a spell slot, but only on corpses that died within the last 24 hours.",
 				level: 1,
+				actionType: "action",
+				uses: { formula: "at-will", recharge: "short-rest" },
+				tracking: "uses",
 			},
 			{
 				name: "Unhallowed Wake",
@@ -1860,8 +1894,9 @@ export const jobs: Job[] = [
 			{
 				name: "Carrion Anchor",
 				description:
-					"Low-intelligence Rift anomalies read your mana-signature as part of the dead environment and ignore you unless you attack them first or harvest a Remnant within their sight.",
+					"Low-intelligence Rift anomalies read your mana-signature as part of the dead environment and ignore you unless you attack them first or harvest a Remnant within their sight. You have advantage on Dexterity (Stealth) checks made against undead and fiends.",
 				type: "passive",
+				actionType: "passive",
 			},
 		],
 		abilityScoreImprovements: { vitality: 2, strength: 1 },
@@ -2092,14 +2127,18 @@ export const jobs: Job[] = [
 			{
 				name: "Rift Ecology Sense",
 				description:
-					"Communicate with beasts and plant creatures — stray dogs follow you, pigeons land on your shoulder, and houseplants lean toward you. Sense Rift openings within 1 mile by reading ecosystem stress patterns the way a meteorologist reads weather radar.",
+					"Communicate with beasts and plant creatures — stray dogs follow you, pigeons land on your shoulder, and houseplants lean toward you. You can cast speak with animals at will, without expending a spell slot. Additionally, you can sense Rift openings within 1 mile by reading ecosystem stress patterns the way a meteorologist reads weather radar.",
 				level: 1,
+				actionType: "action",
+				uses: { formula: "at-will", recharge: "short-rest" },
+				tracking: "uses",
 			},
 			{
 				name: "Stabilized Entity Shift",
 				description:
-					"When you assume entity form, your body retains more coherence. Entity forms gain temp HP = Summoner level. Maintain concentration while shifted.",
+					"When you assume entity form, your body retains more coherence. When you use Entity Shift, your entity form gains temporary hit points equal to your Summoner level. Furthermore, you can maintain concentration on spells while shifted.",
 				level: 6,
+				actionType: "passive",
 			},
 			{
 				name: "Reinforced Summons",
@@ -2112,8 +2151,9 @@ export const jobs: Job[] = [
 			{
 				name: "Biome Link",
 				description:
-					"You speak the primal language of Rift ecosystems — zoo animals calm when you enter, feral Rift creatures hesitate, and plants in your apartment thrive suspiciously well. Communicate with beasts and plants at all times.",
+					`You speak the primal language of Rift ecosystems — zoo animals calm when you enter, feral Rift creatures hesitate, and plants in your apartment thrive suspiciously well. You can communicate with beasts and plants as if you shared a language. You have advantage on initiative rolls.`,
 				type: "passive",
+				actionType: "passive",
 			},
 			{
 				name: "Toxin Resistance",
@@ -2124,9 +2164,11 @@ export const jobs: Job[] = [
 			{
 				name: "Familiar Summon",
 				description:
-					"Expend an Entity Shift use to summon a gate-native familiar (fey form) without material components.",
+					"You can expend one use of your Entity Shift to cast the find familiar spell without material components. The familiar always takes the form of a gate-native fey creature.",
 				type: "active",
-				frequency: "short-rest",
+				actionType: "action",
+				resource: "1 Entity Shift use",
+				tracking: "resource",
 			},
 		],
 		abilityScoreImprovements: { presence: 2, intelligence: 1 },
@@ -2335,20 +2377,25 @@ export const jobs: Job[] = [
 			{
 				name: "Covenant Bond",
 				description:
-					"Your oath links you to nearby allies like a supernatural resonant bond — paramedics have documented Holy Knight teammates' vitals stabilizing in sync. When you or an ally within 10 ft succeeds on a death save, they regain 1 HP.",
+					"Your oath links you to nearby allies like a supernatural resonant bond — paramedics have documented Holy Knight teammates' vitals stabilizing in sync. When you or an ally within 10 feet of you succeeds on a death saving throw, the creature regains 1 hit point.",
 				level: 1,
+				actionType: "passive",
 			},
 			{
 				name: "Oath Sense",
 				description:
-					"Your covenant pings threats to the Absolute's order like a sensory alert — your phone buzzes with [HOSTILE ENTITY DETECTED] when anomaly, celestials, or anomaly are within 60 ft. Know type and location. 1 + Presence mod uses per long rest.",
+					"Your covenant pings threats to the Absolute's order like a sensory alert — your phone buzzes with [HOSTILE ENTITY DETECTED] when an anomaly, fiend, or undead is within 60 feet. As an action, you can open your awareness to detect such creatures. Until the end of your next turn, you know the location of any celestial, fiend, or undead within 60 feet of you that is not behind total cover. You know the type of any being whose presence you sense, but not its identity. You can use this feature a number of times equal to 1 + your Presence modifier. When you finish a long rest, you regain all expended uses.",
 				level: 1,
+				actionType: "action",
+				uses: { formula: "1 + @pre.mod", recharge: "long-rest" },
+				tracking: "uses",
 			},
 			{
 				name: "Aura of Resolve",
 				description:
-					"Your covenant radiates courage — panicking civilians calm down near you, and teammates report feeling 'invincible' in your presence. You and allies within 10 ft can't be frightened while you're conscious. 30 ft at 18th.",
+					"Your covenant radiates courage — panicking civilians calm down near you, and teammates report feeling 'invincible' in your presence. You and friendly creatures within 10 feet of you can't be frightened while you are conscious. At 18th level, the range of this aura increases to 30 feet.",
 				level: 10,
+				actionType: "passive",
 			},
 			{
 				name: "Purification Touch",
@@ -2374,8 +2421,9 @@ export const jobs: Job[] = [
 			{
 				name: "Covenant Immunity",
 				description:
-					"Your oath purifies your biology — you haven't been sick since your awakening, and pandemic-era contact tracers flagged you as a statistical anomaly. Immune to disease.",
+					"Your oath purifies your biology — you haven't been sick since your awakening, and pandemic-era contact tracers flagged you as a statistical anomaly. You are immune to disease.",
 				type: "immunity",
+				actionType: "passive",
 			},
 		],
 		abilityScoreImprovements: { strength: 2, presence: 1 },
@@ -2626,8 +2674,9 @@ export const jobs: Job[] = [
 			{
 				name: "Mandate Vision",
 				description:
-					"You see the Absolute's construction resonance overlaid on objects like a permanent AR schematic display — pick up any gadget and you instantly see its internal wiring, stress points, and upgrade paths. Double proficiency on INT checks related to magic items, tech, or Absolute constructs.",
+					"You see the Absolute's construction resonance overlaid on objects like a permanent AR schematic display — pick up any gadget and you instantly see its internal wiring, stress points, and upgrade paths. You double your proficiency bonus on any Intelligence checks related to magic items, technology, or Absolute constructs.",
 				level: 1,
+				actionType: "passive",
 			},
 			{
 				name: "Neural Synchronization",
@@ -2638,14 +2687,16 @@ export const jobs: Job[] = [
 			{
 				name: "Aetheric-Mandate Access",
 				description:
-					"Interface with any Absolute construct or divine device like touching an intuitive schematic — read functions, bypass security, and rewrite resonance behavior. You've unraveled Rift artifacts that global research labs couldn't crack. Advantage on checks to analyze magical technology.",
+					"Interface with any Absolute construct or divine device like touching an intuitive schematic — read functions, bypass security, and rewrite resonance behavior. You've unraveled Rift artifacts that global research labs couldn't crack. You have advantage on Intelligence checks made to analyze or operate magical technology.",
 				level: 1,
+				actionType: "passive",
 			},
 			{
 				name: "Infusion Optimization",
 				description:
-					"Your infused items exceed standard parameters. They grant an additional +3 bonus (stacking with base infusion). +6 at 14th level.",
+					"Your infused items exceed standard parameters. Any infused item you create grants an additional +3 bonus to attack rolls, damage rolls, or AC (stacking with the base infusion bonus). This additional bonus increases to +6 at 14th level.",
 				level: 6,
+				actionType: "passive",
 			},
 			{
 				name: "Construct Reinforcement",
@@ -2658,9 +2709,11 @@ export const jobs: Job[] = [
 			{
 				name: "Mandate Tinkering",
 				description:
-					"Imbue tiny objects with Absolute-powered effects — turn a pen into a flashlight, a coin into a voice recorder, or a business card into a GPS tracker. Up to INT mod objects at once. Your apartment is full of enchanted household items.",
+					"Imbue tiny objects with Absolute-powered effects — turn a pen into a flashlight, a coin into a voice recorder, or a business card into a GPS tracker. As an action, you can touch a Tiny nonmagical object and imbue it with a minor magical property. You can have up to your Intelligence modifier (minimum of one) objects imbued at once. Your apartment is full of enchanted household items.",
 				type: "active",
+				actionType: "action",
 				frequency: "at-will",
+				tracking: "manual",
 			},
 			{
 				name: "Tool Mastery",
@@ -2945,8 +2998,9 @@ export const jobs: Job[] = [
 			{
 				name: "Broad-Spectrum Awakening",
 				description:
-					"Your frequency attunement grants intuitive understanding of many disciplines — you pick up new skills the way most people pick up slang, absorbing competence from the Absolute's resonance flows. Gain proficiency in two additional skills of your choice.",
+					"Your frequency attunement grants intuitive understanding of many disciplines — you pick up new skills the way most people pick up slang, absorbing competence from the Absolute's resonance flows. You gain proficiency in two additional skills of your choice.",
 				level: 1,
+				actionType: "passive",
 			},
 			{
 				name: "Resonance Shield",
@@ -2957,8 +3011,9 @@ export const jobs: Job[] = [
 			{
 				name: "Amplified Hype",
 				description:
-					"When you grant a Hype die, the recipient also gains temp HP = Presence mod — they literally feel stronger, more confident, like their favorite song just came on during a workout. Your resonance reinforces their resolve.",
+					"When you grant a Hype die, the recipient also gains temporary hit points equal to your Presence modifier (minimum of 1) — they literally feel stronger, more confident, like their favorite song just came on during a workout. Your resonance reinforces their resolve.",
 				level: 1,
+				actionType: "passive",
 			},
 			{
 				name: "Dissonance Burst",
@@ -2971,27 +3026,31 @@ export const jobs: Job[] = [
 				description:
 					"When an ally uses your Hype die and rolls the maximum value, the die is not expended. Your frequencies synchronize perfectly.",
 				level: 14,
+				actionType: "passive",
 			},
 		],
 		jobTraits: [
 			{
 				name: "Absolute Versatility",
 				description:
-					"The Absolute's ambient frequencies feed you data about everything — you're the person who's weirdly good at trivia, can fix a flat tire, knows first aid, and speaks conversational Japanese despite never studying it. Add half prof bonus to unproficient checks.",
+					"The Absolute's ambient frequencies feed you data about everything — you're the person who's weirdly good at trivia, can fix a flat tire, knows first aid, and speaks conversational Japanese despite never studying it. You can add half your proficiency bonus, rounded down, to any ability check you make that doesn't already include your proficiency bonus.",
 				type: "passive",
+				actionType: "passive",
 			},
 			{
 				name: "Frequency Restoration",
 				description:
-					"During short rest, emit restorative harmonics — it sounds like ambient music that makes everyone feel better. Teammates' wounds close faster, stress melts away. Presence mod creatures each regain extra 1d6 HP.",
+					"During a short rest, you can emit restorative harmonics — it sounds like ambient music that makes everyone feel better. Teammates' wounds close faster, stress melts away. If you or any friendly creatures who can hear your performance regain hit points at the end of the short rest by spending one or more Hit Dice, each of those creatures regains an extra 1d6 hit points.",
 				type: "active",
+				actionType: "passive",
 				frequency: "short-rest",
 			},
 			{
 				name: "Frequency Mastery",
 				description:
-					"Choose two skills you are proficient in: when you make an ability check using one of those skills, you treat any d20 roll of 9 or lower as 10. Choose two more at 10th level. Mechanically distinct from the Assassin's Specialist Training (doubled proficiency).",
+					"Choose two skills you are proficient in: when you make an ability check using one of those skills, you treat any d20 roll of 9 or lower as 10. You choose two more skills at 10th level. This is mechanically distinct from the Assassin's Specialist Training (doubled proficiency).",
 				type: "passive",
+				actionType: "passive",
 			},
 		],
 		abilityScoreImprovements: { presence: 2, agility: 1 },
@@ -3278,12 +3337,14 @@ export const jobs: Job[] = [
 				description:
 					"The Absolute's broadcast flows through you. When you cast a Herald mantra that restores hit points, add your Presence modifier to the total healed.",
 				level: 1,
+				actionType: "passive",
 			},
 			{
 				name: "Resonance Channel",
 				description:
-					"Your body tolerates higher-bandwidth transmissions. At 6th level, you can maintain concentration on two Herald mantras of 1st level or lower simultaneously.",
+					"Your body tolerates higher-bandwidth transmissions. At 6th level, you can maintain concentration on two Herald mantras of 1st level or lower simultaneously. If you take damage, you make a single Constitution saving throw to maintain concentration on both.",
 				level: 6,
+				actionType: "passive",
 			},
 			{
 				name: "Covenant Broadcast",
@@ -3550,26 +3611,30 @@ export const jobs: Job[] = [
 			{
 				name: "Patron Tether",
 				description:
-					"At Awakening, your patron inscribes a pact-sigil on your skin and establishes the aetheric umbilical. The brand pulses warmly when your patron observes you and glows brightly when they wish to speak.",
+					`At Awakening, your patron inscribes a pact-sigil on your skin and establishes the aetheric umbilical. The brand pulses warmly when your patron observes you and glows brightly when they wish to speak. You can communicate telepathically with your patron, though they may not always answer. You have advantage on initiative rolls.`,
 				level: 1,
+				actionType: "passive",
 			},
 			{
 				name: "Pact Boon",
 				description:
-					"Your patron grants one boon: Boon of the Blade (summon a pact weapon), Boon of the Tome (bonus cantrips), or Boon of the Familiar (summon a pact-bound imp/sprite/quasit).",
+					"Your patron grants one boon: Boon of the Blade (summon a pact weapon), Boon of the Tome (bonus cantrips), or Boon of the Familiar (summon a pact-bound imp/sprite/quasit). Each boon grants specific passive and active benefits detailed in their respective descriptions.",
 				level: 3,
+				actionType: "passive",
 			},
 			{
 				name: "Contract Invocations",
 				description:
-					"You learn specialized invocations that rewrite your vessel's capabilities — extra eye, see-in-darkness, unnaturally persuasive voice, etc. Gain additional invocations at 2nd, 5th, 7th, 9th, 12th, 15th, and 18th level.",
+					`You learn specialized invocations that rewrite your vessel's capabilities — extra eye, see-in-darkness, unnaturally persuasive voice, etc. You gain additional invocations at 2nd, 5th, 7th, 9th, 12th, 15th, and 18th level. You gain a +1 bonus to all saving throws.`,
 				level: 2,
+				actionType: "passive",
 			},
 			{
 				name: "Rift Mantle",
 				description:
-					"At 10th level, you can wrap yourself in your patron's resonance as a reaction: resistance to all damage until the start of your next turn. Once per short rest.",
+					"At 10th level, you can wrap yourself in your patron's resonance as a reaction when you take damage. You gain resistance to all damage until the start of your next turn. Once you use this feature, you can't use it again until you finish a short or long rest.",
 				level: 10,
+				actionType: "reaction",
 				uses: { formula: "1", recharge: "short-rest" },
 			},
 		],
@@ -3577,8 +3642,9 @@ export const jobs: Job[] = [
 			{
 				name: "Aetheric Bandwidth",
 				description:
-					"Your pact feeds you more mana per recovery than your rank should allow. You regain all expended pact slots on a short rest.",
+					"Your pact feeds you more mana per recovery than your rank should allow. You regain all expended pact spell slots when you finish a short or long rest.",
 				type: "passive",
+				actionType: "passive",
 			},
 			{
 				name: "Patron's Shield",
@@ -3921,8 +3987,9 @@ export const jobs: Job[] = [
 			{
 				name: "Primal Tracking",
 				description:
-					"You can follow any trail — physical, aetheric, or dimensional — left within the last 24 hours at the rate of a fast march. You automatically spot obvious tracks without a check.",
+					"You can follow any trail — physical, aetheric, or dimensional — left within the last 24 hours at the rate of a fast march. You automatically spot obvious tracks without needing to make a Wisdom (Survival) check.",
 				type: "passive",
+				actionType: "passive",
 			},
 			{
 				name: "Ambush Tactics",

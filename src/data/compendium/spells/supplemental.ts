@@ -354,7 +354,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 		name: "Mind Spike",
 		display_name: "Mind Spike",
 		description:
-			"Drive a needle of psychic pressure into a creature's mind within 60 feet. The target must succeed on a DC 13 Presence saving throw or take 1d8 psychic damage and have disadvantage on its next ability check.",
+			"As an action, you drive a needle of psychic pressure into the mind of a creature you can see within 60 feet. The target must succeed on a DC 13 Presence saving throw or take 1d8 psychic damage, and it has disadvantage on the next ability check it makes before the end of its next turn.",
 		lore: {
 			origin:
 				"Standard Esper psionic primer — the quietest weapon in the Bureau arsenal.",
@@ -1036,7 +1036,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 		name: "Searing Oath",
 		display_name: "Searing Oath",
 		description:
-			"Channel your oath into your weapon. The next time you hit a creature with a melee weapon attack during the spell's duration, the attack deals an extra 2d8 radiant damage. Against anomalies, the extra damage is 3d8.",
+			"As a bonus action, you channel your oath into your weapon. The next time you hit a creature with a melee weapon attack during the spell's duration, the attack deals an extra 2d8 radiant damage. If the target is an Anomaly, this extra radiant damage increases to 3d8.",
 		lore: {
 			origin: "Documented in the Rift Ascendant compendium.",
 			history: "",
@@ -1100,8 +1100,9 @@ export const spells_supplemental: CompendiumSpell[] = [
 		source_book: "Rift Ascendant Canon",
 		effects: {
 			primary:
-				"Brand a creature you can see within range with a mana signature visible only to you.",
-			secondary: "",
+				"Once per turn, deal an extra 1d6 damage to the branded creature when you hit it with an attack.",
+			secondary:
+				"You always know the branded target's location while it is within 300 feet, even through total cover.",
 		},
 		level: 1,
 		school: "Divination",
@@ -1163,8 +1164,10 @@ export const spells_supplemental: CompendiumSpell[] = [
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
 		effects: {
-			primary: "Place a pact-sealed curse on a creature within range.",
-			secondary: "",
+			primary:
+				"Deal an extra 1d6 necrotic damage whenever you hit the cursed target. Choose one ability score; the target has disadvantage on ability checks with it.",
+			secondary:
+				"If the target drops to 0 HP, move the hex to a new creature within range as a bonus action (no new casting required).",
 		},
 		level: 1,
 		school: "Enchantment",
@@ -1201,7 +1204,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 		name: "Psychic Lance",
 		display_name: "Psychic Lance",
 		description:
-			"Drive a focused psychic spike into a creature's consciousness. The target must make a DC 14 Presence save. On a failure, it takes 2d10 psychic damage and is stunned until the end of its next turn. On a success, half damage and no stun.",
+			"As an action, you drive a focused psychic spike into a creature's consciousness. The target must make a DC 14 Presence saving throw. On a failed save, it takes 2d10 psychic damage and is stunned until the end of its next turn. On a successful save, it takes half as much damage and is not stunned.",
 		lore: {
 			origin: "Documented in the Rift Ascendant compendium.",
 			history: "",
@@ -1554,7 +1557,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 		name: "Scramble Signal",
 		display_name: "Scramble Signal",
 		description:
-			"Broadcast a corrupted mana frequency that scrambles a creature's sensory processing. The target must make a DC 14 Intelligence save. On a failure, it has disadvantage on attack rolls and can't use reactions for the duration. At the end of each of its turns, the target can repeat the save.",
+			"As an action, you broadcast a corrupted mana frequency that scrambles a creature's sensory processing. The target must make a DC 14 Intelligence saving throw. On a failed save, it has disadvantage on attack rolls and cannot use its reaction for the duration. The target can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success.",
 		lore: {
 			origin: "Documented in the Rift Ascendant compendium.",
 			history: "",
@@ -1935,8 +1938,10 @@ export const spells_supplemental: CompendiumSpell[] = [
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
 		effects: {
-			primary: "Wreath yourself in a cloak of entropic mana.",
-			secondary: "",
+			primary:
+				"Your melee attacks deal an extra 1d4 necrotic damage. You gain resistance to necrotic damage.",
+			secondary:
+				"The shroud dims all light within 5 feet of you to dim light for the duration.",
 		},
 		level: 1,
 		school: "Necromancy",
@@ -2063,8 +2068,9 @@ export const spells_supplemental: CompendiumSpell[] = [
 		source_book: "Rift Ascendant Canon",
 		effects: {
 			primary:
-				"As a reaction when you take damage, invoke your patron's protection.",
-			secondary: "",
+				"Reduce incoming damage by 2d6 + your Presence modifier.",
+			secondary:
+				"If this reduces the damage to 0, the attacker takes 1d4 force damage as the pact retaliates.",
 		},
 		level: 1,
 		school: "Abjuration",
@@ -2224,7 +2230,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 		name: "Fade to Shadow",
 		display_name: "Fade to Shadow",
 		description:
-			"Dissolve your visual profile into ambient shadow. While in dim light or darkness, you become invisible for the duration. The spell ends early if you attack, cast another spell, or enter bright light.",
+			"As an action, you dissolve your visual profile into ambient shadow. While in dim light or darkness, you become invisible for the duration. The spell ends early if you attack, cast a spell, or enter bright light.",
 		lore: {
 			origin: "Documented in the Rift Ascendant compendium.",
 			history: "",
@@ -2392,7 +2398,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 		name: "Mana Seal",
 		display_name: "Mana Seal",
 		description:
-			"Touch a closed entry point — a door, container, or minor Rift fissure — and fuse it shut with crystallized mana. The seal is invisible but tangible, raising the DC to breach by 10. You and designated allies pass through unimpeded. The seal can be suppressed by a successful Circuit Interrupt for 10 minutes.",
+			"As an action, you touch a closed entry point, such as a door, container, or minor Rift fissure, and fuse it shut with crystallized mana. The seal is invisible but tangible, increasing the DC to breach or pick the lock by 10. You and designated allies can pass through unimpeded. The seal can be suppressed for 10 minutes by a successful Circuit Interrupt check.",
 		lore: {
 			origin: "Documented in the Rift Ascendant compendium.",
 			history: "",
@@ -2535,8 +2541,9 @@ export const spells_supplemental: CompendiumSpell[] = [
 		source_book: "Rift Ascendant Canon",
 		effects: {
 			primary:
-				"Create a mana-oath tether between yourself and a willing creature.",
-			secondary: "",
+				"Tethered target gains +1 to AC and saving throws and resistance to all damage.",
+			secondary:
+				"Each time the tethered ally takes damage, an equal amount is routed to your HP.",
 		},
 		level: 2,
 		school: "Abjuration",
@@ -2763,7 +2770,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 		name: "Oath Smite",
 		display_name: "Oath Smite",
 		description:
-			"Charge your weapon with the full weight of your oath. The next melee hit during the spell's duration deals an extra 3d8 radiant damage. The target must also make a DC 14 Presence save or be frightened of you for 1 minute (save ends).",
+			"As a bonus action, you charge your weapon with the full weight of your oath. The next time you hit a creature with a melee weapon attack during the spell's duration, the attack deals an extra 3d8 radiant damage. Additionally, the target must succeed on a DC 14 Presence saving throw or become frightened of you for 1 minute. A frightened target can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success.",
 		lore: {
 			origin: "Documented in the Rift Ascendant compendium.",
 			history: "",
@@ -2894,8 +2901,9 @@ export const spells_supplemental: CompendiumSpell[] = [
 		source_book: "Rift Ascendant Canon",
 		effects: {
 			primary:
-				"As a reaction to taking psychic damage or being targeted by a charm/fear effect, erect a psionic barrier around your consciousness.",
-			secondary: "",
+				"Gain resistance to psychic damage for the duration.",
+			secondary:
+				"Advantage on saving throws against being charmed, frightened, or stunned.",
 		},
 		level: 2,
 		school: "Abjuration",
@@ -3194,7 +3202,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 		name: "Hallowed Ground",
 		display_name: "Hallowed Ground",
 		description:
-			"Consecrate a 15-foot radius centered on you with the Absolute's protective radiance. Allies within the area gain +2 to AC against attacks from anomalies. Anomalies that enter the area or start their turn there take 1d6 radiant damage.",
+			"As an action, you consecrate a 15-foot radius area centered on you with the Absolute's protective radiance for the duration. Allies within the area gain a +2 bonus to AC against attack rolls made by Anomalies. Any Anomaly that enters the area for the first time on a turn or starts its turn there takes 1d6 radiant damage.",
 		lore: {
 			origin: "Documented in the Rift Ascendant compendium.",
 			history: "",
@@ -3397,7 +3405,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 		name: "Rift-Companion Link",
 		display_name: "Rift-Companion Link",
 		description:
-			"Form a mana-circuit bridge with a willing gate-creature companion you touch. For the duration, you share thoughts telepathically and can switch sensory perception to the companion's perspective as a bonus action. The linked creature has advantage on attack rolls against anything within 5 feet of you.",
+			"As an action, you form a mana-circuit bridge with a willing gate-creature companion you touch. For the duration, you share thoughts telepathically with the companion, and as a bonus action, you can switch your sensory perception to the companion's perspective. The linked creature has advantage on attack rolls against any creature within 5 feet of you.",
 		lore: {
 			origin: "Documented in the Rift Ascendant compendium.",
 			history: "",
@@ -3783,7 +3791,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 		name: "Pact Hunger",
 		display_name: "Pact Hunger",
 		description:
-			"Channel your patron's dread presence through your voice. A creature within range must make a DC 15 Presence save. On failure: 4d8 psychic damage and frightened for the duration. While frightened, the target must use its movement to move away from you. Save at end of each turn.",
+			"As an action, you channel your patron's dread presence through your voice. A creature you can see within range must make a DC 15 Presence saving throw. On a failed save, it takes 4d8 psychic damage and is frightened for the duration. While frightened in this way, the target must use its movement to move as far away from you as possible. It can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success.",
 		lore: {
 			origin: "Documented in the Rift Ascendant compendium.",
 			history: "",
@@ -3938,8 +3946,10 @@ export const spells_supplemental: CompendiumSpell[] = [
 		rarity: "uncommon",
 		source_book: "Rift Ascendant Canon",
 		effects: {
-			primary: "Phase through mana-space to deliver a devastating strike.",
-			secondary: "",
+			primary:
+				"Mark a creature within 60 feet. Before end of your next turn, teleport to within 5 feet of the marked creature when you attack it.",
+			secondary:
+				"The triggering weapon attack deals an extra 3d8 force damage.",
 		},
 		level: 3,
 		school: "Conjuration",
@@ -3976,7 +3986,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 		name: "Absolute Beacon",
 		display_name: "Absolute Beacon",
 		description:
-			"Radiate the Absolute's protective light. For the duration, allies within 30 feet gain +2 to attack rolls and saving throws against anomalies. Anomalies in the area have disadvantage on attack rolls.",
+			"As an action, you radiate the Absolute's protective light. For the duration, allies within 30 feet of you gain a +2 bonus to attack rolls and saving throws against Anomalies. Additionally, Anomalies within the area have disadvantage on attack rolls.",
 		lore: {
 			origin: "Documented in the Rift Ascendant compendium.",
 			history: "",
@@ -4062,8 +4072,10 @@ export const spells_supplemental: CompendiumSpell[] = [
 		rarity: "uncommon",
 		source_book: "Rift Ascendant Canon",
 		effects: {
-			primary: "Overcharge your mana circuit for one devastating release.",
-			secondary: "",
+			primary:
+				"The next damaging spell you cast within the duration deals maximum damage instead of rolling dice.",
+			secondary:
+				"After that spell resolves, you take 1d6 force damage from circuit backlash.",
 		},
 		level: 3,
 		school: "Transmutation",
@@ -4123,8 +4135,9 @@ export const spells_supplemental: CompendiumSpell[] = [
 		source_book: "Rift Ascendant Canon",
 		effects: {
 			primary:
-				"Tear a brief rift and pull a semi-autonomous Rift echo into an unoccupied space within range.",
-			secondary: "",
+				"Summon a Medium Rift echo (AC 14, HP 30, +5 to hit, 2d6+3 damage) that acts on its own initiative and obeys your mental commands.",
+			secondary:
+				"The echo vanishes when reduced to 0 HP or when the spell ends.",
 		},
 		level: 3,
 		school: "Conjuration",
@@ -4164,7 +4177,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 		name: "Circuit Overclock",
 		display_name: "Circuit Overclock",
 		description:
-			"Overclock a willing creature's mana circuit, boosting physical performance. For the duration, the target gains +2 AC, advantage on Agility saving throws, and +10 feet movement speed. The spell ends early if the target falls unconscious.",
+			"As an action, you overclock a willing creature's mana circuit, significantly boosting its physical performance. For the duration, the target gains a +2 bonus to AC, advantage on Agility saving throws, and its walking speed increases by 10 feet. The spell ends early if the target falls unconscious.",
 		lore: {
 			origin: "Documented in the Rift Ascendant compendium.",
 			history: "",
@@ -4300,7 +4313,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 		name: "Whisper Network",
 		display_name: "Whisper Network",
 		description:
-			"Transmit a whispered message of 25 words or fewer to a creature within 1 mile that you are familiar with. The creature hears the message in your voice and can reply with 25 words of its own. The spell can reach across Rift boundaries.",
+			"As an action, you transmit a whispered message of 25 words or fewer to a creature within 1 mile that you are familiar with. The creature hears the message in your voice and can reply with 25 words of its own. This spell can reach across dimensional boundaries such as Rifts.",
 		lore: {
 			origin: "Documented in the Rift Ascendant compendium.",
 			history: "",
@@ -4624,7 +4637,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 		name: "Oath Aura",
 		display_name: "Oath Aura",
 		description:
-			"Radiate your oath's authority. For the duration, you and all friendly creatures within 30 feet add your Presence modifier (minimum +1) to all saving throws. You are also immune to being frightened while concentrating on this spell.",
+			"As an action, you radiate your oath's authority. For the duration, you and all friendly creatures within 30 feet of you gain a bonus to all saving throws equal to your Presence modifier (minimum of +1). You are also immune to the frightened condition while you are concentrating on this spell.",
 		lore: {
 			origin: "Documented in the Rift Ascendant compendium.",
 			history: "",
@@ -4703,7 +4716,12 @@ export const spells_supplemental: CompendiumSpell[] = [
 		],
 		rarity: "uncommon",
 		source_book: "Rift Ascendant Canon",
-		effects: { primary: "", secondary: "" },
+		effects: {
+			primary:
+				"Create 3 illusory duplicates (1 HP, AC 14). Attacks against you randomly target you or a duplicate (d4: 1-3 hits duplicate, 4 hits you).",
+			secondary:
+				"Each duplicate can deliver melee attacks dealing 1d8 psychic damage using your spell attack modifier.",
+		},
 		level: 4,
 		school: "Illusion",
 		casting_time: "1 action",
@@ -5210,7 +5228,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 		name: "Pact Dominion",
 		display_name: "Pact Dominion",
 		description:
-			"Channel your patron's will directly into a creature's mind. The target makes a DC 17 Presence save. On failure, it is dominated for the duration: you use your action to issue commands and the target obeys to the best of its ability. It repeats the save each time it takes damage.",
+			"As an action, you channel your patron's will directly into a creature's mind. The target must succeed on a DC 17 Presence saving throw or be dominated by you for the duration. While it is dominated, you can use your action to issue commands, which the target obeys to the best of its ability. It can repeat the saving throw each time it takes damage, ending the effect on a success.",
 		lore: {
 			origin: "Documented in the Rift Ascendant compendium.",
 			history: "",
@@ -5335,7 +5353,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 		name: "Absolute Judgment",
 		display_name: "Absolute Judgment",
 		description:
-			"Call down a column of the Absolute's judgment on a creature within range. The target makes a DC 17 Vitality save: 8d8 radiant damage on failure (10d8 against anomalies), half on success. On failure, the target is also blinded until end of its next turn.",
+			"As an action, you call down a column of the Absolute's judgment on a creature you can see within range. The target must make a DC 17 Vitality saving throw. On a failed save, it takes 8d8 radiant damage (or 10d8 radiant damage if it is an Anomaly) and is blinded until the end of its next turn. On a successful save, it takes half as much damage and is not blinded.",
 		lore: {
 			origin: "Documented in the Rift Ascendant compendium.",
 			history: "",
@@ -5468,7 +5486,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 		name: "Mass Circuit Boost",
 		display_name: "Mass Circuit Boost",
 		description:
-			"Overclock up to 6 willing creatures' mana circuits simultaneously. For the duration, each target gains +2 AC, advantage on Agility saves, +10 feet movement speed, and can take one additional action on each turn (Attack [one attack only], Dash, Disengage, Hide, or Use Object).",
+			"As an action, you overclock the mana circuits of up to 6 willing creatures you can see within range. For the duration, each target gains a +2 bonus to AC, advantage on Agility saving throws, a 10-foot bonus to its walking speed, and it can take one additional action on each of its turns. That action can be used only to take the Attack (one weapon attack only), Dash, Disengage, Hide, or Use an Object action.",
 		lore: {
 			origin: "Documented in the Rift Ascendant compendium.",
 			history: "",
@@ -5962,8 +5980,10 @@ export const spells_supplemental: CompendiumSpell[] = [
 		rarity: "rare",
 		source_book: "Rift Ascendant Canon",
 		effects: {
-			primary: "Channel the full protective mandate of the Absolute.",
-			secondary: "",
+			primary:
+				"All friendly creatures within 30 feet gain resistance to all damage.",
+			secondary:
+				"While concentrating on this spell, you cannot make attacks or cast damaging spells.",
 		},
 		level: 6,
 		school: "Abjuration",
@@ -6072,7 +6092,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 		name: "Nightmare Pact",
 		display_name: "Nightmare Pact",
 		description:
-			"Trap a creature's consciousness in a waking nightmare constructed by your patron. The target must make a DC 17 Presence save at the start of each of its turns: 6d10 psychic damage and paralyzed on failure. On success, the nightmare breaks and the spell ends.",
+			"As an action, you trap a creature's consciousness in a waking nightmare constructed by your patron. At the start of each of its turns for the duration, the target must make a DC 17 Presence saving throw. On a failed save, it takes 6d10 psychic damage and is paralyzed until the start of its next turn. On a successful save, the nightmare breaks and the spell ends.",
 		lore: {
 			origin: "Documented in the Rift Ascendant compendium.",
 			history: "",
@@ -6232,8 +6252,10 @@ export const spells_supplemental: CompendiumSpell[] = [
 		rarity: "rare",
 		source_book: "Rift Ascendant Canon",
 		effects: {
-			primary: "Vanish into the umbral layer of mana-space.",
-			secondary: "",
+			primary:
+				"You are invisible for the duration. The first attack you make deals an extra 8d6 damage (your choice of type).",
+			secondary:
+				"After attacking, you immediately teleport up to 30 feet to a space in dim light or darkness.",
 		},
 		level: 6,
 		school: "Illusion",
@@ -6272,7 +6294,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 		name: "Absolute Wrath",
 		display_name: "Absolute Wrath",
 		description:
-			"Channel the Absolute's fury into a blinding detonation of radiant force. Each creature within 60 feet must make a DC 18 Vitality save: 12d6 radiant on failure, half on success. Anomalies automatically take maximum damage without a save.",
+			"As an action, you channel the Absolute's fury into a blinding detonation of radiant force. Each creature in a 60-foot-radius sphere centered on you must make a DC 18 Vitality saving throw. On a failed save, a creature takes 12d6 radiant damage, or half as much damage on a successful save. Anomalies automatically fail this saving throw and take maximum damage.",
 		lore: {
 			origin: "Documented in the Rift Ascendant compendium.",
 			history: "",
@@ -6611,7 +6633,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 		name: "Total Concealment",
 		display_name: "Total Concealment",
 		description:
-			"Become undetectable. You are invisible, inaudible, and immune to divination. Truesight cannot see you. See Invisibility fails. If you attack or cast a spell, you are revealed until the end of your next turn but the spell continues.",
+			"As an action, you become completely undetectable for the duration. You are invisible, inaudible, and immune to divination magic. You cannot be perceived by truesight or spells such as See Invisibility. If you make an attack roll or cast a spell, your presence is briefly revealed until the end of your next turn, but this spell does not end.",
 		lore: {
 			origin: "Documented in the Rift Ascendant compendium.",
 			history: "",
@@ -6692,8 +6714,9 @@ export const spells_supplemental: CompendiumSpell[] = [
 		source_book: "Rift Ascendant Canon",
 		effects: {
 			primary:
-				"Tear open a massive rift and summon a Huge Rift leviathan (AC 18, HP 160, multiattack: 3 at +11 for 2d12+7, swim/fly 60 ft, siege: double damage to objects/structures).",
-			secondary: "",
+				"Summon a Huge Rift leviathan (AC 18, HP 160, multiattack: 3 at +11 for 2d12+7, swim/fly 60 ft) that obeys mental commands.",
+			secondary:
+				"The leviathan has siege (double damage to objects/structures).",
 		},
 		level: 7,
 		school: "Conjuration",
@@ -6756,8 +6779,10 @@ export const spells_supplemental: CompendiumSpell[] = [
 		rarity: "epic",
 		source_book: "Rift Ascendant Canon",
 		effects: {
-			primary: "Erect an impenetrable psionic barrier in a 30-foot radius.",
-			secondary: "",
+			primary:
+				"Allies within 30 feet are immune to psychic damage and cannot be charmed, frightened, stunned, or possessed.",
+			secondary:
+				"Any hostile psychic or enchantment effect that would enter the area is automatically dispelled.",
 		},
 		level: 7,
 		school: "Abjuration",
@@ -6940,7 +6965,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 		name: "Reality Rewrite",
 		display_name: "Reality Rewrite",
 		description:
-			"Rewrite a creature's fundamental form. The target must make a DC 19 Presence save or be transformed into a beast of CR 1 or lower for the duration. The target retains its HP but gains the beast's statistics. If reduced to 0 HP in beast form, it reverts with excess damage carrying over.",
+			"As an action, you attempt to rewrite a creature's fundamental form. The target must succeed on a DC 19 Presence saving throw or be transformed into a beast of Challenge Rating 1 or lower for the duration. The target retains its hit points and hit dice, but otherwise adopts the beast's statistics. If it drops to 0 hit points in this form, it reverts to its original form, with any excess damage carrying over.",
 		lore: {
 			origin: "Documented in the Rift Ascendant compendium.",
 			history: "",
@@ -7074,7 +7099,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 		name: "Total Domination",
 		display_name: "Total Domination",
 		description:
-			"Seize total control of a creature's mind, overwriting its consciousness. The target must make a DC 19 Presence save. On failure, it is dominated and fights on your behalf using all its abilities. You maintain telepathic control. It repeats the save only when it takes damage.",
+			"As an action, you seize total control of a creature's mind, overwriting its consciousness. The target must succeed on a DC 19 Presence saving throw or be dominated by you for the duration. While it is dominated, you maintain a telepathic link with it as long as you are on the same plane of existence, and it fights on your behalf using all of its abilities. It can repeat the saving throw only when it takes damage.",
 		lore: {
 			origin: "Documented in the Rift Ascendant compendium.",
 			history: "",
@@ -7136,7 +7161,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 		name: "Absolute Genesis",
 		display_name: "Absolute Genesis",
 		description:
-			"Invoke the Absolute's primordial creative force. You permanently reshape terrain within a 1-mile radius: raise or lower ground by 100 feet, create or destroy forests, divert rivers, and establish a self-sustaining biome. The change is permanent and indistinguishable from natural terrain.",
+			"As an action, you invoke the Absolute's primordial creative force to permanently reshape terrain within a 1-mile radius. You can raise or lower the ground by up to 100 feet, create or destroy forests, divert rivers, and establish a completely self-sustaining biome. The change is permanent and indistinguishable from natural terrain, requiring no concentration.",
 		lore: {
 			origin: "Documented in the Rift Ascendant compendium.",
 			history: "",
@@ -7409,7 +7434,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 		name: "Rift Colossus",
 		display_name: "Rift Colossus",
 		description:
-			"Tear open the largest rift you've ever manifested and summon a Gargantuan Rift colossus (AC 20, HP 300, multiattack: 4 slams at +14 for 4d10+8, siege, legendary actions: stomp/tail/roar). The colossus obeys your mental commands. When it falls, the rift seals.",
+			"As an action, you tear open a massive rift and summon a Gargantuan Rift colossus (AC 20, 300 hit points; Multiattack: 4 slams at +14 to hit, 4d10+8 bludgeoning damage each; Siege Monster; Legendary Actions: Stomp, Tail, Roar). The colossus acts on your initiative and obeys your telepathic commands. When the colossus drops to 0 hit points or the spell ends, the rift seals.",
 		lore: {
 			origin: "Documented in the Rift Ascendant compendium.",
 			history: "",
@@ -7548,7 +7573,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 		name: "Total Recall",
 		display_name: "Total Recall",
 		description:
-			"Reset your mana circuit to its fully-charged state. You regain all expended spell slots of 5th level or lower and all uses of class features that normally recharge on a short rest. This spell cannot be cast again until you complete a long rest.",
+			"As an action, you completely reset your mana circuit to its fully-charged state. You regain all expended spell slots of 5th level or lower, and you regain all expended uses of class features and abilities that normally recharge on a short rest. Once you cast this spell, you cannot cast it again until you finish a long rest.",
 		lore: {
 			origin: "Documented in the Rift Ascendant compendium.",
 			history: "",
@@ -7794,7 +7819,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 		name: "Lattice Feedback Loop",
 		display_name: "Lattice Feedback Loop",
 		description:
-			"When struck by a spell, route incoming mana through your circuit's feedback buffer. Reduce damage taken by 1d6+Intelligence modifier. If you reduce more than 10 damage, the original caster must make a DC 13 Vitality save or lose concentration.",
+			"As a reaction when you are struck by a spell, you route incoming mana through your circuit's feedback buffer. You reduce the damage taken by 1d6 + your Intelligence modifier. If you reduce the damage by 10 or more, the original caster must succeed on a DC 13 Vitality saving throw or lose concentration on any spell they are maintaining.",
 		lore: {
 			origin: "Documented in the Rift Ascendant compendium.",
 			history: "",
@@ -7904,7 +7929,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 		name: "Awakening Surge",
 		display_name: "Awakening Surge",
 		description:
-			"Touch a willing creature and force-awaken dormant capacity in their mana circuit. For the duration, one ability score of your choice increases by 2 (max 22). When the spell ends, the target gains 1 level of exhaustion as the circuit cools.",
+			"As an action, you touch a willing creature and force-awaken dormant capacity in their mana circuit. For the duration, one ability score of your choice increases by 2, up to a maximum of 22. When the spell ends, the target's circuit cools rapidly, and they suffer 1 level of exhaustion.",
 		lore: {
 			origin: "Documented in the Rift Ascendant compendium.",
 			history: "",
@@ -8014,7 +8039,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 		name: "Circuit Overload",
 		display_name: "Circuit Overload",
 		description:
-			"Target a creature's mana circuit and inject a destabilizing charge. DC 14 Intelligence save: 3d8 lightning on failure and the target's next spell within 1 minute costs one additional slot level (a 3rd-level spell requires a 4th-level slot). Constructs and mana-devices take double damage.",
+			"As an action, you target a creature's mana circuit and inject a destabilizing charge. The target must make a DC 14 Intelligence saving throw. On a failed save, it takes 3d8 lightning damage, and the next spell it casts within 1 minute costs one additional slot level higher than normal (e.g., a 3rd-level spell requires a 4th-level spell slot). Constructs and mana-devices take double the lightning damage.",
 		lore: {
 			origin: "Documented in the Rift Ascendant compendium.",
 			history: "",
@@ -8069,7 +8094,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 		name: "Patron's Witness",
 		display_name: "Patron's Witness",
 		description:
-			"Open a two-way sensory channel with your patron entity. For the duration, you can perceive through your patron's awareness within a 1-mile radius, granting you advantage on Perception checks and initiative rolls. Your patron may offer cryptic tactical observations.",
+			"As an action, you open a two-way sensory channel with your patron entity. For the duration, you can perceive through your patron's vast awareness within a 1-mile radius of you. You gain advantage on Wisdom (Perception) checks and Initiative rolls. Your patron may also telepathically offer cryptic tactical observations.",
 		lore: {
 			origin: "Documented in the Rift Ascendant compendium.",
 			history: "",
@@ -8170,7 +8195,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 		name: "Rift Anchor",
 		display_name: "Rift Anchor",
 		description:
-			"Anchor the local mana-lattice to prevent dimensional manipulation. Within a 30-foot radius: no creature can teleport, be summoned, or use dimensional travel. Rift-anomalies cannot phase between dimensional layers. Existing teleportation effects are suppressed.",
+			"As an action, you anchor the local mana-lattice in a 30-foot-radius sphere centered on you, preventing dimensional manipulation. Within this area, no creature can teleport, be summoned, or use dimensional travel. Anomalies cannot phase between dimensional layers, and any existing teleportation or portal effects within the area are suppressed for the duration.",
 		lore: {
 			origin: "Documented in the Rift Ascendant compendium.",
 			history: "",
@@ -8336,7 +8361,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 		name: "Mana Circuit Splice",
 		display_name: "Mana Circuit Splice",
 		description:
-			"Splice a temporary mana pathway into a willing creature's circuit, granting it one spell slot of 3rd level or lower. The recipient can use this slot to cast any spell it has directly observed being cast within the last 24 hours, using your spellcasting modifier.",
+			"As an action, you splice a temporary mana pathway into a willing creature's circuit. For the duration, the target gains one spell slot of 3rd level or lower. The recipient can use this slot to cast any spell it has directly observed being cast within the last 24 hours. The spell is cast using your spellcasting modifier and spell save DC.",
 		lore: {
 			origin: "Documented in the Rift Ascendant compendium.",
 			history: "",
@@ -8614,7 +8639,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 		name: "Lattice Severance",
 		display_name: "Lattice Severance",
 		description:
-			"Isolate a creature's mana circuit from the ambient lattice. DC 18 Intelligence save. On failure, the target is severed: it can't cast spells, use any mana-based ability, or benefit from magical items for the duration. It can repeat the save at the end of each turn.",
+			"As an action, you attempt to isolate a creature's mana circuit from the ambient lattice. The target must make a DC 18 Intelligence saving throw. On a failed save, the target is severed: it cannot cast spells, use any mana-based abilities, or benefit from the magical properties of magic items for the duration. The target can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success.",
 		lore: {
 			origin: "Documented in the Rift Ascendant compendium.",
 			history: "",
@@ -8724,7 +8749,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 		name: "S-Rank Awakening",
 		display_name: "S-Rank Awakening",
 		description:
-			"Force your mana circuit past every safety limiter simultaneously. For 1 minute: all ability scores become 25, you gain 100 temporary HP, you're immune to all conditions, your speed doubles, and you gain an extra action each turn. When the spell ends, you gain 5 levels of exhaustion.",
+			"As an action, you force your mana circuit past every safety limiter simultaneously for 1 minute. For the duration, all of your ability scores become 25, you gain 100 temporary hit points, you are immune to all conditions, your walking speed is doubled, and you can take one additional action on each of your turns (no restrictions on action type). When the spell ends, you instantly gain 5 levels of exhaustion.",
 		lore: {
 			origin: "Documented in the Rift Ascendant compendium.",
 			history: "",
@@ -8833,7 +8858,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 		name: "Quarantine Membrane",
 		display_name: "Quarantine Membrane",
 		description:
-			"Project a shimmering dome of purified mana in a 20-foot radius. Rift-anomaly creatures cannot enter or pass through the barrier. Awakened creatures and mundane beings pass freely. Spells can cross the barrier normally.",
+			"As an action, you project a shimmering dome of purified mana in a 20-foot-radius hemisphere centered on a point you can see within range. Rift-Anomalies cannot enter or pass through the barrier. Awakened creatures and mundane beings can pass freely through the membrane. Spells and magical effects can cross the barrier normally.",
 		lore: {
 			origin: "Documented in the Rift Ascendant compendium.",
 			history: "",
@@ -8946,7 +8971,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 		name: "Sympathetic Circuit",
 		display_name: "Sympathetic Circuit",
 		description:
-			"Create a sympathetic resonance between up to 3 willing creatures' mana circuits. For the duration, when any linked creature takes damage, the total is divided equally among all linked creatures. When any linked creature receives magical healing, all others regain HP equal to half that healing.",
+			"As an action, you create a sympathetic resonance between the mana circuits of up to 3 willing creatures you can see within range. For the duration, whenever any linked creature takes damage, the total damage is divided equally among all linked creatures. Additionally, whenever any linked creature receives magical healing, all other linked creatures regain hit points equal to half that amount.",
 		lore: {
 			origin: "Documented in the Rift Ascendant compendium.",
 			history: "",
@@ -8961,8 +8986,9 @@ export const spells_supplemental: CompendiumSpell[] = [
 		source_book: "Rift Ascendant Canon",
 		effects: {
 			primary:
-				"Create a sympathetic resonance between up to 3 willing creatures' mana circuits.",
-			secondary: "",
+				"Damage taken by any linked creature is divided equally among all linked creatures.",
+			secondary:
+				"When any linked creature receives magical healing, all others regain HP equal to half that healing.",
 		},
 		level: 3,
 		school: "Transmutation",
@@ -9000,7 +9026,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 		name: "Anomaly Mimicry",
 		display_name: "Anomaly Mimicry",
 		description:
-			"Overwrite your mana-circuit's broadcast signature to mimic a gate-anomaly. You appear to be an anomaly of CR equal to your character level. Rift-anomalies treat you as one of their own (unless you attack them). Awakened creatures who observe you can make a DC 16 Intelligence save to see through the disguise.",
+			"As an action, you overwrite your mana-circuit's broadcast signature to mimic a gate-anomaly for 1 hour. For the duration, you appear to be an Anomaly with a Challenge Rating equal to your character level. Rift-Anomalies treat you as one of their own unless you attack them. Awakened creatures who observe you can use their action to inspect your signature and must succeed on a DC 16 Intelligence (Investigation) check to see through the disguise.",
 		lore: {
 			origin: "Documented in the Rift Ascendant compendium.",
 			history: "",
@@ -9056,7 +9082,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 		name: "Unstable Rift Tear",
 		display_name: "Unstable Rift Tear",
 		description:
-			"Tear a 10-foot unstable dimensional rift at a point within range. At the start of each creature's turn within 30 feet, it's pulled 15 feet toward the rift (DC 16 Strength save to resist). Creatures entering the rift or starting their turn inside: DC 16 AGI save, 4d8 force on failure, half on success.",
+			"As an action, you tear open a 10-foot unstable dimensional rift at a point you can see within 60 feet. At the start of each creature's turn that is within 30 feet of the rift, the creature is pulled 15 feet toward the rift unless it succeeds on a DC 16 Strength saving throw. Any creature that enters the rift for the first time on a turn or starts its turn inside it must make a DC 16 Agility saving throw, taking 4d8 force damage on a failed save, or half as much damage on a successful one.",
 		lore: {
 			origin: "Documented in the Rift Ascendant compendium.",
 			history: "",
@@ -9111,7 +9137,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 		name: "Ghost Protocol",
 		display_name: "Ghost Protocol",
 		description:
-			"Completely suppress your mana-circuit's broadcast signature. For the duration, you are undetectable by any mana-based detection (divination spells, mana-sight, Anomaly Scan, gate-creature tremorsense). You remain visible to normal senses.",
+			"As an action, you completely suppress your mana-circuit's broadcast signature. For the duration, you are undetectable by any mana-based detection, including divination spells, mana-sight, Anomaly Scan, and the tremorsense of gate-creatures. You remain visible to normal senses.",
 		lore: {
 			origin: "Documented in the Rift Ascendant compendium.",
 			history: "",
@@ -9179,8 +9205,9 @@ export const spells_supplemental: CompendiumSpell[] = [
 		source_book: "Rift Ascendant Canon",
 		effects: {
 			primary:
-				"Force-renegotiate the terms of your patron pact for 1 minute, drawing more power than originally agreed.",
-			secondary: "",
+				"All pact-granted abilities deal +2d6 damage of your pact's damage type, and pact spells cost 1 fewer slot level (minimum 1).",
+			secondary:
+				"After the spell ends, your patron extracts a favour (Warden determines the cost).",
 		},
 		level: 5,
 		school: "Enchantment",
@@ -9218,7 +9245,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 		name: "Mana Cascade Failure",
 		display_name: "Mana Cascade Failure",
 		description:
-			"Trigger a catastrophic feedback cascade in a creature's mana circuit. DC 17 Intelligence save: 8d6 force on failure and the target loses its highest remaining spell slot. If the target has no mana-casting ability, it's stunned until the end of its next turn instead.",
+			"As an action, you trigger a catastrophic feedback cascade in a creature's mana circuit. The target must make a DC 17 Intelligence saving throw. On a failed save, it takes 8d6 force damage and loses its highest-level remaining spell slot. If the target does not have any spellcasting or mana-based abilities, it is stunned until the end of its next turn instead.",
 		lore: {
 			origin: "Documented in the Rift Ascendant compendium.",
 			history: "",
@@ -9327,7 +9354,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 		name: "Echo Split",
 		display_name: "Echo Split",
 		description:
-			"Split your mana-circuit output into two bodies: yourself and a perfect echo. The echo has your stats but half your current HP. It acts on your initiative and can take all normal actions. At the start of each turn, you choose which body is 'you' — the other is the echo. If either body drops to 0 HP, it vanishes and the spell ends.",
+			"As an action, you split your mana-circuit output into two bodies: yourself and a perfect echo. The echo has your statistics, but its hit point maximum and current hit points are half of your current hit points. It acts on your initiative and can take all normal actions. At the start of each of your turns, you choose which body is 'you' and which is the 'echo'. If either body drops to 0 hit points, it vanishes and the spell ends.",
 		lore: {
 			origin: "Documented in the Rift Ascendant compendium.",
 			history: "",
@@ -9381,7 +9408,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 		name: "Absolute Mandate",
 		display_name: "Absolute Mandate",
 		description:
-			"Channel the Absolute's authority through the mana-lattice as an irrefutable command. All hostile creatures within 60 feet: DC 18 Presence save. On failure, they must obey one simple command: drop weapons, kneel, flee, or freeze. The effect lasts 1 round.",
+			"As an action, you channel the Absolute's authority through the mana-lattice as an irrefutable command. All hostile creatures within 60 feet of you must make a DC 18 Presence saving throw. On a failed save, they must obey one simple command (such as 'drop weapons', 'kneel', 'flee', or 'freeze') for 1 round.",
 		lore: {
 			origin: "Documented in the Rift Ascendant compendium.",
 			history: "",
@@ -9434,7 +9461,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 		name: "Resonance Overwrite",
 		display_name: "Resonance Overwrite",
 		description:
-			"Rewrite a willing creature's mana-circuit at the fundamental level. Choose one: grant resistance to a damage type, change one saving throw proficiency to a different ability score, or add proficiency in one skill. The change lasts for 1 hour.",
+			"As an action, you rewrite a willing creature's mana-circuit at the fundamental level for 1 hour. Choose one of the following effects: the target gains resistance to one damage type of your choice, the target changes one of its saving throw proficiencies to a different ability score, or the target gains proficiency in one skill of your choice.",
 		lore: {
 			origin: "Documented in the Rift Ascendant compendium.",
 			history: "",
@@ -9449,8 +9476,9 @@ export const spells_supplemental: CompendiumSpell[] = [
 		source_book: "Rift Ascendant Canon",
 		effects: {
 			primary:
-				"Rewrite a willing creature's mana-circuit at the fundamental level.",
-			secondary: "",
+				"Choose one: grant resistance to a damage type, change one saving throw proficiency to a different ability score, or add proficiency in one skill.",
+			secondary:
+				"The change lasts for 1 hour.",
 		},
 		level: 7,
 		school: "Transmutation",
@@ -9543,7 +9571,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 		name: "Dimensional Lockdown",
 		display_name: "Dimensional Lockdown",
 		description:
-			"Anchor the dimensional fabric within a 1-mile radius with overwhelming stabilizing force. For 24 hours: no new Rifts can open, no portals can form, all dimensional travel fails, and existing Rifts are suppressed. This spell requires 10 minutes of preparation and a mana-crystal worth 1000 GP.",
+			"You anchor the dimensional fabric within a 1-mile radius of you with overwhelming stabilizing force for 24 hours. For the duration, no new Rifts can open, no portals can form, all dimensional travel fails, and existing Rifts are suppressed. Casting this spell requires 10 minutes of preparation and the consumption of a mana-crystal worth 1,000 GP.",
 		lore: {
 			origin: "Documented in the Rift Ascendant compendium.",
 			history: "",
@@ -9598,7 +9626,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 		name: "Mana Circuit Genesis",
 		display_name: "Mana Circuit Genesis",
 		description:
-			"The ultimate act of creation: force-awaken a latent mana circuit in a mundane creature. After 8 hours of sustained mana infusion, the target permanently becomes an Awakened with one level in a caster job of your choosing. The target retains all existing abilities and gains spellcasting. This spell can only be cast once per year.",
+			"Through the ultimate act of creation, you force-awaken a latent mana circuit in a mundane creature. After an 8-hour casting time of sustained mana infusion, the target permanently becomes an Awakened and gains one level in a caster job of your choosing. The target retains all existing abilities and gains spellcasting features. This spell can only be cast once per year.",
 		lore: {
 			origin: "Documented in the Rift Ascendant compendium.",
 			history: "",
@@ -10103,7 +10131,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 		name: "Pact Brand",
 		display_name: "Pact Brand",
 		description:
-			"Imprint your patron's sigil on a creature's mana circuit. DC 15 PRS save. On failure, the brand takes hold for 1 minute: you always know the target's location, and whenever it attacks anyone other than you, it takes 2d6 psychic damage as the pact punishes disobedience.",
+			"As an action, you imprint your patron's sigil on a creature's mana circuit. The target must make a DC 15 Presence saving throw. On a failed save, the brand takes hold for 1 minute: for the duration, you always know the target's location, and whenever the target makes an attack against anyone other than you, it takes 2d6 psychic damage as the pact punishes disobedience.",
 		lore: {
 			origin: "Documented in the Rift Ascendant compendium.",
 			history: "",
@@ -10377,7 +10405,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 		name: "Radiant Condemnation",
 		display_name: "Radiant Condemnation",
 		description:
-			"Call down a focused beam of the Absolute's condemnation. One creature: DC 17 VIT save, 8d8 radiant on failure, half on success. On failure, the target is blinded for 1 round. Anomalies automatically take maximum damage.",
+			"As an action, you call down a focused beam of the Absolute's condemnation. A creature you can see within range must make a DC 17 Vitality saving throw. On a failed save, it takes 8d8 radiant damage and is blinded until the end of its next turn. On a successful save, it takes half as much damage and is not blinded. Anomalies automatically fail this saving throw and take maximum damage.",
 		lore: {
 			origin: "Documented in the Rift Ascendant compendium.",
 			history: "",
@@ -10450,8 +10478,10 @@ export const spells_supplemental: CompendiumSpell[] = [
 		rarity: "rare",
 		source_book: "Rift Ascendant Canon",
 		effects: {
-			primary: "Project a psionic defense bastion of stabilized mana-thought.",
-			secondary: "",
+			primary:
+				"Allies within 30 feet are immune to psychic damage and immune to being charmed.",
+			secondary:
+				"Allies within 30 feet gain advantage on Intelligence and Presence saving throws.",
 		},
 		level: 5,
 		school: "Abjuration",
@@ -10599,7 +10629,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 		name: "Bureau Authority Seal",
 		display_name: "Bureau Authority Seal",
 		description:
-			"Inscribe the Bureau's authority seal on a surface, creating a 60-foot radius ward. Rift-anomalies cannot willingly enter. Teleportation into or out of the area requires a DC 17 Presence save. You receive a telepathic alarm if any creature fails the save or forces entry.",
+			"As an action, you inscribe the Bureau's authority seal on a surface, creating a 60-foot-radius ward around it. Rift-Anomalies cannot willingly enter the area. Any creature attempting to teleport into or out of the area must make a DC 17 Presence saving throw to succeed. You receive a telepathic alarm in your mind if any creature fails the save or attempts to force entry.",
 		lore: {
 			origin: "Documented in the Rift Ascendant compendium.",
 			history: "",
@@ -10655,7 +10685,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 		name: "Patron's Judgment",
 		display_name: "Patron's Judgment",
 		description:
-			"Channel your patron's displeasure into a devastating psychic condemnation. One creature: DC 18 PRS save, 10d8 psychic on failure, half on success. On failure, the target is also cursed for 1 minute: disadvantage on all saving throws.",
+			"As an action, you channel your patron's displeasure into a devastating psychic condemnation. One creature you can see within range must make a DC 18 Presence saving throw. On a failed save, it takes 10d8 psychic damage and is cursed for 1 minute. While cursed in this way, the target has disadvantage on all saving throws. On a successful save, it takes half as much damage and is not cursed.",
 		lore: {
 			origin: "Documented in the Rift Ascendant compendium.",
 			history: "",
@@ -10788,8 +10818,9 @@ export const spells_supplemental: CompendiumSpell[] = [
 		source_book: "Rift Ascendant Canon",
 		effects: {
 			primary:
-				"Project a field of total mana-suppression calibrated to gate-frequency signatures.",
-			secondary: "",
+				"All gate-anomaly creatures within 120 feet lose all damage resistances and immunities.",
+			secondary:
+				"Their special abilities are suppressed, and their movement speed is halved.",
 		},
 		level: 8,
 		school: "Abjuration",
@@ -10827,7 +10858,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 		name: "Mana Circuit Transplant",
 		display_name: "Mana Circuit Transplant",
 		description:
-			"Physically transplant mana-circuit capacity to another Awakened. Transfer up to 3 spell slots (any levels) to a willing creature. The recipient can use these slots as if they were their own, using their own spellcasting ability. Transferred slots vanish after 1 hour if unused.",
+			"As an action, you physically transplant mana-circuit capacity to another Awakened. You transfer up to 3 spell slots of any levels you possess to a willing creature you touch. The recipient can use these slots to cast spells as if they were their own, using their own spellcasting ability. Any transferred slots that are not used vanish after 1 hour.",
 		lore: {
 			origin: "Documented in the Rift Ascendant compendium.",
 			history: "",
@@ -10882,7 +10913,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 		name: "Absolute Sanctuary",
 		display_name: "Absolute Sanctuary",
 		description:
-			"Invoke the Absolute's sanctuary over a 30-foot radius. Any creature that attempts to make an attack or cast a harmful spell against a creature within the sanctuary must first make a DC 19 PRS save. On failure, the attack or spell fails and the creature's action is wasted. Creatures that succeed are unaffected for 1 round.",
+			"As an action, you invoke the Absolute's sanctuary over a 30-foot-radius sphere centered on you. Any creature that attempts to make an attack or cast a harmful spell targeting a creature within the sanctuary must first make a DC 19 Presence saving throw. On a failed save, the attack or spell fails and the creature's action is wasted. On a successful save, the creature is immune to this effect for 1 round.",
 		lore: {
 			origin: "Documented in the Rift Ascendant compendium.",
 			history: "",
@@ -11102,7 +11133,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 		name: "Final Breath of the Absolute",
 		display_name: "Final Breath of the Absolute",
 		description:
-			"Channel the Absolute's final exhalation through your mana circuit. Every creature within 120 feet is affected: enemies make DC 20 VIT save, 15d8 radiant on failure, half on success. Anomalies are instantly destroyed. Allied creatures instead regain HP equal to the damage that would have been dealt to them.",
+			"As an action, you channel the Absolute's final exhalation through your mana circuit. Every creature within a 120-foot radius centered on you is affected: hostile creatures must make a DC 20 Vitality saving throw, taking 15d8 radiant damage on a failed save, or half as much damage on a successful one. Anomalies are instantly destroyed. Allied creatures instead regain hit points equal to the radiant damage that would have been dealt to them.",
 		lore: {
 			origin: "Documented in the Rift Ascendant compendium.",
 			history: "",
