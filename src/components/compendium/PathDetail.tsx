@@ -26,6 +26,7 @@ interface PathFeature extends PathMechanics {
 	description: string;
 	level: number;
 	prerequisites?: string | null;
+	mechanics?: import("@/types/compendium").CompendiumMechanics;
 }
 
 const formatRestRecharge = (recharge: "short-rest" | "long-rest") =>
@@ -90,6 +91,9 @@ export const PathDetail = ({ data }: { data: PathData }) => {
 						(feature.tracking === "manual"
 							? "Manual tracking (source cadence unspecified)"
 							: null),
+					mechanics: feature.mechanics as
+						| import("@/types/compendium").CompendiumMechanics
+						| undefined,
 				}));
 
 			if (!isCancelled) setFeatures(staticFeatures);
@@ -149,6 +153,9 @@ export const PathDetail = ({ data }: { data: PathData }) => {
 						(ability.tracking === "manual"
 							? "Manual tracking (source cadence unspecified)"
 							: null),
+					mechanics: ability.mechanics as
+						| import("@/types/compendium").CompendiumMechanics
+						| undefined,
 				};
 			}),
 		[data.abilities, data.id, pathLevel],
@@ -322,6 +329,21 @@ export const PathDetail = ({ data }: { data: PathData }) => {
 									<AutoLinkText text={feature.description} />
 								</p>
 								<MechanicDetails mechanics={feature} />
+								{feature.mechanics?.stat_bonuses && (
+									<div className="flex flex-wrap gap-2 mt-2">
+										{Object.entries(feature.mechanics.stat_bonuses).map(
+											([stat, val]) => (
+												<Badge
+													key={stat}
+													variant="outline"
+													className="border-primary/30 text-primary text-xs"
+												>
+													{formatRegentVernacular(stat)} +{String(val)}
+												</Badge>
+											),
+										)}
+									</div>
+								)}
 							</div>
 						))}
 					</div>
@@ -343,6 +365,21 @@ export const PathDetail = ({ data }: { data: PathData }) => {
 									<AutoLinkText text={ability.description} />
 								</p>
 								<MechanicDetails mechanics={ability} />
+								{ability.mechanics?.stat_bonuses && (
+									<div className="flex flex-wrap gap-2 mt-2">
+										{Object.entries(ability.mechanics.stat_bonuses).map(
+											([stat, val]) => (
+												<Badge
+													key={stat}
+													variant="outline"
+													className="border-primary/30 text-primary text-xs"
+												>
+													{formatRegentVernacular(stat)} +{String(val)}
+												</Badge>
+											),
+										)}
+									</div>
+								)}
 							</div>
 						))}
 					</div>

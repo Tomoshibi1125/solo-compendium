@@ -372,6 +372,7 @@ export interface JobFeature extends BaseCompendiumItem {
 	prerequisites?: string | null;
 	type?: string | null;
 	frequency?: string | null;
+	mechanics?: CompendiumMechanics;
 }
 
 export interface CompendiumDeity extends BaseCompendiumItem {
@@ -950,6 +951,7 @@ export interface CompendiumJob extends BaseCompendiumItem {
 		};
 		resource?: string;
 		tracking?: "uses" | "resource" | "manual";
+		mechanics?: CompendiumMechanics;
 	}>;
 	abilities: Array<{
 		name: string;
@@ -1038,6 +1040,7 @@ export interface CompendiumPath extends BaseCompendiumItem {
 		};
 		resource?: string;
 		tracking?: "uses" | "resource" | "manual";
+		mechanics?: CompendiumMechanics;
 	}>;
 	abilities?: Array<{
 		name: string;
@@ -1052,6 +1055,7 @@ export interface CompendiumPath extends BaseCompendiumItem {
 		};
 		resource?: string;
 		tracking?: "uses" | "resource" | "manual";
+		mechanics?: CompendiumMechanics;
 	}>;
 	stats?: {
 		primaryAttribute: string;
@@ -1093,6 +1097,7 @@ export interface CompendiumRegent extends BaseCompendiumItem {
 		resource?: string;
 		tracking?: "uses" | "resource" | "manual";
 		canonStatus?: "source-backed" | "review-blocked";
+		mechanics?: CompendiumMechanics;
 		provenance?: {
 			levelSource: "progression_table" | "class_features";
 			mechanicsSource:

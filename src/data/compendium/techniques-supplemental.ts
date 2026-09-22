@@ -209,7 +209,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		classes: ["Destroyer"],
 		name: "Unyielding Fortress",
 		display_name: "Unyielding Fortress",
-		description: "As a bonus action, you enter an immovable stance for 1 minute. You cannot be moved against your will, you have advantage on all Strength and Vitality saving throws, bludgeoning, piercing, and slashing damage that you take is reduced by 5, and you can use your reaction to impose disadvantage on any attack roll targeting an ally within 10 feet of you.",
+		description:
+			"As a bonus action, you enter an immovable stance for 1 minute. You cannot be moved against your will, you have advantage on all Strength and Vitality saving throws, bludgeoning, piercing, and slashing damage that you take is reduced by 5, and you can use your reaction to impose disadvantage on any attack roll targeting an ally within 10 feet of you.",
 		lore: {
 			origin:
 				"Developed through Destroyer combat doctrine and field-tested in Rift operations.",
@@ -274,7 +275,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		classes: ["Destroyer"],
 		name: "World Anchor",
 		display_name: "World Anchor",
-		description: "As an action, you drive your weapon into the earth and become one with the battlefield. For 1 minute, your speed becomes 0, you gain immunity to all conditions, bludgeoning, piercing, and slashing damage that you take is reduced by 15, and any creature that makes an attack against an ally within 30 feet of you takes 5d10 force damage. When this effect ends, you suffer 2 levels of exhaustion.",
+		description:
+			"As an action, you drive your weapon into the earth and become one with the battlefield. For 1 minute, your speed becomes 0, you gain immunity to all conditions, bludgeoning, piercing, and slashing damage that you take is reduced by 15, and any creature that makes an attack against an ally within 30 feet of you takes 5d10 force damage. When this effect ends, you suffer 2 levels of exhaustion.",
 		lore: {
 			origin:
 				"Developed through Destroyer combat doctrine and field-tested in Rift operations.",

@@ -277,11 +277,17 @@ export const RegentDetail = ({ data }: RegentDetailProps) => {
 								</p>
 								{feature.mechanics?.stat_bonuses && (
 									<div className="flex flex-wrap gap-2 mt-2">
-										{Object.entries(feature.mechanics.stat_bonuses).map(([stat, val]) => (
-											<Badge key={stat} variant="outline" className="border-gate-s/30 text-gate-s text-xs">
-												{formatRegentVernacular(stat)} +{String(val)}
-											</Badge>
-										))}
+										{Object.entries(feature.mechanics.stat_bonuses).map(
+											([stat, val]) => (
+												<Badge
+													key={stat}
+													variant="outline"
+													className="border-gate-s/30 text-gate-s text-xs"
+												>
+													{formatRegentVernacular(stat)} +{String(val)}
+												</Badge>
+											),
+										)}
 									</div>
 								)}
 							</div>
@@ -346,11 +352,17 @@ export const RegentDetail = ({ data }: RegentDetailProps) => {
 								</p>
 								{feature.mechanics?.stat_bonuses && (
 									<div className="flex flex-wrap gap-2 mt-2">
-										{Object.entries(feature.mechanics.stat_bonuses).map(([stat, val]) => (
-											<Badge key={stat} variant="outline" className="border-gate-s/30 text-gate-s text-xs">
-												{formatRegentVernacular(stat)} +{String(val)}
-											</Badge>
-										))}
+										{Object.entries(feature.mechanics.stat_bonuses).map(
+											([stat, val]) => (
+												<Badge
+													key={stat}
+													variant="outline"
+													className="border-gate-s/30 text-gate-s text-xs"
+												>
+													{formatRegentVernacular(stat)} +{String(val)}
+												</Badge>
+											),
+										)}
 									</div>
 								)}
 							</div>

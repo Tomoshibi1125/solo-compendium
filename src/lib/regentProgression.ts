@@ -10,6 +10,7 @@ import type {
 	RegentFeatureType,
 	RegentFeatureUseDefinition,
 } from "@/lib/regentTypes";
+import type { CompendiumMechanics } from "@/types/compendium";
 
 export type {
 	RegentFeatureFrequency,
@@ -100,6 +101,7 @@ type SourceFeature = {
 	uses?: RegentFeatureUseDefinition;
 	resource?: string;
 	tracking?: RegentFeatureTracking;
+	mechanics?: CompendiumMechanics;
 	sourceKind: Exclude<RegentFeatureSourceKind, "progression_table">;
 	sourceIndex: number;
 };
@@ -214,6 +216,26 @@ function materializeProgressionFeature(
 		sourceLevel !== undefined && sourceLevel !== level
 			? `progression_table grants level ${level}; ${source?.sourceKind} labels the matching source row ${sourceLevel}`
 			: undefined;
+
+	let synthesizedMechanics = source?.mechanics;
+	let description = source?.description ?? REVIEW_DESCRIPTION;
+	let canonStatus: RegentFeatureCanonStatus = source
+		? "source-backed"
+		: "review-blocked";
+
+	if (name === "Regent Attribute Enhancement" && !synthesizedMechanics) {
+		const bonuses: Record<string, number> = {};
+		if (regent.primary_ability) {
+			for (const ability of regent.primary_ability) {
+				bonuses[ability.toLowerCase()] = 2;
+			}
+		}
+		synthesizedMechanics = { stat_bonuses: bonuses };
+		description =
+			"Your primary and secondary attributes increase by +2, reflecting your growing Regent power.";
+		canonStatus = "source-backed";
+	}
+
 	const provenance: RegentFeatureProvenance = source
 		? {
 				levelSource: "progression_table",
@@ -236,7 +258,7 @@ function materializeProgressionFeature(
 		id,
 		level,
 		name,
-		description: source?.description ?? REVIEW_DESCRIPTION,
+		description,
 		type,
 		frequency,
 		actionType:
@@ -244,13 +266,15 @@ function materializeProgressionFeature(
 		uses,
 		resource,
 		tracking,
-		canonStatus: source ? "source-backed" : "review-blocked",
+		canonStatus,
+		mechanics: synthesizedMechanics,
 		provenance,
-		reviewBlockerId: !source
-			? `task7:${regent.id}:progression-mechanics`
-			: manualCadence
+		reviewBlockerId:
+			canonStatus === "review-blocked"
 				? `task7:${regent.id}:progression-mechanics`
-				: undefined,
+				: manualCadence
+					? `task7:${regent.id}:progression-mechanics`
+					: undefined,
 	};
 }
 

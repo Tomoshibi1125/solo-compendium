@@ -2150,8 +2150,7 @@ export const jobs: Job[] = [
 		jobTraits: [
 			{
 				name: "Biome Link",
-				description:
-					`You speak the primal language of Rift ecosystems — zoo animals calm when you enter, feral Rift creatures hesitate, and plants in your apartment thrive suspiciously well. You can communicate with beasts and plants as if you shared a language. You have advantage on initiative rolls.`,
+				description: `You speak the primal language of Rift ecosystems — zoo animals calm when you enter, feral Rift creatures hesitate, and plants in your apartment thrive suspiciously well. You can communicate with beasts and plants as if you shared a language. You have advantage on initiative rolls.`,
 				type: "passive",
 				actionType: "passive",
 			},
@@ -3610,8 +3609,7 @@ export const jobs: Job[] = [
 		awakeningFeatures: [
 			{
 				name: "Patron Tether",
-				description:
-					`At Awakening, your patron inscribes a pact-sigil on your skin and establishes the aetheric umbilical. The brand pulses warmly when your patron observes you and glows brightly when they wish to speak. You can communicate telepathically with your patron, though they may not always answer. You have advantage on initiative rolls.`,
+				description: `At Awakening, your patron inscribes a pact-sigil on your skin and establishes the aetheric umbilical. The brand pulses warmly when your patron observes you and glows brightly when they wish to speak. You can communicate telepathically with your patron, though they may not always answer. You have advantage on initiative rolls.`,
 				level: 1,
 				actionType: "passive",
 			},
@@ -3624,8 +3622,7 @@ export const jobs: Job[] = [
 			},
 			{
 				name: "Contract Invocations",
-				description:
-					`You learn specialized invocations that rewrite your vessel's capabilities — extra eye, see-in-darkness, unnaturally persuasive voice, etc. You gain additional invocations at 2nd, 5th, 7th, 9th, 12th, 15th, and 18th level. You gain a +1 bonus to all saving throws.`,
+				description: `You learn specialized invocations that rewrite your vessel's capabilities — extra eye, see-in-darkness, unnaturally persuasive voice, etc. You gain additional invocations at 2nd, 5th, 7th, 9th, 12th, 15th, and 18th level. You gain a +1 bonus to all saving throws.`,
 				level: 2,
 				actionType: "passive",
 			},

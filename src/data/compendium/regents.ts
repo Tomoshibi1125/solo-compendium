@@ -52,7 +52,8 @@ export const regents: Regent[] = [
 		],
 		created_at: "2026-01-13T22:03:39.601Z",
 		source_book: "Rift Ascendant Canon",
-		flavor: "A specialized manifestation of Regent Resonance. This form allows the caster to weave the Umbral Regent into an Absolute Decree.",
+		flavor:
+			"A specialized manifestation of Regent Resonance. This form allows the caster to weave the Umbral Regent into an Absolute Decree.",
 		lore: "The Umbral Regent is an Ascendant class overlay that represents the pinnacle of its respective domain. Its historical records are sealed by the Wardens.",
 		hit_dice: "1d12",
 		primary_ability: ["Presence", "Sense"],
@@ -227,7 +228,7 @@ export const regents: Regent[] = [
 					"Your primary and secondary attributes increase by +2, reflecting your growing Regent power.",
 				type: "passive",
 				mechanics: {
-					stat_bonuses: { presence: 2, sense: 2 }
+					stat_bonuses: { presence: 2, sense: 2 },
 				},
 			},
 			{
@@ -291,7 +292,7 @@ export const regents: Regent[] = [
 					"Your primary and secondary attributes increase by another +2.",
 				type: "passive",
 				mechanics: {
-					stat_bonuses: { presence: 2, sense: 2 }
+					stat_bonuses: { presence: 2, sense: 2 },
 				},
 			},
 			{
@@ -556,7 +557,8 @@ export const regents: Regent[] = [
 		tags: ["regent", "radiant", "white-flames", "purification", "fire"],
 		created_at: "2026-01-13T22:03:39.601Z",
 		source_book: "Rift Ascendant Canon",
-		flavor: "A specialized manifestation of Regent Resonance. This form allows the caster to weave the Radiant Regent into an Absolute Decree.",
+		flavor:
+			"A specialized manifestation of Regent Resonance. This form allows the caster to weave the Radiant Regent into an Absolute Decree.",
 		lore: "The Radiant Regent is an Ascendant class overlay that represents the pinnacle of its respective domain. Its historical records are sealed by the Wardens.",
 		hit_dice: "1d10",
 		primary_ability: ["Presence", "Strength"],
@@ -946,7 +948,8 @@ export const regents: Regent[] = [
 		tags: ["regent", "iron_body", "tarnak", "invulnerable", "titan", "defense"],
 		created_at: "2026-01-13T22:03:39.601Z",
 		source_book: "Rift Ascendant Canon",
-		flavor: "A specialized manifestation of Regent Resonance. This form allows the caster to weave the Steel Regent into an Absolute Decree.",
+		flavor:
+			"A specialized manifestation of Regent Resonance. This form allows the caster to weave the Steel Regent into an Absolute Decree.",
 		lore: "The Steel Regent is an Ascendant class overlay that represents the pinnacle of its respective domain. Its historical records are sealed by the Wardens.",
 		hit_dice: "1d12",
 		primary_ability: ["Vitality", "Strength"],
@@ -1358,7 +1361,8 @@ export const regents: Regent[] = [
 		],
 		created_at: "2026-01-13T22:03:39.601Z",
 		source_book: "Rift Ascendant Canon",
-		flavor: "A specialized manifestation of Regent Resonance. This form allows the caster to weave the Destruction Regent into an Absolute Decree.",
+		flavor:
+			"A specialized manifestation of Regent Resonance. This form allows the caster to weave the Destruction Regent into an Absolute Decree.",
 		lore: "The Destruction Regent is an Ascendant class overlay that represents the pinnacle of its respective domain. Its historical records are sealed by the Wardens.",
 		hit_dice: "1d12",
 		primary_ability: ["Strength", "Vitality"],
@@ -1777,7 +1781,8 @@ export const regents: Regent[] = [
 		],
 		created_at: "2026-01-13T22:03:39.601Z",
 		source_book: "Rift Ascendant Canon",
-		flavor: "A specialized manifestation of Regent Resonance. This form allows the caster to weave the War Regent into an Absolute Decree.",
+		flavor:
+			"A specialized manifestation of Regent Resonance. This form allows the caster to weave the War Regent into an Absolute Decree.",
 		lore: "The War Regent is an Ascendant class overlay that represents the pinnacle of its respective domain. Its historical records are sealed by the Wardens.",
 		hit_dice: "1d10",
 		primary_ability: ["Presence", "Intelligence"],
@@ -2175,7 +2180,8 @@ export const regents: Regent[] = [
 		],
 		created_at: "2026-02-26T00:00:00.000Z",
 		source_book: "Rift Ascendant Canon",
-		flavor: "A specialized manifestation of Regent Resonance. This form allows the caster to weave the Frost Regent into an Absolute Decree.",
+		flavor:
+			"A specialized manifestation of Regent Resonance. This form allows the caster to weave the Frost Regent into an Absolute Decree.",
 		lore: "The Frost Regent is an Ascendant class overlay that represents the pinnacle of its respective domain. Its historical records are sealed by the Wardens.",
 		hit_dice: "1d10",
 		primary_ability: ["Intelligence", "Sense"],
@@ -2542,7 +2548,8 @@ export const regents: Regent[] = [
 		],
 		created_at: "2026-02-26T00:00:00.000Z",
 		source_book: "Rift Ascendant Canon",
-		flavor: "A specialized manifestation of Regent Resonance. This form allows the caster to weave the Beast Regent into an Absolute Decree.",
+		flavor:
+			"A specialized manifestation of Regent Resonance. This form allows the caster to weave the Beast Regent into an Absolute Decree.",
 		lore: "The Beast Regent is an Ascendant class overlay that represents the pinnacle of its respective domain. Its historical records are sealed by the Wardens.",
 		hit_dice: "1d12",
 		primary_ability: ["Strength", "Vitality"],
@@ -2897,7 +2904,8 @@ export const regents: Regent[] = [
 		tags: ["regent", "plague", "disease", "swarm", "class-overlay"],
 		created_at: "2026-02-26T00:00:00.000Z",
 		source_book: "Rift Ascendant Canon",
-		flavor: "A specialized manifestation of Regent Resonance. This form allows the caster to weave the Plague Regent into an Absolute Decree.",
+		flavor:
+			"A specialized manifestation of Regent Resonance. This form allows the caster to weave the Plague Regent into an Absolute Decree.",
 		lore: "The Plague Regent is an Ascendant class overlay that represents the pinnacle of its respective domain. Its historical records are sealed by the Wardens.",
 		hit_dice: "1d10",
 		primary_ability: ["Intelligence", "Sense"],
@@ -3309,7 +3317,8 @@ export const regents: Regent[] = [
 		tags: ["regent", "spatial", "dimensional", "void", "class-overlay"],
 		created_at: "2026-02-26T00:00:00.000Z",
 		source_book: "Rift Ascendant Canon",
-		flavor: "A specialized manifestation of Regent Resonance. This form allows the caster to weave the Spatial Regent into an Absolute Decree.",
+		flavor:
+			"A specialized manifestation of Regent Resonance. This form allows the caster to weave the Spatial Regent into an Absolute Decree.",
 		lore: "The Spatial Regent is an Ascendant class overlay that represents the pinnacle of its respective domain. Its historical records are sealed by the Wardens.",
 		hit_dice: "1d8",
 		primary_ability: ["Intelligence"],
@@ -3657,7 +3666,8 @@ export const regents: Regent[] = [
 		tags: ["regent", "mimic", "shapeshifting", "adaptation", "class-overlay"],
 		created_at: "2026-02-26T00:00:00.000Z",
 		source_book: "Rift Ascendant Canon",
-		flavor: "A specialized manifestation of Regent Resonance. This form allows the caster to weave the Mimic Regent into an Absolute Decree.",
+		flavor:
+			"A specialized manifestation of Regent Resonance. This form allows the caster to weave the Mimic Regent into an Absolute Decree.",
 		lore: "The Mimic Regent is an Ascendant class overlay that represents the pinnacle of its respective domain. Its historical records are sealed by the Wardens.",
 		hit_dice: "1d10",
 		primary_ability: ["Agility", "Presence"],
@@ -4060,7 +4070,8 @@ export const regents: Regent[] = [
 		tags: ["regent", "blood", "hemomancy", "life", "eternal_of_blood"],
 		created_at: "2026-02-26T00:00:00.000Z",
 		source_book: "Rift Ascendant Canon",
-		flavor: "A specialized manifestation of Regent Resonance. This form allows the caster to weave the Blood Regent into an Absolute Decree.",
+		flavor:
+			"A specialized manifestation of Regent Resonance. This form allows the caster to weave the Blood Regent into an Absolute Decree.",
 		lore: "The Blood Regent is an Ascendant class overlay that represents the pinnacle of its respective domain. Its historical records are sealed by the Wardens.",
 		hit_dice: "1d10",
 		primary_ability: ["Vitality", "Presence"],
@@ -4423,7 +4434,8 @@ export const regents: Regent[] = [
 		],
 		created_at: "2026-02-26T00:00:00.000Z",
 		source_book: "Rift Ascendant Canon",
-		flavor: "A specialized manifestation of Regent Resonance. This form allows the caster to weave the Gravity Regent into an Absolute Decree.",
+		flavor:
+			"A specialized manifestation of Regent Resonance. This form allows the caster to weave the Gravity Regent into an Absolute Decree.",
 		lore: "The Gravity Regent is an Ascendant class overlay that represents the pinnacle of its respective domain. Its historical records are sealed by the Wardens.",
 		hit_dice: "1d12",
 		primary_ability: ["Strength", "Intelligence"],

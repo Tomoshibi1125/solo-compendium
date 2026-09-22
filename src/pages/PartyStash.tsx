@@ -13,13 +13,13 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { PageHeader } from "@/components/ui/PageHeader";
+import { WardenItemDeliveryDialog } from "@/components/warden-directives/WardenItemDeliveryDialog";
 import { useCampaignGold } from "@/hooks/useCampaignGold";
 import { useCampaignInventory } from "@/hooks/useCampaignInventory";
 import { useHasWardenAccess } from "@/hooks/useCampaigns";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth/authContext";
 import { RA_CURRENCY_TYPES } from "@/lib/currency";
-import { WardenItemDeliveryDialog } from "@/components/warden-directives/WardenItemDeliveryDialog";
 
 export default function PartyStash() {
 	const navigate = useNavigate();
@@ -132,7 +132,8 @@ export default function PartyStash() {
 						<div className="flex flex-col items-center justify-center py-6 text-center">
 							<Package className="w-10 h-10 mb-4 opacity-50" />
 							<p className="text-muted-foreground mb-4">
-								Wardens can grant any item, artifact, or relic from the full compendium to the party stash.
+								Wardens can grant any item, artifact, or relic from the full
+								compendium to the party stash.
 							</p>
 							<Button onClick={() => setDeliveryDialogOpen(true)} size="lg">
 								<Package className="w-4 h-4 mr-2" />

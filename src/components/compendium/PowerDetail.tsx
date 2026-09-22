@@ -1,4 +1,13 @@
-import { BookOpen, Clock, Target, Timer, Zap, Swords, Shield, Footprints } from "lucide-react";
+import {
+	BookOpen,
+	Clock,
+	Footprints,
+	Shield,
+	Swords,
+	Target,
+	Timer,
+	Zap,
+} from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { AutoLinkText } from "@/components/compendium/AutoLinkText";
 import { CompendiumImage } from "@/components/compendium/CompendiumImage";

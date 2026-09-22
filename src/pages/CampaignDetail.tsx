@@ -39,7 +39,6 @@ import { CampaignVehiclesPanel } from "@/components/campaign/CampaignVehiclesPan
 import { CampaignWiki } from "@/components/campaign/CampaignWiki";
 import { SessionReplayPanel } from "@/components/campaign/SessionReplayPanel";
 import { Layout } from "@/components/layout/Layout";
-import { WardenItemDeliveryDialog } from "@/components/warden-directives/WardenItemDeliveryDialog";
 import {
 	AscendantText,
 	ManaFlowText,
@@ -74,6 +73,7 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { WardenItemDeliveryDialog } from "@/components/warden-directives/WardenItemDeliveryDialog";
 import { useActivityFeed } from "@/hooks/useActivityFeed";
 import { useSendCampaignMessage } from "@/hooks/useCampaignChat";
 import {
@@ -769,11 +769,7 @@ const CampaignDetail = () => {
 										<Package className="w-4 h-4" />
 										Deliver Item / Grant Content
 									</Button>
-									<Button
-										asChild
-										variant="outline"
-										className="flex-1 gap-2"
-									>
+									<Button asChild variant="outline" className="flex-1 gap-2">
 										<Link to={`/party-stash?campaignId=${id}`}>
 											<Shield className="w-4 h-4" />
 											Open Party Stash

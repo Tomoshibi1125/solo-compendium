@@ -49,6 +49,7 @@ export interface JobFeature {
 	resource?: string;
 	tracking?: "uses" | "resource" | "manual";
 	is_path_feature: boolean;
+	mechanics?: import("@/types/compendium").CompendiumMechanics;
 }
 
 export interface JobPath {
@@ -158,6 +159,7 @@ export const JobDetail = ({ data }: { data: JobData }) => {
 					uses: feature.uses,
 					resource: feature.resource,
 					tracking: feature.tracking,
+					mechanics: feature.mechanics,
 				}),
 			);
 
@@ -1198,6 +1200,21 @@ export const JobDetail = ({ data }: { data: JobData }) => {
 									resource={feature.resource}
 									tracking={feature.tracking}
 								/>
+								{feature.mechanics?.stat_bonuses && (
+									<div className="flex flex-wrap gap-2 mt-2">
+										{Object.entries(feature.mechanics.stat_bonuses).map(
+											([stat, val]) => (
+												<Badge
+													key={stat}
+													variant="outline"
+													className="border-primary/30 text-primary text-xs"
+												>
+													{formatRegentVernacular(stat)} +{String(val)}
+												</Badge>
+											),
+										)}
+									</div>
+								)}
 							</div>
 						))}
 					</div>

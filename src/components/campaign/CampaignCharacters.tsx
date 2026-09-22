@@ -1,9 +1,4 @@
-import {
-	Crown,
-	ExternalLink,
-	Loader2,
-	PackagePlus,
-} from "lucide-react";
+import { Crown, ExternalLink, Loader2, PackagePlus } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
@@ -150,7 +145,8 @@ export function CampaignCharacters({ campaignId }: CampaignCharactersProps) {
 			>
 				<div className="flex justify-between items-center mb-4">
 					<p className="text-sm text-muted-foreground">
-						Characters linked to this campaign. Wardens can open sheets and grant items.
+						Characters linked to this campaign. Wardens can open sheets and
+						grant items.
 					</p>
 				</div>
 				<div className="flex-1 overflow-y-auto space-y-2">

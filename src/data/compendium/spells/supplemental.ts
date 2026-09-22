@@ -2067,8 +2067,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
 		effects: {
-			primary:
-				"Reduce incoming damage by 2d6 + your Presence modifier.",
+			primary: "Reduce incoming damage by 2d6 + your Presence modifier.",
 			secondary:
 				"If this reduces the damage to 0, the attacker takes 1d4 force damage as the pact retaliates.",
 		},
@@ -2900,8 +2899,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
 		effects: {
-			primary:
-				"Gain resistance to psychic damage for the duration.",
+			primary: "Gain resistance to psychic damage for the duration.",
 			secondary:
 				"Advantage on saving throws against being charmed, frightened, or stunned.",
 		},
@@ -9477,8 +9475,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 		effects: {
 			primary:
 				"Choose one: grant resistance to a damage type, change one saving throw proficiency to a different ability score, or add proficiency in one skill.",
-			secondary:
-				"The change lasts for 1 hour.",
+			secondary: "The change lasts for 1 hour.",
 		},
 		level: 7,
 		school: "Transmutation",
