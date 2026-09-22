@@ -15,7 +15,7 @@ import { regents } from "@/data/compendium/regents";
 
 export const BestiaryEcologies = () => {
 	const originText =
-		"Anomalies are not born through natural biological processes; they are manifested by the Lattice's response to dimensional dissonance. When a high-resonance Rift opens, the Lattice shapes the entropic energy into physical forms that our reality can stabilize—drawing from humanity's collective unconscious. This is why many Anomalies resemble mythical terrors like dragons or specters rather than formless void-horrors.";
+		"Anomalies are biological, living creatures that reproduce naturally and evolve based on the specific Rift they originate from.";
 
 	const umbralText =
 		"The Umbral Legion represents the absolute mastery of Shadow Resonance. When a Shadow Sovereign defeats a high-rank Anomaly, they can extract its 'Shadow'—the residual mana essence—before it dissipates back into the Lattice. This echo is then re-bound to the Sovereign's own core, becoming a loyal Umbral Soldier. These entities are no longer Anomalies; they are manifestations of the master's own power, sustained by their mana reserve.";
