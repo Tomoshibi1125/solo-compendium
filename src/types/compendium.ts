@@ -1025,9 +1025,6 @@ export interface CompendiumPath extends BaseCompendiumItem {
 	pathType?: string;
 	requirements?: {
 		level: number;
-		abilities?: string[];
-		skills?: string[];
-		prerequisites?: string[];
 	};
 	features: Array<{
 		level: number;
@@ -1062,7 +1059,6 @@ export interface CompendiumPath extends BaseCompendiumItem {
 		secondaryAttribute?: string;
 		bonusStats: Record<string, number>;
 	};
-	prerequisites?: string;
 }
 
 export interface CompendiumRegent extends BaseCompendiumItem {

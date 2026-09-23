@@ -179,7 +179,6 @@ type StaticPathSource = {
 	features?: StaticPathFeatureSource[];
 	requirements?: {
 		level?: number | null;
-		skills?: string[] | null;
 	};
 };
 
@@ -505,7 +504,6 @@ export const LevelUpWizardModal = ({
 					const eligibility = getPathEligibility(path, {
 						jobName: characterJobName,
 						level: newLevel,
-						skillProficiencies: character.skill_proficiencies ?? [],
 					});
 					return {
 						id: path.id,
@@ -1610,9 +1608,7 @@ export const LevelUpWizardModal = ({
 				(path) => path.id === selectedPath,
 			)?.eligibility;
 			toast({
-				title: requirement
-					? "Path requirements not met"
-					: "Path selection required",
+				title: requirement ? "Path unavailable" : "Path selection required",
 				description:
 					requirement?.reason ??
 					"Choose a path before completing this level up.",

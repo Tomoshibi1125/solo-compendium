@@ -251,54 +251,25 @@ export const PathDetail = ({ data }: { data: PathData }) => {
 				)}
 			</div>
 
-			{/* Requirements */}
-			{(pathLevel || data.prerequisites || data.requirements) && (
+			{/* Path access */}
+			{(jobName || pathLevel) && (
 				<div>
 					<h3 className="text-lg font-semibold mb-3 font-heading">
-						Requirements
+						Path Access
 					</h3>
 					<div className="space-y-2 text-sm">
+						{jobName && (
+							<div className="flex items-center gap-2">
+								<GitBranch className="w-4 h-4" />
+								<span>{formatRegentVernacular(jobName)} job</span>
+							</div>
+						)}
 						{pathLevel > 0 && (
 							<div className="flex items-center gap-2">
 								<Swords className="w-4 h-4" />
-								<span>Level {pathLevel}</span>
+								<span>Unlocks at level {pathLevel}</span>
 							</div>
 						)}
-						{data.requirements?.skills &&
-							data.requirements.skills.length > 0 && (
-								<div>
-									<span className="text-muted-foreground">Skills: </span>
-									{data.requirements.skills
-										.map(formatRegentVernacular)
-										.join(", ")}
-								</div>
-							)}
-						{data.requirements?.abilities &&
-							data.requirements.abilities.length > 0 && (
-								<div>
-									<span className="text-muted-foreground">Abilities: </span>
-									{data.requirements.abilities
-										.map(formatRegentVernacular)
-										.join(", ")}
-								</div>
-							)}
-						{data.requirements?.prerequisites &&
-							data.requirements.prerequisites.length > 0 && (
-								<div>
-									<span className="text-muted-foreground">Other: </span>
-									{data.requirements.prerequisites
-										.map(formatRegentVernacular)
-										.join(", ")}
-								</div>
-							)}
-						{data.prerequisites &&
-							!data.requirements?.skills?.length &&
-							!data.requirements?.abilities?.length &&
-							!data.requirements?.prerequisites?.length && (
-								<div className="text-muted-foreground">
-									Prerequisites: {formatRegentVernacular(data.prerequisites)}
-								</div>
-							)}
 					</div>
 				</div>
 			)}

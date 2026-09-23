@@ -747,15 +747,6 @@ const CharacterNew = () => {
 	const selectedBackgroundData = allBackgrounds.find(
 		(background) => background.id === selectedBackground,
 	);
-	const pathSkillProficiencies = useMemo(
-		() => [
-			...selectedSkills,
-			...(((
-				selectedBackgroundData as { skill_proficiencies?: string[] } | undefined
-			)?.skill_proficiencies ?? []) as string[]),
-		],
-		[selectedSkills, selectedBackgroundData],
-	);
 	const pathsAvailableAtCreation = useMemo(
 		() =>
 			pathsUnlockingAtCreation.map((path) => ({
@@ -766,16 +757,10 @@ const CharacterNew = () => {
 						jobId: selectedJob,
 						jobName: jobData?.name,
 						level: 1,
-						skillProficiencies: pathSkillProficiencies,
 					},
 				),
 			})),
-		[
-			pathsUnlockingAtCreation,
-			selectedJob,
-			jobData?.name,
-			pathSkillProficiencies,
-		],
+		[pathsUnlockingAtCreation, selectedJob, jobData?.name],
 	);
 	const isPathRequiredAtCreation = pathsUnlockingAtCreation.length > 0;
 
@@ -1343,10 +1328,10 @@ const CharacterNew = () => {
 				(path) => path.id === selectedPath,
 			)?.eligibility;
 			toast({
-				title: "Path requirements not met",
+				title: "Path unavailable",
 				description:
 					selectedRequirement?.reason ??
-					"Select a path whose level and skill requirements are satisfied.",
+					"Select a path that belongs to your chosen job.",
 				variant: "destructive",
 			});
 			return;

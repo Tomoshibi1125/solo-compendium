@@ -39,9 +39,6 @@ export interface Path {
 	pathType: string;
 	requirements: {
 		level: number;
-		abilities?: string[];
-		skills?: string[];
-		prerequisites?: string[];
 	};
 	description: string;
 	features: PathFeature[];
@@ -72,7 +69,6 @@ const pathCatalog: Path[] = [
 		pathType: "apex-predator",
 		requirements: {
 			level: 3,
-			skills: ["Athletics"],
 		},
 		description:
 			"The Apex Predator is the ultimate physical mandate of the Destroyer lineage — a recursive refinement of the Awakened's biological vessel into a tool of absolute lethality. In the modern era of Absolute containment, they are the supreme front-line anchors of high-rank guilds, their every movement a masterclass in optimized destructive intent. To walk this path is to accept that your muscles are no longer purely biological, but a perfected conductor for the Absolute's force.",
@@ -138,7 +134,6 @@ const pathCatalog: Path[] = [
 		pathType: "tactician",
 		requirements: {
 			level: 3,
-			skills: ["Athletics", "Insight"],
 		},
 		description:
 			"The Tactician mandate is granted to those whose cognitive resonances can process battlefield echoes at speeds that defy conventional analysis. These are the Mandate architects of top-tier guilds and the strategic specialists of the Ascendant Bureau, treating every gate-boundary as a structural zone of calculated dominance. They do not just fight; they harmonize the local weave into a blueprint for victory, ensuring that no variable remains unaccounted for.",
@@ -211,7 +206,6 @@ const pathCatalog: Path[] = [
 		pathType: "spell-breaker",
 		requirements: {
 			level: 3,
-			skills: ["Mana Flow"],
 		},
 		description:
 			"The Spell Breaker mandate designates an Ascendant as the ultimate deterrent against hostile mana-manifestations. They have integrated the primordial threads of the Absolute directly into their weapon bonds, allowing them to channel anti-resonance frequencies through physical strikes. Often recruited by high-stakes containment units, they are the ones who traverse resonant storms to deliver the final, crushing blow to reality-warping entities.",
@@ -287,7 +281,6 @@ const pathCatalog: Path[] = [
 		pathType: "bulwark",
 		requirements: {
 			level: 3,
-			skills: ["Athletics", "Intimidation"],
 		},
 		description:
 			"The Bulwark is a living bastion of the Destroyer lineage, an Ascendant whose very presence generates a localized threat field anchored by Absolute-reinforced frames. In modern containment zones, they serve as the physical barriers that allow civilians to escape unstable Rift boundaries. To face a Bulwark is to engage with an immovable force of nature that punishes any attempt to bypass its defensive perimeter.",
@@ -356,7 +349,6 @@ const pathCatalog: Path[] = [
 		pathType: "last-stand",
 		requirements: {
 			level: 3,
-			skills: ["Athletics", "Perception"],
 		},
 		description:
 			"The Last Stand mandate is granted to survivors of catastrophic Rift incidents who have learned to override their body's inherent mortal limiters. They fight with a transcendent, near-supernatural focus that fuels impossible last-second victories. These Destroyers do not recognize the concept of defeat; they simply channel the Absolute's emergency reserves to maintain lethality long after their physical forms should have failed.",
@@ -424,7 +416,6 @@ const pathCatalog: Path[] = [
 		pathType: "echo",
 		requirements: {
 			level: 3,
-			skills: ["Athletics", "Mana Flow"],
 		},
 		description:
 			"The Path of the Aftershock is held by those whose strikes resonate with such intensity that the Absolute generates residual force iterations — temporal echoes of their movements from adjacent reflections. In the field, it manifests as multiple strikes resolving simultaneously from ghostly iterations. Footage of Aftershock Destroyers highlights the sheer visual overload of doubled impacts tearing through Rift entities with absolute recursive power.",
@@ -499,7 +490,6 @@ const pathCatalog: Path[] = [
 		pathType: "escalating-resonance",
 		requirements: {
 			level: 3,
-			skills: ["Athletics", "Intimidation"],
 		},
 		description:
 			"The Path of the Escalating Resonance is walked by those whose spirits vibrate with the most unstable aetheric frequencies. In the modern world, they are the high-octane headliners of underground fight clubs and elite gate-clearance units, where pain is not an obstacle but a catalyst. Each drop of blood spilled acts as a conductor for their internal mana, fueling a recursive cycle of violence that ends only when the enemy—or the Ascendant themselves—is thoroughly spent. They are living batteries of escalating fury, held together only by the Absolute's merciless mandate.",
@@ -561,7 +551,6 @@ const pathCatalog: Path[] = [
 		pathType: "gate-beast",
 		requirements: {
 			level: 3,
-			skills: ["Rift Topology", "Survival"],
 		},
 		description:
 			"The Gate Beast represents an Awakened who has harmonized their essence with the primal aetheric fauna found within the shadows of the Rifts. They do not merely observe nature; they consume its most violent aspects to fuel their own ascendant power. In modern tactical guilds, they are the trackers and frontline skirmishers who can transition from human strategist to mindless predator in a heartbeat, channeling the echoes of ancient beasts to protect or destroy with animalistic clarity.",
@@ -622,7 +611,6 @@ const pathCatalog: Path[] = [
 		pathType: "mana-scars",
 		requirements: {
 			level: 3,
-			skills: ["Athletics", "Dimensional Lore"],
 		},
 		description:
 			"Those who walk the Path of the Mana Scars are living testaments to the Absolute's traumatic touch. Their bodies are maps of ancient gate-breaks and survived overloads, the luminous scar tissue acting as high-capacity conductors for defensive mana. While the modern world might see them as grizzled survivors of the first gate-age, their true purpose is to serve as the unbreakable anchors of a guild resonance, turning the pain of their history into the armor of the present.",
@@ -683,7 +671,6 @@ const pathCatalog: Path[] = [
 		pathType: "rift-storm",
 		requirements: {
 			level: 3,
-			skills: ["Athletics", "Rift Topology"],
 		},
 		description:
 			"The Rift Storm represents an Ascendant who has survived the epicenter of a catastrophic gate-collapse and emerged saturated with raw, elemental mana. When they enter Overload, their internal energy vents as pure environmental turbulence—fire, lightning, or freezing cold radiating from their very pores. They are volatile assets, often deployed by elite containment units as a 'scorched earth' deterrent against massive gate-swarms where collateral damage is a secondary concern to survival.",
@@ -745,7 +732,6 @@ const pathCatalog: Path[] = [
 		pathType: "absolute-zealot",
 		requirements: {
 			level: 3,
-			skills: ["Athletics", "Cosmic Lore"],
 		},
 		description:
 			"The Absolute Zealot is an Ascendant whose devotion to the primordial force transcended mere faith and became a physical anchor. They do not see their power as a 'connection' but as a divine mandate to be executed. Often seen leading extremist fellowships or streaming their gate-raids as grand aetheric sermons, they possess a terrifying resilience, as the Absolute itself seems to refuse their passing until their work is finished. To them, every strike is a prayer, and every kill is an offering.",
@@ -816,7 +802,6 @@ const pathCatalog: Path[] = [
 		pathType: "aetheric-anomaly",
 		requirements: {
 			level: 3,
-			skills: ["Athletics", "Mana Flow"],
 		},
 		description:
 			"The Aetheric Anomaly is an Ascendant whose connection to the Absolute was shattered and reformed during a violent gate-collapse. They are walking anchors of instability whose every Overload triggers random, reality-warping discharges. While guilds often fear their unpredictability, they are prized for their ability to bypass conventional defensive measures and turn any battlefield into a chaotic domain where only they can truly thrive.",
@@ -888,7 +873,6 @@ const pathCatalog: Path[] = [
 		pathType: "gate-runner",
 		requirements: {
 			level: 3,
-			skills: ["Stealth", "Sleight of Hand"],
 		},
 		description:
 			"A Gate Runner is an Ascendant whose essence has been tuned to the phase-spaces between the physical world and the Rifts. They possess a fluidity of movement that allows them to slip through barriers—both physical and aetheric—as if they were nothing more than mist. In the modern world, they are the specialized assets recruited for high-stakes recovery operations and urgent scouting, moving through hostile territory with a grace that defies the Absolute's own laws of permanence.",
@@ -955,7 +939,6 @@ const pathCatalog: Path[] = [
 		pathType: "terminus",
 		requirements: {
 			level: 3,
-			skills: ["Stealth", "Deception"],
 		},
 		description:
 			"The Terminus mandate is reserved for those who embody the absolute finality of the reaper. They are the surgical edge of the Absolute, capable of delivering a clinical end to any existence with a single, unanswerable strike. In the modern world, they are the ghosts of the battlefield, their presence known only by the sudden, absolute silence they leave in their wake. When a Terminus marks a target, the Absolute itself acknowledges the inevitability of their transition.",
@@ -1023,7 +1006,6 @@ const pathCatalog: Path[] = [
 		pathType: "weave-infiltrator",
 		requirements: {
 			level: 3,
-			skills: ["Stealth", "Mana Flow"],
 		},
 		description:
 			"The Weave Infiltrator mandate allows an Ascendant to harmonize their phase-shifted essence with the primordial weave of the Absolute. They do not just hide; they exist within the static of the local mana-field, capable of intercepting aetheric flows and stealing the resonances of other casters mid-manifestation. In a world of complex gate-wards and magical defenses, they are the ultimate locksmiths of reality.",
@@ -1093,7 +1075,6 @@ const pathCatalog: Path[] = [
 		pathType: "shadow-herald",
 		requirements: {
 			level: 3,
-			skills: ["Insight", "Deception"],
 		},
 		description:
 			"The Shadow Herald mandate is granted to those whose aetheric resonance allows them to perceive the 'echoes' of intent before they even manifest. They are the master strategists and information brokers of the high-tier guilds, weaving networks of intelligence from the fundamental static of the Absolute. In a world where a single secret can topple a corporation or clear a Rift, the Herald is the most valuable asset on any tactical roster.",
@@ -1161,7 +1142,6 @@ const pathCatalog: Path[] = [
 		pathType: "blade-dancer",
 		requirements: {
 			level: 3,
-			skills: ["Acrobatics", "Persuasion"],
 		},
 		description:
 			"The Blade Dancer mandate designates an Ascendant who has mastered the lethal fluidity of phase-step combat. They do not merely fight; they move with an impossible, aetheric grace that makes every encounter look like a choreographed display of violence. In modern high-society duels and televised gate-raids, only the most skilled Dancers can maintain the frequency of the Absolute while moving through a sea of blades without a single scratch.",
@@ -1232,7 +1212,6 @@ const pathCatalog: Path[] = [
 		pathType: "vanguard-outrider",
 		requirements: {
 			level: 3,
-			skills: ["Stealth", "Survival"],
 		},
 		description:
 			"The Vanguard Outrider is the advance resonance of the mandate—the first to enter a Rift and the last to leave. They have mastered aetheric recon, using phase-shifted sonar to map hostile terrain and relay vital intel through the weave. In the modern world of Rift containment, they are the indispensable scouts whose ability to survive behind enemy resonances ensures the success of every mission.",
@@ -1301,7 +1280,6 @@ const pathCatalog: Path[] = [
 		pathType: "kinetic-core",
 		requirements: {
 			level: 3,
-			skills: ["Athletics", "Acrobatics"],
 		},
 		description:
 			"The Path of the Kinetic Core is for those who treat their own body as a high-velocity conductor for the Absolute's power. They do not just strike; they release focused bursts of kinetic resonance that can shatter reinforced Rifts and liquefy the internals of the most durable entities. In the high-stakes world of Rift suppression, they are the undisputed masters of frontline engagement, moving with a speed that leaves afterimages of aetheric fire in their wake.",
@@ -1364,7 +1342,6 @@ const pathCatalog: Path[] = [
 		pathType: "phantom-step",
 		requirements: {
 			level: 3,
-			skills: ["Stealth", "Acrobatics"],
 		},
 		description:
 			"The Phantom Step mandate allows an Ascendant to route their physical existence through the low-frequency shadows of the local aether. They are the spectral legends of the gate-wars—flickers in a dark alley followed by the absolute collapse of a high-tier entity. They move not with speed, but with a displacement of reality, stepping through the darkness as if it were a physical gateway.",
@@ -1425,7 +1402,6 @@ const pathCatalog: Path[] = [
 		pathType: "aetheric-channeler",
 		requirements: {
 			level: 3,
-			skills: ["Acrobatics", "Rift Topology"],
 		},
 		description:
 			"The Aetheric Channeler mandate transforms an Ascendant into a living environmental conductor. They do not just strike; they convert ambient aetheric energy into fundamental elemental forces—concussive gravity, thermal discharges, or high-intensity lightning. In the containment of a high-tier Rift, they are the ultimate multi-role assets, capable of adapting their physical strikes to the specific weaknesses of any anomaly.",
@@ -1485,7 +1461,6 @@ const pathCatalog: Path[] = [
 		pathType: "entropic-flow",
 		requirements: {
 			level: 3,
-			skills: ["Acrobatics", "Performance"],
 		},
 		description:
 			"The Entropic Flow is walked by those whose internal aetheric Rifts fire in seemingly chaotic, unpredictable patterns. They do not fight with discipline, but with a fluidity that disregards the Absolute's logic. To an observer, they appear to be stumbling, tripping, and swaying through combat—yet every movement somehow lands a devastating blow or evades an impossible strike. They are the living embodiment of the 'unlucky' hit that always finds its mark.",
@@ -1546,7 +1521,6 @@ const pathCatalog: Path[] = [
 		pathType: "blade-conductor",
 		requirements: {
 			level: 3,
-			skills: ["Athletics", "Acrobatics"],
 		},
 		description:
 			"The Blade Conductor mandate allows an Ascendant to extend their internal aetheric Rifts into physical steel. They do not just carry weapons; they bond with them, turning a simple blade into a high-frequency conductor for the Absolute's destructive frequency. In the elite academies of the modern world, Conductors are praised for their lethal precision and the harmonic 'hum' of their steel as it carves through reality.",
@@ -1608,7 +1582,6 @@ const pathCatalog: Path[] = [
 		pathType: "harmonic-surgeon",
 		requirements: {
 			level: 3,
-			skills: ["Medicine", "Insight"],
 		},
 		description:
 			"The Harmonic Surgeon mandate is granted to those whose understanding of aetheric pathways allows them to repair the physical vessel with a touch. In the modern world, they are the most critical members of any high-tier raid team, capable of shutting down enemy motor functions with clinical precision or realigning the broken essences of their allies mid-combat. They move with a cold, calculated efficiency that treats the battlefield as a triage unit.",
@@ -1686,7 +1659,6 @@ const pathCatalog: Path[] = [
 		pathType: "detonation-specialist",
 		requirements: {
 			level: 2,
-			skills: ["Mana Flow"],
 		},
 		description:
 			"The Detonation Specialist mandate is walked by those who treat aetheric energy as a raw, explosive substrate. They are the architects of controlled destruction, capable of weaving destructive mantras that bypass friendly resonances with surgical precision. In the high-stakes world of Rift clearance, they serve as the heavy artillery, turning the local weave into a localized supernova of calculated fury.",
@@ -1748,7 +1720,6 @@ const pathCatalog: Path[] = [
 		pathType: "shield-architect",
 		requirements: {
 			level: 2,
-			skills: ["Mana Flow"],
 		},
 		description:
 			"The Shield Architect mandate is for those who view the weave of the Absolute as a protective barrier to be reinforced. They generate persistent aetheric shields that absorb damage and reject hostile manifestations. In a world where a single error can mean total annihilation, the Architect is the foundation of any successful suppression mission—the one whose continuous protection harmonics ensure the survival of the party.",
@@ -1810,7 +1781,6 @@ const pathCatalog: Path[] = [
 		pathType: "probability-mandate",
 		requirements: {
 			level: 2,
-			skills: ["Mana Flow", "Insight"],
 		},
 		description:
 			"The Probability Mandate designates an Ascendant who has learned to perceive the underlying variables of the Absolute. They do not see the future as a vision, but as a series of calculated outcomes that can be anchored into reality. In the modern world, they are the indispensable strategists of any high-tier guild, capable of overriding unfavorable resonance-branches and ensuring the 'unlucky' moment never comes to pass.",
@@ -1871,7 +1841,6 @@ const pathCatalog: Path[] = [
 		pathType: "phantasmist",
 		requirements: {
 			level: 2,
-			skills: ["Mana Flow", "Deception"],
 		},
 		description:
 			"The Phantasmist mandate is walked by those who have mastered the art of weaving aetheric fakes so sophisticated that the Absolute itself accepts them as genuine resonance. They do not just create illusions; they inject false realities into the world, bypassing all senses to fool both sentient and anomalous threats. At their peak, their phantasms can manifest physical presence, proving that in the Absolute's eye, perception IS reality.",
@@ -1933,7 +1902,6 @@ const pathCatalog: Path[] = [
 		pathType: "rift-caller",
 		requirements: {
 			level: 2,
-			skills: ["Mana Flow"],
 		},
 		description:
 			"The Rift Caller mandate is for those who treat physical space as a mere suggestion. They specialize in tearing open micro-gates to pull matter from distant reaches or summon reinforcements from the Absolute's many reflections. In the modern world of gate-containment, they are the masters of logistics and tactical displacement, moving through reality via dimensional shortcuts that bypass all conventional defenses.",
@@ -1994,7 +1962,6 @@ const pathCatalog: Path[] = [
 		pathType: "matter-weaver",
 		requirements: {
 			level: 2,
-			skills: ["Mana Flow", "Investigation"],
 		},
 		description:
 			"The Matter Weaver mandate allows an Ascendant to rewrite the fundamental physical properties of the local substrate. They treat the world as a programmable weave, capable of turning steel to glass or concrete to water with a single aetheric command. In the modern world of advanced alchemy and essence-cultivation, the Weaver is a priceless asset for both guild construction and tactical environmental manipulation.",
@@ -2057,7 +2024,6 @@ const pathCatalog: Path[] = [
 		pathType: "aetheric-dragon",
 		requirements: {
 			level: 1,
-			skills: ["Mana Flow"],
 		},
 		description:
 			"The Aetheric Dragon mandate awakens in those whose anomalous resonance carries the signature of the primordial Rift dragons—ancient masters of the Absolute who predated even the current cycle of Rifts. Their spirit manifests as elemental fury, their very cells crystallizing into regent-tier mana-scales that hum with the power of a dying star. They are not merely casters; they are living manifestations of the Absolute's primal rage.",
@@ -2126,7 +2092,6 @@ const pathCatalog: Path[] = [
 		pathType: "aetheric-cascade",
 		requirements: {
 			level: 1,
-			skills: ["Mana Flow"],
 		},
 		description:
 			"The Aetheric Cascade mandate is granted to those whose connection to the Absolute was shattered and reformed into a volatile reactive core. They do not just cast; they trigger cascading aetheric events that baffle traditional understanding. Each manifestation is a harmonic anomaly, a reality-warping discharge that can heal an ally or incinerate a foe with the same unpredictable fervor.",
@@ -2195,7 +2160,6 @@ const pathCatalog: Path[] = [
 		pathType: "shadow",
 		requirements: {
 			level: 1,
-			skills: ["Stealth", "Mana Flow"],
 		},
 		description:
 			"Espers who draw power from the empty space between Rift dimensions — the void that separates realities. They tend to be quiet, withdrawn individuals whose internal resonance focuses on the silence behind the Absolute's weave. Environmental fluctuations are common when they pass, and the shadows around them often seem to detach from their physical anchors. They command absolute darkness, summon void-born entities, and can dissolve their physical form into pure shadow-resonance.",
@@ -2264,7 +2228,6 @@ const pathCatalog: Path[] = [
 		pathType: "storm",
 		requirements: {
 			level: 1,
-			skills: ["Mana Flow", "Rift Topology"],
 		},
 		description:
 			"The Path of the Tempest Core is for those whose anomalous resonance is synchronized with absolute atmospheric pressure. Lightning arcs from their skin during moments of high resonance-flux, wind shifts when they move, and environmental sensors fluctuate wildly in their presence. They are the living conduits of the Absolute's storms, their internal resonance-field powered by the very energy that structures a Rift's atmosphere.",
@@ -2339,7 +2302,6 @@ const pathCatalog: Path[] = [
 		pathType: "absolute-spark",
 		requirements: {
 			level: 1,
-			skills: ["Mana Flow", "Cosmic Lore"],
 		},
 		description:
 			"Espers who carry a fragment of the Absolute's core energy — not mere Rift mana, but the fundamental force itself. Often individuals whose innate empathy resonated with the restorative layers of the Absolute during their awakening, they access both destructive Esper resonance-flux and Herald restorative transmissions. They are the rarest anomaly type, serving as the ultimate stabilizers for high-tier containment missions.",
@@ -2407,7 +2369,6 @@ const pathCatalog: Path[] = [
 		pathType: "aberrant",
 		requirements: {
 			level: 1,
-			skills: ["Mana Flow", "Insight"],
 		},
 		description:
 			"Espers touched by entities from beyond the known Rift network — alien intelligences whose psionic imprint rewired their resonance during awakening. These Ascendants often perceive the Absolute not as a network of laws, but as a collective of interconnected consciousnesses that exist outside of traditional time. They cast with thought alone, their minds becoming an impenetrably alien echo of the Absolute's deepest layers.",
@@ -2483,7 +2444,6 @@ const pathCatalog: Path[] = [
 		pathType: "void-eater",
 		requirements: {
 			level: 2,
-			skills: ["Mana Flow", "Medicine"],
 		},
 		description:
 			"The Void Eater answers Marthos's hunger without restraint: entropy is not a tool but an appetite. Where other Revenants harvest the dying, the Void Eater hastens the dying, treating a wounded foe as a feast half-served. Their necrosis pours through the flimsy wards of the living, and every kill only sharpens the next. The Ascendant Bureau fields them when a Rift must be emptied rather than held - the longer the fight lasts, the less of the enemy remains.",
@@ -2551,7 +2511,6 @@ const pathCatalog: Path[] = [
 		pathType: "black-blood",
 		requirements: {
 			level: 2,
-			skills: ["Mana Flow", "Persuasion"],
 		},
 		description:
 			"The Black Blood walks the oldest bargain of the End-Cycle: pay in your own life and entropy repays it tenfold. Their veins run with congealed Remnant-essence that they spend freely, wounding themselves to deepen the harvest and turning every blow they suffer into slow, crawling recovery. They are the Revenants who simply refuse to fall, buoyed by a tide of blood - their own and their enemies' - that never quite runs dry.",
@@ -2620,7 +2579,6 @@ const pathCatalog: Path[] = [
 		pathType: "hollow-king",
 		requirements: {
 			level: 2,
-			skills: ["Mana Flow", "Athletics"],
 		},
 		description:
 			"The Hollow King rules the front line from a throne of decay. They draw every eye and every blade, daring the enemy to spend itself against an entropy that cannot be outlasted. What strikes their allies, they take instead; what strikes them, they turn to dust. Marthos's mandate names them wardens of the threshold - the immovable dead who hold the breach while the living do their work behind.",
@@ -2689,7 +2647,6 @@ const pathCatalog: Path[] = [
 		pathType: "grave-shepherd",
 		requirements: {
 			level: 2,
-			skills: ["Mana Flow", "Cosmic Lore"],
 		},
 		description:
 			"The Grave Shepherd does on a battlefield what Marthos does on a cosmic scale: it reaps the fallen and sets them to work. Rather than scatter its harvest, the Shepherd binds a single great Remnant into an elite thrall - a risen champion stitched from the strongest dead - and commands it as an extension of its own will. Few in number but terrible in strength, the Shepherd's risen turn every casualty into a reinforcement.",
@@ -2756,7 +2713,6 @@ const pathCatalog: Path[] = [
 		pathType: "dread-veil",
 		requirements: {
 			level: 2,
-			skills: ["Mana Flow", "Intimidation"],
 		},
 		description:
 			"The Dread Veil wears Marthos's terror like a shroud. Where they walk, the Void-Breath thickens until the bravest find their hands shaking and their courage rotting from within. They need not strike a foe that has already surrendered to despair - and those who flee only die tired. Bureau handlers deploy the Veil to break a Rift's defenders before a single real blow is struck.",
@@ -2825,7 +2781,6 @@ const pathCatalog: Path[] = [
 		pathType: "threshold-walker",
 		requirements: {
 			level: 2,
-			skills: ["Mana Flow", "Insight"],
 		},
 		description:
 			"The Threshold Walker stands where Marthos and Solara contend - on the exact line between the End-Cycle and the next dawn. Alone among Revenants, they can run the harvest backward, pouring reclaimed Remnants into failing allies and dragging the newly dead back across the threshold. To friends they are a cold mercy; to enemies, the hand that decides the moment has come.",
@@ -2894,7 +2849,6 @@ const pathCatalog: Path[] = [
 		pathType: "biome-architect",
 		requirements: {
 			level: 2,
-			skills: ["Rift Topology"],
 		},
 		description:
 			"The Biome Architect mandate is held by those who have attained a perfect resonance with a specific Rift ecosystem. They do not just survive; they recover their internal essence by absorbing ambient Rift energy with an efficiency that borders on the miraculous. In the containment protocols of the modern world, the Architect is indispensable for identifying and stabilizing the volatile environments that bleed into our reality.",
@@ -2966,7 +2920,6 @@ const pathCatalog: Path[] = [
 		pathType: "apex-shifter",
 		requirements: {
 			level: 2,
-			skills: ["Rift Topology", "Survival"],
 		},
 		description:
 			"The Apex Shifter mandate is for those who seek to dominate their environment by assuming the physical vessels of the Absolute's apex predators. They do not merely shift; they undergo a total biological restructuring into powerful Rift creatures that exceed all earthly limits. In the modern world, they are the front-line tanks who lead every raid, their very existence a bridge between human consciousness and absolute fury.",
@@ -3033,7 +2986,6 @@ const pathCatalog: Path[] = [
 		pathType: "dream-weaver",
 		requirements: {
 			level: 2,
-			skills: ["Rift Topology", "Insight"],
 		},
 		description:
 			"The Dream Weaver mandate designates those who have forged a connection with the Lush-resonance—the restorative, semi-material reflections that drift along the boundaries of certain Rifts. They do not just heal; they manifest localized patches of aetheric stability that promote rapid biological repair. In the modern world, the Weaver is the emotional and physical anchor of any raid team, transforming a nightmare Rift Break into a temporary sanctuary.",
@@ -3093,7 +3045,6 @@ const pathCatalog: Path[] = [
 		pathType: "pack-commander",
 		requirements: {
 			level: 2,
-			skills: ["Rift Topology", "Beast Taming"],
 		},
 		description:
 			"The Pack Commander mandate elevates a Summoner to the status of an absolute leader within the Rift's predatory hierarchy. They do not just summon entities; they command them like a unified tactical unit, reinforcing their creatures with their own internal aetheric essence. In the modern world, one Commander with a full menagerie is a one-person tactical squad, turning a solo raid into a coordinated absolute assault.",
@@ -3158,7 +3109,6 @@ const pathCatalog: Path[] = [
 		pathType: "symbiotic-host",
 		requirements: {
 			level: 2,
-			skills: ["Rift Topology", "Medicine"],
 		},
 		description:
 			"The Symbiotic Host mandate is given to those who have allowed their physical vessel to become a living ecosystem for mutualistic gate-organisms. They do not just host these symbiotes; they fuse with them to gain terrifying biological efficiencies and project a defensive field of aetheric spores. In the Absolute's cycle of life and death, the Host is the bridge where both processes occur simultaneously within the same body.",
@@ -3227,7 +3177,6 @@ const pathCatalog: Path[] = [
 		pathType: "cosmic-conduit",
 		requirements: {
 			level: 2,
-			skills: ["Mana Flow", "Rift Topology"],
 		},
 		description:
 			"The Cosmic Conduit mandate is for those who draw power from the massive, distant aetheric vibrations that resonate through high-rank Rifts. They do not just see stars; they channel the fundamental cosmic energy of the Absolute into manifestations of healing, destruction, and prophetic anchoring. In the modern world, they are the supreme mystics of the gate-age, their every action informed by a variable cosmic map only they can perceive.",
@@ -3294,7 +3243,6 @@ const pathCatalog: Path[] = [
 		pathType: "restoration-mandate",
 		requirements: {
 			level: 1,
-			skills: ["Medicine"],
 		},
 		description:
 			"The Restoration Mandate designates those who channel the Absolute's most potent restorative resonance. They do not just heal; they stabilize the local reality-variable, ensuring that the physical vessel of their allies remains anchored in its most optimal state. In the modern world, the Restoration Herald is the supreme asset of any raid, their mere presence raising the survival probability of the entire collective.",
@@ -3369,7 +3317,6 @@ const pathCatalog: Path[] = [
 		pathType: "radiance-mandate",
 		requirements: {
 			level: 1,
-			skills: ["Cosmic Lore"],
 		},
 		description:
 			"The Radiance Mandate grants an Ascendant the ability to broadcast the Absolute's most destructive light resonance. Their presence is a beacon of pure aetheric energy, incinerating the void-remnants of the Rifts and shielding their allies in a protective luminance. In the modern world, a Radiance Herald is often the vanguard of any high-rank Rift suppression, their radiant overloads visible from miles around.",
@@ -3444,7 +3391,6 @@ const pathCatalog: Path[] = [
 		pathType: "combat-mandate",
 		requirements: {
 			level: 1,
-			skills: ["Athletics", "Cosmic Lore"],
 		},
 		description:
 			"The Combat Mandate is given to those who serve as the physical conduit for the Absolute's offensive transmissions. Armored, lethal, and broadcasting the martial directives of the Zenith lineage, they fight at the forefront of every Rift eruption. They do not just support; they lead the charge, their weapon strikes resonating with the pure destructive intent of the Absolute.",
@@ -3519,7 +3465,6 @@ const pathCatalog: Path[] = [
 		pathType: "knowledge-mandate",
 		requirements: {
 			level: 1,
-			skills: ["Dimensional Lore", "Cosmic Lore"],
 		},
 		description:
 			"The Knowledge Mandate provides an Ascendant with a direct uplink to the Absolute's primordial records. They do not just learn; they download encrypted knowledge that bypasses all mortal limitations, allowing them to read the aetheric signatures of enemies and objects with near-perfect accuracy. In the modern world, they are the supreme archivists and analysts, their transmissions revealing everything the Rifts seek to hide.",
@@ -3587,7 +3532,6 @@ const pathCatalog: Path[] = [
 		pathType: "storm-mandate",
 		requirements: {
 			level: 1,
-			skills: ["Rift Topology", "Cosmic Lore"],
 		},
 		description:
 			"The Storm Mandate empowers an Ascendant to broadcast the Absolute's most violent atmospheric resonance. They are walking thunderheads, their every gesture capable of summoning lightning and shattering the resolve of their foes. In the modern world, a Storm Herald is the ultimate deterrent, their radiant and electrical overloads enough to power entire city blocks or level them with equal ease.",
@@ -3661,7 +3605,6 @@ const pathCatalog: Path[] = [
 		pathType: "triage-mandate",
 		requirements: {
 			level: 1,
-			skills: ["Medicine", "Cosmic Lore"],
 		},
 		description:
 			"The Triage Mandate is for those who specialize in the Absolute's emergency field calibrations. They operate on a unique restorative resonance that maximizes output on critical vessels, marking targets for absolute elimination while canceling lethal blows through aetheric realignment. In the modern world, a Triage Herald's presence is the difference between a total wipe and an absolute victory.",
@@ -3736,7 +3679,6 @@ const pathCatalog: Path[] = [
 		pathType: "glamour-weaver",
 		requirements: {
 			level: 1,
-			skills: ["Mana Flow", "Deception"],
 		},
 		description:
 			"The Glamour Weaver bargain is forged with the ethereal reflections that rule the Absolute's most vibrant Rift ecosystems. They do not just deceive; they rewrite the sensory reality of those around them, weaving illusions of absolute beauty or terrifying despair. In the modern world, the Glamour Weaver is a master of social and physical manipulation, their presence alone enough to ensnare the unwary.",
@@ -3797,7 +3739,6 @@ const pathCatalog: Path[] = [
 		pathType: "infernal-conduit",
 		requirements: {
 			level: 1,
-			skills: ["Mana Flow", "Intimidation"],
 		},
 		description:
 			"The Infernal Conduit bargain is forged with the destructive entities that dwell within the deepest entropic layers of the Rifts. Their physical vessel burns with a literal internal heat, every kill feeding the insatiable hunger of their patron. In the modern world, the Infernal is a walking force of destruction, their aetheric bargain granting them the power to hurl foes through the void itself.",
@@ -3858,7 +3799,6 @@ const pathCatalog: Path[] = [
 		pathType: "void-whisperer",
 		requirements: {
 			level: 1,
-			skills: ["Mana Flow", "Investigation"],
 		},
 		description:
 			"The Void Whisperer bargain is forged with the vast, ancient intelligences that drift beyond the Absolute's primary resonance-layers. They do not just see the Rifts; they perceive the alien geometry of the multiverse, granting them psionic capabilities that shatter the fragile minds of their enemies. In the modern world, the Void Whisperer is a master of mental dominance and informational warfare.",
@@ -3922,7 +3862,6 @@ const pathCatalog: Path[] = [
 		pathType: "radiant-vessel",
 		requirements: {
 			level: 1,
-			skills: ["Mana Flow", "Cosmic Lore"],
 		},
 		description:
 			"The Radiant Vessel bargain is forged with the luminous entities of the Zenith lineage — beings of pure restorative and destructive light. They are the rarest of all Contractors, their physical vessel a conduit for aetheric energy that heals and incinerates with equal intensity. In the modern world, they are often seen as modern saints or supreme gate-raid anchors.",
@@ -3988,7 +3927,6 @@ const pathCatalog: Path[] = [
 		pathType: "cursed-blade",
 		requirements: {
 			level: 1,
-			skills: ["Mana Flow", "Athletics"],
 		},
 		description:
 			"The Cursed Blade bargain is forged with the sentient, shadow-forged armaments found deep within the Absolute's highest-rank Rifts. They do not just wield a weapon; they are bonded to a physical manifestation of their patron's hunger. In the modern world, the Cursed Blade is a lethal martial specialist, their every strike fueled by an ancient aetheric curse that consumes the resonance of their victims.",
@@ -4054,7 +3992,6 @@ const pathCatalog: Path[] = [
 		pathType: "deep-dweller",
 		requirements: {
 			level: 1,
-			skills: ["Mana Flow", "Rift Topology"],
 		},
 		description:
 			"The Deep Dweller bargain is forged with the colossal, kraken-like entities that rule the Absolute's submerged Rift dimensions. They are masters of the crushing pressure and freezing cold found at the boundaries of the aetheric abyss, manifesting spectral tentacles and dimensional rifts at will. In the modern world, they are the undisputed masters of coastal and underwater Rift containment.",
@@ -4128,7 +4065,6 @@ const pathCatalog: Path[] = [
 		pathType: "apex-hunter",
 		requirements: {
 			level: 3,
-			skills: ["Survival", "Perception"],
 		},
 		description:
 			"The Apex Ascendant mandate is held by those who have mastered the art of exploiting the physical vulnerabilities of the Absolute's most dangerous entities. They do not just hunt; they analyze the aetheric structure of their prey, adapting their strikes to counteract specific threat profiles. In the modern world, the Apex Ascendant is the supreme field operative, capable of neutralizing entities that ignore conventional force.",
@@ -4190,7 +4126,6 @@ const pathCatalog: Path[] = [
 		pathType: "pack-leader",
 		requirements: {
 			level: 3,
-			skills: ["Beast Taming", "Rift Topology"],
 		},
 		description:
 			"The Pack Leader mandate is for those who forge deep aetheric bonds with the Absolute's apex predators. They do not just hunt alongside their companion; they fuse their hunting instincts into a single, coordinated absolute strikes that dominate the battlefield. In the modern world, the Pack Leader is a one-person tactical unit, their bonded entity often as famous and lethal as the Stalker themselves.",
@@ -4248,7 +4183,6 @@ const pathCatalog: Path[] = [
 		pathType: "umbral-hunter",
 		requirements: {
 			level: 3,
-			skills: ["Stealth", "Perception"],
 		},
 		description:
 			"The Umbral Ascendant mandate is for those who have mastered the zero-light resonance of the highest-rank Rifts. They do not just hide in shadow; they become one with the void, manifesting as an invisible predator that strikes with absolute lethality from the darkness. In the modern world, the Umbral Ascendant is the supreme assassin of the Stalker lineage, their very existence a ghost story in the halls of the Absolute.",
@@ -4316,7 +4250,6 @@ const pathCatalog: Path[] = [
 		pathType: "rift-strider",
 		requirements: {
 			level: 3,
-			skills: ["Mana Flow", "Survival"],
 		},
 		description:
 			"The Rift Strider mandate empowers a Stalker to navigate the precarious boundaries between Rift dimensions. They do not just track prey; they step through micro-rifts in reality, manifesting across the battlefield with a frightening fluidity. In the modern world, the Rift Strider is the supreme interceptor, their ability to seal dimensional crossings and strike through space making them an indispensable asset.",
@@ -4385,7 +4318,6 @@ const pathCatalog: Path[] = [
 		pathType: "apex-slayer",
 		requirements: {
 			level: 3,
-			skills: ["Investigation", "Survival"],
 		},
 		description:
 			"The Apex Slayer mandate is given to those who obsessively study the absolute weaknesses of their prey. They do not just hunt; they deconstruct, learning to counter every aetheric ability and exploit every biological flaw of high-rank Rift entities. In the modern world, the Apex Slayer is the ultimate boss-killer, their analytical focus turning a nightmare encounter into a systematic elimination.",
@@ -4455,7 +4387,6 @@ const pathCatalog: Path[] = [
 		pathType: "hive-synchronist",
 		requirements: {
 			level: 3,
-			skills: ["Rift Topology", "Survival"],
 		},
 		description:
 			"The Hive Synchronist mandate designates those who have bonded with a living swarm of gate-microorganisms. They do not just carry a hive; they are a walking ecosystem, their swarm enhancing every offensive manifestation and providing absolute mobility via aethertic levitation. In the modern world, the Synchronist is a terrifyingly efficient field operative, their presence denoted by a permanent cloud of aetheric static.",
@@ -4523,7 +4454,6 @@ const pathCatalog: Path[] = [
 		pathType: "absolute-devotion",
 		requirements: {
 			level: 3,
-			skills: ["Cosmic Lore"],
 		},
 		description:
 			"The Absolute Devotion mandate designates those who are the physical paragons of the Absolute's primary resonance. They do not just follow a code; they become a walking anchor for the restorative and protective frequencies of the Zenith lineage, their presence alone stabilizing the local reality of their allies. In the modern world, the Devotion Knight is the ultimate frontline leader, their absolute faith manifesting as physical aetheric armaments.",
@@ -4591,7 +4521,6 @@ const pathCatalog: Path[] = [
 		pathType: "retribution-mandate",
 		requirements: {
 			level: 3,
-			skills: ["Intimidation"],
 		},
 		description:
 			"The Retribution Mandate is held by those who have sacrificed their defensive stability for the absolute destruction of their foes. They do not just strike; they exact a toll for every transgression against the Absolute, pursuing their targets with a relentless aetheric fury that cannot be outrun. In the modern world, the Retribution Knight is a lethal specialist, their covenant burning with the righteous hunger for absolute realignment.",
@@ -4661,7 +4590,6 @@ const pathCatalog: Path[] = [
 		pathType: "verdant-mandate",
 		requirements: {
 			level: 3,
-			skills: ["Rift Topology", "Cosmic Lore"],
 		},
 		description:
 			"Those who walk the Path of the Verdant Mandate swear to protect the Absolute's original intent against the encroaching resonance corruption of the Rifts. Their covenant is a primal pact with the world's original life-resonance, anchoring themselves to threatened Rift biomes to serve as the ultimate custodians of aetheric diversity. In the modern world, they are the bulwark against total ecological collapse, their presence stabilizing the very fabric of reality.",
@@ -4730,7 +4658,6 @@ const pathCatalog: Path[] = [
 		pathType: "dominance-mandate",
 		requirements: {
 			level: 3,
-			skills: ["Intimidation", "Athletics"],
 		},
 		description:
 			"The Dominance Mandate designates those who wield the Absolute's authority with uncompromising force. They do not just lead; they dominate, their aetheric presence frozen with a chill authority that renders enemies immobile. In the modern world, the Dominance Knight is the supreme arbiter of the Absolute's order, their very will enough to shatter the resolve of those who oppose them.",
@@ -4797,7 +4724,6 @@ const pathCatalog: Path[] = [
 		pathType: "atonement-mandate",
 		requirements: {
 			level: 3,
-			skills: ["Persuasion", "Cosmic Lore"],
 		},
 		description:
 			"The Atonement Mandate is held by those who prioritize the absolute preservation of life. They do not just defend; they absorb the suffering of their allies, manifesting as a living shield for the Absolute's most fragile resonance-layers. In the modern world, the Atonement Knight is the supreme guardian of peace, their covenant punishing those who choose violence with a radiant backlash.",
@@ -4865,7 +4791,6 @@ const pathCatalog: Path[] = [
 		pathType: "exaltation-mandate",
 		requirements: {
 			level: 3,
-			skills: ["Athletics", "Performance"],
 		},
 		description:
 			"The Exaltation Mandate is for those who strive for absolute physical and aetheric perfection. They do not just fight; they perform, their every strike a legendary feat that inspires those around them to reach their own absolute potential. In the modern world, the Exaltation Knight is the supreme hero, their covenant fueling superhuman manifestations that turn every struggle into an epic victory.",
@@ -4935,7 +4860,6 @@ const pathCatalog: Path[] = [
 		pathType: "aether-chemist-design",
 		requirements: {
 			level: 3,
-			skills: ["Mana Flow", "Medicine"],
 		},
 		description:
 			"The Aether Chemist designs are for those who synthesize aetheric reagents harvested directly from the Rifts. They do not just brew potions; they architecture complex somatic sequences that heal, transform, and incinerate with absolute precision. In the modern world, the Aether Chemist is the supreme specialist in restorative and entropic resonance dynamics, their presence stabilizing the party's biological integrity.",
@@ -5008,7 +4932,6 @@ const pathCatalog: Path[] = [
 		pathType: "aether-vessel-design",
 		requirements: {
 			level: 3,
-			skills: ["Mana Flow", "Athletics"],
 		},
 		description:
 			"The Aether Vessel designs are for those who infuse physical armaments with the Absolute's blueprints. They do not just wear armor; they manifest localized power-frames that grant superhuman strength and impenetrable defensive auras, turning the Technomancer into a walking force of aetheric might. In the modern world, the Aether Vessel is the supreme martial-architect, their designs representing the peak of ascendant warfare.",
@@ -5081,7 +5004,6 @@ const pathCatalog: Path[] = [
 		pathType: "resonance-siege-design",
 		requirements: {
 			level: 3,
-			skills: ["Mana Flow"],
 		},
 		description:
 			"The Resonance Siege designs represent the peak of offensive aetheric manifestations. They do not just build platforms; they architecture localized resonators that project destructive harmonics or protective fields across the battlefield. In the modern world, the Resonance Siege architect is the supreme heavy resonance specialist, their constructs capable of breaking any gate-defense with absolute power.",
@@ -5151,7 +5073,6 @@ const pathCatalog: Path[] = [
 		pathType: "synchronist-binary-design",
 		requirements: {
 			level: 3,
-			skills: ["Mana Flow", "Athletics"],
 		},
 		description:
 			"The Synchronist Binary designs are for those who bond with a primary aetheric defender. They do not just build a companion; they fuse their own neural resonance with a physical construct, creating a perfect binary fighting unit. In the modern world, the Synchronist is a formidable frontline combatant, their attacks fueled by aetheric compilations that outpace physical reflex.",
@@ -5225,7 +5146,6 @@ const pathCatalog: Path[] = [
 		pathType: "swarm-conduit-design",
 		requirements: {
 			level: 3,
-			skills: ["Mana Flow", "Investigation"],
 		},
 		description:
 			"The Swarm Conduit designs are for those who deploy aetheric micro-conspicuous to blanket the battlefield. They do not just control drones; they weave a living surveillance and offensive weave that provides absolute oversight and precision strikes. In the modern world, the Swarm Conduit is the supreme tactical specialist, their micro-conduits capable of relaying information and force across any distance.",
@@ -5292,7 +5212,6 @@ const pathCatalog: Path[] = [
 		pathType: "aether-breacher-design",
 		requirements: {
 			level: 3,
-			skills: ["Mana Flow", "Investigation"],
 		},
 		description:
 			"The Aetheric Breacher designs are for those who interface directly with the Absolute's core resonance. They treat reality like a malleable sequence — finding vulnerabilities, suppressing enemy manifestations, and realigning the laws of local aetheric flow. In the modern world, the Breacher is the supreme infiltration specialist, their ability to bypass any defensive mandate making them the ultimate asset for high-rank Rift raids.",
@@ -5362,7 +5281,6 @@ const pathCatalog: Path[] = [
 		pathType: "lore-resonance",
 		requirements: {
 			level: 3,
-			skills: ["Dimensional Lore", "Performance"],
 		},
 		description:
 			"Those who walk the Path of the Lore Resonance are collectors of the Absolute's recursive data-manifolds. They do not just record; they weaponize information itself, disrupting enemy manifestations by echoing their own psychological vulnerabilities back at them in a tidal wave of dissonant data. In the modern world, the Lore Idol is the supreme analytical strategist, their mastery of the Absolute's secrets making them feared by any entity with a hidden variable.",
@@ -5422,7 +5340,6 @@ const pathCatalog: Path[] = [
 		pathType: "dance-resonance",
 		requirements: {
 			level: 3,
-			skills: ["Acrobatics", "Performance"],
 		},
 		description:
 			"Those who walk the Path of the Dance Resonance channel the Absolute's combat-frequency through movement itself — their fighting styles derived from modern dance forms weaponized by the Ascendant Bureau's martial arts division. K-pop precision choreography becomes blade-work timing, contemporary flow becomes evasion doctrine, ballet extension becomes strike reach, and hip-hop impact becomes devastating kinetic force. In the modern world, the Dance Idol is the supreme mobile combatant, their battlefield presence a lethal performance that inspires allies and annihilates anomalies with equal grace.",
@@ -5483,7 +5400,6 @@ const pathCatalog: Path[] = [
 		pathType: "hypnotic-resonance",
 		requirements: {
 			level: 3,
-			skills: ["Performance", "Persuasion"],
 		},
 		description:
 			"The Path of the Hypnotic Resonance designates an Idol who broadcasts on the fey-resonance bands of the Absolute. They do not just perform; they project irresistible harmonic patterns that override the common consensus of those who witness them. In the high-stakes world of social and political containment, they are the supreme influencers, their absolute charm capable of turning an entire city-block into a unified collective of their choosing.",
@@ -5545,7 +5461,6 @@ const pathCatalog: Path[] = [
 		pathType: "blade-resonance",
 		requirements: {
 			level: 3,
-			skills: ["Acrobatics", "Performance"],
 		},
 		description:
 			"Those who walk the Path of the Blade Resonance channel their harmonic frequencies through physical armaments. They treat the battlefield as a lethal performance, their every strike a precision-weighted aetheric flourish that maximizes destruction while ensuring their own physical integrity. In the elite academies, they are the supreme martial specialists, their combat style a perfect bridge between physical perfection and aetheric art.",
@@ -5612,7 +5527,6 @@ const pathCatalog: Path[] = [
 		pathType: "shadow-resonance",
 		requirements: {
 			level: 3,
-			skills: ["Deception", "Performance"],
 		},
 		description:
 			"The Shadow Resonance mandate is walked by those who broadcast on the hidden, subsonic layers of the Absolute's dark architecture. They are the supreme ghosts of the Idol lineage, gathered intel from the very static of the world around them. They do not just hide; they weave fear into the aetheric signatures of their enemies, planting suggestions and extracting secrets with a surgical, undetectable precision.",
@@ -5674,7 +5588,6 @@ const pathCatalog: Path[] = [
 		pathType: "genesis-resonance",
 		requirements: {
 			level: 3,
-			skills: ["Mana Flow", "Performance"],
 		},
 		description:
 			"The Path of the Genesis Resonance designates an Idol who taps into the Absolute's foundational harmonic—the vibration that structures matter itself. They do not just imagine; they manifest, fabricating physical items and animating objects from raw mana as a physical manifestation of their art. In the modern world, they are the supreme architects of the material weave, their presence turning any location into a factory of absolute creation.",

@@ -1,5 +1,4 @@
 import { getStaticPathUnlockLevel } from "@/lib/levelGating";
-import { normalizeSkillName } from "@/lib/skills";
 
 export interface PathEligibilitySource {
 	id?: string | null;
@@ -11,7 +10,6 @@ export interface PathEligibilitySource {
 	path_level?: number | null;
 	requirements?: {
 		level?: number | null;
-		skills?: string[] | null;
 	} | null;
 }
 
@@ -19,7 +17,6 @@ export interface PathEligibilityContext {
 	jobId?: string | null;
 	jobName?: string | null;
 	level: number;
-	skillProficiencies?: readonly string[] | null;
 }
 
 export interface PathEligibilityResult {
@@ -27,7 +24,6 @@ export interface PathEligibilityResult {
 	jobMatches: boolean;
 	levelMet: boolean;
 	requiredLevel: number;
-	missingSkills: string[];
 	reason: string;
 }
 
@@ -57,35 +53,17 @@ export function getPathEligibility(
 			requirements: path.requirements,
 		});
 	const levelMet = context.level >= requiredLevel;
-	const proficientSkills = new Set(
-		(context.skillProficiencies ?? []).map(normalizeSkillName),
-	);
-	const requiredSkills = Array.from(
-		new Map(
-			(path.requirements?.skills ?? []).map((skill) => [
-				normalizeSkillName(skill),
-				skill,
-			]),
-		).values(),
-	);
-	const missingSkills = requiredSkills.filter(
-		(skill) => !proficientSkills.has(normalizeSkillName(skill)),
-	);
-
 	const reasons: string[] = [];
 	if (!jobMatches) reasons.push("This path belongs to a different job.");
 	if (!levelMet)
 		reasons.push(`Requires level ${requiredLevel} (current ${context.level}).`);
-	if (missingSkills.length > 0)
-		reasons.push(`Requires proficiency in ${missingSkills.join(" and ")}.`);
 
 	return {
-		eligible: jobMatches && levelMet && missingSkills.length === 0,
+		eligible: jobMatches && levelMet,
 		jobMatches,
 		levelMet,
 		requiredLevel,
-		missingSkills,
-		reason: reasons.join(" ") || "All path requirements are met.",
+		reason: reasons.join(" ") || "Path is available.",
 	};
 }
 

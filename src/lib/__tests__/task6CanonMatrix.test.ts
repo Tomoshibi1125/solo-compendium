@@ -11,7 +11,6 @@ interface PathExpectation {
 	name: string;
 	aliases?: string[];
 	level: number;
-	skills: string[];
 	featureLevels: number[];
 	abilityName: string;
 	actionType: string;
@@ -24,7 +23,6 @@ const PATH_MATRIX: Record<string, PathExpectation> = {
 		name: "Path of the Void Eater",
 		aliases: ["Path of the Void Lord"],
 		level: 2,
-		skills: ["Mana Flow", "Medicine"],
 		featureLevels: [2, 2, 6, 10, 14],
 		abilityName: "Devour the Remnant",
 		actionType: "Action",
@@ -35,7 +33,6 @@ const PATH_MATRIX: Record<string, PathExpectation> = {
 		name: "Path of the Black Blood",
 		aliases: ["Path of the Entropy Drinker"],
 		level: 2,
-		skills: ["Mana Flow", "Persuasion"],
 		featureLevels: [2, 2, 6, 10, 14],
 		abilityName: "Hemorrhage",
 		actionType: "Action",
@@ -46,7 +43,6 @@ const PATH_MATRIX: Record<string, PathExpectation> = {
 		name: "Path of the Hollow King",
 		aliases: ["Path of the Wither Guard"],
 		level: 2,
-		skills: ["Mana Flow", "Athletics"],
 		featureLevels: [2, 2, 6, 10, 14],
 		abilityName: "Entropy Carapace",
 		actionType: "Bonus action",
@@ -57,7 +53,6 @@ const PATH_MATRIX: Record<string, PathExpectation> = {
 		name: "Path of the Grave Shepherd",
 		aliases: ["Path of the Entropy Blade"],
 		level: 2,
-		skills: ["Mana Flow", "Cosmic Lore"],
 		featureLevels: [2, 2, 6, 10, 14],
 		abilityName: "Reaping Decree",
 		actionType: "Action",
@@ -68,7 +63,6 @@ const PATH_MATRIX: Record<string, PathExpectation> = {
 		name: "Path of the Dread Veil",
 		aliases: ["Path of the Plague Weaver"],
 		level: 2,
-		skills: ["Mana Flow", "Intimidation"],
 		featureLevels: [2, 2, 6, 10, 14],
 		abilityName: "Maw of the Void",
 		actionType: "Action",
@@ -78,7 +72,6 @@ const PATH_MATRIX: Record<string, PathExpectation> = {
 		jobId: "revenant",
 		name: "Path of the Threshold Walker",
 		level: 2,
-		skills: ["Mana Flow", "Insight"],
 		featureLevels: [2, 2, 6, 10, 14],
 		abilityName: "Threshold Pulse",
 		actionType: "Action",
@@ -89,7 +82,6 @@ const PATH_MATRIX: Record<string, PathExpectation> = {
 		name: "Path of the Apex Ascendant",
 		aliases: ["Path of the Apex Hunter"],
 		level: 3,
-		skills: ["Survival", "Perception"],
 		featureLevels: [3, 7, 11, 15],
 		abilityName: "Prey Manifest",
 		actionType: "Bonus action",
@@ -99,7 +91,6 @@ const PATH_MATRIX: Record<string, PathExpectation> = {
 		jobId: "stalker",
 		name: "Path of the Pack Leader",
 		level: 3,
-		skills: ["Beast Taming", "Rift Topology"],
 		featureLevels: [3, 7, 11, 15],
 		abilityName: "Coordinated Strike",
 		actionType: "Action",
@@ -110,7 +101,6 @@ const PATH_MATRIX: Record<string, PathExpectation> = {
 		name: "Path of the Umbral Ascendant",
 		aliases: ["Path of the Umbral Hunter"],
 		level: 3,
-		skills: ["Stealth", "Perception"],
 		featureLevels: [3, 3, 7, 11, 15],
 		abilityName: "Shadow Strike",
 		actionType: "Bonus action",
@@ -120,7 +110,6 @@ const PATH_MATRIX: Record<string, PathExpectation> = {
 		jobId: "stalker",
 		name: "Path of the Rift Strider",
 		level: 3,
-		skills: ["Mana Flow", "Survival"],
 		featureLevels: [3, 3, 7, 11, 15],
 		abilityName: "Planar Collapse",
 		actionType: "Action",
@@ -130,7 +119,6 @@ const PATH_MATRIX: Record<string, PathExpectation> = {
 		jobId: "stalker",
 		name: "Path of the Apex Slayer",
 		level: 3,
-		skills: ["Investigation", "Survival"],
 		featureLevels: [3, 3, 7, 11, 15],
 		abilityName: "Exploit Vulnerability",
 		actionType: "Free",
@@ -140,7 +128,6 @@ const PATH_MATRIX: Record<string, PathExpectation> = {
 		jobId: "stalker",
 		name: "Path of the Hive Synchronist",
 		level: 3,
-		skills: ["Rift Topology", "Survival"],
 		featureLevels: [3, 3, 7, 11, 15],
 		abilityName: "Hive Eruption",
 		actionType: "Action",
@@ -150,7 +137,6 @@ const PATH_MATRIX: Record<string, PathExpectation> = {
 		jobId: "technomancer",
 		name: "Design: The Aether Chemist",
 		level: 3,
-		skills: ["Mana Flow", "Medicine"],
 		featureLevels: [3, 3, 3, 5, 9, 15],
 		abilityName: "Volatile Burst",
 		actionType: "Action",
@@ -160,7 +146,6 @@ const PATH_MATRIX: Record<string, PathExpectation> = {
 		jobId: "technomancer",
 		name: "Design: The Aether Vessel",
 		level: 3,
-		skills: ["Mana Flow", "Athletics"],
 		featureLevels: [3, 3, 3, 5, 9, 15],
 		abilityName: "Pulse Overdrive",
 		actionType: "Bonus action",
@@ -170,7 +155,6 @@ const PATH_MATRIX: Record<string, PathExpectation> = {
 		jobId: "technomancer",
 		name: "Design: Resonance Siege",
 		level: 3,
-		skills: ["Mana Flow"],
 		featureLevels: [3, 3, 3, 5, 9, 15],
 		abilityName: "Absolute Salvo",
 		actionType: "Bonus action",
@@ -180,7 +164,6 @@ const PATH_MATRIX: Record<string, PathExpectation> = {
 		jobId: "technomancer",
 		name: "Design: Synchronist Binary",
 		level: 3,
-		skills: ["Mana Flow", "Athletics"],
 		featureLevels: [3, 3, 3, 5, 9, 15],
 		abilityName: "Absolute Overdrive",
 		actionType: "Bonus action",
@@ -190,7 +173,6 @@ const PATH_MATRIX: Record<string, PathExpectation> = {
 		jobId: "technomancer",
 		name: "Design: Swarm Conduit",
 		level: 3,
-		skills: ["Mana Flow", "Investigation"],
 		featureLevels: [3, 3, 5, 9, 15],
 		abilityName: "Absolute Convergence",
 		actionType: "Action",
@@ -200,7 +182,6 @@ const PATH_MATRIX: Record<string, PathExpectation> = {
 		jobId: "technomancer",
 		name: "Design: Aether Breacher",
 		level: 3,
-		skills: ["Mana Flow", "Investigation"],
 		featureLevels: [3, 3, 5, 9, 15],
 		abilityName: "Absolute Lockdown",
 		actionType: "Action",
@@ -209,7 +190,7 @@ const PATH_MATRIX: Record<string, PathExpectation> = {
 };
 
 describe("Task 6 canonical job/path matrix", () => {
-	it("locks all 18 stable path identities, requirements, progression, aliases, and local signatures", () => {
+	it("locks all 18 stable path identities, unlock levels, progression, aliases, and local signatures", () => {
 		expect(Object.keys(PATH_MATRIX)).toHaveLength(18);
 		for (const [id, expected] of Object.entries(PATH_MATRIX)) {
 			const path = paths.find((entry) => entry.id === id);
@@ -218,10 +199,7 @@ describe("Task 6 canonical job/path matrix", () => {
 			expect(path.jobId).toBe(expected.jobId);
 			expect(path.name).toBe(expected.name);
 			expect(path.aliases ?? []).toEqual(expected.aliases ?? []);
-			expect(path.requirements).toMatchObject({
-				level: expected.level,
-				skills: expected.skills,
-			});
+			expect(path.requirements).toEqual({ level: expected.level });
 			expect(path.features.map((feature) => feature.level)).toEqual(
 				expected.featureLevels,
 			);

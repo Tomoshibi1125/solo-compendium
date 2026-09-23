@@ -490,15 +490,6 @@ export const canonicalReviewBlockers: readonly CanonReviewBlocker[] = [
 	// Task 4: shared path-data contracts. These records use a canonical path as
 	// the audit anchor, but the decisions apply to every path in the Task 4 batch.
 	{
-		id: "task4:paths:skill-prerequisite-semantics",
-		dataset: "paths",
-		entryId: "berserker--escalating-resonance",
-		fieldPath: "requirements.skills",
-		message:
-			"Task 4 paths do not define whether listed skills are required or recommended, all-or-any matching, proficiency level, check timing, or skill-loss handling.",
-		dependsOnTask: 16,
-	},
-	{
 		id: "task4:paths:bonus-stats-semantics",
 		dataset: "paths",
 		entryId: "berserker--escalating-resonance",
@@ -508,15 +499,6 @@ export const canonicalReviewBlockers: readonly CanonReviewBlocker[] = [
 		dependsOnTask: 16,
 	},
 	// Task 5: shared path contracts and unresolved source vocabulary.
-	{
-		id: "task5:paths:skill-prerequisite-semantics",
-		dataset: "paths",
-		entryId: "esper--draconic-lineage",
-		fieldPath: "requirements.skills",
-		message:
-			"Task 5 path selection enforces every authored skill, but canon does not define later proficiency-loss handling, recheck timing, or whether temporary proficiency can satisfy a path requirement.",
-		dependsOnTask: 16,
-	},
 	{
 		id: "task5:paths:bonus-stats-semantics",
 		dataset: "paths",
@@ -608,15 +590,6 @@ export const canonicalReviewBlockers: readonly CanonReviewBlocker[] = [
 		dependsOnTask: 20,
 	},
 	// Task 6: shared path contracts and rejected generated ability identities.
-	{
-		id: "task6:paths:skill-prerequisite-semantics",
-		dataset: "paths",
-		entryId: "revenant--void-lord",
-		fieldPath: "requirements.skills",
-		message:
-			"Task 6 path selection enforces every authored skill, but canon does not define later proficiency-loss handling, recheck timing, or whether temporary proficiency can satisfy a path requirement.",
-		dependsOnTask: 16,
-	},
 	{
 		id: "task6:paths:bonus-stats-semantics",
 		dataset: "paths",

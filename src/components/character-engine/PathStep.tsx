@@ -41,12 +41,10 @@ interface PathRow {
 	path_level?: number | null;
 	requirements?: {
 		level?: number | null;
-		skills?: string[] | null;
 	} | null;
 	eligibility?: {
 		eligible: boolean;
 		reason: string;
-		missingSkills: string[];
 	} | null;
 	stats?: PathStats | null;
 	features?: PathFeature[] | null;
@@ -244,8 +242,7 @@ export const PathStep: React.FC<PathStepProps> = ({
 						{paths.length > 0 &&
 							!paths.some((path) => path.eligibility?.eligible !== false) && (
 								<p className="text-xs text-destructive">
-									No path requirements are currently met. Return to Job or
-									Background and choose the required skill proficiencies.
+									No paths are available for this job at the current level.
 								</p>
 							)}
 					</div>

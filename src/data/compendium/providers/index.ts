@@ -1988,11 +1988,7 @@ export const staticDataProvider: StaticDataProvider = {
 			created_at:
 				(path as { created_at?: string }).created_at ||
 				"2024-01-01T00:00:00.000Z",
-			tags: [
-				path.jobId,
-				`tier-${path.tier}`,
-				...(path.requirements.skills || []),
-			].filter(Boolean) as string[],
+			tags: [path.jobId, `tier-${path.tier}`].filter(Boolean) as string[],
 			source_book: path.source,
 			image_url: path.image,
 			level: path.requirements.level,
@@ -2006,13 +2002,7 @@ export const staticDataProvider: StaticDataProvider = {
 				(path.abilities as unknown as Array<Record<string, Json>>) || [],
 			stats: path.stats as unknown as Record<string, Json>,
 			requirements: path.requirements as unknown as Record<string, Json>,
-			prerequisites:
-				[
-					...(path.requirements.prerequisites ?? []),
-					...(path.requirements.skills ?? []).map((skill) => `Skill: ${skill}`),
-				]
-					.filter(Boolean)
-					.join(", ") || null,
+			prerequisites: null,
 			// Paths are class progressions, not items — no rarity. Their
 			// classifier is tier/level (surfaced above), not a rarity tier.
 			jobId: path.jobId,

@@ -767,7 +767,7 @@ export const compendiumCategoryDefinitions = {
 		providerMethod: "getPaths",
 		publicTypes: ["paths"],
 		sourceIds: ["paths/catalog"],
-		schema: universalSchema(["aliases", "requirements.prerequisites", "requirements.skills", "tags"]),
+		schema: universalSchema(["aliases", "tags"]),
 		references: [pathJobReference, ...pathAbilityReferences],
 	},
 	powers: {

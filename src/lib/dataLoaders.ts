@@ -129,13 +129,6 @@ export const loadPaths = (): Promise<CompendiumPath[]> =>
 				features: p.features,
 				abilities: p.abilities,
 				stats: p.stats,
-				prerequisites:
-					[
-						...(p.requirements.prerequisites ?? []),
-						...(p.requirements.skills ?? []).map((skill) => `Skill: ${skill}`),
-					]
-						.filter(Boolean)
-						.join(", ") || undefined,
 			}),
 		),
 	);
