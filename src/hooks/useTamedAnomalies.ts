@@ -1,19 +1,25 @@
 /**
  * useTamedAnomalies — the party's tamed-anomaly roster (campaign-scoped),
- * wiring the previously-orphaned campaign_tamed_anomalies table + its RPCs
- * (attempt_taming / claim_anomaly_controller / release_anomaly_controller).
- * The taming rule lives in src/lib/taming.ts; attempt_taming re-gates on the
- * DC server-side. Anomaly stats hydrate from the canonical anomaly catalog.
+ * wiring campaign_tamed_anomalies + its existing RPCs. C1 layers stable
+ * companion-instance identity over the legacy row while preserving the row's
+ * current taming/controller fields for compatibility.
  */
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useToast } from "@/hooks/use-toast";
 import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import { listCanonicalEntries } from "@/lib/canonicalCompendium";
+import {
+	indexCompanionInstances,
+	resolveCompanionEffectiveStats,
+	type CompanionInstanceRecord,
+	type EffectiveCompanionStats,
+} from "@/lib/companionInstances";
 
 export interface TamedAnomalyRow {
 	id: string;
 	campaign_id: string;
 	anomaly_id: string;
+	companion_instance_id: string;
 	nickname: string | null;
 	current_hp: number;
 	max_hp_override: number | null;
@@ -22,6 +28,8 @@ export interface TamedAnomalyRow {
 	primary_handler_character_id: string | null;
 	tamed_by_character_id: string | null;
 	is_summoned: boolean;
+	companion_instance?: CompanionInstanceRecord | null;
+	effective_stats?: EffectiveCompanionStats | null;
 	anomaly?: AnomalyCatalogEntry;
 }
 
@@ -29,12 +37,14 @@ export interface AnomalyCatalogEntry {
 	id: string;
 	name: string;
 	hp: number;
+	ac: number;
+	speed: number;
 	rank: string;
 }
 
 const KEY = (campaignId: string) => ["campaign-tamed-anomalies", campaignId];
 
-/** Taming DC derived from the anomaly's gate-rank (no per-anomaly DC field). */
+/** Taming DC derived from the anomaly's gate-rank (legacy C2 predecessor). */
 export function tamingDcForRank(rank: string): number {
 	switch (rank.toUpperCase()) {
 		case "E":
@@ -67,12 +77,25 @@ export function useAnomalyCatalog() {
 					id: e.id,
 					name: e.name,
 					hp: Number(rec.hit_points_average ?? rec.hit_points ?? 1) || 1,
+					ac: Number(rec.armor_class ?? 10) || 10,
+					speed: Number(rec.speed_walk ?? 30) || 30,
 					rank: String(rec.gate_rank ?? rec.rank ?? "D"),
 				});
 			}
 			return map;
 		},
 	});
+}
+
+async function loadInstances(ids: readonly string[]) {
+	const unique = Array.from(new Set(ids.filter(Boolean)));
+	if (unique.length === 0) return [] as CompanionInstanceRecord[];
+	const { data, error } = await supabase
+		.from("companion_instances" as never)
+		.select("*")
+		.in("id", unique);
+	if (error) throw error;
+	return (data ?? []) as unknown as CompanionInstanceRecord[];
 }
 
 export function useTamedAnomalies(campaignId: string | undefined) {
@@ -87,10 +110,40 @@ export function useTamedAnomalies(campaignId: string | undefined) {
 				.eq("campaign_id", campaignId as string)
 				.order("tamed_at", { ascending: false });
 			if (error) throw error;
+			const rows = (data ?? []) as unknown as TamedAnomalyRow[];
+			const instances = await loadInstances(
+				rows.map((row) => row.companion_instance_id),
+			);
+			const byId = indexCompanionInstances(instances);
 			const map = catalog.data;
-			return (data ?? []).map((r) => {
-				const row = r as unknown as TamedAnomalyRow;
-				return { ...row, anomaly: map?.get(row.anomaly_id) };
+			return rows.map((row) => {
+				const anomaly = map?.get(row.anomaly_id);
+				const instance = byId.get(row.companion_instance_id) ?? null;
+				const liveFallback = anomaly
+					? {
+							name: anomaly.name,
+							hpMax: anomaly.hp,
+							baseAc: anomaly.ac,
+							speed: anomaly.speed,
+							rank: anomaly.rank,
+						}
+					: null;
+				return {
+					...row,
+					anomaly,
+					companion_instance: instance,
+					effective_stats: instance
+						? resolveCompanionEffectiveStats(
+								instance,
+								{
+									nickname: row.nickname,
+									currentHp: row.current_hp,
+									hpMax: row.max_hp_override,
+								},
+								liveFallback,
+							)
+						: null,
+				};
 			});
 		},
 	});
@@ -134,6 +187,9 @@ export function useTameAnomaly() {
 		},
 		onSuccess: (id, v) => {
 			qc.invalidateQueries({ queryKey: KEY(v.campaignId) });
+			qc.invalidateQueries({
+				queryKey: ["character-companion-instances", v.characterId],
+			});
 			toast(
 				id
 					? { title: "Anomaly tamed! It joins the party roster." }
@@ -168,7 +224,12 @@ export function useClaimAnomalyController() {
 			);
 			if (error) throw new Error(error.message);
 		},
-		onSuccess: (_, v) => qc.invalidateQueries({ queryKey: KEY(v.campaignId) }),
+		onSuccess: (_, v) => {
+			qc.invalidateQueries({ queryKey: KEY(v.campaignId) });
+			qc.invalidateQueries({
+				queryKey: ["character-companion-instances", v.characterId],
+			});
+		},
 		onError: (e) =>
 			toast({
 				title: "Failed to take control",
