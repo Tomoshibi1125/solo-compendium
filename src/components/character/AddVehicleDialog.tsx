@@ -24,8 +24,11 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
+import { useCompanionInstance, useRegisterCharacterVehicleMount } from "@/hooks/useCompanionInstances";
 import { useDialogSwipeClose } from "@/hooks/useDialogSwipeClose";
 import { useAddCharacterVehicle } from "@/hooks/useVehicles";
+import type { Json } from "@/integrations/supabase/types";
+import { createCanonicalCompanionSource } from "@/lib/companions";
 import { formatRaCurrencyValue } from "@/lib/currency";
 import type { CompendiumVehicle } from "@/types/compendium";
 import { AddDialogDetailPanel } from "./AddDialogDetailPanel";
@@ -44,6 +47,7 @@ export function AddVehicleDialog({
 	catalog,
 }: AddVehicleDialogProps) {
 	const addVehicle = useAddCharacterVehicle();
+	const registerMount = useRegisterCharacterVehicleMount();
 	const [filter, setFilter] = useState<"all" | "mount" | "vehicle">("all");
 	const [selectedId, setSelectedId] = useState<string>("");
 	const [nickname, setNickname] = useState("");
@@ -61,12 +65,40 @@ export function AddVehicleDialog({
 
 	const handleAdd = async () => {
 		if (!selected) return;
-		await addVehicle.mutateAsync({
+		const row = await addVehicle.mutateAsync({
 			characterId,
 			vehicleId: selected.id,
 			nickname: nickname.trim() || undefined,
 			initialHp: selected.hit_points.max,
 		});
+
+		if (selected.vehicle_type === "mount") {
+			const snapshot = createCanonicalCompanionSource({
+				canonicalId: selected.id,
+				canonicalType: "vehicle",
+				canonicalCollection: "vehicles",
+				entryType: selected.vehicle_type,
+				source:
+					typeof (selected as { source?: unknown }).source === "string"
+						? ((selected as { source?: string }).source ?? null)
+						: null,
+				sourceBook:
+					typeof (selected as { source_book?: unknown }).source_book === "string"
+						? ((selected as { source_book?: string }).source_book ?? null)
+						: null,
+				name: selected.name,
+				hpMax: selected.hit_points.max,
+				baseAc: selected.armor_class,
+				speed: selected.speed?.land ?? 0,
+				rank: selected.rank ?? null,
+			});
+			await registerMount.mutateAsync({
+				characterId,
+				vehicleLinkId: row.id,
+				sourceSnapshot: snapshot as unknown as Json,
+			});
+		}
+
 		setSelectedId("");
 		setNickname("");
 		onOpenChange(false);
@@ -85,8 +117,8 @@ export function AddVehicleDialog({
 						Add Vehicle or Mount
 					</DialogTitle>
 					<DialogDescription>
-						Pick from the {catalog.length}-entry RA catalog. Mounts and vehicles
-						share the same data model; choose the entry that fits your campaign.
+						Pick from the {catalog.length}-entry RA catalog. Living mounts keep a
+						frozen companion source snapshot; constructed vehicles remain vehicle-only.
 					</DialogDescription>
 				</DialogHeader>
 
@@ -251,7 +283,7 @@ export function AddVehicleDialog({
 					</Button>
 					<Button
 						onClick={handleAdd}
-						disabled={!selected || addVehicle.isPending}
+						disabled={!selected || addVehicle.isPending || registerMount.isPending}
 						data-testid="vehicle-add-confirm"
 					>
 						Add to character
