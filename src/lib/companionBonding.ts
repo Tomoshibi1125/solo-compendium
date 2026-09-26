@@ -66,19 +66,13 @@ export interface BondingResolution {
 	reason?: string;
 }
 
-const normalizeSourceName = (value: string | null | undefined) =>
-	(value ?? "").trim().toLowerCase();
+const BONDING_JOB_IDS = new Set(["summoner", "contractor", "esper"]);
 
-const BONDING_PATH_PATTERNS = [
-	/pack[\s-]?leader/i,
-	/biome[\s-]?bond/i,
-	/pact[\s-]?of[\s-]?the[\s-]?chain/i,
-	/entity[\s-]?shift/i,
-	/synchronist[\s-]?binary/i,
-	/hive[\s-]?synchronist/i,
-];
-
-const BONDING_JOB_NAMES = new Set(["summoner", "contractor", "esper"]);
+const BONDING_PATH_IDS = new Map<string, string>([
+	["stalker--pack-leader", "stalker"],
+	["stalker--hive-synchronist", "stalker"],
+	["technomancer--synchronist-binary-design", "technomancer"],
+]);
 
 export function bondingDcForRank(rank: unknown): number | null {
 	if (typeof rank !== "string") return null;
@@ -117,10 +111,10 @@ export function hasBeastTamingProficiency(
 /**
  * Resolve the one source-backed +2 bonding specialization.
  *
- * C2 deliberately does not award a bonus from a matching display name alone:
- * the character must also carry the canonical Job/Path id that backs it.
- * If multiple labels happen to match, a Path source wins over a Job source and
- * the numeric bonus is still applied exactly once.
+ * C2 treats the canonical Job/Path ids as authority. Display labels remain
+ * presentation only, so a stale or edited label cannot grant the bonus. If a
+ * character qualifies through both an authored Path and Job, the Path source
+ * wins and the numeric bonus is still applied exactly once.
  */
 export function resolveBondingSpecializationSource(
 	character: Pick<
@@ -128,26 +122,23 @@ export function resolveBondingSpecializationSource(
 		"job" | "jobId" | "path" | "pathId"
 	>,
 ): BondingSpecializationSource | null {
-	const path = character.path?.trim() ?? "";
-	if (
-		character.pathId &&
-		path &&
-		BONDING_PATH_PATTERNS.some((pattern) => pattern.test(path))
-	) {
+	const jobId = character.jobId?.trim() ?? "";
+	const pathId = character.pathId?.trim() ?? "";
+	const requiredJobId = BONDING_PATH_IDS.get(pathId);
+	if (requiredJobId && jobId === requiredJobId) {
 		return {
 			sourceKind: "path",
-			sourceId: character.pathId,
-			label: path,
+			sourceId: pathId,
+			label: character.path?.trim() || pathId,
 			bonus: BONDING_SPECIALIZATION_BONUS,
 		};
 	}
 
-	const job = character.job?.trim() ?? "";
-	if (character.jobId && BONDING_JOB_NAMES.has(normalizeSourceName(job))) {
+	if (BONDING_JOB_IDS.has(jobId)) {
 		return {
 			sourceKind: "job",
-			sourceId: character.jobId,
-			label: job,
+			sourceId: jobId,
+			label: character.job?.trim() || jobId,
 			bonus: BONDING_SPECIALIZATION_BONUS,
 		};
 	}
