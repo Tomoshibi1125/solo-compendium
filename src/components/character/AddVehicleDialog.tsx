@@ -26,7 +26,10 @@ import {
 } from "@/components/ui/select";
 import { useRegisterCharacterVehicleMount } from "@/hooks/useCompanionInstances";
 import { useDialogSwipeClose } from "@/hooks/useDialogSwipeClose";
-import { useAddCharacterVehicle } from "@/hooks/useVehicles";
+import {
+	useAddCharacterVehicle,
+	useDeleteCharacterVehicle,
+} from "@/hooks/useVehicles";
 import type { Json } from "@/integrations/supabase/types";
 import { createCanonicalCompanionSource } from "@/lib/companions";
 import { formatRaCurrencyValue } from "@/lib/currency";
@@ -47,6 +50,7 @@ export function AddVehicleDialog({
 	catalog,
 }: AddVehicleDialogProps) {
 	const addVehicle = useAddCharacterVehicle();
+	const deleteVehicle = useDeleteCharacterVehicle();
 	const registerMount = useRegisterCharacterVehicleMount();
 	const [filter, setFilter] = useState<"all" | "mount" | "vehicle">("all");
 	const [selectedId, setSelectedId] = useState<string>("");
@@ -92,11 +96,22 @@ export function AddVehicleDialog({
 				speed: selected.speed?.land ?? 0,
 				rank: selected.rank ?? null,
 			});
-			await registerMount.mutateAsync({
-				characterId,
-				vehicleLinkId: row.id,
-				sourceSnapshot: snapshot as unknown as Json,
-			});
+			try {
+				await registerMount.mutateAsync({
+					characterId,
+					vehicleLinkId: row.id,
+					sourceSnapshot: snapshot as unknown as Json,
+				});
+			} catch (error) {
+				// Keep legacy requisition state and C1 living identity all-or-nothing
+				// from the user's perspective. The existing delete hook also refunds
+				// the vehicle's VRP and the DB delete trigger removes any orphaned
+				// companion instance.
+				await deleteVehicle
+					.mutateAsync({ characterId, vehicleLinkId: row.id })
+					.catch(() => undefined);
+				throw error;
+			}
 		}
 
 		setSelectedId("");
@@ -283,7 +298,12 @@ export function AddVehicleDialog({
 					</Button>
 					<Button
 						onClick={handleAdd}
-						disabled={!selected || addVehicle.isPending || registerMount.isPending}
+						disabled={
+							!selected ||
+							addVehicle.isPending ||
+							registerMount.isPending ||
+							deleteVehicle.isPending
+						}
 						data-testid="vehicle-add-confirm"
 					>
 						Add to character
