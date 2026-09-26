@@ -7,6 +7,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useToast } from "@/hooks/use-toast";
 import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
+import type { Json } from "@/integrations/supabase/types";
 import { listCanonicalEntries } from "@/lib/canonicalCompendium";
 import {
 	indexCompanionInstances,
@@ -14,6 +15,7 @@ import {
 	type CompanionInstanceRecord,
 	type EffectiveCompanionStats,
 } from "@/lib/companionInstances";
+import { createCanonicalCompanionSource } from "@/lib/companions";
 
 export interface TamedAnomalyRow {
 	id: string;
@@ -157,6 +159,7 @@ type RpcClient = (
 export function useTameAnomaly() {
 	const qc = useQueryClient();
 	const { toast } = useToast();
+	const catalog = useAnomalyCatalog();
 	return useMutation({
 		mutationFn: async (input: {
 			campaignId: string;
@@ -169,8 +172,25 @@ export function useTameAnomaly() {
 			nickname?: string | null;
 		}) => {
 			if (!isSupabaseConfigured) throw new Error("Backend not configured.");
+			const anomaly = catalog.data?.get(input.anomalyId);
+			if (!anomaly) {
+				throw new Error("The canonical Anomaly source could not be resolved.");
+			}
+			const sourceSnapshot = createCanonicalCompanionSource({
+				canonicalId: anomaly.id,
+				canonicalType: "anomaly",
+				canonicalCollection: "anomalies",
+				entryType: "anomaly",
+				source: null,
+				sourceBook: null,
+				name: anomaly.name,
+				hpMax: anomaly.hp,
+				baseAc: anomaly.ac,
+				speed: anomaly.speed,
+				rank: anomaly.rank,
+			});
 			const { data, error } = await (supabase.rpc as unknown as RpcClient)(
-				"attempt_taming",
+				"attempt_taming_with_source",
 				{
 					p_campaign_id: input.campaignId,
 					p_character_id: input.characterId,
@@ -178,6 +198,7 @@ export function useTameAnomaly() {
 					p_roll_total: input.rollTotal,
 					p_dc: input.dc,
 					p_initial_hp: input.initialHp,
+					p_source_snapshot: sourceSnapshot as unknown as Json,
 					p_bond_initial: input.bondInitial ?? 1,
 					p_nickname: input.nickname ?? null,
 				},
