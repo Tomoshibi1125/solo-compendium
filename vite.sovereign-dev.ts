@@ -1,6 +1,7 @@
 import type { IncomingMessage } from "node:http";
 import type { Plugin } from "vite";
-import { handleSovereignGenerationRequest } from "./api/_sovereignGeneration";
+
+type SovereignGenerationModule = typeof import("./api/_sovereignGeneration");
 
 const MAX_SOVEREIGN_BODY_BYTES = 16 * 1024;
 
@@ -65,8 +66,11 @@ export function devSovereignProxy(): Plugin {
 					return;
 				}
 
+				const module = (await server.ssrLoadModule(
+					"/api/_sovereignGeneration.ts",
+				)) as SovereignGenerationModule;
 				const forwarded = firstHeader(req.headers["x-forwarded-for"]);
-				const result = await handleSovereignGenerationRequest({
+				const result = await module.handleSovereignGenerationRequest({
 					authorization: firstHeader(req.headers.authorization),
 					clientIp:
 						forwarded?.split(",")[0]?.trim() ||
