@@ -48,24 +48,24 @@ describe("C2 companion bonding rules", () => {
 		expect(result.total).toBe(13);
 	});
 
-	it("requires a canonical source id before awarding the established +2 specialization", () => {
+	it("requires exact canonical source ids for the established +2 specialization", () => {
 		expect(
 			resolveBondingSpecializationSource({
 				job: "Stalker",
-				jobId: "job-stalker",
+				jobId: "stalker",
 				path: "Path of the Pack Leader",
-				pathId: "path-pack-leader",
+				pathId: "stalker--pack-leader",
 			}),
 		).toEqual({
 			sourceKind: "path",
-			sourceId: "path-pack-leader",
+			sourceId: "stalker--pack-leader",
 			label: "Path of the Pack Leader",
 			bonus: 2,
 		});
 		expect(
 			resolveBondingSpecializationSource({
 				job: "Stalker",
-				jobId: "job-stalker",
+				jobId: "stalker",
 				path: "Path of the Pack Leader",
 				pathId: null,
 			}),
@@ -73,21 +73,64 @@ describe("C2 companion bonding rules", () => {
 		expect(
 			resolveBondingSpecializationSource({
 				job: "Summoner",
-				jobId: "job-summoner",
+				jobId: "summoner",
 				path: null,
 				pathId: null,
 			}),
-		).toMatchObject({ sourceKind: "job", sourceId: "job-summoner", bonus: 2 });
+		).toMatchObject({ sourceKind: "job", sourceId: "summoner", bonus: 2 });
 	});
 
-	it("applies the +2 specialization at most once even when multiple labels match", () => {
+	it("does not let a matching display label turn an unrelated canonical id into a specialization", () => {
+		expect(
+			resolveBondingSpecializationSource({
+				job: "Stalker",
+				jobId: "stalker",
+				path: "Path of the Pack Leader",
+				pathId: "stalker--apex-hunter",
+			}),
+		).toBeNull();
+		expect(
+			resolveBondingSpecializationSource({
+				job: "Summoner",
+				jobId: "berserker",
+				path: null,
+				pathId: null,
+			}),
+		).toBeNull();
+	});
+
+	it("requires the canonical Path to belong to the matching canonical Job", () => {
+		expect(
+			resolveBondingSpecializationSource({
+				job: "Technomancer",
+				jobId: "technomancer",
+				path: "Design: Synchronist Binary",
+				pathId: "technomancer--synchronist-binary-design",
+			}),
+		).toMatchObject({
+			sourceKind: "path",
+			sourceId: "technomancer--synchronist-binary-design",
+			bonus: 2,
+		});
+		expect(
+			resolveBondingSpecializationSource({
+				job: "Stalker",
+				jobId: "stalker",
+				path: "Design: Synchronist Binary",
+				pathId: "technomancer--synchronist-binary-design",
+			}),
+		).toBeNull();
+	});
+
+	it("applies the +2 specialization at most once even when both Job and Path qualify", () => {
 		const source = resolveBondingSpecializationSource({
 			job: "Summoner",
-			jobId: "job-summoner",
+			jobId: "summoner",
 			path: "Path of the Hive Synchronist",
-			pathId: "path-hive",
+			pathId: "stalker--hive-synchronist",
 		});
-		expect(source?.sourceKind).toBe("path");
+		// The mismatched Path is rejected, but the canonical Summoner Job still qualifies.
+		expect(source?.sourceKind).toBe("job");
 
 		const result = resolveBondingAttempt({
 			rank: "C",
@@ -98,7 +141,7 @@ describe("C2 companion bonding rules", () => {
 			proficiencyApplies: true,
 			specializationBonus: source?.bonus ?? 0,
 		});
-		// 8 + PRE(+2) + PB(+3) + specialization(+2) = 15, not +4 specialization.
+		// 8 + PRE(+2) + PB(+3) + specialization(+2) = 15.
 		expect(result.specializationBonus).toBe(2);
 		expect(result.total).toBe(15);
 	});
