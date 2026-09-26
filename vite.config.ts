@@ -1,9 +1,18 @@
+import path from "node:path";
 import type { IncomingMessage } from "node:http";
+import { fileURLToPath } from "node:url";
 import baseConfig from "./vite.base.config";
 import { defineConfig, type Plugin } from "vite";
 import { handleSovereignGenerationRequest } from "./api/_sovereignGeneration";
 
 const MAX_SOVEREIGN_BODY_BYTES = 16 * 1024;
+
+// vite.base.config.ts is the pre-S4 config moved behind this composition layer.
+// Its existing aliases intentionally resolve from the repository root via
+// __dirname, so preserve that Node config global before its callback executes.
+Object.assign(globalThis, {
+	__dirname: path.dirname(fileURLToPath(import.meta.url)),
+});
 
 function firstHeader(value: string | string[] | undefined): string | undefined {
 	return Array.isArray(value) ? value[0] : value;
