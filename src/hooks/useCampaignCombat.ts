@@ -4,6 +4,7 @@ import { useToast } from "@/hooks/use-toast";
 import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import type { Database, Json } from "@/integrations/supabase/types";
 import { AppError } from "@/lib/appError";
+import { resolveTurnOrder } from "@/lib/companionCombat";
 import { clientChannelName } from "@/lib/realtimeChannel";
 import { enqueueSyncItem } from "@/lib/syncManager";
 
@@ -159,7 +160,8 @@ export const useCampaignCombatSession = (
 				.order("created_at", { ascending: true });
 
 			if (combatantError) throw combatantError;
-			return { session, combatants: (combatantData || []) as Combatant[] };
+			const combatants = (combatantData || []) as Combatant[];
+			return { session, combatants: resolveTurnOrder(combatants) };
 		},
 		enabled: !!campaignId,
 	});
