@@ -16,13 +16,15 @@ import {
 import { enableTouchOptimizations } from "./lib/mobile";
 import { registerPwa } from "./lib/pwa";
 import { initSentry } from "./lib/sentry";
+import { registerCompanionInitiativeBridge } from "./lib/companionInitiativeBridge";
 import { registerCompanionRestBridge } from "./lib/companionRestBridge";
 
 const logger = createLogger({ mode: "production" });
 
 // Initialize Sentry before anything else
 initSentry();
-// C3: subscribe living companions to the existing typed rest lifecycle.
+// C3: subscribe living companions to existing combat/rest lifecycle seams.
+registerCompanionInitiativeBridge();
 registerCompanionRestBridge();
 
 import { initializeProtocolData } from "./lib/ProtocolDataManager";
