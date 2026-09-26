@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import c2Source from "../../../supabase/migrations/20260926030000_companion_c2_bonding.sql?raw";
+import c2Source from "../../../supabase/migrations/20260926040000_companion_c2_bonding.sql?raw";
 
 const migration = c2Source.replace(/\r\n/g, "\n");
 
