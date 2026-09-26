@@ -13,8 +13,9 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import { craftingMaterials, craftingRecipes } from "@/data/compendium/crafting";
+import { craftingRecipes } from "@/data/compendium/crafting";
 import { type CraftingProjectStatus, useCrafting } from "@/hooks/useCrafting";
+import { useMaterialLots } from "@/hooks/useMaterialLots";
 
 interface CraftingPanelProps {
 	characterId: string;
@@ -35,21 +36,29 @@ const statusLabel: Record<CraftingProjectStatus, string> = {
 	abandoned: "Abandoned",
 };
 
+const operationId = (kind: string) =>
+	`m1:${kind}:${globalThis.crypto.randomUUID()}`;
+
 export function CraftingPanel({ characterId, readOnly }: CraftingPanelProps) {
 	const {
 		knownRecipes,
-		materials,
 		projects,
 		learnRecipe,
-		adjustMaterial,
 		startProject,
 		advanceProject,
 		setProjectStatus,
 		deleteProject,
 	} = useCrafting(characterId);
+	const {
+		definitions,
+		lots,
+		discoveries,
+		createLot,
+		adjustLot,
+	} = useMaterialLots(characterId);
 	const [recipeToLearn, setRecipeToLearn] = useState("");
-	const [materialId, setMaterialId] = useState(craftingMaterials[0]?.id ?? "");
-	const [materialDelta, setMaterialDelta] = useState(1);
+	const [materialDefinitionId, setMaterialDefinitionId] = useState("");
+	const [materialQuantity, setMaterialQuantity] = useState(1);
 	const [projectRecipeId, setProjectRecipeId] = useState(
 		craftingRecipes[0]?.id ?? "",
 	);
@@ -62,9 +71,13 @@ export function CraftingPanel({ characterId, readOnly }: CraftingPanelProps) {
 		() => new Map(craftingRecipes.map((recipe) => [recipe.id, recipe])),
 		[],
 	);
-	const materialById = useMemo(
-		() => new Map(craftingMaterials.map((material) => [material.id, material])),
-		[],
+	const definitionById = useMemo(
+		() => new Map(definitions.map((definition) => [definition.id, definition])),
+		[definitions],
+	);
+	const discoveryByLotId = useMemo(
+		() => new Map(discoveries.map((discovery) => [discovery.lot_id, discovery])),
+		[discoveries],
 	);
 	const learnableRecipes = craftingRecipes.filter(
 		(recipe) => !knownRecipeIds.has(recipe.id),
@@ -76,11 +89,26 @@ export function CraftingPanel({ characterId, readOnly }: CraftingPanelProps) {
 		setRecipeToLearn("");
 	};
 
-	const handleAdjustMaterial = (direction: 1 | -1) => {
-		if (!materialId || materialDelta <= 0) return;
-		adjustMaterial.mutate({
-			materialId,
-			delta: materialDelta * direction,
+	const handleCreateLot = () => {
+		if (!materialDefinitionId || materialQuantity <= 0) return;
+		createLot.mutate({
+			materialDefinitionId,
+			quantity: materialQuantity,
+			operationId: operationId("create"),
+		});
+	};
+
+	const handleAdjustLot = (
+		lotId: string,
+		rowVersion: number,
+		delta: number,
+	) => {
+		if (!delta) return;
+		adjustLot.mutate({
+			lotId,
+			delta,
+			expectedVersion: rowVersion,
+			operationId: operationId("adjust"),
 		});
 	};
 
@@ -151,91 +179,137 @@ export function CraftingPanel({ characterId, readOnly }: CraftingPanelProps) {
 								No known recipes yet
 							</span>
 						) : (
-							knownRecipes.map((known) => {
-								const recipe = recipeById.get(known.recipe_id);
-								return (
-									<Badge key={known.id} variant="secondary">
-										{recipe?.name ?? known.recipe_id}
-									</Badge>
-								);
-							})
+							knownRecipes.map((known) => (
+								<Badge key={known.id} variant="secondary">
+									{recipeById.get(known.recipe_id)?.name ?? known.recipe_id}
+								</Badge>
+							))
 						)}
 					</div>
 				</div>
 
-				<div className="space-y-2 border-t border-border/40 pt-3">
-					<div className="flex flex-wrap items-end gap-2">
-						<div className="flex-1 min-w-44">
-							<Label className="text-xs">Material</Label>
-							<Select value={materialId} onValueChange={setMaterialId}>
-								<SelectTrigger className="h-8 text-xs">
-									<SelectValue />
-								</SelectTrigger>
-								<SelectContent>
-									{craftingMaterials.map((material) => (
-										<SelectItem key={material.id} value={material.id}>
-											{material.name}
-										</SelectItem>
-									))}
-								</SelectContent>
-							</Select>
+				<div className="space-y-3 border-t border-border/40 pt-3">
+					<div>
+						<div className="text-xs uppercase text-muted-foreground">
+							Material Lots
 						</div>
-						<div className="w-24">
-							<Label htmlFor="crafting-material-qty" className="text-xs">
-								Amount
-							</Label>
-							<Input
-								id="crafting-material-qty"
-								type="number"
-								min={1}
-								value={materialDelta}
-								onChange={(event) =>
-									setMaterialDelta(
-										Math.max(1, Number.parseInt(event.target.value, 10) || 1),
-									)
-								}
-								className="h-8"
-								disabled={readOnly}
-							/>
-						</div>
-						{!readOnly && (
-							<div className="flex gap-1">
-								<Button
-									size="sm"
-									variant="outline"
-									className="h-8 w-8 p-0"
-									onClick={() => handleAdjustMaterial(-1)}
-									disabled={adjustMaterial.isPending}
-									aria-label="Remove material"
-								>
-									<Minus className="w-3.5 h-3.5" />
-								</Button>
-								<Button
-									size="sm"
-									variant="outline"
-									className="h-8 w-8 p-0"
-									onClick={() => handleAdjustMaterial(1)}
-									disabled={adjustMaterial.isPending}
-									aria-label="Add material"
-								>
-									<Plus className="w-3.5 h-3.5" />
-								</Button>
-							</div>
-						)}
+						<p className="mt-1 text-xs text-muted-foreground">
+							Each lot keeps its own provenance, unit, grade, notes, and discovery metadata.
+						</p>
 					</div>
-					<div className="flex flex-wrap gap-1.5">
-						{materials.length === 0 ? (
-							<span className="text-xs text-muted-foreground">
-								No stored materials
-							</span>
+					{!readOnly && (
+						<div className="flex flex-wrap items-end gap-2">
+							<div className="min-w-52 flex-1">
+								<Label className="text-xs">Material definition</Label>
+								<Select
+									value={materialDefinitionId}
+									onValueChange={setMaterialDefinitionId}
+								>
+									<SelectTrigger className="h-8 text-xs">
+										<SelectValue placeholder="Choose material" />
+									</SelectTrigger>
+									<SelectContent>
+										{definitions.map((definition) => (
+											<SelectItem key={definition.id} value={definition.id}>
+												{definition.name}
+												{definition.family ? ` · ${definition.family}` : ""}
+											</SelectItem>
+										))}
+									</SelectContent>
+								</Select>
+							</div>
+							<div className="w-24">
+								<Label htmlFor="material-lot-qty" className="text-xs">
+									Quantity
+								</Label>
+								<Input
+									id="material-lot-qty"
+									type="number"
+									min={1}
+									step={1}
+									value={materialQuantity}
+									onChange={(event) =>
+										setMaterialQuantity(
+											Math.max(1, Number.parseInt(event.target.value, 10) || 1),
+										)
+									}
+									className="h-8"
+								/>
+							</div>
+							<Button
+								size="sm"
+								variant="outline"
+								className="h-8 gap-2"
+								onClick={handleCreateLot}
+								disabled={
+									!materialDefinitionId || createLot.isPending || materialQuantity <= 0
+								}
+							>
+								<Plus className="h-3.5 w-3.5" /> Add lot
+							</Button>
+						</div>
+					)}
+
+					<div className="space-y-2">
+						{lots.length === 0 ? (
+							<span className="text-xs text-muted-foreground">No stored material lots</span>
 						) : (
-							materials.map((row) => {
-								const material = materialById.get(row.material_id);
+							lots.map((lot) => {
+								const definition = definitionById.get(lot.material_definition_id);
+								const discovery = discoveryByLotId.get(lot.id);
 								return (
-									<Badge key={row.id} variant="outline">
-										{material?.name ?? row.material_id}: {row.quantity}{" "}
-										{material?.unit ?? "units"}
-									</Badge>
+									<div
+										key={lot.id}
+										className="rounded border border-border/40 bg-black/20 p-3"
+									>
+										<div className="flex flex-wrap items-start justify-between gap-2">
+											<div>
+												<div className="text-sm font-semibold">
+													{definition?.name ?? lot.material_definition_id}
+												</div>
+												<div className="mt-1 flex flex-wrap gap-1.5">
+													{definition?.family && (
+														<Badge variant="secondary">{definition.family}</Badge>
+													)}
+													<Badge variant="outline">{lot.provenance_status}</Badge>
+													{lot.grade && <Badge variant="outline">Grade {lot.grade}</Badge>}
+													{discovery && <Badge variant="outline">Discovered</Badge>}
+												</div>
+											</div>
+											<div className="flex items-center gap-1">
+												<span className="min-w-16 text-right font-mono text-sm">
+													{lot.quantity} {lot.unit ?? definition?.unit ?? "units"}
+												</span>
+												{!readOnly && (
+													<>
+														<Button
+															size="sm"
+															variant="outline"
+															className="h-7 w-7 p-0"
+															disabled={adjustLot.isPending || lot.quantity <= 0}
+															onClick={() => handleAdjustLot(lot.id, lot.row_version, -1)}
+															aria-label="Remove one from material lot"
+														>
+															<Minus className="h-3 w-3" />
+														</Button>
+														<Button
+															size="sm"
+															variant="outline"
+															className="h-7 w-7 p-0"
+															disabled={adjustLot.isPending}
+															onClick={() => handleAdjustLot(lot.id, lot.row_version, 1)}
+															aria-label="Add one to material lot"
+														>
+															<Plus className="h-3 w-3" />
+														</Button>
+													</>
+												)}
+											</div>
+										</div>
+										{lot.notes && (
+											<p className="mt-2 text-xs text-muted-foreground">{lot.notes}</p>
+										)}
+									</div>
 								);
 							})
 						)}
@@ -246,10 +320,7 @@ export function CraftingPanel({ characterId, readOnly }: CraftingPanelProps) {
 					<div className="flex flex-wrap items-end gap-2">
 						<div className="flex-1 min-w-56">
 							<Label className="text-xs">Project Recipe</Label>
-							<Select
-								value={projectRecipeId}
-								onValueChange={setProjectRecipeId}
-							>
+							<Select value={projectRecipeId} onValueChange={setProjectRecipeId}>
 								<SelectTrigger className="h-8 text-xs">
 									<SelectValue />
 								</SelectTrigger>
@@ -270,17 +341,14 @@ export function CraftingPanel({ characterId, readOnly }: CraftingPanelProps) {
 								onClick={handleStartProject}
 								disabled={!projectRecipeId || startProject.isPending}
 							>
-								<Hammer className="w-3.5 h-3.5" />
-								Start
+								<Hammer className="w-3.5 h-3.5" /> Start
 							</Button>
 						)}
 					</div>
 
 					<div className="space-y-2">
 						{projects.length === 0 ? (
-							<span className="text-xs text-muted-foreground">
-								No crafting projects
-							</span>
+							<span className="text-xs text-muted-foreground">No crafting projects</span>
 						) : (
 							projects.map((project) => {
 								const recipe = recipeById.get(project.recipe_id);
@@ -303,17 +371,13 @@ export function CraftingPanel({ characterId, readOnly }: CraftingPanelProps) {
 												</div>
 											</div>
 											<div className="flex items-center gap-2">
-												<Badge variant="outline">
-													{statusLabel[project.status]}
-												</Badge>
+												<Badge variant="outline">{statusLabel[project.status]}</Badge>
 												{!readOnly && (
 													<Button
 														size="sm"
 														variant="ghost"
 														className="h-8 w-8 p-0 text-destructive hover:text-destructive"
-														onClick={() =>
-															deleteProject.mutate({ projectId: project.id })
-														}
+														onClick={() => deleteProject.mutate({ projectId: project.id })}
 														aria-label="Delete project"
 													>
 														<Trash2 className="w-3.5 h-3.5" />
@@ -329,10 +393,7 @@ export function CraftingPanel({ characterId, readOnly }: CraftingPanelProps) {
 													variant="outline"
 													className="h-7 w-7 p-0"
 													onClick={() =>
-														advanceProject.mutate({
-															projectId: project.id,
-															delta: -1,
-														})
+														advanceProject.mutate({ projectId: project.id, delta: -1 })
 													}
 													disabled={project.progress <= 0}
 													aria-label="Reduce project progress"
@@ -344,10 +405,7 @@ export function CraftingPanel({ characterId, readOnly }: CraftingPanelProps) {
 													variant="outline"
 													className="h-7 w-7 p-0"
 													onClick={() =>
-														advanceProject.mutate({
-															projectId: project.id,
-															delta: 1,
-														})
+														advanceProject.mutate({ projectId: project.id, delta: 1 })
 													}
 													disabled={project.status === "completed"}
 													aria-label="Advance project progress"
