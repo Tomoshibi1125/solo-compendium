@@ -1,14 +1,12 @@
 import { useQueryClient } from "@tanstack/react-query";
 import { formatDistanceToNow } from "date-fns";
-import { Brain, Loader2, Send, Sparkles, Trash2 } from "lucide-react";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { Loader2, Send, Trash2 } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { PopOutButton } from "@/components/ui/PopOutButton";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Switch } from "@/components/ui/switch";
 import type { CampaignMessage } from "@/hooks/useCampaignChat";
 import {
 	useCampaignMessages,
@@ -17,7 +15,6 @@ import {
 	useSendCampaignMessage,
 } from "@/hooks/useCampaignChat";
 import { supabase } from "@/integrations/supabase/client";
-import { narrateCombatEvent } from "@/lib/ai/protocolWarden";
 import { getLocalUserId } from "@/lib/guestStore";
 import { cn } from "@/lib/utils";
 
@@ -28,8 +25,6 @@ interface CampaignChatProps {
 export function CampaignChat({ campaignId }: CampaignChatProps) {
 	const [message, setMessage] = useState("");
 	const [currentUserId, setCurrentUserId] = useState<string | null>(null);
-	const [isAutoNarrating, setIsAutoNarrating] = useState(false);
-	const [isNarratingMsg, setIsNarratingMsg] = useState<string | null>(null);
 	const guestEnabled = import.meta.env.VITE_GUEST_ENABLED !== "false";
 	const messagesEndRef = useRef<HTMLDivElement>(null);
 	const queryClient = useQueryClient();
@@ -38,44 +33,6 @@ export function CampaignChat({ campaignId }: CampaignChatProps) {
 	const sendMessage = useSendCampaignMessage();
 	const deleteMessage = useDeleteCampaignMessage();
 
-	const handleManualNarration = useCallback(
-		async (msg: CampaignMessage) => {
-			if (isNarratingMsg) return;
-			try {
-				setIsNarratingMsg(msg.id);
-				const characterNames = [
-					...new Set(
-						messages
-							.slice(-10)
-							.map((m) => m.character_name)
-							.filter((name): name is string => Boolean(name)),
-					),
-				];
-				const recentContext = messages
-					.filter((m) => m.id !== msg.id)
-					.slice(-3)
-					.map((m) => m.content)
-					.join(" | ");
-				const narration = await narrateCombatEvent(msg.content, {
-					characterNames,
-					recentContext,
-				});
-
-				await sendMessage.mutateAsync({
-					campaignId,
-					content: `Warden: ${narration}`,
-					messageType: "whisper", // Use whisper type to visually distinguish AI flavor text
-				});
-			} catch (error) {
-				console.error("Narration failed", error);
-			} finally {
-				setIsNarratingMsg(null);
-			}
-		},
-		[isNarratingMsg, sendMessage, campaignId, messages],
-	);
-
-	// Get current user ID
 	useEffect(() => {
 		supabase.auth.getUser().then(({ data: { user } }) => {
 			if (user?.id) {
@@ -86,52 +43,33 @@ export function CampaignChat({ campaignId }: CampaignChatProps) {
 				setCurrentUserId(null);
 			}
 		});
-	}, []);
+	}, [guestEnabled]);
 
-	// Real-time updates handler
 	const handleNewMessage = useRef<(message: CampaignMessage) => void>(() => {});
-
 	useEffect(() => {
 		handleNewMessage.current = (newMessage: CampaignMessage) => {
 			queryClient.setQueryData(
 				["campaigns", campaignId, "messages"],
 				(old: CampaignMessage[] | undefined) => {
 					if (!old) return [newMessage];
-					if (old.some((m) => m.id === newMessage.id)) return old;
+					if (old.some((candidate) => candidate.id === newMessage.id)) return old;
 					return [...old, newMessage];
 				},
 			);
-
-			if (
-				isAutoNarrating &&
-				["roll", "rift"].includes(newMessage.message_type) &&
-				newMessage.user_id === currentUserId
-			) {
-				// Automatically narrate incoming mechanics if toggle is enabled
-				handleManualNarration(newMessage);
-			}
 		};
-	}, [
-		campaignId,
-		queryClient,
-		isAutoNarrating,
-		currentUserId, // Automatically narrate incoming mechanics if toggle is enabled
-		handleManualNarration,
-	]);
+	}, [campaignId, queryClient]);
 
 	useCampaignMessagesRealtime(campaignId, (msg) =>
 		handleNewMessage.current(msg),
 	);
 
-	// Auto-scroll to bottom
 	useEffect(() => {
 		messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-	}, []);
+	}, [messages.length]);
 
-	const handleSend = async (e: React.FormEvent) => {
-		e.preventDefault();
+	const handleSend = async (event: React.FormEvent) => {
+		event.preventDefault();
 		if (!message.trim() || sendMessage.isPending) return;
-
 		await sendMessage.mutateAsync({ campaignId, content: message });
 		setMessage("");
 	};
@@ -144,30 +82,13 @@ export function CampaignChat({ campaignId }: CampaignChatProps) {
 
 	return (
 		<AscendantWindow title="CAMPAIGN CHAT" className="h-[500px] flex flex-col">
-			<div className="flex items-center justify-between p-2 border-b bg-muted/50 mb-2">
-				<div className="flex items-center space-x-2">
-					<Brain className="w-4 h-4 text-resurge" />
-					<Label
-						htmlFor="auto-narrate"
-						className="text-xs font-medium cursor-pointer"
-					>
-						AI Warden (Auto-Narrate)
-					</Label>
-				</div>
-				<div className="flex items-center gap-1">
-					<Switch
-						id="auto-narrate"
-						checked={isAutoNarrating}
-						onCheckedChange={setIsAutoNarrating}
-					/>
-					{/* Misty Pearl B2 — pop chat out into a separate window */}
-					<PopOutButton
-						name={`campaign-chat-${campaignId}`}
-						path={`/campaigns/${campaignId}?tab=chat`}
-						label="Pop out campaign chat"
-						data-testid="campaign-chat-popout"
-					/>
-				</div>
+			<div className="flex items-center justify-end p-2 border-b bg-muted/50 mb-2">
+				<PopOutButton
+					name={`campaign-chat-${campaignId}`}
+					path={`/campaigns/${campaignId}?tab=chat`}
+					label="Pop out campaign chat"
+					data-testid="campaign-chat-popout"
+				/>
 			</div>
 			<ScrollArea className="flex-1 pr-4">
 				<div className="space-y-2">
@@ -212,35 +133,17 @@ export function CampaignChat({ campaignId }: CampaignChatProps) {
 													addSuffix: true,
 												})}
 											</span>
-											<div className="flex items-center opacity-0 group-hover:opacity-100 transition-opacity">
-												{["roll", "rift"].includes(msg.message_type) && (
-													<Button
-														variant="ghost"
-														size="icon"
-														className="h-5 w-5 mr-1 text-resurge hover:text-resurge"
-														onClick={() => handleManualNarration(msg)}
-														disabled={isNarratingMsg === msg.id}
-														title="Generate AI Narration"
-													>
-														{isNarratingMsg === msg.id ? (
-															<Loader2 className="w-3 h-3 animate-spin" />
-														) : (
-															<Sparkles className="w-3 h-3" />
-														)}
-													</Button>
-												)}
-												{isOwn && (
-													<Button
-														variant="ghost"
-														size="icon"
-														className="h-5 w-5"
-														onClick={() => handleDelete(msg.id)}
-														title="Delete Message"
-													>
-														<Trash2 className="w-3 h-3" />
-													</Button>
-												)}
-											</div>
+											{isOwn && (
+												<Button
+													variant="ghost"
+													size="icon"
+													className="h-5 w-5 opacity-0 group-hover:opacity-100 transition-opacity"
+													onClick={() => handleDelete(msg.id)}
+													title="Delete Message"
+												>
+													<Trash2 className="w-3 h-3" />
+												</Button>
+											)}
 										</div>
 									</div>
 								</div>
@@ -253,7 +156,7 @@ export function CampaignChat({ campaignId }: CampaignChatProps) {
 			<form onSubmit={handleSend} className="mt-4 flex gap-2">
 				<Input
 					value={message}
-					onChange={(e) => setMessage(e.target.value)}
+					onChange={(event) => setMessage(event.target.value)}
 					placeholder="Type a message..."
 					disabled={sendMessage.isPending}
 					className="flex-1"
