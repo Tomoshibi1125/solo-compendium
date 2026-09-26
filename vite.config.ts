@@ -5,121 +5,17 @@ import { visualizer } from "rollup-plugin-visualizer";
 import { defineConfig, type Plugin } from "vite";
 import { VitePWA } from "vite-plugin-pwa";
 import wasm from "vite-plugin-wasm";
-import { normalizeImages, runProviderChain } from "./api/_aiProviders.js";
 import { devSovereignProxy } from "./vite.sovereign-dev";
 
-// Load .env for server-side use (GEMINI_API_KEY is not VITE_ prefixed)
+// Load server-only environment values used by the dedicated Sovereign dev route.
 // quiet: suppress dotenv v17's promotional banner in every tool run.
 dotenvConfig({ quiet: true });
-
-/**
- * Vite dev middleware that mimics the Vercel /api/ai serverless function during
- * local development. It calls the SAME shared free-provider chain as the Vercel
- * function (api/_aiProviders.js) — one source of truth, so dev and prod never
- * drift. Owns only the HTTP glue (CORS, body parse, response shaping).
- */
-function devAIProxy(): Plugin {
-	return {
-		name: "dev-ai-proxy",
-		configureServer(server) {
-			server.middlewares.use("/api/ai", async (req, res) => {
-				res.setHeader("Access-Control-Allow-Origin", "*");
-				res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
-				res.setHeader(
-					"Access-Control-Allow-Headers",
-					"Content-Type, Authorization",
-				);
-				if (req.method === "OPTIONS") {
-					res.statusCode = 204;
-					res.end();
-					return;
-				}
-				if (req.method !== "POST") {
-					res.statusCode = 405;
-					res.end(JSON.stringify({ error: "Method not allowed" }));
-					return;
-				}
-
-				let rawBody = "";
-				await new Promise<void>((resolve) => {
-					req.on("data", (chunk: Buffer) => {
-						rawBody += chunk.toString();
-					});
-					req.on("end", resolve);
-				});
-
-				let body: Record<string, unknown>;
-				try {
-					body = JSON.parse(rawBody);
-				} catch {
-					res.statusCode = 400;
-					res.end(JSON.stringify({ error: "Invalid JSON body" }));
-					return;
-				}
-
-				const {
-					prompt,
-					systemPrompt,
-					maxTokens,
-					provider,
-					model,
-					images: rawImages,
-				} = body as {
-					prompt?: string;
-					systemPrompt?: string;
-					maxTokens?: number;
-					provider?: string;
-					model?: string;
-					images?: unknown;
-				};
-				if (!prompt || typeof prompt !== "string") {
-					res.statusCode = 400;
-					res.end(JSON.stringify({ error: "Missing required field: prompt" }));
-					return;
-				}
-
-				const normalizedImages = normalizeImages(rawImages);
-				if (normalizedImages.error) {
-					res.statusCode = 400;
-					res.end(JSON.stringify({ error: normalizedImages.error }));
-					return;
-				}
-
-				const result = await runProviderChain({
-					prompt,
-					systemPrompt,
-					maxTokens: maxTokens as number | undefined,
-					provider,
-					model,
-					images: normalizedImages.images ?? [],
-				});
-				if (!result.ok) {
-					res.statusCode = 502;
-					res.end(JSON.stringify({ error: result.error, available: false }));
-					return;
-				}
-				res.statusCode = 200;
-				res.setHeader("Content-Type", "application/json");
-				res.end(
-					JSON.stringify({
-						success: true,
-						text: result.text,
-						model: result.model,
-						usage: result.usage || {},
-						provider: result.provider,
-					}),
-				);
-			});
-		},
-	};
-}
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode: _mode }) => {
 	const plugins = [
 		react(),
 		wasm(),
-		devAIProxy(),
 		devSovereignProxy(),
 		// PWA plugin for better mobile experience
 		VitePWA({
@@ -292,54 +188,20 @@ export default defineConfig(({ mode: _mode }) => {
 		resolve: {
 			alias: {
 				"@": path.resolve(__dirname, "./src"),
-				// Force the ESM entry of @pollinations_ai/sdk in the browser build:
-				// the package's `browser` export is an IIFE bundle whose named
-				// exports (configure, chat, etc.) are not statically analyzable
-				// by Rollup. Using the ESM entry preserves tree-shakeable exports.
-				"@pollinations_ai/sdk": path.resolve(
-					__dirname,
-					"./node_modules/@pollinations_ai/sdk/dist/index.js",
-				),
 			},
 			dedupe: ["react", "react-dom", "three"],
 		},
 		build: {
 			chunkSizeWarningLimit: 4000,
-			// Optimize for production and mobile
 			minify: "esbuild",
-			sourcemap: "hidden", // Hidden source maps for Sentry — not exposed to browsers
-			// Mobile performance optimizations
-			// Needed for wasm chunks that rely on top-level await.
+			sourcemap: "hidden",
 			target: "es2022",
 			cssCodeSplit: true,
-			// Vendor grouping via rolldown's native codeSplitting groups.
-			//
-			// The previous rollup-style `manualChunks(id)` function was emulated by
-			// rolldown with recursive dependency capture: each named group absorbed
-			// its matched modules' shared dependencies (react-dom landed inside the
-			// dice chunk, compendium helpers inside particles-vendor, ...), which
-			// made unrelated chunks statically import multi-MB vendor chunks and
-			// dragged ~10 MB of 3D/PDF/analytics code into the boot modulepreloads.
-			//
-			// codeSplitting groups with includeDependenciesRecursively:false assign
-			// ONLY the matched modules, so lazy-route vendors stay lazy. Group order
-			// decides ties (earlier wins), mirroring the old if-chain order.
-			//
-			// RULE (learned twice, Jul 3 markdown + Jul 4 quill): every group must
-			// pin its package's ENTIRE runtime dependency subtree — especially CJS
-			// deps. Unmatched deps scatter into the first app chunk that imports
-			// them; the vendor chunk then reaches back into that app chunk at
-			// module init through a chunk cycle, and the circular evaluation order
-			// crashes every consumer route with "<minified> is not a function".
-			// `npm run verify:chunks` (scripts/verify-chunk-init.mjs) enforces this
-			// after every build: no vendor chunk may import a non-vendor chunk, and
-			// every chunk must evaluate cleanly as an import-graph root.
 			rollupOptions: {
 				output: {
 					codeSplitting: {
 						includeDependenciesRecursively: false,
 						groups: [
-							// ── Core shared libraries first ──
 							{
 								name: "react-vendor",
 								test: /node_modules[\\/](react|react-dom|react-is|scheduler)[\\/]/,
@@ -350,22 +212,13 @@ export default defineConfig(({ mode: _mode }) => {
 							},
 							{ name: "query-vendor", test: /[\\/]@tanstack[\\/]/ },
 							{ name: "dnd-vendor", test: /node_modules[\\/]@dnd-kit[\\/]/ },
-							// zustand is shared by app stores (boot) AND @react-three/fiber;
-							// its own group keeps that edge vendor→vendor instead of letting
-							// react-three-vendor reach into a boot app chunk.
 							{ name: "state-vendor", test: /node_modules[\\/]zustand[\\/]/ },
-							// @use-gesture is shared by app surfaces (VTT pan/pinch) AND drei.
 							{
 								name: "gesture-vendor",
 								test: /[\\/]@use-gesture[\\/]/,
 							},
 							{ name: "validation-vendor", test: /node_modules[\\/]zod[\\/]/ },
 							{
-								// Full quill subtree: quill-delta's CJS deps (lodash.clonedeep/
-								// lodash.isequal/fast-diff) otherwise scatter into the character
-								// sheet chunk and editor-vendor calls their require factories at
-								// init through a chunk cycle — "Qe is not a function" crashed
-								// every character sheet in prod (Jul 4).
 								name: "editor-vendor",
 								test: /node_modules[\\/](quill|quill-delta|parchment|eventemitter3|fast-diff|lodash\.clonedeep|lodash\.isequal|lodash-es)[\\/]/,
 							},
@@ -395,22 +248,15 @@ export default defineConfig(({ mode: _mode }) => {
 								test: /node_modules[\\/](howler|hls\.js)[\\/]/,
 							},
 							{
-								// motion-dom/motion-utils are framer-motion's runtime; the
-								// __vite-optional-peer-dep stub is its @emotion/is-prop-valid
-								// virtual module.
 								name: "motion-vendor",
 								test: /node_modules[\\/](framer-motion|motion-dom|motion-utils)[\\/]|__vite-optional-peer-dep/,
 							},
-
-							// ── 3D vendors (all reached only via lazy dice/3D scenes) ──
 							{ name: "three-vendor", test: /node_modules[\\/]three[\\/]/ },
 							{
 								name: "three-stdlib-vendor",
 								test: /node_modules[\\/]three-stdlib[\\/]/,
 							},
 							{
-								// Includes drei/fiber's full runtime subtree (@babel/runtime is
-								// CJS and only consumed by this stack).
 								name: "react-three-vendor",
 								test: /node_modules[\\/](@react-three|@babel[\\/]runtime|troika-three-text|troika-worker-utils|troika-three-utils|three-mesh-bvh|camera-controls|maath|detect-gpu|stats-gl|stats\.js|meshline|glsl-noise|suspend-react|its-fine|bidi-js|react-use-measure|tunnel-rat|webgl-sdf-generator)[\\/]/,
 							},
@@ -426,9 +272,6 @@ export default defineConfig(({ mode: _mode }) => {
 								name: "rapier-vendor",
 								test: /node_modules[\\/]@dimforge[\\/]/,
 							},
-
-							// ── Lazy-feature vendors (PDF export, analytics consent,
-							// login screen, markdown surfaces) ──
 							{
 								name: "pdf-vendor",
 								test: /node_modules[\\/](pdf-lib|@pdf-lib|pako)[\\/]/,
@@ -438,23 +281,10 @@ export default defineConfig(({ mode: _mode }) => {
 								test: /node_modules[\\/]posthog-js[\\/]/,
 							},
 							{
-								// property-expr/tiny-case/toposort are yup's CJS deps; left
-								// unpinned they scattered into an app chunk and crashed the
-								// login route at init ("Be is not a function").
 								name: "auth-ui-vendor",
 								test: /[\\/]@supabase[\\/]auth-ui-(react|shared)[\\/]|node_modules[\\/](yup|@stitches|property-expr|tiny-case|toposort)[\\/]/,
 							},
 							{
-								// The whole react-markdown/unified subtree must live in ONE
-								// leaf chunk. Small helpers left off this list (style-to-object
-								// + inline-style-parser are CJS) otherwise scatter into whatever
-								// lazy app chunk imports them first; markdown-vendor then does a
-								// cross-chunk `__toESM(require())` against that app chunk, which
-								// has a back-edge to markdown-vendor — the circular init order
-								// leaves the CJS factory undefined ("Hr is not a function") and
-								// crashes every markdown surface (compendium detail, etc.).
-								// ccount/markdown-table/longest-streak/zwitch/escape-string-regexp
-								// are the remark-gfm helpers that scattered next (Jul 4).
 								name: "markdown-vendor",
 								test: /node_modules[\\/](react-markdown|unified|hastscript|vfile[^\\/]*|property-information|space-separated-tokens|comma-separated-tokens|trim-lines|devlop|style-to-js|style-to-object|inline-style-parser|html-url-attributes|bail|trough|is-plain-obj|extend|estree-util-is-identifier-name|ccount|markdown-table|longest-streak|zwitch|escape-string-regexp)[\\/]|node_modules[\\/](remark-|rehype-|micromark|mdast-|hast-|unist-|character-entities|decode-named-character-reference)|node_modules[\\/]@ungap[\\/]structured-clone[\\/]/,
 							},
@@ -462,22 +292,10 @@ export default defineConfig(({ mode: _mode }) => {
 								name: "forms-vendor",
 								test: /node_modules[\\/](react-hook-form|@hookform)[\\/]/,
 							},
-							// Supabase client core: needed at boot, but versioned
-							// independently of app code — its own chunk caches better.
-							// iceberg-js is @supabase/storage-js's CJS dep — unpinned it
-							// scattered into the app client chunk (vendor→app cycle).
 							{
 								name: "supabase-vendor",
 								test: /[\\/]@supabase[\\/]|node_modules[\\/]iceberg-js[\\/]/,
 							},
-
-							// NO node_modules catch-all on purpose: a catch-all "vendor"
-							// chunk sits in the boot graph (it holds boot libs like the
-							// toaster), so any lazy-only lib that fell into it dragged its
-							// vendor deps (three, auth-ui, react-hook-form) into the boot
-							// modulepreloads. Unmatched modules follow natural splitting:
-							// boot libs join shared boot chunks, lazy libs stay with their
-							// lazy importers.
 						],
 					},
 				},
