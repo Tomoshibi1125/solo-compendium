@@ -23,6 +23,10 @@ export interface CompanionInstanceRecord {
 	progression_profile: unknown;
 	stat_overrides: unknown;
 	mount_profile: unknown;
+	/** C3 durable combat state shared by tracker/session projections. */
+	combat_state?: unknown;
+	/** Optimistic-concurrency revision for the durable C3 combat state. */
+	combat_state_version?: number;
 	origin_table: string;
 	origin_row_id: string;
 	created_at: string;
