@@ -21,27 +21,11 @@ async function readJsonBody(req: IncomingMessage): Promise<unknown> {
 	return raw ? JSON.parse(raw) : {};
 }
 
-/**
- * Vite dev mirror of api/sovereign.ts. `enforce: pre` also retires the legacy
- * generic /api/ai path before older middleware can reach a provider.
- */
+/** Vite dev mirror of api/sovereign.ts using the exact shared S4 core. */
 export function devSovereignProxy(): Plugin {
 	return {
 		name: "dev-sovereign-proxy",
-		enforce: "pre",
 		configureServer(server) {
-			server.middlewares.use("/api/ai", (_req, res) => {
-				res.statusCode = 410;
-				res.setHeader("Content-Type", "application/json");
-				res.setHeader("Cache-Control", "no-store");
-				res.end(
-					JSON.stringify({
-						error:
-							"General AI was retired. Use the dedicated Sovereign generation endpoint.",
-					}),
-				);
-			});
-
 			server.middlewares.use("/api/sovereign", async (req, res) => {
 				res.setHeader("Access-Control-Allow-Origin", "*");
 				res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
