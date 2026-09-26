@@ -1,8 +1,10 @@
 /**
- * useTamedAnomalies — the party's tamed-anomaly roster (campaign-scoped),
- * wiring campaign_tamed_anomalies + its existing RPCs. C1 layers stable
- * companion-instance identity over the legacy row while preserving the row's
- * current taming/controller fields for compatibility.
+ * Campaign tamed-Anomaly roster and C2 tame/bond adjudication hooks.
+ *
+ * C1 provides stable living identity. C2 moves all attempt math and retry
+ * authority to server RPCs while keeping existing roster/controller fields for
+ * compatibility. Client code supplies only dice results plus canonical source
+ * identity; it never supplies DC, total, success, PB, or specialization bonus.
  */
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useToast } from "@/hooks/use-toast";
@@ -41,30 +43,84 @@ export interface AnomalyCatalogEntry {
 	hp: number;
 	ac: number;
 	speed: number;
+	/** Empty/unsupported ranks are intentionally preserved for C2 adjudication. */
 	rank: string;
 }
 
-const KEY = (campaignId: string) => ["campaign-tamed-anomalies", campaignId];
+export type CompanionAttemptOutcome =
+	| "success"
+	| "failure"
+	| "invalid"
+	| "already-bonded";
 
-/** Taming DC derived from the anomaly's gate-rank (legacy C2 predecessor). */
-export function tamingDcForRank(rank: string): number {
-	switch (rank.toUpperCase()) {
-		case "E":
-			return 10;
-		case "D":
-			return 12;
-		case "C":
-			return 14;
-		case "B":
-			return 16;
-		case "A":
-			return 18;
-		case "S":
-			return 20;
-		default:
-			return 13;
-	}
+export interface CompanionAttemptResult {
+	valid: boolean;
+	success?: boolean | null;
+	outcome: CompanionAttemptOutcome;
+	reason?: string;
+	rank?: string | null;
+	dc?: number | null;
+	selected_roll?: number | null;
+	ability?: "PRE";
+	ability_modifier?: number;
+	proficiency_source_id?: string | null;
+	proficiency_bonus?: number;
+	specialization_source_id?: string | null;
+	specialization_bonus?: number;
+	total?: number | null;
+	attempt_id?: string | null;
+	attempt_chain_id?: string | null;
+	retry_of_attempt_id?: string | null;
+	tamed_id?: string | null;
+	bond_id?: string | null;
+	companion_instance_id?: string | null;
+	roll_mode?: "normal" | "advantage" | "disadvantage";
 }
+
+export interface CompanionAttemptHistoryRow {
+	id: string;
+	campaign_id: string;
+	character_id: string;
+	companion_instance_id: string | null;
+	target_source_id: string;
+	target_rank: string | null;
+	attempt_kind: "tame" | "bond";
+	attempt_chain_id: string;
+	retry_of_attempt_id: string | null;
+	adjudication_id: string | null;
+	roll_mode: "normal" | "advantage" | "disadvantage";
+	roll_primary: number | null;
+	roll_secondary: number | null;
+	selected_roll: number | null;
+	ability: "PRE";
+	ability_modifier: number;
+	proficiency_source_id: string | null;
+	proficiency_bonus: number;
+	specialization_source_id: string | null;
+	specialization_bonus: number;
+	dc: number | null;
+	total: number | null;
+	outcome: "success" | "failure" | "invalid";
+	invalid_reason: string | null;
+	created_at: string;
+}
+
+export interface CompanionBondRow {
+	id: string;
+	campaign_id: string;
+	companion_instance_id: string;
+	character_id: string;
+	created_by_attempt_id: string | null;
+	bonded_at: string;
+	released_at: string | null;
+	release_reason: string | null;
+	created_at: string;
+}
+
+const KEY = (campaignId: string) => ["campaign-tamed-anomalies", campaignId] as const;
+const ATTEMPTS_KEY = (campaignId: string) =>
+	["companion-bond-attempts", campaignId] as const;
+const BONDS_KEY = (campaignId: string) => ["companion-bonds", campaignId] as const;
 
 export function useAnomalyCatalog() {
 	return useQuery({
@@ -78,10 +134,11 @@ export function useAnomalyCatalog() {
 				map.set(e.id, {
 					id: e.id,
 					name: e.name,
-					hp: Number(rec.hit_points_average ?? rec.hit_points ?? 1) || 1,
-					ac: Number(rec.armor_class ?? 10) || 10,
-					speed: Number(rec.speed_walk ?? 30) || 30,
-					rank: String(rec.gate_rank ?? rec.rank ?? "D"),
+					hp: Number(rec.hit_points_average ?? rec.hit_points ?? rec.hp ?? 1) || 1,
+					ac: Number(rec.armor_class ?? rec.ac ?? 10) || 10,
+					speed: Number(rec.speed_walk ?? rec.speed ?? 30) || 30,
+					// C2 must not silently turn missing/E/unknown rank into D.
+					rank: String(rec.gate_rank ?? rec.rank ?? ""),
 				});
 			}
 			return map;
@@ -156,8 +213,26 @@ type RpcClient = (
 	args: Record<string, unknown>,
 ) => Promise<{ data: unknown; error: { message: string } | null }>;
 
+const callRpc: RpcClient = supabase.rpc as unknown as RpcClient;
+
+const parseAttemptResult = (value: unknown): CompanionAttemptResult => {
+	if (!value || typeof value !== "object" || Array.isArray(value)) {
+		throw new Error("Companion attempt returned an invalid response.");
+	}
+	return value as CompanionAttemptResult;
+};
+
+function invalidateC2Campaign(
+	queryClient: ReturnType<typeof useQueryClient>,
+	campaignId: string,
+) {
+	queryClient.invalidateQueries({ queryKey: KEY(campaignId) });
+	queryClient.invalidateQueries({ queryKey: ATTEMPTS_KEY(campaignId) });
+	queryClient.invalidateQueries({ queryKey: BONDS_KEY(campaignId) });
+}
+
 export function useTameAnomaly() {
-	const qc = useQueryClient();
+	const queryClient = useQueryClient();
 	const { toast } = useToast();
 	const catalog = useAnomalyCatalog();
 	return useMutation({
@@ -165,10 +240,9 @@ export function useTameAnomaly() {
 			campaignId: string;
 			characterId: string;
 			anomalyId: string;
-			rollTotal: number;
-			dc: number;
-			initialHp: number;
-			bondInitial?: number;
+			rollPrimary: number;
+			rollSecondary?: number | null;
+			adjudicationId?: string | null;
 			nickname?: string | null;
 		}) => {
 			if (!isSupabaseConfigured) throw new Error("Backend not configured.");
@@ -187,51 +261,185 @@ export function useTameAnomaly() {
 				hpMax: anomaly.hp,
 				baseAc: anomaly.ac,
 				speed: anomaly.speed,
-				rank: anomaly.rank,
+				rank: anomaly.rank || null,
 			});
-			const { data, error } = await (supabase.rpc as unknown as RpcClient)(
-				"attempt_taming_with_source",
-				{
-					p_campaign_id: input.campaignId,
-					p_character_id: input.characterId,
-					p_anomaly_id: input.anomalyId,
-					p_roll_total: input.rollTotal,
-					p_dc: input.dc,
-					p_initial_hp: input.initialHp,
-					p_source_snapshot: sourceSnapshot as unknown as Json,
-					p_bond_initial: input.bondInitial ?? 1,
-					p_nickname: input.nickname ?? null,
-				},
-			);
+			const { data, error } = await callRpc("resolve_companion_tame_attempt_c2", {
+				p_campaign_id: input.campaignId,
+				p_character_id: input.characterId,
+				p_anomaly_id: input.anomalyId,
+				p_source_snapshot: sourceSnapshot as unknown as Json,
+				p_roll_primary: input.rollPrimary,
+				p_roll_secondary: input.rollSecondary ?? null,
+				p_adjudication_id: input.adjudicationId ?? null,
+				p_nickname: input.nickname ?? null,
+			});
 			if (error) throw new Error(error.message);
-			return data as string | null;
+			return parseAttemptResult(data);
 		},
-		onSuccess: (id, v) => {
-			qc.invalidateQueries({ queryKey: KEY(v.campaignId) });
-			qc.invalidateQueries({
-				queryKey: ["character-companion-instances", v.characterId],
+		onSuccess: (result, variables) => {
+			invalidateC2Campaign(queryClient, variables.campaignId);
+			if (result.companion_instance_id) {
+				queryClient.invalidateQueries({
+					queryKey: ["companion-instance", result.companion_instance_id],
+				});
+			}
+			if (result.outcome === "success") {
+				toast({
+					title: "Taming succeeded",
+					description: `Total ${result.total ?? "—"} vs DC ${result.dc ?? "—"}.`,
+				});
+			} else if (result.outcome === "failure") {
+				toast({
+					title: "Taming failed",
+					description: `Total ${result.total ?? "—"} vs DC ${result.dc ?? "—"}. A retry requires Warden adjudication.`,
+					variant: "destructive",
+				});
+			} else {
+				toast({
+					title: "Taming attempt is not valid",
+					description: result.reason ?? "This source requires Warden adjudication.",
+					variant: "destructive",
+				});
+			}
+		},
+		onError: (error: Error) => {
+			toast({ title: "Taming failed", description: error.message, variant: "destructive" });
+		},
+	});
+}
+
+export function useBondCompanion() {
+	const queryClient = useQueryClient();
+	const { toast } = useToast();
+	return useMutation({
+		mutationFn: async (input: {
+			campaignId: string;
+			characterId: string;
+			companionInstanceId: string;
+			expectedSourceId: string;
+			rollPrimary: number;
+			rollSecondary?: number | null;
+			adjudicationId?: string | null;
+		}) => {
+			const { data, error } = await callRpc("resolve_companion_bond_attempt_c2", {
+				p_campaign_id: input.campaignId,
+				p_character_id: input.characterId,
+				p_companion_instance_id: input.companionInstanceId,
+				p_expected_source_id: input.expectedSourceId,
+				p_roll_primary: input.rollPrimary,
+				p_roll_secondary: input.rollSecondary ?? null,
+				p_adjudication_id: input.adjudicationId ?? null,
 			});
-			toast(
-				id
-					? { title: "Anomaly tamed! It joins the party roster." }
-					: {
-							title: "Taming failed",
-							description: "The roll didn't beat the DC.",
-							variant: "destructive",
-						},
-			);
+			if (error) throw new Error(error.message);
+			return parseAttemptResult(data);
 		},
-		onError: (e) =>
-			toast({
-				title: "Taming failed",
-				description: e instanceof Error ? e.message : "Unknown error",
-				variant: "destructive",
-			}),
+		onSuccess: (result, variables) => {
+			invalidateC2Campaign(queryClient, variables.campaignId);
+			if (result.outcome === "success" || result.outcome === "already-bonded") {
+				toast({
+					title: result.outcome === "already-bonded" ? "Bond already active" : "Bond established",
+					description:
+					result.total != null && result.dc != null
+						? `Total ${result.total} vs DC ${result.dc}.`
+						: undefined,
+				});
+			} else if (result.outcome === "failure") {
+				toast({
+					title: "Bond attempt failed",
+					description: `Total ${result.total ?? "—"} vs DC ${result.dc ?? "—"}. A retry requires Warden adjudication.`,
+					variant: "destructive",
+				});
+			} else {
+				toast({
+					title: "Bond attempt is not valid",
+					description: result.reason ?? "Warden adjudication is required.",
+					variant: "destructive",
+				});
+			}
+		},
+		onError: (error: Error) => {
+			toast({ title: "Bond attempt failed", description: error.message, variant: "destructive" });
+		},
+	});
+}
+
+export function usePrepareCompanionAttemptAdjudication() {
+	const queryClient = useQueryClient();
+	return useMutation({
+		mutationFn: async (input: {
+			campaignId: string;
+			characterId: string;
+			targetSourceId: string;
+			attemptKind: "tame" | "bond";
+			companionInstanceId?: string | null;
+			rollMode?: "normal" | "advantage" | "disadvantage";
+			proficiencyMode?: "default" | "apply" | "suppress";
+			specializationMode?: "default" | "apply" | "suppress";
+			retryOfAttemptId?: string | null;
+			reason?: string | null;
+		}) => {
+			const { data, error } = await callRpc("prepare_companion_attempt_adjudication", {
+				p_campaign_id: input.campaignId,
+				p_character_id: input.characterId,
+				p_target_source_id: input.targetSourceId,
+				p_attempt_kind: input.attemptKind,
+				p_companion_instance_id: input.companionInstanceId ?? null,
+				p_roll_mode: input.rollMode ?? "normal",
+				p_proficiency_mode: input.proficiencyMode ?? "default",
+				p_specialization_mode: input.specializationMode ?? "default",
+				p_retry_of_attempt_id: input.retryOfAttemptId ?? null,
+				p_reason: input.reason ?? null,
+			});
+			if (error) throw new Error(error.message);
+			if (typeof data !== "string" || !data) {
+				throw new Error("Adjudication did not return an id.");
+			}
+			return data;
+		},
+		onSuccess: (_, variables) => {
+			queryClient.invalidateQueries({ queryKey: ATTEMPTS_KEY(variables.campaignId) });
+		},
+	});
+}
+
+export function useCompanionBondAttempts(campaignId: string | undefined) {
+	return useQuery({
+		queryKey: ATTEMPTS_KEY(campaignId ?? ""),
+		enabled: !!campaignId && isSupabaseConfigured,
+		queryFn: async (): Promise<CompanionAttemptHistoryRow[]> => {
+			if (!campaignId) return [];
+			const { data, error } = await supabase
+				.from("companion_bond_attempts" as never)
+				.select("*")
+				.eq("campaign_id", campaignId)
+				.order("created_at", { ascending: false })
+				.limit(100);
+			if (error) throw error;
+			return (data ?? []) as unknown as CompanionAttemptHistoryRow[];
+		},
+	});
+}
+
+export function useCompanionBonds(campaignId: string | undefined) {
+	return useQuery({
+		queryKey: BONDS_KEY(campaignId ?? ""),
+		enabled: !!campaignId && isSupabaseConfigured,
+		queryFn: async (): Promise<CompanionBondRow[]> => {
+			if (!campaignId) return [];
+			const { data, error } = await supabase
+				.from("companion_bonds" as never)
+				.select("*")
+				.eq("campaign_id", campaignId)
+				.is("released_at", null)
+				.order("bonded_at", { ascending: false });
+			if (error) throw error;
+			return (data ?? []) as unknown as CompanionBondRow[];
+		},
 	});
 }
 
 export function useClaimAnomalyController() {
-	const qc = useQueryClient();
+	const queryClient = useQueryClient();
 	const { toast } = useToast();
 	return useMutation({
 		mutationFn: async (input: {
@@ -239,43 +447,42 @@ export function useClaimAnomalyController() {
 			tamedId: string;
 			characterId: string;
 		}) => {
-			const { error } = await (supabase.rpc as unknown as RpcClient)(
-				"claim_anomaly_controller",
-				{ p_tamed_id: input.tamedId, p_character_id: input.characterId },
-			);
+			const { error } = await callRpc("claim_anomaly_controller", {
+				p_tamed_id: input.tamedId,
+				p_character_id: input.characterId,
+			});
 			if (error) throw new Error(error.message);
 		},
-		onSuccess: (_, v) => {
-			qc.invalidateQueries({ queryKey: KEY(v.campaignId) });
-			qc.invalidateQueries({
-				queryKey: ["character-companion-instances", v.characterId],
+		onSuccess: (_, variables) => {
+			invalidateC2Campaign(queryClient, variables.campaignId);
+			queryClient.invalidateQueries({
+				queryKey: ["character-companion-instances", variables.characterId],
 			});
 		},
-		onError: (e) =>
+		onError: (error: Error) =>
 			toast({
 				title: "Failed to take control",
-				description: e instanceof Error ? e.message : "Unknown error",
+				description: error.message,
 				variant: "destructive",
 			}),
 	});
 }
 
 export function useReleaseAnomalyController() {
-	const qc = useQueryClient();
+	const queryClient = useQueryClient();
 	return useMutation({
 		mutationFn: async (input: { campaignId: string; tamedId: string }) => {
-			const { error } = await (supabase.rpc as unknown as RpcClient)(
-				"release_anomaly_controller",
-				{ p_tamed_id: input.tamedId },
-			);
+			const { error } = await callRpc("release_anomaly_controller", {
+				p_tamed_id: input.tamedId,
+			});
 			if (error) throw new Error(error.message);
 		},
-		onSuccess: (_, v) => qc.invalidateQueries({ queryKey: KEY(v.campaignId) }),
+		onSuccess: (_, variables) => invalidateC2Campaign(queryClient, variables.campaignId),
 	});
 }
 
 export function useUpdateTamedAnomalyHP() {
-	const qc = useQueryClient();
+	const queryClient = useQueryClient();
 	return useMutation({
 		mutationFn: async (input: {
 			campaignId: string;
@@ -288,12 +495,12 @@ export function useUpdateTamedAnomalyHP() {
 				.eq("id", input.id);
 			if (error) throw error;
 		},
-		onSuccess: (_, v) => qc.invalidateQueries({ queryKey: KEY(v.campaignId) }),
+		onSuccess: (_, variables) => invalidateC2Campaign(queryClient, variables.campaignId),
 	});
 }
 
 export function useDeleteTamedAnomaly() {
-	const qc = useQueryClient();
+	const queryClient = useQueryClient();
 	const { toast } = useToast();
 	return useMutation({
 		mutationFn: async (input: { campaignId: string; id: string }) => {
@@ -303,8 +510,8 @@ export function useDeleteTamedAnomaly() {
 				.eq("id", input.id);
 			if (error) throw error;
 		},
-		onSuccess: (_, v) => {
-			qc.invalidateQueries({ queryKey: KEY(v.campaignId) });
+		onSuccess: (_, variables) => {
+			invalidateC2Campaign(queryClient, variables.campaignId);
 			toast({ title: "Anomaly released from the roster." });
 		},
 	});
