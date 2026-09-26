@@ -7,8 +7,9 @@ export interface SovereignReadiness {
 	isReady: boolean;
 	hasJob: boolean;
 	hasPath: boolean;
+	/** Count of resolved canonical Regent unlocks only. */
 	regentCount: number;
-	/** A Sovereign fusion needs two unlocked Regents. */
+	/** A Sovereign fusion needs two resolved canonical Regents. */
 	hasTwoRegents: boolean;
 	/** A Sovereign is permanent/once-per-character — true once locked in. */
 	alreadyLockedIn: boolean;
@@ -17,8 +18,9 @@ export interface SovereignReadiness {
 
 /**
  * Derives whether a character's Gemini Protocol fusion is ready to perform:
- * Job + Path set, at least two Regents unlocked, and no Sovereign locked in yet.
- * Drives the "fusion ready" notification/CTA on the character sheet.
+ * Job + Path set, two resolved canonical Regents, and no Sovereign locked in.
+ * Legacy UUID-only Regent rows stay visible elsewhere but never satisfy
+ * readiness until they are reconciled to canonical identities.
  */
 export function useSovereignReady(
 	characterId: string | undefined,
@@ -34,7 +36,9 @@ export function useSovereignReady(
 
 	const hasJob = Boolean(character?.job);
 	const hasPath = Boolean(character?.path);
-	const regentCount = unlocks.length;
+	const regentCount = unlocks.filter(
+		(unlock) => unlock.resolved_regent_id !== null,
+	).length;
 	const hasTwoRegents = regentCount >= 2;
 	const alreadyLockedIn = Boolean(sovereign);
 	const isLoading = charLoading || unlocksLoading || sovereignLoading;
