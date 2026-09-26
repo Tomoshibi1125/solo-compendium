@@ -117,10 +117,7 @@ export function hasBeastTamingProficiency(
  * wins and the numeric bonus is still applied exactly once.
  */
 export function resolveBondingSpecializationSource(
-	character: Pick<
-		BondingCharacterContext,
-		"job" | "jobId" | "path" | "pathId"
-	>,
+	character: Pick<BondingCharacterContext, "job" | "jobId" | "path" | "pathId">,
 ): BondingSpecializationSource | null {
 	const jobId = character.jobId?.trim() ?? "";
 	const pathId = character.pathId?.trim() ?? "";
@@ -152,7 +149,10 @@ export function selectBondingRoll(
 	rollSecondary?: number | null,
 ): BondingRollSelection {
 	const validD20 = (value: number | null | undefined) =>
-		typeof value === "number" && Number.isInteger(value) && value >= 1 && value <= 20;
+		typeof value === "number" &&
+		Number.isInteger(value) &&
+		value >= 1 &&
+		value <= 20;
 
 	if (!validD20(rollPrimary)) {
 		return { valid: false, selectedRoll: null, reason: "ROLL_OUT_OF_RANGE" };
@@ -228,7 +228,10 @@ export function resolveBondingAttempt(
 	}
 
 	const total =
-		roll.selectedRoll + abilityModifier + proficiencyBonus + specializationBonus;
+		roll.selectedRoll +
+		abilityModifier +
+		proficiencyBonus +
+		specializationBonus;
 	return {
 		valid: true,
 		rank,

@@ -53,7 +53,9 @@ const toLegacyDisplayAbility = (
 	action_type: ability.action_type,
 	recharge: ability.recharge,
 	is_capstone: ability.is_capstone,
-	origin_sources: ability.ancestry.map((source) => sourceDisplayName(source, input)),
+	origin_sources: ability.ancestry.map((source) =>
+		sourceDisplayName(source, input),
+	),
 	fusion_type: "unified",
 });
 
@@ -77,7 +79,12 @@ export async function createSovereignGenerationOperationId(input: {
 	regentAId: string;
 	regentBId: string;
 }): Promise<string> {
-	const seed = [input.jobId, input.pathId, input.regentAId, input.regentBId].join("|");
+	const seed = [
+		input.jobId,
+		input.pathId,
+		input.regentAId,
+		input.regentBId,
+	].join("|");
 	const bytes = new TextEncoder().encode(seed);
 	if (globalThis.crypto?.subtle) {
 		const digest = await globalThis.crypto.subtle.digest("SHA-256", bytes);

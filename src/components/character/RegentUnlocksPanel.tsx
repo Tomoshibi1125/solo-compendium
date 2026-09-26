@@ -44,7 +44,9 @@ const canonicalRegents = regents.flatMap((regent) => {
 	const id = resolveCanonicalRegentId(regent.id);
 	return id ? [{ ...regent, id }] : [];
 });
-const regentsById = new Map(canonicalRegents.map((regent) => [regent.id, regent]));
+const regentsById = new Map(
+	canonicalRegents.map((regent) => [regent.id, regent]),
+);
 
 export function RegentUnlocksPanel({
 	characterId,
@@ -84,7 +86,11 @@ export function RegentUnlocksPanel({
 
 	const handleConsume = async () => {
 		const canonicalId = resolveCanonicalRegentId(selectedRegentId);
-		if (!canonicalId || !activeOffer || !storedCandidateIds?.includes(canonicalId)) {
+		if (
+			!canonicalId ||
+			!activeOffer ||
+			!storedCandidateIds?.includes(canonicalId)
+		) {
 			return;
 		}
 		const selectedRegent = regentsById.get(canonicalId);
@@ -178,7 +184,9 @@ export function RegentUnlocksPanel({
 														Unresolved legacy {REGENT_LABEL} unlock
 													</p>
 													<p className="text-xs text-muted-foreground">
-														The preserved legacy identity is visible but is not counted toward Sovereign readiness until reconciled to a canonical Regent.
+														The preserved legacy identity is visible but is not
+														counted toward Sovereign readiness until reconciled
+														to a canonical Regent.
 													</p>
 												</div>
 											</div>
@@ -200,14 +208,19 @@ export function RegentUnlocksPanel({
 														)}
 													</p>
 													{unlock.is_primary && (
-														<Badge variant="outline" className="text-regent-gold">
+														<Badge
+															variant="outline"
+															className="text-regent-gold"
+														>
 															Primary
 														</Badge>
 													)}
 												</div>
 												<div className="flex items-center gap-2 text-xs text-muted-foreground mt-1">
 													<Scroll className="h-3 w-3" />
-													<span>Quest: {formatRegentVernacular(unlock.quest_name)}</span>
+													<span>
+														Quest: {formatRegentVernacular(unlock.quest_name)}
+													</span>
 												</div>
 											</div>
 											{!unlock.is_primary && canonicalUnlocks.length > 1 && (
@@ -242,9 +255,13 @@ export function RegentUnlocksPanel({
 					<div className="flex items-start gap-3 p-4 rounded-lg border border-regent-gold/40 bg-regent-gold/5">
 						<AlertTriangle className="h-5 w-5 text-regent-gold shrink-0" />
 						<div>
-							<p className="font-semibold text-regent-gold">Legacy offer needs Warden configuration</p>
+							<p className="font-semibold text-regent-gold">
+								Legacy offer needs Warden configuration
+							</p>
 							<p className="text-xs text-muted-foreground mt-1">
-								This older unlock credit is preserved, but R1 requires your Warden to store exactly three canonical Regent candidates before it can be used.
+								This older unlock credit is preserved, but R1 requires your
+								Warden to store exactly three canonical Regent candidates before
+								it can be used.
 							</p>
 						</div>
 					</div>
@@ -268,7 +285,9 @@ export function RegentUnlocksPanel({
 									Choose One Regent
 								</DialogTitle>
 								<p className="text-sm text-muted-foreground">
-									Your Warden stored exactly three candidates for {formatRegentVernacular(activeOffer.quest_title)}. Offer version {activeOffer.offer_version} is authoritative.
+									Your Warden stored exactly three candidates for{" "}
+									{formatRegentVernacular(activeOffer.quest_title)}. Offer
+									version {activeOffer.offer_version} is authoritative.
 								</p>
 							</DialogHeader>
 							<div className="space-y-3 pt-2">
@@ -288,7 +307,9 @@ export function RegentUnlocksPanel({
 												<p className="font-heading font-semibold text-sm">
 													{formatRegentVernacular(regent.title || regent.name)}
 												</p>
-												<p className="text-xs text-muted-foreground">{regent.theme} Theme</p>
+												<p className="text-xs text-muted-foreground">
+													{regent.theme} Theme
+												</p>
 											</div>
 											{selectedRegentId === regent.id && (
 												<CheckCircle className="h-4 w-4 text-regent-gold" />
@@ -302,7 +323,9 @@ export function RegentUnlocksPanel({
 									disabled={!selectedRegentId || isConsuming}
 								>
 									<Crown className="h-4 w-4 mr-2" />
-									{isConsuming ? "ATTUNING..." : `ATTUNE ${REGENT_LABEL.toUpperCase()}`}
+									{isConsuming
+										? "ATTUNING..."
+										: `ATTUNE ${REGENT_LABEL.toUpperCase()}`}
 								</Button>
 							</div>
 						</DialogContent>

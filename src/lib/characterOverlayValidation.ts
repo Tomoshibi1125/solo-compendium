@@ -99,7 +99,12 @@ export async function normalizeGeminiState(
 			: 0;
 	}
 	if (Object.hasOwn(record, "modifiers")) {
-		next.modifiers = normalizeModifiers(record.modifiers);
+		// v2 Sovereign modifiers are validated definition data, not the older
+		// free-form Gemini stat modifiers. A rest/import normalization pass must
+		// preserve their typed shape exactly.
+		if (record.definitionSchemaVersion !== 2) {
+			next.modifiers = normalizeModifiers(record.modifiers);
+		}
 	}
 	for (const key of GEMINI_OVERLAY_KEYS) {
 		if (Object.hasOwn(record, key)) {

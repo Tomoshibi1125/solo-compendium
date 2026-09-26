@@ -77,10 +77,12 @@ async function persistHandoff(
 		p_session_id: detail.sessionId,
 		p_companion_instance_id: instance.id,
 		p_initiative:
-			initiativeMode === "independent" ? Math.trunc(item.initiative ?? 0) : null,
+			initiativeMode === "independent"
+				? Math.trunc(item.initiative ?? 0)
+				: null,
 		p_initiative_mode: initiativeMode,
 		p_anchor_character_id:
-			initiativeMode === "linked" ? anchorCharacterId ?? null : null,
+			initiativeMode === "linked" ? (anchorCharacterId ?? null) : null,
 	});
 	if (error) throw new Error(error.message);
 }
@@ -88,7 +90,11 @@ async function persistHandoff(
 function onCompanionCombatHandoff(event: Event): void {
 	const custom = event as CustomEvent<CompanionCombatHandoffDetail>;
 	const detail = custom.detail;
-	if (!detail?.campaignId || !detail.sessionId || !Array.isArray(detail.items)) {
+	if (
+		!detail?.campaignId ||
+		!detail.sessionId ||
+		!Array.isArray(detail.items)
+	) {
 		return;
 	}
 

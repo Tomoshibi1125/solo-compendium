@@ -1,16 +1,17 @@
-import type { CustomResource } from "@/lib/characterResources";
+import type {
+	ActionResolutionPayload,
+	ActionResolutionPayloadV2,
+	TypedConditionIntentV2,
+} from "@/lib/actionResolution";
 import { getProficiencyBonus } from "@/lib/characterCalculations";
+import type { CustomResource } from "@/lib/characterResources";
 import type { CustomModifier } from "@/lib/customModifiers";
-import type { ActionResolutionPayload } from "@/lib/actionResolution";
 import {
 	readSovereignDefinition,
 	type SovereignV2Definition,
 	type SovereignV2Expression,
 } from "@/lib/sovereign/sovereignV2Contract";
-import {
-	type AbilityScore,
-	getAbilityModifier,
-} from "@/types/core-rules";
+import { type AbilityScore, getAbilityModifier } from "@/types/core-rules";
 
 const SOVEREIGN_RESOURCE_PREFIX = "sovereign:";
 const ABILITY_COLUMNS: Record<AbilityScore, keyof SovereignRuntimeCharacter> = {
@@ -23,6 +24,7 @@ const ABILITY_COLUMNS: Record<AbilityScore, keyof SovereignRuntimeCharacter> = {
 };
 
 export interface SovereignRuntimeCharacter {
+	id?: string;
 	level: number;
 	abilities?: Partial<Record<AbilityScore, number>> | null;
 	str?: number | null;
@@ -57,6 +59,12 @@ export interface SovereignRuntimeAction {
 	resourceMax?: number;
 	recharge?: string;
 	resourceCosts?: SovereignResourceCost[];
+	attackBonus?: number;
+	attackRoll?: string;
+	damageRoll?: string;
+	damageType?: string;
+	formulaAbility?: string;
+	formulaAbilityModifier?: number;
 	payload: ActionResolutionPayload;
 	sourceId: string;
 }
@@ -123,8 +131,7 @@ export function evaluateSovereignExpression(
 			return expression.count * expression.sides + (expression.bonus ?? 0);
 		case "sum":
 			return expression.terms.reduce(
-				(total, term) =>
-					total + evaluateSovereignExpression(term, character),
+				(total, term) => total + evaluateSovereignExpression(term, character),
 				0,
 			);
 	}
@@ -180,7 +187,8 @@ export function reconcileSovereignResourceRows(
 	);
 	const sovereignRows = definition.resources
 		.filter(
-			(resource) => character.level >= resourceUnlockLevel(definition, resource.id),
+			(resource) =>
+				character.level >= resourceUnlockLevel(definition, resource.id),
 		)
 		.map((resource): CustomResource => {
 			const sourceKey = sovereignResourceSourceKey(definition.id, resource.id);
@@ -220,7 +228,8 @@ export function reconcileSovereignResourceRows(
 		}));
 	return {
 		rows,
-		changed: JSON.stringify(comparable(rows)) !== JSON.stringify(comparable(existing)),
+		changed:
+			JSON.stringify(comparable(rows)) !== JSON.stringify(comparable(existing)),
 	};
 }
 
@@ -263,8 +272,10 @@ export function buildSovereignRuntimeModifiers(
 	const resistances = new Set<string>();
 	const advantages = new Set<string>();
 	const customModifiers: CustomModifier[] = [];
-	const otherProficiencies: SovereignRuntimeModifiers["otherProficiencies"] = [];
-	const conditionalAdvantages: SovereignRuntimeModifiers["conditionalAdvantages"] = [];
+	const otherProficiencies: SovereignRuntimeModifiers["otherProficiencies"] =
+		[];
+	const conditionalAdvantages: SovereignRuntimeModifiers["conditionalAdvantages"] =
+		[];
 
 	for (const modifier of definition.modifiers) {
 		if (!activeIds.has(modifier.source_id)) continue;
@@ -332,11 +343,13 @@ export function buildSovereignRuntimeModifiers(
 
 	for (const skill of new Set([...skillGrants, ...expertiseGrants])) {
 		const hasExpertise = baseHas(character.skill_expertise, skill);
-		const hasProficiency = hasExpertise || baseHas(character.skill_proficiencies, skill);
+		const hasProficiency =
+			hasExpertise || baseHas(character.skill_proficiencies, skill);
 		const wantsExpertise = expertiseGrants.has(skill);
 		const currentMultiplier = hasExpertise ? 2 : hasProficiency ? 1 : 0;
 		const desiredMultiplier = wantsExpertise ? 2 : 1;
-		const delta = Math.max(0, desiredMultiplier - currentMultiplier) * profBonus;
+		const delta =
+			Math.max(0, desiredMultiplier - currentMultiplier) * profBonus;
 		if (delta === 0) continue;
 		customModifiers.push({
 			id: `sovereign:${definition.id}:skill:${normalizedName(skill)}`,
@@ -357,7 +370,9 @@ export function buildSovereignRuntimeModifiers(
 	};
 }
 
-function actionActivation(actionType: SovereignV2Definition["abilities"][number]["action_type"]): string {
+function actionActivation(
+	actionType: SovereignV2Definition["abilities"][number]["action_type"],
+): string {
 	switch (actionType) {
 		case "bonus-action":
 			return "1 bonus action";
@@ -368,6 +383,88 @@ function actionActivation(actionType: SovereignV2Definition["abilities"][number]
 		default:
 			return "Passive";
 	}
+}
+
+const diceRoll = (dice: { count: number; sides: number }): string =>
+	`${dice.count}d${dice.sides}`;
+
+function typedSovereignActionPayload(
+	definition: SovereignV2Definition,
+	ability: SovereignV2Definition["abilities"][number],
+	character: SovereignRuntimeCharacter,
+	costs: SovereignResourceCost[],
+	description: string,
+): ActionResolutionPayloadV2 | null {
+	const mechanics = ability.mechanics;
+	if (!mechanics) return null;
+	const id = `sovereign-v2-${definition.id}-${ability.id}`;
+	const condition =
+		mechanics.kind === "healing" ? undefined : mechanics.condition;
+	const conditionIntents: TypedConditionIntentV2[] = condition
+		? [
+				{
+					conditionId: condition.id,
+					gate: mechanics.kind === "attack" ? "on-hit" : "on-failed-save",
+					duration: {
+						unit: "round",
+						anchor: "round-end",
+						value: condition.duration_rounds,
+						remaining: condition.duration_rounds,
+					},
+					stackingPolicy: "refresh",
+					restPolicy: "remove-on-rest",
+					automationState: "automated",
+				},
+			]
+		: [];
+	const abilityModifier =
+		mechanics.kind === "healing"
+			? 0
+			: getAbilityModifier(getAbilityScore(character, mechanics.ability));
+	const proficiency = getProficiencyBonus(character.level);
+	const bonus = proficiency + abilityModifier;
+	return {
+		version: 2,
+		id,
+		name: ability.name,
+		source: { type: "power", entryId: ability.id },
+		kind: mechanics.kind,
+		actor: character.id ? { id: character.id } : null,
+		targets: [],
+		actionEconomy: {
+			type: ability.action_type as "action" | "bonus-action" | "reaction",
+			cost: 1,
+		},
+		resourceCosts: costs.map((cost) => ({
+			resourceId: cost.sourceKey,
+			amount: cost.amount,
+		})),
+		conditionIntents,
+		duration: null,
+		concentration: null,
+		saveSuccessDamagePolicy:
+			mechanics.kind === "save" ? mechanics.success_damage : "none",
+		mitigationMode: "typed",
+		applicationGate: "always",
+		automationState: "automated",
+		attack:
+			mechanics.kind === "attack"
+				? { roll: `1d20${bonus >= 0 ? "+" : ""}${bonus}` }
+				: undefined,
+		save:
+			mechanics.kind === "save"
+				? { dc: 8 + bonus, ability: mechanics.save_ability }
+				: undefined,
+		damage:
+			mechanics.kind === "healing"
+				? undefined
+				: { roll: diceRoll(mechanics.damage), type: mechanics.damage.type },
+		healing:
+			mechanics.kind === "healing"
+				? { roll: diceRoll(mechanics.healing), mode: "hit-points" }
+				: undefined,
+		description,
+	};
 }
 
 /** Build stable v2 combat actions directly from the authoritative definition. */
@@ -404,15 +501,18 @@ export function buildSovereignRuntimeActions(
 							amount: cost.amount,
 						},
 					];
-			},
+				},
 			);
-			const costLabel = costs.map((cost) => `${cost.amount} ${cost.name}`).join(" + ");
+			const costLabel = costs
+				.map((cost) => `${cost.amount} ${cost.name}`)
+				.join(" + ");
 			const currentUses =
 				costs.length > 0
 					? Math.min(
 							...costs.map((cost) =>
 								Math.floor(
-									(rowsBySourceKey.get(cost.sourceKey)?.current ?? 0) / cost.amount,
+									(rowsBySourceKey.get(cost.sourceKey)?.current ?? 0) /
+										cost.amount,
 								),
 							),
 						)
@@ -421,27 +521,59 @@ export function buildSovereignRuntimeActions(
 				costs.length > 0
 					? Math.min(
 							...costs.map((cost) =>
-								Math.floor((rowsBySourceKey.get(cost.sourceKey)?.max ?? 0) / cost.amount),
+								Math.floor(
+									(rowsBySourceKey.get(cost.sourceKey)?.max ?? 0) / cost.amount,
+								),
 							),
 						)
 					: undefined;
 			const description = costLabel
 				? `Resource cost: ${costLabel}. ${ability.description}`
 				: ability.description;
+			const mechanics = ability.mechanics;
+			const typedPayload = typedSovereignActionPayload(
+				definition,
+				ability,
+				character,
+				costs,
+				description,
+			);
+			const abilityModifier =
+				mechanics && mechanics.kind !== "healing"
+					? getAbilityModifier(getAbilityScore(character, mechanics.ability))
+					: undefined;
+			const attackBonus =
+				mechanics?.kind === "attack" && abilityModifier !== undefined
+					? getProficiencyBonus(character.level) + abilityModifier
+					: undefined;
 			return {
 				id: `sovereign-v2-${definition.id}-${ability.id}`,
 				name: ability.name,
 				type: "power" as const,
 				description,
 				activation: actionActivation(ability.action_type),
-				range: "Self",
-				target: "",
+				range: mechanics ? `${mechanics.range_ft} ft.` : "Self",
+				target:
+					mechanics?.kind === "healing"
+						? "One creature"
+						: mechanics
+							? "One target"
+							: "",
 				resourceCost: costLabel || undefined,
 				resourceCurrent: currentUses,
 				resourceMax: maxUses,
 				recharge: ability.recharge ?? undefined,
 				resourceCosts: costs.length > 0 ? costs : undefined,
-				payload: {
+				attackBonus,
+				attackRoll: typedPayload?.attack?.roll,
+				damageRoll: typedPayload?.damage?.roll,
+				damageType: typedPayload?.damage?.type,
+				formulaAbility:
+					mechanics && mechanics.kind !== "healing"
+						? mechanics.ability
+						: undefined,
+				formulaAbilityModifier: abilityModifier,
+				payload: typedPayload ?? {
 					version: 1,
 					id: `sovereign-v2-${definition.id}-${ability.id}`,
 					name: ability.name,

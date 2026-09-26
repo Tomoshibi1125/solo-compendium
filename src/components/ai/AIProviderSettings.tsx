@@ -16,10 +16,10 @@ export function AIProviderSettings() {
 				</CardTitle>
 			</CardHeader>
 			<CardContent className="text-sm text-muted-foreground">
-				General AI provider settings have been removed. Built-in AI is limited to
-				authenticated Sovereign creation and is configured securely on the server.
-				Manual and outside-AI Sovereign import remain available from the fusion
-				console.
+				General AI provider settings have been removed. Built-in AI is limited
+				to authenticated Sovereign creation and is configured securely on the
+				server. Manual and outside-AI Sovereign import remain available from the
+				fusion console.
 			</CardContent>
 		</Card>
 	);

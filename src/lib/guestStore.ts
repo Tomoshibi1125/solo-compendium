@@ -756,6 +756,10 @@ export function addLocalFeature(
 		feature_id: feature.feature_id ?? null,
 		name: feature.name,
 		source: feature.source,
+		sovereign_definition_id: feature.sovereign_definition_id ?? null,
+		sovereign_entity_id: feature.sovereign_entity_id ?? null,
+		sovereign_projection_revision:
+			feature.sovereign_projection_revision ?? null,
 		description: feature.description ?? null,
 		level_acquired: feature.level_acquired ?? 1,
 		action_type: feature.action_type ?? null,

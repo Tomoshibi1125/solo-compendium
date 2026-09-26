@@ -7,7 +7,6 @@ export interface CompanionTurnEntry {
 	initiative: number | null | undefined;
 	created_at?: string | null;
 	companion_instance_id?: string | null;
-	initiative_mode?: CompanionInitiativeMode | null;
 	initiative_anchor_character_id?: string | null;
 }
 
@@ -27,10 +26,7 @@ export interface CompanionMountProfile {
 }
 
 export interface CompanionRestRule {
-	heal:
-		| { kind: "none" }
-		| { kind: "full" }
-		| { kind: "flat"; amount: number };
+	heal: { kind: "none" } | { kind: "full" } | { kind: "flat"; amount: number };
 	conditions: "clear" | "preserve" | null;
 	clearDowned: boolean | null;
 	resources: Record<string, unknown> | null;
@@ -44,7 +40,8 @@ const recordOrNull = (value: unknown): Record<string, unknown> | null =>
 const stringArrayOrNull = (value: unknown): string[] | null => {
 	if (!Array.isArray(value)) return null;
 	const values = value.filter(
-		(entry): entry is string => typeof entry === "string" && entry.trim().length > 0,
+		(entry): entry is string =>
+			typeof entry === "string" && entry.trim().length > 0,
 	);
 	return values.length === value.length ? values : null;
 };
@@ -61,7 +58,8 @@ export function resolveTurnOrder<T extends CompanionTurnEntry>(
 		.map((entry, index) => ({ entry, index }))
 		.sort((left, right) => {
 			const initiativeDelta =
-				Number(right.entry.initiative ?? 0) - Number(left.entry.initiative ?? 0);
+				Number(right.entry.initiative ?? 0) -
+				Number(left.entry.initiative ?? 0);
 			if (initiativeDelta !== 0) return initiativeDelta;
 			const leftCreated = left.entry.created_at ?? "";
 			const rightCreated = right.entry.created_at ?? "";
@@ -104,7 +102,8 @@ export function readCompanionCombatProfile(
 	const combat = recordOrNull(profile?.combat);
 	const progression = recordOrNull(profile?.progression);
 	const initiativeMode =
-		combat?.initiativeMode === "independent" || combat?.initiativeMode === "linked"
+		combat?.initiativeMode === "independent" ||
+		combat?.initiativeMode === "linked"
 			? combat.initiativeMode
 			: undefined;
 	const reactionPool: CompanionReactionPool =
@@ -124,7 +123,9 @@ export function readCompanionCombatProfile(
 	};
 }
 
-export function readCompanionMountProfile(raw: unknown): CompanionMountProfile | null {
+export function readCompanionMountProfile(
+	raw: unknown,
+): CompanionMountProfile | null {
 	const profile = recordOrNull(raw);
 	if (!profile) return null;
 	const riderLimit =

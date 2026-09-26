@@ -33,8 +33,8 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import { usePendingCompanionAdjudications } from "@/hooks/useCompanionAdjudications";
 import { useCharacters } from "@/hooks/useCharacters";
+import { usePendingCompanionAdjudications } from "@/hooks/useCompanionAdjudications";
 import {
 	type CompanionAttemptHistoryRow,
 	type CompanionBondRow,
@@ -52,10 +52,10 @@ import {
 	useUpdateTamedAnomalyHP,
 } from "@/hooks/useTamedAnomalies";
 import {
+	type BondingRollMode,
 	bondingDcForRank,
 	hasBeastTamingProficiency,
 	resolveBondingSpecializationSource,
-	type BondingRollMode,
 } from "@/lib/companionBonding";
 
 interface Props {
@@ -139,11 +139,13 @@ export function CampaignTamedAnomaliesPanel({ campaignId, isWarden }: Props) {
 
 			<AttemptHistory
 				attempts={attempts}
-				pendingRetryIds={new Set(
-					pending
-						.map((row) => row.retry_of_attempt_id)
-						.filter((id): id is string => Boolean(id)),
-				)}
+				pendingRetryIds={
+					new Set(
+						pending
+							.map((row) => row.retry_of_attempt_id)
+							.filter((id): id is string => Boolean(id)),
+					)
+				}
 				isWarden={isWarden}
 				onAuthorizeRetry={authorizeRetry}
 				isAuthorizing={prepare.isPending}
@@ -170,7 +172,9 @@ function TamedCard({
 	isWarden: boolean;
 	attempts: CompanionAttemptHistoryRow[];
 	bonds: CompanionBondRow[];
-	pending: ReturnType<typeof usePendingCompanionAdjudications>["data"] extends infer T
+	pending: ReturnType<
+		typeof usePendingCompanionAdjudications
+	>["data"] extends infer T
 		? NonNullable<T>
 		: never;
 	onAdjudicationConsumed: () => void;
@@ -186,10 +190,16 @@ function TamedCard({
 		myCharacters.find((character) => character.id === bondCharacterId) ??
 		myCharacters[0];
 	const maxHp =
-		row.max_hp_override ?? row.effective_stats?.hpMax ?? row.anomaly?.hp ?? row.current_hp;
+		row.max_hp_override ??
+		row.effective_stats?.hpMax ??
+		row.anomaly?.hp ??
+		row.current_hp;
 	const pct = maxHp > 0 ? Math.round((row.current_hp / maxHp) * 100) : 0;
 	const title =
-		row.nickname || row.effective_stats?.name || row.anomaly?.name || "Tamed Anomaly";
+		row.nickname ||
+		row.effective_stats?.name ||
+		row.anomaly?.name ||
+		"Tamed Anomaly";
 	const sourceId = row.companion_instance?.source_id ?? row.anomaly_id;
 	const myControlled = myCharacters.some(
 		(character) => character.id === row.current_controller_character_id,
@@ -280,7 +290,10 @@ function TamedCard({
 							Retry authorized
 						</Badge>
 					) : latestFailedBond ? (
-						<Badge variant="outline" className="text-[10px] text-muted-foreground">
+						<Badge
+							variant="outline"
+							className="text-[10px] text-muted-foreground"
+						>
 							Retry needs Warden
 						</Badge>
 					) : null}
@@ -400,7 +413,9 @@ function TameDialog({
 }: {
 	campaignId: string;
 	isWarden: boolean;
-	pending: NonNullable<ReturnType<typeof usePendingCompanionAdjudications>["data"]>;
+	pending: NonNullable<
+		ReturnType<typeof usePendingCompanionAdjudications>["data"]
+	>;
 	onAdjudicationChanged: () => void;
 }) {
 	const { data: catalog } = useAnomalyCatalog();
@@ -410,7 +425,8 @@ function TameDialog({
 	const [open, setOpen] = useState(false);
 	const [anomalyId, setAnomalyId] = useState("");
 	const [characterId, setCharacterId] = useState("");
-	const [wardenRollMode, setWardenRollMode] = useState<BondingRollMode>("normal");
+	const [wardenRollMode, setWardenRollMode] =
+		useState<BondingRollMode>("normal");
 
 	const anomalyList = useMemo(
 		() =>
@@ -516,7 +532,9 @@ function TameDialog({
 					{isWarden && !retryAdjudication && (
 						<Select
 							value={wardenRollMode}
-							onValueChange={(value) => setWardenRollMode(value as BondingRollMode)}
+							onValueChange={(value) =>
+								setWardenRollMode(value as BondingRollMode)
+							}
 						>
 							<SelectTrigger>
 								<SelectValue placeholder="Contextual roll mode" />
@@ -531,21 +549,24 @@ function TameDialog({
 
 					{anomaly && dc == null ? (
 						<p className="text-xs text-destructive">
-							{anomaly.rank || "Unknown"}-rank has no authored C2 bonding DC. The
-							attempt is unavailable until a source-backed rule exists.
+							{anomaly.rank || "Unknown"}-rank has no authored C2 bonding DC.
+							The attempt is unavailable until a source-backed rule exists.
 						</p>
 					) : dc != null ? (
 						<div className="rounded border border-border/40 p-2 text-xs text-muted-foreground">
 							<div>
-								Presence check vs <span className="text-primary">DC {dc}</span> ·{" "}
-								{effectiveRollMode}
+								Presence check vs <span className="text-primary">DC {dc}</span>{" "}
+								· {effectiveRollMode}
 							</div>
 							<div className="mt-1">
-								Beast Taming PB: {proficiencyApplies ? "source found" : "not applicable"}
+								Beast Taming PB:{" "}
+								{proficiencyApplies ? "source found" : "not applicable"}
 								{" · "}+2 specialization: {specialization?.label ?? "none"}
 							</div>
 							{retryAdjudication && (
-								<div className="mt-1 text-primary">Explicit retry adjudication ready.</div>
+								<div className="mt-1 text-primary">
+									Explicit retry adjudication ready.
+								</div>
 							)}
 						</div>
 					) : null}
@@ -589,7 +610,9 @@ function AttemptHistory({
 		<Card className="border-border bg-black/30 p-4">
 			<div className="mb-3 flex items-center gap-2">
 				<History className="h-4 w-4" />
-				<h3 className="font-heading text-sm">Tame &amp; Bond Attempt History</h3>
+				<h3 className="font-heading text-sm">
+					Tame &amp; Bond Attempt History
+				</h3>
 			</div>
 			<div className="space-y-2">
 				{visible.map((attempt) => {
@@ -613,7 +636,9 @@ function AttemptHistory({
 										{attempt.attempt_kind}
 									</Badge>
 									<Badge
-										variant={attempt.outcome === "success" ? "secondary" : "outline"}
+										variant={
+											attempt.outcome === "success" ? "secondary" : "outline"
+										}
 										className="text-[10px]"
 									>
 										{attempt.outcome}
@@ -625,10 +650,13 @@ function AttemptHistory({
 								<div className="mt-1 text-muted-foreground">
 									{attempt.total != null && attempt.dc != null
 										? `${attempt.total} vs DC ${attempt.dc}`
-										: attempt.invalid_reason ?? "No resolved total"}
-									{" · "}{attempt.roll_mode}
-									{" · PB +"}{attempt.proficiency_bonus}
-									{" · specialization +"}{attempt.specialization_bonus}
+										: (attempt.invalid_reason ?? "No resolved total")}
+									{" · "}
+									{attempt.roll_mode}
+									{" · PB +"}
+									{attempt.proficiency_bonus}
+									{" · specialization +"}
+									{attempt.specialization_bonus}
 								</div>
 							</div>
 							{isWarden && canRetry && (

@@ -5,6 +5,18 @@ import type { SovereignV2Definition } from "@/lib/sovereign/sovereignV2Contract"
 export const SOVEREIGN_STORAGE_SCHEMA_VERSION = 2 as const;
 export const SOVEREIGN_PROJECTION_REVISION = "sovereign-projection-v1" as const;
 
+/** Projected feature rows are rebuilt only by attachment; imports must skip them. */
+export function isRebuildableSovereignFeature(row: {
+	source?: unknown;
+	sovereign_definition_id?: unknown;
+}): boolean {
+	return (
+		(typeof row.source === "string" && row.source.startsWith("Sovereign:")) ||
+		(typeof row.sovereign_definition_id === "string" &&
+			row.sovereign_definition_id.length > 0)
+	);
+}
+
 export interface LegacySovereignSavePayload {
 	name: string;
 	title: string;

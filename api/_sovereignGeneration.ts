@@ -1,12 +1,15 @@
 import { createHash } from "node:crypto";
 import { createClient } from "@supabase/supabase-js";
-import { runProviderChain } from "./_aiProviders.js";
+import { DAMAGE_TYPES } from "../src/lib/damageApplication";
 import {
 	SOVEREIGN_V2_SCHEMA_VERSION,
-	validateSovereignV2Definition,
 	type SovereignV2Definition,
 	type SovereignV2SourceIds,
+	validateGeneratedSovereignBudget,
+	validateSovereignV2Definition,
 } from "../src/lib/sovereign/sovereignV2Contract";
+import { SKILLS } from "../src/types/core-rules";
+import { runProviderChain } from "./_aiProviders.js";
 
 const REQUEST_KEYS = new Set([
 	"jobId",
@@ -118,7 +121,8 @@ const validateStableId = (
 	const trimmed = value.trim();
 	if (!trimmed) return `${field} is required`;
 	if (trimmed.length > maxLength) return `${field} is too long`;
-	if (!STABLE_ID_RE.test(trimmed)) return `${field} must be a stable identifier`;
+	if (!STABLE_ID_RE.test(trimmed))
+		return `${field} must be a stable identifier`;
 	return null;
 };
 
@@ -127,7 +131,8 @@ export function parseSovereignGenerationRequest(
 ):
 	| { ok: true; request: SovereignGenerationRequest }
 	| { ok: false; error: string } {
-	if (!isRecord(raw)) return { ok: false, error: "Request body must be a JSON object" };
+	if (!isRecord(raw))
+		return { ok: false, error: "Request body must be a JSON object" };
 
 	const unexpected = Object.keys(raw).filter((key) => !REQUEST_KEYS.has(key));
 	if (unexpected.length > 0) {
@@ -254,14 +259,20 @@ Required fields:
 - primary_abilities: one or more of STR, AGI, VIT, INT, SENSE, PRE
 - affinities: array of { id, name, optional description, ancestry }
 - traits: array of { id, name, description, ancestry, modifier_ids: [], compatibility: "native" }
-- features: same shape as traits
-- abilities: exactly eight entries in order at levels 1,3,5,7,10,14,17,20. Each entry must contain id, name, description, level, action_type (action|bonus-action|reaction|passive), recharge (at-will|short-rest|long-rest|null), is_capstone, ancestry, modifier_ids: [], resource_costs: [], compatibility: "native". Levels 17 and 20 are the only capstones and each capstone ancestry must contain job, path, regent-a, regent-b.
-- resources: []
-- modifiers: []
+- features: same shape as traits. Exactly one feature must claim the modifier below in modifier_ids.
+- abilities: exactly eight entries in order at levels 1,3,5,7,10,14,17,20. Each has id, name, description, level, action_type (action|bonus-action|reaction|passive), recharge (at-will|short-rest|long-rest|null), is_capstone, ancestry, modifier_ids: [], resource_costs, compatibility, and optionally mechanics. Levels 17 and 20 are the only capstones and each capstone ancestry must contain job, path, regent-a, regent-b.
+- resources: exactly one { id, name, description, ancestry, maximum: {kind:"proficiency-bonus"}, recharge:"long-rest" }. This pool has PB uses, no other bonuses.
+- modifiers: exactly one { id, source_id, kind:"proficiency", proficiency_type:"skill", target, ancestry, duration:"persistent", stacking:"engine-default" }. source_id must name the feature claiming it. target must be one canonical skill: ${SKILLS.map((skill) => skill.name).join(", ")}.
 
 Every ID must be unique and contain only letters, numbers, period, underscore, colon, or hyphen. Every ancestry array may use only job, path, regent-a, regent-b. Across the package all four sources must be represented.
 
-Do not invent automated ability-score changes, numeric stacking rules, resource budgets, resistances, proficiencies, expertise, or other modifiers. Those balance permissions are intentionally unresolved. Keep all modifier_ids and resource_costs empty and resources/modifiers empty. Ability descriptions may explain thematic combat intent, but must not claim unsupported automated sheet changes.`;
+Conservative combat budget:
+- At least four active abilities have typed mechanics, including at least one attack and one save. An active ability without mechanics must have compatibility:"manual-only". A passive ability has no mechanics.
+- Attack mechanics: {kind:"attack", ability, range_ft, damage:{count,sides,type}, optional condition:{id,duration_rounds:1}}. Save mechanics: {kind:"save", ability, save_ability, range_ft, damage:{count,sides,type}, success_damage:"none"|"half", optional condition}. Healing mechanics: {kind:"healing", range_ft, healing:{count,sides}}. Ability must be one of primary_abilities; save_ability may be any listed ability. The runtime derives attack bonus as PB + ability modifier and save DC as 8 + PB + ability modifier.
+- Range is an integer from 5 to 60 feet. Dice sides may only be 4, 6, or 8. Dice count limit is 1 at levels 1/3, 2 at levels 5/7, 3 at levels 10/14, and 4 at levels 17/20. Damage type must be one of: ${DAMAGE_TYPES.join(", ")}.
+- At most one ability may apply a condition, only on hit or failed save. Allowed conditions are deafened from level 5 and blinded from level 14. Duration is exactly one round. No other status, forced movement, area effect, extra attack, or hidden numeric effect is automated.
+- One or two typed abilities at level 10 or higher spend exactly one point from the single pool, with resource_costs:[{resource_id:<pool ID>,amount:1}] and recharge:"long-rest". All other resource_costs are [].
+- Do not claim automated effects in prose beyond these mechanics and the one declared skill proficiency. Unsupported effects are descriptive and manual-only.`;
 
 function buildProviderPrompt(input: {
 	job: JsonRecord;
@@ -299,12 +310,13 @@ export function finalizeProviderDefinition(
 		id: `sovereign.${input.operationId}`,
 		generation: {
 			contract_revision: SOVEREIGN_V2_SCHEMA_VERSION,
-			ruleset_revision: "rules.sovereign-v2.s4",
+			ruleset_revision: "rules.sovereign-v2.s5",
 			canonical_source_revision: input.canonicalRevision,
-			generator: `Dedicated Sovereign endpoint (${input.provider}/${input.model})`.slice(
-				0,
-				160,
-			),
+			generator:
+				`Dedicated Sovereign endpoint (${input.provider}/${input.model})`.slice(
+					0,
+					160,
+				),
 			generated_at: input.generatedAt,
 			operation_id: input.operationId,
 			source_ids: input.sourceIds,
@@ -444,7 +456,10 @@ export async function handleSovereignGenerationRequest(
 	try {
 		dataAccess =
 			dependencies.dataAccess ??
-			createSupabaseSovereignDataAccess(accessToken, context.env ?? process.env);
+			createSupabaseSovereignDataAccess(
+				accessToken,
+				context.env ?? process.env,
+			);
 	} catch (error) {
 		return { status: 500, body: { error: errorMessage(error) } };
 	}
@@ -475,7 +490,8 @@ export async function handleSovereignGenerationRequest(
 				return {
 					status: 409,
 					body: {
-						error: "operationId already belongs to a different or invalid Sovereign draft",
+						error:
+							"operationId already belongs to a different or invalid Sovereign draft",
 					},
 				};
 			}
@@ -507,7 +523,10 @@ export async function handleSovereignGenerationRequest(
 		if (!job || !path || !regentA || !regentB) {
 			return {
 				status: 400,
-				body: { error: "One or more canonical Sovereign sources could not be resolved" },
+				body: {
+					error:
+						"One or more canonical Sovereign sources could not be resolved",
+				},
 			};
 		}
 		if (String(path.job_id || "") !== String(job.id || "")) {
@@ -545,7 +564,10 @@ export async function handleSovereignGenerationRequest(
 		} catch (error) {
 			return {
 				status: 422,
-				body: { error: "Provider returned invalid JSON", details: errorMessage(error) },
+				body: {
+					error: "Provider returned invalid JSON",
+					details: errorMessage(error),
+				},
 			};
 		}
 
@@ -573,6 +595,18 @@ export async function handleSovereignGenerationRequest(
 				},
 			};
 		}
+		const budgetErrors = validateGeneratedSovereignBudget(
+			validation.definition,
+		);
+		if (budgetErrors.length > 0) {
+			return {
+				status: 422,
+				body: {
+					error: "Provider output exceeded the Sovereign generation budget",
+					details: budgetErrors.slice(0, 20),
+				},
+			};
+		}
 
 		let saved: SavedSovereignDraft;
 		try {
@@ -584,15 +618,23 @@ export async function handleSovereignGenerationRequest(
 			const message = errorMessage(error);
 			return {
 				status: /operation conflict|duplicate|23505/i.test(message) ? 409 : 422,
-				body: { error: "Validated Sovereign could not be saved", details: message },
+				body: {
+					error: "Validated Sovereign could not be saved",
+					details: message,
+				},
 			};
 		}
 
-		const savedValidation = validateSovereignV2Definition(saved.definition, sourceIds);
+		const savedValidation = validateSovereignV2Definition(
+			saved.definition,
+			sourceIds,
+		);
 		if (!savedValidation.ok) {
 			return {
 				status: 500,
-				body: { error: "Saved Sovereign failed authoritative reload validation" },
+				body: {
+					error: "Saved Sovereign failed authoritative reload validation",
+				},
 			};
 		}
 
@@ -610,7 +652,10 @@ export async function handleSovereignGenerationRequest(
 	} catch (error) {
 		return {
 			status: 500,
-			body: { error: "Sovereign generation failed", details: errorMessage(error) },
+			body: {
+				error: "Sovereign generation failed",
+				details: errorMessage(error),
+			},
 		};
 	}
 }

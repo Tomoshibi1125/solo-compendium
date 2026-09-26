@@ -139,6 +139,14 @@ interface Combatant {
 	advancedConditions: ConditionEntry[];
 	/** Dex modifier used for auto-rolled anomaly initiative (P1-6). */
 	dexMod?: number;
+	memberId?: string | null;
+	companionInstanceId?: string | null;
+	companionProfileVersion?: number | null;
+	companionStateVersion?: number | null;
+	initiativeMode?: string | null;
+	initiativeAnchorCharacterId?: string | null;
+	persistedStats?: Json;
+	persistedFlags?: Json;
 }
 
 type CampaignWithRole = {
@@ -230,6 +238,14 @@ const mapCampaignCombatantToTracker = (
 				: null,
 		advancedConditions: normalizedConditions.advancedConditions,
 		dexMod: toNumber(stats.dex_mod ?? stats.dexMod),
+		memberId: combatant.member_id,
+		companionInstanceId: combatant.companion_instance_id,
+		companionProfileVersion: combatant.companion_profile_version,
+		companionStateVersion: combatant.companion_state_version,
+		initiativeMode: combatant.initiative_mode,
+		initiativeAnchorCharacterId: combatant.initiative_anchor_character_id,
+		persistedStats: combatant.stats,
+		persistedFlags: combatant.flags,
 	};
 };
 
@@ -270,6 +286,8 @@ const InitiativeTracker = () => {
 	const hydratedContextRef = useRef<string | null>(null);
 	const hydratedCombatSessionRef = useRef<string | null>(null);
 	const skipNextCombatSyncRef = useRef(false);
+	const companionStateVersionRef = useRef(new Map<string, number>());
+	const removedCompanionIdsRef = useRef(new Set<string>());
 	const { data: myCampaigns = [], isLoading: myCampaignsLoading } =
 		useMyCampaigns();
 	const { data: joinedCampaigns = [], isLoading: joinedCampaignsLoading } =
@@ -462,6 +480,41 @@ const InitiativeTracker = () => {
 		isSyncingCombatSession,
 	]);
 
+	// A companion handoff is inserted by the C3 RPC after initial hydration.
+	// Merge that persisted actor into the tracker without manufacturing a second
+	// generic row or resaving an unchanged companion state on every refetch.
+	useEffect(() => {
+		if (!isSyncingCombatSession || !combatSessionContext) return;
+		const liveIds = new Set(activeCombatants.map((row) => row.id));
+		for (const removedId of removedCompanionIdsRef.current) {
+			if (!liveIds.has(removedId))
+				removedCompanionIdsRef.current.delete(removedId);
+		}
+		for (const row of activeCombatants) {
+			if (row.companion_instance_id && row.companion_state_version !== null) {
+				companionStateVersionRef.current.set(
+					row.id,
+					row.companion_state_version,
+				);
+			}
+		}
+		const additions = activeCombatants
+			.filter(
+				(row) =>
+					row.companion_instance_id &&
+					!removedCompanionIdsRef.current.has(row.id),
+			)
+			.map(mapCampaignCombatantToTracker);
+		if (additions.length === 0) return;
+		setCombatants((current) => {
+			const ids = new Set(current.map((row) => row.id));
+			const missing = additions.filter((row) => !ids.has(row.id));
+			if (missing.length === 0) return current;
+			skipNextCombatSyncRef.current = true;
+			return [...current, ...missing];
+		});
+	}, [activeCombatants, combatSessionContext, isSyncingCombatSession]);
+
 	// Load persisted state (best-effort)
 	useEffect(() => {
 		if (isSyncingCombatSession) return;
@@ -532,6 +585,7 @@ const InitiativeTracker = () => {
 					name: combatant.name,
 					initiative: combatant.initiative,
 					stats: {
+						...toRecord(combatant.persistedStats),
 						hp: combatant.hp ?? null,
 						max_hp: combatant.maxHp ?? null,
 						temp_hp: combatant.tempHp ?? null,
@@ -550,9 +604,20 @@ const InitiativeTracker = () => {
 					},
 					conditions: getActiveConditionNames(combatant.advancedConditions),
 					flags: {
+						...toRecord(combatant.persistedFlags),
 						isHunter: combatant.isHunter,
 					},
-					member_id: null,
+					member_id: combatant.memberId ?? null,
+					companion_instance_id: combatant.companionInstanceId ?? null,
+					companion_profile_version: combatant.companionProfileVersion ?? null,
+					companion_state_version: combatant.companionInstanceId
+						? (companionStateVersionRef.current.get(combatant.id) ??
+							combatant.companionStateVersion ??
+							null)
+						: null,
+					initiative_mode: combatant.initiativeMode ?? "independent",
+					initiative_anchor_character_id:
+						combatant.initiativeAnchorCharacterId ?? null,
 				})),
 			});
 
@@ -644,6 +709,9 @@ const InitiativeTracker = () => {
 	};
 
 	const removeCombatant = (id: string) => {
+		if (combatants.some((row) => row.id === id && row.companionInstanceId)) {
+			removedCompanionIdsRef.current.add(id);
+		}
 		setCombatants(combatants.filter((c) => c.id !== id));
 		if (currentTurn >= combatants.length - 1) {
 			setCurrentTurn(0);
@@ -1017,6 +1085,9 @@ const InitiativeTracker = () => {
 	}, [activeCombatSession]);
 
 	const resetCombat = () => {
+		for (const row of combatants) {
+			if (row.companionInstanceId) removedCompanionIdsRef.current.add(row.id);
+		}
 		setCombatants([]);
 		setCurrentTurn(0);
 		setRound(1);

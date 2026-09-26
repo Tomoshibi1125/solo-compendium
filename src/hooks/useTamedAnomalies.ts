@@ -12,10 +12,10 @@ import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import type { Json } from "@/integrations/supabase/types";
 import { listCanonicalEntries } from "@/lib/canonicalCompendium";
 import {
-	indexCompanionInstances,
-	resolveCompanionEffectiveStats,
 	type CompanionInstanceRecord,
 	type EffectiveCompanionStats,
+	indexCompanionInstances,
+	resolveCompanionEffectiveStats,
 } from "@/lib/companionInstances";
 import { createCanonicalCompanionSource } from "@/lib/companions";
 
@@ -117,10 +117,12 @@ export interface CompanionBondRow {
 	created_at: string;
 }
 
-const KEY = (campaignId: string) => ["campaign-tamed-anomalies", campaignId] as const;
+const KEY = (campaignId: string) =>
+	["campaign-tamed-anomalies", campaignId] as const;
 const ATTEMPTS_KEY = (campaignId: string) =>
 	["companion-bond-attempts", campaignId] as const;
-const BONDS_KEY = (campaignId: string) => ["companion-bonds", campaignId] as const;
+const BONDS_KEY = (campaignId: string) =>
+	["companion-bonds", campaignId] as const;
 
 export function useAnomalyCatalog() {
 	return useQuery({
@@ -134,7 +136,9 @@ export function useAnomalyCatalog() {
 				map.set(e.id, {
 					id: e.id,
 					name: e.name,
-					hp: Number(rec.hit_points_average ?? rec.hit_points ?? rec.hp ?? 1) || 1,
+					hp:
+						Number(rec.hit_points_average ?? rec.hit_points ?? rec.hp ?? 1) ||
+						1,
 					ac: Number(rec.armor_class ?? rec.ac ?? 10) || 10,
 					speed: Number(rec.speed_walk ?? rec.speed ?? 30) || 30,
 					// C2 must not silently turn missing/E/unknown rank into D.
@@ -263,16 +267,19 @@ export function useTameAnomaly() {
 				speed: anomaly.speed,
 				rank: anomaly.rank || null,
 			});
-			const { data, error } = await callRpc("resolve_companion_tame_attempt_c2", {
-				p_campaign_id: input.campaignId,
-				p_character_id: input.characterId,
-				p_anomaly_id: input.anomalyId,
-				p_source_snapshot: sourceSnapshot as unknown as Json,
-				p_roll_primary: input.rollPrimary,
-				p_roll_secondary: input.rollSecondary ?? null,
-				p_adjudication_id: input.adjudicationId ?? null,
-				p_nickname: input.nickname ?? null,
-			});
+			const { data, error } = await callRpc(
+				"resolve_companion_tame_attempt_c2",
+				{
+					p_campaign_id: input.campaignId,
+					p_character_id: input.characterId,
+					p_anomaly_id: input.anomalyId,
+					p_source_snapshot: sourceSnapshot as unknown as Json,
+					p_roll_primary: input.rollPrimary,
+					p_roll_secondary: input.rollSecondary ?? null,
+					p_adjudication_id: input.adjudicationId ?? null,
+					p_nickname: input.nickname ?? null,
+				},
+			);
 			if (error) throw new Error(error.message);
 			return parseAttemptResult(data);
 		},
@@ -297,13 +304,18 @@ export function useTameAnomaly() {
 			} else {
 				toast({
 					title: "Taming attempt is not valid",
-					description: result.reason ?? "This source requires Warden adjudication.",
+					description:
+						result.reason ?? "This source requires Warden adjudication.",
 					variant: "destructive",
 				});
 			}
 		},
 		onError: (error: Error) => {
-			toast({ title: "Taming failed", description: error.message, variant: "destructive" });
+			toast({
+				title: "Taming failed",
+				description: error.message,
+				variant: "destructive",
+			});
 		},
 	});
 }
@@ -321,15 +333,18 @@ export function useBondCompanion() {
 			rollSecondary?: number | null;
 			adjudicationId?: string | null;
 		}) => {
-			const { data, error } = await callRpc("resolve_companion_bond_attempt_c2", {
-				p_campaign_id: input.campaignId,
-				p_character_id: input.characterId,
-				p_companion_instance_id: input.companionInstanceId,
-				p_expected_source_id: input.expectedSourceId,
-				p_roll_primary: input.rollPrimary,
-				p_roll_secondary: input.rollSecondary ?? null,
-				p_adjudication_id: input.adjudicationId ?? null,
-			});
+			const { data, error } = await callRpc(
+				"resolve_companion_bond_attempt_c2",
+				{
+					p_campaign_id: input.campaignId,
+					p_character_id: input.characterId,
+					p_companion_instance_id: input.companionInstanceId,
+					p_expected_source_id: input.expectedSourceId,
+					p_roll_primary: input.rollPrimary,
+					p_roll_secondary: input.rollSecondary ?? null,
+					p_adjudication_id: input.adjudicationId ?? null,
+				},
+			);
 			if (error) throw new Error(error.message);
 			return parseAttemptResult(data);
 		},
@@ -337,11 +352,14 @@ export function useBondCompanion() {
 			invalidateC2Campaign(queryClient, variables.campaignId);
 			if (result.outcome === "success" || result.outcome === "already-bonded") {
 				toast({
-					title: result.outcome === "already-bonded" ? "Bond already active" : "Bond established",
+					title:
+						result.outcome === "already-bonded"
+							? "Bond already active"
+							: "Bond established",
 					description:
-					result.total != null && result.dc != null
-						? `Total ${result.total} vs DC ${result.dc}.`
-						: undefined,
+						result.total != null && result.dc != null
+							? `Total ${result.total} vs DC ${result.dc}.`
+							: undefined,
 				});
 			} else if (result.outcome === "failure") {
 				toast({
@@ -358,7 +376,11 @@ export function useBondCompanion() {
 			}
 		},
 		onError: (error: Error) => {
-			toast({ title: "Bond attempt failed", description: error.message, variant: "destructive" });
+			toast({
+				title: "Bond attempt failed",
+				description: error.message,
+				variant: "destructive",
+			});
 		},
 	});
 }
@@ -378,18 +400,21 @@ export function usePrepareCompanionAttemptAdjudication() {
 			retryOfAttemptId?: string | null;
 			reason?: string | null;
 		}) => {
-			const { data, error } = await callRpc("prepare_companion_attempt_adjudication", {
-				p_campaign_id: input.campaignId,
-				p_character_id: input.characterId,
-				p_target_source_id: input.targetSourceId,
-				p_attempt_kind: input.attemptKind,
-				p_companion_instance_id: input.companionInstanceId ?? null,
-				p_roll_mode: input.rollMode ?? "normal",
-				p_proficiency_mode: input.proficiencyMode ?? "default",
-				p_specialization_mode: input.specializationMode ?? "default",
-				p_retry_of_attempt_id: input.retryOfAttemptId ?? null,
-				p_reason: input.reason ?? null,
-			});
+			const { data, error } = await callRpc(
+				"prepare_companion_attempt_adjudication",
+				{
+					p_campaign_id: input.campaignId,
+					p_character_id: input.characterId,
+					p_target_source_id: input.targetSourceId,
+					p_attempt_kind: input.attemptKind,
+					p_companion_instance_id: input.companionInstanceId ?? null,
+					p_roll_mode: input.rollMode ?? "normal",
+					p_proficiency_mode: input.proficiencyMode ?? "default",
+					p_specialization_mode: input.specializationMode ?? "default",
+					p_retry_of_attempt_id: input.retryOfAttemptId ?? null,
+					p_reason: input.reason ?? null,
+				},
+			);
 			if (error) throw new Error(error.message);
 			if (typeof data !== "string" || !data) {
 				throw new Error("Adjudication did not return an id.");
@@ -397,7 +422,9 @@ export function usePrepareCompanionAttemptAdjudication() {
 			return data;
 		},
 		onSuccess: (_, variables) => {
-			queryClient.invalidateQueries({ queryKey: ATTEMPTS_KEY(variables.campaignId) });
+			queryClient.invalidateQueries({
+				queryKey: ATTEMPTS_KEY(variables.campaignId),
+			});
 		},
 	});
 }
@@ -477,7 +504,8 @@ export function useReleaseAnomalyController() {
 			});
 			if (error) throw new Error(error.message);
 		},
-		onSuccess: (_, variables) => invalidateC2Campaign(queryClient, variables.campaignId),
+		onSuccess: (_, variables) =>
+			invalidateC2Campaign(queryClient, variables.campaignId),
 	});
 }
 
@@ -489,13 +517,14 @@ export function useUpdateTamedAnomalyHP() {
 			id: string;
 			currentHp: number;
 		}) => {
-			const { error } = await supabase
-				.from("campaign_tamed_anomalies")
-				.update({ current_hp: Math.max(0, input.currentHp) })
-				.eq("id", input.id);
+			const { error } = await callRpc("set_campaign_tamed_hp", {
+				p_tamed_id: input.id,
+				p_current_hp: Math.max(0, input.currentHp),
+			});
 			if (error) throw error;
 		},
-		onSuccess: (_, variables) => invalidateC2Campaign(queryClient, variables.campaignId),
+		onSuccess: (_, variables) =>
+			invalidateC2Campaign(queryClient, variables.campaignId),
 	});
 }
 
@@ -504,10 +533,9 @@ export function useDeleteTamedAnomaly() {
 	const { toast } = useToast();
 	return useMutation({
 		mutationFn: async (input: { campaignId: string; id: string }) => {
-			const { error } = await supabase
-				.from("campaign_tamed_anomalies")
-				.delete()
-				.eq("id", input.id);
+			const { error } = await callRpc("remove_campaign_tamed_anomaly", {
+				p_tamed_id: input.id,
+			});
 			if (error) throw error;
 		},
 		onSuccess: (_, variables) => {

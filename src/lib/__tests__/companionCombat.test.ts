@@ -25,12 +25,18 @@ describe("C3 companion combat rules", () => {
 				{ id: "actor-2", initiative: 8, companion_instance_id: "instance-2" },
 			],
 			[
-				{ id: "actor-1-new", initiative: 14, companion_instance_id: "instance-1" },
+				{
+					id: "actor-1-new",
+					initiative: 14,
+					companion_instance_id: "instance-1",
+				},
 				{ id: "actor-3", initiative: 7, companion_instance_id: "instance-3" },
 			],
 		);
 		expect(merged).toHaveLength(3);
-		expect(merged.find((row) => row.companion_instance_id === "instance-1")).toMatchObject({
+		expect(
+			merged.find((row) => row.companion_instance_id === "instance-1"),
+		).toMatchObject({
 			id: "actor-1-new",
 			initiative: 14,
 		});
@@ -38,46 +44,46 @@ describe("C3 companion combat rules", () => {
 
 	it("defaults reactions to a separate pool unless a profile explicitly shares the rider pool", () => {
 		expect(readCompanionCombatProfile({})).toMatchObject({
-		reactionPool: "separate",
-		progressionMode: null,
-	});
+			reactionPool: "separate",
+			progressionMode: null,
+		});
 		expect(
-		readCompanionCombatProfile({
-			combat: {
-				reactionPool: "shared-rider",
-				actionEconomy: { actions: 1, reactions: 1 },
-			},
-			progression: { mode: "milestone" },
-		}),
-	).toMatchObject({
-		reactionPool: "shared-rider",
-		actionEconomy: { actions: 1, reactions: 1 },
-		progressionMode: "milestone",
-	});
+			readCompanionCombatProfile({
+				combat: {
+					reactionPool: "shared-rider",
+					actionEconomy: { actions: 1, reactions: 1 },
+				},
+				progression: { mode: "milestone" },
+			}),
+		).toMatchObject({
+			reactionPool: "shared-rider",
+			actionEconomy: { actions: 1, reactions: 1 },
+			progressionMode: "milestone",
+		});
 	});
 
 	it("does not synthesize rest healing when no authored rule exists", () => {
 		expect(readCompanionRestRule({}, "short")).toBeNull();
 		expect(
-		readCompanionRestRule(
-			{
-				rest: {
-					long: {
-						heal: { kind: "flat", amount: 6 },
-						conditions: "preserve",
-						clearDowned: true,
-						resources: { focus: 2 },
+			readCompanionRestRule(
+				{
+					rest: {
+						long: {
+							heal: { kind: "flat", amount: 6 },
+							conditions: "preserve",
+							clearDowned: true,
+							resources: { focus: 2 },
+						},
 					},
 				},
-			},
-			"long",
-		),
-	).toEqual({
-		heal: { kind: "flat", amount: 6 },
-		conditions: "preserve",
-		clearDowned: true,
-		resources: { focus: 2 },
-	});
+				"long",
+			),
+		).toEqual({
+			heal: { kind: "flat", amount: 6 },
+			conditions: "preserve",
+			clearDowned: true,
+			resources: { focus: 2 },
+		});
 	});
 
 	it("enforces only mount limits explicitly present in the authored profile", () => {
@@ -96,7 +102,7 @@ describe("C3 companion combat rules", () => {
 				hasTack: true,
 				isTrained: true,
 			}),
-	).toEqual({ valid: true });
+		).toEqual({ valid: true });
 		expect(
 			evaluateMountEligibility({
 				profile,
@@ -105,6 +111,6 @@ describe("C3 companion combat rules", () => {
 				hasTack: true,
 				isTrained: true,
 			}),
-	).toEqual({ valid: false, reason: "MOUNT_RIDER_SIZE_REJECTED" });
+		).toEqual({ valid: false, reason: "MOUNT_RIDER_SIZE_REJECTED" });
 	});
 });

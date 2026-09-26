@@ -87,7 +87,8 @@ export function AddVehicleDialog({
 						? ((selected as { source?: string }).source ?? null)
 						: null,
 				sourceBook:
-					typeof (selected as { source_book?: unknown }).source_book === "string"
+					typeof (selected as { source_book?: unknown }).source_book ===
+					"string"
 						? ((selected as { source_book?: string }).source_book ?? null)
 						: null,
 				name: selected.name,
@@ -132,8 +133,9 @@ export function AddVehicleDialog({
 						Add Vehicle or Mount
 					</DialogTitle>
 					<DialogDescription>
-						Pick from the {catalog.length}-entry RA catalog. Living mounts keep a
-						frozen companion source snapshot; constructed vehicles remain vehicle-only.
+						Pick from the {catalog.length}-entry RA catalog. Living mounts keep
+						a frozen companion source snapshot; constructed vehicles remain
+						vehicle-only.
 					</DialogDescription>
 				</DialogHeader>
 

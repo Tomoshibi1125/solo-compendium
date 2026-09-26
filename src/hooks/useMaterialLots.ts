@@ -89,7 +89,9 @@ function invalidateMaterialLots(
 	queryClient.invalidateQueries({ queryKey: keys.lots(characterId) });
 	queryClient.invalidateQueries({ queryKey: keys.discoveries(characterId) });
 	// Old crafting readers remain a compatibility projection during M1/M2.
-	queryClient.invalidateQueries({ queryKey: ["character-materials", characterId] });
+	queryClient.invalidateQueries({
+		queryKey: ["character-materials", characterId],
+	});
 }
 
 function isRecord(value: unknown): value is Record<string, unknown> {
@@ -97,7 +99,8 @@ function isRecord(value: unknown): value is Record<string, unknown> {
 }
 
 export function parseMaterialLotBundle(value: unknown): MaterialLotBundleV1 {
-	if (!isRecord(value)) throw new Error("Material lot import must be a JSON object.");
+	if (!isRecord(value))
+		throw new Error("Material lot import must be a JSON object.");
 	if (value.kind !== "rift-ascendant-material-lots" || value.version !== 1) {
 		throw new Error("Unsupported material lot bundle.");
 	}
@@ -106,7 +109,9 @@ export function parseMaterialLotBundle(value: unknown): MaterialLotBundleV1 {
 		!Array.isArray(value.lots) ||
 		!Array.isArray(value.discoveries)
 	) {
-		throw new Error("Material lot bundle is missing definitions, lots, or discoveries.");
+		throw new Error(
+			"Material lot bundle is missing definitions, lots, or discoveries.",
+		);
 	}
 	return value as unknown as MaterialLotBundleV1;
 }
@@ -160,7 +165,9 @@ export function useMaterialLots(characterId: string | undefined) {
 	});
 
 	const lotsQuery = useQuery({
-		queryKey: characterId ? keys.lots(characterId) : ["material-lots-m1", "_none"],
+		queryKey: characterId
+			? keys.lots(characterId)
+			: ["material-lots-m1", "_none"],
 		enabled: !!characterId && isSupabaseConfigured,
 		queryFn: async (): Promise<MaterialLotRow[]> => {
 			if (!characterId) return [];
@@ -259,7 +266,10 @@ export function useMaterialLots(characterId: string | undefined) {
 
 	const importBundle = useMutation({
 		retry: 1,
-		mutationFn: async (input: { bundle: MaterialLotBundleV1; operationId: string }) => {
+		mutationFn: async (input: {
+			bundle: MaterialLotBundleV1;
+			operationId: string;
+		}) => {
 			if (!characterId) throw new Error("Character is required.");
 			const bundle = parseMaterialLotBundle(input.bundle);
 			const { data, error } = await callRpc("import_material_lots_m1", {
@@ -305,7 +315,9 @@ export function useMaterialLots(characterId: string | undefined) {
 		lots: lotsQuery.data ?? [],
 		discoveries: discoveriesQuery.data ?? [],
 		isLoading:
-			definitionsQuery.isLoading || lotsQuery.isLoading || discoveriesQuery.isLoading,
+			definitionsQuery.isLoading ||
+			lotsQuery.isLoading ||
+			discoveriesQuery.isLoading,
 		createLot,
 		adjustLot,
 		importBundle,

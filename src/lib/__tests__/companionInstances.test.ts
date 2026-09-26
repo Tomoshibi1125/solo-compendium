@@ -1,13 +1,15 @@
 import { describe, expect, it } from "vitest";
 import {
+	type CompanionInstanceRecord,
 	isSameLivingCompanion,
 	readCompanionSnapshotBaseStats,
 	resolveCompanionEffectiveStats,
-	type CompanionInstanceRecord,
 } from "@/lib/companionInstances";
 import { createCanonicalCompanionSource } from "@/lib/companions";
 
-const baseInstance = (overrides: Partial<CompanionInstanceRecord> = {}): CompanionInstanceRecord => ({
+const baseInstance = (
+	overrides: Partial<CompanionInstanceRecord> = {},
+): CompanionInstanceRecord => ({
 	id: "11111111-1111-4111-8111-111111111111",
 	owner_scope: "character",
 	owner_character_id: "22222222-2222-4222-8222-222222222222",
@@ -45,7 +47,9 @@ const baseInstance = (overrides: Partial<CompanionInstanceRecord> = {}): Compani
 
 describe("C1 companion instance resolver", () => {
 	it("reads the existing canonical companion snapshot envelope", () => {
-		expect(readCompanionSnapshotBaseStats(baseInstance().source_snapshot)).toEqual({
+		expect(
+			readCompanionSnapshotBaseStats(baseInstance().source_snapshot),
+		).toEqual({
 			name: "Echo Wolf",
 			hpMax: 30,
 			baseAc: 14,
@@ -129,6 +133,8 @@ describe("C1 companion instance resolver", () => {
 		const instance = baseInstance({ identity_kind: "mount" });
 		const extraProjection = { id: instance.id };
 		const vehicleProjection = { id: instance.id };
-		expect(isSameLivingCompanion(extraProjection, vehicleProjection)).toBe(true);
+		expect(isSameLivingCompanion(extraProjection, vehicleProjection)).toBe(
+			true,
+		);
 	});
 });

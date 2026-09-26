@@ -7,9 +7,15 @@ const hook = hookSource.replace(/\r\n/g, "\n");
 
 describe("C1 taming source boundary", () => {
 	it("requires a canonical Anomaly snapshot matching the requested source", () => {
-		expect(migration).toContain("CREATE OR REPLACE FUNCTION public.attempt_taming_with_source(");
-		expect(migration).toContain("'{provenance,canonicalType}' IS DISTINCT FROM 'anomaly'");
-		expect(migration).toContain("'{provenance,canonicalId}' IS DISTINCT FROM p_anomaly_id");
+		expect(migration).toContain(
+			"CREATE OR REPLACE FUNCTION public.attempt_taming_with_source(",
+		);
+		expect(migration).toContain(
+			"'{provenance,canonicalType}' IS DISTINCT FROM 'anomaly'",
+		);
+		expect(migration).toContain(
+			"'{provenance,canonicalId}' IS DISTINCT FROM p_anomaly_id",
+		);
 		expect(migration).toContain("TAMING_SOURCE_SNAPSHOT_REQUIRED");
 	});
 
@@ -30,11 +36,12 @@ describe("C1 taming source boundary", () => {
 		);
 	});
 
-	it("has the client build the existing canonical companion envelope and call only the wrapper", () => {
+	it("has the client build a canonical companion envelope and call the C2 resolver", () => {
 		expect(hook).toContain("createCanonicalCompanionSource({");
 		expect(hook).toContain('canonicalType: "anomaly"');
 		expect(hook).toContain('canonicalCollection: "anomalies"');
-		expect(hook).toContain('"attempt_taming_with_source"');
+		expect(hook).toContain('"resolve_companion_tame_attempt_c2"');
+		expect(hook).not.toContain('"attempt_taming_with_source"');
 		expect(hook).not.toContain('"attempt_taming",');
 	});
 });

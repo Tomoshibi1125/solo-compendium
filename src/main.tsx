@@ -7,6 +7,8 @@ import "./styles/ra-theme.css";
 import "./styles/dropdown-opacity-fix.css";
 import "./styles/app-performance.css";
 
+import { registerCompanionInitiativeBridge } from "./lib/companionInitiativeBridge";
+import { registerCompanionRestBridge } from "./lib/companionRestBridge";
 import {
 	createLogger,
 	isCriticalError,
@@ -16,8 +18,6 @@ import {
 import { enableTouchOptimizations } from "./lib/mobile";
 import { registerPwa } from "./lib/pwa";
 import { initSentry } from "./lib/sentry";
-import { registerCompanionInitiativeBridge } from "./lib/companionInitiativeBridge";
-import { registerCompanionRestBridge } from "./lib/companionRestBridge";
 
 const logger = createLogger({ mode: "production" });
 

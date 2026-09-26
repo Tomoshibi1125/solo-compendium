@@ -180,7 +180,12 @@ describe("C2 companion bonding rules", () => {
 			specializationBonus: 0,
 		});
 		// 11 + PRE(+3) + PB(+2) = 16 versus B DC 16.
-		expect(valid).toMatchObject({ valid: true, dc: 16, total: 16, success: true });
+		expect(valid).toMatchObject({
+			valid: true,
+			dc: 16,
+			total: 16,
+			success: true,
+		});
 
 		const invalid = resolveBondingAttempt({
 			rank: "E",

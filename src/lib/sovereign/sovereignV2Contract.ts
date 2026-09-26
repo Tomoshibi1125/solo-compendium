@@ -1,14 +1,16 @@
 import { z } from "zod";
-import type { FeatureEffect } from "@/types/featureEffects";
+import { DAMAGE_TYPES } from "@/lib/damageApplication";
 import { SOVEREIGN_ABILITY_LEVELS } from "@/lib/sovereign/sovereignContract";
+import { SKILLS } from "@/types/core-rules";
+import type { FeatureEffect } from "@/types/featureEffects";
 
 /**
  * Sovereign definition v2 contract.
  *
  * This module intentionally owns only the contract/compatibility boundary. It
  * does not persist, attach, project, or execute Sovereigns; those are later
- * delivery slices. Numeric limits below are serialization-safety bounds, not
- * game-balance ceilings. Balance budgets remain an explicit design decision.
+ * delivery slices. Existing v2 definitions remain readable. New generated
+ * definitions additionally pass the conservative budget below.
  */
 export const SOVEREIGN_V2_SCHEMA_VERSION = 2 as const;
 
@@ -38,6 +40,17 @@ export const SOVEREIGN_ABILITY_SCORES = [
 	"PRE",
 ] as const;
 
+/** Ruleset s5: explicit ceilings for newly generated Sovereigns. */
+export const SOVEREIGN_GENERATION_BUDGET = {
+	maxResources: 1,
+	maxModifiers: 1,
+	minTypedAbilities: 4,
+	maxRangeFeet: 60,
+	maxConditionAbilities: 1,
+	maxResourceCost: 1,
+	maxCostAbilities: 2,
+} as const;
+
 const ActionTypeSchema = z.enum(SOVEREIGN_ACTION_TYPES);
 const RechargeSchema = z.enum(SOVEREIGN_RECHARGE_TYPES);
 const AncestrySourceSchema = z.enum(SOVEREIGN_ANCESTRY_SOURCES);
@@ -55,21 +68,8 @@ const StableIdSchema = z
 const ShortStringSchema = z.string().trim().min(1).max(160);
 const LongStringSchema = z.string().trim().min(1).max(12_000);
 const OptionalLongStringSchema = z.string().trim().min(1).max(4_000).optional();
-const SafeIntegerSchema = z
-	.number()
-	.int()
-	.min(Number.MIN_SAFE_INTEGER)
-	.max(Number.MAX_SAFE_INTEGER);
-const NonNegativeSafeIntegerSchema = z
-	.number()
-	.int()
-	.min(0)
-	.max(Number.MAX_SAFE_INTEGER);
-const PositiveSafeIntegerSchema = z
-	.number()
-	.int()
-	.min(1)
-	.max(Number.MAX_SAFE_INTEGER);
+const SafeIntegerSchema = z.number().int().min(-1_000_000).max(1_000_000);
+const PositiveSafeIntegerSchema = z.number().int().min(1).max(1_000_000);
 
 const AncestrySchema = z
 	.array(AncestrySourceSchema)
@@ -102,8 +102,8 @@ const AbilityModifierExpressionSchema = z
 const DiceExpressionSchema = z
 	.object({
 		kind: z.literal("dice"),
-		count: PositiveSafeIntegerSchema,
-		sides: z.number().int().min(2).max(Number.MAX_SAFE_INTEGER),
+		count: z.number().int().min(1).max(100),
+		sides: z.number().int().min(2).max(1_000),
 		bonus: SafeIntegerSchema.optional(),
 	})
 	.strict();
@@ -144,7 +144,7 @@ const ResistanceModifierSchema = z
 	.object({
 		...ModifierCommon,
 		kind: z.literal("resistance"),
-		damage_type: ShortStringSchema,
+		damage_type: z.enum(DAMAGE_TYPES),
 	})
 	.strict();
 const AdvantageModifierSchema = z
@@ -238,6 +238,54 @@ const ResourceCostSchema = z
 	})
 	.strict();
 
+const CombatDiceSchema = z
+	.object({
+		count: z.number().int().min(1).max(4),
+		sides: z.union([z.literal(4), z.literal(6), z.literal(8)]),
+	})
+	.strict();
+const CombatDamageSchema = CombatDiceSchema.extend({
+	type: z.enum(DAMAGE_TYPES),
+}).strict();
+const CombatConditionSchema = z
+	.object({
+		id: z.enum(["deafened", "blinded"]),
+		duration_rounds: z.literal(1),
+	})
+	.strict();
+const CombatRangeSchema = z.number().int().min(5).max(60);
+
+/** Dice, DCs, and attack bonuses are composed by the runtime from sheet stats. */
+export const SovereignAbilityMechanicsSchema = z.discriminatedUnion("kind", [
+	z
+		.object({
+			kind: z.literal("attack"),
+			ability: AbilityScoreSchema,
+			range_ft: CombatRangeSchema,
+			damage: CombatDamageSchema,
+			condition: CombatConditionSchema.optional(),
+		})
+		.strict(),
+	z
+		.object({
+			kind: z.literal("save"),
+			ability: AbilityScoreSchema,
+			save_ability: AbilityScoreSchema,
+			range_ft: CombatRangeSchema,
+			damage: CombatDamageSchema,
+			success_damage: z.enum(["none", "half"]),
+			condition: CombatConditionSchema.optional(),
+		})
+		.strict(),
+	z
+		.object({
+			kind: z.literal("healing"),
+			range_ft: CombatRangeSchema,
+			healing: CombatDiceSchema,
+		})
+		.strict(),
+]);
+
 const AbilitySchema = z
 	.object({
 		id: StableIdSchema,
@@ -250,6 +298,7 @@ const AbilitySchema = z
 		ancestry: AncestrySchema,
 		modifier_ids: z.array(StableIdSchema).max(256),
 		resource_costs: z.array(ResourceCostSchema).max(64),
+		mechanics: SovereignAbilityMechanicsSchema.optional(),
 		compatibility: EntityCompatibilitySchema,
 	})
 	.strict();
@@ -308,13 +357,15 @@ export const SovereignV2DefinitionSchema = z
 export type SovereignV2Definition = z.infer<typeof SovereignV2DefinitionSchema>;
 export type SovereignV2Modifier = z.infer<typeof SovereignModifierSchema>;
 export type SovereignV2Expression = z.infer<typeof SovereignExpressionSchema>;
-export type SovereignV2SourceIds = SovereignV2Definition["generation"]["source_ids"];
+export type SovereignV2SourceIds =
+	SovereignV2Definition["generation"]["source_ids"];
 
 export type SovereignV2ValidationResult =
 	| { ok: true; definition: SovereignV2Definition }
 	| { ok: false; errors: string[] };
 
-const normalizedName = (value: string): string => value.trim().toLocaleLowerCase();
+const normalizedName = (value: string): string =>
+	value.trim().toLocaleLowerCase();
 
 const duplicateValues = (values: readonly string[]): string[] => {
 	const seen = new Set<string>();
@@ -352,17 +403,29 @@ export function validateSovereignV2Definition(
 	const definition = parsed.data;
 	const errors: string[] = [];
 
-	if (new Set(definition.primary_abilities).size !== definition.primary_abilities.length) {
+	if (
+		new Set(definition.primary_abilities).size !==
+		definition.primary_abilities.length
+	) {
 		errors.push("primary_abilities must be unique");
 	}
 
-	if (definition.generation.source_ids.regent_a === definition.generation.source_ids.regent_b) {
+	if (
+		definition.generation.source_ids.regent_a ===
+		definition.generation.source_ids.regent_b
+	) {
 		errors.push("generation.source_ids requires two distinct Regents");
 	}
 
 	for (const [key, expected] of Object.entries(expectedSources ?? {})) {
-		if (expected && definition.generation.source_ids[key as keyof SovereignV2SourceIds] !== expected) {
-			errors.push(`generation.source_ids.${key} does not match the canonical input`);
+		if (
+			expected &&
+			definition.generation.source_ids[key as keyof SovereignV2SourceIds] !==
+				expected
+		) {
+			errors.push(
+				`generation.source_ids.${key} does not match the canonical input`,
+			);
 		}
 	}
 
@@ -370,7 +433,9 @@ export function validateSovereignV2Definition(
 		const ability = definition.abilities[index];
 		const expectedLevel = SOVEREIGN_ABILITY_LEVELS[index];
 		if (ability.level !== expectedLevel) {
-			errors.push(`abilities.${index}.level must be the ordered level-${expectedLevel} milestone`);
+			errors.push(
+				`abilities.${index}.level must be the ordered level-${expectedLevel} milestone`,
+			);
 		}
 		const expectedCapstone = expectedLevel === 17 || expectedLevel === 20;
 		if (ability.is_capstone !== expectedCapstone) {
@@ -381,7 +446,48 @@ export function validateSovereignV2Definition(
 			);
 		}
 		if (expectedCapstone && !hasEveryAncestrySource(ability.ancestry)) {
-			errors.push(`abilities.${index}.ancestry must identify all four fusion sources`);
+			errors.push(
+				`abilities.${index}.ancestry must identify all four fusion sources`,
+			);
+		}
+		if (ability.mechanics) {
+			if (
+				ability.action_type === "passive" ||
+				ability.compatibility !== "native"
+			) {
+				errors.push(
+					`abilities.${index}.mechanics requires a native active ability`,
+				);
+			}
+			const mechanics = ability.mechanics;
+			const dice =
+				mechanics.kind === "healing" ? mechanics.healing : mechanics.damage;
+			const diceCap =
+				expectedLevel < 5
+					? 1
+					: expectedLevel < 10
+						? 2
+						: expectedLevel < 17
+							? 3
+							: 4;
+			if (dice.count > diceCap) {
+				errors.push(
+					`abilities.${index}.mechanics exceeds the level-${expectedLevel} dice cap of ${diceCap}d8`,
+				);
+			}
+			if (mechanics.kind !== "healing") {
+				if (!definition.primary_abilities.includes(mechanics.ability)) {
+					errors.push(`abilities.${index}.mechanics ability must be primary`);
+				}
+				if (mechanics.condition?.id === "blinded" && expectedLevel < 14) {
+					errors.push(`abilities.${index}.mechanics blinded requires level 14`);
+				}
+				if (mechanics.condition && expectedLevel < 5) {
+					errors.push(
+						`abilities.${index}.mechanics condition requires level 5`,
+					);
+				}
+			}
 		}
 	}
 
@@ -394,49 +500,79 @@ export function validateSovereignV2Definition(
 		...definition.modifiers.flatMap((entry) => entry.ancestry),
 	];
 	if (!hasEveryAncestrySource(ancestry)) {
-		errors.push("ancestry tags across the package must represent job, path, Regent A, and Regent B");
+		errors.push(
+			"ancestry tags across the package must represent job, path, Regent A, and Regent B",
+		);
 	}
 
 	const identifiedEntities = [
-		...definition.affinities.map((entry) => ({ id: entry.id, name: entry.name })),
+		...definition.affinities.map((entry) => ({
+			id: entry.id,
+			name: entry.name,
+		})),
 		...definition.traits.map((entry) => ({ id: entry.id, name: entry.name })),
 		...definition.features.map((entry) => ({ id: entry.id, name: entry.name })),
-		...definition.abilities.map((entry) => ({ id: entry.id, name: entry.name })),
-		...definition.resources.map((entry) => ({ id: entry.id, name: entry.name })),
+		...definition.abilities.map((entry) => ({
+			id: entry.id,
+			name: entry.name,
+		})),
+		...definition.resources.map((entry) => ({
+			id: entry.id,
+			name: entry.name,
+		})),
 		...definition.modifiers.map((entry) => ({ id: entry.id, name: entry.id })),
 	];
-	const duplicateIds = duplicateValues(identifiedEntities.map((entry) => entry.id));
+	const duplicateIds = duplicateValues(
+		identifiedEntities.map((entry) => entry.id),
+	);
 	if (duplicateIds.length > 0) {
-		errors.push(`stable IDs must be globally unique: ${duplicateIds.join(", ")}`);
+		errors.push(
+			`stable IDs must be globally unique: ${duplicateIds.join(", ")}`,
+		);
 	}
 	const duplicateNames = duplicateValues(
 		identifiedEntities
-			.filter((entry) => entry.name !== entry.id)
+			.filter(
+				(entry) =>
+					!definition.modifiers.some((modifier) => modifier.id === entry.id),
+			)
 			.map((entry) => entry.name),
 	);
 	if (duplicateNames.length > 0) {
 		errors.push(`entity names must be unique: ${duplicateNames.join(", ")}`);
 	}
 
-	const modifiersById = new Map(definition.modifiers.map((modifier) => [modifier.id, modifier]));
-	const resourceIds = new Set(definition.resources.map((resource) => resource.id));
-	const modifierOwners = new Set([
-		...definition.traits.map((entry) => entry.id),
-		...definition.features.map((entry) => entry.id),
-		...definition.abilities.map((entry) => entry.id),
-	]);
-
-	for (const modifier of definition.modifiers) {
-		if (!modifierOwners.has(modifier.source_id)) {
-			errors.push(`modifier ${modifier.id} source_id does not reference a trait, feature, or ability`);
-		}
-	}
-
+	const modifiersById = new Map(
+		definition.modifiers.map((modifier) => [modifier.id, modifier]),
+	);
+	const resourceIds = new Set(
+		definition.resources.map((resource) => resource.id),
+	);
 	const entitiesWithModifiers = [
 		...definition.traits,
 		...definition.features,
 		...definition.abilities,
 	];
+	const modifierOwners = new Map(
+		entitiesWithModifiers.map((entry) => [entry.id, entry]),
+	);
+
+	for (const modifier of definition.modifiers) {
+		const owner = modifierOwners.get(modifier.source_id);
+		if (!owner) {
+			errors.push(
+				`modifier ${modifier.id} source_id does not reference a trait, feature, or ability`,
+			);
+		} else if (
+			owner.compatibility === "manual-only" ||
+			!owner.modifier_ids.includes(modifier.id)
+		) {
+			errors.push(
+				`modifier ${modifier.id} must be claimed by an automated owner`,
+			);
+		}
+	}
+
 	for (const entity of entitiesWithModifiers) {
 		if (new Set(entity.modifier_ids).size !== entity.modifier_ids.length) {
 			errors.push(`${entity.id}.modifier_ids must not contain duplicates`);
@@ -444,15 +580,24 @@ export function validateSovereignV2Definition(
 		for (const modifierId of entity.modifier_ids) {
 			const modifier = modifiersById.get(modifierId);
 			if (!modifier) {
-				errors.push(`${entity.id}.modifier_ids references unknown modifier ${modifierId}`);
+				errors.push(
+					`${entity.id}.modifier_ids references unknown modifier ${modifierId}`,
+				);
 				continue;
 			}
 			if (modifier.source_id !== entity.id) {
-				errors.push(`${entity.id}.modifier_ids references modifier ${modifierId} owned by ${modifier.source_id}`);
+				errors.push(
+					`${entity.id}.modifier_ids references modifier ${modifierId} owned by ${modifier.source_id}`,
+				);
 			}
 		}
-		if (entity.compatibility === "manual-only" && entity.modifier_ids.length > 0) {
-			errors.push(`${entity.id} is manual-only and cannot claim automated modifiers`);
+		if (
+			entity.compatibility === "manual-only" &&
+			entity.modifier_ids.length > 0
+		) {
+			errors.push(
+				`${entity.id} is manual-only and cannot claim automated modifiers`,
+			);
 		}
 	}
 
@@ -460,16 +605,115 @@ export function validateSovereignV2Definition(
 		const seenCosts = new Set<string>();
 		for (const cost of ability.resource_costs) {
 			if (!resourceIds.has(cost.resource_id)) {
-				errors.push(`${ability.id}.resource_costs references unknown resource ${cost.resource_id}`);
+				errors.push(
+					`${ability.id}.resource_costs references unknown resource ${cost.resource_id}`,
+				);
 			}
 			if (seenCosts.has(cost.resource_id)) {
-				errors.push(`${ability.id}.resource_costs must not repeat ${cost.resource_id}`);
+				errors.push(
+					`${ability.id}.resource_costs must not repeat ${cost.resource_id}`,
+				);
 			}
 			seenCosts.add(cost.resource_id);
 		}
 	}
 
 	return errors.length > 0 ? { ok: false, errors } : { ok: true, definition };
+}
+
+/** Additional balance gate for new AI drafts; older valid v2 saves are exempt. */
+export function validateGeneratedSovereignBudget(
+	definition: SovereignV2Definition,
+): string[] {
+	const errors: string[] = [];
+	const typed = definition.abilities.filter((ability) => ability.mechanics);
+	if (typed.length < SOVEREIGN_GENERATION_BUDGET.minTypedAbilities) {
+		errors.push(
+			`generated Sovereign requires at least ${SOVEREIGN_GENERATION_BUDGET.minTypedAbilities} typed abilities`,
+		);
+	}
+	if (!typed.some((ability) => ability.mechanics?.kind === "attack")) {
+		errors.push("generated Sovereign requires a typed attack");
+	}
+	if (!typed.some((ability) => ability.mechanics?.kind === "save")) {
+		errors.push("generated Sovereign requires a typed save");
+	}
+	const conditionCount = typed.filter(
+		(ability) =>
+			ability.mechanics?.kind !== "healing" && ability.mechanics?.condition,
+	).length;
+	if (conditionCount > SOVEREIGN_GENERATION_BUDGET.maxConditionAbilities) {
+		errors.push("generated Sovereign exceeds the condition ability limit");
+	}
+	if (
+		definition.resources.length !== SOVEREIGN_GENERATION_BUDGET.maxResources
+	) {
+		errors.push("generated Sovereign requires one bounded resource pool");
+	} else {
+		const resource = definition.resources[0];
+		if (
+			resource.maximum.kind !== "proficiency-bonus" ||
+			resource.recharge !== "long-rest"
+		) {
+			errors.push(
+				"generated resource must have PB maximum and long-rest recharge",
+			);
+		}
+	}
+	if (
+		definition.modifiers.length !== SOVEREIGN_GENERATION_BUDGET.maxModifiers
+	) {
+		errors.push("generated Sovereign requires one skill proficiency modifier");
+	} else {
+		const modifier = definition.modifiers[0];
+		if (
+			modifier.kind !== "proficiency" ||
+			modifier.proficiency_type !== "skill" ||
+			!SKILLS.some((skill) => skill.name === modifier.target) ||
+			!definition.features.some((feature) => feature.id === modifier.source_id)
+		) {
+			errors.push(
+				"generated modifier must grant one canonical skill from a feature",
+			);
+		}
+	}
+	const withCosts = definition.abilities.filter(
+		(ability) => ability.resource_costs.length > 0,
+	);
+	if (
+		withCosts.length < 1 ||
+		withCosts.length > SOVEREIGN_GENERATION_BUDGET.maxCostAbilities
+	) {
+		errors.push(
+			"generated Sovereign requires one or two resource-cost abilities",
+		);
+	}
+	for (const ability of withCosts) {
+		if (
+			ability.level < 10 ||
+			ability.resource_costs.length !== 1 ||
+			ability.resource_costs[0].amount !==
+				SOVEREIGN_GENERATION_BUDGET.maxResourceCost ||
+			ability.recharge !== "long-rest" ||
+			!ability.mechanics
+		) {
+			errors.push(
+				`${ability.id} must be a typed level-10+ long-rest ability costing one point`,
+			);
+		}
+	}
+	for (const ability of definition.abilities) {
+		if (
+			ability.action_type !== "passive" &&
+			!ability.mechanics &&
+			ability.compatibility !== "manual-only"
+		) {
+			errors.push(
+				`${ability.id} has no mechanics and must be marked manual-only`,
+			);
+		}
+	}
+	return errors;
 }
 
 /** Map a validated v2 modifier into the existing structured effect consumer. */
@@ -535,12 +779,15 @@ export type SovereignDefinitionReadResult =
  * records remain visible exactly as stored; the reader does not manufacture
  * v2 IDs, ancestry, resources, or mechanics for them.
  */
-export function readSovereignDefinition(raw: unknown): SovereignDefinitionReadResult {
+export function readSovereignDefinition(
+	raw: unknown,
+): SovereignDefinitionReadResult {
 	if (
 		raw &&
 		typeof raw === "object" &&
 		!Array.isArray(raw) &&
-		(raw as Record<string, unknown>).schema_version === SOVEREIGN_V2_SCHEMA_VERSION
+		(raw as Record<string, unknown>).schema_version ===
+			SOVEREIGN_V2_SCHEMA_VERSION
 	) {
 		const validation = validateSovereignV2Definition(raw);
 		return validation.ok
@@ -554,7 +801,12 @@ export function readSovereignDefinition(raw: unknown): SovereignDefinitionReadRe
 	}
 
 	const legacy = LegacySovereignSchema.safeParse(raw);
-	if (!legacy.success || !raw || typeof raw !== "object" || Array.isArray(raw)) {
+	if (
+		!legacy.success ||
+		!raw ||
+		typeof raw !== "object" ||
+		Array.isArray(raw)
+	) {
 		return {
 			ok: false,
 			errors: legacy.success
@@ -655,4 +907,5 @@ export function toExternalSovereignRecharge(
 }
 
 // This type import documents the legacy object boundary without converting it.
-export type LegacyGeneratedSovereign = import("@/lib/geminiProtocol").GeneratedSovereign;
+export type LegacyGeneratedSovereign =
+	import("@/lib/geminiProtocol").GeneratedSovereign;

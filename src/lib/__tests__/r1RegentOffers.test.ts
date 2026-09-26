@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import migrationSource from "../../../supabase/migrations/20260926030000_r1_curated_regent_offers.sql?raw";
-import playerPanelSource from "../../components/character/RegentUnlocksPanel.tsx?raw";
 import wardenPanelSource from "../../components/campaign/CampaignRegentOversight.tsx?raw";
+import playerPanelSource from "../../components/character/RegentUnlocksPanel.tsx?raw";
 import readinessSource from "../../hooks/useSovereignReady.ts?raw";
 
 const source = migrationSource.replace(/\r\n/g, "\n");
@@ -43,17 +43,29 @@ const canonicalIds = [
 
 describe("R1 curated Regent offers", () => {
 	it("stores exactly three distinct canonical candidates", () => {
-		expect(source).toContain("ADD COLUMN IF NOT EXISTS candidate_regent_ids TEXT[]");
+		expect(source).toContain(
+			"ADD COLUMN IF NOT EXISTS candidate_regent_ids TEXT[]",
+		);
 		expect(source).toContain("cardinality(candidate_regent_ids) = 3");
-		expect(source).toContain("candidate_regent_ids[1] <> candidate_regent_ids[2]");
-		expect(source).toContain("candidate_regent_ids[1] <> candidate_regent_ids[3]");
-		expect(source).toContain("candidate_regent_ids[2] <> candidate_regent_ids[3]");
+		expect(source).toContain(
+			"candidate_regent_ids[1] <> candidate_regent_ids[2]",
+		);
+		expect(source).toContain(
+			"candidate_regent_ids[1] <> candidate_regent_ids[3]",
+		);
+		expect(source).toContain(
+			"candidate_regent_ids[2] <> candidate_regent_ids[3]",
+		);
 		for (const id of canonicalIds) expect(source).toContain(`'${id}'`);
 	});
 
 	it("removes direct grant-write bypasses and exposes actor-bound RPCs only", () => {
-		expect(source).toContain("DROP POLICY IF EXISTS regent_unlock_grants_insert");
-		expect(source).toContain("DROP POLICY IF EXISTS regent_unlock_grants_delete");
+		expect(source).toContain(
+			"DROP POLICY IF EXISTS regent_unlock_grants_insert",
+		);
+		expect(source).toContain(
+			"DROP POLICY IF EXISTS regent_unlock_grants_delete",
+		);
 		for (const block of [createOffer, configureOffer, consumeOffer]) {
 			expect(block).toContain("SECURITY DEFINER");
 			expect(block).toContain("v_actor UUID := auth.uid()");
@@ -82,8 +94,12 @@ describe("R1 curated Regent offers", () => {
 	});
 
 	it("preserves exact retry and the existing two-unlock concurrency boundary", () => {
-		const retryIndex = consumeOffer.indexOf("IF v_grant.consumed_unlock_id IS NOT NULL THEN");
-		const configuredIndex = consumeOffer.indexOf("IF v_grant.candidate_regent_ids IS NULL THEN");
+		const retryIndex = consumeOffer.indexOf(
+			"IF v_grant.consumed_unlock_id IS NOT NULL THEN",
+		);
+		const configuredIndex = consumeOffer.indexOf(
+			"IF v_grant.candidate_regent_ids IS NULL THEN",
+		);
 		expect(retryIndex).toBeGreaterThanOrEqual(0);
 		expect(configuredIndex).toBeGreaterThan(retryIndex);
 		expect(consumeOffer).toContain("RETURN v_existing_unlock.id;");
@@ -93,15 +109,25 @@ describe("R1 curated Regent offers", () => {
 	});
 
 	it("does not introduce a Regent level gate", () => {
-		expect(createOffer).not.toMatch(/character_row\.level|minimum_level|level\s*[>=]/i);
-		expect(consumeOffer).not.toMatch(/character_row\.level|minimum_level|level\s*[>=]/i);
+		expect(createOffer).not.toMatch(
+			/character_row\.level|minimum_level|level\s*[>=]/i,
+		);
+		expect(consumeOffer).not.toMatch(
+			/character_row\.level|minimum_level|level\s*[>=]/i,
+		);
 	});
 
 	it("uses stored candidates in player UI and explicit three-candidate Warden UI", () => {
-		expect(playerPanelSource).toContain("getStoredRegentOfferCandidates(activeOffer)");
+		expect(playerPanelSource).toContain(
+			"getStoredRegentOfferCandidates(activeOffer)",
+		);
 		expect(playerPanelSource).not.toContain("adaptiveChoices");
-		expect(playerPanelSource).toContain("Legacy offer needs Warden configuration");
-		expect(wardenPanelSource).toContain("Choose exactly three distinct canonical Regents");
+		expect(playerPanelSource).toContain(
+			"Legacy offer needs Warden configuration",
+		);
+		expect(wardenPanelSource).toContain(
+			"Choose exactly three distinct canonical Regents",
+		);
 		expect(wardenPanelSource).toContain("candidateIds");
 		expect(wardenPanelSource).toContain("crypto.randomUUID()");
 	});

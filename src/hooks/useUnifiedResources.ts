@@ -107,11 +107,7 @@ export function useUnifiedResources(
 
 		reconciledFor.current = reconcileSignature;
 
-		if (
-			migrated.length === 0 &&
-			!jobReconcile &&
-			!sovereignReconcile.changed
-		)
+		if (migrated.length === 0 && !jobReconcile && !sovereignReconcile.changed)
 			return;
 		void saveSheetState({
 			resources: {
@@ -181,10 +177,15 @@ export function useUnifiedResources(
 			if (costs.length === 0) return Promise.resolve(true);
 			const totals = new Map<string, number>();
 			for (const cost of costs) {
-				totals.set(cost.sourceKey, (totals.get(cost.sourceKey) ?? 0) + cost.amount);
+				totals.set(
+					cost.sourceKey,
+					(totals.get(cost.sourceKey) ?? 0) + cost.amount,
+				);
 			}
 			for (const [sourceKey, amount] of totals) {
-				const row = customResources.find((entry) => entry.sourceKey === sourceKey);
+				const row = customResources.find(
+					(entry) => entry.sourceKey === sourceKey,
+				);
 				if (!row || row.current < amount) return Promise.resolve(false);
 			}
 			const next = customResources.map((row) => {

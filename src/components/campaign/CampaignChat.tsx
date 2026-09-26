@@ -43,7 +43,7 @@ export function CampaignChat({ campaignId }: CampaignChatProps) {
 				setCurrentUserId(null);
 			}
 		});
-	}, [guestEnabled]);
+	}, []);
 
 	const handleNewMessage = useRef<(message: CampaignMessage) => void>(() => {});
 	useEffect(() => {
@@ -52,7 +52,8 @@ export function CampaignChat({ campaignId }: CampaignChatProps) {
 				["campaigns", campaignId, "messages"],
 				(old: CampaignMessage[] | undefined) => {
 					if (!old) return [newMessage];
-					if (old.some((candidate) => candidate.id === newMessage.id)) return old;
+					if (old.some((candidate) => candidate.id === newMessage.id))
+						return old;
 					return [...old, newMessage];
 				},
 			);
@@ -63,9 +64,12 @@ export function CampaignChat({ campaignId }: CampaignChatProps) {
 		handleNewMessage.current(msg),
 	);
 
+	const lastMessageId = messages.at(-1)?.id;
 	useEffect(() => {
-		messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-	}, [messages.length]);
+		if (lastMessageId) {
+			messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+		}
+	}, [lastMessageId]);
 
 	const handleSend = async (event: React.FormEvent) => {
 		event.preventDefault();

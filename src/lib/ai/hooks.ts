@@ -24,7 +24,12 @@ export function useAITagGeneration() {
 			[] as string[],
 		[],
 	);
-	return { isGenerating: false, tags: [] as string[], error: RETIRED, generateTags };
+	return {
+		isGenerating: false,
+		tags: [] as string[],
+		error: RETIRED,
+		generateTags,
+	};
 }
 
 export function useAIMoodDetection() {
@@ -50,7 +55,10 @@ export function useAIImageAnalysis() {
 }
 
 export function useAIStyleSuggestions() {
-	const suggestStyles = useCallback(async (_baseStyle: string) => [] as string[], []);
+	const suggestStyles = useCallback(
+		async (_baseStyle: string) => [] as string[],
+		[],
+	);
 	return {
 		isSuggesting: false,
 		suggestions: [] as string[],

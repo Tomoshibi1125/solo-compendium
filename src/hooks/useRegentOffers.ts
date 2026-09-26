@@ -35,7 +35,9 @@ function normalizeCandidates(values: readonly string[]): CanonicalRegentId[] {
 		return canonical ? [canonical] : [];
 	});
 	if (resolved.length !== 3 || new Set(resolved).size !== 3) {
-		throw new Error("A Regent offer requires exactly three distinct canonical Regents.");
+		throw new Error(
+			"A Regent offer requires exactly three distinct canonical Regents.",
+		);
 	}
 	return resolved;
 }
@@ -88,7 +90,8 @@ export function useRegentOffers(characterId: string) {
 				p_candidate_regent_ids: candidates,
 				p_request_id: requestId,
 			});
-			if (error) throw new Error(error.message || "Failed to create Regent offer.");
+			if (error)
+				throw new Error(error.message || "Failed to create Regent offer.");
 			if (typeof data !== "string" || !data) {
 				throw new Error("The server did not return a Regent offer identity.");
 			}
@@ -123,7 +126,8 @@ export function useRegentOffers(characterId: string) {
 				p_grant_id: grantId,
 				p_candidate_regent_ids: candidates,
 			});
-			if (error) throw new Error(error.message || "Failed to configure Regent offer.");
+			if (error)
+				throw new Error(error.message || "Failed to configure Regent offer.");
 			if (typeof data !== "number") {
 				throw new Error("The server did not return an offer version.");
 			}
@@ -150,7 +154,8 @@ export function useRegentOffers(characterId: string) {
 			const { data, error } = await callRpc("revoke_regent_unlock_offer", {
 				p_grant_id: grantId,
 			});
-			if (error) throw new Error(error.message || "Failed to revoke Regent offer.");
+			if (error)
+				throw new Error(error.message || "Failed to revoke Regent offer.");
 			if (data !== grantId) {
 				throw new Error("The server did not confirm Regent offer revocation.");
 			}

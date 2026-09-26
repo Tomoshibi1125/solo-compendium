@@ -143,9 +143,11 @@ export function resolveCompanionEffectiveStats(
 ): EffectiveCompanionStats | null {
 	const snapshot = readCompanionSnapshotBaseStats(instance.source_snapshot);
 	const mayUseLive = instance.source_policy === "legacy-live";
-	const source = snapshot ?? (mayUseLive ? liveCatalogFallback ?? null : null);
+	const source =
+		snapshot ?? (mayUseLive ? (liveCatalogFallback ?? null) : null);
 
-	const projectedName = stringOrNull(projection.nickname) ?? stringOrNull(projection.name);
+	const projectedName =
+		stringOrNull(projection.nickname) ?? stringOrNull(projection.name);
 	const projectedHpMax = positiveOrNull(projection.hpMax);
 	const projectedAc = finiteNumber(projection.baseAc);
 	const projectedSpeed = positiveOrNull(projection.speed);
@@ -173,7 +175,8 @@ export function resolveCompanionEffectiveStats(
 		sourceRevision: instance.source_revision,
 		sourcePolicy: instance.source_policy,
 		profileVersion: instance.profile_version,
-		usesLiveCatalogFallback: snapshot === null && mayUseLive && !!liveCatalogFallback,
+		usesLiveCatalogFallback:
+			snapshot === null && mayUseLive && !!liveCatalogFallback,
 	};
 }
 

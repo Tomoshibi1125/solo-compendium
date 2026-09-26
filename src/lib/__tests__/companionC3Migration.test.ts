@@ -6,18 +6,34 @@ const migration = `${c3Source}\n${c3Hardening}`.replace(/\r\n/g, "\n");
 
 describe("C3 companion persistence contract", () => {
 	it("links one stable living instance to at most one actor per combat session", () => {
-		expect(migration).toContain("campaign_combatants_companion_once_per_session");
-		expect(migration).toContain("ON public.campaign_combatants(session_id, companion_instance_id)");
-		expect(migration).toContain("ON CONFLICT (session_id, companion_instance_id)");
+		expect(migration).toContain(
+			"campaign_combatants_companion_once_per_session",
+		);
+		expect(migration).toContain(
+			"ON public.campaign_combatants(session_id, companion_instance_id)",
+		);
+		expect(migration).toContain(
+			"ON CONFLICT (session_id, companion_instance_id)",
+		);
 		expect(migration).toContain("RETURN v_existing");
 	});
 
 	it("persists and reconciles HP, conditions, resources and downed state", () => {
-		expect(migration).toContain("combat_state_version BIGINT NOT NULL DEFAULT 0");
-		expect(migration).toContain("combat_state JSONB NOT NULL DEFAULT '{}'::jsonb");
-		expect(migration).toContain("'conditions', app_private.companion_c3_array(NEW.conditions)");
-		expect(migration).toContain("'resources', app_private.companion_c3_record(NEW.stats->'resources')");
-		expect(migration).toContain("'downed', COALESCE((NEW.stats->>'downed')::BOOLEAN, v_hp <= 0)");
+		expect(migration).toContain(
+			"combat_state_version BIGINT NOT NULL DEFAULT 0",
+		);
+		expect(migration).toContain(
+			"combat_state JSONB NOT NULL DEFAULT '{}'::jsonb",
+		);
+		expect(migration).toContain(
+			"'conditions', app_private.companion_c3_array(NEW.conditions)",
+		);
+		expect(migration).toContain(
+			"'resources', app_private.companion_c3_record(NEW.stats->'resources')",
+		);
+		expect(migration).toContain(
+			"'downed', COALESCE((NEW.stats->>'downed')::BOOLEAN, v_hp <= 0)",
+		);
 		expect(migration).toContain("'STALE_COMPANION_COMBAT_STATE'");
 	});
 
@@ -29,7 +45,9 @@ describe("C3 companion persistence contract", () => {
 	});
 
 	it("keeps reactions separate unless the authored profile explicitly shares them", () => {
-		expect(migration).toContain("COALESCE(NULLIF(v_combat->>'reactionPool', ''), 'separate')");
+		expect(migration).toContain(
+			"COALESCE(NULLIF(v_combat->>'reactionPool', ''), 'separate')",
+		);
 		expect(migration).toContain("('separate', 'shared-rider')");
 		expect(migration).toContain("'reactionAvailable'");
 	});

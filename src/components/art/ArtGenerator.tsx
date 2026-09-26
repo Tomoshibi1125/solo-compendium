@@ -46,14 +46,21 @@ export function ArtGenerator({
 				</Alert>
 				{existingData?.name && (
 					<p className="text-sm text-muted-foreground">
-						Current subject: <span className="font-medium text-foreground">{existingData.name}</span>
+						Current subject:{" "}
+						<span className="font-medium text-foreground">
+							{existingData.name}
+						</span>
 					</p>
 				)}
 				{referenceImageUrl && (
 					<div className="overflow-hidden rounded-lg border bg-muted/20 p-2">
 						<img
 							src={referenceImageUrl}
-							alt={existingData?.name ? `${existingData.name} reference` : "Existing reference artwork"}
+							alt={
+								existingData?.name
+									? `${existingData.name} reference`
+									: "Existing reference artwork"
+							}
 							className="mx-auto max-h-72 rounded object-contain"
 						/>
 					</div>

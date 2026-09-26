@@ -25,7 +25,9 @@ const v2Validator = between(
 
 describe("S2 Sovereign storage migration contract", () => {
 	it("establishes versioned definition authority without fabricating legacy v2 IDs", () => {
-		expect(migration).toContain("ADD COLUMN IF NOT EXISTS schema_version SMALLINT");
+		expect(migration).toContain(
+			"ADD COLUMN IF NOT EXISTS schema_version SMALLINT",
+		);
 		expect(migration).toContain("ADD COLUMN IF NOT EXISTS definition JSONB");
 		expect(migration).toContain("ADD COLUMN IF NOT EXISTS definition_id TEXT");
 		expect(migration).toContain("'status', 'legacy-visible'");
@@ -56,14 +58,20 @@ describe("S2 Sovereign storage migration contract", () => {
 		expect(attachRpc).toContain("INSERT INTO public.character_features");
 		expect(attachRpc).toContain("UPDATE public.characters");
 		expect(attachRpc).toContain("active_sovereign_id = v_sovereign.id");
-		expect(attachRpc).toContain("INSERT INTO public.sovereign_attachment_operations");
-		expect(attachRpc).toContain("PERFORM set_config('app.sovereign_attachment', 'on', true)");
+		expect(attachRpc).toContain(
+			"INSERT INTO public.sovereign_attachment_operations",
+		);
+		expect(attachRpc).toContain(
+			"PERFORM set_config('app.sovereign_attachment', 'on', true)",
+		);
 	});
 
 	it("revalidates ownership, canonical sources and both Regent unlocks server-side", () => {
 		expect(attachRpc).toContain("CHARACTER_OWNERSHIP_REQUIRED");
 		expect(attachRpc).toContain("SOVEREIGN_OWNERSHIP_REQUIRED");
-		expect(attachRpc).toContain("SOVEREIGN_CHARACTER_CANONICAL_SOURCE_REQUIRED");
+		expect(attachRpc).toContain(
+			"SOVEREIGN_CHARACTER_CANONICAL_SOURCE_REQUIRED",
+		);
 		expect(attachRpc).toContain("SOVEREIGN_CHARACTER_SOURCE_MISMATCH");
 		expect(attachRpc).toContain("count(DISTINCT unlock_row.regent_id)");
 		expect(attachRpc).toContain("SOVEREIGN_REGENT_UNLOCKS_REQUIRED");
@@ -83,14 +91,22 @@ describe("S2 Sovereign storage migration contract", () => {
 		expect(migration).toContain("SOVEREIGN_ATTACHMENT_RPC_REQUIRED");
 		expect(migration).toContain("SOVEREIGN_RUNTIME_IDENTITY_RPC_REQUIRED");
 		expect(migration).toContain("SOVEREIGN_PROJECTION_RPC_REQUIRED");
-		expect(migration).toContain("BEFORE INSERT OR UPDATE OF active_sovereign_id, gemini_state");
-		expect(migration).not.toContain("BEFORE UPDATE OF gemini_state ON public.characters");
+		expect(migration).toContain(
+			"BEFORE INSERT OR UPDATE OF active_sovereign_id, gemini_state",
+		);
+		expect(migration).not.toContain(
+			"BEFORE UPDATE OF gemini_state ON public.characters",
+		);
 	});
 
 	it("carries an authoritative definition snapshot through the existing character export envelope", () => {
-		expect(attachRpc).toContain("'sovereignDefinition', v_sovereign.definition");
+		expect(attachRpc).toContain(
+			"'sovereignDefinition', v_sovereign.definition",
+		);
 		expect(migration).toContain("'sovereignImportDetached', true");
 		expect(migration).toContain("NEW.active_sovereign_id := NULL");
-		expect(migration).toContain("'legacySovereignCompatibility', 'unmapped-compendium-reference'");
+		expect(migration).toContain(
+			"'legacySovereignCompatibility', 'unmapped-compendium-reference'",
+		);
 	});
 });

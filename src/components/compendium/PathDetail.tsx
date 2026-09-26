@@ -252,7 +252,7 @@ export const PathDetail = ({ data }: { data: PathData }) => {
 			</div>
 
 			{/* Path access */}
-			{(jobName || pathLevel) && (
+			{(jobName || pathLevel || data.requirements?.level) && (
 				<div>
 					<h3 className="text-lg font-semibold mb-3 font-heading">
 						Path Access
@@ -268,6 +268,12 @@ export const PathDetail = ({ data }: { data: PathData }) => {
 							<div className="flex items-center gap-2">
 								<Swords className="w-4 h-4" />
 								<span>Unlocks at level {pathLevel}</span>
+							</div>
+						)}
+						{data.requirements?.level != null && (
+							<div className="flex items-center gap-2">
+								<Swords className="w-4 h-4" />
+								<span>Requires level {data.requirements.level}</span>
 							</div>
 						)}
 					</div>

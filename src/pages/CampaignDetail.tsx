@@ -24,6 +24,7 @@ import { CampaignActivityPanel } from "@/components/campaign/CampaignActivityPan
 import { CampaignCalendarPanel } from "@/components/campaign/CampaignCalendarPanel";
 import { CampaignCharacters } from "@/components/campaign/CampaignCharacters";
 import { CampaignChat } from "@/components/campaign/CampaignChat";
+import { CampaignHarvestingOversight } from "@/components/campaign/CampaignHarvestingOversight";
 import { CampaignInviteModal } from "@/components/campaign/CampaignInviteModal";
 import { CampaignNotes } from "@/components/campaign/CampaignNotes";
 import { CampaignPresenceBadge } from "@/components/campaign/CampaignPresenceBadge";
@@ -479,7 +480,7 @@ const CampaignDetail = () => {
 									className="flex-1 gap-1.5 text-xs sm:text-sm min-h-[44px] px-2"
 								>
 									<Crown className="w-3 h-3 sm:w-4 sm:h-4 shrink-0" />
-									<span className="hidden sm:inline">Regent Oversight</span>
+									<span className="hidden sm:inline">Warden Oversight</span>
 									<span className="sm:hidden">Oversight</span>
 								</TabsTrigger>
 							)}
@@ -822,8 +823,9 @@ const CampaignDetail = () => {
 							</TabsContent>
 						)}
 						{hasWardenAccess && (
-							<TabsContent value="oversight">
+							<TabsContent value="oversight" className="space-y-6">
 								<CampaignRegentOversight campaignId={id || ""} />
+								<CampaignHarvestingOversight campaignId={id || ""} />
 							</TabsContent>
 						)}
 					</Tabs>

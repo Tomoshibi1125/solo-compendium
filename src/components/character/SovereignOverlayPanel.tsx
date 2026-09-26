@@ -221,7 +221,9 @@ export function SovereignOverlayPanel({
 		: (sovereign.abilities || [])
 				.map((ability, index) => legacyAbility(ability, index, level))
 				.sort((a, b) => a.level - b.level);
-	const capstoneCount = abilities.filter((ability) => ability.isCapstone).length;
+	const capstoneCount = abilities.filter(
+		(ability) => ability.isCapstone,
+	).length;
 	const identityName = definition?.identity.name ?? sovereign.name;
 	const identityTitle = definition?.identity.title ?? sovereign.title;
 	const description = definition?.description ?? sovereign.description;
@@ -251,14 +253,20 @@ export function SovereignOverlayPanel({
 							</Badge>
 						)}
 						{definition ? (
-							<Badge variant="outline">v2 • {abilities.length}/8 milestones</Badge>
+							<Badge variant="outline">
+								v2 • {abilities.length}/8 milestones
+							</Badge>
 						) : (
 							<>
 								{sovereign.power_multiplier && (
-									<Badge variant="outline">⚡ {sovereign.power_multiplier}</Badge>
+									<Badge variant="outline">
+										⚡ {sovereign.power_multiplier}
+									</Badge>
 								)}
 								{sovereign.fusion_stability && (
-									<Badge variant="outline">🔗 {sovereign.fusion_stability}</Badge>
+									<Badge variant="outline">
+										🔗 {sovereign.fusion_stability}
+									</Badge>
 								)}
 							</>
 						)}
@@ -319,7 +327,9 @@ export function SovereignOverlayPanel({
 							</p>
 						</div>
 						{definition && (
-							<Badge variant={capstoneCount === 2 ? "secondary" : "destructive"}>
+							<Badge
+								variant={capstoneCount === 2 ? "secondary" : "destructive"}
+							>
 								{capstoneCount}/2 capstones
 							</Badge>
 						)}
@@ -327,11 +337,7 @@ export function SovereignOverlayPanel({
 					<ScrollArea className="max-h-[460px] pr-2">
 						<div className="space-y-2">
 							{abilities.map((ability, index) => (
-								<AbilityCard
-									key={ability.id}
-									ability={ability}
-									index={index}
-								/>
+								<AbilityCard key={ability.id} ability={ability} index={index} />
 							))}
 						</div>
 					</ScrollArea>

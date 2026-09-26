@@ -1,14 +1,23 @@
 import { describe, expect, it } from "vitest";
-import type { GeneratedSovereign, Job, Path, Regent } from "@/lib/geminiProtocol";
+import type {
+	GeneratedSovereign,
+	Job,
+	Path,
+	Regent,
+} from "@/lib/geminiProtocol";
 import {
 	buildLegacySovereignSavePayload,
 	canonicalizeLegacySovereign,
+	isRebuildableSovereignFeature,
 	legacySovereignSaveOperationId,
 	SOVEREIGN_PROJECTION_REVISION,
 	sovereignAttachmentOperationId,
 } from "@/lib/sovereign/sovereignPersistence";
 
-const job = { id: "11111111-1111-4111-8111-111111111111", name: "Destroyer" } as Job;
+const job = {
+	id: "11111111-1111-4111-8111-111111111111",
+	name: "Destroyer",
+} as Job;
 const path = {
 	id: "22222222-2222-4222-8222-222222222222",
 	name: "Path of the Frostwarden",
@@ -42,6 +51,23 @@ const sovereign = {
 } as GeneratedSovereign;
 
 describe("Sovereign S2 persistence helpers", () => {
+	it("drops imported Sovereign projection rows so a backup cannot attach foreign mechanics", () => {
+		expect(
+			isRebuildableSovereignFeature({
+				source: "Sovereign: Frostvoid",
+				sovereign_definition_id: null,
+			}),
+		).toBe(true);
+		expect(
+			isRebuildableSovereignFeature({
+				source: "Other",
+				sovereign_definition_id: "foreign-save-id",
+			}),
+		).toBe(true);
+		expect(isRebuildableSovereignFeature({ source: "Job: Destroyer" })).toBe(
+			false,
+		);
+	});
 	it("canonicalizes explicit Regent aliases without swapping source order", () => {
 		const canonical = canonicalizeLegacySovereign(sovereign);
 		expect(canonical.regentA.id).toBe("umbral_regent");
@@ -67,7 +93,9 @@ describe("Sovereign S2 persistence helpers", () => {
 		expect(legacySovereignSaveOperationId(first)).toBe(
 			legacySovereignSaveOperationId(reordered),
 		);
-		expect(legacySovereignSaveOperationId(first)).toMatch(/^s2-save-legacy-[0-9a-f]{8}$/);
+		expect(legacySovereignSaveOperationId(first)).toMatch(
+			/^s2-save-legacy-[0-9a-f]{8}$/,
+		);
 	});
 
 	it("changes the save identity when mechanics change", () => {

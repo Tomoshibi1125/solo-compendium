@@ -186,7 +186,7 @@ export const craftingRecipes: CompendiumRecipe[] = [
 		name: "Residue-Safe Rations",
 		display_name: "Residue-Safe Rations",
 		description:
-			"Prepare sealed meals and hydration packs that resist minor Essence contamination during long operations.",
+			"Prepare sealed meals and hydration packs that resist minor Essence contamination during long operations. This formula uses a 30-minute Intelligence (Survival) check against DC 12.",
 		recipe_type: "survival",
 		rank: "D",
 		time_required: "30 minutes",
@@ -198,6 +198,8 @@ export const craftingRecipes: CompendiumRecipe[] = [
 		required_tools: ["Cook's utensils or survival kit"],
 		outcome:
 			"Create 4 safe ration servings; each grants advantage on one save against exposure from spoiled supplies.",
+		failure_risk:
+			"The ration base and containment foam are consumed when work begins, including on a failed check.",
 		source_book: RA_SOURCE,
 	},
 	{

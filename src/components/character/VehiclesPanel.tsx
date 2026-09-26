@@ -152,12 +152,24 @@ export function VehiclesPanel({ characterId, readOnly }: VehiclesPanelProps) {
 						<Badge variant="outline">
 							{requisitionProfile?.spent_vrp ?? 0} spent
 						</Badge>
+						{!readOnly && (
+							<Button
+								variant="outline"
+								size="sm"
+								className="gap-2"
+								onClick={() => setAddOpen(true)}
+								data-testid="vehicle-add-btn"
+							>
+								<Plus className="w-4 h-4" />
+								Add Vehicle or Mount
+							</Button>
+						)}
 					</div>
 				</div>
 
 				{vehicles.length === 0 ? (
 					<p className="text-xs text-muted-foreground text-center py-4">
-						No vehicles or mounts yet. Add one from the canonical catalog.
+						No vehicles or mounts yet. Choose one from the catalog.
 					</p>
 				) : (
 					<div className="space-y-2">
@@ -177,7 +189,9 @@ export function VehiclesPanel({ characterId, readOnly }: VehiclesPanelProps) {
 							}
 							const isMount = catalogEntry.vehicle_type === "mount";
 							const companionInstanceId = (
-								row as CharacterVehicleRow & { companion_instance_id?: string | null }
+								row as CharacterVehicleRow & {
+									companion_instance_id?: string | null;
+								}
 							).companion_instance_id;
 							const companionInstance = companionInstanceId
 								? (companionById.get(companionInstanceId) ?? null)
@@ -463,19 +477,6 @@ export function VehiclesPanel({ characterId, readOnly }: VehiclesPanelProps) {
 							);
 						})}
 					</div>
-				)}
-
-				{!readOnly && (
-					<Button
-						variant="outline"
-						size="sm"
-						className="w-full gap-2"
-						onClick={() => setAddOpen(true)}
-						data-testid="vehicle-add-btn"
-					>
-						<Plus className="w-4 h-4" />
-						Add Vehicle or Mount
-					</Button>
 				)}
 			</div>
 			<AddVehicleDialog

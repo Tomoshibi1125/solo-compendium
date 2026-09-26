@@ -1,14 +1,18 @@
+import { readFileSync } from "node:fs";
+import { resolve } from "node:path";
 import { describe, expect, it } from "vitest";
+import { z } from "zod";
 import {
 	normalizeExternalSovereignActionType,
 	normalizeExternalSovereignRecharge,
 	readSovereignDefinition,
-	sovereignModifierToFeatureEffect,
 	SovereignExpressionSchema,
+	type SovereignV2Definition,
+	SovereignV2DefinitionSchema,
+	sovereignModifierToFeatureEffect,
 	toExternalSovereignActionType,
 	toExternalSovereignRecharge,
 	validateSovereignV2Definition,
-	type SovereignV2Definition,
 } from "@/lib/sovereign/sovereignV2Contract";
 
 const ancestry = ["job", "path", "regent-a", "regent-b"] as const;
@@ -24,7 +28,8 @@ const validDefinition: SovereignV2Definition = {
 	description: "A fused sovereign definition used as a strict v2 fixture.",
 	manifestation: "Black frost condenses into a single stable sovereign form.",
 	fusion_theme: "Singularity Frost",
-	combat_doctrine: "Control space, force movement, and finish isolated targets.",
+	combat_doctrine:
+		"Control space, force movement, and finish isolated targets.",
 	primary_abilities: ["STR", "PRE"],
 	affinities: [
 		{
@@ -60,14 +65,16 @@ const validDefinition: SovereignV2Definition = {
 					? ["job", "regent-a"]
 					: ["path", "regent-b"],
 		modifier_ids: [],
-		resource_costs: level === 14 ? [{ resource_id: "resource.focus", amount: 1 }] : [],
+		resource_costs:
+			level === 14 ? [{ resource_id: "resource.focus", amount: 1 }] : [],
 		compatibility: "native",
 	})),
 	resources: [
 		{
 			id: "resource.focus",
 			name: "Sovereign Focus",
-			description: "A typed resource whose exact balance budget is defined elsewhere.",
+			description:
+				"A typed resource whose exact balance budget is defined elsewhere.",
 			ancestry: ["job", "path"],
 			maximum: { kind: "proficiency-bonus" },
 			recharge: "long-rest",
@@ -102,6 +109,24 @@ const validDefinition: SovereignV2Definition = {
 };
 
 const clone = (): SovereignV2Definition => structuredClone(validDefinition);
+
+it("keeps the database structural validator generated from the client contract", () => {
+	const schema = JSON.parse(
+		readFileSync(
+			resolve(process.cwd(), "supabase/sovereign_v2.schema.json"),
+			"utf8",
+		),
+	);
+	const migration = readFileSync(
+		resolve(
+			process.cwd(),
+			"supabase/migrations/20260926083000_sovereign_json_schema_guard.sql",
+		),
+		"utf8",
+	);
+	expect(schema).toEqual(z.toJSONSchema(SovereignV2DefinitionSchema));
+	expect(migration).toContain(JSON.stringify(schema));
+});
 
 describe("validateSovereignV2Definition", () => {
 	it("accepts the strict v2 fixture and canonical source expectations", () => {
@@ -162,7 +187,53 @@ describe("validateSovereignV2Definition", () => {
 		});
 		expect(result.ok).toBe(false);
 		if (result.ok) return;
-		expect(result.errors.join(" ")).toMatch(/does not match the canonical input/i);
+		expect(result.errors.join(" ")).toMatch(
+			/does not match the canonical input/i,
+		);
+	});
+
+	it("rejects unknown damage types, duplicate names, and unclaimed modifiers", () => {
+		const unknownDamage = {
+			...clone(),
+			modifiers: [
+				{ ...validDefinition.modifiers[0], damage_type: "made-up-force" },
+			],
+		};
+		expect(validateSovereignV2Definition(unknownDamage).ok).toBe(false);
+
+		const duplicateName = clone();
+		duplicateName.affinities[0].name = duplicateName.features[0].name;
+		expect(validateSovereignV2Definition(duplicateName).ok).toBe(false);
+
+		const unclaimed = clone();
+		unclaimed.features[0].modifier_ids = [];
+		expect(validateSovereignV2Definition(unclaimed).ok).toBe(false);
+
+		const manual = clone();
+		manual.features[0].compatibility = "manual-only";
+		manual.features[0].modifier_ids = [];
+		expect(validateSovereignV2Definition(manual).ok).toBe(false);
+	});
+
+	it("bounds typed combat mechanics by milestone and primary ability", () => {
+		const candidate = clone();
+		candidate.abilities[1].mechanics = {
+			kind: "attack",
+			ability: "PRE",
+			range_ft: 30,
+			damage: { count: 4, sides: 8, type: "cold" },
+		};
+		const result = validateSovereignV2Definition(candidate);
+		expect(result.ok).toBe(false);
+		if (result.ok) return;
+		expect(result.errors.join(" ")).toMatch(/dice cap|ability must be primary/);
+		candidate.abilities[1].mechanics = {
+			kind: "attack",
+			ability: "STR",
+			range_ft: 30,
+			damage: { count: 1, sides: 8, type: "cold" },
+		};
+		expect(validateSovereignV2Definition(candidate).ok).toBe(true);
 	});
 });
 
@@ -177,11 +248,27 @@ describe("bounded expression grammar", () => {
 				],
 			}).success,
 		).toBe(true);
-		expect(SovereignExpressionSchema.safeParse("2d6 + PRE").success).toBe(false);
+		expect(SovereignExpressionSchema.safeParse("2d6 + PRE").success).toBe(
+			false,
+		);
 		expect(
 			SovereignExpressionSchema.safeParse({
 				kind: "constant",
 				value: Number.MAX_SAFE_INTEGER + 1,
+			}).success,
+		).toBe(false);
+		expect(
+			SovereignExpressionSchema.safeParse({
+				kind: "dice",
+				count: 70,
+				sides: 100,
+			}).success,
+		).toBe(true);
+		expect(
+			SovereignExpressionSchema.safeParse({
+				kind: "dice",
+				count: 101,
+				sides: 1_001,
 			}).success,
 		).toBe(false);
 	});
@@ -189,7 +276,9 @@ describe("bounded expression grammar", () => {
 
 describe("external vocabulary adapters", () => {
 	it("round-trips external action vocabulary through the internal hyphenated form", () => {
-		expect(normalizeExternalSovereignActionType("bonus_action")).toBe("bonus-action");
+		expect(normalizeExternalSovereignActionType("bonus_action")).toBe(
+			"bonus-action",
+		);
 		expect(
 			normalizeExternalSovereignActionType(
 				toExternalSovereignActionType("bonus-action"),
@@ -255,6 +344,10 @@ describe("existing FeatureEffect mapping", () => {
 				duration: "persistent",
 				stacking: "engine-default",
 			}),
-		).toEqual({ kind: "advantage", rollType: "save", condition: "against fear" });
+		).toEqual({
+			kind: "advantage",
+			rollType: "save",
+			condition: "against fear",
+		});
 	});
 });

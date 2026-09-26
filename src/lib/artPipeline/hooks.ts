@@ -19,10 +19,13 @@ export function useArtPipeline() {
 		}),
 		[],
 	);
-	const getQueueStatus = useCallback(async (): Promise<QueueStatus> => ({
-		running: [],
-		pending: [],
-	}), []);
+	const getQueueStatus = useCallback(
+		async (): Promise<QueueStatus> => ({
+			running: [],
+			pending: [],
+		}),
+		[],
+	);
 	const clearQueue = useCallback(async () => {}, []);
 	const interrupt = useCallback(async () => {}, []);
 
@@ -53,7 +56,9 @@ export function useArtAsset(
 		setError(null);
 		try {
 			const assets = await artPipeline.getAssetsForEntity(entityType, entityId);
-			setAsset(assets.find((candidate) => candidate.variant === variant) ?? null);
+			setAsset(
+				assets.find((candidate) => candidate.variant === variant) ?? null,
+			);
 		} catch (err) {
 			setError(err instanceof Error ? err.message : "Failed to load asset");
 		} finally {
@@ -62,10 +67,11 @@ export function useArtAsset(
 	}, [entityType, entityId, variant]);
 
 	const createAsset = useCallback(
-		async (_title: string, _options: Partial<ArtRequest> = {}) => ({
-			success: false,
-			error: RETIRED_MESSAGE,
-		}) as GenerationResult,
+		async (_title: string, _options: Partial<ArtRequest> = {}) =>
+			({
+				success: false,
+				error: RETIRED_MESSAGE,
+			}) as GenerationResult,
 		[],
 	);
 

@@ -1,10 +1,10 @@
 import { describe, expect, it, vi } from "vitest";
+import type { SovereignV2Definition } from "@/lib/sovereign/sovereignV2Contract";
 import {
 	handleSovereignGenerationRequest,
 	parseSovereignGenerationRequest,
 	type SovereignGenerationDataAccess,
 } from "../../../api/_sovereignGeneration";
-import type { SovereignV2Definition } from "@/lib/sovereign/sovereignV2Contract";
 
 const request = {
 	jobId: "job.test",
@@ -47,7 +47,8 @@ const creativeBody = () => ({
 	description: "A stable synthesis of the four declared canonical sources.",
 	manifestation: "A ring of black frost condenses around a unified silhouette.",
 	fusion_theme: "Eclipse Frost",
-	combat_doctrine: "Control space with shadowed frost and decisive positioning.",
+	combat_doctrine:
+		"Control space with shadowed frost and decisive positioning.",
 	primary_abilities: ["STR"],
 	affinities: [
 		{
@@ -58,22 +59,72 @@ const creativeBody = () => ({
 		},
 	],
 	traits: [],
-	features: [],
+	features: [
+		{
+			id: "feature.eclipse-sense",
+			name: "Eclipse Sense",
+			description: "Grants Perception proficiency.",
+			ancestry: ["job", "regent-a"],
+			modifier_ids: ["modifier.eclipse-sense"],
+			compatibility: "native",
+		},
+	],
 	abilities: [1, 3, 5, 7, 10, 14, 17, 20].map((level) => ({
 		id: `ability.eclipse-${level}`,
 		name: `Eclipse Milestone ${level}`,
 		description: `A level ${level} fused technique derived from all four sources.`,
 		level,
 		action_type: "action",
-		recharge: "at-will",
+		recharge: level === 10 ? "long-rest" : "at-will",
 		is_capstone: level === 17 || level === 20,
 		ancestry: ["job", "path", "regent-a", "regent-b"],
 		modifier_ids: [],
-		resource_costs: [],
-		compatibility: "native",
+		resource_costs:
+			level === 10
+				? [{ resource_id: "resource.eclipse-focus", amount: 1 }]
+				: [],
+		mechanics:
+			level === 1 || level === 5
+				? {
+						kind: "attack",
+						ability: "STR",
+						range_ft: 30,
+						damage: { count: level === 1 ? 1 : 2, sides: 6, type: "cold" },
+					}
+				: level === 3 || level === 10
+					? {
+							kind: "save",
+							ability: "STR",
+							save_ability: "AGI",
+							range_ft: 30,
+							damage: { count: level === 3 ? 1 : 3, sides: 6, type: "cold" },
+							success_damage: "half",
+						}
+					: undefined,
+		compatibility: [1, 3, 5, 10].includes(level) ? "native" : "manual-only",
 	})),
-	resources: [],
-	modifiers: [],
+	resources: [
+		{
+			id: "resource.eclipse-focus",
+			name: "Eclipse Focus",
+			description: "One use per proficiency bonus, regained on a long rest.",
+			ancestry: ["job", "path"],
+			maximum: { kind: "proficiency-bonus" },
+			recharge: "long-rest",
+		},
+	],
+	modifiers: [
+		{
+			id: "modifier.eclipse-sense",
+			source_id: "feature.eclipse-sense",
+			kind: "proficiency",
+			proficiency_type: "skill",
+			target: "Perception",
+			ancestry: ["regent-a"],
+			duration: "persistent",
+			stacking: "engine-default",
+		},
+	],
 });
 
 function makeDataAccess() {
@@ -168,9 +219,9 @@ describe("dedicated Sovereign generation core", () => {
 		expect(definition.abilities.map((ability) => ability.level)).toEqual([
 			1, 3, 5, 7, 10, 14, 17, 20,
 		]);
-		expect(definition.abilities.filter((ability) => ability.is_capstone)).toHaveLength(
-			2,
-		);
+		expect(
+			definition.abilities.filter((ability) => ability.is_capstone),
+		).toHaveLength(2);
 
 		const retry = await handleSovereignGenerationRequest(
 			{
@@ -213,6 +264,35 @@ describe("dedicated Sovereign generation core", () => {
 			},
 		);
 		expect(result.status).toBe(422);
+		expect(store.getSaveCount()).toBe(0);
+	});
+
+	it("rejects a structurally valid draft that exceeds the generated resource budget", async () => {
+		const store = makeDataAccess();
+		const draft = creativeBody();
+		const unbounded = {
+			...draft,
+			resources: draft.resources.map((resource) => ({
+				...resource,
+				maximum: { kind: "constant", value: 99 },
+			})),
+		};
+		const result = await handleSovereignGenerationRequest(
+			{ authorization: "Bearer valid-token", body: request },
+			{
+				dataAccess: store.dataAccess,
+				runProvider: async () => ({
+					ok: true,
+					text: JSON.stringify(unbounded),
+					provider: "test-provider",
+					model: "test-model",
+					usage: {},
+				}),
+				disableRateLimit: true,
+			},
+		);
+		expect(result.status).toBe(422);
+		expect(result.body.error).toMatch(/generation budget/i);
 		expect(store.getSaveCount()).toBe(0);
 	});
 

@@ -10,7 +10,7 @@
 
 import { useQuery } from "@tanstack/react-query";
 import { Loader2, PawPrint, Search, Skull, Users } from "lucide-react";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -36,12 +36,14 @@ import {
 import { formatRegentVernacular } from "@/lib/vernacular";
 import { AddDialogDetailPanel, type DetailStat } from "./AddDialogDetailPanel";
 
-type PickerSource = "statblock" | "mount" | "ally";
+export type CompanionPickerSource = "statblock" | "mount" | "ally";
 
 interface AddCompanionDialogProps {
 	open: boolean;
 	onOpenChange: (open: boolean) => void;
 	characterId: string;
+	/** Select a useful catalog tab when the picker is opened from a contextual action. */
+	initialSource?: CompanionPickerSource;
 }
 
 /** Narrowers for the wide StaticCompendiumEntry bag. */
@@ -63,12 +65,19 @@ export function AddCompanionDialog({
 	open,
 	onOpenChange,
 	characterId,
+	initialSource = "statblock",
 }: AddCompanionDialogProps) {
-	const [source, setSource] = useState<PickerSource>("statblock");
+	const [source, setSource] = useState<CompanionPickerSource>(initialSource);
 	const [searchQuery, setSearchQuery] = useState("");
 	const [addingKey, setAddingKey] = useState<string | null>(null);
 	const { addExtra } = useCharacterExtras(characterId);
 	const addGuildAlly = useAddGuildAllyCompanion();
+
+	// The dialog remains mounted while closed. Reset its catalog tab every time
+	// a contextual action (for example, "Add mount") opens it.
+	useEffect(() => {
+		if (open) setSource(initialSource);
+	}, [initialSource, open]);
 
 	const { data: statblocks = [], isLoading: statblocksLoading } = useQuery({
 		queryKey: ["companion-statblocks", searchQuery],
@@ -384,7 +393,7 @@ export function AddCompanionDialog({
 
 				<Tabs
 					value={source}
-					onValueChange={(value) => setSource(value as PickerSource)}
+					onValueChange={(value) => setSource(value as CompanionPickerSource)}
 					className="w-full"
 				>
 					<TabsList className="grid grid-cols-3">

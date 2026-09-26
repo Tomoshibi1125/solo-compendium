@@ -1,7 +1,10 @@
 import { ExternalLink, Plus, RefreshCw, Shield, Trash2 } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { AddCompanionDialog } from "@/components/character/AddCompanionDialog";
+import {
+	AddCompanionDialog,
+	type CompanionPickerSource,
+} from "@/components/character/AddCompanionDialog";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -35,6 +38,8 @@ export function CharacterExtrasPanel({
 	const ascendantTools = useAscendantTools();
 
 	const [pickerOpen, setPickerOpen] = useState(false);
+	const [pickerSource, setPickerSource] =
+		useState<CompanionPickerSource>("statblock");
 	const [showCustom, setShowCustom] = useState(false);
 	const [draftName, setDraftName] = useState("");
 	const [draftType, setDraftType] = useState("companion");
@@ -87,6 +92,11 @@ export function CharacterExtrasPanel({
 			.catch(console.error);
 	};
 
+	const openPicker = (source: CompanionPickerSource) => {
+		setPickerSource(source);
+		setPickerOpen(true);
+	};
+
 	return (
 		<div className="space-y-4">
 			{/* Section header */}
@@ -106,9 +116,18 @@ export function CharacterExtrasPanel({
 						</Badge>
 					)}
 					{!isReadOnly && (
-						<Button size="sm" onClick={() => setPickerOpen(true)}>
-							<Plus className="w-4 h-4" /> Add Companion
-						</Button>
+						<div className="flex flex-wrap justify-end gap-2">
+							<Button size="sm" onClick={() => openPicker("statblock")}>
+								<Plus className="w-4 h-4" /> Add Companion
+							</Button>
+							<Button
+								size="sm"
+								variant="outline"
+								onClick={() => openPicker("mount")}
+							>
+								<Plus className="w-4 h-4" /> Add Mount
+							</Button>
+						</div>
 					)}
 				</div>
 			</div>
@@ -118,6 +137,7 @@ export function CharacterExtrasPanel({
 				open={pickerOpen}
 				onOpenChange={setPickerOpen}
 				characterId={characterId}
+				initialSource={pickerSource}
 			/>
 
 			{/* Custom free-form entry (homebrew fallback). */}
@@ -220,8 +240,35 @@ export function CharacterExtrasPanel({
 						Loading...
 					</div>
 				) : extras.length === 0 ? (
-					<div className="text-center p-8 border border-dashed rounded-lg text-muted-foreground">
-						No extras tracked. Add one above.
+					<div className="flex flex-col items-center gap-3 border border-dashed p-8 text-center text-muted-foreground rounded-lg">
+						<p>No companions, mounts, or allies tracked yet.</p>
+						{!isReadOnly && (
+							<div className="flex flex-wrap justify-center gap-2">
+								<Button
+									size="sm"
+									variant="outline"
+									onClick={() => openPicker("statblock")}
+									data-testid="companion-empty-browse-btn"
+								>
+									<Plus className="w-4 h-4" /> Browse Companions
+								</Button>
+								<Button
+									size="sm"
+									variant="outline"
+									onClick={() => openPicker("mount")}
+									data-testid="companion-empty-add-mount-btn"
+								>
+									<Plus className="w-4 h-4" /> Browse Mounts
+								</Button>
+								<Button
+									size="sm"
+									variant="ghost"
+									onClick={() => setShowCustom(true)}
+								>
+									Add Custom
+								</Button>
+							</div>
+						)}
 					</div>
 				) : (
 					extras.map((extra) => (

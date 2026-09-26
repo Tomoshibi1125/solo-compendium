@@ -104,7 +104,8 @@ export function CampaignRegentOversight({
 	const selectableRegents = canonicalRegents.filter(
 		(regent) => !selectedUnlockIds.has(regent.id),
 	);
-	const distinctCandidates = candidateIds.every(Boolean) && new Set(candidateIds).size === 3;
+	const distinctCandidates =
+		candidateIds.every(Boolean) && new Set(candidateIds).size === 3;
 	const busy = isCreating || isConfiguring;
 
 	const resetDialog = () => {
@@ -194,7 +195,8 @@ export function CampaignRegentOversight({
 		);
 	}
 
-	const readError = sharedCharacterError ?? campaignUnlockError ?? grantReadError;
+	const readError =
+		sharedCharacterError ?? campaignUnlockError ?? grantReadError;
 	if (readError) {
 		return (
 			<div className="flex items-start gap-3 rounded-lg border border-destructive/40 bg-destructive/5 p-4 text-sm text-destructive">
@@ -213,7 +215,10 @@ export function CampaignRegentOversight({
 			<AscendantWindow title={`${REGENT_LABEL.toUpperCase()} OVERSIGHT`}>
 				<div className="flex justify-between items-start gap-4 mb-6">
 					<p className="text-sm text-muted-foreground max-w-2xl">
-						Confirm a completed Regent quest, then offer exactly three distinct canonical Regents. The player may choose only one stored candidate; there is no level gate and a character can resolve at most two Regents.
+						Confirm a completed Regent quest, then offer exactly three distinct
+						canonical Regents. The player may choose only one stored candidate;
+						there is no level gate and a character can resolve at most two
+						Regents.
 					</p>
 					<Button onClick={openCreate}>
 						<Plus className="w-4 h-4 mr-2" />
@@ -244,13 +249,18 @@ export function CampaignRegentOversight({
 											<User className="w-3 h-3" />
 											Level {character.level} {character.job}
 										</span>
-										<Badge variant="outline">{characterUnlocks.length}/2 resolved</Badge>
+										<Badge variant="outline">
+											{characterUnlocks.length}/2 resolved
+										</Badge>
 									</div>
 
 									{characterOffers.map((offer) => {
 										const stored = getStoredRegentOfferCandidates(offer);
 										return (
-											<div key={offer.id} className="p-3 rounded border bg-muted/20 space-y-2">
+											<div
+												key={offer.id}
+												className="p-3 rounded border bg-muted/20 space-y-2"
+											>
 												<div className="flex items-center justify-between gap-2">
 													<span className="text-xs font-semibold flex items-center gap-1">
 														<ScrollText className="w-3 h-3" />
@@ -262,17 +272,30 @@ export function CampaignRegentOversight({
 												</div>
 												{stored ? (
 													<p className="text-[11px] text-muted-foreground">
-														{stored.map((id) => regentNameById.get(id) ?? id).join(" • ")}
+														{stored
+															.map((id) => regentNameById.get(id) ?? id)
+															.join(" • ")}
 													</p>
 												) : (
-													<p className="text-[11px] text-regent-gold">Legacy credit: candidate configuration required.</p>
+													<p className="text-[11px] text-regent-gold">
+														Legacy credit: candidate configuration required.
+													</p>
 												)}
 												<div className="flex gap-2">
-													<Button size="sm" variant="outline" onClick={() => openEdit(offer)}>
+													<Button
+														size="sm"
+														variant="outline"
+														onClick={() => openEdit(offer)}
+													>
 														<Pencil className="w-3 h-3 mr-1" />
 														{stored ? "Edit" : "Configure"}
 													</Button>
-													<Button size="sm" variant="ghost" disabled={isRevoking} onClick={() => handleRevokeOffer(offer)}>
+													<Button
+														size="sm"
+														variant="ghost"
+														disabled={isRevoking}
+														onClick={() => handleRevokeOffer(offer)}
+													>
 														<Trash2 className="w-3 h-3 mr-1 text-destructive" />
 														Revoke
 													</Button>
@@ -282,17 +305,25 @@ export function CampaignRegentOversight({
 									})}
 
 									{characterUnlocks.map((unlock) => (
-										<div key={unlock.id} className="flex items-center justify-between p-2 rounded bg-muted/30 border">
+										<div
+											key={unlock.id}
+											className="flex items-center justify-between p-2 rounded bg-muted/30 border"
+										>
 											<div className="min-w-0">
 												<p className="font-semibold text-sm">
 													{unlock.regent?.name ?? "Unresolved legacy Regent"}
 												</p>
-												<p className="text-[11px] text-muted-foreground">via: {unlock.quest_name}</p>
+												<p className="text-[11px] text-muted-foreground">
+													via: {unlock.quest_name}
+												</p>
 											</div>
 											<Button
 												variant="ghost"
 												size="icon"
-												onClick={() => handleDeleteUnlock(unlock.id, character.id)}
+												aria-label={`Remove ${unlock.regent?.name ?? "Regent"} unlock`}
+												onClick={() =>
+													handleDeleteUnlock(unlock.id, character.id)
+												}
 												disabled={isRemoving}
 											>
 												<Trash2 className="w-3 h-3 text-destructive" />
@@ -319,18 +350,28 @@ export function CampaignRegentOversight({
 							{editingOffer ? "Configure Regent Offer" : "Create Regent Offer"}
 						</DialogTitle>
 						<DialogDescription>
-							Choose exactly three distinct canonical Regents. Pending offers may be edited; consumed offers are immutable.
+							Choose exactly three distinct canonical Regents. Pending offers
+							may be edited; consumed offers are immutable.
 						</DialogDescription>
 					</DialogHeader>
 
 					<div className="space-y-4 py-4">
 						<div className="space-y-2">
 							<Label>Character</Label>
-							<Select value={selectedCharId} onValueChange={setSelectedCharId} disabled={Boolean(editingOffer)}>
-								<SelectTrigger><SelectValue placeholder="Select character" /></SelectTrigger>
+							<Select
+								value={selectedCharId}
+								onValueChange={setSelectedCharId}
+								disabled={Boolean(editingOffer)}
+							>
+								<SelectTrigger>
+									<SelectValue placeholder="Select character" />
+								</SelectTrigger>
 								<SelectContent>
 									{sharedCharacters.map((share) => (
-										<SelectItem key={share.character_id} value={share.character_id}>
+										<SelectItem
+											key={share.character_id}
+											value={share.character_id}
+										>
 											{share.characters?.name}
 										</SelectItem>
 									))}
@@ -341,8 +382,13 @@ export function CampaignRegentOversight({
 						{!editingOffer && (
 							<div className="space-y-2">
 								<Label>Completed Regent Quest</Label>
-								<Select value={selectedQuestId} onValueChange={setSelectedQuestId}>
-									<SelectTrigger><SelectValue placeholder="Select completed quest" /></SelectTrigger>
+								<Select
+									value={selectedQuestId}
+									onValueChange={setSelectedQuestId}
+								>
+									<SelectTrigger>
+										<SelectValue placeholder="Select completed quest" />
+									</SelectTrigger>
 									<SelectContent>
 										{regentQuests.map((quest) => (
 											<SelectItem key={quest.id} value={quest.id}>
@@ -357,11 +403,24 @@ export function CampaignRegentOversight({
 						{([0, 1, 2] as const).map((index) => (
 							<div className="space-y-2" key={index}>
 								<Label>Candidate {index + 1}</Label>
-								<Select value={candidateIds[index]} onValueChange={(value) => setCandidate(index, value)} disabled={!selectedCharId}>
-									<SelectTrigger><SelectValue placeholder={`Choose Regent ${index + 1}`} /></SelectTrigger>
+								<Select
+									value={candidateIds[index]}
+									onValueChange={(value) => setCandidate(index, value)}
+									disabled={!selectedCharId}
+								>
+									<SelectTrigger>
+										<SelectValue placeholder={`Choose Regent ${index + 1}`} />
+									</SelectTrigger>
 									<SelectContent>
 										{selectableRegents.map((regent) => (
-											<SelectItem key={regent.id} value={regent.id} disabled={candidateIds.some((chosen, chosenIndex) => chosenIndex !== index && chosen === regent.id)}>
+											<SelectItem
+												key={regent.id}
+												value={regent.id}
+												disabled={candidateIds.some(
+													(chosen, chosenIndex) =>
+														chosenIndex !== index && chosen === regent.id,
+												)}
+											>
 												{regent.title || regent.name}
 											</SelectItem>
 										))}
@@ -372,12 +431,23 @@ export function CampaignRegentOversight({
 					</div>
 
 					<DialogFooter>
-						<Button variant="outline" onClick={() => setDialogOpen(false)}>Cancel</Button>
+						<Button variant="outline" onClick={() => setDialogOpen(false)}>
+							Cancel
+						</Button>
 						<Button
 							onClick={handleSubmit}
-							disabled={!selectedCharId || (!editingOffer && !selectedQuestId) || !distinctCandidates || busy}
+							disabled={
+								!selectedCharId ||
+								(!editingOffer && !selectedQuestId) ||
+								!distinctCandidates ||
+								busy
+							}
 						>
-							{busy ? "Saving..." : editingOffer ? "Save Offer" : "Create Offer"}
+							{busy
+								? "Saving..."
+								: editingOffer
+									? "Save Offer"
+									: "Create Offer"}
 						</Button>
 					</DialogFooter>
 				</DialogContent>

@@ -13,9 +13,7 @@ import {
 	SOVEREIGN_FEATURE_SOURCE_PREFIX,
 	sovereignAbilitiesToFeatureRows,
 } from "@/lib/sovereign/applySovereign";
-import {
-	isGeneratedSovereignV2Draft,
-} from "@/lib/sovereign/sovereignGenerationClient";
+import { isGeneratedSovereignV2Draft } from "@/lib/sovereign/sovereignGenerationClient";
 import {
 	buildLegacySovereignSavePayload,
 	canonicalizeLegacySovereign,
@@ -213,14 +211,11 @@ export function useSaveSovereign() {
 				const canonicalSovereign = canonicalizeLegacySovereign(sovereign);
 				projectionSovereign = canonicalSovereign;
 				const payload = buildLegacySovereignSavePayload(canonicalSovereign);
-				sovereignId = await runRpc<string>(
-					"save_legacy_sovereign_definition",
-					{
-						p_payload: payload,
-						p_operation_id: legacySovereignSaveOperationId(payload),
-						p_is_public: true,
-					},
-				);
+				sovereignId = await runRpc<string>("save_legacy_sovereign_definition", {
+					p_payload: payload,
+					p_operation_id: legacySovereignSaveOperationId(payload),
+					p_is_public: true,
+				});
 			}
 			if (typeof sovereignId !== "string" || !sovereignId) {
 				throw new AppError(

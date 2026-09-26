@@ -90,10 +90,7 @@ export function ActionsList({
 		}
 
 		if (!equipmentId) return;
-		if (
-			action.resourceCurrent === undefined ||
-			action.resourceCurrent <= 0
-		)
+		if (action.resourceCurrent === undefined || action.resourceCurrent <= 0)
 			return;
 
 		try {
@@ -181,9 +178,7 @@ export function ActionsList({
 					? () => handleAmmoSpend(action.id)
 					: undefined
 			}
-			onAmmoSpend={
-				action.ammo ? () => handleAmmoSpend(action.id) : undefined
-			}
+			onAmmoSpend={action.ammo ? () => handleAmmoSpend(action.id) : undefined}
 			onUse={() => handleUseAction(action.id, action.equipmentId)}
 			characterId={characterId}
 			campaignId={campaignId}

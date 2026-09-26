@@ -1,9 +1,9 @@
-import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import path from "node:path";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { artPipeline } from "@/lib/artPipeline/service";
 import { AIServiceManager } from "@/lib/ai/aiService";
 import { narrateCombatEvent } from "@/lib/ai/protocolWarden";
+import { artPipeline } from "@/lib/artPipeline/service";
 
 const root = process.cwd();
 const thisTest = "src/lib/__tests__/aiIsolation.test.ts";
@@ -54,6 +54,7 @@ function executableFiles(): string[] {
 	].filter(
 		(file, index, all) =>
 			EXECUTABLE_EXT.test(file) &&
+			!file.endsWith(".d.ts") &&
 			file !== thisTest &&
 			all.indexOf(file) === index,
 	);
@@ -102,9 +103,7 @@ describe("A1 AI isolation", () => {
 			if (source.includes("/api/sovereign")) callers.push(file);
 			expect(source, file).not.toContain("/api/ai");
 		}
-		expect(callers).toEqual([
-			"src/lib/sovereign/sovereignGenerationClient.ts",
-		]);
+		expect(callers).toEqual(["src/lib/sovereign/sovereignGenerationClient.ts"]);
 		const sovereignClient = read(callers[0]);
 		expect(sovereignClient).toContain('fetch("/api/sovereign"');
 		for (const marker of PROVIDER_MARKERS) {

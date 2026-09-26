@@ -4,10 +4,10 @@ import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import type { Database, Json } from "@/integrations/supabase/types";
 import {
-	indexCompanionInstances,
-	resolveCompanionEffectiveStats,
 	type CompanionInstanceRecord,
 	type EffectiveCompanionStats,
+	indexCompanionInstances,
+	resolveCompanionEffectiveStats,
 } from "@/lib/companionInstances";
 import {
 	abilitiesFromNpc,

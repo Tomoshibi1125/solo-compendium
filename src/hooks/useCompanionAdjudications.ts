@@ -21,7 +21,9 @@ export interface CompanionAttemptAdjudicationRow {
 export const COMPANION_ADJUDICATIONS_KEY = (campaignId: string) =>
 	["companion-attempt-adjudications", campaignId] as const;
 
-export function usePendingCompanionAdjudications(campaignId: string | undefined) {
+export function usePendingCompanionAdjudications(
+	campaignId: string | undefined,
+) {
 	return useQuery({
 		queryKey: COMPANION_ADJUDICATIONS_KEY(campaignId ?? ""),
 		enabled: !!campaignId && isSupabaseConfigured,

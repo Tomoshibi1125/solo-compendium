@@ -33,6 +33,7 @@ import {
 	collectContainerOriginalIds,
 	resolveImportedContainerId,
 } from "@/lib/importValidation";
+import { isRebuildableSovereignFeature } from "@/lib/sovereign/sovereignPersistence";
 
 /**
  * Export schema version. Bump when the export shape changes in a way that
@@ -282,26 +283,28 @@ async function buildImportedFeatureRows(
 	characterId: string,
 ): Promise<FeatureInsert[]> {
 	return Promise.all(
-		rows.map(async (feature) => {
-			const name = stringOrNull(feature.name);
-			const source = stringOrNull(feature.source);
-			const canonicalFeat = source?.toLowerCase().includes("feat")
-				? (
-						await resolveCanonicalReference("feats", {
-							id: stringOrNull(feature.feat_id),
-							name,
-						})
-					).entry
-				: null;
+		rows
+			.filter((feature) => !isRebuildableSovereignFeature(feature))
+			.map(async (feature) => {
+				const name = stringOrNull(feature.name);
+				const source = stringOrNull(feature.source);
+				const canonicalFeat = source?.toLowerCase().includes("feat")
+					? (
+							await resolveCanonicalReference("feats", {
+								id: stringOrNull(feature.feat_id),
+								name,
+							})
+						).entry
+					: null;
 
-			return {
-				...feature,
-				character_id: characterId,
-				id: undefined,
-				feat_id: canonicalFeat?.id ?? stringOrNull(feature.feat_id) ?? null,
-				feature_id: stringOrNull(feature.feature_id) ?? null,
-			} as FeatureInsert;
-		}),
+				return {
+					...feature,
+					character_id: characterId,
+					id: undefined,
+					feat_id: canonicalFeat?.id ?? stringOrNull(feature.feat_id) ?? null,
+					feature_id: stringOrNull(feature.feature_id) ?? null,
+				} as FeatureInsert;
+			}),
 	);
 }
 

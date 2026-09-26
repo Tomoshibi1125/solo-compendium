@@ -5,7 +5,8 @@ import type { Json } from "@/integrations/supabase/types";
 import type { CompanionInstanceRecord } from "@/lib/companionInstances";
 
 const INSTANCE_KEY = (id: string) => ["companion-instance", id] as const;
-const CHARACTER_KEY = (id: string) => ["character-companion-instances", id] as const;
+const CHARACTER_KEY = (id: string) =>
+	["character-companion-instances", id] as const;
 
 const typedRow = (value: unknown): CompanionInstanceRecord =>
 	value as CompanionInstanceRecord;
@@ -27,7 +28,9 @@ export function useCompanionInstance(instanceId: string | null | undefined) {
 	});
 }
 
-export function useCharacterCompanionInstances(characterId: string | undefined) {
+export function useCharacterCompanionInstances(
+	characterId: string | undefined,
+) {
 	return useQuery({
 		queryKey: CHARACTER_KEY(characterId ?? "_none"),
 		enabled: !!characterId && isSupabaseConfigured,
@@ -43,6 +46,7 @@ export function useCharacterCompanionInstances(characterId: string | undefined) 
 				.from("companion_instances" as never)
 				.select("*")
 				.or(filter)
+				.eq("lifecycle_status", "active")
 				.order("created_at", { ascending: true });
 			if (error) throw error;
 			return (data ?? []).map(typedRow);
@@ -71,7 +75,9 @@ export function useRegisterCharacterVehicleMount() {
 			});
 			if (error) throw new Error(error.message);
 			if (typeof data !== "string" || data.length === 0) {
-				throw new Error("Mount registration did not return a companion identity.");
+				throw new Error(
+					"Mount registration did not return a companion identity.",
+				);
 			}
 			return data;
 		},
@@ -79,7 +85,9 @@ export function useRegisterCharacterVehicleMount() {
 			queryClient.invalidateQueries({
 				queryKey: ["character-vehicles", variables.characterId],
 			});
-			queryClient.invalidateQueries({ queryKey: CHARACTER_KEY(variables.characterId) });
+			queryClient.invalidateQueries({
+				queryKey: CHARACTER_KEY(variables.characterId),
+			});
 			queryClient.invalidateQueries({ queryKey: INSTANCE_KEY(instanceId) });
 		},
 		onError: (error: Error) => {

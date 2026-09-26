@@ -89,7 +89,8 @@ export function useMergedCustomModifiers(
 	const sovereignModifiers = useMemo(() => {
 		if (!character) return [];
 		const definition = readAttachedSovereignV2(character.gemini_state);
-		return buildSovereignRuntimeModifiers(definition, character).customModifiers;
+		return buildSovereignRuntimeModifiers(definition, character)
+			.customModifiers;
 	}, [character]);
 
 	return useMemo(

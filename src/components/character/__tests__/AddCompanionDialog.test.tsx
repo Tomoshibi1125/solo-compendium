@@ -212,20 +212,15 @@ describe("AddCompanionDialog canonical persistence", () => {
 				open={true}
 				onOpenChange={vi.fn()}
 				characterId="character-1"
+				initialSource="mount"
 			/>,
 		);
 		await flush();
 
-		const mountsTab = Array.from(
-			document.querySelectorAll<HTMLButtonElement>('[role="tab"]'),
-		).find((tab) => tab.textContent?.includes("Mounts"));
-		expect(mountsTab).toBeTruthy();
-		act(() => {
-			mountsTab?.dispatchEvent(
-				new MouseEvent("mousedown", { bubbles: true, button: 0 }),
-			);
-		});
-		await flush();
+		expect(
+			document.querySelector('label[for="companion-catalog-search"]')
+				?.textContent,
+		).toContain("Search mounts");
 
 		const addButton = findButton("Add Test Runner");
 		expect(addButton).toBeTruthy();

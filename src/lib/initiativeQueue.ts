@@ -136,7 +136,10 @@ export function enqueueInitiativeAdditions(
 	}
 }
 
-function campaignCombatContext(): { campaignId: string; sessionId: string } | null {
+function campaignCombatContext(): {
+	campaignId: string;
+	sessionId: string;
+} | null {
 	if (typeof window === "undefined") return null;
 	const params = new URLSearchParams(window.location.search);
 	const campaignId = params.get("campaignId")?.trim();
@@ -147,7 +150,7 @@ function campaignCombatContext(): { campaignId: string; sessionId: string } | nu
 function isPersistentCompanionHandoff(item: PendingCombatant): boolean {
 	return Boolean(
 		item.companionInstanceId ||
-		(item.companionOriginTable && item.companionOriginRowId),
+			(item.companionOriginTable && item.companionOriginRowId),
 	);
 }
 
