@@ -1,5 +1,13 @@
-import { CheckCircle2, Hammer, Minus, Plus, Trash2 } from "lucide-react";
-import { useMemo, useState } from "react";
+import {
+	CheckCircle2,
+	Download,
+	Hammer,
+	Minus,
+	Plus,
+	Trash2,
+	Upload,
+} from "lucide-react";
+import { useMemo, useRef, useState } from "react";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -15,7 +23,10 @@ import {
 } from "@/components/ui/select";
 import { craftingRecipes } from "@/data/compendium/crafting";
 import { type CraftingProjectStatus, useCrafting } from "@/hooks/useCrafting";
-import { useMaterialLots } from "@/hooks/useMaterialLots";
+import {
+	parseMaterialLotBundle,
+	useMaterialLots,
+} from "@/hooks/useMaterialLots";
 
 interface CraftingPanelProps {
 	characterId: string;
@@ -55,7 +66,10 @@ export function CraftingPanel({ characterId, readOnly }: CraftingPanelProps) {
 		discoveries,
 		createLot,
 		adjustLot,
+		importBundle,
+		buildExportBundle,
 	} = useMaterialLots(characterId);
+	const importInputRef = useRef<HTMLInputElement>(null);
 	const [recipeToLearn, setRecipeToLearn] = useState("");
 	const [materialDefinitionId, setMaterialDefinitionId] = useState("");
 	const [materialQuantity, setMaterialQuantity] = useState(1);
@@ -110,6 +124,31 @@ export function CraftingPanel({ characterId, readOnly }: CraftingPanelProps) {
 			expectedVersion: rowVersion,
 			operationId: operationId("adjust"),
 		});
+	};
+
+	const handleExportLots = () => {
+		const bundle = buildExportBundle();
+		const blob = new Blob([JSON.stringify(bundle, null, 2)], {
+			type: "application/json",
+		});
+		const url = URL.createObjectURL(blob);
+		const link = document.createElement("a");
+		link.href = url;
+		link.download = `material-lots-${characterId}.json`;
+		document.body.appendChild(link);
+		link.click();
+		document.body.removeChild(link);
+		URL.revokeObjectURL(url);
+	};
+
+	const handleImportLots = async (file: File | undefined) => {
+		if (!file) return;
+		const parsed = parseMaterialLotBundle(JSON.parse(await file.text()));
+		await importBundle.mutateAsync({
+			bundle: parsed,
+			operationId: operationId("import"),
+		});
+		if (importInputRef.current) importInputRef.current.value = "";
 	};
 
 	const handleStartProject = () => {
@@ -189,13 +228,50 @@ export function CraftingPanel({ characterId, readOnly }: CraftingPanelProps) {
 				</div>
 
 				<div className="space-y-3 border-t border-border/40 pt-3">
-					<div>
-						<div className="text-xs uppercase text-muted-foreground">
-							Material Lots
+					<div className="flex flex-wrap items-start justify-between gap-2">
+						<div>
+							<div className="text-xs uppercase text-muted-foreground">
+								Material Lots
+							</div>
+							<p className="mt-1 text-xs text-muted-foreground">
+								Each lot keeps its own provenance, unit, grade, notes, and discovery metadata.
+							</p>
 						</div>
-						<p className="mt-1 text-xs text-muted-foreground">
-							Each lot keeps its own provenance, unit, grade, notes, and discovery metadata.
-						</p>
+						<div className="flex gap-1">
+							<Button
+								type="button"
+								size="sm"
+								variant="outline"
+								className="h-8 gap-1.5"
+								onClick={handleExportLots}
+								disabled={lots.length === 0}
+							>
+								<Download className="h-3.5 w-3.5" /> Export lots
+							</Button>
+							{!readOnly && (
+								<>
+									<input
+										ref={importInputRef}
+										type="file"
+										accept="application/json,.json"
+										className="hidden"
+										onChange={(event) =>
+											void handleImportLots(event.target.files?.[0])
+										}
+									/>
+									<Button
+										type="button"
+										size="sm"
+										variant="outline"
+										className="h-8 gap-1.5"
+										onClick={() => importInputRef.current?.click()}
+										disabled={importBundle.isPending}
+									>
+										<Upload className="h-3.5 w-3.5" /> Import lots
+									</Button>
+								</>
+							)}
+						</div>
 					</div>
 					{!readOnly && (
 						<div className="flex flex-wrap items-end gap-2">
