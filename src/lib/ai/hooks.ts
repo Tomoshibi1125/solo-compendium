@@ -1,232 +1,60 @@
-/**
- * AI Service React Hooks
- * React integration for AI-powered enhancements
- */
-
-import { useCallback, useState } from "react";
-import { useFeatureFlag } from "@/lib/featureFlags";
-import { aiService } from "./aiService";
+import { useCallback } from "react";
 import type { ImageAnalysis, PromptEnhancement } from "./types";
 
-/**
- * Hook for AI-powered prompt enhancement
- */
+const RETIRED = "General AI features were retired in A1.";
+
 export function useAIEnhancement() {
-	const [isEnhancing, setIsEnhancing] = useState(false);
-	const [enhancedPrompt, setEnhancedPrompt] = useState<string>("");
-	const [enhancement, setEnhancement] = useState<PromptEnhancement | null>(
-		null,
-	);
-	const [error, setError] = useState<string | null>(null);
-	const isAvailable = useFeatureFlag("aiEnhancementEnabled");
-
 	const enhancePrompt = useCallback(
-		async (originalPrompt: string, context?: Record<string, unknown>) => {
-			if (!isAvailable) {
-				setError("AI enhancement is disabled");
-				return;
-			}
-
-			setIsEnhancing(true);
-			setError(null);
-			setEnhancedPrompt("");
-
-			try {
-				const result = await aiService.enhancePrompt(originalPrompt, context);
-				setEnhancedPrompt(result.enhanced);
-				setEnhancement(result);
-				return result;
-			} catch (err) {
-				setError(err instanceof Error ? err.message : "Enhancement failed");
-				throw err;
-			} finally {
-				setIsEnhancing(false);
-			}
-		},
-		[isAvailable],
+		async (_originalPrompt: string, _context?: Record<string, unknown>) =>
+			undefined as PromptEnhancement | undefined,
+		[],
 	);
-
 	return {
-		isEnhancing,
-		enhancedPrompt,
-		enhancement,
-		error,
+		isEnhancing: false,
+		enhancedPrompt: "",
+		enhancement: null as PromptEnhancement | null,
+		error: RETIRED,
 		enhancePrompt,
 	};
 }
 
-/**
- * Hook for AI-powered tag generation
- */
 export function useAITagGeneration() {
-	const [isGenerating, setIsGenerating] = useState(false);
-	const [tags, setTags] = useState<string[]>([]);
-	const [error, setError] = useState<string | null>(null);
-	const isAvailable = useFeatureFlag("aiTagsEnabled");
-
 	const generateTags = useCallback(
-		async (content: string, type: "audio" | "image" | "text" = "text") => {
-			if (!isAvailable) {
-				setError("AI tag generation is disabled");
-				return [];
-			}
-
-			setIsGenerating(true);
-			setError(null);
-			setTags([]);
-
-			try {
-				const result = await aiService.generateTags(content, type);
-				setTags(result);
-				return result;
-			} catch (err) {
-				setError(err instanceof Error ? err.message : "Tag generation failed");
-				throw err;
-			} finally {
-				setIsGenerating(false);
-			}
-		},
-		[isAvailable],
+		async (_content: string, _type: "audio" | "image" | "text" = "text") =>
+			[] as string[],
+		[],
 	);
-
-	return {
-		isGenerating,
-		tags,
-		error,
-		generateTags,
-	};
+	return { isGenerating: false, tags: [] as string[], error: RETIRED, generateTags };
 }
 
-/**
- * Hook for AI-powered mood detection
- */
 export function useAIMoodDetection() {
-	const [isDetecting, setIsDetecting] = useState(false);
-	const [mood, setMood] = useState<string>("neutral");
-	const [error, setError] = useState<string | null>(null);
-	const isAvailable = useFeatureFlag("aiMoodDetectionEnabled");
-
 	const detectMood = useCallback(
-		async (content: string, type: "audio" | "image" | "text" = "text") => {
-			if (!isAvailable) {
-				setError("AI mood detection is disabled");
-				return "neutral";
-			}
-
-			setIsDetecting(true);
-			setError(null);
-			setMood("neutral");
-
-			try {
-				const result = await aiService.detectMood(content, type);
-				setMood(result);
-				return result;
-			} catch (err) {
-				setError(err instanceof Error ? err.message : "Mood detection failed");
-				throw err;
-			} finally {
-				setIsDetecting(false);
-			}
-		},
-		[isAvailable],
+		async (_content: string, _type: "audio" | "image" | "text" = "text") =>
+			"neutral",
+		[],
 	);
-
-	return {
-		isDetecting,
-		mood,
-		error,
-		detectMood,
-	};
+	return { isDetecting: false, mood: "neutral", error: RETIRED, detectMood };
 }
 
-/**
- * Hook for AI-powered image analysis (multimodal). Sends an image URL/data-URL
- * to the vision ladder (Gemini → OpenRouter VLM → keyless Pollinations) via the
- * `/api/ai` proxy and returns a structured description + tags + style + mood.
- */
 export function useAIImageAnalysis() {
-	const [isAnalyzing, setIsAnalyzing] = useState(false);
-	const [analysis, setAnalysis] = useState<ImageAnalysis | null>(null);
-	const [error, setError] = useState<string | null>(null);
-	const isAvailable = useFeatureFlag("aiAnalysisEnabled");
-
 	const analyzeImage = useCallback(
-		async (imageUrl: string) => {
-			if (!isAvailable) {
-				setError("AI image analysis is disabled");
-				return null;
-			}
-			if (!imageUrl?.trim()) {
-				setError("No image to analyze");
-				return null;
-			}
-
-			setIsAnalyzing(true);
-			setError(null);
-			setAnalysis(null);
-
-			try {
-				const result = await aiService.analyzeImage(imageUrl);
-				setAnalysis(result);
-				return result;
-			} catch (err) {
-				setError(err instanceof Error ? err.message : "Image analysis failed");
-				throw err;
-			} finally {
-				setIsAnalyzing(false);
-			}
-		},
-		[isAvailable],
+		async (_imageUrl: string) => null as ImageAnalysis | null,
+		[],
 	);
-
 	return {
-		isAnalyzing,
-		analysis,
-		error,
+		isAnalyzing: false,
+		analysis: null as ImageAnalysis | null,
+		error: RETIRED,
 		analyzeImage,
 	};
 }
 
-/**
- * Hook for AI-powered style suggestions
- */
 export function useAIStyleSuggestions() {
-	const [isSuggesting, setIsSuggesting] = useState(false);
-	const [suggestions, setSuggestions] = useState<string[]>([]);
-	const [error, setError] = useState<string | null>(null);
-	const isAvailable = useFeatureFlag("aiStyleSuggestionsEnabled");
-
-	const suggestStyles = useCallback(
-		async (baseStyle: string) => {
-			if (!isAvailable) {
-				setError("AI style suggestions are disabled");
-				return [];
-			}
-
-			setIsSuggesting(true);
-			setError(null);
-			setSuggestions([]);
-
-			try {
-				const result = await aiService.suggestStyleVariations(baseStyle);
-				setSuggestions(result);
-				return result;
-			} catch (err) {
-				setError(
-					err instanceof Error ? err.message : "Style suggestions failed",
-				);
-				throw err;
-			} finally {
-				setIsSuggesting(false);
-			}
-		},
-		[isAvailable],
-	);
-
+	const suggestStyles = useCallback(async (_baseStyle: string) => [] as string[], []);
 	return {
-		isSuggesting,
-		suggestions,
-		error,
+		isSuggesting: false,
+		suggestions: [] as string[],
+		error: RETIRED,
 		suggestStyles,
 	};
 }

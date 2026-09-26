@@ -2,7 +2,6 @@ import { useCallback } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import type { Database, Json } from "@/integrations/supabase/types";
-import { aiService } from "@/lib/ai/aiService";
 import { useAuth } from "@/lib/auth/authContext";
 import { publishCampaignRollEvent } from "@/lib/campaignRollEvents";
 import { enqueueSyncItem } from "@/lib/syncManager";
@@ -60,17 +59,10 @@ export function useCampaignDice() {
 				return null;
 			}
 
-			// `character_name` is a feed-only field — `roll_history` has no such
-			// column, so keep it out of that insert and use it only for the
-			// shared campaign roll feed ("Game Log").
 			const { character_name, ...historyRoll } = rollData;
-
 			const isOfflineMode =
 				typeof navigator !== "undefined" && !navigator.onLine;
 
-			// Publish to the persistent campaign roll feed regardless of the
-			// offline branch below — the feed is the durable shared Game Log
-			// every member's CampaignRollFeed subscribes to.
 			void publishCampaignRollEvent(
 				{
 					campaign_id: campaignId,
@@ -112,7 +104,6 @@ export function useCampaignDice() {
 
 				if (error) throw error;
 
-				// Send to campaign chat
 				await supabase.from("campaign_messages").insert({
 					campaign_id: campaignId,
 					user_id: user.id,
@@ -123,59 +114,9 @@ export function useCampaignDice() {
 					},
 				});
 
-				// AI Automated Combat Resolution
-				// We do this non-blocking or at least after the roll is registered
-				const { data: campaignData, error: campaignError } = await supabase
-					.from("campaigns")
-					.select("settings")
-					.eq("id", campaignId)
-					.single();
-
-				if (!campaignError && campaignData?.settings) {
-					const settings = campaignData.settings as Record<string, unknown>;
-					if (
-						settings.automated_combat === true &&
-						(rollData.roll_type === "attack" ||
-							rollData.context?.toLowerCase().includes("attack"))
-					) {
-						// Fire and forget the AI narrative generation
-						(async () => {
-							try {
-								const prompt = `A character just performed an attack roll.
-Context: ${rollData.context || "Standard Attack"}
-Roll Result: ${rollData.result} (Formula: ${rollData.dice_formula})
-Generate a brief (1-2 sentences), hyper-flavorful, cinematic description of this attack occurring in the dark-fantasy Rift Ascendant universe. Do not include mechanical numbers in the narrative.`;
-
-								const response = await aiService.processRequest({
-									service: aiService.getConfiguration().defaultService,
-									type: "generate-content",
-									input: prompt,
-								});
-
-								if (response.success && response.data) {
-									const content =
-										typeof response.data === "string"
-											? response.data
-											: (response.data as { content?: string }).content;
-									if (content) {
-										await supabase.from("campaign_messages").insert({
-											campaign_id: campaignId,
-											user_id: user.id,
-											message_type: "rift",
-											content: `**Warden AI:** ${content}`,
-										});
-									}
-								}
-							} catch (err) {
-								console.error("Failed to generate AI combat narrative:", err);
-							}
-						})();
-					}
-				}
-
 				toast({
 					title: "Roll Recorded",
-					description: `Roll added to campaign`,
+					description: "Roll added to campaign",
 				});
 
 				return data;
