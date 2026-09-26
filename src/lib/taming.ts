@@ -1,23 +1,12 @@
 /**
- * Universal taming substrate (Q6 of Round 3).
+ * Legacy taming substrate (Q6 of Round 3).
  *
- * Any character can attempt to tame a `tameable` anomaly. Once tamed,
- * the anomaly belongs to the party. The controller is whoever currently
- * holds the lock; control may be claimed by any party member.
- *
- * Path bonuses (Pack Leader / Summoner / Contractor / Esper /
- * Synchronist / Hive) layer on top of the universal substrate. They are
- * detected here and surfaced to the UI / action resolver.
- *
- * All functions in this module are pure — callers pass data in, get
- * results back, no side effects. Persistence (when wired) is handled by
- * the calling layer via Supabase RPCs.
+ * C2 campaign tame/bond attempts now resolve through companionBonding.ts and
+ * authoritative server RPCs. These pure helpers remain for compatibility with
+ * older callers and controller-bonus presentation only; they do not establish
+ * C2 retry entitlement or persistence.
  */
 import type { AbilityScore } from "@/types/core-rules";
-
-// ──────────────────────────────────────────────────────────────────────
-// Types
-// ──────────────────────────────────────────────────────────────────────
 
 export interface TamingTargetMeta {
 	dc: number;
@@ -54,11 +43,6 @@ export interface ControllerBonuses {
 	passiveBoosts: string[];
 }
 
-// ──────────────────────────────────────────────────────────────────────
-// Path detection — string-match against canonical RA path names.
-// Pulled from src/data/compendium/paths.ts grep audit during Round 3.
-// ──────────────────────────────────────────────────────────────────────
-
 const PACK_LEADER_PATTERNS = [/pack[\s-]?leader/i];
 const SUMMONER_PATTERNS = [/^summoner/i, /biome[\s-]?bond/i];
 const CONTRACTOR_PATTERNS = [
@@ -74,16 +58,12 @@ function matchesAny(
 	patterns: RegExp[],
 ): boolean {
 	if (!text) return false;
-	return patterns.some((p) => p.test(text));
+	return patterns.some((pattern) => pattern.test(text));
 }
 
 /**
- * Detect which bonding-friendly paths apply to a controller. Returns a
- * structured bonus payload the UI / action resolver consumes.
- *
- * Detection inspects BOTH the character's Job and Path strings so a
- * Summoner Job picks up biome bonuses even if no Path is selected, and
- * Pack Leader picks up bonuses even on a non-Stalker Job (homebrew).
+ * Legacy controller presentation helper. C2 attempt bonuses are resolved from
+ * canonical source ids instead of display-name matches.
  */
 export function getControllerBonuses(
 	character: TamingCharacterContext | null | undefined,
@@ -135,21 +115,14 @@ export function getControllerBonuses(
 	return result;
 }
 
-// ──────────────────────────────────────────────────────────────────────
-// Roll resolution
-// ──────────────────────────────────────────────────────────────────────
-
 function getAbilityModifier(score: number): number {
 	if (!Number.isFinite(score)) return 0;
 	return Math.floor((score - 10) / 2);
 }
 
 /**
- * Resolve a taming attempt. The roll is provided by the caller (the dice
- * subsystem produces it); this function applies the character's ability
- * modifier + proficiency bonus and compares to the anomaly's DC.
- *
- * Layered bonuses from bonding-friendly paths grant +2 to the check.
+ * @deprecated C2 campaign attempts use resolve_companion_*_attempt_c2. This
+ * compatibility calculation deliberately makes no claim about retry timing.
  */
 export function attemptTaming(
 	character: TamingCharacterContext,
@@ -176,15 +149,10 @@ export function attemptTaming(
 		total,
 		dc: target.dc,
 		bondLevel: success ? Math.max(1, target.bond_initial ?? 1) : 0,
-		reason: success
-			? undefined
-			: `Failed by ${target.dc - total}. Try again after a short rest.`,
+		reason: success ? undefined : `Failed by ${target.dc - total}.`,
 	};
 }
 
-/**
- * Format the bonuses payload as a single-line summary for the UI.
- */
 export function formatControllerBonusesSummary(
 	bonuses: ControllerBonuses,
 ): string | null {
