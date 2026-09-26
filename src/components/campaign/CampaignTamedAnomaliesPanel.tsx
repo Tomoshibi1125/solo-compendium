@@ -11,10 +11,14 @@ import {
 	PawPrint,
 	Plus,
 	RotateCcw,
+	Settings2,
 	Sparkles,
 	Trash2,
 } from "lucide-react";
 import { useMemo, useState } from "react";
+import { CampaignCharacterCompanionsPanel } from "@/components/campaign/CampaignCharacterCompanionsPanel";
+import { CompanionScalingDialog } from "@/components/campaign/CompanionScalingDialog";
+import { CompanionCombatDetails } from "@/components/character/CompanionCombatDetails";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -136,6 +140,7 @@ export function CampaignTamedAnomaliesPanel({ campaignId, isWarden }: Props) {
 					))}
 				</div>
 			)}
+			{isWarden && <CampaignCharacterCompanionsPanel campaignId={campaignId} />}
 
 			<AttemptHistory
 				attempts={attempts}
@@ -186,15 +191,17 @@ function TamedCard({
 	const { data: myCharacters = [] } = useCharacters();
 	const bond = useBondCompanion();
 	const [bondCharacterId, setBondCharacterId] = useState("");
+	const [scalingOpen, setScalingOpen] = useState(false);
 	const actingCharacter =
 		myCharacters.find((character) => character.id === bondCharacterId) ??
 		myCharacters[0];
 	const maxHp =
-		row.max_hp_override ??
 		row.effective_stats?.hpMax ??
+		row.max_hp_override ??
 		row.anomaly?.hp ??
 		row.current_hp;
-	const pct = maxHp > 0 ? Math.round((row.current_hp / maxHp) * 100) : 0;
+	const currentHp = Math.min(row.current_hp, maxHp);
+	const pct = maxHp > 0 ? Math.round((currentHp / maxHp) * 100) : 0;
 	const title =
 		row.nickname ||
 		row.effective_stats?.name ||
@@ -270,11 +277,38 @@ function TamedCard({
 				<div className="flex items-center justify-between text-xs mb-1">
 					<span className="text-muted-foreground">HP</span>
 					<span className="font-mono">
-						{row.current_hp} / {maxHp}
+						{currentHp} / {maxHp}
 					</span>
 				</div>
 				<Progress value={pct} className="h-2" />
 			</div>
+			{row.companion_instance && row.effective_stats?.combatScaling && (
+				<CompanionCombatDetails
+					instance={row.companion_instance}
+					scaling={row.effective_stats.combatScaling}
+				/>
+			)}
+			{isWarden &&
+				row.companion_instance &&
+				row.effective_stats?.combatScaling && (
+					<>
+						<Button
+							type="button"
+							size="sm"
+							variant="outline"
+							className="mt-2 gap-1 text-xs"
+							onClick={() => setScalingOpen(true)}
+						>
+							<Settings2 className="h-3.5 w-3.5" /> Approve scaling
+						</Button>
+						<CompanionScalingDialog
+							instance={row.companion_instance}
+							campaignId={campaignId}
+							open={scalingOpen}
+							onOpenChange={setScalingOpen}
+						/>
+					</>
+				)}
 
 			<div className="mt-3 rounded border border-border/40 bg-background/20 p-2">
 				<div className="mb-2 flex items-center justify-between gap-2">

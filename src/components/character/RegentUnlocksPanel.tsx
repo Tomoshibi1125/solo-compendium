@@ -58,6 +58,9 @@ export function RegentUnlocksPanel({
 		regentId: string;
 		unlockId: string;
 	} | null>(null);
+	const [dismissedCatchUpId, setDismissedCatchUpId] = useState<string | null>(
+		null,
+	);
 
 	const { data: character } = useCharacter(characterId);
 	const {
@@ -130,7 +133,8 @@ export function RegentUnlocksPanel({
 	);
 	const catchUpTarget =
 		catchUpFor ??
-		(pendingCatchUp?.resolved_regent_id
+		(pendingCatchUp?.resolved_regent_id &&
+		pendingCatchUp.id !== dismissedCatchUpId
 			? {
 					regentId: pendingCatchUp.resolved_regent_id,
 					unlockId: pendingCatchUp.id,
@@ -232,6 +236,23 @@ export function RegentUnlocksPanel({
 												>
 													<Star className="h-3 w-3 mr-1" />
 													Set Primary
+												</Button>
+											)}
+											{unlock.caught_up_at_level === null && (
+												<Button
+													size="sm"
+													variant="outline"
+													onClick={() => {
+														const regentId = unlock.resolved_regent_id;
+														if (!regentId) return;
+														setDismissedCatchUpId(null);
+														setCatchUpFor({
+															regentId,
+															unlockId: unlock.id,
+														});
+													}}
+												>
+													Complete attunement
 												</Button>
 											)}
 										</div>
@@ -351,6 +372,10 @@ export function RegentUnlocksPanel({
 						campaignId={campaignId}
 						open
 						onComplete={() => setCatchUpFor(null)}
+						onClose={() => {
+							setDismissedCatchUpId(catchUpTarget.unlockId);
+							setCatchUpFor(null);
+						}}
 					/>
 				)}
 			</div>

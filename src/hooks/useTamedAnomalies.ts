@@ -178,6 +178,34 @@ export function useTamedAnomalies(campaignId: string | undefined) {
 				rows.map((row) => row.companion_instance_id),
 			);
 			const byId = indexCompanionInstances(instances);
+			const handlerIds = [
+				...new Set(
+					rows.flatMap((row) => {
+						const instance = byId.get(row.companion_instance_id);
+						const id =
+							instance?.primary_handler_character_id ??
+							instance?.rider_character_id ??
+							instance?.owner_character_id ??
+							row.primary_handler_character_id ??
+							row.tamed_by_character_id;
+						return id ? [id] : [];
+					}),
+				),
+			];
+			const levelResult =
+				handlerIds.length > 0
+					? await supabase
+							.from("characters")
+							.select("id, level")
+							.in("id", handlerIds)
+					: { data: [], error: null };
+			if (levelResult.error) throw levelResult.error;
+			const levelByCharacter = new Map(
+				(levelResult.data ?? []).map((character) => [
+					character.id,
+					character.level,
+				]),
+			);
 			const map = catalog.data;
 			return rows.map((row) => {
 				const anomaly = map?.get(row.anomaly_id);
@@ -204,6 +232,14 @@ export function useTamedAnomalies(campaignId: string | undefined) {
 									hpMax: row.max_hp_override,
 								},
 								liveFallback,
+								levelByCharacter.get(
+									instance.primary_handler_character_id ??
+										instance.rider_character_id ??
+										instance.owner_character_id ??
+										row.primary_handler_character_id ??
+										row.tamed_by_character_id ??
+										"",
+								) ?? 1,
 							)
 						: null,
 				};

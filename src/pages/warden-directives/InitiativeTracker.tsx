@@ -1,3 +1,4 @@
+import { useQuery } from "@tanstack/react-query";
 import {
 	ArrowDown,
 	ArrowLeft,
@@ -14,6 +15,7 @@ import {
 } from "lucide-react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import { CompanionCombatDetails } from "@/components/character/CompanionCombatDetails";
 import { Layout } from "@/components/layout/Layout";
 import { ManaFlowText } from "@/components/ui/AscendantText";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
@@ -31,6 +33,7 @@ import {
 } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 import { useAIEnhance } from "@/hooks/useAIEnhance";
+import { useCampaignSharedCharacters } from "@/hooks/useCampaignCharacters";
 import { useSendCampaignMessage } from "@/hooks/useCampaignChat";
 import {
 	type Combatant as CampaignCombatantRow,
@@ -55,6 +58,12 @@ import {
 } from "@/lib/actionResolution";
 import { useAuth } from "@/lib/auth/authContext";
 import { publishSessionEvent } from "@/lib/campaignSessionEvents";
+import type { CompanionInstanceRecord } from "@/lib/companionInstances";
+import {
+	companionSourceRank,
+	isLevelScaledCompanion,
+	scaleCompanionAtLevel,
+} from "@/lib/companionScaling";
 import {
 	CONDITION_CATALOG_IDS,
 	CONDITION_EFFECTS,
@@ -265,6 +274,48 @@ const STORAGE_KEY = "solo-compendium.Warden-tools.initiative.v1";
 const CONDITION_OPTIONS = CONDITION_CATALOG_IDS.map(
 	(conditionId) => CONDITION_EFFECTS[conditionId].name,
 );
+
+function TrackerCompanionCombatDetails({
+	campaignId,
+	instanceId,
+	profileVersion,
+}: {
+	campaignId: string;
+	instanceId: string;
+	profileVersion: number | null | undefined;
+}) {
+	const { data: roster = [] } = useCampaignSharedCharacters(campaignId);
+	const { data: instance } = useQuery({
+		queryKey: ["tracker-companion-instance", instanceId, profileVersion],
+		queryFn: async (): Promise<CompanionInstanceRecord | null> => {
+			const { data, error } = await supabase
+				.from("companion_instances" as never)
+				.select("*")
+				.eq("id", instanceId)
+				.maybeSingle();
+			if (error) throw error;
+			return data as unknown as CompanionInstanceRecord | null;
+		},
+	});
+	if (!instance || !isLevelScaledCompanion(instance)) return null;
+	const handlerId =
+		instance.primary_handler_character_id ??
+		instance.rider_character_id ??
+		instance.owner_character_id;
+	const level =
+		roster.find((entry) => entry.character_id === handlerId)?.characters
+			?.level ?? 1;
+	return (
+		<CompanionCombatDetails
+			instance={instance}
+			scaling={scaleCompanionAtLevel(
+				level,
+				companionSourceRank(instance),
+				instance.progression_profile,
+			)}
+		/>
+	);
+}
 
 const hasManualConditionDuration = (
 	payload: ActionResolutionPayload,
@@ -1598,6 +1649,13 @@ const InitiativeTracker = () => {
 													<Trash2 className="w-3 h-3" />
 												</Button>
 											</div>
+											{campaignId && combatant.companionInstanceId && (
+												<TrackerCompanionCombatDetails
+													campaignId={campaignId}
+													instanceId={combatant.companionInstanceId}
+													profileVersion={combatant.companionProfileVersion}
+												/>
+											)}
 											<div className="grid grid-cols-2 gap-2">
 												<div>
 													<Label

@@ -58,20 +58,25 @@ describe("C1 companion instance resolver", () => {
 		});
 	});
 
-	it("preserves existing sheet fields over frozen source fields", () => {
-		const stats = resolveCompanionEffectiveStats(baseInstance(), {
-			name: "Old Name",
-			nickname: "Nyx",
-			currentHp: 17,
-			hpMax: 35,
-			baseAc: 16,
-			speed: 45,
-		});
+	it("uses handler level for anomaly combat stats while preserving identity and speed", () => {
+		const stats = resolveCompanionEffectiveStats(
+			baseInstance(),
+			{
+				name: "Old Name",
+				nickname: "Nyx",
+				currentHp: 17,
+				hpMax: 35,
+				baseAc: 16,
+				speed: 45,
+			},
+			undefined,
+			5,
+		);
 		expect(stats).toMatchObject({
 			name: "Nyx",
 			currentHp: 17,
-			hpMax: 35,
-			baseAc: 16,
+			hpMax: 48,
+			baseAc: 13,
 			speed: 45,
 			sourceRevision: "canonical-snapshot-v1",
 			usesLiveCatalogFallback: false,
@@ -86,8 +91,8 @@ describe("C1 companion instance resolver", () => {
 		);
 		expect(stats).toMatchObject({
 			name: "Echo Wolf",
-			hpMax: 30,
-			baseAc: 14,
+			hpMax: 16,
+			baseAc: 12,
 			speed: 40,
 			rank: "C",
 			usesLiveCatalogFallback: false,
@@ -111,8 +116,8 @@ describe("C1 companion instance resolver", () => {
 		);
 		expect(stats).toMatchObject({
 			currentHp: 12,
-			hpMax: 30,
-			baseAc: 14,
+			hpMax: 16,
+			baseAc: 12,
 			speed: 40,
 			usesLiveCatalogFallback: true,
 		});

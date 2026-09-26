@@ -1,3 +1,8 @@
+import {
+	isLevelScaledCompanion,
+	type ScaledCompanionCombatStats,
+	scaleCompanionAtLevel,
+} from "@/lib/companionScaling";
 import { parseCanonicalCompanionSource } from "@/lib/companions";
 
 export type CompanionOwnerScope = "character" | "campaign";
@@ -58,6 +63,7 @@ export interface EffectiveCompanionStats extends CompanionBaseStats {
 	sourcePolicy: CompanionSourcePolicy;
 	profileVersion: number;
 	usesLiveCatalogFallback: boolean;
+	combatScaling: ScaledCompanionCombatStats | null;
 }
 
 const finiteNumber = (value: unknown): number | null =>
@@ -140,6 +146,7 @@ export function resolveCompanionEffectiveStats(
 	instance: CompanionInstanceRecord,
 	projection: CompanionStateProjection,
 	liveCatalogFallback?: CompanionBaseStats | null,
+	characterLevel?: number | null,
 ): EffectiveCompanionStats | null {
 	const snapshot = readCompanionSnapshotBaseStats(instance.source_snapshot);
 	const mayUseLive = instance.source_policy === "legacy-live";
@@ -152,10 +159,28 @@ export function resolveCompanionEffectiveStats(
 	const projectedAc = finiteNumber(projection.baseAc);
 	const projectedSpeed = positiveOrNull(projection.speed);
 	const overrides = readStatOverrides(instance.stat_overrides);
+	const rank = source?.rank ?? liveCatalogFallback?.rank ?? null;
+	const combatScaling = isLevelScaledCompanion(instance)
+		? scaleCompanionAtLevel(
+				characterLevel ?? 1,
+				rank,
+				instance.progression_profile,
+			)
+		: null;
 
 	const name = projectedName ?? source?.name ?? "Companion";
-	const hpMax = projectedHpMax ?? overrides.hpMax ?? source?.hpMax ?? null;
-	const baseAc = projectedAc ?? overrides.baseAc ?? source?.baseAc ?? null;
+	const hpMax =
+		combatScaling?.hpMax ??
+		projectedHpMax ??
+		overrides.hpMax ??
+		source?.hpMax ??
+		null;
+	const baseAc =
+		combatScaling?.baseAc ??
+		projectedAc ??
+		overrides.baseAc ??
+		source?.baseAc ??
+		null;
 	const speed = projectedSpeed ?? overrides.speed ?? source?.speed ?? null;
 	if (hpMax === null || baseAc === null || speed === null) return null;
 
@@ -170,13 +195,14 @@ export function resolveCompanionEffectiveStats(
 		hpMax,
 		baseAc,
 		speed,
-		rank: source?.rank ?? null,
+		rank,
 		sourceId: instance.source_id,
 		sourceRevision: instance.source_revision,
 		sourcePolicy: instance.source_policy,
 		profileVersion: instance.profile_version,
 		usesLiveCatalogFallback:
 			snapshot === null && mayUseLive && !!liveCatalogFallback,
+		combatScaling,
 	};
 }
 

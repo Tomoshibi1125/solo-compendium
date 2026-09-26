@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import type { SandboxNPC } from "@/data/compendium/sandbox-npcs";
 import { useToast } from "@/hooks/use-toast";
+import { useCharacter } from "@/hooks/useCharacters";
 import { supabase } from "@/integrations/supabase/client";
 import type { Database, Json } from "@/integrations/supabase/types";
 import {
@@ -46,9 +47,10 @@ async function loadCompanionInstances(
 export function useCharacterExtras(characterId: string) {
 	const queryClient = useQueryClient();
 	const { toast } = useToast();
+	const { data: ownerCharacter } = useCharacter(characterId);
 
 	const { data: extras = [], isLoading } = useQuery({
-		queryKey: ["character_extras", characterId],
+		queryKey: ["character_extras", characterId, ownerCharacter?.level],
 		queryFn: async () => {
 			const { data, error } = await supabase
 				.from("character_extras")
@@ -87,13 +89,18 @@ export function useCharacterExtras(characterId: string) {
 					...row,
 					companion_instance: instance,
 					effective_stats: instance
-						? resolveCompanionEffectiveStats(instance, {
-								name: row.name,
-								currentHp: row.hp_current,
-								hpMax: row.hp_max,
-								baseAc: row.ac,
-								speed: row.speed,
-							})
+						? resolveCompanionEffectiveStats(
+								instance,
+								{
+									name: row.name,
+									currentHp: row.hp_current,
+									hpMax: row.hp_max,
+									baseAc: row.ac,
+									speed: row.speed,
+								},
+								undefined,
+								ownerCharacter?.level,
+							)
 						: null,
 				};
 			});

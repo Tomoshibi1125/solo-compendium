@@ -26,6 +26,7 @@ import {
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import { CompanionCombatDetails } from "@/components/character/CompanionCombatDetails";
 import { Layout } from "@/components/layout/Layout";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
@@ -121,18 +122,20 @@ export default function CompanionExtraSheet() {
 	const abilities = parseAbilities(extra.abilities);
 	const conditions = parseConditions(extra.conditions);
 	const canonicalSource = parseCanonicalCompanionSource(extra.npc_data);
-	const baseAc = extra.ac ?? 10;
+	const scaledCombat = extra.effective_stats?.combatScaling ?? null;
+	const baseAc = extra.effective_stats?.baseAc ?? extra.ac ?? 10;
 	const effectiveAc = effectiveCompanionAc(baseAc, equipment);
 	const acBonus = equipmentAcBonus(equipment);
 
-	const hpMax = extra.hp_max;
+	const hpMax = extra.effective_stats?.hpMax ?? extra.hp_max;
+	const currentHp = Math.min(extra.hp_current, hpMax);
 	const hpPercent = Math.min(
 		100,
-		Math.max(0, hpMax > 0 ? (extra.hp_current / hpMax) * 100 : 0),
+		Math.max(0, hpMax > 0 ? (currentHp / hpMax) * 100 : 0),
 	);
 
 	const handleAdjustHp = (delta: number) => {
-		const next = Math.max(0, Math.min(hpMax, extra.hp_current + delta));
+		const next = Math.max(0, Math.min(hpMax, currentHp + delta));
 		updateExtra({ id: extra.id, data: { hp_current: next } });
 	};
 
@@ -205,12 +208,24 @@ export default function CompanionExtraSheet() {
 	const handleAddToInitiative = () => {
 		enqueueInitiativeAdditions({
 			name: extra.name,
-			hp: extra.hp_current,
-			maxHp: extra.hp_max,
+			hp: currentHp,
+			maxHp: hpMax,
 			ac: effectiveAc,
 			isHunter: false,
 			initiative: extra.initiative ?? 0,
 			conditions: [],
+			...(extra.companion_instance_id
+				? {
+						companionInstanceId: extra.companion_instance_id,
+						companionProfileVersion: extra.companion_instance?.profile_version,
+						companionStateVersion:
+							extra.companion_instance?.combat_state_version,
+					}
+				: {
+						companionOriginTable: "character_extras" as const,
+						companionOriginRowId: extra.id,
+						companionOwnerCharacterId: characterId,
+					}),
 		});
 		toast({
 			title: "Added to initiative",
@@ -339,9 +354,11 @@ export default function CompanionExtraSheet() {
 							)}
 						</dl>
 						<p className="mt-3 border-t border-primary/20 pt-3 text-xs text-muted-foreground">
-							Name, maximum HP, base AC, speed, and source abilities are locked
-							to this saved snapshot. Current HP, initiative, equipment,
-							conditions, and notes remain editable instance state.
+							{scaledCombat
+								? "This creature's combat numbers scale with its handler's level. Its source identity and authored abilities remain linked to the canonical creature."
+								: "Name, maximum HP, base AC, speed, and source abilities are locked to this saved snapshot."}{" "}
+							Current HP, initiative, equipment, conditions, and notes remain
+							editable instance state.
 						</p>
 					</section>
 				)}
@@ -356,11 +373,13 @@ export default function CompanionExtraSheet() {
 									<Heart className="w-4 text-destructive" aria-hidden="true" />
 									<div>
 										<div className="font-mono text-sm">
-											Current HP {extra.hp_current} / {hpMax}
+											Current HP {currentHp} / {hpMax}
 										</div>
 										{canonicalSource && (
 											<div className="text-[10px] uppercase tracking-wide text-muted-foreground">
-												Maximum HP is source-locked
+												{scaledCombat
+													? `Maximum HP scales at level ${scaledCombat.level}`
+													: "Maximum HP is source-locked"}
 											</div>
 										)}
 									</div>
@@ -432,7 +451,8 @@ export default function CompanionExtraSheet() {
 								</div>
 								{canonicalSource ? (
 									<div className="mt-1 text-xs text-muted-foreground">
-										Source base {baseAc} · read-only
+										{scaledCombat ? "Level-scaled base" : "Source base"}{" "}
+										{baseAc} · read-only
 										{acBonus !== 0 &&
 											` · gear ${acBonus >= 0 ? "+" : ""}${acBonus}`}
 									</div>
@@ -601,7 +621,13 @@ export default function CompanionExtraSheet() {
 									Source abilities · read-only
 								</p>
 							)}
-							{abilities.length === 0 ? (
+							{scaledCombat && extra.companion_instance && (
+								<CompanionCombatDetails
+									instance={extra.companion_instance}
+									scaling={scaledCombat}
+								/>
+							)}
+							{scaledCombat ? null : abilities.length === 0 ? (
 								<p className="text-xs text-muted-foreground">
 									No actions recorded.
 								</p>

@@ -22,12 +22,12 @@ import { supabase } from "@/integrations/supabase/client";
 import {
 	type CanonicalCastableEntry,
 	listCanonicalEntries,
-	listLearnablePowers,
-	listLearnableSpells,
-	listLearnableTechniques,
+	listCanonicalPowers,
+	listCanonicalSpells,
 } from "@/lib/canonicalCompendium";
 import { calculateTotalChoices } from "@/lib/choiceCalculations";
 import { isLocalCharacterId } from "@/lib/guestStore";
+import { listRegentCuratedOptions } from "@/lib/regentCatchUpCatalog";
 import { resolveCanonicalRegentId } from "@/lib/regentIdentity";
 import {
 	type CanonicalPickEntry,
@@ -201,6 +201,7 @@ interface RegentCatchUpModalProps {
 	campaignId?: string;
 	open: boolean;
 	onComplete: () => void;
+	onClose: () => void;
 }
 
 type SelectionState = Record<CatchUpBucketKey, Set<string>>;
@@ -292,6 +293,7 @@ export function RegentCatchUpModal({
 	campaignId,
 	open,
 	onComplete,
+	onClose,
 }: RegentCatchUpModalProps) {
 	const { toast } = useToast();
 	const queryClient = useQueryClient();
@@ -347,15 +349,26 @@ export function RegentCatchUpModal({
 
 	const baseQueryEnabled =
 		open && remoteCharacter && !!regent && validLevel && !!regentName;
+	const curatedQuery = useQuery({
+		queryKey: ["regent-curated-options", unlockId],
+		queryFn: () => listRegentCuratedOptions(unlockId),
+		enabled: baseQueryEnabled,
+	});
+	const curatedIds = useMemo(() => {
+		const map = {
+			powers: new Set<string>(),
+			techniques: new Set<string>(),
+			cantrips: new Set<string>(),
+			spells: new Set<string>(),
+		};
+		for (const option of curatedQuery.data ?? [])
+			map[option.kind].add(option.id);
+		return map;
+	}, [curatedQuery.data]);
 
 	const powerQuery = useQuery<CanonicalCastableEntry[]>({
 		queryKey: ["regent-catchup-powers", canonicalRegentId, level, campaignId],
-		queryFn: () =>
-			listLearnablePowers({
-				accessContext: { campaignId },
-				characterLevel: level,
-				regentNames: [regentName],
-			}),
+		queryFn: () => listCanonicalPowers(undefined, { campaignId }),
 		enabled: baseQueryEnabled && owed.powers > 0,
 	});
 
@@ -367,23 +380,13 @@ export function RegentCatchUpModal({
 			campaignId,
 		],
 		queryFn: () =>
-			listLearnableTechniques({
-				accessContext: { campaignId },
-				characterLevel: level,
-				regentNames: [regentName],
-				maxLevel: level,
-			}),
+			listCanonicalEntries("techniques", undefined, { campaignId }),
 		enabled: baseQueryEnabled && owed.techniques > 0,
 	});
 
 	const spellQuery = useQuery<CanonicalCastableEntry[]>({
 		queryKey: ["regent-catchup-spells", canonicalRegentId, level, campaignId],
-		queryFn: () =>
-			listLearnableSpells({
-				accessContext: { campaignId },
-				characterLevel: level,
-				regentNames: [regentName],
-			}),
+		queryFn: () => listCanonicalSpells(undefined, { campaignId }),
 		enabled: baseQueryEnabled && (owed.cantrips > 0 || owed.spells > 0),
 	});
 
@@ -452,7 +455,11 @@ export function RegentCatchUpModal({
 							source: row.source,
 						})),
 				},
-				unresolvedTechniqueIds: techniqueResolution.unresolvedIds,
+				unresolvedTechniqueIds: techniqueResolution.unresolvedIds.filter((id) =>
+					(techniqueResult.data ?? []).some(
+						(row) => row.technique_id === id && row.source === catchUpSource,
+					),
+				),
 			};
 		},
 		enabled: baseQueryEnabled,
@@ -470,16 +477,29 @@ export function RegentCatchUpModal({
 	}, [selectionResetKey]);
 
 	const powerOptions = useMemo(
-		() => (powerQuery.data ?? []).map(toCastablePick),
-		[powerQuery.data],
+		() =>
+			(powerQuery.data ?? [])
+				.filter((entry) => curatedIds.powers.has(entry.id))
+				.map(toCastablePick),
+		[powerQuery.data, curatedIds],
 	);
 	const techniqueOptions = useMemo(
-		() => (techniqueQuery.data ?? []).map(toTechniquePick),
-		[techniqueQuery.data],
+		() =>
+			(techniqueQuery.data ?? [])
+				.filter((entry) => curatedIds.techniques.has(entry.id))
+				.map(toTechniquePick),
+		[techniqueQuery.data, curatedIds],
 	);
 	const allSpellOptions = useMemo(
-		() => (spellQuery.data ?? []).map(toCastablePick),
-		[spellQuery.data],
+		() =>
+			(spellQuery.data ?? [])
+				.filter((entry) =>
+					entry.power_level === 0
+						? curatedIds.cantrips.has(entry.id)
+						: curatedIds.spells.has(entry.id),
+				)
+				.map(toCastablePick),
+		[spellQuery.data, curatedIds],
 	);
 	const cantripOptions = useMemo(
 		() => allSpellOptions.filter((spell) => spell.power_level === 0),
@@ -565,10 +585,14 @@ export function RegentCatchUpModal({
 		(owed.techniques > 0 && techniqueQuery.isLoading) ||
 		((owed.cantrips > 0 || owed.spells > 0) && spellQuery.isLoading);
 	const queryLoading =
-		characterLoading || optionLoading || knownQuery.isLoading;
+		characterLoading ||
+		optionLoading ||
+		knownQuery.isLoading ||
+		curatedQuery.isLoading;
 	const optionError =
 		powerQuery.error ?? techniqueQuery.error ?? spellQuery.error;
-	const queryError = characterError ?? optionError ?? knownQuery.error;
+	const queryError =
+		characterError ?? optionError ?? knownQuery.error ?? curatedQuery.error;
 	const catalogBlockers = buckets.filter(
 		(bucket) =>
 			bucket.readiness.hasCatalogDeficit || bucket.readiness.hasExcessPersisted,
@@ -765,8 +789,8 @@ export function RegentCatchUpModal({
 		blocker = (
 			<div className="space-y-2">
 				<p>
-					Catch-up is blocked by the Task 9 identity catalog. The full owed
-					count cannot be reduced to fit a short catalog.
+					Your Warden must approve enough canonical {regentName} choices for
+					every owed pick. The full owed count remains available after approval.
 				</p>
 				<ul className="list-disc pl-5">
 					{catalogBlockers.map((bucket) => (
@@ -779,19 +803,27 @@ export function RegentCatchUpModal({
 						</li>
 					))}
 				</ul>
+				<Button
+					size="sm"
+					variant="outline"
+					onClick={() => void curatedQuery.refetch()}
+				>
+					Refresh approved choices
+				</Button>
 			</div>
 		);
 	}
 
 	return (
-		<Dialog open={open} onOpenChange={() => undefined}>
-			<DialogContent
-				className="bg-card border-regent-gold/40 max-w-2xl max-h-[85vh] overflow-y-auto"
-				onInteractOutside={(event) => event.preventDefault()}
-				onEscapeKeyDown={(event) => event.preventDefault()}
-			>
-				<DialogHeader>
-					<DialogTitle className="font-display text-xl gradient-text-regent flex items-center gap-2">
+		<Dialog
+			open={open}
+			onOpenChange={(next) => {
+				if (!next && !saving) onClose();
+			}}
+		>
+			<DialogContent className="bg-card border-regent-gold/40 w-[calc(100vw-1rem)] max-w-[calc(100vw-1rem)] sm:max-w-2xl max-h-[85vh] overflow-x-hidden overflow-y-auto">
+				<DialogHeader className="min-w-0">
+					<DialogTitle className="font-display text-xl gradient-text-regent flex min-w-0 items-center gap-2 break-words pr-4">
 						<Crown className="h-5 w-5" />
 						{formatRegentVernacular(
 							regent?.title || regentName || REGENT_LABEL,
@@ -811,9 +843,9 @@ export function RegentCatchUpModal({
 						Loading character, known abilities, and canonical options...
 					</div>
 				) : blocker ? (
-					<div className="flex items-start gap-3 rounded-lg border border-regent-gold/40 bg-regent-gold/5 p-4 text-sm text-muted-foreground">
+					<div className="flex min-w-0 items-start gap-3 rounded-lg border border-regent-gold/40 bg-regent-gold/5 p-4 text-sm text-muted-foreground">
 						<AlertTriangle className="h-5 w-5 text-regent-gold shrink-0" />
-						<div>{blocker}</div>
+						<div className="min-w-0 break-words">{blocker}</div>
 					</div>
 				) : (
 					<div className="space-y-5 pt-2">
