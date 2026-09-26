@@ -12,6 +12,7 @@
 		"lint": "npx @biomejs/biome check --write ./src ./scripts ./tests ./tools ./supabase/functions ./vite.config.ts ./vite.sourcebook.config.ts ./vitest.config.ts ./playwright.config.ts",
 		"lint:check": "npx @biomejs/biome check ./src ./scripts ./tests ./tools ./supabase/functions ./vite.config.ts ./vite.sourcebook.config.ts ./vitest.config.ts ./playwright.config.ts",
 		"check:deno": "deno check supabase/functions/**/*.ts",
+		"check:ai-isolation": "vitest run src/lib/__tests__/aiIsolation.test.ts",
 		"build": "node scripts/write-runtime-env.mjs && vite build",
 		"build:vercel": "node scripts/write-runtime-env.mjs && vite build",
 		"preview": "vite preview --host",
@@ -64,8 +65,6 @@
 		"script:enrichCompendium": "node scripts/enrichCompendium.mjs",
 		"script:enrichMassiveArchives": "node scripts/enrichMassiveArchives.mjs",
 		"script:find-duplicates": "tsx scripts/find-duplicates.ts",
-		"script:generate-ai-tokens": "tsx scripts/generate-ai-tokens.ts",
-		"script:generate-ai-unique-content": "tsx scripts/generate-ai-unique-content.ts",
 		"script:generate-algorithmic-uniqueness": "tsx scripts/generate-algorithmic-uniqueness.ts",
 		"script:generate-backgrounds": "tsx scripts/generate-backgrounds.ts",
 		"script:generate-items": "node scripts/generate-items.js",
@@ -187,7 +186,8 @@
 		],
 		"ignoreExportsUsedInFile": true,
 		"ignoreDependencies": [
-			"@radix-ui/react-slider"
+			"@radix-ui/react-slider",
+			"@google/genai"
 		],
 		"project": [
 			"src/**/*.{ts,tsx}"
