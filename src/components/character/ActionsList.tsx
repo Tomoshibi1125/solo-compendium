@@ -1,14 +1,27 @@
 import { Plus } from "lucide-react";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useToast } from "@/hooks/use-toast";
 import { useCharacterSheetState } from "@/hooks/useCharacterSheetState";
-import { useCombatActions } from "@/hooks/useCombatActions";
+import { useCharacter } from "@/hooks/useCharacters";
+import { type CombatAction, useCombatActions } from "@/hooks/useCombatActions";
 import { useEquipment } from "@/hooks/useEquipment";
+import { useUnifiedResources } from "@/hooks/useUnifiedResources";
+import {
+	buildSovereignRuntimeActions,
+	readAttachedSovereignV2,
+	type SovereignResourceCost,
+} from "@/lib/sovereign/sovereignRuntime";
 import type { DetailData } from "@/types/character";
 import { ActionCard } from "./ActionCard";
 import { AddTechniqueDialog } from "./AddTechniqueDialog";
 import { UnifiedResourcePanel } from "./UnifiedResourcePanel";
+
+type RuntimeCombatAction = CombatAction & {
+	recharge?: string;
+	resourceCosts?: SovereignResourceCost[];
+};
 
 export function ActionsList({
 	characterId,
@@ -23,19 +36,61 @@ export function ActionsList({
 	attacksPerAction?: number;
 }) {
 	const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
-	const { actions, isLoading } = useCombatActions(characterId);
+	const { toast } = useToast();
+	const { actions: baseActions, isLoading } = useCombatActions(characterId);
+	const { data: character } = useCharacter(characterId);
 	const { updateEquipment } = useEquipment(characterId);
 	// Ammo tracking defaults to manual — attacks only auto-spend when the
 	// character's opt-in toggle (Resources section) is on.
 	const { state: sheetState } = useCharacterSheetState(characterId);
 	const autoSpendAmmo = sheetState.resources.tracking.autoSpendAmmo;
+	const { spendCustomCosts } = useUnifiedResources(characterId, {
+		reconcile: false,
+	});
+
+	const sovereignActions = useMemo(() => {
+		if (!character) return [];
+		const definition = readAttachedSovereignV2(character.gemini_state);
+		return buildSovereignRuntimeActions(
+			definition,
+			character,
+			sheetState.resources.custom_resources,
+		);
+	}, [character, sheetState.resources.custom_resources]);
+
+	const actions = useMemo<RuntimeCombatAction[]>(() => {
+		// useCombatActions retains the legacy character_features projection as a
+		// fallback. For a v2 attachment, replace only those projected Sovereign
+		// action cards with stable-ID runtime actions from the authoritative
+		// definition so resources/costs cannot drift from storage.
+		const base = sovereignActions.length
+			? baseActions.filter((action) => !action.id.startsWith("sovereign-feat-"))
+			: baseActions;
+		return [
+			...(base as RuntimeCombatAction[]),
+			...(sovereignActions as RuntimeCombatAction[]),
+		];
+	}, [baseActions, sovereignActions]);
 
 	const handleUseAction = async (actionId: string, equipmentId?: string) => {
-		if (!equipmentId) return;
+		const action = actions.find((candidate) => candidate.id === actionId);
+		if (!action) return;
 
-		const action = actions.find((a) => a.id === actionId);
+		if (action.resourceCosts && action.resourceCosts.length > 0) {
+			const spent = await spendCustomCosts(action.resourceCosts);
+			if (!spent) {
+				toast({
+					title: "Insufficient Sovereign resource",
+					description:
+						"The declared resource cost cannot be paid from the current pools.",
+					variant: "destructive",
+				});
+			}
+			return;
+		}
+
+		if (!equipmentId) return;
 		if (
-			!action ||
 			action.resourceCurrent === undefined ||
 			action.resourceCurrent <= 0
 		)
@@ -91,6 +146,58 @@ export function ActionsList({
 		),
 	};
 
+	const renderAction = (action: RuntimeCombatAction) => (
+		<ActionCard
+			key={action.id}
+			name={action.name}
+			type={action.type}
+			description={action.description || ""}
+			attackBonus={action.attackBonus}
+			damage={action.damageRoll}
+			damageType={action.damageType}
+			range={action.range}
+			formulaAbility={action.formulaAbility}
+			formulaAbilityModifier={action.formulaAbilityModifier}
+			attackRoll={action.attackRoll}
+			uses={
+				action.resourceMax !== undefined
+					? {
+							current: action.resourceCurrent || 0,
+							max: action.resourceMax,
+						}
+					: undefined
+			}
+			recharge={action.recharge}
+			ammo={
+				action.ammo
+					? {
+							name: action.ammo.name,
+							remaining: action.ammo.remaining,
+						}
+					: undefined
+			}
+			onAttackExecuted={
+				action.ammo && autoSpendAmmo
+					? () => handleAmmoSpend(action.id)
+					: undefined
+			}
+			onAmmoSpend={
+				action.ammo ? () => handleAmmoSpend(action.id) : undefined
+			}
+			onUse={() => handleUseAction(action.id, action.equipmentId)}
+			characterId={characterId}
+			campaignId={campaignId}
+			payload={action.payload}
+			onSelect={() =>
+				onSelectDetail?.({
+					title: action.name,
+					description: action.description || "",
+					payload: action,
+				})
+			}
+		/>
+	);
+
 	return (
 		<div className="space-y-4">
 			{attacksPerAction !== undefined && attacksPerAction > 1 && (
@@ -137,56 +244,7 @@ export function ActionsList({
 				</div>
 
 				<TabsContent value="all" className="mt-4 space-y-4">
-					{actions.map((action) => (
-						<ActionCard
-							key={action.id}
-							name={action.name}
-							type={action.type}
-							description={action.description || ""}
-							attackBonus={action.attackBonus}
-							damage={action.damageRoll}
-							damageType={action.damageType}
-							range={action.range}
-							formulaAbility={action.formulaAbility}
-							formulaAbilityModifier={action.formulaAbilityModifier}
-							attackRoll={action.attackRoll}
-							uses={
-								action.resourceMax
-									? {
-											current: action.resourceCurrent || 0,
-											max: action.resourceMax,
-										}
-									: undefined
-							}
-							ammo={
-								action.ammo
-									? {
-											name: action.ammo.name,
-											remaining: action.ammo.remaining,
-										}
-									: undefined
-							}
-							onAttackExecuted={
-								action.ammo && autoSpendAmmo
-									? () => handleAmmoSpend(action.id)
-									: undefined
-							}
-							onAmmoSpend={
-								action.ammo ? () => handleAmmoSpend(action.id) : undefined
-							}
-							onUse={() => handleUseAction(action.id, action.equipmentId)}
-							characterId={characterId}
-							campaignId={campaignId}
-							payload={action.payload}
-							onSelect={() =>
-								onSelectDetail?.({
-									title: action.name,
-									description: action.description || "",
-									payload: action,
-								})
-							}
-						/>
-					))}
+					{actions.map(renderAction)}
 					{actions.length === 0 && (
 						<div className="text-center p-8 border-2 border-dashed border-border rounded-lg text-muted-foreground">
 							No combat actions found.
@@ -196,56 +254,7 @@ export function ActionsList({
 
 				{Object.entries(categorizedActions).map(([key, list]) => (
 					<TabsContent key={key} value={key} className="mt-4 space-y-4">
-						{list.map((action) => (
-							<ActionCard
-								key={action.id}
-								name={action.name}
-								type={action.type}
-								description={action.description || ""}
-								attackBonus={action.attackBonus}
-								damage={action.damageRoll}
-								damageType={action.damageType}
-								range={action.range}
-								formulaAbility={action.formulaAbility}
-								formulaAbilityModifier={action.formulaAbilityModifier}
-								attackRoll={action.attackRoll}
-								uses={
-									action.resourceMax
-										? {
-												current: action.resourceCurrent || 0,
-												max: action.resourceMax,
-											}
-										: undefined
-								}
-								ammo={
-									action.ammo
-										? {
-												name: action.ammo.name,
-												remaining: action.ammo.remaining,
-											}
-										: undefined
-								}
-								onAttackExecuted={
-									action.ammo && autoSpendAmmo
-										? () => handleAmmoSpend(action.id)
-										: undefined
-								}
-								onAmmoSpend={
-									action.ammo ? () => handleAmmoSpend(action.id) : undefined
-								}
-								onUse={() => handleUseAction(action.id, action.equipmentId)}
-								characterId={characterId}
-								campaignId={campaignId}
-								payload={action.payload}
-								onSelect={() =>
-									onSelectDetail?.({
-										title: action.name,
-										description: action.description || "",
-										payload: action,
-									})
-								}
-							/>
-						))}
+						{list.map(renderAction)}
 						{list.length === 0 && (
 							<div className="text-center p-8 border-2 border-dashed border-border rounded-lg text-muted-foreground">
 								No {key} actions found.

@@ -11,10 +11,21 @@ import {
 	useCharacterFeatures,
 } from "@/hooks/useCharacterFeatures";
 import { useCharacterGuildBenefits } from "@/hooks/useCharacterGuildBenefits";
+import { useCharacter } from "@/hooks/useCharacters";
 import {
 	type CustomModifier,
 	normalizeCustomModifiers,
 } from "@/lib/customModifiers";
+import {
+	buildSovereignRuntimeModifiers,
+	readAttachedSovereignV2,
+} from "@/lib/sovereign/sovereignRuntime";
+
+const isProjectedSovereignFeature = (feature: CharacterFeature): boolean =>
+	Boolean(
+		(feature as CharacterFeature & { sovereign_definition_id?: string | null })
+			.sovereign_definition_id,
+	);
 
 /**
  * Pure merge of every custom-modifier source. Exported separately from the
@@ -28,12 +39,22 @@ export function mergeCustomModifierSources(input: {
 	syntheticFeatures: CharacterFeature[];
 	activeSpells: ActiveSpellRow[];
 	level: number;
+	sovereignModifiers?: CustomModifier[];
 }): CustomModifier[] {
+	// v2 Sovereign feature rows are a rebuildable projection. Their modifiers
+	// use the structured FeatureEffect shape (`kind`, not the legacy flat
+	// `type/value` shape), so execute them once from the authoritative definition
+	// below instead of letting the legacy feature converter misread or duplicate
+	// them. Legacy Sovereigns never carried structured modifiers.
+	const normalFeatures = input.charFeatures.filter(
+		(feature) => !isProjectedSovereignFeature(feature),
+	);
 	return [
 		...normalizeCustomModifiers(input.sheetCustomModifiers),
-		...featureModifiersToCustomModifiers(input.charFeatures),
-		...featureEffectsToCustomModifiers(input.charFeatures, input.level),
+		...featureModifiersToCustomModifiers(normalFeatures),
+		...featureEffectsToCustomModifiers(normalFeatures, input.level),
 		...featureEffectsToCustomModifiers(input.syntheticFeatures, input.level),
+		...(input.sovereignModifiers ?? []),
 		...activeSpellsToCustomModifiers(input.activeSpells),
 	];
 }
@@ -45,15 +66,14 @@ export function mergeCustomModifierSources(input: {
  * + feature/feat flat modifiers
  * + structured feature effects (Tough +2 HP/level, ability bonuses, …)
  * + Guild Base benefits (War Room +Initiative, Vanguard Tactics +Attack, …)
+ * + authoritative Sovereign v2 modifiers
  * + persisted active spells (Bless, Shield of Faith, Haste, …)
  *
- * Every consumer of `useCharacterDerivedStats` MUST pass this merged list,
- * not the raw sheet-state list. Passing only `sheetState.customModifiers`
- * silently drops the feature-derived entries, so ability scores (and every
- * number computed from them — spell attack, save DC, weapon damage) drift
- * from the character sheet, which merges all sources. An origin's +2 PRE
- * reached the stats panel but not the action cards until the action
- * pipeline switched to this hook.
+ * Sovereign v2 does not execute arbitrary formula strings. Its bounded
+ * definition is converted to the same CustomModifier consumers used by the
+ * rest of the sheet (save/skill proficiency deltas and unconditional roll
+ * advantage). Resistance and non-numeric proficiencies remain available from
+ * the shared Sovereign runtime helper for defense/presentation consumers.
  */
 export function useMergedCustomModifiers(
 	characterId: string | undefined,
@@ -64,6 +84,13 @@ export function useMergedCustomModifiers(
 	const { data: characterActiveSpells = [] } =
 		useCharacterActiveSpells(characterId);
 	const guildBenefits = useCharacterGuildBenefits(characterId);
+	const { data: character } = useCharacter(characterId || "");
+
+	const sovereignModifiers = useMemo(() => {
+		if (!character) return [];
+		const definition = readAttachedSovereignV2(character.gemini_state);
+		return buildSovereignRuntimeModifiers(definition, character).customModifiers;
+	}, [character]);
 
 	return useMemo(
 		() =>
@@ -73,6 +100,7 @@ export function useMergedCustomModifiers(
 				syntheticFeatures: guildBenefits.syntheticFeatures,
 				activeSpells: characterActiveSpells,
 				level,
+				sovereignModifiers,
 			}),
 		[
 			sheetCustomModifiers,
@@ -80,6 +108,7 @@ export function useMergedCustomModifiers(
 			characterActiveSpells,
 			guildBenefits.syntheticFeatures,
 			level,
+			sovereignModifiers,
 		],
 	);
 }

@@ -7,9 +7,10 @@
  * ammunition/consumables/charged items derive live from equipment rows and
  * write back through useEquipment, sharing the attack cards' write path.
  *
- * On load it (once per character) migrates the retired localStorage tracker
- * (`sa-tracked-resources-*`) into custom_resources and reconciles job pools —
- * both idempotent, so repeat renders never write.
+ * S3 also reconciles authoritative Sovereign v2 resource declarations into
+ * the same custom-resource store. That deliberately reuses applyResourceRest,
+ * so short/long-rest recovery has one implementation rather than a separate
+ * Sovereign-only lifecycle.
  */
 
 import { useCallback, useEffect, useMemo, useRef } from "react";
@@ -20,6 +21,11 @@ import type {
 	CustomResource,
 	ResourceRecharge,
 } from "@/lib/characterResources";
+import {
+	readAttachedSovereignV2,
+	reconcileSovereignResourceRows,
+	type SovereignResourceCost,
+} from "@/lib/sovereign/sovereignRuntime";
 import {
 	applyJobPoolReconcile,
 	characterRowToJobPoolShape,
@@ -61,15 +67,22 @@ export function useUnifiedResources(
 
 	const resources = state.resources;
 	const customResources = resources.custom_resources;
+	const sovereignDefinition = useMemo(
+		() => readAttachedSovereignV2(character?.gemini_state),
+		[character?.gemini_state],
+	);
 
-	// One reconcile pass per character per mount; the diff-null guards inside
-	// make extra passes harmless, this just avoids write attempts on every
-	// dependency wiggle.
+	// Re-run only when inputs that can change an auto-derived maximum change.
+	// Resource spending itself must not trigger reconciliation/refills.
 	const reconciledFor = useRef<string | null>(null);
+	const reconcileSignature = character
+		? `${characterId}:${character.level}:${sovereignDefinition?.id ?? "none"}`
+		: null;
 
 	useEffect(() => {
-		if (!shouldReconcile || isLoading || !character) return;
-		if (reconciledFor.current === characterId) return;
+		if (!shouldReconcile || isLoading || !character || !reconcileSignature)
+			return;
+		if (reconciledFor.current === reconcileSignature) return;
 
 		const migrated = migrateLocalTrackedResources(
 			readLegacyRows(characterId),
@@ -77,18 +90,34 @@ export function useUnifiedResources(
 		);
 		const merged = [...customResources, ...migrated];
 
-		// Rows carry short ability columns (str/agi/vit/int/sense/pre); the
-		// pool formulas read full names — map, don't cast (a direct cast fed
-		// every ability-scaled pool a phantom score of 10).
 		const poolCharacter = characterRowToJobPoolShape(character);
-		const reconcile = reconcileJobPools(character.job, poolCharacter, merged);
+		const jobReconcile = reconcileJobPools(
+			character.job,
+			poolCharacter,
+			merged,
+		);
+		const afterJob = jobReconcile
+			? applyJobPoolReconcile(merged, jobReconcile)
+			: merged;
+		const sovereignReconcile = reconcileSovereignResourceRows(
+			afterJob,
+			sovereignDefinition,
+			character,
+		);
 
-		reconciledFor.current = characterId;
+		reconciledFor.current = reconcileSignature;
 
-		if (migrated.length === 0 && !reconcile) return;
-		const next = reconcile ? applyJobPoolReconcile(merged, reconcile) : merged;
+		if (
+			migrated.length === 0 &&
+			!jobReconcile &&
+			!sovereignReconcile.changed
+		)
+			return;
 		void saveSheetState({
-			resources: { ...resources, custom_resources: next },
+			resources: {
+				...resources,
+				custom_resources: sovereignReconcile.rows,
+			},
 		}).then(() => {
 			try {
 				window.localStorage.removeItem(legacyStorageKey(characterId));
@@ -104,6 +133,8 @@ export function useUnifiedResources(
 		customResources,
 		resources,
 		saveSheetState,
+		sovereignDefinition,
+		reconcileSignature,
 	]);
 
 	const equipmentSections = useMemo(() => {
@@ -140,6 +171,29 @@ export function useUnifiedResources(
 				return { ...row, current };
 			});
 			return saveCustomResources(next);
+		},
+		[customResources, saveCustomResources],
+	);
+
+	/** Spend one action's declared Sovereign resource costs in one state write. */
+	const spendCustomCosts = useCallback(
+		(costs: SovereignResourceCost[]): Promise<boolean> => {
+			if (costs.length === 0) return Promise.resolve(true);
+			const totals = new Map<string, number>();
+			for (const cost of costs) {
+				totals.set(cost.sourceKey, (totals.get(cost.sourceKey) ?? 0) + cost.amount);
+			}
+			for (const [sourceKey, amount] of totals) {
+				const row = customResources.find((entry) => entry.sourceKey === sourceKey);
+				if (!row || row.current < amount) return Promise.resolve(false);
+			}
+			const next = customResources.map((row) => {
+				const amount = row.sourceKey ? totals.get(row.sourceKey) : undefined;
+				return amount === undefined
+					? row
+					: { ...row, current: Math.max(0, row.current - amount) };
+			});
+			return saveCustomResources(next).then(() => true);
 		},
 		[customResources, saveCustomResources],
 	);
@@ -190,10 +244,12 @@ export function useUnifiedResources(
 		isLoading,
 		jobPools,
 		customRows,
+		allCustomResources: customResources,
 		equipmentSections,
 		autoSpendAmmo: resources.tracking.autoSpendAmmo,
 		setAutoSpendAmmo,
 		adjustCustom,
+		spendCustomCosts,
 		addCustom,
 		removeCustom,
 		adjustEquipment,

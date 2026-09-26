@@ -9,7 +9,7 @@ import {
 	Star,
 	Zap,
 } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
@@ -17,20 +17,34 @@ import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { useToast } from "@/hooks/use-toast";
+import { useCharacter } from "@/hooks/useCharacters";
 import { useCharacterSovereign } from "@/hooks/useSavedSovereigns";
 import { useSovereignReady } from "@/hooks/useSovereignReady";
 import type { FusionAbility } from "@/lib/geminiProtocol";
+import { readAttachedSovereignV2 } from "@/lib/sovereign/sovereignRuntime";
 import { cn } from "@/lib/utils";
 
 interface SovereignOverlayPanelProps {
 	characterId: string;
 }
 
+interface DisplayAbility {
+	id: string;
+	name: string;
+	description: string;
+	level: number;
+	actionType: string | null;
+	recharge: string | null;
+	isCapstone: boolean;
+	ancestry: string[];
+	locked: boolean;
+}
+
 function AbilityCard({
 	ability,
 	index,
 }: {
-	ability: FusionAbility;
+	ability: DisplayAbility;
 	index: number;
 }) {
 	const [expanded, setExpanded] = useState(false);
@@ -40,9 +54,10 @@ function AbilityCard({
 			type="button"
 			className={cn(
 				"w-full text-left rounded-lg border p-3 transition-colors cursor-pointer",
-				ability.is_capstone
+				ability.isCapstone
 					? "border-resurge-violet/60 bg-resurge-violet/8"
 					: "border-border bg-muted/20 hover:border-resurge-violet/30",
+				ability.locked && "opacity-70",
 			)}
 			onClick={() => setExpanded(!expanded)}
 		>
@@ -51,15 +66,19 @@ function AbilityCard({
 					<span className="text-xs font-mono text-muted-foreground/60 shrink-0">
 						{String(index + 1).padStart(2, "0")}
 					</span>
-					{ability.is_capstone && (
+					{ability.isCapstone && (
 						<Star className="w-3 h-3 text-resurge-violet shrink-0" />
 					)}
+					{ability.locked && <Lock className="w-3 h-3 shrink-0" />}
 					<p className="text-sm font-semibold truncate">{ability.name}</p>
 				</div>
 				<div className="flex items-center gap-1.5 shrink-0">
-					{ability.action_type && (
-						<Badge variant="outline" className="text-[10px] h-5 px-1.5">
-							{ability.action_type}
+					<Badge variant="outline" className="text-[10px] h-5 px-1.5">
+						L{ability.level}
+					</Badge>
+					{ability.isCapstone && (
+						<Badge className="text-[10px] h-5 px-1.5 bg-resurge-violet/20 text-resurge-violet border border-resurge-violet/40">
+							Capstone
 						</Badge>
 					)}
 					{expanded ? (
@@ -71,20 +90,25 @@ function AbilityCard({
 			</div>
 
 			{expanded && (
-				<div className="mt-2 space-y-1">
-					{ability.recharge && (
-						<p className="text-xs text-muted-foreground">
-							<span className="font-semibold">Recharge:</span>{" "}
-							{ability.recharge}
-						</p>
-					)}
-					{ability.level > 0 && (
-						<p className="text-xs text-muted-foreground">
-							<span className="font-semibold">Unlock Level:</span>{" "}
-							{ability.level}
-						</p>
-					)}
-					<p className="text-xs text-muted-foreground leading-relaxed mt-1">
+				<div className="mt-2 space-y-2">
+					<div className="flex flex-wrap gap-1.5">
+						{ability.actionType && (
+							<Badge variant="secondary" className="text-[10px]">
+								{ability.actionType}
+							</Badge>
+						)}
+						{ability.recharge && (
+							<Badge variant="outline" className="text-[10px]">
+								{ability.recharge}
+							</Badge>
+						)}
+						{ability.ancestry.map((source) => (
+							<Badge key={source} variant="outline" className="text-[10px]">
+								{source}
+							</Badge>
+						))}
+					</div>
+					<p className="text-xs text-muted-foreground leading-relaxed">
 						{ability.description}
 					</p>
 				</div>
@@ -93,13 +117,34 @@ function AbilityCard({
 	);
 }
 
+const legacyAbility = (
+	ability: FusionAbility,
+	index: number,
+	level: number,
+): DisplayAbility => ({
+	id: `legacy-${ability.name}-${index}`,
+	name: ability.name,
+	description: ability.description,
+	level: ability.level,
+	actionType: ability.action_type ?? null,
+	recharge: ability.recharge ?? null,
+	isCapstone: Boolean(ability.is_capstone),
+	ancestry: ability.origin_sources ?? [],
+	locked: ability.level > level,
+});
+
 export function SovereignOverlayPanel({
 	characterId,
 }: SovereignOverlayPanelProps) {
 	const { data: sovereign, isLoading } = useCharacterSovereign(characterId);
+	const { data: character } = useCharacter(characterId);
 	const ready = useSovereignReady(characterId);
 	const navigate = useNavigate();
 	const { toast } = useToast();
+	const definition = useMemo(
+		() => readAttachedSovereignV2(character?.gemini_state),
+		[character?.gemini_state],
+	);
 
 	// One-time "fusion ready" toast per character per session (the on-sheet CTA
 	// below is the persistent notification).
@@ -135,8 +180,7 @@ export function SovereignOverlayPanel({
 						</div>
 						<p className="text-sm text-muted-foreground leading-relaxed">
 							You've unlocked two Regents. Forge a permanent Sovereign overlay
-							with the built-in AI — or bring one from your own AI — and it
-							applies straight to this sheet.
+							from your Job, Path, and Regent pair and apply it to this sheet.
 						</p>
 						<Button
 							size="sm"
@@ -150,11 +194,8 @@ export function SovereignOverlayPanel({
 					<div className="flex items-center gap-3 text-muted-foreground text-sm py-2">
 						<Lock className="w-4 h-4 shrink-0" />
 						<p>
-							No Sovereign overlay locked in. Generate one via the{" "}
-							<span className="text-resurge-violet font-semibold">
-								Gemini Protocol
-							</span>{" "}
-							once you have unlocked two Regents.
+							No Sovereign overlay locked in. Unlock two Regents to begin the
+							fusion protocol.
 						</p>
 					</div>
 				)}
@@ -162,42 +203,75 @@ export function SovereignOverlayPanel({
 		);
 	}
 
-	const abilities = sovereign.abilities || [];
-	const capstone = abilities.find((a) => a.is_capstone);
-	const standard = abilities.filter((a) => !a.is_capstone);
+	const level = character?.level ?? 1;
+	const abilities: DisplayAbility[] = definition
+		? definition.abilities
+				.map((ability) => ({
+					id: ability.id,
+					name: ability.name,
+					description: ability.description,
+					level: ability.level,
+					actionType: ability.action_type,
+					recharge: ability.recharge,
+					isCapstone: ability.is_capstone,
+					ancestry: ability.ancestry,
+					locked: ability.level > level,
+				}))
+				.sort((a, b) => a.level - b.level)
+		: (sovereign.abilities || [])
+				.map((ability, index) => legacyAbility(ability, index, level))
+				.sort((a, b) => a.level - b.level);
+	const capstoneCount = abilities.filter((ability) => ability.isCapstone).length;
+	const identityName = definition?.identity.name ?? sovereign.name;
+	const identityTitle = definition?.identity.title ?? sovereign.title;
+	const description = definition?.description ?? sovereign.description;
+	const doctrine = definition?.combat_doctrine ?? sovereign.fusion_description;
+	const theme = definition?.fusion_theme ?? sovereign.fusion_theme;
 
 	return (
 		<AscendantWindow title="SOVEREIGN OVERLAY">
-			{/* Header */}
 			<div className="space-y-3">
 				<div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2">
 					<div>
 						<div className="flex items-center gap-2">
 							<Crown className="w-5 h-5 text-resurge-violet" />
-							<h3 className="text-lg font-bold">{sovereign.name}</h3>
+							<h3 className="text-lg font-bold">{identityName}</h3>
 						</div>
 						<p className="text-sm text-muted-foreground italic mt-0.5">
-							{sovereign.title}
+							{identityTitle}
+							{definition?.identity.epithet
+								? ` — ${definition.identity.epithet}`
+								: ""}
 						</p>
 					</div>
 					<div className="flex flex-wrap gap-1.5">
-						{sovereign.fusion_theme && (
+						{theme && (
 							<Badge className="bg-resurge-violet/20 text-resurge-violet border-resurge-violet/40 border">
-								{sovereign.fusion_theme}
+								{theme}
 							</Badge>
 						)}
-						<Badge variant="outline">⚡ {sovereign.power_multiplier}</Badge>
-						<Badge variant="outline">🔗 {sovereign.fusion_stability}</Badge>
+						{definition ? (
+							<Badge variant="outline">v2 • {abilities.length}/8 milestones</Badge>
+						) : (
+							<>
+								{sovereign.power_multiplier && (
+									<Badge variant="outline">⚡ {sovereign.power_multiplier}</Badge>
+								)}
+								{sovereign.fusion_stability && (
+									<Badge variant="outline">🔗 {sovereign.fusion_stability}</Badge>
+								)}
+							</>
+						)}
 					</div>
 				</div>
 
-				{sovereign.description && (
+				{description && (
 					<p className="text-sm text-muted-foreground leading-relaxed">
-						{sovereign.description}
+						{description}
 					</p>
 				)}
 
-				{sovereign.fusion_description && (
+				{doctrine && (
 					<>
 						<Separator />
 						<div>
@@ -208,38 +282,57 @@ export function SovereignOverlayPanel({
 								</p>
 							</div>
 							<p className="text-sm text-muted-foreground leading-relaxed">
-								{sovereign.fusion_description}
+								{doctrine}
 							</p>
+						</div>
+					</>
+				)}
+
+				{definition && (
+					<>
+						<Separator />
+						<div className="grid gap-2 sm:grid-cols-3 text-xs">
+							<div>
+								<span className="text-muted-foreground">Traits</span>
+								<p className="font-semibold">{definition.traits.length}</p>
+							</div>
+							<div>
+								<span className="text-muted-foreground">Affinities</span>
+								<p className="font-semibold">{definition.affinities.length}</p>
+							</div>
+							<div>
+								<span className="text-muted-foreground">Resources</span>
+								<p className="font-semibold">{definition.resources.length}</p>
+							</div>
 						</div>
 					</>
 				)}
 
 				<Separator />
 
-				{/* Abilities */}
 				<div>
-					<div className="flex items-center gap-2 mb-3">
-						<Zap className="w-3.5 h-3.5 text-resurge-violet" />
-						<p className="text-xs font-semibold text-resurge-violet tracking-wider uppercase">
-							Fusion Abilities ({abilities.length})
-						</p>
+					<div className="flex items-center justify-between gap-2 mb-3">
+						<div className="flex items-center gap-2">
+							<Zap className="w-3.5 h-3.5 text-resurge-violet" />
+							<p className="text-xs font-semibold text-resurge-violet tracking-wider uppercase">
+								Milestone Ladder ({abilities.length})
+							</p>
+						</div>
+						{definition && (
+							<Badge variant={capstoneCount === 2 ? "secondary" : "destructive"}>
+								{capstoneCount}/2 capstones
+							</Badge>
+						)}
 					</div>
-					<ScrollArea className="max-h-[400px] pr-2">
+					<ScrollArea className="max-h-[460px] pr-2">
 						<div className="space-y-2">
-							{standard.map((ability, i) => (
+							{abilities.map((ability, index) => (
 								<AbilityCard
-									key={ability.name || i}
+									key={ability.id}
 									ability={ability}
-									index={i}
+									index={index}
 								/>
 							))}
-							{capstone && (
-								<AbilityCard
-									key={capstone.name}
-									ability={capstone}
-									index={abilities.length - 1}
-								/>
-							)}
 						</div>
 					</ScrollArea>
 				</div>
