@@ -24,7 +24,7 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import { useCompanionInstance, useRegisterCharacterVehicleMount } from "@/hooks/useCompanionInstances";
+import { useRegisterCharacterVehicleMount } from "@/hooks/useCompanionInstances";
 import { useDialogSwipeClose } from "@/hooks/useDialogSwipeClose";
 import { useAddCharacterVehicle } from "@/hooks/useVehicles";
 import type { Json } from "@/integrations/supabase/types";
