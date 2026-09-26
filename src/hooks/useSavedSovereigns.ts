@@ -14,11 +14,15 @@ import {
 	sovereignAbilitiesToFeatureRows,
 } from "@/lib/sovereign/applySovereign";
 import {
+	isGeneratedSovereignV2Draft,
+} from "@/lib/sovereign/sovereignGenerationClient";
+import {
 	buildLegacySovereignSavePayload,
 	canonicalizeLegacySovereign,
 	legacySovereignSaveOperationId,
 	sovereignAttachmentOperationId,
 } from "@/lib/sovereign/sovereignPersistence";
+import { readSovereignDefinition } from "@/lib/sovereign/sovereignV2Contract";
 
 export interface SavedSovereign {
 	id: string;
@@ -133,10 +137,53 @@ function applyLocalLegacyProjection(
 	}
 }
 
+async function resolveAlreadySavedV2Draft(
+	sovereign: GeneratedSovereign,
+	userId: string,
+): Promise<string | null> {
+	if (!isGeneratedSovereignV2Draft(sovereign)) return null;
+
+	const { data, error } = await supabase
+		.from("saved_sovereigns")
+		.select("id, created_by, schema_version, definition")
+		.eq("id", sovereign.saved_sovereign_id)
+		.maybeSingle();
+	if (error) throw new AppError(error.message, "UNKNOWN", error);
+	if (!data || data.created_by !== userId || data.schema_version !== 2) {
+		throw new AppError(
+			"The generated Sovereign draft is not an owned v2 definition",
+			"AUTH_REQUIRED",
+		);
+	}
+
+	const persisted = readSovereignDefinition(data.definition);
+	if (!persisted.ok || persisted.kind !== "v2") {
+		throw new AppError(
+			"The saved Sovereign draft failed v2 validation",
+			"UNKNOWN",
+		);
+	}
+	const preview = readSovereignDefinition(sovereign.definition);
+	if (!preview.ok || preview.kind !== "v2") {
+		throw new AppError("The generated Sovereign preview is invalid", "UNKNOWN");
+	}
+	if (
+		persisted.definition.id !== preview.definition.id ||
+		persisted.definition.generation.operation_id !==
+			preview.definition.generation.operation_id
+	) {
+		throw new AppError(
+			"The generated Sovereign preview does not match its saved draft",
+			"UNKNOWN",
+		);
+	}
+	return String(data.id);
+}
+
 /**
- * Save a legacy GeneratedSovereign as a durable schema-v1 definition, then
- * atomically attach it when a cloud character is supplied. The server owns all
- * authorization, canonical source validation, runtime writes and projections.
+ * Built-in S4 generation arrives here as an already validated, already saved
+ * schema-v2 draft. It is attached directly without rewriting it as legacy v1.
+ * Outside/manual legacy imports keep the compatibility save path below.
  */
 export function useSaveSovereign() {
 	const queryClient = useQueryClient();
@@ -150,9 +197,6 @@ export function useSaveSovereign() {
 			sovereign: GeneratedSovereign;
 			characterId?: string;
 		}) => {
-			const canonicalSovereign = canonicalizeLegacySovereign(sovereign);
-			const payload = buildLegacySovereignSavePayload(canonicalSovereign);
-
 			const {
 				data: { user },
 			} = await supabase.auth.getUser();
@@ -163,14 +207,21 @@ export function useSaveSovereign() {
 				);
 			}
 
-			const sovereignId = await runRpc<string>(
-				"save_legacy_sovereign_definition",
-				{
-					p_payload: payload,
-					p_operation_id: legacySovereignSaveOperationId(payload),
-					p_is_public: true,
-				},
-			);
+			let sovereignId = await resolveAlreadySavedV2Draft(sovereign, user.id);
+			let projectionSovereign = sovereign;
+			if (!sovereignId) {
+				const canonicalSovereign = canonicalizeLegacySovereign(sovereign);
+				projectionSovereign = canonicalSovereign;
+				const payload = buildLegacySovereignSavePayload(canonicalSovereign);
+				sovereignId = await runRpc<string>(
+					"save_legacy_sovereign_definition",
+					{
+						p_payload: payload,
+						p_operation_id: legacySovereignSaveOperationId(payload),
+						p_is_public: true,
+					},
+				);
+			}
 			if (typeof sovereignId !== "string" || !sovereignId) {
 				throw new AppError(
 					"The Sovereign definition was not saved correctly",
@@ -180,10 +231,10 @@ export function useSaveSovereign() {
 
 			if (characterId) {
 				if (isLocalCharacterId(characterId)) {
-					// Guest/local state cannot participate in the cloud transaction.
-					// Keep the existing local projection behavior while the durable
-					// definition remains available in the signed-in user's archive.
-					applyLocalLegacyProjection(characterId, canonicalSovereign);
+					// Guest/local state cannot participate in the cloud attachment
+					// transaction. Keep the existing local display projection while the
+					// signed-in user's authoritative draft remains safely archived.
+					applyLocalLegacyProjection(characterId, projectionSovereign);
 				} else {
 					await runRpc<Record<string, unknown>>("attach_saved_sovereign", {
 						p_character_id: characterId,
