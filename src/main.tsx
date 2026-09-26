@@ -16,11 +16,14 @@ import {
 import { enableTouchOptimizations } from "./lib/mobile";
 import { registerPwa } from "./lib/pwa";
 import { initSentry } from "./lib/sentry";
+import { registerCompanionRestBridge } from "./lib/companionRestBridge";
 
 const logger = createLogger({ mode: "production" });
 
 // Initialize Sentry before anything else
 initSentry();
+// C3: subscribe living companions to the existing typed rest lifecycle.
+registerCompanionRestBridge();
 
 import { initializeProtocolData } from "./lib/ProtocolDataManager";
 
