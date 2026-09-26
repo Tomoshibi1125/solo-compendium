@@ -6,7 +6,6 @@ import { useWardenA } from "../../hooks/usePWA";
 import { cn } from "../../lib/utils";
 import { OfflineStatus, WardenAInstallPrompt } from "../pwa/PWAComponents";
 import { OfflineBanner } from "../ui/OfflineBanner";
-import { WardenChatbot } from "../warden-directives/WardenChatbot";
 
 interface LayoutProps {
 	children?: React.ReactNode;
@@ -18,7 +17,6 @@ interface LayoutProps {
 	fullBleed?: boolean;
 }
 
-// Module-level custom hook (must not be defined inside a component)
 function useMediaQuery(query: string): boolean {
 	const [matches, setMatches] = useState(() =>
 		typeof window !== "undefined" ? window.matchMedia(query).matches : false,
@@ -45,7 +43,6 @@ function useMediaQuery(query: string): boolean {
 	return matches;
 }
 
-// Derive RA zone from current route
 function useRAZone(): string {
 	const location = useLocation();
 	const path = location.pathname;
@@ -61,7 +58,7 @@ function useRAZone(): string {
 	if (path.startsWith("/homebrew") || path.startsWith("/marketplace"))
 		return "compendium";
 	if (path.startsWith("/profile")) return "player";
-	return "character"; // default
+	return "character";
 }
 
 export function Layout({ children, className, fullBleed }: LayoutProps) {
@@ -80,7 +77,6 @@ export function Layout({ children, className, fullBleed }: LayoutProps) {
 	const isTablet = useMediaQuery("(max-width: 1024px)");
 	const isDesktop = !isMobile && !isTablet;
 
-	// Responsive layout classes
 	const layoutClasses = cn(
 		"min-h-screen flex flex-col bg-transparent",
 		isMobile && "mobile-layout",
@@ -109,10 +105,7 @@ export function Layout({ children, className, fullBleed }: LayoutProps) {
 
 	return (
 		<div className={cn(layoutClasses, "relative")} data-ra-zone={raZone}>
-			{/* Offline connectivity banner */}
 			<OfflineBanner />
-			{/* Global Cosmic Architecture removed to avoid double rendering with App.tsx */}
-
 			<a
 				href="#main-content"
 				className="sr-only focus:not-sr-only focus:absolute focus:z-[100] focus:p-4 focus:bg-background focus:text-foreground top-0 left-0"
@@ -124,8 +117,6 @@ export function Layout({ children, className, fullBleed }: LayoutProps) {
 				tabIndex={-1}
 				className={cn(
 					"flex-1",
-					// Bottom-nav clearance is owned by MainLayout's <main>; keep the
-					// inner padding modest on mobile to avoid excessive dead space.
 					!fullBleed && (isMobile ? "px-4 pt-6 pb-6" : "px-8 pt-8 pb-32"),
 					fullBleed && "layout-fullbleed",
 				)}
@@ -133,7 +124,6 @@ export function Layout({ children, className, fullBleed }: LayoutProps) {
 				{children || <Outlet />}
 			</main>
 
-			{/* WardenA Components */}
 			<WardenAInstallPrompt
 				isInstallable={isInstallable}
 				isInstalled={isInstalled}
@@ -144,8 +134,6 @@ export function Layout({ children, className, fullBleed }: LayoutProps) {
 				connectionType="unknown"
 				syncQueueLength={syncQueueLength}
 			/>
-
-			{raZone === "warden" && <WardenChatbot />}
 		</div>
 	);
 }
