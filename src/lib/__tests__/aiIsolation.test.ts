@@ -6,6 +6,7 @@ import { AIServiceManager } from "@/lib/ai/aiService";
 import { narrateCombatEvent } from "@/lib/ai/protocolWarden";
 
 const root = process.cwd();
+const thisTest = "src/lib/__tests__/aiIsolation.test.ts";
 const read = (relativePath: string) =>
 	readFileSync(path.join(root, relativePath), "utf8");
 
@@ -35,6 +36,28 @@ const PROVIDER_MARKERS = [
 	"api-inference.huggingface.co",
 	"@google/genai",
 ];
+const EXECUTABLE_EXT = /\.(?:[cm]?js|ts|tsx)$/;
+const ALLOWED_PROVIDER_FILES = new Set([
+	"api/_aiProviders.js",
+	"api/_sovereignGeneration.ts",
+]);
+
+function executableFiles(): string[] {
+	return [
+		...walkFiles("src"),
+		...walkFiles("scripts"),
+		...walkFiles("supabase/functions"),
+		...walkFiles("api"),
+		"vite.config.ts",
+		"vite.sourcebook.config.ts",
+		"vite.sovereign-dev.ts",
+	].filter(
+		(file, index, all) =>
+			EXECUTABLE_EXT.test(file) &&
+			file !== thisTest &&
+			all.indexOf(file) === index,
+	);
+}
 
 describe("A1 AI isolation", () => {
 	afterEach(() => {
@@ -42,52 +65,50 @@ describe("A1 AI isolation", () => {
 		vi.restoreAllMocks();
 	});
 
-	it("removes the generic production AI endpoint", () => {
+	it("removes generic production and Vite AI endpoints", () => {
 		expect(existsSync(path.join(root, "api/ai.js"))).toBe(false);
+		const vite = read("vite.config.ts");
+		const sovereignDev = read("vite.sovereign-dev.ts");
+		expect(vite).not.toContain("devAIProxy");
+		expect(vite).not.toContain('"/api/ai"');
+		expect(vite).not.toContain("./api/_aiProviders");
+		expect(sovereignDev).not.toContain('"/api/ai"');
+		expect(sovereignDev).toContain('use("/api/sovereign"');
 	});
 
-	it("retires the generic Vite dev route before legacy middleware", () => {
-		const source = read("vite.sovereign-dev.ts");
-		expect(source).toContain('enforce: "pre"');
-		expect(source).toContain('use("/api/ai"');
-		expect(source).toContain("statusCode = 410");
-		expect(source).toContain('use("/api/sovereign"');
-	});
-
-	it("allows executable scripts no provider imports or provider URLs", () => {
+	it("whitelists provider code to the dedicated Sovereign server boundary", () => {
 		const offenders: string[] = [];
-		for (const file of walkFiles("scripts")) {
-			if (!/\.(?:[cm]?js|ts|tsx)$/.test(file)) continue;
+		for (const file of executableFiles()) {
+			if (ALLOWED_PROVIDER_FILES.has(file)) continue;
 			const source = read(file);
 			for (const marker of PROVIDER_MARKERS) {
 				if (source.includes(marker)) offenders.push(`${file}: ${marker}`);
+			}
+			if (source.includes("runProviderChain")) {
+				offenders.push(`${file}: runProviderChain`);
+			}
+			if (source.includes('from "./api/_aiProviders')) {
+				offenders.push(`${file}: _aiProviders import`);
 			}
 		}
 		expect(offenders).toEqual([]);
 	});
 
-	it("keeps client provider access limited to the dedicated Sovereign route", () => {
-		const sovereignClient = read(
+	it("keeps the browser's only AI network route in the Sovereign generation client", () => {
+		const callers: string[] = [];
+		for (const file of walkFiles("src")) {
+			if (!EXECUTABLE_EXT.test(file) || file === thisTest) continue;
+			const source = read(file);
+			if (source.includes("/api/sovereign")) callers.push(file);
+			expect(source, file).not.toContain("/api/ai");
+		}
+		expect(callers).toEqual([
 			"src/lib/sovereign/sovereignGenerationClient.ts",
-		);
+		]);
+		const sovereignClient = read(callers[0]);
 		expect(sovereignClient).toContain('fetch("/api/sovereign"');
-		expect(sovereignClient).not.toContain("/api/ai");
 		for (const marker of PROVIDER_MARKERS) {
 			expect(sovereignClient).not.toContain(marker);
-		}
-
-		for (const file of [
-			"src/lib/ai/aiService.ts",
-			"src/hooks/useAIEnhance.ts",
-			"src/lib/artPipeline/service.ts",
-			"src/hooks/useCampaignDice.ts",
-			"src/lib/ai/protocolWarden.ts",
-		]) {
-			const source = read(file);
-			expect(source, file).not.toContain("/api/ai");
-			for (const marker of PROVIDER_MARKERS) {
-				expect(source, file).not.toContain(marker);
-			}
 		}
 	});
 
