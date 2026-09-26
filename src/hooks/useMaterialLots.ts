@@ -60,6 +60,15 @@ export interface MaterialLotDiscoveryRow {
 	updated_at: string;
 }
 
+export interface MaterialLotBundleV1 {
+	kind: "rift-ascendant-material-lots";
+	version: 1;
+	exported_at: string;
+	definitions: MaterialDefinitionRow[];
+	lots: MaterialLotRow[];
+	discoveries: MaterialLotDiscoveryRow[];
+}
+
 type RpcClient = (
 	fn: string,
 	args: Record<string, unknown>,
@@ -81,6 +90,25 @@ function invalidateMaterialLots(
 	queryClient.invalidateQueries({ queryKey: keys.discoveries(characterId) });
 	// Old crafting readers remain a compatibility projection during M1/M2.
 	queryClient.invalidateQueries({ queryKey: ["character-materials", characterId] });
+}
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+	return !!value && typeof value === "object" && !Array.isArray(value);
+}
+
+export function parseMaterialLotBundle(value: unknown): MaterialLotBundleV1 {
+	if (!isRecord(value)) throw new Error("Material lot import must be a JSON object.");
+	if (value.kind !== "rift-ascendant-material-lots" || value.version !== 1) {
+		throw new Error("Unsupported material lot bundle.");
+	}
+	if (
+		!Array.isArray(value.definitions) ||
+		!Array.isArray(value.lots) ||
+		!Array.isArray(value.discoveries)
+	) {
+		throw new Error("Material lot bundle is missing definitions, lots, or discoveries.");
+	}
+	return value as unknown as MaterialLotBundleV1;
 }
 
 export function useMaterialLots(characterId: string | undefined) {
@@ -229,6 +257,49 @@ export function useMaterialLots(characterId: string | undefined) {
 			}),
 	});
 
+	const importBundle = useMutation({
+		retry: 1,
+		mutationFn: async (input: { bundle: MaterialLotBundleV1; operationId: string }) => {
+			if (!characterId) throw new Error("Character is required.");
+			const bundle = parseMaterialLotBundle(input.bundle);
+			const { data, error } = await callRpc("import_material_lots_m1", {
+				p_character_id: characterId,
+				p_definitions: bundle.definitions,
+				p_lots: bundle.lots,
+				p_discoveries: bundle.discoveries,
+				p_operation_id: input.operationId,
+			});
+			if (error) throw new Error(error.message);
+			return data;
+		},
+		onSuccess: () => {
+			if (characterId) invalidateMaterialLots(queryClient, characterId);
+			toast({ title: "Material lots imported" });
+		},
+		onError: (error: Error) =>
+			toast({
+				title: "Could not import material lots",
+				description: error.message,
+				variant: "destructive",
+			}),
+	});
+
+	const buildExportBundle = (): MaterialLotBundleV1 => {
+		const lotDefinitionIds = new Set(
+			(lotsQuery.data ?? []).map((lot) => lot.material_definition_id),
+		);
+		return {
+			kind: "rift-ascendant-material-lots",
+			version: 1,
+			exported_at: new Date().toISOString(),
+			definitions: (definitionsQuery.data ?? []).filter((definition) =>
+				lotDefinitionIds.has(definition.id),
+			),
+			lots: lotsQuery.data ?? [],
+			discoveries: discoveriesQuery.data ?? [],
+		};
+	};
+
 	return {
 		definitions: definitionsQuery.data ?? [],
 		lots: lotsQuery.data ?? [],
@@ -237,5 +308,7 @@ export function useMaterialLots(characterId: string | undefined) {
 			definitionsQuery.isLoading || lotsQuery.isLoading || discoveriesQuery.isLoading,
 		createLot,
 		adjustLot,
+		importBundle,
+		buildExportBundle,
 	};
 }
