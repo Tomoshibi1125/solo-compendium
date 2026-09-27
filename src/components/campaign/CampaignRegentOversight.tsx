@@ -68,6 +68,7 @@ export function CampaignRegentOversight({
 	]);
 	const [editingOffer, setEditingOffer] = useState<RegentOffer | null>(null);
 	const [requestId, setRequestId] = useState("");
+	const [submissionError, setSubmissionError] = useState<string | null>(null);
 	const [curatingUnlock, setCuratingUnlock] = useState<{
 		id: string;
 		regentId: string;
@@ -110,8 +111,17 @@ export function CampaignRegentOversight({
 	const selectableRegents = canonicalRegents.filter(
 		(regent) => !selectedUnlockIds.has(regent.id),
 	);
+	const selectedUnlockCount = campaignUnlocks.filter(
+		(unlock) => unlock.character_id === selectedCharId,
+	).length;
+	const selectableRegentIds = new Set<string>(
+		selectableRegents.map((regent) => regent.id),
+	);
 	const distinctCandidates =
 		candidateIds.every(Boolean) && new Set(candidateIds).size === 3;
+	const eligibleCandidates = candidateIds.every(
+		(candidateId) => !candidateId || selectableRegentIds.has(candidateId),
+	);
 	const busy = isCreating || isConfiguring;
 
 	const resetDialog = () => {
@@ -120,6 +130,7 @@ export function CampaignRegentOversight({
 		setSelectedQuestId("");
 		setCandidateIds(["", "", ""]);
 		setRequestId("");
+		setSubmissionError(null);
 	};
 
 	const openCreate = () => {
@@ -130,19 +141,39 @@ export function CampaignRegentOversight({
 
 	const openEdit = (offer: RegentOffer) => {
 		const stored = getStoredRegentOfferCandidates(offer);
+		const unlockedIds = new Set(
+			campaignUnlocks
+				.filter((unlock) => unlock.character_id === offer.character_id)
+				.flatMap((unlock) =>
+					unlock.resolved_regent_id ? [unlock.resolved_regent_id] : [],
+				),
+		);
 		setEditingOffer(offer);
 		setSelectedCharId(offer.character_id);
 		setSelectedQuestId(offer.quest_id ?? "");
 		setCandidateIds(
 			stored && stored.length === 3
-				? [stored[0], stored[1], stored[2]]
+				? [
+						unlockedIds.has(stored[0]) ? "" : stored[0],
+						unlockedIds.has(stored[1]) ? "" : stored[1],
+						unlockedIds.has(stored[2]) ? "" : stored[2],
+					]
 				: ["", "", ""],
 		);
 		setRequestId("");
+		setSubmissionError(null);
 		setDialogOpen(true);
 	};
 
+	const selectCharacter = (characterId: string) => {
+		setSelectedCharId(characterId);
+		setSelectedQuestId("");
+		setCandidateIds(["", "", ""]);
+		setSubmissionError(null);
+	};
+
 	const setCandidate = (index: 0 | 1 | 2, value: string) => {
+		setSubmissionError(null);
 		setCandidateIds((current) => {
 			const next: [string, string, string] = [...current];
 			next[index] = value;
@@ -152,7 +183,16 @@ export function CampaignRegentOversight({
 
 	const handleSubmit = async () => {
 		if (!selectedCharId || !distinctCandidates) return;
+		setSubmissionError(null);
 		try {
+			if (selectedUnlockCount >= 2) {
+				throw new Error("This character already has two Regent unlocks.");
+			}
+			if (!eligibleCandidates) {
+				throw new Error(
+					"A selected Regent is already unlocked by this character. Choose another candidate.",
+				);
+			}
 			if (editingOffer) {
 				await configureOfferAsync({
 					grantId: editingOffer.id,
@@ -172,8 +212,12 @@ export function CampaignRegentOversight({
 			}
 			setDialogOpen(false);
 			resetDialog();
-		} catch {
-			// Hooks own destructive toasts; dialog remains open for stable retry.
+		} catch (error) {
+			setSubmissionError(
+				error instanceof Error
+					? error.message
+					: "The Regent offer could not be sent. Please retry.",
+			);
 		}
 	};
 
@@ -389,7 +433,7 @@ export function CampaignRegentOversight({
 							<Label>Character</Label>
 							<Select
 								value={selectedCharId}
-								onValueChange={setSelectedCharId}
+								onValueChange={selectCharacter}
 								disabled={Boolean(editingOffer)}
 							>
 								<SelectTrigger>
@@ -413,7 +457,10 @@ export function CampaignRegentOversight({
 								<Label>Completed Regent Quest</Label>
 								<Select
 									value={selectedQuestId}
-									onValueChange={setSelectedQuestId}
+									onValueChange={(value) => {
+										setSelectedQuestId(value);
+										setSubmissionError(null);
+									}}
 								>
 									<SelectTrigger>
 										<SelectValue placeholder="Select completed quest" />
@@ -457,6 +504,26 @@ export function CampaignRegentOversight({
 								</Select>
 							</div>
 						))}
+						{selectedCharId && selectedUnlockCount >= 2 && (
+							<p className="text-sm text-destructive" role="alert">
+								This character already has two Regent unlocks and cannot receive
+								another offer.
+							</p>
+						)}
+						{!eligibleCandidates && (
+							<p className="text-sm text-destructive" role="alert">
+								A selected Regent is already unlocked. Choose another candidate.
+							</p>
+						)}
+						{submissionError && (
+							<div
+								className="flex items-start gap-2 rounded border border-destructive/40 bg-destructive/5 p-3 text-sm text-destructive"
+								role="alert"
+							>
+								<AlertTriangle className="mt-0.5 h-4 w-4 shrink-0" />
+								<span className="break-words">{submissionError}</span>
+							</div>
+						)}
 					</div>
 
 					<DialogFooter>
@@ -469,6 +536,8 @@ export function CampaignRegentOversight({
 								!selectedCharId ||
 								(!editingOffer && !selectedQuestId) ||
 								!distinctCandidates ||
+								!eligibleCandidates ||
+								selectedUnlockCount >= 2 ||
 								busy
 							}
 						>

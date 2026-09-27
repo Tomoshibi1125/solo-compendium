@@ -24,7 +24,8 @@ type RpcResult = Promise<{
 	error: { message?: string } | null;
 }>;
 
-const callRpc = supabase.rpc as unknown as (
+// SupabaseClient.rpc reads `this.rest`; keep the method bound to the client.
+const callRpc = supabase.rpc.bind(supabase) as unknown as (
 	name: string,
 	args: Record<string, unknown>,
 ) => RpcResult;
@@ -104,13 +105,6 @@ export function useRegentOffers(characterId: string) {
 				description: "The player can choose one of the three stored Regents.",
 			});
 		},
-		onError: (error: Error) => {
-			toast({
-				title: "Failed to Create Offer",
-				description: error.message,
-				variant: "destructive",
-			});
-		},
 	});
 
 	const configureMutation = useMutation({
@@ -138,13 +132,6 @@ export function useRegentOffers(characterId: string) {
 			toast({
 				title: `${REGENT_LABEL} Offer Updated`,
 				description: "The pending three-Regent offer is now authoritative.",
-			});
-		},
-		onError: (error: Error) => {
-			toast({
-				title: "Failed to Configure Offer",
-				description: error.message,
-				variant: "destructive",
 			});
 		},
 	});
