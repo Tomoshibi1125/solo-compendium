@@ -36,7 +36,3 @@ function getAllFeatureFlags(): FeatureFlags {
 export function useFeatureFlags(): FeatureFlags {
 	return getAllFeatureFlags();
 }
-
-export function useFeatureFlag(flag: keyof FeatureFlags): boolean {
-	return getFeatureFlag(flag);
-}

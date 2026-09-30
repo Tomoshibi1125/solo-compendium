@@ -542,10 +542,6 @@ export async function reconcileAbilityUses(characterId: string): Promise<void> {
 
 export type SpellProgression = "none" | "full" | "half" | "pact";
 
-export function normalizeJobName(jobName: string | null | undefined): string {
-	return (jobName || "").trim().toLowerCase();
-}
-
 export type JobReference = StaticJob | DbJob | string | null | undefined;
 
 export function isStaticJob(job: JobReference): job is StaticJob {

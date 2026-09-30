@@ -8,7 +8,6 @@ import {
 	PATH_ABILITY_GRANTS,
 	pathGrantsAbilityKind,
 	rejectedReconciledPathAbilityGrantCandidates,
-	rejectedTask3PathAbilityGrantCandidates,
 } from "@/lib/pathAbilityAccess";
 
 describe("pathAbilityAccess exported grant catalog", () => {
@@ -159,9 +158,6 @@ describe("pathAbilityAccess exported grant catalog", () => {
 			expect(tokens).not.toContain(rejectedToken);
 		}
 
-		expect(rejectedTask3PathAbilityGrantCandidates).toBe(
-			rejectedReconciledPathAbilityGrantCandidates,
-		);
 		expect(rejectedReconciledPathAbilityGrantCandidates).toEqual(
 			expect.arrayContaining([
 				expect.objectContaining({

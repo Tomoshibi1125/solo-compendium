@@ -19,7 +19,7 @@ INSERT INTO public.character_regent_unlocks
   ('b5550000-5555-4555-8555-555555555555',
    'b4440000-4444-4444-8444-444444444444', 'beast_regent', 'Beast quest', true);
 
-SELECT plan(14);
+SELECT plan(18);
 SET LOCAL ROLE authenticated;
 DO $$ BEGIN PERFORM set_config('request.jwt.claim.sub', 'b2220000-2222-4222-8222-222222222222', true); END $$;
 SELECT throws_ok($$SELECT public.set_regent_catch_up_options(
@@ -33,6 +33,13 @@ SELECT throws_ok($$SELECT public.set_regent_catch_up_options(
   'b3330000-3333-4333-8333-333333333333', '[]'::jsonb)$$,
   '22023', 'REGENT_CATALOG_BELOW_OWED_COUNT',
   'Warden cannot approve a short catalog for Beast Regent level 3');
+SELECT throws_ok($$SELECT public.set_regent_catch_up_options(
+  'b5550000-5555-4555-8555-555555555555',
+  'b3330000-3333-4333-8333-333333333333',
+  '[{"kind":"powers","id":"power-sup-5-48-apex-predator"},
+    {"kind":"powers","id":"power-sup-5-48-apex-predator"}]'::jsonb)$$,
+  '23505', 'DUPLICATE_REGENT_OPTION: powers power-sup-5-48-apex-predator',
+  'a catalog cannot list the same option twice');
 SELECT is(public.set_regent_catch_up_options(
   'b5550000-5555-4555-8555-555555555555',
   'b3330000-3333-4333-8333-333333333333',
@@ -95,6 +102,33 @@ SELECT is((SELECT count(*) FROM public.character_techniques
   WHERE regent_unlock_id = 'b5550000-5555-4555-8555-555555555555'
     AND acquisition_kind = 'regent'), 3::bigint,
   'all three Regent techniques persist');
+
+DO $$ BEGIN PERFORM set_config('request.jwt.claim.sub', 'b1110000-1111-4111-8111-111111111111', true); END $$;
+SELECT throws_ok($$SELECT public.set_regent_catch_up_options(
+  'b5550000-5555-4555-8555-555555555555',
+  'b3330000-3333-4333-8333-333333333333',
+  '[{"kind":"powers","id":"power-arch-5-24-surge-stride"},
+    {"kind":"powers","id":"power-arch-5-17-titan-blow"},
+    {"kind":"powers","id":"power-sup-5-45-thousand-fists"},
+    {"kind":"techniques","id":"tech-sup-5-29-predator-s-leap"},
+    {"kind":"techniques","id":"tech-arch-5-51-killer-instinct"},
+    {"kind":"techniques","id":"tech-sup-6-97-summoner-s-bond-strike"}]'::jsonb)$$,
+  '22023', 'REGENT_CATALOG_WOULD_REVOKE_PERSISTED_PICK',
+  'Warden cannot drop an option the player already picked');
+SELECT is(public.set_regent_catch_up_options(
+  'b5550000-5555-4555-8555-555555555555',
+  'b3330000-3333-4333-8333-333333333333',
+  '[{"kind":"powers","id":"power-sup-5-48-apex-predator"},
+    {"kind":"powers","id":"power-arch-5-17-titan-blow"},
+    {"kind":"powers","id":"power-sup-5-45-thousand-fists"},
+    {"kind":"techniques","id":"tech-sup-5-29-predator-s-leap"},
+    {"kind":"techniques","id":"tech-arch-5-51-killer-instinct"},
+    {"kind":"techniques","id":"tech-sup-6-97-summoner-s-bond-strike"}]'::jsonb), 6,
+  'Warden can re-approve the same catalog after picks persist');
+SELECT is((SELECT count(*) FROM public.regent_catch_up_options
+  WHERE unlock_id = 'b5550000-5555-4555-8555-555555555555'), 6::bigint,
+  're-approval replaces the catalog without duplicating rows');
+DO $$ BEGIN PERFORM set_config('request.jwt.claim.sub', 'b2220000-2222-4222-8222-222222222222', true); END $$;
 INSERT INTO public.character_powers
   (character_id, power_id, name, power_level, source, acquisition_kind, canonical_source_id)
 VALUES ('b4440000-4444-4444-8444-444444444444',

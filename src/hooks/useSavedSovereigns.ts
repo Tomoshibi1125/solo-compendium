@@ -15,6 +15,7 @@ import {
 } from "@/lib/sovereign/applySovereign";
 import { isGeneratedSovereignV2Draft } from "@/lib/sovereign/sovereignGenerationClient";
 import {
+	SOVEREIGN_STORAGE_SCHEMA_VERSION,
 	sovereignAttachmentOperationId,
 	sovereignV2SaveOperationId,
 } from "@/lib/sovereign/sovereignPersistence";
@@ -148,7 +149,11 @@ async function resolveAlreadySavedV2Draft(
 		.eq("id", sovereign.saved_sovereign_id)
 		.maybeSingle();
 	if (error) throw new AppError(error.message, "UNKNOWN", error);
-	if (!data || data.created_by !== userId || data.schema_version !== 2) {
+	if (
+		!data ||
+		data.created_by !== userId ||
+		data.schema_version !== SOVEREIGN_STORAGE_SCHEMA_VERSION
+	) {
 		throw new AppError(
 			"The generated Sovereign draft is not an owned v2 definition",
 			"AUTH_REQUIRED",
@@ -211,14 +216,19 @@ export function useSaveSovereign() {
 				definition?: unknown;
 			};
 			const validation =
-				candidate.schema_version === 2
+				candidate.schema_version === SOVEREIGN_STORAGE_SCHEMA_VERSION
 					? validateSovereignV2Definition(candidate.definition, {
 							job: String(sovereign.job.id),
 							path: String(sovereign.path.id),
 							regent_a: String(sovereign.regentA.id),
 							regent_b: String(sovereign.regentB.id),
 						})
-					: { ok: false as const, errors: ["schema_version 2 is required"] };
+					: {
+							ok: false as const,
+							errors: [
+								`schema_version ${SOVEREIGN_STORAGE_SCHEMA_VERSION} is required`,
+							],
+						};
 			if (!validation.ok) {
 				throw new AppError(
 					`New Sovereigns require a complete v2 definition: ${validation.errors.join("; ")}`,

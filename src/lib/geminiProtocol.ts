@@ -152,12 +152,6 @@ const buildFusionName = (regentA: Regent, regentB: Regent): string => {
 	return generateUnifiedFusionName(nameA, nameB);
 };
 
-// Generate fusion name while enforcing canonical, ordered, distinct inputs.
-export function generateFusionName(regentA: Regent, regentB: Regent): string {
-	const [canonicalA, canonicalB] = normalizeFusionRegents(regentA, regentB);
-	return buildFusionName(canonicalA, canonicalB);
-}
-
 // Fusion Theme Lattice with Dual Class-style power combinations
 const themeLattice: Record<
 	string,
@@ -607,14 +601,6 @@ function buildFusionTheme(
 		element: `${themeElementSlug(themeA)}-${themeElementSlug(themeB)}`,
 		concept: `fusion of ${themeA} and ${themeB} domains`,
 	};
-}
-
-export function getFusionTheme(
-	regentA: Regent,
-	regentB: Regent,
-): { theme: string; element: string; concept: string } {
-	const [canonicalA, canonicalB] = normalizeFusionRegents(regentA, regentB);
-	return buildFusionTheme(canonicalA, canonicalB);
 }
 
 // Unified Power Multiplier - Single comprehensive approach

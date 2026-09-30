@@ -185,7 +185,8 @@
 		],
 		"ignore": [
 			"src/integrations/supabase/types.ts",
-			"src/components/ui/**/*.tsx"
+			"src/components/ui/**/*.tsx",
+			"src/lib/nineRegents.ts"
 		]
 	}
 }

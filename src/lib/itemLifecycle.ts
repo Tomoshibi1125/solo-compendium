@@ -984,6 +984,3 @@ export function planItemLifecycleV1(
 		}
 	}
 }
-
-/** Concise alias for callers that do not encode the schema version in names. */
-export const planItemLifecycle = planItemLifecycleV1;

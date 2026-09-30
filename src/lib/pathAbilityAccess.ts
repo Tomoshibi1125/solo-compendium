@@ -1914,10 +1914,6 @@ export const rejectedReconciledPathAbilityGrantCandidates =
 			!isSourceBackedReconciledGrant(grant),
 	);
 
-/** @deprecated Use rejectedReconciledPathAbilityGrantCandidates instead. */
-export const rejectedTask3PathAbilityGrantCandidates =
-	rejectedReconciledPathAbilityGrantCandidates;
-
 export const PATH_ABILITY_GRANTS: readonly PathAbilityGrant[] =
 	pathAbilityGrantCandidates.filter(
 		(grant) =>

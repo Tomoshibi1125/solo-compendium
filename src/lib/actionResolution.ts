@@ -658,9 +658,6 @@ export function normalizeActionResolutionPayload(
 	};
 }
 
-export const migrateActionResolutionPayloadV1 =
-	normalizeActionResolutionPayload;
-
 export type ResolutionOutcome =
 	| {
 			kind: "attack";

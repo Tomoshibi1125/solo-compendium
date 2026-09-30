@@ -77,9 +77,6 @@ export const providerBackedCompendiumCategories = [
 	"vehicles",
 ] as const satisfies readonly CompendiumCategory[];
 
-export type ProviderBackedCompendiumCategory =
-	(typeof providerBackedCompendiumCategories)[number];
-
 export const canonicalPublicEntryTypes = [
 	"jobs",
 	"paths",
@@ -2061,22 +2058,9 @@ export function loadCanonicalRegistry(): Promise<CanonicalRegistrySnapshot> {
 	return canonicalRegistryPromise;
 }
 
-export function clearCanonicalRegistryCache(): void {
-	canonicalRegistryPromise = null;
-}
-
 export function getRegisteredSource(
 	sourceId: string,
 ): CompendiumSourceDescriptor | null {
 	const source = sourceById.get(sourceId);
 	return source ? descriptorWithoutLoader(source) : null;
-}
-
-export function getRegisteredSourcesForCategory(
-	category: CompendiumCategory,
-): CompendiumSourceDescriptor[] {
-	return compendiumCategoryDefinitions[category].sourceIds
-		.map((sourceId) => sourceById.get(sourceId))
-		.filter((source): source is RegisteredCompendiumSource => Boolean(source))
-		.map(descriptorWithoutLoader);
 }

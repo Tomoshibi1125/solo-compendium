@@ -17,6 +17,9 @@ DECLARE
   v_id TEXT;
   v_tier INTEGER;
   v_total INTEGER := 0;
+  -- Requested picks as parallel arrays (kind[i], canonical_id[i]); no temp table.
+  v_kinds TEXT[] := ARRAY[]::TEXT[];
+  v_ids TEXT[] := ARRAY[]::TEXT[];
 BEGIN
   IF v_actor IS NULL THEN RAISE EXCEPTION 'AUTH_REQUIRED' USING ERRCODE = '42501'; END IF;
   IF p_options IS NULL OR jsonb_typeof(p_options) <> 'array'
@@ -47,10 +50,6 @@ BEGIN
   WHERE regent_id = v_unlock.regent_id AND character_level = v_level;
   IF NOT FOUND THEN RAISE EXCEPTION 'REGENT_REQUIREMENTS_NOT_FOUND' USING ERRCODE = '22023'; END IF;
 
-  CREATE TEMP TABLE IF NOT EXISTS pg_temp.regent_requested_options (
-    kind TEXT NOT NULL, canonical_id TEXT NOT NULL, PRIMARY KEY (kind, canonical_id)
-  ) ON COMMIT DROP;
-  TRUNCATE pg_temp.regent_requested_options;
   FOR v_entry IN SELECT value FROM jsonb_array_elements(p_options) AS request(value) LOOP
     v_kind := v_entry->>'kind';
     v_id := v_entry->>'id';
@@ -66,30 +65,37 @@ BEGIN
        OR (v_kind = 'spells' AND (v_requirements.spells = 0 OR v_tier > v_requirements.max_spell_tier)) THEN
       RAISE EXCEPTION 'REGENT_OPTION_OUTSIDE_PROGRESSION: % %', v_kind, v_id USING ERRCODE = '22023';
     END IF;
-    INSERT INTO pg_temp.regent_requested_options(kind, canonical_id) VALUES (v_kind, v_id);
+    IF EXISTS (
+      SELECT 1 FROM unnest(v_kinds, v_ids) AS requested(kind, canonical_id)
+      WHERE requested.kind = v_kind AND requested.canonical_id = v_id
+    ) THEN
+      RAISE EXCEPTION 'DUPLICATE_REGENT_OPTION: % %', v_kind, v_id USING ERRCODE = '23505';
+    END IF;
+    v_kinds := array_append(v_kinds, v_kind);
+    v_ids := array_append(v_ids, v_id);
     v_total := v_total + 1;
   END LOOP;
-  IF (SELECT count(*) FROM pg_temp.regent_requested_options WHERE kind = 'powers') < v_requirements.powers
-     OR (SELECT count(*) FROM pg_temp.regent_requested_options WHERE kind = 'techniques') < v_requirements.techniques
-     OR (SELECT count(*) FROM pg_temp.regent_requested_options WHERE kind = 'cantrips') < v_requirements.cantrips
-     OR (SELECT count(*) FROM pg_temp.regent_requested_options WHERE kind = 'spells') < v_requirements.spells THEN
+  IF (SELECT count(*) FROM unnest(v_kinds) AS requested(kind) WHERE requested.kind = 'powers') < v_requirements.powers
+     OR (SELECT count(*) FROM unnest(v_kinds) AS requested(kind) WHERE requested.kind = 'techniques') < v_requirements.techniques
+     OR (SELECT count(*) FROM unnest(v_kinds) AS requested(kind) WHERE requested.kind = 'cantrips') < v_requirements.cantrips
+     OR (SELECT count(*) FROM unnest(v_kinds) AS requested(kind) WHERE requested.kind = 'spells') < v_requirements.spells THEN
     RAISE EXCEPTION 'REGENT_CATALOG_BELOW_OWED_COUNT' USING ERRCODE = '22023';
   END IF;
 
   IF EXISTS (
     SELECT 1 FROM public.character_powers p WHERE p.regent_unlock_id = p_unlock_id
       AND p.acquisition_kind = 'regent'
-      AND NOT EXISTS (SELECT 1 FROM pg_temp.regent_requested_options o
+      AND NOT EXISTS (SELECT 1 FROM unnest(v_kinds, v_ids) AS o(kind, canonical_id)
         WHERE o.kind = 'powers' AND o.canonical_id = p.power_id)
   ) OR EXISTS (
     SELECT 1 FROM public.character_techniques t WHERE t.regent_unlock_id = p_unlock_id
       AND t.acquisition_kind = 'regent'
-      AND NOT EXISTS (SELECT 1 FROM pg_temp.regent_requested_options o
+      AND NOT EXISTS (SELECT 1 FROM unnest(v_kinds, v_ids) AS o(kind, canonical_id)
         WHERE o.kind = 'techniques' AND o.canonical_id = t.technique_id)
   ) OR EXISTS (
     SELECT 1 FROM public.character_spells s WHERE s.character_id = v_character_id
       AND s.source = v_requirements.regent_name || ' Attunement (Catch-Up)'
-      AND NOT EXISTS (SELECT 1 FROM pg_temp.regent_requested_options o
+      AND NOT EXISTS (SELECT 1 FROM unnest(v_kinds, v_ids) AS o(kind, canonical_id)
         WHERE o.kind = CASE WHEN s.spell_level = 0 THEN 'cantrips' ELSE 'spells' END
           AND o.canonical_id = s.spell_id)
   ) THEN
@@ -97,7 +103,8 @@ BEGIN
   END IF;
   DELETE FROM public.regent_catch_up_options WHERE unlock_id = p_unlock_id;
   INSERT INTO public.regent_catch_up_options(unlock_id, kind, canonical_id, approved_by)
-  SELECT p_unlock_id, kind, canonical_id, v_actor FROM pg_temp.regent_requested_options;
+  SELECT p_unlock_id, requested.kind, requested.canonical_id, v_actor
+  FROM unnest(v_kinds, v_ids) AS requested(kind, canonical_id);
   RETURN v_total;
 END;
 $$;

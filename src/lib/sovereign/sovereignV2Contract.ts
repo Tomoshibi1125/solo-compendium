@@ -905,7 +905,3 @@ export function toExternalSovereignRecharge(
 			return null;
 	}
 }
-
-// This type import documents the legacy object boundary without converting it.
-export type LegacyGeneratedSovereign =
-	import("@/lib/geminiProtocol").GeneratedSovereign;
