@@ -1,22 +1,19 @@
 import { useQuery } from "@tanstack/react-query";
-import { Settings2 } from "lucide-react";
-import { useMemo, useState } from "react";
-import { CompanionScalingDialog } from "@/components/campaign/CompanionScalingDialog";
+import { useMemo } from "react";
 import { CompanionCombatDetails } from "@/components/character/CompanionCombatDetails";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { useCampaignSharedCharacters } from "@/hooks/useCampaignCharacters";
 import { supabase } from "@/integrations/supabase/client";
 import type { CompanionInstanceRecord } from "@/lib/companionInstances";
 import {
+	companionScalingCharacterId,
 	companionSourceName,
-	companionSourceRank,
 	isLevelScaledCompanion,
-	scaleCompanionAtLevel,
+	scaleCompanionInstance,
 } from "@/lib/companionScaling";
 
-/** Warden controls for living companions owned by campaign characters, including mounts. */
+/** Read-only view of the scaled companions and mounts the party's characters own. */
 export function CampaignCharacterCompanionsPanel({
 	campaignId,
 }: {
@@ -49,8 +46,6 @@ export function CampaignCharacterCompanionsPanel({
 			);
 		},
 	});
-	const [selectedId, setSelectedId] = useState<string | null>(null);
-	const selected = instances.find((entry) => entry.id === selectedId) ?? null;
 	const byCharacter = new Map(
 		roster.map((entry) => [entry.character_id, entry.characters]),
 	);
@@ -58,11 +53,11 @@ export function CampaignCharacterCompanionsPanel({
 	return (
 		<section className="space-y-3">
 			<h3 className="font-heading text-sm font-semibold">
-				Character-owned anomaly companions and mounts
+				Party companions and mounts
 			</h3>
 			<p className="text-xs text-muted-foreground">
-				Every living creature uses its handler's character level. Approve
-				per-creature coefficients when the rank defaults need adjustment.
+				Each companion belongs to its character and scales with that character's
+				level.
 			</p>
 			{error && (
 				<p className="text-xs text-destructive">
@@ -78,23 +73,16 @@ export function CampaignCharacterCompanionsPanel({
 			)}
 			{!isLoading && !error && instances.length === 0 && (
 				<p className="text-xs text-muted-foreground">
-					No character-owned anomaly companions or mounts are on this roster.
+					No character on this roster has a scaled companion or mount.
 				</p>
 			)}
 			<div className="grid gap-3 sm:grid-cols-2">
 				{instances.map((instance) => {
-					const handler =
-						byCharacter.get(
-							instance.primary_handler_character_id ??
-								instance.rider_character_id ??
-								instance.owner_character_id ??
-								"",
-						) ?? byCharacter.get(instance.owner_character_id ?? "");
-					const scaling = scaleCompanionAtLevel(
-						handler?.level ?? 1,
-						companionSourceRank(instance),
-						instance.progression_profile,
+					const owner = byCharacter.get(
+						companionScalingCharacterId(instance) ?? "",
 					);
+					const scaling = scaleCompanionInstance(instance, owner?.level);
+					if (!scaling) return null;
 					return (
 						<Card key={instance.id} className="p-3 border-border bg-black/40">
 							<div className="flex items-start justify-between gap-2">
@@ -103,43 +91,22 @@ export function CampaignCharacterCompanionsPanel({
 										{companionSourceName(instance)}
 									</div>
 									<div className="text-xs text-muted-foreground">
-										{handler?.name ?? "Unassigned handler"} · Level{" "}
-										{scaling.level}
+										{owner?.name ?? "Unknown owner"} · Level {scaling.level}
 									</div>
 								</div>
 								<Badge variant="outline" className="text-[10px] uppercase">
-									{instance.identity_kind}
+									{instance.identity_kind === "mount" ? "Mount" : "Companion"}
 								</Badge>
 							</div>
 							<div className="mt-2 text-xs">
-								HP {scaling.hpMax} · AC {scaling.baseAc} · Attack +
-								{scaling.attackBonus} · DC {scaling.saveDc} ·{" "}
-								{scaling.damageDice}
+								HP {scaling.hpMax} ({scaling.hitDice}) · AC {scaling.baseAc} ·
+								Attack +{scaling.attackBonus} · DC {scaling.saveDc}
 							</div>
 							<CompanionCombatDetails instance={instance} scaling={scaling} />
-							<Button
-								type="button"
-								size="sm"
-								variant="outline"
-								className="mt-2 gap-1 text-xs"
-								onClick={() => setSelectedId(instance.id)}
-							>
-								<Settings2 className="h-3.5 w-3.5" /> Approve scaling
-							</Button>
 						</Card>
 					);
 				})}
 			</div>
-			{selected && (
-				<CompanionScalingDialog
-					instance={selected}
-					campaignId={campaignId}
-					open={Boolean(selected)}
-					onOpenChange={(open) => {
-						if (!open) setSelectedId(null);
-					}}
-				/>
-			)}
 		</section>
 	);
 }

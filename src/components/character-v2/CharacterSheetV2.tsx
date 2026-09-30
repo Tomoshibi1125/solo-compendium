@@ -118,6 +118,7 @@ import {
 	getXPProgress,
 	type LevelingType,
 } from "@/lib/experience";
+import { isLocalCharacterId } from "@/lib/guestStore";
 import { applyDamage, applyHealing } from "@/lib/hpAdjustments";
 import { type HunterRank, hunterRankForLevel } from "@/lib/hunterRank";
 import { cn } from "@/lib/utils";
@@ -518,7 +519,14 @@ export default function CharacterSheetV2() {
 
 	const onHPClick = () => sheetController.setModal("health", true);
 	const onACClick = () => sheetController.setModal("defenses", true);
-	const onShortRest = () => handleShortRest();
+	// The Short Rest dialog rolls the spent Hit Dice; apply the healing and
+	// the spent dice before the short-rest recharges.
+	const onShortRest = (totalRecovered: number, hitDiceSpent: number) => {
+		if (totalRecovered > 0) handleHeal(totalRecovered);
+		if (hitDiceSpent > 0)
+			handleResourceAdjust("hit_dice_current", -hitDiceSpent);
+		void handleShortRest();
+	};
 	const onLongRest = () => handleLongRest();
 	const onLevelUp = () => sheetController.setModal("levelUp", true);
 	const onResourceAdjust = (
@@ -836,6 +844,7 @@ export default function CharacterSheetV2() {
 		<>
 			<CharacterExtrasPanel
 				characterId={character.id}
+				characterLevel={character.level || 1}
 				isReadOnly={isReadOnly}
 			/>
 			<VehiclesPanel characterId={character.id} readOnly={isReadOnly} />
@@ -979,6 +988,11 @@ export default function CharacterSheetV2() {
 							hpCurrent={displayHpCurrent}
 							hpMax={effectiveHpMax}
 							onFinishRest={onShortRest}
+							companionOwner={
+								isLocalCharacterId(character.id)
+									? undefined
+									: { characterId: character.id, level: character.level || 1 }
+							}
 						/>
 						<Button
 							variant="outline"

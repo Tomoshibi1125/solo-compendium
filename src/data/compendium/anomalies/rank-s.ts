@@ -22,7 +22,7 @@ export const anomalies_s = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-eternal-celestial-guardian-159jka.webp",
 		description:
-			"A fearsome Dragon that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Dragon Anomaly cataloged at S rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
 		weaknesses: ["Light"],
 		senses: "darkvision 120 ft., blindsight 30 ft., passive Perception 17",
@@ -169,7 +169,7 @@ export const anomalies_s = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-eternal-celestial-serpent-6liz0p.webp",
 		description:
-			"A fearsome Anomaly that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Anomaly Anomaly cataloged at S rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
 		weaknesses: ["Light", "Holy Damage"],
 		senses: "darkvision 60 ft., truesight 30 ft., passive Perception 18",
@@ -313,7 +313,7 @@ export const anomalies_s = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-eternal-celestial-phoenix-1epks7.webp",
 		description:
-			"A fearsome Humanoid that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Humanoid Anomaly cataloged at S rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
 		weaknesses: ["Light", "Holy Damage"],
 		senses: "darkvision 30 ft., passive Perception 18",
@@ -464,7 +464,7 @@ export const anomalies_s = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-eternal-celestial-herald-16pj6q.webp",
 		description:
-			"A fearsome Beast that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Beast Anomaly cataloged at S rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
 		weaknesses: ["Light", "Holy Damage"],
 		senses: "darkvision 60 ft., passive Perception 17",
@@ -614,7 +614,7 @@ export const anomalies_s = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-corrupted-celestial-guardian-mfwlwd.webp",
 		description:
-			"A fearsome anomaly that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A anomaly Anomaly cataloged at S rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast"],
 		weaknesses: ["Light", "Holy Damage"],
 		senses: "darkvision 60 ft., truesight 30 ft., passive Perception 17",
@@ -751,7 +751,7 @@ export const anomalies_s = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-corrupted-celestial-serpent-kv6kz7.webp",
 		description:
-			"A fearsome Elemental that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Elemental Anomaly cataloged at S rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
 		weaknesses: ["Light"],
 		senses: "darkvision 60 ft., passive Perception 17",
@@ -901,7 +901,7 @@ export const anomalies_s = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-corrupted-celestial-phoenix-1ikjo5.webp",
 		description:
-			"A fearsome Dragon that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Dragon Anomaly cataloged at S rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast"],
 		weaknesses: ["Light", "Holy Damage"],
 		senses: "darkvision 120 ft., blindsight 30 ft., passive Perception 17",
@@ -1048,7 +1048,7 @@ export const anomalies_s = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-corrupted-celestial-herald-1quk3g.webp",
 		description:
-			"A fearsome Anomaly that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Anomaly Anomaly cataloged at S rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast"],
 		weaknesses: ["Light", "Holy Damage"],
 		senses: "darkvision 60 ft., truesight 30 ft., passive Perception 18",
@@ -1192,7 +1192,7 @@ export const anomalies_s = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-blessed-celestial-guardian-5sjdfb.webp",
 		description:
-			"A fearsome Humanoid that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Humanoid Anomaly cataloged at S rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast"],
 		weaknesses: ["Light"],
 		senses: "darkvision 30 ft., passive Perception 18",
@@ -1343,7 +1343,7 @@ export const anomalies_s = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-blessed-celestial-serpent-12qc34.webp",
 		description:
-			"A fearsome Beast that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Beast Anomaly cataloged at S rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast"],
 		weaknesses: ["Light"],
 		senses: "darkvision 60 ft., passive Perception 17",
@@ -1493,7 +1493,7 @@ export const anomalies_s = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-blessed-celestial-phoenix-1mzyny.webp",
 		description:
-			"A fearsome anomaly that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A anomaly Anomaly cataloged at S rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
 		weaknesses: ["Light"],
 		senses: "darkvision 60 ft., truesight 30 ft., passive Perception 17",
@@ -1630,7 +1630,7 @@ export const anomalies_s = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-blessed-celestial-herald-1ux3cw.webp",
 		description:
-			"A fearsome Elemental that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Elemental Anomaly cataloged at S rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast"],
 		weaknesses: ["Light"],
 		senses: "darkvision 60 ft., passive Perception 17",
@@ -1780,7 +1780,7 @@ export const anomalies_s = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-cursed-celestial-guardian-itup2x.webp",
 		description:
-			"A fearsome Dragon that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Dragon Anomaly cataloged at S rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
 		weaknesses: ["Light", "Holy Damage"],
 		senses: "darkvision 120 ft., blindsight 30 ft., passive Perception 17",
@@ -1927,7 +1927,7 @@ export const anomalies_s = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-cursed-celestial-serpent-1jxirn.webp",
 		description:
-			"A fearsome Anomaly that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Anomaly Anomaly cataloged at S rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
 		weaknesses: ["Light", "Holy Damage"],
 		senses: "darkvision 60 ft., truesight 30 ft., passive Perception 18",
@@ -2071,7 +2071,7 @@ export const anomalies_s = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-cursed-celestial-phoenix-7ybjbs.webp",
 		description:
-			"A fearsome Humanoid that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Humanoid Anomaly cataloged at S rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
 		weaknesses: ["Light", "Holy Damage"],
 		senses: "darkvision 30 ft., passive Perception 18",
@@ -2222,7 +2222,7 @@ export const anomalies_s = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-cursed-celestial-herald-12a46x.webp",
 		description:
-			"A fearsome Beast that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Beast Anomaly cataloged at S rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
 		weaknesses: ["Light"],
 		senses: "darkvision 60 ft., passive Perception 17",
@@ -2372,7 +2372,7 @@ export const anomalies_s = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-ancient-celestial-guardian-4kr3qr.webp",
 		description:
-			"A fearsome anomaly that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A anomaly Anomaly cataloged at S rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast"],
 		weaknesses: ["Light"],
 		senses: "darkvision 60 ft., truesight 30 ft., passive Perception 17",
@@ -2509,7 +2509,7 @@ export const anomalies_s = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-ancient-celestial-serpent-1xowx2.webp",
 		description:
-			"A fearsome Elemental that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Elemental Anomaly cataloged at S rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
 		weaknesses: ["Light", "Holy Damage"],
 		senses: "darkvision 60 ft., passive Perception 17",
@@ -2659,7 +2659,7 @@ export const anomalies_s = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-ancient-celestial-phoenix-xds61m.webp",
 		description:
-			"A fearsome Dragon that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Dragon Anomaly cataloged at S rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast"],
 		weaknesses: ["Light", "Holy Damage"],
 		senses: "darkvision 120 ft., blindsight 30 ft., passive Perception 17",
@@ -2806,7 +2806,7 @@ export const anomalies_s = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-ancient-celestial-herald-1wwup2.webp",
 		description:
-			"A fearsome Anomaly that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Anomaly Anomaly cataloged at S rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast"],
 		weaknesses: ["Light", "Holy Damage"],
 		senses: "darkvision 60 ft., truesight 30 ft., passive Perception 18",
@@ -2950,7 +2950,7 @@ export const anomalies_s = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-primordial-celestial-guardian-1xua91.webp",
 		description:
-			"A fearsome Humanoid that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Humanoid Anomaly cataloged at S rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast"],
 		weaknesses: ["Light"],
 		senses: "darkvision 30 ft., passive Perception 18",
@@ -3101,7 +3101,7 @@ export const anomalies_s = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-primordial-celestial-serpent-1grmfe.webp",
 		description:
-			"A fearsome Beast that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Beast Anomaly cataloged at S rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast"],
 		weaknesses: ["Light", "Holy Damage"],
 		senses: "darkvision 60 ft., passive Perception 17",
@@ -3251,7 +3251,7 @@ export const anomalies_s = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-primordial-celestial-phoenix-s4lht5.webp",
 		description:
-			"A fearsome anomaly that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A anomaly Anomaly cataloged at S rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast"],
 		weaknesses: ["Light", "Holy Damage"],
 		senses: "darkvision 60 ft., truesight 30 ft., passive Perception 18",
@@ -3388,7 +3388,7 @@ export const anomalies_s = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-primordial-celestial-herald-1lh8ph.webp",
 		description:
-			"A fearsome Elemental that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Elemental Anomaly cataloged at S rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast"],
 		weaknesses: ["Light", "Holy Damage"],
 		senses: "darkvision 60 ft., passive Perception 18",
@@ -3538,7 +3538,7 @@ export const anomalies_s = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-supreme-celestial-guardian-b7i2m.webp",
 		description:
-			"A fearsome Dragon that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Dragon Anomaly cataloged at S rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast"],
 		weaknesses: ["Light", "Holy Damage"],
 		senses: "darkvision 120 ft., blindsight 30 ft., passive Perception 18",
@@ -3685,7 +3685,7 @@ export const anomalies_s = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-supreme-celestial-serpent-ptm94o.webp",
 		description:
-			"A fearsome Anomaly that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Anomaly Anomaly cataloged at S rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
 		weaknesses: ["Light"],
 		senses: "darkvision 60 ft., truesight 30 ft., passive Perception 19",
@@ -3829,7 +3829,7 @@ export const anomalies_s = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-supreme-celestial-phoenix-1ygt4m.webp",
 		description:
-			"A fearsome Humanoid that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Humanoid Anomaly cataloged at S rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
 		weaknesses: ["Light"],
 		senses: "darkvision 30 ft., passive Perception 19",
@@ -3980,7 +3980,7 @@ export const anomalies_s = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-supreme-celestial-herald-1nozyw.webp",
 		description:
-			"A fearsome Beast that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Beast Anomaly cataloged at S rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
 		weaknesses: ["Light", "Holy Damage"],
 		senses: "darkvision 60 ft., passive Perception 18",
@@ -4130,7 +4130,7 @@ export const anomalies_s = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-legendary-celestial-guardian-dlm9rw.webp",
 		description:
-			"A fearsome anomaly that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A anomaly Anomaly cataloged at S rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast"],
 		weaknesses: ["Light", "Holy Damage"],
 		senses: "darkvision 60 ft., truesight 30 ft., passive Perception 18",
@@ -4267,7 +4267,7 @@ export const anomalies_s = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-legendary-celestial-serpent-1j1w2t.webp",
 		description:
-			"A fearsome Elemental that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Elemental Anomaly cataloged at S rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast"],
 		weaknesses: ["Light", "Holy Damage"],
 		senses: "darkvision 60 ft., passive Perception 18",
@@ -4417,7 +4417,7 @@ export const anomalies_s = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-legendary-celestial-phoenix-156t89.webp",
 		description:
-			"A fearsome Dragon that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Dragon Anomaly cataloged at S rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
 		weaknesses: ["Light", "Holy Damage"],
 		senses: "darkvision 120 ft., blindsight 30 ft., passive Perception 18",
@@ -4564,7 +4564,7 @@ export const anomalies_s = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-legendary-celestial-herald-lw1kc9.webp",
 		description:
-			"A fearsome Anomaly that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Anomaly Anomaly cataloged at S rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast"],
 		weaknesses: ["Light", "Holy Damage"],
 		senses: "darkvision 60 ft., truesight 30 ft., passive Perception 19",
@@ -4708,7 +4708,7 @@ export const anomalies_s = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-mythic-celestial-guardian-1u4ovc.webp",
 		description:
-			"A fearsome Humanoid that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Humanoid Anomaly cataloged at S rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast"],
 		weaknesses: ["Light"],
 		senses: "darkvision 30 ft., passive Perception 19",
@@ -4859,7 +4859,7 @@ export const anomalies_s = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-mythic-celestial-serpent-1ju77o.webp",
 		description:
-			"A fearsome Beast that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Beast Anomaly cataloged at S rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
 		weaknesses: ["Light", "Holy Damage"],
 		senses: "darkvision 60 ft., passive Perception 18",
@@ -5009,7 +5009,7 @@ export const anomalies_s = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-mythic-celestial-phoenix-158jvs.webp",
 		description:
-			"A fearsome anomaly that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A anomaly Anomaly cataloged at S rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast"],
 		weaknesses: ["Light", "Holy Damage"],
 		senses: "darkvision 60 ft., truesight 30 ft., passive Perception 18",
@@ -5146,7 +5146,7 @@ export const anomalies_s = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-mythic-celestial-herald-xsxnxb.webp",
 		description:
-			"A fearsome Elemental that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Elemental Anomaly cataloged at S rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast"],
 		weaknesses: ["Light"],
 		senses: "darkvision 60 ft., passive Perception 18",
@@ -5296,7 +5296,7 @@ export const anomalies_s = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-divine-celestial-guardian-145c8d.webp",
 		description:
-			"A fearsome Dragon that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Dragon Anomaly cataloged at S rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast"],
 		weaknesses: ["Light", "Holy Damage"],
 		senses: "darkvision 120 ft., blindsight 30 ft., passive Perception 18",
@@ -5443,7 +5443,7 @@ export const anomalies_s = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-divine-celestial-serpent-qoa0q.webp",
 		description:
-			"A fearsome Anomaly that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Anomaly Anomaly cataloged at S rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
 		weaknesses: ["Light", "Holy Damage"],
 		senses: "darkvision 60 ft., truesight 30 ft., passive Perception 19",
@@ -5587,7 +5587,7 @@ export const anomalies_s = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-divine-celestial-phoenix-6cfc7l.webp",
 		description:
-			"A fearsome Humanoid that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Humanoid Anomaly cataloged at S rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
 		weaknesses: ["Light", "Holy Damage"],
 		senses: "darkvision 30 ft., passive Perception 19",
@@ -5738,7 +5738,7 @@ export const anomalies_s = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-divine-celestial-herald-tkknc6.webp",
 		description:
-			"A fearsome Beast that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Beast Anomaly cataloged at S rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
 		weaknesses: ["Light"],
 		senses: "darkvision 60 ft., passive Perception 18",
@@ -5888,7 +5888,7 @@ export const anomalies_s = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-infernal-celestial-guardian-1lfjq4.webp",
 		description:
-			"A fearsome anomaly that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A anomaly Anomaly cataloged at S rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast"],
 		weaknesses: ["Light", "Holy Damage"],
 		senses: "darkvision 60 ft., truesight 30 ft., passive Perception 18",
@@ -6025,7 +6025,7 @@ export const anomalies_s = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-infernal-celestial-serpent-vd8jij.webp",
 		description:
-			"A fearsome Elemental that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Elemental Anomaly cataloged at S rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
 		weaknesses: ["Light", "Holy Damage"],
 		senses: "darkvision 60 ft., passive Perception 18",
@@ -6175,7 +6175,7 @@ export const anomalies_s = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-infernal-celestial-phoenix-8zwvqc.webp",
 		description:
-			"A fearsome Dragon that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Dragon Anomaly cataloged at S rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
 		weaknesses: ["Light"],
 		senses: "darkvision 120 ft., blindsight 30 ft., passive Perception 18",
@@ -6322,7 +6322,7 @@ export const anomalies_s = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-infernal-celestial-herald-1e5733.webp",
 		description:
-			"A fearsome Anomaly that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Anomaly Anomaly cataloged at S rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
 		weaknesses: ["Light", "Holy Damage"],
 		senses: "darkvision 60 ft., truesight 30 ft., passive Perception 19",
@@ -6466,7 +6466,7 @@ export const anomalies_s = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-celestial-celestial-guardian-9875j7.webp",
 		description:
-			"A fearsome Humanoid that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Humanoid Anomaly cataloged at S rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
 		weaknesses: ["Light", "Holy Damage"],
 		senses: "darkvision 30 ft., passive Perception 19",
@@ -6617,7 +6617,7 @@ export const anomalies_s = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-celestial-celestial-serpent-1s6dfr.webp",
 		description:
-			"A fearsome Beast that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Beast Anomaly cataloged at S rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
 		weaknesses: ["Light"],
 		senses: "darkvision 60 ft., passive Perception 18",
@@ -6767,7 +6767,7 @@ export const anomalies_s = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-celestial-celestial-phoenix-1cepxd.webp",
 		description:
-			"A fearsome anomaly that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A anomaly Anomaly cataloged at S rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
 		weaknesses: ["Light"],
 		senses: "darkvision 60 ft., truesight 30 ft., passive Perception 18",
@@ -6904,7 +6904,7 @@ export const anomalies_s = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-celestial-celestial-herald-w58xp6.webp",
 		description:
-			"A fearsome Elemental that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Elemental Anomaly cataloged at S rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
 		weaknesses: ["Light", "Holy Damage"],
 		senses: "darkvision 60 ft., passive Perception 19",

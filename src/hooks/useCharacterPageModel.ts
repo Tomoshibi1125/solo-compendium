@@ -547,7 +547,7 @@ export function useCharacterPageModel() {
 		notifyAsync({
 			type: "success",
 			title: "Resources restored",
-			message: `${character.name} took a short rest — hit dice and short-rest abilities refreshed.`,
+			message: `${character.name} took a short rest — short-rest abilities refreshed.`,
 			category: "rest",
 		});
 

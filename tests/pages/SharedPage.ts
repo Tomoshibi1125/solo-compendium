@@ -168,16 +168,22 @@ export class SharedPage {
 			"Sessions",
 			"Chat",
 			"Notes",
-			"Handouts",
 			"Characters",
 			"Guilds",
 			"Activity",
+			"Assets",
+			"Quests",
 		];
-		if (isDm) tabs.push("Settings");
+		// Warden-only tabs ("Warden Oversight" is labelled "Oversight" on narrow
+		// viewports, so match the shared word).
+		if (isDm) tabs.push("Settings", "Oversight");
 
 		for (const tab of tabs) {
-			await this.page.getByRole("tab", { name: new RegExp(tab, "i") }).click();
-			await this.page.waitForTimeout(500);
+			const trigger = this.page.getByRole("tab", {
+				name: new RegExp(tab, "i"),
+			});
+			await trigger.click();
+			await expect(trigger).toHaveAttribute("aria-selected", "true");
 		}
 	}
 

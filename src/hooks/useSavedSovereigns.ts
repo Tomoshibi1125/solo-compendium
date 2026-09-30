@@ -15,12 +15,13 @@ import {
 } from "@/lib/sovereign/applySovereign";
 import { isGeneratedSovereignV2Draft } from "@/lib/sovereign/sovereignGenerationClient";
 import {
-	buildLegacySovereignSavePayload,
-	canonicalizeLegacySovereign,
-	legacySovereignSaveOperationId,
 	sovereignAttachmentOperationId,
+	sovereignV2SaveOperationId,
 } from "@/lib/sovereign/sovereignPersistence";
-import { readSovereignDefinition } from "@/lib/sovereign/sovereignV2Contract";
+import {
+	readSovereignDefinition,
+	validateSovereignV2Definition,
+} from "@/lib/sovereign/sovereignV2Contract";
 
 export interface SavedSovereign {
 	id: string;
@@ -179,9 +180,9 @@ async function resolveAlreadySavedV2Draft(
 }
 
 /**
- * Built-in S4 generation arrives here as an already validated, already saved
- * schema-v2 draft. It is attached directly without rewriting it as legacy v1.
- * Outside/manual legacy imports keep the compatibility save path below.
+ * Built-in generation arrives as an already saved v2 draft. Outside imports
+ * must provide a complete v2 definition and pass the same save RPC boundary.
+ * Persisted v1 rows remain readable but cannot be created here.
  */
 export function useSaveSovereign() {
 	const queryClient = useQueryClient();
@@ -205,16 +206,33 @@ export function useSaveSovereign() {
 				);
 			}
 
+			const candidate = sovereign as GeneratedSovereign & {
+				schema_version?: number;
+				definition?: unknown;
+			};
+			const validation =
+				candidate.schema_version === 2
+					? validateSovereignV2Definition(candidate.definition, {
+							job: String(sovereign.job.id),
+							path: String(sovereign.path.id),
+							regent_a: String(sovereign.regentA.id),
+							regent_b: String(sovereign.regentB.id),
+						})
+					: { ok: false as const, errors: ["schema_version 2 is required"] };
+			if (!validation.ok) {
+				throw new AppError(
+					`New Sovereigns require a complete v2 definition: ${validation.errors.join("; ")}`,
+					"INVALID_INPUT",
+				);
+			}
+
 			let sovereignId = await resolveAlreadySavedV2Draft(sovereign, user.id);
-			let projectionSovereign = sovereign;
+			const projectionSovereign = sovereign;
 			if (!sovereignId) {
-				const canonicalSovereign = canonicalizeLegacySovereign(sovereign);
-				projectionSovereign = canonicalSovereign;
-				const payload = buildLegacySovereignSavePayload(canonicalSovereign);
-				sovereignId = await runRpc<string>("save_legacy_sovereign_definition", {
-					p_payload: payload,
-					p_operation_id: legacySovereignSaveOperationId(payload),
-					p_is_public: true,
+				sovereignId = await runRpc<string>("save_sovereign_v2_definition", {
+					p_definition: validation.definition,
+					p_operation_id: sovereignV2SaveOperationId(validation.definition),
+					p_is_public: false,
 				});
 			}
 			if (typeof sovereignId !== "string" || !sovereignId) {

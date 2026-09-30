@@ -19,7 +19,7 @@ INSERT INTO public.character_regent_unlocks
   ('b5550000-5555-4555-8555-555555555555',
    'b4440000-4444-4444-8444-444444444444', 'beast_regent', 'Beast quest', true);
 
-SELECT plan(11);
+SELECT plan(14);
 SET LOCAL ROLE authenticated;
 DO $$ BEGIN PERFORM set_config('request.jwt.claim.sub', 'b2220000-2222-4222-8222-222222222222', true); END $$;
 SELECT throws_ok($$SELECT public.set_regent_catch_up_options(
@@ -56,29 +56,72 @@ SELECT throws_ok($$SELECT public.complete_regent_catch_up(
   '22023', 'REGENT_CATCH_UP_PICKS_INCOMPLETE',
   'server refuses to complete before exact picks persist');
 SELECT throws_ok($$INSERT INTO public.character_powers
-  (character_id, power_id, name, power_level, source) VALUES
+  (character_id, power_id, name, power_level, source,
+   acquisition_kind, canonical_source_id, regent_id, regent_unlock_id, acquired_level) VALUES
   ('b4440000-4444-4444-8444-444444444444',
    'power-sup-9-97-s-rank-smite', 'S-Rank Smite', 9,
-   'Beast Regent Attunement (Catch-Up)')$$,
+   'Any display label', 'regent', 'beast_regent', 'beast_regent',
+   'b5550000-5555-4555-8555-555555555555', 3)$$,
   '42501', 'REGENT_PICK_NOT_WARDEN_APPROVED',
   'an unapproved high-tier pick is rejected');
 
 INSERT INTO public.character_powers
-  (character_id, power_id, name, power_level, source) VALUES
-  ('b4440000-4444-4444-8444-444444444444', 'power-sup-5-48-apex-predator', 'Killing Tempo', 5, 'Beast Regent Attunement (Catch-Up)'),
-  ('b4440000-4444-4444-8444-444444444444', 'power-arch-5-17-titan-blow', 'Titan Blow', 5, 'Beast Regent Attunement (Catch-Up)'),
-  ('b4440000-4444-4444-8444-444444444444', 'power-sup-5-45-thousand-fists', 'Thousand Fists', 5, 'Beast Regent Attunement (Catch-Up)');
+  (character_id, power_id, name, power_level, source,
+   acquisition_kind, canonical_source_id, regent_id, regent_unlock_id, acquired_level)
+SELECT 'b4440000-4444-4444-8444-444444444444', pick.id, pick.name,
+  5, 'Renamed Regent display label', 'regent', 'beast_regent', 'beast_regent',
+  'b5550000-5555-4555-8555-555555555555', 3
+FROM (VALUES
+  ('power-sup-5-48-apex-predator', 'Killing Tempo'),
+  ('power-arch-5-17-titan-blow', 'Titan Blow'),
+  ('power-sup-5-45-thousand-fists', 'Thousand Fists')
+) AS pick(id, name);
 INSERT INTO public.character_techniques
-  (character_id, technique_id, source) VALUES
-  ('b4440000-4444-4444-8444-444444444444', 'tech-sup-5-29-predator-s-leap', 'Beast Regent Attunement (Catch-Up)'),
-  ('b4440000-4444-4444-8444-444444444444', 'tech-arch-5-51-killer-instinct', 'Beast Regent Attunement (Catch-Up)'),
-  ('b4440000-4444-4444-8444-444444444444', 'tech-sup-6-97-summoner-s-bond-strike', 'Beast Regent Attunement (Catch-Up)');
+  (character_id, technique_id, source,
+   acquisition_kind, canonical_source_id, regent_id, regent_unlock_id, acquired_level)
+SELECT 'b4440000-4444-4444-8444-444444444444', pick.id,
+  'Renamed Regent display label', 'regent', 'beast_regent', 'beast_regent',
+  'b5550000-5555-4555-8555-555555555555', 3
+FROM (VALUES
+  ('tech-sup-5-29-predator-s-leap'),
+  ('tech-arch-5-51-killer-instinct'),
+  ('tech-sup-6-97-summoner-s-bond-strike')
+) AS pick(id);
 SELECT is((SELECT count(*) FROM public.character_powers
-  WHERE source = 'Beast Regent Attunement (Catch-Up)' AND character_id = 'b4440000-4444-4444-8444-444444444444'), 3::bigint,
+  WHERE regent_unlock_id = 'b5550000-5555-4555-8555-555555555555'
+    AND acquisition_kind = 'regent'), 3::bigint,
   'all three Regent powers persist');
 SELECT is((SELECT count(*) FROM public.character_techniques
-  WHERE source = 'Beast Regent Attunement (Catch-Up)' AND character_id = 'b4440000-4444-4444-8444-444444444444'), 3::bigint,
+  WHERE regent_unlock_id = 'b5550000-5555-4555-8555-555555555555'
+    AND acquisition_kind = 'regent'), 3::bigint,
   'all three Regent techniques persist');
+INSERT INTO public.character_powers
+  (character_id, power_id, name, power_level, source, acquisition_kind, canonical_source_id)
+VALUES ('b4440000-4444-4444-8444-444444444444',
+  'power-sup-5-48-apex-predator', 'Killing Tempo', 5, 'Job progression', 'job', 'test-job');
+SELECT is((SELECT count(*) FROM public.character_powers
+  WHERE character_id = 'b4440000-4444-4444-8444-444444444444'
+    AND power_id = 'power-sup-5-48-apex-predator'), 2::bigint,
+  'the same canonical power may have separate Regent and Job grants');
+INSERT INTO public.character_powers
+  (character_id, power_id, name, power_level, source, acquisition_kind, canonical_source_id)
+VALUES ('b4440000-4444-4444-8444-444444444444',
+  'power-sup-5-48-apex-predator', 'Killing Tempo', 5, 'Path progression', 'path', 'test-path');
+SELECT is((SELECT count(*) FROM public.character_powers
+  WHERE character_id = 'b4440000-4444-4444-8444-444444444444'
+    AND power_id = 'power-sup-5-48-apex-predator'), 3::bigint,
+  'the same canonical power may have separate Job, Path, and Regent grants');
+INSERT INTO public.character_techniques
+  (character_id, technique_id, source, acquisition_kind, canonical_source_id)
+VALUES
+  ('b4440000-4444-4444-8444-444444444444',
+   'tech-sup-5-29-predator-s-leap', 'Job progression', 'job', 'test-job'),
+  ('b4440000-4444-4444-8444-444444444444',
+   'tech-sup-5-29-predator-s-leap', 'Path progression', 'path', 'test-path');
+SELECT is((SELECT count(*) FROM public.character_techniques
+  WHERE character_id = 'b4440000-4444-4444-8444-444444444444'
+    AND technique_id = 'tech-sup-5-29-predator-s-leap'), 3::bigint,
+  'the same canonical technique may have separate Job, Path, and Regent grants');
 SELECT is(public.complete_regent_catch_up('b5550000-5555-4555-8555-555555555555'), 3,
   'server completes catch-up at the confirmed level');
 SELECT is((SELECT caught_up_at_level FROM public.character_regent_unlocks

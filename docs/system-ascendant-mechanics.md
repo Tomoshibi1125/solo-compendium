@@ -20,7 +20,7 @@
 - **Short/long rests** - 1 hour / 8 hours
 - **Death saves** - 3 successes to stabilize, 3 failures = death
 - **Multiclass spell slots** - PHB page 164 merging rules
-- **Critical hits** - Natural 20 = double damage dice
+- **Critical hits** - Natural 20 = maximum normal dice + rolled critical dice + modifiers once
 - **Concentration** - One spell at a time, broken by damage/incapacitation
 
 ---
@@ -210,116 +210,19 @@ function parseJobTraitEffects(trait, jobLevel): Effect[] {
 
 ---
 
-### 4. **Regent/Gemini System** (Gestalt Full-Class Overlay) ✅ IMPLEMENTED
+### 4. **Regent/Gemini System** (Gestalt Full-Class Overlay)
 
-> **Canon lock (May 2026):** A Regent is **NOT a subclass**. It is a **full
-> class overlay with its own complete progression**, applied via the D&D
-> *gestalt* variant rule. Once unlocked, the character levels the base **Job
-> and the Regent simultaneously** at the character's level — gaining both
-> feature sets, combined hit dice, unioned proficiencies/saves, and merged
-> spellcasting. Inspired by Solo Leveling's Jinwoo gaining the Shadow Monarch
-> and leveling it alongside his base class. Earlier drafts of this doc called
-> regents "subclasses" — that is wrong and has been corrected. The gestalt
-> engine lives in `src/lib/regentGestalt.ts`; the canonical rich class data is
-> `src/data/compendium/regents.ts` (NOT the thin `nineRegents.ts`, which is for
-> Gemini-fusion theming only).
+A Regent is an earned full class overlay: **Job + Path + Regent**. It is never a Path or subclass. A Warden or co-Warden offers exactly three distinct canonical Regents, and the player chooses one. The unlock is binary, has no character-level or highest-stat requirement, and a character can hold at most two Regents.
 
-**What It Is:** A second full class, gestalted onto the Job.
+**Progression and HP:** A Regent's level equals character level. On unlock, all features and owed selections through the current level apply immediately. Each character level adds one maximum Regent Hit Die on top of Job HP; VIT is already included in Job HP. For a d10 Regent, the added total is +30 at level 3, including retroactive levels, and the next level adds only +10. The class overlay also contributes its authored proficiencies, saves, and spellcasting rules.
 
-**Locked gestalt rules:**
-- **Regent level = character level**, applied **retroactively** on unlock (the instant power spike). All `class_features` with `level <= character level` apply immediately, then advance simultaneously.
-- **HP: ADDITIVE.** Each level: `avg(Job die) + avg(Regent die) + VIT mod` (VIT once per level, not per die). Surfaced reactively on the sheet (`getRegentHpContribution`) so it is correct the instant a Regent is unlocked — no stored-HP migration, base `hp_max` stays Job-only.
-- **Proficiencies & saving throws:** UNION of Job + Regent, de-duped (`getGestaltProficiencies`, unioned in `calculateCharacterStats`).
-- **Spellcasting:** when both Job and Regent cast, their caster levels MERGE via the PHB p.164 method into one combined slot table (`getGestaltSpellSlots`, wired through `useSpellSlots`). This is the **only** multi-class construct in the system — there is no generalized multiclassing. A non-casting Regent leaves the Job's native slots unchanged.
-- **AC:** best available base option from either class (engine takes the max).
+**Known abilities:** Martial and half-caster Regents with Power and Technique progressions use the cumulative known-count array `2,2,3,3,3,4,4,4,5,5,5,6,6,6,7,7,7,8,8,8` for each category. Full-caster Regents retain their authored spell and cantrip progression. Initial owed selections use the Warden-curated catch-up flow. Later Regent Power and Technique choices are made by the player from canonical tiers 5–9, with the ability's full effect intact.
 
-**How It Works:**
-- **Regent** = full class overlay unlocked via quest/Warden gate (persisted in `character_regent_unlocks`, canonical `regents.ts` ids).
-- **Gemini Protocol** = Fusion of TWO Regents for hybrid abilities (DBZ-style fusion).
-- **Stat-based** - Regent type determined by highest ability score.
-- **Auto-integrated** - the derived-stats path (`useCharacterDerivedStats` → `calculateCharacterStats`, plus `useSpellSlots`) resolves unlocked regents to rich class data and applies the gestalt overlay.
+**Regent Resonance:** A character has one shared pool for Regent-acquired Powers and Techniques. Its maximum at levels 1–20 is `1,1,2,2,2,3,3,3,4,4,4,5,5,5,6,6,6,7,7,8`. Tier 5 costs 1; tiers 6–7 cost 2; tiers 8–9 cost 3. A Long Rest refills the pool. The pool replaces each Regent acquisition's native per-rest charges. The same canonical ability acquired through a Job or Path retains its own use system. Regent class features, Job resources, and spell slots are not paid from this pool.
 
-**Regent Types:**
-```typescript
-enum RegentType {
-  STRENGTH_REGENT = 'Strength Regent',
-  AGILITY_REGENT = 'Agility Regent',
-  VITALITY_REGENT = 'Vitality Regent',
-  INTELLIGENCE_REGENT = 'Intelligence Regent',
-  SENSE_REGENT = 'Sense Regent',
-  PRESENCE_REGENT = 'Presence Regent'
-}
-```
-
-**Key Mechanic:**
-- Regents are **NOT level-gated** (advisory only)
-- Require **quest completion** or **Warden approval**
-- Grant **unique features, spells, and stat bonuses**
-- Can be **fused** into Gemini Sovereigns (fusion quality: Perfect/Good/Average)
-
-**Example:**
-```typescript
-{
-  id: 'iron_fist_regent',
-  name: 'Iron Fist Regent',
-  type: RegentType.STRENGTH_REGENT,
-  requirements: {
-    questCompleted: 'Trial of the Iron Fist',
-    statThreshold: 18 // STR must be 18+
-  },
-  features: [
-    { name: 'Titanic Strength', description: 'Double strength modifier for melee attacks' }
-  ]
-}
-```
-
-**Difference from 5e:**
-- 5e: Subclass chosen at level 3, automatic progression within the one class.
-- RA: Regent is an **earned second full class**, gestalted onto the Job and leveling simultaneously at the character's level (not a subclass tier).
-
-**Implementation in Engine:**
-```typescript
-// ✅ IMPLEMENTED in characterEngine.ts:469-662
-interface CharacterJob {
-  job: string;
-  path?: string; // Standard path (level 3 automatic)
-  regent?: string; // Regent (quest-gated, Warden unlocks)
-  gemini?: {
-    regent1Id: string;
-    regent2Id: string;
-    sovereignId: string;
-    fusionType: 'Perfect' | 'Good' | 'Average';
-  };
-  level: number;
-}
-
-function aggregateRegentFeatures(jobs: CharacterJob[]): FeatureInstance[] {
-  // Loads regent data from regentGeminiSystem
-  // Parses regent feature effects (AC bonuses, stat modifiers, etc.)
-}
-
-function aggregateGeminiFeatures(jobs: CharacterJob[]): FeatureInstance[] {
-  // Loads both regents from Gemini fusion
-  // Calculates stat bonuses based on fusion type
-  // Merges features from both regents
-}
-
-function calculateGeminiStatBonuses(regent1, regent2, fusionType): StatBonuses {
-  // Perfect fusion: +4 to regent stats, +2 to all stats
-  // Good fusion: +3 to regent stats, +2 to all stats
-  // Average fusion: +2 to regent stats, +2 to all stats
-}
-
-// Effects integrated with Priority 170 (Regent) and 180 (Gemini)
-```
-
-**Gemini Stat Bonuses:**
-- **Perfect Fusion**: +4 to both regent primary stats, +2 to all other stats (+6/+2/+2/+2/+2/+2)
-- **Good Fusion**: +3 to both regent primary stats, +2 to all other stats (+5/+2/+2/+2/+2/+2)
-- **Average Fusion**: +2 to both regent primary stats, +2 to all other stats (+4/+2/+2/+2/+2/+2)
+**Gemini Protocol:** Two Regents can fuse into a Sovereign. The Sovereign is the resulting saved class package, not another name for a Regent. Its complete eight-milestone progression is generated and saved at creation; later play is deterministic.
 
 ---
-
 ### 5. **Rank System** (Power Tiers)
 
 **What It Is:** Korean manhwa-style power classification
@@ -336,7 +239,7 @@ function calculateGeminiStatBonuses(regent1, regent2, fusionType): StatBonuses {
 - **Powers have ranks** - Spell equivalents classified by danger
 - **Relics have ranks** - Magic item power levels
 
-**No Mechanical Effect** - Purely thematic flavor for world-building
+**No effect on a character's own numbers** - Thematic flavor for world-building. The one mechanical use is a companion's rank tier in companion scaling (section 7).
 
 ---
 
@@ -352,6 +255,26 @@ function calculateGeminiStatBonuses(regent1, regent2, fusionType): StatBonuses {
 
 **Example Flavor Text:**
 > "Your HUD displays [TARGET DESIGNATED]. Security cameras capture you vanishing. Your phone buzzes with [MANA ABSORBED]. Bystanders' smartphones auto-focus on your glowing veins."
+
+---
+
+### 7. **Companions and Mounts** (RA-9, RA-10)
+
+A tamed or bonded creature and every mount belong to the character that holds them, and the owner edits the companion's sheet. The Add Companion catalog lists the creatures a character can take. There are no per-creature companion profiles. The former campaign tamed roster is retired; its creatures moved to their handlers' sheets. A player tells the Warden when a character mounts or dismounts; the app does not track riders.
+
+**Which creatures scale:** Anomaly companions, mounts linked to an Anomaly stat block, and the combat-capable catalog mounts (Mana-Touched Wolf, Bureau Warhorse, Bureau K9 (Mastiff-class), Mountain Patrol Bear, and Pantheon Steed). Utility mounts, guild allies, and custom companions keep their saved stats.
+
+**One scaled version:** L is the owning character's level (1–20) and PB = 2 + floor((L − 1) / 4).
+
+- **Hit points:** L Hit Dice, each at its maximum value, with no VIT added. The die is the stat block's Hit Die (`12 (1d10 + 6)` → d10), or by size when none is authored: Tiny d4, Small d6, Medium d8, Large d10, Huge d12, Gargantuan d20. A level-up raises maximum HP without healing current HP.
+- **Damage:** Every damage roll keeps its die size. The dice count is 1 at levels 1–4, 2 at 5–10, 3 at 11–16, and 4 at 17–20. Attack damage adds PB and drops the stat block's flat bonus; save-based effects roll dice only. Dice that are not damage, such as durations and recharge ranges, are unchanged.
+- **Defenses:** AC = 10 + rank tier + floor((L − 1) / 4). Attack bonus = 2 + rank tier + PB. Save DC = 8 + rank tier + PB. Rank tiers are E 0, D 1, C 2, B 3, A 4, S 5; a missing rank counts as D. A linked mount uses its own catalog rank.
+- **Actions:** The creature uses its stat block's traits, actions, bonus actions, reactions, and legendary actions. Lair actions stay with a wild creature's lair. A linked mount adds its own abilities; a combat-capable mount without a stat block uses its natural attacks (wolf Bite d8; warhorse and Pantheon Steed Hooves d10; bear Bite and Claws d10; the K9's authored d6 Bite).
+- **Rests:** A companion rests with its character, by the character's rules. On a Short Rest its owner may spend its Hit Dice from the character's Short Rest dialog; each die heals one roll of its Hit Die, with no VIT added. On a Long Rest it regains all HP and half its Hit Dice (minimum 1), and its conditions end as the character's do. A companion that keeps its saved stats has no Hit Dice to spend; a Long Rest still restores all its HP.
+
+**Examples:** A d10 Anomaly has 50 HP at level 5. A Mana-Touched Wolf has 40 HP and a 2d8 + 3 bite at level 5. A 1d6 claw deals 1d6 + 2 at level 1, 2d6 + 3 at level 5, 3d6 + 4 at level 11, and 4d6 + 6 at level 17.
+
+The numbers are implemented in `src/lib/companionProgression.ts`, and `src/lib/companionScaling.ts` decides which creatures scale. The server mirrors the HP, AC, attack bonus, and save DC rules for companion combat state (`supabase/migrations/20260928100000_companion_scaling_v2.sql`) and applies companion rests and Hit Dice (`supabase/migrations/20260929100000_companion_rests_follow_character.sql`). `src/lib/__tests__/canonParity.test.ts` checks these numbers against this document, the canon locks, and the in-app sourcebook.
 
 ---
 
@@ -409,12 +332,15 @@ ability types — they are **not** reskins of each other.
    - Implemented in `characterEngine.ts:358-462`
    - Auto-converts traits to effects
 
-4. ✅ **Regent/Gemini System** - Quest-gated subclasses
+4. ✅ **Regent/Gemini System** - Earned Regent class overlays and saved Sovereign fusion
    - Implemented in `characterEngine.ts:469-662`
    - Auto-loads regent features when Warden unlocks
 
-5. ✅ **Rank System** - Thematic only, no mechanical effect
-   - Can be displayed in UI but doesn't affect calculations
+5. ✅ **Rank System** - Thematic for characters; sets a companion's rank tier
+   - Can be displayed in UI but doesn't affect a character's own calculations
+
+6. ✅ **Companion scaling** - One scaled version per species (RA-10)
+   - Implemented in `src/lib/companionScaling.ts`
 
 ### Standard 5e Mechanics (Already Supported)
 
@@ -440,10 +366,12 @@ ability types — they are **not** reskins of each other.
 | **Core d20** | ✅ Same | — |
 | **Ability Scores** | ✅ Same formulas | Renamed (AGI, VIT, SENSE, PRE) |
 | **Classes** | ✅ Same hit dice, progression | Renamed to Jobs, modern flavor |
-| **Subclasses** | Level 3 automatic | **Regent/Gemini** (quest-gated) |
+| **Subclasses** | Job specialization | **Paths** belong to Jobs |
+| **Regent overlays** | No direct 5e equivalent | Earned full class overlays; Gemini creates a saved Sovereign |
 | **Class Features** | Standard | **Awakening Features** (System-granted) |
 | **Inspiration** | Binary on/off | **System Favor** (resource pool + die) |
-| **Spells** | ✅ Same mechanics | Renamed to Powers, essence materials |
+| **Spells, Powers, Techniques** | Distinct authored categories | Spells use slots; Powers and Techniques retain their own use rules unless Regent acquisition uses Resonance |
+| **Companions and mounts** | Fixed stat blocks | Character-owned; one version scaled to the owner's level (max Hit Dice, cantrip-pace damage + PB) |
 | **Setting** | Medieval fantasy | **Modern urban fantasy** |
 
 ---
@@ -483,4 +411,4 @@ All System Ascendant custom mechanics are integrated with the effect priority sy
 1. ✅ **characterEngine.ts** - All System Ascendant mechanics integrated
 2. **useComputedCharacterStats.ts** - Already fetches all data needed
 3. **UI Integration** - Update character sheet to display awakening features, job traits, and regent/gemini status
-4. **Database Schema** - Add `regent` and `gemini` columns to `character_jobs` table if not present
+4. **Database Schema** - Persist Regent unlocks, acquisition provenance, Resonance, and complete Sovereign definitions in their dedicated records.

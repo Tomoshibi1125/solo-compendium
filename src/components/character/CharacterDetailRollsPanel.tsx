@@ -1,5 +1,8 @@
 import { Badge } from "@/components/ui/badge";
-import type { ActionResolutionPayload } from "@/lib/actionResolution";
+import {
+	type ActionResolutionPayload,
+	isActionResolutionPayload,
+} from "@/lib/actionResolution";
 import {
 	formatAttackLine,
 	formatDamageLine,
@@ -150,13 +153,12 @@ function readStringArray(
 	);
 }
 
+/** A validated v1 or v2 payload; Sovereign v2 abilities carry save DCs only here. */
 function payloadField(
 	record: DetailRecord | null,
 ): ActionResolutionPayload | undefined {
-	const payload = asRecord(record?.payload);
-	if (payload?.version === 1)
-		return payload as unknown as ActionResolutionPayload;
-	return undefined;
+	const payload = record?.payload;
+	return isActionResolutionPayload(payload) ? payload : undefined;
 }
 
 function isActionLike(record: DetailRecord): boolean {

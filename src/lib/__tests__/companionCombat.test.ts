@@ -4,7 +4,6 @@ import {
 	mergeCompanionTurnEntries,
 	readCompanionCombatProfile,
 	readCompanionMountProfile,
-	readCompanionRestRule,
 	resolveTurnOrder,
 } from "@/lib/companionCombat";
 
@@ -59,30 +58,6 @@ describe("C3 companion combat rules", () => {
 			reactionPool: "shared-rider",
 			actionEconomy: { actions: 1, reactions: 1 },
 			progressionMode: "milestone",
-		});
-	});
-
-	it("does not synthesize rest healing when no authored rule exists", () => {
-		expect(readCompanionRestRule({}, "short")).toBeNull();
-		expect(
-			readCompanionRestRule(
-				{
-					rest: {
-						long: {
-							heal: { kind: "flat", amount: 6 },
-							conditions: "preserve",
-							clearDowned: true,
-							resources: { focus: 2 },
-						},
-					},
-				},
-				"long",
-			),
-		).toEqual({
-			heal: { kind: "flat", amount: 6 },
-			conditions: "preserve",
-			clearDowned: true,
-			resources: { focus: 2 },
 		});
 	});
 

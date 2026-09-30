@@ -2835,6 +2835,8 @@ export const staticDataProvider: StaticDataProvider = {
 					cargo_capacity_lbs: v.cargo_capacity_lbs,
 					crew_positions: v.crew_positions,
 					abilities: v.abilities,
+					combat_capable: v.combat_capable,
+					natural_attacks: v.natural_attacks,
 					bonded: v.bonded,
 					anomaly_id: v.anomaly_id,
 					bonded_from_name: v.anomaly_id

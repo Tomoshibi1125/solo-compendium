@@ -22,11 +22,12 @@ import type {
 	Regent,
 } from "@/lib/geminiProtocol";
 import {
-	buildSovereignExport,
-	parseImportedSovereign,
-	type SovereignInputs,
-} from "@/lib/sovereign/sovereignContract";
+	type SovereignV2Definition,
+	validateGeneratedSovereignBudget,
+	validateSovereignV2Definition,
+} from "@/lib/sovereign/sovereignV2Contract";
 import { formatRegentVernacular } from "@/lib/vernacular";
+import sovereignV2Schema from "../../../supabase/sovereign_v2.schema.json";
 
 interface SovereignExportImportPanelProps {
 	job: Job;
@@ -38,12 +39,57 @@ interface SovereignExportImportPanelProps {
 	alreadyLockedIn?: boolean;
 }
 
-/**
- * "Use an outside AI" flow for the Gemini Protocol fusion. Exports the exact
- * fusion inputs as a ready-to-paste prompt (or downloadable bundle), then
- * validates and applies the JSON the user brings back — so a Sovereign created
- * in ChatGPT/Claude/Gemini lands on the character exactly like an embedded one.
- */
+function parseJsonObject(text: string): unknown {
+	const trimmed = text
+		.trim()
+		.replace(/^```(?:json)?\s*/i, "")
+		.replace(/\s*```$/i, "");
+	try {
+		return JSON.parse(trimmed);
+	} catch {
+		const start = trimmed.indexOf("{");
+		const end = trimmed.lastIndexOf("}");
+		if (start < 0 || end <= start) throw new Error("No JSON object found");
+		return JSON.parse(trimmed.slice(start, end + 1));
+	}
+}
+
+function toPreview(
+	definition: SovereignV2Definition,
+	job: Job,
+	path: Path,
+	regentA: Regent,
+	regentB: Regent,
+): GeneratedSovereign {
+	return {
+		name: definition.identity.name,
+		title: definition.identity.title,
+		description: definition.description,
+		fusion_theme: definition.fusion_theme,
+		fusion_description: definition.combat_doctrine,
+		fusion_method: "Gemini Protocol (outside AI)",
+		power_multiplier: "Versioned v2 mechanics",
+		fusion_stability: "Validated v2 definition",
+		abilities: definition.abilities.map((ability) => ({
+			name: ability.name,
+			description: ability.description,
+			level: ability.level,
+			action_type: ability.action_type,
+			recharge: ability.recharge,
+			is_capstone: ability.is_capstone,
+			origin_sources: ability.ancestry,
+			fusion_type: "unified",
+		})),
+		job,
+		path,
+		regentA,
+		regentB,
+		schema_version: 2,
+		definition,
+	} as GeneratedSovereign;
+}
+
+/** Outside-AI fusion must return the same complete v2 package as built-in AI. */
 export function SovereignExportImportPanel({
 	job,
 	path,
@@ -59,15 +105,37 @@ export function SovereignExportImportPanel({
 	const [parsed, setParsed] = useState<GeneratedSovereign | null>(null);
 	const [errors, setErrors] = useState<string[]>([]);
 
-	const inputs: SovereignInputs = useMemo(
-		() => ({ job, path, regentA, regentB }),
-		[job, path, regentA, regentB],
+	const [importIdentity] = useState(() => ({
+		id: `sovereign.external.${globalThis.crypto?.randomUUID?.() ?? Date.now().toString(36)}`,
+		operationId: `external-${globalThis.crypto?.randomUUID?.() ?? Date.now().toString(36)}`,
+		generatedAt: new Date().toISOString(),
+	}));
+	const sourceIds = useMemo(
+		() => ({
+			job: String(job.id),
+			path: String(path.id),
+			regent_a: String(regentA.id),
+			regent_b: String(regentB.id),
+		}),
+		[job.id, path.id, regentA.id, regentB.id],
 	);
-	const exportData = useMemo(() => buildSovereignExport(inputs), [inputs]);
+	const prompt = useMemo(
+		() =>
+			[
+				"Create exactly one complete Rift Ascendant Sovereign v2 JSON object. Return JSON only, with no markdown.",
+				"Every field required by the attached JSON schema must be present. Include exactly eight ordered abilities at levels 1, 3, 5, 7, 10, 14, 17, 20. Levels 17 and 20 are capstones.",
+				"Use the schema's bounded mechanics. At least four active abilities need typed mechanics, including an attack and a save. Include exactly one PB/long-rest resource, one canonical skill proficiency modifier owned by a feature, and one or two typed level 10+ abilities spending one point from that resource.",
+				`Set id to ${importIdentity.id}. Set generation to ${JSON.stringify({ contract_revision: 2, ruleset_revision: "rules.sovereign-v2.s5", canonical_source_revision: "external-v2", generator: "Outside AI import", generated_at: importIdentity.generatedAt, operation_id: importIdentity.operationId, source_ids: sourceIds })}.`,
+				'Set schema_version to 2 and compatibility to {"status":"native","notes":[]}.',
+				`Canonical sources: ${JSON.stringify({ job: { id: job.id, name: job.name }, path: { id: path.id, name: path.name }, regent_a: { id: regentA.id, name: regentA.name }, regent_b: { id: regentB.id, name: regentB.name } })}`,
+				`JSON schema: ${JSON.stringify(sovereignV2Schema)}`,
+			].join("\n\n"),
+		[job, path, regentA, regentB, sourceIds, importIdentity],
+	);
 
 	const handleCopyPrompt = async () => {
 		try {
-			await navigator.clipboard.writeText(exportData.prompt);
+			await navigator.clipboard.writeText(prompt);
 			toast({
 				title: "Prompt copied",
 				description:
@@ -79,21 +147,35 @@ export function SovereignExportImportPanel({
 	};
 
 	const handleDownloadBundle = () => {
-		const blob = new Blob([JSON.stringify(exportData.bundle, null, 2)], {
-			type: "application/json",
+		const blob = new Blob([prompt], {
+			type: "text/plain",
 		});
 		const url = URL.createObjectURL(blob);
 		const anchor = document.createElement("a");
 		anchor.href = url;
-		anchor.download = `sovereign-request-${regentA.id}-${regentB.id}.json`;
+		anchor.download = `sovereign-request-${regentA.id}-${regentB.id}.txt`;
 		anchor.click();
 		URL.revokeObjectURL(url);
 	};
 
 	const runParse = (raw: string) => {
-		const result = parseImportedSovereign(raw, inputs);
+		let parsedJson: unknown;
+		try {
+			parsedJson = parseJsonObject(raw);
+		} catch (error) {
+			setParsed(null);
+			setErrors([error instanceof Error ? error.message : "Invalid JSON"]);
+			return;
+		}
+		const result = validateSovereignV2Definition(parsedJson, sourceIds);
 		if (result.ok) {
-			setParsed(result.sovereign);
+			const budgetErrors = validateGeneratedSovereignBudget(result.definition);
+			if (budgetErrors.length > 0) {
+				setParsed(null);
+				setErrors(budgetErrors);
+				return;
+			}
+			setParsed(toPreview(result.definition, job, path, regentA, regentB));
 			setErrors([]);
 		} else {
 			setParsed(null);
@@ -149,7 +231,7 @@ export function SovereignExportImportPanel({
 							onClick={handleDownloadBundle}
 						>
 							<Download className="h-4 w-4 mr-2" />
-							Download request (.json)
+							Download request (.txt)
 						</Button>
 					</div>
 				</CardContent>
@@ -167,12 +249,13 @@ export function SovereignExportImportPanel({
 					<p className="text-sm text-muted-foreground">
 						Paste the AI's reply (the JSON, even with surrounding text) or
 						upload its <code className="text-xs">.json</code> file. We validate
-						it and re-attach your canonical Job/Path/Regents automatically.
+						it as a complete version 2 definition against your selected Job,
+						Path, and Regents.
 					</p>
 					<Textarea
 						value={importText}
 						onChange={(event) => setImportText(event.target.value)}
-						placeholder='Paste the AI response here, e.g. {"name": "...", "abilities": [ ... ]}'
+						placeholder='Paste the complete v2 JSON response here, e.g. {"schema_version": 2, "abilities": [ ... ]}'
 						className="min-h-[140px] font-mono text-xs"
 					/>
 					<div className="flex flex-wrap gap-2">

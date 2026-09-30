@@ -1,4 +1,3 @@
-import { useQuery } from "@tanstack/react-query";
 import {
 	ArrowDown,
 	ArrowLeft,
@@ -10,7 +9,6 @@ import {
 	Plus,
 	RotateCcw,
 	ScrollText,
-	Sparkles,
 	Trash2,
 } from "lucide-react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
@@ -32,7 +30,6 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
-import { useAIEnhance } from "@/hooks/useAIEnhance";
 import { useCampaignSharedCharacters } from "@/hooks/useCampaignCharacters";
 import { useSendCampaignMessage } from "@/hooks/useCampaignChat";
 import {
@@ -42,6 +39,7 @@ import {
 	useUpsertCombatants,
 } from "@/hooks/useCampaignCombat";
 import { useJoinedCampaigns, useMyCampaigns } from "@/hooks/useCampaigns";
+import { useCompanionInstance } from "@/hooks/useCompanionInstances";
 import { useDebounce } from "@/hooks/useDebounce";
 import { useAscendantTools } from "@/hooks/useGlobalDDBeyondIntegration";
 import { useHydratedPreferredCampaignId } from "@/hooks/usePreferredCampaignSelection";
@@ -58,11 +56,13 @@ import {
 } from "@/lib/actionResolution";
 import { useAuth } from "@/lib/auth/authContext";
 import { publishSessionEvent } from "@/lib/campaignSessionEvents";
-import type { CompanionInstanceRecord } from "@/lib/companionInstances";
 import {
-	companionSourceRank,
-	isLevelScaledCompanion,
-	scaleCompanionAtLevel,
+	combatantAllegianceBadges,
+	toEncounterDisposition,
+} from "@/lib/combatantAllegiance";
+import {
+	companionScalingCharacterId,
+	scaleCompanionInstance,
 } from "@/lib/companionScaling";
 import {
 	CONDITION_CATALOG_IDS,
@@ -83,6 +83,7 @@ import {
 	drainInitiativeAdditions,
 	type PendingCombatant,
 } from "@/lib/initiativeQueue";
+import type { EncounterDisposition } from "@/lib/planning/adapters/encounterWorkflow";
 import { downloadJson, downloadMarkdown } from "@/lib/toolExport";
 import { cn } from "@/lib/utils";
 
@@ -140,6 +141,12 @@ interface Combatant {
 	conditions: string[];
 	condition_timers?: Record<string, number>;
 	isHunter: boolean;
+	/** Character-owned companion or mount; never labeled by disposition. */
+	isCompanion?: boolean;
+	/** Encounter attitude from the Encounter Builder handoff. */
+	disposition?: EncounterDisposition;
+	/** Encounter Builder "Hostile now"; absent means it follows disposition. */
+	currentlyHostile?: boolean;
 	damage_resistances?: string[];
 	damage_immunities?: string[];
 	damage_vulnerabilities?: string[];
@@ -229,6 +236,14 @@ const mapCampaignCombatantToTracker = (
 			typeof flags.isHunter === "boolean"
 				? flags.isHunter
 				: Boolean(combatant.member_id),
+		isCompanion:
+			Boolean(combatant.companion_instance_id) ||
+			flags.actorKind === "companion",
+		disposition: toEncounterDisposition(flags.disposition),
+		currentlyHostile:
+			typeof flags.currentlyHostile === "boolean"
+				? flags.currentlyHostile
+				: undefined,
 		damage_resistances: toStringArray(
 			stats.damage_resistances ?? stats.damageResistances,
 		),
@@ -262,11 +277,17 @@ const mapCampaignCombatantToTracker = (
  * Normalize combatants hydrated from persisted tool-state. The reusable,
  * unit-tested `normalizeCombatConditions` backfills the `advancedConditions`
  * the roster render reads unguarded (see its docblock for why this is a crash
- * guard, not a nicety).
+ * guard, not a nicety). Encounter handoffs store `disposition` and
+ * `currentlyHostile` on each row; anything else in those keys is dropped.
  */
 const normalizeStoredCombatant = (combatant: Combatant): Combatant => ({
 	...combatant,
 	...normalizeCombatConditions(combatant),
+	disposition: toEncounterDisposition(combatant.disposition),
+	currentlyHostile:
+		typeof combatant.currentlyHostile === "boolean"
+			? combatant.currentlyHostile
+			: undefined,
 });
 
 const STORAGE_KEY = "solo-compendium.Warden-tools.initiative.v1";
@@ -285,36 +306,14 @@ function TrackerCompanionCombatDetails({
 	profileVersion: number | null | undefined;
 }) {
 	const { data: roster = [] } = useCampaignSharedCharacters(campaignId);
-	const { data: instance } = useQuery({
-		queryKey: ["tracker-companion-instance", instanceId, profileVersion],
-		queryFn: async (): Promise<CompanionInstanceRecord | null> => {
-			const { data, error } = await supabase
-				.from("companion_instances" as never)
-				.select("*")
-				.eq("id", instanceId)
-				.maybeSingle();
-			if (error) throw error;
-			return data as unknown as CompanionInstanceRecord | null;
-		},
-	});
-	if (!instance || !isLevelScaledCompanion(instance)) return null;
-	const handlerId =
-		instance.primary_handler_character_id ??
-		instance.rider_character_id ??
-		instance.owner_character_id;
-	const level =
-		roster.find((entry) => entry.character_id === handlerId)?.characters
-			?.level ?? 1;
-	return (
-		<CompanionCombatDetails
-			instance={instance}
-			scaling={scaleCompanionAtLevel(
-				level,
-				companionSourceRank(instance),
-				instance.progression_profile,
-			)}
-		/>
-	);
+	const { data: instance } = useCompanionInstance(instanceId, profileVersion);
+	if (!instance) return null;
+	const ownerId = companionScalingCharacterId(instance);
+	const level = roster.find((entry) => entry.character_id === ownerId)
+		?.characters?.level;
+	const scaling = scaleCompanionInstance(instance, level);
+	if (!scaling) return null;
+	return <CompanionCombatDetails instance={instance} scaling={scaling} />;
 }
 
 const hasManualConditionDuration = (
@@ -353,9 +352,6 @@ const InitiativeTracker = () => {
 	const [currentTurn, setCurrentTurn] = useState(0);
 	const [round, setRound] = useState(1);
 	const [combatLog, setCombatLog] = useState<CombatLogEntry[]>([]);
-	const [narration, setNarration] = useState("");
-	const { isEnhancing: isNarrating, enhance: enhanceNarration } =
-		useAIEnhance();
 
 	const logEvent = useCallback(
 		(text: string, atRound: number, atTurn: number) => {
@@ -605,6 +601,10 @@ const InitiativeTracker = () => {
 				ac: p.ac,
 				conditions: p.conditions ?? [],
 				isHunter: p.isHunter ?? false,
+				// Every queue producer is a companion sheet; the instance id (or the
+				// origin row an older sheet sends) marks the row as a companion.
+				isCompanion: Boolean(p.companionInstanceId || p.companionOriginRowId),
+				companionInstanceId: p.companionInstanceId ?? null,
 				advancedConditions: [],
 				dexMod: p.dexMod,
 			}));
@@ -657,6 +657,12 @@ const InitiativeTracker = () => {
 					flags: {
 						...toRecord(combatant.persistedFlags),
 						isHunter: combatant.isHunter,
+						...(combatant.disposition
+							? { disposition: combatant.disposition }
+							: {}),
+						...(typeof combatant.currentlyHostile === "boolean"
+							? { currentlyHostile: combatant.currentlyHostile }
+							: {}),
 					},
 					member_id: combatant.memberId ?? null,
 					companion_instance_id: combatant.companionInstanceId ?? null,
@@ -1143,7 +1149,6 @@ const InitiativeTracker = () => {
 		setCurrentTurn(0);
 		setRound(1);
 		setCombatLog([]);
-		setNarration("");
 
 		if (isSyncingCombatSession && activeCombatSession) {
 			void supabase
@@ -1183,11 +1188,6 @@ const InitiativeTracker = () => {
 				lines.push(`- **R${e.round}** ${e.text}`);
 			}
 		}
-		if (narration.trim()) {
-			lines.push("");
-			lines.push("## After-Action Narrative");
-			lines.push(narration.trim());
-		}
 		return `${lines.join("\n")}\n`;
 	};
 
@@ -1206,22 +1206,8 @@ const InitiativeTracker = () => {
 					maxHp: c.maxHp,
 				})),
 				log: combatLog,
-				narration,
 			});
 		}
-	};
-
-	const narrateCombat = async () => {
-		if (combatLog.length === 0) return;
-		const transcript = combatLog
-			.map((e) => `Round ${e.round}: ${e.text}`)
-			.join("\n");
-		const result = await enhanceNarration(
-			"combat-after-action",
-			transcript,
-			"Narrate this Rift Ascendant combat as a punchy after-action report for the Warden — concise, cinematic, and faithful to the rolls.",
-		);
-		if (result) setNarration(result);
 	};
 
 	useEffect(() => {
@@ -1619,14 +1605,16 @@ const InitiativeTracker = () => {
 													<div>
 														<div className="font-heading font-semibold flex items-center gap-2">
 															{combatant.name}
-															{combatant.isHunter ? (
-																<Badge variant="secondary" className="text-xs">
-																	Ascendant
-																</Badge>
-															) : (
-																<Badge variant="outline" className="text-xs">
-																	Anomaly
-																</Badge>
+															{combatantAllegianceBadges(combatant).map(
+																(badge) => (
+																	<Badge
+																		key={badge.label}
+																		variant={badge.variant}
+																		className="text-xs"
+																	>
+																		{badge.label}
+																	</Badge>
+																),
 															)}
 														</div>
 														<div className="text-xs text-muted-foreground">
@@ -1991,17 +1979,6 @@ const InitiativeTracker = () => {
 									type="button"
 									variant="outline"
 									size="sm"
-									onClick={narrateCombat}
-									disabled={combatLog.length === 0 || isNarrating}
-									className="gap-2"
-								>
-									<Sparkles className="w-3 h-3" />
-									{isNarrating ? "Narrating…" : "AI Narrate"}
-								</Button>
-								<Button
-									type="button"
-									variant="outline"
-									size="sm"
 									onClick={() => exportLog("md")}
 									disabled={combatLog.length === 0}
 									title="Export Markdown"
@@ -2043,17 +2020,6 @@ const InitiativeTracker = () => {
 									))
 							)}
 						</div>
-
-						{narration && (
-							<div className="rounded border border-accent/20 bg-accent/5 p-3">
-								<p className="text-[11px] uppercase tracking-widest text-accent/80 font-bold mb-1">
-									After-Action Narrative
-								</p>
-								<p className="text-sm text-muted-foreground whitespace-pre-wrap leading-snug">
-									{narration}
-								</p>
-							</div>
-						)}
 					</div>
 				</AscendantWindow>
 			</div>

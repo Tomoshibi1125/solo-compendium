@@ -35,11 +35,12 @@ INSERT INTO public.companion_instances (
 );
 
 SELECT plan(19);
+-- The linked Eternal Void Beast is 13d8: one maximum d8 at owner level 1.
 SELECT is((SELECT combat_state->>'maxHp' FROM public.companion_instances
-  WHERE id = 'a7770000-7777-4777-8777-777777777777'), '16',
-  'a bonded mount starts from rank and level, not its source HP');
+  WHERE id = 'a7770000-7777-4777-8777-777777777777'), '8',
+  'a bonded mount scales from its linked Anomaly Hit Die, not its source HP');
 SELECT is((SELECT combat_state->>'hp' FROM public.companion_instances
-  WHERE id = 'a7770000-7777-4777-8777-777777777777'), '16',
+  WHERE id = 'a7770000-7777-4777-8777-777777777777'), '8',
   'source-sized current HP is clamped to scaled max HP');
 SELECT is((SELECT app_private.companion_c3_ac(instance)::INTEGER FROM public.companion_instances AS instance
   WHERE id = 'a7770000-7777-4777-8777-777777777777'), 12,
@@ -75,39 +76,36 @@ SELECT ok(public.add_companion_to_combat(
   'a7770000-7777-4777-8777-777777777777', 12) IS NOT NULL,
   'Warden adds the living mount to campaign combat');
 SELECT is((SELECT stats->>'max_hp' FROM public.campaign_combatants
-  WHERE companion_instance_id = 'a7770000-7777-4777-8777-777777777777'), '16',
+  WHERE companion_instance_id = 'a7770000-7777-4777-8777-777777777777'), '8',
   'initial combatant uses level-scaled HP');
+-- Rank C (tier 2) at level 1: attack 2 + 2 + PB 2, save DC 8 + 2 + PB 2.
 SELECT is((SELECT stats->>'attack_bonus' FROM public.campaign_combatants
   WHERE companion_instance_id = 'a7770000-7777-4777-8777-777777777777'), '6',
   'combatant records the scaled attack bonus');
-SELECT is((SELECT stats->>'damage_dice' FROM public.campaign_combatants
-  WHERE companion_instance_id = 'a7770000-7777-4777-8777-777777777777'), '3d6',
-  'combatant records scaled damage');
+SELECT is((SELECT stats->>'save_dc' FROM public.campaign_combatants
+  WHERE companion_instance_id = 'a7770000-7777-4777-8777-777777777777'), '12',
+  'combatant records the scaled save DC');
+SELECT ok((SELECT NOT (stats ? 'damage_dice') FROM public.campaign_combatants
+  WHERE companion_instance_id = 'a7770000-7777-4777-8777-777777777777'),
+  'damage is resolved per authored roll, not one shared damage string');
 
 DO $$ BEGIN PERFORM set_config('request.jwt.claim.sub', 'a2220000-2222-4222-8222-222222222222', true); END $$;
 UPDATE public.characters SET level = 5 WHERE id = 'a5550000-5555-4555-8555-555555555555';
 SELECT is((SELECT stats->>'max_hp' FROM public.campaign_combatants
-  WHERE companion_instance_id = 'a7770000-7777-4777-8777-777777777777'), '48',
-  'handler level-up refreshes active combat max HP');
+  WHERE companion_instance_id = 'a7770000-7777-4777-8777-777777777777'), '40',
+  'owner level-up refreshes active combat max HP');
+SELECT is((SELECT stats->>'hp' FROM public.campaign_combatants
+  WHERE companion_instance_id = 'a7770000-7777-4777-8777-777777777777'), '8',
+  'a raised maximum does not heal current HP');
 SELECT is((SELECT stats->>'ac' FROM public.campaign_combatants
   WHERE companion_instance_id = 'a7770000-7777-4777-8777-777777777777'), '13',
-  'handler level-up refreshes active combat AC');
+  'owner level-up refreshes active combat AC');
 SELECT is((SELECT stats->>'attack_bonus' FROM public.campaign_combatants
   WHERE companion_instance_id = 'a7770000-7777-4777-8777-777777777777'), '7',
-  'handler level-up refreshes attack proficiency');
+  'owner level-up refreshes attack proficiency');
 
-DO $$ BEGIN PERFORM set_config('request.jwt.claim.sub', 'a1110000-1111-4111-8111-111111111111', true); END $$;
-SELECT is(public.set_companion_scaling_profile(
-  'a7770000-7777-4777-8777-777777777777',
-  'a3330000-3333-4333-8333-333333333333',
-  '{"hpBase":20,"hpPerLevel":10,"acBase":14,"damageDie":8}'::jsonb), 2,
-  'Warden profile update advances the profile version');
-SELECT is((SELECT stats->>'max_hp' FROM public.campaign_combatants
-  WHERE companion_instance_id = 'a7770000-7777-4777-8777-777777777777'), '70',
-  'Warden override refreshes active combat max HP');
-SELECT is((SELECT stats->>'damage_dice' FROM public.campaign_combatants
-  WHERE companion_instance_id = 'a7770000-7777-4777-8777-777777777777'), '4d8',
-  'Warden override refreshes active combat damage');
+SELECT ok(to_regprocedure('public.set_companion_scaling_profile(uuid,uuid,jsonb)') IS NULL,
+  'Warden scaling coefficients are retired');
 
 SELECT * FROM finish();
 ROLLBACK;

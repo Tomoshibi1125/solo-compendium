@@ -35,7 +35,7 @@ export interface QuestContract {
 	/**
 	 * Regent-tagged quest. Completing ANY quest flagged here lets a Warden grant
 	 * the character one Regent-unlock opportunity (the player then chooses which
-	 * Regent from three stat-ranked candidates). The tag is generic — it is never
+	 * Regent from three distinct Warden-offered canonical candidates). The tag is generic — it is never
 	 * tied to a specific Regent. See `useRegentUnlockGrants` / `RegentUnlocksPanel`.
 	 */
 	grantsRegentUnlock?: boolean;
@@ -563,18 +563,19 @@ export const PREBUILT_QUEST_CONTRACTS: QuestContract[] = [
 
 	// ── S-rank ────────────────────────────────────────────────────────────────
 	{
+		// Stable legacy ID is retained for existing quest references.
 		id: "qc-s-monarchgate",
-		title: "The Monarch Rift",
+		title: "The Crowned Rift",
 		rank: "S",
 		type: "strike",
 		summary:
-			"An S-rank Rift is ruled by a Monarch-class entity. Only a coalition of elite ascendants can hope to clear it.",
+			"An S-rank Rift is ruled by an apex Anomaly. Only a coalition of elite Ascendants can hope to clear it.",
 		objectives: [
-			"Survive the Monarch's domain on entry",
-			"Dismantle the Monarch's court of heralds",
-			"Defeat the Monarch and seal the Rift",
+			"Survive the apex Anomaly's domain on entry",
+			"Dismantle its court of heralds",
+			"Defeat the apex Anomaly and seal the Rift",
 		],
-		rewardNotes: "Legendary clear; Monarch-grade relics; national renown.",
+		rewardNotes: "Legendary clear; Regent-grade relics; national renown.",
 		grantsRegentUnlock: true,
 	},
 	{

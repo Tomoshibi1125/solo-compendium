@@ -6,7 +6,6 @@ import {
 	Database,
 	Download,
 	FileText,
-	Image,
 	Loader2,
 	ScrollText,
 	Shield,
@@ -201,15 +200,6 @@ const Admin = () => {
 								>
 									<Shield className="w-4 h-4" />
 									Selection Protocols
-								</Button>
-							</Link>
-							<Link to="/warden-directives/art-generation">
-								<Button
-									variant="outline"
-									className="gap-2 border-resurge/30 hover:bg-resurge/10 hover:border-resurge/50"
-								>
-									<Image className="w-4 h-4" />
-									Art Generation
 								</Button>
 							</Link>
 						</>

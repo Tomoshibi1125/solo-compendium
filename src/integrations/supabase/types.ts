@@ -1664,7 +1664,7 @@ export type Database = {
 					anomaly_id: string;
 					bond_level: number;
 					campaign_id: string;
-					companion_instance_id: string;
+					companion_instance_id: string | null;
 					companion_source_snapshot: Json | null;
 					conditions: Json;
 					created_at: string;
@@ -1685,7 +1685,7 @@ export type Database = {
 					anomaly_id: string;
 					bond_level?: number;
 					campaign_id: string;
-					companion_instance_id?: string;
+					companion_instance_id?: string | null;
 					companion_source_snapshot?: Json | null;
 					conditions?: Json;
 					created_at?: string;
@@ -1706,7 +1706,7 @@ export type Database = {
 					anomaly_id?: string;
 					bond_level?: number;
 					campaign_id?: string;
-					companion_instance_id?: string;
+					companion_instance_id?: string | null;
 					companion_source_snapshot?: Json | null;
 					conditions?: Json;
 					created_at?: string;
@@ -2741,8 +2741,75 @@ export type Database = {
 					},
 				];
 			};
+			character_pending_regent_grants: {
+				Row: {
+					approved_at: string | null;
+					approved_unlock_id: string | null;
+					canonical_id: string;
+					character_id: string;
+					created_at: string;
+					grant_kind: string;
+					id: string;
+					original_unlock_id: string | null;
+					payload: Json;
+					regent_id: string;
+					status: string;
+				};
+				Insert: {
+					approved_at?: string | null;
+					approved_unlock_id?: string | null;
+					canonical_id: string;
+					character_id: string;
+					created_at?: string;
+					grant_kind: string;
+					id?: string;
+					original_unlock_id?: string | null;
+					payload: Json;
+					regent_id: string;
+					status?: string;
+				};
+				Update: {
+					approved_at?: string | null;
+					approved_unlock_id?: string | null;
+					canonical_id?: string;
+					character_id?: string;
+					created_at?: string;
+					grant_kind?: string;
+					id?: string;
+					original_unlock_id?: string | null;
+					payload?: Json;
+					regent_id?: string;
+					status?: string;
+				};
+				Relationships: [
+					{
+						foreignKeyName: "character_pending_regent_grants_approved_unlock_id_fkey";
+						columns: ["approved_unlock_id"];
+						isOneToOne: false;
+						referencedRelation: "character_regent_unlocks";
+						referencedColumns: ["id"];
+					},
+					{
+						foreignKeyName: "character_pending_regent_grants_character_id_fkey";
+						columns: ["character_id"];
+						isOneToOne: false;
+						referencedRelation: "characters";
+						referencedColumns: ["id"];
+					},
+					{
+						foreignKeyName: "character_pending_regent_grants_character_id_fkey";
+						columns: ["character_id"];
+						isOneToOne: false;
+						referencedRelation: "user_characters";
+						referencedColumns: ["id"];
+					},
+				];
+			};
 			character_powers: {
 				Row: {
+					acquired_level: number | null;
+					acquisition_kind: string;
+					canonical_source_id: string | null;
 					casting_time: string | null;
 					character_id: string;
 					concentration: boolean;
@@ -2759,11 +2826,16 @@ export type Database = {
 					power_level: number;
 					range: string | null;
 					recharge: string | null;
+					regent_id: string | null;
+					regent_unlock_id: string | null;
 					source: string | null;
 					uses_current: number | null;
 					uses_max: number | null;
 				};
 				Insert: {
+					acquired_level?: number | null;
+					acquisition_kind?: string;
+					canonical_source_id?: string | null;
 					casting_time?: string | null;
 					character_id: string;
 					concentration?: boolean;
@@ -2780,11 +2852,16 @@ export type Database = {
 					power_level?: number;
 					range?: string | null;
 					recharge?: string | null;
+					regent_id?: string | null;
+					regent_unlock_id?: string | null;
 					source?: string | null;
 					uses_current?: number | null;
 					uses_max?: number | null;
 				};
 				Update: {
+					acquired_level?: number | null;
+					acquisition_kind?: string;
+					canonical_source_id?: string | null;
 					casting_time?: string | null;
 					character_id?: string;
 					concentration?: boolean;
@@ -2801,6 +2878,8 @@ export type Database = {
 					power_level?: number;
 					range?: string | null;
 					recharge?: string | null;
+					regent_id?: string | null;
+					regent_unlock_id?: string | null;
 					source?: string | null;
 					uses_current?: number | null;
 					uses_max?: number | null;
@@ -2818,6 +2897,13 @@ export type Database = {
 						columns: ["character_id"];
 						isOneToOne: false;
 						referencedRelation: "user_characters";
+						referencedColumns: ["id"];
+					},
+					{
+						foreignKeyName: "character_powers_regent_unlock_id_fkey";
+						columns: ["regent_unlock_id"];
+						isOneToOne: false;
+						referencedRelation: "character_regent_unlocks";
 						referencedColumns: ["id"];
 					},
 				];
@@ -2860,6 +2946,87 @@ export type Database = {
 					},
 					{
 						foreignKeyName: "character_recipes_character_id_fkey";
+						columns: ["character_id"];
+						isOneToOne: false;
+						referencedRelation: "user_characters";
+						referencedColumns: ["id"];
+					},
+				];
+			};
+			character_regent_resonance: {
+				Row: {
+					character_id: string;
+					points_current: number;
+					points_max: number;
+					updated_at: string;
+				};
+				Insert: {
+					character_id: string;
+					points_current: number;
+					points_max: number;
+					updated_at?: string;
+				};
+				Update: {
+					character_id?: string;
+					points_current?: number;
+					points_max?: number;
+					updated_at?: string;
+				};
+				Relationships: [
+					{
+						foreignKeyName: "character_regent_resonance_character_id_fkey";
+						columns: ["character_id"];
+						isOneToOne: true;
+						referencedRelation: "characters";
+						referencedColumns: ["id"];
+					},
+					{
+						foreignKeyName: "character_regent_resonance_character_id_fkey";
+						columns: ["character_id"];
+						isOneToOne: true;
+						referencedRelation: "user_characters";
+						referencedColumns: ["id"];
+					},
+				];
+			};
+			character_regent_resonance_spends: {
+				Row: {
+					character_id: string;
+					cost: number;
+					grant_id: string;
+					grant_kind: string;
+					points_after: number;
+					request_id: string;
+					spent_at: string;
+				};
+				Insert: {
+					character_id: string;
+					cost: number;
+					grant_id: string;
+					grant_kind: string;
+					points_after: number;
+					request_id: string;
+					spent_at?: string;
+				};
+				Update: {
+					character_id?: string;
+					cost?: number;
+					grant_id?: string;
+					grant_kind?: string;
+					points_after?: number;
+					request_id?: string;
+					spent_at?: string;
+				};
+				Relationships: [
+					{
+						foreignKeyName: "character_regent_resonance_spends_character_id_fkey";
+						columns: ["character_id"];
+						isOneToOne: false;
+						referencedRelation: "characters";
+						referencedColumns: ["id"];
+					},
+					{
+						foreignKeyName: "character_regent_resonance_spends_character_id_fkey";
 						columns: ["character_id"];
 						isOneToOne: false;
 						referencedRelation: "user_characters";
@@ -3618,7 +3785,7 @@ export type Database = {
 					anomaly_id: string;
 					bond_level: number;
 					character_id: string;
-					companion_instance_id: string;
+					companion_instance_id: string | null;
 					companion_source_snapshot: Json | null;
 					conditions: Json;
 					created_at: string;
@@ -3636,7 +3803,7 @@ export type Database = {
 					anomaly_id: string;
 					bond_level?: number;
 					character_id: string;
-					companion_instance_id?: string;
+					companion_instance_id?: string | null;
 					companion_source_snapshot?: Json | null;
 					conditions?: Json;
 					created_at?: string;
@@ -3654,7 +3821,7 @@ export type Database = {
 					anomaly_id?: string;
 					bond_level?: number;
 					character_id?: string;
-					companion_instance_id?: string;
+					companion_instance_id?: string | null;
 					companion_source_snapshot?: Json | null;
 					conditions?: Json;
 					created_at?: string;
@@ -3757,30 +3924,45 @@ export type Database = {
 			};
 			character_techniques: {
 				Row: {
+					acquired_level: number | null;
+					acquisition_kind: string;
+					canonical_source_id: string | null;
 					character_id: string;
 					id: string;
 					learned_at: string;
 					recharge: string | null;
+					regent_id: string | null;
+					regent_unlock_id: string | null;
 					source: string | null;
 					technique_id: string;
 					uses_current: number | null;
 					uses_max: number | null;
 				};
 				Insert: {
+					acquired_level?: number | null;
+					acquisition_kind?: string;
+					canonical_source_id?: string | null;
 					character_id: string;
 					id?: string;
 					learned_at?: string;
 					recharge?: string | null;
+					regent_id?: string | null;
+					regent_unlock_id?: string | null;
 					source?: string | null;
 					technique_id: string;
 					uses_current?: number | null;
 					uses_max?: number | null;
 				};
 				Update: {
+					acquired_level?: number | null;
+					acquisition_kind?: string;
+					canonical_source_id?: string | null;
 					character_id?: string;
 					id?: string;
 					learned_at?: string;
 					recharge?: string | null;
+					regent_id?: string | null;
+					regent_unlock_id?: string | null;
 					source?: string | null;
 					technique_id?: string;
 					uses_current?: number | null;
@@ -3799,6 +3981,13 @@ export type Database = {
 						columns: ["character_id"];
 						isOneToOne: false;
 						referencedRelation: "user_characters";
+						referencedColumns: ["id"];
+					},
+					{
+						foreignKeyName: "character_techniques_regent_unlock_id_fkey";
+						columns: ["regent_unlock_id"];
+						isOneToOne: false;
+						referencedRelation: "character_regent_unlocks";
 						referencedColumns: ["id"];
 					},
 				];
@@ -8057,18 +8246,78 @@ export type Database = {
 				};
 				Relationships: [];
 			};
+			craft_formula_research: {
+				Row: {
+					character_id: string;
+					formula_id: string;
+					formula_revision: string;
+					iteration_bonus: number;
+					mastered: boolean;
+					state: string;
+					successful_productions: number;
+					updated_at: string;
+				};
+				Insert: {
+					character_id: string;
+					formula_id: string;
+					formula_revision: string;
+					iteration_bonus?: number;
+					mastered?: boolean;
+					state: string;
+					successful_productions?: number;
+					updated_at?: string;
+				};
+				Update: {
+					character_id?: string;
+					formula_id?: string;
+					formula_revision?: string;
+					iteration_bonus?: number;
+					mastered?: boolean;
+					state?: string;
+					successful_productions?: number;
+					updated_at?: string;
+				};
+				Relationships: [
+					{
+						foreignKeyName: "craft_formula_research_character_id_fkey";
+						columns: ["character_id"];
+						isOneToOne: false;
+						referencedRelation: "characters";
+						referencedColumns: ["id"];
+					},
+					{
+						foreignKeyName: "craft_formula_research_character_id_fkey";
+						columns: ["character_id"];
+						isOneToOne: false;
+						referencedRelation: "user_characters";
+						referencedColumns: ["id"];
+					},
+					{
+						foreignKeyName: "craft_formula_research_formula_id_fkey";
+						columns: ["formula_id"];
+						isOneToOne: false;
+						referencedRelation: "craft_formulas_m3";
+						referencedColumns: ["id"];
+					},
+				];
+			};
 			craft_formulas_m3: {
 				Row: {
 					ability: string;
+					adaptation_risks: Json | null;
 					created_at: string;
 					dc: number;
-					discipline: string;
+					default_research_state: string;
+					discipline: string | null;
 					failure_policy: string;
 					id: string;
+					ingredient_roles: Json;
 					name: string;
 					output_definition_id: string;
 					output_quantity: number;
+					procedure_kind: string;
 					recipe_id: string;
+					recovery_policy: Json;
 					requirement_snapshot: Json;
 					revision: string;
 					skill: string;
@@ -8077,15 +8326,20 @@ export type Database = {
 				};
 				Insert: {
 					ability: string;
+					adaptation_risks?: Json | null;
 					created_at?: string;
 					dc: number;
-					discipline: string;
+					default_research_state?: string;
+					discipline?: string | null;
 					failure_policy: string;
 					id: string;
+					ingredient_roles: Json;
 					name: string;
 					output_definition_id: string;
 					output_quantity: number;
+					procedure_kind?: string;
 					recipe_id: string;
+					recovery_policy?: Json;
 					requirement_snapshot: Json;
 					revision: string;
 					skill: string;
@@ -8094,15 +8348,20 @@ export type Database = {
 				};
 				Update: {
 					ability?: string;
+					adaptation_risks?: Json | null;
 					created_at?: string;
 					dc?: number;
-					discipline?: string;
+					default_research_state?: string;
+					discipline?: string | null;
 					failure_policy?: string;
 					id?: string;
+					ingredient_roles?: Json;
 					name?: string;
 					output_definition_id?: string;
 					output_quantity?: number;
+					procedure_kind?: string;
 					recipe_id?: string;
+					recovery_policy?: Json;
 					requirement_snapshot?: Json;
 					revision?: string;
 					skill?: string;
@@ -8132,6 +8391,7 @@ export type Database = {
 					output_lot_id: string | null;
 					proficiency_bonus: number | null;
 					resolved_at: string | null;
+					risk_outcome: Json | null;
 					roll: number | null;
 					row_version: number;
 					started_at: string;
@@ -8153,6 +8413,7 @@ export type Database = {
 					output_lot_id?: string | null;
 					proficiency_bonus?: number | null;
 					resolved_at?: string | null;
+					risk_outcome?: Json | null;
 					roll?: number | null;
 					row_version?: number;
 					started_at?: string;
@@ -8174,6 +8435,7 @@ export type Database = {
 					output_lot_id?: string | null;
 					proficiency_bonus?: number | null;
 					resolved_at?: string | null;
+					risk_outcome?: Json | null;
 					roll?: number | null;
 					row_version?: number;
 					started_at?: string;
@@ -9306,6 +9568,7 @@ export type Database = {
 					reservation_kind: string;
 					status: string;
 					updated_at: string;
+					usage_role: string;
 				};
 				Insert: {
 					created_at?: string;
@@ -9317,6 +9580,7 @@ export type Database = {
 					reservation_kind?: string;
 					status?: string;
 					updated_at?: string;
+					usage_role?: string;
 				};
 				Update: {
 					created_at?: string;
@@ -9328,6 +9592,7 @@ export type Database = {
 					reservation_kind?: string;
 					status?: string;
 					updated_at?: string;
+					usage_role?: string;
 				};
 				Relationships: [
 					{
@@ -9355,6 +9620,7 @@ export type Database = {
 					quantity: number;
 					regulation_metadata: Json;
 					row_version: number;
+					source_rank: string | null;
 					unit: string | null;
 					updated_at: string;
 				};
@@ -9373,6 +9639,7 @@ export type Database = {
 					quantity?: number;
 					regulation_metadata?: Json;
 					row_version?: number;
+					source_rank?: string | null;
 					unit?: string | null;
 					updated_at?: string;
 				};
@@ -9391,6 +9658,7 @@ export type Database = {
 					quantity?: number;
 					regulation_metadata?: Json;
 					row_version?: number;
+					source_rank?: string | null;
 					unit?: string | null;
 					updated_at?: string;
 				};
@@ -9579,6 +9847,38 @@ export type Database = {
 						columns: ["quest_id"];
 						isOneToOne: false;
 						referencedRelation: "session_quests";
+						referencedColumns: ["id"];
+					},
+				];
+			};
+			regent_catch_up_options: {
+				Row: {
+					approved_at: string;
+					approved_by: string;
+					canonical_id: string;
+					kind: string;
+					unlock_id: string;
+				};
+				Insert: {
+					approved_at?: string;
+					approved_by: string;
+					canonical_id: string;
+					kind: string;
+					unlock_id: string;
+				};
+				Update: {
+					approved_at?: string;
+					approved_by?: string;
+					canonical_id?: string;
+					kind?: string;
+					unlock_id?: string;
+				};
+				Relationships: [
+					{
+						foreignKeyName: "regent_catch_up_options_unlock_id_fkey";
+						columns: ["unlock_id"];
+						isOneToOne: false;
+						referencedRelation: "character_regent_unlocks";
 						referencedColumns: ["id"];
 					},
 				];
@@ -10168,6 +10468,16 @@ export type Database = {
 				};
 				Relationships: [];
 			};
+			regent_unresolved_ability_grants: {
+				Row: {
+					canonical_id: string | null;
+					character_id: string | null;
+					id: string | null;
+					kind: string | null;
+					source: string | null;
+				};
+				Relationships: [];
+			};
 			user_characters: {
 				Row: {
 					active_sovereign_id: string | null;
@@ -10383,6 +10693,14 @@ export type Database = {
 				};
 				Returns: string;
 			};
+			approve_pending_regent_grant: {
+				Args: {
+					p_campaign_id: string;
+					p_pending_id: string;
+					p_unlock_id: string;
+				};
+				Returns: string;
+			};
 			asset_exists: { Args: { p_path: string }; Returns: boolean };
 			assign_campaign_loot: {
 				Args: {
@@ -10493,6 +10811,10 @@ export type Database = {
 					p_source_snapshot: Json;
 				};
 				Returns: string;
+			};
+			begin_craft_experiment_m4: {
+				Args: { p_character_id: string; p_formula_id: string };
+				Returns: Json;
 			};
 			bureau_guild_leaderboard: {
 				Args: never;
@@ -10858,6 +11180,15 @@ export type Database = {
 				Returns: string;
 			};
 			hypopg_reset: { Args: never; Returns: undefined };
+			import_craft_state_authority: {
+				Args: {
+					p_lot_id_map: Json;
+					p_operation_id: string;
+					p_original_character_id: string;
+					p_target_character_id: string;
+				};
+				Returns: Json;
+			};
 			import_material_lots_m1: {
 				Args: {
 					p_character_id: string;
@@ -10877,6 +11208,30 @@ export type Database = {
 					p_operation_id: string;
 				};
 				Returns: Json;
+			};
+			import_regent_grant_authority: {
+				Args: {
+					p_grant_kind: string;
+					p_original_grant_id: string;
+					p_target_unlock_id: string;
+				};
+				Returns: string;
+			};
+			import_regent_resonance_state: {
+				Args: {
+					p_original_character_id: string;
+					p_requested_points: number;
+					p_target_character_id: string;
+				};
+				Returns: number;
+			};
+			import_regent_unlock_authority: {
+				Args: {
+					p_expected_regent_id: string;
+					p_original_unlock_id: string;
+					p_target_character_id: string;
+				};
+				Returns: string;
 			};
 			is_campaign_active: { Args: { p_campaign_id: string }; Returns: boolean };
 			is_campaign_dm: {
@@ -10962,6 +11317,10 @@ export type Database = {
 			redeem_campaign_invite_unchecked: {
 				Args: { p_character_id?: string; p_token: string };
 				Returns: string;
+			};
+			refill_regent_resonance: {
+				Args: { p_character_id: string };
+				Returns: number;
 			};
 			register_character_vehicle_mount: {
 				Args: { p_source_snapshot: Json; p_vehicle_link_id: string };
@@ -11232,6 +11591,27 @@ export type Database = {
 			set_primary_regent_unlock: {
 				Args: { p_unlock_id: string };
 				Returns: string;
+			};
+			set_regent_catch_up_options: {
+				Args: { p_campaign_id: string; p_options: Json; p_unlock_id: string };
+				Returns: number;
+			};
+			spend_companion_hit_dice: {
+				Args: {
+					p_companion_instance_id: string;
+					p_dice: number;
+					p_hp_recovered: number;
+				};
+				Returns: Json;
+			};
+			spend_regent_resonance: {
+				Args: {
+					p_character_id: string;
+					p_grant_id: string;
+					p_grant_kind: string;
+					p_request_id: string;
+				};
+				Returns: number;
 			};
 			start_active_session: {
 				Args: {

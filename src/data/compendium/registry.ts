@@ -215,8 +215,7 @@ export type CompendiumLineageKind =
 	| "normalization"
 	| "provider-transform"
 	| "public-view"
-	| "audit"
-	| "publication";
+	| "audit";
 
 export interface CompendiumLineageDescriptor {
 	id: string;
@@ -1197,15 +1196,6 @@ export const compendiumLineageRegistry: readonly CompendiumLineageDescriptor[] =
 		outputCategories: compendiumCategories,
 		independentEvidence: false,
 		description: "Blocking source, conflict, reference, and transformed-content audit.",
-	},
-	{
-		id: "publication/books-direct",
-		kind: "publication",
-		modulePath: "books/scripts/build-books.ts",
-		inputIds: ["aggregate/anomalies", "aggregate/backgrounds", "aggregate/feats", "aggregate/items-static", "aggregate/spells", "aggregate/powers", "aggregate/techniques", "jobs/catalog", "paths/catalog"],
-		outputCategories: providerBackedCompendiumCategories,
-		independentEvidence: false,
-		description: "Current book build lineage; publication output is derived and never corroborating evidence.",
 	},
 ];
 

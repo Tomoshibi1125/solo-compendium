@@ -1,3 +1,5 @@
+-- Removing a companion from its sheet must not erase its bond, attempt, and
+-- control history: the identity is retired instead of deleted.
 BEGIN;
 SET LOCAL search_path = extensions, public, pg_catalog;
 
@@ -23,23 +25,19 @@ VALUES (
   '99999999-9999-4999-8999-999999999999',
   'C2 history character'
 );
-INSERT INTO public.campaign_tamed_anomalies (
-  id, campaign_id, anomaly_id, current_hp, tamed_by_character_id,
-  primary_handler_character_id
-) VALUES (
+INSERT INTO public.character_extras (id, character_id, name, extra_type, hp_current, hp_max, npc_data)
+VALUES (
   'cccc0000-cccc-4ccc-8ccc-cccccccccccc',
-  'aaaa0000-aaaa-4aaa-8aaa-aaaaaaaaaaaa',
-  'dddd0000-dddd-4ddd-8ddd-dddddddddddd',
-  12,
   'bbbb0000-bbbb-4bbb-8bbb-bbbbbbbbbbbb',
-  'bbbb0000-bbbb-4bbb-8bbb-bbbbbbbbbbbb'
+  'History companion', 'companion', 12, 12,
+  '{"kind":"canonical-compendium","version":1,"provenance":{"canonicalId":"anomaly-0006","canonicalType":"anomaly","canonicalCollection":"anomalies","entryType":"anomaly","source":null,"sourceBook":null},"sourceFields":{"name":"Eternal Ancient Dragon","hpMax":12,"baseAc":13,"speed":30,"rank":"D"}}'
 );
 
 DO $$
 BEGIN
   PERFORM set_config('test.c2_instance', (
     SELECT companion_instance_id::text
-    FROM public.campaign_tamed_anomalies
+    FROM public.character_extras
     WHERE id = 'cccc0000-cccc-4ccc-8ccc-cccccccccccc'
   ), true);
 END;
@@ -53,7 +51,7 @@ INSERT INTO public.companion_bond_attempts (
   'aaaa0000-aaaa-4aaa-8aaa-aaaaaaaaaaaa',
   'bbbb0000-bbbb-4bbb-8bbb-bbbbbbbbbbbb',
   current_setting('test.c2_instance')::uuid,
-  'anomaly-history-fixture', 'bond', 'normal', 'success'
+  'anomaly-0006', 'bond', 'normal', 'success'
 );
 INSERT INTO public.companion_bonds (
   campaign_id, companion_instance_id, character_id, created_by_attempt_id
@@ -64,51 +62,55 @@ INSERT INTO public.companion_bonds (
   'eeee0000-eeee-4eee-8eee-eeeeeeeeeeee'
 );
 INSERT INTO public.companion_control_events (
-  campaign_id, tamed_anomaly_id, companion_instance_id,
+  campaign_id, companion_instance_id,
   actor_user_id, actor_character_id, event_type,
   next_controller_character_id
 ) VALUES (
   'aaaa0000-aaaa-4aaa-8aaa-aaaaaaaaaaaa',
-  'cccc0000-cccc-4ccc-8ccc-cccccccccccc',
   current_setting('test.c2_instance')::uuid,
   '99999999-9999-4999-8999-999999999999',
   'bbbb0000-bbbb-4bbb-8bbb-bbbbbbbbbbbb',
   'claim', 'bbbb0000-bbbb-4bbb-8bbb-bbbbbbbbbbbb'
 );
 
-SELECT plan(10);
+SELECT plan(11);
 SELECT is(
   (SELECT lifecycle_status FROM public.companion_instances WHERE id = current_setting('test.c2_instance')::uuid),
   'active',
-  'a linked companion starts active'
+  'a character companion starts active'
 );
 SET LOCAL ROLE authenticated;
 DO $$ BEGIN PERFORM set_config('request.jwt.claim.sub', '77777777-7777-4777-8777-777777777777', true); END $$;
 SELECT is(
-  (SELECT count(*) FROM public.campaign_tamed_anomalies),
+  (SELECT count(*) FROM public.companion_instances WHERE id = current_setting('test.c2_instance')::uuid),
   0::bigint,
-  'an unrelated authenticated user cannot read the campaign tame roster'
+  'an unrelated authenticated user cannot read the companion'
 );
-SELECT throws_ok(
-  $$SELECT public.remove_campaign_tamed_anomaly('cccc0000-cccc-4ccc-8ccc-cccccccccccc')$$,
-  '42501', 'WARDEN_TAMED_REMOVAL_REQUIRED',
-  'an outsider cannot remove a campaign tame'
+SELECT lives_ok(
+  $$DELETE FROM public.character_extras WHERE id = 'cccc0000-cccc-4ccc-8ccc-cccccccccccc'$$,
+  'an outsider delete finds nothing it may remove'
 );
 DO $$ BEGIN PERFORM set_config('request.jwt.claim.sub', '88888888-8888-4888-8888-888888888888', true); END $$;
 SELECT is(
-  (SELECT count(*) FROM public.campaign_tamed_anomalies),
+  (SELECT count(*) FROM public.companion_instances WHERE id = current_setting('test.c2_instance')::uuid),
   1::bigint,
-  'the Warden can read the campaign tame roster'
+  'the Warden of the owner''s campaign can read the companion'
+);
+DO $$ BEGIN PERFORM set_config('request.jwt.claim.sub', '99999999-9999-4999-8999-999999999999', true); END $$;
+SELECT is(
+  (SELECT count(*) FROM public.character_extras WHERE id = 'cccc0000-cccc-4ccc-8ccc-cccccccccccc'),
+  1::bigint,
+  'the outsider did not remove the owner''s companion'
 );
 SELECT lives_ok(
-  $$SELECT public.remove_campaign_tamed_anomaly('cccc0000-cccc-4ccc-8ccc-cccccccccccc')$$,
-  'the Warden removes the roster row through the audited RPC'
+  $$DELETE FROM public.character_extras WHERE id = 'cccc0000-cccc-4ccc-8ccc-cccccccccccc'$$,
+  'the owner removes the companion from the sheet'
 );
 RESET ROLE;
 SELECT is(
   (SELECT lifecycle_status FROM public.companion_instances WHERE id = current_setting('test.c2_instance')::uuid),
   'retired',
-  'roster removal retires a companion with history rather than deleting identity'
+  'removal retires a companion with history rather than deleting identity'
 );
 SELECT ok(
   (SELECT retired_at IS NOT NULL FROM public.companion_instances WHERE id = current_setting('test.c2_instance')::uuid),
@@ -120,14 +122,14 @@ SELECT is(
   'the bond attempt remains linked to the retired identity'
 );
 SELECT ok(
-  (SELECT tamed_anomaly_id IS NULL AND companion_instance_id = current_setting('test.c2_instance')::uuid
+  (SELECT companion_instance_id = current_setting('test.c2_instance')::uuid
    FROM public.companion_control_events LIMIT 1),
-  'control history survives with a detached roster reference'
+  'control history survives'
 );
 SELECT ok(
-  (SELECT released_at IS NOT NULL AND release_reason = 'companion-roster-removed'
+  (SELECT released_at IS NOT NULL AND release_reason = 'companion-removed'
    FROM public.companion_bonds WHERE companion_instance_id = current_setting('test.c2_instance')::uuid),
-  'an active bond is explicitly released when its roster entry is removed'
+  'an active bond is explicitly released when its companion is removed'
 );
 
 SELECT * FROM finish();

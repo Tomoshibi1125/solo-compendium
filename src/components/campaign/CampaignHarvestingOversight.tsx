@@ -12,9 +12,9 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
+import { useAnomalyCatalog } from "@/hooks/useAnomalyCatalog";
 import { useCampaignSharedCharacters } from "@/hooks/useCampaignCharacters";
 import { useCampaignHarvesting } from "@/hooks/useHarvesting";
-import { useAnomalyCatalog } from "@/hooks/useTamedAnomalies";
 import { supabase } from "@/integrations/supabase/client";
 import {
 	type HarvestMethod,

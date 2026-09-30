@@ -1,6 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Loader2, Save, Wand2, X } from "lucide-react";
-import { useEffect, useState } from "react";
+import { Save, X } from "lucide-react";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
@@ -19,7 +19,6 @@ import { useToast } from "@/hooks/use-toast";
 import type { CharacterWithAbilities } from "@/hooks/useCharacters";
 import { useUpdateCharacter } from "@/hooks/useCharacters";
 import { useAscendantTools } from "@/hooks/useGlobalDDBeyondIntegration";
-import { aiService } from "@/lib/ai/aiService";
 import { logger } from "@/lib/logger";
 import { PortraitUpload } from "./PortraitUpload";
 
@@ -66,70 +65,6 @@ export function CharacterEditDialog({
 			});
 		}
 	}, [character, form]);
-
-	const nameValue = form.watch("name");
-
-	const [isGeneratingApp, setIsGeneratingApp] = useState(false);
-	const [isGeneratingBack, setIsGeneratingBack] = useState(false);
-
-	const handleGenerateAI = async (field: "appearance" | "backstory") => {
-		if (!character) return;
-		const isApp = field === "appearance";
-		const loader = isApp ? setIsGeneratingApp : setIsGeneratingBack;
-
-		loader(true);
-		try {
-			const charDesc = `Level ${character.level} character named ${character.name || "Unknown"}`;
-			const prompt = isApp
-				? `Generate a 2-3 sentence evocative, dark-fantasy physical appearance description for a ${charDesc} in the Rift Ascendant universe. Emphasize their glowing aura and combat readiness.`
-				: `Generate a 1-paragraph dramatic, high-stakes backstory for a ${charDesc} in the Rift Ascendant universe. They recently awoke to a powerful, mysterious System. Keep it exciting and aligned with manhwa tropes.`;
-
-			const response = await aiService.processRequest({
-				service: aiService.getConfiguration().defaultService,
-				type: "generate-content",
-				input: prompt,
-				context: {
-					contentType: "backstory",
-					tone: "epic",
-					length: isApp ? "short" : "medium",
-					complexity: "moderate",
-					universe: "Rift Ascendant",
-				},
-			});
-
-			if (!response.success) {
-				throw new Error(response.error || "Generation failed.");
-			}
-
-			// the response.data might be a string, or an object containing .content or .output
-			let text = typeof response.data === "string" ? response.data : "";
-			const dataObj = response.data as { content?: string; output?: string };
-			if (!text && dataObj?.content && typeof dataObj.content === "string") {
-				text = dataObj.content;
-			}
-			if (!text && dataObj?.output && typeof dataObj.output === "string") {
-				text = dataObj.output;
-			}
-
-			if (text) {
-				form.setValue(field, text, { shouldDirty: true });
-				toast({
-					title: `${isApp ? "Appearance" : "Backstory"} Generated`,
-					description: "Feel free to modify the result.",
-				});
-			} else {
-				throw new Error("Received empty response from AI.");
-			}
-		} catch (err) {
-			toast({
-				title: "Generation Failed",
-				description: err instanceof Error ? err.message : String(err),
-				variant: "destructive",
-			});
-		} finally {
-			loader(false);
-		}
-	};
 
 	const onSubmit = form.handleSubmit(
 		async (values) => {
@@ -232,23 +167,7 @@ export function CharacterEditDialog({
 					</div>
 
 					<div>
-						<div className="flex items-center justify-between mb-1">
-							<Label htmlFor="character-appearance">Appearance</Label>
-							<Button
-								variant="ghost"
-								size="sm"
-								className="h-6 text-xs text-muted-foreground hover:text-primary px-2"
-								onClick={() => handleGenerateAI("appearance")}
-								disabled={isGeneratingApp || !nameValue}
-							>
-								{isGeneratingApp ? (
-									<Loader2 className="w-3 h-3 mr-1 animate-spin" />
-								) : (
-									<Wand2 className="w-3 h-3 mr-1" />
-								)}
-								Auto-fill
-							</Button>
-						</div>
+						<Label htmlFor="character-appearance">Appearance</Label>
 						<Textarea
 							id="character-appearance"
 							{...form.register("appearance")}
@@ -259,23 +178,7 @@ export function CharacterEditDialog({
 					</div>
 
 					<div>
-						<div className="flex items-center justify-between mb-1">
-							<Label htmlFor="character-backstory">Backstory</Label>
-							<Button
-								variant="ghost"
-								size="sm"
-								className="h-6 text-xs text-muted-foreground hover:text-primary px-2"
-								onClick={() => handleGenerateAI("backstory")}
-								disabled={isGeneratingBack || !nameValue}
-							>
-								{isGeneratingBack ? (
-									<Loader2 className="w-3 h-3 mr-1 animate-spin" />
-								) : (
-									<Wand2 className="w-3 h-3 mr-1" />
-								)}
-								Auto-fill
-							</Button>
-						</div>
+						<Label htmlFor="character-backstory">Backstory</Label>
 						<Textarea
 							id="character-backstory"
 							{...form.register("backstory")}

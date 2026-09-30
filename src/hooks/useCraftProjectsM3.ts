@@ -7,7 +7,19 @@ export interface CraftFormulaM3 {
 	revision: string;
 	name: string;
 	recipe_id: string;
-	discipline: string;
+	discipline: string | null;
+	procedure_kind:
+		| "ordinary"
+		| "field_survival"
+		| "inscription"
+		| "research"
+		| "biological_adaptation";
+	ingredient_roles: Record<string, "Consumed" | "Incorporated" | "Catalyst">;
+	recovery_policy: Record<string, number>;
+	default_research_state: "Field Standard" | "Known";
+	adaptation_risks: {
+		onFailure: { label: string; effect: string };
+	} | null;
 	requirement_snapshot: Record<string, number>;
 	output_definition_id: string;
 	output_quantity: number;
@@ -34,6 +46,7 @@ export interface CraftProjectM3 {
 	total: number | null;
 	dc: number | null;
 	output_lot_id: string | null;
+	risk_outcome: { label: string; effect: string } | null;
 	created_at: string;
 }
 
@@ -42,7 +55,17 @@ export interface CraftReservationM3 {
 	lot_id: string;
 	quantity: number;
 	status: "active" | "released" | "consumed";
+	usage_role: "Consumed" | "Incorporated" | "Catalyst";
 	reference_id: string;
+}
+export interface CraftFormulaResearch {
+	character_id: string;
+	formula_id: string;
+	formula_revision: string;
+	state: "Field Standard" | "Known" | "Experimental" | "Proven";
+	iteration_bonus: number;
+	successful_productions: number;
+	mastered: boolean;
 }
 
 type RpcClient = (
@@ -133,6 +156,19 @@ export function useCraftProjectsM3(
 		},
 		enabled: !!characterId && isSupabaseConfigured,
 	});
+	const researchQuery = useQuery({
+		queryKey: ["craft-research-m4", characterId],
+		queryFn: async (): Promise<CraftFormulaResearch[]> => {
+			if (!characterId) return [];
+			const { data, error } = await supabase
+				.from("craft_formula_research" as never)
+				.select("*")
+				.eq("character_id", characterId);
+			if (error) throw error;
+			return (data ?? []) as unknown as CraftFormulaResearch[];
+		},
+		enabled: !!characterId && isSupabaseConfigured,
+	});
 	const reservationsQuery = useQuery({
 		queryKey: characterId
 			? [...reservationKey(characterId), ...lotIds.toSorted()]
@@ -141,7 +177,7 @@ export function useCraftProjectsM3(
 			if (lotIds.length === 0) return [];
 			const { data, error } = await supabase
 				.from("material_lot_reservations" as never)
-				.select("id, lot_id, quantity, status, reference_id")
+				.select("id, lot_id, quantity, status, reference_id, usage_role")
 				.in("lot_id", lotIds)
 				.eq("status", "active");
 			if (error) throw error;
@@ -157,6 +193,9 @@ export function useCraftProjectsM3(
 		if (!characterId) return;
 		queryClient.invalidateQueries({ queryKey: projectKey(characterId) });
 		queryClient.invalidateQueries({ queryKey: reservationKey(characterId) });
+		queryClient.invalidateQueries({
+			queryKey: ["craft-research-m4", characterId],
+		});
 		queryClient.invalidateQueries({
 			queryKey: ["material-lots-m1", characterId],
 		});
@@ -190,6 +229,22 @@ export function useCraftProjectsM3(
 		},
 		onError: mutationError("Could not reserve materials"),
 	});
+	const beginExperiment = useMutation({
+		mutationFn: async (formulaId: string) => {
+			if (!characterId) throw new Error("Character is required.");
+			const { data, error } = await callRpc("begin_craft_experiment_m4", {
+				p_character_id: characterId,
+				p_formula_id: formulaId,
+			});
+			if (error) throw new Error(error.message);
+			return data;
+		},
+		onSuccess: () => {
+			invalidate();
+			toast({ title: "Experimental procedure opened" });
+		},
+		onError: mutationError("Could not begin experiment"),
+	});
 
 	const work = useCraftTransitionM3(
 		"work_craft_project_m3",
@@ -209,13 +264,16 @@ export function useCraftProjectsM3(
 
 	return {
 		formulas: formulasQuery.data ?? [],
+		research: researchQuery.data ?? [],
 		projects: projectsQuery.data ?? [],
 		reservations: reservationsQuery.data ?? [],
 		isLoading:
 			formulasQuery.isLoading ||
 			projectsQuery.isLoading ||
-			reservationsQuery.isLoading,
+			reservationsQuery.isLoading ||
+			researchQuery.isLoading,
 		reserve,
+		beginExperiment,
 		work,
 		resolve,
 		cancel,

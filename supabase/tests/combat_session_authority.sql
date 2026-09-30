@@ -28,15 +28,14 @@ VALUES
    '44440000-4444-4444-8444-444444444444',
    '77770000-7777-4777-8777-777777777777',
    'Handler', 14, '{"hp":12}', '55550000-5555-4555-8555-555555555555');
-INSERT INTO public.campaign_tamed_anomalies
-  (id, campaign_id, anomaly_id, current_hp, tamed_by_character_id,
-   primary_handler_character_id)
+-- The member's character owns a companion (RA-9).
+INSERT INTO public.character_extras
+  (id, character_id, name, extra_type, hp_current, hp_max, npc_data)
 VALUES
   ('99990000-9999-4999-8999-999999999999',
-   '44440000-4444-4444-8444-444444444444',
-   'aaaa0000-aaaa-4aaa-8aaa-aaaaaaaaaaaa', 11,
    '66660000-6666-4666-8666-666666666666',
-   '66660000-6666-4666-8666-666666666666');
+   'Handler companion', 'companion', 11, 11,
+   '{"kind":"canonical-compendium","version":1,"provenance":{"canonicalId":"anomaly-0006","canonicalType":"anomaly","canonicalCollection":"anomalies","entryType":"anomaly","source":null,"sourceBook":null},"sourceFields":{"name":"Eternal Ancient Dragon","hpMax":12,"baseAc":13,"speed":30,"rank":"D"}}');
 
 SELECT plan(13);
 SET LOCAL ROLE authenticated;
@@ -90,7 +89,7 @@ SELECT throws_ok(
 SELECT lives_ok(
   $$SELECT public.add_companion_to_combat(
     '77770000-7777-4777-8777-777777777777',
-    (SELECT companion_instance_id FROM public.campaign_tamed_anomalies
+    (SELECT companion_instance_id FROM public.character_extras
       WHERE id = '99990000-9999-4999-8999-999999999999'), 10)$$,
   'Warden companion handoff persists through the C3 RPC');
 SELECT is(
@@ -99,7 +98,7 @@ SELECT is(
 SELECT lives_ok(
   $$SELECT public.add_companion_to_combat(
     '77770000-7777-4777-8777-777777777777',
-    (SELECT companion_instance_id FROM public.campaign_tamed_anomalies
+    (SELECT companion_instance_id FROM public.character_extras
       WHERE id = '99990000-9999-4999-8999-999999999999'), 10)$$,
   'repeated handoff is safe');
 SELECT is(

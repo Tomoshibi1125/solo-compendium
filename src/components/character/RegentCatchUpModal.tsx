@@ -126,9 +126,9 @@ function normalizeAbilityName(value: string | null | undefined): string {
 }
 
 /**
- * Exclude already-known options by exact canonical ID first, then normalized
- * name fallback. Only an exact ID written by this catch-up source can satisfy
- * owed picks on a retry; every other match is merely unavailable.
+ * Count exact canonical IDs from this catch-up source on retry. A grant from
+ * another structured source may coexist; name-only legacy matches remain
+ * unavailable until their identity is resolved.
  */
 export function classifyCatchUpOptions<T extends { id: string; name: string }>(
 	options: readonly T[],
@@ -144,10 +144,12 @@ export function classifyCatchUpOptions<T extends { id: string; name: string }>(
 			(candidate) => candidate.canonicalId === option.id,
 		);
 		if (idMatches.length > 0) {
-			if (idMatches.every((candidate) => candidate.source === catchUpSource)) {
+			if (idMatches.some((candidate) => candidate.source === catchUpSource)) {
 				completedSameSource.push(option);
 			} else {
-				excludedExisting.push(option);
+				// A Job, Path, or different Regent can grant the same canonical
+				// ability independently. This unlock still gets its own grant.
+				available.push(option);
 			}
 			continue;
 		}
@@ -651,7 +653,11 @@ export function RegentCatchUpModal({
 			const techniques = fulfilled("techniques");
 			const cantrips = fulfilled("cantrips");
 			const spells = fulfilled("spells");
-			const persistenceOptions = { campaignId };
+			const persistenceOptions = {
+				campaignId,
+				regentId: canonicalRegentId ?? regentId,
+				unlockId,
+			};
 			const [powerResult, techniqueResult, cantripResult, spellResult] =
 				await Promise.all([
 					persistRegentPowers(

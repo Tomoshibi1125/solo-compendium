@@ -206,8 +206,8 @@ export function useCharacterExtras(characterId: string) {
 }
 
 /**
- * Carry a recruited guild NPC onto a character sheet as a combat-ready ally
- * Companion. Snapshots the NPC's leveled stats + key abilities into a
+ * Carry a recruited guild NPC onto a character sheet as an ally Companion
+ * that keeps its saved stats (RA-10). Snapshots the NPC's leveled stats + key abilities into a
  * `character_extras` row and records provenance (npc/guild/member ids) so a
  * future "re-sync from guild" is possible. The C1 insert trigger creates a
  * distinct living identity for this row; the existing npc_id uniqueness rule

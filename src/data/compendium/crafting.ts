@@ -23,7 +23,7 @@ export const craftingMaterials: CompendiumCraftingMaterial[] = [
 		name: "Anomaly Tissue",
 		display_name: "Anomaly Tissue",
 		description:
-			"Harvested hide, chitin, bone, gland, or fiber from a defeated anomaly before the body fully decays.",
+			"Harvested hide, chitin, bone, gland, or fiber from an Anomaly when its biology and the procedure permit collection.",
 		material_type: "anomaly_material",
 		rarity: "uncommon",
 		unit: "sample",

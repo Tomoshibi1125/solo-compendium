@@ -1,4 +1,9 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+	type QueryClient,
+	useMutation,
+	useQuery,
+	useQueryClient,
+} from "@tanstack/react-query";
 import { useToast } from "@/hooks/use-toast";
 import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import type { Json } from "@/integrations/supabase/types";
@@ -8,12 +13,36 @@ const INSTANCE_KEY = (id: string) => ["companion-instance", id] as const;
 const CHARACTER_KEY = (id: string) =>
 	["character-companion-instances", id] as const;
 
+/** Refetch every view of a character's companions, e.g. after a rest. */
+export function invalidateCharacterCompanions(
+	queryClient: QueryClient,
+	characterId: string,
+): void {
+	queryClient.invalidateQueries({ queryKey: CHARACTER_KEY(characterId) });
+	queryClient.invalidateQueries({
+		queryKey: ["character_extras", characterId],
+	});
+	queryClient.invalidateQueries({
+		queryKey: ["character-vehicles", characterId],
+	});
+	queryClient.invalidateQueries({ queryKey: ["companion-instance"] });
+}
+
 const typedRow = (value: unknown): CompanionInstanceRecord =>
 	value as CompanionInstanceRecord;
 
-export function useCompanionInstance(instanceId: string | null | undefined) {
+/**
+ * One living companion. `revision` (for example a combatant row's
+ * `companion_profile_version` column) refetches when the instance changes
+ * elsewhere; the key still starts with INSTANCE_KEY, so invalidating an
+ * instance refreshes it.
+ */
+export function useCompanionInstance(
+	instanceId: string | null | undefined,
+	revision?: number | null,
+) {
 	return useQuery({
-		queryKey: INSTANCE_KEY(instanceId ?? "_none"),
+		queryKey: [...INSTANCE_KEY(instanceId ?? "_none"), revision ?? null],
 		enabled: !!instanceId && isSupabaseConfigured,
 		queryFn: async (): Promise<CompanionInstanceRecord | null> => {
 			if (!instanceId || !isSupabaseConfigured) return null;

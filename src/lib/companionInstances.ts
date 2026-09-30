@@ -1,7 +1,7 @@
+import type { ScaledCompanionCombatStats } from "@/lib/companionProgression";
 import {
-	isLevelScaledCompanion,
-	type ScaledCompanionCombatStats,
-	scaleCompanionAtLevel,
+	companionSourceRank,
+	scaleCompanionInstance,
 } from "@/lib/companionScaling";
 import { parseCanonicalCompanionSource } from "@/lib/companions";
 
@@ -24,6 +24,7 @@ export interface CompanionInstanceRecord {
 	source_revision: string;
 	source_snapshot_version: number;
 	source_snapshot: unknown;
+	/** Optimistic-concurrency revision of this instance's identity rows. */
 	profile_version: number;
 	progression_profile: unknown;
 	stat_overrides: unknown;
@@ -63,6 +64,7 @@ export interface EffectiveCompanionStats extends CompanionBaseStats {
 	sourcePolicy: CompanionSourcePolicy;
 	profileVersion: number;
 	usesLiveCatalogFallback: boolean;
+	/** RA-10 numbers at the owner's level; null for saved-stat companions. */
 	combatScaling: ScaledCompanionCombatStats | null;
 }
 
@@ -134,11 +136,12 @@ function readStatOverrides(raw: unknown): Partial<CompanionBaseStats> {
 /**
  * Resolve effective creature stats from one stable living instance.
  *
- * Priority is deliberate:
- * 1. frozen source snapshot when present;
- * 2. live catalog only for explicitly legacy-live instances;
- * 3. versioned instance stat overrides;
- * 4. existing persisted projection fields (to preserve current sheets).
+ * A level-scaled creature (RA-10) takes maximum HP and AC from its owner's
+ * level. Otherwise priority is deliberate:
+ * 1. existing persisted projection fields (to preserve current sheets);
+ * 2. versioned instance stat overrides;
+ * 3. frozen source snapshot when present;
+ * 4. live catalog only for explicitly legacy-live instances.
  *
  * A catalog edit therefore cannot silently rewrite a snapshot-backed companion.
  */
@@ -159,14 +162,12 @@ export function resolveCompanionEffectiveStats(
 	const projectedAc = finiteNumber(projection.baseAc);
 	const projectedSpeed = positiveOrNull(projection.speed);
 	const overrides = readStatOverrides(instance.stat_overrides);
-	const rank = source?.rank ?? liveCatalogFallback?.rank ?? null;
-	const combatScaling = isLevelScaledCompanion(instance)
-		? scaleCompanionAtLevel(
-				characterLevel ?? 1,
-				rank,
-				instance.progression_profile,
-			)
-		: null;
+	const rank =
+		companionSourceRank(instance) ??
+		source?.rank ??
+		liveCatalogFallback?.rank ??
+		null;
+	const combatScaling = scaleCompanionInstance(instance, characterLevel, rank);
 
 	const name = projectedName ?? source?.name ?? "Companion";
 	const hpMax =

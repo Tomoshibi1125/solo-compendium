@@ -33,6 +33,8 @@ export interface MaterialLotRow {
 	quantity: number;
 	unit: string | null;
 	grade: string | null;
+	/** Source rank and material grade are independent facts. */
+	source_rank?: "E" | "D" | "C" | "B" | "A" | "S" | null;
 	provenance_status:
 		| "canonical"
 		| "legacy-unknown"
@@ -68,6 +70,11 @@ export interface MaterialLotBundleV1 {
 	lots: MaterialLotRow[];
 	discoveries: MaterialLotDiscoveryRow[];
 }
+export interface MaterialLotBundleV2
+	extends Omit<MaterialLotBundleV1, "version"> {
+	version: 2;
+}
+export type MaterialLotBundle = MaterialLotBundleV1 | MaterialLotBundleV2;
 
 type RpcClient = (
 	fn: string,
@@ -98,10 +105,13 @@ function isRecord(value: unknown): value is Record<string, unknown> {
 	return !!value && typeof value === "object" && !Array.isArray(value);
 }
 
-export function parseMaterialLotBundle(value: unknown): MaterialLotBundleV1 {
+export function parseMaterialLotBundle(value: unknown): MaterialLotBundle {
 	if (!isRecord(value))
 		throw new Error("Material lot import must be a JSON object.");
-	if (value.kind !== "rift-ascendant-material-lots" || value.version !== 1) {
+	if (
+		value.kind !== "rift-ascendant-material-lots" ||
+		(value.version !== 1 && value.version !== 2)
+	) {
 		throw new Error("Unsupported material lot bundle.");
 	}
 	if (
@@ -113,7 +123,17 @@ export function parseMaterialLotBundle(value: unknown): MaterialLotBundleV1 {
 			"Material lot bundle is missing definitions, lots, or discoveries.",
 		);
 	}
-	return value as unknown as MaterialLotBundleV1;
+	if (
+		value.version === 2 &&
+		value.lots.some((lot: unknown) => {
+			const rank = isRecord(lot) ? lot.source_rank : undefined;
+			return (
+				rank != null && !["E", "D", "C", "B", "A", "S"].includes(String(rank))
+			);
+		})
+	)
+		throw new Error("Material lot bundle contains an invalid source rank.");
+	return value as unknown as MaterialLotBundle;
 }
 
 export function useMaterialLots(characterId: string | undefined) {
@@ -267,7 +287,7 @@ export function useMaterialLots(characterId: string | undefined) {
 	const importBundle = useMutation({
 		retry: 1,
 		mutationFn: async (input: {
-			bundle: MaterialLotBundleV1;
+			bundle: MaterialLotBundle;
 			operationId: string;
 		}) => {
 			if (!characterId) throw new Error("Character is required.");
@@ -275,7 +295,12 @@ export function useMaterialLots(characterId: string | undefined) {
 			const { data, error } = await callRpc("import_material_lots_m1", {
 				p_character_id: characterId,
 				p_definitions: bundle.definitions,
-				p_lots: bundle.lots,
+				p_lots: bundle.lots.map((lot) => ({
+					...lot,
+					provenance_metadata: lot.source_rank
+						? { ...lot.provenance_metadata, sourceRank: lot.source_rank }
+						: lot.provenance_metadata,
+				})),
 				p_discoveries: bundle.discoveries,
 				p_operation_id: input.operationId,
 			});
@@ -294,13 +319,13 @@ export function useMaterialLots(characterId: string | undefined) {
 			}),
 	});
 
-	const buildExportBundle = (): MaterialLotBundleV1 => {
+	const buildExportBundle = (): MaterialLotBundleV2 => {
 		const lotDefinitionIds = new Set(
 			(lotsQuery.data ?? []).map((lot) => lot.material_definition_id),
 		);
 		return {
 			kind: "rift-ascendant-material-lots",
-			version: 1,
+			version: 2,
 			exported_at: new Date().toISOString(),
 			definitions: (definitionsQuery.data ?? []).filter((definition) =>
 				lotDefinitionIds.has(definition.id),

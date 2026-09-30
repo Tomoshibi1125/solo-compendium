@@ -2,13 +2,11 @@ import {
 	Download,
 	Edit,
 	Gift,
-	Loader2,
 	Package,
 	Package2,
 	Plus,
 	Save,
 	Search,
-	Sparkles,
 	Star,
 	Trash2,
 	Upload,
@@ -40,7 +38,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { useActivityFeed } from "@/hooks/useActivityFeed";
-import { useAIEnhance } from "@/hooks/useAIEnhance";
 import {
 	type MarketplaceItemRecord,
 	type MarketplaceItemType,
@@ -114,18 +111,7 @@ export function MarketplaceWorkbench() {
 	const recordDownload = useRecordMarketplaceDownload();
 	const submitReview = useUpsertMarketplaceReview();
 	const giftItem = useGiftMarketplaceItem();
-	const { enhance, isEnhancing } = useAIEnhance();
 	const activity = useActivityFeed({ toolKey: "marketplace-activity" });
-
-	const handleGenerateDescription = async () => {
-		const seed = `Title: ${title || "(untitled)"}. Type: ${itemType}. Category: ${category}`;
-		const text = await enhance(
-			"marketplace listing description",
-			seed,
-			"Write a compelling 2-3 sentence marketplace listing description for a dark fantasy TTRPG content pack. Return only the prose, no preamble.",
-		);
-		if (text) setDescription(text.trim());
-	};
 
 	// F6 of May 2026 remediation plan — gift modal state.
 	const [giftItemTarget, setGiftItemTarget] =
@@ -665,24 +651,7 @@ export function MarketplaceWorkbench() {
 						</div>
 
 						<div className="md:col-span-2">
-							<div className="flex items-center justify-between">
-								<Label htmlFor="publish-description">Description</Label>
-								<Button
-									type="button"
-									variant="ghost"
-									size="sm"
-									className="h-7 gap-1.5 text-xs"
-									onClick={handleGenerateDescription}
-									disabled={isEnhancing}
-								>
-									{isEnhancing ? (
-										<Loader2 className="w-3.5 h-3.5 animate-spin" />
-									) : (
-										<Sparkles className="w-3.5 h-3.5" />
-									)}
-									Generate
-								</Button>
-							</div>
+							<Label htmlFor="publish-description">Description</Label>
 							<Textarea
 								id="publish-description"
 								rows={3}

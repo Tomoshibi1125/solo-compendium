@@ -73,20 +73,38 @@ test.describe
 			}
 		});
 
-		test("Party Stash: add loot lands in the campaign stash inventory", async () => {
+		test("Party Stash: Warden delivers a catalog item into the stash inventory", async () => {
 			await page.goto(`/party-stash?campaignId=${campaignId}`);
 			await expect(page.getByText("ADD LOOT").first()).toBeVisible({
 				timeout: 15_000,
 			});
 
-			const itemName = `Bureau Salvage Voucher ${Date.now()}`;
-			await page.getByPlaceholder(/Bureau salvage voucher/i).fill(itemName);
-			await page.getByRole("button", { name: /^Add$/i }).click();
+			// Wardens add loot through the full catalog; the free-text form is the
+			// Ascendant view. The dialog opens in Party Stash mode, which needs no
+			// Ascendant, so Deliver unlocks as soon as an item is picked.
+			await page.getByRole("button", { name: /Browse Full Catalog/i }).click();
+			const dialog = page.getByRole("dialog", {
+				name: /Deliver to Party Stash/i,
+			});
+			await expect(dialog).toBeVisible();
+
+			const itemName = "Rope (50 ft)";
+			await dialog.getByPlaceholder(/Search spells, powers/i).fill(itemName);
+			const catalogItem = dialog
+				.getByRole("button", { name: /^Rope \(50 ft\)/ })
+				.first();
+			await expect(catalogItem).toBeVisible({ timeout: 20_000 });
+			await catalogItem.click();
+
+			const deliver = dialog.getByRole("button", { name: /^Deliver$/ });
+			await expect(deliver).toBeEnabled();
+			await deliver.click();
+			await expect(dialog).toBeHidden({ timeout: 10_000 });
 
 			await expect(page.getByText("STASH INVENTORY").first()).toBeVisible();
-			await expect(page.getByText(itemName).first()).toBeVisible({
-				timeout: 10_000,
-			});
+			await expect(
+				page.locator("span").filter({ hasText: /^Rope \(50 ft\)$/ }),
+			).toBeVisible({ timeout: 10_000 });
 		});
 
 		test("Session play route renders the live-combat shell gracefully", async () => {

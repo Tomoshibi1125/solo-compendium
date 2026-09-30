@@ -166,7 +166,9 @@ function ActionCardComponent({
 							message = `${critPrefix}${displayName} Attack: ${attackVal} (vs AC 10)`;
 							if (outcome.damageTotal) {
 								message += ` | Damage: ${outcome.damageTotal}${
-									outcome.criticalHit ? " (dice doubled)" : ""
+									outcome.criticalHit
+										? " (normal dice maximized + critical dice rolled)"
+										: ""
 								}`;
 							}
 							formula = payload.attack.roll;

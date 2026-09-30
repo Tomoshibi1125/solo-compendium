@@ -45,21 +45,29 @@ export class DMToolsPage {
 		const expectedTools = [
 			"Encounter Builder",
 			"Initiative Tracker",
-			"Rift Generator",
-			"NPC Generator",
 			"Rollable Tables",
 			"Relic Workshop",
-			"Treasure Generator",
 			"Session Planner",
-			"Random Events",
 			"Party Tracker",
-			"Art Generation",
 			"Content Audit",
 		];
 		for (const tool of expectedTools) {
 			await expect(
 				this.page.getByText(tool, { exact: false }).first(),
 			).toBeVisible();
+		}
+		// RA-18: the AI generators are gone from the hub.
+		for (const retired of [
+			"Rift Generator",
+			"NPC Generator",
+			"Treasure Generator",
+			"Random Events",
+			"Directive Lattice",
+			"Art Generation",
+		]) {
+			await expect(this.page.getByText(retired, { exact: true })).toHaveCount(
+				0,
+			);
 		}
 	}
 
@@ -197,127 +205,28 @@ export class DMToolsPage {
 		).toBeVisible({ timeout: 5_000 });
 	}
 
-	// ─── Rift Generator ───────────────────────────────────────────
+	// ─── Retired AI generators (RA-18) ───────────────────────────
 
-	async testRiftGenerator() {
-		await this.page.goto("/warden-directives/gate-generator");
+	async testRetiredGeneratorRedirects() {
+		// The Rift, NPC, Treasure, Random Event, Directive/Quest, and art
+		// generators were removed; their old URLs land on the Warden tools hub.
+		for (const retired of [
+			"/warden-directives/gate-generator",
+			"/warden-directives/npc-generator",
+			"/warden-directives/treasure-generator",
+			"/warden-directives/quest-generator",
+			"/warden-directives/directive-lattice",
+			"/warden-directives/random-event-generator",
+			"/warden-directives/art-generator",
+		]) {
+			await this.page.goto(retired);
+			await expect(this.page).toHaveURL(/\/warden-protocols$/, {
+				timeout: 15_000,
+			});
+		}
 		await expect(
-			this.page
-				.getByText("Dimensional Rift Synthesis", { exact: false })
-				.first(),
+			this.page.getByText("Quick Protocols", { exact: false }).first(),
 		).toBeVisible({ timeout: 15_000 });
-
-		// Generate button
-		const generateBtn = this.page
-			.getByRole("button", { name: /Generate/i })
-			.first();
-		await expect(generateBtn).toBeVisible({ timeout: 5_000 });
-		await generateBtn.click();
-		await this.page.waitForTimeout(500);
-
-		// Copy button should appear after generation
-		const copyBtn = this.page.getByRole("button", { name: /Copy/i }).first();
-		if (await copyBtn.isVisible({ timeout: 5_000 }).catch(() => false)) {
-			await expect(copyBtn).toBeVisible();
-		}
-	}
-
-	// ─── NPC Generator ────────────────────────────────────────────
-
-	async testNPCGenerator() {
-		await this.page.goto("/warden-directives/npc-generator");
-		await expect(
-			this.page
-				.getByText("Construct Synthesis Protocol", { exact: false })
-				.first(),
-		).toBeVisible({ timeout: 15_000 });
-
-		const generateBtn = this.page
-			.getByRole("button", { name: /Synthesize Construct/i })
-			.first();
-		await expect(generateBtn).toBeVisible({ timeout: 5_000 });
-		await generateBtn.click();
-		await this.page.waitForTimeout(500);
-
-		// NPC card should appear
-		const copyBtn = this.page.getByRole("button", { name: /Copy/i }).first();
-		if (await copyBtn.isVisible({ timeout: 5_000 }).catch(() => false)) {
-			await expect(copyBtn).toBeVisible();
-		}
-	}
-
-	// ─── Treasure Generator ───────────────────────────────────────
-
-	async testTreasureGenerator() {
-		await this.page.goto("/warden-directives/treasure-generator");
-		await expect(
-			this.page.getByText("Material Requisition", { exact: false }).first(),
-		).toBeVisible({ timeout: 15_000 });
-
-		// Rank select
-		const rankTrigger = this.page.locator('button[role="combobox"]').first();
-		if (await rankTrigger.isVisible({ timeout: 5_000 }).catch(() => false)) {
-			await rankTrigger.click();
-			const option = this.page.getByRole("option").first();
-			if (await option.isVisible({ timeout: 3_000 }).catch(() => false)) {
-				await option.click();
-				await this.page.waitForTimeout(300);
-			} else {
-				await this.page.keyboard.press("Escape");
-			}
-		}
-
-		// Generate
-		const generateBtn = this.page
-			.getByRole("button", { name: /Generate/i })
-			.first();
-		await expect(generateBtn).toBeVisible({ timeout: 5_000 });
-		await generateBtn.click();
-		await this.page.waitForTimeout(500);
-
-		// Copy
-		const copyBtn = this.page.getByRole("button", { name: /Copy/i }).first();
-		if (await copyBtn.isVisible({ timeout: 5_000 }).catch(() => false)) {
-			await expect(copyBtn).toBeVisible();
-		}
-	}
-
-	// ─── Quest Generator (redirects to Directive Lattice) ─────────
-
-	async testQuestGenerator() {
-		await this.page.goto("/warden-directives/quest-generator");
-		// The legacy quest-generator route redirects to the Directive Lattice.
-		await expect(
-			this.page.getByText("Directive Lattice", { exact: false }).first(),
-		).toBeVisible({ timeout: 15_000 });
-
-		// Quest type select
-		const selects = this.page.locator('button[role="combobox"]');
-		const selectCount = await selects.count();
-		if (selectCount > 0) {
-			await selects.first().click();
-			const option = this.page.getByRole("option").first();
-			if (await option.isVisible({ timeout: 3_000 }).catch(() => false)) {
-				await option.click();
-				await this.page.waitForTimeout(300);
-			} else {
-				await this.page.keyboard.press("Escape");
-			}
-		}
-
-		// Generate
-		const generateBtn = this.page
-			.getByRole("button", { name: /Generate/i })
-			.first();
-		await expect(generateBtn).toBeVisible({ timeout: 5_000 });
-		await generateBtn.click();
-		await this.page.waitForTimeout(500);
-
-		// Copy
-		const copyBtn = this.page.getByRole("button", { name: /Copy/i }).first();
-		if (await copyBtn.isVisible({ timeout: 5_000 }).catch(() => false)) {
-			await expect(copyBtn).toBeVisible();
-		}
 	}
 
 	// ─── Session Planner ──────────────────────────────────────────
@@ -354,41 +263,6 @@ export class DMToolsPage {
 		await expect(
 			this.page.getByText(/Back to (Warden|System) Tools/i).first(),
 		).toBeVisible();
-	}
-
-	// ─── Random Event Generator ───────────────────────────────────
-
-	async testRandomEventGenerator() {
-		await this.page.goto("/warden-directives/random-event-generator");
-		await expect(
-			this.page
-				.getByText("Systemic Entropy Generator", { exact: false })
-				.first(),
-		).toBeVisible({ timeout: 15_000 });
-
-		// Generate world event
-		const worldBtn = this.page
-			.getByRole("button", { name: /World Event|Generate World/i })
-			.first();
-		if (await worldBtn.isVisible({ timeout: 5_000 }).catch(() => false)) {
-			await worldBtn.click();
-			await this.page.waitForTimeout(500);
-		}
-
-		// Generate NPC encounter
-		const npcBtn = this.page
-			.getByRole("button", { name: /NPC|Generate NPC/i })
-			.first();
-		if (await npcBtn.isVisible({ timeout: 5_000 }).catch(() => false)) {
-			await npcBtn.click();
-			await this.page.waitForTimeout(500);
-		}
-
-		// Copy
-		const copyBtn = this.page.getByRole("button", { name: /Copy/i }).first();
-		if (await copyBtn.isVisible({ timeout: 5_000 }).catch(() => false)) {
-			await expect(copyBtn).toBeVisible();
-		}
 	}
 
 	// ─── Relic Workshop ───────────────────────────────────────────
@@ -469,27 +343,6 @@ export class DMToolsPage {
 		}
 	}
 
-	// ─── Art Generator ────────────────────────────────────────────
-
-	async testArtGenerator() {
-		await this.page.goto("/warden-directives/art-generator");
-		await expect(
-			this.page.getByText("Visualization Lattice", { exact: false }).first(),
-		).toBeVisible({ timeout: 15_000 });
-
-		// Tabs (if present)
-		const tabs = this.page.getByRole("tab");
-		if ((await tabs.count()) > 0) {
-			await expect(tabs.first()).toBeVisible();
-			// Click each tab
-			const tabCount = await tabs.count();
-			for (let i = 0; i < Math.min(tabCount, 3); i++) {
-				await tabs.nth(i).click();
-				await this.page.waitForTimeout(300);
-			}
-		}
-	}
-
 	// ─── Rift Console (Admin) ───────────────────────────────────
 
 	// The three admin routes below are `allowGuest={false}` — a guest Warden
@@ -517,14 +370,17 @@ export class DMToolsPage {
 		await expect(heading).toBeVisible({ timeout: 15_000 });
 	}
 
-	// ─── Art Generation (Admin) ─────────────────────────────────
+	// ─── Retired Art Generation admin URL (RA-18) ─────────────────
 
-	async testArtGenerationAdmin() {
+	async testRetiredArtGenerationAdmin() {
 		await this.page.goto("/warden-directives/art-generation");
 		await this.page.waitForTimeout(2_000);
 		const heading = this.page
-			.getByText(/Authentication Required|Art Generation/i)
+			.getByText(/Authentication Required|Rift Console/i)
 			.first();
 		await expect(heading).toBeVisible({ timeout: 15_000 });
+		await expect(
+			this.page.getByText(/Visualization Lattice|Generate art/i),
+		).toHaveCount(0);
 	}
 }

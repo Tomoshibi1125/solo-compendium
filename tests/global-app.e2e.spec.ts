@@ -86,40 +86,19 @@ test.describe
 					await dmTools.testRollableTables();
 				});
 
-				// ── 6. Rift Generator ───────────────────────────────────────
-				test("6. Rift Generator: generate and copy", async () => {
-					const dmTools = new DMToolsPage(dmPage);
-					await dmTools.testRiftGenerator();
-				});
+				// Tests 6-8, 11, and 16 (Rift, NPC, Treasure, Random Event, and
+				// Art generators) were removed with those tools under RA-18.
 
-				// ── 7. NPC Generator ────────────────────────────────────────
-				test("7. NPC Generator: generate and copy", async () => {
+				// ── 9. Retired generators ───────────────────────────────────
+				test("9. Retired generators: old URLs land on Warden tools", async () => {
 					const dmTools = new DMToolsPage(dmPage);
-					await dmTools.testNPCGenerator();
-				});
-
-				// ── 8. Treasure Generator ───────────────────────────────────
-				test("8. Treasure Generator: rank select, generate, copy", async () => {
-					const dmTools = new DMToolsPage(dmPage);
-					await dmTools.testTreasureGenerator();
-				});
-
-				// ── 9. Quest Generator ──────────────────────────────────────
-				test("9. Quest Generator: selects, generate, copy", async () => {
-					const dmTools = new DMToolsPage(dmPage);
-					await dmTools.testQuestGenerator();
+					await dmTools.testRetiredGeneratorRedirects();
 				});
 
 				// ── 10. Session Planner ─────────────────────────────────────
 				test("10. Session Planner: campaign select, sessions panel", async () => {
 					const dmTools = new DMToolsPage(dmPage);
 					await dmTools.testSessionPlanner();
-				});
-
-				// ── 11. Random Event Generator ──────────────────────────────
-				test("11. Random Event Generator: generate events", async () => {
-					const dmTools = new DMToolsPage(dmPage);
-					await dmTools.testRandomEventGenerator();
 				});
 
 				// ── 12. Relic Workshop ──────────────────────────────────────
@@ -138,12 +117,6 @@ test.describe
 				// Manager), and 18 (VTT Map) were removed with their tools — the
 				// standalone dungeon-map tool, token library, session audio, and
 				// VTT were scraped from the app (see docs/pending-wiring.md).
-
-				// ── 16. Art Generator ───────────────────────────────────────
-				test("16. Art Generator: tabs, generator panel", async () => {
-					const dmTools = new DMToolsPage(dmPage);
-					await dmTools.testArtGenerator();
-				});
 
 				// ── 19. Rift Console ──────────────────────────────────────
 				test("19. Rift Console: admin page loads", async () => {
@@ -291,7 +264,7 @@ test.describe
 				});
 
 				// ── 32. Campaign Detail Tabs ──────────────────────────────────
-				test("32. Campaign Detail: exercise all tabs (Overview, Wiki, Sessions, Chat, Notes, Handouts, Characters, Settings)", async () => {
+				test("32. Campaign Detail: exercise all tabs (Overview, Wiki, Sessions, Chat, Notes, Characters, Guilds, Activity, Assets, Quests, Settings, Oversight)", async () => {
 					expect(campaignId).toBeTruthy();
 					const shared = new SharedPage(dmPage);
 					await shared.gotoCampaignDetail(campaignId);
@@ -305,10 +278,10 @@ test.describe
 					await shared.verifyCampaignListLoads();
 				});
 
-				// ── 34. DM Art Generation Admin ───────────────────────────────
-				test("34. DM Art Generation admin: page loads", async () => {
+				// ── 34. Retired Art Generation admin URL ──────────────────────
+				test("34. Retired Art Generation admin URL: redirects to Rift Console", async () => {
 					const dmTools = new DMToolsPage(dmPage);
-					await dmTools.testArtGenerationAdmin();
+					await dmTools.testRetiredArtGenerationAdmin();
 				});
 
 				// ── 35. Character Level Up ────────────────────────────────────
@@ -472,10 +445,10 @@ test.describe
 					await shared.verifyMarketplaceLoads();
 				});
 
-				// ── 46. Player Character Art ──────────────────────────────────
-				test("46. Player Character Art: tool page loads", async () => {
+				// ── 46. Retired Character Art Generator ───────────────────────
+				test("46. Retired Character Art: old tool URL returns to tools", async () => {
 					const player = new PlayerPage(playerPage);
-					await player.verifyCharacterArtTool();
+					await player.verifyRetiredCharacterArtTool();
 				});
 
 				// ── 47. Player Party View ─────────────────────────────────────

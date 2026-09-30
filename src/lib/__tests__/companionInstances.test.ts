@@ -58,7 +58,8 @@ describe("C1 companion instance resolver", () => {
 		});
 	});
 
-	it("uses handler level for anomaly combat stats while preserving identity and speed", () => {
+	it("uses the owner's level for anomaly combat stats while preserving identity and speed", () => {
+		// "echo-wolf" has no catalog stat block, so it rolls the Medium d8.
 		const stats = resolveCompanionEffectiveStats(
 			baseInstance(),
 			{
@@ -75,7 +76,7 @@ describe("C1 companion instance resolver", () => {
 		expect(stats).toMatchObject({
 			name: "Nyx",
 			currentHp: 17,
-			hpMax: 48,
+			hpMax: 40,
 			baseAc: 13,
 			speed: 45,
 			sourceRevision: "canonical-snapshot-v1",
@@ -91,7 +92,7 @@ describe("C1 companion instance resolver", () => {
 		);
 		expect(stats).toMatchObject({
 			name: "Echo Wolf",
-			hpMax: 16,
+			hpMax: 8,
 			baseAc: 12,
 			speed: 40,
 			rank: "C",
@@ -113,12 +114,15 @@ describe("C1 companion instance resolver", () => {
 			legacy,
 			{ currentHp: 12 },
 			{ name: "Echo Wolf", hpMax: 30, baseAc: 14, speed: 40, rank: "C" },
+			5,
 		);
 		expect(stats).toMatchObject({
+			name: "Echo Wolf",
 			currentHp: 12,
-			hpMax: 16,
-			baseAc: 12,
+			hpMax: 40,
+			baseAc: 13,
 			speed: 40,
+			rank: "C",
 			usesLiveCatalogFallback: true,
 		});
 	});

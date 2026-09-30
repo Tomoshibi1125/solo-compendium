@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import c3Source from "../../../supabase/migrations/20260926050000_companion_c3_combat.sql?raw";
 import c3Hardening from "../../../supabase/migrations/20260926051000_companion_c3_hardening.sql?raw";
+import restMigration from "../../../supabase/migrations/20260929100000_companion_rests_follow_character.sql?raw";
 
 const migration = `${c3Source}\n${c3Hardening}`.replace(/\r\n/g, "\n");
 
@@ -59,12 +60,19 @@ describe("C3 companion persistence contract", () => {
 		expect(migration).toContain("'progressionMode', v_progression_mode");
 	});
 
-	it("makes companion rests profile-driven and does not invent universal healing", () => {
-		expect(migration).toContain("Missing rules are a no-op by design");
-		expect(migration).toContain("v_heal_kind = 'full'");
-		expect(migration).toContain("v_heal_kind = 'flat'");
-		expect(migration).toContain("v_heal_kind <> 'none'");
-		expect(migration).toContain("'UNSUPPORTED_COMPANION_REST_HEAL_RULE'");
+	it("rests companions by their character's rules, not per-creature profile rules", () => {
+		const rests = restMigration.replace(/\r\n/g, "\n");
+		// The profile-driven body this file created is replaced (RA-10).
+		expect(rests).toContain(
+			"CREATE OR REPLACE FUNCTION public.rest_companions_for_character(",
+		);
+		expect(rests).not.toContain("progression_profile");
+		expect(rests).toContain("IF p_rest_kind = 'short' THEN RETURN 0; END IF;");
+		expect(rests).toContain("GREATEST(1, v_dice / 2)");
+		expect(rests).toContain(
+			"app_private.companion_conditions_after_long_rest(v_state->'conditions')",
+		);
+		expect(rests).toContain("'COMPANION_HAS_NO_HIT_DICE'");
 	});
 
 	it("guards mount ownership, campaign scope, rider size/terrain, tack and training", () => {

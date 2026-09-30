@@ -1,3 +1,4 @@
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import {
 	AlertTriangle,
 	Pencil,
@@ -40,6 +41,7 @@ import {
 	useCampaignRegentUnlocks,
 	useRemoveRegentUnlock,
 } from "@/hooks/useRegentUnlocks";
+import { supabase } from "@/integrations/supabase/client";
 import { resolveCanonicalRegentId } from "@/lib/regentIdentity";
 import { REGENT_LABEL } from "@/lib/vernacular";
 
@@ -51,7 +53,7 @@ const canonicalRegents = regents.flatMap((regent) => {
 	const id = resolveCanonicalRegentId(regent.id);
 	return id ? [{ ...regent, id }] : [];
 });
-const regentNameById = new Map(
+const regentNameById = new Map<string, string>(
 	canonicalRegents.map((regent) => [regent.id, regent.title || regent.name]),
 );
 
@@ -74,6 +76,13 @@ export function CampaignRegentOversight({
 		regentId: string;
 		level: number;
 	} | null>(null);
+	const [approvingPendingId, setApprovingPendingId] = useState<string | null>(
+		null,
+	);
+	const [pendingApprovalError, setPendingApprovalError] = useState<
+		string | null
+	>(null);
+	const queryClient = useQueryClient();
 
 	const {
 		data: sharedCharacters = [],
@@ -85,6 +94,46 @@ export function CampaignRegentOversight({
 		isLoading: loadingUnlocks,
 		error: campaignUnlockError,
 	} = useCampaignRegentUnlocks(campaignId, sharedCharacters);
+	const characterIds = sharedCharacters.map((entry) => entry.character_id);
+	const { data: pendingRegentGrants = [] } = useQuery({
+		queryKey: ["campaign-pending-regent-grants", campaignId, characterIds],
+		enabled: characterIds.length > 0,
+		queryFn: async () => {
+			const { data, error } = await supabase
+				.from("character_pending_regent_grants")
+				.select("id, character_id, regent_id, grant_kind, canonical_id")
+				.in("character_id", characterIds)
+				.eq("status", "pending");
+			if (error) throw error;
+			return data ?? [];
+		},
+	});
+	const approvePendingGrant = async (pendingId: string, unlockId: string) => {
+		setApprovingPendingId(pendingId);
+		setPendingApprovalError(null);
+		try {
+			const { error } = await supabase.rpc("approve_pending_regent_grant", {
+				p_pending_id: pendingId,
+				p_unlock_id: unlockId,
+				p_campaign_id: campaignId,
+			});
+			if (error) throw error;
+			await queryClient.invalidateQueries({
+				queryKey: ["campaign-pending-regent-grants", campaignId],
+			});
+			await queryClient.invalidateQueries({
+				queryKey: ["pending-regent-grants"],
+			});
+			await queryClient.invalidateQueries({ queryKey: ["powers"] });
+			await queryClient.invalidateQueries({ queryKey: ["techniques"] });
+		} catch (error) {
+			setPendingApprovalError(
+				error instanceof Error ? error.message : "Approval failed.",
+			);
+		} finally {
+			setApprovingPendingId(null);
+		}
+	};
 	const {
 		campaignGrants,
 		isLoading: loadingGrants,
@@ -403,6 +452,53 @@ export function CampaignRegentOversight({
 											</div>
 										</div>
 									))}
+									{pendingRegentGrants
+										.filter((grant) => grant.character_id === character.id)
+										.map((grant) => {
+											const matchingUnlock = characterUnlocks.find(
+												(unlock) =>
+													unlock.resolved_regent_id === grant.regent_id,
+											);
+											return (
+												<div
+													key={grant.id}
+													className="rounded border border-regent-gold/40 bg-regent-gold/10 p-2 text-xs"
+												>
+													<div className="flex items-center justify-between gap-2">
+														<span>
+															Pending imported {grant.grant_kind}:{" "}
+															{grant.canonical_id} ·{" "}
+															{regentNameById.get(grant.regent_id) ??
+																grant.regent_id}
+														</span>
+														{matchingUnlock ? (
+															<Button
+																size="sm"
+																variant="outline"
+																disabled={approvingPendingId === grant.id}
+																onClick={() =>
+																	approvePendingGrant(
+																		grant.id,
+																		matchingUnlock.id,
+																	)
+																}
+															>
+																Approve grant
+															</Button>
+														) : (
+															<span className="text-muted-foreground">
+																Regent unlock required
+															</span>
+														)}
+													</div>
+												</div>
+											);
+										})}
+									{pendingApprovalError && (
+										<p className="text-xs text-destructive">
+											{pendingApprovalError}
+										</p>
+									)}
 								</div>
 							</AscendantWindow>
 						);

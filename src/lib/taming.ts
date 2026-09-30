@@ -1,10 +1,10 @@
 /**
  * Legacy taming substrate (Q6 of Round 3).
  *
- * C2 campaign tame/bond attempts now resolve through companionBonding.ts and
- * authoritative server RPCs. These pure helpers remain for compatibility with
- * older callers and controller-bonus presentation only; they do not establish
- * C2 retry entitlement or persistence.
+ * The campaign tamed roster and its tame/bond RPCs are retired (RA-9): a
+ * character adds a companion from the Add Companion catalog. These pure
+ * helpers remain for controller-bonus presentation only; they do not
+ * establish persistence.
  */
 import type { AbilityScore } from "@/types/core-rules";
 

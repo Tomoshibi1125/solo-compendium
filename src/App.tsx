@@ -102,7 +102,6 @@ const CompanionSheet = lazy(() => import("./pages/CompanionSheet"));
 const CompanionExtraSheet = lazy(() => import("./pages/CompanionExtraSheet"));
 const Admin = lazy(() => import("./pages/Admin"));
 const ContentAudit = lazy(() => import("./pages/admin/ContentAudit"));
-const ArtGeneration = lazy(() => import("./pages/admin/ArtGeneration"));
 const FeatureChoicesAdmin = lazy(
 	() => import("./pages/admin/FeatureChoicesAdmin"),
 );
@@ -116,23 +115,8 @@ const InitiativeTracker = lazy(
 const RollableTables = lazy(
 	() => import("./pages/warden-directives/RollableTables"),
 );
-const GateGenerator = lazy(
-	() => import("./pages/warden-directives/GateGenerator"),
-);
-const NPCGenerator = lazy(
-	() => import("./pages/warden-directives/NPCGenerator"),
-);
-const TreasureGenerator = lazy(
-	() => import("./pages/warden-directives/TreasureGenerator"),
-);
-const DirectiveLattice = lazy(
-	() => import("./pages/warden-directives/DirectiveMatrix"),
-);
 const SessionPlanner = lazy(
 	() => import("./pages/warden-directives/SessionPlanner"),
-);
-const RandomEventGenerator = lazy(
-	() => import("./pages/warden-directives/RandomEventGenerator"),
 );
 const RelicWorkshop = lazy(
 	() => import("./pages/warden-directives/RelicWorkshop"),
@@ -141,10 +125,18 @@ const PartyTracker = lazy(
 	() => import("./pages/warden-directives/PartyTracker"),
 );
 const PartyStash = lazy(() => import("./pages/PartyStash"));
-// Map generator was merged into the Rift Generator (gate-generator)
-const ArtGeneratorWarden = lazy(
-	() => import("./pages/warden-directives/ArtGenerator"),
-);
+// RA-18: only Sovereign creation uses AI. These retired generator URLs are
+// kept as redirects so old bookmarks land on the Warden tools hub.
+const RETIRED_GENERATOR_PATHS = [
+	"/player-tools/map",
+	"/warden-directives/gate-generator",
+	"/warden-directives/npc-generator",
+	"/warden-directives/treasure-generator",
+	"/warden-directives/quest-generator",
+	"/warden-directives/directive-lattice",
+	"/warden-directives/random-event-generator",
+	"/warden-directives/art-generator",
+] as const;
 const Favorites = lazy(() => import("./pages/Favorites"));
 const Campaigns = lazy(() => import("./pages/Campaigns"));
 const CampaignDetail = lazy(() => import("./pages/CampaignDetail"));
@@ -395,10 +387,13 @@ const AppContent = () => {
 					path="/player-tools"
 					element={<Navigate to="/ascendant-tools" replace />}
 				/>
-				<Route
-					path="/player-tools/map"
-					element={<Navigate to="/warden-directives/gate-generator" replace />}
-				/>
+				{RETIRED_GENERATOR_PATHS.map((path) => (
+					<Route
+						key={path}
+						path={path}
+						element={<Navigate to="/warden-protocols" replace />}
+					/>
+				))}
 				<Route
 					path="/player-tools/:toolId"
 					element={<LegacyPlayerToolsRedirect />}
@@ -525,13 +520,7 @@ const AppContent = () => {
 				/>
 				<Route
 					path="/warden-directives/art-generation"
-					element={
-						<ProtectedRoute requireWarden allowGuest={false}>
-							<Suspense fallback={<PageLoader />}>
-								<ArtGeneration />
-							</Suspense>
-						</ProtectedRoute>
-					}
+					element={<Navigate to="/warden-directives/rift-console" replace />}
 				/>
 				<Route
 					path="/admin"
@@ -545,7 +534,7 @@ const AppContent = () => {
 					path="/admin/art-generation"
 					element={
 						<ProtectedRoute requireWarden allowGuest={false}>
-							<Navigate to="/warden-directives/art-generation" replace />
+							<Navigate to="/warden-directives/rift-console" replace />
 						</ProtectedRoute>
 					}
 				/>
@@ -602,54 +591,8 @@ const AppContent = () => {
 					}
 				/>
 				<Route
-					path="/warden-directives/gate-generator"
-					element={
-						<ProtectedRoute requireWarden>
-							<Suspense fallback={<PageLoader />}>
-								<GateGenerator />
-							</Suspense>
-						</ProtectedRoute>
-					}
-				/>
-				<Route
-					path="/warden-directives/npc-generator"
-					element={
-						<ProtectedRoute requireWarden>
-							<Suspense fallback={<PageLoader />}>
-								<NPCGenerator />
-							</Suspense>
-						</ProtectedRoute>
-					}
-				/>
-				<Route
-					path="/warden-directives/treasure-generator"
-					element={
-						<ProtectedRoute requireWarden>
-							<Suspense fallback={<PageLoader />}>
-								<TreasureGenerator />
-							</Suspense>
-						</ProtectedRoute>
-					}
-				/>
-				<Route
-					path="/warden-directives/quest-generator"
-					element={
-						<Navigate to="/warden-directives/directive-lattice" replace />
-					}
-				/>
-				<Route
 					path="/warden-directives/campaign-manager"
 					element={<Navigate to="/warden-directives" replace />}
-				/>
-				<Route
-					path="/warden-directives/directive-lattice"
-					element={
-						<ProtectedRoute requireWarden>
-							<Suspense fallback={<PageLoader />}>
-								<DirectiveLattice />
-							</Suspense>
-						</ProtectedRoute>
-					}
 				/>
 				<Route
 					path="/warden-directives/session-planner"
@@ -657,16 +600,6 @@ const AppContent = () => {
 						<ProtectedRoute requireWarden>
 							<Suspense fallback={<PageLoader />}>
 								<SessionPlanner />
-							</Suspense>
-						</ProtectedRoute>
-					}
-				/>
-				<Route
-					path="/warden-directives/random-event-generator"
-					element={
-						<ProtectedRoute requireWarden>
-							<Suspense fallback={<PageLoader />}>
-								<RandomEventGenerator />
 							</Suspense>
 						</ProtectedRoute>
 					}
@@ -697,16 +630,6 @@ const AppContent = () => {
 						<Suspense fallback={<PageLoader />}>
 							<PartyStash />
 						</Suspense>
-					}
-				/>
-				<Route
-					path="/warden-directives/art-generator"
-					element={
-						<ProtectedRoute requireWarden>
-							<Suspense fallback={<PageLoader />}>
-								<ArtGeneratorWarden />
-							</Suspense>
-						</ProtectedRoute>
 					}
 				/>
 				<Route

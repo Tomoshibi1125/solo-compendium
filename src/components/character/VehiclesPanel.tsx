@@ -304,12 +304,14 @@ export function VehiclesPanel({ characterId, readOnly }: VehiclesPanelProps) {
 															: "bg-system-green/25",
 												)}
 											/>
-											{companionInstance && mountStats?.combatScaling && (
+											{companionInstance && mountStats && (
 												<>
-													<CompanionCombatDetails
-														instance={companionInstance}
-														scaling={mountStats.combatScaling}
-													/>
+													{mountStats.combatScaling && (
+														<CompanionCombatDetails
+															instance={companionInstance}
+															scaling={mountStats.combatScaling}
+														/>
+													)}
 													{!readOnly && (
 														<Button
 															type="button"

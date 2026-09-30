@@ -131,8 +131,9 @@ dist-sourcebook/
 sourcebook-payload/
 sourcebook-payload.zip
 
-# Authored book sources are tracked. books/.gitignore excludes generated
-# PDFs, rendered samples, optimized assets, caches, chunks, and reports.
+# The PDF book pipeline is retired. Any leftover generated PDFs, samples, and
+# reports under books/ are local archives, never tracked.
+books/
 
 # Bundle-analysis and audit output (ANALYZE=1 npm run build)
 audit-artifacts/

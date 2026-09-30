@@ -93,6 +93,14 @@ export function CraftingPanel({ characterId, readOnly }: CraftingPanelProps) {
 	const activeFormula =
 		craft.formulas.find((formula) => formula.id === formulaId) ??
 		craft.formulas[0];
+	const activeResearch = craft.research.find(
+		(row) => row.formula_id === activeFormula?.id,
+	);
+	const formulaAvailable =
+		!!activeFormula &&
+		(knownRecipeIds.has(activeFormula.recipe_id) ||
+			activeResearch?.state === "Experimental" ||
+			activeResearch?.state === "Proven");
 	const formulaRequirements = Object.entries(
 		activeFormula?.requirement_snapshot ?? {},
 	);
@@ -386,6 +394,11 @@ export function CraftingPanel({ characterId, readOnly }: CraftingPanelProps) {
 													{lot.grade && (
 														<Badge variant="outline">Grade {lot.grade}</Badge>
 													)}
+													{lot.source_rank && (
+														<Badge variant="outline">
+															Source rank {lot.source_rank}
+														</Badge>
+													)}
 													{discovery && (
 														<Badge variant="outline">Discovered</Badge>
 													)}
@@ -447,7 +460,9 @@ export function CraftingPanel({ characterId, readOnly }: CraftingPanelProps) {
 						</div>
 						<p className="mt-1 text-xs text-muted-foreground">
 							Select exact lots, reserve them, complete the listed work, then
-							resolve the server roll. Inputs are spent when work begins.
+							resolve the server roll. Consumed ingredients are spent at work;
+							Incorporated ingredients join a successful result, and Catalysts
+							follow the procedure's recovery rule.
 						</p>
 					</div>
 					<div className="flex flex-wrap items-end gap-2">
@@ -475,12 +490,36 @@ export function CraftingPanel({ characterId, readOnly }: CraftingPanelProps) {
 					</div>
 					{activeFormula && (
 						<p className="text-xs text-muted-foreground">
-							{activeFormula.discipline} · {activeFormula.ability} (
-							{activeFormula.skill}) DC {activeFormula.dc} · Tool:{" "}
-							{activeFormula.tool_names.join(" or ")}· Output:{" "}
-							{activeFormula.output_quantity} servings
+							{activeFormula.discipline ??
+								activeFormula.procedure_kind.replaceAll("_", " ")}{" "}
+							· {activeFormula.ability} ({activeFormula.skill}) DC{" "}
+							{activeFormula.dc} · Tool: {activeFormula.tool_names.join(" or ")}
+							· Output: {activeFormula.output_quantity} servings
 						</p>
 					)}
+					{activeFormula && (
+						<p className="text-xs text-muted-foreground">
+							Research:{" "}
+							{activeResearch?.state ?? activeFormula.default_research_state}
+							{activeResearch?.state === "Experimental" &&
+								` · Unproven DC +2 · Iteration +${activeResearch.iteration_bonus}`}
+							{activeResearch?.mastered && " · Mastered"}
+							{" · "}Input roles:{" "}
+							{Object.entries(activeFormula.ingredient_roles)
+								.map(
+									([id, role]) =>
+										`${definitionById.get(id)?.name ?? id}: ${role}`,
+								)
+								.join("; ")}
+						</p>
+					)}
+					{activeFormula?.procedure_kind === "biological_adaptation" &&
+						activeFormula.adaptation_risks?.onFailure && (
+							<p className="text-xs text-warning">
+								Failure risk · {activeFormula.adaptation_risks.onFailure.label}:{" "}
+								{activeFormula.adaptation_risks.onFailure.effect}
+							</p>
+						)}
 					{!readOnly && activeFormula && (
 						<div className="flex flex-wrap items-end gap-2">
 							{formulaRequirements.map(([materialId, quantity]) => {
@@ -494,7 +533,9 @@ export function CraftingPanel({ characterId, readOnly }: CraftingPanelProps) {
 									<div key={materialId} className="min-w-52 flex-1">
 										<Label className="text-xs">
 											{quantity} ×{" "}
-											{definitionById.get(materialId)?.name ?? materialId}
+											{definitionById.get(materialId)?.name ?? materialId} (
+											{activeFormula.ingredient_roles[materialId] ?? "Consumed"}
+											)
 										</Label>
 										<Select
 											value={selectedInputLots[materialId] ?? ""}
@@ -529,7 +570,7 @@ export function CraftingPanel({ characterId, readOnly }: CraftingPanelProps) {
 								disabled={
 									craft.isLoading ||
 									craft.reserve.isPending ||
-									!knownRecipeIds.has(activeFormula.recipe_id) ||
+									!formulaAvailable ||
 									!inputSelectionReady
 								}
 							>
@@ -537,10 +578,15 @@ export function CraftingPanel({ characterId, readOnly }: CraftingPanelProps) {
 							</Button>
 						</div>
 					)}
-					{activeFormula && !knownRecipeIds.has(activeFormula.recipe_id) && (
-						<p className="text-xs text-muted-foreground">
-							Learn this recipe before reserving its materials.
-						</p>
+					{activeFormula && !formulaAvailable && !readOnly && (
+						<Button
+							size="sm"
+							variant="outline"
+							disabled={craft.beginExperiment.isPending}
+							onClick={() => craft.beginExperiment.mutate(activeFormula.id)}
+						>
+							Begin experimental research
+						</Button>
 					)}
 
 					<div className="space-y-2">
@@ -572,6 +618,12 @@ export function CraftingPanel({ characterId, readOnly }: CraftingPanelProps) {
 										= {project.total} vs DC {project.dc}
 									</p>
 								)}
+								{project.risk_outcome && (
+									<p className="mt-1 text-xs text-warning">
+										Biological risk · {project.risk_outcome.label}:{" "}
+										{project.risk_outcome.effect}
+									</p>
+								)}
 								{!readOnly &&
 									(project.status === "reserved" ||
 										project.status === "worked") && (
@@ -589,7 +641,7 @@ export function CraftingPanel({ characterId, readOnly }: CraftingPanelProps) {
 														})
 													}
 												>
-													Complete work and spend inputs
+													Complete work and spend Consumed inputs
 												</Button>
 											)}
 											{project.status === "worked" && (
@@ -622,7 +674,7 @@ export function CraftingPanel({ characterId, readOnly }: CraftingPanelProps) {
 											>
 												Cancel{" "}
 												{project.status === "worked"
-													? "(inputs stay spent)"
+													? "(release retained inputs)"
 													: "(release lots)"}
 											</Button>
 										</div>

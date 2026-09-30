@@ -2,9 +2,11 @@
  * AddCompanionDialog — DDB-style catalog picker for the Companions/Extras
  * section. Instead of typing a generic name + stats, the user picks a real
  * entry from three canonical sources and its stats auto-populate:
- *   • Statblocks — anomaly/monster bestiary (HP/AC/speed snapshot)
- *   • Mounts     — vehicle catalog mounts (HP/AC/speed snapshot)
+ *   • Statblocks — anomaly bestiary; scales with the owner's level (RA-10)
+ *   • Mounts     — vehicle catalog mounts; linked and combat-capable mounts
+ *                  scale, utility mounts keep their catalog stats
  *   • Allies     — recruitable guild NPCs (via useAddGuildAllyCompanion)
+ * The saved snapshot keeps the catalog's source fields as provenance.
  * A "Custom" free-form entry remains available in the panel for homebrew.
  */
 
@@ -30,7 +32,13 @@ import {
 import type { Json } from "@/integrations/supabase/types";
 import { listCanonicalEntries } from "@/lib/canonicalCompendium";
 import {
+	companionScalingSummary,
+	type ScaledCompanionCombatStats,
+} from "@/lib/companionProgression";
+import { scaleCompanionInstance } from "@/lib/companionScaling";
+import {
 	abilitiesFromCanonicalSource,
+	type CanonicalCompanionCollection,
 	createCanonicalCompanionSource,
 } from "@/lib/companions";
 import { formatRegentVernacular } from "@/lib/vernacular";
@@ -42,6 +50,8 @@ interface AddCompanionDialogProps {
 	open: boolean;
 	onOpenChange: (open: boolean) => void;
 	characterId: string;
+	/** The owning character's level; scaled companions preview and start at it. */
+	characterLevel?: number | null;
 	/** Select a useful catalog tab when the picker is opened from a contextual action. */
 	initialSource?: CompanionPickerSource;
 }
@@ -61,10 +71,35 @@ const vehicleLandSpeed = (entry: unknown): number | null => {
 	return num((speed as { land?: unknown }).land);
 };
 
+/** RA-10 numbers for a catalog entry at the owner's level, or null for saved-stat entries. */
+const scaledFor = (
+	collection: CanonicalCompanionCollection,
+	id: string,
+	rank: string | null,
+	level: number | null | undefined,
+): ScaledCompanionCombatStats | null =>
+	scaleCompanionInstance(
+		{ source_collection: collection, source_id: id, source_snapshot: null },
+		level,
+		rank,
+	);
+
+/** Picker badges and detail rows for a creature that scales with its owner. */
+const scaledBadges = (scaled: ScaledCompanionCombatStats) => [
+	`HP ${scaled.hpMax} (${scaled.hitDice})`,
+	`AC ${scaled.baseAc}`,
+];
+const scaledStats = (scaled: ScaledCompanionCombatStats): DetailStat[] => [
+	{ label: "Hit Die", value: `d${scaled.hitDie}` },
+	{ label: `HP at level ${scaled.level}`, value: scaled.hpMax },
+	{ label: `AC at level ${scaled.level}`, value: scaled.baseAc },
+];
+
 export function AddCompanionDialog({
 	open,
 	onOpenChange,
 	characterId,
+	characterLevel,
 	initialSource = "statblock",
 }: AddCompanionDialogProps) {
 	const [source, setSource] = useState<CompanionPickerSource>(initialSource);
@@ -155,14 +190,17 @@ export function AddCompanionDialog({
 				"action",
 			),
 		];
+		// The snapshot keeps the wild stat block; the companion starts at full scaled HP.
+		const scaled = scaledFor("anomalies", entry.id, rank, characterLevel);
+		const startingHp = scaled?.hpMax ?? hp;
 
 		await addExtra({
 			character_id: characterId,
 			name: entry.name,
 			extra_type: "companion",
-			hp_current: hp,
-			hp_max: hp,
-			ac,
+			hp_current: startingHp,
+			hp_max: startingHp,
+			ac: scaled?.baseAc ?? ac,
 			speed,
 			// Static canonical IDs are slugs, while monster_id is a UUID FK.
 			monster_id: null,
@@ -199,14 +237,16 @@ export function AddCompanionDialog({
 			(entry as { abilities?: unknown }).abilities,
 			"action",
 		);
+		const scaled = scaledFor("vehicles", entry.id, rank, characterLevel);
+		const startingHp = scaled?.hpMax ?? hp;
 
 		await addExtra({
 			character_id: characterId,
 			name: entry.name,
 			extra_type: "mount",
-			hp_current: hp,
-			hp_max: hp,
-			ac,
+			hp_current: startingHp,
+			hp_max: startingHp,
+			ac: scaled?.baseAc ?? ac,
 			speed,
 			monster_id: null,
 			npc_data: sourceSnapshot as unknown as Json,
@@ -233,109 +273,49 @@ export function AddCompanionDialog({
 			description?: string | null;
 			tags?: string[] | null;
 			sourceBook?: string | null;
+			extra?: Array<{ label: string; value: unknown }>;
 		};
 		onAdd: () => Promise<void>;
 	}[] =
 		source === "statblock"
-			? statblocks.map((entry) => ({
-					key: entry.id,
-					title: entry.name,
-					badges: [
-						(entry as { gate_rank?: string | null }).gate_rank
-							? `Rank ${(entry as { gate_rank?: string }).gate_rank}`
-							: "",
-						num((entry as { hit_points_average?: unknown }).hit_points_average)
-							? `HP ${num((entry as { hit_points_average?: unknown }).hit_points_average)}`
-							: "",
-						num((entry as { armor_class?: unknown }).armor_class)
-							? `AC ${num((entry as { armor_class?: unknown }).armor_class)}`
-							: "",
-					].filter(Boolean),
-					detail: {
-						stats: [
-							{
-								label: "Rank",
-								value: (entry as { gate_rank?: string | null }).gate_rank,
-							},
-							{
-								label: "CR",
-								value: (entry as { cr?: string | null }).cr,
-							},
-							{
-								label: "Size",
-								value: (entry as { size?: string | null }).size,
-							},
-							{
-								label: "HP",
-								value: num(
-									(entry as { hit_points_average?: unknown })
-										.hit_points_average,
-								),
-							},
-							{
-								label: "AC",
-								value: num((entry as { armor_class?: unknown }).armor_class),
-							},
-							{
-								label: "Speed",
-								value: num((entry as { speed_walk?: unknown }).speed_walk)
-									? `${num((entry as { speed_walk?: unknown }).speed_walk)} ft`
-									: null,
-							},
-						],
-						description: (entry as { description?: string | null }).description,
-						tags: (entry as { tags?: string[] | null }).tags,
-						sourceBook: (entry as { source_book?: string | null }).source_book,
-					},
-					onAdd: () => runAdd(entry.id, () => addStatblock(entry)),
-				}))
-			: source === "mount"
-				? mounts.map((entry) => ({
+			? statblocks.map((entry) => {
+					const rank = text((entry as { gate_rank?: unknown }).gate_rank);
+					const wildHp = num(
+						(entry as { hit_points_average?: unknown }).hit_points_average,
+					);
+					const wildAc = num((entry as { armor_class?: unknown }).armor_class);
+					const scaled = scaledFor("anomalies", entry.id, rank, characterLevel);
+					return {
 						key: entry.id,
 						title: entry.name,
 						badges: [
-							(entry as { rank?: string | null }).rank
-								? `Rank ${(entry as { rank?: string }).rank}`
-								: "",
-							num((entry as { hit_points?: { max?: unknown } }).hit_points?.max)
-								? `HP ${num((entry as { hit_points?: { max?: unknown } }).hit_points?.max)}`
-								: "",
-							num((entry as { armor_class?: unknown }).armor_class)
-								? `AC ${num((entry as { armor_class?: unknown }).armor_class)}`
-								: "",
+							rank ? `Rank ${rank}` : "",
+							...(scaled
+								? scaledBadges(scaled)
+								: [wildHp ? `HP ${wildHp}` : "", wildAc ? `AC ${wildAc}` : ""]),
 						].filter(Boolean),
 						detail: {
 							stats: [
+								{ label: "Rank", value: rank },
 								{
-									label: "Type",
-									value: (entry as { vehicle_type?: string | null })
-										.vehicle_type,
+									label: "CR",
+									value: (entry as { cr?: string | null }).cr,
 								},
 								{
 									label: "Size",
 									value: (entry as { size?: string | null }).size,
 								},
-								{
-									label: "Rank",
-									value: (entry as { rank?: string | null }).rank,
-								},
-								{
-									label: "HP",
-									value: num(
-										(entry as { hit_points?: { max?: unknown } }).hit_points
-											?.max,
-									),
-								},
-								{
-									label: "AC",
-									value: num((entry as { armor_class?: unknown }).armor_class),
-								},
+								...(scaled
+									? scaledStats(scaled)
+									: [
+											{ label: "HP", value: wildHp },
+											{ label: "AC", value: wildAc },
+										]),
 								{
 									label: "Speed",
-									value:
-										vehicleLandSpeed(entry) !== null
-											? `${vehicleLandSpeed(entry)} ft`
-											: null,
+									value: num((entry as { speed_walk?: unknown }).speed_walk)
+										? `${num((entry as { speed_walk?: unknown }).speed_walk)} ft`
+										: null,
 								},
 							],
 							description: (entry as { description?: string | null })
@@ -343,9 +323,83 @@ export function AddCompanionDialog({
 							tags: (entry as { tags?: string[] | null }).tags,
 							sourceBook: (entry as { source_book?: string | null })
 								.source_book,
+							extra: scaled
+								? [{ label: "Scaling", value: companionScalingSummary(scaled) }]
+								: undefined,
 						},
-						onAdd: () => runAdd(entry.id, () => addMount(entry)),
-					}))
+						onAdd: () => runAdd(entry.id, () => addStatblock(entry)),
+					};
+				})
+			: source === "mount"
+				? mounts.map((entry) => {
+						const rank = text((entry as { rank?: unknown }).rank);
+						const catalogHp = num(
+							(entry as { hit_points?: { max?: unknown } }).hit_points?.max,
+						);
+						const catalogAc = num(
+							(entry as { armor_class?: unknown }).armor_class,
+						);
+						const scaled = scaledFor(
+							"vehicles",
+							entry.id,
+							rank,
+							characterLevel,
+						);
+						return {
+							key: entry.id,
+							title: entry.name,
+							badges: [
+								rank ? `Rank ${rank}` : "",
+								...(scaled
+									? scaledBadges(scaled)
+									: [
+											catalogHp ? `HP ${catalogHp}` : "",
+											catalogAc ? `AC ${catalogAc}` : "",
+										]),
+							].filter(Boolean),
+							detail: {
+								stats: [
+									{
+										label: "Type",
+										value: (entry as { vehicle_type?: string | null })
+											.vehicle_type,
+									},
+									{
+										label: "Size",
+										value: (entry as { size?: string | null }).size,
+									},
+									{ label: "Rank", value: rank },
+									...(scaled
+										? scaledStats(scaled)
+										: [
+												{ label: "HP", value: catalogHp },
+												{ label: "AC", value: catalogAc },
+											]),
+									{
+										label: "Speed",
+										value:
+											vehicleLandSpeed(entry) !== null
+												? `${vehicleLandSpeed(entry)} ft`
+												: null,
+									},
+								],
+								description: (entry as { description?: string | null })
+									.description,
+								tags: (entry as { tags?: string[] | null }).tags,
+								sourceBook: (entry as { source_book?: string | null })
+									.source_book,
+								extra: scaled
+									? [
+											{
+												label: "Scaling",
+												value: companionScalingSummary(scaled),
+											},
+										]
+									: [{ label: "Scaling", value: "Keeps its saved stats." }],
+							},
+							onAdd: () => runAdd(entry.id, () => addMount(entry)),
+						};
+					})
 				: allies.map((npc) => ({
 						key: npc.id,
 						title: npc.name,
@@ -386,8 +440,9 @@ export function AddCompanionDialog({
 				<DialogHeader>
 					<DialogTitle>Add Companion</DialogTitle>
 					<DialogDescription>
-						Pick a statblock, mount, or ally from the compendium. Canonical
-						identity and source details stay attached to the saved companion.
+						Pick a statblock, mount, or ally from the compendium. Anomaly
+						companions and combat mounts scale with your level; the others keep
+						their saved stats.
 					</DialogDescription>
 				</DialogHeader>
 
@@ -498,6 +553,7 @@ export function AddCompanionDialog({
 									description={row.detail.description}
 									tags={row.detail.tags}
 									sourceBook={row.detail.sourceBook}
+									extra={row.detail.extra}
 								/>
 							</div>
 						))

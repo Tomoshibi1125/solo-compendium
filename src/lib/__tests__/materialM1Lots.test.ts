@@ -99,14 +99,31 @@ describe("M1 material lot authority", () => {
 			discoveries: [],
 		});
 		expect(bundle.version).toBe(1);
+		const versionTwo = parseMaterialLotBundle({
+			kind: "rift-ascendant-material-lots",
+			version: 2,
+			definitions: [],
+			lots: [{ source_rank: "B" }],
+			discoveries: [],
+		});
+		expect(versionTwo.version).toBe(2);
 		expect(() =>
 			parseMaterialLotBundle({
 				kind: "rift-ascendant-material-lots",
-				version: 2,
+				version: 3,
 				definitions: [],
 				lots: [],
 				discoveries: [],
 			}),
 		).toThrow(/Unsupported material lot bundle/);
+		expect(() =>
+			parseMaterialLotBundle({
+				kind: "rift-ascendant-material-lots",
+				version: 2,
+				definitions: [],
+				lots: [{ source_rank: "Z" }],
+				discoveries: [],
+			}),
+		).toThrow(/invalid source rank/i);
 	});
 });

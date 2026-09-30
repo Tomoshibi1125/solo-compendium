@@ -48,20 +48,22 @@ describe("C1 companion export/import identity", () => {
 		expect(migration).toContain("source_snapshot = p_source_snapshot");
 	});
 
-	it("keeps personal companion rows in the existing character export while excluding campaign ownership rows", () => {
+	it("exports companions as sheet rows and imports retired personal tames as companions", () => {
 		expect(exportImport).toContain('.from("character_extras")');
 		expect(exportImport).toContain('.from("character_vehicles")');
-		expect(exportImport).toContain('.from("character_tamed_anomalies")');
-		expect(exportImport).toContain(
-			"tamed_anomalies: tamedAnomaliesResult.data || []",
-		);
+		// The tamed tables are retired history (RA-9): nothing reads or writes them.
+		expect(exportImport).not.toContain('.from("character_tamed_anomalies")');
 		expect(exportImport).not.toContain('.from("campaign_tamed_anomalies")');
+		expect(exportImport).not.toContain("tamed_anomalies:");
+		expect(exportImport).toContain(
+			"companionRowsFromRetiredTames(data.tamed_anomalies)",
+		);
 	});
 
 	it("keeps unknown additive row fields through the import sanitizer", () => {
 		const stripStart = exportImport.indexOf("const stripImportOnlyFields = (");
 		const stripEnd = exportImport.indexOf(
-			"const createImportedEquipmentRows",
+			"async function resolveStaticReferenceId",
 			stripStart,
 		);
 		const stripBlock = exportImport.slice(

@@ -8,7 +8,6 @@ import "./styles/dropdown-opacity-fix.css";
 import "./styles/app-performance.css";
 
 import { registerCompanionInitiativeBridge } from "./lib/companionInitiativeBridge";
-import { registerCompanionRestBridge } from "./lib/companionRestBridge";
 import {
 	createLogger,
 	isCriticalError,
@@ -23,9 +22,9 @@ const logger = createLogger({ mode: "production" });
 
 // Initialize Sentry before anything else
 initSentry();
-// C3: subscribe living companions to existing combat/rest lifecycle seams.
+// C3: subscribe living companions to the combat handoff seam. Companion rests
+// run inside the character's rest (restSystem.ts), so they can be awaited.
 registerCompanionInitiativeBridge();
-registerCompanionRestBridge();
 
 import { initializeProtocolData } from "./lib/ProtocolDataManager";
 

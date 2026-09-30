@@ -1,11 +1,5 @@
 project_id = "rhqrtowjgocwkncqcerm"
 
-# Logflare analytics requires the Docker daemon exposed on tcp://localhost:2375,
-# which is not available in this Windows local-dev environment. It is optional
-# for app/e2e testing, so disable it locally to allow the stack to start.
-[analytics]
-enabled = false
-
 [storage.buckets.compendium-images]
 public = true
 file_size_limit = 5242880

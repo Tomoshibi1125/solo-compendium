@@ -811,16 +811,15 @@ export class PlayerPage {
 
 	// ─── Additional Player Tool Details ─────────────────────────
 
-	/** Verify character art generator tool loads. */
-	async verifyCharacterArtTool() {
+	/** The retired Character Art Generator (RA-18) falls back to the tools hub. */
+	async verifyRetiredCharacterArtTool() {
 		await this.page.goto("/ascendant-tools/character-art");
-		await this.page.waitForTimeout(2_000);
-		const heading = this.page
-			.getByText(
-				/Character Art|Art Generator|ACTIVE ASCENDANT|NO ACTIVE ASCENDANT/i,
-			)
-			.first();
-		await expect(heading).toBeVisible({ timeout: 10_000 });
+		await expect(this.page).toHaveURL(/\/ascendant-tools$/, {
+			timeout: 15_000,
+		});
+		await expect(this.page.getByText(/Character Art Generator/i)).toHaveCount(
+			0,
+		);
 	}
 
 	/** Verify party view tool loads. */

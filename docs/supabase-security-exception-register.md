@@ -87,7 +87,7 @@ All signatures in this section are granted to `authenticated` only unless they a
 | `public.complete_session_quest(uuid,text)` | `src/hooks/useSessionQuests.ts` | Authenticated primary Warden of the quest campaign required. Marks the quest complete and stores optional notes. | Privileged quest state transition. |
 | `public.claim_quest_rewards(uuid,uuid)` | `src/hooks/useSessionQuests.ts` | Completed quest, campaign membership/Warden status, owned character, and explicit character-campaign link are all required. The internal body prevents duplicate claims and awards configured rewards atomically. | Cross-table reward issuance through quest and character RLS. |
 
-### Character lifecycle and tamed anomalies
+### Character lifecycle
 
 | Exact signature | Caller | Authorization invariant and contract | Why definer is retained |
 | --- | --- | --- | --- |
@@ -95,9 +95,15 @@ All signatures in this section are granted to `authenticated` only unless they a
 | `public.on_long_rest_assign_quests(uuid)` | `src/lib/restSystem.ts` | Character must belong to `auth.uid()`. Expires old daily quests, applies configured penalties, and assigns the next set atomically. | Owner-bound multi-table long-rest transition. |
 | `public.generate_character_share_token_for_character(uuid)` | `src/hooks/useCharacters.ts` | Character ownership required. Rotates a persisted unique token and returns it. | Owner-bound token rotation and collision checks across RLS. |
 | `public.get_character_by_share_token(uuid,text)` | `src/hooks/useCharacters.ts` | Authenticated bearer must supply both exact character UUID and persisted nonblank token. Returns the matching full character row or no row. | Bearer-controlled read of a character hidden by owner RLS. |
-| `public.attempt_taming(uuid,uuid,text,integer,integer,integer,integer,text)` | `src/hooks/useTamedAnomalies.ts` | Requires owned character, valid input ranges, canonical anomaly ID, exact server-derived DC/HP, and campaign link when scoped. Returns null on failed roll or created anomaly UUID on success. | Validated write to owner/shared anomaly tables. |
-| `public.claim_anomaly_controller(uuid,uuid)` | `src/hooks/useTamedAnomalies.ts` | Owned character and link to the anomaly's campaign required. Claims only an empty, same, or stale controller slot; returns whether update occurred. | Atomic mutation of shared party state. |
-| `public.release_anomaly_controller(uuid)` | `src/hooks/useTamedAnomalies.ts` | Clears only when the actor owns the controlling character or is primary campaign Warden; otherwise no-ops. | Controlled update of shared party state. |
+
+### Companions
+
+| Exact signature | Caller | Authorization invariant and contract | Why definer is retained |
+| --- | --- | --- | --- |
+| `public.rest_companions_for_character(uuid,text)` | `src/lib/restSystem.ts` (Long Rest) | Character must belong to `auth.uid()`; rest kind must be `short` or `long`. A Short Rest returns 0 without changes. A Long Rest locks every active companion the character owns or handles, restores all HP, clears downed, ends conditions by the character rest policy, gives back spent Hit Dice up to half the companion's total (minimum 1), and syncs the companion sheet row. Returns the number rested. | Owner-bound update of companion instances and their sheet rows, which clients cannot write directly. |
+| `public.spend_companion_hit_dice(uuid,integer,integer)` | `src/hooks/useCompanionRest.ts` (Short Rest dialog) | Caller must own the companion's owner or primary-handler character; the companion must be active and level-scaled. Dice must be between 1 and the unspent count, and healing between 0 and dice × Hit Die. Heals up to the maximum, counts the dice as spent, syncs the sheet row, and returns HP and Hit Dice totals. | Validated owner-bound update of companion instance state, which clients cannot write directly. |
+
+The campaign tamed roster and its tame, bond, controller, HP, removal, and retry-adjudication RPCs are retired: `supabase/migrations/20260928110000_retire_tamed_companion_rosters.sql` revokes client execution and moves each creature to a character's companion sheet (RA-9).
 
 ### Guild and Bureau
 
@@ -153,6 +159,8 @@ These signatures are authenticated and exact-granted because RLS expressions dep
 | Join and invite internals | `join_campaign_by_id(uuid,uuid)`, `attach_campaign_member_character`, `resolve_campaign_invite`, `normalize_campaign_invite_role`, token/code/hash generators, and invite audit logger | Retained as owner-internal dependencies; no direct API execution. ID-only joining is deliberately revoked. |
 | Sourcebook internals | `user_has_sourcebook_access(text,uuid,uuid)` and any grant/share administration routine not in the final exact list | No browser execution. Use only through reviewed wrappers or trusted administration. |
 | Legacy combat/session entry points | `advance_combat_turn(uuid)`, `start_active_session`, `end_active_session`, `start_session_combat`, `end_session_combat` | Revoked from API roles; application uses the campaign-combat/session model. |
+| Retired tamed rosters | `attempt_taming`, `attempt_taming_with_source`, `resolve_companion_tame_attempt_c2`, `resolve_companion_bond_attempt_c2`, `prepare_companion_attempt_adjudication`, `claim_anomaly_controller`, `release_anomaly_controller`, `set_campaign_tamed_hp`, `remove_campaign_tamed_anomaly` | Revoked from API roles. Companions are character-owned sheet rows; the roster tables are read-only history. |
+| Retired companion scaling and profiles | `set_companion_scaling_profile`, `set_companion_profile_v1`, `import_companion_profile_authority` | Dropped. Companions scale from their owner's level and have no per-creature profile (RA-9, RA-10). |
 | Trigger/event routines | Character-limit enforcement, timestamp/version triggers, `rls_auto_enable`, and other trigger-only functions | Trigger/event invocation only; no client execution. |
 | Utilities and maintenance | `asset_exists(text)`, `get_campaign_member_count(uuid)`, `prepare_search_text(text)`, `hypopg_reset()`, `sync_compendium_data`, share-code/token helpers | Internal or revoked. `hypopg_reset` and maintenance helpers must never be browser RPCs. |
 | Removed attack surface | `exec_sql(text)`, stale quest overloads, and `get_character_by_share_token(text)` | Dropped. Maintenance scripts must use trusted direct SQL rather than recreating `exec_sql`. |

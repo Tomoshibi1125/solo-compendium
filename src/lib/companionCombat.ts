@@ -25,13 +25,6 @@ export interface CompanionMountProfile {
 	requiresTraining: boolean | null;
 }
 
-export interface CompanionRestRule {
-	heal: { kind: "none" } | { kind: "full" } | { kind: "flat"; amount: number };
-	conditions: "clear" | "preserve" | null;
-	clearDowned: boolean | null;
-	resources: Record<string, unknown> | null;
-}
-
 const recordOrNull = (value: unknown): Record<string, unknown> | null =>
 	value && typeof value === "object" && !Array.isArray(value)
 		? (value as Record<string, unknown>)
@@ -144,44 +137,6 @@ export function readCompanionMountProfile(
 			typeof profile.requiresTraining === "boolean"
 				? profile.requiresTraining
 				: null,
-	};
-}
-
-/** Missing rest policy is manual/no-op; no universal healing is synthesized. */
-export function readCompanionRestRule(
-	profileRaw: unknown,
-	restKind: "short" | "long",
-): CompanionRestRule | null {
-	const profile = recordOrNull(profileRaw);
-	const rest = recordOrNull(profile?.rest);
-	const rule = recordOrNull(rest?.[restKind]);
-	if (!rule) return null;
-	const heal = recordOrNull(rule.heal);
-	let parsedHeal: CompanionRestRule["heal"];
-	if (!heal || heal.kind === "none") {
-		parsedHeal = { kind: "none" };
-	} else if (heal.kind === "full") {
-		parsedHeal = { kind: "full" };
-	} else if (
-		heal.kind === "flat" &&
-		typeof heal.amount === "number" &&
-		Number.isFinite(heal.amount) &&
-		heal.amount >= 0
-	) {
-		parsedHeal = { kind: "flat", amount: heal.amount };
-	} else {
-		return null;
-	}
-	const conditions =
-		rule.conditions === "clear" || rule.conditions === "preserve"
-			? rule.conditions
-			: null;
-	return {
-		heal: parsedHeal,
-		conditions,
-		clearDowned:
-			typeof rule.clearDowned === "boolean" ? rule.clearDowned : null,
-		resources: recordOrNull(rule.resources),
 	};
 }
 

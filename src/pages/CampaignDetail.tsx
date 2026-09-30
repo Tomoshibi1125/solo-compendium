@@ -22,6 +22,7 @@ import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { CampaignActivityPanel } from "@/components/campaign/CampaignActivityPanel";
 import { CampaignCalendarPanel } from "@/components/campaign/CampaignCalendarPanel";
+import { CampaignCharacterCompanionsPanel } from "@/components/campaign/CampaignCharacterCompanionsPanel";
 import { CampaignCharacters } from "@/components/campaign/CampaignCharacters";
 import { CampaignChat } from "@/components/campaign/CampaignChat";
 import { CampaignHarvestingOversight } from "@/components/campaign/CampaignHarvestingOversight";
@@ -35,7 +36,6 @@ import { CampaignRelicsPanel } from "@/components/campaign/CampaignRelicsPanel";
 import { CampaignRollFeed } from "@/components/campaign/CampaignRollFeed";
 import { CampaignSessionsPanel } from "@/components/campaign/CampaignSessionsPanel";
 import { CampaignSettings } from "@/components/campaign/CampaignSettings";
-import { CampaignTamedAnomaliesPanel } from "@/components/campaign/CampaignTamedAnomaliesPanel";
 import { CampaignVehiclesPanel } from "@/components/campaign/CampaignVehiclesPanel";
 import { CampaignWiki } from "@/components/campaign/CampaignWiki";
 import { SessionReplayPanel } from "@/components/campaign/SessionReplayPanel";
@@ -796,15 +796,14 @@ const CampaignDetail = () => {
 									isWarden={hasWardenAccess}
 								/>
 							</div>
-							<div>
-								<h2 className="font-heading text-sm uppercase tracking-widest text-muted-foreground mb-3">
-									Tamed Anomalies
-								</h2>
-								<CampaignTamedAnomaliesPanel
-									campaignId={id || ""}
-									isWarden={hasWardenAccess}
-								/>
-							</div>
+							{hasWardenAccess && (
+								<div>
+									<h2 className="font-heading text-sm uppercase tracking-widest text-muted-foreground mb-3">
+										Party Companions
+									</h2>
+									<CampaignCharacterCompanionsPanel campaignId={id || ""} />
+								</div>
+							)}
 						</TabsContent>
 						<TabsContent value="quests">
 							<CampaignQuestsPanel

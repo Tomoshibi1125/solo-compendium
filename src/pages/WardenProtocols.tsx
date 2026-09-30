@@ -9,7 +9,6 @@ import {
 	Grid3x3,
 	HelpCircle,
 	List,
-	Scroll,
 	Search,
 	Settings,
 	Sword,
@@ -305,7 +304,7 @@ const WardenProtocols = () => {
 							</CardDescription>
 						</CardHeader>
 						<CardContent>
-							<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+							<div className="grid grid-cols-1 md:grid-cols-3 gap-4">
 								<Button
 									variant="outline"
 									className="justify-start"
@@ -315,16 +314,6 @@ const WardenProtocols = () => {
 								>
 									<Sword className="w-4 h-4 mr-2" />
 									Quick Combat
-								</Button>
-								<Button
-									variant="outline"
-									className="justify-start"
-									onClick={() =>
-										navigate("/warden-directives/directive-lattice")
-									}
-								>
-									<Scroll className="w-4 h-4 mr-2" />
-									Directive Synthesis
 								</Button>
 								<Button
 									variant="outline"

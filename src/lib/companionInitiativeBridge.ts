@@ -1,5 +1,4 @@
 import { supabase } from "@/integrations/supabase/client";
-import { readCompanionCombatProfile } from "@/lib/companionCombat";
 import {
 	COMPANION_COMBAT_HANDOFF_EVENT,
 	type CompanionCombatHandoffDetail,
@@ -10,11 +9,14 @@ import { logger } from "@/lib/logger";
 
 interface CompanionInstanceBridgeRow {
 	id: string;
+	owner_character_id: string | null;
 	primary_handler_character_id: string | null;
 	profile_version: number;
 	combat_state_version: number | null;
-	progression_profile: unknown;
 }
+
+const BRIDGE_COLUMNS =
+	"id, owner_character_id, primary_handler_character_id, profile_version, combat_state_version";
 
 type RpcClient = (
 	fn: string,
@@ -30,9 +32,7 @@ async function resolveInstance(
 	if (item.companionInstanceId) {
 		const { data, error } = await supabase
 			.from("companion_instances" as never)
-			.select(
-				"id, primary_handler_character_id, profile_version, combat_state_version, progression_profile",
-			)
+			.select(BRIDGE_COLUMNS)
 			.eq("id", item.companionInstanceId)
 			.maybeSingle();
 		if (error) throw new Error(error.message);
@@ -46,9 +46,7 @@ async function resolveInstance(
 
 	const { data, error } = await supabase
 		.from("companion_instances" as never)
-		.select(
-			"id, primary_handler_character_id, profile_version, combat_state_version, progression_profile",
-		)
+		.select(BRIDGE_COLUMNS)
 		.eq("origin_table", item.companionOriginTable)
 		.eq("origin_row_id", item.companionOriginRowId)
 		.maybeSingle();
@@ -62,12 +60,14 @@ async function persistHandoff(
 	item: PendingCombatant,
 ): Promise<void> {
 	const instance = await resolveInstance(item);
-	const profile = readCompanionCombatProfile(instance.progression_profile);
-	const initiativeMode =
-		item.initiativeMode ?? profile.initiativeMode ?? "independent";
+	// Every companion can join combat (RA-9). The handoff picks how it takes
+	// turns; a linked companion acts on its owner's initiative.
+	const initiativeMode = item.initiativeMode ?? "independent";
 	const anchorCharacterId =
 		item.initiativeAnchorCharacterId ??
-		(instance.primary_handler_character_id || item.companionOwnerCharacterId);
+		(instance.owner_character_id ||
+			instance.primary_handler_character_id ||
+			item.companionOwnerCharacterId);
 
 	if (initiativeMode === "linked" && !anchorCharacterId) {
 		throw new Error("LINKED_INITIATIVE_ANCHOR_REQUIRED");

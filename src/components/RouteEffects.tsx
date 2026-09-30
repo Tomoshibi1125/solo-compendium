@@ -50,7 +50,6 @@ const ASCENDANT_TOOL_LABELS: Record<string, string> = {
 	"character-sheet": "Character Sheet",
 	inventory: "Inventory",
 	abilities: "Abilities & Skills",
-	"character-art": "Character Art Generator",
 	"compendium-viewer": "Compendium Viewer",
 	"quest-log": "Quest Log",
 	"party-view": "Party View",
@@ -61,26 +60,18 @@ const ASCENDANT_TOOLS_WITH_CHARACTER = new Set([
 	"character-sheet",
 	"inventory",
 	"abilities",
-	"character-art",
 	"quest-log",
 ]);
 
 const WARDEN_TOOL_LABELS: Record<string, string> = {
 	"rift-console": "Rift Console",
 	"content-audit": "Content Audit",
-	"art-generation": "Art Generation",
 	"encounter-builder": "Encounter Builder",
 	"initiative-tracker": "Initiative Tracker",
 	"rollable-tables": "Rollable Tables",
-	"gate-generator": "Rift Generator",
-	"npc-generator": "NPC Generator",
-	"treasure-generator": "Treasure Generator",
-	"quest-generator": "Quest Generator",
 	"session-planner": "Session Planner",
-	"random-event-generator": "Random Event Generator",
 	"relic-workshop": "Relic Workshop",
 	"party-tracker": "Party Tracker",
-	"art-generator": "Art Generator",
 };
 
 const getZone = (pathname: string): AppZone => {
@@ -148,12 +139,7 @@ const resolveTitle = (pathname: string) => {
 	if (pathname.startsWith("/admin")) {
 		const segments = pathname.split("/").filter(Boolean);
 		const adminKey = segments[1] ?? "rift-console";
-		const adminLabel =
-			adminKey === "audit"
-				? "Content Audit"
-				: adminKey === "art-generation"
-					? "Art Generation"
-					: "Rift Console";
+		const adminLabel = adminKey === "audit" ? "Content Audit" : "Rift Console";
 		return `${BASE_TITLE} - Warden Tools: ${adminLabel}`;
 	}
 	if (pathname.startsWith("/auth")) {
