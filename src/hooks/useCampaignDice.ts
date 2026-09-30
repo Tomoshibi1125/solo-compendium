@@ -16,17 +16,13 @@ export function useCampaignDice() {
 	const getCampaignsForRolling = useCallback(async () => {
 		if (!user || !isSupabaseConfigured) return [];
 
+		// campaigns RLS already limits rows to campaigns the user runs or has
+		// joined. (The old campaign_details query filtered on a column the view
+		// lacks inside an `or` PostgREST cannot parse, so it always failed.)
 		const { data, error } = await supabase
-			.from("campaign_details")
-			.select(`
-        id,
-        name,
-        campaign_members!inner(
-          user_id,
-          role
-        )
-      `)
-			.or(`campaign_members.user_id.eq.${user.id},created_by.eq.${user.id}`);
+			.from("campaigns")
+			.select("id, name")
+			.order("name");
 
 		if (error) {
 			console.error("Error fetching campaigns:", error);
