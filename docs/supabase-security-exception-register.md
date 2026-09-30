@@ -117,17 +117,18 @@ The campaign tamed roster and its tame, bond, controller, HP, removal, and retry
 | `public.accept_bureau_contract(uuid,uuid)` | `src/hooks/useBureauContracts.ts` | Guild leader/vice-master/officer required; locks a published contract, creates the rank-scaled quest, marks acceptance, and returns quest UUID. | Atomic cross-table contract acceptance. |
 | `public.bureau_guild_leaderboard()` | `src/hooks/useBureauContracts.ts` | Any authenticated caller receives only the top 50 active guild projection: ID, name, rank, contribution, and member count. | Intentional minimal global projection across member-scoped guild RLS. |
 
-### Notifications, marketplace, homebrew, and sourcebooks
+### Notifications, marketplace, and homebrew
 
 | Exact signature | Caller | Authorization invariant and contract | Why definer is retained |
 | --- | --- | --- | --- |
 | `public.add_user_notification(uuid,text,text,text,text,text,jsonb,text,timestamptz)` | `src/lib/notify.ts` and sync manager | Self-targeting is allowed. Cross-user delivery is limited to `mention` or `campaign_invite`, requires a UUID `payload.campaign_id`, verifies actor relationship, and verifies the target is a member or the campaign's primary Warden as appropriate. Returns notification UUID. | Narrowly controlled cross-user inbox write. |
 | `public.mark_user_notification_read(uuid)` | `src/hooks/useUserNotifications.ts` | Updates only an unread notification owned by `auth.uid()` and returns whether a row changed. | Self-bound update retained for compatibility; candidate for conversion to invoker. |
-| `public.record_marketplace_download(uuid,uuid)` | `src/hooks/useMarketplaceData.ts` and sync manager | Supplied/default user must equal `auth.uid()`. Requires entitlement, inserts idempotent download, and recomputes item count. | Self-bound ledger plus aggregate update in one transaction. |
-| `public.upsert_marketplace_review(uuid,integer,text,uuid)` | `src/hooks/useMarketplaceData.ts` and sync manager | Supplied/default user must equal `auth.uid()`; rating is 1–5. Upserts review and recomputes item rating aggregates; returns review UUID. | Self-bound review plus aggregate update in one transaction. |
-| `public.gift_marketplace_item(uuid,uuid,text)` | `src/hooks/useMarketplaceData.ts` | Authenticated entitled giver and distinct existing recipient required. Copies primary and bundle-child entitlements idempotently. | Intentional, contract-limited cross-user entitlement write. |
+| `public.record_marketplace_download(uuid,uuid)` | `src/hooks/useMarketplaceData.ts` and sync manager | Supplied/default user must equal `auth.uid()`. Requires access through `app_private.marketplace_item_access` (free item, author, or current entitlement), records one row per person in the internal `app_private.marketplace_downloads` ledger, and recomputes the item count. | Self-bound ledger plus aggregate update in one transaction. |
+| `public.upsert_marketplace_review(uuid,integer,text,uuid)` | `src/hooks/useMarketplaceData.ts` and sync manager | Supplied/default user must equal `auth.uid()`; rating is 1–5. Upserts review, sets `verified_purchase` from the same access rule, and recomputes item rating aggregates; returns review UUID. | Self-bound review plus aggregate update in one transaction. |
+| `public.gift_marketplace_item(uuid,uuid,text)` | `src/hooks/useMarketplaceData.ts` | Authenticated giver who holds the item under the same access rule, and a distinct existing recipient, required. Copies primary and bundle-child entitlements idempotently. | Intentional, contract-limited cross-user entitlement write. |
 | `public.set_homebrew_content_status(uuid,text,text,uuid)` | `src/hooks/useHomebrewContent.ts` and sync manager | Actor must be owner, canonical account admin, or Warden/co-Warden of the content's existing campaign. Validates status/scope; campaign visibility also requires target-campaign authority. Returns content UUID. | Controlled moderation beyond owner RLS. |
-| `public.get_accessible_sourcebooks(uuid,uuid)` | `src/lib/sourcebookAccess.ts` | Requires auth, supplied user must equal `auth.uid()`, and optional campaign requires actor membership or primary-Warden status. Returns only free, current owned, and current campaign-shared entitlement projections. The broader legacy helper remains revoked. | Actor-bound entitlement projection must verify a sharer's current entitlement across RLS without exposing an arbitrary-user oracle. |
+
+`app_private.marketplace_item_access(uuid,uuid)` is an owner-internal helper with no API execution; only the definers above call it.
 
 ### Compendium search projections
 
@@ -149,7 +150,7 @@ These signatures are authenticated and exact-granted because RLS expressions dep
 - `public.can_manage_homebrew_content(uuid,uuid)`
 - `public.can_view_homebrew_content(uuid,uuid)`
 
-`public.get_accessible_sourcebooks(uuid,uuid)` is intentionally not in this list: the hardening migration makes it an actor-bound definer so it can validate the current entitlement behind a campaign share. `public.user_has_sourcebook_access(text,uuid,uuid)` remains internal and revoked.
+The sourcebook entitlement layer is retired: `20260725000000` dropped its tables and `user_has_sourcebook_access`, and `20260930100100` dropped `get_accessible_sourcebooks(uuid,uuid)` and the tables' trigger functions. Every sourcebook is available to every account.
 
 ## Internal, revoked, and removed routines
 
@@ -157,7 +158,6 @@ These signatures are authenticated and exact-granted because RLS expressions dep
 | --- | --- | --- |
 | Guarded legacy delegates | `upsert_campaign_session_unchecked`, `add_user_notification_unchecked`, `assign_daily_quests_unchecked`, `on_long_rest_assign_quests_unchecked`, `record_marketplace_download_unchecked`, `upsert_marketplace_review_unchecked`, `claim_quest_rewards_unchecked`, `attempt_taming_unchecked`, `redeem_campaign_invite_unchecked`, `resolve_guild_quest_unchecked`, `assign_campaign_loot_unchecked`, `assign_campaign_relic_unchecked` | Owner-internal only; no API execution. Call only from the checked wrappers. |
 | Join and invite internals | `join_campaign_by_id(uuid,uuid)`, `attach_campaign_member_character`, `resolve_campaign_invite`, `normalize_campaign_invite_role`, token/code/hash generators, and invite audit logger | Retained as owner-internal dependencies; no direct API execution. ID-only joining is deliberately revoked. |
-| Sourcebook internals | `user_has_sourcebook_access(text,uuid,uuid)` and any grant/share administration routine not in the final exact list | No browser execution. Use only through reviewed wrappers or trusted administration. |
 | Legacy combat/session entry points | `advance_combat_turn(uuid)`, `start_active_session`, `end_active_session`, `start_session_combat`, `end_session_combat` | Revoked from API roles; application uses the campaign-combat/session model. |
 | Retired tamed rosters | `attempt_taming`, `attempt_taming_with_source`, `resolve_companion_tame_attempt_c2`, `resolve_companion_bond_attempt_c2`, `prepare_companion_attempt_adjudication`, `claim_anomaly_controller`, `release_anomaly_controller`, `set_campaign_tamed_hp`, `remove_campaign_tamed_anomaly` | Revoked from API roles. Companions are character-owned sheet rows; the roster tables are read-only history. |
 | Retired companion scaling and profiles | `set_companion_scaling_profile`, `set_companion_profile_v1`, `import_companion_profile_authority` | Dropped. Companions scale from their owner's level and have no per-creature profile (RA-9, RA-10). |

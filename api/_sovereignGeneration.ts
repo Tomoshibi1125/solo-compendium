@@ -1,15 +1,22 @@
+// Vercel runs api/ files as plain Node ESM: every relative import on this
+// graph needs an explicit .js extension and no "@/" alias (vercelDeployInputs
+// test). Canonical sources come from the generated _sovereignSources module.
 import { createHash } from "node:crypto";
 import { createClient } from "@supabase/supabase-js";
-import { DAMAGE_TYPES } from "../src/lib/damageApplication";
+import { DAMAGE_TYPES } from "../src/lib/damageApplication.js";
 import {
 	SOVEREIGN_V2_SCHEMA_VERSION,
 	type SovereignV2Definition,
 	type SovereignV2SourceIds,
 	validateGeneratedSovereignBudget,
 	validateSovereignV2Definition,
-} from "../src/lib/sovereign/sovereignV2Contract";
-import { SKILLS } from "../src/types/core-rules";
+} from "../src/lib/sovereign/sovereignV2Contract.js";
+import { SKILLS } from "../src/types/core-rules.js";
 import { runProviderChain } from "./_aiProviders.js";
+import {
+	SOVEREIGN_SOURCES,
+	type SovereignSourceKind,
+} from "./_sovereignSources.js";
 
 const REQUEST_KEYS = new Set([
 	"jobId",
@@ -25,26 +32,29 @@ const RATE_LIMIT_WINDOW_MS = 60_000;
 const RATE_LIMIT_MAX = 8;
 const rateBuckets = new Map<string, { windowStart: number; count: number }>();
 
-const CANONICAL_REGENTS = new Set([
-	"umbral_regent",
-	"radiant_regent",
-	"steel_regent",
-	"destruction_regent",
-	"war_regent",
-	"frost_regent",
-	"beast_regent",
-	"plague_regent",
-	"spatial_regent",
-	"mimic_regent",
-	"blood_regent",
-	"gravity_regent",
-]);
-
 type JsonRecord = Record<string, unknown>;
-type CanonicalTable =
-	| "compendium_jobs"
-	| "compendium_job_paths"
-	| "compendium_regents";
+
+const CANONICAL_SOURCES = new Map<string, JsonRecord>(
+	SOVEREIGN_SOURCES.map((source) => [
+		`${source.kind}:${source.id}`,
+		{ ...source },
+	]),
+);
+
+const CANONICAL_REGENTS = new Set(
+	SOVEREIGN_SOURCES.filter((source) => source.kind === "regent").map(
+		(source) => source.id,
+	),
+);
+
+/** The static canonical source for a Sovereign input, or null if unknown. */
+export function findCanonicalSovereignSource(
+	kind: SovereignSourceKind,
+	id: string,
+): JsonRecord | null {
+	const source = CANONICAL_SOURCES.get(`${kind}:${id}`);
+	return source ? { ...source } : null;
+}
 
 export interface SovereignGenerationRequest {
 	jobId: string;
@@ -67,7 +77,7 @@ export interface SovereignGenerationDataAccess {
 		operationId: string,
 	): Promise<SavedSovereignDraft | null>;
 	getCanonicalSource(
-		table: CanonicalTable,
+		kind: SovereignSourceKind,
 		id: string,
 	): Promise<JsonRecord | null>;
 	saveDefinition(
@@ -397,14 +407,10 @@ export function createSupabaseSovereignDataAccess(
 					}
 				: null;
 		},
-		async getCanonicalSource(table, id) {
-			const { data, error } = await client
-				.from(table)
-				.select("*")
-				.eq("id", id)
-				.maybeSingle();
-			if (error) throw error;
-			return data && isRecord(data) ? data : null;
+		// Jobs, Paths, and Regents are static canon (the ids characters store),
+		// not rows in the legacy compendium_* tables.
+		async getCanonicalSource(kind, id) {
+			return findCanonicalSovereignSource(kind, id);
 		},
 		async saveDefinition(definition, operationId) {
 			const { data: sovereignId, error: saveError } = await client.rpc(
@@ -515,10 +521,10 @@ export async function handleSovereignGenerationRequest(
 		}
 
 		const [job, path, regentA, regentB] = await Promise.all([
-			dataAccess.getCanonicalSource("compendium_jobs", request.jobId),
-			dataAccess.getCanonicalSource("compendium_job_paths", request.pathId),
-			dataAccess.getCanonicalSource("compendium_regents", request.regentAId),
-			dataAccess.getCanonicalSource("compendium_regents", request.regentBId),
+			dataAccess.getCanonicalSource("job", request.jobId),
+			dataAccess.getCanonicalSource("path", request.pathId),
+			dataAccess.getCanonicalSource("regent", request.regentAId),
+			dataAccess.getCanonicalSource("regent", request.regentBId),
 		]);
 		if (!job || !path || !regentA || !regentB) {
 			return {

@@ -1,8 +1,11 @@
 import { z } from "zod";
-import { DAMAGE_TYPES } from "@/lib/damageApplication";
-import { SOVEREIGN_ABILITY_LEVELS } from "@/lib/sovereign/sovereignContract";
-import { SKILLS } from "@/types/core-rules";
 import type { FeatureEffect } from "@/types/featureEffects";
+import { SKILLS } from "../../types/core-rules.js";
+// The Sovereign API function (api/sovereign.ts) loads this module as plain
+// Node ESM, so runtime imports are relative with explicit .js extensions (no
+// "@/" alias). See src/lib/__tests__/vercelDeployInputs.test.ts.
+import { DAMAGE_TYPES } from "../damageApplication.js";
+import { SOVEREIGN_ABILITY_LEVELS } from "./sovereignContract.js";
 
 /**
  * Sovereign definition v2 contract.

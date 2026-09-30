@@ -19,7 +19,7 @@ INSERT INTO public.character_regent_unlocks
   ('b5550000-5555-4555-8555-555555555555',
    'b4440000-4444-4444-8444-444444444444', 'beast_regent', 'Beast quest', true);
 
-SELECT plan(18);
+SELECT plan(21);
 SET LOCAL ROLE authenticated;
 DO $$ BEGIN PERFORM set_config('request.jwt.claim.sub', 'b2220000-2222-4222-8222-222222222222', true); END $$;
 SELECT throws_ok($$SELECT public.set_regent_catch_up_options(
@@ -161,6 +161,25 @@ SELECT is(public.complete_regent_catch_up('b5550000-5555-4555-8555-555555555555'
 SELECT is((SELECT caught_up_at_level FROM public.character_regent_unlocks
   WHERE id = 'b5550000-5555-4555-8555-555555555555'), 3,
   'completion stamp is durable only after exact picks');
+
+-- One guard serves both tables; it must not read the other table's columns.
+SELECT lives_ok(
+  $$UPDATE public.character_powers SET is_prepared = true
+    WHERE regent_unlock_id = 'b5550000-5555-4555-8555-555555555555'
+      AND acquisition_kind = 'regent'$$,
+  'the owner can update a Regent-granted power');
+SELECT lives_ok(
+  $$UPDATE public.character_techniques SET learned_at = learned_at
+    WHERE regent_unlock_id = 'b5550000-5555-4555-8555-555555555555'
+      AND acquisition_kind = 'regent'$$,
+  'the owner can update a Regent-granted technique');
+SELECT throws_ok(
+  $$UPDATE public.character_powers SET power_id = 'power-arch-5-24-surge-stride'
+    WHERE regent_unlock_id = 'b5550000-5555-4555-8555-555555555555'
+      AND power_id = 'power-sup-5-48-apex-predator'
+      AND acquisition_kind = 'regent'$$,
+  '42501', 'REGENT_GRANT_IDENTITY_IMMUTABLE',
+  'a Regent grant cannot be swapped for a different ability');
 
 SELECT * FROM finish();
 ROLLBACK;

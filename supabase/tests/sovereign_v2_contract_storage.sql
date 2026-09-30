@@ -4,20 +4,15 @@ SET LOCAL search_path = extensions, public, pg_catalog;
 INSERT INTO auth.users (id, email)
 VALUES ('77777777-7777-4777-8777-777777777777', 'sovereign-v2-test@example.test');
 
+-- Source ids are the canonical slugs characters store and the app sends.
 DO $$
 DECLARE
-  v_job TEXT;
-  v_path TEXT;
+  v_job TEXT := 'striker';
+  v_path TEXT := 'striker--phantom-step';
   v_abilities JSONB := '[]'::jsonb;
   v_level INTEGER;
   v_definition JSONB;
 BEGIN
-  SELECT job_id::text, id::text INTO v_job, v_path
-  FROM public.compendium_job_paths
-  ORDER BY id LIMIT 1;
-  IF v_job IS NULL OR v_path IS NULL THEN
-    RAISE EXCEPTION 'Sovereign fixture requires canonical job and path rows';
-  END IF;
   FOREACH v_level IN ARRAY ARRAY[1,3,5,7,10,14,17,20] LOOP
     v_abilities := v_abilities || jsonb_build_array(jsonb_build_object(
       'id', 'ability.test-' || v_level,
@@ -70,7 +65,21 @@ BEGIN
 END;
 $$;
 
-SELECT plan(12);
+-- A Striker on the Phantom Step path holding both Regents, and a Destroyer.
+INSERT INTO public.characters (id, user_id, name, level, job, path, job_id, path_id)
+VALUES
+  ('71117777-7777-4777-8777-777777777777', '77777777-7777-4777-8777-777777777777',
+   'Sovereign attach target', 20, 'Striker', 'Path of the Phantom Step',
+   'striker', 'striker--phantom-step'),
+  ('72227777-7777-4777-8777-777777777777', '77777777-7777-4777-8777-777777777777',
+   'Mismatched Job', 20, 'Destroyer', 'Path of the Apex Predator',
+   'destroyer', 'destroyer--apex-predator');
+INSERT INTO public.character_regent_unlocks (character_id, regent_id, quest_name, is_primary)
+VALUES
+  ('71117777-7777-4777-8777-777777777777', 'umbral_regent', 'Umbral quest', true),
+  ('71117777-7777-4777-8777-777777777777', 'frost_regent', 'Frost quest', false);
+
+SELECT plan(19);
 SELECT ok(
   extensions.jsonb_matches_schema(
     (SELECT schema_json FROM app_private.sovereign_v2_schemas WHERE version = 2),
@@ -162,6 +171,67 @@ SELECT is(
   (SELECT count(*) FROM public.saved_sovereigns),
   0::bigint,
   'an unrelated authenticated user cannot read that private definition'
+);
+
+DO $$ BEGIN PERFORM set_config('request.jwt.claim.sub', '77777777-7777-4777-8777-777777777777', true); END $$;
+SELECT is(
+  (SELECT job_id || ' / ' || path_id FROM public.saved_sovereigns),
+  'striker / striker--phantom-step',
+  'the saved row keeps the canonical Job and Path slugs'
+);
+SELECT throws_ok(
+  $$SELECT public.save_sovereign_v2_definition(
+    jsonb_set(
+      jsonb_set(current_setting('test.sovereign_v2_definition')::jsonb,
+        '{generation,source_ids,job}', '"no-such-job"'::jsonb),
+      '{id}', '"sovereign.test-unknown-job"'::jsonb
+    ),
+    's2-v2-unknown-job', false
+  )$$,
+  '22023', 'SOVEREIGN_V2_UNKNOWN_JOB',
+  'a Job outside the canonical catalog is rejected'
+);
+SELECT throws_ok(
+  $$SELECT public.save_sovereign_v2_definition(
+    jsonb_set(
+      jsonb_set(current_setting('test.sovereign_v2_definition')::jsonb,
+        '{generation,source_ids,path}', '"destroyer--apex-predator"'::jsonb),
+      '{id}', '"sovereign.test-foreign-path"'::jsonb
+    ),
+    's2-v2-foreign-path', false
+  )$$,
+  '22023', 'SOVEREIGN_V2_UNKNOWN_PATH',
+  'a Path that belongs to another Job is rejected'
+);
+SELECT lives_ok(
+  $$SELECT public.attach_saved_sovereign(
+    '71117777-7777-4777-8777-777777777777',
+    (SELECT id FROM public.saved_sovereigns WHERE definition_id = 'sovereign.test-v2'),
+    's2-v2-attach-operation'
+  )$$,
+  'a matching Striker with both Regents attaches the saved Sovereign'
+);
+SELECT is(
+  (SELECT active_sovereign_id FROM public.characters
+   WHERE id = '71117777-7777-4777-8777-777777777777'),
+  (SELECT id FROM public.saved_sovereigns WHERE definition_id = 'sovereign.test-v2'),
+  'the character now points at the attached definition'
+);
+SELECT is(
+  (SELECT count(*) FROM public.character_features
+   WHERE character_id = '71117777-7777-4777-8777-777777777777'
+     AND sovereign_definition_id IS NOT NULL),
+  8::bigint,
+  'attachment projects all eight milestone abilities'
+);
+SELECT throws_ok(
+  $$SELECT public.attach_saved_sovereign(
+    '72227777-7777-4777-8777-777777777777',
+    (SELECT id FROM public.saved_sovereigns WHERE definition_id = 'sovereign.test-v2'),
+    's2-v2-attach-mismatch'
+  )$$,
+  '42501', 'SOVEREIGN_CHARACTER_SOURCE_MISMATCH',
+  'a character on a different Job cannot attach the Sovereign'
 );
 
 SELECT * FROM finish();

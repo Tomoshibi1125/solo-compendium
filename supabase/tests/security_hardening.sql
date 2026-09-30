@@ -349,21 +349,9 @@ SELECT throws_ok(
 );
 
 SELECT ok(
-  (
-    SELECT function_row.prosecdef
-    FROM pg_proc AS function_row
-    WHERE function_row.oid = 'public.get_accessible_sourcebooks(uuid,uuid)'::regprocedure
-  )
-  AND has_function_privilege(
-    'authenticated',
-    'public.get_accessible_sourcebooks(uuid,uuid)'::regprocedure,
-    'EXECUTE'
-  )
-  AND NOT has_function_privilege(
-    'anon',
-    'public.get_accessible_sourcebooks(uuid,uuid)'::regprocedure,
-    'EXECUTE'
-  )
+  -- The entitlement layer was retired (20260725000000); its projection RPC
+  -- read dropped tables and is removed (20260930100100).
+  to_regprocedure('public.get_accessible_sourcebooks(uuid,uuid)') IS NULL
   AND NOT EXISTS (
     SELECT 1
     FROM pg_proc AS legacy_helper
@@ -373,20 +361,14 @@ SELECT ok(
       AND legacy_helper.proname = 'user_has_sourcebook_access'
       AND has_function_privilege('authenticated', legacy_helper.oid, 'EXECUTE')
   ),
-  'sourcebook access uses only the guarded authenticated projection'
+  'the retired sourcebook projection is gone and no legacy helper is executable'
 );
 
-SELECT throws_ok(
-  $$
-    SELECT *
-    FROM public.get_accessible_sourcebooks(
-      NULL,
-      '22222222-2222-4222-8222-222222222222'::uuid
-    )
-  $$,
-  '42501',
-  'SOURCEBOOK_USER_CONTEXT_FORBIDDEN',
-  'sourcebook access rejects a caller-supplied actor mismatch'
+SELECT ok(
+  to_regclass('public.sourcebook_catalog') IS NULL
+  AND to_regclass('public.user_sourcebook_entitlements') IS NULL
+  AND to_regclass('public.campaign_sourcebook_shares') IS NULL,
+  'the retired sourcebook entitlement tables stay dropped'
 );
 
 SELECT ok(

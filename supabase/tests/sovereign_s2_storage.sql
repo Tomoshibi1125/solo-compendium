@@ -5,10 +5,10 @@ SET LOCAL search_path = extensions, public, pg_catalog;
 SELECT plan(13);
 
 SELECT ok(
-  to_regprocedure('public.save_legacy_sovereign_definition(jsonb,text,boolean)') IS NOT NULL
-  AND to_regprocedure('public.save_sovereign_v2_definition(jsonb,text,boolean)') IS NOT NULL
-  AND to_regprocedure('public.attach_saved_sovereign(uuid,uuid,text)') IS NOT NULL,
-  'S2 exposes the three reviewed Sovereign RPCs'
+  to_regprocedure('public.save_sovereign_v2_definition(jsonb,text,boolean)') IS NOT NULL
+  AND to_regprocedure('public.attach_saved_sovereign(uuid,uuid,text)') IS NOT NULL
+  AND to_regprocedure('public.save_legacy_sovereign_definition(jsonb,text,boolean)') IS NULL,
+  'S2 exposes the v2 save and attach RPCs; the retired legacy save is gone'
 );
 
 SELECT ok(

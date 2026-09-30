@@ -10054,13 +10054,6 @@ export type Database = {
 				};
 				Relationships: [
 					{
-						foreignKeyName: "saved_sovereigns_job_id_fkey";
-						columns: ["job_id"];
-						isOneToOne: false;
-						referencedRelation: "compendium_jobs";
-						referencedColumns: ["id"];
-					},
-					{
 						foreignKeyName: "saved_sovereigns_monarch_a_id_fkey";
 						columns: ["monarch_a_id"];
 						isOneToOne: false;
@@ -10072,13 +10065,6 @@ export type Database = {
 						columns: ["monarch_b_id"];
 						isOneToOne: false;
 						referencedRelation: "compendium_monarchs";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "saved_sovereigns_path_id_fkey";
-						columns: ["path_id"];
-						isOneToOne: false;
-						referencedRelation: "compendium_job_paths";
 						referencedColumns: ["id"];
 					},
 				];
@@ -11018,15 +11004,6 @@ export type Database = {
 				Returns: string;
 			};
 			generate_share_code: { Args: never; Returns: string };
-			get_accessible_sourcebooks: {
-				Args: { p_campaign_id?: string; p_user_id?: string };
-				Returns: {
-					access_type: string;
-					expires_at: string;
-					shared_by: string;
-					sourcebook_id: string;
-				}[];
-			};
 			get_campaign_by_share_code: {
 				Args: { p_share_code: string };
 				Returns: {
@@ -11463,14 +11440,6 @@ export type Database = {
 					p_entries?: Json;
 					p_loot?: Json;
 					p_name?: string;
-				};
-				Returns: string;
-			};
-			save_legacy_sovereign_definition: {
-				Args: {
-					p_is_public?: boolean;
-					p_operation_id: string;
-					p_payload: Json;
 				};
 				Returns: string;
 			};

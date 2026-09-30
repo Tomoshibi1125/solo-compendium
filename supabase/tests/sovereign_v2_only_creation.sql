@@ -5,12 +5,8 @@ SET LOCAL search_path = extensions, public, pg_catalog;
 SELECT plan(3);
 
 SELECT ok(
-  NOT has_function_privilege(
-    'authenticated',
-    'public.save_legacy_sovereign_definition(jsonb,text,boolean)'::regprocedure,
-    'EXECUTE'
-  ),
-  'authenticated clients cannot create legacy Sovereigns through the old RPC'
+  to_regprocedure('public.save_legacy_sovereign_definition(jsonb,text,boolean)') IS NULL,
+  'the legacy Sovereign save RPC no longer exists'
 );
 
 SELECT ok(

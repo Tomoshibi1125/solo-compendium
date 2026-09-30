@@ -1353,9 +1353,10 @@ function transformJob(job: StaticJobSource): StaticCompendiumEntry {
 	const hitDieVal = legacyJob.hit_die;
 	const rawHitDie =
 		job.hitDie || (typeof hitDieVal === "string" ? hitDieVal : undefined);
-	const hitDieNumber = rawHitDie
-		? parseInt(rawHitDie.replace(/\D/g, "").slice(-2) || "0", 10)
-		: null;
+	// Read the die size after "d": stripping every non-digit turned "1d8" into
+	// 18 and "1d6" into 16.
+	const dieSize = rawHitDie?.match(/d\s*(\d+)/i)?.[1];
+	const hitDieNumber = dieSize ? Number.parseInt(dieSize, 10) : null;
 	// Number of skills chosen at creation from the skillChoices options pool.
 	// The canonical per-job count lives in jobs.ts (`skillChoiceCount`); baseline
 	// 2 (Stalker 3, Assassin/Idol 4). NOT the pool size.

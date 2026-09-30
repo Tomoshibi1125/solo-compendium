@@ -421,5 +421,7 @@ describe("Task 5 canonical job/path matrix", () => {
 				3,
 			),
 		).toMatchObject([{ type: "dissonance_effect", target: "hype_die" }]);
-	});
+		// The first import of the character-creation graph takes ~3s alone and
+		// can pass the default 5s ceiling under full-suite load.
+	}, 30_000);
 });

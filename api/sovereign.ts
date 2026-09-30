@@ -1,5 +1,5 @@
 import type { IncomingMessage, ServerResponse } from "node:http";
-import { handleSovereignGenerationRequest } from "./_sovereignGeneration";
+import { handleSovereignGenerationRequest } from "./_sovereignGeneration.js";
 
 const MAX_BODY_BYTES = 16 * 1024;
 
@@ -9,9 +9,7 @@ type VercelLikeResponse = ServerResponse & {
 	json: (body: unknown) => unknown;
 };
 
-function headerValue(
-	value: string | string[] | undefined,
-): string | undefined {
+function headerValue(value: string | string[] | undefined): string | undefined {
 	return Array.isArray(value) ? value[0] : value;
 }
 
@@ -27,7 +25,9 @@ async function readBody(req: VercelLikeRequest): Promise<unknown> {
 	let raw = "";
 	let bytes = 0;
 	for await (const chunk of req) {
-		const text = Buffer.isBuffer(chunk) ? chunk.toString("utf8") : String(chunk);
+		const text = Buffer.isBuffer(chunk)
+			? chunk.toString("utf8")
+			: String(chunk);
 		bytes += Buffer.byteLength(text, "utf8");
 		if (bytes > MAX_BODY_BYTES) throw new Error("REQUEST_TOO_LARGE");
 		raw += text;
@@ -58,12 +58,18 @@ export default async function handler(
 	try {
 		body = await readBody(req);
 	} catch (error) {
-		return res.status(error instanceof Error && error.message === "REQUEST_TOO_LARGE" ? 413 : 400).json({
-			error:
+		return res
+			.status(
 				error instanceof Error && error.message === "REQUEST_TOO_LARGE"
-					? "Request body too large"
-					: "Invalid JSON body",
-		});
+					? 413
+					: 400,
+			)
+			.json({
+				error:
+					error instanceof Error && error.message === "REQUEST_TOO_LARGE"
+						? "Request body too large"
+						: "Invalid JSON body",
+			});
 	}
 
 	const forwarded = headerValue(req.headers["x-forwarded-for"]);

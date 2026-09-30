@@ -1,6 +1,7 @@
 import { describe, expect, it, vi } from "vitest";
 import type { SovereignV2Definition } from "@/lib/sovereign/sovereignV2Contract";
 import {
+	findCanonicalSovereignSource,
 	handleSovereignGenerationRequest,
 	parseSovereignGenerationRequest,
 	type SovereignGenerationDataAccess,
@@ -15,23 +16,23 @@ const request = {
 };
 
 const canonicalRows = {
-	"compendium_jobs:job.test": {
+	"job:job.test": {
 		id: "job.test",
 		name: "Test Job",
 		hit_die: 8,
 		primary_abilities: ["STR"],
 	},
-	"compendium_job_paths:path.test": {
+	"path:path.test": {
 		id: "path.test",
 		name: "Test Path",
 		job_id: "job.test",
 	},
-	"compendium_regents:umbral_regent": {
+	"regent:umbral_regent": {
 		id: "umbral_regent",
 		name: "Umbral Regent",
 		theme: "Shadow",
 	},
-	"compendium_regents:frost_regent": {
+	"regent:frost_regent": {
 		id: "frost_regent",
 		name: "Frost Regent",
 		theme: "Frost",
@@ -141,9 +142,9 @@ function makeDataAccess() {
 				? { id: stored.id, definition: stored.definition, schema_version: 2 }
 				: null;
 		},
-		async getCanonicalSource(table, id) {
+		async getCanonicalSource(kind, id) {
 			return (
-				canonicalRows[`${table}:${id}` as keyof typeof canonicalRows] ?? null
+				canonicalRows[`${kind}:${id}` as keyof typeof canonicalRows] ?? null
 			);
 		},
 		async saveDefinition(definition, operationId) {
@@ -309,5 +310,44 @@ describe("dedicated Sovereign generation core", () => {
 		);
 		expect(result.status).toBe(401);
 		expect(provider).not.toHaveBeenCalled();
+	});
+});
+
+describe("canonical Sovereign sources on the server", () => {
+	it("resolves the static slugs the app sends, not legacy table UUIDs", () => {
+		const job = findCanonicalSovereignSource("job", "striker");
+		const path = findCanonicalSovereignSource("path", "striker--phantom-step");
+		const regent = findCanonicalSovereignSource("regent", "umbral_regent");
+		expect(job).toMatchObject({ id: "striker", name: "Striker", hit_die: 8 });
+		expect(path).toMatchObject({
+			id: "striker--phantom-step",
+			job_id: "striker",
+		});
+		expect(regent).toMatchObject({ id: "umbral_regent" });
+		expect(
+			findCanonicalSovereignSource(
+				"job",
+				"360e1a0d-a1fe-416a-82c6-7ec61c5de5d4",
+			),
+		).toBeNull();
+		expect(findCanonicalSovereignSource("path", "striker")).toBeNull();
+	});
+
+	it("accepts every canonical Regent in a request", () => {
+		expect(
+			parseSovereignGenerationRequest({
+				...request,
+				jobId: "striker",
+				pathId: "striker--phantom-step",
+				regentAId: "gravity_regent",
+				regentBId: "war_regent",
+			}).ok,
+		).toBe(true);
+		expect(
+			parseSovereignGenerationRequest({
+				...request,
+				regentAId: "shadow_regent",
+			}).ok,
+		).toBe(false);
 	});
 });

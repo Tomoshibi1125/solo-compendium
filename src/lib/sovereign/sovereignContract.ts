@@ -15,7 +15,9 @@ import type {
 	Path,
 	Regent,
 } from "@/lib/geminiProtocol";
-import { requireDistinctCanonicalRegents } from "@/lib/regentIdentity";
+// Runtime import stays relative with a .js extension: the Sovereign API
+// function loads this module as plain Node ESM (see vercelDeployInputs.test.ts).
+import { requireDistinctCanonicalRegents } from "../regentIdentity.js";
 
 /** Bump when the wire format changes in a backward-incompatible way. */
 export const SOVEREIGN_CONTRACT_VERSION = 1 as const;
