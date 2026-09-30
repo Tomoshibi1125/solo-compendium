@@ -693,6 +693,7 @@ jobs:
       - run: npm ci
       - name: Typecheck all Edge Functions with Deno
         run: |
+          set -o pipefail
           mkdir -p test-results/supabase-edge
           npm run check:deno 2>&1 | tee test-results/supabase-edge/deno-check.log
 
@@ -741,12 +742,20 @@ jobs:
           npx supabase migration up --local 2>&1 | tee test-results/supabase-db/migrations.log
 
       # No package script exists for DB lint, so keep the local-only CLI command
-      # explicit. Warning-level findings are required failures.
+      # explicit. Warning-level findings in the app's schemas are required
+      # failures (extensions.index_advisor ships with Supabase and is out of
+      # scope). pipefail keeps tee from masking the exit code.
       - name: Lint the migrated local database
-        run: npx supabase db lint --local --level warning --fail-on warning 2>&1 | tee test-results/supabase-db/db-lint.log
+        run: |
+          set -o pipefail
+          npx supabase db lint --local --schema public,app_private --level warning --fail-on warning 2>&1 | tee test-results/supabase-db/db-lint.log
 
-      - name: Run pgTAP security hardening contracts
-        run: npm run test:db:security 2>&1 | tee test-results/supabase-db/security-contracts.log
+      # Every pgTAP file, including the security hardening contracts and
+      # function_body_integrity.sql (plpgsql_check over public and app_private).
+      - name: Run pgTAP database contracts
+        run: |
+          set -o pipefail
+          npx supabase test db --local 2>&1 | tee test-results/supabase-db/pgtap.log
 
       - name: Stop local Supabase
         if: always()
