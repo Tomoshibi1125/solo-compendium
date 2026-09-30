@@ -422,12 +422,12 @@ export function useRemoveRegentUnlock() {
 }
 
 /**
- * Warden-granted Regent-unlock opportunities (credits) for a character. Direct
- * insert/delete remains intentionally permitted by Task 8 RLS; consuming a
- * credit is handled only by consume_regent_unlock_grant above.
+ * Warden-granted Regent-unlock opportunities (credits) for a character,
+ * read-only. Wardens create and configure offers through useRegentOffers
+ * (create_regent_unlock_offer); consuming a credit is handled only by
+ * consume_regent_unlock_grant above.
  */
 export function useRegentUnlockGrants(characterId: string) {
-	const { toast } = useToast();
 	const queryClient = useQueryClient();
 	const remoteCharacter = isRemoteId(characterId);
 
@@ -475,62 +475,10 @@ export function useRegentUnlockGrants(characterId: string) {
 		};
 	}, [characterId, queryClient, remoteCharacter]);
 
-	const grantMutation = useMutation({
-		mutationFn: async ({
-			questId,
-			questTitle,
-		}: {
-			questId?: string | null;
-			questTitle: string;
-		}) => {
-			assertRemoteCharacter(characterId);
-			const { data: authData, error: authError } =
-				await supabase.auth.getUser();
-			if (authError) throw authError;
-			const { data, error: insertError } = await supabase
-				.from("character_regent_unlock_grants")
-				.insert({
-					character_id: characterId,
-					quest_id: questId ?? null,
-					quest_title: questTitle,
-					granted_by: authData.user?.id ?? null,
-				})
-				.select()
-				.single();
-			if (insertError) throw insertError;
-			return data;
-		},
-		onSuccess: async () => {
-			await Promise.all([
-				queryClient.invalidateQueries({
-					queryKey: ["regent-unlock-grants", characterId],
-				}),
-				queryClient.invalidateQueries({
-					queryKey: ["campaign-regent-unlock-grants"],
-				}),
-			]);
-			toast({
-				title: "Regent Quest Completed",
-				description: `The character may now attune a ${REGENT_LABEL}.`,
-			});
-		},
-		onError: (mutationError: Error) => {
-			toast({
-				title: "Failed to Grant",
-				description:
-					mutationError.message ||
-					"An error occurred while granting the unlock.",
-				variant: "destructive",
-			});
-		},
-	});
-
 	return {
 		grants,
 		availableCredits: grants.length,
 		isLoading,
 		error,
-		grantRegentUnlockAsync: grantMutation.mutateAsync,
-		isGranting: grantMutation.isPending,
 	};
 }

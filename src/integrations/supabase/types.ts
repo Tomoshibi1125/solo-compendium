@@ -1264,13 +1264,6 @@ export type Database = {
 						referencedRelation: "campaigns_public_listings";
 						referencedColumns: ["id"];
 					},
-					{
-						foreignKeyName: "campaign_relic_instances_relic_id_fkey";
-						columns: ["relic_id"];
-						isOneToOne: false;
-						referencedRelation: "compendium_relics";
-						referencedColumns: ["id"];
-					},
 				];
 			};
 			campaign_roll_events: {
@@ -10817,14 +10810,6 @@ export type Database = {
 				Returns: number;
 			};
 			calculate_proficiency_bonus: { Args: { level: number }; Returns: number };
-			can_manage_homebrew_content: {
-				Args: { p_homebrew_id: string; p_user_id?: string };
-				Returns: boolean;
-			};
-			can_view_homebrew_content: {
-				Args: { p_homebrew_id: string; p_user_id?: string };
-				Returns: boolean;
-			};
 			cancel_craft_project_m3: {
 				Args: {
 					p_expected_version: number;

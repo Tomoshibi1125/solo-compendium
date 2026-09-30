@@ -80,7 +80,7 @@ All signatures in this section are granted to `authenticated` only unless they a
 | `public.deploy_campaign_encounter(uuid)` | `src/hooks/useCampaignEncounters.ts` | Resolves the encounter, requires primary/co-Warden, creates combat session/combatants, emits a rule event, and returns session UUID. | Atomic multi-table deployment through combat RLS. |
 | `public.export_campaign_bundle(uuid)` | `src/hooks/useCampaignExport.ts` | Primary/co-Warden required. Returns the campaign's multi-table export bundle. | One authorized aggregate read across otherwise independent RLS policies. |
 | `public.assign_campaign_loot(uuid,jsonb,uuid,uuid,uuid)` | `src/hooks/useCampaignRewards.ts` | Primary/co-Warden required. Requires a valid item array with positive quantities/nonnegative values and campaign-owned optional references; applies economy caps, writes loot and rule event, and returns loot UUID. | Validated atomic campaign ledger/event update. |
-| `public.assign_campaign_relic(uuid,uuid,text,text,jsonb,numeric,uuid,boolean)` | Compatibility surface; no current direct caller found | Primary/co-Warden required. Rejects negative values and cross-campaign member bindings; validates name/economy cap in the internal body, writes relic and rule event, and returns instance UUID. | Validated atomic campaign ledger/event update. |
+| `public.assign_campaign_relic(uuid,text,text,text,jsonb,numeric,uuid,boolean)` | `src/hooks/useCampaignRelics.ts` | Primary/co-Warden required. Takes the canonical relic slug. Rejects negative values and cross-campaign member bindings; validates name/economy cap in the internal body, writes relic and rule event, and returns instance UUID. The vault has no direct insert policy. | Validated atomic campaign ledger/event update. |
 | `public.update_character_xp(uuid,integer,uuid,text)` | `src/hooks/useEncounterRewards.ts` | Requires positive XP and locks the character. With campaign context, requires primary/co-Warden and a campaign-linked target; without campaign context, requires character ownership. Updates XP and writes a `reward` campaign log when applicable; returns success, total, and message. | Serialized character update and campaign audit write, including controlled cross-user awards. |
 | `public.warden_grant_character_equipment(uuid,jsonb)` | `src/hooks/useWardenItemDelivery.ts` | Primary/co-Warden required; every target character must be linked to the campaign. Stacks or inserts validated equipment and returns processed count. | Controlled cross-user inventory mutation in one transaction. |
 | `public.create_session_quest(uuid,text,text,text[],jsonb)` | `src/hooks/useSessionQuests.ts` | Authenticated primary Warden required. Creates a campaign quest with objectives/rewards and returns quest UUID. | Privileged quest insert through campaign RLS. |
@@ -145,10 +145,9 @@ All six search RPCs require authentication, accept `(query, limit, offset)`, ran
 
 ## Exact-granted SECURITY INVOKER helpers
 
-These signatures are authenticated and exact-granted because RLS expressions depend on them, but they are **not definer exceptions**:
+None. `20260930110100` dropped `can_manage_homebrew_content(uuid,uuid)` and `can_view_homebrew_content(uuid,uuid)`: homebrew RLS no longer uses them, and both trusted the editable `profiles.role`. Homebrew policies use `app_private.is_account_admin()`, `app_private.actor_in_campaign(uuid)`, and `public.is_campaign_system(uuid,uuid)` instead.
 
-- `public.can_manage_homebrew_content(uuid,uuid)`
-- `public.can_view_homebrew_content(uuid,uuid)`
+Direct Data API writes to `homebrew_content`, `marketplace_items`, and `profiles` also pass SECURITY INVOKER guard triggers in `app_private` (`guard_homebrew_content_api_write`, `guard_marketplace_item_api_write`, `guard_profile_api_write`). They act only when `current_user` is `anon` or `authenticated`, so the definer RPCs keep their own rules: ownership and authorship cannot move, marketplace counters and moderation flags stay with the RPCs, bundles hold only their author's items, and `banned_at` stays with `admin_set_user_ban`.
 
 The sourcebook entitlement layer is retired: `20260725000000` dropped its tables and `user_has_sourcebook_access`, and `20260930100100` dropped `get_accessible_sourcebooks(uuid,uuid)` and the tables' trigger functions. Every sourcebook is available to every account.
 
@@ -168,7 +167,7 @@ The sourcebook entitlement layer is retired: `20260725000000` dropped its tables
 ## Review and removal candidates
 
 - Remove `add_player_character_to_campaign` after old clients are retired.
-- Confirm callers before retaining `save_campaign_encounter`, `assign_campaign_relic`, `get_campaign_linked_characters`, and the six compendium searches.
+- Confirm callers before retaining `save_campaign_encounter`, `get_campaign_linked_characters`, and the six compendium searches.
 - Move `guild_member_role` and campaign/profile role predicates to a non-exposed schema when RLS dependencies can be migrated; today they are membership/role oracles.
 - Convert `mark_user_notification_read` and other strictly self-bound routines to invoker when policy coverage is proven.
 - Review `asset_exists`, `get_campaign_member_count`, `prepare_search_text`, `hypopg_reset`, `resolve_campaign_invite`, and timestamp-only definers for deletion or invoker conversion.
@@ -214,3 +213,5 @@ Any new function, overload, result change, grant, or authorization change requir
 - this register and rollout evidence updated.
 
 Name-based allowlists are not approval. Do not expose an unchecked body, broad helper, maintenance routine, or new anonymous function for compatibility.
+
+Tables follow the same rule. Production predates Supabase's May 2026 default change, and `20260930110000` restates its legacy defaults everywhere, so a new `public` table is granted ALL to `anon`, `authenticated`, and `service_role` the moment it is created. RLS is the only boundary: enable it and add caller-scoped policies (`TO authenticated`, bound to `auth.uid()` or an actor helper) for exactly the commands the app uses, in the same migration, with allow and deny cases in `supabase/tests/scoped_rls_policies.sql` or a sibling test.
