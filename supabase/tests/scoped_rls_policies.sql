@@ -1,16 +1,18 @@
--- Direct Data API access restored or tightened in 20260930110100, run under
--- the production-equivalent grants of 20260930110000. Each area checks the
--- intended caller, another signed-in user, and signed-out access.
+-- Direct Data API access restored or tightened in 20260930110100 and
+-- 20260930120000, run under the production-equivalent grants of
+-- 20260930110000. Each area checks the intended caller, another signed-in
+-- user, and signed-out access. The app has two roles, Warden and Ascendant.
 BEGIN;
 SET LOCAL search_path = extensions, public, pg_catalog;
 
--- Owner A is a member of campaign C (Warden W); B is an outsider; X is an
--- account admin; E has no profile row yet.
+-- Owner A is a member of campaign C (Warden W); B is an outsider; X carries
+-- the old account_role 'admin' app metadata, which grants nothing; E has no
+-- profile row yet.
 INSERT INTO auth.users (id, email, raw_app_meta_data) VALUES
   ('e1110000-1111-4111-8111-111111111111', 'rls-owner@example.test', '{}'),
   ('e2220000-2222-4222-8222-222222222222', 'rls-other@example.test', '{}'),
   ('e3330000-3333-4333-8333-333333333333', 'rls-warden@example.test', '{}'),
-  ('e4440000-4444-4444-8444-444444444444', 'rls-admin@example.test', '{"account_role":"admin"}'),
+  ('e4440000-4444-4444-8444-444444444444', 'rls-metadata@example.test', '{"account_role":"admin"}'),
   ('e5550000-5555-4555-8555-555555555555', 'rls-new@example.test', '{}');
 DELETE FROM public.profiles WHERE id = 'e5550000-5555-4555-8555-555555555555';
 
@@ -54,13 +56,13 @@ INSERT INTO public.campaign_member_characters (campaign_id, campaign_member_id, 
   ('e6660000-6666-4666-8666-666666666666', 'e9990000-9999-4999-8999-999999999999',
    'e7770000-7777-4777-8777-777777777777');
 
--- B's unlisted paid item, and a review by A on it.
+-- B's listing, and a review by A on it.
 INSERT INTO public.marketplace_items
-  (id, author_id, title, description, item_type, price_type, is_listed) VALUES
+  (id, author_id, title, description, item_type) VALUES
   ('fb000000-0000-4000-8000-00000000000b', 'e2220000-2222-4222-8222-222222222222',
-   'Private module', 'Unlisted paid module.', 'module', 'paid', false);
-INSERT INTO public.marketplace_reviews (item_id, user_id, rating, verified_purchase) VALUES
-  ('fb000000-0000-4000-8000-00000000000b', 'e1110000-1111-4111-8111-111111111111', 3, false);
+   'Shared module', 'A shared module.', 'module');
+INSERT INTO public.marketplace_reviews (item_id, user_id, rating) VALUES
+  ('fb000000-0000-4000-8000-00000000000b', 'e1110000-1111-4111-8111-111111111111', 3);
 
 SELECT plan(91);
 
@@ -418,6 +420,13 @@ SELECT is(
 
 -- ── Homebrew ────────────────────────────────────────────────────────────────
 DO $$ BEGIN PERFORM set_config('request.jwt.claim.sub', 'e1110000-1111-4111-8111-111111111111', true); END $$;
+SELECT is(
+  (SELECT confrelid::regclass::text FROM pg_constraint
+   WHERE conrelid = 'public.homebrew_content'::regclass
+     AND conname = 'homebrew_content_user_id_fkey'),
+  'profiles',
+  'homebrew owners reference profiles, not the empty legacy user_profiles'
+);
 SELECT lives_ok(
   $$INSERT INTO public.homebrew_content (id, user_id, content_type, name, description, data)
     VALUES ('f9000000-0000-4000-8000-000000000009', 'e1110000-1111-4111-8111-111111111111',
@@ -454,6 +463,14 @@ SELECT is(
   0::bigint,
   'another user cannot see drafts'
 );
+DO $$ BEGIN PERFORM set_config('request.jwt.claim.sub', 'e4440000-4444-4444-8444-444444444444', true); END $$;
+SELECT is(
+  (SELECT count(*) FROM public.homebrew_content
+   WHERE id IN ('f9000000-0000-4000-8000-000000000009', 'f9100000-0000-4000-8000-000000000019')),
+  0::bigint,
+  'the old admin app metadata reveals no drafts'
+);
+DO $$ BEGIN PERFORM set_config('request.jwt.claim.sub', 'e2220000-2222-4222-8222-222222222222', true); END $$;
 SELECT throws_ok(
   $$INSERT INTO public.homebrew_content (user_id, content_type, name, description, data, campaign_id)
     VALUES ('e2220000-2222-4222-8222-222222222222', 'item', 'Intruder', 'x', '{}',
@@ -524,52 +541,40 @@ SELECT throws_ok(
   '42501', NULL,
   'authorship cannot move'
 );
-SELECT throws_ok(
-  $$INSERT INTO public.marketplace_items (author_id, title, description, item_type, is_bundle, bundled_item_ids)
-    VALUES ('e1110000-1111-4111-8111-111111111111', 'Sneaky bundle', 'x', 'module', true,
-            ARRAY['fb000000-0000-4000-8000-00000000000b']::uuid[])$$,
-  '42501', 'MARKETPLACE_BUNDLE_FOREIGN_ITEM',
-  'a bundle cannot include another author''s item'
+SELECT ok(
+  to_regclass('public.user_marketplace_entitlements') IS NULL
+  AND to_regprocedure('public.gift_marketplace_item(uuid,uuid,text)') IS NULL
+  AND NOT EXISTS (
+    SELECT 1 FROM information_schema.columns
+    WHERE table_schema = 'public' AND table_name = 'marketplace_items'
+      AND column_name IN ('price_type', 'price_amount', 'price_currency', 'is_listed', 'is_bundle')
+  ),
+  'the marketplace is free and public: no prices, entitlements, gifts, or hidden listings'
 );
-SELECT throws_ok(
-  $$INSERT INTO public.user_marketplace_entitlements (user_id, item_id)
-    VALUES ('e1110000-1111-4111-8111-111111111111', 'fb000000-0000-4000-8000-00000000000b')$$,
-  '42501', NULL,
-  'a user cannot grant themselves a paid item'
-);
-UPDATE public.marketplace_reviews SET verified_purchase = true, rating = 5
+UPDATE public.marketplace_reviews SET rating = 5
   WHERE item_id = 'fb000000-0000-4000-8000-00000000000b';
 SELECT is(
   (SELECT count(*) FROM public.marketplace_items WHERE id = 'fb000000-0000-4000-8000-00000000000b'),
-  0::bigint,
-  'unlisted items are hidden from other users'
+  1::bigint,
+  'every listing is visible to other users'
 );
 DO $$ BEGIN PERFORM set_config('request.jwt.claim.sub', 'e2220000-2222-4222-8222-222222222222', true); END $$;
 UPDATE public.marketplace_items SET title = 'Hijacked' WHERE id = 'fa000000-0000-4000-8000-00000000000a';
-SELECT is(
-  (SELECT count(*) FROM public.marketplace_items WHERE id = 'fb000000-0000-4000-8000-00000000000b'),
-  1::bigint,
-  'the author sees their unlisted item'
-);
 DO $$ BEGIN PERFORM set_config('request.jwt.claim.sub', 'e4440000-4444-4444-8444-444444444444', true); END $$;
-SELECT lives_ok(
-  $$INSERT INTO public.user_marketplace_entitlements (user_id, item_id, entitlement_type)
-    VALUES ('e1110000-1111-4111-8111-111111111111', 'fb000000-0000-4000-8000-00000000000b', 'grant')$$,
-  'an account admin can grant an entitlement'
-);
-DO $$ BEGIN PERFORM set_config('request.jwt.claim.sub', 'e1110000-1111-4111-8111-111111111111', true); END $$;
-SELECT is(
-  (SELECT count(*) FROM public.marketplace_items WHERE id = 'fb000000-0000-4000-8000-00000000000b'),
-  1::bigint,
-  'an entitled user sees the unlisted item'
+UPDATE public.marketplace_items SET title = 'Metadata edit' WHERE id = 'fa000000-0000-4000-8000-00000000000a';
+SELECT throws_ok(
+  $$INSERT INTO public.marketplace_items (author_id, title, description, item_type)
+    VALUES ('e1110000-1111-4111-8111-111111111111', 'Posted for someone else', 'x', 'map')$$,
+  '42501', NULL,
+  'no one can list an item under another author'
 );
 SET LOCAL ROLE anon;
 DO $$ BEGIN PERFORM set_config('request.jwt.claim.sub', '', true); END $$;
 SELECT is(
-  (SELECT string_agg(title, ',') FROM public.marketplace_items
+  (SELECT string_agg(title, ',' ORDER BY title) FROM public.marketplace_items
    WHERE id IN ('fa000000-0000-4000-8000-00000000000a', 'fb000000-0000-4000-8000-00000000000b')),
-  'Probe Map II',
-  'signed-out callers browse listed items only'
+  'Probe Map II,Shared module',
+  'signed-out callers browse every listing, and other users'' edits changed nothing'
 );
 RESET ROLE;
 SELECT is(
@@ -580,9 +585,9 @@ SELECT is(
   'authors cannot set counters, ratings, or moderation flags'
 );
 SELECT is(
-  (SELECT rating || '/' || verified_purchase::text FROM public.marketplace_reviews
+  (SELECT rating FROM public.marketplace_reviews
    WHERE item_id = 'fb000000-0000-4000-8000-00000000000b'),
-  '3/false',
+  3,
   'reviews cannot be rewritten directly'
 );
 
@@ -643,18 +648,17 @@ SELECT is(
 );
 
 -- ── Profiles ────────────────────────────────────────────────────────────────
-RESET ROLE;
-UPDATE public.profiles SET banned_at = now() WHERE id = 'e2220000-2222-4222-8222-222222222222';
 SET LOCAL ROLE authenticated;
 DO $$ BEGIN PERFORM set_config('request.jwt.claim.sub', 'e2220000-2222-4222-8222-222222222222', true); END $$;
-SELECT throws_ok(
-  $$UPDATE public.profiles SET banned_at = NULL WHERE id = 'e2220000-2222-4222-8222-222222222222'$$,
-  '42501', 'PROFILE_SUSPENSION_READ_ONLY',
-  'a suspended account cannot lift its own suspension'
-);
 SELECT lives_ok(
-  $$UPDATE public.profiles SET display_name = 'Still suspended' WHERE id = 'e2220000-2222-4222-8222-222222222222'$$,
-  'profile edits that leave suspension alone still work'
+  $$UPDATE public.profiles SET display_name = 'Renamed' WHERE id = 'e2220000-2222-4222-8222-222222222222'$$,
+  'a user edits their own profile'
+);
+DO $$ BEGIN PERFORM set_config('request.jwt.claim.sub', 'e4440000-4444-4444-8444-444444444444', true); END $$;
+SELECT is(
+  (SELECT count(*) FROM public.profiles),
+  1::bigint,
+  'the old admin app metadata reveals no one else''s profile'
 );
 DO $$ BEGIN PERFORM set_config('request.jwt.claim.sub', 'e5550000-5555-4555-8555-555555555555', true); END $$;
 SELECT throws_ok(
@@ -676,6 +680,11 @@ SELECT is(
   'ascendant',
   'sign-up metadata cannot claim the admin profile role'
 );
+SELECT throws_ok(
+  $$UPDATE public.profiles SET role = 'admin' WHERE id = 'e5560000-5555-4555-8555-555555555556'$$,
+  '23514', NULL,
+  'the only profile roles are Warden and Ascendant'
+);
 
 -- ── Compendium catalog ──────────────────────────────────────────────────────
 SET LOCAL ROLE anon;
@@ -691,19 +700,20 @@ DO $$ BEGIN PERFORM set_config('request.jwt.claim.sub', 'e3330000-3333-4333-8333
 SELECT throws_ok(
   $$INSERT INTO public.compendium_spells (name, description) VALUES ('Vandal Spell', 'x')$$,
   '42501', NULL,
-  'a signed-in non-admin cannot write compendium spells'
+  'signed-in users cannot write compendium spells'
 );
 SELECT throws_ok(
   $$INSERT INTO public.compendium_feature_choice_groups (feature_id, choice_key)
     VALUES ('eb000000-0000-4000-8000-00000000000b', 'warden-edit')$$,
   '42501', NULL,
-  'a Warden profile is not compendium-admin authority'
+  'Wardens cannot edit the shared feature-choice catalog'
 );
 DO $$ BEGIN PERFORM set_config('request.jwt.claim.sub', 'e4440000-4444-4444-8444-444444444444', true); END $$;
-SELECT lives_ok(
+SELECT throws_ok(
   $$INSERT INTO public.compendium_feature_choice_groups (feature_id, choice_key)
-    VALUES ('eb000000-0000-4000-8000-00000000000b', 'admin-edit')$$,
-  'an account admin edits the feature-choice catalog'
+    VALUES ('eb000000-0000-4000-8000-00000000000b', 'metadata-edit')$$,
+  '42501', NULL,
+  'the old admin app metadata grants no compendium writes'
 );
 RESET ROLE;
 

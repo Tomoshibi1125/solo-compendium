@@ -1,6 +1,5 @@
 import type { LucideIcon } from "lucide-react";
 import {
-	BarChart3,
 	BookOpen,
 	Calendar,
 	Clock,
@@ -49,7 +48,6 @@ export const WARDEN_TOOL_CATEGORIES: ToolCatalogCategory[] = [
 	{ id: "content", name: "Content", icon: BookOpen },
 	{ id: "items", name: "Items & Equipment", icon: Shield },
 	{ id: "party", name: "Party & Session", icon: UsersRound },
-	{ id: "rift", name: "System", icon: Settings },
 ];
 
 export const WARDEN_TOOLS: ToolCatalogItem[] = [
@@ -148,20 +146,6 @@ export const WARDEN_TOOLS: ToolCatalogItem[] = [
 		glow: "group-hover:shadow-system-green/20",
 		category: "party",
 		priority: 12,
-	},
-	{
-		id: "content-audit",
-		name: "Content Audit",
-		description:
-			"Review database completeness, link integrity, and coverage gaps.",
-		icon: BarChart3,
-		status: "available",
-		color:
-			"from-zinc-500/20 to-zinc-600/10 border-zinc-500/30 hover:border-zinc-500/60",
-		iconColor: "text-zinc-400",
-		glow: "group-hover:shadow-zinc-500/20",
-		category: "rift",
-		priority: 19,
 	},
 ];
 

@@ -3,16 +3,16 @@ import { AuthPage } from "./pages/AuthPage";
 
 /**
  * Guest coverage for app surfaces with no prior E2E coverage:
- * Bureau hub, Party Stash, Field Roster, Meridian City atlas, the
- * players-book source book (exercises the IntroChapter protocol-data
- * gate), Profile, Legal, and Landing.
+ * Bureau hub, Party Stash, Meridian City atlas, the players-book source
+ * book (exercises the IntroChapter protocol-data gate), Profile, Legal, and
+ * Landing.
  *
  * All tests run as a guest Ascendant in one shared context (guest data is
  * per-context localStorage, matching the rest of the suite).
  */
 
 test.describe
-	.serial("Guest surfaces: bureau/stash/roster/atlas/book", () => {
+	.serial("Guest surfaces: bureau/stash/atlas/book", () => {
 		let page: Page;
 
 		test.beforeAll(async ({ browser }) => {
@@ -48,24 +48,6 @@ test.describe
 			await expect(
 				page.getByRole("button", { name: /Find Campaign/i }),
 			).toBeVisible();
-		});
-
-		test("Field Roster: page renders posts, the empty state, or the guest load error", async () => {
-			await page.goto("/field-roster");
-			await expect(page.getByText("BUREAU FIELD ROSTER").first()).toBeVisible({
-				timeout: 15_000,
-			});
-			// Listings live behind account access (the public listings view runs
-			// with the caller's rights and anon cannot read campaigns), so a guest
-			// gets the explicit load error. Signed-in users see open posts or the
-			// empty state. Any of the three means the page settled.
-			await expect(
-				page
-					.getByRole("link", { name: /Request to join/i })
-					.or(page.getByText(/NO OPEN POSTS/i))
-					.or(page.getByText(/Could not load the Field Roster/i))
-					.first(),
-			).toBeVisible({ timeout: 15_000 });
 		});
 
 		test("Meridian City atlas: header, districts, and legend render", async () => {

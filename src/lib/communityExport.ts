@@ -76,20 +76,12 @@ export interface MarketplaceItemExport {
 	title: string;
 	item_type: string;
 	category: string;
-	price_type: string;
-	price_amount: number | null;
-	price_currency: string | null;
 	rating_avg: number;
 	rating_count: number;
 	downloads_count: number;
 	tags: string[];
 	description: string;
 }
-
-const priceLabel = (i: MarketplaceItemExport): string =>
-	i.price_type === "paid"
-		? `${i.price_currency || "USD"} ${i.price_amount ?? 0}`
-		: i.price_type;
 
 export function buildMarketplaceMarkdown(
 	items: ReadonlyArray<MarketplaceItemExport>,
@@ -100,7 +92,6 @@ export function buildMarketplaceMarkdown(
 		lines.push(`## ${i.title}`);
 		lines.push(
 			`- **Type:** ${i.item_type} · ${i.category}`,
-			`- **Price:** ${priceLabel(i)}`,
 			`- **Rating:** ${i.rating_avg.toFixed(2)} (${i.rating_count})`,
 			`- **Downloads:** ${i.downloads_count}`,
 		);
@@ -118,8 +109,6 @@ export function buildMarketplaceCsv(
 		"title",
 		"item_type",
 		"category",
-		"price_type",
-		"price_amount",
 		"rating_avg",
 		"rating_count",
 		"downloads_count",
@@ -129,8 +118,6 @@ export function buildMarketplaceCsv(
 		title: i.title,
 		item_type: i.item_type,
 		category: i.category,
-		price_type: i.price_type,
-		price_amount: i.price_amount ?? "",
 		rating_avg: i.rating_avg,
 		rating_count: i.rating_count,
 		downloads_count: i.downloads_count,

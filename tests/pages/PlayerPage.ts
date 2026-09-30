@@ -832,18 +832,6 @@ export class PlayerPage {
 		await expect(heading).toBeVisible({ timeout: 10_000 });
 	}
 
-	/** Attempt to access a Warden route and verify access is denied. */
-	async verifyDMRouteBlocked(route: string) {
-		await this.page.goto(route);
-		await this.page.waitForTimeout(2_000);
-		const accessDenied = this.page
-			.getByText(
-				/Access Denied|Warden Access Required|Authentication Required/i,
-			)
-			.first();
-		await expect(accessDenied).toBeVisible({ timeout: 10_000 });
-	}
-
 	// ─── Enhanced character creation ─────────────────────────────────
 
 	/**

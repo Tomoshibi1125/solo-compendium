@@ -11,7 +11,6 @@ import { describe, expect, it } from "vitest";
 const SWEPT_CLEAN_PAGES = [
 	"src/pages/Campaigns.tsx",
 	"src/pages/CampaignSessionPlay.tsx",
-	"src/pages/admin/FeatureChoicesAdmin.tsx",
 ];
 
 const SUB_11PX_PATTERN = /text-\[(?:[1-9]|10)px\]/;

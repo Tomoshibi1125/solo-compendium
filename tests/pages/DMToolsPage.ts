@@ -343,44 +343,27 @@ export class DMToolsPage {
 		}
 	}
 
-	// ─── Rift Console (Admin) ───────────────────────────────────
+	// ─── Retired admin/dev URLs ─────────────────────────────────
 
-	// The three admin routes below are `allowGuest={false}` — a guest Warden
-	// sees ProtectedRoute's "Authentication Required" gate, while a real
-	// Warden account sees the page. Accept either so the assertion holds in
-	// both modes and still fails on crashes/blank renders.
+	// Admin and development work happens outside the app. The old console,
+	// selection-protocol editor, content audit, and art-generation URLs
+	// redirect to the Warden Protocols hub.
 
-	async testSystemConsole() {
-		await this.page.goto("/warden-directives/rift-console");
-		await this.page.waitForTimeout(2_000);
-		const heading = this.page
-			.getByText(/Authentication Required|Rift Console/i)
-			.first();
-		await expect(heading).toBeVisible({ timeout: 15_000 });
-	}
-
-	// ─── Content Audit ────────────────────────────────────────────
-
-	async testContentAudit() {
-		await this.page.goto("/warden-directives/content-audit");
-		await this.page.waitForTimeout(2_000);
-		const heading = this.page
-			.getByText(/Authentication Required|Content Audit/i)
-			.first();
-		await expect(heading).toBeVisible({ timeout: 15_000 });
-	}
-
-	// ─── Retired Art Generation admin URL (RA-18) ─────────────────
-
-	async testRetiredArtGenerationAdmin() {
-		await this.page.goto("/warden-directives/art-generation");
-		await this.page.waitForTimeout(2_000);
-		const heading = this.page
-			.getByText(/Authentication Required|Rift Console/i)
-			.first();
-		await expect(heading).toBeVisible({ timeout: 15_000 });
+	async testRetiredAdminUrls() {
+		for (const path of [
+			"/warden-directives/rift-console",
+			"/warden-directives/selection-protocols",
+			"/warden-directives/content-audit",
+			"/warden-directives/art-generation",
+			"/admin",
+		]) {
+			await this.page.goto(path);
+			await expect(this.page).toHaveURL(/\/warden-protocols/, {
+				timeout: 15_000,
+			});
+		}
 		await expect(
-			this.page.getByText(/Visualization Lattice|Generate art/i),
+			this.page.getByText(/Import Content|Selection Protocols|Generate art/i),
 		).toHaveCount(0);
 	}
 }

@@ -19,11 +19,9 @@ INSERT INTO public.campaign_members (campaign_id, user_id, role, character_id) V
    'c2220000-2222-4222-8222-222222222222', 'ascendant',
    'c6660000-6666-4666-8666-666666666666');
 INSERT INTO public.marketplace_items
-  (id, author_id, title, description, item_type, price_type, is_listed) VALUES
+  (id, author_id, title, description, item_type) VALUES
   ('c7770000-7777-4777-8777-777777777777', 'c3330000-3333-4333-8333-333333333333',
-   'Free map', 'A free map.', 'map', 'free', true),
-  ('c8880000-8888-4888-8888-888888888888', 'c3330000-3333-4333-8333-333333333333',
-   'Paid module', 'A paid module.', 'module', 'paid', true);
+   'Shared map', 'A shared map.', 'map');
 INSERT INTO public.homebrew_content
   (id, user_id, content_type, name, description, data, status, visibility_scope) VALUES
   ('c9990000-9999-4999-8999-999999999999', 'c3330000-3333-4333-8333-333333333333',
@@ -37,7 +35,7 @@ INSERT INTO public.character_spells
    'spell-probe', 'Probe Spell', 1, 'Frost Regent Attunement (Catch-Up)', false, true);
 SET LOCAL session_replication_role = origin;
 
-SELECT plan(17);
+SELECT plan(15);
 
 -- Campaign XP award (unqualified parameters used to collide with columns).
 SET LOCAL ROLE authenticated;
@@ -62,12 +60,12 @@ SELECT is(
   'the award is logged to the campaign'
 );
 
--- Marketplace downloads, reviews, and gifts.
+-- Marketplace downloads and reviews (every listing is free).
 SET LOCAL ROLE authenticated;
 DO $$ BEGIN PERFORM set_config('request.jwt.claim.sub', 'c2220000-2222-4222-8222-222222222222', true); END $$;
 SELECT lives_ok(
   $$SELECT public.record_marketplace_download('c7770000-7777-4777-8777-777777777777')$$,
-  'a player records a free download'
+  'a player records a download'
 );
 SELECT lives_ok(
   $$SELECT public.record_marketplace_download('c7770000-7777-4777-8777-777777777777')$$,
@@ -75,35 +73,23 @@ SELECT lives_ok(
 );
 SELECT throws_ok(
   $$SELECT public.record_marketplace_download('c8880000-8888-4888-8888-888888888888')$$,
-  'P0001', 'MARKETPLACE_ACCESS_DENIED',
-  'a paid item without an entitlement cannot be downloaded'
+  'P0001', 'MARKETPLACE_ITEM_NOT_FOUND',
+  'a download of a missing listing fails'
 );
 SELECT lives_ok(
   $$SELECT public.upsert_marketplace_review('c7770000-7777-4777-8777-777777777777', 4, 'Solid map')$$,
-  'a player reviews a free item'
-);
-SELECT throws_ok(
-  $$SELECT public.gift_marketplace_item(
-    'c8880000-8888-4888-8888-888888888888', 'c4440000-4444-4444-8444-444444444444', NULL)$$,
-  'P0001', 'GIFT_NOT_ENTITLED',
-  'a player cannot gift an item they do not hold'
-);
-DO $$ BEGIN PERFORM set_config('request.jwt.claim.sub', 'c3330000-3333-4333-8333-333333333333', true); END $$;
-SELECT lives_ok(
-  $$SELECT public.gift_marketplace_item(
-    'c8880000-8888-4888-8888-888888888888', 'c4440000-4444-4444-8444-444444444444', 'Enjoy')$$,
-  'the author gifts their paid item'
+  'a player reviews a listing'
 );
 DO $$ BEGIN PERFORM set_config('request.jwt.claim.sub', 'c4440000-4444-4444-8444-444444444444', true); END $$;
 SELECT lives_ok(
-  $$SELECT public.record_marketplace_download('c8880000-8888-4888-8888-888888888888')$$,
-  'the gift recipient can download the paid item'
+  $$SELECT public.record_marketplace_download('c7770000-7777-4777-8777-777777777777')$$,
+  'another player records a download'
 );
 RESET ROLE;
 SELECT is(
   (SELECT downloads_count || '/' || rating_count || '/' || rating_avg::text
    FROM public.marketplace_items WHERE id = 'c7770000-7777-4777-8777-777777777777'),
-  '1/1/4.00',
+  '2/1/4.00',
   'downloads count people once and reviews update the rating'
 );
 

@@ -6,7 +6,6 @@ import { useAuth } from "@/lib/auth/authContext";
 interface ProtectedRouteProps {
 	children: ReactNode;
 	requireWarden?: boolean;
-	requireAccountAdmin?: boolean;
 	allowGuest?: boolean;
 }
 
@@ -72,7 +71,6 @@ const AccessDenied = ({
 export function ProtectedRoute({
 	children,
 	requireWarden = false,
-	requireAccountAdmin = false,
 	allowGuest,
 }: ProtectedRouteProps) {
 	const isE2E = import.meta.env.VITE_E2E === "true";
@@ -80,7 +78,6 @@ export function ProtectedRoute({
 	const { user, loading, session, updateProfile } = useAuth();
 	const isAuthenticated = !!user;
 	const isWarden = user?.role === "warden";
-	const isAccountAdmin = user?.isAccountAdmin === true;
 	const guestAllowed = allowGuest ?? guestEnabled;
 	const hasStoredSession =
 		typeof window !== "undefined" &&
@@ -93,15 +90,6 @@ export function ProtectedRoute({
 
 	// E2E mode still enforces capabilities represented by the mocked user.
 	if (isE2E) {
-		if (requireAccountAdmin && !isAccountAdmin) {
-			return (
-				<AccessDenied
-					title="Account Administrator Access Required"
-					message="This area requires a trusted account-administrator claim."
-					icon={Lock}
-				/>
-			);
-		}
 		if (requireWarden && !isWarden) {
 			return (
 				<AccessDenied
@@ -116,7 +104,7 @@ export function ProtectedRoute({
 
 	// If Supabase isn't configured, show helpful setup message
 	if (!isSupabaseConfigured) {
-		if (guestAllowed && !requireAccountAdmin && (!requireWarden || isWarden)) {
+		if (guestAllowed && (!requireWarden || isWarden)) {
 			return <>{children}</>;
 		}
 		return (
@@ -137,7 +125,7 @@ export function ProtectedRoute({
 	}
 
 	if (!isAuthenticated) {
-		if (guestAllowed && !requireAccountAdmin) {
+		if (guestAllowed) {
 			return <>{children}</>;
 		}
 		return (
@@ -155,16 +143,6 @@ export function ProtectedRoute({
 			window.location.reload();
 		}
 	};
-
-	if (requireAccountAdmin && !isAccountAdmin) {
-		return (
-			<AccessDenied
-				title="Account Administrator Access Required"
-				message="This area is limited to trusted account administrators. Warden gameplay mode does not grant account-management authority."
-				icon={Lock}
-			/>
-		);
-	}
 
 	if (requireWarden && !isWarden) {
 		return (

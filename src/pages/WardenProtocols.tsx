@@ -10,7 +10,6 @@ import {
 	HelpCircle,
 	List,
 	Search,
-	Settings,
 	Sword,
 	Users,
 	Zap,
@@ -111,24 +110,14 @@ const WardenProtocols = () => {
 							</ManaFlowText>
 						}
 						actions={
-							<>
-								<Button
-									variant="outline"
-									size="sm"
-									onClick={() => navigate("/compendium")}
-								>
-									<HelpCircle className="w-4 h-4 mr-2" />
-									Help
-								</Button>
-								<Button
-									variant="outline"
-									size="sm"
-									onClick={() => navigate("/warden-directives/rift-console")}
-								>
-									<Settings className="w-4 h-4 mr-2" />
-									Settings
-								</Button>
-							</>
+							<Button
+								variant="outline"
+								size="sm"
+								onClick={() => navigate("/compendium")}
+							>
+								<HelpCircle className="w-4 h-4 mr-2" />
+								Help
+							</Button>
 						}
 					/>
 				</div>

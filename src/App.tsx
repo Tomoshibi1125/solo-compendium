@@ -100,11 +100,6 @@ const CharacterNew = lazy(() => import("./pages/CharacterNew"));
 const CharacterCompare = lazy(() => import("./pages/CharacterCompare"));
 const CompanionSheet = lazy(() => import("./pages/CompanionSheet"));
 const CompanionExtraSheet = lazy(() => import("./pages/CompanionExtraSheet"));
-const Admin = lazy(() => import("./pages/Admin"));
-const ContentAudit = lazy(() => import("./pages/admin/ContentAudit"));
-const FeatureChoicesAdmin = lazy(
-	() => import("./pages/admin/FeatureChoicesAdmin"),
-);
 const WardenProtocols = lazy(() => import("./pages/WardenProtocols"));
 const EncounterBuilder = lazy(
 	() => import("./pages/warden-directives/EncounterBuilder"),
@@ -137,13 +132,23 @@ const RETIRED_GENERATOR_PATHS = [
 	"/warden-directives/random-event-generator",
 	"/warden-directives/art-generator",
 ] as const;
+// Admin and development work happens outside the app. The retired console,
+// selection-protocol editor, and content audit URLs land on the Warden hub.
+const RETIRED_ADMIN_PATHS = [
+	"/warden-directives/rift-console",
+	"/warden-directives/selection-protocols",
+	"/warden-directives/content-audit",
+	"/warden-directives/art-generation",
+	"/admin",
+	"/admin/art-generation",
+	"/admin/audit",
+] as const;
 const Favorites = lazy(() => import("./pages/Favorites"));
 const Campaigns = lazy(() => import("./pages/Campaigns"));
 const CampaignDetail = lazy(() => import("./pages/CampaignDetail"));
 const CampaignBookView = lazy(() => import("./pages/CampaignBookView"));
 const CampaignJoin = lazy(() => import("./pages/CampaignJoin"));
 const Stream = lazy(() => import("./pages/Stream"));
-const FieldRoster = lazy(() => import("./pages/FieldRoster"));
 const CampaignSessionPlay = lazy(() => import("./pages/CampaignSessionPlay"));
 const Guilds = lazy(() => import("./pages/Guilds"));
 const GuildDetail = lazy(() => import("./pages/GuildDetail"));
@@ -487,65 +492,13 @@ const AppContent = () => {
 					}
 				/>
 
-				<Route
-					path="/warden-directives/rift-console"
-					element={
-						<ProtectedRoute requireWarden allowGuest={false}>
-							<Suspense fallback={<PageLoader />}>
-								<Admin />
-							</Suspense>
-						</ProtectedRoute>
-					}
-				/>
-
-				<Route
-					path="/warden-directives/selection-protocols"
-					element={
-						<ProtectedRoute requireWarden allowGuest={false}>
-							<Suspense fallback={<PageLoader />}>
-								<FeatureChoicesAdmin />
-							</Suspense>
-						</ProtectedRoute>
-					}
-				/>
-				<Route
-					path="/warden-directives/content-audit"
-					element={
-						<ProtectedRoute requireWarden allowGuest={false}>
-							<Suspense fallback={<PageLoader />}>
-								<ContentAudit />
-							</Suspense>
-						</ProtectedRoute>
-					}
-				/>
-				<Route
-					path="/warden-directives/art-generation"
-					element={<Navigate to="/warden-directives/rift-console" replace />}
-				/>
-				<Route
-					path="/admin"
-					element={
-						<ProtectedRoute requireWarden allowGuest={false}>
-							<Navigate to="/warden-directives/rift-console" replace />
-						</ProtectedRoute>
-					}
-				/>
-				<Route
-					path="/admin/art-generation"
-					element={
-						<ProtectedRoute requireWarden allowGuest={false}>
-							<Navigate to="/warden-directives/rift-console" replace />
-						</ProtectedRoute>
-					}
-				/>
-				<Route
-					path="/admin/audit"
-					element={
-						<ProtectedRoute requireWarden allowGuest={false}>
-							<Navigate to="/warden-directives/content-audit" replace />
-						</ProtectedRoute>
-					}
-				/>
+				{RETIRED_ADMIN_PATHS.map((path) => (
+					<Route
+						key={path}
+						path={path}
+						element={<Navigate to="/warden-protocols" replace />}
+					/>
+				))}
 				<Route
 					path="/warden-protocols"
 					element={
@@ -708,15 +661,6 @@ const AppContent = () => {
 					element={
 						<Suspense fallback={<PageLoader />}>
 							<Stream />
-						</Suspense>
-					}
-				/>
-				{/* Misty Pearl E4 — Field Roster (public campaign discovery) */}
-				<Route
-					path="/field-roster"
-					element={
-						<Suspense fallback={<PageLoader />}>
-							<FieldRoster />
 						</Suspense>
 					}
 				/>

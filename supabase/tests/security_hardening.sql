@@ -160,16 +160,26 @@ SELECT is(
 
 SELECT ok(
   NOT has_schema_privilege('anon', 'app_private', 'USAGE')
-  AND NOT has_function_privilege('anon', 'app_private.is_account_admin()'::regprocedure, 'EXECUTE')
-  AND has_schema_privilege('authenticated', 'app_private', 'USAGE')
-  AND has_function_privilege('authenticated', 'app_private.is_account_admin()'::regprocedure, 'EXECUTE'),
-  'the account-admin helper is executable only by authenticated RLS callers'
+  AND has_schema_privilege('authenticated', 'app_private', 'USAGE'),
+  'only authenticated RLS callers can use the app_private helper schema'
 );
 
 SELECT ok(
-  has_function_privilege('authenticated', 'public.admin_set_user_role(uuid,text)'::regprocedure, 'EXECUTE')
-  AND has_function_privilege('authenticated', 'public.admin_set_user_ban(uuid,boolean)'::regprocedure, 'EXECUTE'),
-  'authenticated callers can reach guarded account-admin RPCs'
+  -- The app has two roles, Warden and Ascendant; admin work happens outside
+  -- the app (20260930120000).
+  to_regprocedure('app_private.is_account_admin()') IS NULL
+  AND to_regprocedure('public.admin_set_user_role(uuid,text)') IS NULL
+  AND to_regprocedure('public.admin_set_user_ban(uuid,boolean)') IS NULL
+  AND to_regclass('public.admin_audit_log') IS NULL
+  AND to_regprocedure('public.is_warden_or_admin(uuid)') IS NULL
+  AND to_regprocedure('public.is_dm_or_admin(uuid)') IS NULL
+  AND NOT EXISTS (
+    SELECT 1
+    FROM pg_policies
+    WHERE schemaname IN ('public', 'app_private', 'storage')
+      AND COALESCE(qual, '') || COALESCE(with_check, '') ~* 'admin'
+  ),
+  'there is no admin role: no admin helpers, admin RPCs, admin audit log, or policy that names one'
 );
 
 SELECT ok(

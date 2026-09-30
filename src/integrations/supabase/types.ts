@@ -57,51 +57,10 @@ export type Database = {
 						foreignKeyName: "active_sessions_campaign_id_fkey";
 						columns: ["campaign_id"];
 						isOneToOne: false;
-						referencedRelation: "campaign_details";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "active_sessions_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
 						referencedRelation: "campaigns";
 						referencedColumns: ["id"];
 					},
-					{
-						foreignKeyName: "active_sessions_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
-						referencedRelation: "campaigns_public_listings";
-						referencedColumns: ["id"];
-					},
 				];
-			};
-			admin_audit_log: {
-				Row: {
-					action: string;
-					actor_user_id: string;
-					created_at: string | null;
-					details: Json;
-					id: string;
-					target_user_id: string | null;
-				};
-				Insert: {
-					action: string;
-					actor_user_id: string;
-					created_at?: string | null;
-					details?: Json;
-					id?: string;
-					target_user_id?: string | null;
-				};
-				Update: {
-					action?: string;
-					actor_user_id?: string;
-					created_at?: string | null;
-					details?: Json;
-					id?: string;
-					target_user_id?: string | null;
-				};
-				Relationships: [];
 			};
 			art_assets: {
 				Row: {
@@ -255,21 +214,7 @@ export type Database = {
 						foreignKeyName: "campaign_character_shares_campaign_id_fkey";
 						columns: ["campaign_id"];
 						isOneToOne: false;
-						referencedRelation: "campaign_details";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "campaign_character_shares_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
 						referencedRelation: "campaigns";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "campaign_character_shares_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
-						referencedRelation: "campaigns_public_listings";
 						referencedColumns: ["id"];
 					},
 					{
@@ -327,21 +272,7 @@ export type Database = {
 						foreignKeyName: "campaign_combat_sessions_campaign_id_fkey";
 						columns: ["campaign_id"];
 						isOneToOne: false;
-						referencedRelation: "campaign_details";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "campaign_combat_sessions_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
 						referencedRelation: "campaigns";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "campaign_combat_sessions_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
-						referencedRelation: "campaigns_public_listings";
 						referencedColumns: ["id"];
 					},
 					{
@@ -413,21 +344,7 @@ export type Database = {
 						foreignKeyName: "campaign_combatants_campaign_id_fkey";
 						columns: ["campaign_id"];
 						isOneToOne: false;
-						referencedRelation: "campaign_details";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "campaign_combatants_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
 						referencedRelation: "campaigns";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "campaign_combatants_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
-						referencedRelation: "campaigns_public_listings";
 						referencedColumns: ["id"];
 					},
 					{
@@ -495,21 +412,7 @@ export type Database = {
 						foreignKeyName: "campaign_encounter_entries_campaign_id_fkey";
 						columns: ["campaign_id"];
 						isOneToOne: false;
-						referencedRelation: "campaign_details";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "campaign_encounter_entries_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
 						referencedRelation: "campaigns";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "campaign_encounter_entries_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
-						referencedRelation: "campaigns_public_listings";
 						referencedColumns: ["id"];
 					},
 					{
@@ -570,21 +473,7 @@ export type Database = {
 						foreignKeyName: "campaign_encounters_campaign_id_fkey";
 						columns: ["campaign_id"];
 						isOneToOne: false;
-						referencedRelation: "campaign_details";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "campaign_encounters_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
 						referencedRelation: "campaigns";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "campaign_encounters_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
-						referencedRelation: "campaigns_public_listings";
 						referencedColumns: ["id"];
 					},
 				];
@@ -637,21 +526,7 @@ export type Database = {
 						foreignKeyName: "campaign_extras_campaign_id_fkey";
 						columns: ["campaign_id"];
 						isOneToOne: false;
-						referencedRelation: "campaign_details";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "campaign_extras_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
 						referencedRelation: "campaigns";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "campaign_extras_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
-						referencedRelation: "campaigns_public_listings";
 						referencedColumns: ["id"];
 					},
 				];
@@ -701,21 +576,7 @@ export type Database = {
 						foreignKeyName: "campaign_inventory_campaign_id_fkey";
 						columns: ["campaign_id"];
 						isOneToOne: false;
-						referencedRelation: "campaign_details";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "campaign_inventory_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
 						referencedRelation: "campaigns";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "campaign_inventory_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
-						referencedRelation: "campaigns_public_listings";
 						referencedColumns: ["id"];
 					},
 				];
@@ -753,21 +614,7 @@ export type Database = {
 						foreignKeyName: "campaign_invite_audit_logs_campaign_id_fkey";
 						columns: ["campaign_id"];
 						isOneToOne: false;
-						referencedRelation: "campaign_details";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "campaign_invite_audit_logs_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
 						referencedRelation: "campaigns";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "campaign_invite_audit_logs_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
-						referencedRelation: "campaigns_public_listings";
 						referencedColumns: ["id"];
 					},
 					{
@@ -845,21 +692,7 @@ export type Database = {
 						foreignKeyName: "campaign_invites_campaign_id_fkey";
 						columns: ["campaign_id"];
 						isOneToOne: false;
-						referencedRelation: "campaign_details";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "campaign_invites_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
 						referencedRelation: "campaigns";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "campaign_invites_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
-						referencedRelation: "campaigns_public_listings";
 						referencedColumns: ["id"];
 					},
 				];
@@ -910,21 +743,7 @@ export type Database = {
 						foreignKeyName: "campaign_loot_drops_campaign_id_fkey";
 						columns: ["campaign_id"];
 						isOneToOne: false;
-						referencedRelation: "campaign_details";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "campaign_loot_drops_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
 						referencedRelation: "campaigns";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "campaign_loot_drops_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
-						referencedRelation: "campaigns_public_listings";
 						referencedColumns: ["id"];
 					},
 					{
@@ -973,21 +792,7 @@ export type Database = {
 						foreignKeyName: "campaign_member_characters_campaign_id_fkey";
 						columns: ["campaign_id"];
 						isOneToOne: false;
-						referencedRelation: "campaign_details";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "campaign_member_characters_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
 						referencedRelation: "campaigns";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "campaign_member_characters_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
-						referencedRelation: "campaigns_public_listings";
 						referencedColumns: ["id"];
 					},
 					{
@@ -1043,21 +848,7 @@ export type Database = {
 						foreignKeyName: "campaign_members_campaign_id_fkey";
 						columns: ["campaign_id"];
 						isOneToOne: false;
-						referencedRelation: "campaign_details";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "campaign_members_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
 						referencedRelation: "campaigns";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "campaign_members_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
-						referencedRelation: "campaigns_public_listings";
 						referencedColumns: ["id"];
 					},
 					{
@@ -1115,21 +906,7 @@ export type Database = {
 						foreignKeyName: "campaign_messages_campaign_id_fkey";
 						columns: ["campaign_id"];
 						isOneToOne: false;
-						referencedRelation: "campaign_details";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "campaign_messages_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
 						referencedRelation: "campaigns";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "campaign_messages_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
-						referencedRelation: "campaigns_public_listings";
 						referencedColumns: ["id"];
 					},
 				];
@@ -1173,21 +950,7 @@ export type Database = {
 						foreignKeyName: "campaign_notes_campaign_id_fkey";
 						columns: ["campaign_id"];
 						isOneToOne: false;
-						referencedRelation: "campaign_details";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "campaign_notes_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
 						referencedRelation: "campaigns";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "campaign_notes_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
-						referencedRelation: "campaigns_public_listings";
 						referencedColumns: ["id"];
 					},
 				];
@@ -1247,21 +1010,7 @@ export type Database = {
 						foreignKeyName: "campaign_relic_instances_campaign_id_fkey";
 						columns: ["campaign_id"];
 						isOneToOne: false;
-						referencedRelation: "campaign_details";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "campaign_relic_instances_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
 						referencedRelation: "campaigns";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "campaign_relic_instances_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
-						referencedRelation: "campaigns_public_listings";
 						referencedColumns: ["id"];
 					},
 				];
@@ -1317,21 +1066,7 @@ export type Database = {
 						foreignKeyName: "campaign_roll_events_campaign_id_fkey";
 						columns: ["campaign_id"];
 						isOneToOne: false;
-						referencedRelation: "campaign_details";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "campaign_roll_events_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
 						referencedRelation: "campaigns";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "campaign_roll_events_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
-						referencedRelation: "campaigns_public_listings";
 						referencedColumns: ["id"];
 					},
 					{
@@ -1380,21 +1115,7 @@ export type Database = {
 						foreignKeyName: "campaign_rule_events_campaign_id_fkey";
 						columns: ["campaign_id"];
 						isOneToOne: false;
-						referencedRelation: "campaign_details";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "campaign_rule_events_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
 						referencedRelation: "campaigns";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "campaign_rule_events_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
-						referencedRelation: "campaigns_public_listings";
 						referencedColumns: ["id"];
 					},
 				];
@@ -1429,21 +1150,7 @@ export type Database = {
 						foreignKeyName: "campaign_rules_campaign_id_fkey";
 						columns: ["campaign_id"];
 						isOneToOne: true;
-						referencedRelation: "campaign_details";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "campaign_rules_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: true;
 						referencedRelation: "campaigns";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "campaign_rules_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: true;
-						referencedRelation: "campaigns_public_listings";
 						referencedColumns: ["id"];
 					},
 				];
@@ -1481,21 +1188,7 @@ export type Database = {
 						foreignKeyName: "campaign_session_events_campaign_id_fkey";
 						columns: ["campaign_id"];
 						isOneToOne: false;
-						referencedRelation: "campaign_details";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "campaign_session_events_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
 						referencedRelation: "campaigns";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "campaign_session_events_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
-						referencedRelation: "campaigns_public_listings";
 						referencedColumns: ["id"];
 					},
 					{
@@ -1552,21 +1245,7 @@ export type Database = {
 						foreignKeyName: "campaign_session_logs_campaign_id_fkey";
 						columns: ["campaign_id"];
 						isOneToOne: false;
-						referencedRelation: "campaign_details";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "campaign_session_logs_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
 						referencedRelation: "campaigns";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "campaign_session_logs_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
-						referencedRelation: "campaigns_public_listings";
 						referencedColumns: ["id"];
 					},
 					{
@@ -1626,21 +1305,7 @@ export type Database = {
 						foreignKeyName: "campaign_sessions_campaign_id_fkey";
 						columns: ["campaign_id"];
 						isOneToOne: false;
-						referencedRelation: "campaign_details";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "campaign_sessions_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
 						referencedRelation: "campaigns";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "campaign_sessions_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
-						referencedRelation: "campaigns_public_listings";
 						referencedColumns: ["id"];
 					},
 					{
@@ -1721,21 +1386,7 @@ export type Database = {
 						foreignKeyName: "campaign_tamed_anomalies_campaign_id_fkey";
 						columns: ["campaign_id"];
 						isOneToOne: false;
-						referencedRelation: "campaign_details";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "campaign_tamed_anomalies_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
 						referencedRelation: "campaigns";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "campaign_tamed_anomalies_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
-						referencedRelation: "campaigns_public_listings";
 						referencedColumns: ["id"];
 					},
 					{
@@ -1825,21 +1476,7 @@ export type Database = {
 						foreignKeyName: "campaign_tool_states_campaign_id_fkey";
 						columns: ["campaign_id"];
 						isOneToOne: false;
-						referencedRelation: "campaign_details";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "campaign_tool_states_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
 						referencedRelation: "campaigns";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "campaign_tool_states_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
-						referencedRelation: "campaigns_public_listings";
 						referencedColumns: ["id"];
 					},
 				];
@@ -1889,21 +1526,7 @@ export type Database = {
 						foreignKeyName: "campaign_vehicles_campaign_id_fkey";
 						columns: ["campaign_id"];
 						isOneToOne: false;
-						referencedRelation: "campaign_details";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "campaign_vehicles_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
 						referencedRelation: "campaigns";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "campaign_vehicles_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
-						referencedRelation: "campaigns_public_listings";
 						referencedColumns: ["id"];
 					},
 				];
@@ -1947,21 +1570,7 @@ export type Database = {
 						foreignKeyName: "campaign_wiki_articles_campaign_id_fkey";
 						columns: ["campaign_id"];
 						isOneToOne: false;
-						referencedRelation: "campaign_details";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "campaign_wiki_articles_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
 						referencedRelation: "campaigns";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "campaign_wiki_articles_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
-						referencedRelation: "campaigns_public_listings";
 						referencedColumns: ["id"];
 					},
 					{
@@ -1981,7 +1590,6 @@ export type Database = {
 					is_active: boolean;
 					name: string;
 					party_gold: Json | null;
-					public_listing: Json | null;
 					settings: Json;
 					share_code: string;
 					updated_at: string;
@@ -1994,7 +1602,6 @@ export type Database = {
 					is_active?: boolean;
 					name: string;
 					party_gold?: Json | null;
-					public_listing?: Json | null;
 					settings?: Json;
 					share_code: string;
 					updated_at?: string;
@@ -2007,7 +1614,6 @@ export type Database = {
 					is_active?: boolean;
 					name?: string;
 					party_gold?: Json | null;
-					public_listing?: Json | null;
 					settings?: Json;
 					share_code?: string;
 					updated_at?: string;
@@ -4537,21 +4143,7 @@ export type Database = {
 						foreignKeyName: "companion_attempt_adjudications_campaign_id_fkey";
 						columns: ["campaign_id"];
 						isOneToOne: false;
-						referencedRelation: "campaign_details";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "companion_attempt_adjudications_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
 						referencedRelation: "campaigns";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "companion_attempt_adjudications_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
-						referencedRelation: "campaigns_public_listings";
 						referencedColumns: ["id"];
 					},
 					{
@@ -4678,21 +4270,7 @@ export type Database = {
 						foreignKeyName: "companion_bond_attempts_campaign_id_fkey";
 						columns: ["campaign_id"];
 						isOneToOne: false;
-						referencedRelation: "campaign_details";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "companion_bond_attempts_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
 						referencedRelation: "campaigns";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "companion_bond_attempts_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
-						referencedRelation: "campaigns_public_listings";
 						referencedColumns: ["id"];
 					},
 					{
@@ -4764,21 +4342,7 @@ export type Database = {
 						foreignKeyName: "companion_bonds_campaign_id_fkey";
 						columns: ["campaign_id"];
 						isOneToOne: false;
-						referencedRelation: "campaign_details";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "companion_bonds_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
 						referencedRelation: "campaigns";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "companion_bonds_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
-						referencedRelation: "campaigns_public_listings";
 						referencedColumns: ["id"];
 					},
 					{
@@ -4867,21 +4431,7 @@ export type Database = {
 						foreignKeyName: "companion_control_events_campaign_id_fkey";
 						columns: ["campaign_id"];
 						isOneToOne: false;
-						referencedRelation: "campaign_details";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "companion_control_events_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
 						referencedRelation: "campaigns";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "companion_control_events_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
-						referencedRelation: "campaigns_public_listings";
 						referencedColumns: ["id"];
 					},
 					{
@@ -5035,21 +4585,7 @@ export type Database = {
 						foreignKeyName: "companion_instances_owner_campaign_id_fkey";
 						columns: ["owner_campaign_id"];
 						isOneToOne: false;
-						referencedRelation: "campaign_details";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "companion_instances_owner_campaign_id_fkey";
-						columns: ["owner_campaign_id"];
-						isOneToOne: false;
 						referencedRelation: "campaigns";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "companion_instances_owner_campaign_id_fkey";
-						columns: ["owner_campaign_id"];
-						isOneToOne: false;
-						referencedRelation: "campaigns_public_listings";
 						referencedColumns: ["id"];
 					},
 					{
@@ -8517,21 +8053,7 @@ export type Database = {
 						foreignKeyName: "daily_quest_configs_campaign_id_fkey";
 						columns: ["campaign_id"];
 						isOneToOne: false;
-						referencedRelation: "campaign_details";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "daily_quest_configs_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
 						referencedRelation: "campaigns";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "daily_quest_configs_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
-						referencedRelation: "campaigns_public_listings";
 						referencedColumns: ["id"];
 					},
 					{
@@ -8915,21 +8437,7 @@ export type Database = {
 						foreignKeyName: "guilds_campaign_id_fkey";
 						columns: ["campaign_id"];
 						isOneToOne: false;
-						referencedRelation: "campaign_details";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "guilds_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
 						referencedRelation: "campaigns";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "guilds_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
-						referencedRelation: "campaigns_public_listings";
 						referencedColumns: ["id"];
 					},
 				];
@@ -9004,21 +8512,7 @@ export type Database = {
 						foreignKeyName: "harvest_attempts_m2_campaign_id_fkey";
 						columns: ["campaign_id"];
 						isOneToOne: false;
-						referencedRelation: "campaign_details";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "harvest_attempts_m2_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
 						referencedRelation: "campaigns";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "harvest_attempts_m2_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
-						referencedRelation: "campaigns_public_listings";
 						referencedColumns: ["id"];
 					},
 					{
@@ -9122,21 +8616,7 @@ export type Database = {
 						foreignKeyName: "harvest_authorizations_m2_campaign_id_fkey";
 						columns: ["campaign_id"];
 						isOneToOne: false;
-						referencedRelation: "campaign_details";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "harvest_authorizations_m2_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
 						referencedRelation: "campaigns";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "harvest_authorizations_m2_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
-						referencedRelation: "campaigns_public_listings";
 						referencedColumns: ["id"];
 					},
 					{
@@ -9225,21 +8705,7 @@ export type Database = {
 						foreignKeyName: "homebrew_content_campaign_id_fkey";
 						columns: ["campaign_id"];
 						isOneToOne: false;
-						referencedRelation: "campaign_details";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "homebrew_content_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
 						referencedRelation: "campaigns";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "homebrew_content_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
-						referencedRelation: "campaigns_public_listings";
 						referencedColumns: ["id"];
 					},
 					{
@@ -9292,7 +8758,6 @@ export type Database = {
 			marketplace_items: {
 				Row: {
 					author_id: string;
-					bundled_item_ids: string[] | null;
 					category: string;
 					compatibility: Json;
 					content: Json;
@@ -9301,15 +8766,10 @@ export type Database = {
 					downloads_count: number;
 					file_url: string | null;
 					id: string;
-					is_bundle: boolean;
 					is_featured: boolean;
-					is_listed: boolean;
 					is_verified: boolean;
 					item_type: string;
 					license: string;
-					price_amount: number | null;
-					price_currency: string | null;
-					price_type: string;
 					rating_avg: number;
 					rating_count: number;
 					requirements: Json;
@@ -9321,7 +8781,6 @@ export type Database = {
 				};
 				Insert: {
 					author_id: string;
-					bundled_item_ids?: string[] | null;
 					category?: string;
 					compatibility?: Json;
 					content?: Json;
@@ -9330,15 +8789,10 @@ export type Database = {
 					downloads_count?: number;
 					file_url?: string | null;
 					id?: string;
-					is_bundle?: boolean;
 					is_featured?: boolean;
-					is_listed?: boolean;
 					is_verified?: boolean;
 					item_type: string;
 					license?: string;
-					price_amount?: number | null;
-					price_currency?: string | null;
-					price_type?: string;
 					rating_avg?: number;
 					rating_count?: number;
 					requirements?: Json;
@@ -9350,7 +8804,6 @@ export type Database = {
 				};
 				Update: {
 					author_id?: string;
-					bundled_item_ids?: string[] | null;
 					category?: string;
 					compatibility?: Json;
 					content?: Json;
@@ -9359,15 +8812,10 @@ export type Database = {
 					downloads_count?: number;
 					file_url?: string | null;
 					id?: string;
-					is_bundle?: boolean;
 					is_featured?: boolean;
-					is_listed?: boolean;
 					is_verified?: boolean;
 					item_type?: string;
 					license?: string;
-					price_amount?: number | null;
-					price_currency?: string | null;
-					price_type?: string;
 					rating_avg?: number;
 					rating_count?: number;
 					requirements?: Json;
@@ -9389,7 +8837,6 @@ export type Database = {
 					rating: number;
 					updated_at: string;
 					user_id: string;
-					verified_purchase: boolean;
 				};
 				Insert: {
 					comment?: string | null;
@@ -9400,7 +8847,6 @@ export type Database = {
 					rating: number;
 					updated_at?: string;
 					user_id: string;
-					verified_purchase?: boolean;
 				};
 				Update: {
 					comment?: string | null;
@@ -9411,7 +8857,6 @@ export type Database = {
 					rating?: number;
 					updated_at?: string;
 					user_id?: string;
-					verified_purchase?: boolean;
 				};
 				Relationships: [
 					{
@@ -9674,21 +9119,7 @@ export type Database = {
 						foreignKeyName: "material_lots_owner_campaign_id_fkey";
 						columns: ["owner_campaign_id"];
 						isOneToOne: false;
-						referencedRelation: "campaign_details";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "material_lots_owner_campaign_id_fkey";
-						columns: ["owner_campaign_id"];
-						isOneToOne: false;
 						referencedRelation: "campaigns";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "material_lots_owner_campaign_id_fkey";
-						columns: ["owner_campaign_id"];
-						isOneToOne: false;
-						referencedRelation: "campaigns_public_listings";
 						referencedColumns: ["id"];
 					},
 					{
@@ -9710,7 +9141,6 @@ export type Database = {
 			profiles: {
 				Row: {
 					avatar_url: string | null;
-					banned_at: string | null;
 					created_at: string;
 					display_name: string | null;
 					email: string;
@@ -9721,7 +9151,6 @@ export type Database = {
 				};
 				Insert: {
 					avatar_url?: string | null;
-					banned_at?: string | null;
 					created_at?: string;
 					display_name?: string | null;
 					email: string;
@@ -9732,7 +9161,6 @@ export type Database = {
 				};
 				Update: {
 					avatar_url?: string | null;
-					banned_at?: string | null;
 					created_at?: string;
 					display_name?: string | null;
 					email?: string;
@@ -9921,21 +9349,7 @@ export type Database = {
 						foreignKeyName: "roll_history_campaign_id_fkey";
 						columns: ["campaign_id"];
 						isOneToOne: false;
-						referencedRelation: "campaign_details";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "roll_history_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
 						referencedRelation: "campaigns";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "roll_history_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
-						referencedRelation: "campaigns_public_listings";
 						referencedColumns: ["id"];
 					},
 					{
@@ -10156,21 +9570,7 @@ export type Database = {
 						foreignKeyName: "session_quests_campaign_id_fkey";
 						columns: ["campaign_id"];
 						isOneToOne: false;
-						referencedRelation: "campaign_details";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "session_quests_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
 						referencedRelation: "campaigns";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "session_quests_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
-						referencedRelation: "campaigns_public_listings";
 						referencedColumns: ["id"];
 					},
 				];
@@ -10250,53 +9650,6 @@ export type Database = {
 					user_id?: string;
 				};
 				Relationships: [];
-			};
-			user_marketplace_entitlements: {
-				Row: {
-					created_at: string;
-					entitlement_type: string;
-					expires_at: string | null;
-					gift_message: string | null;
-					gifted_by: string | null;
-					granted_by: string | null;
-					id: string;
-					item_id: string;
-					updated_at: string;
-					user_id: string;
-				};
-				Insert: {
-					created_at?: string;
-					entitlement_type?: string;
-					expires_at?: string | null;
-					gift_message?: string | null;
-					gifted_by?: string | null;
-					granted_by?: string | null;
-					id?: string;
-					item_id: string;
-					updated_at?: string;
-					user_id: string;
-				};
-				Update: {
-					created_at?: string;
-					entitlement_type?: string;
-					expires_at?: string | null;
-					gift_message?: string | null;
-					gifted_by?: string | null;
-					granted_by?: string | null;
-					id?: string;
-					item_id?: string;
-					updated_at?: string;
-					user_id?: string;
-				};
-				Relationships: [
-					{
-						foreignKeyName: "user_marketplace_entitlements_item_id_fkey";
-						columns: ["item_id"];
-						isOneToOne: false;
-						referencedRelation: "marketplace_items";
-						referencedColumns: ["id"];
-					},
-				];
 			};
 			user_notifications: {
 				Row: {
@@ -10402,51 +9755,6 @@ export type Database = {
 			};
 		};
 		Views: {
-			campaign_details: {
-				Row: {
-					created_at: string | null;
-					description: string | null;
-					dm_email: string | null;
-					dm_id: string | null;
-					dm_name: string | null;
-					id: string | null;
-					is_active: boolean | null;
-					name: string | null;
-					party_gold: Json | null;
-					public_listing: Json | null;
-					settings: Json | null;
-					share_code: string | null;
-					updated_at: string | null;
-					warden_email: string | null;
-					warden_id: string | null;
-					warden_name: string | null;
-				};
-				Relationships: [];
-			};
-			campaigns_public_listings: {
-				Row: {
-					id: string | null;
-					name: string | null;
-					public_listing: Json | null;
-					share_code: string | null;
-					updated_at: string | null;
-				};
-				Insert: {
-					id?: string | null;
-					name?: string | null;
-					public_listing?: Json | null;
-					share_code?: string | null;
-					updated_at?: string | null;
-				};
-				Update: {
-					id?: string | null;
-					name?: string | null;
-					public_listing?: Json | null;
-					share_code?: string | null;
-					updated_at?: string | null;
-				};
-				Relationships: [];
-			};
 			regent_unresolved_ability_grants: {
 				Row: {
 					canonical_id: string | null;
@@ -10636,14 +9944,6 @@ export type Database = {
 					p_operation_id: string;
 				};
 				Returns: Json;
-			};
-			admin_set_user_ban: {
-				Args: { p_banned: boolean; p_target: string };
-				Returns: undefined;
-			};
-			admin_set_user_role: {
-				Args: { p_role: string; p_target: string };
-				Returns: undefined;
 			};
 			advance_combat_turn: {
 				Args: { p_session_id: string };
@@ -11125,14 +10425,6 @@ export type Database = {
 					isSetofReturn: true;
 				};
 			};
-			gift_marketplace_item: {
-				Args: {
-					p_item_id: string;
-					p_message?: string;
-					p_recipient_user_id: string;
-				};
-				Returns: string;
-			};
 			guild_member_role: {
 				Args: { p_guild_id: string; p_uid: string };
 				Returns: string;
@@ -11212,8 +10504,6 @@ export type Database = {
 				Args: { p_campaign_id: string; p_user_id?: string };
 				Returns: boolean;
 			};
-			is_dm_or_admin: { Args: { p_user_id?: string }; Returns: boolean };
-			is_warden_or_admin: { Args: { p_user_id?: string }; Returns: boolean };
 			join_campaign_by_code: {
 				Args: { p_character_id?: string; p_code: string };
 				Returns: string;

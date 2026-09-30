@@ -1,9 +1,6 @@
 import {
 	Download,
 	Edit,
-	Gift,
-	Package,
-	Package2,
 	Plus,
 	Save,
 	Search,
@@ -17,14 +14,6 @@ import { ExportMenu } from "@/components/shared/ExportMenu";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import {
-	Dialog,
-	DialogContent,
-	DialogDescription,
-	DialogFooter,
-	DialogHeader,
-	DialogTitle,
-} from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
@@ -41,9 +30,8 @@ import { useActivityFeed } from "@/hooks/useActivityFeed";
 import {
 	type MarketplaceItemRecord,
 	type MarketplaceItemType,
-	type MarketplacePriceType,
+	type MarketplaceScope,
 	useDeleteMarketplaceItem,
-	useGiftMarketplaceItem,
 	useMarketplaceItems,
 	useRecordMarketplaceDownload,
 	useSaveMarketplaceItem,
@@ -64,13 +52,11 @@ const ITEM_TYPES: MarketplaceItemType[] = [
 	"template",
 ];
 
-const PRICE_TYPES: MarketplacePriceType[] = ["free", "paid", "donation"];
-
 export function MarketplaceWorkbench() {
 	const { user } = useAuth();
 	const { toast } = useToast();
 
-	const [scope, setScope] = useState<"listed" | "mine" | "all">("listed");
+	const [scope, setScope] = useState<MarketplaceScope>("all");
 	const [search, setSearch] = useState("");
 	const [typeFilter, setTypeFilter] = useState<MarketplaceItemType | "all">(
 		"all",
@@ -84,13 +70,9 @@ export function MarketplaceWorkbench() {
 	const [itemType, setItemType] = useState<MarketplaceItemType>("campaign");
 	const [category, setCategory] = useState("General");
 	const [tagsText, setTagsText] = useState("");
-	const [priceType, setPriceType] = useState<MarketplacePriceType>("free");
-	const [priceAmount, setPriceAmount] = useState("");
-	const [priceCurrency, setPriceCurrency] = useState("USD");
 	const [license, setLicense] = useState("Custom");
 	const [fileUrl, setFileUrl] = useState("");
 	const [contentJson, setContentJson] = useState('{\n  "summary": ""\n}');
-	const [isListed, setIsListed] = useState(true);
 
 	const [ratingByItem, setRatingByItem] = useState<Record<string, number>>({});
 	const [commentByItem, setCommentByItem] = useState<Record<string, string>>(
@@ -110,46 +92,7 @@ export function MarketplaceWorkbench() {
 	const deleteItem = useDeleteMarketplaceItem();
 	const recordDownload = useRecordMarketplaceDownload();
 	const submitReview = useUpsertMarketplaceReview();
-	const giftItem = useGiftMarketplaceItem();
 	const activity = useActivityFeed({ toolKey: "marketplace-activity" });
-
-	// F6 of May 2026 remediation plan — gift modal state.
-	const [giftItemTarget, setGiftItemTarget] =
-		useState<MarketplaceItemRecord | null>(null);
-	const [giftRecipientId, setGiftRecipientId] = useState("");
-	const [giftMessage, setGiftMessage] = useState("");
-
-	const handleGift = async () => {
-		if (!giftItemTarget) return;
-		const recipientTrim = giftRecipientId.trim();
-		if (!recipientTrim) {
-			toast({
-				title: "Recipient required",
-				description: "Paste the recipient's user ID before sending.",
-				variant: "destructive",
-			});
-			return;
-		}
-		await giftItem
-			.mutateAsync({
-				itemId: giftItemTarget.id,
-				recipientUserId: recipientTrim,
-				message: giftMessage.trim() || undefined,
-			})
-			.then(() => {
-				activity.log({
-					kind: "gifted",
-					label: `Gifted “${giftItemTarget.title}”`,
-					category: "marketplace",
-				});
-				setGiftItemTarget(null);
-				setGiftRecipientId("");
-				setGiftMessage("");
-			})
-			.catch(() => {
-				// useGiftMarketplaceItem surfaces its own toast on error.
-			});
-	};
 
 	const resetForm = () => {
 		setEditingId(null);
@@ -158,13 +101,9 @@ export function MarketplaceWorkbench() {
 		setItemType("campaign");
 		setCategory("General");
 		setTagsText("");
-		setPriceType("free");
-		setPriceAmount("");
-		setPriceCurrency("USD");
 		setLicense("Custom");
 		setFileUrl("");
 		setContentJson('{\n  "summary": ""\n}');
-		setIsListed(true);
 	};
 
 	const loadForEdit = (item: MarketplaceItemRecord) => {
@@ -174,13 +113,9 @@ export function MarketplaceWorkbench() {
 		setItemType(item.item_type);
 		setCategory(item.category || "General");
 		setTagsText(item.tags.join(", "));
-		setPriceType(item.price_type);
-		setPriceAmount(item.price_amount !== null ? String(item.price_amount) : "");
-		setPriceCurrency(item.price_currency || "USD");
 		setLicense(item.license || "Custom");
 		setFileUrl(item.file_url || "");
 		setContentJson(JSON.stringify(item.content || {}, null, 2));
-		setIsListed(item.is_listed);
 		setTab("publish");
 	};
 
@@ -229,13 +164,9 @@ export function MarketplaceWorkbench() {
 			itemType,
 			category,
 			tags: parsedTags,
-			priceType,
-			priceAmount: priceType === "paid" ? Number(priceAmount || 0) : null,
-			priceCurrency,
 			license,
 			fileUrl: fileUrl.trim() || null,
 			content: parsedContent,
-			isListed,
 		});
 
 		activity.log({
@@ -256,7 +187,7 @@ export function MarketplaceWorkbench() {
 		}
 	};
 
-	const proceedDownload = async (item: MarketplaceItemRecord) => {
+	const handleDownload = async (item: MarketplaceItemRecord) => {
 		await recordDownload.mutateAsync({ itemId: item.id });
 		activity.log({
 			kind: "downloaded",
@@ -273,29 +204,7 @@ export function MarketplaceWorkbench() {
 		}
 	};
 
-	const handleDownload = async (item: MarketplaceItemRecord) => {
-		if (!item.has_access) {
-			toast({
-				title: "Access required",
-				description: "You do not currently have entitlement to this listing.",
-				variant: "destructive",
-			});
-			return;
-		}
-
-		await proceedDownload(item);
-	};
-
 	const handleImportToCompendium = (item: MarketplaceItemRecord) => {
-		if (!item.has_access && item.price_type !== "free") {
-			toast({
-				title: "Access required",
-				description: "You do not currently have entitlement to this listing.",
-				variant: "destructive",
-			});
-			return;
-		}
-
 		try {
 			const saved = localStorage.getItem("sa_homebrew_content");
 			const homebrewList = saved ? JSON.parse(saved) : [];
@@ -358,17 +267,14 @@ export function MarketplaceWorkbench() {
 							<Label htmlFor="market-scope">Scope</Label>
 							<Select
 								value={scope}
-								onValueChange={(value) =>
-									setScope(value as "listed" | "mine" | "all")
-								}
+								onValueChange={(value) => setScope(value as MarketplaceScope)}
 							>
 								<SelectTrigger id="market-scope">
 									<SelectValue />
 								</SelectTrigger>
 								<SelectContent>
-									<SelectItem value="listed">Public Listings</SelectItem>
+									<SelectItem value="all">All Listings</SelectItem>
 									<SelectItem value="mine">My Listings</SelectItem>
-									<SelectItem value="all">All Accessible</SelectItem>
 								</SelectContent>
 							</Select>
 						</div>
@@ -465,24 +371,11 @@ export function MarketplaceWorkbench() {
 											{item.description}
 										</p>
 
-										<div className="mt-3 flex flex-wrap gap-2">
-											<Badge
-												variant={
-													item.price_type === "free" ? "secondary" : "outline"
-												}
-											>
-												{item.price_type === "paid"
-													? `${item.price_currency || "USD"} ${item.price_amount || 0}`
-													: item.price_type}
-											</Badge>
-											<Badge variant={item.is_listed ? "default" : "outline"}>
-												{item.is_listed ? "listed" : "unlisted"}
-											</Badge>
-											{item.is_verified && <Badge>verified</Badge>}
-											{!item.has_access && (
-												<Badge variant="destructive">locked</Badge>
-											)}
-										</div>
+										{item.is_verified && (
+											<div className="mt-3 flex flex-wrap gap-2">
+												<Badge>verified</Badge>
+											</div>
+										)}
 
 										{item.tags.length > 0 && (
 											<div className="mt-2 flex flex-wrap gap-1">
@@ -516,30 +409,6 @@ export function MarketplaceWorkbench() {
 												<Plus className="w-4 h-4 mr-2" />
 												Add to Compendium
 											</Button>
-											<Button
-												size="sm"
-												variant="outline"
-												onClick={() => {
-													setGiftItemTarget(item);
-													setGiftRecipientId("");
-													setGiftMessage("");
-												}}
-												data-testid={`marketplace-gift-btn-${item.id}`}
-												aria-label={`Gift ${item.title}`}
-											>
-												<Gift className="w-4 h-4 mr-2" />
-												Gift
-											</Button>
-											{item.is_bundle && (
-												<Badge
-													variant="outline"
-													className="gap-1 text-resurge-violet border-resurge-violet/40"
-													data-testid={`marketplace-bundle-pill-${item.id}`}
-												>
-													<Package2 className="w-3 h-3" />
-													Bundle ({item.bundled_item_ids?.length ?? 0})
-												</Badge>
-											)}
 											{isOwner && (
 												<>
 													<Button
@@ -678,50 +547,6 @@ export function MarketplaceWorkbench() {
 						</div>
 
 						<div>
-							<Label htmlFor="publish-price-type">Price Type</Label>
-							<Select
-								value={priceType}
-								onValueChange={(value) =>
-									setPriceType(value as MarketplacePriceType)
-								}
-							>
-								<SelectTrigger id="publish-price-type">
-									<SelectValue />
-								</SelectTrigger>
-								<SelectContent>
-									{PRICE_TYPES.map((type) => (
-										<SelectItem key={type} value={type}>
-											{type}
-										</SelectItem>
-									))}
-								</SelectContent>
-							</Select>
-						</div>
-
-						{priceType === "paid" && (
-							<>
-								<div>
-									<Label htmlFor="publish-price-amount">Amount</Label>
-									<Input
-										id="publish-price-amount"
-										type="number"
-										min={0}
-										value={priceAmount}
-										onChange={(event) => setPriceAmount(event.target.value)}
-									/>
-								</div>
-								<div>
-									<Label htmlFor="publish-price-currency">Currency</Label>
-									<Input
-										id="publish-price-currency"
-										value={priceCurrency}
-										onChange={(event) => setPriceCurrency(event.target.value)}
-									/>
-								</div>
-							</>
-						)}
-
-						<div>
 							<Label htmlFor="publish-license">License</Label>
 							<Input
 								id="publish-license"
@@ -748,25 +573,6 @@ export function MarketplaceWorkbench() {
 								onChange={(event) => setContentJson(event.target.value)}
 							/>
 						</div>
-
-						<div className="md:col-span-2 flex items-center justify-between rounded border border-border px-3 py-2">
-							<div className="flex items-center gap-2 text-sm">
-								<Package className="w-4 h-4 text-muted-foreground" />
-								<span>Listing visibility in browse feed</span>
-							</div>
-							<Select
-								value={isListed ? "listed" : "hidden"}
-								onValueChange={(value) => setIsListed(value === "listed")}
-							>
-								<SelectTrigger className="w-28" aria-label="Listing visibility">
-									<SelectValue />
-								</SelectTrigger>
-								<SelectContent>
-									<SelectItem value="listed">Listed</SelectItem>
-									<SelectItem value="hidden">Hidden</SelectItem>
-								</SelectContent>
-							</Select>
-						</div>
 					</div>
 
 					<div className="mt-4 flex flex-wrap gap-2">
@@ -790,83 +596,9 @@ export function MarketplaceWorkbench() {
 					events={activity.events}
 					onRemove={activity.remove}
 					onClear={activity.clear}
-					emptyLabel="No marketplace activity yet. Publish, gift, or download a listing to build a history."
+					emptyLabel="No marketplace activity yet. Publish or download a listing to build a history."
 				/>
 			</TabsContent>
-			<Dialog
-				open={giftItemTarget !== null}
-				onOpenChange={(open) => {
-					if (!open) {
-						setGiftItemTarget(null);
-						setGiftRecipientId("");
-						setGiftMessage("");
-					}
-				}}
-			>
-				<DialogContent
-					className="max-w-md"
-					data-testid="marketplace-gift-dialog"
-				>
-					<DialogHeader>
-						<DialogTitle className="flex items-center gap-2">
-							<Gift className="w-5 h-5 text-resurge-violet" />
-							Gift {giftItemTarget?.title}
-						</DialogTitle>
-						<DialogDescription>
-							Send this item to another player. They get access immediately — no
-							payment required.
-						</DialogDescription>
-					</DialogHeader>
-					<div className="space-y-3 py-2">
-						<div className="space-y-2">
-							<Label htmlFor="gift-recipient">Recipient user ID</Label>
-							<Input
-								id="gift-recipient"
-								value={giftRecipientId}
-								onChange={(e) => setGiftRecipientId(e.target.value)}
-								placeholder="00000000-0000-0000-0000-000000000000"
-								data-testid="marketplace-gift-recipient"
-							/>
-							<p className="text-xs text-muted-foreground">
-								Ask the recipient for their user ID from their profile page.
-							</p>
-						</div>
-						<div className="space-y-2">
-							<Label htmlFor="gift-message">Message (optional)</Label>
-							<Textarea
-								id="gift-message"
-								rows={2}
-								value={giftMessage}
-								onChange={(e) => setGiftMessage(e.target.value)}
-								placeholder="A short note to include with the gift."
-								data-testid="marketplace-gift-message"
-							/>
-						</div>
-						{giftItemTarget?.is_bundle && (
-							<div className="rounded border border-resurge-violet/30 bg-resurge-violet/10 px-2 py-1.5 text-xs text-resurge-violet">
-								This is a bundle — the recipient also gets access to{" "}
-								{giftItemTarget.bundled_item_ids?.length ?? 0} bundled items.
-							</div>
-						)}
-					</div>
-					<DialogFooter>
-						<Button
-							variant="ghost"
-							onClick={() => setGiftItemTarget(null)}
-							disabled={giftItem.isPending}
-						>
-							Cancel
-						</Button>
-						<Button
-							onClick={handleGift}
-							disabled={giftItem.isPending || !giftRecipientId.trim()}
-							data-testid="marketplace-gift-confirm"
-						>
-							{giftItem.isPending ? "Sending…" : "Send gift"}
-						</Button>
-					</DialogFooter>
-				</DialogContent>
-			</Dialog>
 		</Tabs>
 	);
 }
