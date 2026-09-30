@@ -8,6 +8,7 @@ import {
 	Wand2,
 } from "lucide-react";
 import { useMemo, useRef, useState } from "react";
+import { z } from "zod";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -23,11 +24,18 @@ import type {
 } from "@/lib/geminiProtocol";
 import {
 	type SovereignV2Definition,
+	SovereignV2DefinitionSchema,
 	validateGeneratedSovereignBudget,
 	validateSovereignV2Definition,
 } from "@/lib/sovereign/sovereignV2Contract";
 import { formatRegentVernacular } from "@/lib/vernacular";
-import sovereignV2Schema from "../../../supabase/sovereign_v2.schema.json";
+
+// Built from the Zod contract instead of importing supabase/sovereign_v2.schema.json:
+// deploys exclude the supabase/ folder. sovereignV2Contract.test.ts keeps that
+// file equal to this same z.toJSONSchema output.
+const SOVEREIGN_V2_JSON_SCHEMA = JSON.stringify(
+	z.toJSONSchema(SovereignV2DefinitionSchema),
+);
 
 interface SovereignExportImportPanelProps {
 	job: Job;
@@ -128,7 +136,7 @@ export function SovereignExportImportPanel({
 				`Set id to ${importIdentity.id}. Set generation to ${JSON.stringify({ contract_revision: 2, ruleset_revision: "rules.sovereign-v2.s5", canonical_source_revision: "external-v2", generator: "Outside AI import", generated_at: importIdentity.generatedAt, operation_id: importIdentity.operationId, source_ids: sourceIds })}.`,
 				'Set schema_version to 2 and compatibility to {"status":"native","notes":[]}.',
 				`Canonical sources: ${JSON.stringify({ job: { id: job.id, name: job.name }, path: { id: path.id, name: path.name }, regent_a: { id: regentA.id, name: regentA.name }, regent_b: { id: regentB.id, name: regentB.name } })}`,
-				`JSON schema: ${JSON.stringify(sovereignV2Schema)}`,
+				`JSON schema: ${SOVEREIGN_V2_JSON_SCHEMA}`,
 			].join("\n\n"),
 		[job, path, regentA, regentB, sourceIds, importIdentity],
 	);
