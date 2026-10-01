@@ -130,25 +130,6 @@ export const canonicalReviewBlockers: readonly CanonReviewBlocker[] = [
 			"Exaltation features do not quantify physical advantage, healing, speed, reflected damage, or Heroic Manifestation's area/save/damage.",
 		dependsOnTask: 20,
 	},
-	// Task 4: Berserker canon gaps.
-	{
-		id: "task4:berserker:overload-pre20-semantics",
-		dataset: "jobs",
-		entryId: "berserker",
-		fieldPath: "classFeatures.Overload State.description",
-		message:
-			"Overload has no pre-20 use progression or pre-15 duration, and its temporary level-based HP does not define current/max-HP changes or end-state damage handling.",
-		dependsOnTask: 20,
-	},
-	{
-		id: "task4:berserker:overload-level20-unlimited",
-		dataset: "jobs",
-		entryId: "berserker",
-		fieldPath: "classFeatures.Overload State.uses.formula",
-		message:
-			"The level-20 unlimited-use promise remains structured as 2/long rest, with no level-aware unlimited representation.",
-		dependsOnTask: 20,
-	},
 	{
 		id: "task4:berserker-gate-beast:persistent-aspect",
 		dataset: "paths",
@@ -210,16 +191,6 @@ export const canonicalReviewBlockers: readonly CanonReviewBlocker[] = [
 		fieldPath: "features.Controlled Distortion.description",
 		message:
 			"Identify variables, anchor, and harmonic match have no roll, timing, cadence, success rule, or defined interaction with the missing chart.",
-		dependsOnTask: 20,
-	},
-	// Task 4: Assassin canon gaps and legacy convergence.
-	{
-		id: "task4:assassin:vulnerability-analysis-core",
-		dataset: "jobs",
-		entryId: "assassin",
-		fieldPath: "classFeatures.Vulnerability Analysis.description",
-		message:
-			"Vulnerability Analysis omits its activation trigger, advantage predicate, per-turn frequency, target limits, observation procedure, and critical-hit behavior.",
 		dependsOnTask: 20,
 	},
 	{
@@ -386,24 +357,6 @@ export const canonicalReviewBlockers: readonly CanonReviewBlocker[] = [
 		dependsOnTask: 9,
 	},
 	{
-		id: "task4:striker:kinetic-deflection-return",
-		dataset: "jobs",
-		entryId: "striker",
-		fieldPath: "classFeatures.Kinetic Deflection.description",
-		message:
-			"The job-trait return is free while the level-3 return costs 1 Impulse, and neither version fully defines the return attack and damage.",
-		dependsOnTask: 20,
-	},
-	{
-		id: "task4:striker:kinetic-deflection-layers",
-		dataset: "jobs",
-		entryId: "striker",
-		fieldPath: "jobTraits.Kinetic Deflection.name",
-		message:
-			"Kinetic Deflection exists as both an always-present job trait and a level-3 class feature with divergent mechanics; canon does not choose one layer or define coexistence.",
-		dependsOnTask: 20,
-	},
-	{
 		id: "task5:esper-aetheric-dragon:resonance-choice",
 		dataset: "paths",
 		entryId: "esper--draconic-lineage",
@@ -511,25 +464,6 @@ export const canonicalReviewBlockers: readonly CanonReviewBlocker[] = [
 			"Three generated Technomancer path-grant candidates infer spell access without source text that names canonical entries; they remain rejected pending Task 9.",
 		dependsOnTask: 9,
 	},
-	// Task 6: job resources and unresolved controlled-entity lifecycles.
-	{
-		id: "task6:stalker:prey-lock-pre20-uses",
-		dataset: "jobs",
-		entryId: "stalker",
-		fieldPath: "classFeatures.Prey Lock.uses",
-		message:
-			"Zenith Apex Predator removes Prey Lock's rest limitation at level 20, but no pre-20 use count, recharge cadence, or level transition is authored, so Prey Lock remains manually tracked.",
-		dependsOnTask: 20,
-	},
-	{
-		id: "task6:revenant:remnant-initial-refill-semantics",
-		dataset: "jobs",
-		entryId: "revenant",
-		fieldPath: "classFeatures.Remnant Harvest.resourceLifecycle",
-		message:
-			"Remnant Harvest authors generation and maximum capacity but not initial character-state quantity, non-combat initialization, or any rest refill; rests therefore do not refill Remnants and initial full seeding needs a lifecycle decision.",
-		dependsOnTask: 20,
-	},
 	{
 		id: "task6:revenant-grave-shepherd:thrall-lifecycle",
 		dataset: "paths",
@@ -601,15 +535,6 @@ export const canonicalReviewBlockers: readonly CanonReviewBlocker[] = [
 		message:
 			"Multiple Task 6 features and signatures omit save DC bases, target eligibility, repeat-save timing, exact durations, areas, or damage formulas, so their effects remain manual.",
 		dependsOnTask: 20,
-	},
-	{
-		id: "task6:technomancer:spell-capacitor-device-lifecycle",
-		dataset: "jobs",
-		entryId: "technomancer",
-		fieldPath: "classFeatures.Spell Capacitor.deviceLifecycle",
-		message:
-			"Spell Capacitor defines charge capacity and spell tiers but not construction cost/time, device count, stored-spell replacement, holder attunement, destruction, or whether charges belong to each device or the Technomancer.",
-		dependsOnTask: 11,
 	},
 	// Task 7: every progression name is retained at its authored table level.
 	// These records identify rows whose mechanic text, cadence, identity, or

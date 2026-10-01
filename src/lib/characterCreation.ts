@@ -3737,16 +3737,23 @@ export async function addJobAwakeningBenefitsForLevel(
 						]
 					: []),
 			] as unknown as Array<Record<string, Json>>;
+			// Renamed features adopt the row stored under a former name, so a
+			// rename updates that row instead of adding a second one. Only a row
+			// gained at the feature's own level qualifies, which keeps a
+			// same-named Job trait from being taken over.
+			const formerNames = new Set(
+				(cf.formerNames ?? []).map(normalizeFeatureIdentity),
+			);
 			await reconcileCanonicalFeatureRow(
 				characterId,
 				featureRows,
 				(row) => {
 					if (row.homebrew_id) return false;
-					if (
-						normalizeFeatureIdentity(row.name) !==
-						normalizeFeatureIdentity(cf.name)
-					)
-						return false;
+					const rowName = normalizeFeatureIdentity(row.name);
+					const isCurrentName = rowName === normalizeFeatureIdentity(cf.name);
+					const isFormerName =
+						formerNames.has(rowName) && row.level_acquired === cf.level;
+					if (!isCurrentName && !isFormerName) return false;
 					const source = normalizeFeatureIdentity(row.source);
 					return (
 						source === normalizeFeatureIdentity(`Job: ${jobName}`) ||

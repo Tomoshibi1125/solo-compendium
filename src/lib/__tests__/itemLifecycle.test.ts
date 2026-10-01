@@ -389,7 +389,7 @@ describe("item lifecycle plan v1", () => {
 		});
 	});
 
-	it("keeps Spell Capacitor lifecycle manual instead of assigning device charges", () => {
+	it("keeps a manual job-feature resolution blocked instead of assigning equipment charges", () => {
 		const plan = planItemLifecycleV1({
 			source: source("job-feature", "technomancer:spell-capacitor"),
 			equipment: equipment({
@@ -401,8 +401,8 @@ describe("item lifecycle plan v1", () => {
 			resolution: {
 				status: "manual",
 				reason:
-					"Device count, replacement, attunement, destruction, and charge ownership are unresolved.",
-				instructions: "Await authored device lifecycle rules.",
+					"Spell Capacitor charges are tracked as the feature's uses, not on an equipment row.",
+				instructions: "Spend charges from the Spell Capacitor feature.",
 			},
 		});
 
@@ -411,7 +411,9 @@ describe("item lifecycle plan v1", () => {
 			outcome: "blocked",
 			canApply: false,
 			operations: [],
-			manual: { instructions: "Await authored device lifecycle rules." },
+			manual: {
+				instructions: "Spend charges from the Spell Capacitor feature.",
+			},
 		});
 	});
 

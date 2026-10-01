@@ -161,6 +161,8 @@ export interface StaticJob {
 		uses?: FeatureUseDefinition;
 		resource?: string;
 		tracking?: FeatureTracking;
+		/** Earlier names of a renamed feature; level-up adopts rows stored under them. */
+		formerNames?: string[];
 	}>;
 	spellcasting?: {
 		ability: string;

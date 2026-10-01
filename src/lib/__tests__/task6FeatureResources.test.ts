@@ -5,6 +5,7 @@ import {
 	addLevel1Features,
 } from "@/lib/characterCreation";
 import {
+	addLocalFeature,
 	createLocalCharacter,
 	listLocalFeatures,
 	updateLocalFeature,
@@ -72,7 +73,7 @@ describe("Task 6 canonical feature resources", () => {
 		restoreLocalStorage?.();
 	});
 
-	it("seeds level-1 action/manual metadata without creating phantom charges", async () => {
+	it("seeds Prey Lock with proficiency-bonus uses per long rest", async () => {
 		const row = createLocalCharacter({
 			name: "Prey",
 			job: "Stalker",
@@ -83,11 +84,13 @@ describe("Task 6 canonical feature resources", () => {
 		expect(preyLock).toMatchObject({
 			feature_id: "job-feature:stalker:prey-lock",
 			action_type: "Bonus action",
-			uses_max: null,
-			uses_current: null,
-			recharge: null,
+			uses_max: 2,
+			uses_current: 2,
+			recharge: "long-rest",
 		});
-		expect(resourceModifier(preyLock, "uses_formula")).toBeUndefined();
+		expect(resourceModifier(preyLock, "uses_formula")).toMatchObject({
+			value: "PB",
+		});
 	});
 
 	it("persists Revenant actions and Remnant costs while preserving spent uses", async () => {
@@ -179,6 +182,52 @@ describe("Task 6 canonical feature resources", () => {
 			11,
 		);
 		expect(feature(technomancer.id, "Spell Capacitor")?.uses_current).toBe(2);
+	});
+
+	it("adopts a stored level-3 Kinetic Deflection row as Kinetic Return and keeps the trait", async () => {
+		const striker = createLocalCharacter({
+			name: "Return",
+			job: "Striker",
+			level: 3,
+		});
+		addLocalFeature(striker.id, {
+			name: "Kinetic Deflection",
+			source: "Job Trait: Striker",
+			level_acquired: 1,
+			description: "Stored Job trait.",
+			is_active: true,
+		});
+		addLocalFeature(striker.id, {
+			name: "Kinetic Deflection",
+			source: "Job: Striker",
+			level_acquired: 3,
+			description: "Stored level-3 feature under its former name.",
+			is_active: true,
+		});
+
+		await addJobAwakeningBenefitsForLevel(striker.id, job("striker"), 3);
+
+		const rows = listLocalFeatures(striker.id);
+		expect(
+			rows.filter((entry) => entry.name === "Kinetic Return"),
+		).toHaveLength(1);
+		expect(rows.filter((entry) => entry.name === "Kinetic Deflection")).toEqual(
+			[
+				expect.objectContaining({
+					source: "Job Trait: Striker",
+					level_acquired: 1,
+				}),
+			],
+		);
+		const kineticReturn = feature(striker.id, "Kinetic Return");
+		expect(kineticReturn).toMatchObject({
+			feature_id: "job-feature:striker:kinetic-return",
+			source: "Job Feature: Striker",
+			level_acquired: 3,
+		});
+		expect(resourceModifier(kineticReturn, "resource_cost")).toMatchObject({
+			value: "1 Impulse point",
+		});
 	});
 
 	it("persists all 18 path signatures idempotently as path-local feature rows", async () => {
