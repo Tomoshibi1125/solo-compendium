@@ -1351,7 +1351,7 @@ export const sigils: CompendiumSigil[] = [
 	},
 	{
 		id: "sigil-shadow-king",
-		name: "Sigil of the Shadow Regent",
+		name: "Sigil of the Umbral Regent",
 		source_book: "Rift Ascendant Canon",
 		description:
 			"A pitch-black rune that seems to swallow the light around it, radiating pure necrotic mana.",
@@ -1367,7 +1367,7 @@ export const sigils: CompendiumSigil[] = [
 			current_owner: "Currently unaccounted for.",
 			curse: "",
 			history:
-				"Archived in the Guild's secured inscription reference. The Sigil of the Shadow Regent's service record notes as much.",
+				"Archived in the Guild's secured inscription reference. The Sigil of the Umbral Regent's service record notes as much.",
 			origin:
 				"A forbidden artifact; those who study its design too closely often lose their minds to the whispering dark.",
 			personality: "Hungry for ambient magic.",

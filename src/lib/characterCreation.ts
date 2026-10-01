@@ -2715,8 +2715,8 @@ export function getRegentFeatureModifiers(
 	const regent = regentName.trim().toLowerCase();
 	const feature = featureName.trim().toLowerCase();
 
-	// 1. Shadow/Umbral Regent
-	if (regent === "umbral regent" || regent === "shadow regent") {
+	// 1. Umbral Regent
+	if (regent === "umbral regent") {
 		if (feature === "umbral command" || feature === "shadow extraction")
 			return [
 				{
@@ -2782,78 +2782,8 @@ export function getRegentFeatureModifiers(
 			];
 	}
 
-	// 2. Dragon Regent
-	if (regent === "dragon regent") {
-		if (feature === "breath of annihilation")
-			return [
-				{
-					type: "aoe_damage",
-					value: 0,
-					target: "12d10_fire",
-					source: featureName,
-				},
-			];
-		if (feature === "destruction aura")
-			return [
-				{
-					type: "aura_damage",
-					value: 4,
-					target: "4d6_fire",
-					source: featureName,
-				},
-			];
-		if (feature === "cataclysm wings")
-			return [
-				{
-					type: "fly_speed",
-					value: 90,
-					target: undefined,
-					source: featureName,
-				},
-			];
-		if (feature === "scale armor")
-			return [
-				{
-					type: "ac_set",
-					value: 17,
-					target: "natural_armor",
-					source: featureName,
-				},
-			];
-		if (feature === "true dragon form")
-			return [
-				{
-					type: "ac_set",
-					value: 22,
-					target: "transformation",
-					source: featureName,
-				},
-				{
-					type: "fly_speed",
-					value: 120,
-					target: undefined,
-					source: featureName,
-				},
-				{ type: "immunity", value: 0, target: "fire", source: featureName },
-			];
-		if (feature === "primordial flame")
-			return [
-				{
-					type: "ignore_resistance",
-					value: 0,
-					target: "fire",
-					source: featureName,
-				},
-			];
-		if (feature === "absolute dragon")
-			return [
-				{ type: "immunity", value: 0, target: "fire", source: featureName },
-				{ type: "immunity", value: 0, target: "physical", source: featureName },
-			];
-	}
-
 	// 3. Frost Regent
-	if (regent === "frost regent" || regent === "frost sovereign") {
+	if (regent === "frost regent") {
 		if (feature === "frost dominion" || feature === "glacial domain")
 			return [
 				{ type: "immunity", value: 0, target: "cold", source: featureName },
@@ -2974,8 +2904,8 @@ export function getRegentFeatureModifiers(
 			];
 	}
 
-	// 5. Titan Regent (maps to Steel Regent in compendium)
-	if (regent === "titan regent" || regent === "steel regent") {
+	// 5. Steel Regent
+	if (regent === "steel regent") {
 		if (
 			feature === "true invulnerability" ||
 			feature === "flesh reconstruction"
@@ -3078,79 +3008,8 @@ export function getRegentFeatureModifiers(
 			];
 	}
 
-	// 7. Architect Regent
-	if (regent === "architect regent") {
-		if (feature === "world creation")
-			return [
-				{
-					type: "create_demiplane",
-					value: 1,
-					target: "mile_cube",
-					source: featureName,
-				},
-			];
-		if (feature === "instant architecture")
-			return [
-				{
-					type: "create_structure",
-					value: 300,
-					target: "cube_ft",
-					source: featureName,
-				},
-			];
-		if (feature === "spatial anchors")
-			return [
-				{
-					type: "teleport_anchors",
-					value: 12,
-					target: "permanent",
-					source: featureName,
-				},
-			];
-		if (feature === "living lair")
-			return [
-				{
-					type: "lair_control",
-					value: 0,
-					target: "own_structures",
-					source: featureName,
-				},
-			];
-		if (feature === "dimensional lock")
-			return [
-				{
-					type: "antimagic_zone",
-					value: 1,
-					target: "mile_radius",
-					source: featureName,
-				},
-			];
-		if (feature === "blueprint vision")
-			return [
-				{ type: "truesight", value: 5, target: "miles", source: featureName },
-			];
-		if (feature === "reality rewrite")
-			return [
-				{
-					type: "terrain_reshape",
-					value: 1,
-					target: "mile_radius",
-					source: featureName,
-				},
-			];
-		if (feature === "absolute architect")
-			return [
-				{
-					type: "at_will_creation",
-					value: 0,
-					target: "demiplanes",
-					source: featureName,
-				},
-			];
-	}
-
-	// 8. Radiant Regent (maps to Flame Regent in compendium)
-	if (regent === "radiant regent" || regent === "flame regent") {
+	// 8. Radiant Regent
+	if (regent === "radiant regent") {
 		if (feature === "flame step")
 			return [
 				{

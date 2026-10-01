@@ -1103,7 +1103,6 @@ export interface CompendiumPath extends BaseCompendiumItem {
 	stats?: {
 		primaryAttribute: string;
 		secondaryAttribute?: string;
-		bonusStats: Record<string, number>;
 	};
 }
 

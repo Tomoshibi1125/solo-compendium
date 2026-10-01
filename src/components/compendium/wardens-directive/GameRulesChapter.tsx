@@ -144,6 +144,42 @@ export const GameRulesChapter = () => {
 					Warden when a character mounts or dismounts.
 				</p>
 				<h2 className="text-2xl font-display font-bold text-white">
+					Job and Path features
+				</h2>
+				<p>
+					A Job or Path feature that calls for a saving throw without stating a
+					DC uses the Job save DC: 8 + proficiency bonus + the Job's key ability
+					modifier. Key abilities are STR for Destroyer and Berserker, AGI for
+					Assassin and Striker, INT for Mage, Revenant, and Technomancer, SENSE
+					for Herald, Summoner, and Stalker, and PRE for Esper, Contractor, Holy
+					Knight, and Idol. Powers use the same DC. A Regent feature uses 8 +
+					proficiency bonus + the Regent's first primary ability modifier, and
+					spells use the spell save DC.
+				</p>
+				<p>
+					A feature that offers options lists them all. The player picks when
+					the character gains the feature, and later grants add to earlier
+					picks. Unless the feature says otherwise, each time the character
+					gains a level in that Job, the player may swap one of those options
+					for another.
+				</p>
+				<p>
+					A creature a feature creates or commands uses the stat block in that
+					feature and shares its creator's proficiency bonus. It acts right
+					after its creator on the same initiative and takes the Dodge action
+					unless commanded with a bonus action or the feature lets it act
+					freely. It lasts for the feature's duration, until it drops to 0 hit
+					points, until dismissed (no action), or until the feature is used
+					again. Track it as a custom companion: it has no Hit Dice, does not
+					rest, and heals only as its feature allows.
+				</p>
+				<p>
+					A Path's primary and secondary attributes are build guidance; a Path
+					grants no ability score increases. Ability Score Improvements are
+					gained at level-up, and a character created above 1st level keeps the
+					scores entered for it.
+				</p>
+				<h2 className="text-2xl font-display font-bold text-white">
 					Damage and crafting
 				</h2>
 				<p>

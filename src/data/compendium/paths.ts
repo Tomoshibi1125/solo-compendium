@@ -46,14 +46,6 @@ export interface Path {
 	stats: {
 		primaryAttribute: string;
 		secondaryAttribute?: string;
-		bonusStats: {
-			strength?: number;
-			dexterity?: number;
-			constitution?: number;
-			intelligence?: number;
-			wisdom?: number;
-			charisma?: number;
-		};
 	};
 	source: string;
 	image?: string;
@@ -118,10 +110,6 @@ const pathCatalog: Path[] = [
 		stats: {
 			primaryAttribute: "Strength",
 			secondaryAttribute: "Vitality",
-			bonusStats: {
-				strength: 2,
-				constitution: 1,
-			},
 		},
 		source: "Rift Ascendant Canon",
 	},
@@ -190,10 +178,6 @@ const pathCatalog: Path[] = [
 		stats: {
 			primaryAttribute: "Strength",
 			secondaryAttribute: "Intelligence",
-			bonusStats: {
-				strength: 2,
-				intelligence: 1,
-			},
 		},
 		source: "Rift Ascendant Canon",
 	},
@@ -265,10 +249,6 @@ const pathCatalog: Path[] = [
 		stats: {
 			primaryAttribute: "Strength",
 			secondaryAttribute: "Intelligence",
-			bonusStats: {
-				strength: 1,
-				intelligence: 2,
-			},
 		},
 		source: "Rift Ascendant Canon",
 	},
@@ -333,10 +313,6 @@ const pathCatalog: Path[] = [
 		stats: {
 			primaryAttribute: "Vitality",
 			secondaryAttribute: "Strength",
-			bonusStats: {
-				constitution: 2,
-				strength: 1,
-			},
 		},
 		source: "Rift Ascendant Canon",
 	},
@@ -400,10 +376,6 @@ const pathCatalog: Path[] = [
 		stats: {
 			primaryAttribute: "Strength",
 			secondaryAttribute: "Sense",
-			bonusStats: {
-				strength: 2,
-				wisdom: 1,
-			},
 		},
 		source: "Rift Ascendant Canon",
 	},
@@ -474,10 +446,6 @@ const pathCatalog: Path[] = [
 		stats: {
 			primaryAttribute: "Strength",
 			secondaryAttribute: "Vitality",
-			bonusStats: {
-				strength: 2,
-				constitution: 1,
-			},
 		},
 		source: "Rift Ascendant Canon",
 	},
@@ -535,10 +503,6 @@ const pathCatalog: Path[] = [
 		stats: {
 			primaryAttribute: "Strength",
 			secondaryAttribute: "Vitality",
-			bonusStats: {
-				strength: 2,
-				constitution: 1,
-			},
 		},
 		source: "Rift Ascendant Canon",
 	},
@@ -595,10 +559,6 @@ const pathCatalog: Path[] = [
 		stats: {
 			primaryAttribute: "Strength",
 			secondaryAttribute: "Sense",
-			bonusStats: {
-				strength: 2,
-				wisdom: 1,
-			},
 		},
 		source: "Rift Ascendant Canon",
 	},
@@ -655,10 +615,6 @@ const pathCatalog: Path[] = [
 		stats: {
 			primaryAttribute: "Strength",
 			secondaryAttribute: "Vitality",
-			bonusStats: {
-				strength: 2,
-				constitution: 1,
-			},
 		},
 		source: "Rift Ascendant Canon",
 	},
@@ -716,10 +672,6 @@ const pathCatalog: Path[] = [
 		stats: {
 			primaryAttribute: "Strength",
 			secondaryAttribute: "Vitality",
-			bonusStats: {
-				strength: 2,
-				constitution: 1,
-			},
 		},
 		source: "Rift Ascendant Canon",
 	},
@@ -786,10 +738,6 @@ const pathCatalog: Path[] = [
 		stats: {
 			primaryAttribute: "Strength",
 			secondaryAttribute: "Vitality",
-			bonusStats: {
-				strength: 2,
-				constitution: 1,
-			},
 		},
 		source: "Rift Ascendant Canon",
 	},
@@ -857,10 +805,6 @@ const pathCatalog: Path[] = [
 		stats: {
 			primaryAttribute: "Strength",
 			secondaryAttribute: "Vitality",
-			bonusStats: {
-				strength: 2,
-				constitution: 1,
-			},
 		},
 		source: "Rift Ascendant Canon",
 	},
@@ -923,10 +867,6 @@ const pathCatalog: Path[] = [
 		stats: {
 			primaryAttribute: "Agility",
 			secondaryAttribute: "Intelligence",
-			bonusStats: {
-				dexterity: 2,
-				intelligence: 1,
-			},
 		},
 		source: "Rift Ascendant Canon",
 	},
@@ -990,10 +930,6 @@ const pathCatalog: Path[] = [
 		stats: {
 			primaryAttribute: "Agility",
 			secondaryAttribute: "Vitality",
-			bonusStats: {
-				dexterity: 2,
-				constitution: 1,
-			},
 		},
 		source: "Rift Ascendant Canon",
 	},
@@ -1059,10 +995,6 @@ const pathCatalog: Path[] = [
 		stats: {
 			primaryAttribute: "Agility",
 			secondaryAttribute: "Intelligence",
-			bonusStats: {
-				dexterity: 1,
-				intelligence: 2,
-			},
 		},
 		source: "Rift Ascendant Canon",
 	},
@@ -1126,10 +1058,6 @@ const pathCatalog: Path[] = [
 		stats: {
 			primaryAttribute: "Presence",
 			secondaryAttribute: "Intelligence",
-			bonusStats: {
-				charisma: 2,
-				intelligence: 1,
-			},
 		},
 		source: "Rift Ascendant Canon",
 	},
@@ -1196,10 +1124,6 @@ const pathCatalog: Path[] = [
 		stats: {
 			primaryAttribute: "Agility",
 			secondaryAttribute: "Presence",
-			bonusStats: {
-				dexterity: 2,
-				charisma: 1,
-			},
 		},
 		source: "Rift Ascendant Canon",
 	},
@@ -1264,10 +1188,6 @@ const pathCatalog: Path[] = [
 		stats: {
 			primaryAttribute: "Agility",
 			secondaryAttribute: "Sense",
-			bonusStats: {
-				dexterity: 2,
-				wisdom: 1,
-			},
 		},
 		source: "Rift Ascendant Canon",
 	},
@@ -1326,10 +1246,6 @@ const pathCatalog: Path[] = [
 		stats: {
 			primaryAttribute: "Agility",
 			secondaryAttribute: "Sense",
-			bonusStats: {
-				dexterity: 2,
-				wisdom: 1,
-			},
 		},
 		source: "Rift Ascendant Canon",
 	},
@@ -1386,10 +1302,6 @@ const pathCatalog: Path[] = [
 		stats: {
 			primaryAttribute: "Agility",
 			secondaryAttribute: "Sense",
-			bonusStats: {
-				dexterity: 2,
-				wisdom: 1,
-			},
 		},
 		source: "Rift Ascendant Canon",
 	},
@@ -1445,10 +1357,6 @@ const pathCatalog: Path[] = [
 		stats: {
 			primaryAttribute: "Agility",
 			secondaryAttribute: "Sense",
-			bonusStats: {
-				dexterity: 1,
-				wisdom: 2,
-			},
 		},
 		source: "Rift Ascendant Canon",
 	},
@@ -1505,10 +1413,6 @@ const pathCatalog: Path[] = [
 		stats: {
 			primaryAttribute: "Agility",
 			secondaryAttribute: "Presence",
-			bonusStats: {
-				dexterity: 2,
-				charisma: 1,
-			},
 		},
 		source: "Rift Ascendant Canon",
 	},
@@ -1566,10 +1470,6 @@ const pathCatalog: Path[] = [
 		stats: {
 			primaryAttribute: "Agility",
 			secondaryAttribute: "Sense",
-			bonusStats: {
-				dexterity: 2,
-				wisdom: 1,
-			},
 		},
 		source: "Rift Ascendant Canon",
 	},
@@ -1643,10 +1543,6 @@ const pathCatalog: Path[] = [
 		stats: {
 			primaryAttribute: "Sense",
 			secondaryAttribute: "Agility",
-			bonusStats: {
-				wisdom: 2,
-				dexterity: 1,
-			},
 		},
 		source: "Rift Ascendant Canon",
 	},
@@ -1704,10 +1600,6 @@ const pathCatalog: Path[] = [
 		stats: {
 			primaryAttribute: "Intelligence",
 			secondaryAttribute: "Vitality",
-			bonusStats: {
-				intelligence: 2,
-				constitution: 1,
-			},
 		},
 		source: "Rift Ascendant Canon",
 	},
@@ -1765,10 +1657,6 @@ const pathCatalog: Path[] = [
 		stats: {
 			primaryAttribute: "Intelligence",
 			secondaryAttribute: "Vitality",
-			bonusStats: {
-				intelligence: 2,
-				constitution: 1,
-			},
 		},
 		source: "Rift Ascendant Canon",
 	},
@@ -1825,10 +1713,6 @@ const pathCatalog: Path[] = [
 		stats: {
 			primaryAttribute: "Intelligence",
 			secondaryAttribute: "Sense",
-			bonusStats: {
-				intelligence: 2,
-				wisdom: 1,
-			},
 		},
 		source: "Rift Ascendant Canon",
 	},
@@ -1886,10 +1770,6 @@ const pathCatalog: Path[] = [
 		stats: {
 			primaryAttribute: "Intelligence",
 			secondaryAttribute: "Presence",
-			bonusStats: {
-				intelligence: 2,
-				charisma: 1,
-			},
 		},
 		source: "Rift Ascendant Canon",
 	},
@@ -1946,10 +1826,6 @@ const pathCatalog: Path[] = [
 		stats: {
 			primaryAttribute: "Intelligence",
 			secondaryAttribute: "Vitality",
-			bonusStats: {
-				intelligence: 2,
-				constitution: 1,
-			},
 		},
 		source: "Rift Ascendant Canon",
 	},
@@ -2008,10 +1884,6 @@ const pathCatalog: Path[] = [
 		stats: {
 			primaryAttribute: "Intelligence",
 			secondaryAttribute: "Sense",
-			bonusStats: {
-				intelligence: 2,
-				wisdom: 1,
-			},
 		},
 		source: "Rift Ascendant Canon",
 	},
@@ -2076,10 +1948,6 @@ const pathCatalog: Path[] = [
 		stats: {
 			primaryAttribute: "Presence",
 			secondaryAttribute: "Vitality",
-			bonusStats: {
-				charisma: 2,
-				constitution: 1,
-			},
 		},
 		source: "Rift Ascendant Canon",
 	},
@@ -2144,10 +2012,6 @@ const pathCatalog: Path[] = [
 		stats: {
 			primaryAttribute: "Presence",
 			secondaryAttribute: "Vitality",
-			bonusStats: {
-				charisma: 2,
-				constitution: 1,
-			},
 		},
 		source: "Rift Ascendant Canon",
 	},
@@ -2212,10 +2076,6 @@ const pathCatalog: Path[] = [
 		stats: {
 			primaryAttribute: "Presence",
 			secondaryAttribute: "Vitality",
-			bonusStats: {
-				charisma: 2,
-				constitution: 1,
-			},
 		},
 		source: "Rift Ascendant Canon",
 	},
@@ -2286,10 +2146,6 @@ const pathCatalog: Path[] = [
 		stats: {
 			primaryAttribute: "Presence",
 			secondaryAttribute: "Vitality",
-			bonusStats: {
-				charisma: 2,
-				constitution: 1,
-			},
 		},
 		source: "Rift Ascendant Canon",
 	},
@@ -2353,10 +2209,6 @@ const pathCatalog: Path[] = [
 		stats: {
 			primaryAttribute: "Presence",
 			secondaryAttribute: "Sense",
-			bonusStats: {
-				charisma: 2,
-				wisdom: 1,
-			},
 		},
 		source: "Rift Ascendant Canon",
 	},
@@ -2428,10 +2280,6 @@ const pathCatalog: Path[] = [
 		stats: {
 			primaryAttribute: "Presence",
 			secondaryAttribute: "Intelligence",
-			bonusStats: {
-				charisma: 2,
-				intelligence: 1,
-			},
 		},
 		source: "Rift Ascendant Canon",
 	},
@@ -2496,9 +2344,6 @@ const pathCatalog: Path[] = [
 		stats: {
 			primaryAttribute: "Intelligence",
 			secondaryAttribute: "Intelligence",
-			bonusStats: {
-				intelligence: 3,
-			},
 		},
 		source: "Rift Ascendant Canon",
 	},
@@ -2563,10 +2408,6 @@ const pathCatalog: Path[] = [
 		stats: {
 			primaryAttribute: "Intelligence",
 			secondaryAttribute: "Vitality",
-			bonusStats: {
-				intelligence: 2,
-				constitution: 1,
-			},
 		},
 		source: "Rift Ascendant Canon",
 	},
@@ -2631,10 +2472,6 @@ const pathCatalog: Path[] = [
 		stats: {
 			primaryAttribute: "Intelligence",
 			secondaryAttribute: "Vitality",
-			bonusStats: {
-				intelligence: 2,
-				constitution: 1,
-			},
 		},
 		source: "Rift Ascendant Canon",
 	},
@@ -2698,9 +2535,6 @@ const pathCatalog: Path[] = [
 		stats: {
 			primaryAttribute: "Intelligence",
 			secondaryAttribute: "Intelligence",
-			bonusStats: {
-				intelligence: 3,
-			},
 		},
 		source: "Rift Ascendant Canon",
 	},
@@ -2765,10 +2599,6 @@ const pathCatalog: Path[] = [
 		stats: {
 			primaryAttribute: "Intelligence",
 			secondaryAttribute: "Presence",
-			bonusStats: {
-				intelligence: 2,
-				charisma: 1,
-			},
 		},
 		source: "Rift Ascendant Canon",
 	},
@@ -2833,10 +2663,6 @@ const pathCatalog: Path[] = [
 		stats: {
 			primaryAttribute: "Intelligence",
 			secondaryAttribute: "Sense",
-			bonusStats: {
-				intelligence: 2,
-				wisdom: 1,
-			},
 		},
 		source: "Rift Ascendant Canon",
 	},
@@ -2904,10 +2730,6 @@ const pathCatalog: Path[] = [
 		stats: {
 			primaryAttribute: "Sense",
 			secondaryAttribute: "Vitality",
-			bonusStats: {
-				wisdom: 2,
-				constitution: 1,
-			},
 		},
 		source: "Rift Ascendant Canon",
 	},
@@ -2970,10 +2792,6 @@ const pathCatalog: Path[] = [
 		stats: {
 			primaryAttribute: "Sense",
 			secondaryAttribute: "Vitality",
-			bonusStats: {
-				wisdom: 2,
-				constitution: 1,
-			},
 		},
 		source: "Rift Ascendant Canon",
 	},
@@ -3029,10 +2847,6 @@ const pathCatalog: Path[] = [
 		stats: {
 			primaryAttribute: "Sense",
 			secondaryAttribute: "Presence",
-			bonusStats: {
-				wisdom: 2,
-				charisma: 1,
-			},
 		},
 		source: "Rift Ascendant Canon",
 	},
@@ -3093,10 +2907,6 @@ const pathCatalog: Path[] = [
 		stats: {
 			primaryAttribute: "Sense",
 			secondaryAttribute: "Vitality",
-			bonusStats: {
-				wisdom: 2,
-				constitution: 1,
-			},
 		},
 		source: "Rift Ascendant Canon",
 	},
@@ -3161,10 +2971,6 @@ const pathCatalog: Path[] = [
 		stats: {
 			primaryAttribute: "Sense",
 			secondaryAttribute: "Vitality",
-			bonusStats: {
-				wisdom: 2,
-				constitution: 1,
-			},
 		},
 		source: "Rift Ascendant Canon",
 	},
@@ -3227,10 +3033,6 @@ const pathCatalog: Path[] = [
 		stats: {
 			primaryAttribute: "Sense",
 			secondaryAttribute: "Intelligence",
-			bonusStats: {
-				wisdom: 2,
-				intelligence: 1,
-			},
 		},
 		source: "Rift Ascendant Canon",
 	},
@@ -3301,10 +3103,6 @@ const pathCatalog: Path[] = [
 		stats: {
 			primaryAttribute: "Sense",
 			secondaryAttribute: "Vitality",
-			bonusStats: {
-				wisdom: 2,
-				constitution: 1,
-			},
 		},
 		source: "Rift Ascendant Canon",
 	},
@@ -3375,10 +3173,6 @@ const pathCatalog: Path[] = [
 		stats: {
 			primaryAttribute: "Sense",
 			secondaryAttribute: "Presence",
-			bonusStats: {
-				wisdom: 2,
-				charisma: 1,
-			},
 		},
 		source: "Rift Ascendant Canon",
 	},
@@ -3449,10 +3243,6 @@ const pathCatalog: Path[] = [
 		stats: {
 			primaryAttribute: "Sense",
 			secondaryAttribute: "Strength",
-			bonusStats: {
-				wisdom: 2,
-				strength: 1,
-			},
 		},
 		source: "Rift Ascendant Canon",
 	},
@@ -3516,10 +3306,6 @@ const pathCatalog: Path[] = [
 		stats: {
 			primaryAttribute: "Sense",
 			secondaryAttribute: "Intelligence",
-			bonusStats: {
-				wisdom: 2,
-				intelligence: 1,
-			},
 		},
 		source: "Rift Ascendant Canon",
 	},
@@ -3589,10 +3375,6 @@ const pathCatalog: Path[] = [
 		stats: {
 			primaryAttribute: "Sense",
 			secondaryAttribute: "Strength",
-			bonusStats: {
-				wisdom: 2,
-				strength: 1,
-			},
 		},
 		source: "Rift Ascendant Canon",
 	},
@@ -3663,10 +3445,6 @@ const pathCatalog: Path[] = [
 		stats: {
 			primaryAttribute: "Sense",
 			secondaryAttribute: "Vitality",
-			bonusStats: {
-				wisdom: 2,
-				constitution: 1,
-			},
 		},
 		source: "Rift Ascendant Canon",
 	},
@@ -3723,10 +3501,6 @@ const pathCatalog: Path[] = [
 		stats: {
 			primaryAttribute: "Presence",
 			secondaryAttribute: "Agility",
-			bonusStats: {
-				charisma: 2,
-				dexterity: 1,
-			},
 		},
 		source: "Rift Ascendant Canon",
 	},
@@ -3783,10 +3557,6 @@ const pathCatalog: Path[] = [
 		stats: {
 			primaryAttribute: "Presence",
 			secondaryAttribute: "Vitality",
-			bonusStats: {
-				charisma: 2,
-				constitution: 1,
-			},
 		},
 		source: "Rift Ascendant Canon",
 	},
@@ -3846,10 +3616,6 @@ const pathCatalog: Path[] = [
 		stats: {
 			primaryAttribute: "Presence",
 			secondaryAttribute: "Intelligence",
-			bonusStats: {
-				charisma: 2,
-				intelligence: 1,
-			},
 		},
 		source: "Rift Ascendant Canon",
 	},
@@ -3911,10 +3677,6 @@ const pathCatalog: Path[] = [
 		stats: {
 			primaryAttribute: "Presence",
 			secondaryAttribute: "Sense",
-			bonusStats: {
-				charisma: 2,
-				wisdom: 1,
-			},
 		},
 		source: "Rift Ascendant Canon",
 	},
@@ -3976,10 +3738,6 @@ const pathCatalog: Path[] = [
 		stats: {
 			primaryAttribute: "Presence",
 			secondaryAttribute: "Strength",
-			bonusStats: {
-				charisma: 2,
-				strength: 1,
-			},
 		},
 		source: "Rift Ascendant Canon",
 	},
@@ -4049,10 +3807,6 @@ const pathCatalog: Path[] = [
 		stats: {
 			primaryAttribute: "Presence",
 			secondaryAttribute: "Vitality",
-			bonusStats: {
-				charisma: 2,
-				constitution: 1,
-			},
 		},
 		source: "Rift Ascendant Canon",
 	},
@@ -4110,10 +3864,6 @@ const pathCatalog: Path[] = [
 		stats: {
 			primaryAttribute: "Agility",
 			secondaryAttribute: "Sense",
-			bonusStats: {
-				dexterity: 2,
-				wisdom: 1,
-			},
 		},
 		source: "Rift Ascendant Canon",
 	},
@@ -4167,10 +3917,6 @@ const pathCatalog: Path[] = [
 		stats: {
 			primaryAttribute: "Agility",
 			secondaryAttribute: "Sense",
-			bonusStats: {
-				dexterity: 2,
-				wisdom: 1,
-			},
 		},
 		source: "Rift Ascendant Canon",
 	},
@@ -4234,10 +3980,6 @@ const pathCatalog: Path[] = [
 		stats: {
 			primaryAttribute: "Agility",
 			secondaryAttribute: "Sense",
-			bonusStats: {
-				dexterity: 2,
-				wisdom: 1,
-			},
 		},
 		source: "Rift Ascendant Canon",
 	},
@@ -4302,10 +4044,6 @@ const pathCatalog: Path[] = [
 		stats: {
 			primaryAttribute: "Agility",
 			secondaryAttribute: "Sense",
-			bonusStats: {
-				dexterity: 2,
-				wisdom: 1,
-			},
 		},
 		source: "Rift Ascendant Canon",
 	},
@@ -4371,10 +4109,6 @@ const pathCatalog: Path[] = [
 		stats: {
 			primaryAttribute: "Agility",
 			secondaryAttribute: "Sense",
-			bonusStats: {
-				dexterity: 2,
-				wisdom: 1,
-			},
 		},
 		source: "Rift Ascendant Canon",
 	},
@@ -4438,10 +4172,6 @@ const pathCatalog: Path[] = [
 		stats: {
 			primaryAttribute: "Agility",
 			secondaryAttribute: "Sense",
-			bonusStats: {
-				dexterity: 2,
-				wisdom: 1,
-			},
 		},
 		source: "Rift Ascendant Canon",
 	},
@@ -4505,10 +4235,6 @@ const pathCatalog: Path[] = [
 		stats: {
 			primaryAttribute: "Strength",
 			secondaryAttribute: "Presence",
-			bonusStats: {
-				strength: 2,
-				charisma: 1,
-			},
 		},
 		source: "Rift Ascendant Canon",
 	},
@@ -4574,10 +4300,6 @@ const pathCatalog: Path[] = [
 		stats: {
 			primaryAttribute: "Strength",
 			secondaryAttribute: "Presence",
-			bonusStats: {
-				strength: 2,
-				charisma: 1,
-			},
 		},
 		source: "Rift Ascendant Canon",
 	},
@@ -4642,10 +4364,6 @@ const pathCatalog: Path[] = [
 		stats: {
 			primaryAttribute: "Strength",
 			secondaryAttribute: "Presence",
-			bonusStats: {
-				strength: 2,
-				charisma: 1,
-			},
 		},
 		source: "Rift Ascendant Canon",
 	},
@@ -4708,10 +4426,6 @@ const pathCatalog: Path[] = [
 		stats: {
 			primaryAttribute: "Strength",
 			secondaryAttribute: "Presence",
-			bonusStats: {
-				strength: 2,
-				charisma: 1,
-			},
 		},
 		source: "Rift Ascendant Canon",
 	},
@@ -4775,10 +4489,6 @@ const pathCatalog: Path[] = [
 		stats: {
 			primaryAttribute: "Presence",
 			secondaryAttribute: "Vitality",
-			bonusStats: {
-				charisma: 2,
-				constitution: 1,
-			},
 		},
 		source: "Rift Ascendant Canon",
 	},
@@ -4844,10 +4554,6 @@ const pathCatalog: Path[] = [
 		stats: {
 			primaryAttribute: "Strength",
 			secondaryAttribute: "Presence",
-			bonusStats: {
-				strength: 2,
-				charisma: 1,
-			},
 		},
 		source: "Rift Ascendant Canon",
 	},
@@ -4916,10 +4622,6 @@ const pathCatalog: Path[] = [
 		stats: {
 			primaryAttribute: "Intelligence",
 			secondaryAttribute: "Sense",
-			bonusStats: {
-				intelligence: 2,
-				wisdom: 1,
-			},
 		},
 		source: "Rift Ascendant Canon",
 	},
@@ -4988,10 +4690,6 @@ const pathCatalog: Path[] = [
 		stats: {
 			primaryAttribute: "Intelligence",
 			secondaryAttribute: "Vitality",
-			bonusStats: {
-				intelligence: 2,
-				constitution: 1,
-			},
 		},
 		source: "Rift Ascendant Canon",
 	},
@@ -5057,10 +4755,6 @@ const pathCatalog: Path[] = [
 		stats: {
 			primaryAttribute: "Intelligence",
 			secondaryAttribute: "Vitality",
-			bonusStats: {
-				intelligence: 2,
-				constitution: 1,
-			},
 		},
 		source: "Rift Ascendant Canon",
 	},
@@ -5130,10 +4824,6 @@ const pathCatalog: Path[] = [
 		stats: {
 			primaryAttribute: "Intelligence",
 			secondaryAttribute: "Vitality",
-			bonusStats: {
-				intelligence: 2,
-				constitution: 1,
-			},
 		},
 		source: "Rift Ascendant Canon",
 	},
@@ -5196,10 +4886,6 @@ const pathCatalog: Path[] = [
 		stats: {
 			primaryAttribute: "Intelligence",
 			secondaryAttribute: "Agility",
-			bonusStats: {
-				intelligence: 2,
-				dexterity: 1,
-			},
 		},
 		source: "Rift Ascendant Canon",
 	},
@@ -5265,10 +4951,6 @@ const pathCatalog: Path[] = [
 		stats: {
 			primaryAttribute: "Intelligence",
 			secondaryAttribute: "Sense",
-			bonusStats: {
-				intelligence: 2,
-				wisdom: 1,
-			},
 		},
 		source: "Rift Ascendant Canon",
 	},
@@ -5324,10 +5006,6 @@ const pathCatalog: Path[] = [
 		stats: {
 			primaryAttribute: "Presence",
 			secondaryAttribute: "Intelligence",
-			bonusStats: {
-				charisma: 2,
-				intelligence: 1,
-			},
 		},
 		source: "Rift Ascendant Canon",
 	},
@@ -5384,10 +5062,6 @@ const pathCatalog: Path[] = [
 		stats: {
 			primaryAttribute: "Presence",
 			secondaryAttribute: "Agility",
-			bonusStats: {
-				charisma: 2,
-				dexterity: 1,
-			},
 		},
 		source: "Rift Ascendant Canon",
 	},
@@ -5445,10 +5119,6 @@ const pathCatalog: Path[] = [
 		stats: {
 			primaryAttribute: "Presence",
 			secondaryAttribute: "Agility",
-			bonusStats: {
-				charisma: 2,
-				dexterity: 1,
-			},
 		},
 		source: "Rift Ascendant Canon",
 	},
@@ -5511,10 +5181,6 @@ const pathCatalog: Path[] = [
 		stats: {
 			primaryAttribute: "Presence",
 			secondaryAttribute: "Agility",
-			bonusStats: {
-				charisma: 2,
-				dexterity: 1,
-			},
 		},
 		source: "Rift Ascendant Canon",
 	},
@@ -5572,10 +5238,6 @@ const pathCatalog: Path[] = [
 		stats: {
 			primaryAttribute: "Presence",
 			secondaryAttribute: "Agility",
-			bonusStats: {
-				charisma: 2,
-				dexterity: 1,
-			},
 		},
 		source: "Rift Ascendant Canon",
 	},
@@ -5632,10 +5294,6 @@ const pathCatalog: Path[] = [
 		stats: {
 			primaryAttribute: "Presence",
 			secondaryAttribute: "Intelligence",
-			bonusStats: {
-				charisma: 2,
-				intelligence: 1,
-			},
 		},
 		source: "Rift Ascendant Canon",
 	},
@@ -5655,6 +5313,8 @@ const RECONCILED_PATH_ALIASES: Readonly<Record<string, readonly string[]>> = {
 		"mage--shield-architect",
 		"Path of the Shield Compiler",
 	],
+	// The legacy roster named this Berserker Path the Feedback Loop.
+	"berserker--escalating-resonance": ["Path of the Feedback Loop"],
 	"assassin--gate-runner": ["assassin--shadow-thief"],
 	"assassin--terminus": [
 		"assassin--silent-knife",

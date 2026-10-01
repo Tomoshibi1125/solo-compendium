@@ -366,7 +366,7 @@ export const PathDetail = ({ data }: { data: PathData }) => {
 			{data.stats && (
 				<div>
 					<h3 className="text-lg font-semibold mb-3 font-heading">
-						Path Bonuses
+						Path Attributes
 					</h3>
 					<div className="p-4 bg-card border rounded-lg">
 						<div className="flex gap-4 mb-2">
@@ -385,23 +385,9 @@ export const PathDetail = ({ data }: { data: PathData }) => {
 								</span>
 							)}
 						</div>
-						{data.stats.bonusStats &&
-							Object.keys(data.stats.bonusStats).length > 0 && (
-								<div className="text-sm mt-3">
-									<span className="text-muted-foreground block mb-2">
-										Bonus Stats:{" "}
-									</span>
-									<div className="flex flex-wrap gap-2">
-										{Object.entries(data.stats.bonusStats).map(
-											([stat, val]) => (
-												<Badge key={stat} variant="outline">
-													{formatRegentVernacular(stat)} +{val}
-												</Badge>
-											),
-										)}
-									</div>
-								</div>
-							)}
+						<p className="text-xs text-muted-foreground">
+							Build guidance only. A Path grants no ability score increases.
+						</p>
 					</div>
 				</div>
 			)}

@@ -31,7 +31,7 @@ export const REGENT_EXPECTATIONS = {
 	radiant_regent: {
 		id: "radiant_regent",
 		theme: "White Flames and Purification",
-		quest: "Complete the Flame Regent Trials quest series",
+		quest: "Complete the Radiant Regent Trials quest series",
 		prerequisiteJob: COMMON_QUEST_PREREQUISITE,
 		powerLevel: 10,
 		featureCount: 8,

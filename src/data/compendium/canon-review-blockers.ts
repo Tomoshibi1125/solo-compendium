@@ -130,27 +130,6 @@ export const canonicalReviewBlockers: readonly CanonReviewBlocker[] = [
 			"Exaltation features do not quantify physical advantage, healing, speed, reflected damage, or Heroic Manifestation's area/save/damage.",
 		dependsOnTask: 20,
 	},
-	// Historical-save convergence is resolved by the dedicated progression and
-	// versioned reconciliation tasks; keeping these explicit prevents Task 3's
-	// canon corrections from silently guessing prior player choices.
-	{
-		id: "task3:destroyer:retroactive-asi-entitlements",
-		dataset: "jobs",
-		entryId: "destroyer",
-		fieldPath: "classFeatures.Ability Score Improvement.existingCharacters",
-		message:
-			"Existing Destroyers above levels 6 or 14 need explicit, player-selected catch-up receipts; prior ASI choices cannot be inferred safely from current scores.",
-		dependsOnTask: 18,
-	},
-	{
-		id: "task3:mage:ambiguous-legacy-asi-markers",
-		dataset: "jobs",
-		entryId: "mage",
-		fieldPath: "abilityScoreImprovements.existingCharacters",
-		message:
-			"Exact legacy INT +2/PRE +1 markers migrate deterministically, but missing, edited, capped, or otherwise ambiguous historical markers require versioned previewable reconciliation.",
-		dependsOnTask: 19,
-	},
 	// Task 4: Berserker canon gaps.
 	{
 		id: "task4:berserker:overload-pre20-semantics",
@@ -169,15 +148,6 @@ export const canonicalReviewBlockers: readonly CanonReviewBlocker[] = [
 		message:
 			"The level-20 unlimited-use promise remains structured as 2/long rest, with no level-aware unlimited representation.",
 		dependsOnTask: 20,
-	},
-	{
-		id: "task4:berserker-escalating-resonance:feedback-loop-alias",
-		dataset: "paths",
-		entryId: "berserker--escalating-resonance",
-		fieldPath: "aliases",
-		message:
-			"Legacy data names Path of the Feedback Loop, but canon does not decide whether it aliases Escalating Resonance or represents a distinct obsolete path.",
-		dependsOnTask: 19,
 	},
 	{
 		id: "task4:berserker-gate-beast:persistent-aspect",
@@ -315,60 +285,6 @@ export const canonicalReviewBlockers: readonly CanonReviewBlocker[] = [
 			"The two cantrips, three restricted spells, replacement rules, known/prepared status, and level-by-level third-caster slots lack a complete structured ledger.",
 		dependsOnTask: 16,
 	},
-	{
-		id: "task4:assassin-gate-runner:legacy-row-migration",
-		dataset: "paths",
-		entryId: "assassin--gate-runner",
-		fieldPath: "aliases",
-		message:
-			"The shadow-thief alias resolves statically, but persisted obsolete path, feature, choice, and character rows have no migration policy.",
-		dependsOnTask: 19,
-	},
-	{
-		id: "task4:assassin-terminus:legacy-row-migration",
-		dataset: "paths",
-		entryId: "assassin--terminus",
-		fieldPath: "aliases",
-		message:
-			"Silent Knife and Terminus-Scythe aliases resolve statically, but persisted obsolete rows have no merge, remap, or removal policy.",
-		dependsOnTask: 19,
-	},
-	{
-		id: "task4:assassin-weave-infiltrator:legacy-row-migration",
-		dataset: "paths",
-		entryId: "assassin--weave-infiltrator",
-		fieldPath: "aliases",
-		message:
-			"Spell Thief and Lattice-Breaker aliases resolve statically, but persisted obsolete rows have no merge, remap, or removal policy.",
-		dependsOnTask: 19,
-	},
-	{
-		id: "task4:assassin-shadow-herald:legacy-row-migration",
-		dataset: "paths",
-		entryId: "assassin--shadow-herald",
-		fieldPath: "aliases",
-		message:
-			"Shadow Broker and Telemetry-Architect aliases resolve statically, but persisted obsolete rows have no merge, remap, or removal policy.",
-		dependsOnTask: 19,
-	},
-	{
-		id: "task4:assassin-blade-dancer:legacy-row-migration",
-		dataset: "paths",
-		entryId: "assassin--blade-dancer",
-		fieldPath: "aliases",
-		message:
-			"Duellist and Resonance-Dancer aliases resolve statically, but persisted obsolete rows have no merge, remap, or removal policy.",
-		dependsOnTask: 19,
-	},
-	{
-		id: "task4:assassin-vanguard-outrider:legacy-row-migration",
-		dataset: "paths",
-		entryId: "assassin--vanguard-outrider",
-		fieldPath: "aliases",
-		message:
-			"Outrider and Threshold-Surveyor aliases resolve statically, but persisted obsolete rows have no merge, remap, or removal policy.",
-		dependsOnTask: 19,
-	},
 	// Task 4: Striker canon gaps.
 	{
 		id: "task4:striker-kinetic-core:rapid-barrage-vocabulary",
@@ -487,27 +403,6 @@ export const canonicalReviewBlockers: readonly CanonReviewBlocker[] = [
 			"Kinetic Deflection exists as both an always-present job trait and a level-3 class feature with divergent mechanics; canon does not choose one layer or define coexistence.",
 		dependsOnTask: 20,
 	},
-	// Task 4: shared path-data contracts. These records use a canonical path as
-	// the audit anchor, but the decisions apply to every path in the Task 4 batch.
-	{
-		id: "task4:paths:bonus-stats-semantics",
-		dataset: "paths",
-		entryId: "berserker--escalating-resonance",
-		fieldPath: "stats.bonusStats",
-		message:
-			"Task 4 paths do not define whether bonusStats are grants or recommendations, their timing, stacking and caps, or legacy-stat-to-canonical-ability mapping.",
-		dependsOnTask: 16,
-	},
-	// Task 5: shared path contracts and unresolved source vocabulary.
-	{
-		id: "task5:paths:bonus-stats-semantics",
-		dataset: "paths",
-		entryId: "esper--draconic-lineage",
-		fieldPath: "stats.bonusStats",
-		message:
-			"Task 5 paths do not define whether bonusStats are grants or recommendations, their timing, stacking and caps, or legacy-stat-to-canonical-ability mapping.",
-		dependsOnTask: 16,
-	},
 	{
 		id: "task5:esper-aetheric-dragon:resonance-choice",
 		dataset: "paths",
@@ -588,16 +483,6 @@ export const canonicalReviewBlockers: readonly CanonReviewBlocker[] = [
 		message:
 			"Combat Choreography lists four discipline packages but provides no stable option IDs, selection timing, replacement rule, or persisted binding for later features.",
 		dependsOnTask: 20,
-	},
-	// Task 6: shared path contracts and rejected generated ability identities.
-	{
-		id: "task6:paths:bonus-stats-semantics",
-		dataset: "paths",
-		entryId: "revenant--void-lord",
-		fieldPath: "stats.bonusStats",
-		message:
-			"Task 6 paths do not define whether bonusStats are grants or recommendations, their timing, stacking and caps, or legacy-stat-to-canonical-ability mapping.",
-		dependsOnTask: 16,
 	},
 	{
 		id: "task6:revenant:rejected-inferred-grant-identities",
@@ -846,23 +731,5 @@ export const canonicalReviewBlockers: readonly CanonReviewBlocker[] = [
 		message:
 			"All forty named additional spells currently resolve to no canonical spell entry, and martial Regents name no selectable power or technique IDs; prior school and Job-list grants were thematic inference and remain quarantined pending Task 9.",
 		dependsOnTask: 9,
-	},
-	{
-		id: "task7:regents:unapproved-aliases",
-		dataset: "regents",
-		entryId: "*",
-		fieldPath: "aliases",
-		message:
-			"Shadow/Umbral, Flame/Radiant, Titan/Steel, Dragon/Destruction, Architect/Spatial, Transfiguration/Mimic, and Frost Sovereign compatibility names are not approved canonical aliases and must not silently resolve.",
-		dependsOnTask: 16,
-	},
-	{
-		id: "task7:regents:source-citation-matrix",
-		dataset: "regents",
-		entryId: "*",
-		fieldPath: "class_features.provenance",
-		message:
-			"The repository identifies Rift Ascendant Canon but provides no independent page/section citation matrix for all Regent mechanics; provenance therefore records exact repository fields rather than claiming unavailable page citations.",
-		dependsOnTask: 23,
 	},
 ];

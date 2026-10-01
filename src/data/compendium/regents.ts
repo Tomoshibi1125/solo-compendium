@@ -572,7 +572,7 @@ export const regents: Regent[] = [
 		weapon_proficiencies: ["Awakened Weapons", "Rift-Forged Weapons"],
 		tool_proficiencies: [],
 		requirements: {
-			quest_completion: "Complete the Flame Regent Trials quest series",
+			quest_completion: "Complete the Radiant Regent Trials quest series",
 			warden_verification: true,
 			prerequisite_job: "Any base job",
 			power_level: 10,
@@ -992,7 +992,7 @@ export const regents: Regent[] = [
 			{
 				name: "Titan's Law",
 				description:
-					"As a reaction, reflect the damage of an attack back at the attacker (force damage). This mirrors the Titan Regent's law of retribution.",
+					"As a reaction, reflect the damage of an attack back at the attacker (force damage). This mirrors the Steel Regent's law of retribution.",
 				type: "reaction",
 				frequency: "at-will",
 				power_level: 2,

@@ -168,7 +168,7 @@ async function resolveStaticReferenceId(
 const isCanonicalRuneKey = (value: string): boolean =>
 	/^rune-[a-z0-9]+(?:-[a-z0-9]+)*$/.test(value);
 
-async function buildImportedCharacterInsert(
+export async function buildImportedCharacterInsert(
 	charData: Record<string, unknown>,
 	userId: string,
 ): Promise<CharacterInsert> {
@@ -195,11 +195,13 @@ async function buildImportedCharacterInsert(
 		user_id: userId,
 		name: `${stringOrNull(charData.name) ?? "Imported Character"} (Imported)`,
 		level: numberOrDefault(charData.level, 1),
-		job,
+		// A resolved reference stores the canonical name, so a retired name
+		// matched through an alias is never persisted (RA-27).
+		job: jobResolution.entry?.name ?? job,
 		job_id: jobResolution.entry?.id ?? stringOrNull(charData.job_id) ?? null,
-		path,
+		path: pathResolution.entry?.name ?? path,
 		path_id: pathResolution.entry?.id ?? stringOrNull(charData.path_id) ?? null,
-		background,
+		background: backgroundResolution.entry?.name ?? background,
 		background_id:
 			backgroundResolution.entry?.id ??
 			stringOrNull(charData.background_id) ??

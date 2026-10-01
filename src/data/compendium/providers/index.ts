@@ -1974,7 +1974,6 @@ export const staticDataProvider: StaticDataProvider = {
 			stats?: {
 				primaryAttribute: string;
 				secondaryAttribute?: string;
-				bonusStats: Record<string, number>;
 			};
 			requirements: {
 				level?: number;
