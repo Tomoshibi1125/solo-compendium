@@ -3850,6 +3850,10 @@ export async function addJobAwakeningBenefitsForLevel(
 				} | null;
 				resource?: string | null;
 				tracking?: "uses" | "resource" | "manual" | null;
+				formerNames?: string[] | null;
+				grants?: {
+					spells: Array<{ name: string; level?: number }>;
+				} | null;
 			}> | null;
 			abilities?: Array<{
 				name: string;
@@ -3918,16 +3922,22 @@ export async function addJobAwakeningBenefitsForLevel(
 					pathData.id,
 					feature.name,
 				);
+				// A renamed feature adopts the row stored under a former name at
+				// the same level instead of leaving a stale copy.
+				const formerNames = new Set(
+					(feature.formerNames ?? []).map(normalizeFeatureIdentity),
+				);
 				await reconcileCanonicalFeatureRow(
 					characterId,
 					featureRows,
 					(row) => {
 						if (row.homebrew_id) return false;
-						if (
-							normalizeFeatureIdentity(row.name) !==
-							normalizeFeatureIdentity(feature.name)
-						)
-							return false;
+						const rowName = normalizeFeatureIdentity(row.name);
+						const isCurrentName =
+							rowName === normalizeFeatureIdentity(feature.name);
+						const isFormerName =
+							formerNames.has(rowName) && row.level_acquired === feature.level;
+						if (!isCurrentName && !isFormerName) return false;
 						const source = normalizeFeatureIdentity(row.source);
 						if (!source.startsWith("path-")) return false;
 						return ownerKeys.some((ownerKey) => source.includes(ownerKey));
@@ -3955,6 +3965,13 @@ export async function addJobAwakeningBenefitsForLevel(
 				);
 				existingNames.add(feature.name);
 			}
+
+			await addPathSpellGrants(
+				characterId,
+				pathData.name,
+				earnedPathFeatures,
+				level,
+			);
 
 			const earnedPathAbilities = (pathData.abilities ?? []).filter(
 				(ability) => (ability.level ?? pathUnlockLevel) <= level,
@@ -4276,6 +4293,87 @@ export async function addJobAwakeningBenefitsForLevel(
 	// Innate channeling spells unlocking at this level.
 	if (isStaticJob(job) && job.innateChanneling) {
 		await addInnateChannelingForLevel(characterId, job, level);
+	}
+}
+
+/**
+ * Add the spells a Path's earned features grant outright as known spells that
+ * don't count against the character's limit. Idempotent: a granted spell
+ * already on the sheet under the Path's source is skipped, so re-running the
+ * cumulative reconcile never duplicates it.
+ */
+export async function addPathSpellGrants(
+	characterId: string,
+	pathName: string,
+	features: ReadonlyArray<{
+		level: number;
+		grants?: { spells: Array<{ name: string; level?: number }> } | null;
+	}>,
+	level: number,
+): Promise<void> {
+	const due = features.flatMap((feature) =>
+		(feature.grants?.spells ?? [])
+			.filter((spell) => (spell.level ?? feature.level) <= level)
+			.map((spell) => spell.name),
+	);
+	if (due.length === 0) return;
+
+	const sourceLabel = `Path Spell: ${pathName}`;
+	const existing: Array<{ name: string | null; source: string | null }> =
+		isLocalCharacterId(characterId)
+			? listLocalSpells(characterId)
+			: ((
+					await supabase
+						.from("character_spells")
+						.select("name, source")
+						.eq("character_id", characterId)
+				).data ?? []);
+	const granted = new Set(
+		existing
+			.filter((spell) => spell.source === sourceLabel)
+			.map((spell) => normalizeFeatureIdentity(spell.name)),
+	);
+
+	for (const name of due) {
+		if (granted.has(normalizeFeatureIdentity(name))) continue;
+		const canonicalSpell = await findCanonicalCastableByName(name, undefined, [
+			"spells",
+		]);
+		if (!canonicalSpell) {
+			console.warn(`addPathSpellGrants: no canonical spell named ${name}`);
+			continue;
+		}
+		const row = {
+			spell_id: canonicalSpell.id,
+			name: canonicalSpell.name,
+			source: sourceLabel,
+			spell_level: canonicalSpell.power_level ?? 0,
+			is_prepared: true,
+			is_known: true,
+			counts_against_limit: false,
+			description: canonicalSpell.description ?? null,
+			higher_levels: canonicalSpell.higher_levels ?? null,
+			casting_time: canonicalSpell.casting_time ?? null,
+			range: canonicalSpell.range ?? null,
+			duration: canonicalSpell.duration ?? null,
+			concentration: canonicalSpell.concentration ?? false,
+			ritual: canonicalSpell.ritual ?? false,
+			recharge: null,
+			uses_max: null,
+			uses_current: null,
+		};
+		if (isLocalCharacterId(characterId)) {
+			addLocalSpell(characterId, row);
+		} else {
+			const { error } = await supabase
+				.from("character_spells")
+				.insert({ character_id: characterId, ...row });
+			if (error) {
+				console.warn("addPathSpellGrants: failed to add spell", error);
+				continue;
+			}
+		}
+		granted.add(normalizeFeatureIdentity(name));
 	}
 }
 

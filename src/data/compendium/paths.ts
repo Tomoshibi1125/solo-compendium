@@ -1,6 +1,8 @@
 // Job Paths Compendium - Ascendant Compendium (84 Paths)
 // 14 Jobs × 6 Paths each, unique SA identities with 5e-compatible mechanical backbone
 
+import { getPathCaster } from "./pathSpellcasting";
+
 export type PathRestRecharge = "short-rest" | "long-rest";
 export type PathAbilityTracking = "uses" | "resource" | "manual";
 
@@ -12,6 +14,63 @@ export interface PathFeature {
 	uses?: { formula: string; recharge: PathRestRecharge };
 	resource?: string;
 	tracking?: PathAbilityTracking;
+	/** Earlier names; Path reconciliation adopts rows stored under them. */
+	formerNames?: string[];
+	/**
+	 * Spells the feature grants outright, each from its own character level
+	 * (default: the feature's level). They are added as known spells that don't
+	 * count against the character's limit.
+	 */
+	grants?: { spells: Array<{ name: string; level?: number }> };
+}
+
+/** A named option offered by a Path feature (RA-23). */
+export interface PathChoiceOption {
+	name: string;
+	description: string;
+}
+
+/**
+ * - `path-option`: the feature names every option and the sheet records each
+ *   pick as its own feature entry (Path choices panel).
+ * - The other types add to the shared choice totals that the creation and
+ *   level-up pickers already handle.
+ */
+export type PathLevelChoiceType =
+	| "path-option"
+	| "fighting-style"
+	| "skill"
+	| "expertise"
+	| "tool"
+	| "language"
+	| "cantrip"
+	| "spell"
+	| "power"
+	| "technique";
+
+/** A structured choice a Path feature grants at a level (RA-23). */
+export interface PathLevelChoice {
+	level: number;
+	type: PathLevelChoiceType;
+	count: number;
+	/** Feature that grants the choice; matches a feature name on the Path. */
+	source: string;
+	/** Required for `path-option`; every option the feature offers. */
+	options?: PathChoiceOption[];
+}
+
+/** Third-caster spellcasting a Path grants to a Job that doesn't cast. */
+export interface PathSpellcasting {
+	/** Feature that grants the casting; its prose is not re-parsed for picks. */
+	source: string;
+	/** Job spell list the Path learns from. */
+	list: string;
+	ability: "Intelligence";
+	casterType: "third";
+	/** Cantrips known by character level (index = level - 1). */
+	cantripsKnown: number[];
+	/** Spells known by character level (index = level - 1). */
+	spellsKnown: number[];
 }
 
 export interface PathAbility {
@@ -43,6 +102,10 @@ export interface Path {
 	description: string;
 	features: PathFeature[];
 	abilities: PathAbility[];
+	/** Structured choices the Path's features grant (RA-23). */
+	levelChoices?: PathLevelChoice[];
+	/** Spellcasting for Paths of Jobs that don't cast. */
+	spellcasting?: PathSpellcasting;
 	stats: {
 		primaryAttribute: string;
 		secondaryAttribute?: string;
@@ -6360,11 +6423,14 @@ export const paths: Path[] = pathCatalog.map((path) => {
 	const aliases = RECONCILED_PATH_ALIASES[path.id];
 	const abilityMechanics = RECONCILED_PATH_ABILITY_MECHANICS[path.id];
 	const featureMechanics = RECONCILED_PATH_FEATURE_MECHANICS[path.id];
-	if (!aliases && !abilityMechanics && !featureMechanics) return path;
+	const caster = getPathCaster(path.id);
+	if (!aliases && !abilityMechanics && !featureMechanics && !caster)
+		return path;
 
 	return {
 		...path,
 		...(aliases ? { aliases: [...aliases] } : {}),
+		...(caster ? { spellcasting: caster.spellcasting } : {}),
 		features: path.features.map((feature) => {
 			const mechanics = featureMechanics?.find(
 				(candidate) => candidate.featureName === feature.name,

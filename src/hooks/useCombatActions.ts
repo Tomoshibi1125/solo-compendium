@@ -18,6 +18,7 @@ import { scaleCantripDamage } from "@/lib/cantripScaling";
 import { getProficiencyBonus } from "@/lib/characterCalculations";
 import { buildItemProperties } from "@/lib/characterCreation";
 import { sumCustomModifiers } from "@/lib/customModifiers";
+import { toCastingReference } from "@/lib/jobRules";
 import {
 	appendAbilityModifierToDamageFormula,
 	buildAttackRollFormula,
@@ -632,7 +633,8 @@ export const useCombatActions = (characterId: string) => {
 			// NOT the Job's primary ability. See `spellActionFormulas.ts`
 			// and the design note in `powerActionFormulas.ts:9-23`.
 			const spellFormula = resolveSpellActionFormula({
-				job: character.job,
+				// The casting reference carries the Path for Path casters.
+				job: toCastingReference(character) ?? character.job,
 				abilities: derivedStats.finalAbilities,
 				level: character.level ?? 1,
 				attackBonus: customPowerAttackBonus,

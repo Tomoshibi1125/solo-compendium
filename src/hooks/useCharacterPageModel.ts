@@ -51,6 +51,7 @@ import {
 	rollDiceString,
 } from "@/lib/diceRoller";
 import { isLocalCharacterId } from "@/lib/guestStore";
+import { toCastingReference } from "@/lib/jobRules";
 import { notifyAsync } from "@/lib/notify";
 import {
 	type AdvantageState,
@@ -122,7 +123,7 @@ export function useCharacterPageModel() {
 
 	const { data: spellSlotData = [] } = useSpellSlots(
 		character?.id || "",
-		character?.job || null,
+		toCastingReference(character),
 		character?.level || 1,
 	);
 	const { broadcastDiceRoll, isConnected: isCampaignConnected } =

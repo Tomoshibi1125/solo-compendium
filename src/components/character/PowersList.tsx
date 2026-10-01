@@ -33,6 +33,7 @@ import {
 	getSpellsPreparedLimit,
 } from "@/lib/characterCalculations";
 import { getJobPowerMode } from "@/lib/jobAbilityAccess";
+import { toCastingReference } from "@/lib/jobRules";
 import {
 	spendRegentResonance,
 	usePendingRegentGrants,
@@ -106,9 +107,10 @@ export function PowersList({
 	const { features, updateFeature } = useFeatures(characterId);
 	const powers = rawPowers as Power[];
 	const { data: character } = useCharacter(characterId);
+	const castingReference = toCastingReference(character);
 	const { data: spellSlots = [] } = useSpellSlots(
 		characterId,
-		character?.job || null,
+		castingReference,
 		character?.level || 1,
 	);
 	const { actions } = useCombatActions(characterId);
@@ -178,8 +180,8 @@ export function PowersList({
 				(power.uses_current ?? 0) <= 0;
 
 	// Calculate spell limits
-	const spellcastingAbility = character
-		? getSpellcastingAbility(character.job)
+	const spellcastingAbility = castingReference
+		? getSpellcastingAbility(castingReference)
 		: null;
 	const abilityModifier =
 		character && spellcastingAbility

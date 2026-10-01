@@ -57,6 +57,7 @@ import {
 	type PartyInventoryItem,
 	PartyInventoryPanel,
 } from "@/components/character/PartyInventoryPanel";
+import { PathChoicesPanel } from "@/components/character/PathChoicesPanel";
 import { PathFeaturesDisplay } from "@/components/character/PathFeaturesDisplay";
 import { RegentFeaturesDisplay } from "@/components/character/RegentFeaturesDisplay";
 import { RegentUnlocksPanel } from "@/components/character/RegentUnlocksPanel";
@@ -748,6 +749,7 @@ export default function CharacterSheetV2() {
 				readOnly={isReadOnly}
 			/>
 			<FeatureChoicesPanel characterId={character.id} readOnly={isReadOnly} />
+			<PathChoicesPanel characterId={character.id} readOnly={isReadOnly} />
 			<HomebrewFeatureApplicator
 				characterId={character.id}
 				readOnly={isReadOnly}

@@ -33,6 +33,7 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 import { getFightingStylesForJob } from "@/data/compendium/fightingStyles";
+import type { Path } from "@/data/compendium/paths";
 import type { StaticCompendiumEntry } from "@/data/compendium/providers/types";
 import { regents as canonicalRegents } from "@/data/compendium/regents";
 import { useToast } from "@/hooks/use-toast";
@@ -43,6 +44,7 @@ import { usePublishedHomebrew } from "@/hooks/useHomebrewContent";
 import { useRegentUnlocks } from "@/hooks/useRegentUnlocks";
 import { useInitializeSpellSlots } from "@/hooks/useSpellSlots";
 import { useStaticJobs } from "@/hooks/useStaticJobs";
+import { useStaticPathCatalog } from "@/hooks/useStaticPathCatalog";
 import { supabase } from "@/integrations/supabase/client";
 import type { Database } from "@/integrations/supabase/types";
 import { getAbilityModifier } from "@/lib/5eRulesEngine";
@@ -108,6 +110,7 @@ import {
 	runtimePathMatchesJob,
 	runtimeSpellMatchesCharacter,
 } from "@/lib/homebrewRuntime";
+import { toCastingReference } from "@/lib/jobRules";
 import { removeProgressionGrantsAboveLevel } from "@/lib/levelDownCleanup";
 import { getStaticPathUnlockLevel, isASILevel } from "@/lib/levelGating";
 import {
@@ -123,6 +126,7 @@ import { logger } from "@/lib/logger";
 import { getStaticPaths, getStaticRegents } from "@/lib/ProtocolDataManager";
 import { getEffectiveMaxAbilityLevel } from "@/lib/pathAbilityAccess";
 import { getPathEligibility } from "@/lib/pathEligibility";
+import { withStaticPathLedger } from "@/lib/pathLedger";
 import {
 	buildCharacterLevelDownPreflightV1,
 	buildCharacterLevelUpWorkflowPlanV1,
@@ -321,14 +325,23 @@ function toChoiceSourceData(
 }
 
 function toPathChoiceSourceData(
-	path: Pick<ChoiceSourceData, "features" | "name"> | null | undefined,
-	name?: string | null,
+	path:
+		| (Pick<ChoiceSourceData, "features" | "name"> & { id?: string | null })
+		| null
+		| undefined,
+	name: string | null | undefined,
+	catalog: readonly Path[] | undefined,
 ): ChoiceSourceData | null {
 	if (!path) return null;
-	return {
-		name: name ?? path.name,
-		features: path.features ?? [],
-	};
+	// Structured Path choices and Path casting come from the static catalog.
+	return withStaticPathLedger(
+		{
+			name: name ?? path.name,
+			features: path.features ?? [],
+		},
+		{ id: path.id, name: name ?? path.name },
+		catalog,
+	);
 }
 
 function getExperienceForNextLevel(currentLevel: number): number {
@@ -569,6 +582,9 @@ export const LevelUpWizardModal = ({
 		character?.path ??
 		selectedPathRow?.name ??
 		null;
+	const { data: staticPathCatalog } = useStaticPathCatalog(
+		Boolean(effectivePathName),
+	);
 	const characterRegentNames = useMemo(() => {
 		const overlays = Array.isArray(character?.regent_overlays)
 			? character.regent_overlays.filter(
@@ -598,12 +614,19 @@ export const LevelUpWizardModal = ({
 	const pathChoiceSource = useMemo(() => {
 		if (!character?.job || !effectivePathName) return null;
 		if (selectedPathRow) {
-			return toPathChoiceSourceData(selectedPathRow, effectivePathName);
+			return toPathChoiceSourceData(
+				selectedPathRow,
+				effectivePathName,
+				staticPathCatalog,
+			);
 		}
 		if (resolvedCanonicalPath) {
 			return toPathChoiceSourceData(
-				resolvedCanonicalPath as Pick<ChoiceSourceData, "features" | "name">,
+				resolvedCanonicalPath as Pick<ChoiceSourceData, "features" | "name"> & {
+					id?: string | null;
+				},
 				effectivePathName,
+				staticPathCatalog,
 			);
 		}
 		const jobNameKey = normalizeCompendiumKey(character.job);
@@ -624,6 +647,7 @@ export const LevelUpWizardModal = ({
 		return toPathChoiceSourceData(
 			staticPath ?? homebrewPath,
 			effectivePathName,
+			staticPathCatalog,
 		);
 	}, [
 		character?.job,
@@ -631,6 +655,7 @@ export const LevelUpWizardModal = ({
 		homebrewPaths,
 		resolvedCanonicalPath,
 		selectedPathRow,
+		staticPathCatalog,
 	]);
 
 	// Active regent overlays as choice sources so their full independent
@@ -1682,7 +1707,7 @@ export const LevelUpWizardModal = ({
 			try {
 				await initializeSpellSlots.mutateAsync({
 					characterId: character.id,
-					job: jobObj || character.job,
+					job: toCastingReference(character) ?? jobObj ?? character.job,
 					level: newLevel,
 				});
 			} catch (error) {
@@ -2841,11 +2866,21 @@ export const LevelUpWizardModal = ({
 				data: characterUpdates,
 			});
 
-			// Initialize/update spell slots for new level
+			// Initialize/update spell slots for new level. The casting reference
+			// carries the Path (including one chosen in this level-up), so a
+			// third-caster Path gains its slots.
 			try {
 				await initializeSpellSlots.mutateAsync({
 					characterId: character.id,
-					job: jobObj || character.job,
+					job:
+						toCastingReference({
+							job: character.job,
+							job_id: character.job_id,
+							path: characterUpdates.path ?? character.path,
+							path_id: characterUpdates.path_id ?? character.path_id,
+						}) ??
+						jobObj ??
+						character.job,
 					level: newLevel,
 				});
 			} catch (error) {

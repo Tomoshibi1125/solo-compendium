@@ -1,15 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
 import type { Job } from "@/data/compendium/jobs";
+import type { Path } from "@/data/compendium/paths";
 import { useCharacter } from "@/hooks/useCharacters";
+import { useStaticPathCatalog } from "@/hooks/useStaticPathCatalog";
 import {
 	type ChoiceSourceData,
 	calculateTotalChoices,
 } from "@/lib/choiceCalculations";
-
-interface PathLike {
-	name: string;
-	features?: ChoiceSourceData["features"];
-}
+import { findPathIn, getPathChoiceLedger } from "@/lib/pathLedger";
 
 /**
  * Shared hook that returns the cumulative D&D-Beyond-style choice totals for
@@ -36,13 +34,12 @@ function toJobChoiceSource(job: Job | undefined): ChoiceSourceData | null {
 	};
 }
 
-function toPathChoiceSource(
-	path: PathLike | undefined,
-): ChoiceSourceData | null {
+function toPathChoiceSource(path: Path | null): ChoiceSourceData | null {
 	if (!path) return null;
 	return {
 		name: path.name,
 		features: path.features ?? [],
+		...getPathChoiceLedger(path),
 	};
 }
 
@@ -90,15 +87,9 @@ export function useCharacterChoiceTotals(characterId: string | undefined): {
 		enabled: !!character,
 	});
 
-	const { data: paths, isLoading: pathsLoading } = useQuery({
-		queryKey: ["static-paths-for-totals"],
-		queryFn: async () => {
-			const module = await import("@/data/compendium/paths");
-			return module.paths;
-		},
-		staleTime: Number.POSITIVE_INFINITY,
-		enabled: !!character?.path,
-	});
+	const hasPath = Boolean(character?.path_id || character?.path);
+	const { data: paths, isLoading: pathsLoading } =
+		useStaticPathCatalog(hasPath);
 
 	if (!character) {
 		return { data: EMPTY_TOTALS, isLoading: characterLoading };
@@ -107,9 +98,10 @@ export function useCharacterChoiceTotals(characterId: string | undefined): {
 	const normalize = (value: string | null | undefined): string =>
 		(value ?? "").trim().toLowerCase();
 	const job = jobs?.find((j) => normalize(j.name) === normalize(character.job));
-	const path = paths?.find(
-		(p) => normalize(p.name) === normalize(character.path),
-	);
+	// Stored path id first, then the name or a declared alias.
+	const path = hasPath
+		? findPathIn(paths, { id: character.path_id, name: character.path })
+		: null;
 
 	const jobSource = toJobChoiceSource(job);
 	const pathSource = toPathChoiceSource(path);
@@ -133,6 +125,6 @@ export function useCharacterChoiceTotals(characterId: string | undefined): {
 			expertise: totals.expertise,
 			spellbookInscriptions: totals.spellbookInscriptions,
 		},
-		isLoading: characterLoading || jobsLoading || pathsLoading,
+		isLoading: characterLoading || jobsLoading || (hasPath && pathsLoading),
 	};
 }
