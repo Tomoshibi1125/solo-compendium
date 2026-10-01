@@ -217,6 +217,11 @@ export interface CompendiumMechanics {
 	ability?: string;
 	save?: string;
 	dc?: number | string;
+	/**
+	 * For strike abilities: "added" dice ride on a strike's damage and stay as
+	 * written; "unarmed-die" damage uses the Striker unarmed die by level.
+	 */
+	damage_basis?: "added" | "unarmed-die";
 	attack?: {
 		type?: string;
 		mode?: string;

@@ -453,13 +453,15 @@ const pathAbilityGrantCandidates: readonly PathAbilityGrant[] = [
 		entryNames: [],
 		progression: "base",
 	},
+	// Dance Repertoire (Combat Choreography): the limited martial selection a
+	// Dance Resonance Idol learns from, unlocking at 3rd, 6th, and 14th level.
 	{
 		jobName: "Idol",
 		pathName: "Path of the Dance Resonance",
 		level: 3,
 		kind: "power",
 		sourceTokens: [],
-		entryNames: ["Adrenaline Surge", "Dissonant Strike"],
+		entryNames: ["Dissonant Strike", "Kinetic Rush"],
 		progression: "base",
 	},
 	{
@@ -468,7 +470,7 @@ const pathAbilityGrantCandidates: readonly PathAbilityGrant[] = [
 		level: 3,
 		kind: "technique",
 		sourceTokens: [],
-		entryNames: ["Anchor Strike", "Rhythmic Strike"],
+		entryNames: ["Rhythmic Strike", "Nerve Disruption"],
 		progression: "base",
 	},
 	{
@@ -492,55 +494,37 @@ const pathAbilityGrantCandidates: readonly PathAbilityGrant[] = [
 	{
 		jobName: "Idol",
 		pathName: "Path of the Dance Resonance",
-		level: 5,
-		kind: "technique",
-		sourceTokens: [],
-		entryNames: ["Arterial Cut"],
-		progression: "base",
-	},
-	{
-		jobName: "Idol",
-		pathName: "Path of the Dance Resonance",
-		level: 5,
+		level: 6,
 		kind: "power",
 		sourceTokens: [],
-		entryNames: ["Berserker's Fury"],
+		entryNames: ["Shockwave Palm"],
 		progression: "base",
 	},
 	{
 		jobName: "Idol",
 		pathName: "Path of the Dance Resonance",
-		level: 9,
-		kind: "power",
-		sourceTokens: [],
-		entryNames: ["Absolute Smite"],
-		progression: "base",
-	},
-	{
-		jobName: "Idol",
-		pathName: "Path of the Dance Resonance",
-		level: 9,
+		level: 6,
 		kind: "technique",
 		sourceTokens: [],
-		entryNames: ["Anchor Slam"],
+		entryNames: ["Meridian Cascade"],
 		progression: "base",
 	},
 	{
 		jobName: "Idol",
 		pathName: "Path of the Dance Resonance",
-		level: 13,
-		kind: "technique",
-		sourceTokens: [],
-		entryNames: ["Absolute Cleave", "Absolute Execution"],
-		progression: "base",
-	},
-	{
-		jobName: "Idol",
-		pathName: "Path of the Dance Resonance",
-		level: 17,
+		level: 14,
 		kind: "power",
 		sourceTokens: [],
-		entryNames: ["Absolute Ascension", "Absolute Pact"],
+		entryNames: ["Killing Tempo", "Infinite Barrage"],
+		progression: "base",
+	},
+	{
+		jobName: "Idol",
+		pathName: "Path of the Dance Resonance",
+		level: 14,
+		kind: "technique",
+		sourceTokens: [],
+		entryNames: ["Whirlwind Execution", "Infinite Combo"],
 		progression: "base",
 	},
 	{
@@ -1897,7 +1881,11 @@ const isSourceBackedReconciledGrant = (grant: PathAbilityGrant): boolean => {
 			grant.kind === "spell") ||
 		(jobId === "assassin" &&
 			pathId === "path-of-the-blade-dancer" &&
-			grant.kind === "technique")
+			grant.kind === "technique") ||
+		// Combat Choreography names the Dance Repertoire entries.
+		(jobId === "idol" &&
+			pathId === "path-of-the-dance-resonance" &&
+			(grant.kind === "power" || grant.kind === "technique"))
 	);
 };
 

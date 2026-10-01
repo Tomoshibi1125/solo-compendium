@@ -9,6 +9,10 @@ import {
 	formatSaveLine,
 } from "@/lib/canonicalActionDisplay";
 import { formatModifier } from "@/lib/characterCalculations";
+import {
+	describeAbilityDamage,
+	readAbilityDamageBasis,
+} from "@/lib/powerActionFormulas";
 import { formatRegentVernacular } from "@/lib/vernacular";
 
 type DetailRecord = Record<string, unknown>;
@@ -348,8 +352,15 @@ function buildCanonicalLines(
 		stringValue(mechanicsAttack?.damage);
 	const damage =
 		readString(canonical, entry, ["damage_roll", "damage"]) ?? mechanicsDamage;
-	const damageType = readString(canonical, entry, ["damage_type"]);
-	const damageLine = formatDamageLine({ damageRoll: damage, damageType });
+	const damageType =
+		readString(canonical, entry, ["damage_type"]) ??
+		stringValue(mechanicsAttack?.damage_type);
+	// Strike abilities say whether their dice are added to the strike or use
+	// the scaling unarmed die.
+	const damageBasis = readAbilityDamageBasis(mechanics);
+	const damageLine = damageBasis
+		? describeAbilityDamage(damage, damageBasis, damageType)
+		: formatDamageLine({ damageRoll: damage, damageType });
 	if (damageLine) lines.push({ label: "Base Damage", value: damageLine });
 
 	const armorClass = readString(canonical, entry, ["armor_class"]);

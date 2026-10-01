@@ -1007,7 +1007,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		name: "Nerve Disruption",
 		display_name: "Nerve Disruption",
 		description:
-			"Strike a nerve cluster. Make an unarmed attack; on hit, 1d8+AGI bludgeoning damage and the target must make DC 13 VIT save or lose its reaction until the end of your next turn.",
+			"Strike a nerve cluster. Make an unarmed strike. On a hit, it deals bludgeoning damage equal to your unarmed die + your AGI modifier, and the target must succeed on a DC 13 VIT saving throw or lose its reaction until the end of your next turn. Your unarmed die is the Striker unarmed die for your level: a d4, which becomes a d6 at 5th level, a d8 at 11th, and a d10 at 17th.",
 		lore: {
 			origin:
 				"Developed through Striker combat doctrine and field-tested in Rift operations.",
@@ -1024,7 +1024,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		source_book: "Rift Ascendant Canon",
 		effects: {
 			primary: "Damage + reaction denial.",
-			secondary: "Damage scales: 1d8 bludgeoning at level 1.",
+			secondary:
+				"Damage uses your unarmed die: d4, d6 at 5th level, d8 at 11th, d10 at 17th.",
 		},
 		type: "Combat Arts",
 		style: "Martial",
@@ -1036,7 +1037,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		components: { verbal: false, somatic: true, material: false },
 		mechanics: {
 			duration: "Instantaneous",
-			damage_profile: "1d8 bludgeoning",
+			damage_profile: "1d4 bludgeoning",
+			damage_basis: "unarmed-die",
 			range: "Self",
 			type: "unarmed",
 			action: "1 action",
@@ -1047,14 +1049,15 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 				mode: "melee",
 				resolution: "martial_attack",
 				modifier: "Agility",
-				damage: "1d8",
+				damage: "1d4",
 				damage_type: "bludgeoning",
 			},
 			saving_throw: {
-				ability: "Agility",
+				ability: "Vitality",
 				dc: 13,
-				success: "Half damage and no rider.",
-				failure: "Damage + reaction denial.",
+				success: "The target keeps its reaction.",
+				failure:
+					"The target can't take reactions until the end of your next turn.",
 			},
 		},
 		limitations: {
@@ -1073,7 +1076,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		name: "Meridian Cascade",
 		display_name: "Meridian Cascade",
 		description:
-			"Strike 5 pressure points in rapid succession. Make 3 unarmed attacks. If 2+ hit the same target, it must make DC 15 VIT save or have its speed reduced to 0 and disadvantage on attacks until end of its next turn.",
+			"Strike 5 pressure points in rapid succession. Make three unarmed strikes; each deals its normal damage, your unarmed die + your AGI modifier. If two or more hit the same target, it must succeed on a DC 15 VIT saving throw or have its speed reduced to 0 and disadvantage on attack rolls until the end of its next turn.",
 		lore: {
 			origin:
 				"Developed through Striker combat doctrine and field-tested in Rift operations.",
@@ -1090,7 +1093,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		source_book: "Rift Ascendant Canon",
 		effects: {
 			primary: "Triple attack + conditional paralysis-lite.",
-			secondary: "Damage scales: 3d8 bludgeoning at level 3.",
+			secondary:
+				"Each strike uses your unarmed die: d4, d6 at 5th level, d8 at 11th, d10 at 17th.",
 		},
 		type: "Combat Arts",
 		style: "Martial",
@@ -1102,7 +1106,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		components: { verbal: false, somatic: true, material: false },
 		mechanics: {
 			duration: "Instantaneous",
-			damage_profile: "3d8 bludgeoning",
+			damage_profile: "1d4 bludgeoning",
+			damage_basis: "unarmed-die",
 			range: "Self",
 			type: "unarmed",
 			action: "1 action",
@@ -1113,14 +1118,15 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 				mode: "melee",
 				resolution: "martial_attack",
 				modifier: "Agility",
-				damage: "3d8",
+				damage: "1d4",
 				damage_type: "bludgeoning",
 			},
 			saving_throw: {
-				ability: "Agility",
+				ability: "Vitality",
 				dc: 15,
-				success: "Half damage and no rider.",
-				failure: "Triple attack + conditional paralysis-lite.",
+				success: "No effect.",
+				failure:
+					"Speed 0 and disadvantage on attack rolls until the end of its next turn.",
 			},
 		},
 		limitations: {
@@ -1944,7 +1950,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		name: "Rhythmic Strike",
 		display_name: "Rhythmic Strike",
 		description:
-			"Channel K-pop fighting style into a flashy melee attack. On a hit, deal 1d8+PRS thunder damage. Each ally within 30 feet who can see you gains +1 to their next attack roll from the inspiring performance.",
+			"Channel K-pop fighting style into a flashy unarmed strike. On a hit, the strike deals thunder damage equal to your unarmed die + your PRE modifier instead of its normal damage, and each ally within 30 feet of you who can see you gains a +1 bonus to its next attack roll before the end of its next turn. Your unarmed die is the Striker unarmed die for your level: a d4, which becomes a d6 at 5th level, a d8 at 11th, and a d10 at 17th.",
 		lore: {
 			origin:
 				"Developed through Idol combat doctrine and field-tested in Rift operations.",
@@ -1960,8 +1966,9 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
 		effects: {
-			primary: "Damage + ally buff from performance.",
-			secondary: "Damage scales: 1d8 thunder at level 1.",
+			primary: "Unarmed strike for thunder damage + ally attack bonus.",
+			secondary:
+				"Damage uses your unarmed die: d4, d6 at 5th level, d8 at 11th, d10 at 17th.",
 		},
 		type: "Combat Arts",
 		style: "Dance",
@@ -1973,7 +1980,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		components: { verbal: false, somatic: true, material: false },
 		mechanics: {
 			duration: "Instantaneous",
-			damage_profile: "1d8 thunder",
+			damage_profile: "1d4 thunder",
+			damage_basis: "unarmed-die",
 			range: "Self",
 			type: "resonance",
 			action: "1 action",
@@ -1985,14 +1993,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 				mode: "melee",
 				resolution: "martial_attack",
 				modifier: "Presence",
-				damage: "1d8",
+				damage: "1d4",
 				damage_type: "thunder",
-			},
-			saving_throw: {
-				ability: "Presence",
-				dc: 13,
-				success: "Half damage and no rider.",
-				failure: "Damage + ally buff from performance.",
 			},
 		},
 		limitations: {
@@ -4384,7 +4386,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		effects: {
 			primary:
 				"Multi-target attack (up to 5) + 3d6 force + invisibility at 3+ hits.",
-			secondary: "Damage scales: 5d8 force at level 5.",
+			secondary:
+				"The added 3d6 force stays as written; each hit also deals its normal damage.",
 		},
 		type: "Combat Arts",
 		style: "offensive",
@@ -4396,7 +4399,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		components: { verbal: false, somatic: true, material: false },
 		mechanics: {
 			duration: "Instantaneous",
-			damage_profile: "5d8 force",
+			damage_profile: "3d6 force",
+			damage_basis: "added",
 			range: "Self",
 			type: "offensive",
 			action: "1 action",
@@ -4408,15 +4412,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 				mode: "melee",
 				resolution: "martial_attack",
 				modifier: "Agility",
-				damage: "5d8",
+				damage: "3d6",
 				damage_type: "force",
-			},
-			saving_throw: {
-				ability: "Agility",
-				dc: 17,
-				success: "Half damage and no rider.",
-				failure:
-					"Multi-target attack (up to 5) + 3d6 force + invisibility at 3+ hits.",
 			},
 		},
 		limitations: {
@@ -4878,7 +4875,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		source_book: "Rift Ascendant Canon",
 		effects: {
 			primary: "Escalating infinite combo; 5+ hits = stun.",
-			secondary: "Damage scales: 8d8 force at level 8.",
+			secondary:
+				"The added 1d10 per hit stays as written; each hit also deals its normal damage.",
 		},
 		type: "Combat Arts",
 		style: "offensive",
@@ -4890,7 +4888,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		components: { verbal: false, somatic: true, material: false },
 		mechanics: {
 			duration: "Instantaneous",
-			damage_profile: "8d8 force",
+			damage_profile: "1d10 force",
+			damage_basis: "added",
 			range: "Self",
 			type: "offensive",
 			action: "1 action",
@@ -4902,14 +4901,14 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 				mode: "melee",
 				resolution: "martial_attack",
 				modifier: "Agility",
-				damage: "8d8",
+				damage: "1d10",
 				damage_type: "force",
 			},
 			saving_throw: {
 				ability: "Vitality",
 				dc: 19,
-				success: "Half damage and no rider.",
-				failure: "Escalating infinite combo; 5+ hits = stun.",
+				success: "The target isn't stunned.",
+				failure: "The target is stunned for 1 minute.",
 			},
 		},
 		limitations: {

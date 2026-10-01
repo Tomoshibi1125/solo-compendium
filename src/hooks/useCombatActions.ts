@@ -23,6 +23,8 @@ import {
 	appendAbilityModifierToDamageFormula,
 	buildAttackRollFormula,
 	formatSignedNumber,
+	readAbilityDamageBasis,
+	resolveAbilityDamageRoll,
 	resolvePowerActionFormula,
 } from "@/lib/powerActionFormulas";
 import {
@@ -36,6 +38,7 @@ import {
 	findAmmunitionRow,
 	getStrikerMartialArtsDie,
 	getVersatileDamageDice,
+	pathUsesStrikerUnarmedDie,
 	pickLargerDamageDice,
 	weaponRequiresAmmunition,
 } from "@/lib/weaponAutomation";
@@ -276,6 +279,9 @@ export const useCombatActions = (characterId: string) => {
 		// treatment, never the scaling.
 		const isStrikerJob =
 			(character.job ?? "").trim().toLowerCase() === "striker";
+		// The Dance Resonance Path gives an Idol's unarmed strikes the same die.
+		const hasDanceUnarmedDie =
+			!isStrikerJob && pathUsesStrikerUnarmedDie(character);
 		const martialArtsDie = getStrikerMartialArtsDie(character.level ?? 1);
 		const hasStrikerStance = charFeatures.some((f) =>
 			(f.name ?? "").toLowerCase().includes("striker stance"),
@@ -466,7 +472,7 @@ export const useCombatActions = (characterId: string) => {
 			let unarmedDamageRoll: string;
 			let unarmedNote: string;
 
-			if (isStrikerJob) {
+			if (isStrikerJob || hasDanceUnarmedDie) {
 				const formula = resolveWeaponActionFormula({
 					abilities: derivedStats.finalAbilities,
 					proficiencyBonus: profBonus,
@@ -480,7 +486,9 @@ export const useCombatActions = (characterId: string) => {
 				unarmedAbility = formula.ability;
 				unarmedAbilityModifier = formula.abilityModifier;
 				unarmedDamageRoll = formula.damageRoll;
-				unarmedNote = `Martial-arts die (${martialArtsDie}) scales with Striker level.`;
+				unarmedNote = isStrikerJob
+					? `Martial-arts die (${martialArtsDie}) scales with Striker level.`
+					: `Combat Choreography: the Striker unarmed die (${martialArtsDie}) scales with your level; STR or AGI.`;
 			} else if (hasStrikerStance) {
 				const agi = getAbilityModifier(derivedStats.finalAbilities.AGI);
 				const vit = getAbilityModifier(derivedStats.finalAbilities.VIT);
@@ -562,8 +570,11 @@ export const useCombatActions = (characterId: string) => {
 
 			const mechanics = (powerData.mechanics as unknown as JsonMechanics) || {};
 			const target = powerData.target || (mechanics.target as string) || "";
-			const damageRoll = appendAbilityModifierToDamageFormula(
+			// Added strike dice stay as written; unarmed-die damage scales.
+			const damageRoll = resolveAbilityDamageRoll(
 				powerData.damage_roll,
+				readAbilityDamageBasis(mechanics),
+				character.level ?? 1,
 				powerFormula.abilityModifier,
 			);
 			const powerKind = powerData.has_attack_roll
@@ -773,8 +784,11 @@ export const useCombatActions = (characterId: string) => {
 							: typeof mechanics.damage_profile === "string"
 								? mechanics.damage_profile
 								: undefined;
-			const damageRoll = appendAbilityModifierToDamageFormula(
+			// Added strike dice stay as written; unarmed-die damage scales.
+			const damageRoll = resolveAbilityDamageRoll(
 				rawDamageRoll,
+				readAbilityDamageBasis(mechanics),
+				character.level ?? 1,
 				abiMod,
 			);
 			const damageType =

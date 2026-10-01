@@ -31,6 +31,37 @@ export const PATH_LEVEL_CHOICES: Readonly<
 		{ level: 10, type: "technique", count: 2, source: "Tactical Charge" },
 		{ level: 15, type: "technique", count: 2, source: "Tactical Charge" },
 	],
+	// Combat Choreography: a dance discipline plus the Dance Repertoire picks.
+	// The repertoire entries are the Path's grants in pathAbilityAccess.ts.
+	"idol--dance-resonance": [
+		{
+			level: 3,
+			type: "path-option",
+			count: 1,
+			source: "Combat Choreography",
+			options: [
+				option(
+					"K-Pop",
+					"As a bonus action, feint at a creature within 5 feet of you: advantage on your next attack roll against it this turn.",
+				),
+				option(
+					"Contemporary",
+					"When a creature hits you with an attack, use your reaction to move up to 10 feet without provoking opportunity attacks.",
+				),
+				option("Ballet", "Your reach with melee attacks increases by 5 feet."),
+				option(
+					"Hip-Hop",
+					"Once per turn, when you hit a Large or smaller creature with an unarmed strike, push it up to 10 feet straight away from you.",
+				),
+			],
+		},
+		{ level: 3, type: "power", count: 1, source: "Combat Choreography" },
+		{ level: 3, type: "technique", count: 1, source: "Combat Choreography" },
+		{ level: 6, type: "power", count: 1, source: "Combat Choreography" },
+		{ level: 6, type: "technique", count: 1, source: "Combat Choreography" },
+		{ level: 14, type: "power", count: 1, source: "Combat Choreography" },
+		{ level: 14, type: "technique", count: 1, source: "Combat Choreography" },
+	],
 	// Primal Aspect replaces the legacy "Bonded Aspect" choice group.
 	"berserker--gate-beast": [
 		{

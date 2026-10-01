@@ -32,7 +32,6 @@ const RUNE_ONLY_POWER_IDS = new Set<string>([
 	"power-sup-7-122-patron-sacrifice",
 	// Task 5 supplemental entries rejected as native Esper/Summoner/Herald/Idol
 	// path grants. They remain available only through explicit Rune absorption.
-	"power-sup-1-22-dissonant-strike",
 	"power-sup-1-24-guided-strike",
 	"power-sup-2-25-retributive-ward",
 	"power-sup-4-80-encore-performance",
@@ -58,7 +57,6 @@ const RUNE_ONLY_TECHNIQUE_IDS = new Set<string>([
 	"tech-sup-4-61-pact-weapon-manifest",
 	"tech-sup-5-38-patron-s-fury",
 	// Task 5 supplemental entries rejected as native path grants.
-	"tech-sup-1-30-rhythmic-strike",
 	"tech-sup-1-33-sacred-weapon",
 	"tech-sup-3-34-spiritual-hammer",
 	"tech-sup-5-35-war-god-s-blessing",
@@ -358,6 +356,31 @@ describe("Job ability coverage — archetype contract", () => {
 	});
 });
 
+// Path repertoires authored by name in the Path's own feature text. These are
+// the only additions a reconciled Task 5-6 Path may make to its Job's lists.
+const AUTHORED_PATH_REPERTOIRES: Record<
+	string,
+	{ power: readonly string[]; technique: readonly string[] }
+> = {
+	// Combat Choreography's Dance Repertoire.
+	"Path of the Dance Resonance": {
+		power: [
+			"power-sup-1-10-kinetic-rush",
+			"power-sup-1-22-dissonant-strike",
+			"power-sup-3-12-shockwave-palm",
+			"power-sup-5-48-apex-predator",
+			"power-sup-6-52-infinite-barrage",
+		],
+		technique: [
+			"tech-sup-1-16-nerve-disruption",
+			"tech-sup-1-30-rhythmic-strike",
+			"tech-sup-3-17-meridian-cascade",
+			"tech-sup-5-65-whirlwind-execution",
+			"tech-sup-8-72-infinite-combo",
+		],
+	},
+};
+
 describe("Job ability access — hybrid path grant coverage", () => {
 	it("reconciled Task 5-6 paths do not infer supplemental catalog access", async () => {
 		for (const jobName of [
@@ -398,14 +421,21 @@ describe("Job ability access — hybrid path grant coverage", () => {
 						characterLevel: 20,
 					}),
 				]);
+				const authored = AUTHORED_PATH_REPERTOIRES[path.name];
 				expect(
-					pathPowers.filter((entry) => !baseIds.power.has(entry.id)),
+					pathPowers
+						.filter((entry) => !baseIds.power.has(entry.id))
+						.map((entry) => entry.id)
+						.sort(),
 					`${path.name} inferred power access`,
-				).toEqual([]);
+				).toEqual([...(authored?.power ?? [])]);
 				expect(
-					pathTechniques.filter((entry) => !baseIds.technique.has(entry.id)),
+					pathTechniques
+						.filter((entry) => !baseIds.technique.has(entry.id))
+						.map((entry) => entry.id)
+						.sort(),
 					`${path.name} inferred technique access`,
-				).toEqual([]);
+				).toEqual([...(authored?.technique ?? [])]);
 				expect(
 					pathSpells.filter((entry) => !baseIds.spell.has(entry.id)),
 					`${path.name} inferred spell access`,

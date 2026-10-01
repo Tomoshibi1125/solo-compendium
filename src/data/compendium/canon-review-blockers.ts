@@ -86,15 +86,6 @@ export const canonicalReviewBlockers: readonly CanonReviewBlocker[] = [
 		dependsOnTask: 16,
 	},
 	{
-		id: "task5:idol-dance:discipline-choice",
-		dataset: "paths",
-		entryId: "idol--dance-resonance",
-		fieldPath: "features.Combat Choreography.choice",
-		message:
-			"Combat Choreography lists four discipline packages but provides no stable option IDs, selection timing, replacement rule, or persisted binding for later features.",
-		dependsOnTask: 20,
-	},
-	{
 		id: "task6:revenant:rejected-inferred-grant-identities",
 		dataset: "paths",
 		entryId: "revenant--void-lord",
