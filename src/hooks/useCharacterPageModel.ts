@@ -39,6 +39,10 @@ import { isSupabaseConfigured } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth/authContext";
 import { publishCampaignRollEvent } from "@/lib/campaignRollEvents";
 import { resolveCanonicalReference } from "@/lib/canonicalCompendium";
+import {
+	CANON_FEATURE_REVISION,
+	syncCanonicalFeatureRows,
+} from "@/lib/characterCreation";
 import { addTemporaryHP, applyResourceRest } from "@/lib/characterResources";
 import {
 	type ConditionEntry,
@@ -52,6 +56,7 @@ import {
 } from "@/lib/diceRoller";
 import { isLocalCharacterId } from "@/lib/guestStore";
 import { toCastingReference } from "@/lib/jobRules";
+import { logger } from "@/lib/logger";
 import { notifyAsync } from "@/lib/notify";
 import {
 	type AdvantageState,
@@ -321,6 +326,42 @@ export function useCharacterPageModel() {
 	}, [character?.id, isReadOnly, deathSaves.persist]);
 
 	useAutoBackup(character ?? null, !isReadOnly);
+
+	// Existing sheets pick up canon changes to Job, Path, and Regent features
+	// once per catalog revision, through the same pass a level-up runs.
+	const characterJob = character?.job ?? null;
+	const characterLevel = character?.level ?? 1;
+	useEffect(() => {
+		if (!character?.id || isReadOnly || !characterJob) return;
+		const characterId = character.id;
+		const storageKey = `ra:canon-feature-revision:${characterId}`;
+		try {
+			if (localStorage.getItem(storageKey) === CANON_FEATURE_REVISION) return;
+		} catch {
+			return;
+		}
+		void syncCanonicalFeatureRows(characterId, characterJob, characterLevel)
+			.then(async (synced) => {
+				if (!synced) return;
+				try {
+					localStorage.setItem(storageKey, CANON_FEATURE_REVISION);
+				} catch {
+					// Storage is unavailable; the next visit syncs again.
+				}
+				await Promise.all(
+					[
+						["character-features", characterId],
+						["features", characterId],
+						["powers", characterId],
+						["character-techniques", characterId],
+						["combat-actions", characterId],
+					].map((queryKey) => queryClient.invalidateQueries({ queryKey })),
+				);
+			})
+			.catch((error) => {
+				logger.warn("Canon feature sync failed", error);
+			});
+	}, [character?.id, characterJob, characterLevel, isReadOnly, queryClient]);
 
 	const spellCasting = useSpellCasting(
 		spellSlotData,

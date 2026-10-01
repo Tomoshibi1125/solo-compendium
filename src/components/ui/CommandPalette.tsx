@@ -13,8 +13,10 @@ import {
 	CommandShortcut,
 } from "@/components/ui/command";
 import { useCharacters } from "@/hooks/useCharacters";
-import { supabase } from "@/integrations/supabase/client";
-import { type EntryType, getTableName } from "@/lib/compendiumResolver";
+import {
+	listCanonicalEntries,
+	type StaticCanonicalEntryType,
+} from "@/lib/canonicalCompendium";
 import {
 	formatRegentVernacular,
 	normalizeRegentSearch,
@@ -46,9 +48,10 @@ export function CommandPalette({ open, onOpenChange }: CommandPaletteProps) {
 			}> = [];
 			const canonicalQuery = normalizeRegentSearch(search);
 
-			// Search common compendium types using resolver table names
+			// Search the canonical catalog, the same source the compendium pages
+			// render. The legacy DB compendium tables are stale copies.
 			const searchTypes: Array<{
-				type: EntryType;
+				type: StaticCanonicalEntryType;
 				label: string;
 				route: string;
 			}> = [
@@ -56,47 +59,29 @@ export function CommandPalette({ open, onOpenChange }: CommandPaletteProps) {
 				{ type: "powers", label: "Power", route: "powers" },
 				{ type: "equipment", label: "Equipment", route: "equipment" },
 			];
+			const needle = canonicalQuery.toLowerCase();
+			const nameMatches = (value: unknown) =>
+				typeof value === "string" &&
+				normalizeRegentSearch(value.toLowerCase()).includes(needle);
 
 			for (const { type, label, route } of searchTypes) {
 				try {
-					const tableName = getTableName(type);
-					const { data } = await supabase
-						.from(tableName)
-						.select("id, name, display_name")
-						.or(
-							`name.ilike.%${canonicalQuery}%,display_name.ilike.%${canonicalQuery}%`,
+					const entries = await listCanonicalEntries(type, canonicalQuery);
+					entries
+						.filter((entry) =>
+							[entry.name, entry.display_name, ...(entry.aliases ?? [])].some(
+								nameMatches,
+							),
 						)
-						.limit(5);
-
-					if (data && Array.isArray(data)) {
-						// Type guard to filter out error objects
-						const items = data as unknown[];
-						const validItems = items.filter(
-							(
-								item,
-							): item is {
-								id: string;
-								name: string;
-								display_name?: string | null;
-							} => {
-								if (typeof item !== "object" || item === null) return false;
-								if ("error" in item) return false; // Filter out error objects
-								const obj = item as Record<string, unknown>;
-								return (
-									typeof obj.id === "string" && typeof obj.name === "string"
-								);
-							},
-						);
-
-						validItems.forEach((item) => {
+						.slice(0, 5)
+						.forEach((entry) => {
 							results.push({
-								id: item.id,
-								name: item.display_name || item.name,
+								id: entry.id,
+								name: entry.display_name || entry.name,
 								type: label,
-								href: `/compendium/${route}/${item.id}`,
+								href: `/compendium/${route}/${entry.id}`,
 							});
 						});
-					}
 				} catch {
 					// Continue to next type on error
 				}
@@ -211,7 +196,7 @@ export function CommandPalette({ open, onOpenChange }: CommandPaletteProps) {
 								<FileText className="mr-2 h-4 w-4" />
 								{formatRegentVernacular(item.name)}
 								<span className="ml-2 text-xs text-muted-foreground">
-									export {formatRegentVernacular(item.type)}
+									{formatRegentVernacular(item.type)}
 								</span>
 							</CommandItem>
 						))}

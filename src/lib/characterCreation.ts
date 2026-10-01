@@ -42,7 +42,11 @@ import {
 	updateLocalFeature,
 } from "@/lib/guestStore";
 import { getStaticPathUnlockLevel } from "@/lib/levelGating";
-import { getStaticItems, getStaticJobs } from "@/lib/ProtocolDataManager";
+import {
+	getStaticItems,
+	getStaticJobs,
+	initializeProtocolData,
+} from "@/lib/ProtocolDataManager";
 import {
 	getCharacterCampaignId,
 	isSourcebookAccessible,
@@ -761,13 +765,12 @@ async function reconcileCanonicalFeatureRow(
 	payload: CanonicalFeaturePayload,
 	featureName: string,
 ): Promise<void> {
-	const existing = rows.find(
-		(row) =>
-			(payload.feature_id !== null &&
-				payload.feature_id !== undefined &&
-				row.feature_id === payload.feature_id) ||
-			matchLegacy(row),
-	);
+	// A row already stamped with this feature's id wins over a legacy match,
+	// so a same-named feature from another source can't take its place.
+	const existing =
+		(payload.feature_id
+			? rows.find((row) => row.feature_id === payload.feature_id)
+			: undefined) ?? rows.find(matchLegacy);
 	const canonicalModifiers = Array.isArray(payload.modifiers)
 		? (payload.modifiers as Array<Record<string, Json>>)
 		: [];
@@ -817,6 +820,32 @@ async function reconcileCanonicalFeatureRow(
 	if (!changed) return;
 	await updateCharacterFeatureById(characterId, existing.id, patch);
 	Object.assign(existing, patch);
+}
+
+/**
+ * Give stored canonical rows the current catalog text. Update-only: a missing
+ * row is not added, so a feature the player removed stays removed.
+ */
+async function refreshCanonicalFeatureText(
+	characterId: string,
+	rows: ReconciledCharacterFeature[],
+	featureId: string | null,
+	featureName: string,
+	sources: readonly string[],
+	description: string,
+): Promise<void> {
+	const name = normalizeFeatureIdentity(featureName);
+	const sourceKeys = new Set(sources.map(normalizeFeatureIdentity));
+	for (const row of rows) {
+		if (row.homebrew_id || row.description === description) continue;
+		const matches =
+			(featureId !== null && row.feature_id === featureId) ||
+			(normalizeFeatureIdentity(row.name) === name &&
+				sourceKeys.has(normalizeFeatureIdentity(row.source)));
+		if (!matches) continue;
+		await updateCharacterFeatureById(characterId, row.id, { description });
+		row.description = description;
+	}
 }
 
 /**
@@ -3667,7 +3696,14 @@ export async function addJobAwakeningBenefitsForLevel(
 						normalizeFeatureIdentity(feature.name)
 					)
 						return false;
+					// Some Jobs reuse an awakening feature's name for a class feature
+					// or Job trait (Stalker's Prey Lock, Striker's Impulse Sense);
+					// those rows belong to their own reconcile pass.
+					if (row.feature_id && row.feature_id !== canonicalFeatureId)
+						return false;
 					const source = normalizeFeatureIdentity(row.source);
+					if (/^(job-feature|job-trait|job-level|racial-trait)-/.test(source))
+						return false;
 					return (
 						source.startsWith("job-awakening-") ||
 						(source.startsWith("job-") &&
@@ -3802,6 +3838,40 @@ export async function addJobAwakeningBenefitsForLevel(
 				is_active: true,
 			});
 			existingNames.add(cf.name);
+		}
+
+		// Unstructured features are only added when first earned, but a row
+		// already on the sheet takes the current canonical text.
+		for (const cf of job.classFeatures.filter(
+			(cf) =>
+				cf.level <= level &&
+				!cf.uses &&
+				!cf.actionType &&
+				!cf.resource &&
+				!cf.tracking,
+		)) {
+			await refreshCanonicalFeatureText(
+				characterId,
+				featureRows,
+				buildCanonicalFeatureId("job-feature", ownerId, cf.name),
+				cf.name,
+				[`Job: ${jobName}`, `Job: Level ${cf.level}`, canonicalSource],
+				cf.description,
+			);
+		}
+	}
+
+	// Job traits are added at 1st level only; stored rows take current text.
+	if (isStaticJob(job)) {
+		for (const trait of job.jobTraits || []) {
+			await refreshCanonicalFeatureText(
+				characterId,
+				featureRows,
+				null,
+				trait.name,
+				[`Job Trait: ${jobName}`],
+				trait.description,
+			);
 		}
 	}
 
@@ -4293,6 +4363,50 @@ export async function addJobAwakeningBenefitsForLevel(
 	// Innate channeling spells unlocking at this level.
 	if (isStaticJob(job) && job.innateChanneling) {
 		await addInnateChannelingForLevel(characterId, job, level);
+	}
+}
+
+/**
+ * Revision of the canonical Job, Path, and Regent feature text and resources.
+ * Bump it whenever that data changes: each existing sheet then syncs once, the
+ * next time its owner opens it.
+ */
+export const CANON_FEATURE_REVISION = "2026-10-01";
+
+const canonSyncsInFlight = new Set<string>();
+
+/**
+ * Bring an existing character's canonical feature rows up to the current
+ * catalog with the same cumulative pass a level-up runs: stale text, uses,
+ * and resources are rewritten and missing rows are added, but spent uses are
+ * never refilled. Returns false when the Job isn't in the catalog or a sync
+ * for the character is already running.
+ */
+export async function syncCanonicalFeatureRows(
+	characterId: string,
+	jobName: string | null | undefined,
+	level: number,
+): Promise<boolean> {
+	if (canonSyncsInFlight.has(characterId)) return false;
+	canonSyncsInFlight.add(characterId);
+	try {
+		// The app starts the catalog load without awaiting it.
+		await initializeProtocolData();
+		const job = findStaticJobByName(jobName);
+		if (!job) return false;
+		await addJobAwakeningBenefitsForLevel(
+			characterId,
+			job as unknown as StaticJob,
+			level,
+		);
+		// Both use passes read and write cloud rows only.
+		if (!isLocalCharacterId(characterId)) {
+			await autoUpdateFeatureUses(characterId);
+			await reconcileAbilityUses(characterId);
+		}
+		return true;
+	} finally {
+		canonSyncsInFlight.delete(characterId);
 	}
 }
 

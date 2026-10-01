@@ -3,6 +3,7 @@ import { jobs } from "@/data/compendium/jobs";
 import {
 	addJobAwakeningBenefitsForLevel,
 	addLevel1Features,
+	syncCanonicalFeatureRows,
 } from "@/lib/characterCreation";
 import {
 	addLocalFeature,
@@ -294,5 +295,72 @@ describe("Task 6 canonical feature resources", () => {
 			).toHaveLength(1);
 			expect(feature(row.id, abilityName)?.uses_current).toBe(0);
 		}
+	});
+
+	it("syncs stale stored rows to the current canon without refilling uses", async () => {
+		const stalker = job("stalker");
+		const classText = (name: string) =>
+			stalker.classFeatures?.find((entry) => entry.name === name)?.description;
+		const row = createLocalCharacter({
+			name: "Stale",
+			job: "Stalker",
+			level: 5,
+		});
+		addLocalFeature(row.id, {
+			name: "Prey Lock",
+			source: "Job: Level 1",
+			level_acquired: 1,
+			description: "Old Prey Lock text.",
+			uses_max: 1,
+			uses_current: 0,
+			recharge: "short-rest",
+			is_active: true,
+		});
+		addLocalFeature(row.id, {
+			name: "Favored Terrain",
+			source: "Job: Level 1",
+			level_acquired: 1,
+			description: "Old Favored Terrain text.",
+			is_active: true,
+		});
+		addLocalFeature(row.id, {
+			name: "Primal Tracking",
+			source: "Job Trait: Stalker",
+			level_acquired: 1,
+			description: "Old trait text.",
+			is_active: true,
+		});
+
+		expect(await syncCanonicalFeatureRows(row.id, "Stalker", 5)).toBe(true);
+		const preyLock = listLocalFeatures(row.id).find(
+			(entry) => entry.feature_id === "job-feature:stalker:prey-lock",
+		);
+		expect(preyLock).toMatchObject({
+			description: classText("Prey Lock"),
+			uses_max: 3,
+			uses_current: 0,
+			recharge: "long-rest",
+		});
+		expect(feature(row.id, "Favored Terrain")?.description).toBe(
+			classText("Favored Terrain"),
+		);
+		expect(feature(row.id, "Primal Tracking")?.description).toBe(
+			stalker.jobTraits?.find((entry) => entry.name === "Primal Tracking")
+				?.description,
+		);
+
+		// The awakening Prey Lock shares the name; a second pass must not turn
+		// the class row into an awakening row and re-add it with full uses.
+		const rowCount = listLocalFeatures(row.id).length;
+		expect(await syncCanonicalFeatureRows(row.id, "Stalker", 5)).toBe(true);
+		expect(listLocalFeatures(row.id)).toHaveLength(rowCount);
+		expect(
+			listLocalFeatures(row.id).filter(
+				(entry) => entry.feature_id === "job-feature:stalker:prey-lock",
+			),
+		).toEqual([expect.objectContaining({ uses_current: 0, uses_max: 3 })]);
+		expect(await syncCanonicalFeatureRows(row.id, "Homebrew Job", 5)).toBe(
+			false,
+		);
 	});
 });

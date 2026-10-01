@@ -4,7 +4,6 @@ import type {
 } from "@/data/compendium/providers/types";
 import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import type { Database } from "@/integrations/supabase/types";
-import { AppError } from "@/lib/appError";
 import {
 	isStaticCanonicalEntryType,
 	listCanonicalEntries,
@@ -293,22 +292,6 @@ export async function resolveRefs(
 
 	await Promise.all(promises);
 	return results;
-}
-
-/**
- * Get the Supabase table name for an entry type
- */
-export function getTableName(
-	type: EntryType,
-): keyof Database["public"]["Tables"] {
-	const tableName = supabaseTableMap[type];
-	if (!tableName) {
-		throw new AppError(
-			`No Supabase table for entry type: ${type}`,
-			"INVALID_INPUT",
-		);
-	}
-	return tableName;
 }
 
 /**
