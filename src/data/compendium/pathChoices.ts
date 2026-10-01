@@ -8,10 +8,35 @@
  */
 import type { PathChoiceOption, PathLevelChoice } from "./paths";
 
-const option = (name: string, description: string): PathChoiceOption => ({
+/** `spells`: what the option grants, as names or { name, level } pairs. */
+const option = (
+	name: string,
+	description: string,
+	spells?: ReadonlyArray<string | { name: string; level: number }>,
+): PathChoiceOption => ({
 	name,
 	description,
+	...(spells?.length
+		? {
+				grants: {
+					spells: spells.map((spell) =>
+						typeof spell === "string" ? { name: spell } : { ...spell },
+					),
+				},
+			}
+		: {}),
 });
+
+/** A Biome Mantras option: its four spells unlock at 3rd, 5th, 7th, and 9th. */
+const biome = (
+	name: string,
+	spells: readonly [string, string, string, string],
+): PathChoiceOption =>
+	option(
+		name,
+		`Always prepared: ${spells[0]} (3rd level), ${spells[1]} (5th), ${spells[2]} (7th), ${spells[3]} (9th).`,
+		spells.map((spell, index) => ({ name: spell, level: 3 + index * 2 })),
+	);
 
 export const PATH_LEVEL_CHOICES: Readonly<
 	Record<string, readonly PathLevelChoice[]>
@@ -61,6 +86,280 @@ export const PATH_LEVEL_CHOICES: Readonly<
 		{ level: 6, type: "technique", count: 1, source: "Combat Choreography" },
 		{ level: 14, type: "power", count: 1, source: "Combat Choreography" },
 		{ level: 14, type: "technique", count: 1, source: "Combat Choreography" },
+	],
+	// Blade Flourish fighting discipline.
+	"idol--blade-resonance": [
+		{
+			level: 3,
+			type: "path-option",
+			count: 1,
+			source: "Combat Discipline",
+			options: [
+				option(
+					"Dueling",
+					"While you wield a melee weapon in one hand and no other weapon, you gain a +2 bonus to damage rolls with it.",
+				),
+				option(
+					"Two-Weapon Fighting",
+					"When you fight with two weapons, you add your ability modifier to the damage of the second attack.",
+				),
+			],
+		},
+	],
+	// Mandated Proficiencies and the Arcane Secrets spell list.
+	"idol--lore-resonance": [
+		{ level: 3, type: "skill", count: 3, source: "Mandated Proficiencies" },
+		{
+			level: 6,
+			type: "path-option",
+			count: 2,
+			source: "Arcane Secrets",
+			options: [
+				option("Mana Armor", "1st-level abjuration from the Mage list.", [
+					"Mana Armor",
+				]),
+				option("Shield Lattice", "1st-level abjuration from the Mage list.", [
+					"Shield Lattice",
+				]),
+				option("Gravity Spike", "1st-level transmutation from the Mage list.", [
+					"Gravity Spike",
+				]),
+				option("Frost Lattice", "1st-level evocation from the Mage list.", [
+					"Frost Lattice",
+				]),
+				option(
+					"Verdant Grasp",
+					"1st-level conjuration from the Summoner list.",
+					["Verdant Grasp"],
+				),
+				option(
+					"Necrotic Shroud",
+					"1st-level necromancy from the Revenant list.",
+					["Necrotic Shroud"],
+				),
+				option("Misty Blink", "2nd-level conjuration from the Mage list.", [
+					"Misty Blink",
+				]),
+				option(
+					"Awakening Surge",
+					"2nd-level transmutation from the Technomancer list.",
+					["Awakening Surge"],
+				),
+				option("Rift Snare", "2nd-level conjuration from the Summoner list.", [
+					"Rift Snare",
+				]),
+				option("Triple Ignition", "2nd-level evocation from the Mage list.", [
+					"Triple Ignition",
+				]),
+				option("Mana Barrage", "3rd-level evocation from the Mage list.", [
+					"Mana Barrage",
+				]),
+				option(
+					"Revenant's Embrace",
+					"3rd-level necromancy from the Revenant list.",
+					["Revenant's Embrace"],
+				),
+				option(
+					"Quarantine Membrane",
+					"3rd-level abjuration from the Technomancer list.",
+					["Quarantine Membrane"],
+				),
+				option(
+					"Summon Rift Echo",
+					"3rd-level conjuration from the Summoner list.",
+					["Summon Rift Echo"],
+				),
+			],
+		},
+	],
+	// The dragon's resonance binds Elemental Affinity and Dragon Breath.
+	"esper--draconic-lineage": [
+		{
+			level: 1,
+			type: "path-option",
+			count: 1,
+			source: "regent-tier Resonance",
+			options: [
+				option("Ember", "Your resonance damage type is fire."),
+				option("Storm", "Your resonance damage type is lightning."),
+				option("Frost", "Your resonance damage type is cold."),
+				option("Venom", "Your resonance damage type is poison."),
+				option("Corrosion", "Your resonance damage type is acid."),
+			],
+		},
+	],
+	// Affinity spells; Dual Manifestation Access also opens the Herald list.
+	"esper--absolute-spark": [
+		{
+			level: 1,
+			type: "path-option",
+			count: 1,
+			source: "Dual Manifestation Access",
+			options: [
+				option("Restoration", "You learn Healing Resonance.", [
+					"Healing Resonance",
+				]),
+				option("Entropy", "You learn Soul Siphon.", ["Soul Siphon"]),
+				option("Order", "You learn Resonance Pulse.", ["Resonance Pulse"]),
+				option("Chaos", "You learn Hex Contract.", ["Hex Contract"]),
+				option("Balance", "You learn Aegis of the Absolute.", [
+					"Aegis of the Absolute",
+				]),
+			],
+		},
+	],
+	// Each biome's spells unlock at 3rd, 5th, 7th, and 9th level.
+	"summoner--biome-architect": [
+		{
+			level: 3,
+			type: "path-option",
+			count: 1,
+			source: "Biome Mantras",
+			options: [
+				biome("Arctic", [
+					"Arctic Lance",
+					"Pressure Wave",
+					"Rending Flux",
+					"Mana Storm",
+				]),
+				biome("Coastal", [
+					"Misty Blink",
+					"Harmonic Barrage",
+					"Tentacle Field",
+					"Rift Walk",
+				]),
+				biome("Desert", [
+					"Triple Ignition",
+					"Mana Barrage",
+					"Ghost Protocol",
+					"Mana Storm",
+				]),
+				biome("Forest", [
+					"Snaring Vines",
+					"Rift Flora Eruption",
+					"Thorn Fortress",
+					"Predator's Web",
+				]),
+				biome("Grassland", [
+					"Awakening Surge",
+					"Circuit Overclock",
+					"Pack Ambush",
+					"Mass Circuit Boost",
+				]),
+				biome("Mountain", [
+					"Stone Spikes",
+					"Gravity Well",
+					"Gravity Crush",
+					"Rift Fissure",
+				]),
+				biome("Swamp", [
+					"Corrosive Aura",
+					"Revenant's Embrace",
+					"Rust Wave",
+					"Predator's Web",
+				]),
+				biome("Subterranean", [
+					"Rift Snare",
+					"Mana Detonation Charge",
+					"Unstable Rift Tear",
+					"Rift Fissure",
+				]),
+			],
+		},
+	],
+	// Hunter-style picks, one recorded option per feature.
+	"stalker--apex-hunter": [
+		{
+			level: 3,
+			type: "path-option",
+			count: 1,
+			source: "Ascendant's Resonance",
+			options: [
+				option(
+					"Giant Slayer",
+					"Once per turn, when you hit a Large or larger creature with a weapon attack, it takes an extra 1d8 damage of the weapon's type.",
+				),
+				option(
+					"Horde Breaker",
+					"Once on each of your turns when you make a weapon attack, you can attack a different creature within 5 feet of the original target and within your weapon's range.",
+				),
+				option(
+					"Absolute Will",
+					"You have advantage on saving throws against being charmed or frightened.",
+				),
+			],
+		},
+		{
+			level: 7,
+			type: "path-option",
+			count: 1,
+			source: "Evasive Resilience",
+			options: [
+				option(
+					"Multi-target Defense",
+					"When a creature hits you with an attack, you gain +4 AC against its later attacks this turn.",
+				),
+				option(
+					"Aetheric Escape",
+					"Opportunity attacks against you have disadvantage.",
+				),
+			],
+		},
+		{
+			level: 11,
+			type: "path-option",
+			count: 1,
+			source: "Absolute Multi-strike",
+			options: [
+				option(
+					"Volley",
+					"As an action, make a ranged weapon attack against any number of creatures within 10 feet of a point in range.",
+				),
+				option(
+					"Whirlwind",
+					"As an action, make a melee weapon attack against any number of creatures within 5 feet of you.",
+				),
+			],
+		},
+		{
+			level: 15,
+			type: "path-option",
+			count: 1,
+			source: "Apex Defense",
+			options: [
+				option(
+					"Evasion",
+					"AGI saves for half damage: no damage on a success, half on a failure.",
+				),
+				option(
+					"Redirect",
+					"Reaction when a creature misses you with a melee attack: it repeats the attack against another creature of your choice in its reach.",
+				),
+				option(
+					"Uncanny Reflexes",
+					"Reaction when an attacker you can see hits you: halve the attack's damage.",
+				),
+			],
+		},
+	],
+	// Aether-Frame model.
+	"technomancer--aether-vessel-design": [
+		{
+			level: 3,
+			type: "path-option",
+			count: 1,
+			source: "Aether-Frame Integration",
+			options: [
+				option(
+					"Arbiter",
+					"Thunder gauntlets (1d8 thunder); a creature you hit has disadvantage on attacks against others until your next turn.",
+				),
+				option(
+					"Outrider",
+					"Lightning launcher (90/300 ft., 1d6 lightning, +1d6 once per turn); walking speed +5 feet.",
+				),
+			],
+		},
 	],
 	// Primal Aspect replaces the legacy "Bonded Aspect" choice group.
 	"berserker--gate-beast": [

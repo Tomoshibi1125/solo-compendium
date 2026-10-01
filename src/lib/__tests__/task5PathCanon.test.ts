@@ -1,16 +1,32 @@
-import { describe, expect, it } from "vitest";
+import { afterEach, beforeEach, describe, expect, it } from "vitest";
+import { jobs } from "@/data/compendium/jobs";
 import { type Path, paths } from "@/data/compendium/paths";
 import { powers } from "@/data/compendium/powers";
+import { spells } from "@/data/compendium/spells";
 import { techniques } from "@/data/compendium/techniques";
 import {
 	listLearnablePowers,
+	listLearnableSpells,
 	listLearnableTechniques,
 } from "@/lib/canonicalCompendium";
+import {
+	addJobAwakeningBenefitsForLevel,
+	reconcilePathSpellGrants,
+} from "@/lib/characterCreation";
 import { calculateTotalChoices } from "@/lib/choiceCalculations";
 import {
+	addLocalFeature,
+	createLocalCharacter,
+	listLocalSpells,
+	removeLocalFeature,
+} from "@/lib/guestStore";
+import {
+	buildPathOptionFeatureId,
+	getChosenPathOptionGrants,
 	getPathChoiceIssues,
 	getPathChoiceLedger,
 	getPathOptionGroups,
+	pathOptionFeatureName,
 } from "@/lib/pathLedger";
 import {
 	describeAbilityDamage,
@@ -241,5 +257,257 @@ describe("Dance Resonance unarmed damage", () => {
 			"Unarmed die thunder (d4; d6 at 5th level, d8 at 11th, d10 at 17th)",
 		);
 		expect(describeAbilityDamage("3d6", null, "force")).toBe("3d6 force");
+	});
+});
+
+const installIsolatedLocalStorage = (): (() => void) => {
+	const store = new Map<string, string>();
+	const storage: Storage = {
+		get length() {
+			return store.size;
+		},
+		clear: () => store.clear(),
+		getItem: (key) => store.get(key) ?? null,
+		key: (index) => Array.from(store.keys())[index] ?? null,
+		removeItem: (key) => {
+			store.delete(key);
+		},
+		setItem: (key, value) => {
+			store.set(key, String(value));
+		},
+	};
+	const prior = Object.getOwnPropertyDescriptor(globalThis, "localStorage");
+	Object.defineProperty(globalThis, "localStorage", {
+		value: storage,
+		configurable: true,
+		writable: true,
+	});
+	return () => {
+		if (prior) Object.defineProperty(globalThis, "localStorage", prior);
+		else
+			delete (globalThis as unknown as { localStorage?: unknown }).localStorage;
+	};
+};
+
+const optionNames = (pathId: string, level: number) =>
+	getPathOptionGroups(path(pathId), level, []).flatMap((group) =>
+		group.options.map((entry) => entry.name),
+	);
+
+const pathSpellNames = (characterId: string, pathName: string) =>
+	listLocalSpells(characterId)
+		.filter((spell) => spell.source === `Path Spell: ${pathName}`)
+		.map((spell) => spell.name)
+		.sort();
+
+const TASK5_JOBS = new Set(["esper", "summoner", "herald", "idol"]);
+
+describe("Task 5 Path canon", () => {
+	let restoreLocalStorage: (() => void) | undefined;
+
+	beforeEach(() => {
+		restoreLocalStorage = installIsolatedLocalStorage();
+	});
+
+	afterEach(() => {
+		restoreLocalStorage?.();
+	});
+
+	it("records the Aetheric Dragon's resonance and binds its damage type", () => {
+		expect(optionNames("esper--draconic-lineage", 1)).toEqual([
+			"Ember",
+			"Storm",
+			"Frost",
+			"Venom",
+			"Corrosion",
+		]);
+		expect(
+			feature("esper--draconic-lineage", "regent-tier Resonance").description,
+		).toMatch(/This choice is permanent/);
+		const breath = path("esper--draconic-lineage").abilities.find(
+			(entry) => entry.name === "Dragon Breath",
+		);
+		expect(breath?.description).toMatch(/your resonance's type.*Job save DC/s);
+	});
+
+	it("authors the full d20 Aetheric Cascade table", () => {
+		const trigger = feature("esper--aetheric-cascade", "Cascade Trigger");
+		for (let roll = 1; roll <= 20; roll += 1) {
+			expect(trigger.description).toContain(`${roll}, `);
+		}
+		expect(trigger.description).toMatch(/Saving throws use your Job save DC/);
+		expect(
+			feature("esper--aetheric-cascade", "Selective Cascade").description,
+		).toMatch(/roll twice and use either number/);
+	});
+
+	it("gives the Absolute Spark an affinity spell and the Herald list", async () => {
+		const spark = path("esper--absolute-spark");
+		const [affinity] = getPathOptionGroups(spark, 1, []);
+		expect(
+			affinity.options.map((entry) => entry.grants?.spells[0].name),
+		).toEqual([
+			"Healing Resonance",
+			"Soul Siphon",
+			"Resonance Pulse",
+			"Hex Contract",
+			"Aegis of the Absolute",
+		]);
+		const base = new Set(
+			(await listLearnableSpells({ jobName: "Esper", characterLevel: 5 })).map(
+				(entry) => entry.id,
+			),
+		);
+		const withPath = await listLearnableSpells({
+			jobName: "Esper",
+			pathName: spark.name,
+			characterLevel: 5,
+		});
+		const added = withPath.filter((entry) => !base.has(entry.id));
+		expect(added.length).toBeGreaterThan(0);
+		expect(added.every((entry) => entry.power_level <= 3)).toBe(true);
+	});
+
+	it("grants the Psionic Breach imprint spells at their Esper levels", async () => {
+		const breach = path("esper--aberrant-mind");
+		const character = createLocalCharacter({
+			name: "Breach",
+			job: "Esper",
+			level: 5,
+			path: breach.name,
+			path_id: breach.id,
+		});
+		const esper = jobs.find((entry) => entry.id === "esper");
+		if (!esper) throw new Error("Missing esper");
+		await addJobAwakeningBenefitsForLevel(character.id, esper, 5);
+		expect(pathSpellNames(character.id, breach.name)).toEqual([
+			"Psychic Barrier",
+			"Psychic Lance",
+			"Whisper Network",
+		]);
+	});
+
+	it("binds Biome Mantras spells to the recorded biome and swaps them", async () => {
+		const architect = path("summoner--biome-architect");
+		expect(optionNames(architect.id, 3)).toEqual([
+			"Arctic",
+			"Coastal",
+			"Desert",
+			"Forest",
+			"Grassland",
+			"Mountain",
+			"Swamp",
+			"Subterranean",
+		]);
+		const character = createLocalCharacter({
+			name: "Architect",
+			job: "Summoner",
+			level: 5,
+			path: architect.name,
+			path_id: architect.id,
+		});
+		const record = (biome: string) =>
+			addLocalFeature(character.id, {
+				feature_id: buildPathOptionFeatureId(
+					architect.id,
+					"Biome Mantras",
+					biome,
+				),
+				name: pathOptionFeatureName("Biome Mantras", biome),
+				source: `Path Choice: ${architect.name}`,
+				level_acquired: 3,
+				description: biome,
+				is_active: true,
+			});
+		const forest = record("Forest");
+		await reconcilePathSpellGrants(character.id, { id: architect.id }, 5);
+		expect(pathSpellNames(character.id, architect.name)).toEqual([
+			"Rift Flora Eruption",
+			"Snaring Vines",
+		]);
+
+		removeLocalFeature(forest.id);
+		record("Desert");
+		await reconcilePathSpellGrants(character.id, { id: architect.id }, 5);
+		expect(pathSpellNames(character.id, architect.name)).toEqual([
+			"Mana Barrage",
+			"Triple Ignition",
+		]);
+	});
+
+	it("records Lore proficiencies and Arcane Secrets as structured picks", () => {
+		const lore = path("idol--lore-resonance");
+		const source = { features: lore.features, ...getPathChoiceLedger(lore) };
+		expect(calculateTotalChoices({}, source, [], 3).skills).toBe(3);
+		const secrets = getPathOptionGroups(lore, 6, []).find(
+			(group) => group.source === "Arcane Secrets",
+		);
+		expect(secrets?.required).toBe(2);
+		expect(secrets?.options).toHaveLength(14);
+		expect(
+			secrets?.options.every((entry) => entry.grants?.spells.length === 1),
+		).toBe(true);
+		expect(calculateTotalChoices({}, source, [], 6).spells).toBe(0);
+	});
+
+	it("defines Summoner essence as spell slots and drops vague wording", () => {
+		for (const owner of paths.filter((entry) => TASK5_JOBS.has(entry.jobId))) {
+			for (const item of [...owner.features, ...owner.abilities]) {
+				expect(item.description, `${owner.id} / ${item.name}`).not.toMatch(
+					/essence|normaliz|wizard spell list|Guiding Resonance|PRS/i,
+				);
+			}
+		}
+		expect(
+			feature("summoner--biome-architect", "Biome Absorption").description,
+		).toMatch(/recover expended spell slots/);
+	});
+});
+
+describe("Path spell grants", () => {
+	it("resolves every feature and option grant to a catalog spell", () => {
+		const names = new Set(spells.map((spell) => spell.name.toLowerCase()));
+		const missing: string[] = [];
+		for (const owner of paths) {
+			const grants = [
+				...owner.features.flatMap((item) => item.grants?.spells ?? []),
+				...(owner.levelChoices ?? []).flatMap((choice) =>
+					(choice.options ?? []).flatMap((entry) => entry.grants?.spells ?? []),
+				),
+			];
+			for (const grant of grants) {
+				if (!names.has(grant.name.toLowerCase()))
+					missing.push(`${owner.id}: ${grant.name}`);
+			}
+			expect(getPathChoiceIssues(owner), owner.id).toEqual([]);
+		}
+		expect(missing).toEqual([]);
+	});
+
+	it("reads chosen option grants with their own levels", () => {
+		const architect = path("summoner--biome-architect");
+		const rows = [
+			{
+				name: pathOptionFeatureName("Biome Mantras", "Mountain"),
+				feature_id: buildPathOptionFeatureId(
+					architect.id,
+					"Biome Mantras",
+					"Mountain",
+				),
+			},
+		];
+		expect(getChosenPathOptionGrants(architect, 9, rows)).toEqual([
+			{
+				level: 3,
+				grants: {
+					spells: [
+						{ name: "Stone Spikes", level: 3 },
+						{ name: "Gravity Well", level: 5 },
+						{ name: "Gravity Crush", level: 7 },
+						{ name: "Rift Fissure", level: 9 },
+					],
+				},
+			},
+		]);
 	});
 });

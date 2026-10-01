@@ -29,6 +29,11 @@ export interface PathFeature {
 export interface PathChoiceOption {
 	name: string;
 	description: string;
+	/**
+	 * Spells the option grants outright while it is chosen, each from its own
+	 * character level (default: the level of the choice that offers it).
+	 */
+	grants?: { spells: Array<{ name: string; level?: number }> };
 }
 
 /**
@@ -1979,7 +1984,7 @@ const pathCatalog: Path[] = [
 			{
 				name: "regent-tier Resonance",
 				description:
-					"Choose an aetheric dragon type. Double prof bonus on PRE checks with regent-tier beings. Instinctively understand the ancient Primordial tongue.",
+					"When you gain this feature, choose your dragon's resonance: Ember (fire), Storm (lightning), Frost (cold), Venom (poison), or Corrosion (acid). Its damage type is the type your Elemental Affinity and Dragon Breath use. This choice is permanent. You can speak, read, and write Primordial, and when you make a PRE check to interact with a dragon, your proficiency bonus is doubled if it applies to the check.",
 				level: 1,
 				actionType: "passive",
 			},
@@ -1993,7 +1998,7 @@ const pathCatalog: Path[] = [
 			{
 				name: "Elemental Affinity",
 				description:
-					"When you manifest a spell matching your dragon's resonance, add PRE mod to the effect. Spend 1 Flux for resistance to that element for 1 hour.",
+					"When you cast a spell that deals damage of your resonance's type, add your PRE modifier to one damage roll of that spell. At the same time, you can spend 1 Flux to gain resistance to that damage type for 1 hour.",
 				level: 6,
 				actionType: "passive",
 			},
@@ -2007,7 +2012,7 @@ const pathCatalog: Path[] = [
 			{
 				name: "regent-tier Mandate",
 				description:
-					"Action: 60-ft aura of regent-tier pressure. PRE save or charmed/frightened. 1 min, concentration. 5 Flux.",
+					"As an action, spend 5 Flux to radiate draconic presence in a 60-foot aura around you for 1 minute (concentration). Choose charm or fear when you activate it. When a hostile creature starts its turn in the aura or enters it for the first time on a turn, it must succeed on a SENSE saving throw against your Job save DC or be charmed by you (or frightened of you) until the aura ends. A creature that succeeds is immune to your aura for 24 hours.",
 				level: 18,
 				actionType: "passive",
 			},
@@ -2016,7 +2021,7 @@ const pathCatalog: Path[] = [
 			{
 				name: "Dragon Breath",
 				description:
-					"30-ft cone or 60-ft line: 4d8 damage of your resonance type, AGI save for half. 3 Flux.",
+					"As an action, spend 3 Flux to exhale energy of your resonance's type in a 30-foot cone or a 60-foot line that is 5 feet wide. Each creature in the area makes an AGI saving throw against your Job save DC, taking 4d8 damage of that type on a failure or half as much on a success.",
 				recharge: 0,
 				cost: "3 Flux",
 			},
@@ -2043,35 +2048,35 @@ const pathCatalog: Path[] = [
 			{
 				name: "Cascade Trigger",
 				description:
-					"After manifesting a 1st+ spell, the local Absolute weave may trigger a Cascade (d20). On 1, roll on the Aetheric Cascade table for a random discharge.",
+					"Immediately after you cast an Esper spell of 1st level or higher, the Warden can have you roll a d20. On a 1, roll on the Aetheric Cascade table below; the effect resolves at once. Saving throws use your Job save DC. Aetheric Cascade (d20): 1, Feedback Burst: you and each creature within 30 feet of you make a VIT save, taking 3d6 force damage on a failure or half as much on a success. 2, Lattice Lock: you are restrained by crystallized mana until the end of your next turn. 3, Phase Shift: you teleport up to 60 feet to an unoccupied space of your choice that you can see. 4, Mana Bloom: for 1 minute you shed bright light in a 30-foot radius and dim light for another 30 feet, and you can't hide. 5, Static Wings: you gain a flying speed of 30 feet for 1 minute. 6, Temporal Skip: you vanish until the start of your next turn, then reappear in the space you left or the nearest unoccupied space. 7, Overcharge: you regain 1d4 Flux, up to your maximum. 8, Drain: you lose 1d4 Flux. 9, Aetheric Shell: you gain 2d8 temporary hit points. 10, Gravity Inversion: each other creature within 15 feet of you makes a STR save or is pushed 15 feet away from you and knocked prone. 11, Static Voice: for 1 minute, anything you say sounds like static; you can still cast spells. 12, Blur: for 1 minute, attack rolls against you have disadvantage until you take damage. 13, Resonant Mending: you and each ally within 30 feet of you regain 2d6 hit points. 14, Rift Spark: the creature nearest to you within 60 feet, other than you, makes an AGI save, taking 3d8 lightning damage on a failure or half as much on a success. 15, Anchored: your speed is 0 until the end of your next turn. 16, Displacement: you and one creature of your choice within 60 feet of you that you can see swap places. 17, Mana Fog: a 20-foot-radius sphere of heavily obscuring mist fills the area around you for 1 minute or until a strong wind disperses it. 18, Acceleration: for 1 minute, your speed doubles and you can take the Dash action as a bonus action. 19, Backlash: you take 2d10 force damage. 20, Absolute Surge: you regain your lowest-level expended spell slot.",
 				level: 1,
 				actionType: "passive",
 			},
 			{
 				name: "Riding the Cascade",
 				description:
-					"Lean into your instability. Gain advantage on one attack or check. The Absolute will demand a Cascade in return for this favor.",
+					"You can give yourself advantage on one attack roll, ability check, or saving throw. Once you do, you can't again until you finish a long rest or a Cascade occurs. Before you regain it, immediately after you cast an Esper spell of 1st level or higher, the Warden can have you roll on the Aetheric Cascade table; you then regain it.",
 				level: 1,
 				actionType: "passive",
 			},
 			{
 				name: "Probability Realignment",
 				description:
-					"Reaction: when a visible creature makes an attack or save, spend 2 Flux to roll 1d4 and adjust their result. You nudge the local fate-branch.",
+					"When a creature you can see makes an attack roll, an ability check, or a saving throw, you can use your reaction and spend 2 Flux to roll 1d4 and add the number to the roll or subtract it from the roll. You do this after the creature rolls but before the outcome is known.",
 				level: 6,
 				actionType: "passive",
 			},
 			{
 				name: "Selective Cascade",
 				description:
-					"When you roll on the Cascade table, roll twice and choose which manifestation to anchor into reality.",
+					"When you roll on the Aetheric Cascade table, roll twice and use either number.",
 				level: 14,
 				actionType: "passive",
 			},
 			{
 				name: "Absolute Chain Reaction",
 				description:
-					"When you roll max on a damage die for a spell, reroll that die and add to the total. Your internal reactor is chain-reacting.",
+					"Once per turn, when you roll the maximum number on a damage die for a spell, you can roll that die again and add the roll to the damage. Your internal reactor is chain-reacting.",
 				level: 18,
 				actionType: "passive",
 			},
@@ -2080,7 +2085,7 @@ const pathCatalog: Path[] = [
 			{
 				name: "Cascade Bolt",
 				description:
-					"Hurlraw unstable mana: 2d8+1d6, damage type random. If the d8s match, the bolt cascades to another target.",
+					"As an action, expend a spell slot of 1st level or higher to hurl raw, unstable mana at a creature you can see within 120 feet of you: make a ranged spell attack. On a hit, the target takes 2d8 + 1d6 damage, plus 1d6 for each slot level above 1st. Choose one of the d8s; its number sets the damage type: 1 acid, 2 cold, 3 fire, 4 force, 5 lightning, 6 poison, 7 psychic, 8 thunder. If both d8s show the same number, the bolt leaps to a different creature of your choice within 30 feet of the target: make a new attack roll and roll new damage against it. A creature can be hit only once by each casting.",
 				recharge: 0,
 				cost: "1st-level slot",
 			},
@@ -2107,7 +2112,7 @@ const pathCatalog: Path[] = [
 			{
 				name: "Void Sight",
 				description:
-					"Darkvision 120 ft. At 3rd level, cast Darkness for 2 flux and you can see through it — your eyes resonate with the void frequency.",
+					"You have darkvision out to 120 feet. From 3rd level, you can spend 2 Flux as an action to fill a 15-foot-radius sphere centered on a point you can see within 60 feet with magical darkness for 10 minutes (concentration). Darkvision can't see through it, nonmagical light can't illuminate it, and you can see through it.",
 				level: 1,
 				actionType: "passive",
 			},
@@ -2121,14 +2126,14 @@ const pathCatalog: Path[] = [
 			{
 				name: "Void Hound",
 				description:
-					"Bonus action, 3 flux: manifest a shadow predator from the void that relentlessly pursues one creature. Target has disadvantage on saves vs your spells while the hound is within 5 ft.",
+					"As a bonus action, spend 3 Flux to call a hound from the void to hunt one creature you can see within 120 feet. It appears in an unoccupied space within 30 feet of that creature and lasts for 5 minutes, until it drops to 0 hit points, or until its quarry drops to 0 hit points. Track it as a custom companion on your sheet. Void Hound: Large monstrosity. AC 14. Hit points equal to five times your Esper level. Speed 50 ft. STR 17, AGI 15, VIT 15, INT 3, SENSE 12, PRE 7. It can move through creatures and objects as if they were difficult terrain, taking 5 force damage if it ends its turn inside an object, and it always knows where its quarry is. Shadow Bite: melee attack using your spell attack modifier, reach 5 ft.; hit: 2d6 + your proficiency bonus piercing damage, and the target must succeed on a STR saving throw against your Job save DC or be knocked prone. The hound acts freely on your initiative, immediately after you: it moves toward its quarry and attacks it when it can. While the hound is within 5 feet of its quarry, the quarry has disadvantage on saving throws against your spells.",
 				level: 6,
 				actionType: "passive",
 			},
 			{
 				name: "Void Step",
 				description:
-					"Bonus action in dim light/darkness: step through the void. Teleport up to 120 ft to another dim/dark space.",
+					"As a bonus action while you are in dim light or darkness, you step through the void and teleport up to 120 feet to an unoccupied space you can see that is also in dim light or darkness. You then have advantage on the first melee attack you make before the end of this turn.",
 				level: 14,
 				actionType: "passive",
 			},
@@ -2184,28 +2189,28 @@ const pathCatalog: Path[] = [
 			{
 				name: "Tempest Core",
 				description:
-					"Resistance to lightning and thunder. When you cast a 1st+ spell dealing lightning/thunder, arc lightning deals damage = half Esper level to creatures of your choice within 10 ft.",
+					"You have resistance to lightning and thunder damage. When you cast a spell of 1st level or higher that deals lightning or thunder damage, arcing energy deals lightning or thunder damage (your choice) equal to half your Esper level (rounded down) to any number of creatures of your choice that you can see within 10 feet of you.",
 				level: 6,
 				actionType: "passive",
 			},
 			{
 				name: "Weather Control",
 				description:
-					"If raining, stop rain in 20-ft sphere. Bonus action: control wind direction within 100 ft for 1 round.",
+					"As a bonus action, choose a direction: the wind within 100 feet of you blows that way until the end of your next turn. If it is raining, you can also make the rain stop falling in a 20-foot-radius sphere centered on you for as long as you choose.",
 				level: 6,
 				actionType: "passive",
 			},
 			{
 				name: "Storm Retaliation",
 				description:
-					"Reaction when hit by melee: discharge lightning = Esper level and STR save or pushed 20 ft.",
+					"When a creature within 5 feet of you hits you with a melee attack, you can use your reaction to deal lightning or thunder damage (your choice) equal to your Esper level to it. It must also succeed on a STR saving throw against your Job save DC or be pushed up to 20 feet straight away from you.",
 				level: 14,
 				actionType: "passive",
 			},
 			{
 				name: "Eye of the Storm",
 				description:
-					"Immunity to lightning and thunder. 60-ft fly speed. Action: share flight (reduce to 30 ft for 1 hour, give up to 3+PRE mod creatures 30-ft fly).",
+					"You have immunity to lightning and thunder damage and a flying speed of 60 feet. As an action, you can reduce your flying speed to 30 feet for 1 hour and give up to 3 + your PRE modifier creatures you can see within 30 feet of you a flying speed of 30 feet for the same hour. Once you share your flight, you can't do so again until you finish a short rest.",
 				level: 18,
 				actionType: "passive",
 			},
@@ -2214,7 +2219,7 @@ const pathCatalog: Path[] = [
 			{
 				name: "Thunder Rift",
 				description:
-					"Teleport 90 ft via lightning bolt. Creatures within 10 ft of origin take 3d10 thunder (VIT half). Can bring one willing creature.",
+					"As an action, expend a 3rd-level spell slot to become a bolt of lightning and teleport up to 90 feet to an unoccupied space you can see; you can bring one willing creature within 5 feet of you, which appears within 5 feet of your destination. Each other creature within 10 feet of the space you left makes a VIT saving throw against your Job save DC, taking 3d10 thunder damage on a failure or half as much on a success.",
 				recharge: 0,
 				cost: "3rd-level slot",
 			},
@@ -2240,21 +2245,22 @@ const pathCatalog: Path[] = [
 		features: [
 			{
 				name: "Dual Manifestation Access",
-				description: `Learn one Herald transmission based on affinity (Restoration: Cure Wounds, Entropy: Inflict Wounds, Order: Bless, Chaos: Bane, Balance: Protection from Evil and Good). Access both Esper and Herald manifestation lists. You gain proficiency in one skill or tool of your choice.`,
+				description:
+					"When you learn an Esper spell, you can choose it from the Herald spell list as well as the Esper list; a Herald spell you learn this way counts as an Esper spell for you. You also choose an affinity when you gain this feature and learn its spell, which counts as an Esper spell for you and doesn't count against your spells known: Restoration, Healing Resonance; Entropy, Soul Siphon; Order, Resonance Pulse; Chaos, Hex Contract; Balance, Aegis of the Absolute. Whenever you gain an Esper level, you can switch to another affinity, and its spell replaces the old one. You gain proficiency in one skill or tool of your choice.",
 				level: 1,
 				actionType: "passive",
 			},
 			{
 				name: "Absolute Favor",
 				description:
-					"When you fail a save or miss an attack, the Absolute nudges reality. Add 2d4 to the roll. Once/short rest.",
+					"When you fail a saving throw or miss with an attack roll, you can roll 2d4 and add the total to the roll, possibly changing the outcome. Once per short rest.",
 				level: 1,
 				actionType: "passive",
 			},
 			{
 				name: "Healing Amplification",
 				description:
-					"When you or ally within 5 ft rolls dice to heal with a spell, spend 1 flux to reroll any number of those dice. Once/turn.",
+					"Once per turn, when you or an ally within 5 feet of you rolls dice to restore hit points with a spell, you can spend 1 Flux to reroll any number of those dice once. The new rolls must be used.",
 				level: 6,
 				actionType: "passive",
 			},
@@ -2268,7 +2274,7 @@ const pathCatalog: Path[] = [
 			{
 				name: "Emergency Restoration",
 				description:
-					"When below half HP, bonus action: the Absolute floods you with restorative energy. Regain HP = half your HP max. Once/long rest.",
+					"As a bonus action while you have fewer than half your hit points left but at least 1, the Absolute floods you with restorative energy: you regain hit points equal to half your hit point maximum. Once per long rest.",
 				level: 18,
 				actionType: "passive",
 			},
@@ -2277,7 +2283,7 @@ const pathCatalog: Path[] = [
 			{
 				name: "Absolute Healing Surge",
 				description:
-					"Manifest a healing rite and add PRE mod to each die of restorative resonance. The Absolute amplifies your output. 2 flux.",
+					"When you cast a spell that restores hit points, you can spend 2 Flux to add your PRE modifier (minimum +1) to each die rolled for that healing.",
 				recharge: 0,
 				cost: "2 flux",
 			},
@@ -2304,21 +2310,30 @@ const pathCatalog: Path[] = [
 			{
 				name: "Psionic Imprint Spells",
 				description:
-					"Learn bonus spells at 1st,3rd,5th,7th,9th (Arms of Hadar, Calm Emotions, Hunger of Hadar, Evard's Black Tentacles, Telekinesis). Swap each for divination/enchantment.",
+					"You learn these spells at the Esper levels shown. Each counts as an Esper spell for you and doesn't count against your spells known: 1st, Psychic Lance; 3rd, Psychic Barrier; 5th, Whisper Network; 7th, Tentacle Field; 9th, Psionic Shockwave. They are your psionic spells.",
+				grants: {
+					spells: [
+						{ name: "Psychic Lance", level: 1 },
+						{ name: "Psychic Barrier", level: 3 },
+						{ name: "Whisper Network", level: 5 },
+						{ name: "Tentacle Field", level: 7 },
+						{ name: "Psionic Shockwave", level: 9 },
+					],
+				},
 				level: 1,
 				actionType: "passive",
 			},
 			{
 				name: "Telepathic Link",
 				description:
-					"Bonus action: establish psionic link with one creature within 30 ft for Esper level minutes. Communicate in any known language via thought.",
+					"As a bonus action, choose one creature you can see within 30 feet of you. For a number of minutes equal to your Esper level, you and it can speak telepathically to each other while you are within a number of miles of each other equal to your PRE modifier (minimum 1 mile). To understand you, it must know a language; you understand it through thought alone.",
 				level: 1,
 				actionType: "passive",
 			},
 			{
 				name: "Psionic Casting",
 				description:
-					"Cast a psionic spell by spending flux = spell level instead of a slot. No verbal or somatic components — pure thought casting.",
+					"When you cast one of your psionic spells, you can spend Flux equal to the spell's level instead of expending a spell slot. Cast this way, it needs no verbal or somatic components, and no material components unless they are consumed or have a cost.",
 				level: 6,
 				actionType: "passive",
 			},
@@ -2339,7 +2354,7 @@ const pathCatalog: Path[] = [
 			{
 				name: "Psionic Implosion",
 				description:
-					"Action: teleport 120 ft. Each creature within 30 ft of origin: STR save or 3d10 force + pulled to your old space. Success: half, no pull. Once/long rest or 5 flux.",
+					"As an action, you teleport up to 120 feet to an unoccupied space you can see. Each creature within 30 feet of the space you left makes a STR saving throw against your Job save DC. On a failure, it takes 3d10 force damage and is pulled straight toward the space you left, ending in the nearest unoccupied space; on a success, it takes half as much damage and isn't pulled. You can do this once per long rest, or again by spending 5 Flux.",
 				level: 18,
 				actionType: "passive",
 			},
@@ -2396,7 +2411,7 @@ const pathCatalog: Path[] = [
 			{
 				name: "Execute the Withering",
 				description:
-					"As a bonus action, spend 2 Remnants to pass sentence on a creature marked for the reaping that is below one-quarter of its hit points: it must succeed on a Vitality save or drop to 0 hit points, taking 4d10 + your Intelligence modifier necrotic damage on a success instead.",
+					"As a bonus action, spend 2 Remnants to pass sentence on a creature marked for the reaping that you can see within 60 feet of you and that has fewer than one-quarter of its hit points left. It must succeed on a VIT saving throw against your Job save DC or drop to 0 hit points. On a success, it takes 4d10 + your INT modifier necrotic damage instead.",
 				level: 10,
 				actionType: "passive",
 			},
@@ -2412,7 +2427,7 @@ const pathCatalog: Path[] = [
 			{
 				name: "Devour the Remnant",
 				description:
-					"Action: detonate a corpse or a creature marked for the reaping within 60 feet. Each creature in a 15-foot radius takes 4d8 + your Intelligence modifier necrotic damage (Vitality save for half) and is marked for the reaping; you reclaim 1 Remnant for each creature reduced to 0. Once per long rest.",
+					"As an action, choose a corpse or a creature marked for the reaping within 60 feet of you, and entropy erupts from it. Each creature other than you within 15 feet of it makes a VIT saving throw against your Job save DC, taking 4d8 + your INT modifier necrotic damage on a failure or half as much on a success, and each creature that takes this damage is marked for the reaping. A corpse used this way is destroyed. You reclaim 1 Remnant for each creature the eruption reduces to 0 hit points. Once per long rest.",
 				recharge: 3,
 				cost: "Action",
 			},
@@ -2476,7 +2491,7 @@ const pathCatalog: Path[] = [
 			{
 				name: "Hemorrhage",
 				description:
-					"Action: a creature within 30 feet must make a Vitality save or take 4d8 necrotic damage and begin bleeding for 1 minute (repeating the save at the end of each of its turns to end the effect). While it bleeds, you regain hit points equal to half the bleed damage each round. Once per long rest.",
+					"As an action, choose a creature you can see within 30 feet of you. It makes a VIT saving throw against your Job save DC. On a failure, it takes 4d8 necrotic damage and starts bleeding for 1 minute; on a success, it takes half as much damage and doesn't bleed. A bleeding creature takes 1d8 necrotic damage at the start of each of its turns, and you regain hit points equal to half that damage (rounded down). It repeats the save at the end of each of its turns, and the bleeding ends on a success. Once per long rest.",
 				recharge: 3,
 				cost: "Action",
 			},
@@ -2531,7 +2546,7 @@ const pathCatalog: Path[] = [
 			{
 				name: "Crown of Cessation",
 				description:
-					"When you are reduced to half your hit point maximum or lower, your Decree aura expands to 30 feet and enemies marked within it must succeed on a Presence save or be unable to take reactions. The throne does not fall.",
+					"While you have half your hit points or fewer, your Decree of the Hollow Throne aura extends to 30 feet, and each enemy marked for the reaping that starts its turn in the aura must succeed on a PRE saving throw against your Job save DC or be unable to take reactions until the start of its next turn. The throne does not fall.",
 				level: 14,
 				actionType: "passive",
 			},
@@ -2567,14 +2582,14 @@ const pathCatalog: Path[] = [
 			{
 				name: "Command the Risen",
 				description:
-					"As an action, spend 3 Remnants to raise one elite thrall from a corpse or a creature marked for the reaping that died within the last minute. The thrall obeys you, acts on your turn, shares your necrotic resistance, and has hit points equal to five times your Revenant level. You may have one thrall at a time (two at 14th level).",
+					"As an action, spend 3 Remnants and touch the corpse of a creature that died within the last minute, or that was marked for the reaping when it died within the last hour, and isn't a construct. It rises as your risen thrall. You can have one thrall at a time (two at 14th level); raising another beyond that limit makes your oldest thrall crumble. Track the thrall as a custom companion on your sheet. Risen Thrall: Medium undead. AC 13 + your proficiency bonus (PB). Hit points equal to five times your Revenant level. Speed 30 ft. STR 16, AGI 12, VIT 15, INT 6, SENSE 10, PRE 6. It has resistance to necrotic damage, immunity to poison damage, and immunity to the charmed, frightened, and poisoned conditions. Grave Strike: melee attack using your spell attack modifier, reach 5 ft., one target; hit: 1d8 + PB necrotic damage. In combat, the thrall acts on your initiative, immediately after you. It can move on its own, but on its turn it takes the Dodge action unless you use a bonus action to command it to take another action, such as Grave Strike. It has no Hit Dice and doesn't rest; it regains hit points only from your features. It lasts until it drops to 0 hit points, until you dismiss it (no action required), or until you finish a long rest. When it drops to 0 hit points or is dismissed, it crumbles to dust, and that corpse can't rise again.",
 				level: 2,
 				actionType: "passive",
 			},
 			{
 				name: "Shepherd's Bond",
 				description:
-					"Your thrall uses your spell save DC and proficiency bonus. While it is within 30 feet of you, you may use your reaction to have it move up to its speed and make one attack, or interpose itself to take an attack aimed at you.",
+					"Your thrall uses your spell save DC and spell attack modifier. While it is within 30 feet of you, you can use your reaction for one of the following: at the end of another creature's turn, the thrall moves up to its speed and makes one Grave Strike; or, when a creature you can see attacks you while the thrall is within 5 feet of you, the thrall interposes itself and becomes the attack's target instead.",
 				level: 2,
 				actionType: "passive",
 			},
@@ -2588,13 +2603,14 @@ const pathCatalog: Path[] = [
 			{
 				name: "Two-Soul Tether",
 				description:
-					"Your thrall may take two actions on each of its turns, and when it would drop to 0 hit points you may spend 1 Remnant to keep it at 1 hit point instead.",
+					"When you command your thrall with a bonus action, it can take two actions on that turn instead of one. When it would drop to 0 hit points, you can spend 1 Remnant (no action required) to have it drop to 1 hit point instead.",
 				level: 10,
 				actionType: "passive",
 			},
 			{
 				name: "Legion of One",
-				description: `You may command two elite thralls at once, and once per turn when a creature marked for the reaping dies you may raise it as a temporary lesser risen that acts until the end of your next turn at no Remnant cost. You can reroll a failed ability check once per short or long rest.`,
+				description:
+					"You can have two risen thralls at once. In addition, once per turn when a creature marked for the reaping dies within 60 feet of you, you can raise it as a lesser risen at no Remnant cost. A lesser risen uses the Risen Thrall statistics, except that its hit points equal your Revenant level, it acts immediately after you, and it crumbles at the end of your next turn. You can reroll a failed ability check once per short or long rest.",
 				level: 14,
 				actionType: "passive",
 			},
@@ -2630,7 +2646,7 @@ const pathCatalog: Path[] = [
 			{
 				name: "Shroud of the Veil",
 				description:
-					"As a bonus action, unfurl a 15-foot aura of dread until the start of your next turn. Each enemy that starts its turn in the aura must succeed on a Presence save or be frightened of you until the end of its next turn and marked for the reaping.",
+					"As a bonus action, unfurl a 15-foot aura of dread around you until the start of your next turn. Each enemy that starts its turn in the aura must succeed on a PRE saving throw against your Job save DC or be frightened of you until the end of its next turn and marked for the reaping.",
 				level: 2,
 				actionType: "passive",
 			},
@@ -2651,14 +2667,14 @@ const pathCatalog: Path[] = [
 			{
 				name: "Contagion of Fear",
 				description:
-					"When a creature frightened by you fails a saving throw, the fear spreads: one other creature within 10 feet of it must succeed on a Presence save or also become frightened of you and marked for the reaping.",
+					"When a creature frightened of you fails a saving throw, the fear spreads: one other creature of your choice within 10 feet of it must succeed on a PRE saving throw against your Job save DC or be frightened of you until the end of its next turn and marked for the reaping.",
 				level: 10,
 				actionType: "passive",
 			},
 			{
 				name: "Terror Pulse",
 				description:
-					"When you reduce a frightened creature to 0 hit points, every enemy within 30 feet must succeed on a Presence save or become frightened of you until the end of their next turn. Frightened creatures have vulnerability to your necrotic damage.",
+					"When you reduce a frightened creature to 0 hit points, each enemy within 30 feet of you must succeed on a PRE saving throw against your Job save DC or be frightened of you until the end of its next turn. While a creature is frightened of you, it has vulnerability to your necrotic damage.",
 				level: 14,
 				actionType: "passive",
 			},
@@ -2667,7 +2683,7 @@ const pathCatalog: Path[] = [
 			{
 				name: "Maw of the Void",
 				description:
-					"Action: every enemy in a 30-foot cone must make a Presence save. On a failure a creature is frightened for 1 minute (repeating the save at the end of each of its turns) and takes 3d8 necrotic damage; on a success it takes half damage and is marked for the reaping. Once per long rest.",
+					"As an action, each enemy in a 30-foot cone makes a PRE saving throw against your Job save DC. On a failure, a creature takes 3d8 necrotic damage and is frightened of you for 1 minute; it repeats the save at the end of each of its turns, ending the effect on a success. On a success, a creature takes half as much damage and is marked for the reaping. Once per long rest.",
 				recharge: 3,
 				cost: "Action",
 			},
@@ -2722,7 +2738,7 @@ const pathCatalog: Path[] = [
 			{
 				name: "Arbiter's Decree",
 				description:
-					"As an action, pass judgment on one creature within 30 feet: a creature dead no longer than 1 hour returns to life with hit points equal to your Revenant level + your Intelligence modifier, or a living creature must succeed on a Vitality save or take 10d8 necrotic damage as you shove it across the threshold. Once per long rest.",
+					"As an action, pass judgment on one creature within 30 feet of you. A creature that has been dead no longer than 1 hour and isn't a construct or undead returns to life with hit points equal to your Revenant level + your INT modifier. A living creature must succeed on a VIT saving throw against your Job save DC or take 10d8 necrotic damage as you shove it across the threshold; on a success, it takes half as much damage. Once per long rest.",
 				level: 14,
 				actionType: "passive",
 			},
@@ -2731,7 +2747,7 @@ const pathCatalog: Path[] = [
 			{
 				name: "Threshold Pulse",
 				description:
-					"Action: in a 30-foot radius centered on you, allies regain 2d8 + your Intelligence modifier hit points and enemies take 2d8 + your Intelligence modifier necrotic damage (Vitality save for half). You are the fulcrum of the life-death axis. Once per long rest.",
+					"As an action, release a pulse in a 30-foot radius centered on you. Each ally in the area regains 2d8 + your INT modifier hit points, and each enemy in the area makes a VIT saving throw against your Job save DC, taking 2d8 + your INT modifier necrotic damage on a failure or half as much on a success. You are the fulcrum of the life-death axis. Once per long rest.",
 				recharge: 3,
 				cost: "Action",
 			},
@@ -2757,19 +2773,22 @@ const pathCatalog: Path[] = [
 		features: [
 			{
 				name: "Biome Insight",
-				description: `Learn one additional Summoner mantra from your bonded biome. You gain a +1 bonus to all saving throws.`,
+				description:
+					"You learn one Summoner cantrip of your choice. You gain a +1 bonus to all saving throws.",
 				level: 2,
 				actionType: "passive",
 			},
 			{
 				name: "Biome Absorption",
-				description: `During a moment of stillness, absorb ambient Rift energy: recover internal essence equivalent to half Summoner level. Once/long rest. You have advantage on initiative rolls.`,
+				description:
+					"Once per long rest, when you finish a short rest, you can absorb ambient Rift energy to recover expended spell slots with a combined level equal to or less than half your Summoner level (rounded up), none of them 6th level or higher. You have advantage on initiative rolls.",
 				level: 2,
 				actionType: "passive",
 			},
 			{
 				name: "Biome Mantras",
-				description: `Gain bonus always-prepared manifestations at 3rd, 5th, 7th, and 9th level based on your bonded Rift biome (Arctic, Coastal, Desert, Forest, Grassland, Mountain, Swamp, or Subterranean). You gain a +1 bonus to all saving throws.`,
+				description:
+					"When you gain this feature, choose your bonded biome. You always have its four spells prepared, and they don't count against your prepared spells: the first from 3rd level, the second from 5th, the third from 7th, and the fourth from 9th. Arctic: Arctic Lance, Pressure Wave, Rending Flux, Mana Storm. Coastal: Misty Blink, Harmonic Barrage, Tentacle Field, Rift Walk. Desert: Triple Ignition, Mana Barrage, Ghost Protocol, Mana Storm. Forest: Snaring Vines, Rift Flora Eruption, Thorn Fortress, Predator's Web. Grassland: Awakening Surge, Circuit Overclock, Pack Ambush, Mass Circuit Boost. Mountain: Stone Spikes, Gravity Well, Gravity Crush, Rift Fissure. Swamp: Corrosive Aura, Revenant's Embrace, Rust Wave, Predator's Web. Subterranean: Rift Snare, Mana Detonation Charge, Unstable Rift Tear, Rift Fissure. Whenever you gain a Summoner level, you can bond with a different biome; its spells replace the old ones. You gain a +1 bonus to all saving throws.",
 				level: 3,
 				actionType: "passive",
 			},
@@ -2789,7 +2808,8 @@ const pathCatalog: Path[] = [
 			},
 			{
 				name: "Biome Sanctuary",
-				description: `Manifesting part of the Absolute's ecosystem around you, beasts and plant entities choice another target. Your resonance marks you as part of the environment. Your movement speed increases by 5 feet.`,
+				description:
+					"When a beast or plant creature attacks you, it must make a SENSE saving throw against your Job save DC. On a failure, it must choose a different target, or the attack automatically misses; on a success, it is immune to this effect for 24 hours. Your resonance marks you as part of the environment. Your movement speed increases by 5 feet.",
 				level: 14,
 				actionType: "passive",
 			},
@@ -2798,7 +2818,7 @@ const pathCatalog: Path[] = [
 			{
 				name: "Biome Surge",
 				description:
-					"Channel the local Rift energy: regain internal essence and gain advantage on environmental checks for 1 hour. Once/long rest.",
+					"As an action, channel the local Rift energy: you recover one expended spell slot of a level no higher than half your proficiency bonus (rounded up), and for 1 hour you have advantage on ability checks made to navigate, forage, or track in natural or Rift terrain. Once per long rest.",
 				recharge: 3,
 				cost: "Action",
 			},
@@ -2825,7 +2845,7 @@ const pathCatalog: Path[] = [
 			{
 				name: "Absolute Entity Shift",
 				description:
-					"Entity Shift as bonus action. While in Rift creature form, spend aetheric essence to regain 1d8 HP per level.",
+					"You can use Entity Shift as a bonus action. While you are shifted, you can use a bonus action to expend one spell slot and regain 1d8 hit points per level of the slot expended.",
 				level: 2,
 				actionType: "passive",
 			},
@@ -2844,7 +2864,8 @@ const pathCatalog: Path[] = [
 			},
 			{
 				name: "Elemental Integration",
-				description: `Assume the form of an elemental entity from the Absolute's reflection (Air, Earth, Fire, or Water). You gain a +1 bonus to all saving throws.`,
+				description:
+					"You can expend two uses of Entity Shift at once to take the form of an air, earth, fire, or water elemental Anomaly you have studied, using its stat block, for up to 1 hour. You gain a +1 bonus to all saving throws.",
 				level: 10,
 				actionType: "passive",
 			},
@@ -2860,7 +2881,7 @@ const pathCatalog: Path[] = [
 			{
 				name: "Apex Manifestation",
 				description:
-					"Shift into an apex Rift entity for 1 hour. Retain all mandate access. Once/long rest.",
+					"As a bonus action, without expending Entity Shift, you take the form of a Rift creature you have studied whose challenge rating is no higher than half your Summoner level (minimum 1), for up to 1 hour. You can cast your spells in this form. The form ends early as it does for Entity Shift. Once per long rest.",
 				recharge: 3,
 				cost: "Bonus action",
 			},
@@ -2887,7 +2908,7 @@ const pathCatalog: Path[] = [
 			{
 				name: "Balm of the Absolute",
 				description:
-					"Pool of d6s = Summoner level. Bonus action: heal a creature within 120 ft by spending dice + 1 temp HP per die spent.",
+					"You have a pool of d6s equal to your Summoner level, and it refills when you finish a long rest. As a bonus action, choose a creature you can see within 120 feet of you and spend up to half your Summoner level (rounded up) of the dice. It regains hit points equal to the total rolled and gains 1 temporary hit point per die spent.",
 				level: 2,
 				actionType: "passive",
 			},
@@ -2906,7 +2927,8 @@ const pathCatalog: Path[] = [
 			},
 			{
 				name: "Walker in Reflections",
-				description: `After a rest, manifest Dream or Scrying without spending essence. Your connection to the Absolute allows for distant observation. You learn one cantrip of your choice from the wizard spell list. Intelligence is your spellcasting ability for it.`,
+				description:
+					"When you finish a short rest, you can cast Whisper Network or Rift Echo without expending a spell slot; once you do, you can't again until you finish a long rest. Your connection to the Absolute allows for distant observation. You learn one Summoner cantrip of your choice.",
 				level: 14,
 				actionType: "passive",
 			},
@@ -2915,7 +2937,7 @@ const pathCatalog: Path[] = [
 			{
 				name: "Lush Blessing",
 				description:
-					"All allies within 30 ft regain 2d8 HP and gain advantage on saves against phantasm-effects for 1 min. Once/long rest.",
+					"As an action, you and each ally within 30 feet of you regain 2d8 hit points and have advantage on saving throws against being charmed or frightened for 1 minute. Once per long rest.",
 				recharge: 3,
 				cost: "Action",
 			},
@@ -2948,7 +2970,7 @@ const pathCatalog: Path[] = [
 			{
 				name: "Aetheric Totem",
 				description:
-					"Bonus action: manifest a totemic guardian (60-ft aura). Bear: allies gain temp HP and STR advantage. Hawk: allies gain Perception advantage. Unicorn: allies gain advantage on detection and enhanced restorative output.",
+					"As a bonus action, manifest a totem guardian at an unoccupied point you can see within 60 feet of you. For 1 minute, it projects a 60-foot aura of your chosen spirit. Bear: each ally in the aura when the totem appears gains temporary hit points equal to 5 + your Summoner level, and allies in the aura have advantage on STR checks and STR saving throws. Hawk: when a creature makes an attack roll against a target in the aura, you can use your reaction to give it advantage, and allies in the aura have advantage on SENSE (Perception) checks. Unicorn: allies in the aura have advantage on ability checks to detect creatures in it, and when you cast a spell with a spell slot that restores hit points to anyone, each creature of your choice in the aura also regains hit points equal to your Summoner level. Once per short rest.",
 				level: 2,
 				actionType: "passive",
 			},
@@ -2960,13 +2982,15 @@ const pathCatalog: Path[] = [
 			},
 			{
 				name: "Absolute Guardian",
-				description: `Entities you summon that drop to 0 HP in your Totem aura instead regain half their HP max. The resonance refuses to let them fall. You have advantage on initiative rolls.`,
+				description:
+					"Once per summoning, when a creature you summoned or created with a spell drops to 0 hit points inside your Aetheric Totem's aura, it instead drops to half its hit point maximum. The resonance refuses to let them fall. You have advantage on initiative rolls.",
 				level: 10,
 				actionType: "passive",
 			},
 			{
 				name: "Faithful Call",
-				description: `When you drop to 0 HP, immediately conjure 4 Rift predators of CR 2 or lower to defend you. Once/long rest. You can reroll a failed ability check once per short or long rest.`,
+				description:
+					"When you drop to 0 hit points or are incapacitated against your will, four Rift predators of challenge rating 2 or lower appear in unoccupied spaces within 20 feet of you to defend you; the Warden supplies their stat blocks. They act on your initiative, immediately after you, and attack your foes on their own. They last for 1 hour or until they drop to 0 hit points; track them as custom companions on your sheet. Once per long rest. You can reroll a failed ability check once per short or long rest.",
 				level: 14,
 				actionType: "passive",
 			},
@@ -2975,7 +2999,7 @@ const pathCatalog: Path[] = [
 			{
 				name: "Absolute Alpha",
 				description:
-					"All summoned entities within 60 ft gain +2 to attack and deal extra 1d4 damage. Once/short rest.",
+					"As a bonus action, for 1 minute, each creature you summoned or created with a spell within 60 feet of you gains a +2 bonus to attack rolls and deals an extra 1d4 damage when it hits. Once per short rest.",
 				recharge: 1,
 				cost: "Bonus action",
 			},
@@ -3002,35 +3026,35 @@ const pathCatalog: Path[] = [
 			{
 				name: "Absolute Spore Cloud",
 				description:
-					"Reaction: creature within 10 ft must save or take necrotic damage. Your symbiotic colony reacts to perceived threats.",
+					"When a creature you can see moves into a space within 10 feet of you or starts its turn there, you can use your reaction to make it succeed on a VIT saving throw against your Job save DC or take 1d4 necrotic damage (1d6 at 6th level, 1d8 at 10th, 1d10 at 14th). Your symbiotic colony reacts to perceived threats.",
 				level: 2,
 				actionType: "passive",
 			},
 			{
 				name: "Host Fusion",
 				description:
-					"Expend Entity Shift to fuse with your colony. Gain temp HP = 4 × Summoner level. While fused, spore damage is absolute and strikes deal extra poison.",
+					"As an action, expend a use of Entity Shift to fuse with your colony for 10 minutes. You gain temporary hit points equal to four times your Summoner level. While fused, your Absolute Spore Cloud rolls its damage die twice and adds the rolls together, and your melee weapon attacks deal an extra 1d6 poison damage. The fusion ends early when those temporary hit points are gone or when you use Entity Shift again.",
 				level: 2,
 				actionType: "passive",
 			},
 			{
 				name: "Colony Expansion",
 				description:
-					"Reaction when a creature falls within 10 ft: your symbiotes colonize the remnant. It rises to serve you for 1 hour. SENSE uses/long rest.",
+					"When a Small or Medium beast or humanoid dies within 10 feet of you, you can use your reaction to have your symbiotes colonize it. It rises as a spore husk with 1 hit point and lasts for 1 hour; track it as a custom companion on your sheet. Spore Husk: AC 8, speed 20 ft., STR 13, AGI 6, VIT 16, INT 3, SENSE 6, PRE 5. Slam: melee attack, +3 to hit, reach 5 ft.; hit: 1d6 + 1 bludgeoning damage. It obeys your mental commands, acts on your initiative immediately after you, and can take only the Attack action. You can do this a number of times equal to your SENSE modifier (minimum once) per long rest.",
 				level: 6,
 				actionType: "passive",
 			},
 			{
 				name: "Projected Spore Zone",
 				description:
-					"While fused, bonus action: project your spore cloud as a mobile zone of entropic destruction.",
+					"While Host Fusion is active, as a bonus action, you can project your spores into a 10-foot cube within 30 feet of you for 1 minute, until you use this again, or until the fusion ends. A creature that moves into the cube or starts its turn there must succeed on a VIT saving throw against your Job save DC or take your Absolute Spore Cloud damage. While the cube exists, your Absolute Spore Cloud doesn't work around you.",
 				level: 10,
 				actionType: "passive",
 			},
 			{
 				name: "Perfect Symbiosis",
 				description:
-					"Your colony protects all physical senses. Immune to blind, deaf, frighten, and poison. Crits against you are normalized by the colony's absorption.",
+					"You can't be blinded, deafened, frightened, or poisoned, and any critical hit against you counts as a normal hit instead, unless you are incapacitated.",
 				level: 14,
 				actionType: "passive",
 			},
@@ -3039,7 +3063,7 @@ const pathCatalog: Path[] = [
 			{
 				name: "Spore Eruption",
 				description:
-					"All creatures within 20 ft: VIT save or take 4d8 poison and become poisoned. Your colony erupts in a reality-warping discharge. Once/long rest.",
+					"As an action, each creature within 20 feet of you makes a VIT saving throw against your Job save DC. On a failure, it takes 4d8 poison damage and is poisoned until the end of your next turn; on a success, it takes half as much damage and isn't poisoned. Your colony erupts in a reality-warping discharge. Once per long rest.",
 				recharge: 3,
 				cost: "Action",
 			},
@@ -3065,34 +3089,36 @@ const pathCatalog: Path[] = [
 		features: [
 			{
 				name: "Absolute Cosmic Map",
-				description: `Learn one additional Summoner guidance. Cast Guiding Resonance without spending essence prof times/long rest. You gain a +1 bonus to all saving throws.`,
+				description:
+					"You learn one Summoner cantrip of your choice. You can cast Foresight Strike without expending a spell slot a number of times equal to your proficiency bonus per long rest. You gain a +1 bonus to all saving throws.",
 				level: 2,
 				actionType: "passive",
 			},
 			{
 				name: "Aetheric Starlight Form",
 				description:
-					"Expend Shift use to assume a starry form. Archer: bonus action ranged strike. Chalice: enhance all restorative manifestations. Dragon: stabilize internal focus for absolute precision.",
+					"As a bonus action, expend a use of Entity Shift to take a starry form for 10 minutes. Choose its constellation. Archer: when you take this form, and as a bonus action on later turns while it lasts, make a ranged spell attack against a creature within 60 feet of you, dealing 1d8 + your SENSE modifier radiant damage on a hit. Chalice: when you cast a spell with a spell slot that restores hit points, you or another creature within 30 feet of you regains 1d8 + your SENSE modifier hit points. Dragon: when you make an INT or SENSE check, or a VIT saving throw to maintain concentration, you can treat a d20 roll of 9 or lower as a 10.",
 				level: 2,
 				actionType: "passive",
 			},
 			{
 				name: "Cosmic Prophecy",
 				description:
-					"Reaction: adjust a creature's result with a d6 (add or subtract). You nudge the local fate-variable. Prof uses/long rest.",
+					"When a creature you can see within 30 feet of you makes an attack roll, an ability check, or a saving throw, you can use your reaction to roll a d6 and add the number to the roll or subtract it from the roll. You nudge the local fate-variable. You can do this a number of times equal to your proficiency bonus per long rest.",
 				level: 6,
 				actionType: "passive",
 			},
 			{
 				name: "Universal Alignment",
-				description: `Starry Form effects are doubled. At the start of each turn, you can switch between forms as the Absolute realigns. You gain a +1 bonus to all saving throws.`,
+				description:
+					"The 1d8 of your Archer and Chalice constellations becomes 2d8, and while the Dragon constellation is active you have a flying speed of 20 feet and can hover. At the start of each of your turns in starry form, you can change its constellation. You gain a +1 bonus to all saving throws.",
 				level: 10,
 				actionType: "passive",
 			},
 			{
 				name: "Star-Forged Vessel",
 				description:
-					"While in starry form, resistance to all physical damage from non-aetheric sources.",
+					"While you are in starry form, you have resistance to bludgeoning, piercing, and slashing damage.",
 				level: 14,
 				actionType: "passive",
 			},
@@ -3101,7 +3127,7 @@ const pathCatalog: Path[] = [
 			{
 				name: "Starfall Manifestation",
 				description:
-					"30-ft radius: 4d10 radiant, blind victims in a reality-warping discharge. Once/long rest.",
+					"As an action, call down starfall on a point you can see within 120 feet of you. Each creature in a 30-foot radius around it makes an AGI saving throw against your Job save DC. On a failure, it takes 4d10 radiant damage and is blinded until the end of your next turn; on a success, it takes half as much damage and isn't blinded. Once per long rest.",
 				recharge: 3,
 				cost: "Action",
 			},
@@ -3141,7 +3167,7 @@ const pathCatalog: Path[] = [
 			{
 				name: "Absolute Resonance: Preserve Life",
 				description:
-					"Action: distribute HP = 5× Herald level among creatures within 30 ft. You stabilize their local resonance.",
+					"As an action, expend a use of Channel Absolute to restore hit points equal to five times your Herald level, divided as you choose among any creatures within 30 feet of you. This can't raise a creature above half its hit point maximum. You stabilize their local resonance.",
 				level: 2,
 				actionType: "passive",
 			},
@@ -3162,7 +3188,7 @@ const pathCatalog: Path[] = [
 			{
 				name: "Supreme Manifestation",
 				description:
-					"When you heal, usage of the Absolute's essence is normalized to its maximum efficiency for each die.",
+					"When you would roll dice to restore hit points with a spell, you use the highest number possible for each die instead.",
 				level: 17,
 				actionType: "passive",
 			},
@@ -3211,7 +3237,7 @@ const pathCatalog: Path[] = [
 			{
 				name: "Absolute Resonance: Radiance",
 				description:
-					"Action: 30-ft radius — cleanse magical darkness, hostile entities take 2d10+Herald level radiant damage.",
+					"As an action, expend a use of Channel Absolute: magical darkness within 30 feet of you is dispelled, and each hostile creature within 30 feet of you makes a VIT saving throw against your Job save DC, taking 2d10 + your Herald level radiant damage on a failure or half as much on a success.",
 				level: 2,
 				actionType: "passive",
 			},
@@ -3232,7 +3258,7 @@ const pathCatalog: Path[] = [
 			{
 				name: "Corona of the Absolute",
 				description:
-					"Action: 60-ft absolute light aura. Enemies have disadvantage on saves against your fire/radiant manifestations for 1 min.",
+					"As an action, you activate a 60-foot aura of absolute light for 1 minute, or until you end it as an action. Within it, you shed bright light, and enemies in the aura have disadvantage on saving throws against your spells that deal fire or radiant damage.",
 				level: 17,
 				actionType: "passive",
 			},
@@ -3241,7 +3267,7 @@ const pathCatalog: Path[] = [
 			{
 				name: "Solar Burst",
 				description:
-					"30-ft cone: 4d8 radiant, blind failers for 1 round. Once/short rest.",
+					"As an action, each creature in a 30-foot cone makes a VIT saving throw against your Job save DC. On a failure, it takes 4d8 radiant damage and is blinded until the end of your next turn; on a success, it takes half as much damage and isn't blinded. Once per short rest.",
 				recharge: 1,
 				cost: "Action",
 			},
@@ -3281,14 +3307,14 @@ const pathCatalog: Path[] = [
 			{
 				name: "Absolute Resonance: Guided Strike",
 				description:
-					"When you strike, +10 to the roll. Declare your intent after the roll.",
+					"When you make an attack roll, you can expend a use of Channel Absolute to gain a +10 bonus to the roll. You decide after you see the roll, but before the Warden says whether the attack hits.",
 				level: 2,
 				actionType: "passive",
 			},
 			{
 				name: "Absolute Resonance: Allied Blessing",
 				description:
-					"Reaction: ally within 30 ft strikes → +10 to their roll as you realign their path.",
+					"When a creature within 30 feet of you makes an attack roll, you can use your reaction and expend a use of Channel Absolute to give it a +10 bonus to the roll. You decide after you see the roll, but before the Warden says whether the attack hits.",
 				level: 6,
 				actionType: "passive",
 			},
@@ -3345,14 +3371,14 @@ const pathCatalog: Path[] = [
 			{
 				name: "Absolute Resonance: Ancient Insight",
 				description:
-					"Action: gain proficiency with one tool or skill for 10 minutes as the Absolute realigns your vessel.",
+					"As an action, expend a use of Channel Absolute and choose one skill or tool. For 10 minutes, you have proficiency with it.",
 				level: 2,
 				actionType: "passive",
 			},
 			{
 				name: "Absolute Resonance: Aetheric Reader",
 				description:
-					"Action: read the surface thoughts of a creature within 60 ft. If successful, you can also implant a minor directive.",
+					"As an action, expend a use of Channel Absolute and choose a creature you can see within 60 feet of you. It must succeed on a SENSE saving throw against your Job save DC, or for 1 minute you can read its surface thoughts while it is within 60 feet of you. During that minute, you can use an action to end the effect and implant a directive: the creature follows one reasonable course of action you describe for up to 1 hour, or until you or your allies harm it.",
 				level: 6,
 				actionType: "passive",
 			},
@@ -3407,13 +3433,14 @@ const pathCatalog: Path[] = [
 			{
 				name: "Wrath of the Absolute",
 				description:
-					"Reaction when targeted in melee: manifest a lightning discharge for 2d8 damage. SENSE uses/long rest.",
+					"When a creature within 5 feet of you that you can see hits you with an attack, you can use your reaction to make it attempt an AGI saving throw against your Job save DC. It takes 2d8 lightning or thunder damage (your choice) on a failure, or half as much on a success. You can do this a number of times equal to your SENSE modifier (minimum once) per long rest.",
 				level: 1,
 				actionType: "passive",
 			},
 			{
 				name: "Absolute Resonance: Destructive Wrath",
-				description: `When you manifest lightning or thunder, normalize the effect to its absolute maximum intensity. Your movement speed increases by 5 feet.`,
+				description:
+					"When you roll lightning or thunder damage, you can expend a use of Channel Absolute to deal the maximum damage instead of rolling. Your movement speed increases by 5 feet.",
 				level: 2,
 				actionType: "passive",
 			},
@@ -3443,7 +3470,7 @@ const pathCatalog: Path[] = [
 			{
 				name: "Call Lightning Manifestation",
 				description:
-					"30-ft radius: 3d10 lightning. Maximize with Absolute Resonance. Once/short rest.",
+					"As an action, call lightning down on a point you can see within 120 feet of you. Each creature within 30 feet of that point makes an AGI saving throw against your Job save DC, taking 3d10 lightning damage on a failure or half as much on a success. If you use Destructive Wrath on this damage, it is maximized. Once per short rest.",
 				recharge: 1,
 				cost: "Action",
 			},
@@ -3469,7 +3496,8 @@ const pathCatalog: Path[] = [
 		features: [
 			{
 				name: "Absolute Triage",
-				description: `When you manifest restorative energy on a creature at 0 HP, the Absolute normalize output to its maximum intensity. You gain proficiency in one skill or tool of your choice.`,
+				description:
+					"When you restore hit points with a spell to a creature that has 0 hit points, it regains the maximum number the spell's dice can provide instead of rolling them. You gain proficiency in one skill or tool of your choice.",
 				level: 1,
 				actionType: "passive",
 			},
@@ -3483,7 +3511,7 @@ const pathCatalog: Path[] = [
 			{
 				name: "Absolute Resonance: Essential Target",
 				description:
-					"Action: mark a creature for absolute elimination. The next attack against it deals double damage.",
+					"As an action, expend a use of Channel Absolute to mark a creature you can see within 60 feet of you for elimination. The next attack that hits it before the end of your next turn deals double damage.",
 				level: 2,
 				actionType: "passive",
 			},
@@ -3502,7 +3530,8 @@ const pathCatalog: Path[] = [
 			},
 			{
 				name: "Aetheric Recycling",
-				description: `When an enemy falls, the Absolute recycles its residual resonance. You or an ally regain HP. Once per round. Your spell attacks score a critical hit on a roll of 19 or 20.`,
+				description:
+					"Once per round, when a hostile creature you can see within 60 feet of you drops to 0 hit points, the Absolute recycles its residual resonance: you or an ally within 30 feet of you regains 1d8 + your SENSE modifier hit points. Your spell attacks score a critical hit on a roll of 19 or 20.",
 				level: 17,
 				actionType: "passive",
 			},
@@ -3912,28 +3941,28 @@ const pathCatalog: Path[] = [
 			{
 				name: "Ascendant's Resonance",
 				description:
-					"Choose one specialty: Giant Slayer (extra damage vs large entities), Horde Breaker (additional strikes vs multiple targets), or Absolute Will (advantage against mental intrusion).",
+					"Choose one specialty when you gain this feature. Giant Slayer: once per turn, when you hit a Large or larger creature with a weapon attack, it takes an extra 1d8 damage of the weapon's type. Horde Breaker: once on each of your turns when you make a weapon attack, you can make another attack with the same weapon against a different creature that is within 5 feet of the original target and within your weapon's range. Absolute Will: you have advantage on saving throws against being charmed or frightened. Whenever you gain a Stalker level, you can replace your specialty with another.",
 				level: 3,
 				actionType: "passive",
 			},
 			{
 				name: "Evasive Resilience",
 				description:
-					"Choose a defensive adaptation: Multi-target Defense (+4 AC after being hit) or Aetheric Escape (disadvantage on strikes against you).",
+					"Choose a defensive adaptation when you gain this feature. Multi-target Defense: when a creature hits you with an attack, you gain a +4 bonus to AC against all later attacks that creature makes this turn. Aetheric Escape: opportunity attacks against you have disadvantage. Whenever you gain a Stalker level, you can replace your adaptation with the other.",
 				level: 7,
 				actionType: "passive",
 			},
 			{
 				name: "Absolute Multi-strike",
 				description:
-					"Choose an offensive manifestation: Volley (ranged aether-burst) or Whirlwind (melee aether-burst).",
+					"Choose an offensive manifestation when you gain this feature. Volley: as an action, make a ranged weapon attack against any number of creatures within 10 feet of a point you can see within your weapon's range, with a separate attack roll for each target; you need ammunition for each target. Whirlwind: as an action, make a melee weapon attack against any number of creatures within 5 feet of you, with a separate attack roll for each target. Whenever you gain a Stalker level, you can replace your manifestation with the other.",
 				level: 11,
 				actionType: "passive",
 			},
 			{
 				name: "Apex Defense",
 				description:
-					"Choose a supreme adaptation: Evasion (negate aetheric saves), Redirect (return missed strikes), or Uncanny Reflexes (halve incoming force).",
+					"Choose a supreme adaptation when you gain this feature. Evasion: when an effect lets you make an AGI saving throw to take only half damage, you take no damage on a success and half damage on a failure. Redirect: when a hostile creature misses you with a melee attack, you can use your reaction to force it to repeat the attack against another creature of your choice (other than itself) that is within its reach. Uncanny Reflexes: when an attacker you can see hits you with an attack, you can use your reaction to halve the attack's damage against you. Whenever you gain a Stalker level, you can replace your adaptation with another.",
 				level: 15,
 				actionType: "passive",
 			},
@@ -3942,7 +3971,7 @@ const pathCatalog: Path[] = [
 			{
 				name: "Prey Manifest",
 				description:
-					"Mark an entity for absolute elimination: gain advantage on all strikes and detection for 1 hour. Once/short rest.",
+					"As a bonus action, mark a creature you can see within 90 feet of you for elimination. For 1 hour, you have advantage on attack rolls against it and on SENSE (Perception) and SENSE (Survival) checks to find or track it. The mark ends early if the creature dies or you use this again. Once per short rest.",
 				recharge: 1,
 				cost: "Bonus action",
 			},
@@ -3968,25 +3997,29 @@ const pathCatalog: Path[] = [
 		features: [
 			{
 				name: "Absolute Companion",
-				description: `Bond with a high-resonance entity (Predator of the Land, Sea, or Sky). It shares your initiative and acts as an extension of your own will. You gain proficiency in one skill or tool of your choice.`,
+				description:
+					"When you gain this feature, choose one of your Anomaly companions (a creature you have tamed or bonded) as your bonded companion; if you have none, you can bond with the next Anomaly you tame. It can be a creature of the land, sea, or sky. It keeps its own species stat block, scaled to your level like every companion, and you can have one bonded companion at a time. In combat it acts on your initiative, immediately after you. It moves and uses its reactions on its own, but the only action it takes is the Dodge action unless you use a bonus action to command it to take another action from its stat block, or you give up one of your attacks when you take the Attack action to have it make one attack. If it died within the last hour, you can touch it as an action and expend a spell slot of 1st level or higher: it returns to life after 1 minute with all its hit points restored. If it is lost for good, you can bond with another of your Anomaly companions when you finish a long rest. You gain proficiency in one skill or tool of your choice.",
 				level: 3,
 				actionType: "passive",
 			},
 			{
 				name: "Advanced Resonance",
-				description: `Your companion's natural strikes count as aetheric. It can Dash, Disengage, or Support as part of your offensive manifestations. You gain proficiency in one skill or tool of your choice.`,
+				description:
+					"When you command your bonded companion with a bonus action, it can also take the Dash, Disengage, or Help action as part of that command. Its attacks count as magical for overcoming resistance and immunity to nonmagical attacks. You gain proficiency in one skill or tool of your choice.",
 				level: 7,
 				actionType: "passive",
 			},
 			{
 				name: "Primal Fury",
-				description: `When you command your companion to strike, it unleashes two absolute attacks. You can reroll a failed ability check once per short or long rest.`,
+				description:
+					"When you command your bonded companion to take the Attack action, it can make two attacks, or use its multiattack if its stat block has one. You can reroll a failed ability check once per short or long rest.",
 				level: 11,
 				actionType: "passive",
 			},
 			{
 				name: "Shared Resonance",
-				description: `When you manifest a personal adaptation, your companion also benefits from the Absolute's blessing. You can reroll a failed ability check once per short or long rest.`,
+				description:
+					"When you cast a spell that targets only you, you can have it also affect your bonded companion if the companion is within 30 feet of you. You can reroll a failed ability check once per short or long rest.",
 				level: 15,
 				actionType: "passive",
 			},
@@ -3995,7 +4028,7 @@ const pathCatalog: Path[] = [
 			{
 				name: "Coordinated Strike",
 				description:
-					"You and your companion both strike the same target with absolute precision. If both hit, the target is stunned. Once/short rest.",
+					"As an action, you make one weapon attack and your bonded companion makes one attack against the same creature, if the companion is within reach of it. If both attacks hit, the target must succeed on a VIT saving throw against your Job save DC or be stunned until the end of your next turn. Once per short rest.",
 				recharge: 1,
 				cost: "Action",
 			},
@@ -4022,34 +4055,35 @@ const pathCatalog: Path[] = [
 			{
 				name: "Absolute Ambush",
 				description:
-					"First round: +SENSE to initiative, walking speed +10 ft, and one additional strike for extra damage.",
+					"You add your SENSE modifier to your initiative rolls. At the start of your first turn in each combat, your walking speed increases by 10 feet until the end of that turn, and if you take the Attack action on that turn, you can make one additional weapon attack as part of it. If that attack hits, the target takes an extra 1d8 damage of the weapon's type.",
 				level: 3,
 				actionType: "passive",
 			},
 			{
 				name: "Umbral Sight",
 				description:
-					"Mastery of darkness. While in shadow, you are invisible to all creatures that rely on aetheric or physical sight.",
+					"You gain darkvision out to 60 feet; if you already have darkvision, its range increases by 30 feet. While you are in darkness, you are invisible to any creature that relies on darkvision to see you.",
 				level: 3,
 				actionType: "passive",
 			},
 			{
 				name: "Void-Minded",
 				description:
-					"Proficiency in SENSE saves. Your vessel is hardened against mental instability.",
+					"You gain proficiency in SENSE saving throws. If you already have it, you instead gain proficiency in INT or PRE saving throws (your choice). Your vessel is hardened against mental instability.",
 				level: 7,
 				actionType: "passive",
 			},
 			{
 				name: "Ascendant's Flurry",
-				description: `If your strike misses, the Absolute realigns your path for an immediate follow-up strike. You gain proficiency in one skill or tool of your choice.`,
+				description:
+					"Once on each of your turns when you miss with a weapon attack, you can make another weapon attack as part of the same action. You gain proficiency in one skill or tool of your choice.",
 				level: 11,
 				actionType: "passive",
 			},
 			{
 				name: "Umbral Reflex",
 				description:
-					"Reaction when targeted: impose disadvantage via a momentary lapse into the void.",
+					"When a creature makes an attack roll against you without advantage, you can use your reaction to impose disadvantage on that roll. You must decide before you know whether the attack hits.",
 				level: 15,
 				actionType: "passive",
 			},
@@ -4058,7 +4092,7 @@ const pathCatalog: Path[] = [
 			{
 				name: "Shadow Strike",
 				description:
-					"Become invisible for 1 round. Your next strike deals extra 2d8 damage and terrifies the recipient. Once/short rest.",
+					"As a bonus action, you become invisible until the start of your next turn or until you make an attack or cast a spell. The next time you hit a creature with a weapon attack before the end of your next turn, it takes an extra 2d8 damage of the weapon's type and must succeed on a PRE saving throw against your Job save DC or be frightened of you until the end of its next turn. Once per short rest.",
 				recharge: 1,
 				cost: "Bonus action",
 			},
@@ -4092,28 +4126,28 @@ const pathCatalog: Path[] = [
 			{
 				name: "Aetheric Striker",
 				description:
-					"Bonus action: your strikes deal extra force damage as you channel the Absolute's primal energy.",
+					"As a bonus action, choose one creature you can see within 30 feet of you. The next time you hit it with a weapon attack this turn, all the attack's damage becomes force damage and it takes an extra 1d8 force damage (2d8 from 11th level).",
 				level: 3,
 				actionType: "passive",
 			},
 			{
 				name: "Ethereal Step",
 				description:
-					"Bonus action: step into the aetheric reflection for 1 round. Move through objects and entities. Once/short rest.",
+					"As a bonus action, you step into the aetheric reflection until the end of your turn. Until then, you can move through creatures and objects as if they were difficult terrain. If you end your turn inside a creature or an object, you are shunted to the nearest unoccupied space and take 1d10 force damage for every 5 feet you are moved. Once per short rest.",
 				level: 7,
 				actionType: "passive",
 			},
 			{
 				name: "Distant Strike",
 				description:
-					"When you strike, teleport 10 ft before each manifestation. If you strike multiple foes, gain one additional strike.",
+					"When you take the Attack action, you can teleport up to 10 feet to an unoccupied space you can see before each attack. If you attack at least two different creatures with the action, you can make one more attack with it against a third creature.",
 				level: 11,
 				actionType: "passive",
 			},
 			{
 				name: "Absolute Defense (Rift)",
 				description:
-					"Reaction when targeted: gain resistance to the incoming force as you partially transition between planes.",
+					"When you take damage from an attack, you can use your reaction to give yourself resistance to all of that attack's damage this turn as you partially transition between planes.",
 				level: 15,
 				actionType: "passive",
 			},
@@ -4122,7 +4156,7 @@ const pathCatalog: Path[] = [
 			{
 				name: "Planar Collapse",
 				description:
-					"Open a 20-ft radius collapse: entities are banished to another plane and take 4d10 force damage. Once/long rest.",
+					"As an action, choose a point you can see within 60 feet of you. Each creature of your choice in a 20-foot-radius sphere centered there makes a PRE saving throw against your Job save DC. On a failure, a creature takes 4d10 force damage and is banished to a harmless pocket plane until the end of your next turn, when it returns to the space it left or the nearest unoccupied space. On a success, it takes half as much damage and isn't banished. Once per long rest.",
 				recharge: 3,
 				cost: "Action",
 			},
@@ -4148,35 +4182,36 @@ const pathCatalog: Path[] = [
 		features: [
 			{
 				name: "Absolute Sense",
-				description: `Action: learn an entity's resistances, vulnerabilities, and immunities. SENSE uses/long rest. Your movement speed increases by 5 feet.`,
+				description:
+					"As an action, choose one creature you can see within 60 feet of you. You learn whether it has any damage immunities, resistances, or vulnerabilities, and what they are. A creature hidden from divination magic reads as having none. You can use this a number of times equal to your SENSE modifier (minimum once) per long rest. Your movement speed increases by 5 feet.",
 				level: 3,
 				actionType: "passive",
 			},
 			{
 				name: "Slayer's Focus",
 				description:
-					"Bonus action: designate a target. Your first strike each turn deals additional damage until it falls.",
+					"As a bonus action, designate one creature you can see within 60 feet of you as your quarry. The first time on each of your turns that you hit your quarry with a weapon attack, it takes an extra 1d6 damage of the weapon's type. The designation lasts until you finish a short or long rest, the quarry dies, or you designate another creature.",
 				level: 3,
 				actionType: "passive",
 			},
 			{
 				name: "Supernatural Adaptation",
 				description:
-					"When your target forces a save, add 1d6 to your result via aetheric prediction.",
+					"Whenever your quarry forces you to make a saving throw, or you make an ability check to escape its grapple, add 1d6 to the roll.",
 				level: 7,
 				actionType: "passive",
 			},
 			{
 				name: "Entity's Nemesis",
 				description:
-					"Reaction when an entity manifests power or teleports: SENSE save or the effect is negated. Once/short rest.",
+					"When you see a creature within 60 feet of you cast a spell, use a power, or teleport, you can use your reaction to force it to make a SENSE saving throw against your Job save DC. On a failure, the spell, power, or teleport fails and is wasted. Once per short rest.",
 				level: 11,
 				actionType: "passive",
 			},
 			{
 				name: "Slayer's Counter",
 				description:
-					"Reaction when your target forces a save: make an immediate strike. If successful, you auto-succeed on the save.",
+					"When your quarry forces you to make a saving throw, you can use your reaction to make one weapon attack against it, immediately before you make the save. If the attack hits, your save automatically succeeds, in addition to the attack's normal effects.",
 				level: 15,
 				actionType: "passive",
 			},
@@ -4185,7 +4220,7 @@ const pathCatalog: Path[] = [
 			{
 				name: "Exploit Vulnerability",
 				description:
-					"After sensing a target, your strikes ignore all resistances and treat immunities as resistance for 1 min. Once/long rest.",
+					"When you hit a creature you have studied with Absolute Sense since your last long rest, you can activate this (no action required): for 1 minute, your weapon attacks against that creature ignore its damage resistances, and its damage immunities count as resistances against them. Once per long rest.",
 				cost: "Free",
 				actionType: "bonus action",
 				uses: { formula: "1", recharge: "long-rest" },
@@ -4214,34 +4249,44 @@ const pathCatalog: Path[] = [
 			{
 				name: "Gathered Hive",
 				description:
-					"Once per turn on a strike: your hive deals extra damage, pushes the target, or realigns your own position.",
+					"A swarm of intangible aetheric motes surrounds you. Once on each of your turns when you hit a creature with an attack, you can choose one: the target takes an extra 1d6 piercing damage; the target must succeed on a STR saving throw against your Job save DC or be moved up to 15 feet horizontally in a direction of your choice; or you are moved 5 feet horizontally in a direction of your choice.",
 				level: 3,
 				actionType: "passive",
 			},
 			{
 				name: "Hive Manifestations",
-				description: `Learn bonus absolute mandates: Aetheric Glow, Web, Gaseous Form, Aetheric Eye, and Hive Plague. Your movement speed increases by 5 feet.`,
+				description:
+					"You learn these spells at the Stalker levels shown. They count as Stalker spells for you but don't count against your spells known: 3rd, Signal Flare; 5th, Rift Snare; 9th, Phase Strike; 13th, Pack Ambush; 17th, Predator's Web. Your movement speed increases by 5 feet.",
+				grants: {
+					spells: [
+						{ name: "Signal Flare", level: 3 },
+						{ name: "Rift Snare", level: 5 },
+						{ name: "Phase Strike", level: 9 },
+						{ name: "Pack Ambush", level: 13 },
+						{ name: "Predator's Web", level: 17 },
+					],
+				},
 				level: 3,
 				actionType: "passive",
 			},
 			{
 				name: "Writhing Tide",
 				description:
-					"Bonus action: the hive lifts you, granting an aetheric fly speed (hover) for 1 min.",
+					"As a bonus action, your hive lifts you: for 1 minute, you have a flying speed of 10 feet and can hover. You can use this a number of times equal to your proficiency bonus per long rest.",
 				level: 7,
 				actionType: "passive",
 			},
 			{
 				name: "Apex Hive",
 				description:
-					"Your gathered hive damage is normalized to its maximum efficiency. Pushed targets are knocked prone.",
+					"Gathered Hive's extra damage increases to 1d8. When it moves a creature, you can also knock that creature prone if it is Large or smaller.",
 				level: 11,
 				actionType: "passive",
 			},
 			{
 				name: "Hive Dispersal",
 				description:
-					"Reaction when targeted: dissolve into the hive, granting resistance and teleporting to a safe reflection. Once/long rest.",
+					"When you take damage, you can use your reaction to dissolve into the hive: you have resistance to that damage, and you teleport up to 30 feet to an unoccupied space you can see. Once per long rest.",
 				level: 15,
 				actionType: "passive",
 			},
@@ -4250,7 +4295,7 @@ const pathCatalog: Path[] = [
 			{
 				name: "Hive Eruption",
 				description:
-					"Release the hive: all nearby entities take piercing damage and are blinded by absolute static. Once/short rest.",
+					"As an action, release the hive. Each creature of your choice within 15 feet of you makes an AGI saving throw against your Job save DC. On a failure, it takes 3d8 piercing damage and is blinded until the end of your next turn; on a success, it takes half as much damage and isn't blinded. Once per short rest.",
 				recharge: 1,
 				cost: "Action",
 			},
@@ -4662,40 +4707,63 @@ const pathCatalog: Path[] = [
 		features: [
 			{
 				name: "Aetheric Tool Mastery",
-				description: "Absolute proficiency with chemical supplies.",
+				description:
+					"You gain proficiency with alchemist's supplies. If you already have it, you gain proficiency with one other type of artisan's tools of your choice.",
 				level: 3,
 				actionType: "passive",
 			},
 			{
 				name: "Architect's Mandates",
-				description: `A list of always-available absolute mandates for restoration and entropy. You gain advantage on Constitution saving throws to maintain concentration on a spell.`,
+				description:
+					"You always have these spells prepared from the Technomancer levels shown, and they don't count against your prepared spells: 3rd, Healing Resonance and Caustic Transmute; 5th, Corrosive Aura and Triple Ignition; 9th, Revenant's Embrace and Quarantine Membrane; 13th, Rust Wave and Mana Circuit Splice; 17th, Restoration Chorus and Raise Rift Dead. You gain advantage on Constitution saving throws to maintain concentration on a spell.",
+				grants: {
+					spells: [
+						{ name: "Healing Resonance", level: 3 },
+						{ name: "Caustic Transmute", level: 3 },
+						{ name: "Corrosive Aura", level: 5 },
+						{ name: "Triple Ignition", level: 5 },
+						{ name: "Revenant's Embrace", level: 9 },
+						{ name: "Quarantine Membrane", level: 9 },
+						{ name: "Rust Wave", level: 13 },
+						{ name: "Mana Circuit Splice", level: 13 },
+						{ name: "Restoration Chorus", level: 17 },
+						{ name: "Raise Rift Dead", level: 17 },
+					],
+				},
 				level: 3,
 				actionType: "passive",
 			},
 			{
 				name: "Aetheric Infusion",
 				description:
-					"Synthesize one free aetheric infusion after each rest. Choose from: Restoration, Speed, Resilience, Boldness, Flight, or Transformation.",
+					"When you finish a long rest, you synthesize aetheric infusions: one, two at 9th level, or three at 15th level. Each is a flask that lasts until it is drunk or until you finish your next long rest; track them as this feature's uses. You can also expend a spell slot of 1st level or higher to synthesize one more (regain one use). As an action, a creature can drink an infusion or give it to an incapacitated creature; whoever administers it chooses one effect. Restoration: the drinker regains 2d4 + your INT modifier hit points. Speed: its walking speed increases by 10 feet for 1 hour. Resilience: it gains a +1 bonus to AC for 10 minutes. Boldness: for 1 minute, it can roll a d4 and add the number to every attack roll and saving throw it makes. Flight: it gains a flying speed of 10 feet for 10 minutes. Transformation: for 10 minutes, it can change its appearance as an action, keeping its size, shape, and statistics.",
+				uses: { formula: "(level + 3) / 6", recharge: "long-rest" },
+				tracking: "uses",
 				level: 3,
 				actionType: "passive",
 			},
 			{
 				name: "Alchemical Savant",
-				description: `When you use your supplies as an absolute focus, enhance the efficiency of all restorative and destructive manifestations. You gain resistance to force damage.`,
+				description:
+					"When you cast a spell using alchemist's supplies as your spellcasting focus, add your INT modifier (minimum +1) to one roll of the spell that restores hit points or deals acid, fire, necrotic, or poison damage. You gain resistance to force damage.",
 				level: 5,
 				actionType: "passive",
 			},
 			{
 				name: "Restorative Synthesis",
 				description:
-					"All infusions now grant temporary resonance. Manifest restorative mandates at will.",
+					"A creature that drinks one of your infusions also gains temporary hit points equal to 2d6 + your INT modifier (minimum 1). In addition, you can cast Healing Resonance without expending a spell slot a number of times equal to your INT modifier per long rest; track them as this feature's uses.",
+				uses: { formula: "INT mod", recharge: "long-rest" },
+				tracking: "uses",
 				level: 9,
 				actionType: "passive",
 			},
 			{
 				name: "Absolute Synthesis Mastery",
 				description:
-					"Absolute immunity to entropic chemicals. Manifest supreme restoration and greater stabilization once per long rest.",
+					"You have resistance to acid and poison damage and immunity to the poisoned condition. Once per long rest, you can cast Restoration Chorus without expending a spell slot or using material components.",
+				uses: { formula: "1", recharge: "long-rest" },
+				tracking: "uses",
 				level: 15,
 				actionType: "passive",
 			},
@@ -4704,7 +4772,7 @@ const pathCatalog: Path[] = [
 			{
 				name: "Volatile Burst",
 				description:
-					"Synthesize a massive entropic burst: 20-ft radius, dealing acid and fire damage. Once/long rest.",
+					"As an action, hurl a volatile flask at a point you can see within 60 feet of you. Each creature in a 20-foot radius around that point makes an AGI saving throw against your Job save DC, taking 2d8 acid damage and 2d8 fire damage on a failure, or half as much on a success. Once per long rest.",
 				recharge: 3,
 				cost: "Action",
 			},
@@ -4730,21 +4798,35 @@ const pathCatalog: Path[] = [
 		features: [
 			{
 				name: "Vessel Architect Mastery",
-				description:
-					"Absolute proficiency with heavy armaments and smith's tools.",
+				description: "You gain proficiency with heavy armor and smith's tools.",
 				level: 3,
 				actionType: "passive",
 			},
 			{
 				name: "Vessel Mandates",
-				description: `A list of always-available absolute mandates for offensive and defensive power. You learn one cantrip of your choice from the wizard spell list. Intelligence is your spellcasting ability for it.`,
+				description:
+					"You always have these spells prepared from the Technomancer levels shown, and they don't count against your prepared spells: 3rd, Mana Missile Array and Thunder Crack; 5th, Kinetic Burst and Circuit Overload; 9th, Harmonic Barrage and Mana Overcharge; 13th, Phantom Swarm and Resonance Cascade; 17th, Sonic Annihilation and Mass Circuit Boost. You learn one Technomancer cantrip of your choice.",
+				grants: {
+					spells: [
+						{ name: "Mana Missile Array", level: 3 },
+						{ name: "Thunder Crack", level: 3 },
+						{ name: "Kinetic Burst", level: 5 },
+						{ name: "Circuit Overload", level: 5 },
+						{ name: "Harmonic Barrage", level: 9 },
+						{ name: "Mana Overcharge", level: 9 },
+						{ name: "Phantom Swarm", level: 13 },
+						{ name: "Resonance Cascade", level: 13 },
+						{ name: "Sonic Annihilation", level: 17 },
+						{ name: "Mass Circuit Boost", level: 17 },
+					],
+				},
 				level: 3,
 				actionType: "passive",
 			},
 			{
 				name: "Aether-Frame Integration",
 				description:
-					"Transform a suit of armor into an Absolute Aether-Frame. Choose model: Arbiter (thunder-resonant melee) or Outrider (lightning-resonant ranged).",
+					"As an action, you turn a suit of armor you are wearing into your Aether-Frame. While you wear it, it covers your whole body, it can't be removed against your will, you can use it as a spellcasting focus, you ignore its Strength requirement, and you can don or doff it as an action. Choose its model when you gain this feature; when you finish a long rest, you can switch to the other. Arbiter: each gauntlet is a simple melee weapon with which you are proficient, dealing 1d8 thunder damage on a hit, and a creature you hit has disadvantage on attack rolls against targets other than you until the start of your next turn. Outrider: a lightning launcher in the frame is a simple ranged weapon with which you are proficient (range 90/300 ft.), dealing 1d6 lightning damage on a hit; once on each of your turns when you hit with it, the target takes an extra 1d6 lightning damage. Your walking speed also increases by 5 feet.",
 				level: 3,
 				actionType: "passive",
 			},
@@ -4756,14 +4838,15 @@ const pathCatalog: Path[] = [
 			},
 			{
 				name: "Aetheric Conduits",
-				description: `Your vessel counts as four separate aetheric conduits, each capable of holding its own mandate manifestation. When you cast a spell of 1st level or higher, you can teleport up to 10 feet to an unoccupied space you can see.`,
+				description:
+					"Your Aether-Frame counts as four separate items for your Absolute Infusion: the chest piece, the boots, the helmet, and the frame's weapon. Each can bear one infusion, and your limit of infused items increases by 2, but the extra items must be parts of your Aether-Frame. When you cast a spell of 1st level or higher, you can teleport up to 10 feet to an unoccupied space you can see.",
 				level: 9,
 				actionType: "passive",
 			},
 			{
 				name: "Perfected Aether-Frame",
 				description:
-					"Arbiter: reaction to pull entities toward you and strike. Outrider: strikes deal extra lightning damage and reveal all nearby aetheric hidden entities.",
+					"Your model improves. Arbiter: when a Huge or smaller creature you can see ends its turn within 30 feet of you, you can use your reaction to force it to make a STR saving throw against your Job save DC. On a failure, it is pulled up to 25 feet toward you, and if it ends within 5 feet of you, you can make one melee attack against it as part of the reaction. You can do this a number of times equal to your proficiency bonus per long rest. Outrider: a creature that takes lightning damage from your launcher glimmers until the start of your next turn. It sheds dim light in a 5-foot radius, and the next attack roll against it by a creature other than you has advantage; if that attack hits, the target takes an extra 1d6 lightning damage.",
 				level: 15,
 				actionType: "passive",
 			},
@@ -4772,7 +4855,7 @@ const pathCatalog: Path[] = [
 			{
 				name: "Pulse Overdrive",
 				description:
-					"Bonus action: overcharge your aether-frame for 1 min, dealing massive thunder or lightning resonance. Once/long rest.",
+					"As a bonus action, overcharge your Aether-Frame for 1 minute. Once on each of your turns during that time, when you hit a creature with your model's weapon, it takes an extra 2d6 damage: thunder for the Arbiter or lightning for the Outrider. Once per long rest.",
 				recharge: 3,
 				cost: "Bonus action",
 			},
@@ -4799,37 +4882,56 @@ const pathCatalog: Path[] = [
 			{
 				name: "Siege Architect Mastery",
 				description:
-					"Absolute proficiency with woodcarving tools and aetheric resonance.",
+					"You gain proficiency with woodcarver's tools. If you already have it, you gain proficiency with one other type of artisan's tools of your choice.",
 				level: 3,
 				actionType: "passive",
 			},
 			{
 				name: "Siege Mandates",
-				description: `A list of always-available absolute mandates for destructive and protective resonances. Your movement speed increases by 5 feet.`,
+				description:
+					"You always have these spells prepared from the Technomancer levels shown, and they don't count against your prepared spells: 3rd, Shield Lattice and Mana Pulse Grenade; 5th, Triple Ignition and Mana Tripwire Network; 9th, Mana Barrage and Rift Anchor; 13th, Mana Cannon and Rift Ward; 17th, Mana Feedback Bomb and Psionic Bastion. Your movement speed increases by 5 feet.",
+				grants: {
+					spells: [
+						{ name: "Shield Lattice", level: 3 },
+						{ name: "Mana Pulse Grenade", level: 3 },
+						{ name: "Triple Ignition", level: 5 },
+						{ name: "Mana Tripwire Network", level: 5 },
+						{ name: "Mana Barrage", level: 9 },
+						{ name: "Rift Anchor", level: 9 },
+						{ name: "Mana Cannon", level: 13 },
+						{ name: "Rift Ward", level: 13 },
+						{ name: "Mana Feedback Bomb", level: 17 },
+						{ name: "Psionic Bastion", level: 17 },
+					],
+				},
 				level: 3,
 				actionType: "passive",
 			},
 			{
 				name: "Aetheric Resonator",
-				description: `Action: manifest a Tiny aetheric resonator. Choose type: Incinerator (fire cone), Ballista (force strike), or Bulwark (restorative field). You gain advantage on Constitution saving throws to maintain concentration on a spell.`,
+				description:
+					"As an action, use woodcarver's or smith's tools to create a Small or Tiny aetheric resonator in an unoccupied space on a horizontal surface within 5 feet of you. You can create one this way once per long rest (twice from 15th level), and you can expend a spell slot of 1st level or higher to create one more. You can have one resonator at a time (two from 15th level) and can't create one while you have that many. Track each resonator as a custom companion on your sheet. Aetheric Resonator: magical object. AC 18. Hit points equal to five times your Technomancer level. Immunity to poison and psychic damage; every ability score counts as 10 (+0) for checks and saves. It has no Hit Dice, doesn't rest, and regains no hit points. It lasts for 1 hour, until it drops to 0 hit points, or until you dismiss it as an action. When you create it, choose its type. Incinerator: each creature in a 15-foot cone from the resonator makes an AGI saving throw against your Job save DC, taking 2d8 fire damage on a failure or half as much on a success, and unattended flammable objects in the cone ignite. Ballista: make a ranged spell attack from the resonator against one creature or object within 120 feet of it; on a hit, the target takes 2d8 force damage and a creature is pushed up to 5 feet away from the resonator. Bulwark: the resonator and each creature of your choice within 10 feet of it gain temporary hit points equal to 1d8 + your INT modifier (minimum 1). As a bonus action, if you are within 60 feet of a resonator, you can activate it: it moves up to 15 feet and then takes its type's action. You gain advantage on Constitution saving throws to maintain concentration on a spell.",
 				level: 3,
 				actionType: "passive",
 			},
 			{
 				name: "Absolute Resonance Alignment",
-				description: `Enhance the efficiency of all manifestations through an absolute aetheric focus. You gain proficiency in one skill or tool of your choice.`,
+				description:
+					"When you finish a long rest, you can use woodcarver's tools to carve resonance sigils into a wand, staff, or rod, making it your aetheric focus until you carve another. When you cast a Technomancer spell through it, roll a d8 and add the number to one of the spell's damage rolls. You gain proficiency in one skill or tool of your choice.",
 				level: 5,
 				actionType: "passive",
 			},
 			{
 				name: "Aetheric Detonation",
-				description: `Increase resonator efficiency and trigger a self-destructive burst for massive force resonance output. When you cast a spell of 1st level or higher, you can teleport up to 10 feet to an unoccupied space you can see.`,
+				description:
+					"Your resonators' damage rolls and temporary hit points increase by 1d8. As an action, you can detonate a resonator within 60 feet of you: it is destroyed, and each creature within 20 feet of it makes an AGI saving throw against your Job save DC, taking 3d8 force damage on a failure or half as much on a success. When you cast a spell of 1st level or higher, you can teleport up to 10 feet to an unoccupied space you can see.",
 				level: 9,
 				actionType: "passive",
 			},
 			{
 				name: "Siege Specialist",
-				description: `Manifest two resonators simultaneously and grant protection to all nearby allies. You can reroll a failed ability check once per short or long rest.`,
+				description:
+					"You can have two resonators at once, and one bonus action activates both. You and your allies have half cover while within 10 feet of one of your resonators. You can reroll a failed ability check once per short or long rest.",
 				level: 15,
 				actionType: "passive",
 			},
@@ -4837,7 +4939,8 @@ const pathCatalog: Path[] = [
 		abilities: [
 			{
 				name: "Absolute Salvo",
-				description: `All resonators manifest their power simultaneously at maximum efficiency. Once/short rest. Your movement speed increases by 5 feet.`,
+				description:
+					"As a bonus action, each of your resonators within 60 feet of you takes its type's action at once, and every damage or temporary hit point die it rolls for that action uses its maximum value. Once per short rest. Your movement speed increases by 5 feet.",
 				recharge: 1,
 				cost: "Bonus action",
 			},
@@ -4864,20 +4967,35 @@ const pathCatalog: Path[] = [
 			{
 				name: "Binary Architect Mastery",
 				description:
-					"Absolute proficiency with smith's tools and neural resonance.",
+					"You gain proficiency with smith's tools. If you already have it, you gain proficiency with one other type of artisan's tools of your choice.",
 				level: 3,
 				actionType: "passive",
 			},
 			{
 				name: "Synchronist Mandates",
-				description: `A list of always-available absolute mandates for partnership and coordination. You gain proficiency in one skill or tool of your choice.`,
+				description:
+					"You always have these spells prepared from the Technomancer levels shown, and they don't count against your prepared spells: 3rd, Aegis of the Absolute and Shield Lattice; 5th, Oath Tether and Battlefield Harmony; 9th, Sympathetic Circuit and Circuit Overclock; 13th, Oath Aura and Mana Circuit Splice; 17th, Mass Circuit Boost and Restoration Chorus. You gain proficiency in one skill or tool of your choice.",
+				grants: {
+					spells: [
+						{ name: "Aegis of the Absolute", level: 3 },
+						{ name: "Shield Lattice", level: 3 },
+						{ name: "Oath Tether", level: 5 },
+						{ name: "Battlefield Harmony", level: 5 },
+						{ name: "Sympathetic Circuit", level: 9 },
+						{ name: "Circuit Overclock", level: 9 },
+						{ name: "Oath Aura", level: 13 },
+						{ name: "Mana Circuit Splice", level: 13 },
+						{ name: "Mass Circuit Boost", level: 17 },
+						{ name: "Restoration Chorus", level: 17 },
+					],
+				},
 				level: 3,
 				actionType: "passive",
 			},
 			{
 				name: "Absolute Defender",
 				description:
-					"Manifest a primary construct defender that obeys your every directive. Gain absolute resonance-combat proficiency using your intelligence mod.",
+					"You gain proficiency with martial weapons, and when you attack with a magic weapon, you can use your INT modifier instead of STR or AGI for its attack and damage rolls. You also build an Absolute Defender. When you finish a long rest, you can manifest it in an unoccupied space within 5 feet of you; a newly manifested defender replaces the old one. Track it as a custom companion on your sheet. Absolute Defender: Medium construct. AC 15. Hit points equal to 2 + your INT modifier + five times your Technomancer level. Speed 40 ft. STR 14, AGI 12, VIT 14, INT 4, SENSE 10, PRE 6. It adds your proficiency bonus (PB) to AGI and VIT saving throws and to Athletics checks, adds twice your PB to Perception checks, and can't be surprised. It has immunity to poison damage, exhaustion, and the charmed and poisoned conditions, and it understands the languages you speak. Force-Empowered Rend: melee attack using your spell attack modifier, reach 5 ft., one target you can see; hit: 1d8 + PB force damage. Repair (3 per long rest): it restores 2d8 + PB hit points to itself or to one construct or object within 5 feet of it. Deflect Attack (reaction): it imposes disadvantage on an attack roll a creature it can see makes against a creature other than the defender within 5 feet of it. In combat, it acts on your initiative, immediately after you. It can move and use its reaction on its own, but it takes the Dodge action unless you use a bonus action to command it to take one of its actions or the Dash, Disengage, Help, Hide, or Search action; if you are incapacitated, it chooses its own actions. It has no Hit Dice and doesn't rest; it regains hit points only from Repair and your features. If it died within the last hour, you can use smith's tools as an action within 5 feet of it and expend a spell slot of 1st level or higher: it returns to life after 1 minute with all its hit points restored. It deactivates if you manifest a new defender or die.",
 				level: 3,
 				actionType: "passive",
 			},
@@ -4889,13 +5007,15 @@ const pathCatalog: Path[] = [
 			},
 			{
 				name: "Aetheric Feedback",
-				description: `Channel extra force or restorative output through your strikes or your defender's manifestations. Once/short rest. You gain resistance to force damage.`,
+				description:
+					"Once per short rest, when you hit a target with a magic weapon attack or your defender hits with its Force-Empowered Rend, you can channel aetheric feedback through the strike: the target takes an extra 2d6 force damage, or one creature or object you can see within 30 feet of the target regains 2d6 hit points. You gain resistance to force damage.",
 				level: 9,
 				actionType: "passive",
 			},
 			{
 				name: "Supreme Binary Command",
-				description: `Your defender's feedback deals extra force to aggressors, and your synchronization output is doubled. You have advantage on initiative rolls.`,
+				description:
+					"Your Aetheric Feedback's extra damage and healing increase to 4d6, and your defender gains a +2 bonus to AC. Whenever your defender uses Deflect Attack, the attacker takes force damage equal to 1d4 + your INT modifier. You have advantage on initiative rolls.",
 				level: 15,
 				actionType: "passive",
 			},
@@ -4904,7 +5024,7 @@ const pathCatalog: Path[] = [
 			{
 				name: "Absolute Overdrive",
 				description:
-					"Your defender gains absolute speed and power for 1 min. Once/long rest.",
+					"As a bonus action, overdrive your defender for 1 minute: its speed doubles, it has advantage on attack rolls, and its Force-Empowered Rend deals an extra 1d8 force damage. Once per long rest.",
 				cost: "Bonus action",
 				actionType: "bonus action",
 				uses: { formula: "1", recharge: "long-rest" },
@@ -4933,32 +5053,35 @@ const pathCatalog: Path[] = [
 			{
 				name: "Swarm Architect Mastery",
 				description:
-					"Absolute proficiency with artisan's tools and micro-conduits.",
+					"You gain proficiency with tinker's tools. If you already have it, you gain proficiency with one other type of artisan's tools of your choice.",
 				level: 3,
 				actionType: "passive",
 			},
 			{
 				name: "Absolute Swarm",
-				description: `Manifest a network of micro-conduits that share your sight and hearing. Command the swarm as an extension of your own absolute will. You gain a +1 bonus to all saving throws.`,
+				description:
+					"When you finish a long rest, you can deploy your conduit swarm, a cloud of micro-conduits that counts as one Tiny construct, in a space within 5 feet of you. You can have one swarm at a time (two from 15th level); deploying another beyond that limit collapses your oldest one. Track each swarm as a custom companion on your sheet. Conduit Swarm: Tiny construct (swarm). AC 12 + your proficiency bonus (PB). Hit points equal to three times your Technomancer level. Speed 0 ft., fly 30 ft. (hover). STR 2, AGI 16, VIT 10, INT 10, SENSE 12, PRE 2. It can occupy another creature's space and move through any opening at least 1 inch wide. It has immunity to poison and psychic damage and to the charmed, frightened, paralyzed, petrified, poisoned, prone, restrained, and stunned conditions. It can't attack or manipulate objects. In combat, it acts on your initiative, immediately after you. It can move on its own, but it takes the Dodge action unless you use a bonus action to command it to take the Help or Search action. As a bonus action, you can see and hear through the swarm until the start of your next turn; you are blind and deaf to your own surroundings while you do. The swarm collapses if it drops to 0 hit points, if it ends a turn more than 120 feet from you, or when you dismiss it (no action required). It has no Hit Dice and doesn't rest; if it collapses, you can redeploy it as an action by expending a spell slot of 1st level or higher, or when you finish a long rest. You gain a +1 bonus to all saving throws.",
 				level: 3,
 				actionType: "passive",
 			},
 			{
 				name: "Tactical Manifestation",
-				description: `Channel mandates through your swarm conduits and use them to support allies with absolute precision. You have advantage on initiative rolls.`,
+				description:
+					"When you cast a Technomancer spell with a range other than self, you can cast it as if you were in your swarm's space, using your own spell attack modifier and save DC; the swarm must be within 120 feet of you. You have advantage on initiative rolls.",
 				level: 5,
 				actionType: "passive",
 			},
 			{
 				name: "Aetheric Surveillance Web",
 				description:
-					"Your swarm forms a permanent surveillance web, granting advantage on all analytical manifestations and preventing surprise.",
+					"While at least one of your swarms is deployed, you and your allies within 30 feet of you can't be surprised, and you have advantage on INT (Investigation) and SENSE (Perception) checks you make while you see and hear through a swarm.",
 				level: 9,
 				actionType: "passive",
 			},
 			{
 				name: "Supreme Swarm Command",
-				description: `Your conduits are hardened against destruction and can manifest complex physical interactions. Command multiple swarms simultaneously. Your movement speed increases by 5 feet.`,
+				description:
+					"You can have two swarms deployed at once, and one bonus action commands both. Each swarm's hit points equal five times your Technomancer level, and a swarm can now manipulate objects: it can open an unlocked door or container, carry an object weighing up to 10 pounds, and take the Use an Object action when you command it. Your movement speed increases by 5 feet.",
 				level: 15,
 				actionType: "passive",
 			},
@@ -4966,7 +5089,8 @@ const pathCatalog: Path[] = [
 		abilities: [
 			{
 				name: "Absolute Convergence",
-				description: `All swarm conduits converge for a massive force discharge. Once/short rest. You gain proficiency in one skill or tool of your choice.`,
+				description:
+					"As an action, each of your swarms within 120 feet of you converges on a point within 30 feet of it and discharges. Each creature within 10 feet of a point makes an AGI saving throw against your Job save DC, taking 4d8 force damage on a failure or half as much on a success; a creature in more than one area is affected only once. Once per short rest. You gain proficiency in one skill or tool of your choice.",
 				cost: "Action",
 				actionType: "action",
 				uses: { formula: "1", recharge: "short-rest" },
@@ -4995,34 +5119,35 @@ const pathCatalog: Path[] = [
 			{
 				name: "Breacher Architect Mastery",
 				description:
-					"Absolute proficiency with infiltration supplies and resonance analysis.",
+					"You gain proficiency with thieves' tools and in the Investigation skill. If you already have the skill, you gain proficiency in another INT skill of your choice.",
 				level: 3,
 				actionType: "passive",
 			},
 			{
 				name: "Absolute Suppression",
-				description: `Action: target an entity's internal resonance to suppress its resistances or immunities for 1 min. You gain resistance to force damage.`,
+				description:
+					"As an action, choose a creature you can see within 60 feet of you. It must succeed on an INT saving throw against your Job save DC or, for 1 minute, lose its damage resistances, and its damage immunities count as resistances. It repeats the save at the end of each of its turns, ending the effect on a success. You can use this a number of times equal to your proficiency bonus per long rest. You gain resistance to force damage.",
 				level: 3,
 				actionType: "passive",
 			},
 			{
 				name: "Mandate Realignment",
 				description:
-					"Reaction: when an ally fails to resist a manifestation, force a total realignment of the local fate-variable. Once/short rest.",
+					"When a creature you can see within 30 feet of you fails a saving throw against a spell, power, or other magical effect, you can use your reaction to let it reroll the save; it must use the new roll. Once per short rest.",
 				level: 5,
 				actionType: "passive",
 			},
 			{
 				name: "Exploit Resonance Instability",
 				description:
-					"When you suppress an entity, choose an additional effect: disadvantage, halved speed, or total aetheric vulnerability.",
+					"When a creature fails its save against your Absolute Suppression, choose one more effect that lasts as long as the suppression: it has disadvantage on attack rolls, its speed is halved, or it has vulnerability to force damage.",
 				level: 9,
 				actionType: "passive",
 			},
 			{
 				name: "Resonance Collapse",
 				description:
-					"Completely suppress a target's ability to manifest for 1 round. Once/long rest.",
+					"As an action, choose a creature you can see within 60 feet of you. It must succeed on an INT saving throw against your Job save DC or be unable to cast spells, use powers, or activate magic items until the end of your next turn. Once per long rest.",
 				level: 15,
 				actionType: "passive",
 			},
@@ -5031,7 +5156,7 @@ const pathCatalog: Path[] = [
 			{
 				name: "Absolute Lockdown",
 				description:
-					"Target entity's internal resonance is completely frozen for 1 round. Once/long rest.",
+					"As an action, choose a creature you can see within 60 feet of you. It must succeed on a VIT saving throw against your Job save DC or be incapacitated, with its speed reduced to 0, until the end of your next turn. Once per long rest.",
 				cost: "Action",
 				actionType: "action",
 				uses: { formula: "1", recharge: "long-rest" },
@@ -5059,7 +5184,8 @@ const pathCatalog: Path[] = [
 		features: [
 			{
 				name: "Mandated Proficiencies",
-				description: `Mastery of 3 fields (skills) of your choice. You have advantage on initiative rolls.`,
+				description:
+					"You gain proficiency in three skills of your choice. You have advantage on initiative rolls.",
 				level: 3,
 				actionType: "passive",
 			},
@@ -5072,7 +5198,8 @@ const pathCatalog: Path[] = [
 			},
 			{
 				name: "Arcane Secrets",
-				description: `Learn 2 mantras from any lineage's list. They count as Idol resonance mantras. You gain a +1 bonus to all saving throws.`,
+				description:
+					"Choose two spells from other Jobs' lists and learn them. Each counts as an Idol spell for you and doesn't count against your spells known. The choices are Mana Armor, Shield Lattice, Gravity Spike, Frost Lattice, Verdant Grasp, Necrotic Shroud, Misty Blink, Awakening Surge, Rift Snare, Triple Ignition, Mana Barrage, Revenant's Embrace, Quarantine Membrane, and Summon Rift Echo. Whenever you gain an Idol level, you can replace one of them with another from the list. You gain a +1 bonus to all saving throws.",
 				level: 6,
 				actionType: "passive",
 			},
@@ -5088,7 +5215,7 @@ const pathCatalog: Path[] = [
 			{
 				name: "Words of Absolute Truth",
 				description:
-					"Speak a devastating truth to a creature within 60 ft: SENSE save or 3d8 psychic + disadvantage on next manifestation. Once/short rest.",
+					"As an action, speak a devastating truth to a creature within 60 feet of you that can hear you. It makes a SENSE saving throw against your Job save DC. On a failure, it takes 3d8 psychic damage and has disadvantage on its next attack roll before the end of its next turn; on a success, it takes half as much damage. Once per short rest.",
 				recharge: 1,
 				cost: "Action",
 			},
@@ -5178,21 +5305,21 @@ const pathCatalog: Path[] = [
 			{
 				name: "Absolute Enthrallment",
 				description:
-					"After 1+ min performance, PRE mod creatures that watched make SENSE save or are charmed for 1 hour. Charmed entities idolize you, hinder those who oppose you, and don't know they were charmed when it ends.",
+					"If you perform for at least 1 minute, you can choose up to a number of creatures equal to your PRE modifier (minimum 1) that watched and listened to all of it. Each must succeed on a SENSE saving throw against your Job save DC or be charmed by you for 1 hour. A charmed creature idolizes you, speaks glowingly of you, and hinders anyone who opposes you, though it avoids violence unless it was already inclined to fight for you. The effect ends early if the creature takes damage, if you attack it, or if it sees you attack or damage its allies, and it doesn't know it was charmed when the effect ends.",
 				level: 3,
 				actionType: "passive",
 			},
 			{
 				name: "Mantle of the Absolute",
 				description:
-					"Bonus action: take on an appearance of unearthly beauty for 1 min (concentration). Each turn, bonus action use a Command mantra (no slot) against a creature charmed by you. Once/long rest.",
+					"As a bonus action, take on an appearance of unearthly beauty for 1 minute (concentration). When you activate it, and as a bonus action on each of your turns while it lasts, you can cast Commanding Hymn without expending a spell slot. A creature charmed by you automatically fails its save against this casting. Once per long rest.",
 				level: 6,
 				actionType: "passive",
 			},
 			{
 				name: "Unbreakable Presence",
 				description:
-					"Bonus action: for 1 min, any creature that attacks you for the first time on a turn must make a PRE save. Fail: attack is wasted (can't attack you this turn). Success: disadvantage on saves vs your mantras until end of your next turn. Once per short rest.",
+					"As a bonus action, assume an unbreakable presence for 1 minute. During that time, the first time a creature attacks you on a turn, it must make a PRE saving throw against your Job save DC. On a failure, it can't attack you this turn and must choose a new target or waste the attack; on a success, it can attack you this turn but has disadvantage on saving throws against your spells and powers until the end of your next turn. Once per short rest.",
 				level: 14,
 				actionType: "passive",
 			},
@@ -5201,7 +5328,7 @@ const pathCatalog: Path[] = [
 			{
 				name: "Absolute Charm",
 				description:
-					"All creatures within 30 ft: SENSE save or charmed by you for 1 min. Charmed creatures will follow one reasonable suggestion. Once/long rest.",
+					"As an action, each creature of your choice within 30 feet of you makes a SENSE saving throw against your Job save DC or is charmed by you for 1 minute. While charmed, a creature follows one reasonable suggestion you give it. A charmed creature repeats the save each time it takes damage, ending the effect on a success. Once per long rest.",
 				recharge: 3,
 				cost: "Action",
 			},
@@ -5235,7 +5362,7 @@ const pathCatalog: Path[] = [
 			{
 				name: "Combat Discipline",
 				description:
-					"Choose Dueling (+2 damage with one-handed melee) or Two-Weapon Fighting (add ability mod to off-hand damage).",
+					"Choose one discipline when you gain this feature. Dueling: while you wield a melee weapon in one hand and no other weapon, you gain a +2 bonus to damage rolls with it. Two-Weapon Fighting: when you fight with two weapons, you add your ability modifier to the damage of the second attack. Whenever you gain an Idol level, you can switch to the other discipline.",
 				level: 3,
 				actionType: "passive",
 			},
@@ -5297,7 +5424,7 @@ const pathCatalog: Path[] = [
 			{
 				name: "Words of Terror",
 				description:
-					"After 1+ min speaking privately to a creature, SENSE save or it is frightened of a creature of your choice for 1 hour. Doesn't know it was magically frightened. Once per short rest.",
+					"If you speak to a creature alone for at least 1 minute, you can make it attempt a SENSE saving throw against your Job save DC. On a failure, it is frightened of you or of another creature of your choice for 1 hour; the effect ends early if it is attacked or damaged, or if it sees its allies attacked or damaged. It doesn't know it was frightened by your magic. Once per short rest.",
 				level: 3,
 				actionType: "passive",
 			},
@@ -5311,7 +5438,7 @@ const pathCatalog: Path[] = [
 			{
 				name: "Absolute Shadow Lore",
 				description:
-					"Action: creature within 30 ft, SENSE save or it is charmed for 8 hours. It believes you know its deepest secret (even if you don't) and obeys your commands to avoid the secret being revealed. Once per long rest.",
+					"As an action, choose a creature within 30 feet of you that can hear you. It must succeed on a SENSE saving throw against your Job save DC or be charmed by you for 8 hours. It believes you know its deepest secret, even if you don't, and obeys your commands to keep that secret from being revealed, though it won't risk its life or fight for you. The effect ends early if you or your allies harm it. Once per long rest.",
 				level: 14,
 				actionType: "passive",
 			},
@@ -5320,7 +5447,7 @@ const pathCatalog: Path[] = [
 			{
 				name: "Psychic Overload",
 				description:
-					"60 ft: creature makes SENSE save or takes 4d8 psychic and is frightened of you for 1 min. Once/long rest.",
+					"As an action, choose a creature you can see within 60 feet of you. It makes a SENSE saving throw against your Job save DC. On a failure, it takes 4d8 psychic damage and is frightened of you for 1 minute; it repeats the save at the end of each of its turns, ending the effect on a success. On a success, it takes half as much damage and isn't frightened. Once per long rest.",
 				recharge: 3,
 				cost: "Action",
 			},
@@ -5347,7 +5474,7 @@ const pathCatalog: Path[] = [
 			{
 				name: "Mote of Potential",
 				description:
-					"When you give a Hype die, the creature also gains a mote. Strike roll: mote explodes in 5-ft radius thunder (VIT save = Hype die roll). Ability check: roll Hype die twice, use either. Save: gains temp HP = Hype die roll + PRE mod.",
+					"When you give a creature a Hype die, a mote of potential orbits it until the die is used. If it uses the die on an attack roll, each creature of its choice within 5 feet of the target makes a VIT saving throw against your Job save DC, taking thunder damage equal to the Hype die's roll on a failure. If it uses the die on an ability check, it rolls the Hype die twice and uses either roll. If it uses the die on a saving throw, it gains temporary hit points equal to the Hype die's roll + your PRE modifier.",
 				level: 3,
 				actionType: "passive",
 			},
@@ -5361,7 +5488,7 @@ const pathCatalog: Path[] = [
 			{
 				name: "Animating Rite",
 				description:
-					"Action: animate a Large or smaller nonmagical item within 30 ft. It becomes a construct (HP = 10+5× Idol level, AC = 16, +prof to attack, 1d10+PRE force slam, 30 ft speed). Bonus action to command. Lasts 1 hour. Once per long rest.",
+					"As an action, animate a Large or smaller nonmagical item you can see within 30 feet of you for 1 hour; track it as a custom companion on your sheet. It becomes a construct with AC 16, hit points equal to 10 + five times your Idol level, a speed of 30 feet, and a Force Slam (melee attack using your spell attack modifier, reach 5 ft.; hit: 1d10 + your PRE modifier force damage). It acts on your initiative, immediately after you; it takes the Dodge action unless you use a bonus action to command it. It reverts early if it drops to 0 hit points. Once per long rest.",
 				level: 6,
 				actionType: "passive",
 			},
@@ -6266,7 +6393,12 @@ const RECONCILED_PATH_FEATURE_MECHANICS: Readonly<
 		{ featureName: "Storm Discharge", actionType: "Bonus action" },
 		{ featureName: "Weather Control", actionType: "Bonus action" },
 		{ featureName: "Storm Retaliation", actionType: "Reaction" },
-		{ featureName: "Eye of the Storm", actionType: "Action" },
+		{
+			featureName: "Eye of the Storm",
+			actionType: "Action",
+			uses: { formula: "1", recharge: "short-rest" },
+			tracking: "uses",
+		},
 	],
 	"esper--absolute-spark": [
 		{
@@ -6326,7 +6458,12 @@ const RECONCILED_PATH_FEATURE_MECHANICS: Readonly<
 		},
 	],
 	"summoner--pack-commander": [
-		{ featureName: "Aetheric Totem", actionType: "Bonus action" },
+		{
+			featureName: "Aetheric Totem",
+			actionType: "Bonus action",
+			uses: { formula: "1", recharge: "short-rest" },
+			tracking: "uses",
+		},
 		{
 			featureName: "Faithful Call",
 			uses: { formula: "1", recharge: "long-rest" },
@@ -6604,7 +6741,12 @@ const RECONCILED_PATH_FEATURE_MECHANICS: Readonly<
 		{ featureName: "Slayer's Counter", actionType: "Reaction" },
 	],
 	"stalker--hive-synchronist": [
-		{ featureName: "Writhing Tide", actionType: "Bonus action" },
+		{
+			featureName: "Writhing Tide",
+			actionType: "Bonus action",
+			uses: { formula: "PB", recharge: "long-rest" },
+			tracking: "uses",
+		},
 		{
 			featureName: "Hive Dispersal",
 			actionType: "Reaction",
@@ -6613,7 +6755,12 @@ const RECONCILED_PATH_FEATURE_MECHANICS: Readonly<
 		},
 	],
 	"technomancer--resonance-siege-design": [
-		{ featureName: "Aetheric Resonator", actionType: "Action" },
+		{
+			featureName: "Aetheric Resonator",
+			actionType: "Action",
+			uses: { formula: "1 + level / 15", recharge: "long-rest" },
+			tracking: "uses",
+		},
 	],
 	"technomancer--synchronist-binary-design": [
 		{
@@ -6623,7 +6770,12 @@ const RECONCILED_PATH_FEATURE_MECHANICS: Readonly<
 		},
 	],
 	"technomancer--aether-breacher-design": [
-		{ featureName: "Absolute Suppression", actionType: "Action" },
+		{
+			featureName: "Absolute Suppression",
+			actionType: "Action",
+			uses: { formula: "PB", recharge: "long-rest" },
+			tracking: "uses",
+		},
 		{
 			featureName: "Mandate Realignment",
 			actionType: "Reaction",
@@ -6632,6 +6784,7 @@ const RECONCILED_PATH_FEATURE_MECHANICS: Readonly<
 		},
 		{
 			featureName: "Resonance Collapse",
+			actionType: "Action",
 			uses: { formula: "1", recharge: "long-rest" },
 			tracking: "uses",
 		},

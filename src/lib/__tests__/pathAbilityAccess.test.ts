@@ -24,6 +24,15 @@ const danceGrant = (
 	entryNames,
 	progression: "base",
 });
+// Dual Manifestation Access lets an Absolute Spark Esper learn Herald spells.
+const ABSOLUTE_SPARK_HERALD_LIST = {
+	jobName: "Esper",
+	pathName: "Path of the Absolute Spark",
+	level: 1,
+	kind: "spell",
+	sourceTokens: ["Herald"],
+	progression: "base",
+};
 const DANCE_REPERTOIRE_GRANTS = [
 	danceGrant(3, "power", ["Dissonant Strike", "Kinetic Rush"]),
 	danceGrant(3, "technique", ["Rhythmic Strike", "Nerve Disruption"]),
@@ -76,6 +85,7 @@ describe("pathAbilityAccess exported grant catalog", () => {
 				progression: "third",
 				leveledSchoolsOnly: true,
 			},
+			ABSOLUTE_SPARK_HERALD_LIST,
 			{
 				jobName: "Assassin",
 				pathName: "Path of the Blade Dancer",
@@ -231,17 +241,20 @@ describe("pathAbilityAccess exported grant catalog", () => {
 				}),
 			]),
 		);
+		// Revenant, Stalker, and Technomancer inferred candidates were removed:
+		// their Path text grants spells by name (feature grants) or not at all.
 		const reconciledRejectedCounts = {
-			Esper: 4,
+			Esper: 3,
 			Summoner: 4,
 			Herald: 4,
 			Idol: 15,
-			Revenant: 9,
-			Stalker: 4,
-			Technomancer: 3,
+			Revenant: 0,
+			Stalker: 0,
+			Technomancer: 0,
 		} as const;
-		// The only grants these Jobs keep are authored by name in Path text.
+		// The only grants these Jobs keep are authored in Path text.
 		const authoredGrants: Partial<Record<string, unknown[]>> = {
+			Esper: [ABSOLUTE_SPARK_HERALD_LIST],
 			Idol: DANCE_REPERTOIRE_GRANTS,
 		};
 		for (const [jobName, count] of Object.entries(reconciledRejectedCounts)) {

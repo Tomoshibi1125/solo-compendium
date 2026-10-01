@@ -7,7 +7,10 @@ import { useToast } from "@/hooks/use-toast";
 import { useCharacterFeatures } from "@/hooks/useCharacterFeatures";
 import { useCharacter } from "@/hooks/useCharacters";
 import { useStaticPathCatalog } from "@/hooks/useStaticPathCatalog";
-import { insertCharacterFeature } from "@/lib/characterCreation";
+import {
+	insertCharacterFeature,
+	reconcilePathSpellGrants,
+} from "@/lib/characterCreation";
 import { getErrorMessage } from "@/lib/errorHandling";
 import {
 	buildPathOptionFeatureId,
@@ -108,10 +111,21 @@ export function PathChoicesPanel({
 					});
 				}
 			}
+			// Options can grant spells; a swapped option's spells are removed.
+			await reconcilePathSpellGrants(
+				characterId,
+				{ id: path.id, name: path.name },
+				character?.level ?? 1,
+			);
 			setSelected({});
-			await queryClient.invalidateQueries({
-				queryKey: ["character-features", characterId],
-			});
+			await Promise.all([
+				queryClient.invalidateQueries({
+					queryKey: ["character-features", characterId],
+				}),
+				queryClient.invalidateQueries({
+					queryKey: ["character-spells", characterId],
+				}),
+			]);
 			toast({ title: "Path choices recorded" });
 		} catch (error) {
 			toast({

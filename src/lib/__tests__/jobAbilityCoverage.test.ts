@@ -356,12 +356,19 @@ describe("Job ability coverage — archetype contract", () => {
 	});
 });
 
-// Path repertoires authored by name in the Path's own feature text. These are
-// the only additions a reconciled Task 5-6 Path may make to its Job's lists.
+// Access authored in the Path's own feature text. These are the only
+// additions a reconciled Task 5-6 Path may make to its Job's lists.
 const AUTHORED_PATH_REPERTOIRES: Record<
 	string,
-	{ power: readonly string[]; technique: readonly string[] }
+	{
+		power?: readonly string[];
+		technique?: readonly string[];
+		/** A whole other Job's spell list the Path opens. */
+		spellList?: string;
+	}
 > = {
+	// Dual Manifestation Access opens the Herald list.
+	"Path of the Absolute Spark": { spellList: "Herald" },
 	// Combat Choreography's Dance Repertoire.
 	"Path of the Dance Resonance": {
 		power: [
@@ -436,10 +443,28 @@ describe("Job ability access — hybrid path grant coverage", () => {
 						.sort(),
 					`${path.name} inferred technique access`,
 				).toEqual([...(authored?.technique ?? [])]);
-				expect(
-					pathSpells.filter((entry) => !baseIds.spell.has(entry.id)),
-					`${path.name} inferred spell access`,
-				).toEqual([]);
+				const addedSpells = pathSpells.filter(
+					(entry) => !baseIds.spell.has(entry.id),
+				);
+				if (authored?.spellList) {
+					const list = authored.spellList;
+					expect(
+						addedSpells.length,
+						`${path.name} opens the ${list} list`,
+					).toBeGreaterThan(0);
+					// A spell is on a Job's list through its classes or tags.
+					const onList = (entry: (typeof addedSpells)[number]) =>
+						[
+							...(Array.isArray(entry.classes) ? entry.classes : []),
+							...(Array.isArray(entry.tags) ? entry.tags : []),
+						].some((token) => norm(String(token)) === norm(list));
+					expect(
+						addedSpells.filter((entry) => !onList(entry)),
+						`${path.name} spells outside the ${list} list`,
+					).toEqual([]);
+				} else {
+					expect(addedSpells, `${path.name} inferred spell access`).toEqual([]);
+				}
 			}
 		}
 	});

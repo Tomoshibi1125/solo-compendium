@@ -200,6 +200,37 @@ export function getPathOptionGroups(
 	return [...groups.values()];
 }
 
+/**
+ * Spell grants of the options recorded on the sheet, in the `{ level, grants }`
+ * shape Path features use. An option's spells default to the level of the
+ * first choice that offers it.
+ */
+export function getChosenPathOptionGrants(
+	path: Pick<Path, "id" | "levelChoices"> | null | undefined,
+	characterLevel: number,
+	recordedFeatures: readonly RecordedFeatureRow[],
+): Array<{ level: number; grants: NonNullable<PathChoiceOption["grants"]> }> {
+	if (!path?.levelChoices) return [];
+	const offeredAt = new Map<string, number>();
+	for (const choice of path.levelChoices) {
+		if (choice.type !== "path-option") continue;
+		for (const option of choice.options ?? []) {
+			const key = `${choice.source}\u0000${option.name}`;
+			if (!offeredAt.has(key)) offeredAt.set(key, choice.level);
+		}
+	}
+	return getPathOptionGroups(path, characterLevel, recordedFeatures).flatMap(
+		(group) =>
+			group.options
+				.filter((option) => option.grants && group.chosen.includes(option.name))
+				.map((option) => ({
+					level:
+						offeredAt.get(`${group.source}\u0000${option.name}`) ?? group.level,
+					grants: option.grants as NonNullable<PathChoiceOption["grants"]>,
+				})),
+	);
+}
+
 /** Options still to pick, across every group. */
 export const countOpenPathOptions = (groups: readonly PathOptionGroup[]) =>
 	groups.reduce(

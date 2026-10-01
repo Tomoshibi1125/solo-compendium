@@ -63,20 +63,14 @@ const pathAbilityGrantCandidates: readonly PathAbilityGrant[] = [
 		entryNames: ["Mana Lens"],
 		maxLevel: 0,
 	},
+	// Dual Manifestation Access: Esper spells can be learned from the Herald list.
 	{
 		jobName: "Esper",
-		pathName: "Path of the Psionic Breach",
+		pathName: "Path of the Absolute Spark",
 		level: 1,
 		kind: "spell",
-		sourceTokens: [],
-		entryNames: [
-			"Entropic Grasp",
-			"Mind Spike",
-			"Psychic Barrier",
-			"Kinetic Burst",
-			"Psionic Shockwave",
-		],
-		maxLevel: 5,
+		sourceTokens: ["Herald"],
+		progression: "base",
 	},
 	{
 		jobName: "Mage",
@@ -112,74 +106,6 @@ const pathAbilityGrantCandidates: readonly PathAbilityGrant[] = [
 		kind: "technique",
 		sourceTokens: ["Esper"],
 		entryNames: ["Esper Singularity"],
-	},
-	{
-		jobName: "Revenant",
-		pathName: "Path of the Void Lord",
-		level: 2,
-		kind: "power",
-		sourceTokens: ["Revenant"],
-		entryNames: ["Final Entropy", "Entropic Avatar"],
-		progression: "full",
-	},
-	{
-		jobName: "Revenant",
-		pathName: "Path of the Void Lord",
-		level: 2,
-		kind: "technique",
-		sourceTokens: ["Revenant"],
-		entryNames: ["Revenant's Final Entropy"],
-	},
-	{
-		jobName: "Revenant",
-		pathName: "Path of the Entropy Drinker",
-		level: 2,
-		kind: "power",
-		sourceTokens: ["Revenant"],
-		entryNames: ["Death's Momentum", "Entropy Harvest"],
-		progression: "full",
-	},
-	{
-		jobName: "Revenant",
-		pathName: "Path of the Entropy Drinker",
-		level: 2,
-		kind: "technique",
-		sourceTokens: ["Revenant"],
-		entryNames: ["Entropy Surge", "Shadow Harvest"],
-	},
-	{
-		jobName: "Revenant",
-		pathName: "Path of the Wither Guard",
-		level: 2,
-		kind: "power",
-		sourceTokens: ["Revenant"],
-		entryNames: ["Withering Touch", "Entropic Feedback"],
-		progression: "full",
-	},
-	{
-		jobName: "Revenant",
-		pathName: "Path of the Wither Guard",
-		level: 2,
-		kind: "technique",
-		sourceTokens: ["Revenant"],
-		entryNames: ["Withering Blade", "Entropic Rend"],
-	},
-	{
-		jobName: "Revenant",
-		pathName: "Path of the Entropy Blade",
-		level: 2,
-		kind: "power",
-		sourceTokens: ["Revenant"],
-		entryNames: ["Entropic Counter"],
-		progression: "full",
-	},
-	{
-		jobName: "Revenant",
-		pathName: "Path of the Entropy Blade",
-		level: 2,
-		kind: "technique",
-		sourceTokens: ["Revenant"],
-		entryNames: ["Death's Reach", "Entropy Blade"],
 	},
 	{
 		jobName: "Summoner",
@@ -283,15 +209,6 @@ const pathAbilityGrantCandidates: readonly PathAbilityGrant[] = [
 		],
 	},
 	{
-		jobName: "Stalker",
-		pathName: "Path of the Umbral Ascendant",
-		level: 3,
-		kind: "power",
-		sourceTokens: [],
-		entryNames: ["Shadow Strike"],
-		maxLevel: 1,
-	},
-	{
 		jobName: "Assassin",
 		pathName: "Path of the Blade Dancer",
 		level: 17,
@@ -337,71 +254,8 @@ const pathAbilityGrantCandidates: readonly PathAbilityGrant[] = [
 		progression: "base",
 	},
 	{
-		jobName: "Revenant",
-		pathName: "Path of the Threshold Walker",
-		level: 1,
-		kind: "spell",
-		sourceTokens: [],
-		entryNames: [],
-		progression: "base",
-	},
-	{
-		jobName: "Stalker",
-		pathName: "Path of the Apex Ascendant",
-		level: 1,
-		kind: "spell",
-		sourceTokens: [],
-		entryNames: [],
-		progression: "base",
-	},
-	{
-		jobName: "Stalker",
-		pathName: "Path of the Pack Leader",
-		level: 1,
-		kind: "spell",
-		sourceTokens: [],
-		entryNames: [],
-		progression: "base",
-	},
-	{
-		jobName: "Stalker",
-		pathName: "Path of the Rift Strider",
-		level: 1,
-		kind: "spell",
-		sourceTokens: [],
-		entryNames: [],
-		progression: "base",
-	},
-	{
 		jobName: "Holy Knight",
 		pathName: "Path of the Verdant Mandate",
-		level: 1,
-		kind: "spell",
-		sourceTokens: [],
-		entryNames: [],
-		progression: "base",
-	},
-	{
-		jobName: "Technomancer",
-		pathName: "Design: The Aether Chemist",
-		level: 1,
-		kind: "spell",
-		sourceTokens: [],
-		entryNames: [],
-		progression: "base",
-	},
-	{
-		jobName: "Technomancer",
-		pathName: "Design: Swarm Conduit",
-		level: 1,
-		kind: "spell",
-		sourceTokens: [],
-		entryNames: [],
-		progression: "base",
-	},
-	{
-		jobName: "Technomancer",
-		pathName: "Design: Aether Breacher",
 		level: 1,
 		kind: "spell",
 		sourceTokens: [],
@@ -1885,7 +1739,11 @@ const isSourceBackedReconciledGrant = (grant: PathAbilityGrant): boolean => {
 		// Combat Choreography names the Dance Repertoire entries.
 		(jobId === "idol" &&
 			pathId === "path-of-the-dance-resonance" &&
-			(grant.kind === "power" || grant.kind === "technique"))
+			(grant.kind === "power" || grant.kind === "technique")) ||
+		// Dual Manifestation Access opens the Herald spell list.
+		(jobId === "esper" &&
+			pathId === "path-of-the-absolute-spark" &&
+			grant.kind === "spell")
 	);
 };
 

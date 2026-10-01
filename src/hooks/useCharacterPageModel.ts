@@ -354,6 +354,7 @@ export function useCharacterPageModel() {
 						["features", characterId],
 						["powers", characterId],
 						["character-techniques", characterId],
+						["character-spells", characterId],
 						["combat-actions", characterId],
 					].map((queryKey) => queryClient.invalidateQueries({ queryKey })),
 				);

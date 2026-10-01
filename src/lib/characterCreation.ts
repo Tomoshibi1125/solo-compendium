@@ -37,6 +37,7 @@ import {
 	listLocalEquipment,
 	listLocalFeatures,
 	listLocalSpells,
+	removeLocalSpell,
 	setLocalAbilities,
 	updateLocalCharacter,
 	updateLocalFeature,
@@ -47,6 +48,12 @@ import {
 	getStaticJobs,
 	initializeProtocolData,
 } from "@/lib/ProtocolDataManager";
+import {
+	findPathIn,
+	getChosenPathOptionGrants,
+	loadStaticPathCatalog,
+	type StaticPathReference,
+} from "@/lib/pathLedger";
 import {
 	getCharacterCampaignId,
 	isSourcebookAccessible,
@@ -4036,11 +4043,12 @@ export async function addJobAwakeningBenefitsForLevel(
 				existingNames.add(feature.name);
 			}
 
-			await addPathSpellGrants(
+			await reconcilePathSpellGrants(
 				characterId,
-				pathData.name,
-				earnedPathFeatures,
+				{ id: pathData.id, name: pathData.name },
 				level,
+				featureRows,
+				earnedPathFeatures,
 			);
 
 			const earnedPathAbilities = (pathData.abilities ?? []).filter(
@@ -4411,6 +4419,44 @@ export async function syncCanonicalFeatureRows(
 }
 
 /**
+ * Bring a character's Path-granted spells in line with the Path: its earned
+ * features' grants plus the grants of the options recorded on the sheet. With
+ * the static Path catalog loaded the list is complete, so spells of a swapped
+ * option are removed; otherwise `fallbackFeatures` are only added.
+ */
+export async function reconcilePathSpellGrants(
+	characterId: string,
+	pathRef: StaticPathReference,
+	level: number,
+	featureRows?: ReadonlyArray<{ name: string; feature_id?: string | null }>,
+	fallbackFeatures: ReadonlyArray<{
+		level: number;
+		grants?: { spells: Array<{ name: string; level?: number }> } | null;
+	}> = [],
+): Promise<void> {
+	const staticPath = findPathIn(await loadStaticPathCatalog(), pathRef);
+	if (!staticPath) {
+		const pathName =
+			typeof pathRef === "string" ? pathRef : (pathRef?.name ?? null);
+		if (pathName) {
+			await addPathSpellGrants(characterId, pathName, fallbackFeatures, level);
+		}
+		return;
+	}
+	const rows = featureRows ?? (await listCharacterFeatureRows(characterId));
+	await addPathSpellGrants(
+		characterId,
+		staticPath.name,
+		[
+			...staticPath.features.filter((feature) => feature.level <= level),
+			...getChosenPathOptionGrants(staticPath, level, rows),
+		],
+		level,
+		{ prune: true },
+	);
+}
+
+/**
  * Add the spells a Path's earned features grant outright as known spells that
  * don't count against the character's limit. Idempotent: a granted spell
  * already on the sheet under the Path's source is skipped, so re-running the
@@ -4424,27 +4470,60 @@ export async function addPathSpellGrants(
 		grants?: { spells: Array<{ name: string; level?: number }> } | null;
 	}>,
 	level: number,
+	options: {
+		/**
+		 * `features` is the Path's complete grant list, so granted spells no
+		 * longer due (a swapped option, a lower level) are removed.
+		 */
+		prune?: boolean;
+	} = {},
 ): Promise<void> {
 	const due = features.flatMap((feature) =>
 		(feature.grants?.spells ?? [])
 			.filter((spell) => (spell.level ?? feature.level) <= level)
 			.map((spell) => spell.name),
 	);
-	if (due.length === 0) return;
+	if (due.length === 0 && !options.prune) return;
 
 	const sourceLabel = `Path Spell: ${pathName}`;
-	const existing: Array<{ name: string | null; source: string | null }> =
-		isLocalCharacterId(characterId)
-			? listLocalSpells(characterId)
-			: ((
-					await supabase
-						.from("character_spells")
-						.select("name, source")
-						.eq("character_id", characterId)
-				).data ?? []);
+	const existing: Array<{
+		id?: string;
+		name: string | null;
+		source: string | null;
+	}> = isLocalCharacterId(characterId)
+		? listLocalSpells(characterId)
+		: ((
+				await supabase
+					.from("character_spells")
+					.select("id, name, source")
+					.eq("character_id", characterId)
+			).data ?? []);
+	const dueKeys = new Set(due.map(normalizeFeatureIdentity));
+	if (options.prune) {
+		for (const spell of existing) {
+			if (spell.source !== sourceLabel || !spell.id) continue;
+			if (dueKeys.has(normalizeFeatureIdentity(spell.name))) continue;
+			if (isLocalCharacterId(characterId)) {
+				removeLocalSpell(spell.id);
+			} else {
+				const { error } = await supabase
+					.from("character_spells")
+					.delete()
+					.eq("character_id", characterId)
+					.eq("id", spell.id);
+				if (error) {
+					console.warn("addPathSpellGrants: failed to remove spell", error);
+				}
+			}
+		}
+	}
 	const granted = new Set(
 		existing
-			.filter((spell) => spell.source === sourceLabel)
+			.filter(
+				(spell) =>
+					spell.source === sourceLabel &&
+					dueKeys.has(normalizeFeatureIdentity(spell.name)),
+			)
 			.map((spell) => normalizeFeatureIdentity(spell.name)),
 	);
 
