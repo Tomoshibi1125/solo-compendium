@@ -75,9 +75,9 @@ export const THEMES = [
 			/\b(Aetheric|Aether|Arcane|Lattice|Manaforged|Manabound|Mana|Aetherbound)\b/i,
 		key: "aetheric",
 		damageType: "force",
-		consumableSubtype: "mana",
+		// Rift Ascendant has no mana system: aetheric consumables heal.
+		consumableSubtype: "healing",
 		ridersWeapon: [
-			"On a hit, target loses 1 mana point (if any).",
 			"On a critical hit, target's next spellcast within 1 minute requires a DC 13 concentration save.",
 			"While attuned, gain +1 to spell-attack rolls.",
 		],
@@ -85,7 +85,6 @@ export const THEMES = [
 			"Resistance to force damage.",
 			"+1 to spell-save DCs while worn.",
 		],
-		ridersConsumable: ["Restores mana instead of HP."],
 	},
 	{
 		match:
@@ -716,7 +715,7 @@ const VARIANT_POOLS = {
 			type: "scroll",
 		},
 		{
-			note: "Acts as a written arcane focus. Records 3 cast spells; the wielder may recall and cast one without spending mana once per long rest.",
+			note: "Acts as a written arcane focus. Records 3 cast spells; the wielder may recall and cast one without expending a spell slot once per long rest.",
 			item_type: "tool",
 			type: "scroll",
 		},
@@ -812,7 +811,6 @@ const VARIANT_POOLS = {
 			note: "Restores HP on consumption.",
 			action: "Drink",
 		},
-		{ subtype: "mana", note: "Restores mana on consumption.", action: "Drink" },
 		{
 			subtype: "stamina",
 			note: "Grants 1d4 temporary HP and advantage on the next Vitality save within 1 minute.",
@@ -1172,7 +1170,7 @@ const UNIQUE_ACTIVES = {
 			frequency: "short-rest",
 		},
 		{
-			name: "Mana Surge",
+			name: "Spell Surge",
 			description:
 				"As a bonus action, regain 1 spell slot of 2nd level or lower.",
 			action: "bonus-action",
@@ -1247,7 +1245,7 @@ const UNIQUE_ACTIVES = {
 			frequency: "short-rest",
 		},
 		{
-			name: "Mana Cascade",
+			name: "Spell Cascade",
 			description: "As an action, regain 2 spell slots of 3rd level or lower.",
 			action: "action",
 			frequency: "long-rest",
@@ -1324,17 +1322,6 @@ export function consumableHpRange(rarity, subtype) {
 		rare: "6d4 + 6",
 		epic: "8d4 + 8",
 		legendary: "10d4 + 20",
-	};
-	return ranges[rarity] || ranges.common;
-}
-
-export function consumableManaRange(rarity) {
-	const ranges = {
-		common: "2d4",
-		uncommon: "4d4",
-		rare: "6d4",
-		epic: "8d4",
-		legendary: "10d4",
 	};
 	return ranges[rarity] || ranges.common;
 }

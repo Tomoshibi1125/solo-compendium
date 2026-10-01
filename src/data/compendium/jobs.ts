@@ -3639,7 +3639,7 @@ export const jobs: Job[] = [
 			{
 				name: "Aetheric Bandwidth",
 				description:
-					"Your pact feeds you more mana per recovery than your rank should allow. You regain all expended pact spell slots when you finish a short or long rest.",
+					"Your pact restores more than your rank should allow. You regain all expended pact spell slots when you finish a short or long rest.",
 				type: "passive",
 				actionType: "passive",
 			},

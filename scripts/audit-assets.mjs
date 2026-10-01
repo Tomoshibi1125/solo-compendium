@@ -782,6 +782,17 @@ function titleCase(value) {
 		.join(" ");
 }
 
+// Readable subject name for an asset reference: the record name, or the
+// file's base name without its extension, title-cased.
+function cleanSubjectName(value, fallback) {
+	const raw = String(value ?? "").trim();
+	if (!raw) return fallback;
+	const withoutPath = raw.includes("/")
+		? basename(raw.replace(/\\/g, "/"))
+		: raw;
+	return titleCase(withoutPath.replace(/\.[^.]+$/, "")) || fallback;
+}
+
 function slugify(value) {
 	return slugToWords(value)
 		.toLowerCase()

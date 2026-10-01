@@ -2121,7 +2121,7 @@ export const powers_supplemental: CompendiumPower[] = [
 		name: "Second Wind",
 		display_name: "Second Wind",
 		description:
-			"Draw on your mana reserves for an emergency burst of healing. As a bonus action, regain 1d10 + your character level in hit points. Usable once per short rest.",
+			"Draw on your reserves for an emergency burst of healing. As a bonus action, regain 1d10 + your character level in hit points. Usable once per short rest.",
 		lore: {
 			origin:
 				"Every martial Awakened learns this. Those who don't learn it don't survive to learn anything else.",

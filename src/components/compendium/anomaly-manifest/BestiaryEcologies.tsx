@@ -152,8 +152,7 @@ export const BestiaryEcologies = () => {
 									</h4>
 									<ul className="text-[10px] text-slate-400 space-y-2 list-disc pl-4 font-mono leading-relaxed">
 										<li>
-											Umbral Legionnaires consume a passive mana-drain from the
-											host.
+											Umbral Legionnaires draw their presence from the host.
 										</li>
 										<li>Destruction of the Umbral essence is permanent.</li>
 										<li>

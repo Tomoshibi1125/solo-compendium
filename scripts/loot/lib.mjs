@@ -1081,13 +1081,11 @@ const TEMPLATES = {
 		type: "stim",
 		properties: {},
 		effects: {
-			passive: [
-				`On injection, restore ${rarityHpRange(rarity)} hit points or mana.`,
-			],
+			passive: [`On injection, restore ${rarityHpRange(rarity)} hit points.`],
 			active: [
 				{
 					name: "Inject",
-					description: `Bonus action. Restore ${rarityHpRange(rarity)} HP or mana to a willing creature within 5 ft.`,
+					description: `Bonus action. Restore ${rarityHpRange(rarity)} HP to a willing creature within 5 ft.`,
 					action: "bonus-action",
 					frequency: "at-will",
 				},
@@ -1140,7 +1138,7 @@ const TEMPLATES = {
 		properties: {},
 		effects: {
 			passive: [
-				`Single-use scroll. Casts an inscribed spell at ${rarity} potency without consuming mana.`,
+				`Single-use scroll. Casts an inscribed spell at ${rarity} potency without expending a spell slot.`,
 			],
 			active: [
 				{

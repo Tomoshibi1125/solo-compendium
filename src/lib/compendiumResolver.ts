@@ -185,7 +185,10 @@ export async function resolveRef(
 	const resolvedId = legacyIdMap[type]?.[id] ?? id;
 	const staticEntries = await listStaticEntries(type);
 	if (staticEntries) {
-		const entry = staticEntries.find((item) => item.id === resolvedId);
+		// Folded duplicate ids live on the surviving entry's aliases.
+		const entry =
+			staticEntries.find((item) => item.id === resolvedId) ??
+			staticEntries.find((item) => item.aliases?.includes(resolvedId));
 		if (entry) {
 			const resolvedName = entry.display_name || entry.name;
 			return {

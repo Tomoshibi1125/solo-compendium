@@ -1346,7 +1346,7 @@ export const sigils: CompendiumSigil[] = [
 			stat_bonuses: {},
 		},
 		passive_bonuses: {
-			traits: ["Mana Regeneration (+1 spell slot recovery on short rest)"],
+			traits: ["Spell Slot Recovery (+1 spell slot recovery on short rest)"],
 		},
 	},
 	{

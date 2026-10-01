@@ -3257,7 +3257,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		name: "Vital Point Strike",
 		display_name: "Vital Point Strike",
 		description:
-			"As an action, you make a surgical strike against a creature's mana-circuit junction point. Make a melee weapon attack. On a hit, the target takes normal weapon damage plus 2d6 necrotic damage. Additionally, the target's mana recovery is suppressed: it cannot regain hit points from any source until the end of its next turn.",
+			"As an action, you make a surgical strike against a creature's mana-circuit junction point. Make a melee weapon attack. On a hit, the target takes normal weapon damage plus 2d6 necrotic damage. Additionally, the target's recovery is suppressed: it cannot regain hit points from any source until the end of its next turn.",
 		lore: {
 			origin:
 				"Developed through Assassin combat doctrine and field-tested in Rift operations.",
@@ -4786,7 +4786,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		name: "Mountain Crusher",
 		display_name: "Mountain Crusher",
 		description:
-			"Channel your full mana reserve into a single world-breaking strike. Melee attack: normal damage + 10d10 force. All creatures within 30 feet of the impact: DC 18 STR save or knocked prone and pushed 20 feet. Structures within 30 feet take 100 force damage.",
+			"Channel everything you have into a single world-breaking strike. Melee attack: normal damage + 10d10 force. All creatures within 30 feet of the impact: DC 18 STR save or knocked prone and pushed 20 feet. Structures within 30 feet take 100 force damage.",
 		lore: {
 			origin:
 				"Developed through Destroyer combat doctrine and field-tested in Rift operations.",

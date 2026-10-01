@@ -546,6 +546,8 @@ type StaticAnomaliesource = {
 type StaticItemSource = {
 	id?: string;
 	name: string;
+	// Ids of folded duplicate entries that now resolve to this item.
+	aliases?: string[] | null;
 	description: string;
 	type?: string;
 	item_type?: string;
@@ -1285,6 +1287,7 @@ function transformItem(item: StaticItemSource): StaticCompendiumEntry {
 		id: item.id || item.name.toLowerCase().replace(/\s+/g, "-"),
 		name: item.name,
 		display_name: item.name,
+		aliases: item.aliases ?? null,
 		description: item.description,
 		created_at:
 			(item as { created_at?: string }).created_at ||
