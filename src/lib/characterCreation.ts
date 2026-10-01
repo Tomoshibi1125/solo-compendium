@@ -2521,7 +2521,7 @@ export function getPathFeatureModifiers(
 					{
 						type: "impact_effect",
 						value: 0,
-						target: "Rapid Barrage",
+						target: "Rite of Force",
 						source: featureName,
 					},
 				];

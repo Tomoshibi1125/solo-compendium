@@ -588,27 +588,29 @@ const pathCatalog: Path[] = [
 			{
 				name: "Primal Aspect",
 				description:
-					"Tank-beast: resist all damage except psychic in Overload. Raptor: OAs have disadvantage vs you, Dash as bonus in Overload. Pack-leader: allies have advantage on melee vs creatures within 5 ft of you in Overload.",
+					"When you gain this feature, choose your aspect: Tank-Beast, Raptor, or Pack-Leader. Your aspect also decides what Biological Adaptation (6th level) and Apex Mandate (14th level) grant you. Whenever you gain a Berserker level, you can switch to a different aspect, and your later aspect features change with it. While you're in Overload, your aspect grants this benefit. Tank-Beast: you have resistance to all damage except psychic damage. Raptor: opportunity attacks against you have disadvantage, and you can take the Dash action as a bonus action. Pack-Leader: your allies have advantage on melee attack rolls against any hostile creature within 5 feet of you.",
+				formerNames: ["Bonded Aspect"],
 				level: 3,
 				actionType: "passive",
 			},
 			{
 				name: "Biological Adaptation",
 				description:
-					"Tank-beast: double carry, advantage on STR push/pull. Raptor: see 1 mile, dim light no Perception penalty. Pack-leader: track at fast pace, stealth at normal.",
+					"You gain your aspect's adaptation. Tank-Beast: your carrying capacity, including your maximum load and maximum lift, doubles, and you have advantage on STR checks made to push, pull, lift, or break objects. Raptor: you can see up to 1 mile away with no difficulty, discerning fine details as though looking at something no more than 100 feet away, and dim light doesn't impose disadvantage on your SENSE (Perception) checks. Pack-Leader: you can track other creatures while traveling at a fast pace, and you can move stealthily while traveling at a normal pace.",
 				level: 6,
 				actionType: "passive",
 			},
 			{
 				name: "Aetheric Commune",
-				description: `Cast Commune with Nature as ritual; your resonance with the aetheric environment allows you to sense the absolute flow of the local area. You gain resistance to force damage.`,
+				description:
+					"As a ritual that takes 10 minutes, you attune to the aetheric flow of the land around you and learn up to three facts of your choice about the area within 3 miles of you (300 feet if you're underground or inside a Rift): its terrain and bodies of water; its prevalent plants, minerals, animals, or peoples; powerful Anomalies or other dangerous creatures; open or sealed Rifts; or buildings and other structures. You gain resistance to force damage.",
 				level: 10,
 				actionType: "passive",
 			},
 			{
 				name: "Apex Mandate",
 				description:
-					"Tank-beast: in Overload, enemies within 5 ft have disadvantage on attacks vs allies. Raptor: in Overload, fly speed = walk speed. Pack-leader: in Overload, bonus action knock Large-or-smaller prone on hit.",
+					"While you're in Overload, your aspect's mandate applies. Tank-Beast: each hostile creature within 5 feet of you has disadvantage on attack rolls against targets other than you, unless it can't see or hear you or can't be frightened. Raptor: you have a flying speed equal to your walking speed, but you fall if you end your turn in the air with nothing else holding you aloft. Pack-Leader: when you hit a Large or smaller creature with a melee weapon attack on your turn, you can use a bonus action to knock it prone.",
 				level: 14,
 				actionType: "passive",
 			},
@@ -617,7 +619,7 @@ const pathCatalog: Path[] = [
 			{
 				name: "Territorial Roar",
 				description:
-					"All enemies in 30 ft: SENSE save or frightened 1 min. A minor manifestation of a primal Rift beast spirit erupts from your soul. Once/long rest.",
+					"As an action, each hostile creature within 30 feet of you that can hear you must succeed on a SENSE saving throw against your Job save DC or be frightened of you for 1 minute. A frightened creature repeats the saving throw at the end of each of its turns, ending the effect on itself on a success. A minor manifestation of a primal Rift beast spirit erupts from your soul. Once per long rest.",
 				recharge: 3,
 				cost: "Action",
 			},
@@ -657,7 +659,8 @@ const pathCatalog: Path[] = [
 			},
 			{
 				name: "Primal Recall",
-				description: `Your scars record every aetheric disturbance you've survived. Cast Clairvoyance as ritual—your scars resonate with the local weave to anchor environmental echoes from prior engagements. You learn one cantrip of your choice from the wizard spell list. Intelligence is your spellcasting ability for it.`,
+				description:
+					"Your scars record every aetheric disturbance you've survived. As a ritual that takes 10 minutes, you can anchor an invisible sensor in a location within 1 mile of you that you have visited before or can see. For up to 10 minutes (concentration), you can see or hear through the sensor as if you were there; choose sight or hearing when you anchor it, and switch as an action. A creature that can see invisible things sees the sensor as a faint, glowing scar in the air.",
 				level: 10,
 				actionType: "passive",
 			},
@@ -700,28 +703,28 @@ const pathCatalog: Path[] = [
 			{
 				name: "Aetheric Vent",
 				description:
-					"In Overload, your body vents primordial energy—car paint blisters near Inferno types, Tempest types trip circuit breakers, and Glacial types frost over nearby windows. 10-ft aura. Inferno: 2 fire/turn (scales). Tempest: bonus action 1d6 lightning, AGI half. Glacial: 2 temp HP/turn (scales).",
+					"While you're in Overload, you emanate a 10-foot aura that moves with you. Its type is the one you chose when you gained this feature: Inferno, Tempest, or Glacial. Whenever you gain a Berserker level, you can change the type, and your later aura features change with it. The aura activates when you enter Overload, and you can activate it again as a bonus action on each of your later turns while Overload lasts. Inferno: each other creature in the aura takes 2 fire damage (3 at 5th level, 4 at 10th, 5 at 15th, and 6 at 20th). Tempest: choose one other creature in the aura; it makes an AGI saving throw against your Job save DC, taking 1d6 lightning damage on a failure or half as much on a success (2d6 at 10th level, 3d6 at 15th, and 4d6 at 20th). Glacial: each creature of your choice in the aura, including you, gains 2 temporary hit points (3 at 5th level, 4 at 10th, 5 at 15th, and 6 at 20th). Your aura type also decides what Elemental Saturation and Volatile Discharge grant you. Car paint blisters near Inferno types, Tempest types trip circuit breakers, and Glacial types frost over nearby windows.",
 				level: 3,
 				actionType: "passive",
 			},
 			{
 				name: "Elemental Saturation",
 				description:
-					"Inferno: fire resist, immune extreme heat. Tempest: lightning resist, breathe underwater, 30 ft swim. Glacial: cold resist, immune extreme cold, move on ice freely.",
+					"You gain your aura type's saturation. Inferno: you have resistance to fire damage and don't suffer the effects of extreme heat. Tempest: you have resistance to lightning damage, you can breathe underwater, and you gain a swimming speed of 30 feet. Glacial: you have resistance to cold damage, you don't suffer the effects of extreme cold, and you can move across ice without making an ability check.",
 				level: 6,
 				actionType: "passive",
 			},
 			{
 				name: "Radiant Field",
 				description:
-					"Chosen creatures in aura gain your Elemental Saturation resistance. Your storm becomes a safe harbor for your allies.",
+					"Each creature of your choice in your aura has the damage resistance granted by your Elemental Saturation. Your storm becomes a safe harbor for your allies.",
 				level: 10,
 				actionType: "passive",
 			},
 			{
 				name: "Volatile Discharge",
 				description:
-					"Inferno: reaction when hit, fire = half level. Tempest: reaction, AGI save or prone. Glacial: bonus action, STR save or speed 0.",
+					"Your aura type grants a discharge. Inferno: when a creature in your aura hits you with an attack, you can use your reaction to deal fire damage to it equal to half your Berserker level (rounded down). Tempest: when you hit a creature in your aura with an attack, you can use your reaction to force it to make a STR saving throw against your Job save DC; on a failure, it is knocked prone. Glacial: whenever your aura activates, you can choose one creature you can see in it; that creature must succeed on a STR saving throw against your Job save DC or have its speed reduced to 0 until the start of your next turn.",
 				level: 14,
 				actionType: "passive",
 			},
@@ -730,7 +733,7 @@ const pathCatalog: Path[] = [
 			{
 				name: "Storm Detonation",
 				description:
-					"30-ft radius, 4d8 damage (aura type), AGI half. The Absolute unleashed in a single, devastating burst. Once/long rest.",
+					"As an action, each creature of your choice within 30 feet of you must make an AGI saving throw against your Job save DC, taking 4d8 damage of your aura's type (fire for Inferno, lightning for Tempest, cold for Glacial) on a failure, or half as much on a success. The Absolute unleashed in a single, devastating burst. Once per long rest.",
 				recharge: 3,
 				cost: "Action",
 			},
@@ -832,7 +835,7 @@ const pathCatalog: Path[] = [
 			{
 				name: "Anomaly Surge",
 				description:
-					"Enter Overload → consult the Anomaly Surge Chart. Manifestations: shadow tendrils (1d12 force), teleport 30 ft, mana explosion, crystallized force weapon, or size increase.",
+					"Each time you enter Overload, roll a d8 on the Anomaly Surge chart. The surge lasts until your Overload ends unless its entry says otherwise, and a new roll replaces it. Any saving throw it calls for uses your Job save DC. 1, Void Tendrils: each creature of your choice within 30 feet of you must succeed on a VIT saving throw or take 1d12 force damage, and you gain 1d12 temporary hit points. 2, Phase Jump: you teleport up to 30 feet to an unoccupied space you can see; until the surge ends, you can repeat this as a bonus action on each of your turns. 3, Mana Mote: a mote of unstable mana appears within 5 feet of a creature of your choice within 30 feet of you and explodes at the end of the current turn; each creature within 5 feet of it must succeed on an AGI saving throw or take 1d6 force damage. Until the surge ends, you can create another mote as a bonus action on each of your turns. 4, Crystal Weapon: mana crystallizes around one weapon you're holding; until the surge ends, it deals force damage, gains the light and thrown properties (range 20/60 feet), and returns to your hand at the end of the turn if it left it. 5, Giant Surge: you grow one size larger if there's room; until the surge ends, you have advantage on STR checks and STR saving throws, and your weapon attacks deal an extra 1d4 damage. 6, Retribution Field: until the surge ends, a creature that hits you with an attack roll takes 1d6 force damage. 7, Ward Lights: until the surge ends, you and allies within 10 feet of you gain a +1 bonus to AC. 8, Flare Bolt: another creature you can see within 30 feet of you must succeed on a VIT saving throw or take 1d6 radiant damage and be blinded until the start of your next turn; until the surge ends, you can repeat this as a bonus action on each of your turns.",
 				level: 3,
 				actionType: "passive",
 			},
@@ -848,13 +851,14 @@ const pathCatalog: Path[] = [
 			{
 				name: "Cascade Resonance",
 				description:
-					"Take damage or fail save while in Overload → reaction to reroll the Anomaly Surge, replacing the current distortion with a new one.",
+					"While you're in Overload, when you take damage or fail a saving throw, you can use your reaction to roll on the Anomaly Surge chart again; the new result replaces your current surge.",
 				level: 10,
 				actionType: "passive",
 			},
 			{
 				name: "Controlled Distortion",
-				description: `Identify local Anomaly Surge variables twice, choose which manifestation to anchor. On a harmonic match, choose any effect from the chart. Your spell attacks score a critical hit on a roll of 19 or 20.`,
+				description:
+					"Whenever you roll on the Anomaly Surge chart, roll twice and choose which result to use. If both dice show the same number, you can instead choose any effect on the chart. Your spell attacks score a critical hit on a roll of 19 or 20.",
 				level: 14,
 				actionType: "passive",
 			},
@@ -863,7 +867,7 @@ const pathCatalog: Path[] = [
 			{
 				name: "Anomalous Detonation",
 				description:
-					"20-ft radius: 3d10 force, VIT half, random Anomaly Surge on each failure. Once/long rest.",
+					"As an action, each creature of your choice within 20 feet of you must make a VIT saving throw against your Job save DC, taking 3d10 force damage on a failure or half as much on a success. If you're in Overload, you then roll on the Anomaly Surge chart, and the result replaces your current surge. Once per long rest.",
 				recharge: 3,
 				cost: "Action",
 			},
@@ -925,7 +929,7 @@ const pathCatalog: Path[] = [
 			{
 				name: "Phase Grab",
 				description:
-					"Bonus action: phase your hand through a creature within 5 ft and steal a held/worn item (AGI save).",
+					"As a bonus action, phase your hand into a creature within 5 feet of you to take one object it is holding or wearing that weighs no more than 10 pounds, isn't a weapon it's wielding, and isn't armor it's wearing. The creature makes an AGI saving throw against your Job save DC. On a failure, the object appears in your free hand. On a success, you come away empty-handed and the creature knows you tried. You can use Phase Grab a number of times equal to your proficiency bonus, regaining all uses when you finish a long rest.",
 				recharge: 1,
 				cost: "Bonus action",
 			},
@@ -1015,13 +1019,14 @@ const pathCatalog: Path[] = [
 			{
 				name: "Weave Intrusion",
 				description:
-					"Harmonic Hand + 2 Mage cantrips + 3 spells (enchantment/illusion). INT casting, third-caster slots.",
+					"You learn to cast Mage spells and to project a Harmonic Hand. Harmonic Hand: as an action, you conjure a spectral hand at a point you can see within 30 feet of you. It lasts for 1 minute, until you dismiss it (no action), or until you conjure it again, and it vanishes if it's ever more than 30 feet from you. When you conjure it, and as an action on later turns, you can move it up to 30 feet and use it to manipulate an object, open an unlocked door or container, stow or retrieve an item from an open container, or pour out the contents of a vial. It can't attack, activate magic items, or carry more than 10 pounds, and it doesn't count against your cantrips known. Spellcasting: Intelligence is your spellcasting ability; your spell save DC is 8 + your proficiency bonus + your Intelligence modifier, and your spell attack modifier is your proficiency bonus + your Intelligence modifier. You know two Mage cantrips of your choice, and a third at 10th level. You know three Mage spells at 3rd level and learn more as you gain levels (4 at 4th, 5 at 7th, 6 at 8th, 7 at 10th, 8 at 11th, 9 at 13th, 10 at 14th, 11 at 16th, 12 at 19th, and 13 at 20th). Each must be an enchantment or illusion spell of a level for which you have spell slots. Whenever you gain a level in this Job, you can replace one Mage spell you know with another that meets these rules. You have third-caster spell slots, from two 1st-level slots at 3rd level to four 1st-, three 2nd-, three 3rd-, and one 4th-level slot at 19th, and you regain all expended slots when you finish a long rest.",
 				level: 3,
 				actionType: "passive",
 			},
 			{
 				name: "Harmonic Hand Mastery",
-				description: `Your aetheric hand can stow/retrieve objects, pick locks, and disarm traps at range via Sleight of Hand. You gain a +1 bonus to all saving throws.`,
+				description:
+					"Your Harmonic Hand is invisible, and you can control it as a bonus action. With it, you can stow an object in a container worn or carried by another creature, retrieve an object from such a container, or use thieves' tools to pick locks and disarm traps at range. To do one of these unnoticed, make an AGI (Sleight of Hand) check contested by the creature's SENSE (Perception) check. You gain a +1 bonus to all saving throws.",
 				level: 3,
 				actionType: "passive",
 			},
@@ -1053,7 +1058,7 @@ const pathCatalog: Path[] = [
 			{
 				name: "Shadow Casting",
 				description:
-					"Cast a cantrip while hidden without revealing position. Add Vulnerability Analysis if it deals damage. Once/short rest.",
+					"As an action, cast a cantrip while you're hidden; casting it doesn't reveal your position, so you stay hidden. If the cantrip requires a spell attack roll and hits a creature, you can apply your Vulnerability Analysis damage to that creature. This replaces only Vulnerability Analysis's finesse-or-ranged-weapon requirement: the once-per-turn limit and the advantage or adjacent-ally condition still apply, and attacking while hidden normally gives you advantage. Once per short rest.",
 				recharge: 1,
 				cost: "Action",
 			},
@@ -1116,7 +1121,7 @@ const pathCatalog: Path[] = [
 			{
 				name: "Coordinated Exploit",
 				description:
-					"Bonus action: designate target in 60 ft. Next ally to hit it adds your Vulnerability Analysis damage. Once/short rest.",
+					"As a bonus action, designate a creature you can see within 60 feet of you. The next time one of your allies hits it with an attack roll before the start of your next turn, that ally adds your Vulnerability Analysis dice to the damage. The ally needs no advantage, adjacent ally, or particular weapon for this, and the designation then ends. It doesn't use your own Vulnerability Analysis for the turn. Once per short rest.",
 				recharge: 1,
 				cost: "Bonus action",
 			},
@@ -1150,7 +1155,7 @@ const pathCatalog: Path[] = [
 			{
 				name: "Mandated Audacity",
 				description:
-					"Add PRE mod to initiative. Vulnerability Analysis without advantage if no other creature within 5 ft of you (no disadvantage required).",
+					"You add your PRE modifier to your initiative rolls. You can also apply Vulnerability Analysis to a creature you hit without having advantage, as long as it's within 5 feet of you, no other creature is within 5 feet of you, and you don't have disadvantage on the attack roll. All other Vulnerability Analysis rules still apply.",
 				level: 3,
 				actionType: "passive",
 			},
@@ -1182,7 +1187,7 @@ const pathCatalog: Path[] = [
 			{
 				name: "Aetheric Riposte",
 				description:
-					"Reaction when creature misses you: phase-strike with Vulnerability Analysis damage. Once/short rest.",
+					"When a creature within 5 feet of you misses you with a melee attack, you can use your reaction to make one melee attack against it with a finesse weapon. If it hits and you haven't used Vulnerability Analysis this turn, you can apply your Vulnerability Analysis damage even without advantage. Once per short rest.",
 				recharge: 1,
 				cost: "Reaction",
 			},
@@ -1237,7 +1242,7 @@ const pathCatalog: Path[] = [
 			{
 				name: "Recursive Phase Strike",
 				description:
-					"Bonus action: deliver one additional attack from a phase-shifted angle. Can apply Vulnerability Analysis to a different target even if already used this turn.",
+					"If you take the Attack action on your turn, you can make one additional attack as a bonus action, striking from a phase-shifted angle. That attack can benefit from your Vulnerability Analysis even if you've already used it this turn, but not against a creature you've already dealt Vulnerability Analysis damage to this turn.",
 				level: 17,
 				actionType: "passive",
 			},
@@ -1273,7 +1278,7 @@ const pathCatalog: Path[] = [
 			{
 				name: "Kinetic Technique",
 				description:
-					"When you use Aetheric Pulse (Rapid Barrage), each strike can impose one: AGI save or prone; STR save or pushed 15 ft; or target can't take reactions until end of your next turn.",
+					"Whenever you hit a creature with one of the unarmed strikes from your Rite of Force, you can impose one of these effects on it: it must succeed on an AGI saving throw against your Job save DC or be knocked prone; it must succeed on a STR saving throw against your Job save DC or be pushed up to 15 feet away from you; or it can't take reactions until the end of your next turn.",
 				level: 3,
 				actionType: "passive",
 			},
@@ -1288,14 +1293,14 @@ const pathCatalog: Path[] = [
 			{
 				name: "Aetheric Deterrence",
 				description:
-					"Your internal resonance passively deters aggression. End of long rest: gain Sanctuary effect until next long rest (save DC 8+SENSE mod+prof).",
+					"Your internal resonance passively deters aggression. When you finish a long rest, you gain a protective ward that lasts until the start of your next long rest. While it lasts, a creature that targets you with an attack or a harmful spell must first make a SENSE saving throw against DC 8 + your SENSE modifier + your proficiency bonus; on a failure, it must choose a new target or lose the attack or spell. The ward ends early if you make an attack roll, cast a spell, or deal damage to another creature.",
 				level: 11,
 				actionType: "passive",
 			},
 			{
 				name: "Resonance Palm",
 				description:
-					"Unarmed hit implants a kinetic vibration in the target's essence. Action to detonate: VIT save or reduced to 0 HP, success = 10d10 force damage.",
+					"When you hit a creature with an unarmed strike, you can spend 3 Impulse points to implant a kinetic vibration in its essence. The vibration lasts for a number of days equal to your Striker level and is harmless unless you use an action to detonate it while you're both on the same plane of existence. When you do, the creature makes a VIT saving throw against your Job save DC: on a failure, it drops to 0 hit points; on a success, it takes 10d10 force damage. Only one creature can carry your vibration at a time, and you can end it harmlessly (no action).",
 				level: 17,
 				actionType: "passive",
 			},
@@ -1304,7 +1309,7 @@ const pathCatalog: Path[] = [
 			{
 				name: "Essence Lockdown",
 				description:
-					"VIT save or stunned until end of your next turn. 3 Impulse.",
+					"As an action, spend 3 Impulse points and make an unarmed strike. On a hit, the target takes the strike's damage and must succeed on a VIT saving throw against your Job save DC or be stunned for 1 minute. A stunned target repeats the saving throw at the end of each of its turns, ending the effect on itself on a success.",
 				recharge: 0,
 				cost: "3 Impulse",
 			},
@@ -1330,7 +1335,8 @@ const pathCatalog: Path[] = [
 		features: [
 			{
 				name: "Shadow Resonance",
-				description: `2 Impulse: cast Darkness, Darkvision, Pass without Trace, or Silence through your aetheric network. Learn Minor Illusion cantrip. Your walking speed increases by 10 feet, and you gain a climbing speed equal to your walking speed.`,
+				description:
+					"As an action, you can spend 2 Impulse points to create one of these effects. Shroud of Dark: magical darkness fills a 15-foot-radius sphere centered on a point you can see within 60 feet for up to 10 minutes (concentration); darkvision can't see through it, and nonmagical light can't illuminate it. Night Sight: you or a willing creature you touch gains darkvision out to 60 feet for 8 hours. Silent Passage: for up to 1 hour (concentration), you and each creature of your choice within 30 feet of you gain a +10 bonus to AGI (Stealth) checks and can't be tracked except by magical means. Hush: for up to 10 minutes (concentration), no sound can be created within or pass through a 20-foot-radius sphere centered on a point you can see within 120 feet, and creatures fully inside it are deafened and immune to thunder damage. You can also weave a minor phantasm at will: as an action, create a sound, an image of an object no larger than a 5-foot cube, or both within 30 feet of you for 1 minute; a creature that uses its action to examine it sees through it with a successful INT (Investigation) check against your Job save DC. Your walking speed increases by 10 feet, and you gain a climbing speed equal to your walking speed.",
 				level: 3,
 				actionType: "passive",
 			},
@@ -1360,7 +1366,7 @@ const pathCatalog: Path[] = [
 			{
 				name: "Phantom Barrage",
 				description:
-					"Teleport between up to 3 creatures within 60 ft, unarmed strike each. Start/end in dim light/darkness. 3 Impulse.",
+					"As an action while you're in dim light or darkness, spend 3 Impulse points and choose up to three creatures you can see within 60 feet of you. You teleport to an unoccupied space within 5 feet of each target in turn and make one unarmed strike against it, then teleport to your starting space or to another space of dim light or darkness within 60 feet of it. This movement doesn't provoke opportunity attacks.",
 				recharge: 0,
 				cost: "3 Impulse",
 			},
@@ -1386,27 +1392,29 @@ const pathCatalog: Path[] = [
 		features: [
 			{
 				name: "Elemental Conversion",
-				description: `Learn Aetheric Attunement + 1 elemental discipline. More at 6,11,17. Max spirit per discipline = half Striker level (round up). You learn one cantrip of your choice from the wizard spell list. Intelligence is your spellcasting ability for it.`,
+				description:
+					"You learn to convert Impulse points into elemental disciplines. You know Aetheric Attunement and one discipline of your choice from the Discipline Library, and you learn one more at 6th, 11th, and 17th level from the disciplines available at that level (see Advanced Conversions). Whenever you learn a new discipline, you can replace one you already know with another you could learn. To use a discipline, spend its Impulse cost; some let you spend more to increase their effect, but you can't spend more Impulse points on a single use than half your Striker level (rounded up). A discipline that calls for a saving throw uses your Job save DC. Aetheric Attunement (no cost): as an action, you briefly control the elements within 30 feet of you to create a harmless sensory effect (a puff of wind, a shower of sparks, a faint tremor, a wisp of frost); instantly light or snuff out a candle, torch, or small campfire; chill or warm up to 1 pound of nonliving material for up to 1 hour; or shape earth, fire, water, or mist that fits within a 1-foot cube into a crude form for 1 minute.",
 				level: 3,
 				actionType: "passive",
 			},
 			{
 				name: "Discipline Library",
 				description:
-					"Options: Thermal Fists (fire reach +10 ft), Concussive Blast (30 ft 3d10 force), Gravity Whip (30 ft pull 3d10), Thermal Wave (15-ft cone 3d6 fire, 2 spirit), etc.",
+					"Disciplines you can learn from 3rd level. Thermal Fists (1 Impulse): when you take the Attack action on your turn, you can spend 1 Impulse point so that, until the end of the turn, your unarmed strikes have 10 extra feet of reach and deal fire damage; when one hits, you can spend 1 more Impulse point to deal an extra 1d10 fire damage. Concussive Blast (2 Impulse): as an action, choose a creature within 30 feet; it makes a STR saving throw, taking 3d10 force damage, being pushed up to 20 feet away from you, and being knocked prone on a failure, or taking half as much damage only on a success; +1d10 for each additional Impulse point. Gravity Whip (2 Impulse): as an action, choose a creature within 30 feet; it makes an AGI saving throw, and on a failure it takes 3d10 force damage and you either pull it up to 25 feet toward you or knock it prone; on a success it takes half as much damage only; +1d10 for each additional Impulse point. Thermal Wave (2 Impulse): as an action, each creature in a 15-foot cone makes an AGI saving throw, taking 3d6 fire damage on a failure or half as much on a success; +1d6 for each additional Impulse point. Thunder Clap (2 Impulse): as an action, each creature in a 15-foot cube originating from you makes a VIT saving throw, taking 2d8 thunder damage and being pushed 10 feet away from you on a failure, or taking half as much damage only on a success; +1d8 for each additional Impulse point.",
 				level: 3,
 				actionType: "passive",
 			},
 			{
 				name: "Advanced Conversions",
-				description: `6th: Essence Lock 3 spirit, Sonic Shatter 3 spirit. 11th: Thermal Detonation 4 spirit, Gravity Flight 4 spirit. 17th: Cryo Blast 6 spirit, Force Wall 5 spirit. You learn one cantrip of your choice from the wizard spell list. Intelligence is your spellcasting ability for it.`,
+				description:
+					"More disciplines open as you gain levels. From 6th level: Essence Lock (3 Impulse): as an action, choose a humanoid you can see within 60 feet; it must succeed on a SENSE saving throw or be paralyzed for up to 1 minute (concentration, as if on a spell), repeating the saving throw at the end of each of its turns and ending the effect on a success. Sonic Shatter (3 Impulse): as an action, choose a point within 60 feet; each creature in a 10-foot-radius sphere there makes a VIT saving throw, taking 3d8 thunder damage on a failure or half as much on a success, and nonmagical objects there that aren't worn or carried take the same damage; +1d8 for each additional Impulse point. From 11th level: Thermal Detonation (4 Impulse): as an action, choose a point within 150 feet; each creature in a 20-foot-radius sphere there makes an AGI saving throw, taking 8d6 fire damage on a failure or half as much on a success; +1d6 for each additional Impulse point. Gravity Flight (4 Impulse): as an action, you gain a flying speed of 60 feet for up to 10 minutes (concentration). From 17th level: Cryo Blast (6 Impulse): as an action, each creature in a 60-foot cone makes a VIT saving throw, taking 8d8 cold damage on a failure or half as much on a success; +1d8 for each additional Impulse point. Force Wall (5 Impulse): as an action, you raise an invisible wall of force at a point you can see within 120 feet for up to 10 minutes (concentration), shaped as up to ten contiguous 10-foot-square panels or as a hemispherical dome or sphere with a radius of up to 10 feet. Nothing can physically pass through the wall, and it can't be damaged.",
 				level: 6,
 				actionType: "passive",
 			},
 			{
 				name: "Conversion Mastery",
 				description:
-					"Spend 1 extra spirit point on a discipline to increase its save DC by 2. Your elemental output has been perfected.",
+					"When you use a discipline that calls for a saving throw, you can spend 1 additional Impulse point to increase its save DC by 2; this point doesn't count against your per-use limit. Your elemental output has been perfected.",
 				level: 17,
 				actionType: "passive",
 			},
@@ -1415,7 +1423,7 @@ const pathCatalog: Path[] = [
 			{
 				name: "Omni-Burst",
 				description:
-					"30-ft cone: 2d6 fire+2d6 cold+2d6 lightning+2d6 force. 5 Impulse.",
+					"As an action, spend 5 Impulse points to release every element at once: each creature in a 30-foot cone must make an AGI saving throw against your Job save DC, taking 2d6 fire, 2d6 cold, 2d6 lightning, and 2d6 force damage on a failure, or half as much on a success.",
 				recharge: 0,
 				cost: "5 Impulse",
 			},
@@ -1442,27 +1450,28 @@ const pathCatalog: Path[] = [
 			{
 				name: "Erratic Resonance",
 				description:
-					"When you use Aetheric Pulse (Rapid Barrage): gain Disengage and +10 ft speed until end of turn. Your chaotic movement confuses all defenses.",
+					"When you use Rite of Force, you gain the benefit of the Disengage action, and your walking speed increases by 10 feet until the end of the current turn. Your chaotic movement confuses all defenses.",
 				level: 3,
 				actionType: "passive",
 			},
 			{
 				name: "Entropic Realignment",
 				description:
-					"Stand from prone = 5 ft. When missed with melee, spend 1 spirit point to redirect the attack to another creature within 5 ft. Your essence displaces the impact.",
+					"Standing up from prone costs you only 5 feet of movement. When a creature misses you with a melee attack roll, you can use your reaction and spend 1 Impulse point to make that attack hit another creature of your choice within 5 feet of you, other than the attacker. Your essence displaces the impact.",
 				level: 6,
 				actionType: "passive",
 			},
 			{
 				name: "Harmonic Correction",
 				description:
-					"When you have disadvantage on check/attack/save, spend 2 Impulse to cancel it. The Absolute realigns to favor your chaos.",
+					"When you make an ability check, an attack roll, or a saving throw with disadvantage, you can spend 2 Impulse points to cancel the disadvantage for that roll. The Absolute realigns to favor your chaos.",
 				level: 11,
 				actionType: "passive",
 			},
 			{
 				name: "Cascade Assault",
-				description: `Aetheric Pulse (Rapid Barrage): up to 3 additional attacks (5 total), each must target a different creature. Your displaced body appears everywhere at once. You gain a +1 bonus to all saving throws.`,
+				description:
+					"When you use Rite of Force, you can make up to three additional unarmed strikes with it, up to five in total, as long as each strike targets a different creature this turn. Your displaced body appears everywhere at once. You gain a +1 bonus to all saving throws.",
 				level: 17,
 				actionType: "passive",
 			},
@@ -1498,21 +1507,21 @@ const pathCatalog: Path[] = [
 			{
 				name: "Aetheric Weapon Bond",
 				description:
-					"Choose 2 weapons (1 melee, 1 ranged, no heavy/special). They connect to your aetheric network and count as Striker weapons. Melee bonded weapon + unarmed in same turn = +2 AC. Ranged: 1 spirit point for +1d4+SENSE mod damage.",
+					"Choose two weapons to bond with your aetheric network: one melee weapon and one ranged weapon, each a simple or martial weapon without the heavy or special property. You're proficient with them, and they count as Striker weapons for you. If you make an unarmed strike as part of the Attack action on your turn while holding your bonded melee weapon, you gain a +2 bonus to AC until the start of your next turn, as long as you aren't incapacitated. As a bonus action, you can spend 1 Impulse point so that, until the end of the turn, each hit with your bonded ranged weapon deals an extra 1d4 + your SENSE modifier damage.",
 				level: 3,
 				actionType: "passive",
 			},
 			{
 				name: "Harmonic Edge",
 				description:
-					"Bonded weapons count as magical and deal force damage. Keen Strike: 1 spirit point on bonded weapon hit = extra Spirit Combat die damage.",
+					"Your bonded weapons count as magical for overcoming resistance and immunity, and they deal force damage. Keen Strike: once on each of your turns, when you hit with a bonded weapon, you can spend 1 Impulse point to deal extra damage equal to one roll of your Impulse Combat die.",
 				level: 6,
 				actionType: "passive",
 			},
 			{
 				name: "Resonance Honing",
 				description:
-					"Bonus action: spend 1-3 Impulse, granting your nonmagical bonded weapon an equal bonus to attack/damage for 1 min. You vibrate the blade at a molecular level.",
+					"As a bonus action, spend 1 to 3 Impulse points to hone a nonmagical bonded weapon you're holding: it gains a bonus to attack and damage rolls equal to the points spent for 1 minute, or until you use this feature again. You vibrate the blade at a molecular level.",
 				level: 11,
 				actionType: "passive",
 			},
@@ -1528,7 +1537,7 @@ const pathCatalog: Path[] = [
 			{
 				name: "Blade Tempest",
 				description:
-					"Attack every creature within 10 ft with bonded weapon. Each hit: weapon + 2 Spirit Combat dice. 4 Impulse.",
+					"As an action, spend 4 Impulse points to make one melee attack with your bonded melee weapon against each creature of your choice within 10 feet of you; these attacks have a reach of 10 feet. Each hit deals the weapon's damage plus two rolls of your Impulse Combat die.",
 				recharge: 0,
 				cost: "4 Impulse",
 			},
@@ -1561,35 +1570,35 @@ const pathCatalog: Path[] = [
 			{
 				name: "Restorative Touch",
 				description:
-					"During Rapid Barrage: replace one strike with a restorative touch = 1 Spirit Combat die + SENSE mod HP restored. 1 spirit point to also end disease or debilitating conditions (blinded/deafened/paralyzed/poisoned/stunned).",
+					"As an action, you can spend 1 Impulse point to touch a creature and restore hit points equal to one roll of your Impulse Combat die + your SENSE modifier. When you use Rite of Force, you can replace one of its unarmed strikes with a Restorative Touch without spending an Impulse point for the healing. Whenever you use Restorative Touch, you can spend 1 additional Impulse point to also end one disease or one of these conditions on the creature: blinded, deafened, paralyzed, poisoned, or stunned.",
 				level: 3,
 				actionType: "passive",
 			},
 			{
 				name: "Essence Shutdown",
 				description:
-					"During Rapid Barrage hit: spend 1 spirit point to deal extra necrotic damage = 1 Spirit Combat die + SENSE mod. Target's motor pathways seize—poisoned until the end of your next turn.",
+					"Once per turn, when you hit a creature with an unarmed strike, you can spend 1 Impulse point to deal extra necrotic damage equal to one roll of your Impulse Combat die + your SENSE modifier. The target's motor pathways seize: it must succeed on a VIT saving throw against your Job save DC or be poisoned until the end of your next turn.",
 				level: 3,
 				actionType: "passive",
 			},
 			{
 				name: "Advanced Harmonic Surgery",
 				description:
-					"Restorative Touch also ends frightened or charmed. Essence Shutdown: the motor seizure requires no save from the victim.",
+					"Restorative Touch can also end the charmed or frightened condition. Essence Shutdown no longer allows a saving throw: the target is poisoned until the end of your next turn.",
 				level: 6,
 				actionType: "passive",
 			},
 			{
 				name: "Surgical Barrage",
 				description:
-					"Replace each Rapid Barrage strike with Restorative Touch (no spirit cost for heal). Essence Shutdown once per turn without spending spirit.",
+					"When you use Rite of Force, you can replace each of its unarmed strikes with a Restorative Touch without spending Impulse points for the healing. You can also use Essence Shutdown with one Rite of Force strike each turn without spending an Impulse point.",
 				level: 11,
 				actionType: "passive",
 			},
 			{
 				name: "Aetheric Resurrection",
 				description:
-					"Touch a creature that died within 24 hours: spend 5 Impulse to restart its internal resonance. Returns to life with 4d10+SENSE mod HP, cured of all physical conditions. Once/long rest.",
+					"As an action, touch a creature that died within the past 24 hours and spend 5 Impulse points to restart its internal resonance. It returns to life with hit points equal to 4d10 + your SENSE modifier, cured of the blinded, deafened, paralyzed, poisoned, and stunned conditions. Once per long rest.",
 				level: 17,
 				uses: { formula: "1", recharge: "long-rest" },
 				resource: "5 Impulse points",
@@ -1601,7 +1610,7 @@ const pathCatalog: Path[] = [
 			{
 				name: "Aetheric Heal",
 				description:
-					"Touch an ally: restore 2d8+SENSE mod HP and purge one condition by realigning their aetheric pathways. 2 Impulse.",
+					"As an action, spend 2 Impulse points and touch a creature: it regains hit points equal to 2d8 + your SENSE modifier, and you end one of these conditions on it: blinded, charmed, deafened, frightened, paralyzed, poisoned, or stunned.",
 				recharge: 0,
 				cost: "2 Impulse",
 			},
@@ -5647,7 +5656,8 @@ const RECONCILED_PATH_ABILITY_MECHANICS: Readonly<
 		abilityName: "Phase Grab",
 		level: 3,
 		actionType: "Bonus action",
-		tracking: "manual",
+		uses: { formula: "PB", recharge: "long-rest" },
+		tracking: "uses",
 	},
 	"assassin--terminus": {
 		abilityName: "Phase Termination",
@@ -5687,19 +5697,22 @@ const RECONCILED_PATH_ABILITY_MECHANICS: Readonly<
 	"striker--kinetic-core": {
 		abilityName: "Essence Lockdown",
 		level: 3,
-		resource: "Impulse points",
+		actionType: "Action",
+		resource: "3 Impulse points",
 		tracking: "resource",
 	},
 	"striker--phantom-step": {
 		abilityName: "Phantom Barrage",
 		level: 3,
-		resource: "Impulse points",
+		actionType: "Action",
+		resource: "3 Impulse points",
 		tracking: "resource",
 	},
 	"striker--aetheric-channeler": {
 		abilityName: "Omni-Burst",
 		level: 3,
-		resource: "Impulse points",
+		actionType: "Action",
+		resource: "5 Impulse points",
 		tracking: "resource",
 	},
 	"striker--entropic-flow": {
@@ -5712,13 +5725,15 @@ const RECONCILED_PATH_ABILITY_MECHANICS: Readonly<
 	"striker--blade-conductor": {
 		abilityName: "Blade Tempest",
 		level: 3,
-		resource: "Impulse points",
+		actionType: "Action",
+		resource: "4 Impulse points",
 		tracking: "resource",
 	},
 	"striker--harmonic-surgeon": {
 		abilityName: "Aetheric Heal",
 		level: 3,
-		resource: "Impulse points",
+		actionType: "Action",
+		resource: "2 Impulse points",
 		tracking: "resource",
 	},
 	"esper--draconic-lineage": {
@@ -6126,6 +6141,58 @@ const RECONCILED_PATH_FEATURE_MECHANICS: Readonly<
 			tracking: "uses",
 		},
 		{ featureName: "Aura of the Atonement", actionType: "Reaction" },
+	],
+	"berserker--aetheric-anomaly": [
+		{ featureName: "Cascade Resonance", actionType: "Reaction" },
+	],
+	"striker--kinetic-core": [
+		{
+			featureName: "Resonance Palm",
+			resource: "3 Impulse points",
+			tracking: "resource",
+		},
+	],
+	"striker--entropic-flow": [
+		{
+			featureName: "Entropic Realignment",
+			actionType: "Reaction",
+			resource: "1 Impulse point",
+			tracking: "resource",
+		},
+		{
+			featureName: "Harmonic Correction",
+			resource: "2 Impulse points",
+			tracking: "resource",
+		},
+	],
+	"striker--blade-conductor": [
+		{
+			featureName: "Resonance Honing",
+			actionType: "Bonus action",
+			resource: "1-3 Impulse points",
+			tracking: "resource",
+		},
+	],
+	"striker--harmonic-surgeon": [
+		{
+			featureName: "Restorative Touch",
+			actionType: "Action",
+			resource: "1 Impulse point",
+			tracking: "resource",
+		},
+		{
+			featureName: "Essence Shutdown",
+			resource: "1 Impulse point",
+			tracking: "resource",
+		},
+	],
+	"striker--phantom-step": [
+		{
+			featureName: "Shadow Resonance",
+			actionType: "Action",
+			resource: "2 Impulse points",
+			tracking: "resource",
+		},
 	],
 	"holy-knight--exaltation-mandate": [
 		{
