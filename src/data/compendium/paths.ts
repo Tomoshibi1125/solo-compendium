@@ -1,6 +1,7 @@
 // Job Paths Compendium - Ascendant Compendium (84 Paths)
 // 14 Jobs × 6 Paths each, unique SA identities with 5e-compatible mechanical backbone
 
+import { PATH_LEVEL_CHOICES } from "./pathChoices";
 import { getPathCaster } from "./pathSpellcasting";
 
 export type PathRestRecharge = "short-rest" | "long-rest";
@@ -144,7 +145,8 @@ const pathCatalog: Path[] = [
 			},
 			{
 				name: "Secondary Discipline",
-				description: `The Mandate unlocks a second combat discipline slot. Choose another Combat Discipline. You gain a +1 bonus to all saving throws.`,
+				description:
+					"You choose a second Fighting Style from the RA Fighting Style catalog; it can't be one you already have. You gain a +1 bonus to all saving throws.",
 				level: 10,
 				actionType: "passive",
 			},
@@ -191,7 +193,8 @@ const pathCatalog: Path[] = [
 		features: [
 			{
 				name: "Tactical Charge",
-				description: `Learn 3 maneuvers, gain 4 tactical dice (d8). Regain on short/long rest. More maneuvers at 7,10,15. Dice: d10 at 10th, d12 at 18th. You gain proficiency in one skill or tool of your choice.`,
+				description:
+					"You learn three Techniques of your choice from those your Job can learn; these are your maneuvers, in addition to the Techniques your Job grants. You learn two more maneuvers at 7th, 10th, and 15th level, and whenever you gain a level in this Job you can replace one maneuver with another Technique you could learn. You also have tactical dice, which are d8s: four at 3rd level, five at 7th, and six at 15th. You regain all expended tactical dice when you finish a short or long rest. Once on each of your turns, when you use a maneuver, you can expend one tactical die and add it to that maneuver's attack roll or to one of its damage rolls. You gain proficiency in one skill or tool of your choice.",
 				level: 3,
 				actionType: "passive",
 			},
@@ -260,7 +263,7 @@ const pathCatalog: Path[] = [
 			{
 				name: "Weave-Combat Attunement",
 				description:
-					"Learn 2 Mage cantrips and 3 Mage spells (abjuration/evocation). INT casting, third-caster slots.",
+					"You learn to cast Mage spells, using Intelligence as your spellcasting ability: your spell save DC is 8 + your proficiency bonus + your Intelligence modifier, and your spell attack modifier is your proficiency bonus + your Intelligence modifier. Cantrips: you know two Mage cantrips of your choice, and a third at 10th level. Spells: you know three Mage spells at 3rd level and learn more as you gain levels (4 at 4th, 5 at 7th, 6 at 8th, 7 at 10th, 8 at 11th, 9 at 13th, 10 at 14th, 11 at 16th, 12 at 19th, and 13 at 20th). Each must be an abjuration or evocation spell of a level for which you have spell slots. Whenever you gain a level in this Job, you can replace one Mage spell you know with another that meets these rules. Spell slots: you have third-caster spell slots, from two 1st-level slots at 3rd level to four 1st-, three 2nd-, three 3rd-, and one 4th-level slot at 19th, and you regain all expended slots when you finish a long rest.",
 				level: 3,
 				actionType: "passive",
 			},
@@ -1794,7 +1797,8 @@ const pathCatalog: Path[] = [
 		features: [
 			{
 				name: "Refined Projection",
-				description: `Learn Minor Illusion cantrip. Can project both sound and image simultaneously in a single phantasm. You gain proficiency in one skill or tool of your choice.`,
+				description:
+					"You can weave a minor phantasm at will. As an action, create a sound, an image of an object, or both at a point within 30 feet of you. The phantasm lasts for 1 minute, until you dismiss it (no action), or until you create another. A sound can be as quiet as a whisper or as loud as a scream. An image can be no larger than a 5-foot cube; it can't create light, smell, or any other sensory effect, and physical interaction reveals it as an illusion because things pass through it. A creature that uses its action to examine the phantasm can tell it is an illusion with a successful Intelligence (Investigation) check against your spell save DC. You gain proficiency in one skill or tool of your choice.",
 				level: 2,
 				actionType: "passive",
 			},
@@ -1915,7 +1919,7 @@ const pathCatalog: Path[] = [
 			{
 				name: "Aetheric Core",
 				description:
-					"Spend 8 hours to crystallize ambient mana into a core granting various buffs. Realignment of the core occurs when you manifest a transmutation spell.",
+					"You can spend 8 hours crystallizing ambient mana into an Aetheric Core. Whoever carries it (you, or a creature you give it to) gains the benefit you chose for it when you gained this feature: Night Lattice (darkvision out to 60 feet), Swift Lattice (+10 feet to walking speed while the carrier isn't encumbered), Enduring Lattice (proficiency in Vitality saving throws), or a ward that grants resistance to one damage type: Acid Ward, Cold Ward, Fire Ward, Lightning Ward, or Thunder Ward. Each time you cast a transmutation spell of 1st level or higher while the core is on your person, you can change its benefit; record the new benefit in place of the old one. Only one core works at a time: making a new one ends the old one.",
 				level: 6,
 				actionType: "passive",
 			},
@@ -1928,7 +1932,7 @@ const pathCatalog: Path[] = [
 			{
 				name: "Master Weaver's Rite",
 				description:
-					"Destroy your Aetheric Core to trigger a grand realignment: purge conditions, raise the fallen, or reverse the aging of a vessel.",
+					"As an action, you can shatter your Aetheric Core to release one of these effects. You can't make a new core until you finish a long rest. Grand Realignment: transmute a nonmagical object you touch, no larger than a 5-foot cube, into another nonmagical object of similar size and mass and of equal or lesser value; you must handle the object for 10 minutes before you shatter the core. Purge: one creature you touch has all curses, diseases, and poisons removed and regains all its hit points. Raise the Fallen: touch a creature that died within the last 10 days and whose body is mostly intact; if its soul is willing and free, it returns to life with 1 hit point, its poisons and nonmagical diseases are neutralized, and it takes a -4 penalty to attack rolls, saving throws, and ability checks that drops by 1 each time it finishes a long rest. Reverse the Years: touch a willing creature; its apparent age drops by 3d10 years, to a minimum of 13, without extending its lifespan.",
 				level: 14,
 				actionType: "passive",
 			},
@@ -3547,7 +3551,8 @@ const pathCatalog: Path[] = [
 			},
 			{
 				name: "Phantasmal Delirium",
-				description: `Action: trap a creature's consciousness in a misty reflection for 1 min. It perceives a reality of your choosing. Once/short rest. You learn one cantrip of your choice from the wizard spell list. Intelligence is your spellcasting ability for it.`,
+				description:
+					"As an action, choose a creature you can see within 60 feet. It must make a SENSE saving throw against your Job save DC. On a failure, it is charmed or frightened by you (your choice) for 1 minute, until your concentration breaks (as if concentrating on a spell), or until it takes any damage. Until the effect ends, it believes it is lost in a misty realm of your design and can see and hear only itself, you, and the illusion. Once per short rest. You learn one Contractor cantrip of your choice.",
 				level: 14,
 				actionType: "passive",
 			},
@@ -3582,7 +3587,8 @@ const pathCatalog: Path[] = [
 		features: [
 			{
 				name: "Aetheric Siphon",
-				description: `When you reduce an entity to 0 HP, siphon their residual resonance into temp HP. You gain resistance to force damage.`,
+				description:
+					"When you reduce a hostile creature to 0 hit points, you gain temporary hit points equal to your PRE modifier + your Contractor level (minimum 1). You gain resistance to force damage.",
 				level: 1,
 				actionType: "passive",
 			},
@@ -3603,7 +3609,7 @@ const pathCatalog: Path[] = [
 			{
 				name: "Hurl Through the Void",
 				description:
-					"On a successful strike, banish the recipient through a temporary entropic rift for 10d10 damage. Once/long rest.",
+					"When you hit a creature with an attack, you can banish it through a temporary entropic rift. It vanishes, with no saving throw, and hurtles through a nightmare landscape. At the end of your next turn, it returns to the space it left, or the nearest unoccupied space if that one is filled, and takes 10d10 psychic damage. Once per long rest.",
 				level: 14,
 				actionType: "passive",
 			},
@@ -3612,7 +3618,7 @@ const pathCatalog: Path[] = [
 			{
 				name: "Entropic Blast",
 				description:
-					"Channel a concentrated beam of void-energy: deal fire damage and ignite the recipient with aetheric flames. Once/short rest.",
+					"When you hit a creature with a spell attack, you can channel void-fire through the wound: the target takes an extra 2d8 fire damage and ignites. While it burns, it takes 1d8 fire damage at the start of each of its turns. The flames go out after 1 minute, or sooner if the target or a creature within 5 feet of it uses an action to douse them. Once per short rest.",
 				recharge: 1,
 				cost: "Free",
 			},
@@ -3653,14 +3659,14 @@ const pathCatalog: Path[] = [
 			{
 				name: "Aetheric Shield",
 				description:
-					"Immunity to mental intrusion and resistance to psychic damage. Any attempt to read your resonance results in a harmful backlash.",
+					"Your thoughts can't be read unless you allow it, and you have resistance to psychic damage. Whenever a creature deals psychic damage to you, that creature takes the same amount of psychic damage that you take.",
 				level: 10,
 				actionType: "passive",
 			},
 			{
 				name: "Absolute Thrall",
 				description:
-					"Subjugated an incapacitated entity to your will indefinitely. You maintain a permanent telepathic link regardless of distance.",
+					"As an action, touch an incapacitated humanoid. It is charmed by you, with no saving throw, until an effect that ends curses or charms is used on it or until you use this feature again; you can have only one thrall at a time. You can communicate telepathically with your thrall at any distance while you're both on the same plane of existence.",
 				level: 14,
 				actionType: "passive",
 			},
@@ -3669,7 +3675,7 @@ const pathCatalog: Path[] = [
 			{
 				name: "Void Scream",
 				description:
-					"60-ft range: crush the target's consciousness with a burst of void-energy: 3d10 psychic + stun. Once/short rest.",
+					"Choose a creature you can see within 60 feet. It must make an INT saving throw against your Job save DC. On a failure, it takes 3d10 psychic damage and is stunned until the end of your next turn. On a success, it takes half as much damage and isn't stunned. Once per short rest.",
 				cost: "Action",
 				actionType: "action",
 				uses: { formula: "1", recharge: "short-rest" },
@@ -3697,33 +3703,37 @@ const pathCatalog: Path[] = [
 		features: [
 			{
 				name: "Absolute Light",
-				description: `Learn two additional radiant mantras. You gain a +1 bonus to all saving throws.`,
+				description:
+					"You learn the Oath Flare and Corona Storm cantrips. They count as Contractor spells for you and don't count against the number of cantrips you know. You gain a +1 bonus to all saving throws.",
+				grants: { spells: [{ name: "Oath Flare" }, { name: "Corona Storm" }] },
 				level: 1,
 				actionType: "passive",
 			},
 			{
 				name: "Aetheric Radiance",
 				description:
-					"Pool of restorative energy = 1 + Contractor level. Bonus action: heal an ally within 60 ft.",
+					"You have a pool of radiance dice, which are d6s; the pool holds a number of dice equal to 1 + your Contractor level. As a bonus action, you can heal one creature you can see within 60 feet of you by spending dice from the pool, up to a number equal to your PRE modifier (minimum 1). Roll the spent dice; the creature regains hit points equal to the total. You regain all spent dice when you finish a long rest.",
 				level: 1,
 				actionType: "passive",
 			},
 			{
 				name: "Radiant Essence",
 				description:
-					"Resistance to radiant damage. Add your presence toward fire and radiant manifestations.",
+					"You have resistance to radiant damage. When you cast a spell that deals radiant or fire damage, you can add your PRE modifier to one radiant or fire damage roll of that spell against one of its targets.",
 				level: 6,
 				actionType: "passive",
 			},
 			{
 				name: "Absolute Resilience",
-				description: `Grant temporary resonance/HP to yourself and up to 5 allies after every rest. You gain a +1 bonus to all saving throws.`,
+				description:
+					"Whenever you finish a short or long rest, you gain temporary hit points equal to your Contractor level + your PRE modifier, and up to five creatures of your choice that you can see gain temporary hit points equal to half your Contractor level (rounded down) + your PRE modifier. You gain a +1 bonus to all saving throws.",
 				level: 10,
 				actionType: "passive",
 			},
 			{
 				name: "Searing Rebirth",
-				description: `When your vessel is compromised (0 HP), immediately realign at half HP and blind all nearby foes with a radiant discharge. Once/long rest. You gain proficiency in one skill or tool of your choice.`,
+				description:
+					"When you have to make a death saving throw at the start of your turn, you can instead spring back up in a burst of radiant energy. You regain hit points equal to half your hit point maximum and can stand up. Each creature of your choice within 30 feet of you takes radiant damage equal to 2d8 + your PRE modifier and is blinded until the end of the current turn. Once per long rest. You gain proficiency in one skill or tool of your choice.",
 				level: 14,
 				actionType: "passive",
 			},
@@ -3732,7 +3742,7 @@ const pathCatalog: Path[] = [
 			{
 				name: "Radiant Discharge",
 				description:
-					"30-ft radius: 3d8 radiant damage + restorative output for all allies in range. Once/long rest.",
+					"Each hostile creature of your choice within 30 feet of you must make an AGI saving throw against your Job save DC, taking 3d8 radiant damage on a failure or half as much on a success. Each ally within 30 feet of you regains hit points equal to 1d8 + your PRE modifier. Once per long rest.",
 				recharge: 3,
 				cost: "Action",
 			},
@@ -3759,32 +3769,35 @@ const pathCatalog: Path[] = [
 			{
 				name: "Absolute Curse",
 				description:
-					"Bonus action: curse a creature for 1 min. You gain extra damage and critical focus against them.",
+					"As a bonus action, curse a creature you can see within 30 feet of you for 1 minute. The curse ends early if the target dies, you die, or you're incapacitated. Until it ends, you add your proficiency bonus to damage rolls you make against the cursed target, your attack rolls against it score a critical hit on a roll of 19 or 20, and if it drops to 0 hit points you regain hit points equal to your Contractor level + your PRE modifier (minimum 1). Once per short rest.",
 				level: 1,
 				actionType: "passive",
 			},
 			{
 				name: "Aetheric Duelist",
 				description:
-					"Proficiency with all martial armaments. Your offensive output is governed by your sheer presence alone.",
+					"You gain proficiency with medium armor, shields, and martial weapons. Whenever you finish a long rest, you can touch one weapon you're proficient with that lacks the two-handed property: until your next long rest, you use your PRE modifier instead of STR or AGI for its attack and damage rolls.",
 				level: 1,
 				actionType: "passive",
 			},
 			{
 				name: "Aetheric Remnant",
-				description: `When you slay an entity, manifest its residual resonance as a spectral sentinel under your command. Once/long rest. You learn one cantrip of your choice from the wizard spell list. Intelligence is your spellcasting ability for it.`,
+				description:
+					"When you slay a humanoid, you can raise its residual resonance as a Spectral Sentinel in an unoccupied space within 10 feet of the body. It obeys your commands and acts immediately after you on your initiative; it takes the Dodge action unless you use a bonus action to command it. It lasts until the end of your next long rest, until it drops to 0 hit points, until you dismiss it (no action), or until you raise another. Once per long rest. Spectral Sentinel (Medium): AC 12; 22 hit points, plus temporary hit points equal to half your Contractor level (rounded down) when it rises; speed 0 ft, fly 50 ft (hover). It can move through creatures and objects as if they were difficult terrain, taking 1d10 force damage if it ends its turn inside an object. It has resistance to acid, cold, fire, lightning, and thunder damage and to bludgeoning, piercing, and slashing damage from nonmagical attacks; immunity to necrotic and poison damage and to the charmed, frightened, grappled, paralyzed, petrified, poisoned, prone, and restrained conditions; and darkvision out to 60 feet. Life Drain (action): melee spell attack against a creature within 5 feet, using your spell attack bonus; on a hit, the target takes 3d6 necrotic damage and its hit point maximum drops by the same amount until it finishes a long rest. You also learn one Contractor cantrip of your choice.",
 				level: 6,
 				actionType: "passive",
 			},
 			{
 				name: "Absolute Deflection",
-				description: `If your cursed target strikes you, the Absolute realigns the blow to miss. 50% probability. You have advantage on initiative rolls.`,
+				description:
+					"When the target of your Absolute Curse hits you with an attack roll, you can use your reaction to roll a d6. On a 4 or higher, the attack misses you, regardless of its roll. You have advantage on initiative rolls.",
 				level: 10,
 				actionType: "passive",
 			},
 			{
 				name: "Cycle of the Curse",
-				description: `When your cursed target falls, the Absolute immediately transfers the curse to another nearby entity. Your movement speed increases by 5 feet.`,
+				description:
+					"When the target of your Absolute Curse dies, you can apply the curse to a different creature you can see within 30 feet of you, as long as you aren't incapacitated. When you do, you don't regain hit points from the first creature's death. Your movement speed increases by 5 feet.",
 				level: 14,
 				actionType: "passive",
 			},
@@ -3793,7 +3806,7 @@ const pathCatalog: Path[] = [
 			{
 				name: "Shadow Manifest",
 				description:
-					"Conjure a physical blade of pure void-essence for 1 min. It deals psychic damage and grants advantage in shadow.",
+					"As a bonus action, expend a pact slot to conjure a blade of void-essence in your free hand. It lasts for 1 minute, until you let go of it, or until you conjure another. You're proficient with it; it's a melee weapon with the finesse and light properties, and it deals 1d8 psychic damage plus 1d8 for each level of the slot above 1st. You can use your PRE modifier for its attack and damage rolls. While you're in dim light or darkness, you have advantage on attack rolls with it.",
 				recharge: 0,
 				cost: "Aetheric slot",
 			},
@@ -3820,7 +3833,7 @@ const pathCatalog: Path[] = [
 			{
 				name: "Tentacle of the Absolute",
 				description:
-					"Bonus action: summon a spectral tentacle to strike foes and reduce their movement. Once/short rest.",
+					"As a bonus action, you summon a spectral tentacle in an unoccupied space you can see within 60 feet. It lasts for 1 minute or until you summon another. When it appears, you can make a melee spell attack against one creature within 10 feet of it. On a hit, the target takes 1d8 cold damage (2d8 from 10th level) and its speed drops by 10 feet until the start of your next turn. On each of your later turns while the tentacle lasts, you can use a bonus action to move it up to 30 feet and repeat the attack. You can summon the tentacle a number of times equal to your proficiency bonus, regaining all uses when you finish a long rest.",
 				level: 1,
 				actionType: "passive",
 			},
@@ -3840,20 +3853,21 @@ const pathCatalog: Path[] = [
 			{
 				name: "Absolute Coil",
 				description:
-					"Reaction: your tentacles reduce the impact of incoming strikes for yourself and nearby allies.",
+					"When you or a creature you can see takes damage while within 10 feet of your tentacle, you can use your reaction to reduce that damage by 1d8 (2d8 from 10th level).",
 				level: 6,
 				actionType: "passive",
 			},
 			{
 				name: "Void Tentacles",
-				description: `Manifest a massive field of aetheric tentacles to restrain and consume all entities in the area. Once/long rest. You have advantage on initiative rolls.`,
+				description:
+					"As an action, fill a 20-foot square of ground you can see within 90 feet with writhing aetheric tentacles for up to 1 minute (concentration). The area is difficult terrain. A creature that enters the area for the first time on a turn, or starts its turn there, must succeed on an AGI saving throw against your Job save DC or take 3d6 bludgeoning damage and be restrained until the effect ends. A creature that starts its turn restrained there takes 3d6 bludgeoning damage. A restrained creature can use its action to make a STR or AGI check against your Job save DC, freeing itself on a success. When you create the field, you gain temporary hit points equal to your Contractor level, and taking damage can't break your concentration on it. Once per long rest. You have advantage on initiative rolls.",
 				level: 10,
 				actionType: "passive",
 			},
 			{
 				name: "Abyssal Plunge",
 				description:
-					"Teleport several entities through a body of water within 1 mile.",
+					"As an action, you and up to five willing creatures you can see within 30 feet of you vanish into a whirl of tentacles and reappear up to 1 mile away, in or within 30 feet of a body of water at least the size of a pond that you have seen. Each of you appears in an unoccupied space within 30 feet of the others. Once per short rest.",
 				level: 14,
 				actionType: "passive",
 			},
@@ -3862,7 +3876,7 @@ const pathCatalog: Path[] = [
 			{
 				name: "Crushing Resonance",
 				description:
-					"60-ft radius: creatures are restrained by absolute pressure and take 3d8 cold damage. Once/long rest.",
+					"Each creature of your choice within 60 feet of you must make a STR saving throw against your Job save DC. On a failure, a creature takes 3d8 cold damage and is restrained until the end of your next turn. On a success, it takes half as much damage and isn't restrained. Once per long rest.",
 				recharge: 3,
 				cost: "Action",
 			},
@@ -4446,33 +4460,35 @@ const pathCatalog: Path[] = [
 			{
 				name: "Absolute Resonance: Crushing Mandate",
 				description:
-					"Action: manifest an aura of absolute terror that renders nearby entities frightened for 1 min.",
+					"As an action, each creature of your choice within 30 feet of you that can see or hear you must succeed on a SENSE saving throw against your Job save DC or be frightened of you for 1 minute. A frightened creature repeats the saving throw at the end of each of its turns, ending the effect on itself on a success. Once per short rest.",
 				level: 3,
 				actionType: "passive",
 			},
 			{
 				name: "Absolute Resonance: Guided Strike",
-				description: `Gain an absolute bonus to a strike's precision after the manifestation has begun. Your movement speed increases by 5 feet.`,
+				description:
+					"When you make an attack roll, you can gain a +10 bonus to it. You decide after you see the roll, but before you know whether it hits. Once per short rest. Your movement speed increases by 5 feet.",
 				level: 3,
 				actionType: "passive",
 			},
 			{
 				name: "Aura of Dominance",
 				description:
-					"Terrified entities within 10 ft have their movement completely suppressed and suffer mental backlash.",
+					"While you're conscious, a creature that is frightened of you and within 10 feet of you has a speed of 0, and when it starts its turn there it takes psychic damage equal to half your Holy Knight level (rounded down).",
 				level: 7,
 				actionType: "passive",
 			},
 			{
 				name: "Scornful Backlash",
-				description: `Whenever your vessel is struck, the Absolute redirects a portion of the psychic force back at the aggressor. You gain proficiency in one skill or tool of your choice.`,
+				description:
+					"When a creature hits you with an attack, it takes psychic damage equal to your PRE modifier (minimum 1) if you aren't incapacitated. You gain proficiency in one skill or tool of your choice.",
 				level: 15,
 				actionType: "passive",
 			},
 			{
 				name: "Absolute Archon",
 				description:
-					"Action: transform into a supreme vessel of authority for 1 min. Resistance to all force and triple offensive output. Once/long rest.",
+					"As an action, you become a vessel of absolute authority for 1 minute. While transformed, you have resistance to all damage, you can make one additional attack when you take the Attack action on your turn, and your weapon attacks score a critical hit on a roll of 19 or 20. Once per long rest.",
 				level: 20,
 				actionType: "passive",
 			},
@@ -4481,7 +4497,7 @@ const pathCatalog: Path[] = [
 			{
 				name: "Absolute Presence",
 				description:
-					"All enemies within 30 ft must save or be knocked prone and rooted by sheer pressure. Once/long rest.",
+					"Each hostile creature within 30 feet of you must succeed on a STR saving throw against your Job save DC or be knocked prone, and its speed is 0 until the end of your next turn. Once per long rest.",
 				recharge: 3,
 				cost: "Action",
 			},
@@ -4508,34 +4524,35 @@ const pathCatalog: Path[] = [
 			{
 				name: "Absolute Resonance: Peacekeeper",
 				description:
-					"Grant yourself an absolute advantage in all diplomatic manifestations.",
+					"As a bonus action, you gain a +5 bonus to PRE (Persuasion) checks for 10 minutes. Once per short rest.",
 				level: 3,
 				actionType: "passive",
 			},
 			{
 				name: "Absolute Resonance: Radiant Backlash",
 				description:
-					"Reaction: when an entity deals damage, return the absolute equivalent in radiant output.",
+					"When a creature within 30 feet of you deals damage with an attack to a creature other than you, you can use your reaction to force the attacker to make a SENSE saving throw against your Job save DC. It takes radiant damage equal to the damage it just dealt on a failure, or half as much on a success. Once per short rest.",
 				level: 3,
 				actionType: "passive",
 			},
 			{
 				name: "Aura of the Atonement",
 				description:
-					"Reaction: absorb the offensive manifestations directed at your allies within 10 ft.",
+					"When a creature within 10 feet of you takes damage, you can use your reaction to take that damage instead. Damage you take this way can't be reduced or prevented.",
 				level: 7,
 				actionType: "passive",
 			},
 			{
 				name: "Protective Essence",
-				description: `Automatically stabilize your vessel's HP when below half maximum. Your movement speed increases by 5 feet.`,
+				description:
+					"At the end of each of your turns, if you have fewer than half your hit points but at least 1, and you aren't incapacitated, you regain hit points equal to 1d6 + half your Holy Knight level (rounded down). Your movement speed increases by 5 feet.",
 				level: 15,
 				actionType: "passive",
 			},
 			{
 				name: "Emissary of the Absolute",
 				description:
-					"Gain absolute resistance to all manifestations and redirect a portion of all incoming strikes back at their origin.",
+					"You have resistance to all damage dealt by other creatures, and whenever a creature damages you, it takes radiant damage equal to half the damage you take (rounded down). If you attack a creature, cast a spell at it, or damage it by any other means, both benefits stop working against that creature until you finish a long rest.",
 				level: 20,
 				actionType: "passive",
 			},
@@ -4544,7 +4561,7 @@ const pathCatalog: Path[] = [
 			{
 				name: "Harmonic Shield",
 				description:
-					"For 1 min, all damage directed at nearby allies is shared by your vessel. Once/long rest.",
+					"For 1 minute, whenever an ally within 30 feet of you takes damage, you can split it: the ally takes half (rounded down) and you take the rest. Damage you take this way can't be reduced. The effect ends early if you're incapacitated. Once per long rest.",
 				recharge: 3,
 				cost: "Bonus action",
 			},
@@ -4571,34 +4588,35 @@ const pathCatalog: Path[] = [
 			{
 				name: "Absolute Resonance: Peerless Form",
 				description:
-					"Grant yourself absolute advantage in all physical manifestations for 10 min.",
+					"As a bonus action, for 10 minutes you have advantage on STR (Athletics) and AGI (Acrobatics) checks, your carrying capacity and the weight you can push, drag, or lift double, and your long and high jumps each go 10 feet farther. Once per short rest.",
 				level: 3,
 				actionType: "passive",
 			},
 			{
 				name: "Absolute Resonance: Inspiring Smite",
-				description: `After an absolute strike, distribute restorative resonance to all nearby allies. You gain a +1 bonus to all saving throws.`,
+				description:
+					"Immediately after you deal damage with Covenant Strike, you can use a bonus action to distribute temporary hit points equal to 2d8 + your Holy Knight level among any creatures of your choice within 30 feet of you, including yourself. Once per short rest. You gain a +1 bonus to all saving throws.",
 				level: 3,
 				actionType: "passive",
 			},
 			{
 				name: "Aura of Alacrity",
 				description:
-					"Your physical speed is permanently enhanced, and allies who stand within your presence are granted similar acceleration.",
+					"Your walking speed increases by 10 feet. While you're conscious, an ally who starts its turn within 5 feet of you, or moves there for the first time on a turn, gains a 10-foot bonus to its walking speed until the end of its next turn.",
 				level: 7,
 				actionType: "passive",
 			},
 			{
 				name: "Exalted Defense",
 				description:
-					"Reaction: when an ally is targeted, realign the Absolute to grant them protection and return the strike.",
+					"When you or another creature you can see within 10 feet of you is hit by an attack roll, you can use your reaction to add your PRE modifier (minimum +1) to the target's AC against that attack, possibly causing it to miss. If it misses, you can make one weapon attack against the attacker as part of this reaction, if it's within your weapon's range. You can use this a number of times equal to your PRE modifier, regaining all uses when you finish a long rest.",
 				level: 15,
 				actionType: "passive",
 			},
 			{
 				name: "Living Legend",
 				description:
-					"Bonus action: become a legend incarnate for 1 min. Once per turn, turn any failure into an absolute success. Once/long rest.",
+					"As a bonus action, you become a living legend for 1 minute. While it lasts, you have advantage on PRE checks; once on each of your turns when you miss with a weapon attack, you can make it hit instead; and when you fail a saving throw, you can use your reaction to reroll it, using the new roll. Once per long rest.",
 				level: 20,
 				actionType: "passive",
 			},
@@ -4607,7 +4625,7 @@ const pathCatalog: Path[] = [
 			{
 				name: "Heroic Manifestation",
 				description:
-					"Move at double speed in a direct line, rending all entities in your path with absolute radiance. Once/short rest.",
+					"You move up to twice your speed in a straight line without provoking opportunity attacks. Each creature you move within 5 feet of during this movement must make an AGI saving throw against your Job save DC, taking 3d8 radiant damage on a failure or half as much on a success. Once per short rest.",
 				cost: "Action",
 				actionType: "action",
 				uses: { formula: "1", recharge: "short-rest" },
@@ -5530,6 +5548,7 @@ const RECONCILED_PATH_ABILITY_MECHANICS: Readonly<
 	"contractor--cursed-blade": {
 		abilityName: "Shadow Manifest",
 		level: 1,
+		actionType: "Bonus action",
 		resource: "Pact slot",
 		tracking: "resource",
 	},
@@ -6001,6 +6020,139 @@ type ReconciledPathFeature = Pick<
 const RECONCILED_PATH_FEATURE_MECHANICS: Readonly<
 	Record<string, readonly ReconciledPathFeature[]>
 > = {
+	"destroyer--tactician": [
+		{
+			featureName: "Tactical Charge",
+			// Tactical dice: four at 3rd level, five at 7th, six at 15th.
+			uses: { formula: "4 + (level + 1) / 8", recharge: "short-rest" },
+			tracking: "uses",
+		},
+	],
+	"mage--matter-weaver": [
+		{
+			featureName: "Master Weaver's Rite",
+			actionType: "Action",
+			tracking: "manual",
+		},
+	],
+	"contractor--infernal-conduit": [
+		{
+			featureName: "Hurl Through the Void",
+			uses: { formula: "1", recharge: "long-rest" },
+			tracking: "uses",
+		},
+	],
+	"contractor--void-whisperer": [
+		{ featureName: "Absolute Thrall", actionType: "Action" },
+	],
+	"contractor--radiant-vessel": [
+		{
+			featureName: "Aetheric Radiance",
+			actionType: "Bonus action",
+			uses: { formula: "1 + level", recharge: "long-rest" },
+			tracking: "uses",
+		},
+		{
+			featureName: "Searing Rebirth",
+			uses: { formula: "1", recharge: "long-rest" },
+			tracking: "uses",
+		},
+	],
+	"contractor--cursed-blade": [
+		{
+			featureName: "Absolute Curse",
+			actionType: "Bonus action",
+			uses: { formula: "1", recharge: "short-rest" },
+			tracking: "uses",
+		},
+		{
+			featureName: "Aetheric Remnant",
+			uses: { formula: "1", recharge: "long-rest" },
+			tracking: "uses",
+		},
+		{ featureName: "Absolute Deflection", actionType: "Reaction" },
+	],
+	"contractor--deep-dweller": [
+		{
+			featureName: "Tentacle of the Absolute",
+			actionType: "Bonus action",
+			uses: { formula: "PB", recharge: "long-rest" },
+			tracking: "uses",
+		},
+		{ featureName: "Absolute Coil", actionType: "Reaction" },
+		{
+			featureName: "Void Tentacles",
+			actionType: "Action",
+			uses: { formula: "1", recharge: "long-rest" },
+			tracking: "uses",
+		},
+		{
+			featureName: "Abyssal Plunge",
+			actionType: "Action",
+			uses: { formula: "1", recharge: "short-rest" },
+			tracking: "uses",
+		},
+	],
+	"holy-knight--dominance-mandate": [
+		{
+			featureName: "Absolute Resonance: Crushing Mandate",
+			actionType: "Action",
+			uses: { formula: "1", recharge: "short-rest" },
+			tracking: "uses",
+		},
+		{
+			featureName: "Absolute Resonance: Guided Strike",
+			uses: { formula: "1", recharge: "short-rest" },
+			tracking: "uses",
+		},
+		{
+			featureName: "Absolute Archon",
+			actionType: "Action",
+			uses: { formula: "1", recharge: "long-rest" },
+			tracking: "uses",
+		},
+	],
+	"holy-knight--atonement-mandate": [
+		{
+			featureName: "Absolute Resonance: Peacekeeper",
+			actionType: "Bonus action",
+			uses: { formula: "1", recharge: "short-rest" },
+			tracking: "uses",
+		},
+		{
+			featureName: "Absolute Resonance: Radiant Backlash",
+			actionType: "Reaction",
+			uses: { formula: "1", recharge: "short-rest" },
+			tracking: "uses",
+		},
+		{ featureName: "Aura of the Atonement", actionType: "Reaction" },
+	],
+	"holy-knight--exaltation-mandate": [
+		{
+			featureName: "Absolute Resonance: Peerless Form",
+			actionType: "Bonus action",
+			uses: { formula: "1", recharge: "short-rest" },
+			tracking: "uses",
+		},
+		{
+			featureName: "Absolute Resonance: Inspiring Smite",
+			actionType: "Bonus action",
+			uses: { formula: "1", recharge: "short-rest" },
+			tracking: "uses",
+		},
+		{
+			featureName: "Exalted Defense",
+			actionType: "Reaction",
+			uses: { formula: "PRE mod", recharge: "long-rest" },
+			tracking: "uses",
+		},
+		{
+			featureName: "Living Legend",
+			actionType: "Bonus action",
+			uses: { formula: "1", recharge: "long-rest" },
+			tracking: "uses",
+		},
+	],
 	"esper--draconic-lineage": [
 		{
 			featureName: "Elemental Affinity",
@@ -6424,13 +6576,21 @@ export const paths: Path[] = pathCatalog.map((path) => {
 	const abilityMechanics = RECONCILED_PATH_ABILITY_MECHANICS[path.id];
 	const featureMechanics = RECONCILED_PATH_FEATURE_MECHANICS[path.id];
 	const caster = getPathCaster(path.id);
-	if (!aliases && !abilityMechanics && !featureMechanics && !caster)
+	const levelChoices = PATH_LEVEL_CHOICES[path.id];
+	if (
+		!aliases &&
+		!abilityMechanics &&
+		!featureMechanics &&
+		!caster &&
+		!levelChoices
+	)
 		return path;
 
 	return {
 		...path,
 		...(aliases ? { aliases: [...aliases] } : {}),
 		...(caster ? { spellcasting: caster.spellcasting } : {}),
+		...(levelChoices ? { levelChoices: [...levelChoices] } : {}),
 		features: path.features.map((feature) => {
 			const mechanics = featureMechanics?.find(
 				(candidate) => candidate.featureName === feature.name,

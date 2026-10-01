@@ -11,7 +11,7 @@ import {
 import { addPathSpellGrants } from "@/lib/characterCreation";
 import { calculateTotalChoices } from "@/lib/choiceCalculations";
 import { createLocalCharacter, listLocalSpells } from "@/lib/guestStore";
-import { toCastingReference } from "@/lib/jobRules";
+import { type CastingJobReference, toCastingReference } from "@/lib/jobRules";
 import {
 	buildPathOptionFeatureId,
 	countOpenPathOptions,
@@ -157,7 +157,7 @@ describe("Path option groups (RA-23)", () => {
 });
 
 describe("Third-caster Path spellcasting", () => {
-	const spellBreaker = {
+	const spellBreaker: CastingJobReference = {
 		name: "Destroyer",
 		id: "destroyer",
 		pathId: "destroyer--spell-breaker",
@@ -167,13 +167,17 @@ describe("Third-caster Path spellcasting", () => {
 		expect(getCasterType("Destroyer")).toBe("none");
 		expect(getCasterType(spellBreaker)).toBe("third");
 		expect(getSpellcastingAbility(spellBreaker)).toBe("INT");
-		expect(
-			getCasterType({ name: "Berserker", pathId: "destroyer--spell-breaker" }),
-		).toBe("none");
+		const wrongJob: CastingJobReference = {
+			name: "Berserker",
+			pathId: "destroyer--spell-breaker",
+		};
+		expect(getCasterType(wrongJob)).toBe("none");
 		// A casting Job keeps its own progression.
-		expect(
-			getCasterType({ name: "Mage", pathId: "destroyer--spell-breaker" }),
-		).toBe("full");
+		const castingJob: CastingJobReference = {
+			name: "Mage",
+			pathId: "destroyer--spell-breaker",
+		};
+		expect(getCasterType(castingJob)).toBe("full");
 		expect(
 			getCasterType(
 				toCastingReference({
