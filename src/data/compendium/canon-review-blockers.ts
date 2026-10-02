@@ -18,15 +18,6 @@ export const canonicalReviewBlockers: readonly CanonReviewBlocker[] = [
 	// lifecycle cannot be normalized without choosing between conflicting source
 	// fields or inventing missing canon.
 	{
-		id: "task7:umbral_regent:progression-mechanics",
-		dataset: "regents",
-		entryId: "umbral_regent",
-		fieldPath: "class_features|progression_table",
-		message:
-			"Umbral Dominion has passive and active identities at different levels, Absolute Umbral is duplicated at levels 10 and 20, and Legion/Army command, stat blocks, dismissal, death, and persistence are not authored as a complete controlled-entity lifecycle.",
-		dependsOnTask: 20,
-	},
-	{
 		id: "task7:radiant_regent:progression-mechanics",
 		dataset: "regents",
 		entryId: "radiant_regent",
@@ -96,15 +87,6 @@ export const canonicalReviewBlockers: readonly CanonReviewBlocker[] = [
 		fieldPath: "class_features|progression_table",
 		message:
 			"Reality Rewrite conflicts between long-rest metadata and weekly prose; Spatial Anchors, demiplanes, unwilling teleportation, permanent topology, and the unapproved Architect identity lack complete lifecycle and save rules.",
-		dependsOnTask: 20,
-	},
-	{
-		id: "task7:mimic_regent:progression-mechanics",
-		dataset: "regents",
-		entryId: "mimic_regent",
-		fieldPath: "class_features|progression_table",
-		message:
-			"Flat source rows extend to power level 20 while requirements use power level 10; copied identities, storage limits, nested resources, use persistence, and replacement are undefined, and neither spellcasting nor a Transfiguration alias is authored.",
 		dependsOnTask: 20,
 	},
 	{

@@ -24,7 +24,7 @@ export const REGENT_EXPECTATIONS = {
 			3: ["Legion of the Veil", "Umbral Mastery"],
 			4: ["Army of the Damned"],
 			5: ["Dimensional Regent", "Dimensional Authority"],
-			7: ["Umbral Dominion", "Umbral God"],
+			7: ["Umbral Dominion Field", "Umbral God"],
 			10: ["Absolute Umbral"],
 		},
 	},
