@@ -1397,413 +1397,395 @@ export const regents: Regent[] = [
 			warden_verification: true,
 			prerequisite_job: "Any base job",
 		},
-		abilities: [
+		class_features: [
 			{
+				level: 1,
 				name: "Breath of Annihilation",
 				description:
-					"120-ft cone: 12d10 fire damage (AGI save DC 18). On kill, target is erased from reality (no resurrection). Buildings collapse, steel melts, and stone sublimates. This mirrors the Regent of Destruction's devastating breath.",
+					"As an action, unleash a 120-foot cone of apocalyptic fire. Creatures in the area must make an Agility saving throw (DC 8 + PB + STR) or take 12d10 fire damage (half on success). Creatures reduced to 0 hit points are erased from reality and cannot be resurrected by any means short of divine intervention. Buildings collapse, steel melts, and stone sublimates.",
 				type: "action",
 				frequency: "once-per-day",
-				
+				uses: 1,
+				recovery: "long-rest",
 			},
 			{
-				name: "True Dragon Form",
-				description:
-					"Transform into an ancient red dragon for 1 hour. Gargantuan size, fly 120 ft, AC 22, and immunity fire/physical. News declares 'dragon sighting confirmed.' You become the living embodiment of the apocalypse.",
-				type: "action",
-				frequency: "long-rest",
-				
-			},
-			{
+				level: 1,
 				name: "Destruction Step",
 				description:
-					"As a bonus action, teleport by destroying the space between locations, dealing 3d6 force damage to creatures passed through. This mirrors the Destruction Regent's destructive mobility.",
+					"As a bonus action, teleport up to 60 feet by destroying the space between your current location and your destination. Creatures you pass through take 3d6 force damage (no save). This destructive teleportation leaves a trail of shattered reality.",
 				type: "bonus-action",
 				frequency: "at-will",
-				
 			},
 			{
-				name: "Vortex Shield",
-				description:
-					"As a reaction when targeted by an attack, create a destructive vortex that redirects the attack back at the attacker. This reflects the Destruction Regent's destructive defense.",
-				type: "reaction",
-				frequency: "short-rest",
-				
-			},
-			{
-				name: "Aura of Ruin",
-				description:
-					"Non-magical objects within 20 feet crumble to dust over time. Structures take 1d10 damage per round. This represents the Destruction Regent's passive destructive aura.",
-				type: "passive",
-				frequency: "at-will",
-				
-			},
-			{
+				level: 1,
 				name: "Destruction Dominion",
 				description:
-					"As an action, create a 1-mile radius area of absolute destruction control. All destructive effects within are maximized. This mirrors the Destruction Regent's domain over destruction.",
+					"As an action, create a 1-mile radius area of absolute destruction control for 1 hour. All destructive effects (fire, force, necrotic damage) within the area are maximized (no rolling - treat all dice as maximum). Once per day.",
 				type: "action",
 				frequency: "once-per-day",
-				
+				uses: 1,
+				recovery: "long-rest",
 			},
 			{
-				name: "Annihilation Authority",
+				level: 2,
+				name: "Regent Power Resonance",
 				description:
-					"As an action, force all constructs within 300 feet to make a Sense save (DC 20) or be destroyed and become your servants. This reflects the Destruction Regent's command over destruction.",
-				type: "action",
-				frequency: "once-per-day",
-				
-			},
-			{
-				name: "Calamity Wings",
-				description:
-					"Manifest regent-tier wings. Fly 90 ft. Wing buffet (30-ft cone, STR save or 6d6 + knocked prone). Hurricanes form from your wingbeats.",
+					"Your Regent abilities resonate with cosmic power. Gain +1 to the Regent Resonance pool maximum.",
 				type: "passive",
 				frequency: "at-will",
-				
-			},
-		],
-		features: [
-			{
-				name: "Decimation Field",
-				description: "You exude an aura of sheer destructive energy.",
-				type: "passive",
-				
 			},
 			{
-				name: "Regent Power Resonance",
-				description: "Your abilities resonate with the power of the Regents, increasing their effectiveness and reducing cooldowns.",
-				type: "passive",
-				level: 1
-			},
-			{
-				name: "Breath of Annihilation",
-				description:
-					"Unleash a cone of apocalyptic fire that erases matter from existence.",
-				
-			},
-			{
-				name: "Destruction Step",
-				description: "Teleport by destroying the space between points.",
-				
-			},
-			{
+				level: 3,
 				name: "Annihilation Presence",
 				description:
-					"Your mere presence causes structures to weaken and enemies to falter.",
-				
+					"Your mere presence causes structures to weaken and enemies to falter. Non-magical structures within 60 feet take 1d10 damage per round. Creatures that start their turn within 30 feet must make a Vitality save (DC 8 + PB + STR) or have disadvantage on attack rolls until the start of their next turn.",
+				type: "passive",
+				frequency: "at-will",
 			},
 			{
+				level: 3,
 				name: "Destruction Mastery",
-				description: "Perfect control over destructive force and energy.",
-				
+				description:
+					"You have perfect control over destructive force and energy. You are immune to fire damage and have resistance to force damage. Additionally, you can suppress or enhance any destructive effect within 60 feet as a reaction.",
+				type: "passive",
+				frequency: "at-will",
 			},
 			{
-				name: "Cataclysmic Rebirth",
-				description: "Explode on death and reform with full power.",
-				
+				level: 3,
+				name: "Aura of Ruin",
+				description:
+					"Non-magical objects within 20 feet crumble to dust over 1 minute. Structures and fortifications take 2d10 damage per round while you remain within 20 feet. This passive aura can be suppressed or activated as a bonus action.",
+				type: "passive",
+				frequency: "at-will",
+				mechanics: {
+					toggle: "bonus action",
+					area_damage: "2d10 per round to structures",
+				},
 			},
 			{
+				level: 4,
+				name: "Regent Attribute Enhancement",
+				description: "Increase one primary ability score (Strength or Vitality) by +2.",
+				type: "passive",
+				frequency: "at-will",
+			},
+			{
+				level: 5,
+				name: "Decimation Field",
+				description:
+					"As an action, you exude an aura of sheer destructive energy in a 60-foot radius for 1 minute. At the start of each of your turns, all creatures in the area take 6d10 force damage (Vitality save DC 8 + PB + STR for half). Structures automatically take maximum damage. The field moves with you.",
+				type: "action",
+				frequency: "long-rest",
+				uses: 1,
+				recovery: "long-rest",
+			},
+			{
+				level: 5,
 				name: "True Dragon Form",
-				description: "Transform into a gargantuan dragon of destruction.",
-				
+				description:
+					"As an action, transform into an ancient red dragon for 1 hour. You become Gargantuan size, gain fly speed 120 ft, AC 22, and immunity to fire and physical damage (bludgeoning, piercing, slashing). You retain your mental stats but use the dragon's physical stats (STR 30, VIT 29, AGI 10). News agencies declare 'dragon sighting confirmed.' This is the living embodiment of the apocalypse.",
+				type: "action",
+				frequency: "long-rest",
+				uses: 1,
+				recovery: "long-rest",
+				mechanics: {
+					form_stats: "Gargantuan, AC 22, fly 120 ft",
+					immunity: "fire and physical damage",
+					duration: "1 hour",
+				},
 			},
 			{
-				name: "Ruin Lord",
-				description: "Reshape the world through pure destructive will.",
-				
+				level: 5,
+				name: "Cataclysmic Rebirth",
+				description:
+					"When you are reduced to 0 hit points, you explode in a 60-foot radius of destructive energy (all creatures take 15d10 force damage, Agility save DC 8 + PB + STR for half). You are then restored to half your maximum hit points at the start of your next turn, reappearing in an unoccupied space within the explosion radius. Once used, you cannot use this feature again until you complete a long rest.",
+				type: "passive",
+				frequency: "long-rest",
+				uses: 1,
+				recovery: "long-rest",
+				mechanics: {
+					death_save_override: true,
+					restoration: "half max HP next turn",
+					area_damage: "15d10 force, 60-ft radius",
+				},
 			},
 			{
+				level: 6,
+				name: "Regent Power Resonance",
+				description:
+					"Your Regent abilities resonate with cosmic power. Gain +1 to the Regent Resonance pool maximum.",
+				type: "passive",
+				frequency: "at-will",
+			},
+			{
+				level: 7,
+				name: "Vortex Shield",
+				description:
+					"As a reaction when targeted by an attack or spell, create a destructive vortex that redirects the attack back at the attacker. The attacker must make an Agility save (DC 8 + PB + STR) or take the attack's damage themselves.",
+				type: "reaction",
+				frequency: "short-rest",
+				uses: 1,
+				recovery: "short-rest",
+			},
+			{
+				level: 7,
 				name: "Destruction God",
-				description: "Incarnate as the fundamental force of annihilation.",
-				
-			},
-			{
-				name: "Annihilation Command",
-				description: "Command all constructs and destructive forces.",
-				
-			},
-			{
-				name: "Destruction Emperor",
-				description: "Universal reach of your destructive powers.",
-				
-			},
-			{
-				name: "Absolute Destruction",
-				description: "Total immunity and reality-warping annihilation.",
-				
-			},
-			{
-				name: "Destruction Ascendant",
 				description:
-					"You transcend mortal limitations, gaining the ability to exist as pure destruction and command destruction across all dimensions.",
-				
+					"You incarnate as the fundamental force of destruction. All of your destructive damage (fire, force, necrotic) increases by 50% (rounded up). Additionally, once per long rest, you can declare a structure or object 'condemned' - it collapses or disintegrates instantly (no save).",
+				type: "passive",
+				frequency: "at-will",
 			},
 			{
+				level: 7,
 				name: "Ruin Lord",
 				description:
-					"You gain complete control over ruin and destruction, able to reshape entire worlds through destruction.",
-				
+					"You have absolute control over decay and destruction. As an action, you can age any object or structure by 1000 years instantly, causing it to crumble. Living creatures within 60 feet age 10 years (Vitality save DC 8 + PB + STR negates). You can use this once per long rest.",
+				type: "action",
+				frequency: "long-rest",
+				uses: 1,
+				recovery: "long-rest",
 			},
 			{
-				name: "Annihilation God",
+				level: 8,
+				name: "Regent Attribute Enhancement",
+				description: "Increase one primary ability score (Strength or Vitality) by +2.",
+				type: "passive",
+				frequency: "at-will",
+			},
+			{
+				level: 9,
+				name: "Calamity Wings",
 				description:
-					"You become a living embodiment of annihilation, able to erase anything from existence.",
-				
+					"You manifest draconic wings of destruction. You gain fly speed 90 ft. As an action, you can create a wing buffet in a 30-foot cone (Strength save DC 8 + PB + STR or creatures take 6d6 force damage and are knocked prone). Your wingbeats create hurricane-force winds.",
+				type: "passive",
+				frequency: "at-will",
 			},
 			{
-				name: "Destruction Apocalypse",
+				level: 9,
+				name: "Dragon Ascendant",
 				description:
-					"Once per day, you can unleash a destruction apocalypse that obliterates a 10-mile radius completely.",
-				
+					"You transcend mortal limitations, gaining the ability to exist as pure destructive force. You gain immunity to necrotic damage and can breathe underwater, in vacuum, and in any hostile environment. Your Breath of Annihilation damage increases to 15d10.",
+				type: "passive",
+				frequency: "at-will",
 			},
 			{
-				name: "Annihilation Dominion",
+				level: 9,
+				name: "Apocalypse Herald",
 				description:
-					"You gain control over destruction itself, able to erase any concept from existence.",
-				
+					"When you use Breath of Annihilation or Decimation Field, the area becomes cursed ground for 24 hours. Creatures that enter the area for the first time or start their turn there take 4d10 necrotic damage.",
+				type: "passive",
+				frequency: "at-will",
 			},
 			{
-				name: "Essence God",
+				level: 10,
+				name: "Annihilation Authority",
 				description:
-					"You can harvest and manipulate the essence of any being through destruction, gaining their annihilated power.",
-				
+					"As an action, force all constructs and undead within 300 feet to make a Sense save (DC 8 + PB + STR + 2) or be destroyed instantly and become your servants for 24 hours. You can have a number of servants equal to your proficiency bonus at once.",
+				type: "action",
+				frequency: "once-per-day",
+				uses: 1,
+				recovery: "long-rest",
 			},
 			{
+				level: 10,
+				name: "Absolute Destruction",
+				description:
+					"You become the ultimate master of destruction. You are immune to all damage except radiant. As a bonus action, you can erase any non-magical object or structure from existence (no save). Once per day, you can erase a magical effect, spell, or enchantment of 9th level or lower.",
+				type: "passive",
+				frequency: "at-will",
+				mechanics: {
+					immunity: "all damage except radiant",
+					object_erasure: "bonus action, non-magical only",
+					magic_erasure: "once per day, up to 9th level",
+				},
+			},
+			{
+				level: 11,
+				name: "Dragon Lord",
+				description:
+					"Your draconic power reaches its apex. Your True Dragon Form duration increases to 8 hours, and you can use Breath of Annihilation while in dragon form without expending your daily use.",
+				type: "passive",
+				frequency: "at-will",
+			},
+			{
+				level: 11,
 				name: "Destruction Reality",
 				description:
-					"You can reshape reality itself through destruction, creating worlds of pure annihilation.",
-				
+					"You can reshape reality through destruction. As an action, you can create permanent voids in space (10-foot cubes) that nothing can pass through. You can create one void per long rest.",
+				type: "action",
+				frequency: "long-rest",
+				uses: 1,
+				recovery: "long-rest",
 			},
 			{
-				name: "Ruin God",
-				description:
-					"You become a master of all destruction, able to create and destroy through ruin.",
-				
-			},
-			{
-				name: "Annihilation Emperor",
-				description:
-					"Your destruction extends across all realities, allowing you to annihilate entire universes.",
-				
-			},
-			{
-				name: "Destruction Transcendence",
-				description:
-					"You transcend the concept of destruction, becoming a fundamental force of annihilation that cannot be contained.",
-				
-			},
-			{
+				level: 11,
 				name: "Ruin Emperor",
 				description:
-					"You gain mastery over destruction itself, able to create concepts of ruin from nothing.",
-				
+					"Your destructive aura extends to 300 feet. All enemies within the aura have disadvantage on saving throws against your destructive effects.",
+				type: "passive",
+				frequency: "at-will",
 			},
 			{
-				name: "Essence Emperor",
+				level: 12,
+				name: "Regent Attribute Enhancement",
+				description: "Increase one primary ability score (Strength or Vitality) by +2.",
+				type: "passive",
+				frequency: "at-will",
+			},
+			{
+				level: 13,
+				name: "Cataclysm Unleashed",
 				description:
-					"You can absorb and control the destructive essence of entire worlds, gaining their collective power.",
-				
+					"Once per day, you can unleash a devastating cataclysm in a 1-mile radius. All creatures and structures in the area take 20d10 force damage (Agility save DC 8 + PB + STR + 4 for half). The area becomes a wasteland for 1 year.",
+				type: "action",
+				frequency: "once-per-day",
+				uses: 1,
+				recovery: "long-rest",
 			},
 			{
-				name: "Destruction Omnipotence",
+				level: 13,
+				name: "Dragon Emperor",
 				description:
-					"You achieve true omnipotence within the destruction domain, able to control all destruction across all timelines.",
-				
+					"You command all draconic entities. Dragons within 1 mile must make a Presence save (DC 8 + PB + STR) or become charmed by you for 24 hours.",
+				type: "action",
+				frequency: "once-per-day",
+				uses: 1,
+				recovery: "long-rest",
 			},
 			{
-				name: "Annihilation Regent",
+				level: 13,
+				name: "Annihilation Essence",
 				description:
-					"Your destructive power extends across the multiverse, allowing you to reshape entire universes.",
-				
+					"You can extract the essence of destroyed enemies. When you reduce a creature to 0 HP with a destructive attack, you gain temporary hit points equal to half its maximum HP.",
+				type: "passive",
+				frequency: "at-will",
 			},
 			{
-				name: "Ruin Regent",
+				level: 14,
+				name: "Regent Power Resonance",
 				description:
-					"You become the ultimate authority over destruction and ruin, able to determine the fate of all existence.",
-				
+					"Your Regent abilities resonate with cosmic power. Gain +1 to the Regent Resonance pool maximum.",
+				type: "passive",
+				frequency: "at-will",
 			},
 			{
+				level: 15,
+				name: "Primordial Destruction",
+				description:
+					"You embody primordial destruction itself. Your destructive attacks ignore all resistances and immunities. Additionally, you can use Breath of Annihilation as a bonus action.",
+				type: "passive",
+				frequency: "at-will",
+			},
+			{
+				level: 15,
+				name: "Void Weaver",
+				description:
+					"You can weave the void into reality. As an action, you create a 60-foot sphere of void that erases everything inside (Vitality save DC 8 + PB + STR + 4 to survive with 1 HP). Once per week.",
+				type: "action",
+				frequency: "once-per-long-rest",
+				uses: 1,
+				recovery: "long-rest",
+			},
+			{
+				level: 15,
+				name: "Dragon Transcendence",
+				description:
+					"You transcend the concept of the dragon, becoming the apocalypse itself. You can remain in True Dragon Form indefinitely and take no penalties.",
+				type: "passive",
+				frequency: "at-will",
+			},
+			{
+				level: 16,
+				name: "Regent Attribute Enhancement",
+				description: "Increase one primary ability score (Strength or Vitality) by +2.",
+				type: "passive",
+				frequency: "at-will",
+			},
+			{
+				level: 17,
+				name: "Entropy Mastery",
+				description:
+					"You gain mastery over entropy itself. You can accelerate or reverse decay within 300 feet. You can restore destroyed objects or age living creatures to dust.",
+				type: "passive",
+				frequency: "at-will",
+			},
+			{
+				level: 17,
+				name: "Annihilation Omnipotence",
+				description:
+					"You achieve true omnipotence within the domain of destruction. Your destructive effects affect all versions of a target across parallel realities.",
+				type: "passive",
+				frequency: "at-will",
+			},
+			{
+				level: 17,
+				name: "Apocalypse Incarnate",
+				description:
+					"You become the living apocalypse. When you use True Dragon Form, you become a world-ending threat. Your size becomes Colossal, and your breath weapon covers a 300-foot cone.",
+				type: "passive",
+				frequency: "at-will",
+			},
+			{
+				level: 18,
+				name: "Regent Power Resonance",
+				description:
+					"Your Regent abilities resonate with cosmic power. Gain +1 to the Regent Resonance pool maximum.",
+				type: "passive",
+				frequency: "at-will",
+			},
+			{
+				level: 19,
+				name: "Reality Annihilation",
+				description:
+					"You can annihilate reality itself. Once per long rest, you can erase a 1-mile sphere from existence, creating a permanent void. Nothing short of divine intervention can restore it.",
+				type: "action",
+				frequency: "once-per-long-rest",
+				uses: 1,
+				recovery: "long-rest",
+			},
+			{
+				level: 19,
+				name: "Dragon Regent",
+				description:
+					"Your draconic power extends across the multiverse. You can sense and communicate with all dragons across all dimensions.",
+				type: "passive",
+				frequency: "at-will",
+			},
+			{
+				level: 19,
 				name: "Destruction Supremacy",
 				description:
-					"You achieve absolute supremacy over all destruction, becoming the source and master of all ruin.",
-				
+					"You achieve absolute supremacy over all destructive forces. You become the source and master of all destruction in the multiverse.",
+				type: "passive",
+				frequency: "at-will",
 			},
 			{
-				name: "Absolute Destruction",
+				level: 20,
+				name: "Regent Attribute Enhancement",
+				description: "Increase one primary ability score (Strength or Vitality) by +2.",
+				type: "passive",
+				frequency: "at-will",
+			},
+			{
+				level: 20,
+				name: "Void King",
 				description:
-					"You become the embodiment of absolute destruction, a force beyond comprehension that exists outside all laws of reality.",
-				
+					"You become the embodiment of the void, a force beyond comprehension that exists to unmake reality. You are the necessary delete-command of existence.",
+				type: "passive",
+				frequency: "at-will",
 			},
 			{
+				level: 20,
 				name: "Regent Power",
 				description:
-					"You achieve the full power of a Regent at their peak - the ability to command infinite armies of your element, reshape reality, control all dimensions, master your domain completely, and transcend to become a fundamental force of the multiverse. This is the ultimate power of a Regent, equal to all other Regents at their maximum potential.",
-				
+					"You achieve the full power of a Regent at their peak - the ability to command infinite energies of your element, reshape reality, control all dimensions, master your domain completely, and transcend to become a fundamental force of the multiverse.",
+				type: "passive",
+				frequency: "at-will",
 			},
 		],
-		mechanics: {
-			stat_bonuses: {
-				strength: 6,
-				agility: 2,
-				vitality: 4,
-				intelligence: 2,
-				sense: 2,
-				presence: 2,
-			},
-			special_abilities: [
-				"Immune to force and thunder damage",
-				"Can destroy non-magical objects at will",
-				"Destructive energy flows through your attacks",
-				"Can reshape terrain through destruction",
-			],
-			restrictions: [
-				"Requires Warden verification of quest completion",
-				"Once chosen, cannot be changed without Warden approval",
-			],
-		},
-		progression_table: {
-			"1": {
-				features_gained: [
-					"Breath of Annihilation",
-					"Destruction Step",
-					"Destruction Dominion",
-				],
-				abilities_improved: [],
-			},
-			"2": {
-				features_gained: ["Regent Power Resonance"],
-				abilities_improved: [],
-			},
-			"3": {
-				features_gained: [
-					"Annihilation Presence",
-					"Destruction Mastery",
-					"Aura of Ruin",
-				],
-				abilities_improved: [],
-			},
-			"4": {
-				features_gained: ["Regent Attribute Enhancement"],
-				abilities_improved: ["Primary Ability +2"],
-			},
-			"5": {
-				features_gained: [
-					"Decimation Field",
-					"True Dragon Form",
-					"Cataclysmic Rebirth",
-				],
-				abilities_improved: [],
-			},
-			"6": {
-				features_gained: ["Regent Power Resonance"],
-				abilities_improved: [],
-			},
-			"7": {
-				features_gained: ["Vortex Shield", "Destruction God", "Ruin Lord"],
-				abilities_improved: [],
-			},
-			"8": {
-				features_gained: ["Regent Attribute Enhancement"],
-				abilities_improved: ["Primary Ability +2"],
-			},
-			"9": {
-				features_gained: [
-					"Destruction Dominion",
-					"Annihilation Command",
-					"Destruction Emperor",
-				],
-				abilities_improved: [],
-			},
-			"10": {
-				features_gained: ["Annihilation Authority", "Absolute Destruction"],
-				abilities_improved: [],
-			},
-			"11": {
-				features_gained: [
-					"Destruction Ascendant",
-					"Ruin Lord",
-					"Annihilation God",
-				],
-				abilities_improved: [],
-			},
-			"12": {
-				features_gained: ["Regent Attribute Enhancement"],
-				abilities_improved: ["Primary Ability +2"],
-			},
-			"13": {
-				features_gained: [
-					"Destruction Apocalypse",
-					"Annihilation Dominion",
-					"Essence God",
-				],
-				abilities_improved: [],
-			},
-			"14": {
-				features_gained: ["Regent Power Resonance"],
-				abilities_improved: [],
-			},
-			"15": {
-				features_gained: [
-					"Destruction Reality",
-					"Ruin God",
-					"Annihilation Emperor",
-				],
-				abilities_improved: [],
-			},
-			"16": {
-				features_gained: ["Regent Attribute Enhancement"],
-				abilities_improved: ["Primary Ability +2"],
-			},
-			"17": {
-				features_gained: [
-					"Destruction Transcendence",
-					"Ruin Emperor",
-					"Essence Emperor",
-				],
-				abilities_improved: [],
-			},
-			"18": {
-				features_gained: ["Regent Power Resonance"],
-				abilities_improved: [],
-			},
-			"19": {
-				features_gained: [
-					"Destruction Omnipotence",
-					"Annihilation Regent",
-					"Ruin Regent",
-				],
-				abilities_improved: [],
-			},
-			"20": {
-				features_gained: [
-					"Destruction Supremacy",
-					"Absolute Destruction",
-					"Regent Power",
-				],
-				abilities_improved: ["Primary Ability +2"],
-			},
-		},
 	},
-
 	{
 		id: "war_regent",
-		levelChoices: [
-			{
-				level: 1,
-				type: "power",
-				count: 2,
-				source: "regent-powers",
-				options: ["power-sup-example-1", "power-sup-example-2"]
-			},
-			{
-				level: 1,
-				type: "technique",
-				count: 2,
-				source: "regent-techniques",
-				options: ["tech-sup-example-1", "tech-sup-example-2"]
-			}
-		],
 		powersKnown: REGENT_POWERS_KNOWN,
 		techniquesKnown: REGENT_TECHNIQUES_KNOWN,
 		name: "War Regent",
@@ -1845,6 +1827,411 @@ export const regents: Regent[] = [
 			warden_verification: true,
 			prerequisite_job: "Any base job",
 		},
+		class_features: [
+			{
+				level: 1,
+				name: "Warlord's Command",
+				description:
+					"As a bonus action, grant an ally within 60 feet an immediate action. They can make one weapon attack, cast a cantrip, or take the Dash/Disengage/Dodge action. You can use this a number of times equal to your proficiency bonus per long rest.",
+				type: "bonus-action",
+				frequency: "long-rest",
+				uses: "PB",
+				recovery: "long-rest",
+			},
+			{
+				level: 1,
+				name: "Leadership Aura",
+				description:
+					"Allies within 60 feet of you gain advantage on saving throws against being frightened and charmed. Additionally, when an ally within the aura makes an attack roll, you can use your reaction to grant them advantage on that roll (PB times per long rest).",
+				type: "passive",
+				frequency: "at-will",
+				mechanics: {
+					aura_range: "60 feet",
+					reaction_uses: "PB per long rest",
+				},
+			},
+			{
+				level: 1,
+				name: "War Dominion",
+				description:
+					"As an action, create a 1-mile radius area of absolute war control for 1 hour. All allies within the area cannot be frightened, gain +2 to attack rolls, and can make one additional weapon attack when they take the Attack action. Once per day.",
+				type: "action",
+				frequency: "once-per-day",
+				uses: 1,
+				recovery: "long-rest",
+			},
+			{
+				level: 2,
+				name: "Vanguard Step",
+				description:
+					"As a bonus action, teleport up to 60 feet to an unoccupied space you can see. You can bring up to 5 willing allies within 10 feet of you along with the teleport. This represents your tactical positioning mastery.",
+				type: "bonus-action",
+				frequency: "short-rest",
+				uses: 1,
+				recovery: "short-rest",
+			},
+			{
+				level: 2,
+				name: "Regent Power Resonance",
+				description:
+					"Your Regent abilities resonate with cosmic power. Gain +1 to the Regent Resonance pool maximum.",
+				type: "passive",
+				frequency: "at-will",
+			},
+			{
+				level: 3,
+				name: "Conquest",
+				description:
+					"As an action, unleash a 100-foot wave of tactical suppression. All enemies in the area must make a Presence saving throw (DC 8 + PB + PRE) or be stunned until the end of your next turn. This represents your absolute authority on the battlefield.",
+				type: "action",
+				frequency: "long-rest",
+				uses: 1,
+				recovery: "long-rest",
+			},
+			{
+				level: 3,
+				name: "Command Mastery",
+				description:
+					"You have perfect control over tactical situations. You can use Warlord's Command as a free action (once per turn). Additionally, allies affected by your commands add your Presence modifier to their damage rolls.",
+				type: "passive",
+				frequency: "at-will",
+			},
+			{
+				level: 3,
+				name: "Leadership Presence",
+				description:
+					"Your very existence bolsters the courage and combat capability of your army. All allies within 120 feet of you gain temporary hit points equal to your Presence modifier at the start of their turn (if they have none). Additionally, when an ally within range drops to 0 hit points, you can use your reaction to allow them to make one final attack or spell before falling unconscious.",
+				type: "passive",
+				frequency: "at-will",
+				mechanics: {
+					temp_hp: "PRE modifier at turn start",
+					last_stand_reaction: "allow final action before 0 HP",
+					aura_range: "120 feet",
+				},
+			},
+			{
+				level: 4,
+				name: "Regent Attribute Enhancement",
+				description: "Increase one primary ability score (Presence or Intelligence) by +2.",
+				type: "passive",
+				frequency: "at-will",
+			},
+			{
+				level: 5,
+				name: "Tactical Step",
+				description:
+					"Your Vanguard Step is enhanced. You can now teleport up to 120 feet and bring up to 10 willing allies. Additionally, when you use this ability, all teleported allies can immediately make one weapon attack as a free action against a target within range.",
+				type: "passive",
+				frequency: "at-will",
+				mechanics: {
+					enhances: "Vanguard Step",
+					range: "120 feet",
+					allies: "up to 10",
+					bonus_attack: "free action for all teleported allies",
+				},
+			},
+			{
+				level: 5,
+				name: "Command Authority",
+				description:
+					"As an action, you can command any humanoid within 300 feet to follow a single command (attack a target, move to a location, drop their weapon, etc.). The target must make a Wisdom saving throw (DC 8 + PB + PRE) or obey the command for 1 round. You can use this PB times per long rest.",
+				type: "action",
+				frequency: "long-rest",
+				uses: "PB",
+				recovery: "long-rest",
+			},
+			{
+				level: 5,
+				name: "Army Rebirth",
+				description:
+					"When an ally within 60 feet drops to 0 hit points, you can use your reaction to restore them to 1 hit point and grant them temporary hit points equal to your level. You can use this feature a number of times equal to your proficiency bonus per long rest.",
+				type: "reaction",
+				frequency: "long-rest",
+				uses: "PB",
+				recovery: "long-rest",
+			},
+			{
+				level: 6,
+				name: "Regent Power Resonance",
+				description:
+					"Your Regent abilities resonate with cosmic power. Gain +1 to the Regent Resonance pool maximum.",
+				type: "passive",
+				frequency: "at-will",
+			},
+			{
+				level: 7,
+				name: "Command Shield",
+				description:
+					"As a reaction when an ally within 60 feet is hit by an attack, you can redirect the attack to yourself and gain resistance to all damage from that attack. This reflects your role as the unbreakable center of the vanguard.",
+				type: "reaction",
+				frequency: "short-rest",
+				uses: 1,
+				recovery: "short-rest",
+			},
+			{
+				level: 7,
+				name: "War God",
+				description:
+					"You incarnate as the fundamental force of war. All allies within 120 feet add your proficiency bonus to their attack and damage rolls. Additionally, you gain an extra action on each of your turns that can only be used for the Attack action, Dash action, or Warlord's Command.",
+				type: "passive",
+				frequency: "at-will",
+			},
+			{
+				level: 7,
+				name: "Tactical Lord",
+				description:
+					"You have absolute mastery over battlefield tactics. You can use your bonus action to grant all allies within 60 feet advantage on their next attack roll or saving throw. Additionally, you can see and hear through any ally within 1 mile.",
+				type: "passive",
+				frequency: "at-will",
+			},
+			{
+				level: 8,
+				name: "Regent Attribute Enhancement",
+				description: "Increase one primary ability score (Presence or Intelligence) by +2.",
+				type: "passive",
+				frequency: "at-will",
+			},
+			{
+				level: 9,
+				name: "Vanguard Legion",
+				description:
+					"As an action, you summon a legion of spectral warriors (PB creatures) that fight alongside you for 1 hour. They use the stats of Veterans, act on your initiative, and obey your commands. Once per long rest.",
+				type: "action",
+				frequency: "long-rest",
+				uses: 1,
+				recovery: "long-rest",
+				mechanics: {
+					summoned_creatures: "PB Veterans",
+					duration: "1 hour",
+					persistence: "until destroyed, dismissed (bonus action), or duration ends",
+				},
+			},
+			{
+				level: 9,
+				name: "Command Emperor",
+				description:
+					"Your commands become irresistible. When you use Command Authority, targets have disadvantage on the saving throw. Additionally, you can command up to 3 targets with a single use.",
+				type: "passive",
+				frequency: "at-will",
+			},
+			{
+				level: 9,
+				name: "War Incarnate",
+				description:
+					"You become the living embodiment of war. You are immune to being frightened, charmed, or stunned. Additionally, when you take damage, you can use your reaction to make one weapon attack against an enemy within reach.",
+				type: "passive",
+				frequency: "at-will",
+			},
+			{
+				level: 10,
+				name: "Vanguard Authority",
+				description:
+					"As an action, force all enemy leaders and commanders within 300 feet to make a Wisdom saving throw (DC 8 + PB + PRE + 2). On a failure, they surrender and their forces cease hostilities. Surrendered forces will not attack you or your allies for 24 hours. Once per day.",
+				type: "action",
+				frequency: "once-per-day",
+				uses: 1,
+				recovery: "long-rest",
+				mechanics: {
+					targets: "enemy leaders and commanders",
+					effect: "surrender, 24-hour ceasefire",
+				},
+			},
+			{
+				level: 10,
+				name: "Absolute War",
+				description:
+					"You become the ultimate master of war. While you are leading an army (at least 5 allies within 120 feet), you are immune to all damage. Additionally, you can command any creature in existence to take a tactical action (make an attack, move, etc.) as a bonus action, and they must make a Wisdom save (DC 8 + PB + PRE + 4) or obey.",
+				type: "passive",
+				frequency: "at-will",
+				mechanics: {
+					conditional_immunity: "immune to all damage while leading (5+ allies within 120 ft)",
+					universal_command: "command any creature, bonus action, Wis save",
+				},
+			},
+			{
+				level: 11,
+				name: "War Ascendant",
+				description:
+					"You transcend mortal limitations of command. Your War Dominion area expands to 10 miles, and all allies within gain an extra attack on their turn.",
+				type: "passive",
+				frequency: "at-will",
+			},
+			{
+				level: 11,
+				name: "Legion Master",
+				description:
+					"Your Vanguard Legion now summons twice as many warriors (2×PB), and they gain +4 to all rolls while within 60 feet of you.",
+				type: "passive",
+				frequency: "at-will",
+			},
+			{
+				level: 11,
+				name: "Command Reality",
+				description:
+					"Once per long rest, you can command reality itself. You can declare a single event to happen (within reason), and it occurs. This could be commanding a bridge to appear, ordering a wall to collapse, or willing reinforcements to arrive.",
+				type: "action",
+				frequency: "long-rest",
+				uses: 1,
+				recovery: "long-rest",
+			},
+			{
+				level: 12,
+				name: "Regent Attribute Enhancement",
+				description: "Increase one primary ability score (Presence or Intelligence) by +2.",
+				type: "passive",
+				frequency: "at-will",
+			},
+			{
+				level: 13,
+				name: "Absolute Command",
+				description:
+					"Once per day, you can issue an absolute command to all creatures within 1 mile. Choose one of the following: Attack (all creatures attack the nearest enemy), Kneel (all creatures are prone and incapacitated for 1 round), or Flee (all creatures use their turn to Dash away). No save.",
+				type: "action",
+				frequency: "once-per-day",
+				uses: 1,
+				recovery: "long-rest",
+			},
+			{
+				level: 13,
+				name: "War Emperor",
+				description:
+					"You command armies across dimensions. You can sense the location and status of all allied forces within 100 miles, and you can communicate telepathically with any ally you've met.",
+				type: "passive",
+				frequency: "at-will",
+			},
+			{
+				level: 13,
+				name: "Tactical Omniscience",
+				description:
+					"You see all possible tactical outcomes. You have advantage on all Initiative rolls, and you can reroll any attack roll, saving throw, or ability check you make (once per short rest).",
+				type: "passive",
+				frequency: "at-will",
+			},
+			{
+				level: 14,
+				name: "Regent Power Resonance",
+				description:
+					"Your Regent abilities resonate with cosmic power. Gain +1 to the Regent Resonance pool maximum.",
+				type: "passive",
+				frequency: "at-will",
+			},
+			{
+				level: 15,
+				name: "Eternal Vanguard",
+				description:
+					"Your summoned legions become permanent. Vanguard Legion warriors persist until destroyed, and you can have up to 3×PB warriors active at once. They reform automatically 24 hours after being destroyed.",
+				type: "passive",
+				frequency: "at-will",
+				mechanics: {
+					persistence: "permanent, reform 24 hours after death",
+					maximum: "3×PB warriors",
+				},
+			},
+			{
+				level: 15,
+				name: "War Reality",
+				description:
+					"You can reshape battlefields. As an action, you can terraform a 1-mile radius area into ideal tactical terrain (trenches, fortifications, high ground, etc.). This is permanent.",
+				type: "action",
+				frequency: "once-per-long-rest",
+				uses: 1,
+				recovery: "long-rest",
+			},
+			{
+				level: 15,
+				name: "Supreme Commander",
+				description:
+					"All allies within 1 mile of you gain immunity to being frightened, charmed, or stunned, and they add +5 to all attack and damage rolls.",
+				type: "passive",
+				frequency: "at-will",
+			},
+			{
+				level: 16,
+				name: "Regent Attribute Enhancement",
+				description: "Increase one primary ability score (Presence or Intelligence) by +2.",
+				type: "passive",
+				frequency: "at-will",
+			},
+			{
+				level: 17,
+				name: "Multiversal Command",
+				description:
+					"Your commands extend across dimensions. You can command creatures on other planes of existence, and your War Dominion affects all parallel realities within the area.",
+				type: "passive",
+				frequency: "at-will",
+			},
+			{
+				level: 17,
+				name: "War Omnipotence",
+				description:
+					"You achieve true omnipotence within the domain of war. You can see and influence all conflicts across all timelines simultaneously.",
+				type: "passive",
+				frequency: "at-will",
+			},
+			{
+				level: 17,
+				name: "Tactical Infinity",
+				description:
+					"You have infinite tactical options. On your turn, you can take two full turns (two actions, two bonus actions, two reactions) instead of one.",
+				type: "passive",
+				frequency: "at-will",
+			},
+			{
+				level: 18,
+				name: "Regent Power Resonance",
+				description:
+					"Your Regent abilities resonate with cosmic power. Gain +1 to the Regent Resonance pool maximum.",
+				type: "passive",
+				frequency: "at-will",
+			},
+			{
+				level: 19,
+				name: "Absolute Authority",
+				description:
+					"Your authority becomes absolute. Any creature that can see or hear you must obey your commands (Wisdom save DC 8 + PB + PRE + 6 to resist). This extends to gods, cosmic entities, and abstract concepts.",
+				type: "passive",
+				frequency: "at-will",
+			},
+			{
+				level: 19,
+				name: "War Regent",
+				description:
+					"Your command extends across the multiverse. You can reshape entire universes into perfect war machines, commanding the forces of infinite realities.",
+				type: "passive",
+				frequency: "at-will",
+			},
+			{
+				level: 19,
+				name: "Eternal Commander",
+				description:
+					"You become the eternal commander of all forces. You command the loyalty of every warrior, soldier, and fighter across all realities.",
+				type: "passive",
+				frequency: "at-will",
+			},
+			{
+				level: 20,
+				name: "Regent Attribute Enhancement",
+				description: "Increase one primary ability score (Presence or Intelligence) by +2.",
+				type: "passive",
+				frequency: "at-will",
+			},
+			{
+				level: 20,
+				name: "Vanguard Eternal",
+				description:
+					"You become the embodiment of the eternal vanguard, an unstoppable force that leads the charge across all dimensions. You are the first and the last, the beginning and end of every conflict.",
+				type: "passive",
+				frequency: "at-will",
+			},
+			{
+				level: 20,
+				name: "Regent Power",
+				description:
+					"You achieve the full power of a Regent at their peak - the ability to command infinite energies of your element, reshape reality, control all dimensions, master your domain completely, and transcend to become a fundamental force of the multiverse.",
+				type: "passive",
+				frequency: "at-will",
+			},
+		],
 		abilities: [
 			{
 				name: "Warlord's Command",

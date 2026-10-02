@@ -18,24 +18,6 @@ export const canonicalReviewBlockers: readonly CanonReviewBlocker[] = [
 	// lifecycle cannot be normalized without choosing between conflicting source
 	// fields or inventing missing canon.
 	{
-		id: "task7:destruction_regent:progression-mechanics",
-		dataset: "regents",
-		entryId: "destruction_regent",
-		fieldPath: "class_features|progression_table",
-		message:
-			"Decimation Field has no mechanic row; Breath of Annihilation and Destruction Dominion conflict with their flat power levels; Dragon terminology is not approved as an alias or identity merge.",
-		dependsOnTask: 20,
-	},
-	{
-		id: "task7:war_regent:progression-mechanics",
-		dataset: "regents",
-		entryId: "war_regent",
-		fieldPath: "class_features|progression_table",
-		message:
-			"Leadership Presence has no mechanic row; Vanguard Step versus Tactical Step and Absolute War versus Absolute Command are unresolved identities; armies, surrender, commands, and extra attacks lack a complete action-economy and controlled-entity lifecycle.",
-		dependsOnTask: 20,
-	},
-	{
 		id: "task7:frost_regent:progression-mechanics",
 		dataset: "regents",
 		entryId: "frost_regent",

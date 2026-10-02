@@ -75,8 +75,8 @@ export const REGENT_EXPECTATIONS = {
 		theme: "Primordial Destruction and Draconic Apocalypse",
 		quest: "Complete the Path of Destruction quest series",
 		prerequisiteJob: COMMON_QUEST_PREREQUISITE,
-		featureCount: 8,
-		frequencies: COMMON_FOUR_CADENCES,
+		featureCount: 43,
+		frequencies: COMMON_FIVE_CADENCES,
 		grants: { spell: true, power: false, technique: false },
 		progression: {
 			1: ["Breath of Annihilation", "Destruction Step", "Destruction Dominion"],
@@ -93,7 +93,7 @@ export const REGENT_EXPECTATIONS = {
 		theme: "Tactical Battlefield Supremacy & Absolute Command",
 		quest: "Complete the Command Regent Ascension trials",
 		prerequisiteJob: COMMON_QUEST_PREREQUISITE,
-		featureCount: 8,
+		featureCount: 43,
 		frequencies: COMMON_FOUR_CADENCES,
 		grants: { spell: false, power: true, technique: true },
 		progression: {
