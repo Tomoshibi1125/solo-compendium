@@ -111,7 +111,7 @@ export const REGENT_EXPECTATIONS = {
 		theme: "Eternal Winter & absolute Zero",
 		quest: "Complete the Trial of the Frost Gate",
 		prerequisiteJob: COMMON_QUEST_PREREQUISITE,
-		featureCount: 26,
+		featureCount: 33,
 		frequencies: COMMON_FOUR_CADENCES,
 		grants: { spell: true, power: false, technique: false },
 		progression: {
@@ -129,12 +129,12 @@ export const REGENT_EXPECTATIONS = {
 		theme: "Primal Evolution & Apex Regentty",
 		quest: "Complete the Trial of the Beast Gate",
 		prerequisiteJob: COMMON_QUEST_PREREQUISITE,
-		featureCount: 26,
+		featureCount: 34,
 		frequencies: ["at-will", "long-rest", "once-per-day"],
 		grants: { spell: false, power: true, technique: true },
 		progression: {
 			1: ["Apex Form", "Alpha's Presence"],
-			2: ["Beast King's Call"],
+			2: ["Regent Power Resonance", "Beast King's Call"],
 			3: ["Primordial Regeneration"],
 			4: ["Regent Attribute Enhancement"],
 			5: ["Evolutionary Leap"],

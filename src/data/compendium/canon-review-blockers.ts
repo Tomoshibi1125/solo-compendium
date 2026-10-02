@@ -18,24 +18,6 @@ export const canonicalReviewBlockers: readonly CanonReviewBlocker[] = [
 	// lifecycle cannot be normalized without choosing between conflicting source
 	// fields or inventing missing canon.
 	{
-		id: "task7:frost_regent:progression-mechanics",
-		dataset: "regents",
-		entryId: "frost_regent",
-		fieldPath: "class_features|progression_table",
-		message:
-			"Absolute Zero Touch is level 2 in class_features but level 3 in progression_table, and Glacial Eternity's 'prof/long rest' abbreviation does not author an unambiguous structured use formula.",
-		dependsOnTask: 20,
-	},
-	{
-		id: "task7:beast_regent:progression-mechanics",
-		dataset: "regents",
-		entryId: "beast_regent",
-		fieldPath: "class_features|progression_table",
-		message:
-			"Apex Form's 'prof/long rest' abbreviation lacks an unambiguous use formula, Beast King's Call conflicts between once-per-day metadata and once-per-week prose, and commanded beasts have no complete entity lifecycle.",
-		dependsOnTask: 20,
-	},
-	{
 		id: "task7:plague_regent:progression-mechanics",
 		dataset: "regents",
 		entryId: "plague_regent",

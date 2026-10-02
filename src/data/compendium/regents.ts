@@ -2653,92 +2653,122 @@ export const regents: Regent[] = [
 		tool_proficiencies: [],
 		class_features: [
 			{
-				name: "Glacial Eternity",
-				description: "Time slows as heat is drained from the area.",
-				type: "action",
-				uses: { formula: "PB", recharge: "long-rest" },
-				
-			},
-			{
-				name: "Regent Power Resonance",
-				description: "Your abilities resonate with the power of the Regents, increasing their effectiveness and reducing cooldowns.",
-				type: "passive",
-				level: 1
-			},
-			{
 				level: 1,
 				name: "Ice Age Decree",
 				description:
-					"Create a 5-mile radius supernatural ice storm for 8 hours (1/long rest). The temperature drops to -100°C instantly, freezing all water and making fire damage impossible. This mirrors the Regent of Frost's climate-shattering power.",
+					"As an action, create a 5-mile radius supernatural ice storm for 8 hours. The temperature drops to -100°C instantly, freezing all water sources and making fire damage impossible. Non-magical fires are instantly extinguished, and fire spells deal half damage. This mirrors the Regent of Frost's climate-shattering power. You can use this once per long rest.",
 				type: "action",
 				frequency: "long-rest",
+				uses: 1,
+				recovery: "long-rest",
 			},
 			{
 				level: 1,
 				name: "Frost Dominion",
 				description:
-					"Immune to cold. Resistance to fire. Cannot slip on ice. Move at full speed on frozen surfaces.",
+					"You are immune to cold damage and have resistance to fire damage. You cannot slip on ice and move at full speed on frozen surfaces. Additionally, you can see clearly through snow, ice, and freezing fog.",
 				type: "passive",
+				frequency: "at-will",
 			},
 			{
 				level: 2,
+				name: "Regent Power Resonance",
+				description:
+					"Your Regent abilities resonate with cosmic power. Gain +1 to the Regent Resonance pool maximum.",
+				type: "passive",
+				frequency: "at-will",
+			},
+			{
+				level: 3,
 				name: "Absolute Zero Touch",
 				description:
-					"As a touch attack, channel the boundary of absolute zero. Target takes 10d10 cold damage and must make a VIT save or be paralyzed. On kill, they become a permanent ice statue at -273.15°C.",
+					"As a melee spell attack, channel the boundary of absolute zero through your touch. The target takes 10d10 cold damage and must make a Vitality saving throw (DC 8 + PB + INT) or be paralyzed for 1 minute. If this damage reduces a creature to 0 hit points, they become a permanent ice statue at -273.15°C and cannot be resurrected by any means short of Wish. You can use this once per short rest.",
 				type: "action",
 				frequency: "short-rest",
+				uses: 1,
+				recovery: "short-rest",
 			},
 			{
 				level: 3,
 				name: "Glacial Eternity",
 				description:
-					"60-ft radius: enemies half speed, disadvantage AGI, no reactions. 1 min, . Time slows as heat is drained from the area.",
+					"As an action, create a 60-foot radius zone of temporal slowdown for 1 minute (concentration). Enemies within the area have their speed halved, have disadvantage on Agility saving throws, and cannot take reactions. Time appears to slow as heat is drained from the area. You can use this a number of times equal to your proficiency bonus per long rest.",
 				type: "action",
 				frequency: "long-rest",
-				uses: { formula: "PB", recharge: "long-rest" },
+				uses: "PB",
+				recovery: "long-rest",
+			},
+			{
+				level: 4,
+				name: "Regent Attribute Enhancement",
+				description: "Increase one primary ability score (Intelligence or Sense) by +2.",
+				type: "passive",
+				frequency: "at-will",
 			},
 			{
 				level: 5,
 				name: "Winter's Immortality",
 				description:
-					"Immune to cold, fire, aging. Regenerate 20 HP/round in freezing temperatures. Auto-stabilize at 0 HP.",
+					"You are immune to cold damage, fire damage, and aging effects. While in freezing temperatures (below 0°C), you regenerate 20 hit points at the start of each of your turns. If you are reduced to 0 hit points in freezing conditions, you automatically stabilize and do not make death saving throws.",
 				type: "passive",
+				frequency: "at-will",
+			},
+			{
+				level: 6,
+				name: "Regent Power Resonance",
+				description:
+					"Your Regent abilities resonate with cosmic power. Gain +1 to the Regent Resonance pool maximum.",
+				type: "passive",
+				frequency: "at-will",
 			},
 			{
 				level: 7,
 				name: "Cryogenic Prison",
 				description:
-					"Encase a target in absolute-zero ice. VIT save DC 20 or imprisoned indefinitely until thawed by Wish.",
+					"As an action, encase a target you can see within 60 feet in a sphere of absolute-zero ice. The target must make a Vitality saving throw (DC 8 + PB + INT + 2). On a failure, they are imprisoned indefinitely in suspended animation and cannot be freed except by Wish, divine intervention, or your will. Once per long rest.",
 				type: "action",
 				frequency: "long-rest",
+				uses: 1,
+				recovery: "long-rest",
+			},
+			{
+				level: 8,
+				name: "Regent Attribute Enhancement",
+				description: "Increase one primary ability score (Intelligence or Sense) by +2.",
+				type: "passive",
+				frequency: "at-will",
 			},
 			{
 				level: 9,
 				name: "Temporal Frost",
 				description:
-					"Freeze time in a 120-ft radius for 1 round. Only you can act. This reflects your absolute thermodynamic authority.",
+					"As an action, freeze time itself in a 120-foot radius centered on you for 1 round. Only you can act during this frozen moment. This reflects your absolute thermodynamic authority. Creatures and objects are frozen mid-motion. Once per long rest.",
 				type: "action",
 				frequency: "long-rest",
+				uses: 1,
+				recovery: "long-rest",
 			},
 			{
 				level: 10,
 				name: "Absolute Frost",
 				description:
-					"All cold damage you deal is maximized. Ice structures you create are permanent and indestructible.",
+					"All cold damage you deal is maximized (treat all damage dice as if they rolled their maximum value). Additionally, ice structures and objects you create are permanent and indestructible by non-magical means.",
 				type: "passive",
+				frequency: "at-will",
 			},
 			{
 				level: 11,
 				name: "Frost Ascendant",
 				description:
-					"You transcend mortal thermodynamic limitations, gaining the ability to exist as pure absolute zero and command cold across all dimensions.",
+					"You transcend mortal thermodynamic limitations, gaining the ability to exist as pure absolute zero. You can become incorporeal as a bonus action (immune to physical damage, can pass through solid matter). While incorporeal, you can command cold across all dimensions.",
 				type: "passive",
+				frequency: "at-will",
 			},
 			{
 				level: 11,
 				name: "Temporal Lord",
 				description:
-					"You gain complete control over the entropy of time, able to freeze specific moments in space-time across entire city blocks.",
+					"As an action, you gain complete control over the entropy of time within a city block-sized area (up to 500 feet radius). You can freeze specific moments in space-time, creating temporal stasis fields that prevent all change and motion.",
 				type: "action",
 				frequency: "at-will",
 			},
@@ -2746,22 +2776,32 @@ export const regents: Regent[] = [
 				level: 11,
 				name: "Ice God",
 				description:
-					"You become a living embodiment of the eternal winter, able to manifest glacial continents and reshape the climate of worlds at will.",
+					"You become a living embodiment of eternal winter. You can manifest glacial continents and reshape the climate of entire worlds at will. Your Ice Age Decree now affects a 50-mile radius and lasts 7 days.",
 				type: "passive",
+				frequency: "at-will",
+			},
+			{
+				level: 12,
+				name: "Regent Attribute Enhancement",
+				description: "Increase one primary ability score (Intelligence or Sense) by +2.",
+				type: "passive",
+				frequency: "at-will",
 			},
 			{
 				level: 13,
 				name: "Frost Apocalypse",
 				description:
-					"Once per day, you can unleash a frost apocalypse that covers a 10-mile radius in absolute zero, instantly stopping all molecular motion.",
+					"As an action, unleash a frost apocalypse that covers a 10-mile radius in absolute zero, instantly stopping all molecular motion. All creatures in the area take 20d10 cold damage (Vitality save DC 8 + PB + INT + 4 for half) and are paralyzed for 1 minute. Structures take maximum damage. Once per day.",
 				type: "action",
 				frequency: "once-per-day",
+				uses: 1,
+				recovery: "long-rest",
 			},
 			{
 				level: 13,
 				name: "Time Dominion",
 				description:
-					"You gain control over the flow of time within your frozen zones, able to reverse or accelerate events within the crystalline stasis.",
+					"As an action, you gain control over the flow of time within your frozen zones. You can reverse events up to 1 minute in the past or accelerate time up to 1 hour in the future within a 120-foot radius. Living creatures must make an Intelligence save (DC 8 + PB + INT) or be affected.",
 				type: "action",
 				frequency: "at-will",
 			},
@@ -2769,87 +2809,124 @@ export const regents: Regent[] = [
 				level: 13,
 				name: "Cryo God",
 				description:
-					"You can harvest and manipulate the thermal essence of any being through freezing, gaining their power and memories through cryo-archiving.",
+					"As an action, you can harvest and manipulate the thermal essence of any being through freezing. Target one creature within 60 feet and make a melee spell attack. On hit, you gain one of their abilities, memories, or traits permanently through cryo-archiving. Once per long rest.",
 				type: "action",
 				frequency: "long-rest",
+				uses: 1,
+				recovery: "long-rest",
+			},
+			{
+				level: 14,
+				name: "Regent Power Resonance",
+				description:
+					"Your Regent abilities resonate with cosmic power. Gain +1 to the Regent Resonance pool maximum.",
+				type: "passive",
+				frequency: "at-will",
 			},
 			{
 				level: 15,
 				name: "Frost Reality",
 				description:
-					"You can reshape reality itself through the concept of entropy, creating worlds of perfect crystalline order and rewriting physical laws.",
+					"As an action, you can reshape reality itself through the concept of entropy. Create worlds of perfect crystalline order and rewrite physical laws within a 1-mile radius. This transformation is permanent until you choose to reverse it. Once per long rest.",
 				type: "action",
 				frequency: "long-rest",
+				uses: 1,
+				recovery: "long-rest",
 			},
 			{
 				level: 15,
 				name: "Temporal God",
 				description:
-					"You become a master of chronological stasis, able to create and destroy through the suspension of time.",
+					"You become a master of chronological stasis, able to create and destroy through the suspension of time. You can age or de-age objects and creatures at will, and your Temporal Frost now affects a 500-foot radius.",
 				type: "passive",
+				frequency: "at-will",
 			},
 			{
 				level: 15,
 				name: "Ice Emperor",
 				description:
-					"Your freezing power extends across all realities, allowing you to bring an heat-death to entire universes.",
+					"Your freezing power extends across all realities, allowing you to bring heat-death to entire universes. You can create permanent portals to frozen dimensions and command all ice-based entities.",
 				type: "passive",
+				frequency: "at-will",
+			},
+			{
+				level: 16,
+				name: "Regent Attribute Enhancement",
+				description: "Increase one primary ability score (Intelligence or Sense) by +2.",
+				type: "passive",
+				frequency: "at-will",
 			},
 			{
 				level: 17,
 				name: "Frost Transcendence",
 				description:
-					"You transcend the concept of temperature, becoming a fundamental force of stasis that cannot be influenced by energy or heat.",
+					"You transcend the concept of temperature, becoming a fundamental force of stasis that cannot be influenced by energy or heat. You are immune to all damage except psychic and radiant.",
 				type: "passive",
+				frequency: "at-will",
 			},
 			{
 				level: 17,
 				name: "Time Emperor",
 				description:
-					"You gain mastery over time itself, able to create concepts of history and future from the frozen present.",
+					"You gain mastery over time itself, able to create concepts of history and future from the frozen present. You can rewind time up to 1 hour for yourself or a single creature once per day.",
 				type: "passive",
+				frequency: "at-will",
 			},
 			{
 				level: 17,
 				name: "Cryo Emperor",
 				description:
-					"You can absorb and control the thermal essence of entire worlds, gaining their collective power by halting their entropy.",
+					"You can absorb and control the thermal essence of entire worlds, gaining their collective power by halting their entropy. Your cold damage ignores all resistances and immunities.",
 				type: "passive",
+				frequency: "at-will",
+			},
+			{
+				level: 18,
+				name: "Regent Power Resonance",
+				description:
+					"Your Regent abilities resonate with cosmic power. Gain +1 to the Regent Resonance pool maximum.",
+				type: "passive",
+				frequency: "at-will",
 			},
 			{
 				level: 19,
 				name: "Frost Omnipotence",
 				description:
-					"You achieve true omnipotence within the domain of stasis, able to control all thermodynamic states across all timelines.",
+					"You achieve true omnipotence within the domain of stasis, able to control all thermodynamic states across all timelines. You can freeze entire planets instantly.",
 				type: "passive",
+				frequency: "at-will",
 			},
 			{
 				level: 19,
 				name: "Temporal Regent",
 				description:
-					"Your temporal power extends across the multiverse, allowing you to freeze or restart entire universes at will.",
+					"Your temporal power extends across the multiverse, allowing you to freeze or restart entire universes at will. You exist outside of time and cannot be aged or affected by temporal magic.",
 				type: "passive",
+				frequency: "at-will",
 			},
 			{
 				level: 19,
 				name: "Ice Regent",
 				description:
-					"You become the ultimate authority over order and entropy, able to determine the final frozen state of all existence.",
+					"You become the ultimate authority over order and entropy, able to determine the final frozen state of all existence. Your presence lowers ambient temperature by 100°C in a 1-mile radius.",
 				type: "passive",
+				frequency: "at-will",
 			},
 			{
 				level: 20,
 				name: "Frost Supremacy",
 				description:
-					"You achieve absolute supremacy over all thermal forces, becoming the source and master of all universal stasis.",
+					"You achieve absolute supremacy over all thermal forces, becoming the source and master of all universal stasis. Once per day, you can invoke a global ice age affecting an entire planet.",
 				type: "passive",
+				frequency: "at-will",
 			},
 			{
 				level: 20,
 				name: "Absolute Frost",
 				description:
-					"You become the embodiment of absolute zero, a force beyond comprehension that exists outside the reach of thermodynamics.",
+					"You become the embodiment of absolute zero, a force beyond comprehension that exists outside the reach of thermodynamics. You are immune to all damage, and all creatures within 1000 feet take 10d10 cold damage at the start of their turn (no save).",
 				type: "passive",
+				frequency: "at-will",
 			},
 			{
 				level: 20,
@@ -2857,6 +2934,7 @@ export const regents: Regent[] = [
 				description:
 					"You achieve the full power of a Regent at their peak - the ability to command infinite energies of your element, reshape reality, control all dimensions, master your domain completely, and transcend to become a fundamental force of the multiverse.",
 				type: "passive",
+				frequency: "at-will",
 			},
 		],
 		spellcasting: {
@@ -3052,105 +3130,132 @@ export const regents: Regent[] = [
 		],
 		weapon_proficiencies: ["Awakened Weapons", "Rift-Forged Weapons"],
 		tool_proficiencies: [],
+		requirements: {
+			quest_completion: "Complete the Trial of the Beast Gate",
+			warden_verification: true,
+			prerequisite_job: "Any base job",
+		},
+		powersKnown: REGENT_POWERS_KNOWN,
+		techniquesKnown: REGENT_TECHNIQUES_KNOWN,
 		class_features: [
-			{
-				name: "Apex Form",
-				description: "You take on the ultimate predatory form.",
-				type: "action",
-				level: 1,
-				uses: { formula: "PB", recharge: "long-rest" },
-				
-				mechanics: { special_abilities: ["Summoned beasts persist until destroyed or dismissed"] }
-			},
-			{
-				name: "Beast King's Call",
-				description: "Summon the most powerful primordial creatures to your side.",
-				type: "action",
-				level: 2,
-				frequency: "once-per-day",
-				
-			},
-			{
-				name: "Regent Power Resonance",
-				description: "Your abilities resonate with the power of the Regents, increasing their effectiveness and reducing cooldowns.",
-				type: "passive",
-				level: 1
-			},
 			{
 				level: 1,
 				name: "Apex Form",
 				description:
-					"Transform into a gargantuan primordial beast for 10 minutes (). You gain +6 to STR/AGI/VIT (max 26), 3d10+STR natural weapons, and regenerate 15 HP/turn. Your tremorsense extends to 120 ft as you become the ultimate evolutionary apex predator.",
+					"As an action, transform into a gargantuan primordial beast for 10 minutes. You gain +6 to Strength, Agility, and Vitality (maximum 26 in each), natural weapons that deal 3d10 + STR damage, and regenerate 15 hit points at the start of your turn. Your size becomes Gargantuan, and you gain tremorsense 120 feet as you become the ultimate evolutionary apex predator. You can use this a number of times equal to your proficiency bonus per long rest.",
 				type: "action",
-				level: 1,
 				frequency: "long-rest",
-				uses: { formula: "PB", recharge: "long-rest" },
+				uses: "PB",
+				recovery: "long-rest",
 			},
 			{
 				level: 1,
 				name: "Alpha's Presence",
 				description:
-					"You emit a constant 120-foot aura of primal dominance. All beasts within this range recognize you as the alpha and are automatically friendly. Hostile creatures must make a SENSE save or be frightened.",
+					"You emit a constant 120-foot aura of primal dominance. All beasts within this range automatically recognize you as the alpha and become friendly to you (even if hostile). Hostile non-beast creatures must make a Sense saving throw (DC 8 + PB + STR) when they start their turn in the aura or be frightened of you until the start of their next turn.",
 				type: "passive",
+				frequency: "at-will",
+			},
+			{
+				level: 2,
+				name: "Regent Power Resonance",
+				description:
+					"Your Regent abilities resonate with cosmic power. Gain +1 to the Regent Resonance pool maximum.",
+				type: "passive",
+				frequency: "at-will",
 			},
 			{
 				level: 2,
 				name: "Beast King's Call",
 				description:
-					"Exert mental command over all beasts within a 10-mile radius (CR â‰¤ level). They obey your orders absolutely for 1 hour. useable 1/week. Zoo animals break containment, police K-9 units refuse to engage you.",
+					"As an action, exert mental command over all beasts within a 10-mile radius with a CR equal to or less than your level. They obey your orders absolutely for 1 hour. During this time, zoo animals may break containment, police K-9 units refuse to engage you, and wild animals treat you as their pack leader. Once per day.",
 				type: "action",
-				level: 2,
 				frequency: "once-per-day",
+				uses: 1,
+				recovery: "long-rest",
+				mechanics: {
+					summoned_creatures: "All beasts within 10 miles, CR ≤ level",
+					duration: "1 hour",
+					persistence: "commanded beasts persist until duration ends or you dismiss them (bonus action)",
+				},
 			},
 			{
 				level: 3,
 				name: "Primordial Regeneration",
 				description:
-					"Your cellular structure adapts with impossible speed. Regrow lost limbs in 1 minute and regain 25 HP at the start of your turn if below half health. Immune to aging and disease.",
+					"Your cellular structure adapts with impossible speed. You can regrow lost limbs in 1 minute. At the start of your turn, if you are below half your maximum hit points, you regain 25 hit points. You are immune to aging effects and all diseases.",
 				type: "passive",
+				frequency: "at-will",
+			},
+			{
+				level: 4,
+				name: "Regent Attribute Enhancement",
+				description: "Increase one primary ability score (Strength or Vitality) by +2.",
+				type: "passive",
+				frequency: "at-will",
 			},
 			{
 				level: 5,
 				name: "Evolutionary Leap",
 				description:
-					"Adapt to any environment. Grow gills, wings, or thermal insulation as needed as a bonus action.",
+					"As a bonus action, adapt your physical form to any environment or situation. You can grow gills (breathe underwater), wings (fly speed 60 ft), thermal insulation (immunity to extreme heat or cold), claws (natural weapons), or other biological adaptations as needed. The adaptation lasts until you dismiss it or choose a new one.",
 				type: "bonus-action",
+				frequency: "at-will",
+			},
+			{
+				level: 6,
+				name: "Regent Power Resonance",
+				description:
+					"Your Regent abilities resonate with cosmic power. Gain +1 to the Regent Resonance pool maximum.",
+				type: "passive",
 				frequency: "at-will",
 			},
 			{
 				level: 7,
 				name: "Pack Tactics",
 				description:
-					"All allies within 30 ft gain advantage on attack rolls against targets you've damaged this turn.",
+					"All allies within 30 feet of you gain advantage on attack rolls against any creature you've damaged since the start of your last turn. This bonus represents your alpha coordination.",
 				type: "passive",
+				frequency: "at-will",
+			},
+			{
+				level: 8,
+				name: "Regent Attribute Enhancement",
+				description: "Increase one primary ability score (Strength or Vitality) by +2.",
+				type: "passive",
+				frequency: "at-will",
 			},
 			{
 				level: 9,
 				name: "Extinction Event",
 				description:
-					"1-mile radius: all hostile creatures take 6d10 force + frightened (SENSE save DC 20). 1/long rest.",
+					"As an action, unleash a primal roar that creates a 1-mile radius of absolute predatory dominance. All hostile creatures in the area take 6d10 force damage and must make a Sense saving throw (DC 8 + PB + STR + 2) or be frightened for 1 minute. Frightened creatures can repeat the save at the end of each of their turns. Once per long rest.",
 				type: "action",
 				frequency: "long-rest",
+				uses: 1,
+				recovery: "long-rest",
 			},
 			{
 				level: 10,
 				name: "Absolute Beast",
 				description:
-					"Apex Form becomes permanent. Command any beast worldwide. Immune to all physical damage.",
+					"Your Apex Form becomes permanent - you can maintain it indefinitely without concentration or time limits. You can command any beast anywhere in the world telepathically. You are immune to all physical damage (bludgeoning, piercing, slashing) from non-magical sources.",
 				type: "passive",
+				frequency: "at-will",
 			},
 			{
 				level: 11,
 				name: "Beast Ascendant",
 				description:
-					"You transcend mortal biological limitations, gaining the ability to exist as the concept of the primal apex and command nature across all dimensions.",
+					"You transcend mortal biological limitations, gaining the ability to exist as the concept of the primal apex. You can become incorporeal as a bonus action (immune to physical damage, can pass through solid matter). While corporeal, you command nature across all dimensions.",
 				type: "passive",
+				frequency: "at-will",
 			},
 			{
 				level: 11,
 				name: "Primal Lord",
 				description:
-					"You gain complete control over the instincts of all living things, able to command entire ecosystems as a single hive mind.",
+					"As an action, you gain complete control over the instincts of all living things within a 500-foot radius. You can command entire ecosystems as a single hive mind, directing their behavior perfectly.",
 				type: "action",
 				frequency: "at-will",
 			},
@@ -3158,22 +3263,32 @@ export const regents: Regent[] = [
 				level: 11,
 				name: "Evolution God",
 				description:
-					"You become a living embodiment of the evolutionary process, able to mutate and adapt your form or the forms of others instantly and permanently.",
+					"You become a living embodiment of the evolutionary process. You can mutate and adapt your form instantly and permanently. Additionally, you can grant evolutionary adaptations to allies within 60 feet as a bonus action.",
 				type: "passive",
+				frequency: "at-will",
+			},
+			{
+				level: 12,
+				name: "Regent Attribute Enhancement",
+				description: "Increase one primary ability score (Strength or Vitality) by +2.",
+				type: "passive",
+				frequency: "at-will",
 			},
 			{
 				level: 13,
 				name: "Beast Apocalypse",
 				description:
-					"Once per day, you can unleash a beast apocalypse that causes all animals within a 10-mile radius to swarm and destroy everything in their path.",
+					"As an action, unleash a beast apocalypse that causes all animals within a 10-mile radius to swarm and destroy everything in their path. All non-ally creatures take 15d10 damage from the stampede (Agility save DC 8 + PB + STR + 4 for half). The stampede lasts for 1 hour. Once per day.",
 				type: "action",
 				frequency: "once-per-day",
+				uses: 1,
+				recovery: "long-rest",
 			},
 			{
 				level: 13,
 				name: "Primal Dominion",
 				description:
-					"You gain control over the wild itself, able to transform urban landscapes into primordial jungles instantly.",
+					"As an action, you gain control over the wild itself. You can transform urban landscapes into primordial jungles instantly within a 1-mile radius. The transformation is permanent until you reverse it.",
 				type: "action",
 				frequency: "at-will",
 			},
@@ -3181,212 +3296,135 @@ export const regents: Regent[] = [
 				level: 13,
 				name: "Essence God",
 				description:
-					"You can harvest and manipulate the biological essence of any being through the hunt, gaining their predatory power and traits permanently.",
+					"As an action, you can harvest and manipulate the biological essence of any being through the hunt. Target one creature within 60 feet. Make a melee attack. On hit, you gain one of their predatory powers, abilities, or traits permanently. Once per long rest.",
 				type: "action",
 				frequency: "long-rest",
+				uses: 1,
+				recovery: "long-rest",
+			},
+			{
+				level: 14,
+				name: "Regent Power Resonance",
+				description:
+					"Your Regent abilities resonate with cosmic power. Gain +1 to the Regent Resonance pool maximum.",
+				type: "passive",
+				frequency: "at-will",
 			},
 			{
 				level: 15,
 				name: "Beast Reality",
 				description:
-					"You can reshape reality itself through the law of the jungle, creating untamed worlds and rewriting the food chain.",
+					"As an action, you can reshape reality itself through the law of the jungle. Create untamed worlds and rewrite the food chain within a 5-mile radius. The changes are permanent until you reverse them. Once per long rest.",
 				type: "action",
 				frequency: "long-rest",
+				uses: 1,
+				recovery: "long-rest",
 			},
 			{
 				level: 15,
 				name: "Primal God",
 				description:
-					"You become a master of all biological life, able to create and destroy through the concept of the absolute predator.",
+					"You become a master of all biological life, able to create and destroy through the concept of the absolute predator. Your natural weapons now deal an additional 6d10 damage.",
 				type: "passive",
+				frequency: "at-will",
 			},
 			{
 				level: 15,
 				name: "Evolution Emperor",
 				description:
-					"Your evolutionary power extends across all realities, allowing you to rewrite the genetic code of entire universes.",
+					"Your evolutionary power extends across all realities, allowing you to rewrite the genetic code of creatures in entire universes. You can grant or remove evolutionary traits at will.",
 				type: "passive",
+				frequency: "at-will",
+			},
+			{
+				level: 16,
+				name: "Regent Attribute Enhancement",
+				description: "Increase one primary ability score (Strength or Vitality) by +2.",
+				type: "passive",
+				frequency: "at-will",
 			},
 			{
 				level: 17,
 				name: "Beast Transcendence",
 				description:
-					"You transcend the concept of the individual, becoming a fundamental force of the wild that exists in every predator.",
+					"You transcend the concept of the individual, becoming a fundamental force of the wild that exists in every predator simultaneously. You cannot be permanently killed unless all predators in existence are destroyed.",
 				type: "passive",
+				frequency: "at-will",
 			},
 			{
 				level: 17,
 				name: "Primal Emperor",
 				description:
-					"You gain mastery over the life force of planets, able to create concepts of biodiversity from the void.",
+					"You gain mastery over the life force of planets, able to create concepts of biodiversity from the void. You can spontaneously generate ecosystems.",
 				type: "passive",
+				frequency: "at-will",
 			},
 			{
 				level: 17,
 				name: "Essence Emperor",
 				description:
-					"You can absorb and control the biological essence of entire worlds, gaining their collective genetic power.",
+					"You can absorb and control the biological essence of entire worlds, gaining their collective genetic power. Your physical abilities have no maximum.",
 				type: "passive",
+				frequency: "at-will",
+			},
+			{
+				level: 18,
+				name: "Regent Power Resonance",
+				description:
+					"Your Regent abilities resonate with cosmic power. Gain +1 to the Regent Resonance pool maximum.",
+				type: "passive",
+				frequency: "at-will",
 			},
 			{
 				level: 19,
 				name: "Beast Omnipotence",
 				description:
-					"You achieve true omnipotence within the biological domain, able to control all evolution across all timelines.",
+					"You achieve true omnipotence within the biological domain, able to control all evolution across all timelines. You can instantly evolve or devolve any creature.",
 				type: "passive",
+				frequency: "at-will",
 			},
 			{
 				level: 19,
 				name: "Primal Regent",
 				description:
-					"Your primal power extends across the multiverse, allowing you to reshape entire universes into savage paradises.",
+					"Your primal power extends across the multiverse, allowing you to reshape entire universes into savage paradises. Your Beast King's Call now affects all dimensions simultaneously.",
 				type: "passive",
+				frequency: "at-will",
 			},
 			{
 				level: 19,
 				name: "Evolution Regent",
 				description:
-					"You become the ultimate authority over life and change, able to determine the final evolutionary state of all existence.",
+					"You become the ultimate authority over life and change, able to determine the final evolutionary state of all existence. You can create new species at will.",
 				type: "passive",
+				frequency: "at-will",
 			},
 			{
 				level: 20,
 				name: "Beast Supremacy",
 				description:
-					"You achieve absolute supremacy over all biological forces, becoming the source and master of all life.",
+					"You achieve absolute supremacy over all biological forces, becoming the source and master of all natural selection. You can cause instant evolution on a planetary scale.",
 				type: "passive",
+				frequency: "at-will",
 			},
 			{
 				level: 20,
 				name: "Absolute Beast",
 				description:
-					"You become the embodiment of the Absolute Beast, a force beyond comprehension that exists outside the reach of society.",
+					"You become the embodiment of the apex predator, a force beyond comprehension that exists as the pinnacle of all life. You are immune to all damage, and all creatures instinctively fear and respect you.",
 				type: "passive",
+				frequency: "at-will",
 			},
 			{
 				level: 20,
 				name: "Regent Power",
 				description:
-					"You achieve the full power of a Regent at their peak - the ability to command infinite energies of your element, reshape reality, control all dimensions, master your domain completely, and transcend to become a fundamental force of the multiverse.",
+					"You achieve the full power of a Regent at their peak - the ability to command infinite biological forces, reshape reality, control all dimensions, master your domain completely, and transcend to become a fundamental force of the multiverse.",
 				type: "passive",
+				frequency: "at-will",
 			},
 		],
-		progression_table: {
-			"1": {
-				features_gained: ["Apex Form", "Alpha's Presence"],
-				abilities_improved: [],
-			},
-			"2": {
-				features_gained: ["Beast King's Call"],
-				abilities_improved: [],
-			},
-			"3": {
-				features_gained: ["Primordial Regeneration"],
-				abilities_improved: [],
-			},
-			"4": {
-				features_gained: ["Regent Attribute Enhancement"],
-				abilities_improved: ["Primary Ability +2"],
-			},
-			"5": {
-				features_gained: ["Evolutionary Leap"],
-				abilities_improved: [],
-			},
-			"6": {
-				features_gained: ["Regent Power Resonance"],
-				abilities_improved: [],
-			},
-			"7": {
-				features_gained: ["Pack Tactics"],
-				abilities_improved: [],
-			},
-			"8": {
-				features_gained: ["Regent Attribute Enhancement"],
-				abilities_improved: ["Primary Ability +2"],
-			},
-			"9": {
-				features_gained: ["Extinction Event"],
-				abilities_improved: [],
-			},
-			"10": {
-				features_gained: ["Absolute Beast"],
-				abilities_improved: [],
-			},
-			"11": {
-				features_gained: ["Beast Ascendant", "Primal Lord", "Evolution God"],
-				abilities_improved: [],
-			},
-			"12": {
-				features_gained: ["Regent Attribute Enhancement"],
-				abilities_improved: ["Primary Ability +2"],
-			},
-			"13": {
-				features_gained: ["Beast Apocalypse", "Primal Dominion", "Essence God"],
-				abilities_improved: [],
-			},
-			"14": {
-				features_gained: ["Regent Power Resonance"],
-				abilities_improved: [],
-			},
-			"15": {
-				features_gained: ["Beast Reality", "Primal God", "Evolution Emperor"],
-				abilities_improved: [],
-			},
-			"16": {
-				features_gained: ["Regent Attribute Enhancement"],
-				abilities_improved: ["Primary Ability +2"],
-			},
-			"17": {
-				features_gained: [
-					"Beast Transcendence",
-					"Primal Emperor",
-					"Essence Emperor",
-				],
-				abilities_improved: [],
-			},
-			"18": {
-				features_gained: ["Regent Power Resonance"],
-				abilities_improved: [],
-			},
-			"19": {
-				features_gained: [
-					"Beast Omnipotence",
-					"Primal Regent",
-					"Evolution Regent",
-				],
-				abilities_improved: [],
-			},
-			"20": {
-				features_gained: ["Beast Supremacy", "Absolute Beast", "Regent Power"],
-				abilities_improved: ["Primary Ability +2"],
-			},
-		},
-		mechanics: {
-			stat_bonuses: {
-				strength: 4,
-				agility: 2,
-				vitality: 6,
-				intelligence: 2,
-				sense: 4,
-				presence: 2,
-			},
-			special_abilities: [
-				"Beasts automatically friendly",
-				"Regeneration 25 HP/turn",
-				"Tremorsense 120 ft",
-				"Immune to disease and aging",
-			],
-			restrictions: [
-				"Requires Warden verification of quest completion",
-				"Once chosen, cannot be changed without Warden approval",
-			],
-		},
-		requirements: {
-			quest_completion: "Complete the Trial of the Beast Gate",
-			warden_verification: true,
-			prerequisite_job: "Any base job",
-		},
-		},
+	},
 	{
 		id: "plague_regent",
 		spellcasting: {
