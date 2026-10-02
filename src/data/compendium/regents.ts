@@ -3462,395 +3462,302 @@ export const regents: Regent[] = [
 		armor_proficiencies: ["Light Mana-Weave Armor"],
 		weapon_proficiencies: ["Awakened Weapons"],
 		tool_proficiencies: ["Poisoner's kit", "Herbalism kit"],
+		requirements: {
+			quest_completion: "Complete the Trial of the Plague Gate",
+			warden_verification: true,
+			prerequisite_job: "Any base job",
+		},
 		class_features: [
-			{
-				name: "Pandemic Decree",
-				description: "You unleash a global plague that consumes all resistance.",
-				type: "action",
-				frequency: "once-per-day",
-				
-				mechanics: { special_abilities: ["Diseases share common duration and cure lifecycle", "Split swarms persist indefinitely"] }
-			},
-			{
-				name: "Regent Power Resonance",
-				description: "Your abilities resonate with the power of the Regents, increasing their effectiveness and reducing cooldowns.",
-				type: "passive",
-				level: 1
-			},
 			{
 				level: 1,
 				name: "Typhoid Incarnate",
 				description:
-					"You emit a 60-foot aura of supernatural pestilence. Any creature entering the aura must make a VIT save (DC 8+prof+INT) or contract a disease that causes 4d12 necrotic damage per day and spreads to others. You see the infected via the Aether-sight as blighted souls. Only you or a Wish can cure it.",
+					"You emit a 60-foot aura of supernatural pestilence. Any creature that enters the aura for the first time on a turn or starts its turn there must make a Vitality saving throw (DC 8 + PB + INT). On a failure, they contract a supernatural disease that causes 4d12 necrotic damage at the end of each long rest and spreads to anyone within 5 feet of them (same save). You see the infected via Aether-sight as blighted souls. The disease can only be cured by you (as an action) or by Wish.",
 				type: "passive",
+				frequency: "at-will",
+				mechanics: {
+					disease_lifecycle: "spreads on contact, duration: until cured by you or Wish, no natural recovery",
+				},
 			},
 			{
 				level: 1,
 				name: "Insect God",
 				description:
-					"Command all insects within a 5-mile radius with a mental link. You can direct insect swarms to attack specific targets or create an Insect Plague effect at will. Food supplies collapse and biblical-level locust swarms follow in your wake.",
+					"As an action, command all insects within a 5-mile radius with a mental link. You can direct insect swarms to attack specific targets (use Insect Plague effect) or perform tasks. Food supplies collapse and biblical-level locust swarms follow in your wake. You can see and hear through any insect within this radius.",
 				type: "action",
+				frequency: "at-will",
+			},
+			{
+				level: 2,
+				name: "Regent Power Resonance",
+				description:
+					"Your Regent abilities resonate with cosmic power. Gain +1 to the Regent Resonance pool maximum.",
+				type: "passive",
 				frequency: "at-will",
 			},
 			{
 				level: 2,
 				name: "Pandemic Decree",
 				description:
-					"You can design and release a supernatural pandemic once per month. You determine its transmission method (airborne, touch, or water), symptoms, and lethality. The disease spreads with an R0 of 10 and cannot be cured by conventional medicine or magic. The Ascendant displays [PANDEMIC STATUS: ACTIVE] and tracks the infection rate globally.",
+					"As an action, you can design and release a supernatural pandemic. You determine its transmission method (airborne, touch, or water), symptoms, incubation period (1-7 days), and lethality. The disease spreads with an R0 of 10 and cannot be cured by conventional medicine or magic below 7th level. The Ascendant displays [PANDEMIC STATUS: ACTIVE] and tracks the infection rate globally. Once per day.",
 				type: "action",
 				frequency: "once-per-day",
+				uses: 1,
+				recovery: "long-rest",
+				mechanics: {
+					disease_lifecycle: "custom duration (you set), cure: 7th+ level magic or your will, spreads via chosen vector",
+				},
 			},
 			{
 				level: 3,
 				name: "Billion Swarm",
 				description:
-					"Your physical form disintegrates into a massive swarm of billions of insects for up to 1 hour (1/long rest). In this form, you gain a fly speed of 60 feet, can squeeze through gaps as small as 1 inch, and are immune to all non-area-of-effect damage. You can split into multiple sub-swarms to overwhelm city blocks simultaneously.",
+					"As an action, your physical form disintegrates into a massive swarm of billions of insects for up to 1 hour. In this form, you gain fly speed 60 feet, can squeeze through gaps as small as 1 inch, and are immune to all non-area-of-effect damage. You can split into up to 4 sub-swarms (each with 1/4 your HP) that act independently to overwhelm city blocks simultaneously. All sub-swarms must rejoin before you can return to humanoid form. Once per long rest.",
 				type: "action",
 				frequency: "long-rest",
+				uses: 1,
+				recovery: "long-rest",
+				mechanics: {
+					swarm_lifecycle: "duration: 1 hour or until dismissed (bonus action), split swarms persist until rejoined or duration ends, takes area damage normally",
+				},
+			},
+			{
+				level: 4,
+				name: "Regent Attribute Enhancement",
+				description: "Increase one primary ability score (Intelligence or Sense) by +2.",
+				type: "passive",
+				frequency: "at-will",
 			},
 			{
 				level: 5,
 				name: "Pathogen Mastery",
 				description:
-					"Immune to all disease/poison. Detect diseases within 1 mile.",
+					"You are immune to all diseases and poison damage. You can detect diseases and pathogens within 1 mile (you sense their type, severity, and cure conditions).",
 				type: "passive",
+				frequency: "at-will",
+			},
+			{
+				level: 6,
+				name: "Regent Power Resonance",
+				description:
+					"Your Regent abilities resonate with cosmic power. Gain +1 to the Regent Resonance pool maximum.",
+				type: "passive",
+				frequency: "at-will",
 			},
 			{
 				level: 7,
 				name: "Plague Vector",
 				description:
-					"Touch: transfer any disease to target (no save). Cure any disease by touch.",
+					"As an action, touch a creature to transfer any disease you know of to that target (no save required). Alternatively, you can cure any disease by touch. You can also infect objects or areas with diseases that persist for 7 days.",
 				type: "action",
 				frequency: "at-will",
 			},
 			{
+				level: 8,
+				name: "Regent Attribute Enhancement",
+				description: "Increase one primary ability score (Intelligence or Sense) by +2.",
+				type: "passive",
+				frequency: "at-will",
+			},
+			{
 				level: 9,
-				name: "miasma apocalypse",
+				name: "Miasma Apocalypse",
 				description:
-					"1-mile radius: all organic matter begins rapid decay. 8d10 necrotic/round. 1/long rest.",
+					"As an action, create a 1-mile radius zone of toxic miasma where all organic matter begins rapid decay. All creatures in the area take 8d10 necrotic damage at the start of their turn. The miasma lasts for 10 minutes. Once per long rest.",
 				type: "action",
 				frequency: "long-rest",
+				uses: 1,
+				recovery: "long-rest",
 			},
 			{
 				level: 10,
 				name: "Absolute Plague",
 				description:
-					"Diseases you create are permanent, resist all curing. Swarm form is permanent toggle.",
-				type: "passive",
-			},
-		],
-		progression_table: {
-			"1": {
-				features_gained: ["Typhoid Incarnate", "Insect God"],
-				abilities_improved: [],
-			},
-			"2": {
-				features_gained: ["Pandemic Decree"],
-				abilities_improved: [],
-			},
-			"3": {
-				features_gained: ["Billion Swarm"],
-				abilities_improved: [],
-			},
-			"4": {
-				features_gained: ["Regent Attribute Enhancement"],
-				abilities_improved: ["Primary Ability +2"],
-			},
-			"5": {
-				features_gained: ["Pathogen Mastery"],
-				abilities_improved: [],
-			},
-			"6": {
-				features_gained: ["Regent Power Resonance"],
-				abilities_improved: [],
-			},
-			"7": {
-				features_gained: ["Plague Vector"],
-				abilities_improved: [],
-			},
-			"8": {
-				features_gained: ["Regent Attribute Enhancement"],
-				abilities_improved: ["Primary Ability +2"],
-			},
-			"9": {
-				features_gained: ["miasma apocalypse"],
-				abilities_improved: [],
-			},
-			"10": {
-				features_gained: ["Absolute Plague"],
-				abilities_improved: [],
-			},
-			"11": {
-				features_gained: ["Plague Ascendant", "Swarm Lord", "Disease God"],
-				abilities_improved: [],
-			},
-			"12": {
-				features_gained: ["Regent Attribute Enhancement"],
-				abilities_improved: ["Primary Ability +2"],
-			},
-			"13": {
-				features_gained: [
-					"Plague Apocalypse",
-					"Swarm Dominion",
-					"Pathogen God",
-				],
-				abilities_improved: [],
-			},
-			"14": {
-				features_gained: ["Regent Power Resonance"],
-				abilities_improved: [],
-			},
-			"15": {
-				features_gained: ["Plague Reality", "Swarm God", "Disease Emperor"],
-				abilities_improved: [],
-			},
-			"16": {
-				features_gained: ["Regent Attribute Enhancement"],
-				abilities_improved: ["Primary Ability +2"],
-			},
-			"17": {
-				features_gained: [
-					"Plague Transcendence",
-					"Swarm Emperor",
-					"Pathogen Emperor",
-				],
-				abilities_improved: [],
-			},
-			"18": {
-				features_gained: ["Regent Power Resonance"],
-				abilities_improved: [],
-			},
-			"19": {
-				features_gained: [
-					"Plague Omnipotence",
-					"Swarm Regent",
-					"Disease Regent",
-				],
-				abilities_improved: [],
-			},
-			"20": {
-				features_gained: [
-					"Plague Supremacy",
-					"Absolute Plague",
-					"Regent Power",
-				],
-				abilities_improved: ["Primary Ability +2"],
-			},
-		},
-		regent_requirements: {
-			level: 10,
-			abilities: {
-				intelligence: 16,
-		
-			},
-			quest_completion: "Complete the Trial of the Plague Gate",
-			warden_approval: true,
-		},
-		requirements: {
-			quest_completion: "Complete the Trial of the Plague Gate",
-			warden_verification: true,
-			prerequisite_job: "Any base job",
-		},
-		abilities: [
-			{
-				name: "Typhoid Incarnate",
-				description: "60-ft disease aura. Incurable except by you.",
+					"Diseases you create are permanent and resist all attempts to cure them (including Wish) unless you allow it. Your Billion Swarm form becomes a toggleable ability (bonus action to enter/exit, no duration limit).",
 				type: "passive",
 				frequency: "at-will",
-				
 			},
 			{
-				name: "Billion Swarm",
-				description: "Dissolve into insect swarm. Immune to non-AoE.",
-				type: "action",
-				frequency: "long-rest",
-				
-			},
-			{
-				name: "miasma apocalypse",
-				description: "1-mile decay zone. 8d10 necrotic/round.",
-				type: "action",
-				frequency: "long-rest",
-				
-			},
-			{
-				name: "Absolute Plague",
-				description: "Permanent incurable diseases. Permanent swarm.",
-				type: "passive",
-				frequency: "at-will",
-				
-			},
-		],
-		features: [
-			{
-				name: "Typhoid Incarnate",
-				description: "Permanent disease aura.",
-				
-			},
-			{
-				name: "Insect God",
-				description: "Command insects within 5 miles.",
-				
-			},
-			{
-				name: "Pandemic Decree",
-				description: "Create supernatural pandemics.",
-				
-			},
-			{
-				name: "Billion Swarm",
-				description: "Insect swarm form.",
-				
-			},
-			{
-				name: "Pathogen Mastery",
-				description: "Immune to disease/poison, detect diseases.",
-				
-			},
-			{
-				name: "Plague Vector",
-				description: "Transfer or cure any disease.",
-				
-			},
-			{
-				name: "miasma apocalypse",
-				description: "1-mile decay zone.",
-				
-			},
-			{
-				name: "Absolute Plague",
-				description: "Permanent diseases, permanent swarm.",
-				
-			},
-			{
+				level: 11,
 				name: "Plague Ascendant",
 				description:
-					"You transcend biological limitations, gaining the ability to exist as pure pathogen and command decay across all dimensions.",
-				
+					"You transcend mortal biological limitations, gaining the ability to exist as pure pestilence. You can become incorporeal as a bonus action (immune to physical damage, pass through solid matter). While corporeal, you command disease across all dimensions.",
+				type: "passive",
+				frequency: "at-will",
 			},
 			{
+				level: 11,
 				name: "Swarm Lord",
 				description:
-					"You gain complete control over the hive mind of billions, able to command every insect and microorganism on a planetary scale.",
-				
+					"As an action, you gain complete control over all insects and vermin within 10 miles. You can command them as a hive mind, creating coordinated attacks or using them as perfect surveillance across entire cities.",
+				type: "action",
+				frequency: "at-will",
 			},
 			{
+				level: 11,
 				name: "Disease God",
 				description:
-					"You become a living embodiment of pestilence, able to manifest any known or unknown sickness through pure will.",
-				
+					"You become a living embodiment of all plagues. You can create entirely new diseases with unique effects (hallucinations, mutations, mind control) and tailor them to specific targets or species.",
+				type: "passive",
+				frequency: "at-will",
 			},
 			{
+				level: 12,
+				name: "Regent Attribute Enhancement",
+				description: "Increase one primary ability score (Intelligence or Sense) by +2.",
+				type: "passive",
+				frequency: "at-will",
+			},
+			{
+				level: 13,
 				name: "Plague Apocalypse",
 				description:
-					"Once per day, you can unleash a continental pandemic that can sweep across entire landmasses in hours, ignoring all quarantines.",
-				
+					"As an action, unleash a plague apocalypse affecting a 10-mile radius. All creatures take 15d10 necrotic damage (Vitality save DC 8 + PB + INT + 4 for half) and contract a lethal disease (4d12 necrotic per day, spreads on contact). The plague lasts 7 days. Once per day.",
+				type: "action",
+				frequency: "once-per-day",
+				uses: 1,
+				recovery: "long-rest",
 			},
 			{
+				level: 13,
 				name: "Swarm Dominion",
 				description:
-					"You gain control over the space between cells, able to disassemble or reassemble matter through microscopic swarms.",
-				
+					"As an action, you gain control over the collective consciousness of swarms. You can transform entire populations of insects into extensions of your will, creating living storms of plague carriers.",
+				type: "action",
+				frequency: "at-will",
 			},
 			{
+				level: 13,
 				name: "Pathogen God",
 				description:
-					"You can harvest and manipulate the biological essence of any being through infection, gaining their power as you rot their strength.",
-				
+					"As an action, you can harvest and manipulate the disease essence of any being. Target one creature within 60 feet. Make a melee spell attack. On hit, you extract and absorb one of their immunities or biological traits permanently. Once per long rest.",
+				type: "action",
+				frequency: "long-rest",
+				uses: 1,
+				recovery: "long-rest",
 			},
 			{
+				level: 14,
+				name: "Regent Power Resonance",
+				description:
+					"Your Regent abilities resonate with cosmic power. Gain +1 to the Regent Resonance pool maximum.",
+				type: "passive",
+				frequency: "at-will",
+			},
+			{
+				level: 15,
 				name: "Plague Reality",
 				description:
-					"You can reshape reality itself through the concept of decay, creating worlds of terminal beauty and rewriting biological laws.",
-				
+					"As an action, you can reshape reality itself through the concept of decay. Create zones of accelerated entropy within a 5-mile radius where time, matter, and life all deteriorate at your command. The changes are permanent until you reverse them. Once per long rest.",
+				type: "action",
+				frequency: "long-rest",
+				uses: 1,
+				recovery: "long-rest",
 			},
 			{
+				level: 15,
 				name: "Swarm God",
 				description:
-					"You become a master of all collective consciousness, able to create and destroy through the billion-fold swarm.",
-				
+					"You become a master of all collective organisms. You can create swarms from nothing and command them perfectly. Your swarm forms can now include any creature type (not just insects) that you've encountered.",
+				type: "passive",
+				frequency: "at-will",
 			},
 			{
+				level: 15,
 				name: "Disease Emperor",
 				description:
-					"Your pestilent power extends across all realities, allowing you to bring biological ruin to entire universes.",
-				
+					"Your disease power extends across all realities, allowing you to infect entire dimensions with custom plagues. You can create plagues that affect concepts (hope, courage, magic itself).",
+				type: "passive",
+				frequency: "at-will",
 			},
 			{
+				level: 16,
+				name: "Regent Attribute Enhancement",
+				description: "Increase one primary ability score (Intelligence or Sense) by +2.",
+				type: "passive",
+				frequency: "at-will",
+			},
+			{
+				level: 17,
 				name: "Plague Transcendence",
 				description:
-					"You transcend the concept of life, becoming a fundamental force of decay that is the final stage of all existence.",
-				
+					"You transcend the concept of disease, becoming a fundamental force of decay that cannot be destroyed. You exist in every pathogen simultaneously and cannot be permanently killed unless all disease is eradicated from existence.",
+				type: "passive",
+				frequency: "at-will",
 			},
 			{
+				level: 17,
 				name: "Swarm Emperor",
 				description:
-					"You gain mastery over the collective, able to create concepts of unity and division from nothing.",
-				
+					"You gain mastery over collective life, able to create hive-mind civilizations from swarms. You can grant intelligence and purpose to insect colonies, creating living cities.",
+				type: "passive",
+				frequency: "at-will",
 			},
 			{
+				level: 17,
 				name: "Pathogen Emperor",
 				description:
-					"You can absorb and control the plague essence of entire worlds, gaining their collective power through their mass infection.",
-				
+					"You can absorb and control the biological essence of entire worlds, gaining the collective immunity and adaptability of all life on a planet.",
+				type: "passive",
+				frequency: "at-will",
 			},
 			{
+				level: 18,
+				name: "Regent Power Resonance",
+				description:
+					"Your Regent abilities resonate with cosmic power. Gain +1 to the Regent Resonance pool maximum.",
+				type: "passive",
+				frequency: "at-will",
+			},
+			{
+				level: 19,
 				name: "Plague Omnipotence",
 				description:
-					"You achieve true omnipotence within the domain of decay, able to control all pathogens across all timelines.",
-				
+					"You achieve true omnipotence within the biological corruption domain, able to control all disease across all timelines. You can retroactively infect historical events.",
+				type: "passive",
+				frequency: "at-will",
 			},
 			{
+				level: 19,
 				name: "Swarm Regent",
 				description:
-					"Your swarm power extends across the multiverse, allowing you to reshape entire universes into one living hive.",
-				
+					"Your swarm power extends across the multiverse, allowing you to command all collective organisms in every dimension simultaneously. Your presence spawns infinite swarms.",
+				type: "passive",
+				frequency: "at-will",
 			},
 			{
+				level: 19,
 				name: "Disease Regent",
 				description:
-					"You become the ultimate authority over sickness and health, able to determine the final biological fate of all existence.",
-				
+					"You become the ultimate authority over all plagues, able to determine the final diseased state of all existence. No immunity can resist you.",
+				type: "passive",
+				frequency: "at-will",
 			},
 			{
+				level: 20,
 				name: "Plague Supremacy",
 				description:
-					"You achieve absolute supremacy over all necrotic forces, becoming the source and master of all universal decay.",
-				
+					"You achieve absolute supremacy over all biological decay, becoming the source and master of all pestilence. You can cause or prevent any disease on a universal scale.",
+				type: "passive",
+				frequency: "at-will",
 			},
 			{
+				level: 20,
 				name: "Absolute Plague",
 				description:
-					"You become the embodiment of absolute decay, a force beyond comprehension that exists beyond the concept of life.",
-				
+					"You become the embodiment of ultimate pestilence, a force beyond comprehension. You are immune to all damage, and all creatures within 1000 feet contract diseases (no save) that cannot be cured except by your will.",
+				type: "passive",
+				frequency: "at-will",
 			},
 			{
+				level: 20,
 				name: "Regent Power",
 				description:
-					"You achieve the full power of a Regent at their peak - the ability to command infinite energies of your element, reshape reality, control all dimensions, master your domain completely, and transcend to become a fundamental force of the multiverse.",
-				
+					"You achieve the full power of a Regent at their peak - the ability to command infinite plagues, reshape reality, control all dimensions, master your domain completely, and transcend to become a fundamental force of the multiverse.",
+				type: "passive",
+				frequency: "at-will",
 			},
 		],
-		mechanics: {
-			stat_bonuses: {
-				strength: 2,
-				agility: 2,
-				vitality: 4,
-				intelligence: 4,
-				sense: 2,
-				presence: 2,
-			},
-			special_abilities: [
-				"Immune to disease and poison",
-				"Command insects within 5 miles",
-				"Disease aura 60 ft",
-				"Detect diseases within 1 mile",
-			],
-			restrictions: [
-				"Requires Warden verification",
-				"INT or SENSE 16+ required",
-			],
-		},
 	},
 	{
 		id: "spatial_regent",
@@ -3894,26 +3801,17 @@ export const regents: Regent[] = [
 		armor_proficiencies: ["Light Mana-Weave Armor"],
 		weapon_proficiencies: ["Awakened Weapons"],
 		tool_proficiencies: ["Cartographer's tools", "Navigator's tools"],
+		requirements: {
+			quest_completion: "Complete the Trial of the Spatial Rift",
+			warden_verification: true,
+			prerequisite_job: "Any base job",
+		},
 		class_features: [
-			{
-				name: "Reality Rewrite",
-				description: "You rewrite the topology of space itself.",
-				type: "action",
-				frequency: "long-rest",
-				
-				mechanics: { special_abilities: ["Unwilling teleports require a save", "Permanent topology changes follow complete lifecycle"] }
-			},
-			{
-				name: "Regent Power Resonance",
-				description: "Your abilities resonate with the power of the Regents, increasing their effectiveness and reducing cooldowns.",
-				type: "passive",
-				level: 1
-			},
 			{
 				level: 1,
 				name: "Void Singularity",
 				description:
-					"You create a localized gravity well of pure void essence at a point within 120 feet. All creatures within a 20-foot radius are pulled toward the center and take 6d10 force damage. You perceive the blueprints of reality and can tear them apart to crush your enemies.",
+					"As an action, create a localized gravity well of pure void essence at a point within 120 feet. All creatures within a 20-foot radius must make a Strength saving throw (DC 8 + PB + INT) or be pulled to the center and take 6d10 force damage. Objects and structures in the area are crushed. You perceive the blueprints of reality and can tear them apart.",
 				type: "action",
 				frequency: "at-will",
 			},
@@ -3921,67 +3819,114 @@ export const regents: Regent[] = [
 				level: 1,
 				name: "Planar Blink",
 				description:
-					"You achieve the ability to step through the dimensional lattice of the universe. As a bonus action, you can teleport up to 30 feet to any unoccupied space you can see. This 'blink' is instantaneous and creates a minor spatial ripple that only specialized sensors can detect.",
+					"As a bonus action, teleport up to 30 feet to any unoccupied space you can see. This 'blink' is instantaneous and creates a minor spatial ripple that only specialized sensors can detect. You step through the dimensional lattice of the universe.",
 				type: "bonus-action",
+				frequency: "at-will",
+			},
+			{
+				level: 2,
+				name: "Regent Power Resonance",
+				description:
+					"Your Regent abilities resonate with cosmic power. Gain +1 to the Regent Resonance pool maximum.",
+				type: "passive",
 				frequency: "at-will",
 			},
 			{
 				level: 2,
 				name: "Spatial Anchors",
 				description:
-					"You can place up to 12 invisible dimensional anchors anywhere in the multiverse. As an action, you can teleport between these anchors regardless of distance. These anchors are permanent and undetectable by normal means, appearing on your Ascendant Aether-Sight as [QUANTUM TUNNEL POINTS].",
+					"As an action, place up to 12 invisible dimensional anchors anywhere in the multiverse. As an action, teleport between these anchors regardless of distance or planar boundaries. These anchors are permanent until you dismiss them (bonus action) and undetectable by normal means, appearing on your Ascendant Aether-Sight as [QUANTUM TUNNEL POINTS]. Unwilling creatures cannot use your anchors.",
 				type: "action",
 				frequency: "at-will",
+				mechanics: {
+					anchor_lifecycle: "permanent until dismissed, max 12 anchors, teleportation at will between anchors",
+				},
 			},
 			{
 				level: 3,
 				name: "Dimensional Sanctum",
 				description:
-					"In your pocket dimensions or anchored zones: reshape the physical layout as a bonus action, control gravity per room, and decide who can enter.",
+					"As an action, create a pocket dimension (demiplane) with up to 1000 cubic feet of space. Inside this sanctum, you can reshape the physical layout as a bonus action, control gravity per room, and decide who can enter (unwilling creatures must succeed on an Intelligence save DC 8 + PB + INT to resist being pulled in). The demiplane persists until you dismiss it. You can maintain up to 3 demiplanes simultaneously.",
+				type: "action",
+				frequency: "at-will",
+				mechanics: {
+					demiplane_lifecycle: "permanent until dismissed, max 3 active, unwilling entry requires INT save",
+				},
+			},
+			{
+				level: 4,
+				name: "Regent Attribute Enhancement",
+				description: "Increase one primary ability score (Intelligence) by +2.",
 				type: "passive",
+				frequency: "at-will",
 			},
 			{
 				level: 5,
 				name: "Dimensional Lock",
 				description:
-					"Prevent all teleportation/plane shifting in 1-mile radius. 1 hour, 1/long rest.",
+					"As an action, prevent all teleportation and plane shifting within a 1-mile radius for 1 hour. Creatures attempting to teleport into, out of, or within the area automatically fail. Once per long rest.",
 				type: "action",
 				frequency: "long-rest",
+				uses: 1,
+				recovery: "long-rest",
+			},
+			{
+				level: 6,
+				name: "Regent Power Resonance",
+				description:
+					"Your Regent abilities resonate with cosmic power. Gain +1 to the Regent Resonance pool maximum.",
+				type: "passive",
+				frequency: "at-will",
 			},
 			{
 				level: 7,
 				name: "Lattice Vision",
 				description:
-					"See spatial weaknesses, hidden dimensions, and dimensional instabilities. Detect all portals/Rifts within 5 miles.",
+					"You can see spatial weaknesses, hidden dimensions, and dimensional instabilities. You can detect all portals and Rifts within 5 miles and perceive the exact destination of any teleportation effect.",
 				type: "passive",
+				frequency: "at-will",
+			},
+			{
+				level: 8,
+				name: "Regent Attribute Enhancement",
+				description: "Increase one primary ability score (Intelligence) by +2.",
+				type: "passive",
+				frequency: "at-will",
 			},
 			{
 				level: 9,
 				name: "Reality Rewrite",
 				description:
-					"Reshape 1-mile area: change terrain, gravity direction, physics rules. Permanent. 1/week.",
+					"As an action, reshape a 1-mile radius area: change terrain features, alter gravity direction, or modify physics rules (e.g., no friction, reversed time flow in an area, weightlessness). The changes are permanent until you reverse them or someone casts Wish. Unwilling creatures in the area when you activate this must make an Intelligence save (DC 8 + PB + INT + 2) or be affected by the new physics. Once per day.",
 				type: "action",
-				frequency: "long-rest",
+				frequency: "once-per-day",
+				uses: 1,
+				recovery: "long-rest",
+				mechanics: {
+					topology_lifecycle: "permanent until reversed by you or Wish, unwilling creatures get INT save",
+				},
 			},
 			{
 				level: 10,
 				name: "Absolute Spatial",
 				description:
-					"Create demiplanes at will. All spatial folds are indestructible. Reality Rewrite becomes daily.",
+					"You can create demiplanes at will (no action required). All spatial folds you create are indestructible by any means short of your dismissal. Your Reality Rewrite becomes usable once per day (already reflected in level 9).",
 				type: "passive",
+				frequency: "at-will",
 			},
 			{
 				level: 11,
 				name: "Spatial Ascendant",
 				description:
-					"You transcend mortal spatial limitations, gaining the ability to exist as the dimensional lattice itself and command space across all dimensions.",
+					"You transcend mortal spatial limitations, gaining the ability to exist as the dimensional lattice itself. You can become incorporeal as a bonus action (immune to physical damage, pass through matter). While corporeal, you command space across all dimensions.",
 				type: "passive",
+				frequency: "at-will",
 			},
 			{
 				level: 11,
 				name: "Void Lord",
 				description:
-					"You gain complete control over the vacuum of space, able to create localized absolute voids that erase matter and energy instantly.",
+					"As an action, create a localized absolute void within 60 feet (20-foot radius sphere). All matter and energy within the void are erased (creatures take 12d10 force damage, Intelligence save DC 8 + PB + INT + 2 for half; reduced to 0 HP = disintegrated).",
 				type: "action",
 				frequency: "at-will",
 			},
@@ -3989,22 +3934,32 @@ export const regents: Regent[] = [
 				level: 11,
 				name: "Dimensional God",
 				description:
-					"You become a living gateway, able to manifest permanent stable wormholes between any two points in the multiverse.",
+					"You become a living gateway. As an action, manifest permanent stable wormholes between any two points in the multiverse (up to 10 active simultaneously). Others can use these wormholes freely unless you restrict access.",
 				type: "passive",
+				frequency: "at-will",
+			},
+			{
+				level: 12,
+				name: "Regent Attribute Enhancement",
+				description: "Increase one primary ability score (Intelligence) by +2.",
+				type: "passive",
+				frequency: "at-will",
 			},
 			{
 				level: 13,
 				name: "Spatial Apocalypse",
 				description:
-					"Once per day, you can unleash a spatial apocalypse that causes all space within a 10-mile radius to collapse into a singularity, then expand into a new configuration.",
+					"As an action, unleash a spatial apocalypse causing all space within a 10-mile radius to collapse into a singularity, then violently expand into a new configuration. All creatures take 20d10 force damage (Intelligence save DC 8 + PB + INT + 4 for half). The terrain is completely reshaped. Once per day.",
 				type: "action",
 				frequency: "once-per-day",
+				uses: 1,
+				recovery: "long-rest",
 			},
 			{
 				level: 13,
 				name: "Space Dominion",
 				description:
-					"You gain control over the metrics of distance, able to make miles feel like inches for allies and inches feel like miles for enemies.",
+					"As an action, you gain control over the metrics of distance within 1 mile. You can make miles feel like inches for allies (they can reach distant points instantly) and inches feel like miles for enemies (their movement is glacially slow from their perspective).",
 				type: "action",
 				frequency: "at-will",
 			},
@@ -4012,220 +3967,135 @@ export const regents: Regent[] = [
 				level: 13,
 				name: "Reality God",
 				description:
-					"You can harvest and manipulate the spatial essence of any being through dimensional folding, gaining their power by compressing their existence into yours.",
+					"As an action, harvest and manipulate the spatial essence of any being through dimensional folding. Target one creature within 60 feet. Make a melee spell attack. On hit, compress their existence into yours, gaining one of their abilities permanently. Once per long rest.",
 				type: "action",
 				frequency: "long-rest",
+				uses: 1,
+				recovery: "long-rest",
+			},
+			{
+				level: 14,
+				name: "Regent Power Resonance",
+				description:
+					"Your Regent abilities resonate with cosmic power. Gain +1 to the Regent Resonance pool maximum.",
+				type: "passive",
+				frequency: "at-will",
 			},
 			{
 				level: 15,
 				name: "Spatial Reality",
 				description:
-					"You can reshape reality itself through the concept of the void, creating stable pocket universes with their own unique physical laws.",
+					"As an action, reshape reality itself through the concept of the void. Create stable pocket universes with unique physical laws (up to 1 mile radius each, max 5 active). The changes are permanent until you reverse them. Once per long rest.",
 				type: "action",
 				frequency: "long-rest",
+				uses: 1,
+				recovery: "long-rest",
 			},
 			{
 				level: 15,
 				name: "Void God",
 				description:
-					"You become a master of all nothingness, able to create and destroy through the concept of absolute absence.",
+					"You become a master of all nothingness, able to create and destroy through the concept of absolute absence. Your void effects ignore all resistances and immunities.",
 				type: "passive",
+				frequency: "at-will",
 			},
 			{
 				level: 15,
 				name: "Dimensional Emperor",
 				description:
-					"Your dimensional power extends across all realities, allowing you to bridge or sever entire universes at will.",
+					"Your dimensional power extends across all realities, allowing you to bridge or sever entire universes at will. You can create or destroy planar boundaries.",
 				type: "passive",
+				frequency: "at-will",
+			},
+			{
+				level: 16,
+				name: "Regent Attribute Enhancement",
+				description: "Increase one primary ability score (Intelligence) by +2.",
+				type: "passive",
+				frequency: "at-will",
 			},
 			{
 				level: 17,
 				name: "Spatial Transcendence",
 				description:
-					"You transcend the concept of location, becoming a fundamental force of connectivity that exists in the space between all things.",
+					"You transcend the concept of location, becoming a fundamental force of connectivity that exists in the space between all things. You cannot be trapped or confined.",
 				type: "passive",
+				frequency: "at-will",
 			},
 			{
 				level: 17,
 				name: "Space Emperor",
 				description:
-					"You gain mastery over the topology of planets, able to create concepts of distance and volume from the void.",
+					"You gain mastery over the topology of planets, able to create concepts of distance and volume from the void. You can reshape planetary surfaces at will.",
 				type: "passive",
+				frequency: "at-will",
 			},
 			{
 				level: 17,
 				name: "Reality Emperor",
 				description:
-					"You can absorb and control the spatial essence of entire worlds, gaining their collective power by folding their history into the present.",
+					"You can absorb and control the spatial essence of entire worlds, gaining perfect knowledge of their dimensional structure.",
 				type: "passive",
+				frequency: "at-will",
+			},
+			{
+				level: 18,
+				name: "Regent Power Resonance",
+				description:
+					"Your Regent abilities resonate with cosmic power. Gain +1 to the Regent Resonance pool maximum.",
+				type: "passive",
+				frequency: "at-will",
 			},
 			{
 				level: 19,
 				name: "Spatial Omnipotence",
 				description:
-					"You achieve true omnipotence within the domain of distance, able to control all spatial coordinates across all timelines.",
+					"You achieve true omnipotence within the spatial domain, able to control all dimensions across all timelines. You can retroactively alter spatial configurations of past events.",
 				type: "passive",
+				frequency: "at-will",
 			},
 			{
 				level: 19,
 				name: "Void Regent",
 				description:
-					"Your void power extends across the multiverse, allowing you to reshape entire universes into perfect vacuum or infinite expansion.",
+					"Your void power extends across the multiverse, allowing you to create absolute vacuums that span entire dimensions.",
 				type: "passive",
+				frequency: "at-will",
 			},
 			{
 				level: 19,
 				name: "Dimensional Regent",
 				description:
-					"You become the ultimate authority over travel and boundaries, able to determine the final connectivity of all existence.",
+					"You become the ultimate authority over all space and dimensions, able to determine the final spatial state of all existence.",
 				type: "passive",
+				frequency: "at-will",
 			},
 			{
 				level: 20,
 				name: "Spatial Supremacy",
 				description:
-					"You achieve absolute supremacy over all dimensional forces, becoming the source and master of all universal space.",
+					"You achieve absolute supremacy over all spatial forces, becoming the source and master of all dimensions. You can fold entire universes into singularities.",
 				type: "passive",
+				frequency: "at-will",
 			},
 			{
 				level: 20,
 				name: "Absolute Spatial",
 				description:
-					"You become the embodiment of Absolute Space, a force beyond comprehension that exists outside the reach of distance.",
+					"You become the embodiment of ultimate space, a force beyond comprehension. You are immune to all damage, and you can instantly teleport any creature or object anywhere in the multiverse (no save).",
 				type: "passive",
+				frequency: "at-will",
 			},
 			{
 				level: 20,
 				name: "Regent Power",
 				description:
-					"You achieve the full power of a Regent at their peak - the ability to command infinite energies of your element, reshape reality, control all dimensions, master your domain completely, and transcend to become a fundamental force of the multiverse.",
+					"You achieve the full power of a Regent at their peak - the ability to command infinite spatial energy, reshape reality, control all dimensions, master your domain completely, and transcend to become a fundamental force of the multiverse.",
 				type: "passive",
+				frequency: "at-will",
 			},
 		],
-		progression_table: {
-			"1": {
-				features_gained: ["Void Singularity", "Planar Blink"],
-				abilities_improved: [],
-			},
-			"2": {
-				features_gained: ["Spatial Anchors"],
-				abilities_improved: [],
-			},
-			"3": {
-				features_gained: ["Dimensional Sanctum"],
-				abilities_improved: [],
-			},
-			"4": {
-				features_gained: ["Regent Attribute Enhancement"],
-				abilities_improved: ["Primary Ability +2"],
-			},
-			"5": {
-				features_gained: ["Dimensional Lock"],
-				abilities_improved: [],
-			},
-			"6": {
-				features_gained: ["Regent Power Resonance"],
-				abilities_improved: [],
-			},
-			"7": {
-				features_gained: ["Lattice Vision"],
-				abilities_improved: [],
-			},
-			"8": {
-				features_gained: ["Regent Attribute Enhancement"],
-				abilities_improved: ["Primary Ability +2"],
-			},
-			"9": {
-				features_gained: ["Reality Rewrite"],
-				abilities_improved: [],
-			},
-			"10": {
-				features_gained: ["Absolute Spatial"],
-				abilities_improved: [],
-			},
-			"11": {
-				features_gained: ["Spatial Ascendant", "Void Lord", "Dimensional God"],
-				abilities_improved: [],
-			},
-			"12": {
-				features_gained: ["Regent Attribute Enhancement"],
-				abilities_improved: ["Primary Ability +2"],
-			},
-			"13": {
-				features_gained: [
-					"Spatial Apocalypse",
-					"Space Dominion",
-					"Reality God",
-				],
-				abilities_improved: [],
-			},
-			"14": {
-				features_gained: ["Regent Power Resonance"],
-				abilities_improved: [],
-			},
-			"15": {
-				features_gained: ["Spatial Reality", "Void God", "Dimensional Emperor"],
-				abilities_improved: [],
-			},
-			"16": {
-				features_gained: ["Regent Attribute Enhancement"],
-				abilities_improved: ["Primary Ability +2"],
-			},
-			"17": {
-				features_gained: [
-					"Spatial Transcendence",
-					"Space Emperor",
-					"Reality Emperor",
-				],
-				abilities_improved: [],
-			},
-			"18": {
-				features_gained: ["Regent Power Resonance"],
-				abilities_improved: [],
-			},
-			"19": {
-				features_gained: [
-					"Spatial Omnipotence",
-					"Void Regent",
-					"Dimensional Regent",
-				],
-				abilities_improved: [],
-			},
-			"20": {
-				features_gained: [
-					"Spatial Supremacy",
-					"Absolute Spatial",
-					"Regent Power",
-				],
-				abilities_improved: ["Primary Ability +2"],
-			},
-		},
-		mechanics: {
-			stat_bonuses: {
-				strength: 2,
-				agility: 2,
-				vitality: 2,
-				intelligence: 8,
-				sense: 4,
-				presence: 2,
-			},
-			special_abilities: [
-				"Create permanent demiplanes",
-				"Instant spatial folding",
-				"Teleport via spatial anchors",
-				"Detect portals within 5 miles",
-			],
-			restrictions: [
-				"Requires Warden verification of quest completion",
-				"Once chosen, cannot be changed without Warden approval",
-			],
-		},
-		requirements: {
-			quest_completion: "Complete the Trial of the Spatial Rift",
-			warden_verification: true,
-			prerequisite_job: "Any base job",
-		},
-		},
+	},
 	{
 		id: "mimic_regent",
 		powersKnown: REGENT_POWERS_KNOWN,
@@ -4498,122 +4368,6 @@ export const regents: Regent[] = [
 				frequency: "long-rest",
 			},
 		],
-		progression_table: {
-			"1": {
-				features_gained: ["Perfect Imitation", "Power Theft"],
-				abilities_improved: [],
-			},
-			"2": {
-				features_gained: ["Reactive Evolution"],
-				abilities_improved: [],
-			},
-			"3": {
-				features_gained: ["Quantum Existence"],
-				abilities_improved: [],
-			},
-			"4": {
-				features_gained: ["Regent Attribute Enhancement"],
-				abilities_improved: ["Primary Ability +2"],
-			},
-			"5": {
-				features_gained: ["Memory Access"],
-				abilities_improved: [],
-			},
-			"6": {
-				features_gained: ["Regent Power Resonance"],
-				abilities_improved: [],
-			},
-			"7": {
-				features_gained: ["Form Archive"],
-				abilities_improved: [],
-			},
-			"8": {
-				features_gained: ["Regent Attribute Enhancement"],
-				abilities_improved: ["Primary Ability +2"],
-			},
-			"9": {
-				features_gained: ["Perfect Copy"],
-				abilities_improved: [],
-			},
-			"10": {
-				features_gained: ["Absolute Mimic"],
-				abilities_improved: [],
-			},
-			"11": {
-				features_gained: ["Mimic Ascendant", "Form Lord", "Copy God"],
-				abilities_improved: [],
-			},
-			"12": {
-				features_gained: ["Regent Attribute Enhancement"],
-				abilities_improved: ["Primary Ability +2"],
-			},
-			"13": {
-				features_gained: ["Mimic Apocalypse", "Form Dominion", "Copy Dominion"],
-				abilities_improved: [],
-			},
-			"14": {
-				features_gained: ["Regent Power Resonance"],
-				abilities_improved: [],
-			},
-			"15": {
-				features_gained: ["Mimic Reality", "Form God", "Copy Emperor"],
-				abilities_improved: [],
-			},
-			"16": {
-				features_gained: ["Regent Attribute Enhancement"],
-				abilities_improved: ["Primary Ability +2"],
-			},
-			"17": {
-				features_gained: [
-					"Mimic Transcendence",
-					"Form Emperor",
-					"Copy Transcendence",
-				],
-				abilities_improved: [],
-			},
-			"18": {
-				features_gained: ["Regent Power Resonance"],
-				abilities_improved: [],
-			},
-			"19": {
-				features_gained: ["Mimic Omnipotence", "Form Regent", "Copy Regent"],
-				abilities_improved: [],
-			},
-			"20": {
-				features_gained: ["Mimic Supremacy", "Absolute Mimic", "Regent Power"],
-				abilities_improved: ["Primary Ability +2"],
-			},
-		},
-		regent_requirements: {
-			level: 11,
-			abilities: {
-				agility: 17,
-			},
-			quest_completion: "Complete the Trial of the Mimic Gate",
-			warden_approval: true,
-		},
-		requirements: {
-			quest_completion: "Complete the Trial of the Mimic Gate",
-			warden_verification: true,
-			prerequisite_job: "Any base job",
-		},
-		mechanics: {
-			stat_bonuses: {
-				strength: 2,
-				agility: 4,
-				vitality: 2,
-				intelligence: 2,
-				sense: 2,
-				presence: 4,
-			},
-			special_abilities: [
-				"Undetectable shapeshifting",
-				"Copy any ability permanently",
-				"Auto-adapt to threats",
-				"Access mimicked memories",
-			],
-			restrictions: ["Requires Warden verification", "AGI or PRE 17+ required"],
-		},
 	},
 	{
 		id: "blood_regent",
@@ -4658,26 +4412,6 @@ export const regents: Regent[] = [
 		weapon_proficiencies: ["Awakened Weapons", "Rift-Forged Weapons"],
 		tool_proficiencies: [],
 		class_features: [
-			{
-				name: "Sanguine Rebirth",
-				description: "When killed, you are reborn from the blood of your enemies.",
-				type: "passive",
-				
-				mechanics: { special_abilities: ["Includes complete death-state lifecycle"] }
-			},
-			{
-				name: "Blood Apocalypse",
-				description: "You drain the blood of all enemies in a vast area.",
-				type: "action",
-				frequency: "long-rest",
-				
-			},
-			{
-				name: "Regent Power Resonance",
-				description: "Your abilities resonate with the power of the Regents, increasing their effectiveness and reducing cooldowns.",
-				type: "passive",
-				level: 1
-			},
 			{
 				level: 1,
 				name: "Sanguine Command",

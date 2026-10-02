@@ -18,24 +18,6 @@ export const canonicalReviewBlockers: readonly CanonReviewBlocker[] = [
 	// lifecycle cannot be normalized without choosing between conflicting source
 	// fields or inventing missing canon.
 	{
-		id: "task7:plague_regent:progression-mechanics",
-		dataset: "regents",
-		entryId: "plague_regent",
-		fieldPath: "class_features|progression_table",
-		message:
-			"Pandemic Decree conflicts between once-per-day metadata and once-per-month prose; generic and high-tier names lack complete mechanics; diseases and split swarms have no shared duration, cure, command, or persistence lifecycle.",
-		dependsOnTask: 20,
-	},
-	{
-		id: "task7:spatial_regent:progression-mechanics",
-		dataset: "regents",
-		entryId: "spatial_regent",
-		fieldPath: "class_features|progression_table",
-		message:
-			"Reality Rewrite conflicts between long-rest metadata and weekly prose; Spatial Anchors, demiplanes, unwilling teleportation, permanent topology, and the unapproved Architect identity lack complete lifecycle and save rules.",
-		dependsOnTask: 20,
-	},
-	{
 		id: "task7:blood_regent:progression-mechanics",
 		dataset: "regents",
 		entryId: "blood_regent",
