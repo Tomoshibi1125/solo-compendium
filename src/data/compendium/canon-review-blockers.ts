@@ -18,24 +18,6 @@ export const canonicalReviewBlockers: readonly CanonReviewBlocker[] = [
 	// lifecycle cannot be normalized without choosing between conflicting source
 	// fields or inventing missing canon.
 	{
-		id: "task7:radiant_regent:progression-mechanics",
-		dataset: "regents",
-		entryId: "radiant_regent",
-		fieldPath: "class_features|progression_table",
-		message:
-			"Purifying Presence and Flame Emperor have no exact mechanic rows; Flame Dominion, Purification Flame, and Phoenix Rebirth disagree with flat power levels or omit a complete death/rebirth lifecycle.",
-		dependsOnTask: 20,
-	},
-	{
-		id: "task7:steel_regent:progression-mechanics",
-		dataset: "regents",
-		entryId: "steel_regent",
-		fieldPath: "class_features|progression_table",
-		message:
-			"Organic/Flesh versus Steel/Invulnerability vocabulary is unresolved, several progression names have no mechanic rows, Conceptual Invulnerability has no safe toggle/end-state model, and permanent construct control has no controlled-entity lifecycle.",
-		dependsOnTask: 20,
-	},
-	{
 		id: "task7:destruction_regent:progression-mechanics",
 		dataset: "regents",
 		entryId: "destruction_regent",

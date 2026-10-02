@@ -507,7 +507,6 @@ export const regents: Regent[] = [
 			quest_completion: "Complete the Umbral Regent Ascension quest series",
 			warden_verification: true,
 			prerequisite_job: "Any base job",
-			power_level: 5,
 		},
 		mechanics: {
 			stat_bonuses: {
@@ -576,398 +575,364 @@ export const regents: Regent[] = [
 			warden_verification: true,
 			prerequisite_job: "Any base job",
 		},
-		abilities: [
+		class_features: [
 			{
-				name: "White Flame Burst",
-				description:
-					"As an action, create a 30-foot radius of white flames. Creatures take 10d10 fire damage and must make a Vitality saving throw (DC 18) or be blinded for 1 minute. Purification fire that erases corruption.",
-				type: "action",
-				frequency: "once-per-day",
-				
-			},
-			{
-				name: "Seraphim Wings",
-				description:
-					"As a bonus action, manifest 6 wings of white flame. Fly 120 ft. Light up 300 ft radius. Evil/anomaly/anomaly within 60 ft must save or be blinded + 6d8 radiant damage per turn.",
-				type: "bonus-action",
-				frequency: "long-rest",
-				
-			},
-			{
-				name: "Purification Flame",
-				description:
-					"As an action, target a creature or area to purge all diseases, curses, and fiendish influence. Anomaly take 10d10 radiant damage. This mirrors the Regent of White Flames' holy domain.",
-				type: "action",
-				frequency: "short-rest",
-				
-			},
-			{
-				name: "Divine Judgment",
-				description:
-					"As a reaction, point at a creature dealing damage to you. PRE save (DC 20) or they take 8d10 radiant damage and are stunned. On kill, their soul is purified and released.",
-				type: "reaction",
-				frequency: "at-will",
-				
-			},
-			{
-				name: "Immolation Aura",
-				description:
-					"Enemies within 30 feet take 2d12 radiant damage and are unable to benefit from regeneration or healing. This reflects your passive purifying presence.",
-				type: "passive",
-				frequency: "at-will",
-				
-			},
-			{
-				name: "Flame Dominion",
-				description:
-					"As an action, create a 1-mile radius area of absolute holy protection. All allies within gain immunity to fire and radiant damage. This mirrors the Regent's sanctification authority.",
-				type: "action",
-				frequency: "once-per-day",
-				
-			},
-			{
-				name: "Purification Authority",
-				description:
-					"As an action, force all anomalies within 300 feet to make a Sense save (DC 22) or be instantly banished or destroyed. This reflects your command over the spiritual realms.",
-				type: "action",
-				frequency: "once-per-day",
-				
-			},
-			{
-				name: "Absolute Flame",
-				description:
-					"You become the ultimate master of purification fire. You are immune to all damage except necrotic, and you can erase the concept of sin or corruption itself as a bonus action.",
-				type: "passive",
-				frequency: "at-will",
-				
-			},
-		],
-		features: [
-			{
-				name: "Purifying Presence",
-				description: "You project an aura of absolute purity, granting allies advantage against all mind-altering effects.",
-				type: "passive",
-				
-			},
-			{
-				name: "Flame Emperor",
-				description: "You command the ultimate manifestation of purification fire.",
-				type: "passive",
-				
-			},
-			{
-				name: "Regent Power Resonance",
-				description: "Your abilities resonate with the power of the Regents, increasing their effectiveness and reducing cooldowns.",
-				type: "passive",
-				level: 1
-			},
-			{
+				level: 1,
 				name: "White Flame Mastery",
 				description:
 					"Immunity to fire and radiant damage. Your presence purifies any magical or mundane pollution within 60 ft.",
-				
+				type: "passive",
+				frequency: "at-will",
 			},
 			{
-				name: "Purification Flame",
-				description: "Purge diseases and curses from any living creature.",
-				
-			},
-			{
-				name: "Phoenix Rebirth",
-				description: "On death, explode in white fire and reform with full HP.",
-				
-			},
-			{
-				name: "Holy Light",
-				description: "Permanent aura of light that dispels magical darkness.",
-				
-			},
-			{
-				name: "Flame authority",
-				description: "Command all elemental fire and light creatures.",
-				
-			},
-			{
-				name: "Radiant Judgment",
+				level: 1,
+				name: "Immolation Aura",
 				description:
-					"Target a creature to judge their soul and deal radiant damage.",
-				
+					"Enemies within 30 feet take 2d12 radiant damage at the start of their turn and are unable to benefit from regeneration or healing. This reflects your passive purifying presence.",
+				type: "passive",
+				frequency: "at-will",
 			},
 			{
+				level: 1,
+				name: "Flame Dominion",
+				description:
+					"As an action, create a 1-mile radius area of absolute holy protection for 1 hour. All allies within gain immunity to fire and radiant damage. Once per day.",
+				type: "action",
+				frequency: "once-per-day",
+				uses: 1,
+				recovery: "long-rest",
+			},
+			{
+				level: 2,
+				name: "Regent Power Resonance",
+				description:
+					"Your Regent abilities resonate with cosmic power. Gain +1 to the Regent Resonance pool maximum.",
+				type: "passive",
+				frequency: "at-will",
+			},
+			{
+				level: 3,
+				name: "White Flame Burst",
+				description:
+					"As an action, create a 30-foot radius of white flames. Creatures take 10d10 fire damage and must make a Vitality saving throw (DC 8 + PB + PRE) or be blinded for 1 minute. Purification fire that erases corruption.",
+				type: "action",
+				frequency: "once-per-day",
+				uses: 1,
+				recovery: "long-rest",
+			},
+			{
+				level: 3,
+				name: "Purification Flame",
+				description:
+					"As an action, target a creature or 20-foot radius area to purge all diseases, curses, and fiendish influence. Anomalies in the area take 10d10 radiant damage (Vitality save DC 8 + PB + PRE for half).",
+				type: "action",
+				frequency: "short-rest",
+				uses: 1,
+				recovery: "short-rest",
+			},
+			{
+				level: 3,
+				name: "Purifying Presence",
+				description:
+					"You project an aura of absolute purity within 60 feet. All allies within the aura have advantage on saving throws against charmed, frightened, and mind-altering effects. Anomalies that start their turn within the aura take 2d10 radiant damage.",
+				type: "passive",
+				frequency: "at-will",
+			},
+			{
+				level: 4,
+				name: "Regent Attribute Enhancement",
+				description: "Increase one primary ability score (Presence or Strength) by +2.",
+				type: "passive",
+				frequency: "at-will",
+			},
+			{
+				level: 5,
+				name: "Seraphim Wings",
+				description:
+					"As a bonus action, manifest 6 wings of white flame for 1 hour. Gain flying speed of 120 ft. You shed bright light in a 300-ft radius. Evil, anomalous, or undead creatures within 60 ft must make a Vitality save (DC 8 + PB + PRE) at the start of their turn or be blinded and take 6d8 radiant damage.",
+				type: "bonus-action",
+				frequency: "long-rest",
+				uses: 1,
+				recovery: "long-rest",
+			},
+			{
+				level: 5,
+				name: "Flame Authority",
+				description:
+					"As an action, command all elemental fire and light creatures within 300 feet. They must make a Presence saving throw (DC 8 + PB + PRE) or be charmed by you for 24 hours. Charmed creatures obey your verbal commands.",
+				type: "action",
+				frequency: "long-rest",
+				uses: 1,
+				recovery: "long-rest",
+			},
+			{
+				level: 5,
+				name: "Phoenix Rebirth",
+				description:
+					"When you are reduced to 0 hit points, you explode in white fire (all creatures within 30 feet take 10d10 fire damage, Agility save DC 8 + PB + PRE for half) and are instantly restored to full hit points at the start of your next turn. Your body reforms from the flames at the location where you fell. Once used, you cannot use this feature again until you complete a long rest.",
+				type: "passive",
+				frequency: "long-rest",
+				uses: 1,
+				recovery: "long-rest",
+				mechanics: {
+					death_save_override: true,
+					restoration: "full HP on next turn",
+					area_damage: "10d10 fire, 30-ft radius",
+				},
+			},
+			{
+				level: 6,
+				name: "Regent Power Resonance",
+				description:
+					"Your Regent abilities resonate with cosmic power. Gain +1 to the Regent Resonance pool maximum.",
+				type: "passive",
+				frequency: "at-will",
+			},
+			{
+				level: 7,
 				name: "Flame God",
-				description: "Incarnate as the fundamental force of holy fire.",
-				
+				description:
+					"You incarnate as the fundamental force of holy fire. As a bonus action, you can transform into pure white flame for 1 minute. While in this form, you are immune to all damage except necrotic, can move through any gap, and your attacks deal an additional 4d10 radiant damage.",
+				type: "bonus-action",
+				frequency: "long-rest",
+				uses: 1,
+				recovery: "long-rest",
 			},
 			{
+				level: 7,
 				name: "Purification Lord",
-				description: "Absolute control over all spiritual corruption.",
-				
+				description:
+					"You have absolute control over spiritual corruption. As an action, target a creature, object, or 60-foot radius area. All diseases, curses, possession effects, and anomalous taint are instantly removed. Anomalies in the area must make a Sense save (DC 8 + PB + PRE) or be banished to their home plane.",
+				type: "action",
+				frequency: "once-per-day",
+				uses: 1,
+				recovery: "long-rest",
 			},
 			{
-				name: "White Flame Emperor",
-				description: "Universal reach of your purifying fire.",
-				
+				level: 8,
+				name: "Regent Attribute Enhancement",
+				description: "Increase one primary ability score (Presence or Strength) by +2.",
+				type: "passive",
+				frequency: "at-will",
 			},
 			{
+				level: 9,
+				name: "Purification Authority",
+				description:
+					"As an action, force all anomalies within 300 feet to make a Sense save (DC 8 + PB + PRE + 2) or be instantly banished or destroyed (your choice). Banished creatures return to their home plane and cannot return for 1 year.",
+				type: "action",
+				frequency: "once-per-day",
+				uses: 1,
+				recovery: "long-rest",
+			},
+			{
+				level: 9,
+				name: "Flame Emperor",
+				description:
+					"You command the ultimate manifestation of purification fire. All of your fire and radiant damage increases by 50% (rounded up). Additionally, you can spend 1 minute in concentration to sanctify a 1-mile radius area permanently. The area becomes consecrated ground: undead and fiends have disadvantage on all rolls, and living creatures regain maximum hit points from rest.",
+				type: "passive",
+				frequency: "at-will",
+				mechanics: {
+					damage_bonus: "+50% to fire and radiant",
+					sanctification: "1-mile radius, permanent, 1 minute casting",
+				},
+			},
+			{
+				level: 10,
 				name: "Absolute Flame",
 				description:
-					"You achieve the ultimate master of purification fire. You are immune to all damage except necrotic, and you can erase the concept of sin or corruption itself as a bonus action.",
-				
+					"You achieve the ultimate mastery of purification fire. You are permanently immune to all damage except necrotic. As a bonus action, you can erase the concept of sin or corruption from a creature, object, or location, permanently removing any curse, taint, or evil alignment (no save). This is conceptual purification.",
+				type: "passive",
+				frequency: "at-will",
+				mechanics: {
+					immunity: "all damage except necrotic",
+					conceptual_purification: "bonus action, no save, permanent",
+				},
 			},
 			{
+				level: 11,
 				name: "Flame Ascendant",
 				description:
-					"You transcend mortal limitations, gaining the ability to exist as pure white flame and command purification across all dimensions.",
-				
+					"You transcend mortal limitations, gaining the ability to exist as pure white flame. You can move through any space and are immune to being grappled, restrained, or petrified. You command purification across all dimensions.",
+				type: "passive",
+				frequency: "at-will",
 			},
 			{
+				level: 11,
 				name: "Purification Lord",
 				description:
-					"You gain complete control over spiritual purity, able to cleanse entire worlds of corruption at will.",
-				
+					"You gain complete control over spiritual purity, able to cleanse entire worlds of corruption at will. As an action once per week, you can purify a continent-sized area, removing all diseases, curses, and anomalous effects.",
+				type: "action",
+				frequency: "once-per-long-rest",
+				uses: 1,
+				recovery: "weekly",
 			},
 			{
+				level: 11,
 				name: "Fire God",
 				description:
-					"You become a living embodiment of holy fire, able to manifest as the sun itself to illuminate and purify reality.",
-				
+					"You become a living embodiment of holy fire, able to manifest as the sun itself to illuminate and purify reality. Your Immolation Aura expands to 300 feet and deals 6d12 radiant damage.",
+				type: "passive",
+				frequency: "at-will",
 			},
 			{
+				level: 12,
+				name: "Regent Attribute Enhancement",
+				description: "Increase one primary ability score (Presence or Strength) by +2.",
+				type: "passive",
+				frequency: "at-will",
+			},
+			{
+				level: 13,
 				name: "Flame Apocalypse",
 				description:
-					"Once per day, you can unleash a white flame apocalypse that covers a 10-mile radius in purifying light, obliterating all evil-aligned beings instantly.",
-				
+					"Once per day, you can unleash a white flame apocalypse that covers a 10-mile radius in purifying light for 1 minute. All evil-aligned beings in the area must make a Vitality save (DC 8 + PB + PRE + 4) each round or be obliterated (reduced to 0 HP and disintegrated). Neutral and good creatures are unaffected.",
+				type: "action",
+				frequency: "once-per-day",
+				uses: 1,
+				recovery: "long-rest",
 			},
 			{
+				level: 13,
 				name: "Purification Dominion",
 				description:
-					"You gain control over the concept of purity itself, able to overwrite any curse or corruption across a planetary scale.",
-				
+					"You gain control over the concept of purity itself, able to overwrite any curse or corruption across a planetary scale. You can rewrite the fundamental nature of tainted magic.",
+				type: "passive",
+				frequency: "at-will",
 			},
 			{
+				level: 13,
 				name: "Essence God",
 				description:
-					"You can harvest and manipulate the divine essence of any being through purification, gaining their sanctified power.",
-				
+					"You can harvest and manipulate the divine essence of any being through purification, gaining their sanctified power. When you destroy an anomaly, you can choose to extract its essence, gaining one of its abilities for 24 hours.",
+				type: "passive",
+				frequency: "at-will",
 			},
 			{
+				level: 14,
+				name: "Regent Power Resonance",
+				description:
+					"Your Regent abilities resonate with cosmic power. Gain +1 to the Regent Resonance pool maximum.",
+				type: "passive",
+				frequency: "at-will",
+			},
+			{
+				level: 15,
 				name: "Flame Reality",
 				description:
-					"You can reshape reality itself through holy fire, creating sanctified dimensions and rewriting spiritual laws.",
-				
+					"You can reshape reality itself through holy fire, creating sanctified dimensions and rewriting spiritual laws. You can create permanent demiplanes of pure radiance.",
+				type: "action",
+				frequency: "once-per-long-rest",
+				uses: 1,
+				recovery: "weekly",
 			},
 			{
+				level: 15,
 				name: "Purification God",
 				description:
-					"You become a master of all spiritual cleansing, able to create and destroy through the concept of purity.",
-				
+					"You become a master of all spiritual cleansing, able to create and destroy through the concept of purity. Your purification effects ignore all immunities and resistances.",
+				type: "passive",
+				frequency: "at-will",
 			},
 			{
+				level: 15,
 				name: "Fire Emperor",
 				description:
-					"Your purifying fire extends across all realities, allowing you to sanctify entire universes.",
-				
+					"Your purifying fire extends across all realities, allowing you to sanctify entire universes. You can sense and cleanse corruption across dimensional boundaries.",
+				type: "passive",
+				frequency: "at-will",
 			},
 			{
+				level: 16,
+				name: "Regent Attribute Enhancement",
+				description: "Increase one primary ability score (Presence or Strength) by +2.",
+				type: "passive",
+				frequency: "at-will",
+			},
+			{
+				level: 17,
 				name: "Flame Transcendence",
 				description:
-					"You transcend the concept of fire, becoming a fundamental force of holy illumination that cannot be contained or darkened.",
-				
+					"You transcend the concept of fire, becoming a fundamental force of holy illumination that cannot be contained or darkened. You cannot be suppressed, dispelled, or counterspelled.",
+				type: "passive",
+				frequency: "at-will",
 			},
 			{
+				level: 17,
 				name: "Purification Emperor",
 				description:
-					"You gain mastery over purity itself, able to create concepts of holiness from nothing.",
-				
+					"You gain mastery over purity itself, able to create concepts of holiness from nothing. You can spontaneously generate holy relics and sanctified items.",
+				type: "passive",
+				frequency: "at-will",
 			},
 			{
+				level: 17,
 				name: "Essence Emperor",
 				description:
-					"You can absorb and control the sanctified essence of entire worlds, gaining their collective power.",
-				
+					"You can absorb and control the sanctified essence of entire worlds, gaining their collective power. When you purify a location, you gain permanent knowledge of its history and magic.",
+				type: "passive",
+				frequency: "at-will",
 			},
 			{
+				level: 18,
+				name: "Regent Power Resonance",
+				description:
+					"Your Regent abilities resonate with cosmic power. Gain +1 to the Regent Resonance pool maximum.",
+				type: "passive",
+				frequency: "at-will",
+			},
+			{
+				level: 19,
 				name: "Flame Omnipotence",
 				description:
-					"You achieve true omnipotence within the radiant domain, able to control all light and purity across all timelines.",
-				
+					"You achieve true omnipotence within the radiant domain, able to control all light and purity across all timelines. Your radiant magic affects all versions of a target across parallel realities.",
+				type: "passive",
+				frequency: "at-will",
 			},
 			{
+				level: 19,
 				name: "Purification Regent",
 				description:
-					"Your purifying power extends across the multiverse, allowing you to reshape entire universes into beacons of light.",
-				
+					"Your purifying power extends across the multiverse, allowing you to reshape entire universes into beacons of light. You can rewrite the fundamental laws of reality to favor holiness.",
+				type: "passive",
+				frequency: "at-will",
 			},
 			{
+				level: 19,
 				name: "Fire Regent",
 				description:
-					"You become the ultimate authority over light and heat, able to determine the heat-death or enlightenment of existence.",
-				
+					"You become the ultimate authority over light and heat, able to determine the heat-death or enlightenment of existence. You control the thermal destiny of the cosmos.",
+				type: "passive",
+				frequency: "at-will",
 			},
 			{
+				level: 20,
 				name: "Flame Supremacy",
 				description:
-					"You achieve absolute supremacy over all radiant forces, becoming the source and master of all holy illumination.",
-				
+					"You achieve absolute supremacy over all radiant forces, becoming the source and master of all holy illumination. All radiant and fire effects originate from your will.",
+				type: "passive",
+				frequency: "at-will",
 			},
 			{
+				level: 20,
 				name: "Absolute Flame",
 				description:
-					"You become the embodiment of absolute holiness, a force beyond comprehension that exists outside the reach of shadow.",
-				
+					"You become the embodiment of absolute holiness, a force beyond comprehension that exists outside the reach of shadow. You are the eternal flame that cannot be extinguished.",
+				type: "passive",
+				frequency: "at-will",
 			},
 			{
+				level: 20,
 				name: "Regent Power",
 				description:
 					"You achieve the full power of a Regent at their peak - the ability to command infinite energies of your element, reshape reality, control all dimensions, master your domain completely, and transcend to become a fundamental force of the multiverse.",
-				
+				type: "passive",
+				frequency: "at-will",
 			},
 		],
-		mechanics: {
-			stat_bonuses: {
-				strength: 4,
-				agility: 2,
-				vitality: 2,
-				intelligence: 2,
-				sense: 4,
-				presence: 6,
-			},
-			special_abilities: [
-				"Immune to fire and radiant damage",
-				"Can see through any smoke or magical darkness",
-				"White fire automatically purifies any area you stand in",
-				"Anomalies are automatically hostile toward you",
-			],
-			restrictions: [
-				"Requires Warden verification of quest completion",
-				"Once chosen, cannot be changed without Warden approval",
-			],
-		},
-		progression_table: {
-			"1": {
-				features_gained: [
-					"White Flame Mastery",
-					"Immolation Aura",
-					"Flame Dominion",
-				],
-				abilities_improved: [],
-			},
-			"2": {
-				features_gained: ["Regent Power Resonance"],
-				abilities_improved: [],
-			},
-			"3": {
-				features_gained: [
-					"White Flame Burst",
-					"Purification Flame",
-					"Purifying Presence",
-				],
-				abilities_improved: [],
-			},
-			"4": {
-				features_gained: ["Regent Attribute Enhancement"],
-				abilities_improved: ["Primary Ability +2"],
-			},
-			"5": {
-				features_gained: [
-					"Seraphim Wings",
-					"Flame Authority",
-					"Phoenix Rebirth",
-				],
-				abilities_improved: [],
-			},
-			"6": {
-				features_gained: ["Regent Power Resonance"],
-				abilities_improved: [],
-			},
-			"7": {
-				features_gained: ["Flame God", "Purification Lord"],
-				abilities_improved: [],
-			},
-			"8": {
-				features_gained: ["Regent Attribute Enhancement"],
-				abilities_improved: ["Primary Ability +2"],
-			},
-			"9": {
-				features_gained: ["Purification Authority", "Flame Emperor"],
-				abilities_improved: [],
-			},
-			"10": {
-				features_gained: ["Absolute Flame"],
-				abilities_improved: [],
-			},
-			"11": {
-				features_gained: ["Flame Ascendant", "Purification Lord", "Fire God"],
-				abilities_improved: [],
-			},
-			"12": {
-				features_gained: ["Regent Attribute Enhancement"],
-				abilities_improved: ["Primary Ability +2"],
-			},
-			"13": {
-				features_gained: [
-					"Flame Apocalypse",
-					"Purification Dominion",
-					"Essence God",
-				],
-				abilities_improved: [],
-			},
-			"14": {
-				features_gained: ["Regent Power Resonance"],
-				abilities_improved: [],
-			},
-			"15": {
-				features_gained: ["Flame Reality", "Purification God", "Fire Emperor"],
-				abilities_improved: [],
-			},
-			"16": {
-				features_gained: ["Regent Attribute Enhancement"],
-				abilities_improved: ["Primary Ability +2"],
-			},
-			"17": {
-				features_gained: [
-					"Flame Transcendence",
-					"Purification Emperor",
-					"Essence Emperor",
-				],
-				abilities_improved: [],
-			},
-			"18": {
-				features_gained: ["Regent Power Resonance"],
-				abilities_improved: [],
-			},
-			"19": {
-				features_gained: [
-					"Flame Omnipotence",
-					"Purification Regent",
-					"Fire Regent",
-				],
-				abilities_improved: [],
-			},
-			"20": {
-				features_gained: ["Flame Supremacy", "Absolute Flame", "Regent Power"],
-				abilities_improved: ["Primary Ability +2"],
-			},
-		},
 	},
 	{
 		id: "steel_regent",
-		levelChoices: [
-			{
-				level: 1,
-				type: "power",
-				count: 2,
-				source: "regent-powers",
-				options: ["power-sup-example-1", "power-sup-example-2"]
-			},
-			{
-				level: 1,
-				type: "technique",
-				count: 2,
-				source: "regent-techniques",
-				options: ["tech-sup-example-1", "tech-sup-example-2"]
-			}
-		],
 		powersKnown: REGENT_POWERS_KNOWN,
 		techniquesKnown: REGENT_TECHNIQUES_KNOWN,
 		name: "Steel Regent",
@@ -996,426 +961,388 @@ export const regents: Regent[] = [
 			warden_verification: true,
 			prerequisite_job: "Any base job",
 		},
-		abilities: [
+		class_features: [
 			{
-				name: "Conceptual Invulnerability",
-				description:
-					"As an action, enter a state of absolute defense for 1 minute. You are immune to ALL damage and your AC becomes 30. This mirrors the Regent of Iron Body's reality-defying resilience.",
-				type: "action",
-				frequency: "long-rest",
-				
-			},
-			{
-				name: "Immovable Anchor",
-				description:
-					"As a bonus action, root yourself in space. You cannot be moved, grappled, or teleported against your will. Gravity ceases to affect you. This reflects the Titan's immovable nature.",
-				type: "bonus-action",
-				frequency: "at-will",
-				
-			},
-			{
-				name: "Steel Weaving",
-				description:
-					"As a bonus action, reinforce your structure to gain +3 AC and resistance to all physical damage. This reflects the Steel Regent's core defensive capabilities.",
-				type: "bonus-action",
-				frequency: "short-rest",
-				
-			},
-			{
-				name: "Titan's Law",
-				description:
-					"As a reaction, reflect the damage of an attack back at the attacker (force damage). This mirrors the Steel Regent's law of retribution.",
-				type: "reaction",
-				frequency: "at-will",
-				
-			},
-			{
-				name: "Infinite Stamina",
-				description:
-					"You no longer require sleep, food, or air. You are immune to exhaustion and all vital-sign based targeting. This represents the Steel Regent's perfect biology.",
-				type: "passive",
-				frequency: "at-will",
-				
-			},
-			{
-				name: "Iron Dominion",
-				description:
-					"As an action, create a 1-mile radius area of absolute defensive control. All allies within gain your resistances. This mirrors the Steel Regent's territorial dominion.",
-				type: "action",
-				frequency: "once-per-day",
-				
-			},
-			{
-				name: "Titan Authority",
-				description:
-					"As an action, command any construct within 300 feet (Wis save DC 20) to serve you permanently. This reflects your absolute command over the 'Monstrous Humanoids'.",
-				type: "action",
-				frequency: "once-per-day",
-				
-			},
-			{
-				name: "Absolute Invulnerability",
-				description:
-					"You become the ultimate master of defense. You are permanently resistant to all damage, and can toggle full invulnerability as a bonus action. Physics itself bows to your iron will.",
-				type: "passive",
-				frequency: "at-will",
-				
-			},
-		],
-		features: [
-			{
-				name: "Organic Manipulation",
-				description: "You can rewrite the fundamental structure of living beings.",
-				type: "action",
-				frequency: "once-per-day",
-				
-			},
-			{
-				name: "Flesh God",
-				description: "You become a living embodiment of biological perfection.",
-				type: "passive",
-				
-			},
-			{
-				name: "Flesh Dominion",
-				description: "Total control over the physiological limits of flesh and blood.",
-				type: "passive",
-				
-			},
-			{
-				name: "Steel Command",
-				description: "You command the absolute loyalty of all inorganic constructs.",
-				type: "action",
-				frequency: "at-will",
-				
-				mechanics: { special_abilities: ["Summoned constructs persist until destroyed or dismissed"] }
-			},
-			{
-				name: "Flesh Emperor",
-				description: "Ultimate biological sovereignty.",
-				type: "passive",
-				
-			},
-			{
-				name: "Steel Authority",
-				description: "Absolute command over the concept of rigidity and structure.",
-				type: "passive",
-				
-			},
-			{
-				name: "Absolute Flesh",
-				description: "You achieve the pinnacle of organic existence.",
-				type: "passive",
-				
-			},
-			{
-				name: "Conceptual Invulnerability",
-				description: "You become entirely immune to harm.",
-				type: "passive",
-				
-				mechanics: { special_abilities: ["Can safely toggle invulnerable state on and off"] }
-			},
-			{
-				name: "Regent Power Resonance",
-				description: "Your abilities resonate with the power of the Regents, increasing their effectiveness and reducing cooldowns.",
-				type: "passive",
-				level: 1
-			},
-			{
+				level: 1,
 				name: "Iron Body",
 				description:
-					"Your skin becomes hard as dragon scales. Immunity to poison and disease. Cannot be aged or polymorphed.",
-				
+					"Your skin becomes hard as dragon scales. You gain immunity to poison and disease. You cannot be aged or polymorphed against your will.",
+				type: "passive",
+				frequency: "at-will",
 			},
 			{
+				level: 1,
 				name: "Immovable Anchor",
-				description: "Root yourself in space. Gravity cannot affect you.",
-				
+				description:
+					"As a bonus action, root yourself in space for up to 1 hour. While rooted, you cannot be moved, grappled, shoved, or teleported against your will. Gravity ceases to affect you. You can end this effect as a bonus action.",
+				type: "bonus-action",
+				frequency: "at-will",
 			},
 			{
-				name: "Steel Weaving",
-				description: "Reinforce structure for massive AC and resistance.",
-				
-			},
-			{
-				name: "Titan's Law",
-				description: "Reflect damage back at attackers (force damage).",
-				
-			},
-			{
+				level: 1,
 				name: "Infinite Stamina",
-				description: "No need for sleep, food, or air. Immune to exhaustion.",
-				
+				description:
+					"You no longer require sleep, food, or air. You are immune to exhaustion levels and all vital-sign based targeting (such as poison, suffocation, or starvation).",
+				type: "passive",
+				frequency: "at-will",
 			},
 			{
+				level: 2,
+				name: "Regent Power Resonance",
+				description:
+					"Your Regent abilities resonate with cosmic power. Gain +1 to the Regent Resonance pool maximum.",
+				type: "passive",
+				frequency: "at-will",
+			},
+			{
+				level: 3,
+				name: "Steel Weaving",
+				description:
+					"As a bonus action, reinforce your structure for 1 minute to gain +3 AC and resistance to all physical damage (bludgeoning, piercing, slashing).",
+				type: "bonus-action",
+				frequency: "short-rest",
+				uses: 1,
+				recovery: "short-rest",
+			},
+			{
+				level: 3,
+				name: "Titan's Law",
+				description:
+					"As a reaction when you take damage from an attack, reflect that damage back at the attacker as force damage. The attacker takes the same amount of damage you took (before resistances).",
+				type: "reaction",
+				frequency: "at-will",
+			},
+			{
+				level: 3,
+				name: "Conceptual Invulnerability",
+				description:
+					"As an action, enter a state of absolute defense for 1 minute. While in this state, you are immune to ALL damage, your AC becomes 30, and you cannot be affected by any condition. You can toggle this state on or off as an action. Once activated, you cannot use this feature again until you complete a long rest.",
+				type: "action",
+				frequency: "long-rest",
+				uses: 1,
+				recovery: "long-rest",
+				mechanics: {
+					toggle: "action to activate or deactivate",
+					duration: "1 minute maximum",
+					immunity: "all damage and conditions",
+				},
+			},
+			{
+				level: 4,
+				name: "Regent Attribute Enhancement",
+				description: "Increase one primary ability score (Vitality or Strength) by +2.",
+				type: "passive",
+				frequency: "at-will",
+			},
+			{
+				level: 5,
+				name: "Iron Dominion",
+				description:
+					"As an action, create a 1-mile radius area of absolute defensive control for 1 hour. All allies within the area gain your damage resistances. Once per day.",
+				type: "action",
+				frequency: "once-per-day",
+				uses: 1,
+				recovery: "long-rest",
+			},
+			{
+				level: 5,
+				name: "Titan Authority",
+				description:
+					"As an action, command any construct within 300 feet to serve you. The construct must make a Wisdom saving throw (DC 8 + PB + VIT). On a failed save, it becomes permanently loyal to you and follows your commands. You can control a number of constructs equal to your proficiency bonus. Commanded constructs persist until destroyed, dismissed (bonus action), or you die.",
+				type: "action",
+				frequency: "once-per-day",
+				uses: 1,
+				recovery: "long-rest",
+				mechanics: {
+					control_limit: "PB constructs maximum",
+					persistence: "until destroyed, dismissed, or caster death",
+					dismissal: "bonus action",
+					stat_block: "use original construct stats",
+				},
+			},
+			{
+				level: 5,
 				name: "Regeneration Lord",
 				description:
-					"Regrow any lost limb in 1 minute. Mastery over biological repair.",
-				
+					"You can regrow any lost limb, organ, or body part in 1 minute. You have mastery over biological repair and structure.",
+				type: "passive",
+				frequency: "at-will",
 			},
 			{
-				name: "Iron God",
-				description: "Incarnate as the fundamental force of defense.",
-				
+				level: 6,
+				name: "Regent Power Resonance",
+				description:
+					"Your Regent abilities resonate with cosmic power. Gain +1 to the Regent Resonance pool maximum.",
+				type: "passive",
+				frequency: "at-will",
 			},
 			{
-				name: "Titan Command",
-				description: "Command all constructs and Monstrous Humanoids.",
-				
+				level: 7,
+				name: "Organic Manipulation",
+				description:
+					"You can rewrite the fundamental structure of living beings. As an action once per day, target a creature within 60 feet. You can reshape its body, cure diseases, remove curses, restore lost limbs, or impose physical mutations (Constitution save DC 8 + PB + VIT to resist unwanted changes).",
+				type: "action",
+				frequency: "once-per-day",
+				uses: 1,
+				recovery: "long-rest",
 			},
 			{
-				name: "Iron Emperor",
-				description: "Universal reach of your defensive dominion.",
-				
+				level: 7,
+				name: "Flesh God",
+				description:
+					"You become a living embodiment of biological perfection. You gain immunity to critical hits and can reroll any failed Constitution saving throw once per long rest.",
+				type: "passive",
+				frequency: "at-will",
 			},
 			{
-				name: "Absolute Invulnerability",
-				description: "Total immunity and reality-warping defense.",
-				
+				level: 7,
+				name: "Regeneration Lord",
+				description:
+					"Your regeneration becomes instantaneous. At the start of your turn, you regain hit points equal to your proficiency bonus + Vitality modifier.",
+				type: "passive",
+				frequency: "at-will",
 			},
 			{
+				level: 8,
+				name: "Regent Attribute Enhancement",
+				description: "Increase one primary ability score (Vitality or Strength) by +2.",
+				type: "passive",
+				frequency: "at-will",
+			},
+			{
+				level: 9,
+				name: "Flesh Dominion",
+				description:
+					"You have total control over the physiological limits of flesh and blood. You can alter your own physical form at will (change appearance, grow natural weapons, gain aquatic or climbing adaptations). These changes are permanent until you choose to revert them.",
+				type: "passive",
+				frequency: "at-will",
+			},
+			{
+				level: 9,
+				name: "Steel Command",
+				description:
+					"You command the absolute loyalty of all inorganic constructs. As an action, all constructs within 1 mile that can see or hear you must make a Wisdom save (DC 8 + PB + VIT) or become charmed by you for 24 hours. Summoned constructs persist until destroyed or dismissed (bonus action).",
+				type: "action",
+				frequency: "at-will",
+				mechanics: {
+					persistence: "until destroyed or dismissed",
+					dismissal: "bonus action",
+				},
+			},
+			{
+				level: 9,
+				name: "Flesh Emperor",
+				description:
+					"You achieve ultimate biological sovereignty. You can survive any physical trauma short of total disintegration. If you are reduced to 0 hit points but your body remains intact, you stabilize automatically and regain consciousness in 1 minute with 1 HP.",
+				type: "passive",
+				frequency: "at-will",
+			},
+			{
+				level: 10,
+				name: "Steel Authority",
+				description:
+					"You have absolute command over the concept of rigidity and structure. All of your AC bonuses increase by +2, and you can extend your Iron Body immunity to allies you touch (bonus action, lasts 1 hour).",
+				type: "passive",
+				frequency: "at-will",
+			},
+			{
+				level: 10,
+				name: "Absolute Flesh",
+				description:
+					"You achieve the pinnacle of organic existence. You are immune to necrotic damage and cannot be transformed, petrified, or polymorphed. Your biological form is absolute and immutable.",
+				type: "passive",
+				frequency: "at-will",
+			},
+			{
+				level: 11,
 				name: "Titan Ascendant",
 				description:
-					"You transcend mortal limitations, gaining the ability to exist as pure indestructible force and command absolute defense across all dimensions.",
-				
+					"You transcend mortal limitations, gaining the ability to exist as pure indestructible force and command absolute defense across all dimensions. You can phase through solid matter at will.",
+				type: "passive",
+				frequency: "at-will",
 			},
 			{
+				level: 11,
 				name: "Steel Lord",
 				description:
-					"You gain complete control over steel and metal, able to reshape entire worlds of metal at will.",
-				
+					"You gain complete control over steel and metal, able to reshape metal objects within 300 feet at will. You can create simple metal objects (weapons, armor, tools) from raw metal as an action.",
+				type: "passive",
+				frequency: "at-will",
 			},
 			{
+				level: 11,
 				name: "Invulnerability God",
 				description:
-					"You become a living embodiment of invulnerability, able to resist any force in existence.",
-				
+					"You become a living embodiment of invulnerability, able to resist any force in existence. You gain resistance to all damage types. If you already have resistance, you gain immunity instead.",
+				type: "passive",
+				frequency: "at-will",
 			},
 			{
+				level: 12,
+				name: "Regent Attribute Enhancement",
+				description: "Increase one primary ability score (Vitality or Strength) by +2.",
+				type: "passive",
+				frequency: "at-will",
+			},
+			{
+				level: 13,
 				name: "Steel Apocalypse",
 				description:
-					"Once per day, you can unleash a steel apocalypse that reshapes a 10-mile radius, transforming all matter into indestructible divine metal.",
-				
+					"Once per day, you can unleash a steel apocalypse that reshapes a 10-mile radius for 1 minute. All matter in the area transforms into indestructible divine metal. Structures, terrain, and objects become permanent metallic versions. Living creatures must make a Constitution save (DC 8 + PB + VIT) each round or take 10d10 force damage.",
+				type: "action",
+				frequency: "once-per-day",
+				uses: 1,
+				recovery: "long-rest",
 			},
 			{
+				level: 13,
 				name: "Steel Dominion",
 				description:
-					"You gain control over metal itself, able to create and destroy any metallic substance.",
-				
+					"You gain control over metal itself, able to create and destroy any metallic substance at will. You can transmute non-metal into metal and vice versa within a 300-foot radius.",
+				type: "passive",
+				frequency: "at-will",
 			},
 			{
+				level: 13,
 				name: "Essence God",
 				description:
-					"You can harvest and manipulate the essence of any being through the concept of the immovable anchor, gaining their power.",
-				
+					"You can harvest and manipulate the essence of any being through the concept of the immovable anchor. When you reduce a creature to 0 hit points, you can extract its essence, gaining one of its abilities permanently (DM approval required).",
+				type: "passive",
+				frequency: "at-will",
 			},
 			{
+				level: 14,
+				name: "Regent Power Resonance",
+				description:
+					"Your Regent abilities resonate with cosmic power. Gain +1 to the Regent Resonance pool maximum.",
+				type: "passive",
+				frequency: "at-will",
+			},
+			{
+				level: 15,
 				name: "Titan Reality",
 				description:
-					"You can reshape reality itself through the concept of the immovable object, creating indestructible worlds.",
-				
+					"You can reshape reality itself through the concept of the immovable object, creating indestructible worlds. You can create permanent structures and terrain features that cannot be destroyed by any means short of divine intervention.",
+				type: "action",
+				frequency: "once-per-long-rest",
+				uses: 1,
+				recovery: "weekly",
 			},
 			{
+				level: 15,
 				name: "Steel God",
 				description:
-					"You become a master of all metals, able to create and destroy entire metallic worlds.",
-				
+					"You become a master of all metals, able to create and destroy entire metallic worlds. Your metal manipulation extends across dimensions.",
+				type: "passive",
+				frequency: "at-will",
 			},
 			{
+				level: 15,
 				name: "Invulnerability Emperor",
 				description:
-					"Your invulnerability extends across all realities, allowing you to shield entire worlds from destruction.",
-				
+					"Your invulnerability extends across all realities, allowing you to shield entire worlds from destruction. As an action, you can extend your invulnerability to all allies within 1 mile for 1 minute (once per long rest).",
+				type: "passive",
+				frequency: "at-will",
 			},
 			{
+				level: 16,
+				name: "Regent Attribute Enhancement",
+				description: "Increase one primary ability score (Vitality or Strength) by +2.",
+				type: "passive",
+				frequency: "at-will",
+			},
+			{
+				level: 17,
 				name: "Titan Transcendence",
 				description:
-					"You transcend the concept of matter, becoming a fundamental force of permanence that cannot be moved or destroyed.",
-				
+					"You transcend the concept of matter, becoming a fundamental force of permanence that cannot be moved or destroyed. You are immune to all forced movement and cannot be banished, dismissed, or exiled.",
+				type: "passive",
+				frequency: "at-will",
 			},
 			{
+				level: 17,
 				name: "Steel Emperor",
 				description:
-					"You gain mastery over metal itself, able to create concepts of metallurgy from nothing.",
-				
+					"You gain mastery over metal itself, able to create concepts of metallurgy from nothing. You can spontaneously generate any metal, alloy, or metallic compound.",
+				type: "passive",
+				frequency: "at-will",
 			},
 			{
+				level: 17,
 				name: "Essence Emperor",
 				description:
-					"You can absorb and control the structural essence of entire worlds, gaining their collective power.",
-				
+					"You can absorb and control the structural essence of entire worlds, gaining their collective power. You permanently gain the ability to reshape any location you have visited.",
+				type: "passive",
+				frequency: "at-will",
 			},
 			{
+				level: 18,
+				name: "Regent Power Resonance",
+				description:
+					"Your Regent abilities resonate with cosmic power. Gain +1 to the Regent Resonance pool maximum.",
+				type: "passive",
+				frequency: "at-will",
+			},
+			{
+				level: 19,
 				name: "Titan Omnipotence",
 				description:
-					"You achieve true omnipotence within the domain of structural integrity, able to lock all reality across all timelines.",
-				
+					"You achieve true omnipotence within the domain of structural integrity, able to lock all reality across all timelines. Your defensive abilities affect all versions of yourself across parallel worlds.",
+				type: "passive",
+				frequency: "at-will",
 			},
 			{
+				level: 19,
 				name: "Steel Regent",
 				description:
-					"Your metallic power extends across the multiverse, allowing you to reshape entire universes into perfect iron order.",
-				
+					"Your metallic power extends across the multiverse, allowing you to reshape entire universes into perfect iron order. You become the concept of structure itself.",
+				type: "passive",
+				frequency: "at-will",
 			},
 			{
+				level: 19,
 				name: "Invulnerability Regent",
 				description:
-					"You become the ultimate authority over permanence and protection, able to determine the eternal state of all existence.",
-				
+					"You become the ultimate authority over permanence and protection, able to determine the eternal state of all existence. You can make any object, creature, or effect permanent or temporary at will.",
+				type: "passive",
+				frequency: "at-will",
 			},
 			{
+				level: 20,
+				name: "Regent Attribute Enhancement",
+				description: "Increase one primary ability score (Vitality or Strength) by +2.",
+				type: "passive",
+				frequency: "at-will",
+			},
+			{
+				level: 20,
 				name: "Titan Supremacy",
 				description:
-					"You achieve absolute supremacy over all structural forces, becoming the source and master of all permanence.",
-				
+					"You achieve absolute supremacy over all structural forces, becoming the source and master of all permanence. You are the foundation upon which all reality rests.",
+				type: "passive",
+				frequency: "at-will",
 			},
 			{
+				level: 20,
 				name: "Absolute Invulnerability",
 				description:
-					"You become the embodiment of absolute permanence, a force beyond comprehension that exists outside all laws of entropy.",
-				
+					"You become the embodiment of absolute permanence, a force beyond comprehension that exists outside all laws of entropy. You can toggle full invulnerability on or off as a bonus action with no limit on duration or uses. When invulnerable, you are immune to all damage, conditions, and effects.",
+				type: "passive",
+				frequency: "at-will",
+				mechanics: {
+					toggle: "bonus action, unlimited uses",
+					immunity: "all damage, conditions, and effects when active",
+				},
 			},
 			{
+				level: 20,
 				name: "Regent Power",
 				description:
-					"You achieve the full power of a Regent at their peak - the ability to command infinite forces of your element, reshape reality, control all dimensions, master your domain completely, and transcend to become a fundamental force of the multiverse. This is the ultimate power of a Regent, equal to all other Regents at their maximum potential.",
-				
+					"You achieve the full power of a Regent at their peak - the ability to command infinite forces of your element, reshape reality, control all dimensions, master your domain completely, and transcend to become a fundamental force of the multiverse.",
+				type: "passive",
+				frequency: "at-will",
 			},
 		],
-		mechanics: {
-			stat_bonuses: {
-				strength: 4,
-				agility: 2,
-				vitality: 6,
-				intelligence: 2,
-				sense: 2,
-				presence: 2,
-			},
-			special_abilities: [
-				"Immune to disease, poison, and aging effects",
-				"Can regenerate lost limbs in 1 minute",
-				"Can reshape organic matter at will",
-				"Steel and metal objects respond to your will",
-			],
-			restrictions: [
-				"Requires Warden verification of quest completion",
-				"Once chosen, cannot be changed without Warden approval",
-			],
-		},
-		progression_table: {
-			"1": {
-				features_gained: ["Iron Body", "Immovable Anchor", "Infinite Stamina"],
-				abilities_improved: [],
-			},
-			"2": {
-				features_gained: ["Regent Power Resonance"],
-				abilities_improved: [],
-			},
-			"3": {
-				features_gained: [
-					"Steel Weaving",
-					"Titan's Law",
-					"Conceptual Invulnerability",
-				],
-				abilities_improved: [],
-			},
-			"4": {
-				features_gained: ["Regent Attribute Enhancement"],
-				abilities_improved: ["Primary Ability +2"],
-			},
-			"5": {
-				features_gained: [
-					"Iron Dominion",
-					"Titan Authority",
-					"Regeneration Lord",
-				],
-				abilities_improved: [],
-			},
-			"6": {
-				features_gained: ["Regent Power Resonance"],
-				abilities_improved: [],
-			},
-			"7": {
-				features_gained: [
-					"Organic Manipulation",
-					"Flesh God",
-					"Regeneration Lord",
-				],
-				abilities_improved: [],
-			},
-			"8": {
-				features_gained: ["Regent Attribute Enhancement"],
-				abilities_improved: ["Primary Ability +2"],
-			},
-			"9": {
-				features_gained: ["Flesh Dominion", "Steel Command", "Flesh Emperor"],
-				abilities_improved: [],
-			},
-			"10": {
-				features_gained: ["Steel Authority", "Absolute Flesh"],
-				abilities_improved: [],
-			},
-			"11": {
-				features_gained: [
-					"Titan Ascendant",
-					"Steel Lord",
-					"Invulnerability God",
-				],
-				abilities_improved: [],
-			},
-			"12": {
-				features_gained: ["Regent Attribute Enhancement"],
-				abilities_improved: ["Primary Ability +2"],
-			},
-			"13": {
-				features_gained: ["Steel Apocalypse", "Steel Dominion", "Essence God"],
-				abilities_improved: [],
-			},
-			"14": {
-				features_gained: ["Regent Power Resonance"],
-				abilities_improved: [],
-			},
-			"15": {
-				features_gained: [
-					"Titan Reality",
-					"Steel God",
-					"Invulnerability Emperor",
-				],
-				abilities_improved: [],
-			},
-			"16": {
-				features_gained: ["Regent Attribute Enhancement"],
-				abilities_improved: ["Primary Ability +2"],
-			},
-			"17": {
-				features_gained: [
-					"Titan Transcendence",
-					"Steel Emperor",
-					"Essence Emperor",
-				],
-				abilities_improved: [],
-			},
-			"18": {
-				features_gained: ["Regent Power Resonance"],
-				abilities_improved: [],
-			},
-			"19": {
-				features_gained: [
-					"Titan Omnipotence",
-					"Steel Regent",
-					"Invulnerability Regent",
-				],
-				abilities_improved: [],
-			},
-			"20": {
-				features_gained: [
-					"Titan Supremacy",
-					"Absolute Invulnerability",
-					"Regent Power",
-				],
-				abilities_improved: ["Primary Ability +2"],
-			},
-		},
 	},
 	{
 		id: "destruction_regent",
@@ -4244,7 +4171,6 @@ export const regents: Regent[] = [
 			quest_completion: "Complete the Trial of the Mimic Gate",
 			warden_verification: true,
 			prerequisite_job: "Any base job",
-			power_level: 10,
 		},
 		mechanics: {
 			stat_bonuses: {
