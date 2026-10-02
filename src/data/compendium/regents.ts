@@ -4430,6 +4430,14 @@ export const regents: Regent[] = [
 			},
 			{
 				level: 2,
+				name: "Regent Power Resonance",
+				description:
+					"Your Regent abilities resonate with cosmic power. Gain +1 to the Regent Resonance pool maximum.",
+				type: "passive",
+				frequency: "at-will",
+			},
+			{
+				level: 2,
 				name: "Crimson Lance",
 				description:
 					"Form a spear of pressurized blood. Range 120 ft, 6d8 piercing + 4d8 necrotic. On hit, you regain 10 HP.",
@@ -4444,10 +4452,38 @@ export const regents: Regent[] = [
 				type: "passive",
 			},
 			{
+				level: 4,
+				name: "Regent Attribute Enhancement",
+				description:
+					"Your primary and secondary attributes increase by +2, reflecting your growing Regent power.",
+				type: "passive",
+				mechanics: { stat_bonuses: { vitality: 2, presence: 2 } },
+			},
+			{
 				level: 5,
 				name: "Sanguine Rebirth",
 				description:
-					"When you drop to 0 HP, explode in a burst of blood (10d10 necrotic to all within 30 ft) and reappear at full HP. 1/long rest.",
+					"When you drop to 0 HP, you explode in a burst of blood (10d10 necrotic to all within 30 ft, Vitality save for half) and instantly reappear at full HP at a point within 60 feet of your choice. This effect occurs automatically and can trigger once per long rest. While at 0 HP, you exist as pure blood essence for up to 1 minute before reforming, during which you cannot be targeted or affected by any means.",
+				type: "passive",
+				frequency: "long-rest",
+				mechanics: {
+					death_state_lifecycle: {
+						trigger: "Dropping to 0 HP",
+						explosion_damage: "10d10 necrotic",
+						explosion_radius: "30 ft",
+						explosion_save: "Vitality save for half damage",
+						essence_duration: "Up to 1 minute",
+						essence_state: "Untargetable, unaffectable",
+						reformation: "Full HP at chosen point within 60 ft",
+						recharge: "long-rest",
+					},
+				},
+			},
+			{
+				level: 6,
+				name: "Regent Power Resonance",
+				description:
+					"Your Regent powers resonate. The damage of your blood abilities increases by 1d6, and you gain +2 to Vitality saving throws.",
 				type: "passive",
 			},
 			{
@@ -4459,12 +4495,31 @@ export const regents: Regent[] = [
 				frequency: "long-rest",
 			},
 			{
+				level: 8,
+				name: "Regent Attribute Enhancement",
+				description:
+					"Your primary and secondary attributes increase by another +2.",
+				type: "passive",
+				mechanics: { stat_bonuses: { vitality: 2, presence: 2 } },
+			},
+			{
 				level: 9,
 				name: "Blood Apocalypse",
 				description:
-					"1-mile radius: drain the blood of all living things. All take 20d10 necrotic, you gain 1000 temporary HP. 1/week.",
+					"Once per long rest, you can unleash a devastating blood drain in a 1-mile radius. All living creatures within range take 20d10 necrotic damage (Vitality save for half), and you gain temporary HP equal to the total damage dealt (maximum 1000 temporary HP). The blood drains persist for 1 minute, creating a crimson fog that grants you truesight and advantage on all attacks within the area.",
 				type: "action",
 				frequency: "long-rest",
+				mechanics: {
+					blood_apocalypse_lifecycle: {
+						radius: "1 mile",
+						damage: "20d10 necrotic",
+						save: "Vitality save for half damage",
+						temp_hp_gain: "Total damage dealt (max 1000)",
+						duration: "1 minute (crimson fog)",
+						fog_benefits: "Truesight and advantage on attacks",
+						recharge: "long-rest",
+					},
+				},
 			},
 			{
 				level: 10,
@@ -4496,6 +4551,14 @@ export const regents: Regent[] = [
 				type: "passive",
 			},
 			{
+				level: 12,
+				name: "Regent Attribute Enhancement",
+				description:
+					"Your primary and secondary attributes increase by another +2.",
+				type: "passive",
+				mechanics: { stat_bonuses: { vitality: 2, presence: 2 } },
+			},
+			{
 				level: 13,
 				name: "Sanguine Cataclysm",
 				description:
@@ -4520,6 +4583,13 @@ export const regents: Regent[] = [
 				frequency: "long-rest",
 			},
 			{
+				level: 14,
+				name: "Regent Power Resonance",
+				description:
+					"Your Regent powers reach their apex. Blood abilities now ignore resistance and treat immunity as resistance.",
+				type: "passive",
+			},
+			{
 				level: 15,
 				name: "Blood Reality",
 				description:
@@ -4542,6 +4612,14 @@ export const regents: Regent[] = [
 				type: "passive",
 			},
 			{
+				level: 16,
+				name: "Regent Attribute Enhancement",
+				description:
+					"Your primary and secondary attributes increase by another +2.",
+				type: "passive",
+				mechanics: { stat_bonuses: { vitality: 2, presence: 2 } },
+			},
+			{
 				level: 17,
 				name: "Blood Transcendence",
 				description:
@@ -4560,6 +4638,13 @@ export const regents: Regent[] = [
 				name: "Essence Emperor",
 				description:
 					"You can absorb and control the vital essence of entire worlds, gaining their collective power by harvesting their history through their bloodline.",
+				type: "passive",
+			},
+			{
+				level: 18,
+				name: "Regent Power Resonance",
+				description:
+					"Your Regent abilities resonate with cosmic power. Once per long rest as a reaction, when a blood ability would fail, you may immediately reuse it at no cost.",
 				type: "passive",
 			},
 			{
@@ -4605,126 +4690,7 @@ export const regents: Regent[] = [
 				type: "passive",
 			},
 		],
-		progression_table: {
-			"1": {
-				features_gained: ["Sanguine Command", "Blood Shield"],
-				abilities_improved: [],
-			},
-			"2": {
-				features_gained: ["Crimson Lance"],
-				abilities_improved: [],
-			},
-			"3": {
-				features_gained: ["Life Drain Aura"],
-				abilities_improved: [],
-			},
-			"4": {
-				features_gained: ["Regent Attribute Enhancement"],
-				abilities_improved: ["Primary Ability +2"],
-			},
-			"5": {
-				features_gained: ["Sanguine Rebirth"],
-				abilities_improved: [],
-			},
-			"6": {
-				features_gained: ["Regent Power Resonance"],
-				abilities_improved: [],
-			},
-			"7": {
-				features_gained: ["Hemocentric Control"],
-				abilities_improved: [],
-			},
-			"8": {
-				features_gained: ["Regent Attribute Enhancement"],
-				abilities_improved: ["Primary Ability +2"],
-			},
-			"9": {
-				features_gained: ["Blood Apocalypse"],
-				abilities_improved: [],
-			},
-			"10": {
-				features_gained: ["Absolute Blood"],
-				abilities_improved: [],
-			},
-			"11": {
-				features_gained: ["Blood Ascendant", "Sanguine Lord", "Life God"],
-				abilities_improved: [],
-			},
-			"12": {
-				features_gained: ["Regent Attribute Enhancement"],
-				abilities_improved: ["Primary Ability +2"],
-			},
-			"13": {
-				features_gained: ["Sanguine Cataclysm", "Life Dominion", "Essence God"],
-				abilities_improved: [],
-			},
-			"14": {
-				features_gained: ["Regent Power Resonance"],
-				abilities_improved: [],
-			},
-			"15": {
-				features_gained: ["Blood Reality", "Sanguine God", "Life Emperor"],
-				abilities_improved: [],
-			},
-			"16": {
-				features_gained: ["Regent Attribute Enhancement"],
-				abilities_improved: ["Primary Ability +2"],
-			},
-			"17": {
-				features_gained: [
-					"Blood Transcendence",
-					"Life Architect",
-					"Essence Emperor",
-				],
-				abilities_improved: [],
-			},
-			"18": {
-				features_gained: ["Regent Power Resonance"],
-				abilities_improved: [],
-			},
-			"19": {
-				features_gained: [
-					"Blood Omnipotence",
-					"Sanguine Regent",
-					"Life Regent",
-				],
-				abilities_improved: [],
-			},
-			"20": {
-				features_gained: [
-					"Blood Supremacy",
-					"Absolute Sanguinity",
-					"Regent Power",
-				],
-				abilities_improved: ["Primary Ability +2"],
-			},
-		},
-		mechanics: {
-			stat_bonuses: {
-				strength: 2,
-				agility: 2,
-				vitality: 8,
-				intelligence: 2,
-				sense: 2,
-				presence: 6,
-			},
-			special_abilities: [
-				"Sense all living beings within 1 mile",
-				"Regen HP when dealing damage",
-				"Immune to bloodborne diseases",
-				"Control blood of enemies",
-			],
-			restrictions: [
-				"Requires Warden verification of quest completion",
-				"Once chosen, cannot be changed without Warden approval",
-			],
-		},
-		requirements: {
-			quest_completion: "Complete the Sanguine Ritual of the Regent",
-			warden_verification: true,
-			prerequisite_job: "Any base job",
-		},
-		},
+	},
 	{
 		id: "gravity_regent",
 		spellcasting: {
@@ -4775,13 +4741,6 @@ export const regents: Regent[] = [
 		tool_proficiencies: [],
 		class_features: [
 			{
-				name: "Regent Power Resonance",
-				level: 2,
-				description: "Your abilities resonate with the power of the Regents, increasing their effectiveness and reducing cooldowns.",
-				type: "passive",
-				
-			},
-			{
 				level: 1,
 				name: "Gravity Well",
 				description:
@@ -4807,9 +4766,27 @@ export const regents: Regent[] = [
 				level: 3,
 				name: "Planetary Field",
 				description:
-					"60-ft aura: you decide the direction of gravity for each creature within. You can cause enemies to fall upward or toward each other.",
+					"As an action once per long rest, you create a 60-ft radius gravitational field for up to 1 minute (concentration). Within this field, you control the direction of gravity for each creature individually. Affected creatures must make a Strength save at the start of their turn or be moved up to 30 feet in any direction you choose (including upward, causing fall damage if gravity returns to normal). The field persists until you dismiss it (bonus action), lose concentration, or the duration expires.",
 				type: "action",
 				frequency: "long-rest",
+				mechanics: {
+					gravity_field_lifecycle: {
+						radius: "60 ft",
+						duration: "Up to 1 minute (concentration)",
+						save: "Strength save each turn",
+						forced_movement: "Up to 30 ft in any direction",
+						dismissal: "Bonus action or lose concentration",
+						recharge: "long-rest",
+					},
+				},
+			},
+			{
+				level: 4,
+				name: "Regent Attribute Enhancement",
+				description:
+					"Your primary and secondary attributes increase by +2, reflecting your growing Regent power.",
+				type: "passive",
+				mechanics: { stat_bonuses: { strength: 2, intelligence: 2 } },
 			},
 			{
 				level: 5,
@@ -4820,6 +4797,13 @@ export const regents: Regent[] = [
 				frequency: "short-rest",
 			},
 			{
+				level: 6,
+				name: "Regent Power Resonance",
+				description:
+					"Your Regent abilities resonate with cosmic power. Gain +1 to the Regent Resonance pool maximum, and gravity effects deal an additional 1d10 force damage.",
+				type: "passive",
+			},
+			{
 				level: 7,
 				name: "Orbital Striker",
 				description:
@@ -4828,12 +4812,32 @@ export const regents: Regent[] = [
 				frequency: "long-rest",
 			},
 			{
+				level: 8,
+				name: "Regent Attribute Enhancement",
+				description:
+					"Your primary and secondary attributes increase by another +2.",
+				type: "passive",
+				mechanics: { stat_bonuses: { strength: 2, intelligence: 2 } },
+			},
+			{
 				level: 9,
 				name: "Singularity Genesis",
 				description:
-					"Create a black hole that pulls all matter within 500 ft into its center. Targets take 40d10 force damage and are erased from existence on kill.",
+					"As an action once per long rest, you create a black hole at a point within 500 feet. The singularity persists for up to 1 minute (concentration) and has a 100-foot radius gravitational pull. All creatures and objects within range must make a Strength save at the start of their turn or be pulled 50 feet toward the center. Creatures that reach the center take 40d10 force damage and are erased from existence if reduced to 0 HP. The singularity collapses when you dismiss it (bonus action), lose concentration, or the duration expires.",
 				type: "action",
 				frequency: "long-rest",
+				mechanics: {
+					singularity_lifecycle: {
+						range: "500 ft placement",
+						radius: "100 ft gravitational pull",
+						duration: "Up to 1 minute (concentration)",
+						pull_strength: "50 ft per turn (Strength save to resist)",
+						center_damage: "40d10 force",
+						erasure: "Creatures reduced to 0 HP are erased from existence",
+						dismissal: "Bonus action or lose concentration",
+						recharge: "long-rest",
+					},
+				},
 			},
 			{
 				level: 10,
@@ -4865,6 +4869,14 @@ export const regents: Regent[] = [
 				type: "passive",
 			},
 			{
+				level: 12,
+				name: "Regent Attribute Enhancement",
+				description:
+					"Your primary and secondary attributes increase by another +2.",
+				type: "passive",
+				mechanics: { stat_bonuses: { strength: 2, intelligence: 2 } },
+			},
+			{
 				level: 13,
 				name: "Gravity Apocalypse",
 				description:
@@ -4889,6 +4901,13 @@ export const regents: Regent[] = [
 				frequency: "long-rest",
 			},
 			{
+				level: 14,
+				name: "Regent Power Resonance",
+				description:
+					"Your Regent powers reach their apex. Gravity fields now affect creatures with immunity to forced movement, treating immunity as resistance.",
+				type: "passive",
+			},
+			{
 				level: 15,
 				name: "Gravity Reality",
 				description:
@@ -4911,6 +4930,14 @@ export const regents: Regent[] = [
 				type: "passive",
 			},
 			{
+				level: 16,
+				name: "Regent Attribute Enhancement",
+				description:
+					"Your primary and secondary attributes increase by another +2.",
+				type: "passive",
+				mechanics: { stat_bonuses: { strength: 2, intelligence: 2 } },
+			},
+			{
 				level: 17,
 				name: "Gravity Transcendence",
 				description:
@@ -4929,6 +4956,13 @@ export const regents: Regent[] = [
 				name: "Essence Emperor",
 				description:
 					"You can absorb and control the gravitational essence of entire worlds, gaining their collective power by pinning their history to the present.",
+				type: "passive",
+			},
+			{
+				level: 18,
+				name: "Regent Power Resonance",
+				description:
+					"Your Regent abilities resonate with cosmic power. Once per long rest as a reaction, when a gravity ability would fail, you may immediately reuse it at no cost.",
 				type: "passive",
 			},
 			{
@@ -4974,130 +5008,7 @@ export const regents: Regent[] = [
 				type: "passive",
 			},
 		],
-		progression_table: {
-			"1": {
-				features_gained: ["Gravity Well", "Weightless Step"],
-				abilities_improved: [],
-			},
-			"2": {
-				features_gained: ["Crushing Blows"],
-				abilities_improved: [],
-			},
-			"3": {
-				features_gained: ["Planetary Field"],
-				abilities_improved: [],
-			},
-			"4": {
-				features_gained: ["Regent Attribute Enhancement"],
-				abilities_improved: ["Primary Ability +2"],
-			},
-			"5": {
-				features_gained: ["Event Horizon"],
-				abilities_improved: [],
-			},
-			"6": {
-				features_gained: ["Regent Power Resonance"],
-				abilities_improved: [],
-			},
-			"7": {
-				features_gained: ["Orbital Striker"],
-				abilities_improved: [],
-			},
-			"8": {
-				features_gained: ["Regent Attribute Enhancement"],
-				abilities_improved: ["Primary Ability +2"],
-			},
-			"9": {
-				features_gained: ["Singularity Genesis"],
-				abilities_improved: [],
-			},
-			"10": {
-				features_gained: ["Absolute Weight"],
-				abilities_improved: [],
-			},
-			"11": {
-				features_gained: ["Gravity Ascendant", "Weight Lord", "Force God"],
-				abilities_improved: [],
-			},
-			"12": {
-				features_gained: ["Regent Attribute Enhancement"],
-				abilities_improved: ["Primary Ability +2"],
-			},
-			"13": {
-				features_gained: [
-					"Gravity Apocalypse",
-					"Force Dominion",
-					"Essence God",
-				],
-				abilities_improved: [],
-			},
-			"14": {
-				features_gained: ["Regent Power Resonance"],
-				abilities_improved: [],
-			},
-			"15": {
-				features_gained: ["Gravity Reality", "Weight God", "Force Emperor"],
-				abilities_improved: [],
-			},
-			"16": {
-				features_gained: ["Regent Attribute Enhancement"],
-				abilities_improved: ["Primary Ability +2"],
-			},
-			"17": {
-				features_gained: [
-					"Gravity Transcendence",
-					"Fundamental Emperor",
-					"Essence Emperor",
-				],
-				abilities_improved: [],
-			},
-			"18": {
-				features_gained: ["Regent Power Resonance"],
-				abilities_improved: [],
-			},
-			"19": {
-				features_gained: [
-					"Gravity Omnipotence",
-					"Weight Regent",
-					"Force Regent",
-				],
-				abilities_improved: [],
-			},
-			"20": {
-				features_gained: [
-					"Gravity Supremacy",
-					"Absolute Weightlessness",
-					"Regent Power",
-				],
-				abilities_improved: ["Primary Ability +2"],
-			},
-		},
-		mechanics: {
-			stat_bonuses: {
-				strength: 8,
-				agility: 2,
-				vitality: 6,
-				intelligence: 6,
-				sense: 2,
-				presence: 2,
-			},
-			special_abilities: [
-				"Immune to forced movement",
-				"Fly at walk speed",
-				"Crush armor with focus",
-				"Control gravitational vectors",
-			],
-			restrictions: [
-				"Requires Warden verification of quest completion",
-				"Once chosen, cannot be changed without Warden approval",
-			],
-		},
-		requirements: {
-			quest_completion: "Complete the Trial of the Star-Crusher",
-			warden_verification: true,
-			prerequisite_job: "Any base job",
-		},
-		},
+	},
 ];
 
 // Materialize the single runtime ledger at the data boundary. Every consumer

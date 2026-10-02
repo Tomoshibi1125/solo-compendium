@@ -18,24 +18,6 @@ export const canonicalReviewBlockers: readonly CanonReviewBlocker[] = [
 	// lifecycle cannot be normalized without choosing between conflicting source
 	// fields or inventing missing canon.
 	{
-		id: "task7:blood_regent:progression-mechanics",
-		dataset: "regents",
-		entryId: "blood_regent",
-		fieldPath: "class_features|progression_table",
-		message:
-			"Sanguine Rebirth states a cadence only in prose and omits its death-state lifecycle, while Blood Apocalypse conflicts between long-rest metadata and once-per-week prose.",
-		dependsOnTask: 20,
-	},
-	{
-		id: "task7:gravity_regent:progression-mechanics",
-		dataset: "regents",
-		entryId: "gravity_regent",
-		fieldPath: "class_features|progression_table",
-		message:
-			"The source declares spellcasting but not power or technique ledgers; persistent gravity fields, micro-singularities, black holes, targets, saves, destruction, and cleanup lack a common effect lifecycle.",
-		dependsOnTask: 20,
-	},
-	{
 		id: "task7:regents:ability-option-identities",
 		dataset: "regents",
 		entryId: "*",
