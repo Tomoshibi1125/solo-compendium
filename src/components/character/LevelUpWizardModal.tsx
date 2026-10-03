@@ -113,7 +113,6 @@ import {
 import { toCastingReference } from "@/lib/jobRules";
 import { removeProgressionGrantsAboveLevel } from "@/lib/levelDownCleanup";
 import { getStaticPathUnlockLevel, isASILevel } from "@/lib/levelGating";
-import { getMaxRegentAbilityTier } from "@/lib/regentProgression";
 import {
 	calculateAverageHPGain,
 	calculateMaxHPGain,
@@ -142,6 +141,7 @@ import {
 import { rankToGateToken } from "@/lib/rankColors";
 import { getRegentHpContributionForIds } from "@/lib/regentGestalt";
 import {
+	getMaxRegentAbilityTier,
 	getRegentFeaturesAtLevel,
 	regentToChoiceSource,
 } from "@/lib/regentProgression";
@@ -313,7 +313,12 @@ function toChoiceSourceData(
 	if (!job) return null;
 	return {
 		name: name ?? job.name,
-		skill_choice_count: 0,
+		skill_choice_count:
+			(job as { skill_choice_count?: number; skillChoiceCount?: number })
+				.skill_choice_count ??
+			(job as { skill_choice_count?: number; skillChoiceCount?: number })
+				.skillChoiceCount ??
+			0,
 		awakening_features: job.awakeningFeatures ?? [],
 		job_traits: job.jobTraits ?? [],
 		level_choices: job.levelChoices,

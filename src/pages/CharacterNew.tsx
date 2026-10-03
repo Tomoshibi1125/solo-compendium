@@ -791,6 +791,12 @@ const CharacterNew = () => {
 								?.job_traits ??
 							(jobData as { job_traits?: [] } | undefined)?.job_traits ??
 							[],
+						skill_choice_count:
+							(staticJobData as { skillChoiceCount?: number })
+								?.skillChoiceCount ??
+							(jobData as { skill_choice_count?: number })
+								?.skill_choice_count ??
+							0,
 						level_choices: staticJobLedgerData?.levelChoices,
 						cantrips_known: staticJobData?.spellcasting?.cantripsKnown,
 						spells_known: staticJobData?.spellcasting?.spellsKnown,
@@ -1925,6 +1931,7 @@ const CharacterNew = () => {
 				name: name.trim(),
 				level: 1,
 				job: dbJob.name,
+				job_id: dbJob.id,
 				base_class: dbJob.name,
 				portrait_url: jobImage || dbJob.image_url || null,
 				path: paths.find((p) => p.id === selectedPath)?.name || null,

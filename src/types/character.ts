@@ -146,6 +146,8 @@ export interface StaticJob {
 	toolProficiencies?: string[];
 	tool_proficiencies?: string[];
 	skillChoices?: string[];
+	skillChoiceCount?: number;
+	skill_choice_count?: number;
 	source?: string;
 	classFeatures?: Array<{
 		level: number;

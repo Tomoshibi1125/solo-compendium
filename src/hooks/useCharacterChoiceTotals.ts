@@ -22,7 +22,12 @@ function toJobChoiceSource(job: Job | undefined): ChoiceSourceData | null {
 	if (!job) return null;
 	return {
 		name: job.name,
-		skill_choice_count: 0,
+		skill_choice_count:
+			(job as { skill_choice_count?: number; skillChoiceCount?: number })
+				.skill_choice_count ??
+			(job as { skill_choice_count?: number; skillChoiceCount?: number })
+				.skillChoiceCount ??
+			0,
 		awakening_features: job.awakeningFeatures ?? [],
 		job_traits: job.jobTraits ?? [],
 		level_choices: job.levelChoices,
