@@ -46,7 +46,6 @@ import { EquipmentList } from "@/components/character/EquipmentList";
 import { ExportDialog } from "@/components/character/ExportDialog";
 import { FeatureChoicesPanel } from "@/components/character/FeatureChoicesPanel";
 import { FeaturesList } from "@/components/character/FeaturesList";
-import { GuildBenefitsDisplay } from "@/components/character/GuildBenefitsDisplay";
 import { HomebrewFeatureApplicator } from "@/components/character/HomebrewFeatureApplicator";
 import { InlineSectionNote } from "@/components/character/InlineSectionNote";
 import { JournalPanel } from "@/components/character/JournalPanel";
@@ -740,7 +739,6 @@ export default function CharacterSheetV2() {
 				onSelectDetail={(detail) => onSelectDetail(detail, "Feature", Zap)}
 				readOnly={isReadOnly}
 			/>
-			<GuildBenefitsDisplay characterId={character.id} />
 			<InlineSectionNote
 				section="features"
 				label="Features & Traits"
