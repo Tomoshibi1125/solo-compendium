@@ -354,7 +354,21 @@ export function RegentCatchUpModal({
 
 	const powerQuery = useQuery<CanonicalCastableEntry[]>({
 		queryKey: ["regent-catchup-powers", canonicalRegentId, level, campaignId],
-		queryFn: () => listCanonicalPowers(undefined, { campaignId }),
+		queryFn: async () => {
+			// Load regent powers from regent_canonical_pick_options table
+			const { data, error } = await supabase
+				.from("regent_canonical_pick_options")
+				.select("canonical_id, tier")
+				.eq("kind", "powers")
+				.lte("tier", maxTier)
+				.gte("tier", 5);
+			if (error) throw error;
+			
+			// Get full power details from compendium for display
+			const allPowers = await listCanonicalPowers(undefined, { campaignId });
+			const regentPowerIds = new Set(data?.map(row => row.canonical_id) ?? []);
+			return allPowers.filter(p => regentPowerIds.has(p.id) && p.power_level >= 5 && p.power_level <= maxTier);
+		},
 		enabled: baseQueryEnabled && owed.powers > 0,
 	});
 
@@ -365,8 +379,24 @@ export function RegentCatchUpModal({
 			level,
 			campaignId,
 		],
-		queryFn: () =>
-			listCanonicalEntries("techniques", undefined, { campaignId }),
+		queryFn: async () => {
+			// Load regent techniques from regent_canonical_pick_options table
+			const { data, error } = await supabase
+				.from("regent_canonical_pick_options")
+				.select("canonical_id, tier")
+				.eq("kind", "techniques")
+				.lte("tier", maxTier)
+				.gte("tier", 5);
+			if (error) throw error;
+			
+			// Get full technique details from compendium for display
+			const allTechniques = await listCanonicalEntries("techniques", undefined, { campaignId });
+			const regentTechniqueIds = new Set(data?.map(row => row.canonical_id) ?? []);
+			return allTechniques.filter(t => {
+				const tier = Number(t.level_requirement ?? t.level ?? 0);
+				return regentTechniqueIds.has(t.id) && tier >= 5 && tier <= maxTier;
+			});
+		},
 		enabled: baseQueryEnabled && owed.techniques > 0,
 	});
 
