@@ -27,7 +27,6 @@ import {
 } from "@/lib/canonicalCompendium";
 import { calculateTotalChoices } from "@/lib/choiceCalculations";
 import { isLocalCharacterId } from "@/lib/guestStore";
-import { listRegentCuratedOptions } from "@/lib/regentCatchUpCatalog";
 import { resolveCanonicalRegentId } from "@/lib/regentIdentity";
 import {
 	type CanonicalPickEntry,
@@ -351,22 +350,6 @@ export function RegentCatchUpModal({
 
 	const baseQueryEnabled =
 		open && remoteCharacter && !!regent && validLevel && !!regentName;
-	const curatedQuery = useQuery({
-		queryKey: ["regent-curated-options", unlockId],
-		queryFn: () => listRegentCuratedOptions(unlockId),
-		enabled: baseQueryEnabled,
-	});
-	const curatedIds = useMemo(() => {
-		const map = {
-			powers: new Set<string>(),
-			techniques: new Set<string>(),
-			cantrips: new Set<string>(),
-			spells: new Set<string>(),
-		};
-		for (const option of curatedQuery.data ?? [])
-			map[option.kind].add(option.id);
-		return map;
-	}, [curatedQuery.data]);
 
 	const powerQuery = useQuery<CanonicalCastableEntry[]>({
 		queryKey: ["regent-catchup-powers", canonicalRegentId, level, campaignId],
@@ -479,29 +462,16 @@ export function RegentCatchUpModal({
 	}, [selectionResetKey]);
 
 	const powerOptions = useMemo(
-		() =>
-			(powerQuery.data ?? [])
-				.filter((entry) => curatedIds.powers.has(entry.id))
-				.map(toCastablePick),
-		[powerQuery.data, curatedIds],
+		() => (powerQuery.data ?? []).map(toCastablePick),
+		[powerQuery.data],
 	);
 	const techniqueOptions = useMemo(
-		() =>
-			(techniqueQuery.data ?? [])
-				.filter((entry) => curatedIds.techniques.has(entry.id))
-				.map(toTechniquePick),
-		[techniqueQuery.data, curatedIds],
+		() => (techniqueQuery.data ?? []).map(toTechniquePick),
+		[techniqueQuery.data],
 	);
 	const allSpellOptions = useMemo(
-		() =>
-			(spellQuery.data ?? [])
-				.filter((entry) =>
-					entry.power_level === 0
-						? curatedIds.cantrips.has(entry.id)
-						: curatedIds.spells.has(entry.id),
-				)
-				.map(toCastablePick),
-		[spellQuery.data, curatedIds],
+		() => (spellQuery.data ?? []).map(toCastablePick),
+		[spellQuery.data],
 	);
 	const cantripOptions = useMemo(
 		() => allSpellOptions.filter((spell) => spell.power_level === 0),
@@ -586,19 +556,10 @@ export function RegentCatchUpModal({
 		(owed.powers > 0 && powerQuery.isLoading) ||
 		(owed.techniques > 0 && techniqueQuery.isLoading) ||
 		((owed.cantrips > 0 || owed.spells > 0) && spellQuery.isLoading);
-	const queryLoading =
-		characterLoading ||
-		optionLoading ||
-		knownQuery.isLoading ||
-		curatedQuery.isLoading;
+	const queryLoading = characterLoading || optionLoading || knownQuery.isLoading;
 	const optionError =
 		powerQuery.error ?? techniqueQuery.error ?? spellQuery.error;
-	const queryError =
-		characterError ?? optionError ?? knownQuery.error ?? curatedQuery.error;
-	const catalogBlockers = buckets.filter(
-		(bucket) =>
-			bucket.readiness.hasCatalogDeficit || bucket.readiness.hasExcessPersisted,
-	);
+	const queryError = characterError ?? optionError ?? knownQuery.error;
 	const allReady =
 		baseQueryEnabled &&
 		!queryLoading &&
@@ -789,33 +750,6 @@ export function RegentCatchUpModal({
 						</li>
 					))}
 				</ul>
-			</div>
-		);
-	} else if (catalogBlockers.length > 0) {
-		blocker = (
-			<div className="space-y-2">
-				<p>
-					Your Warden must approve enough canonical {regentName} choices for
-					every owed pick. The full owed count remains available after approval.
-				</p>
-				<ul className="list-disc pl-5">
-					{catalogBlockers.map((bucket) => (
-						<li key={bucket.key}>
-							{bucket.label}: {bucket.readiness.requiredSelections} selections
-							required, {bucket.readiness.available} eligible options available
-							{bucket.readiness.hasExcessPersisted
-								? `; ${bucket.readiness.completedSameSource} same-source rows already exceed the owed ${bucket.owed}`
-								: ""}
-						</li>
-					))}
-				</ul>
-				<Button
-					size="sm"
-					variant="outline"
-					onClick={() => void curatedQuery.refetch()}
-				>
-					Refresh approved choices
-				</Button>
 			</div>
 		);
 	}
