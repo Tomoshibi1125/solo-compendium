@@ -352,6 +352,22 @@ export function RegentCatchUpModal({
 	const baseQueryEnabled =
 		open && remoteCharacter && !!regent && validLevel && !!regentName;
 
+	// Calculate max tier for regent abilities based on character level
+	// Tier 5 at level 1, tier 9 at level 20, scales linearly
+	const maxTier = useMemo(() => getMaxRegentAbilityTier(level ?? 1), [level]);
+
+	// Calculate max spell tier based on regent's spell slot progression
+	const maxSpellTier = useMemo(() => {
+		if (!regent?.spellcasting?.spell_slots || !level) return 0;
+		return Object.entries(regent.spellcasting.spell_slots).reduce(
+			(max, [ordinal, counts]) =>
+				Array.isArray(counts) && Number(counts[level - 1]) > 0
+					? Math.max(max, Number.parseInt(ordinal, 10))
+					: max,
+			0,
+		);
+	}, [regent, level]);
+
 	const powerQuery = useQuery<CanonicalCastableEntry[]>({
 		queryKey: ["regent-catchup-powers", canonicalRegentId, level, campaignId, maxTier],
 		queryFn: async () => {
@@ -525,22 +541,6 @@ export function RegentCatchUpModal({
 	useEffect(() => {
 		if (selectionResetKey) setSelected(createEmptySelections());
 	}, [selectionResetKey]);
-
-	// Calculate max tier for regent abilities based on character level
-	// Tier 5 at level 1, tier 9 at level 20, scales linearly
-	const maxTier = useMemo(() => getMaxRegentAbilityTier(level ?? 1), [level]);
-
-	// Calculate max spell tier based on regent's spell slot progression
-	const maxSpellTier = useMemo(() => {
-		if (!regent?.spellcasting?.spell_slots || !level) return 0;
-		return Object.entries(regent.spellcasting.spell_slots).reduce(
-			(max, [ordinal, counts]) =>
-				Array.isArray(counts) && Number(counts[level - 1]) > 0
-					? Math.max(max, Number.parseInt(ordinal, 10))
-					: max,
-			0,
-		);
-	}, [regent, level]);
 
 	const powerOptions = useMemo(
 		() =>
