@@ -1922,6 +1922,8 @@ function transformRegent(regent: StaticRegentSource): StaticCompendiumEntry {
 		mechanics: (regent.mechanics as Record<string, Json>) || null,
 		// Derived 5e-style class features for all regents
 		class_features: classFeatures,
+		// Progression table for level-based feature grants
+		progression_table: (regent as RegentExtended).progression_table || null,
 	};
 }
 
