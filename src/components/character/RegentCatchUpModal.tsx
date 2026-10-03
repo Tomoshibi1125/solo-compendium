@@ -28,6 +28,7 @@ import {
 import { calculateTotalChoices } from "@/lib/choiceCalculations";
 import { isLocalCharacterId } from "@/lib/guestStore";
 import { resolveCanonicalRegentId } from "@/lib/regentIdentity";
+import { getMaxRegentAbilityTier } from "@/lib/regentProgression";
 import {
 	type CanonicalPickEntry,
 	persistRegentPowers,
@@ -461,17 +462,50 @@ export function RegentCatchUpModal({
 		if (selectionResetKey) setSelected(createEmptySelections());
 	}, [selectionResetKey]);
 
+	// Calculate max tier for regent abilities based on character level
+	// Tier 5 at level 1, tier 9 at level 20, scales linearly
+	const maxTier = useMemo(() => getMaxRegentAbilityTier(level ?? 1), [level]);
+
+	// Calculate max spell tier based on regent's spell slot progression
+	const maxSpellTier = useMemo(() => {
+		if (!regent?.spellcasting?.spell_slots || !level) return 0;
+		return Object.entries(regent.spellcasting.spell_slots).reduce(
+			(max, [ordinal, counts]) =>
+				Array.isArray(counts) && Number(counts[level - 1]) > 0
+					? Math.max(max, Number.parseInt(ordinal, 10))
+					: max,
+			0,
+		);
+	}, [regent, level]);
+
 	const powerOptions = useMemo(
-		() => (powerQuery.data ?? []).map(toCastablePick),
-		[powerQuery.data],
+		() =>
+			(powerQuery.data ?? [])
+				.filter(
+					(entry) => entry.power_level >= 5 && entry.power_level <= maxTier,
+				)
+				.map(toCastablePick),
+		[powerQuery.data, maxTier],
 	);
 	const techniqueOptions = useMemo(
-		() => (techniqueQuery.data ?? []).map(toTechniquePick),
-		[techniqueQuery.data],
+		() =>
+			(techniqueQuery.data ?? [])
+				.filter((entry) => {
+					const tier = Number(entry.level_requirement ?? entry.level ?? 0);
+					return tier >= 5 && tier <= maxTier;
+				})
+				.map(toTechniquePick),
+		[techniqueQuery.data, maxTier],
 	);
 	const allSpellOptions = useMemo(
-		() => (spellQuery.data ?? []).map(toCastablePick),
-		[spellQuery.data],
+		() =>
+			(spellQuery.data ?? [])
+				.filter(
+					(entry) =>
+						entry.power_level <= maxSpellTier || entry.power_level === 0,
+				)
+				.map(toCastablePick),
+		[spellQuery.data, maxSpellTier],
 	);
 	const cantripOptions = useMemo(
 		() => allSpellOptions.filter((spell) => spell.power_level === 0),

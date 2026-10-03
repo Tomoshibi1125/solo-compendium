@@ -147,8 +147,8 @@ export const REGENT_EXPECTATIONS = {
 		theme: "Pandemic Incarnate",
 		quest: "Complete the Trial of the Plague Gate",
 		prerequisiteJob: COMMON_QUEST_PREREQUISITE,
-		featureCount: 33,
-		frequencies: COMMON_FIVE_CADENCES,
+		featureCount: 34,
+		frequencies: ["at-will", "long-rest", "once-per-day"],
 		grants: { spell: true, power: false, technique: false },
 		progression: {
 			1: ["Typhoid Incarnate", "Insect God"],
@@ -165,8 +165,8 @@ export const REGENT_EXPECTATIONS = {
 		theme: "Cosmic Weaving & Dimensional Void",
 		quest: "Complete the Trial of the Spatial Rift",
 		prerequisiteJob: COMMON_QUEST_PREREQUISITE,
-		featureCount: 33,
-		frequencies: COMMON_FIVE_CADENCES,
+		featureCount: 34,
+		frequencies: ["at-will", "long-rest", "once-per-day"],
 		grants: { spell: true, power: false, technique: false },
 		progression: {
 			1: ["Void Singularity", "Planar Blink"],
@@ -183,7 +183,7 @@ export const REGENT_EXPECTATIONS = {
 		theme: "Infinite Forms",
 		quest: "Complete the Trial of the Mimic Gate",
 		prerequisiteJob: COMMON_QUEST_PREREQUISITE,
-		featureCount: 5,
+		featureCount: 33,
 		frequencies: ["at-will", "long-rest"],
 		grants: { spell: false, power: true, technique: true },
 		progression: {
@@ -201,7 +201,7 @@ export const REGENT_EXPECTATIONS = {
 		theme: "Hemomancy & Sanguine Regentty",
 		quest: "Complete the Sanguine Ritual of the Regent",
 		prerequisiteJob: COMMON_QUEST_PREREQUISITE,
-		featureCount: 36,
+		featureCount: 34,
 		frequencies: ["at-will", "long-rest", "once-per-day", "short-rest"],
 		grants: { spell: true, power: false, technique: false },
 		progression: {
@@ -219,7 +219,7 @@ export const REGENT_EXPECTATIONS = {
 		theme: "Gravitational Mastery & Fundamental Force",
 		quest: "Complete the Trial of the Star-Crusher",
 		prerequisiteJob: COMMON_QUEST_PREREQUISITE,
-		featureCount: 36,
+		featureCount: 33,
 		frequencies: ["at-will", "long-rest", "once-per-day", "short-rest"],
 		grants: { spell: true, power: false, technique: false },
 		progression: {

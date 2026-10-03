@@ -113,6 +113,7 @@ import {
 import { toCastingReference } from "@/lib/jobRules";
 import { removeProgressionGrantsAboveLevel } from "@/lib/levelDownCleanup";
 import { getStaticPathUnlockLevel, isASILevel } from "@/lib/levelGating";
+import { getMaxRegentAbilityTier } from "@/lib/regentProgression";
 import {
 	calculateAverageHPGain,
 	calculateMaxHPGain,
@@ -1259,25 +1260,29 @@ export const LevelUpWizardModal = ({
 		];
 	});
 	const { data: regentPowerCatalog = [] } = useQuery<CanonicalCastableEntry[]>({
-		queryKey: ["regent-level-power-catalog", campaignId],
+		queryKey: ["regent-level-power-catalog", campaignId, newLevel],
 		enabled: regentLaterChoiceNeeds.some((entry) => entry.powers > 0),
-		queryFn: async () =>
-			(await listCanonicalPowers(undefined, { campaignId })).filter(
-				(entry) => entry.power_level >= 5 && entry.power_level <= 9,
-			),
+		queryFn: async () => {
+			const maxTier = getMaxRegentAbilityTier(newLevel);
+			return (await listCanonicalPowers(undefined, { campaignId })).filter(
+				(entry) => entry.power_level >= 5 && entry.power_level <= maxTier,
+			);
+		},
 	});
 	const { data: regentTechniqueCatalog = [] } = useQuery<
 		StaticCompendiumEntry[]
 	>({
-		queryKey: ["regent-level-technique-catalog", campaignId],
+		queryKey: ["regent-level-technique-catalog", campaignId, newLevel],
 		enabled: regentLaterChoiceNeeds.some((entry) => entry.techniques > 0),
-		queryFn: async () =>
-			(
+		queryFn: async () => {
+			const maxTier = getMaxRegentAbilityTier(newLevel);
+			return (
 				await listCanonicalEntries("techniques", undefined, { campaignId })
 			).filter((entry) => {
 				const tier = Number(entry.level_requirement);
-				return tier >= 5 && tier <= 9;
-			}),
+				return tier >= 5 && tier <= maxTier;
+			});
+		},
 	});
 	const regentLaterChoicesMet = regentLaterChoiceNeeds.every(
 		(need) =>

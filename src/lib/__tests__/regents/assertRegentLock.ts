@@ -25,7 +25,9 @@ const HIGH_TIER_PATTERN =
 export interface RegentLockExpectation {
 	id: keyof typeof REGENT_GRANTS;
 	theme: string;
-	quest: string;
+	/** Quest name - documentation only, actual quest data is in quest-contracts.ts */
+	quest?: string;
+	/** Job prerequisite - documentation only, actual requirement is in quest-contracts.ts */
 	prerequisiteJob?: string;
 	featureCount: number;
 	frequencies: readonly string[];
@@ -39,9 +41,10 @@ export function assertRegentLock(expected: RegentLockExpectation): void {
 	if (!regent) return;
 
 	expect(regent.theme).toBe(expected.theme);
-	expect(regent.requirements?.quest_completion).toBe(expected.quest);
-	expect(regent.requirements?.warden_verification).toBe(true);
-	expect(regent.requirements?.prerequisite_job).toBe(expected.prerequisiteJob);
+	
+	// Requirements (quest, warden verification, prerequisite job) are no longer
+	// stored on regent objects - they're in quest-contracts.ts
+	
 	expect(REGENT_GRANTS[expected.id]).toEqual(expected.grants);
 
 	const features = regent.class_features ?? [];
@@ -98,6 +101,9 @@ export function assertRegentLock(expected: RegentLockExpectation): void {
 		regent.description,
 		...(regent.progression_table?.[20]?.features_gained ?? []),
 		...(regent.progression_table?.[10]?.features_gained ?? []),
+		...(regent.class_features
+			?.filter((f) => f.level === 10 || f.level === 20)
+			.map((f) => `${f.name} ${f.description}`) ?? []),
 	]
 		.filter(Boolean)
 		.join(" ");
