@@ -273,6 +273,43 @@ export interface CompendiumMechanics {
 		type?: string;
 		bonus?: number;
 	};
+	// Regent-specific mechanics
+	death_save_override?: boolean;
+	restoration?: string;
+	area_damage?: string;
+	damage_bonus?: string;
+	conceptual_purification?: boolean | string;
+	toggle?: boolean | string;
+	control_limit?: string;
+	persistence?: string;
+	form_stats?: string;
+	summoned_creatures?: Record<string, unknown> | string;
+	disease_lifecycle?: Record<string, unknown> | string;
+	swarm_lifecycle?: Record<string, unknown> | string;
+	anchor_lifecycle?: Record<string, unknown> | string;
+	demiplane_lifecycle?: Record<string, unknown> | string;
+	topology_lifecycle?: Record<string, unknown> | string;
+	blood_apocalypse_lifecycle?: Record<string, unknown> | string;
+	gravity_field_lifecycle?: Record<string, unknown> | string;
+	singularity_lifecycle?: Record<string, unknown> | string;
+	death_state_lifecycle?: Record<string, unknown> | string;
+	sanctification?: string;
+	dismissal?: string;
+	object_erasure?: string;
+	aura_range?: string;
+	temp_hp?: string;
+	enhances?: string;
+	targets?: string;
+	conditional_immunity?: string;
+	maximum?: string;
+	stat_block?: Record<string, unknown> | string;
+	magic_erasure?: Record<string, unknown> | string;
+	reaction_uses?: string;
+	last_stand_reaction?: Record<string, unknown> | string;
+	allies?: string;
+	effect?: string;
+	universal_command?: Record<string, unknown> | string;
+	bonus_attack?: string | boolean;
 }
 
 export interface CompendiumLimitations {

@@ -599,8 +599,7 @@ export const regents: Regent[] = [
 					"As an action, create a 1-mile radius area of absolute holy protection for 1 hour. All allies within gain immunity to fire and radiant damage. Once per day.",
 				type: "action",
 				frequency: "once-per-day",
-				uses: 1,
-				recovery: "long-rest",
+				uses: { formula: "1", recharge: "long-rest" },
 			},
 			{
 				level: 2,
@@ -617,8 +616,7 @@ export const regents: Regent[] = [
 					"As an action, create a 30-foot radius of white flames. Creatures take 10d10 fire damage and must make a Vitality saving throw (DC 8 + PB + PRE) or be blinded for 1 minute. Purification fire that erases corruption.",
 				type: "action",
 				frequency: "once-per-day",
-				uses: 1,
-				recovery: "long-rest",
+				uses: { formula: "1", recharge: "long-rest" },
 			},
 			{
 				level: 3,
@@ -627,8 +625,7 @@ export const regents: Regent[] = [
 					"As an action, target a creature or 20-foot radius area to purge all diseases, curses, and fiendish influence. Anomalies in the area take 10d10 radiant damage (Vitality save DC 8 + PB + PRE for half).",
 				type: "action",
 				frequency: "short-rest",
-				uses: 1,
-				recovery: "short-rest",
+				uses: { formula: "1", recharge: "short-rest" },
 			},
 			{
 				level: 3,
@@ -652,8 +649,7 @@ export const regents: Regent[] = [
 					"As a bonus action, manifest 6 wings of white flame for 1 hour. Gain flying speed of 120 ft. You shed bright light in a 300-ft radius. Evil, anomalous, or undead creatures within 60 ft must make a Vitality save (DC 8 + PB + PRE) at the start of their turn or be blinded and take 6d8 radiant damage.",
 				type: "bonus-action",
 				frequency: "long-rest",
-				uses: 1,
-				recovery: "long-rest",
+				uses: { formula: "1", recharge: "long-rest" },
 			},
 			{
 				level: 5,
@@ -662,8 +658,7 @@ export const regents: Regent[] = [
 					"As an action, command all elemental fire and light creatures within 300 feet. They must make a Presence saving throw (DC 8 + PB + PRE) or be charmed by you for 24 hours. Charmed creatures obey your verbal commands.",
 				type: "action",
 				frequency: "long-rest",
-				uses: 1,
-				recovery: "long-rest",
+				uses: { formula: "1", recharge: "long-rest" },
 			},
 			{
 				level: 5,
@@ -672,8 +667,7 @@ export const regents: Regent[] = [
 					"When you are reduced to 0 hit points, you explode in white fire (all creatures within 30 feet take 10d10 fire damage, Agility save DC 8 + PB + PRE for half) and are instantly restored to full hit points at the start of your next turn. Your body reforms from the flames at the location where you fell. Once used, you cannot use this feature again until you complete a long rest.",
 				type: "passive",
 				frequency: "long-rest",
-				uses: 1,
-				recovery: "long-rest",
+				uses: { formula: "1", recharge: "long-rest" },
 				mechanics: {
 					death_save_override: true,
 					restoration: "full HP on next turn",
@@ -695,8 +689,7 @@ export const regents: Regent[] = [
 					"You incarnate as the fundamental force of holy fire. As a bonus action, you can transform into pure white flame for 1 minute. While in this form, you are immune to all damage except necrotic, can move through any gap, and your attacks deal an additional 4d10 radiant damage.",
 				type: "bonus-action",
 				frequency: "long-rest",
-				uses: 1,
-				recovery: "long-rest",
+				uses: { formula: "1", recharge: "long-rest" },
 			},
 			{
 				level: 7,
@@ -705,8 +698,7 @@ export const regents: Regent[] = [
 					"You have absolute control over spiritual corruption. As an action, target a creature, object, or 60-foot radius area. All diseases, curses, possession effects, and anomalous taint are instantly removed. Anomalies in the area must make a Sense save (DC 8 + PB + PRE) or be banished to their home plane.",
 				type: "action",
 				frequency: "once-per-day",
-				uses: 1,
-				recovery: "long-rest",
+				uses: { formula: "1", recharge: "long-rest" },
 			},
 			{
 				level: 8,
@@ -722,8 +714,7 @@ export const regents: Regent[] = [
 					"As an action, force all anomalies within 300 feet to make a Sense save (DC 8 + PB + PRE + 2) or be instantly banished or destroyed (your choice). Banished creatures return to their home plane and cannot return for 1 year.",
 				type: "action",
 				frequency: "once-per-day",
-				uses: 1,
-				recovery: "long-rest",
+				uses: { formula: "1", recharge: "long-rest" },
 			},
 			{
 				level: 9,
@@ -761,11 +752,10 @@ export const regents: Regent[] = [
 				level: 11,
 				name: "Purification Lord",
 				description:
-					"You gain complete control over spiritual purity, able to cleanse entire worlds of corruption at will. As an action once per week, you can purify a continent-sized area, removing all diseases, curses, and anomalous effects.",
+					"You gain complete control over spiritual purity, able to cleanse entire worlds of corruption at will. As an action once per long rest, you can purify a continent-sized area, removing all diseases, curses, and anomalous effects.",
 				type: "action",
 				frequency: "once-per-long-rest",
-				uses: 1,
-				recovery: "weekly",
+				uses: { formula: "1", recharge: "long-rest" },
 			},
 			{
 				level: 11,
@@ -789,8 +779,7 @@ export const regents: Regent[] = [
 					"Once per day, you can unleash a white flame apocalypse that covers a 10-mile radius in purifying light for 1 minute. All evil-aligned beings in the area must make a Vitality save (DC 8 + PB + PRE + 4) each round or be obliterated (reduced to 0 HP and disintegrated). Neutral and good creatures are unaffected.",
 				type: "action",
 				frequency: "once-per-day",
-				uses: 1,
-				recovery: "long-rest",
+				uses: { formula: "1", recharge: "long-rest" },
 			},
 			{
 				level: 13,
@@ -823,8 +812,7 @@ export const regents: Regent[] = [
 					"You can reshape reality itself through holy fire, creating sanctified dimensions and rewriting spiritual laws. You can create permanent demiplanes of pure radiance.",
 				type: "action",
 				frequency: "once-per-long-rest",
-				uses: 1,
-				recovery: "weekly",
+				uses: { formula: "1", recharge: "long-rest" },
 			},
 			{
 				level: 15,
@@ -1151,8 +1139,7 @@ export const regents: Regent[] = [
 					"As a bonus action, reinforce your structure for 1 minute to gain +3 AC and resistance to all physical damage (bludgeoning, piercing, slashing).",
 				type: "bonus-action",
 				frequency: "short-rest",
-				uses: 1,
-				recovery: "short-rest",
+				uses: { formula: "1", recharge: "short-rest" },
 			},
 			{
 				level: 3,
@@ -1169,8 +1156,7 @@ export const regents: Regent[] = [
 					"As an action, enter a state of absolute defense for 1 minute. While in this state, you are immune to ALL damage, your AC becomes 30, and you cannot be affected by any condition. You can toggle this state on or off as an action. Once activated, you cannot use this feature again until you complete a long rest.",
 				type: "action",
 				frequency: "long-rest",
-				uses: 1,
-				recovery: "long-rest",
+				uses: { formula: "1", recharge: "long-rest" },
 				mechanics: {
 					toggle: "action to activate or deactivate",
 					duration: "1 minute maximum",
@@ -1191,8 +1177,7 @@ export const regents: Regent[] = [
 					"As an action, create a 1-mile radius area of absolute defensive control for 1 hour. All allies within the area gain your damage resistances. Once per day.",
 				type: "action",
 				frequency: "once-per-day",
-				uses: 1,
-				recovery: "long-rest",
+				uses: { formula: "1", recharge: "long-rest" },
 			},
 			{
 				level: 5,
@@ -1201,8 +1186,7 @@ export const regents: Regent[] = [
 					"As an action, command any construct within 300 feet to serve you. The construct must make a Wisdom saving throw (DC 8 + PB + VIT). On a failed save, it becomes permanently loyal to you and follows your commands. You can control a number of constructs equal to your proficiency bonus. Commanded constructs persist until destroyed, dismissed (bonus action), or you die.",
 				type: "action",
 				frequency: "once-per-day",
-				uses: 1,
-				recovery: "long-rest",
+				uses: { formula: "1", recharge: "long-rest" },
 				mechanics: {
 					control_limit: "PB constructs maximum",
 					persistence: "until destroyed, dismissed, or caster death",
@@ -1233,8 +1217,7 @@ export const regents: Regent[] = [
 					"You can rewrite the fundamental structure of living beings. As an action once per day, target a creature within 60 feet. You can reshape its body, cure diseases, remove curses, restore lost limbs, or impose physical mutations (Constitution save DC 8 + PB + VIT to resist unwanted changes).",
 				type: "action",
 				frequency: "once-per-day",
-				uses: 1,
-				recovery: "long-rest",
+				uses: { formula: "1", recharge: "long-rest" },
 			},
 			{
 				level: 7,
@@ -1341,8 +1324,7 @@ export const regents: Regent[] = [
 					"Once per day, you can unleash a steel apocalypse that reshapes a 10-mile radius for 1 minute. All matter in the area transforms into indestructible divine metal. Structures, terrain, and objects become permanent metallic versions. Living creatures must make a Constitution save (DC 8 + PB + VIT) each round or take 10d10 force damage.",
 				type: "action",
 				frequency: "once-per-day",
-				uses: 1,
-				recovery: "long-rest",
+				uses: { formula: "1", recharge: "long-rest" },
 			},
 			{
 				level: 13,
@@ -1375,8 +1357,7 @@ export const regents: Regent[] = [
 					"You can reshape reality itself through the concept of the immovable object, creating indestructible worlds. You can create permanent structures and terrain features that cannot be destroyed by any means short of divine intervention.",
 				type: "action",
 				frequency: "once-per-long-rest",
-				uses: 1,
-				recovery: "weekly",
+				uses: { formula: "1", recharge: "long-rest" },
 			},
 			{
 				level: 15,
@@ -1511,7 +1492,7 @@ export const regents: Regent[] = [
 		"3": {
 				"features_gained": [
 						"Steel Weaving",
-						"Titan",
+						"Titan's Law",
 						"Conceptual Invulnerability"
 				],
 				"abilities_improved": []
@@ -1711,8 +1692,7 @@ export const regents: Regent[] = [
 					"As an action, unleash a 120-foot cone of apocalyptic fire. Creatures in the area must make an Agility saving throw (DC 8 + PB + STR) or take 12d10 fire damage (half on success). Creatures reduced to 0 hit points are erased from reality and cannot be resurrected by any means short of divine intervention. Buildings collapse, steel melts, and stone sublimates.",
 				type: "action",
 				frequency: "once-per-day",
-				uses: 1,
-				recovery: "long-rest",
+				uses: { formula: "1", recharge: "long-rest" },
 			},
 			{
 				level: 1,
@@ -1729,8 +1709,7 @@ export const regents: Regent[] = [
 					"As an action, create a 1-mile radius area of absolute destruction control for 1 hour. All destructive effects (fire, force, necrotic damage) within the area are maximized (no rolling - treat all dice as maximum). Once per day.",
 				type: "action",
 				frequency: "once-per-day",
-				uses: 1,
-				recovery: "long-rest",
+				uses: { formula: "1", recharge: "long-rest" },
 			},
 			{
 				level: 2,
@@ -1782,8 +1761,7 @@ export const regents: Regent[] = [
 					"As an action, you exude an aura of sheer destructive energy in a 60-foot radius for 1 minute. At the start of each of your turns, all creatures in the area take 6d10 force damage (Vitality save DC 8 + PB + STR for half). Structures automatically take maximum damage. The field moves with you.",
 				type: "action",
 				frequency: "long-rest",
-				uses: 1,
-				recovery: "long-rest",
+				uses: { formula: "1", recharge: "long-rest" },
 			},
 			{
 				level: 5,
@@ -1792,8 +1770,7 @@ export const regents: Regent[] = [
 					"As an action, transform into an ancient red dragon for 1 hour. You become Gargantuan size, gain fly speed 120 ft, AC 22, and immunity to fire and physical damage (bludgeoning, piercing, slashing). You retain your mental stats but use the dragon's physical stats (STR 30, VIT 29, AGI 10). News agencies declare 'dragon sighting confirmed.' This is the living embodiment of the apocalypse.",
 				type: "action",
 				frequency: "long-rest",
-				uses: 1,
-				recovery: "long-rest",
+				uses: { formula: "1", recharge: "long-rest" },
 				mechanics: {
 					form_stats: "Gargantuan, AC 22, fly 120 ft",
 					immunity: "fire and physical damage",
@@ -1807,8 +1784,7 @@ export const regents: Regent[] = [
 					"When you are reduced to 0 hit points, you explode in a 60-foot radius of destructive energy (all creatures take 15d10 force damage, Agility save DC 8 + PB + STR for half). You are then restored to half your maximum hit points at the start of your next turn, reappearing in an unoccupied space within the explosion radius. Once used, you cannot use this feature again until you complete a long rest.",
 				type: "passive",
 				frequency: "long-rest",
-				uses: 1,
-				recovery: "long-rest",
+				uses: { formula: "1", recharge: "long-rest" },
 				mechanics: {
 					death_save_override: true,
 					restoration: "half max HP next turn",
@@ -1830,8 +1806,7 @@ export const regents: Regent[] = [
 					"As a reaction when targeted by an attack or spell, create a destructive vortex that redirects the attack back at the attacker. The attacker must make an Agility save (DC 8 + PB + STR) or take the attack's damage themselves.",
 				type: "reaction",
 				frequency: "short-rest",
-				uses: 1,
-				recovery: "short-rest",
+				uses: { formula: "1", recharge: "short-rest" },
 			},
 			{
 				level: 7,
@@ -1848,8 +1823,7 @@ export const regents: Regent[] = [
 					"You have absolute control over decay and destruction. As an action, you can age any object or structure by 1000 years instantly, causing it to crumble. Living creatures within 60 feet age 10 years (Vitality save DC 8 + PB + STR negates). You can use this once per long rest.",
 				type: "action",
 				frequency: "long-rest",
-				uses: 1,
-				recovery: "long-rest",
+				uses: { formula: "1", recharge: "long-rest" },
 			},
 			{
 				level: 8,
@@ -1889,8 +1863,7 @@ export const regents: Regent[] = [
 					"As an action, force all constructs and undead within 300 feet to make a Sense save (DC 8 + PB + STR + 2) or be destroyed instantly and become your servants for 24 hours. You can have a number of servants equal to your proficiency bonus at once.",
 				type: "action",
 				frequency: "once-per-day",
-				uses: 1,
-				recovery: "long-rest",
+				uses: { formula: "1", recharge: "long-rest" },
 			},
 			{
 				level: 10,
@@ -1920,8 +1893,7 @@ export const regents: Regent[] = [
 					"You can reshape reality through destruction. As an action, you can create permanent voids in space (10-foot cubes) that nothing can pass through. You can create one void per long rest.",
 				type: "action",
 				frequency: "long-rest",
-				uses: 1,
-				recovery: "long-rest",
+				uses: { formula: "1", recharge: "long-rest" },
 			},
 			{
 				level: 11,
@@ -1945,8 +1917,7 @@ export const regents: Regent[] = [
 					"Once per day, you can unleash a devastating cataclysm in a 1-mile radius. All creatures and structures in the area take 20d10 force damage (Agility save DC 8 + PB + STR + 4 for half). The area becomes a wasteland for 1 year.",
 				type: "action",
 				frequency: "once-per-day",
-				uses: 1,
-				recovery: "long-rest",
+				uses: { formula: "1", recharge: "long-rest" },
 			},
 			{
 				level: 13,
@@ -1955,8 +1926,7 @@ export const regents: Regent[] = [
 					"You command all draconic entities. Dragons within 1 mile must make a Presence save (DC 8 + PB + STR) or become charmed by you for 24 hours.",
 				type: "action",
 				frequency: "once-per-day",
-				uses: 1,
-				recovery: "long-rest",
+				uses: { formula: "1", recharge: "long-rest" },
 			},
 			{
 				level: 13,
@@ -1989,8 +1959,7 @@ export const regents: Regent[] = [
 					"You can weave the void into reality. As an action, you create a 60-foot sphere of void that erases everything inside (Vitality save DC 8 + PB + STR + 4 to survive with 1 HP). Once per week.",
 				type: "action",
 				frequency: "once-per-long-rest",
-				uses: 1,
-				recovery: "long-rest",
+				uses: { formula: "1", recharge: "long-rest" },
 			},
 			{
 				level: 15,
@@ -2046,8 +2015,7 @@ export const regents: Regent[] = [
 					"You can annihilate reality itself. Once per long rest, you can erase a 1-mile sphere from existence, creating a permanent void. Nothing short of divine intervention can restore it.",
 				type: "action",
 				frequency: "once-per-long-rest",
-				uses: 1,
-				recovery: "long-rest",
+				uses: { formula: "1", recharge: "long-rest" },
 			},
 			{
 				level: 19,
@@ -2296,8 +2264,7 @@ export const regents: Regent[] = [
 					"As a bonus action, grant an ally within 60 feet an immediate action. They can make one weapon attack, cast a cantrip, or take the Dash/Disengage/Dodge action. You can use this a number of times equal to your proficiency bonus per long rest.",
 				type: "bonus-action",
 				frequency: "long-rest",
-				uses: "PB",
-				recovery: "long-rest",
+				uses: { formula: "PB", recharge: "long-rest" },
 			},
 			{
 				level: 1,
@@ -2318,8 +2285,7 @@ export const regents: Regent[] = [
 					"As an action, create a 1-mile radius area of absolute war control for 1 hour. All allies within the area cannot be frightened, gain +2 to attack rolls, and can make one additional weapon attack when they take the Attack action. Once per day.",
 				type: "action",
 				frequency: "once-per-day",
-				uses: 1,
-				recovery: "long-rest",
+				uses: { formula: "1", recharge: "long-rest" },
 			},
 			{
 				level: 2,
@@ -2328,8 +2294,7 @@ export const regents: Regent[] = [
 					"As a bonus action, teleport up to 60 feet to an unoccupied space you can see. You can bring up to 5 willing allies within 10 feet of you along with the teleport. This represents your tactical positioning mastery.",
 				type: "bonus-action",
 				frequency: "short-rest",
-				uses: 1,
-				recovery: "short-rest",
+				uses: { formula: "1", recharge: "short-rest" },
 			},
 			{
 				level: 2,
@@ -2346,8 +2311,7 @@ export const regents: Regent[] = [
 					"As an action, unleash a 100-foot wave of tactical suppression. All enemies in the area must make a Presence saving throw (DC 8 + PB + PRE) or be stunned until the end of your next turn. This represents your absolute authority on the battlefield.",
 				type: "action",
 				frequency: "long-rest",
-				uses: 1,
-				recovery: "long-rest",
+				uses: { formula: "1", recharge: "long-rest" },
 			},
 			{
 				level: 3,
@@ -2398,8 +2362,7 @@ export const regents: Regent[] = [
 					"As an action, you can command any humanoid within 300 feet to follow a single command (attack a target, move to a location, drop their weapon, etc.). The target must make a Wisdom saving throw (DC 8 + PB + PRE) or obey the command for 1 round. You can use this PB times per long rest.",
 				type: "action",
 				frequency: "long-rest",
-				uses: "PB",
-				recovery: "long-rest",
+				uses: { formula: "PB", recharge: "long-rest" },
 			},
 			{
 				level: 5,
@@ -2408,8 +2371,7 @@ export const regents: Regent[] = [
 					"When an ally within 60 feet drops to 0 hit points, you can use your reaction to restore them to 1 hit point and grant them temporary hit points equal to your level. You can use this feature a number of times equal to your proficiency bonus per long rest.",
 				type: "reaction",
 				frequency: "long-rest",
-				uses: "PB",
-				recovery: "long-rest",
+				uses: { formula: "PB", recharge: "long-rest" },
 			},
 			{
 				level: 6,
@@ -2426,8 +2388,7 @@ export const regents: Regent[] = [
 					"As a reaction when an ally within 60 feet is hit by an attack, you can redirect the attack to yourself and gain resistance to all damage from that attack. This reflects your role as the unbreakable center of the vanguard.",
 				type: "reaction",
 				frequency: "short-rest",
-				uses: 1,
-				recovery: "short-rest",
+				uses: { formula: "1", recharge: "short-rest" },
 			},
 			{
 				level: 7,
@@ -2459,8 +2420,7 @@ export const regents: Regent[] = [
 					"As an action, you summon a legion of spectral warriors (PB creatures) that fight alongside you for 1 hour. They use the stats of Veterans, act on your initiative, and obey your commands. Once per long rest.",
 				type: "action",
 				frequency: "long-rest",
-				uses: 1,
-				recovery: "long-rest",
+				uses: { formula: "1", recharge: "long-rest" },
 				mechanics: {
 					summoned_creatures: "PB Veterans",
 					duration: "1 hour",
@@ -2490,8 +2450,7 @@ export const regents: Regent[] = [
 					"As an action, force all enemy leaders and commanders within 300 feet to make a Wisdom saving throw (DC 8 + PB + PRE + 2). On a failure, they surrender and their forces cease hostilities. Surrendered forces will not attack you or your allies for 24 hours. Once per day.",
 				type: "action",
 				frequency: "once-per-day",
-				uses: 1,
-				recovery: "long-rest",
+				uses: { formula: "1", recharge: "long-rest" },
 				mechanics: {
 					targets: "enemy leaders and commanders",
 					effect: "surrender, 24-hour ceasefire",
@@ -2532,8 +2491,7 @@ export const regents: Regent[] = [
 					"Once per long rest, you can command reality itself. You can declare a single event to happen (within reason), and it occurs. This could be commanding a bridge to appear, ordering a wall to collapse, or willing reinforcements to arrive.",
 				type: "action",
 				frequency: "long-rest",
-				uses: 1,
-				recovery: "long-rest",
+				uses: { formula: "1", recharge: "long-rest" },
 			},
 			{
 				level: 12,
@@ -2549,8 +2507,7 @@ export const regents: Regent[] = [
 					"Once per day, you can issue an absolute command to all creatures within 1 mile. Choose one of the following: Attack (all creatures attack the nearest enemy), Kneel (all creatures are prone and incapacitated for 1 round), or Flee (all creatures use their turn to Dash away). No save.",
 				type: "action",
 				frequency: "once-per-day",
-				uses: 1,
-				recovery: "long-rest",
+				uses: { formula: "1", recharge: "long-rest" },
 			},
 			{
 				level: 13,
@@ -2595,8 +2552,7 @@ export const regents: Regent[] = [
 					"You can reshape battlefields. As an action, you can terraform a 1-mile radius area into ideal tactical terrain (trenches, fortifications, high ground, etc.). This is permanent.",
 				type: "action",
 				frequency: "once-per-long-rest",
-				uses: 1,
-				recovery: "long-rest",
+				uses: { formula: "1", recharge: "long-rest" },
 			},
 			{
 				level: 15,
@@ -2783,7 +2739,6 @@ export const regents: Regent[] = [
 				name: "Regent Power Resonance",
 				description: "Your abilities resonate with the power of the Regents, increasing their effectiveness and reducing cooldowns.",
 				type: "passive",
-				level: 1
 			},
 			{
 				name: "War Dominion",
@@ -3120,8 +3075,7 @@ export const regents: Regent[] = [
 					"As an action, create a 5-mile radius supernatural ice storm for 8 hours. The temperature drops to -100°C instantly, freezing all water sources and making fire damage impossible. Non-magical fires are instantly extinguished, and fire spells deal half damage. This mirrors the Regent of Frost's climate-shattering power. You can use this once per long rest.",
 				type: "action",
 				frequency: "long-rest",
-				uses: 1,
-				recovery: "long-rest",
+				uses: { formula: "1", recharge: "long-rest" },
 			},
 			{
 				level: 1,
@@ -3146,8 +3100,7 @@ export const regents: Regent[] = [
 					"As a melee spell attack, channel the boundary of absolute zero through your touch. The target takes 10d10 cold damage and must make a Vitality saving throw (DC 8 + PB + INT) or be paralyzed for 1 minute. If this damage reduces a creature to 0 hit points, they become a permanent ice statue at -273.15°C and cannot be resurrected by any means short of Wish. You can use this once per short rest.",
 				type: "action",
 				frequency: "short-rest",
-				uses: 1,
-				recovery: "short-rest",
+				uses: { formula: "1", recharge: "short-rest" },
 			},
 			{
 				level: 3,
@@ -3156,8 +3109,7 @@ export const regents: Regent[] = [
 					"As an action, create a 60-foot radius zone of temporal slowdown for 1 minute (concentration). Enemies within the area have their speed halved, have disadvantage on Agility saving throws, and cannot take reactions. Time appears to slow as heat is drained from the area. You can use this a number of times equal to your proficiency bonus per long rest.",
 				type: "action",
 				frequency: "long-rest",
-				uses: "PB",
-				recovery: "long-rest",
+				uses: { formula: "PB", recharge: "long-rest" },
 			},
 			{
 				level: 4,
@@ -3189,8 +3141,7 @@ export const regents: Regent[] = [
 					"As an action, encase a target you can see within 60 feet in a sphere of absolute-zero ice. The target must make a Vitality saving throw (DC 8 + PB + INT + 2). On a failure, they are imprisoned indefinitely in suspended animation and cannot be freed except by Wish, divine intervention, or your will. Once per long rest.",
 				type: "action",
 				frequency: "long-rest",
-				uses: 1,
-				recovery: "long-rest",
+				uses: { formula: "1", recharge: "long-rest" },
 			},
 			{
 				level: 8,
@@ -3206,8 +3157,7 @@ export const regents: Regent[] = [
 					"As an action, freeze time itself in a 120-foot radius centered on you for 1 round. Only you can act during this frozen moment. This reflects your absolute thermodynamic authority. Creatures and objects are frozen mid-motion. Once per long rest.",
 				type: "action",
 				frequency: "long-rest",
-				uses: 1,
-				recovery: "long-rest",
+				uses: { formula: "1", recharge: "long-rest" },
 			},
 			{
 				level: 10,
@@ -3255,8 +3205,7 @@ export const regents: Regent[] = [
 					"As an action, unleash a frost apocalypse that covers a 10-mile radius in absolute zero, instantly stopping all molecular motion. All creatures in the area take 20d10 cold damage (Vitality save DC 8 + PB + INT + 4 for half) and are paralyzed for 1 minute. Structures take maximum damage. Once per day.",
 				type: "action",
 				frequency: "once-per-day",
-				uses: 1,
-				recovery: "long-rest",
+				uses: { formula: "1", recharge: "long-rest" },
 			},
 			{
 				level: 13,
@@ -3273,8 +3222,7 @@ export const regents: Regent[] = [
 					"As an action, you can harvest and manipulate the thermal essence of any being through freezing. Target one creature within 60 feet and make a melee spell attack. On hit, you gain one of their abilities, memories, or traits permanently through cryo-archiving. Once per long rest.",
 				type: "action",
 				frequency: "long-rest",
-				uses: 1,
-				recovery: "long-rest",
+				uses: { formula: "1", recharge: "long-rest" },
 			},
 			{
 				level: 14,
@@ -3291,8 +3239,7 @@ export const regents: Regent[] = [
 					"As an action, you can reshape reality itself through the concept of entropy. Create worlds of perfect crystalline order and rewrite physical laws within a 1-mile radius. This transformation is permanent until you choose to reverse it. Once per long rest.",
 				type: "action",
 				frequency: "long-rest",
-				uses: 1,
-				recovery: "long-rest",
+				uses: { formula: "1", recharge: "long-rest" },
 			},
 			{
 				level: 15,
@@ -3552,8 +3499,6 @@ export const regents: Regent[] = [
 				options: ["tech-sup-example-1", "tech-sup-example-2"]
 			}
 		],
-		powersKnown: REGENT_POWERS_KNOWN,
-		techniquesKnown: REGENT_TECHNIQUES_KNOWN,
 		name: "Beast Regent",
 		title: "Beast Regent (Regent of Beasts)",
 		theme: "Primal Evolution & Apex Regentty",
@@ -3606,8 +3551,7 @@ export const regents: Regent[] = [
 					"As an action, transform into a gargantuan primordial beast for 10 minutes. You gain +6 to Strength, Agility, and Vitality (maximum 26 in each), natural weapons that deal 3d10 + STR damage, and regenerate 15 hit points at the start of your turn. Your size becomes Gargantuan, and you gain tremorsense 120 feet as you become the ultimate evolutionary apex predator. You can use this a number of times equal to your proficiency bonus per long rest.",
 				type: "action",
 				frequency: "long-rest",
-				uses: "PB",
-				recovery: "long-rest",
+				uses: { formula: "PB", recharge: "long-rest" },
 			},
 			{
 				level: 1,
@@ -3632,8 +3576,7 @@ export const regents: Regent[] = [
 					"As an action, exert mental command over all beasts within a 10-mile radius with a CR equal to or less than your level. They obey your orders absolutely for 1 hour. During this time, zoo animals may break containment, police K-9 units refuse to engage you, and wild animals treat you as their pack leader. Once per day.",
 				type: "action",
 				frequency: "once-per-day",
-				uses: 1,
-				recovery: "long-rest",
+				uses: { formula: "1", recharge: "long-rest" },
 				mechanics: {
 					summoned_creatures: "All beasts within 10 miles, CR ≤ level",
 					duration: "1 hour",
@@ -3693,8 +3636,7 @@ export const regents: Regent[] = [
 					"As an action, unleash a primal roar that creates a 1-mile radius of absolute predatory dominance. All hostile creatures in the area take 6d10 force damage and must make a Sense saving throw (DC 8 + PB + STR + 2) or be frightened for 1 minute. Frightened creatures can repeat the save at the end of each of their turns. Once per long rest.",
 				type: "action",
 				frequency: "long-rest",
-				uses: 1,
-				recovery: "long-rest",
+				uses: { formula: "1", recharge: "long-rest" },
 			},
 			{
 				level: 10,
@@ -3742,8 +3684,7 @@ export const regents: Regent[] = [
 					"As an action, unleash a beast apocalypse that causes all animals within a 10-mile radius to swarm and destroy everything in their path. All non-ally creatures take 15d10 damage from the stampede (Agility save DC 8 + PB + STR + 4 for half). The stampede lasts for 1 hour. Once per day.",
 				type: "action",
 				frequency: "once-per-day",
-				uses: 1,
-				recovery: "long-rest",
+				uses: { formula: "1", recharge: "long-rest" },
 			},
 			{
 				level: 13,
@@ -3760,8 +3701,7 @@ export const regents: Regent[] = [
 					"As an action, you can harvest and manipulate the biological essence of any being through the hunt. Target one creature within 60 feet. Make a melee attack. On hit, you gain one of their predatory powers, abilities, or traits permanently. Once per long rest.",
 				type: "action",
 				frequency: "long-rest",
-				uses: 1,
-				recovery: "long-rest",
+				uses: { formula: "1", recharge: "long-rest" },
 			},
 			{
 				level: 14,
@@ -3778,8 +3718,7 @@ export const regents: Regent[] = [
 					"As an action, you can reshape reality itself through the law of the jungle. Create untamed worlds and rewrite the food chain within a 5-mile radius. The changes are permanent until you reverse them. Once per long rest.",
 				type: "action",
 				frequency: "long-rest",
-				uses: 1,
-				recovery: "long-rest",
+				uses: { formula: "1", recharge: "long-rest" },
 			},
 			{
 				level: 15,
@@ -3889,14 +3828,14 @@ export const regents: Regent[] = [
 		"1": {
 				"features_gained": [
 						"Apex Form",
-						"Alpha"
+						"Alpha's Presence"
 				],
 				"abilities_improved": []
 		},
 		"2": {
 				"features_gained": [
 						"Regent Power Resonance",
-						"Beast King"
+						"Beast King's Call"
 				],
 				"abilities_improved": []
 		},
@@ -4107,8 +4046,7 @@ export const regents: Regent[] = [
 					"As an action, you can design and release a supernatural pandemic. You determine its transmission method (airborne, touch, or water), symptoms, incubation period (1-7 days), and lethality. The disease spreads with an R0 of 10 and cannot be cured by conventional medicine or magic below 7th level. The Ascendant displays [PANDEMIC STATUS: ACTIVE] and tracks the infection rate globally. Once per day.",
 				type: "action",
 				frequency: "once-per-day",
-				uses: 1,
-				recovery: "long-rest",
+				uses: { formula: "1", recharge: "long-rest" },
 				mechanics: {
 					disease_lifecycle: "custom duration (you set), cure: 7th+ level magic or your will, spreads via chosen vector",
 				},
@@ -4120,8 +4058,7 @@ export const regents: Regent[] = [
 					"As an action, your physical form disintegrates into a massive swarm of billions of insects for up to 1 hour. In this form, you gain fly speed 60 feet, can squeeze through gaps as small as 1 inch, and are immune to all non-area-of-effect damage. You can split into up to 4 sub-swarms (each with 1/4 your HP) that act independently to overwhelm city blocks simultaneously. All sub-swarms must rejoin before you can return to humanoid form. Once per long rest.",
 				type: "action",
 				frequency: "long-rest",
-				uses: 1,
-				recovery: "long-rest",
+				uses: { formula: "1", recharge: "long-rest" },
 				mechanics: {
 					swarm_lifecycle: "duration: 1 hour or until dismissed (bonus action), split swarms persist until rejoined or duration ends, takes area damage normally",
 				},
@@ -4171,8 +4108,7 @@ export const regents: Regent[] = [
 					"As an action, create a 1-mile radius zone of toxic miasma where all organic matter begins rapid decay. All creatures in the area take 8d10 necrotic damage at the start of their turn. The miasma lasts for 10 minutes. Once per long rest.",
 				type: "action",
 				frequency: "long-rest",
-				uses: 1,
-				recovery: "long-rest",
+				uses: { formula: "1", recharge: "long-rest" },
 			},
 			{
 				level: 10,
@@ -4220,8 +4156,7 @@ export const regents: Regent[] = [
 					"As an action, unleash a plague apocalypse affecting a 10-mile radius. All creatures take 15d10 necrotic damage (Vitality save DC 8 + PB + INT + 4 for half) and contract a lethal disease (4d12 necrotic per day, spreads on contact). The plague lasts 7 days. Once per day.",
 				type: "action",
 				frequency: "once-per-day",
-				uses: 1,
-				recovery: "long-rest",
+				uses: { formula: "1", recharge: "long-rest" },
 			},
 			{
 				level: 13,
@@ -4238,8 +4173,7 @@ export const regents: Regent[] = [
 					"As an action, you can harvest and manipulate the disease essence of any being. Target one creature within 60 feet. Make a melee spell attack. On hit, you extract and absorb one of their immunities or biological traits permanently. Once per long rest.",
 				type: "action",
 				frequency: "long-rest",
-				uses: 1,
-				recovery: "long-rest",
+				uses: { formula: "1", recharge: "long-rest" },
 			},
 			{
 				level: 14,
@@ -4256,8 +4190,7 @@ export const regents: Regent[] = [
 					"As an action, you can reshape reality itself through the concept of decay. Create zones of accelerated entropy within a 5-mile radius where time, matter, and life all deteriorate at your command. The changes are permanent until you reverse them. Once per long rest.",
 				type: "action",
 				frequency: "long-rest",
-				uses: 1,
-				recovery: "long-rest",
+				uses: { formula: "1", recharge: "long-rest" },
 			},
 			{
 				level: 15,
@@ -4616,8 +4549,7 @@ export const regents: Regent[] = [
 					"As an action, prevent all teleportation and plane shifting within a 1-mile radius for 1 hour. Creatures attempting to teleport into, out of, or within the area automatically fail. Once per long rest.",
 				type: "action",
 				frequency: "long-rest",
-				uses: 1,
-				recovery: "long-rest",
+				uses: { formula: "1", recharge: "long-rest" },
 			},
 			{
 				level: 6,
@@ -4649,8 +4581,7 @@ export const regents: Regent[] = [
 					"As an action, reshape a 1-mile radius area: change terrain features, alter gravity direction, or modify physics rules (e.g., no friction, reversed time flow in an area, weightlessness). The changes are permanent until you reverse them or someone casts Wish. Unwilling creatures in the area when you activate this must make an Intelligence save (DC 8 + PB + INT + 2) or be affected by the new physics. Once per day.",
 				type: "action",
 				frequency: "once-per-day",
-				uses: 1,
-				recovery: "long-rest",
+				uses: { formula: "1", recharge: "long-rest" },
 				mechanics: {
 					topology_lifecycle: "permanent until reversed by you or Wish, unwilling creatures get INT save",
 				},
@@ -4701,8 +4632,7 @@ export const regents: Regent[] = [
 					"As an action, unleash a spatial apocalypse causing all space within a 10-mile radius to collapse into a singularity, then violently expand into a new configuration. All creatures take 20d10 force damage (Intelligence save DC 8 + PB + INT + 4 for half). The terrain is completely reshaped. Once per day.",
 				type: "action",
 				frequency: "once-per-day",
-				uses: 1,
-				recovery: "long-rest",
+				uses: { formula: "1", recharge: "long-rest" },
 			},
 			{
 				level: 13,
@@ -4719,8 +4649,7 @@ export const regents: Regent[] = [
 					"As an action, harvest and manipulate the spatial essence of any being through dimensional folding. Target one creature within 60 feet. Make a melee spell attack. On hit, compress their existence into yours, gaining one of their abilities permanently. Once per long rest.",
 				type: "action",
 				frequency: "long-rest",
-				uses: 1,
-				recovery: "long-rest",
+				uses: { formula: "1", recharge: "long-rest" },
 			},
 			{
 				level: 14,
@@ -4737,8 +4666,7 @@ export const regents: Regent[] = [
 					"As an action, reshape reality itself through the concept of the void. Create stable pocket universes with unique physical laws (up to 1 mile radius each, max 5 active). The changes are permanent until you reverse them. Once per long rest.",
 				type: "action",
 				frequency: "long-rest",
-				uses: 1,
-				recovery: "long-rest",
+				uses: { formula: "1", recharge: "long-rest" },
 			},
 			{
 				level: 15,
