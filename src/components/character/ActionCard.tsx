@@ -20,6 +20,7 @@ import {
 	resolveAttack,
 	resolveDamage,
 	resolveEffect,
+	resolveHealing,
 	resolveSave,
 } from "@/lib/actionResolution";
 import { formatModifier } from "@/lib/characterCalculations";
@@ -48,7 +49,7 @@ interface ActionCardProps {
 	/** Ammunition drawn per attack (DDB parity); shown as a count badge. */
 	ammo?: { name: string; remaining: number };
 	onRoll?: (
-		rollType: "attack" | "damage" | "check" | "save" | "effect",
+		rollType: "attack" | "damage" | "healing" | "check" | "save" | "effect",
 	) => void;
 	/** Fires after an internal attack roll executes (hit or miss) — only wired
 	 * when the character's opt-in auto-spend-ammo toggle is on. */
@@ -143,7 +144,7 @@ function ActionCardComponent({
 			: undefined);
 
 	const handleRoll = (
-		rollType: "attack" | "damage" | "check" | "save" | "effect",
+		rollType: "attack" | "damage" | "healing" | "check" | "save" | "effect",
 	) => {
 		if (onRoll) {
 			onRoll(rollType);
@@ -165,7 +166,9 @@ function ActionCardComponent({
 							message = `${critPrefix}${displayName} Attack: ${attackVal} (vs AC 10)`;
 							if (outcome.damageTotal) {
 								message += ` | Damage: ${outcome.damageTotal}${
-									outcome.criticalHit ? " (dice doubled)" : ""
+									outcome.criticalHit
+										? " (normal dice maximized + critical dice rolled)"
+										: ""
 								}`;
 							}
 							formula = payload.attack.roll;
@@ -185,6 +188,12 @@ function ActionCardComponent({
 						if (outcome.kind === "damage") {
 							message = `${displayName} Damage: ${outcome.damageTotal}`;
 							formula = payload.damage.roll;
+						}
+					} else if (rollType === "healing" && payload.healing) {
+						const outcome = resolveHealing(payload);
+						if (outcome.kind === "healing") {
+							message = `${displayName} Healing: ${outcome.healingTotal}`;
+							formula = payload.healing.roll;
 						}
 					} else if (rollType === "effect" || payload.kind === "effect") {
 						const outcome = resolveEffect(payload);
@@ -444,6 +453,17 @@ function ActionCardComponent({
 						>
 							<Zap className="w-4 h-4" />
 							Damage: {displayDamage || damage || "Roll"}
+						</Button>
+					)}
+					{payload?.healing && (
+						<Button
+							variant="outline"
+							size="sm"
+							onClick={() => handleRoll("healing")}
+							className="flex-1 gap-2"
+						>
+							<Zap className="w-4 h-4" />
+							Healing: {payload.healing.roll}
 						</Button>
 					)}
 					{payload?.kind === "effect" && (

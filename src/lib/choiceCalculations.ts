@@ -431,6 +431,12 @@ export interface ChoiceSourceData {
 	name?: string;
 	// --- Ledger + progression inputs (all optional; populated from StaticJob). ---
 	level_choices?: LedgerChoice[];
+	/**
+	 * Feature names whose picks come from the structured ledger or progression
+	 * arrays above. Their prose is not parsed again, so a pick is never counted
+	 * twice.
+	 */
+	structured_sources?: string[];
 	cantrips_known?: number[];
 	spells_known?: number[];
 	powers_known?: number[];
@@ -548,17 +554,32 @@ function applyLedgerToTotals(
 		totals.spellbookInscriptions += inscribed;
 	}
 
-	// 3. Non-progression ledger entries (all other choice types).
+	// 3. Ledger entries. A cantrip/spell/power/technique entry is counted only
+	// when the source has no progression array for that bucket (the array
+	// already holds the cumulative count). Paths use such entries for picks
+	// without a known-count table, like a Tactician's maneuvers.
+	const ownedByProgression: Partial<Record<keyof TotalChoices, boolean>> = {
+		cantrips: Boolean(source.cantrips_known?.length),
+		spells: Boolean(source.spells_known?.length),
+		powers: Boolean(source.powers_known?.length),
+		techniques: Boolean(source.techniques_known?.length),
+	};
 	if (source.level_choices) {
 		for (const choice of source.level_choices) {
 			if (choice.level > level) continue;
 			const bucket = LEDGER_TO_BUCKET[choice.type];
 			if (!bucket) continue;
-			if (PROGRESSION_OWNED_BUCKETS.has(bucket)) continue; // handled above
+			if (PROGRESSION_OWNED_BUCKETS.has(bucket) && ownedByProgression[bucket])
+				continue; // handled above
 			totals[bucket] += choice.count;
 		}
 	}
 }
+
+const isStructuredSource = (
+	source: ChoiceSourceData | null | undefined,
+	featureName: string,
+): boolean => source?.structured_sources?.includes(featureName) ?? false;
 
 export function calculateTotalChoices(
 	jobData: ChoiceSourceData | null | undefined,
@@ -604,9 +625,13 @@ export function calculateTotalChoices(
 		}
 	}
 
+	// Path ledger + progression (structured Path choices and Path casting).
+	applyLedgerToTotals(totals, pathData, level);
+
 	// Path features
 	if (pathData?.features) {
 		for (const feature of pathData.features) {
+			if (isStructuredSource(pathData, feature.name)) continue;
 			if (feature.level <= level) {
 				const grants = parseChoiceGrants(
 					feature.description,
@@ -690,6 +715,7 @@ export function getChoiceGrantDetails(
 	// Path features
 	if (pathData?.features) {
 		for (const feature of pathData.features) {
+			if (isStructuredSource(pathData, feature.name)) continue;
 			if (feature.level <= level) {
 				const grants = parseChoiceGrants(
 					feature.description,

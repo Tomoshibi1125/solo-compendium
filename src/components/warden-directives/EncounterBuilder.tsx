@@ -52,6 +52,7 @@ import {
 	createEncounterWorkflowEntryId,
 	createEncounterWorkflowSourceIdentityV1,
 	describeEncounterWorkflowBlockers,
+	type EncounterDisposition,
 	type EncounterWorkflowInputV1,
 	type EncounterWorkflowSourceIdentityV1,
 	encounterWorkflowSourceKey,
@@ -74,6 +75,8 @@ interface EncounterAnomaly {
 	id: string;
 	Anomaly: Anomaly;
 	quantity: number;
+	disposition: EncounterDisposition;
+	currentlyHostile: boolean;
 	/** Absent only on pre-workflow persisted state. Such entries fail closed. */
 	source?: EncounterWorkflowSourceIdentityV1;
 }
@@ -95,6 +98,8 @@ interface SavedEncounter {
 		cr: string;
 		quantity: number;
 		xp: number;
+		disposition: EncounterDisposition;
+		currentlyHostile: boolean;
 	}[];
 	totalXP: number;
 	difficulty: string;
@@ -228,10 +233,12 @@ const encounterToMarkdown = (e: SavedEncounter): string => {
 	if (e.anomalies.length === 0) {
 		lines.push("_None_");
 	} else {
-		lines.push("| Anomaly | CR | Qty | XP |");
-		lines.push("| --- | --- | --- | --- |");
+		lines.push("| Anomaly | CR | Qty | Disposition | Hostile now | XP |");
+		lines.push("| --- | --- | --- | --- | --- | --- |");
 		for (const a of e.anomalies) {
-			lines.push(`| ${a.name} | ${a.cr} | ${a.quantity} | ${a.xp} |`);
+			lines.push(
+				`| ${a.name} | ${a.cr} | ${a.quantity} | ${a.disposition} | ${a.currentlyHostile ? "Yes" : "No"} | ${a.xp} |`,
+			);
 		}
 	}
 	return `${lines.join("\n")}\n`;
@@ -388,20 +395,20 @@ export function EncounterBuilder({
 
 	const totalXP = encounterAnomalies.reduce(
 		(sum: number, em: EncounterAnomaly) =>
-			sum + calculateXP(em.Anomaly, em.quantity),
+			sum + (em.currentlyHostile ? calculateXP(em.Anomaly, em.quantity) : 0),
 		0,
 	);
-	// DMG: the encounter multiplier scales with how many monsters are in the
-	// fight (quantities included), not with party size.
-	const monsterCount = encounterAnomalies.reduce(
-		(sum: number, em: EncounterAnomaly) => sum + em.quantity,
+	// Difficulty uses creatures currently hostile to the party.
+	const hostileCount = encounterAnomalies.reduce(
+		(sum: number, em: EncounterAnomaly) =>
+			sum + (em.currentlyHostile ? em.quantity : 0),
 		0,
 	);
 	const difficulty = calculateDifficulty(
 		totalXP,
 		hunterLevel,
 		hunterCount,
-		monsterCount,
+		hostileCount,
 	);
 
 	useEffect(() => {
@@ -426,6 +433,8 @@ export function EncounterBuilder({
 				cr: String(em.Anomaly.cr ?? "?"),
 				quantity: em.quantity,
 				xp: calculateXP(em.Anomaly, em.quantity),
+				disposition: em.disposition ?? "neutral",
+				currentlyHostile: em.currentlyHostile === true,
 			})),
 			totalXP,
 			difficulty: difficulty || "minimal",
@@ -453,6 +462,8 @@ export function EncounterBuilder({
 			displayName: entry.Anomaly.name,
 			quantity: entry.quantity,
 			runtimeState: entry.Anomaly,
+			disposition: entry.disposition ?? "neutral",
+			currentlyHostile: entry.currentlyHostile === true,
 			source: entry.source ?? null,
 		})),
 	});
@@ -461,7 +472,7 @@ export function EncounterBuilder({
 	// `projectedStress` HP while enemies stay full — a forward-looking read using
 	// the live combat scaler against a synthetic mid-fight snapshot.
 	useEffect(() => {
-		if (encounterAnomalies.length === 0) return;
+		if (!encounterAnomalies.some((entry) => entry.currentlyHostile)) return;
 		const party = Array.from({ length: Math.max(1, hunterCount) }, (_, i) => ({
 			id: `party-${i}`,
 			side: "party" as const,
@@ -469,19 +480,21 @@ export function EncounterBuilder({
 			maxHp: 100,
 			threat: 1 + hunterLevel / 5,
 		}));
-		const enemy = encounterAnomalies.flatMap((em) =>
-			Array.from({ length: Math.max(1, em.quantity) }, (_, i) => ({
-				id: `${em.Anomaly.id}-${i}`,
-				side: "enemy" as const,
-				hp: em.Anomaly.hit_points_average || 10,
-				maxHp: em.Anomaly.hit_points_average || 10,
-				threat: Math.max(1, calculateXP(em.Anomaly, 1) / 200),
-			})),
-		);
+		const hostileCreatures = encounterAnomalies
+			.filter((em) => em.currentlyHostile)
+			.flatMap((em) =>
+				Array.from({ length: Math.max(1, em.quantity) }, (_, i) => ({
+					id: `${em.Anomaly.id}-${i}`,
+					side: "enemy" as const,
+					hp: em.Anomaly.hit_points_average || 10,
+					maxHp: em.Anomaly.hit_points_average || 10,
+					threat: Math.max(1, calculateXP(em.Anomaly, 1) / 200),
+				})),
+			);
 		analyzeCalibration({
 			sessionId: "encounter-builder-projection",
 			round: 1,
-			combatants: [...party, ...enemy],
+			combatants: [...party, ...hostileCreatures],
 		});
 	}, [
 		encounterAnomalies,
@@ -513,6 +526,8 @@ export function EncounterBuilder({
 					id: createEncounterWorkflowEntryId(source),
 					Anomaly,
 					quantity: 1,
+					disposition: "neutral",
+					currentlyHostile: false,
 					source,
 				},
 			]);
@@ -532,6 +547,30 @@ export function EncounterBuilder({
 		}
 		setEncounterAnomalies(
 			encounterAnomalies.map((em) => (em.id === id ? { ...em, quantity } : em)),
+		);
+	};
+
+	const updateDisposition = (id: string, disposition: EncounterDisposition) => {
+		hasUserInteractedRef.current = true;
+		setEncounterAnomalies((current) =>
+			current.map((entry) =>
+				entry.id === id
+					? {
+							...entry,
+							disposition,
+							currentlyHostile: disposition === "hostile",
+						}
+					: entry,
+			),
+		);
+	};
+
+	const updateHostility = (id: string, currentlyHostile: boolean) => {
+		hasUserInteractedRef.current = true;
+		setEncounterAnomalies((current) =>
+			current.map((entry) =>
+				entry.id === id ? { ...entry, currentlyHostile } : entry,
+			),
 		);
 	};
 
@@ -609,6 +648,8 @@ export function EncounterBuilder({
 				id: rosterEntry.entryId,
 				Anomaly: rosterEntry.runtimeState as unknown as Anomaly,
 				quantity: rosterEntry.quantity,
+				disposition: rosterEntry.disposition,
+				currentlyHostile: rosterEntry.currentlyHostile,
 				source: rosterEntry.source,
 			})),
 		);
@@ -684,7 +725,7 @@ export function EncounterBuilder({
 			{/* Left Column: Build & Anomalys */}
 			<div className={embedded ? "w-full" : "lg:col-span-8 space-y-6"}>
 				<AscendantWindow
-					title={embedded ? "CONSTRUCTS" : "MODEL SYNTHESIS: CONSTRUCTS"}
+					title={embedded ? "ANOMALIES" : "ENCOUNTER BUILDER: ANOMALIES"}
 				>
 					<div className="space-y-4">
 						<div className="relative">
@@ -885,6 +926,41 @@ export function EncounterBuilder({
 												<p className="text-[11px] opacity-60">
 													XP {calculateXP(em.Anomaly, 1)}
 												</p>
+												<div className="mt-1 flex items-center gap-2 text-[11px]">
+													<label htmlFor={`disposition-${em.id}`}>
+														Disposition
+													</label>
+													<select
+														id={`disposition-${em.id}`}
+														value={em.disposition ?? "neutral"}
+														onChange={(event) =>
+															updateDisposition(
+																em.id,
+																event.target.value as EncounterDisposition,
+															)
+														}
+														className="rounded border border-primary/20 bg-background px-1 py-0.5"
+													>
+														<option value="neutral">Neutral</option>
+														<option value="wary">Wary</option>
+														<option value="friendly">Friendly</option>
+														<option value="hostile">Hostile</option>
+													</select>
+													<label
+														className="flex items-center gap-1"
+														htmlFor={`hostile-${em.id}`}
+													>
+														<input
+															id={`hostile-${em.id}`}
+															type="checkbox"
+															checked={em.currentlyHostile === true}
+															onChange={(event) =>
+																updateHostility(em.id, event.target.checked)
+															}
+														/>
+														Hostile now
+													</label>
+												</div>
 											</div>
 											<div className="flex items-center gap-2">
 												<Input

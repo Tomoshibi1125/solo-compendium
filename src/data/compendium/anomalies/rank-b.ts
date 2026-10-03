@@ -22,7 +22,7 @@ export const anomalies_b = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-eternal-abyssal-horror-16whe1.webp",
 		description:
-			"A fearsome Humanoid that serves the shadow armies. This B rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Humanoid Anomaly cataloged at B rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
 		weaknesses: ["Light", "Holy Damage"],
 		senses: "darkvision 30 ft., passive Perception 15",
@@ -137,7 +137,7 @@ export const anomalies_b = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-eternal-shadow-lurker-70tivb.webp",
 		description:
-			"A fearsome Beast that serves the shadow armies. This B rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Beast Anomaly cataloged at B rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
 		weaknesses: ["Light"],
 		senses: "darkvision 60 ft., passive Perception 14",
@@ -251,7 +251,7 @@ export const anomalies_b = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-eternal-shadow-revenant-1t0es0.webp",
 		description:
-			"A fearsome anomaly that serves the shadow armies. This B rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A anomaly Anomaly cataloged at B rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast"],
 		weaknesses: ["Light"],
 		senses: "darkvision 60 ft., truesight 30 ft., passive Perception 14",
@@ -352,7 +352,7 @@ export const anomalies_b = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-eternal-shadow-assassin-1734o7.webp",
 		description:
-			"A fearsome Elemental that serves the shadow armies. This B rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Elemental Anomaly cataloged at B rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast"],
 		weaknesses: ["Light"],
 		senses: "darkvision 60 ft., passive Perception 14",
@@ -466,7 +466,7 @@ export const anomalies_b = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-corrupted-abyssal-horror-uvtbv4.webp",
 		description:
-			"A fearsome Dragon that serves the shadow armies. This B rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Dragon Anomaly cataloged at B rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
 		weaknesses: ["Light"],
 		senses: "darkvision 120 ft., blindsight 30 ft., passive Perception 14",
@@ -577,7 +577,7 @@ export const anomalies_b = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-corrupted-shadow-lurker-1coi23.webp",
 		description:
-			"A fearsome Anomaly that serves the shadow armies. This B rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Anomaly Anomaly cataloged at B rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast"],
 		weaknesses: ["Light", "Holy Damage"],
 		senses: "darkvision 60 ft., truesight 30 ft., passive Perception 15",
@@ -685,7 +685,7 @@ export const anomalies_b = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-corrupted-shadow-revenant-4tst45.webp",
 		description:
-			"A fearsome Humanoid that serves the shadow armies. This B rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Humanoid Anomaly cataloged at B rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast"],
 		weaknesses: ["Light", "Holy Damage"],
 		senses: "darkvision 30 ft., passive Perception 15",
@@ -800,7 +800,7 @@ export const anomalies_b = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-corrupted-shadow-assassin-d91ia0.webp",
 		description:
-			"A fearsome Beast that serves the shadow armies. This B rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Beast Anomaly cataloged at B rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast"],
 		weaknesses: ["Light", "Holy Damage"],
 		senses: "darkvision 60 ft., passive Perception 14",
@@ -914,7 +914,7 @@ export const anomalies_b = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-blessed-abyssal-horror-husqki.webp",
 		description:
-			"A fearsome anomaly that serves the shadow armies. This B rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A anomaly Anomaly cataloged at B rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast"],
 		weaknesses: ["Light", "Holy Damage"],
 		senses: "darkvision 60 ft., truesight 30 ft., passive Perception 14",
@@ -1015,7 +1015,7 @@ export const anomalies_b = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-blessed-shadow-lurker-1qzfto.webp",
 		description:
-			"A fearsome Elemental that serves the shadow armies. This B rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Elemental Anomaly cataloged at B rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
 		weaknesses: ["Light"],
 		senses: "darkvision 60 ft., passive Perception 14",
@@ -1129,7 +1129,7 @@ export const anomalies_b = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-blessed-shadow-revenant-9dg6rj.webp",
 		description:
-			"A fearsome Dragon that serves the shadow armies. This B rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Dragon Anomaly cataloged at B rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
 		weaknesses: ["Light", "Holy Damage"],
 		senses: "darkvision 120 ft., blindsight 30 ft., passive Perception 14",
@@ -1240,7 +1240,7 @@ export const anomalies_b = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-blessed-shadow-assassin-1gi8su.webp",
 		description:
-			"A fearsome Anomaly that serves the shadow armies. This B rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Anomaly Anomaly cataloged at B rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
 		weaknesses: ["Light"],
 		senses: "darkvision 60 ft., truesight 30 ft., passive Perception 15",
@@ -1348,7 +1348,7 @@ export const anomalies_b = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-cursed-abyssal-horror-13vwz0.webp",
 		description:
-			"A fearsome Humanoid that serves the shadow armies. This B rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Humanoid Anomaly cataloged at B rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast"],
 		weaknesses: ["Light"],
 		senses: "darkvision 30 ft., passive Perception 15",
@@ -1463,7 +1463,7 @@ export const anomalies_b = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-cursed-shadow-lurker-ohij4p.webp",
 		description:
-			"A fearsome Beast that serves the shadow armies. This B rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Beast Anomaly cataloged at B rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
 		weaknesses: ["Light", "Holy Damage"],
 		senses: "darkvision 60 ft., passive Perception 14",
@@ -1577,7 +1577,7 @@ export const anomalies_b = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-cursed-shadow-revenant-1thsql.webp",
 		description:
-			"A fearsome anomaly that serves the shadow armies. This B rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A anomaly Anomaly cataloged at B rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
 		weaknesses: ["Light", "Holy Damage"],
 		senses: "darkvision 60 ft., truesight 30 ft., passive Perception 14",
@@ -1678,7 +1678,7 @@ export const anomalies_b = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-cursed-shadow-assassin-1aypiy.webp",
 		description:
-			"A fearsome Elemental that serves the shadow armies. This B rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Elemental Anomaly cataloged at B rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
 		weaknesses: ["Light"],
 		senses: "darkvision 60 ft., passive Perception 14",
@@ -1792,7 +1792,7 @@ export const anomalies_b = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-ancient-abyssal-horror-1pbqdb.webp",
 		description:
-			"A fearsome Dragon that serves the shadow armies. This B rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Dragon Anomaly cataloged at B rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
 		weaknesses: ["Light"],
 		senses: "darkvision 120 ft., blindsight 30 ft., passive Perception 14",
@@ -1903,7 +1903,7 @@ export const anomalies_b = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-ancient-shadow-lurker-e135lb.webp",
 		description:
-			"A fearsome Anomaly that serves the shadow armies. This B rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Anomaly Anomaly cataloged at B rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast"],
 		weaknesses: ["Light"],
 		senses: "darkvision 60 ft., truesight 30 ft., passive Perception 15",
@@ -2011,7 +2011,7 @@ export const anomalies_b = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-ancient-shadow-revenant-1mip0k.webp",
 		description:
-			"A fearsome Humanoid that serves the shadow armies. This B rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Humanoid Anomaly cataloged at B rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
 		weaknesses: ["Light"],
 		senses: "darkvision 30 ft., passive Perception 15",
@@ -2126,7 +2126,7 @@ export const anomalies_b = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-ancient-shadow-assassin-ocfxcq.webp",
 		description:
-			"A fearsome Beast that serves the shadow armies. This B rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Beast Anomaly cataloged at B rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast"],
 		weaknesses: ["Light"],
 		senses: "darkvision 60 ft., passive Perception 14",
@@ -2240,7 +2240,7 @@ export const anomalies_b = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-primordial-abyssal-horror-p43ekh.webp",
 		description:
-			"A fearsome anomaly that serves the shadow armies. This B rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A anomaly Anomaly cataloged at B rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
 		weaknesses: ["Light"],
 		senses: "darkvision 60 ft., truesight 30 ft., passive Perception 14",
@@ -2341,7 +2341,7 @@ export const anomalies_b = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-primordial-shadow-lurker-1l9jqp.webp",
 		description:
-			"A fearsome Elemental that serves the shadow armies. This B rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Elemental Anomaly cataloged at B rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast"],
 		weaknesses: ["Light"],
 		senses: "darkvision 60 ft., passive Perception 14",
@@ -2455,7 +2455,7 @@ export const anomalies_b = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-primordial-shadow-revenant-1s7ged.webp",
 		description:
-			"A fearsome Dragon that serves the shadow armies. This B rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Dragon Anomaly cataloged at B rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
 		weaknesses: ["Light"],
 		senses: "darkvision 120 ft., blindsight 30 ft., passive Perception 14",
@@ -2566,7 +2566,7 @@ export const anomalies_b = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-primordial-shadow-assassin-rlf9ex.webp",
 		description:
-			"A fearsome Anomaly that serves the shadow armies. This B rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Anomaly Anomaly cataloged at B rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
 		weaknesses: ["Light", "Holy Damage"],
 		senses: "darkvision 60 ft., truesight 30 ft., passive Perception 15",
@@ -2674,7 +2674,7 @@ export const anomalies_b = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-supreme-abyssal-horror-omwlzj.webp",
 		description:
-			"A fearsome Humanoid that serves the shadow armies. This B rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Humanoid Anomaly cataloged at B rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast"],
 		weaknesses: ["Light", "Holy Damage"],
 		senses: "darkvision 30 ft., passive Perception 15",
@@ -2789,7 +2789,7 @@ export const anomalies_b = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-supreme-shadow-lurker-tj9wda.webp",
 		description:
-			"A fearsome Beast that serves the shadow armies. This B rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Beast Anomaly cataloged at B rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
 		weaknesses: ["Light"],
 		senses: "darkvision 60 ft., passive Perception 14",
@@ -2903,7 +2903,7 @@ export const anomalies_b = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-supreme-shadow-revenant-j9r2j6.webp",
 		description:
-			"A fearsome anomaly that serves the shadow armies. This B rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A anomaly Anomaly cataloged at B rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast"],
 		weaknesses: ["Light"],
 		senses: "darkvision 60 ft., truesight 30 ft., passive Perception 14",
@@ -3004,7 +3004,7 @@ export const anomalies_b = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-supreme-shadow-assassin-15716b.webp",
 		description:
-			"A fearsome Elemental that serves the shadow armies. This B rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Elemental Anomaly cataloged at B rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
 		weaknesses: ["Light"],
 		senses: "darkvision 60 ft., passive Perception 14",
@@ -3118,7 +3118,7 @@ export const anomalies_b = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-legendary-abyssal-horror-ynp65x.webp",
 		description:
-			"A fearsome Dragon that serves the shadow armies. This B rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Dragon Anomaly cataloged at B rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast"],
 		weaknesses: ["Light"],
 		senses: "darkvision 120 ft., blindsight 30 ft., passive Perception 14",
@@ -3229,7 +3229,7 @@ export const anomalies_b = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-legendary-shadow-lurker-me6ujc.webp",
 		description:
-			"A fearsome Anomaly that serves the shadow armies. This B rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Anomaly Anomaly cataloged at B rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
 		weaknesses: ["Light", "Holy Damage"],
 		senses: "darkvision 60 ft., truesight 30 ft., passive Perception 15",
@@ -3337,7 +3337,7 @@ export const anomalies_b = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-legendary-shadow-revenant-wgh4dc.webp",
 		description:
-			"A fearsome Humanoid that serves the shadow armies. This B rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Humanoid Anomaly cataloged at B rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
 		weaknesses: ["Light"],
 		senses: "darkvision 30 ft., passive Perception 15",
@@ -3452,7 +3452,7 @@ export const anomalies_b = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-legendary-shadow-assassin-gcpnu5.webp",
 		description:
-			"A fearsome Beast that serves the shadow armies. This B rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Beast Anomaly cataloged at B rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
 		weaknesses: ["Light", "Holy Damage"],
 		senses: "darkvision 60 ft., passive Perception 14",
@@ -3566,7 +3566,7 @@ export const anomalies_b = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-mythic-abyssal-horror-vc2f83.webp",
 		description:
-			"A fearsome anomaly that serves the shadow armies. This B rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A anomaly Anomaly cataloged at B rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast"],
 		weaknesses: ["Light", "Holy Damage"],
 		senses: "darkvision 60 ft., truesight 30 ft., passive Perception 14",
@@ -3667,7 +3667,7 @@ export const anomalies_b = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-mythic-shadow-lurker-qq3mzm.webp",
 		description:
-			"A fearsome Elemental that serves the shadow armies. This B rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Elemental Anomaly cataloged at B rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
 		weaknesses: ["Light"],
 		senses: "darkvision 60 ft., passive Perception 14",
@@ -3781,7 +3781,7 @@ export const anomalies_b = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-mythic-shadow-revenant-3gwdiu.webp",
 		description:
-			"A fearsome Dragon that serves the shadow armies. This B rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Dragon Anomaly cataloged at B rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
 		weaknesses: ["Light", "Holy Damage"],
 		senses: "darkvision 120 ft., blindsight 30 ft., passive Perception 14",
@@ -3892,7 +3892,7 @@ export const anomalies_b = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-mythic-shadow-assassin-1cnhal.webp",
 		description:
-			"A fearsome Anomaly that serves the shadow armies. This B rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Anomaly Anomaly cataloged at B rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
 		weaknesses: ["Light", "Holy Damage"],
 		senses: "darkvision 60 ft., truesight 30 ft., passive Perception 15",
@@ -4000,7 +4000,7 @@ export const anomalies_b = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-divine-abyssal-horror-cnuv4p.webp",
 		description:
-			"A fearsome Humanoid that serves the shadow armies. This B rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Humanoid Anomaly cataloged at B rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
 		weaknesses: ["Light", "Holy Damage"],
 		senses: "darkvision 30 ft., passive Perception 15",
@@ -4115,7 +4115,7 @@ export const anomalies_b = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-divine-shadow-lurker-ca7f58.webp",
 		description:
-			"A fearsome Beast that serves the shadow armies. This B rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Beast Anomaly cataloged at B rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast"],
 		weaknesses: ["Light", "Holy Damage"],
 		senses: "darkvision 60 ft., passive Perception 14",
@@ -4229,7 +4229,7 @@ export const anomalies_b = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-divine-shadow-revenant-1bawhg.webp",
 		description:
-			"A fearsome anomaly that serves the shadow armies. This B rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A anomaly Anomaly cataloged at B rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
 		weaknesses: ["Light"],
 		senses: "darkvision 60 ft., truesight 30 ft., passive Perception 14",
@@ -4330,7 +4330,7 @@ export const anomalies_b = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-divine-shadow-assassin-17oxxo.webp",
 		description:
-			"A fearsome Elemental that serves the shadow armies. This B rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Elemental Anomaly cataloged at B rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
 		weaknesses: ["Light", "Holy Damage"],
 		senses: "darkvision 60 ft., passive Perception 14",
@@ -4444,7 +4444,7 @@ export const anomalies_b = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-infernal-abyssal-horror-1bjede.webp",
 		description:
-			"A fearsome Dragon that serves the shadow armies. This B rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Dragon Anomaly cataloged at B rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
 		weaknesses: ["Light", "Holy Damage"],
 		senses: "darkvision 120 ft., blindsight 30 ft., passive Perception 14",
@@ -4555,7 +4555,7 @@ export const anomalies_b = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-infernal-shadow-lurker-1b4jc9.webp",
 		description:
-			"A fearsome Anomaly that serves the shadow armies. This B rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Anomaly Anomaly cataloged at B rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast"],
 		weaknesses: ["Light"],
 		senses: "darkvision 60 ft., truesight 30 ft., passive Perception 15",
@@ -4663,7 +4663,7 @@ export const anomalies_b = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-infernal-shadow-revenant-abrwbt.webp",
 		description:
-			"A fearsome Humanoid that serves the shadow armies. This B rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Humanoid Anomaly cataloged at B rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
 		weaknesses: ["Light"],
 		senses: "darkvision 30 ft., passive Perception 15",
@@ -4778,7 +4778,7 @@ export const anomalies_b = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-infernal-shadow-assassin-1axt1a.webp",
 		description:
-			"A fearsome Beast that serves the shadow armies. This B rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Beast Anomaly cataloged at B rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
 		weaknesses: ["Light"],
 		senses: "darkvision 60 ft., passive Perception 14",
@@ -4892,7 +4892,7 @@ export const anomalies_b = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-celestial-abyssal-horror-1y9e7q.webp",
 		description:
-			"A fearsome anomaly that serves the shadow armies. This B rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A anomaly Anomaly cataloged at B rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
 		weaknesses: ["Light", "Holy Damage"],
 		senses: "darkvision 60 ft., truesight 30 ft., passive Perception 14",
@@ -4993,7 +4993,7 @@ export const anomalies_b = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-celestial-shadow-lurker-wa2ce3.webp",
 		description:
-			"A fearsome Elemental that serves the shadow armies. This B rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Elemental Anomaly cataloged at B rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
 		weaknesses: ["Light"],
 		senses: "darkvision 60 ft., passive Perception 14",
@@ -5107,7 +5107,7 @@ export const anomalies_b = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-celestial-shadow-revenant-1ujryd.webp",
 		description:
-			"A fearsome Dragon that serves the shadow armies. This B rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Dragon Anomaly cataloged at B rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
 		weaknesses: ["Light", "Holy Damage"],
 		senses: "darkvision 120 ft., blindsight 30 ft., passive Perception 14",
@@ -5218,7 +5218,7 @@ export const anomalies_b = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-celestial-shadow-assassin-xh1u1i.webp",
 		description:
-			"A fearsome Anomaly that serves the shadow armies. This B rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Anomaly Anomaly cataloged at B rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
 		weaknesses: ["Light"],
 		senses: "darkvision 60 ft., truesight 30 ft., passive Perception 15",

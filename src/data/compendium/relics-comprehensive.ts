@@ -2360,7 +2360,8 @@ export const comprehensiveRelics: Relic[] = [
 				fingerprint: "ffbe0ff9",
 				payload_complete: true,
 				uniqueness_seed: "essence-potion::Essence Potion",
-				variant_note: "Restores mana on consumption.",
+				variant_note:
+					"Restores 4d4+4 HP and grants +1 to all ability checks for 1 hour.",
 			},
 			condition: "Lethargy",
 			damage_profile: "3d6",

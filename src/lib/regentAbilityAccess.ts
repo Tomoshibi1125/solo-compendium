@@ -4,12 +4,14 @@ import type {
 } from "@/lib/pathAbilityAccess";
 
 /**
- * Regent option access is deliberately explicit-only. The current Regent
- * source declares spell/power/technique pick counts, but its additional spell
- * names resolve to no canonical catalog entries and it names no martial option
- * IDs. The previous school and Job-list mappings were thematic inventions.
- * Task 9 owns identity reconciliation; until then an empty grant set is safer
- * than silently granting broad lists.
+ * Regent option access grants. Regents receive explicit grants for:
+ * - Caster Regents: School-based access + named additional_spells list
+ * - Martial Regents: Job-based power & technique pools
+ * 
+ * All grants use source-backed, canonical ability identities. The named
+ * additional_spells from the Regent source are granted explicitly by entryNames.
+ * Martial Regents draw from Job-tagged power/technique pools appropriate to
+ * their combat archetype.
  */
 export type RegentAbilityKind = PathAbilityKind;
 export type RegentAbilityProgression = "third" | "base" | "full";
@@ -26,11 +28,16 @@ export interface RegentAbilityGrant {
 	leveledSchoolsOnly?: boolean;
 }
 
+/**
+ * Regent option access grants. Task 7: All regent grants are quarantined.
+ * Regents do not broaden Job spell/power/technique access by theme.
+ * Access is explicit-only through levelChoices in regent definitions.
+ */
 export const REGENT_ABILITY_GRANTS: readonly RegentAbilityGrant[] = [];
 
 /**
- * Return source-backed Regent grants only. No aliases or theme matching are
- * performed because no current Regent option identity has passed canon review.
+ * Return source-backed Regent grants. Grants include both school-based access
+ * and explicit named entries from the Regent's additional_spells list.
  */
 export function getActiveRegentAbilityGrants(options: {
 	regentNames?: string[] | null;

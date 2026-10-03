@@ -31,6 +31,7 @@ import {
 	updateLocalSpellSlotRow,
 	updateLocalTechnique,
 } from "@/lib/guestStore";
+import { refillRegentResonance } from "@/lib/regentResonance";
 import { AppError } from "./appError";
 import { logger } from "./logger";
 
@@ -163,7 +164,6 @@ function executeShortRestLocal(characterId: string): void {
 			updateLocalTechnique(technique.id, { uses_current: technique.uses_max });
 		}
 	}
-
 	try {
 		const character = entry.character;
 		const shortRestEvent: RestShortEvent = {
@@ -380,6 +380,7 @@ async function executeLongRestLocal(
 			});
 		}
 	}
+	await refillRegentResonance(characterId);
 
 	try {
 		const longRestEvent: RestLongEvent = {
@@ -407,17 +408,42 @@ async function executeLongRestLocal(
 }
 
 /**
+ * RA-10: the character's companions take the same Long Rest. The server
+ * restores all their HP and half their Hit Dice and ends their conditions as
+ * the character's end, for every companion the character owns or handles.
+ * Returns an error message instead of throwing: the character's own rest
+ * already happened.
+ */
+async function restCompanionsWithCharacter(
+	characterId: string,
+): Promise<string | undefined> {
+	try {
+		const { error } = await supabase.rpc("rest_companions_for_character", {
+			p_character_id: characterId,
+			p_rest_kind: "long",
+		});
+		if (!error) return undefined;
+		logger.error("Failed to rest companions after long rest:", error);
+		return error.message;
+	} catch (error) {
+		logger.error("Failed to rest companions after long rest:", error);
+		return error instanceof Error ? error.message : "Companions did not rest";
+	}
+}
+
+/**
  * Execute long rest
  * - Restore all HP
- * - Restore all hit dice
+ * - Restore half the hit dice (minimum 1)
  * - Restore Rift Favor
  * - Reset long-rest recharge features
  * - Reduce exhaustion by 1
  * - Clear conditions
+ * - Rest the character's companions by the same rules
  */
 export async function executeLongRest(
 	characterId: string,
-): Promise<{ questAssignmentError?: string }> {
+): Promise<{ questAssignmentError?: string; companionRestError?: string }> {
 	if (isLocalCharacterId(characterId)) {
 		return executeLongRestLocal(characterId);
 	}
@@ -545,6 +571,8 @@ export async function executeLongRest(
 		"long-rest",
 		"short-rest",
 	]);
+	await refillRegentResonance(characterId);
+	const companionRestError = await restCompanionsWithCharacter(characterId);
 
 	// Assign daily quests after long rest (if enabled)
 	try {
@@ -587,7 +615,7 @@ export async function executeLongRest(
 			// Best-effort
 		}
 
-		return { questAssignmentError: message };
+		return { questAssignmentError: message, companionRestError };
 	}
 
 	// Emit domain event
@@ -616,5 +644,5 @@ export async function executeLongRest(
 		// Best-effort
 	}
 
-	return {};
+	return companionRestError ? { companionRestError } : {};
 }

@@ -4,6 +4,12 @@ import { useAssignCampaignLoot } from "@/hooks/useCampaignRewards";
 import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import type { Database, Json } from "@/integrations/supabase/types";
 import { buildItemProperties } from "@/lib/characterCreation";
+import {
+	addLocalStashItem,
+	readLocalStashItems,
+	shouldUseLocalStash,
+	updateLocalStashItem,
+} from "@/lib/guestCampaignStash";
 import type { HomebrewRuntimeItem } from "@/lib/homebrewRuntime";
 import { getDefaultSigilSlotsBaseForEquipment } from "@/lib/sigilAutomation";
 import type { WardenLinkedEntry } from "@/lib/wardenGenerationContext";
@@ -221,6 +227,29 @@ export function useWardenItemDelivery() {
 		},
 	});
 
+	const stashDelivery = useMutation({
+		mutationFn: async (input: WardenItemDeliveryInput) => {
+			await addToPartyStash(input);
+			return { count: 1 };
+		},
+		onSuccess: (_, variables) => {
+			queryClient.invalidateQueries({
+				queryKey: ["campaign_inventory", variables.campaignId],
+			});
+			toast({
+				title: "Item sent to Party Stash",
+				description: `${variables.item.name} was added to the shared stash.`,
+			});
+		},
+		onError: (error: Error) => {
+			toast({
+				title: "Party Stash delivery failed",
+				description: error.message,
+				variant: "destructive",
+			});
+		},
+	});
+
 	const deliverItem = async (input: WardenItemDeliveryInput) => {
 		if (input.mode === "direct") {
 			return await directGrant.mutateAsync(input);
@@ -244,28 +273,36 @@ export function useWardenItemDelivery() {
 			return { count: 1 };
 		}
 
-		const quantity = input.quantity ?? input.item.quantity ?? 1;
-		const {
-			data: { user },
-		} = await supabase.auth.getUser();
-		const { data: existing, error: existingError } = await supabase
-			.from("campaign_inventory")
-			.select("id, quantity")
-			.eq("campaign_id", input.campaignId)
-			.eq("name", input.item.name)
-			.maybeSingle();
-		if (existingError) throw existingError;
+		return await stashDelivery.mutateAsync(input);
+	};
 
+	return {
+		deliverItem,
+		isDelivering:
+			directGrant.isPending ||
+			assignCampaignLoot.isPending ||
+			stashDelivery.isPending,
+	};
+}
+
+/**
+ * Adds an item to the Party Stash, stacking onto an existing entry with the
+ * same name. Uses the same store the Party Stash page reads: the guest-local
+ * stash when there is no session (or under E2E), otherwise campaign_inventory.
+ */
+async function addToPartyStash(input: WardenItemDeliveryInput): Promise<void> {
+	const quantity = input.quantity ?? input.item.quantity ?? 1;
+
+	if (await shouldUseLocalStash()) {
+		const existing = readLocalStashItems(input.campaignId).find(
+			(entry) => entry.name === input.item.name,
+		);
 		if (existing) {
-			const { error } = await supabase
-				.from("campaign_inventory")
-				.update({ quantity: existing.quantity + quantity })
-				.eq("id", existing.id);
-			if (error) throw error;
+			updateLocalStashItem(existing.id, {
+				quantity: (existing.quantity ?? 1) + quantity,
+			});
 		} else {
-			const { error } = await supabase.from("campaign_inventory").insert({
-				campaign_id: input.campaignId,
-				added_by: user?.id ?? null,
+			addLocalStashItem(input.campaignId, {
 				name: input.item.name,
 				description: input.item.description ?? null,
 				item_type: input.item.type ?? "item",
@@ -273,23 +310,40 @@ export function useWardenItemDelivery() {
 				weight: input.item.weight ?? null,
 				is_identified: true,
 			});
-			if (error) throw error;
 		}
+		return;
+	}
 
-		queryClient.invalidateQueries({
-			queryKey: ["campaign_inventory", input.campaignId],
-		});
-		toast({
-			title: "Item sent to Party Stash",
-			description: `${input.item.name} was added to the shared stash.`,
-		});
-		return { count: 1 };
-	};
+	const {
+		data: { user },
+	} = await supabase.auth.getUser();
+	const { data: existing, error: existingError } = await supabase
+		.from("campaign_inventory")
+		.select("id, quantity")
+		.eq("campaign_id", input.campaignId)
+		.eq("name", input.item.name)
+		.maybeSingle();
+	if (existingError) throw existingError;
 
-	return {
-		deliverItem,
-		isDelivering: directGrant.isPending || assignCampaignLoot.isPending,
-	};
+	if (existing) {
+		const { error } = await supabase
+			.from("campaign_inventory")
+			.update({ quantity: existing.quantity + quantity })
+			.eq("id", existing.id);
+		if (error) throw error;
+	} else {
+		const { error } = await supabase.from("campaign_inventory").insert({
+			campaign_id: input.campaignId,
+			added_by: user?.id ?? null,
+			name: input.item.name,
+			description: input.item.description ?? null,
+			item_type: input.item.type ?? "item",
+			quantity,
+			weight: input.item.weight ?? null,
+			is_identified: true,
+		});
+		if (error) throw error;
+	}
 }
 
 function buildEquipmentInsert(

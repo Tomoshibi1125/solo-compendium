@@ -22,13 +22,13 @@ import { supabase } from "@/integrations/supabase/client";
 import {
 	type CanonicalCastableEntry,
 	listCanonicalEntries,
-	listLearnablePowers,
-	listLearnableSpells,
-	listLearnableTechniques,
+	listCanonicalPowers,
+	listCanonicalSpells,
 } from "@/lib/canonicalCompendium";
 import { calculateTotalChoices } from "@/lib/choiceCalculations";
 import { isLocalCharacterId } from "@/lib/guestStore";
 import { resolveCanonicalRegentId } from "@/lib/regentIdentity";
+import { getMaxRegentAbilityTier } from "@/lib/regentProgression";
 import {
 	type CanonicalPickEntry,
 	persistRegentPowers,
@@ -126,9 +126,9 @@ function normalizeAbilityName(value: string | null | undefined): string {
 }
 
 /**
- * Exclude already-known options by exact canonical ID first, then normalized
- * name fallback. Only an exact ID written by this catch-up source can satisfy
- * owed picks on a retry; every other match is merely unavailable.
+ * Count exact canonical IDs from this catch-up source on retry. A grant from
+ * another structured source may coexist; name-only legacy matches remain
+ * unavailable until their identity is resolved.
  */
 export function classifyCatchUpOptions<T extends { id: string; name: string }>(
 	options: readonly T[],
@@ -144,10 +144,12 @@ export function classifyCatchUpOptions<T extends { id: string; name: string }>(
 			(candidate) => candidate.canonicalId === option.id,
 		);
 		if (idMatches.length > 0) {
-			if (idMatches.every((candidate) => candidate.source === catchUpSource)) {
+			if (idMatches.some((candidate) => candidate.source === catchUpSource)) {
 				completedSameSource.push(option);
 			} else {
-				excludedExisting.push(option);
+				// A Job, Path, or different Regent can grant the same canonical
+				// ability independently. This unlock still gets its own grant.
+				available.push(option);
 			}
 			continue;
 		}
@@ -201,6 +203,7 @@ interface RegentCatchUpModalProps {
 	campaignId?: string;
 	open: boolean;
 	onComplete: () => void;
+	onClose: () => void;
 }
 
 type SelectionState = Record<CatchUpBucketKey, Set<string>>;
@@ -292,6 +295,7 @@ export function RegentCatchUpModal({
 	campaignId,
 	open,
 	onComplete,
+	onClose,
 }: RegentCatchUpModalProps) {
 	const { toast } = useToast();
 	const queryClient = useQueryClient();
@@ -349,13 +353,42 @@ export function RegentCatchUpModal({
 		open && remoteCharacter && !!regent && validLevel && !!regentName;
 
 	const powerQuery = useQuery<CanonicalCastableEntry[]>({
-		queryKey: ["regent-catchup-powers", canonicalRegentId, level, campaignId],
-		queryFn: () =>
-			listLearnablePowers({
-				accessContext: { campaignId },
-				characterLevel: level,
-				regentNames: [regentName],
-			}),
+		queryKey: ["regent-catchup-powers", canonicalRegentId, level, campaignId, maxTier],
+		queryFn: async () => {
+			// Load regent powers from canonical pick options table (tier 5-9 only)
+			const { data: pickOptions, error: pickError } = await supabase
+				.from("regent_canonical_pick_options")
+				.select("canonical_id")
+				.eq("kind", "powers")
+				.lte("tier", maxTier)
+				.gte("tier", 5);
+			if (pickError) throw pickError;
+			
+			const regentPowerIds = new Set((pickOptions ?? []).map(row => row.canonical_id));
+			if (regentPowerIds.size === 0) return [];
+			
+			// Load full power entries from powers table
+			const { data: powers, error: powersError } = await supabase
+				.from("powers")
+				.select("id, name, power_level, casting_time, range, duration, concentration, ritual, description, higher_levels")
+				.in("id", Array.from(regentPowerIds))
+				.gte("power_level", 5)
+				.lte("power_level", maxTier);
+			if (powersError) throw powersError;
+			
+			return (powers ?? []).map(p => ({
+				id: p.id,
+				name: p.name,
+				power_level: p.power_level,
+				casting_time: p.casting_time,
+				range: p.range,
+				duration: p.duration,
+				concentration: p.concentration ?? false,
+				ritual: p.ritual ?? false,
+				description: p.description,
+				higher_levels: p.higher_levels,
+			})) as CanonicalCastableEntry[];
+		},
 		enabled: baseQueryEnabled && owed.powers > 0,
 	});
 
@@ -365,25 +398,45 @@ export function RegentCatchUpModal({
 			canonicalRegentId,
 			level,
 			campaignId,
+			maxTier,
 		],
-		queryFn: () =>
-			listLearnableTechniques({
-				accessContext: { campaignId },
-				characterLevel: level,
-				regentNames: [regentName],
-				maxLevel: level,
-			}),
+		queryFn: async () => {
+			// Load regent techniques from canonical pick options table (tier 5-9 only)
+			const { data: pickOptions, error: pickError } = await supabase
+				.from("regent_canonical_pick_options")
+				.select("canonical_id")
+				.eq("kind", "techniques")
+				.lte("tier", maxTier)
+				.gte("tier", 5);
+			if (pickError) throw pickError;
+			
+			const regentTechniqueIds = new Set((pickOptions ?? []).map(row => row.canonical_id));
+			if (regentTechniqueIds.size === 0) return [];
+			
+			// Load full technique entries from techniques table
+			const { data: techniques, error: techniquesError } = await supabase
+				.from("techniques")
+				.select("id, name, level, level_requirement, description")
+				.in("id", Array.from(regentTechniqueIds));
+			if (techniquesError) throw techniquesError;
+			
+			return (techniques ?? []).filter(t => {
+				const tier = Number(t.level_requirement ?? t.level ?? 0);
+				return tier >= 5 && tier <= maxTier;
+			}).map(t => ({
+				id: t.id,
+				name: t.name,
+				level: t.level,
+				level_requirement: t.level_requirement,
+				description: t.description,
+			})) as StaticCompendiumEntry[];
+		},
 		enabled: baseQueryEnabled && owed.techniques > 0,
 	});
 
 	const spellQuery = useQuery<CanonicalCastableEntry[]>({
 		queryKey: ["regent-catchup-spells", canonicalRegentId, level, campaignId],
-		queryFn: () =>
-			listLearnableSpells({
-				accessContext: { campaignId },
-				characterLevel: level,
-				regentNames: [regentName],
-			}),
+		queryFn: () => listCanonicalSpells(undefined, { campaignId }),
 		enabled: baseQueryEnabled && (owed.cantrips > 0 || owed.spells > 0),
 	});
 
@@ -452,7 +505,11 @@ export function RegentCatchUpModal({
 							source: row.source,
 						})),
 				},
-				unresolvedTechniqueIds: techniqueResolution.unresolvedIds,
+				unresolvedTechniqueIds: techniqueResolution.unresolvedIds.filter((id) =>
+					(techniqueResult.data ?? []).some(
+						(row) => row.technique_id === id && row.source === catchUpSource,
+					),
+				),
 			};
 		},
 		enabled: baseQueryEnabled,
@@ -469,17 +526,50 @@ export function RegentCatchUpModal({
 		if (selectionResetKey) setSelected(createEmptySelections());
 	}, [selectionResetKey]);
 
+	// Calculate max tier for regent abilities based on character level
+	// Tier 5 at level 1, tier 9 at level 20, scales linearly
+	const maxTier = useMemo(() => getMaxRegentAbilityTier(level ?? 1), [level]);
+
+	// Calculate max spell tier based on regent's spell slot progression
+	const maxSpellTier = useMemo(() => {
+		if (!regent?.spellcasting?.spell_slots || !level) return 0;
+		return Object.entries(regent.spellcasting.spell_slots).reduce(
+			(max, [ordinal, counts]) =>
+				Array.isArray(counts) && Number(counts[level - 1]) > 0
+					? Math.max(max, Number.parseInt(ordinal, 10))
+					: max,
+			0,
+		);
+	}, [regent, level]);
+
 	const powerOptions = useMemo(
-		() => (powerQuery.data ?? []).map(toCastablePick),
-		[powerQuery.data],
+		() =>
+			(powerQuery.data ?? [])
+				.filter(
+					(entry) => entry.power_level >= 5 && entry.power_level <= maxTier,
+				)
+				.map(toCastablePick),
+		[powerQuery.data, maxTier],
 	);
 	const techniqueOptions = useMemo(
-		() => (techniqueQuery.data ?? []).map(toTechniquePick),
-		[techniqueQuery.data],
+		() =>
+			(techniqueQuery.data ?? [])
+				.filter((entry) => {
+					const tier = Number(entry.level_requirement ?? entry.level ?? 0);
+					return tier >= 5 && tier <= maxTier;
+				})
+				.map(toTechniquePick),
+		[techniqueQuery.data, maxTier],
 	);
 	const allSpellOptions = useMemo(
-		() => (spellQuery.data ?? []).map(toCastablePick),
-		[spellQuery.data],
+		() =>
+			(spellQuery.data ?? [])
+				.filter(
+					(entry) =>
+						entry.power_level <= maxSpellTier || entry.power_level === 0,
+				)
+				.map(toCastablePick),
+		[spellQuery.data, maxSpellTier],
 	);
 	const cantripOptions = useMemo(
 		() => allSpellOptions.filter((spell) => spell.power_level === 0),
@@ -564,15 +654,10 @@ export function RegentCatchUpModal({
 		(owed.powers > 0 && powerQuery.isLoading) ||
 		(owed.techniques > 0 && techniqueQuery.isLoading) ||
 		((owed.cantrips > 0 || owed.spells > 0) && spellQuery.isLoading);
-	const queryLoading =
-		characterLoading || optionLoading || knownQuery.isLoading;
+	const queryLoading = characterLoading || optionLoading || knownQuery.isLoading;
 	const optionError =
 		powerQuery.error ?? techniqueQuery.error ?? spellQuery.error;
 	const queryError = characterError ?? optionError ?? knownQuery.error;
-	const catalogBlockers = buckets.filter(
-		(bucket) =>
-			bucket.readiness.hasCatalogDeficit || bucket.readiness.hasExcessPersisted,
-	);
 	const allReady =
 		baseQueryEnabled &&
 		!queryLoading &&
@@ -627,7 +712,11 @@ export function RegentCatchUpModal({
 			const techniques = fulfilled("techniques");
 			const cantrips = fulfilled("cantrips");
 			const spells = fulfilled("spells");
-			const persistenceOptions = { campaignId };
+			const persistenceOptions = {
+				campaignId,
+				regentId: canonicalRegentId ?? regentId,
+				unlockId,
+			};
 			const [powerResult, techniqueResult, cantripResult, spellResult] =
 				await Promise.all([
 					persistRegentPowers(
@@ -761,37 +850,18 @@ export function RegentCatchUpModal({
 				</ul>
 			</div>
 		);
-	} else if (catalogBlockers.length > 0) {
-		blocker = (
-			<div className="space-y-2">
-				<p>
-					Catch-up is blocked by the Task 9 identity catalog. The full owed
-					count cannot be reduced to fit a short catalog.
-				</p>
-				<ul className="list-disc pl-5">
-					{catalogBlockers.map((bucket) => (
-						<li key={bucket.key}>
-							{bucket.label}: {bucket.readiness.requiredSelections} selections
-							required, {bucket.readiness.available} eligible options available
-							{bucket.readiness.hasExcessPersisted
-								? `; ${bucket.readiness.completedSameSource} same-source rows already exceed the owed ${bucket.owed}`
-								: ""}
-						</li>
-					))}
-				</ul>
-			</div>
-		);
 	}
 
 	return (
-		<Dialog open={open} onOpenChange={() => undefined}>
-			<DialogContent
-				className="bg-card border-regent-gold/40 max-w-2xl max-h-[85vh] overflow-y-auto"
-				onInteractOutside={(event) => event.preventDefault()}
-				onEscapeKeyDown={(event) => event.preventDefault()}
-			>
-				<DialogHeader>
-					<DialogTitle className="font-display text-xl gradient-text-regent flex items-center gap-2">
+		<Dialog
+			open={open}
+			onOpenChange={(next) => {
+				if (!next && !saving) onClose();
+			}}
+		>
+			<DialogContent className="bg-card border-regent-gold/40 w-[calc(100vw-1rem)] max-w-[calc(100vw-1rem)] sm:max-w-2xl max-h-[85vh] overflow-x-hidden overflow-y-auto">
+				<DialogHeader className="min-w-0">
+					<DialogTitle className="font-display text-xl gradient-text-regent flex min-w-0 items-center gap-2 break-words pr-4">
 						<Crown className="h-5 w-5" />
 						{formatRegentVernacular(
 							regent?.title || regentName || REGENT_LABEL,
@@ -811,9 +881,9 @@ export function RegentCatchUpModal({
 						Loading character, known abilities, and canonical options...
 					</div>
 				) : blocker ? (
-					<div className="flex items-start gap-3 rounded-lg border border-regent-gold/40 bg-regent-gold/5 p-4 text-sm text-muted-foreground">
+					<div className="flex min-w-0 items-start gap-3 rounded-lg border border-regent-gold/40 bg-regent-gold/5 p-4 text-sm text-muted-foreground">
 						<AlertTriangle className="h-5 w-5 text-regent-gold shrink-0" />
-						<div>{blocker}</div>
+						<div className="min-w-0 break-words">{blocker}</div>
 					</div>
 				) : (
 					<div className="space-y-5 pt-2">

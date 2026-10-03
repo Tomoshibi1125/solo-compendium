@@ -174,23 +174,6 @@ function pickMany(
 	return selected;
 }
 
-export function rankToTreasureRarities(rank: string): string[] {
-	switch (rank.trim().toUpperCase()) {
-		case "E":
-		case "D":
-			return ["common", "uncommon"];
-		case "C":
-		case "B":
-			return ["uncommon", "rare", "very-rare"];
-		case "A":
-			return ["very-rare", "epic", "legendary"];
-		case "S":
-			return ["epic", "legendary", "mythic", "artifact"];
-		default:
-			return ["common", "uncommon", "rare"];
-	}
-}
-
 function matchesRank(entry: StaticCompendiumEntry, rank: string): boolean {
 	const normalizedRank = rank.trim().toUpperCase();
 	if (!normalizedRank) return true;

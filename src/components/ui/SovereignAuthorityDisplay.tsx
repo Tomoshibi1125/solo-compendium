@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils";
 
 interface SovereignAuthorityDisplayProps {
 	authority: number; // 0-100
-	tier: "ascendant" | "sovereign" | "regent" | "regent";
+	tier: "ascendant" | "sovereign" | "regent" | "eternal";
 	domain?: string;
 	decrees?: number;
 	vassals?: number;
@@ -44,7 +44,7 @@ export const SovereignAuthorityDisplay = ({
 			eternal: {
 				color: "#dc2626",
 				glow: "#ef4444",
-				name: "MONARCH",
+				name: "ETERNAL",
 				crown: "👑",
 			},
 		};

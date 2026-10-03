@@ -1,5 +1,14 @@
-import { AlertTriangle, Plus, ScrollText, Trash2, User } from "lucide-react";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+	AlertTriangle,
+	Pencil,
+	Plus,
+	ScrollText,
+	Trash2,
+	User,
+} from "lucide-react";
 import { useMemo, useState } from "react";
+import { RegentCatchUpCatalogDialog } from "@/components/campaign/RegentCatchUpCatalogDialog";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -20,25 +29,60 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 import { getRegentUnlockQuests } from "@/data/compendium/quest-contracts";
+import { regents } from "@/data/compendium/regents";
 import { useCampaignSharedCharacters } from "@/hooks/useCampaignCharacters";
+import {
+	getStoredRegentOfferCandidates,
+	type RegentOffer,
+	useRegentOffers,
+} from "@/hooks/useRegentOffers";
 import {
 	useCampaignRegentUnlockGrants,
 	useCampaignRegentUnlocks,
-	useRegentUnlockGrants,
 	useRemoveRegentUnlock,
 } from "@/hooks/useRegentUnlocks";
+import { supabase } from "@/integrations/supabase/client";
+import { resolveCanonicalRegentId } from "@/lib/regentIdentity";
 import { REGENT_LABEL } from "@/lib/vernacular";
 
 interface CampaignRegentOversightProps {
 	campaignId: string;
 }
 
+const canonicalRegents = regents.flatMap((regent) => {
+	const id = resolveCanonicalRegentId(regent.id);
+	return id ? [{ ...regent, id }] : [];
+});
+const regentNameById = new Map<string, string>(
+	canonicalRegents.map((regent) => [regent.id, regent.title || regent.name]),
+);
+
 export function CampaignRegentOversight({
 	campaignId,
 }: CampaignRegentOversightProps) {
-	const [grantDialogOpen, setGrantDialogOpen] = useState(false);
+	const [dialogOpen, setDialogOpen] = useState(false);
 	const [selectedCharId, setSelectedCharId] = useState("");
 	const [selectedQuestId, setSelectedQuestId] = useState("");
+	const [candidateIds, setCandidateIds] = useState<[string, string, string]>([
+		"",
+		"",
+		"",
+	]);
+	const [editingOffer, setEditingOffer] = useState<RegentOffer | null>(null);
+	const [requestId, setRequestId] = useState("");
+	const [submissionError, setSubmissionError] = useState<string | null>(null);
+	const [curatingUnlock, setCuratingUnlock] = useState<{
+		id: string;
+		regentId: string;
+		level: number;
+	} | null>(null);
+	const [approvingPendingId, setApprovingPendingId] = useState<string | null>(
+		null,
+	);
+	const [pendingApprovalError, setPendingApprovalError] = useState<
+		string | null
+	>(null);
+	const queryClient = useQueryClient();
 
 	const {
 		data: sharedCharacters = [],
@@ -50,40 +94,194 @@ export function CampaignRegentOversight({
 		isLoading: loadingUnlocks,
 		error: campaignUnlockError,
 	} = useCampaignRegentUnlocks(campaignId, sharedCharacters);
-	const unlockError = sharedCharacterError ?? campaignUnlockError;
+	const characterIds = sharedCharacters.map((entry) => entry.character_id);
+	const { data: pendingRegentGrants = [] } = useQuery({
+		queryKey: ["campaign-pending-regent-grants", campaignId, characterIds],
+		enabled: characterIds.length > 0,
+		queryFn: async () => {
+			const { data, error } = await supabase
+				.from("character_pending_regent_grants")
+				.select("id, character_id, regent_id, grant_kind, canonical_id")
+				.in("character_id", characterIds)
+				.eq("status", "pending");
+			if (error) throw error;
+			return data ?? [];
+		},
+	});
+	const approvePendingGrant = async (pendingId: string, unlockId: string) => {
+		setApprovingPendingId(pendingId);
+		setPendingApprovalError(null);
+		try {
+			const { error } = await supabase.rpc("approve_pending_regent_grant", {
+				p_pending_id: pendingId,
+				p_unlock_id: unlockId,
+				p_campaign_id: campaignId,
+			});
+			if (error) throw error;
+			await queryClient.invalidateQueries({
+				queryKey: ["campaign-pending-regent-grants", campaignId],
+			});
+			await queryClient.invalidateQueries({
+				queryKey: ["pending-regent-grants"],
+			});
+			await queryClient.invalidateQueries({ queryKey: ["powers"] });
+			await queryClient.invalidateQueries({ queryKey: ["techniques"] });
+		} catch (error) {
+			setPendingApprovalError(
+				error instanceof Error ? error.message : "Approval failed.",
+			);
+		} finally {
+			setApprovingPendingId(null);
+		}
+	};
 	const {
 		campaignGrants,
 		isLoading: loadingGrants,
 		error: grantReadError,
 	} = useCampaignRegentUnlockGrants(campaignId, sharedCharacters);
-	const { grantRegentUnlockAsync, isGranting } =
-		useRegentUnlockGrants(selectedCharId);
+	const {
+		createOfferAsync,
+		configureOfferAsync,
+		revokeOfferAsync,
+		isCreating,
+		isConfiguring,
+		isRevoking,
+	} = useRegentOffers(selectedCharId);
 	const { removeUnlock, isRemoving } = useRemoveRegentUnlock();
 	const regentQuests = useMemo(() => getRegentUnlockQuests(), []);
 
-	const handleGrant = async () => {
-		if (!selectedCharId || !selectedQuestId) return;
-		const quest = regentQuests.find(
-			(candidate) => candidate.id === selectedQuestId,
-		);
-		if (!quest) return;
+	const selectedUnlockIds = new Set(
+		campaignUnlocks
+			.filter((unlock) => unlock.character_id === selectedCharId)
+			.flatMap((unlock) =>
+				unlock.resolved_regent_id ? [unlock.resolved_regent_id] : [],
+			),
+	);
+	const selectableRegents = canonicalRegents.filter(
+		(regent) => !selectedUnlockIds.has(regent.id),
+	);
+	const selectedUnlockCount = campaignUnlocks.filter(
+		(unlock) => unlock.character_id === selectedCharId,
+	).length;
+	const selectableRegentIds = new Set<string>(
+		selectableRegents.map((regent) => regent.id),
+	);
+	const distinctCandidates =
+		candidateIds.every(Boolean) && new Set(candidateIds).size === 3;
+	const eligibleCandidates = candidateIds.every(
+		(candidateId) => !candidateId || selectableRegentIds.has(candidateId),
+	);
+	const busy = isCreating || isConfiguring;
 
+	const resetDialog = () => {
+		setEditingOffer(null);
+		setSelectedCharId("");
+		setSelectedQuestId("");
+		setCandidateIds(["", "", ""]);
+		setRequestId("");
+		setSubmissionError(null);
+	};
+
+	const openCreate = () => {
+		resetDialog();
+		setRequestId(crypto.randomUUID());
+		setDialogOpen(true);
+	};
+
+	const openEdit = (offer: RegentOffer) => {
+		const stored = getStoredRegentOfferCandidates(offer);
+		const unlockedIds = new Set(
+			campaignUnlocks
+				.filter((unlock) => unlock.character_id === offer.character_id)
+				.flatMap((unlock) =>
+					unlock.resolved_regent_id ? [unlock.resolved_regent_id] : [],
+				),
+		);
+		setEditingOffer(offer);
+		setSelectedCharId(offer.character_id);
+		setSelectedQuestId(offer.quest_id ?? "");
+		setCandidateIds(
+			stored && stored.length === 3
+				? [
+						unlockedIds.has(stored[0]) ? "" : stored[0],
+						unlockedIds.has(stored[1]) ? "" : stored[1],
+						unlockedIds.has(stored[2]) ? "" : stored[2],
+					]
+				: ["", "", ""],
+		);
+		setRequestId("");
+		setSubmissionError(null);
+		setDialogOpen(true);
+	};
+
+	const selectCharacter = (characterId: string) => {
+		setSelectedCharId(characterId);
+		setSelectedQuestId("");
+		setCandidateIds(["", "", ""]);
+		setSubmissionError(null);
+	};
+
+	const setCandidate = (index: 0 | 1 | 2, value: string) => {
+		setSubmissionError(null);
+		setCandidateIds((current) => {
+			const next: [string, string, string] = [...current];
+			next[index] = value;
+			return next;
+		});
+	};
+
+	const handleSubmit = async () => {
+		if (!selectedCharId || !distinctCandidates) return;
+		setSubmissionError(null);
 		try {
-			await grantRegentUnlockAsync({
-				questId: quest.id,
-				questTitle: quest.title,
-			});
-			setGrantDialogOpen(false);
-			setSelectedQuestId("");
-		} catch {
-			// The hook owns the destructive toast and keeps the dialog open for retry.
+			if (selectedUnlockCount >= 2) {
+				throw new Error("This character already has two Regent unlocks.");
+			}
+			if (!eligibleCandidates) {
+				throw new Error(
+					"A selected Regent is already unlocked by this character. Choose another candidate.",
+				);
+			}
+			if (editingOffer) {
+				await configureOfferAsync({
+					grantId: editingOffer.id,
+					candidateRegentIds: candidateIds,
+				});
+			} else {
+				const quest = regentQuests.find(
+					(candidate) => candidate.id === selectedQuestId,
+				);
+				if (!quest || !requestId) return;
+				await createOfferAsync({
+					questId: quest.id,
+					questTitle: quest.title,
+					candidateRegentIds: candidateIds,
+					requestId,
+				});
+			}
+			setDialogOpen(false);
+			resetDialog();
+		} catch (error) {
+			setSubmissionError(
+				error instanceof Error
+					? error.message
+					: "The Regent offer could not be sent. Please retry.",
+			);
 		}
 	};
 
-	const handleDelete = (unlockId: string, characterId: string) => {
-		if (
-			confirm(`Are you sure you want to remove this ${REGENT_LABEL} unlock?`)
-		) {
+	const handleRevokeOffer = async (offer: RegentOffer) => {
+		if (!confirm("Revoke this pending Regent offer?")) return;
+		setSelectedCharId(offer.character_id);
+		try {
+			await revokeOfferAsync(offer.id);
+		} catch {
+			// Hook owns toast.
+		}
+	};
+
+	const handleDeleteUnlock = (unlockId: string, characterId: string) => {
+		if (confirm(`Remove this ${REGENT_LABEL} unlock?`)) {
 			removeUnlock({ unlockId, characterId });
 		}
 	};
@@ -96,7 +294,8 @@ export function CampaignRegentOversight({
 		);
 	}
 
-	const readError = unlockError ?? grantReadError;
+	const readError =
+		sharedCharacterError ?? campaignUnlockError ?? grantReadError;
 	if (readError) {
 		return (
 			<div className="flex items-start gap-3 rounded-lg border border-destructive/40 bg-destructive/5 p-4 text-sm text-destructive">
@@ -109,19 +308,23 @@ export function CampaignRegentOversight({
 			</div>
 		);
 	}
+	const curatingRegent = curatingUnlock
+		? canonicalRegents.find((regent) => regent.id === curatingUnlock.regentId)
+		: null;
 
 	return (
 		<div className="space-y-6">
 			<AscendantWindow title={`${REGENT_LABEL.toUpperCase()} OVERSIGHT`}>
-				<div className="flex justify-between items-center mb-6">
-					<p className="text-sm text-muted-foreground">
-						Award a {REGENT_LABEL} unlock by confirming a character completed a
-						regent-tagged quest. The player then chooses which {REGENT_LABEL}
-						from three stat-ranked candidates.
+				<div className="flex justify-between items-start gap-4 mb-6">
+					<p className="text-sm text-muted-foreground max-w-2xl">
+						Confirm a completed Regent quest, then offer exactly three distinct
+						canonical Regents. The player may choose only one stored candidate;
+						there is no level gate and a character can resolve at most two
+						Regents.
 					</p>
-					<Button onClick={() => setGrantDialogOpen(true)}>
+					<Button onClick={openCreate}>
 						<Plus className="w-4 h-4 mr-2" />
-						Grant {REGENT_LABEL} Unlock
+						Create {REGENT_LABEL} Offer
 					</Button>
 				</div>
 
@@ -129,13 +332,12 @@ export function CampaignRegentOversight({
 					{sharedCharacters.map((share) => {
 						const character = share.characters;
 						if (!character) return null;
-
 						const characterUnlocks = campaignUnlocks.filter(
 							(unlock) => unlock.character_id === character.id,
 						);
-						const pendingCredits = campaignGrants.filter(
+						const characterOffers = campaignGrants.filter(
 							(grant) => grant.character_id === character.id,
-						).length;
+						) as RegentOffer[];
 
 						return (
 							<AscendantWindow
@@ -144,62 +346,158 @@ export function CampaignRegentOversight({
 								variant="quest"
 							>
 								<div className="space-y-3">
-									<div className="flex items-center justify-between gap-2 text-xs text-muted-foreground mb-2">
+									<div className="flex items-center justify-between gap-2 text-xs text-muted-foreground">
 										<span className="flex items-center gap-1">
 											<User className="w-3 h-3" />
 											Level {character.level} {character.job}
 										</span>
-										{pendingCredits > 0 && (
-											<Badge
-												variant="outline"
-												className="text-[10px] gap-1 border-primary/40 text-primary"
-											>
-												<ScrollText className="w-3 h-3" />
-												{pendingCredits} unspent
-											</Badge>
-										)}
+										<Badge variant="outline">
+											{characterUnlocks.length}/2 resolved
+										</Badge>
 									</div>
 
-									{characterUnlocks.length === 0 ? (
-										<p className="text-xs italic text-muted-foreground py-2">
-											No {REGENT_LABEL}s unlocked.
-										</p>
-									) : (
-										<div className="space-y-2">
-											{characterUnlocks.map((unlock) => (
-												<div
-													key={unlock.id}
-													className="flex items-center justify-between p-2 rounded bg-muted/30 border border-border/50 group"
+									{characterOffers.map((offer) => {
+										const stored = getStoredRegentOfferCandidates(offer);
+										return (
+											<div
+												key={offer.id}
+												className="p-3 rounded border bg-muted/20 space-y-2"
+											>
+												<div className="flex items-center justify-between gap-2">
+													<span className="text-xs font-semibold flex items-center gap-1">
+														<ScrollText className="w-3 h-3" />
+														{offer.quest_title}
+													</span>
+													<Badge variant="outline" className="text-[10px]">
+														v{offer.offer_version ?? 1}
+													</Badge>
+												</div>
+												{stored ? (
+													<p className="text-[11px] text-muted-foreground">
+														{stored
+															.map((id) => regentNameById.get(id) ?? id)
+															.join(" • ")}
+													</p>
+												) : (
+													<p className="text-[11px] text-regent-gold">
+														Legacy credit: candidate configuration required.
+													</p>
+												)}
+												<div className="flex gap-2">
+													<Button
+														size="sm"
+														variant="outline"
+														onClick={() => openEdit(offer)}
+													>
+														<Pencil className="w-3 h-3 mr-1" />
+														{stored ? "Edit" : "Configure"}
+													</Button>
+													<Button
+														size="sm"
+														variant="ghost"
+														disabled={isRevoking}
+														onClick={() => handleRevokeOffer(offer)}
+													>
+														<Trash2 className="w-3 h-3 mr-1 text-destructive" />
+														Revoke
+													</Button>
+												</div>
+											</div>
+										);
+									})}
+
+									{characterUnlocks.map((unlock) => (
+										<div
+											key={unlock.id}
+											className="flex items-center justify-between p-2 rounded bg-muted/30 border"
+										>
+											<div className="min-w-0">
+												<p className="font-semibold text-sm">
+													{unlock.regent?.name ?? "Unresolved legacy Regent"}
+												</p>
+												<p className="text-[11px] text-muted-foreground">
+													via: {unlock.quest_name}
+												</p>
+											</div>
+											<div className="flex items-center gap-1">
+												{unlock.resolved_regent_id &&
+													unlock.caught_up_at_level === null && (
+														<Button
+															variant="outline"
+															size="sm"
+															onClick={() => {
+																const regentId = unlock.resolved_regent_id;
+																if (!regentId) return;
+																setCuratingUnlock({
+																	id: unlock.id,
+																	regentId,
+																	level: character.level,
+																});
+															}}
+														>
+															<Pencil className="w-3 h-3 mr-1" /> Curate picks
+														</Button>
+													)}
+												<Button
+													variant="ghost"
+													size="icon"
+													aria-label={`Remove ${unlock.regent?.name ?? "Regent"} unlock`}
+													onClick={() =>
+														handleDeleteUnlock(unlock.id, character.id)
+													}
+													disabled={isRemoving}
 												>
-													<div className="flex flex-col min-w-0">
-														<span className="font-semibold text-sm">
-															{unlock.regent?.name ??
-																"Unresolved legacy Regent"}
+													<Trash2 className="w-3 h-3 text-destructive" />
+												</Button>
+											</div>
+										</div>
+									))}
+									{pendingRegentGrants
+										.filter((grant) => grant.character_id === character.id)
+										.map((grant) => {
+											const matchingUnlock = characterUnlocks.find(
+												(unlock) =>
+													unlock.resolved_regent_id === grant.regent_id,
+											);
+											return (
+												<div
+													key={grant.id}
+													className="rounded border border-regent-gold/40 bg-regent-gold/10 p-2 text-xs"
+												>
+													<div className="flex items-center justify-between gap-2">
+														<span>
+															Pending imported {grant.grant_kind}:{" "}
+															{grant.canonical_id} ·{" "}
+															{regentNameById.get(grant.regent_id) ??
+																grant.regent_id}
 														</span>
-														<span className="text-[11px] text-muted-foreground">
-															via: {unlock.quest_name}
-														</span>
-														{!unlock.regent && (
-															<span className="text-[10px] text-regent-gold">
-																Awaiting Task 19 identity reconciliation
+														{matchingUnlock ? (
+															<Button
+																size="sm"
+																variant="outline"
+																disabled={approvingPendingId === grant.id}
+																onClick={() =>
+																	approvePendingGrant(
+																		grant.id,
+																		matchingUnlock.id,
+																	)
+																}
+															>
+																Approve grant
+															</Button>
+														) : (
+															<span className="text-muted-foreground">
+																Regent unlock required
 															</span>
 														)}
 													</div>
-													<Button
-														variant="ghost"
-														size="icon"
-														aria-label="Delete"
-														className="h-7 w-7 opacity-0 group-hover:opacity-100 transition-opacity"
-														onClick={() =>
-															handleDelete(unlock.id, character.id)
-														}
-														disabled={isRemoving}
-													>
-														<Trash2 className="w-3 h-3 text-destructive" />
-													</Button>
 												</div>
-											))}
-										</div>
+											);
+										})}
+									{pendingApprovalError && (
+										<p className="text-xs text-destructive">
+											{pendingApprovalError}
+										</p>
 									)}
 								</div>
 							</AscendantWindow>
@@ -208,21 +506,32 @@ export function CampaignRegentOversight({
 				</div>
 			</AscendantWindow>
 
-			<Dialog open={grantDialogOpen} onOpenChange={setGrantDialogOpen}>
-				<DialogContent>
+			<Dialog
+				open={dialogOpen}
+				onOpenChange={(next) => {
+					setDialogOpen(next);
+					if (!next) resetDialog();
+				}}
+			>
+				<DialogContent className="max-w-lg">
 					<DialogHeader>
-						<DialogTitle>Grant {REGENT_LABEL} Unlock</DialogTitle>
+						<DialogTitle>
+							{editingOffer ? "Configure Regent Offer" : "Create Regent Offer"}
+						</DialogTitle>
 						<DialogDescription>
-							Confirm a character has completed a regent-tagged quest. This
-							awards one unlock opportunity — the player picks which{" "}
-							{REGENT_LABEL} to attune.
+							Choose exactly three distinct canonical Regents. Pending offers
+							may be edited; consumed offers are immutable.
 						</DialogDescription>
 					</DialogHeader>
 
 					<div className="space-y-4 py-4">
 						<div className="space-y-2">
 							<Label>Character</Label>
-							<Select value={selectedCharId} onValueChange={setSelectedCharId}>
+							<Select
+								value={selectedCharId}
+								onValueChange={selectCharacter}
+								disabled={Boolean(editingOffer)}
+							>
 								<SelectTrigger>
 									<SelectValue placeholder="Select character" />
 								</SelectTrigger>
@@ -239,39 +548,116 @@ export function CampaignRegentOversight({
 							</Select>
 						</div>
 
-						<div className="space-y-2">
-							<Label>Completed Regent Quest</Label>
-							<Select
-								value={selectedQuestId}
-								onValueChange={setSelectedQuestId}
+						{!editingOffer && (
+							<div className="space-y-2">
+								<Label>Completed Regent Quest</Label>
+								<Select
+									value={selectedQuestId}
+									onValueChange={(value) => {
+										setSelectedQuestId(value);
+										setSubmissionError(null);
+									}}
+								>
+									<SelectTrigger>
+										<SelectValue placeholder="Select completed quest" />
+									</SelectTrigger>
+									<SelectContent>
+										{regentQuests.map((quest) => (
+											<SelectItem key={quest.id} value={quest.id}>
+												[{quest.rank}] {quest.title}
+											</SelectItem>
+										))}
+									</SelectContent>
+								</Select>
+							</div>
+						)}
+
+						{([0, 1, 2] as const).map((index) => (
+							<div className="space-y-2" key={index}>
+								<Label>Candidate {index + 1}</Label>
+								<Select
+									value={candidateIds[index]}
+									onValueChange={(value) => setCandidate(index, value)}
+									disabled={!selectedCharId}
+								>
+									<SelectTrigger>
+										<SelectValue placeholder={`Choose Regent ${index + 1}`} />
+									</SelectTrigger>
+									<SelectContent>
+										{selectableRegents.map((regent) => (
+											<SelectItem
+												key={regent.id}
+												value={regent.id}
+												disabled={candidateIds.some(
+													(chosen, chosenIndex) =>
+														chosenIndex !== index && chosen === regent.id,
+												)}
+											>
+												{regent.title || regent.name}
+											</SelectItem>
+										))}
+									</SelectContent>
+								</Select>
+							</div>
+						))}
+						{selectedCharId && selectedUnlockCount >= 2 && (
+							<p className="text-sm text-destructive" role="alert">
+								This character already has two Regent unlocks and cannot receive
+								another offer.
+							</p>
+						)}
+						{!eligibleCandidates && (
+							<p className="text-sm text-destructive" role="alert">
+								A selected Regent is already unlocked. Choose another candidate.
+							</p>
+						)}
+						{submissionError && (
+							<div
+								className="flex items-start gap-2 rounded border border-destructive/40 bg-destructive/5 p-3 text-sm text-destructive"
+								role="alert"
 							>
-								<SelectTrigger>
-									<SelectValue placeholder="Select the completed quest" />
-								</SelectTrigger>
-								<SelectContent>
-									{regentQuests.map((quest) => (
-										<SelectItem key={quest.id} value={quest.id}>
-											[{quest.rank}] {quest.title}
-										</SelectItem>
-									))}
-								</SelectContent>
-							</Select>
-						</div>
+								<AlertTriangle className="mt-0.5 h-4 w-4 shrink-0" />
+								<span className="break-words">{submissionError}</span>
+							</div>
+						)}
 					</div>
 
 					<DialogFooter>
-						<Button variant="outline" onClick={() => setGrantDialogOpen(false)}>
+						<Button variant="outline" onClick={() => setDialogOpen(false)}>
 							Cancel
 						</Button>
 						<Button
-							onClick={handleGrant}
-							disabled={!selectedCharId || !selectedQuestId || isGranting}
+							onClick={handleSubmit}
+							disabled={
+								!selectedCharId ||
+								(!editingOffer && !selectedQuestId) ||
+								!distinctCandidates ||
+								!eligibleCandidates ||
+								selectedUnlockCount >= 2 ||
+								busy
+							}
 						>
-							{isGranting ? "Granting..." : "Grant Unlock"}
+							{busy
+								? "Saving..."
+								: editingOffer
+									? "Save Offer"
+									: "Create Offer"}
 						</Button>
 					</DialogFooter>
 				</DialogContent>
 			</Dialog>
+			{curatingUnlock && curatingRegent && (
+				<RegentCatchUpCatalogDialog
+					open
+					onOpenChange={(next) => {
+						if (!next) setCuratingUnlock(null);
+					}}
+					unlockId={curatingUnlock.id}
+					campaignId={campaignId}
+					characterLevel={curatingUnlock.level}
+					regent={curatingRegent}
+				/>
+			)}
 		</div>
 	);
 }

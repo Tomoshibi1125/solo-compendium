@@ -8,8 +8,39 @@ import {
 	PATH_ABILITY_GRANTS,
 	pathGrantsAbilityKind,
 	rejectedReconciledPathAbilityGrantCandidates,
-	rejectedTask3PathAbilityGrantCandidates,
 } from "@/lib/pathAbilityAccess";
+
+// Combat Choreography's Dance Repertoire, named in the Path's feature text.
+const danceGrant = (
+	level: number,
+	kind: "power" | "technique",
+	entryNames: string[],
+) => ({
+	jobName: "Idol",
+	pathName: "Path of the Dance Resonance",
+	level,
+	kind,
+	sourceTokens: [],
+	entryNames,
+	progression: "base",
+});
+// Dual Manifestation Access lets an Absolute Spark Esper learn Herald spells.
+const ABSOLUTE_SPARK_HERALD_LIST = {
+	jobName: "Esper",
+	pathName: "Path of the Absolute Spark",
+	level: 1,
+	kind: "spell",
+	sourceTokens: ["Herald"],
+	progression: "base",
+};
+const DANCE_REPERTOIRE_GRANTS = [
+	danceGrant(3, "power", ["Dissonant Strike", "Kinetic Rush"]),
+	danceGrant(3, "technique", ["Rhythmic Strike", "Nerve Disruption"]),
+	danceGrant(6, "power", ["Shockwave Palm"]),
+	danceGrant(6, "technique", ["Meridian Cascade"]),
+	danceGrant(14, "power", ["Killing Tempo", "Infinite Barrage"]),
+	danceGrant(14, "technique", ["Whirlwind Execution", "Infinite Combo"]),
+];
 
 describe("pathAbilityAccess exported grant catalog", () => {
 	it("exposes only source-backed reconciled path grants without broadening eligibility", () => {
@@ -54,6 +85,7 @@ describe("pathAbilityAccess exported grant catalog", () => {
 				progression: "third",
 				leveledSchoolsOnly: true,
 			},
+			ABSOLUTE_SPARK_HERALD_LIST,
 			{
 				jobName: "Assassin",
 				pathName: "Path of the Blade Dancer",
@@ -63,6 +95,7 @@ describe("pathAbilityAccess exported grant catalog", () => {
 				entryNames: ["Harmonic Counter"],
 				maxLevel: 5,
 			},
+			...DANCE_REPERTOIRE_GRANTS,
 		]);
 
 		expect(
@@ -105,6 +138,24 @@ describe("pathAbilityAccess exported grant catalog", () => {
 				kind: "technique",
 			}),
 		).toBe(true);
+		for (const kind of ["power", "technique"] as const) {
+			expect(
+				pathGrantsAbilityKind({
+					jobName: "Idol",
+					pathName: "Path of the Dance Resonance",
+					characterLevel: 2,
+					kind,
+				}),
+			).toBe(false);
+			expect(
+				pathGrantsAbilityKind({
+					jobName: "Idol",
+					pathName: "Path of the Dance Resonance",
+					characterLevel: 3,
+					kind,
+				}),
+			).toBe(true);
+		}
 
 		const rejectedQueries = [
 			{
@@ -147,6 +198,7 @@ describe("pathAbilityAccess exported grant catalog", () => {
 				"path-of-the-spell-breaker",
 				"path-of-the-weave-infiltrator",
 				"path-of-the-blade-dancer",
+				"path-of-the-dance-resonance",
 			]),
 		);
 		for (const rejectedToken of [
@@ -159,9 +211,6 @@ describe("pathAbilityAccess exported grant catalog", () => {
 			expect(tokens).not.toContain(rejectedToken);
 		}
 
-		expect(rejectedTask3PathAbilityGrantCandidates).toBe(
-			rejectedReconciledPathAbilityGrantCandidates,
-		);
 		expect(rejectedReconciledPathAbilityGrantCandidates).toEqual(
 			expect.arrayContaining([
 				expect.objectContaining({
@@ -192,20 +241,27 @@ describe("pathAbilityAccess exported grant catalog", () => {
 				}),
 			]),
 		);
+		// Revenant, Stalker, and Technomancer inferred candidates were removed:
+		// their Path text grants spells by name (feature grants) or not at all.
 		const reconciledRejectedCounts = {
-			Esper: 4,
+			Esper: 3,
 			Summoner: 4,
 			Herald: 4,
-			Idol: 23,
-			Revenant: 9,
-			Stalker: 4,
-			Technomancer: 3,
+			Idol: 15,
+			Revenant: 0,
+			Stalker: 0,
+			Technomancer: 0,
 		} as const;
+		// The only grants these Jobs keep are authored in Path text.
+		const authoredGrants: Partial<Record<string, unknown[]>> = {
+			Esper: [ABSOLUTE_SPARK_HERALD_LIST],
+			Idol: DANCE_REPERTOIRE_GRANTS,
+		};
 		for (const [jobName, count] of Object.entries(reconciledRejectedCounts)) {
 			expect(
 				PATH_ABILITY_GRANTS.filter((grant) => grant.jobName === jobName),
 				`${jobName} must not retain inferred path grants`,
-			).toEqual([]);
+			).toEqual(authoredGrants[jobName] ?? []);
 			expect(
 				rejectedReconciledPathAbilityGrantCandidates.filter(
 					(grant) => grant.jobName === jobName,

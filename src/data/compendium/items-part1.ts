@@ -3464,7 +3464,7 @@ export const items_part1: Item[] = [
 		name: "Mana-Inert Handcuffs",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"Specially forged handcuffs treated with mana-dampening alloy. A restrained creature has disadvantage on attempts to cast spells or use mana-based abilities. Standard issue for Bureau enforcement.",
+			"Specially forged handcuffs treated with mana-dampening alloy. A restrained creature has disadvantage on attempts to cast spells or use Powers. Standard issue for Bureau enforcement.",
 		rarity: "uncommon",
 		type: "wondrous",
 		image: "/generated/compendium/items/item-0226.webp",

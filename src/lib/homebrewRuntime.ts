@@ -180,7 +180,7 @@ export interface HomebrewRuntimeFeat extends Record<string, unknown> {
 }
 
 /**
- * A homebrew creature ("anomaly" — RA's monster equivalent), shaped to match
+ * A homebrew creature ("anomaly" — RA's creature stat block), shaped to match
  * the flat `Anomaly` row the Encounter Builder / Combat Tracker consume so a
  * Warden can drop a custom creature straight into an encounter.
  */

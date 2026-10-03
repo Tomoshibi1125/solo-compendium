@@ -68,3 +68,21 @@ export function placeStandardArray(
 	});
 	return result as Record<AbilityScore, number>;
 }
+
+/**
+ * The Hit Die size a Quick Ascendant uses for level-1 HP and its Hit Dice.
+ * Static Jobs author the die as a string ("1d10"); a numeric `hit_die` is
+ * accepted for entries that already carry the size. Falls back to d8 only when
+ * a Job authors neither.
+ */
+export function quickAscendantHitDieSize(job: {
+	hitDie?: string | null;
+	hit_die?: number | null;
+}): number {
+	const authored = job.hitDie?.match(/d\s*(\d+)/i);
+	if (authored) return Number.parseInt(authored[1], 10);
+	if (typeof job.hit_die === "number" && Number.isFinite(job.hit_die)) {
+		return job.hit_die;
+	}
+	return 8;
+}

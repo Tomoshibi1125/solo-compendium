@@ -1,5 +1,7 @@
 # Phase 1 Checkpoint - Backend Foundation (D&D Beyond Parity)
 
+> Historical record. Rift Ascendant is free and has two roles (Warden, Ascendant): sourcebook entitlements were retired in `20260725000000`, and marketplace prices, entitlements, gifting, bundles, hidden listings, and the admin role were removed in `20260930120000`. The current access rules are in `docs/supabase-security-exception-register.md`.
+
 ## Migration list
 
 1. `supabase/migrations/20260216000000_parity_foundation_phase1.sql`

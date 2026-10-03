@@ -65,6 +65,8 @@ interface WardenItemDeliveryDialogProps {
 	campaignId: string;
 	initialItem?: WardenDeliverableItem | null;
 	initialCharacterId?: string | null;
+	/** Delivery mode selected each time the dialog opens. */
+	initialMode?: WardenDeliveryMode;
 	title?: string;
 }
 
@@ -130,9 +132,10 @@ export function WardenItemDeliveryDialog({
 	campaignId,
 	initialItem,
 	initialCharacterId,
+	initialMode = "direct",
 	title = "Deliver Item",
 }: WardenItemDeliveryDialogProps) {
-	const [mode, setMode] = useState<WardenDeliveryMode>("direct");
+	const [mode, setMode] = useState<WardenDeliveryMode>(initialMode);
 	const [search, setSearch] = useState("");
 	const [typeFilter, setTypeFilter] = useState("all");
 	const [activePanel, setActivePanel] = useState<DeliveryPanel>("catalog");
@@ -167,6 +170,7 @@ export function WardenItemDeliveryDialog({
 
 	useEffect(() => {
 		if (!open) return;
+		setMode(initialMode);
 		setSelectedCharacterIds(initialCharacterId ? [initialCharacterId] : []);
 		setSelectedMemberId("unassigned");
 		setSelectedCatalogKey("");
@@ -176,7 +180,7 @@ export function WardenItemDeliveryDialog({
 		setTypeFilter("all");
 		setSearch("");
 		setHomebrewForm(createDefaultHomebrewItemForm());
-	}, [initialCharacterId, open]);
+	}, [initialCharacterId, initialMode, open]);
 
 	const { data: context, isLoading: isContextLoading } = useQuery({
 		queryKey: ["warden-item-delivery-context-v2", campaignId],
@@ -404,20 +408,30 @@ export function WardenItemDeliveryDialog({
 			return;
 		}
 
-		// Physical item path (existing)
-		await deliverItem({
-			campaignId,
-			mode,
-			item: selectedItem,
-			characterIds: selectedCharacterIds,
-			memberId: selectedMemberId === "unassigned" ? null : selectedMemberId,
-			quantity,
-		});
+		// Physical item path. Each mode's mutation toasts its own failure, so a
+		// rejection only needs to keep the dialog open.
+		try {
+			await deliverItem({
+				campaignId,
+				mode,
+				item: selectedItem,
+				characterIds: selectedCharacterIds,
+				memberId: selectedMemberId === "unassigned" ? null : selectedMemberId,
+				quantity,
+			});
+		} catch {
+			return;
+		}
 		onOpenChange(false);
 	};
 
+	// Only direct grants and ability/rune deliveries target Ascendants; Party
+	// Stash and Assigned Loot hide the Ascendant picker and ignore it.
+	const needsAscendant = mode === "direct" || isNonPhysicalType;
 	const disabled =
-		!selectedItem || isDelivering || selectedCharacterIds.length === 0;
+		!selectedItem ||
+		isDelivering ||
+		(needsAscendant && selectedCharacterIds.length === 0);
 
 	return (
 		<Dialog open={open} onOpenChange={onOpenChange}>

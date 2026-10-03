@@ -297,6 +297,11 @@ export const usePowers = (characterId: string) => {
 				if (cached) {
 					const now = new Date().toISOString();
 					const optimistic: Power = {
+						acquired_level: powerWithUses.acquired_level ?? null,
+						acquisition_kind: powerWithUses.acquisition_kind ?? "manual",
+						canonical_source_id: powerWithUses.canonical_source_id ?? null,
+						regent_id: powerWithUses.regent_id ?? null,
+						regent_unlock_id: powerWithUses.regent_unlock_id ?? null,
 						id: `optimistic_${Date.now()}`,
 						character_id: characterId,
 						created_at: now,

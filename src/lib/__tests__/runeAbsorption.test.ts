@@ -296,12 +296,6 @@ describe("resolveRuneGrant native strict eligibility", () => {
 			{
 				kind: "power",
 				jobName: "Idol",
-				pathName: "Path of the Dance Resonance",
-				refs: ["power-sup-1-22-dissonant-strike"],
-			},
-			{
-				kind: "power",
-				jobName: "Idol",
 				pathName: "Path of the Hypnotic Resonance",
 				refs: ["power-sup-4-80-encore-performance"],
 			},
@@ -380,12 +374,6 @@ describe("resolveRuneGrant native strict eligibility", () => {
 				jobName: "Herald",
 				pathName: "Path of the Triage Mandate",
 				refs: ["power-sup-3-110-herald-s-intervention"],
-			},
-			{
-				kind: "technique",
-				jobName: "Idol",
-				pathName: "Path of the Dance Resonance",
-				refs: ["tech-sup-1-30-rhythmic-strike"],
 			},
 			{
 				kind: "technique",

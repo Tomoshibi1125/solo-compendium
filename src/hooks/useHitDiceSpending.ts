@@ -74,10 +74,13 @@ export function useHitDiceSpending(
 		return result;
 	}, [available, hitDieSize, vitMod, hpCurrent, hpMax, totalRecovered]);
 
+	// A new rest starts from the dice the character has now; a Long Rest or
+	// an earlier Short Rest may have changed them since this hook mounted.
 	const resetSession = useCallback(() => {
+		setAvailable(hitDiceCurrent);
 		setTotalRecovered(0);
 		setRolls([]);
-	}, []);
+	}, [hitDiceCurrent]);
 
 	const longRestRecovery = useMemo(
 		() => Math.max(1, Math.ceil(hitDiceMax / 2)),

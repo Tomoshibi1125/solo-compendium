@@ -3,8 +3,10 @@ import { jobs } from "@/data/compendium/jobs";
 import {
 	addJobAwakeningBenefitsForLevel,
 	addLevel1Features,
+	syncCanonicalFeatureRows,
 } from "@/lib/characterCreation";
 import {
+	addLocalFeature,
 	createLocalCharacter,
 	listLocalFeatures,
 	updateLocalFeature,
@@ -72,7 +74,7 @@ describe("Task 6 canonical feature resources", () => {
 		restoreLocalStorage?.();
 	});
 
-	it("seeds level-1 action/manual metadata without creating phantom charges", async () => {
+	it("seeds Prey Lock with proficiency-bonus uses per long rest", async () => {
 		const row = createLocalCharacter({
 			name: "Prey",
 			job: "Stalker",
@@ -83,11 +85,13 @@ describe("Task 6 canonical feature resources", () => {
 		expect(preyLock).toMatchObject({
 			feature_id: "job-feature:stalker:prey-lock",
 			action_type: "Bonus action",
-			uses_max: null,
-			uses_current: null,
-			recharge: null,
+			uses_max: 2,
+			uses_current: 2,
+			recharge: "long-rest",
 		});
-		expect(resourceModifier(preyLock, "uses_formula")).toBeUndefined();
+		expect(resourceModifier(preyLock, "uses_formula")).toMatchObject({
+			value: "PB",
+		});
 	});
 
 	it("persists Revenant actions and Remnant costs while preserving spent uses", async () => {
@@ -181,6 +185,52 @@ describe("Task 6 canonical feature resources", () => {
 		expect(feature(technomancer.id, "Spell Capacitor")?.uses_current).toBe(2);
 	});
 
+	it("adopts a stored level-3 Kinetic Deflection row as Kinetic Return and keeps the trait", async () => {
+		const striker = createLocalCharacter({
+			name: "Return",
+			job: "Striker",
+			level: 3,
+		});
+		addLocalFeature(striker.id, {
+			name: "Kinetic Deflection",
+			source: "Job Trait: Striker",
+			level_acquired: 1,
+			description: "Stored Job trait.",
+			is_active: true,
+		});
+		addLocalFeature(striker.id, {
+			name: "Kinetic Deflection",
+			source: "Job: Striker",
+			level_acquired: 3,
+			description: "Stored level-3 feature under its former name.",
+			is_active: true,
+		});
+
+		await addJobAwakeningBenefitsForLevel(striker.id, job("striker"), 3);
+
+		const rows = listLocalFeatures(striker.id);
+		expect(
+			rows.filter((entry) => entry.name === "Kinetic Return"),
+		).toHaveLength(1);
+		expect(rows.filter((entry) => entry.name === "Kinetic Deflection")).toEqual(
+			[
+				expect.objectContaining({
+					source: "Job Trait: Striker",
+					level_acquired: 1,
+				}),
+			],
+		);
+		const kineticReturn = feature(striker.id, "Kinetic Return");
+		expect(kineticReturn).toMatchObject({
+			feature_id: "job-feature:striker:kinetic-return",
+			source: "Job Feature: Striker",
+			level_acquired: 3,
+		});
+		expect(resourceModifier(kineticReturn, "resource_cost")).toMatchObject({
+			value: "1 Impulse point",
+		});
+	});
+
 	it("persists all 18 path signatures idempotently as path-local feature rows", async () => {
 		// biome-ignore format: Compact tuples keep the complete signature matrix auditable.
 		const signatures = [
@@ -245,5 +295,72 @@ describe("Task 6 canonical feature resources", () => {
 			).toHaveLength(1);
 			expect(feature(row.id, abilityName)?.uses_current).toBe(0);
 		}
+	});
+
+	it("syncs stale stored rows to the current canon without refilling uses", async () => {
+		const stalker = job("stalker");
+		const classText = (name: string) =>
+			stalker.classFeatures?.find((entry) => entry.name === name)?.description;
+		const row = createLocalCharacter({
+			name: "Stale",
+			job: "Stalker",
+			level: 5,
+		});
+		addLocalFeature(row.id, {
+			name: "Prey Lock",
+			source: "Job: Level 1",
+			level_acquired: 1,
+			description: "Old Prey Lock text.",
+			uses_max: 1,
+			uses_current: 0,
+			recharge: "short-rest",
+			is_active: true,
+		});
+		addLocalFeature(row.id, {
+			name: "Favored Terrain",
+			source: "Job: Level 1",
+			level_acquired: 1,
+			description: "Old Favored Terrain text.",
+			is_active: true,
+		});
+		addLocalFeature(row.id, {
+			name: "Primal Tracking",
+			source: "Job Trait: Stalker",
+			level_acquired: 1,
+			description: "Old trait text.",
+			is_active: true,
+		});
+
+		expect(await syncCanonicalFeatureRows(row.id, "Stalker", 5)).toBe(true);
+		const preyLock = listLocalFeatures(row.id).find(
+			(entry) => entry.feature_id === "job-feature:stalker:prey-lock",
+		);
+		expect(preyLock).toMatchObject({
+			description: classText("Prey Lock"),
+			uses_max: 3,
+			uses_current: 0,
+			recharge: "long-rest",
+		});
+		expect(feature(row.id, "Favored Terrain")?.description).toBe(
+			classText("Favored Terrain"),
+		);
+		expect(feature(row.id, "Primal Tracking")?.description).toBe(
+			stalker.jobTraits?.find((entry) => entry.name === "Primal Tracking")
+				?.description,
+		);
+
+		// The awakening Prey Lock shares the name; a second pass must not turn
+		// the class row into an awakening row and re-add it with full uses.
+		const rowCount = listLocalFeatures(row.id).length;
+		expect(await syncCanonicalFeatureRows(row.id, "Stalker", 5)).toBe(true);
+		expect(listLocalFeatures(row.id)).toHaveLength(rowCount);
+		expect(
+			listLocalFeatures(row.id).filter(
+				(entry) => entry.feature_id === "job-feature:stalker:prey-lock",
+			),
+		).toEqual([expect.objectContaining({ uses_current: 0, uses_max: 3 })]);
+		expect(await syncCanonicalFeatureRows(row.id, "Homebrew Job", 5)).toBe(
+			false,
+		);
 	});
 });

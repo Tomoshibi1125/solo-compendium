@@ -37,12 +37,23 @@ import {
 	listLocalEquipment,
 	listLocalFeatures,
 	listLocalSpells,
+	removeLocalSpell,
 	setLocalAbilities,
 	updateLocalCharacter,
 	updateLocalFeature,
 } from "@/lib/guestStore";
 import { getStaticPathUnlockLevel } from "@/lib/levelGating";
-import { getStaticItems, getStaticJobs } from "@/lib/ProtocolDataManager";
+import {
+	getStaticItems,
+	getStaticJobs,
+	initializeProtocolData,
+} from "@/lib/ProtocolDataManager";
+import {
+	findPathIn,
+	getChosenPathOptionGrants,
+	loadStaticPathCatalog,
+	type StaticPathReference,
+} from "@/lib/pathLedger";
 import {
 	getCharacterCampaignId,
 	isSourcebookAccessible,
@@ -542,10 +553,6 @@ export async function reconcileAbilityUses(characterId: string): Promise<void> {
 
 export type SpellProgression = "none" | "full" | "half" | "pact";
 
-export function normalizeJobName(jobName: string | null | undefined): string {
-	return (jobName || "").trim().toLowerCase();
-}
-
 export type JobReference = StaticJob | DbJob | string | null | undefined;
 
 export function isStaticJob(job: JobReference): job is StaticJob {
@@ -765,13 +772,12 @@ async function reconcileCanonicalFeatureRow(
 	payload: CanonicalFeaturePayload,
 	featureName: string,
 ): Promise<void> {
-	const existing = rows.find(
-		(row) =>
-			(payload.feature_id !== null &&
-				payload.feature_id !== undefined &&
-				row.feature_id === payload.feature_id) ||
-			matchLegacy(row),
-	);
+	// A row already stamped with this feature's id wins over a legacy match,
+	// so a same-named feature from another source can't take its place.
+	const existing =
+		(payload.feature_id
+			? rows.find((row) => row.feature_id === payload.feature_id)
+			: undefined) ?? rows.find(matchLegacy);
 	const canonicalModifiers = Array.isArray(payload.modifiers)
 		? (payload.modifiers as Array<Record<string, Json>>)
 		: [];
@@ -821,6 +827,32 @@ async function reconcileCanonicalFeatureRow(
 	if (!changed) return;
 	await updateCharacterFeatureById(characterId, existing.id, patch);
 	Object.assign(existing, patch);
+}
+
+/**
+ * Give stored canonical rows the current catalog text. Update-only: a missing
+ * row is not added, so a feature the player removed stays removed.
+ */
+async function refreshCanonicalFeatureText(
+	characterId: string,
+	rows: ReconciledCharacterFeature[],
+	featureId: string | null,
+	featureName: string,
+	sources: readonly string[],
+	description: string,
+): Promise<void> {
+	const name = normalizeFeatureIdentity(featureName);
+	const sourceKeys = new Set(sources.map(normalizeFeatureIdentity));
+	for (const row of rows) {
+		if (row.homebrew_id || row.description === description) continue;
+		const matches =
+			(featureId !== null && row.feature_id === featureId) ||
+			(normalizeFeatureIdentity(row.name) === name &&
+				sourceKeys.has(normalizeFeatureIdentity(row.source)));
+		if (!matches) continue;
+		await updateCharacterFeatureById(characterId, row.id, { description });
+		row.description = description;
+	}
 }
 
 /**
@@ -2525,7 +2557,7 @@ export function getPathFeatureModifiers(
 					{
 						type: "impact_effect",
 						value: 0,
-						target: "Rapid Barrage",
+						target: "Rite of Force",
 						source: featureName,
 					},
 				];
@@ -2719,8 +2751,8 @@ export function getRegentFeatureModifiers(
 	const regent = regentName.trim().toLowerCase();
 	const feature = featureName.trim().toLowerCase();
 
-	// 1. Shadow/Umbral Regent
-	if (regent === "umbral regent" || regent === "shadow regent") {
+	// 1. Umbral Regent
+	if (regent === "umbral regent") {
 		if (feature === "umbral command" || feature === "shadow extraction")
 			return [
 				{
@@ -2786,78 +2818,8 @@ export function getRegentFeatureModifiers(
 			];
 	}
 
-	// 2. Dragon Regent
-	if (regent === "dragon regent") {
-		if (feature === "breath of annihilation")
-			return [
-				{
-					type: "aoe_damage",
-					value: 0,
-					target: "12d10_fire",
-					source: featureName,
-				},
-			];
-		if (feature === "destruction aura")
-			return [
-				{
-					type: "aura_damage",
-					value: 4,
-					target: "4d6_fire",
-					source: featureName,
-				},
-			];
-		if (feature === "cataclysm wings")
-			return [
-				{
-					type: "fly_speed",
-					value: 90,
-					target: undefined,
-					source: featureName,
-				},
-			];
-		if (feature === "scale armor")
-			return [
-				{
-					type: "ac_set",
-					value: 17,
-					target: "natural_armor",
-					source: featureName,
-				},
-			];
-		if (feature === "true dragon form")
-			return [
-				{
-					type: "ac_set",
-					value: 22,
-					target: "transformation",
-					source: featureName,
-				},
-				{
-					type: "fly_speed",
-					value: 120,
-					target: undefined,
-					source: featureName,
-				},
-				{ type: "immunity", value: 0, target: "fire", source: featureName },
-			];
-		if (feature === "primordial flame")
-			return [
-				{
-					type: "ignore_resistance",
-					value: 0,
-					target: "fire",
-					source: featureName,
-				},
-			];
-		if (feature === "absolute dragon")
-			return [
-				{ type: "immunity", value: 0, target: "fire", source: featureName },
-				{ type: "immunity", value: 0, target: "physical", source: featureName },
-			];
-	}
-
 	// 3. Frost Regent
-	if (regent === "frost regent" || regent === "frost sovereign") {
+	if (regent === "frost regent") {
 		if (feature === "frost dominion" || feature === "glacial domain")
 			return [
 				{ type: "immunity", value: 0, target: "cold", source: featureName },
@@ -2978,8 +2940,8 @@ export function getRegentFeatureModifiers(
 			];
 	}
 
-	// 5. Titan Regent (maps to Steel Regent in compendium)
-	if (regent === "titan regent" || regent === "steel regent") {
+	// 5. Steel Regent
+	if (regent === "steel regent") {
 		if (
 			feature === "true invulnerability" ||
 			feature === "flesh reconstruction"
@@ -3082,79 +3044,8 @@ export function getRegentFeatureModifiers(
 			];
 	}
 
-	// 7. Architect Regent
-	if (regent === "architect regent") {
-		if (feature === "world creation")
-			return [
-				{
-					type: "create_demiplane",
-					value: 1,
-					target: "mile_cube",
-					source: featureName,
-				},
-			];
-		if (feature === "instant architecture")
-			return [
-				{
-					type: "create_structure",
-					value: 300,
-					target: "cube_ft",
-					source: featureName,
-				},
-			];
-		if (feature === "spatial anchors")
-			return [
-				{
-					type: "teleport_anchors",
-					value: 12,
-					target: "permanent",
-					source: featureName,
-				},
-			];
-		if (feature === "living lair")
-			return [
-				{
-					type: "lair_control",
-					value: 0,
-					target: "own_structures",
-					source: featureName,
-				},
-			];
-		if (feature === "dimensional lock")
-			return [
-				{
-					type: "antimagic_zone",
-					value: 1,
-					target: "mile_radius",
-					source: featureName,
-				},
-			];
-		if (feature === "blueprint vision")
-			return [
-				{ type: "truesight", value: 5, target: "miles", source: featureName },
-			];
-		if (feature === "reality rewrite")
-			return [
-				{
-					type: "terrain_reshape",
-					value: 1,
-					target: "mile_radius",
-					source: featureName,
-				},
-			];
-		if (feature === "absolute architect")
-			return [
-				{
-					type: "at_will_creation",
-					value: 0,
-					target: "demiplanes",
-					source: featureName,
-				},
-			];
-	}
-
-	// 8. Radiant Regent (maps to Flame Regent in compendium)
-	if (regent === "radiant regent" || regent === "flame regent") {
+	// 8. Radiant Regent
+	if (regent === "radiant regent") {
 		if (feature === "flame step")
 			return [
 				{
@@ -3812,7 +3703,14 @@ export async function addJobAwakeningBenefitsForLevel(
 						normalizeFeatureIdentity(feature.name)
 					)
 						return false;
+					// Some Jobs reuse an awakening feature's name for a class feature
+					// or Job trait (Stalker's Prey Lock, Striker's Impulse Sense);
+					// those rows belong to their own reconcile pass.
+					if (row.feature_id && row.feature_id !== canonicalFeatureId)
+						return false;
 					const source = normalizeFeatureIdentity(row.source);
+					if (/^(job-feature|job-trait|job-level|racial-trait)-/.test(source))
+						return false;
 					return (
 						source.startsWith("job-awakening-") ||
 						(source.startsWith("job-") &&
@@ -3882,16 +3780,23 @@ export async function addJobAwakeningBenefitsForLevel(
 						]
 					: []),
 			] as unknown as Array<Record<string, Json>>;
+			// Renamed features adopt the row stored under a former name, so a
+			// rename updates that row instead of adding a second one. Only a row
+			// gained at the feature's own level qualifies, which keeps a
+			// same-named Job trait from being taken over.
+			const formerNames = new Set(
+				(cf.formerNames ?? []).map(normalizeFeatureIdentity),
+			);
 			await reconcileCanonicalFeatureRow(
 				characterId,
 				featureRows,
 				(row) => {
 					if (row.homebrew_id) return false;
-					if (
-						normalizeFeatureIdentity(row.name) !==
-						normalizeFeatureIdentity(cf.name)
-					)
-						return false;
+					const rowName = normalizeFeatureIdentity(row.name);
+					const isCurrentName = rowName === normalizeFeatureIdentity(cf.name);
+					const isFormerName =
+						formerNames.has(rowName) && row.level_acquired === cf.level;
+					if (!isCurrentName && !isFormerName) return false;
 					const source = normalizeFeatureIdentity(row.source);
 					return (
 						source === normalizeFeatureIdentity(`Job: ${jobName}`) ||
@@ -3941,6 +3846,40 @@ export async function addJobAwakeningBenefitsForLevel(
 			});
 			existingNames.add(cf.name);
 		}
+
+		// Unstructured features are only added when first earned, but a row
+		// already on the sheet takes the current canonical text.
+		for (const cf of job.classFeatures.filter(
+			(cf) =>
+				cf.level <= level &&
+				!cf.uses &&
+				!cf.actionType &&
+				!cf.resource &&
+				!cf.tracking,
+		)) {
+			await refreshCanonicalFeatureText(
+				characterId,
+				featureRows,
+				buildCanonicalFeatureId("job-feature", ownerId, cf.name),
+				cf.name,
+				[`Job: ${jobName}`, `Job: Level ${cf.level}`, canonicalSource],
+				cf.description,
+			);
+		}
+	}
+
+	// Job traits are added at 1st level only; stored rows take current text.
+	if (isStaticJob(job)) {
+		for (const trait of job.jobTraits || []) {
+			await refreshCanonicalFeatureText(
+				characterId,
+				featureRows,
+				null,
+				trait.name,
+				[`Job Trait: ${jobName}`],
+				trait.description,
+			);
+		}
 	}
 
 	// Path benefits: resolve the persisted ID first and legacy name/aliases second,
@@ -3988,6 +3927,10 @@ export async function addJobAwakeningBenefitsForLevel(
 				} | null;
 				resource?: string | null;
 				tracking?: "uses" | "resource" | "manual" | null;
+				formerNames?: string[] | null;
+				grants?: {
+					spells: Array<{ name: string; level?: number }>;
+				} | null;
 			}> | null;
 			abilities?: Array<{
 				name: string;
@@ -4056,16 +3999,22 @@ export async function addJobAwakeningBenefitsForLevel(
 					pathData.id,
 					feature.name,
 				);
+				// A renamed feature adopts the row stored under a former name at
+				// the same level instead of leaving a stale copy.
+				const formerNames = new Set(
+					(feature.formerNames ?? []).map(normalizeFeatureIdentity),
+				);
 				await reconcileCanonicalFeatureRow(
 					characterId,
 					featureRows,
 					(row) => {
 						if (row.homebrew_id) return false;
-						if (
-							normalizeFeatureIdentity(row.name) !==
-							normalizeFeatureIdentity(feature.name)
-						)
-							return false;
+						const rowName = normalizeFeatureIdentity(row.name);
+						const isCurrentName =
+							rowName === normalizeFeatureIdentity(feature.name);
+						const isFormerName =
+							formerNames.has(rowName) && row.level_acquired === feature.level;
+						if (!isCurrentName && !isFormerName) return false;
 						const source = normalizeFeatureIdentity(row.source);
 						if (!source.startsWith("path-")) return false;
 						return ownerKeys.some((ownerKey) => source.includes(ownerKey));
@@ -4093,6 +4042,14 @@ export async function addJobAwakeningBenefitsForLevel(
 				);
 				existingNames.add(feature.name);
 			}
+
+			await reconcilePathSpellGrants(
+				characterId,
+				{ id: pathData.id, name: pathData.name },
+				level,
+				featureRows,
+				earnedPathFeatures,
+			);
 
 			const earnedPathAbilities = (pathData.abilities ?? []).filter(
 				(ability) => (ability.level ?? pathUnlockLevel) <= level,
@@ -4414,6 +4371,202 @@ export async function addJobAwakeningBenefitsForLevel(
 	// Innate channeling spells unlocking at this level.
 	if (isStaticJob(job) && job.innateChanneling) {
 		await addInnateChannelingForLevel(characterId, job, level);
+	}
+}
+
+/**
+ * Revision of the canonical Job, Path, and Regent feature text and resources.
+ * Bump it whenever that data changes: each existing sheet then syncs once, the
+ * next time its owner opens it.
+ */
+export const CANON_FEATURE_REVISION = "2026-10-01";
+
+const canonSyncsInFlight = new Set<string>();
+
+/**
+ * Bring an existing character's canonical feature rows up to the current
+ * catalog with the same cumulative pass a level-up runs: stale text, uses,
+ * and resources are rewritten and missing rows are added, but spent uses are
+ * never refilled. Returns false when the Job isn't in the catalog or a sync
+ * for the character is already running.
+ */
+export async function syncCanonicalFeatureRows(
+	characterId: string,
+	jobName: string | null | undefined,
+	level: number,
+): Promise<boolean> {
+	if (canonSyncsInFlight.has(characterId)) return false;
+	canonSyncsInFlight.add(characterId);
+	try {
+		// The app starts the catalog load without awaiting it.
+		await initializeProtocolData();
+		const job = findStaticJobByName(jobName);
+		if (!job) return false;
+		await addJobAwakeningBenefitsForLevel(
+			characterId,
+			job as unknown as StaticJob,
+			level,
+		);
+		// Both use passes read and write cloud rows only.
+		if (!isLocalCharacterId(characterId)) {
+			await autoUpdateFeatureUses(characterId);
+			await reconcileAbilityUses(characterId);
+		}
+		return true;
+	} finally {
+		canonSyncsInFlight.delete(characterId);
+	}
+}
+
+/**
+ * Bring a character's Path-granted spells in line with the Path: its earned
+ * features' grants plus the grants of the options recorded on the sheet. With
+ * the static Path catalog loaded the list is complete, so spells of a swapped
+ * option are removed; otherwise `fallbackFeatures` are only added.
+ */
+export async function reconcilePathSpellGrants(
+	characterId: string,
+	pathRef: StaticPathReference,
+	level: number,
+	featureRows?: ReadonlyArray<{ name: string; feature_id?: string | null }>,
+	fallbackFeatures: ReadonlyArray<{
+		level: number;
+		grants?: { spells: Array<{ name: string; level?: number }> } | null;
+	}> = [],
+): Promise<void> {
+	const staticPath = findPathIn(await loadStaticPathCatalog(), pathRef);
+	if (!staticPath) {
+		const pathName =
+			typeof pathRef === "string" ? pathRef : (pathRef?.name ?? null);
+		if (pathName) {
+			await addPathSpellGrants(characterId, pathName, fallbackFeatures, level);
+		}
+		return;
+	}
+	const rows = featureRows ?? (await listCharacterFeatureRows(characterId));
+	await addPathSpellGrants(
+		characterId,
+		staticPath.name,
+		[
+			...staticPath.features.filter((feature) => feature.level <= level),
+			...getChosenPathOptionGrants(staticPath, level, rows),
+		],
+		level,
+		{ prune: true },
+	);
+}
+
+/**
+ * Add the spells a Path's earned features grant outright as known spells that
+ * don't count against the character's limit. Idempotent: a granted spell
+ * already on the sheet under the Path's source is skipped, so re-running the
+ * cumulative reconcile never duplicates it.
+ */
+export async function addPathSpellGrants(
+	characterId: string,
+	pathName: string,
+	features: ReadonlyArray<{
+		level: number;
+		grants?: { spells: Array<{ name: string; level?: number }> } | null;
+	}>,
+	level: number,
+	options: {
+		/**
+		 * `features` is the Path's complete grant list, so granted spells no
+		 * longer due (a swapped option, a lower level) are removed.
+		 */
+		prune?: boolean;
+	} = {},
+): Promise<void> {
+	const due = features.flatMap((feature) =>
+		(feature.grants?.spells ?? [])
+			.filter((spell) => (spell.level ?? feature.level) <= level)
+			.map((spell) => spell.name),
+	);
+	if (due.length === 0 && !options.prune) return;
+
+	const sourceLabel = `Path Spell: ${pathName}`;
+	const existing: Array<{
+		id?: string;
+		name: string | null;
+		source: string | null;
+	}> = isLocalCharacterId(characterId)
+		? listLocalSpells(characterId)
+		: ((
+				await supabase
+					.from("character_spells")
+					.select("id, name, source")
+					.eq("character_id", characterId)
+			).data ?? []);
+	const dueKeys = new Set(due.map(normalizeFeatureIdentity));
+	if (options.prune) {
+		for (const spell of existing) {
+			if (spell.source !== sourceLabel || !spell.id) continue;
+			if (dueKeys.has(normalizeFeatureIdentity(spell.name))) continue;
+			if (isLocalCharacterId(characterId)) {
+				removeLocalSpell(spell.id);
+			} else {
+				const { error } = await supabase
+					.from("character_spells")
+					.delete()
+					.eq("character_id", characterId)
+					.eq("id", spell.id);
+				if (error) {
+					console.warn("addPathSpellGrants: failed to remove spell", error);
+				}
+			}
+		}
+	}
+	const granted = new Set(
+		existing
+			.filter(
+				(spell) =>
+					spell.source === sourceLabel &&
+					dueKeys.has(normalizeFeatureIdentity(spell.name)),
+			)
+			.map((spell) => normalizeFeatureIdentity(spell.name)),
+	);
+
+	for (const name of due) {
+		if (granted.has(normalizeFeatureIdentity(name))) continue;
+		const canonicalSpell = await findCanonicalCastableByName(name, undefined, [
+			"spells",
+		]);
+		if (!canonicalSpell) {
+			console.warn(`addPathSpellGrants: no canonical spell named ${name}`);
+			continue;
+		}
+		const row = {
+			spell_id: canonicalSpell.id,
+			name: canonicalSpell.name,
+			source: sourceLabel,
+			spell_level: canonicalSpell.power_level ?? 0,
+			is_prepared: true,
+			is_known: true,
+			counts_against_limit: false,
+			description: canonicalSpell.description ?? null,
+			higher_levels: canonicalSpell.higher_levels ?? null,
+			casting_time: canonicalSpell.casting_time ?? null,
+			range: canonicalSpell.range ?? null,
+			duration: canonicalSpell.duration ?? null,
+			concentration: canonicalSpell.concentration ?? false,
+			ritual: canonicalSpell.ritual ?? false,
+			recharge: null,
+			uses_max: null,
+			uses_current: null,
+		};
+		if (isLocalCharacterId(characterId)) {
+			addLocalSpell(characterId, row);
+		} else {
+			const { error } = await supabase
+				.from("character_spells")
+				.insert({ character_id: characterId, ...row });
+			if (error) {
+				console.warn("addPathSpellGrants: failed to add spell", error);
+				continue;
+			}
+		}
+		granted.add(normalizeFeatureIdentity(name));
 	}
 }
 

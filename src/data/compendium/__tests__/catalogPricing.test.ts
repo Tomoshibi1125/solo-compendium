@@ -34,7 +34,9 @@ describe("catalog pricing — surfaced prices are varied + tier-correct", () => 
 			);
 			expect(entry.price?.amount ?? 0).toBeGreaterThan(0);
 		}
-	});
+		// The first provider load takes ~3s alone and can pass the default 5s
+		// ceiling under full-suite load.
+	}, 30_000);
 
 	it("uses at least three distinct credit types across the catalog", async () => {
 		const entries = await staticDataProvider.getItems("");

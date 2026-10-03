@@ -9,8 +9,8 @@
  * second full progression, advancing it in lockstep with their base Job.
  *
  * Gestalt rules (locked — see docs/system-ascendant-mechanics.md):
- *   - HP per level: ADDITIVE — avg(Job die) + avg(Regent die) + VIT mod
- *     (VIT applied once per level, not per die). The deliberate power spike.
+ *   - HP per level: ADDITIVE — Job HP + maximum Regent Hit Die for each
+ *     unlocked Regent (VIT is already applied by the Job, once per level).
  *   - Proficiencies & saving throws: UNION of Job + Regent (de-duped).
  *   - Class features: every Regent class_feature with level <= char level.
  *   - Spellcasting: gestalt two-class merge (Job caster contribution +
@@ -159,10 +159,8 @@ export function getRegentHitDieContribution(
  * the displayed HP max so it is retroactive the instant a Regent is unlocked —
  * no stored-HP migration, no double counting (base `hp_max` stays Job-only).
  *
- * Per the locked rule, VIT is applied once per level by the BASE HP already, so
- * the Regent contributes only its die portions: full die at level 1, then
- * average (`floor(die/2)+1`) per subsequent level. Returns 0 when no regent
- * die is present.
+ * VIT is applied once per level by the base Job HP. Each unlocked Regent adds
+ * its maximum die at every character level, including retroactive levels.
  */
 export function getRegentHpContribution(
 	regentHitDieContribution: number,
@@ -170,9 +168,7 @@ export function getRegentHpContribution(
 ): number {
 	const die = regentHitDieContribution > 0 ? regentHitDieContribution : 0;
 	if (die === 0 || level < 1) return 0;
-	const firstLevel = die;
-	const perSubsequent = Math.floor(die / 2) + 1;
-	return firstLevel + Math.max(0, level - 1) * perSubsequent;
+	return die * Math.floor(level);
 }
 
 /**

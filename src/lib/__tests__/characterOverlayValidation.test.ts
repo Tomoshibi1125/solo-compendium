@@ -32,6 +32,21 @@ describe("normalizeRegentOverlayIds", () => {
 });
 
 describe("normalizeGeminiState", () => {
+	it("preserves attached v2 Sovereign modifiers during normal character updates", async () => {
+		const modifier = {
+			id: "modifier.frost",
+			source_id: "feature.frost",
+			kind: "resistance",
+			damage_type: "cold",
+		};
+		await expect(
+			normalizeGeminiState({
+				definitionSchemaVersion: 2,
+				isActive: true,
+				modifiers: [modifier],
+			}),
+		).resolves.toMatchObject({ modifiers: [modifier] });
+	});
 	it("normalizes known runtime fields without dropping unrelated JSON state", async () => {
 		await expect(
 			normalizeGeminiState({

@@ -21,12 +21,6 @@ vi.mock("@/hooks/useCharacters", () => ({
 vi.mock("@/hooks/useGlobalDDBeyondIntegration", () => ({
 	useAscendantTools: () => ({ trackCustomFeatureUsage: trackMock }),
 }));
-vi.mock("@/lib/ai/aiService", () => ({
-	aiService: {
-		processRequest: vi.fn(),
-		getConfiguration: () => ({ defaultService: "test" }),
-	},
-}));
 vi.mock("@/lib/logger", () => ({
 	logger: { error: vi.fn(), warn: vi.fn(), info: vi.fn() },
 	warn: vi.fn(),

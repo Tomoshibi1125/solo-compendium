@@ -546,6 +546,8 @@ type StaticAnomaliesource = {
 type StaticItemSource = {
 	id?: string;
 	name: string;
+	// Ids of folded duplicate entries that now resolve to this item.
+	aliases?: string[] | null;
 	description: string;
 	type?: string;
 	item_type?: string;
@@ -1285,6 +1287,7 @@ function transformItem(item: StaticItemSource): StaticCompendiumEntry {
 		id: item.id || item.name.toLowerCase().replace(/\s+/g, "-"),
 		name: item.name,
 		display_name: item.name,
+		aliases: item.aliases ?? null,
 		description: item.description,
 		created_at:
 			(item as { created_at?: string }).created_at ||
@@ -1353,9 +1356,10 @@ function transformJob(job: StaticJobSource): StaticCompendiumEntry {
 	const hitDieVal = legacyJob.hit_die;
 	const rawHitDie =
 		job.hitDie || (typeof hitDieVal === "string" ? hitDieVal : undefined);
-	const hitDieNumber = rawHitDie
-		? parseInt(rawHitDie.replace(/\D/g, "").slice(-2) || "0", 10)
-		: null;
+	// Read the die size after "d": stripping every non-digit turned "1d8" into
+	// 18 and "1d6" into 16.
+	const dieSize = rawHitDie?.match(/d\s*(\d+)/i)?.[1];
+	const hitDieNumber = dieSize ? Number.parseInt(dieSize, 10) : null;
 	// Number of skills chosen at creation from the skillChoices options pool.
 	// The canonical per-job count lives in jobs.ts (`skillChoiceCount`); baseline
 	// 2 (Stalker 3, Assassin/Idol 4). NOT the pool size.
@@ -1918,6 +1922,8 @@ function transformRegent(regent: StaticRegentSource): StaticCompendiumEntry {
 		mechanics: (regent.mechanics as Record<string, Json>) || null,
 		// Derived 5e-style class features for all regents
 		class_features: classFeatures,
+		// Progression table for level-based feature grants
+		progression_table: (regent as RegentExtended).progression_table || null,
 	};
 }
 
@@ -1970,7 +1976,6 @@ export const staticDataProvider: StaticDataProvider = {
 			stats?: {
 				primaryAttribute: string;
 				secondaryAttribute?: string;
-				bonusStats: Record<string, number>;
 			};
 			requirements: {
 				level?: number;
@@ -2835,6 +2840,8 @@ export const staticDataProvider: StaticDataProvider = {
 					cargo_capacity_lbs: v.cargo_capacity_lbs,
 					crew_positions: v.crew_positions,
 					abilities: v.abilities,
+					combat_capable: v.combat_capable,
+					natural_attacks: v.natural_attacks,
 					bonded: v.bonded,
 					anomaly_id: v.anomaly_id,
 					bonded_from_name: v.anomaly_id

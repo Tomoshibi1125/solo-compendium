@@ -169,7 +169,7 @@ describe("known catch-up option filtering", () => {
 		{ id: "power-d", name: "Power D" },
 	];
 
-	it("counts only exact same-source IDs and otherwise excludes by ID then name", () => {
+	it("counts exact same-source IDs while allowing another source's grant", () => {
 		const result = classifyCatchUpOptions(
 			options,
 			[
@@ -188,10 +188,12 @@ describe("known catch-up option filtering", () => {
 			"power-a",
 		]);
 		expect(result.excludedExisting.map((option) => option.id)).toEqual([
-			"power-b",
 			"power-c",
 		]);
-		expect(result.available.map((option) => option.id)).toEqual(["power-d"]);
+		expect(result.available.map((option) => option.id)).toEqual([
+			"power-b",
+			"power-d",
+		]);
 	});
 
 	it("is deterministic and does not mutate option input", () => {

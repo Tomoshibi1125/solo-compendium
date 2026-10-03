@@ -138,6 +138,7 @@ describe("AddCompanionDialog canonical persistence", () => {
 				open={true}
 				onOpenChange={onOpenChange}
 				characterId="character-1"
+				characterLevel={5}
 			/>,
 		);
 		await flush();
@@ -160,14 +161,17 @@ describe("AddCompanionDialog canonical persistence", () => {
 		await flush();
 
 		expect(addExtraMock).toHaveBeenCalledTimes(1);
+		// An Anomaly companion starts at its level-5 scaled values (no catalog
+		// stat block for this test id, so the Medium d8; rank B AC 10 + 3 + 1).
+		// The snapshot keeps the wild stat block's fields as provenance.
 		expect(addExtraMock).toHaveBeenCalledWith(
 			expect.objectContaining({
 				character_id: "character-1",
 				name: "Test Stalker",
 				extra_type: "companion",
-				hp_current: 42,
-				hp_max: 42,
-				ac: 15,
+				hp_current: 40,
+				hp_max: 40,
+				ac: 14,
 				speed: 35,
 				monster_id: null,
 				abilities: [
@@ -212,20 +216,15 @@ describe("AddCompanionDialog canonical persistence", () => {
 				open={true}
 				onOpenChange={vi.fn()}
 				characterId="character-1"
+				initialSource="mount"
 			/>,
 		);
 		await flush();
 
-		const mountsTab = Array.from(
-			document.querySelectorAll<HTMLButtonElement>('[role="tab"]'),
-		).find((tab) => tab.textContent?.includes("Mounts"));
-		expect(mountsTab).toBeTruthy();
-		act(() => {
-			mountsTab?.dispatchEvent(
-				new MouseEvent("mousedown", { bubbles: true, button: 0 }),
-			);
-		});
-		await flush();
+		expect(
+			document.querySelector('label[for="companion-catalog-search"]')
+				?.textContent,
+		).toContain("Search mounts");
 
 		const addButton = findButton("Add Test Runner");
 		expect(addButton).toBeTruthy();
@@ -238,6 +237,10 @@ describe("AddCompanionDialog canonical persistence", () => {
 		expect(addExtraMock).toHaveBeenCalledWith(
 			expect.objectContaining({
 				extra_type: "mount",
+				// A mount with no combat flag or linked Anomaly keeps its catalog stats.
+				hp_current: 24,
+				hp_max: 24,
+				ac: 12,
 				speed: 60,
 				abilities: [
 					{
@@ -256,6 +259,56 @@ describe("AddCompanionDialog canonical persistence", () => {
 						sourceBook: "Test Stable Guide",
 					},
 					sourceFields: expect.objectContaining({ speed: 60 }),
+				}),
+			}),
+		);
+	});
+
+	it("starts a combat-capable mount at its owner's scaled HP and AC", async () => {
+		useQueryMock.mockImplementation(() => ({
+			data: [
+				{
+					id: "mount-mana-touched-wolf",
+					name: "Mana-Touched Wolf",
+					vehicle_type: "mount",
+					size: "medium",
+					rank: "D",
+					hit_points: { max: 24 },
+					armor_class: 13,
+					speed: { land: 50 },
+					abilities: [],
+				},
+			],
+			isLoading: false,
+		}));
+		mountDialog(
+			<AddCompanionDialog
+				open={true}
+				onOpenChange={vi.fn()}
+				characterId="character-1"
+				characterLevel={5}
+				initialSource="mount"
+			/>,
+		);
+		await flush();
+
+		expect(document.body.textContent).toContain("HP 40 (5d8)");
+		const addButton = findButton("Add Mana-Touched Wolf");
+		await act(async () => {
+			addButton?.click();
+			await Promise.resolve();
+		});
+		await flush();
+
+		expect(addExtraMock).toHaveBeenCalledWith(
+			expect.objectContaining({
+				extra_type: "mount",
+				hp_current: 40,
+				hp_max: 40,
+				ac: 12,
+				speed: 50,
+				npc_data: expect.objectContaining({
+					sourceFields: expect.objectContaining({ hpMax: 24, baseAc: 13 }),
 				}),
 			}),
 		);

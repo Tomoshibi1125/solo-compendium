@@ -38,17 +38,38 @@ function rollDamageFormula(
 		const roll = rollDiceString(formula);
 		return { rolls: roll.rolls, result: roll.result };
 	}
-	let doubled = formula.replace(
-		/(\d+)d(\d+)/gi,
-		(_match, count: string, sides: string) =>
-			`${parseInt(count, 10) * 2}d${sides}`,
-	);
-	if (extraDice > 0) {
-		const firstDie = formula.match(/\d+d(\d+)/i)?.[1];
-		if (firstDie) doubled = `${doubled}+${extraDice}d${firstDie}`;
+	const normalized = formula.replace(/\s+/g, "");
+	const diceTerms = [...normalized.matchAll(/([+-]?)(\d+)d(\d+)/gi)];
+	if (diceTerms.length === 0) {
+		const roll = rollDiceString(formula);
+		return { rolls: roll.rolls, result: roll.result };
 	}
-	const roll = rollDiceString(doubled);
-	return { rolls: roll.rolls, result: roll.result };
+
+	// The normal dice are maximized. Only the additional critical dice (and
+	// Brutal Critical dice) are rolled; flat modifiers enter the total once.
+	const maximumNormalDice = diceTerms.reduce((total, term) => {
+		const sign = term[1] === "-" ? -1 : 1;
+		return total + sign * Number(term[2]) * Number(term[3]);
+	}, 0);
+	const rolledDiceFormula =
+		diceTerms.map((term) => term[0]).join("") +
+		(extraDice > 0 ? `+${extraDice}d${diceTerms[0][3]}` : "");
+	const rolledCriticalDice = rollDiceString(rolledDiceFormula);
+	const flatFormula = normalized.replace(/[+-]?\d+d\d+/gi, "");
+	const flatModifier = (flatFormula.match(/[+-]?\d+/g) ?? []).reduce(
+		(total, modifier) => total + Number(modifier),
+		0,
+	);
+	const maximumRolls = diceTerms.flatMap((term) =>
+		Array.from(
+			{ length: Number(term[2]) },
+			() => (term[1] === "-" ? -1 : 1) * Number(term[3]),
+		),
+	);
+	return {
+		rolls: [...maximumRolls, ...rolledCriticalDice.rolls],
+		result: maximumNormalDice + rolledCriticalDice.total + flatModifier,
+	};
 }
 
 export type ResolutionKind =
@@ -636,9 +657,6 @@ export function normalizeActionResolutionPayload(
 		legacy: true,
 	};
 }
-
-export const migrateActionResolutionPayloadV1 =
-	normalizeActionResolutionPayload;
 
 export type ResolutionOutcome =
 	| {

@@ -1,11 +1,12 @@
 /**
  * VehiclesPanel — character-owned mounts + vehicles list (Q7 of Round 3).
- * Mounts and constructed vehicles share the same data shape; visual
- * differentiation comes from the canonical `vehicle_type` field.
+ * Living mounts resolve creature stats through C1 companion identity; constructed
+ * vehicles continue to use the canonical vehicle catalog directly.
  */
-import { Minus, Plus, Trash2, Truck, Wrench, X } from "lucide-react";
+import { Minus, Plus, Swords, Trash2, Truck, Wrench, X } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { AddVehicleDialog } from "@/components/character/AddVehicleDialog";
+import { CompanionCombatDetails } from "@/components/character/CompanionCombatDetails";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -18,6 +19,8 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 import { allVehicleMods } from "@/data/compendium/vehicleMods";
+import { useCharacter } from "@/hooks/useCharacters";
+import { useCharacterCompanionInstances } from "@/hooks/useCompanionInstances";
 import {
 	type CharacterVehicleRow,
 	useCharacterRequisitionProfile,
@@ -28,6 +31,11 @@ import {
 	useUpdateCharacterVehicleCondition,
 	useUpdateCharacterVehicleHP,
 } from "@/hooks/useVehicles";
+import {
+	indexCompanionInstances,
+	resolveCompanionEffectiveStats,
+} from "@/lib/companionInstances";
+import { enqueueInitiativeAdditions } from "@/lib/initiativeQueue";
 import { cn } from "@/lib/utils";
 import type {
 	CompendiumVehicle,
@@ -82,7 +90,14 @@ const getUsedCapacity = (mods: CompendiumVehicleMod[]) =>
 	mods.reduce((total, mod) => total + mod.capacity_cost, 0);
 
 export function VehiclesPanel({ characterId, readOnly }: VehiclesPanelProps) {
+	const { data: character } = useCharacter(characterId);
 	const { data: vehicles = [] } = useCharacterVehicles(characterId);
+	const { data: companionInstances = [] } =
+		useCharacterCompanionInstances(characterId);
+	const companionById = useMemo(
+		() => indexCompanionInstances(companionInstances),
+		[companionInstances],
+	);
 	const { data: requisitionProfile } =
 		useCharacterRequisitionProfile(characterId);
 	const deleteVehicle = useDeleteCharacterVehicle();
@@ -141,12 +156,24 @@ export function VehiclesPanel({ characterId, readOnly }: VehiclesPanelProps) {
 						<Badge variant="outline">
 							{requisitionProfile?.spent_vrp ?? 0} spent
 						</Badge>
+						{!readOnly && (
+							<Button
+								variant="outline"
+								size="sm"
+								className="gap-2"
+								onClick={() => setAddOpen(true)}
+								data-testid="vehicle-add-btn"
+							>
+								<Plus className="w-4 h-4" />
+								Add Vehicle or Mount
+							</Button>
+						)}
 					</div>
 				</div>
 
 				{vehicles.length === 0 ? (
 					<p className="text-xs text-muted-foreground text-center py-4">
-						No vehicles or mounts yet. Add one from the canonical catalog.
+						No vehicles or mounts yet. Choose one from the catalog.
 					</p>
 				) : (
 					<div className="space-y-2">
@@ -164,12 +191,47 @@ export function VehiclesPanel({ characterId, readOnly }: VehiclesPanelProps) {
 									</div>
 								);
 							}
-							const maxHp = row.max_hp_override ?? catalogEntry.hit_points.max;
+							const isMount = catalogEntry.vehicle_type === "mount";
+							const companionInstanceId = (
+								row as CharacterVehicleRow & {
+									companion_instance_id?: string | null;
+								}
+							).companion_instance_id;
+							const companionInstance = companionInstanceId
+								? (companionById.get(companionInstanceId) ?? null)
+								: null;
+							const mountStats =
+								isMount && companionInstance
+									? resolveCompanionEffectiveStats(
+											companionInstance,
+											{
+												nickname: row.nickname,
+												currentHp: row.current_hp,
+												hpMax: row.max_hp_override,
+											},
+											{
+												name: catalogEntry.name,
+												hpMax: catalogEntry.hit_points.max,
+												baseAc: catalogEntry.armor_class,
+												speed: catalogEntry.speed?.land ?? 0,
+												rank: catalogEntry.rank ?? null,
+											},
+											character?.level,
+										)
+									: null;
+							const maxHp =
+								mountStats?.hpMax ??
+								row.max_hp_override ??
+								catalogEntry.hit_points.max;
+							const displayAc = mountStats?.baseAc ?? catalogEntry.armor_class;
+							const displayName =
+								row.nickname || mountStats?.name || catalogEntry.name;
+							const currentHp =
+								mountStats?.currentHp ?? Math.min(row.current_hp, maxHp);
 							const hpPercent = Math.min(
 								100,
-								Math.max(0, (row.current_hp / maxHp) * 100),
+								Math.max(0, (currentHp / maxHp) * 100),
 							);
-							const isMount = catalogEntry.vehicle_type === "mount";
 							const installedMods = getInstalledMods(row);
 							const usedCapacity = getUsedCapacity(installedMods);
 							const modCapacity = catalogEntry.mod_capacity ?? 0;
@@ -208,7 +270,7 @@ export function VehiclesPanel({ characterId, readOnly }: VehiclesPanelProps) {
 													<Truck className="w-4 h-4 text-shadow-blue" />
 												)}
 												<span className="font-display font-semibold text-sm">
-													{row.nickname || catalogEntry.name}
+													{displayName}
 												</span>
 												<Badge
 													variant="outline"
@@ -229,8 +291,7 @@ export function VehiclesPanel({ characterId, readOnly }: VehiclesPanelProps) {
 												</Badge>
 											</div>
 											<div className="text-xs text-muted-foreground mt-1">
-												AC {catalogEntry.armor_class} · HP {row.current_hp} /{" "}
-												{maxHp}
+												AC {displayAc} · HP {currentHp} / {maxHp}
 											</div>
 											<Progress
 												value={hpPercent}
@@ -243,6 +304,42 @@ export function VehiclesPanel({ characterId, readOnly }: VehiclesPanelProps) {
 															: "bg-system-green/25",
 												)}
 											/>
+											{companionInstance && mountStats && (
+												<>
+													{mountStats.combatScaling && (
+														<CompanionCombatDetails
+															instance={companionInstance}
+															scaling={mountStats.combatScaling}
+														/>
+													)}
+													{!readOnly && (
+														<Button
+															type="button"
+															size="sm"
+															variant="outline"
+															className="mt-2 gap-1 text-xs"
+															onClick={() =>
+																enqueueInitiativeAdditions({
+																	name: displayName,
+																	hp: mountStats.currentHp,
+																	maxHp: mountStats.hpMax,
+																	ac: mountStats.baseAc,
+																	initiative: 0,
+																	isHunter: false,
+																	companionInstanceId: companionInstance.id,
+																	companionProfileVersion:
+																		companionInstance.profile_version,
+																	companionStateVersion:
+																		companionInstance.combat_state_version,
+																})
+															}
+														>
+															<Swords className="h-3.5 w-3.5" /> Add to
+															Initiative
+														</Button>
+													)}
+												</>
+											)}
 											{!readOnly && (
 												<div className="mt-2 flex items-center gap-1">
 													<Button
@@ -423,19 +520,6 @@ export function VehiclesPanel({ characterId, readOnly }: VehiclesPanelProps) {
 							);
 						})}
 					</div>
-				)}
-
-				{!readOnly && (
-					<Button
-						variant="outline"
-						size="sm"
-						className="w-full gap-2"
-						onClick={() => setAddOpen(true)}
-						data-testid="vehicle-add-btn"
-					>
-						<Plus className="w-4 h-4" />
-						Add Vehicle or Mount
-					</Button>
 				)}
 			</div>
 			<AddVehicleDialog

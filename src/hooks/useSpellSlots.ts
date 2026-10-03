@@ -17,6 +17,7 @@ import {
 	updateLocalSpellSlotRow,
 	upsertLocalSpellSlot,
 } from "@/lib/guestStore";
+import { type CastingJobReference, toCastingReference } from "@/lib/jobRules";
 import {
 	type CasterFraction,
 	getGestaltSpellSlots,
@@ -53,7 +54,7 @@ const casterTypeToFraction = (caster: CasterType): CasterFraction => {
  * preserving exact existing behavior for every non-gestalt character.
  */
 export const getExpectedSlotsWithGestalt = (
-	job: JobReference,
+	job: JobReference | CastingJobReference,
 	characterLevel: number,
 	regentIds: readonly string[],
 ): Record<number, number> => {
@@ -121,7 +122,8 @@ const expectedMaxSlotsForLevel = (
  */
 export const useSpellSlots = (
 	characterId: string,
-	job: JobReference,
+	/** Pass toCastingReference(character) so Path casting counts. */
+	job: JobReference | CastingJobReference,
 	characterLevel: number,
 ) => {
 	// Gestalt Regent overlay: fetch unlocked regents internally so every caller
@@ -137,7 +139,13 @@ export const useSpellSlots = (
 		);
 
 	return useQuery({
-		queryKey: ["spell-slots", characterId, [...regentIds].sort().join(",")],
+		queryKey: [
+			"spell-slots",
+			characterId,
+			[...regentIds].sort().join(","),
+			getCasterType(job),
+			characterLevel,
+		],
 		queryFn: async (): Promise<SpellSlotData[]> => {
 			if (isLocalCharacterId(characterId)) {
 				// Local: ensure slots exist based on derived caster progression
@@ -291,7 +299,9 @@ export const useUpdateSpellSlot = () => {
 				const entry = getLocalCharacterState(characterId);
 				if (!entry) throw new AppError("Ascendant not found", "NOT_FOUND");
 
-				const casterType = getCasterType(entry.character.job);
+				const casterType = getCasterType(
+					toCastingReference(entry.character) ?? entry.character.job,
+				);
 				const expectedSlots = getSpellSlotsPerLevel(
 					casterType,
 					entry.character.level,
@@ -368,12 +378,14 @@ export const useUpdateSpellSlot = () => {
 				// Create new if we have a max value
 				const { data: character } = await supabase
 					.from("characters")
-					.select("job, level")
+					.select("job, job_id, level, path, path_id")
 					.eq("id", characterId)
 					.single();
 
 				if (character) {
-					const casterType = getCasterType(character.job);
+					const casterType = getCasterType(
+						toCastingReference(character) ?? character.job,
+					);
 					const expectedSlots = getSpellSlotsPerLevel(
 						casterType,
 						character.level,
@@ -424,7 +436,8 @@ export const useInitializeSpellSlots = () => {
 			level,
 		}: {
 			characterId: string;
-			job: JobReference;
+			/** Pass toCastingReference(character) so Path casting counts. */
+			job: JobReference | CastingJobReference;
 			level: number;
 		}) => {
 			if (isLocalCharacterId(characterId)) {

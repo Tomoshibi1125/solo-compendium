@@ -1,7 +1,10 @@
 import { ExternalLink, Plus, RefreshCw, Shield, Trash2 } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { AddCompanionDialog } from "@/components/character/AddCompanionDialog";
+import {
+	AddCompanionDialog,
+	type CompanionPickerSource,
+} from "@/components/character/AddCompanionDialog";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -16,6 +19,7 @@ import {
 import { useCharacterExtras } from "@/hooks/useCharacterExtras";
 import { useAscendantTools } from "@/hooks/useGlobalDDBeyondIntegration";
 import type { Database } from "@/integrations/supabase/types";
+import { effectiveCompanionAc, parseEquipment } from "@/lib/companions";
 import { cn } from "@/lib/utils";
 import { formatRegentVernacular } from "@/lib/vernacular";
 
@@ -23,11 +27,14 @@ type CharacterExtra = Database["public"]["Tables"]["character_extras"]["Row"];
 
 interface CharacterExtrasPanelProps {
 	characterId: string;
+	/** The owner's level; scaled companions preview and start at it. */
+	characterLevel?: number | null;
 	isReadOnly?: boolean;
 }
 
 export function CharacterExtrasPanel({
 	characterId,
+	characterLevel,
 	isReadOnly,
 }: CharacterExtrasPanelProps) {
 	const { extras, addExtra, updateExtra, removeExtra, isLoading } =
@@ -35,6 +42,8 @@ export function CharacterExtrasPanel({
 	const ascendantTools = useAscendantTools();
 
 	const [pickerOpen, setPickerOpen] = useState(false);
+	const [pickerSource, setPickerSource] =
+		useState<CompanionPickerSource>("statblock");
 	const [showCustom, setShowCustom] = useState(false);
 	const [draftName, setDraftName] = useState("");
 	const [draftType, setDraftType] = useState("companion");
@@ -64,12 +73,29 @@ export function CharacterExtrasPanel({
 		setDraftSpeed("");
 	};
 
-	const handleHpChange = async (extra: CharacterExtra, delta: number) => {
+	/** A scaled companion's maximum follows its owner's level (RA-10). */
+	const vitalsFor = (extra: (typeof extras)[number]) => {
+		const hpMax = extra.effective_stats?.hpMax ?? extra.hp_max;
+		return {
+			hpMax,
+			hpCurrent: Math.max(0, Math.min(hpMax, extra.hp_current)),
+			ac: effectiveCompanionAc(
+				extra.effective_stats?.baseAc ?? extra.ac ?? 10,
+				parseEquipment(extra.equipment),
+			),
+			speed: extra.effective_stats?.speed ?? extra.speed,
+			level: extra.effective_stats?.combatScaling?.level ?? null,
+		};
+	};
+
+	const handleHpChange = async (
+		extra: CharacterExtra,
+		hpCurrent: number,
+		hpMax: number,
+		delta: number,
+	) => {
 		if (isReadOnly) return;
-		const nextHp = Math.max(
-			0,
-			Math.min(extra.hp_max, extra.hp_current + delta),
-		);
+		const nextHp = Math.max(0, Math.min(hpMax, hpCurrent + delta));
 		await updateExtra({ id: extra.id, data: { hp_current: nextHp } });
 	};
 
@@ -85,6 +111,11 @@ export function CharacterExtrasPanel({
 		ascendantTools
 			.trackConditionChange(characterId, conditionName, logAction)
 			.catch(console.error);
+	};
+
+	const openPicker = (source: CompanionPickerSource) => {
+		setPickerSource(source);
+		setPickerOpen(true);
 	};
 
 	return (
@@ -106,9 +137,18 @@ export function CharacterExtrasPanel({
 						</Badge>
 					)}
 					{!isReadOnly && (
-						<Button size="sm" onClick={() => setPickerOpen(true)}>
-							<Plus className="w-4 h-4" /> Add Companion
-						</Button>
+						<div className="flex flex-wrap justify-end gap-2">
+							<Button size="sm" onClick={() => openPicker("statblock")}>
+								<Plus className="w-4 h-4" /> Add Companion
+							</Button>
+							<Button
+								size="sm"
+								variant="outline"
+								onClick={() => openPicker("mount")}
+							>
+								<Plus className="w-4 h-4" /> Add Mount
+							</Button>
+						</div>
 					)}
 				</div>
 			</div>
@@ -118,6 +158,8 @@ export function CharacterExtrasPanel({
 				open={pickerOpen}
 				onOpenChange={setPickerOpen}
 				characterId={characterId}
+				characterLevel={characterLevel}
+				initialSource={pickerSource}
 			/>
 
 			{/* Custom free-form entry (homebrew fallback). */}
@@ -220,126 +262,190 @@ export function CharacterExtrasPanel({
 						Loading...
 					</div>
 				) : extras.length === 0 ? (
-					<div className="text-center p-8 border border-dashed rounded-lg text-muted-foreground">
-						No extras tracked. Add one above.
+					<div className="flex flex-col items-center gap-3 border border-dashed p-8 text-center text-muted-foreground rounded-lg">
+						<p>No companions, mounts, or allies tracked yet.</p>
+						{!isReadOnly && (
+							<div className="flex flex-wrap justify-center gap-2">
+								<Button
+									size="sm"
+									variant="outline"
+									onClick={() => openPicker("statblock")}
+									data-testid="companion-empty-browse-btn"
+								>
+									<Plus className="w-4 h-4" /> Browse Companions
+								</Button>
+								<Button
+									size="sm"
+									variant="outline"
+									onClick={() => openPicker("mount")}
+									data-testid="companion-empty-add-mount-btn"
+								>
+									<Plus className="w-4 h-4" /> Browse Mounts
+								</Button>
+								<Button
+									size="sm"
+									variant="ghost"
+									onClick={() => setShowCustom(true)}
+								>
+									Add Custom
+								</Button>
+							</div>
+						)}
 					</div>
 				) : (
-					extras.map((extra) => (
-						<AscendantWindow
-							key={extra.id}
-							title={extra.name.toUpperCase()}
-							compact
-							className={cn(
-								extra.is_active &&
-									"border-amethyst-purple shadow-[0_0_10px_rgba(155,109,255,0.2)]",
-							)}
-						>
-							<div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
-								{/* Info */}
-								<div className="space-y-1">
-									<Badge variant="outline" className="text-[11px] uppercase">
-										{formatRegentVernacular(extra.extra_type)}
-									</Badge>
-									{extra.monster_id && (
-										<div className="text-xs text-muted-foreground">
-											Linked to Anomaly Statblock
-										</div>
-									)}
-									<div className="flex gap-2 text-xs text-muted-foreground mt-1">
-										<span className="flex items-center gap-1">
-											<Shield className="w-3 h-3" /> AC {extra.ac}
-										</span>
-										<span>•</span>
-										<span>Speed {extra.speed}ft</span>
-									</div>
-								</div>
-
-								{/* HP Tracker */}
-								<div className="flex items-center gap-3">
-									<div className="flex flex-col items-center">
-										<span className="text-[11px] font-mono text-muted-foreground">
-											HP
-										</span>
-										<div className="flex items-center gap-1">
-											<Button
+					extras.map((extra) => {
+						const vitals = vitalsFor(extra);
+						return (
+							<AscendantWindow
+								key={extra.id}
+								title={extra.name.toUpperCase()}
+								compact
+								className={cn(
+									extra.is_active &&
+										"border-amethyst-purple shadow-[0_0_10px_rgba(155,109,255,0.2)]",
+								)}
+							>
+								<div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
+									{/* Info */}
+									<div className="space-y-1">
+										<div className="flex flex-wrap items-center gap-1">
+											<Badge
 												variant="outline"
-												size="sm"
-												className="h-6 w-6 p-0"
-												onClick={() => handleHpChange(extra, -1)}
-												disabled={isReadOnly || extra.hp_current <= 0}
+												className="text-[11px] uppercase"
 											>
-												-
-											</Button>
-											<span className="font-display text-lg w-8 text-center">
-												{extra.hp_current}
+												{formatRegentVernacular(extra.extra_type)}
+											</Badge>
+											{vitals.level !== null && (
+												<Badge variant="secondary" className="text-[11px]">
+													Scales · level {vitals.level}
+												</Badge>
+											)}
+										</div>
+										{extra.monster_id && (
+											<div className="text-xs text-muted-foreground">
+												Linked to Anomaly Statblock
+											</div>
+										)}
+										<div className="flex gap-2 text-xs text-muted-foreground mt-1">
+											<span className="flex items-center gap-1">
+												<Shield className="w-3 h-3" aria-hidden="true" /> AC{" "}
+												{vitals.ac}
 											</span>
-											<Button
-												variant="outline"
-												size="sm"
-												className="h-6 w-6 p-0"
-												onClick={() => handleHpChange(extra, 1)}
-												disabled={
-													isReadOnly || extra.hp_current >= extra.hp_max
-												}
-											>
-												+
-											</Button>
+											<span aria-hidden="true">•</span>
+											<span>Speed {vitals.speed}ft</span>
 										</div>
 									</div>
 
-									<Button
-										variant="outline"
-										size="sm"
-										asChild
-										className="h-8 text-xs"
-									>
-										<Link
-											to={`/characters/${characterId}/companions/extra/${extra.id}`}
-											data-testid={`open-companion-extra-${extra.id}`}
-										>
-											<ExternalLink className="w-3.5 h-3.5 mr-1" />
-											Sheet
-										</Link>
-									</Button>
-
-									{/* Actions */}
-									{!isReadOnly && (
-										<div className="flex items-center gap-2 border-l pl-3 ml-2">
-											<Button
-												variant={extra.is_active ? "default" : "outline"}
-												size="sm"
-												onClick={() => handleToggleActive(extra)}
-												className={cn(
-													"h-8 text-xs",
-													extra.is_active &&
-														"bg-amethyst-purple hover:bg-amethyst-purple/90",
-												)}
-											>
-												{extra.extra_type === "wildshape"
-													? extra.is_active
-														? "Revert Form"
-														: "Transform"
-													: extra.is_active
-														? "Active"
-														: "Equip"}
-											</Button>
-											<Button
-												variant="ghost"
-												size="sm"
-												className="h-8 w-8 p-0 text-destructive hover:text-destructive/90 hover:bg-destructive/10"
-												onClick={() => {
-													if (confirm(`Remove ${extra.name}?`))
-														removeExtra(extra.id);
-												}}
-											>
-												<Trash2 className="w-4 h-4" />
-											</Button>
+									{/* HP Tracker */}
+									<div className="flex items-center gap-3">
+										<div className="flex flex-col items-center">
+											<span className="text-[11px] font-mono text-muted-foreground">
+												HP
+											</span>
+											<div className="flex items-center gap-1">
+												<Button
+													variant="outline"
+													size="sm"
+													className="h-6 w-6 p-0"
+													onClick={() =>
+														handleHpChange(
+															extra,
+															vitals.hpCurrent,
+															vitals.hpMax,
+															-1,
+														)
+													}
+													disabled={isReadOnly || vitals.hpCurrent <= 0}
+													aria-label={`Damage ${extra.name} by 1`}
+												>
+													-
+												</Button>
+												<span
+													className="font-display text-lg min-w-12 text-center"
+													data-testid={`companion-extra-hp-${extra.id}`}
+												>
+													{vitals.hpCurrent}
+													<span className="text-xs text-muted-foreground">
+														/{vitals.hpMax}
+													</span>
+												</span>
+												<Button
+													variant="outline"
+													size="sm"
+													className="h-6 w-6 p-0"
+													onClick={() =>
+														handleHpChange(
+															extra,
+															vitals.hpCurrent,
+															vitals.hpMax,
+															1,
+														)
+													}
+													disabled={
+														isReadOnly || vitals.hpCurrent >= vitals.hpMax
+													}
+													aria-label={`Heal ${extra.name} by 1`}
+												>
+													+
+												</Button>
+											</div>
 										</div>
-									)}
+
+										<Button
+											variant="outline"
+											size="sm"
+											asChild
+											className="h-8 text-xs"
+										>
+											<Link
+												to={`/characters/${characterId}/companions/extra/${extra.id}`}
+												data-testid={`open-companion-extra-${extra.id}`}
+											>
+												<ExternalLink className="w-3.5 h-3.5 mr-1" />
+												Sheet
+											</Link>
+										</Button>
+
+										{/* Actions */}
+										{!isReadOnly && (
+											<div className="flex items-center gap-2 border-l pl-3 ml-2">
+												<Button
+													variant={extra.is_active ? "default" : "outline"}
+													size="sm"
+													onClick={() => handleToggleActive(extra)}
+													className={cn(
+														"h-8 text-xs",
+														extra.is_active &&
+															"bg-amethyst-purple hover:bg-amethyst-purple/90",
+													)}
+												>
+													{extra.extra_type === "wildshape"
+														? extra.is_active
+															? "Revert Form"
+															: "Transform"
+														: extra.is_active
+															? "Active"
+															: "Equip"}
+												</Button>
+												<Button
+													variant="ghost"
+													size="sm"
+													className="h-8 w-8 p-0 text-destructive hover:text-destructive/90 hover:bg-destructive/10"
+													onClick={() => {
+														if (confirm(`Remove ${extra.name}?`))
+															removeExtra(extra.id);
+													}}
+													aria-label={`Remove ${extra.name}`}
+												>
+													<Trash2 className="w-4 h-4" aria-hidden="true" />
+												</Button>
+											</div>
+										)}
+									</div>
 								</div>
-							</div>
-						</AscendantWindow>
-					))
+							</AscendantWindow>
+						);
+					})
 				)}
 			</div>
 		</div>

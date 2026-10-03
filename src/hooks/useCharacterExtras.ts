@@ -1,8 +1,15 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import type { SandboxNPC } from "@/data/compendium/sandbox-npcs";
 import { useToast } from "@/hooks/use-toast";
+import { useCharacter } from "@/hooks/useCharacters";
 import { supabase } from "@/integrations/supabase/client";
 import type { Database, Json } from "@/integrations/supabase/types";
+import {
+	type CompanionInstanceRecord,
+	type EffectiveCompanionStats,
+	indexCompanionInstances,
+	resolveCompanionEffectiveStats,
+} from "@/lib/companionInstances";
 import {
 	abilitiesFromNpc,
 	GUILD_ALLY_EXTRA_TYPE,
@@ -14,6 +21,9 @@ type CharacterExtraInsert =
 	Database["public"]["Tables"]["character_extras"]["Insert"];
 
 type CharacterExtraWithAnomaly = CharacterExtra & {
+	companion_instance_id?: string | null;
+	companion_instance?: CompanionInstanceRecord | null;
+	effective_stats?: EffectiveCompanionStats | null;
 	Anomaly?:
 		| (Database["public"]["Tables"]["compendium_Anomalies"]["Row"] & {
 				actions?: Database["public"]["Tables"]["compendium_monster_actions"]["Row"][];
@@ -21,12 +31,26 @@ type CharacterExtraWithAnomaly = CharacterExtra & {
 		| null;
 };
 
+async function loadCompanionInstances(
+	ids: readonly string[],
+): Promise<CompanionInstanceRecord[]> {
+	const unique = Array.from(new Set(ids.filter(Boolean)));
+	if (unique.length === 0) return [];
+	const { data, error } = await supabase
+		.from("companion_instances" as never)
+		.select("*")
+		.in("id", unique);
+	if (error) throw error;
+	return (data ?? []) as unknown as CompanionInstanceRecord[];
+}
+
 export function useCharacterExtras(characterId: string) {
 	const queryClient = useQueryClient();
 	const { toast } = useToast();
+	const { data: ownerCharacter } = useCharacter(characterId);
 
 	const { data: extras = [], isLoading } = useQuery({
-		queryKey: ["character_extras", characterId],
+		queryKey: ["character_extras", characterId, ownerCharacter?.level],
 		queryFn: async () => {
 			const { data, error } = await supabase
 				.from("character_extras")
@@ -49,7 +73,37 @@ export function useCharacterExtras(characterId: string) {
 				return [];
 			}
 
-			return data as CharacterExtraWithAnomaly[];
+			const rows = (data ?? []) as unknown as CharacterExtraWithAnomaly[];
+			const instances = await loadCompanionInstances(
+				rows.flatMap((row) =>
+					row.companion_instance_id ? [row.companion_instance_id] : [],
+				),
+			);
+			const byId = indexCompanionInstances(instances);
+
+			return rows.map((row) => {
+				const instance = row.companion_instance_id
+					? (byId.get(row.companion_instance_id) ?? null)
+					: null;
+				return {
+					...row,
+					companion_instance: instance,
+					effective_stats: instance
+						? resolveCompanionEffectiveStats(
+								instance,
+								{
+									name: row.name,
+									currentHp: row.hp_current,
+									hpMax: row.hp_max,
+									baseAc: row.ac,
+									speed: row.speed,
+								},
+								undefined,
+								ownerCharacter?.level,
+							)
+						: null,
+				};
+			});
 		},
 		enabled: !!characterId,
 	});
@@ -68,6 +122,9 @@ export function useCharacterExtras(characterId: string) {
 		onSuccess: () => {
 			queryClient.invalidateQueries({
 				queryKey: ["character_extras", characterId],
+			});
+			queryClient.invalidateQueries({
+				queryKey: ["character-companion-instances", characterId],
 			});
 			toast({ title: "Extra added" });
 		},
@@ -125,6 +182,9 @@ export function useCharacterExtras(characterId: string) {
 			queryClient.invalidateQueries({
 				queryKey: ["character_extras", characterId],
 			});
+			queryClient.invalidateQueries({
+				queryKey: ["character-companion-instances", characterId],
+			});
 			toast({ title: "Extra removed" });
 		},
 		onError: (error) => {
@@ -146,11 +206,12 @@ export function useCharacterExtras(characterId: string) {
 }
 
 /**
- * Carry a recruited guild NPC onto a character sheet as a combat-ready ally
- * Companion. Snapshots the NPC's leveled stats + key abilities into a
+ * Carry a recruited guild NPC onto a character sheet as an ally Companion
+ * that keeps its saved stats (RA-10). Snapshots the NPC's leveled stats + key abilities into a
  * `character_extras` row and records provenance (npc/guild/member ids) so a
- * future "re-sync from guild" is possible. The unique
- * `(character_id, npc_id)` index prevents adding the same ally twice.
+ * future "re-sync from guild" is possible. The C1 insert trigger creates a
+ * distinct living identity for this row; the existing npc_id uniqueness rule
+ * still prevents adding the same guild recruit twice to one sheet.
  */
 export function useAddGuildAllyCompanion() {
 	const queryClient = useQueryClient();
@@ -203,6 +264,9 @@ export function useAddGuildAllyCompanion() {
 		onSuccess: (_data, variables) => {
 			queryClient.invalidateQueries({
 				queryKey: ["character_extras", variables.characterId],
+			});
+			queryClient.invalidateQueries({
+				queryKey: ["character-companion-instances", variables.characterId],
 			});
 			toast({
 				title: "Ally added to sheet",

@@ -29,6 +29,7 @@ import {
 	getSpellsKnownLimit,
 	getSpellsPreparedLimit,
 } from "@/lib/characterCalculations";
+import { toCastingReference } from "@/lib/jobRules";
 import { cn } from "@/lib/utils";
 import { formatRegentVernacular } from "@/lib/vernacular";
 import type { DetailData } from "@/types/character";
@@ -53,9 +54,10 @@ export function SpellsList({
 	const { spells, updateSpell, removeSpell } = useSpells(characterId);
 	const { data: character } = useCharacter(characterId);
 	const { actions } = useCombatActions(characterId);
+	const castingReference = toCastingReference(character);
 	const { data: spellSlots = [] } = useSpellSlots(
 		characterId,
-		character?.job || null,
+		castingReference,
 		character?.level || 1,
 	);
 	const { toast } = useToast();
@@ -69,8 +71,8 @@ export function SpellsList({
 	const [upcastChoice, setUpcastChoice] = useState<Record<string, number>>({});
 
 	const countedSpells = spells.filter((spell) => spell.counts_against_limit);
-	const spellcastingAbility = character
-		? getSpellcastingAbility(character.job)
+	const spellcastingAbility = castingReference
+		? getSpellcastingAbility(castingReference)
 		: null;
 	const abilityModifier =
 		character && spellcastingAbility

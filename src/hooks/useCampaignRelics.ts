@@ -1,8 +1,8 @@
 /**
  * useCampaignRelics — the campaign's shared relic vault. Wardens add relics
- * from the catalog; the party sees them read-only. Distinct from personal
- * inventory and from Warden item delivery. Wires the previously-orphaned
- * `campaign_relic_instances` table (member-binding is a later enhancement).
+ * from the catalog through `assign_campaign_relic`; the party sees them
+ * read-only. Distinct from personal inventory and from Warden item delivery.
+ * Rows store the canonical relic slug (member-binding is a later enhancement).
  */
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
@@ -65,13 +65,15 @@ export function useAddCampaignRelic() {
 			if (!isSupabaseConfigured) throw new Error("Backend not configured.");
 			const relic = relicById.get(input.relicId);
 			if (!relic) throw new Error("Relic not found in catalog.");
-			const { error } = await supabase.from("campaign_relic_instances").insert({
-				campaign_id: input.campaignId,
-				relic_id: relic.id,
-				name: relic.name,
-				rarity: relic.rarity,
-				value_credits: relic.value?.amount ?? relic.cost ?? null,
-				properties: (relic.properties ?? {}) as unknown as Json,
+			// The vault has no direct insert: the Warden-checked RPC applies the
+			// campaign's economy cap and logs the rule event.
+			const { error } = await supabase.rpc("assign_campaign_relic", {
+				p_campaign_id: input.campaignId,
+				p_relic_id: relic.id,
+				p_name: relic.name,
+				p_rarity: relic.rarity,
+				p_value_credits: relic.value?.amount ?? relic.cost ?? undefined,
+				p_properties: (relic.properties ?? {}) as unknown as Json,
 			});
 			if (error) throw error;
 		},

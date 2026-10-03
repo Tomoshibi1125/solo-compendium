@@ -9,7 +9,6 @@ import {
 	parseFeatureChoiceGrant,
 	parseFeatureChoiceGrants,
 	projectFeatureChoiceGrants,
-	validateFeatureChoiceGrants,
 } from "@/lib/featureChoiceGrants";
 import { parseCsv, toCsv } from "@/lib/toolExport";
 
@@ -152,7 +151,7 @@ describe("versioned feature-choice grant contracts", () => {
 				},
 			],
 		]) {
-			const result = validateFeatureChoiceGrants(invalid);
+			const result = parseFeatureChoiceGrants(invalid);
 			expect(result.valid).toBe(false);
 			expect(result.errors.length).toBeGreaterThan(0);
 		}

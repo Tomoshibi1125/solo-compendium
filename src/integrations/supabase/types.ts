@@ -7,11 +7,6 @@ export type Json =
 	| Json[];
 
 export type Database = {
-	// Allows to automatically instantiate createClient with right options
-	// instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
-	__InternalSupabase: {
-		PostgrestVersion: "14.5";
-	};
 	public: {
 		Tables: {
 			active_sessions: {
@@ -62,51 +57,10 @@ export type Database = {
 						foreignKeyName: "active_sessions_campaign_id_fkey";
 						columns: ["campaign_id"];
 						isOneToOne: false;
-						referencedRelation: "campaign_details";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "active_sessions_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
 						referencedRelation: "campaigns";
 						referencedColumns: ["id"];
 					},
-					{
-						foreignKeyName: "active_sessions_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
-						referencedRelation: "campaigns_public_listings";
-						referencedColumns: ["id"];
-					},
 				];
-			};
-			admin_audit_log: {
-				Row: {
-					action: string;
-					actor_user_id: string;
-					created_at: string | null;
-					details: Json;
-					id: string;
-					target_user_id: string | null;
-				};
-				Insert: {
-					action: string;
-					actor_user_id: string;
-					created_at?: string | null;
-					details?: Json;
-					id?: string;
-					target_user_id?: string | null;
-				};
-				Update: {
-					action?: string;
-					actor_user_id?: string;
-					created_at?: string | null;
-					details?: Json;
-					id?: string;
-					target_user_id?: string | null;
-				};
-				Relationships: [];
 			};
 			art_assets: {
 				Row: {
@@ -260,21 +214,7 @@ export type Database = {
 						foreignKeyName: "campaign_character_shares_campaign_id_fkey";
 						columns: ["campaign_id"];
 						isOneToOne: false;
-						referencedRelation: "campaign_details";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "campaign_character_shares_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
 						referencedRelation: "campaigns";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "campaign_character_shares_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
-						referencedRelation: "campaigns_public_listings";
 						referencedColumns: ["id"];
 					},
 					{
@@ -332,21 +272,7 @@ export type Database = {
 						foreignKeyName: "campaign_combat_sessions_campaign_id_fkey";
 						columns: ["campaign_id"];
 						isOneToOne: false;
-						referencedRelation: "campaign_details";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "campaign_combat_sessions_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
 						referencedRelation: "campaigns";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "campaign_combat_sessions_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
-						referencedRelation: "campaigns_public_listings";
 						referencedColumns: ["id"];
 					},
 					{
@@ -361,11 +287,16 @@ export type Database = {
 			campaign_combatants: {
 				Row: {
 					campaign_id: string;
+					companion_instance_id: string | null;
+					companion_profile_version: number | null;
+					companion_state_version: number | null;
 					conditions: Json;
 					created_at: string;
 					flags: Json;
 					id: string;
 					initiative: number;
+					initiative_anchor_character_id: string | null;
+					initiative_mode: string | null;
 					member_id: string | null;
 					name: string;
 					session_id: string;
@@ -374,11 +305,16 @@ export type Database = {
 				};
 				Insert: {
 					campaign_id: string;
+					companion_instance_id?: string | null;
+					companion_profile_version?: number | null;
+					companion_state_version?: number | null;
 					conditions?: Json;
 					created_at?: string;
 					flags?: Json;
 					id?: string;
 					initiative?: number;
+					initiative_anchor_character_id?: string | null;
+					initiative_mode?: string | null;
 					member_id?: string | null;
 					name: string;
 					session_id: string;
@@ -387,11 +323,16 @@ export type Database = {
 				};
 				Update: {
 					campaign_id?: string;
+					companion_instance_id?: string | null;
+					companion_profile_version?: number | null;
+					companion_state_version?: number | null;
 					conditions?: Json;
 					created_at?: string;
 					flags?: Json;
 					id?: string;
 					initiative?: number;
+					initiative_anchor_character_id?: string | null;
+					initiative_mode?: string | null;
 					member_id?: string | null;
 					name?: string;
 					session_id?: string;
@@ -403,21 +344,14 @@ export type Database = {
 						foreignKeyName: "campaign_combatants_campaign_id_fkey";
 						columns: ["campaign_id"];
 						isOneToOne: false;
-						referencedRelation: "campaign_details";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "campaign_combatants_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
 						referencedRelation: "campaigns";
 						referencedColumns: ["id"];
 					},
 					{
-						foreignKeyName: "campaign_combatants_campaign_id_fkey";
-						columns: ["campaign_id"];
+						foreignKeyName: "campaign_combatants_companion_instance_id_fkey";
+						columns: ["companion_instance_id"];
 						isOneToOne: false;
-						referencedRelation: "campaigns_public_listings";
+						referencedRelation: "companion_instances";
 						referencedColumns: ["id"];
 					},
 					{
@@ -478,21 +412,7 @@ export type Database = {
 						foreignKeyName: "campaign_encounter_entries_campaign_id_fkey";
 						columns: ["campaign_id"];
 						isOneToOne: false;
-						referencedRelation: "campaign_details";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "campaign_encounter_entries_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
 						referencedRelation: "campaigns";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "campaign_encounter_entries_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
-						referencedRelation: "campaigns_public_listings";
 						referencedColumns: ["id"];
 					},
 					{
@@ -553,21 +473,7 @@ export type Database = {
 						foreignKeyName: "campaign_encounters_campaign_id_fkey";
 						columns: ["campaign_id"];
 						isOneToOne: false;
-						referencedRelation: "campaign_details";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "campaign_encounters_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
 						referencedRelation: "campaigns";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "campaign_encounters_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
-						referencedRelation: "campaigns_public_listings";
 						referencedColumns: ["id"];
 					},
 				];
@@ -620,21 +526,7 @@ export type Database = {
 						foreignKeyName: "campaign_extras_campaign_id_fkey";
 						columns: ["campaign_id"];
 						isOneToOne: false;
-						referencedRelation: "campaign_details";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "campaign_extras_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
 						referencedRelation: "campaigns";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "campaign_extras_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
-						referencedRelation: "campaigns_public_listings";
 						referencedColumns: ["id"];
 					},
 				];
@@ -684,21 +576,7 @@ export type Database = {
 						foreignKeyName: "campaign_inventory_campaign_id_fkey";
 						columns: ["campaign_id"];
 						isOneToOne: false;
-						referencedRelation: "campaign_details";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "campaign_inventory_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
 						referencedRelation: "campaigns";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "campaign_inventory_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
-						referencedRelation: "campaigns_public_listings";
 						referencedColumns: ["id"];
 					},
 				];
@@ -736,21 +614,7 @@ export type Database = {
 						foreignKeyName: "campaign_invite_audit_logs_campaign_id_fkey";
 						columns: ["campaign_id"];
 						isOneToOne: false;
-						referencedRelation: "campaign_details";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "campaign_invite_audit_logs_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
 						referencedRelation: "campaigns";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "campaign_invite_audit_logs_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
-						referencedRelation: "campaigns_public_listings";
 						referencedColumns: ["id"];
 					},
 					{
@@ -828,21 +692,7 @@ export type Database = {
 						foreignKeyName: "campaign_invites_campaign_id_fkey";
 						columns: ["campaign_id"];
 						isOneToOne: false;
-						referencedRelation: "campaign_details";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "campaign_invites_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
 						referencedRelation: "campaigns";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "campaign_invites_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
-						referencedRelation: "campaigns_public_listings";
 						referencedColumns: ["id"];
 					},
 				];
@@ -893,21 +743,7 @@ export type Database = {
 						foreignKeyName: "campaign_loot_drops_campaign_id_fkey";
 						columns: ["campaign_id"];
 						isOneToOne: false;
-						referencedRelation: "campaign_details";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "campaign_loot_drops_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
 						referencedRelation: "campaigns";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "campaign_loot_drops_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
-						referencedRelation: "campaigns_public_listings";
 						referencedColumns: ["id"];
 					},
 					{
@@ -956,21 +792,7 @@ export type Database = {
 						foreignKeyName: "campaign_member_characters_campaign_id_fkey";
 						columns: ["campaign_id"];
 						isOneToOne: false;
-						referencedRelation: "campaign_details";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "campaign_member_characters_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
 						referencedRelation: "campaigns";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "campaign_member_characters_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
-						referencedRelation: "campaigns_public_listings";
 						referencedColumns: ["id"];
 					},
 					{
@@ -1026,21 +848,7 @@ export type Database = {
 						foreignKeyName: "campaign_members_campaign_id_fkey";
 						columns: ["campaign_id"];
 						isOneToOne: false;
-						referencedRelation: "campaign_details";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "campaign_members_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
 						referencedRelation: "campaigns";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "campaign_members_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
-						referencedRelation: "campaigns_public_listings";
 						referencedColumns: ["id"];
 					},
 					{
@@ -1098,21 +906,7 @@ export type Database = {
 						foreignKeyName: "campaign_messages_campaign_id_fkey";
 						columns: ["campaign_id"];
 						isOneToOne: false;
-						referencedRelation: "campaign_details";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "campaign_messages_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
 						referencedRelation: "campaigns";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "campaign_messages_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
-						referencedRelation: "campaigns_public_listings";
 						referencedColumns: ["id"];
 					},
 				];
@@ -1156,21 +950,7 @@ export type Database = {
 						foreignKeyName: "campaign_notes_campaign_id_fkey";
 						columns: ["campaign_id"];
 						isOneToOne: false;
-						referencedRelation: "campaign_details";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "campaign_notes_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
 						referencedRelation: "campaigns";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "campaign_notes_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
-						referencedRelation: "campaigns_public_listings";
 						referencedColumns: ["id"];
 					},
 				];
@@ -1230,28 +1010,7 @@ export type Database = {
 						foreignKeyName: "campaign_relic_instances_campaign_id_fkey";
 						columns: ["campaign_id"];
 						isOneToOne: false;
-						referencedRelation: "campaign_details";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "campaign_relic_instances_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
 						referencedRelation: "campaigns";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "campaign_relic_instances_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
-						referencedRelation: "campaigns_public_listings";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "campaign_relic_instances_relic_id_fkey";
-						columns: ["relic_id"];
-						isOneToOne: false;
-						referencedRelation: "compendium_relics";
 						referencedColumns: ["id"];
 					},
 				];
@@ -1307,21 +1066,7 @@ export type Database = {
 						foreignKeyName: "campaign_roll_events_campaign_id_fkey";
 						columns: ["campaign_id"];
 						isOneToOne: false;
-						referencedRelation: "campaign_details";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "campaign_roll_events_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
 						referencedRelation: "campaigns";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "campaign_roll_events_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
-						referencedRelation: "campaigns_public_listings";
 						referencedColumns: ["id"];
 					},
 					{
@@ -1370,21 +1115,7 @@ export type Database = {
 						foreignKeyName: "campaign_rule_events_campaign_id_fkey";
 						columns: ["campaign_id"];
 						isOneToOne: false;
-						referencedRelation: "campaign_details";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "campaign_rule_events_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
 						referencedRelation: "campaigns";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "campaign_rule_events_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
-						referencedRelation: "campaigns_public_listings";
 						referencedColumns: ["id"];
 					},
 				];
@@ -1419,21 +1150,7 @@ export type Database = {
 						foreignKeyName: "campaign_rules_campaign_id_fkey";
 						columns: ["campaign_id"];
 						isOneToOne: true;
-						referencedRelation: "campaign_details";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "campaign_rules_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: true;
 						referencedRelation: "campaigns";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "campaign_rules_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: true;
-						referencedRelation: "campaigns_public_listings";
 						referencedColumns: ["id"];
 					},
 				];
@@ -1471,21 +1188,7 @@ export type Database = {
 						foreignKeyName: "campaign_session_events_campaign_id_fkey";
 						columns: ["campaign_id"];
 						isOneToOne: false;
-						referencedRelation: "campaign_details";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "campaign_session_events_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
 						referencedRelation: "campaigns";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "campaign_session_events_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
-						referencedRelation: "campaigns_public_listings";
 						referencedColumns: ["id"];
 					},
 					{
@@ -1542,21 +1245,7 @@ export type Database = {
 						foreignKeyName: "campaign_session_logs_campaign_id_fkey";
 						columns: ["campaign_id"];
 						isOneToOne: false;
-						referencedRelation: "campaign_details";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "campaign_session_logs_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
 						referencedRelation: "campaigns";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "campaign_session_logs_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
-						referencedRelation: "campaigns_public_listings";
 						referencedColumns: ["id"];
 					},
 					{
@@ -1616,21 +1305,7 @@ export type Database = {
 						foreignKeyName: "campaign_sessions_campaign_id_fkey";
 						columns: ["campaign_id"];
 						isOneToOne: false;
-						referencedRelation: "campaign_details";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "campaign_sessions_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
 						referencedRelation: "campaigns";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "campaign_sessions_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
-						referencedRelation: "campaigns_public_listings";
 						referencedColumns: ["id"];
 					},
 					{
@@ -1647,6 +1322,8 @@ export type Database = {
 					anomaly_id: string;
 					bond_level: number;
 					campaign_id: string;
+					companion_instance_id: string | null;
+					companion_source_snapshot: Json | null;
 					conditions: Json;
 					created_at: string;
 					current_controller_character_id: string | null;
@@ -1666,6 +1343,8 @@ export type Database = {
 					anomaly_id: string;
 					bond_level?: number;
 					campaign_id: string;
+					companion_instance_id?: string | null;
+					companion_source_snapshot?: Json | null;
 					conditions?: Json;
 					created_at?: string;
 					current_controller_character_id?: string | null;
@@ -1685,6 +1364,8 @@ export type Database = {
 					anomaly_id?: string;
 					bond_level?: number;
 					campaign_id?: string;
+					companion_instance_id?: string | null;
+					companion_source_snapshot?: Json | null;
 					conditions?: Json;
 					created_at?: string;
 					current_controller_character_id?: string | null;
@@ -1705,21 +1386,14 @@ export type Database = {
 						foreignKeyName: "campaign_tamed_anomalies_campaign_id_fkey";
 						columns: ["campaign_id"];
 						isOneToOne: false;
-						referencedRelation: "campaign_details";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "campaign_tamed_anomalies_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
 						referencedRelation: "campaigns";
 						referencedColumns: ["id"];
 					},
 					{
-						foreignKeyName: "campaign_tamed_anomalies_campaign_id_fkey";
-						columns: ["campaign_id"];
+						foreignKeyName: "campaign_tamed_anomalies_companion_instance_id_fkey";
+						columns: ["companion_instance_id"];
 						isOneToOne: false;
-						referencedRelation: "campaigns_public_listings";
+						referencedRelation: "companion_instances";
 						referencedColumns: ["id"];
 					},
 					{
@@ -1802,21 +1476,7 @@ export type Database = {
 						foreignKeyName: "campaign_tool_states_campaign_id_fkey";
 						columns: ["campaign_id"];
 						isOneToOne: false;
-						referencedRelation: "campaign_details";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "campaign_tool_states_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
 						referencedRelation: "campaigns";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "campaign_tool_states_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
-						referencedRelation: "campaigns_public_listings";
 						referencedColumns: ["id"];
 					},
 				];
@@ -1866,21 +1526,7 @@ export type Database = {
 						foreignKeyName: "campaign_vehicles_campaign_id_fkey";
 						columns: ["campaign_id"];
 						isOneToOne: false;
-						referencedRelation: "campaign_details";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "campaign_vehicles_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
 						referencedRelation: "campaigns";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "campaign_vehicles_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
-						referencedRelation: "campaigns_public_listings";
 						referencedColumns: ["id"];
 					},
 				];
@@ -1924,21 +1570,7 @@ export type Database = {
 						foreignKeyName: "campaign_wiki_articles_campaign_id_fkey";
 						columns: ["campaign_id"];
 						isOneToOne: false;
-						referencedRelation: "campaign_details";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "campaign_wiki_articles_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
 						referencedRelation: "campaigns";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "campaign_wiki_articles_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
-						referencedRelation: "campaigns_public_listings";
 						referencedColumns: ["id"];
 					},
 					{
@@ -1958,7 +1590,6 @@ export type Database = {
 					is_active: boolean;
 					name: string;
 					party_gold: Json | null;
-					public_listing: Json | null;
 					settings: Json;
 					share_code: string;
 					updated_at: string;
@@ -1971,7 +1602,6 @@ export type Database = {
 					is_active?: boolean;
 					name: string;
 					party_gold?: Json | null;
-					public_listing?: Json | null;
 					settings?: Json;
 					share_code: string;
 					updated_at?: string;
@@ -1984,7 +1614,6 @@ export type Database = {
 					is_active?: boolean;
 					name?: string;
 					party_gold?: Json | null;
-					public_listing?: Json | null;
 					settings?: Json;
 					share_code?: string;
 					updated_at?: string;
@@ -2310,6 +1939,7 @@ export type Database = {
 					abilities: Json;
 					ac: number | null;
 					character_id: string;
+					companion_instance_id: string;
 					conditions: Json;
 					created_at: string;
 					equipment: Json;
@@ -2333,6 +1963,7 @@ export type Database = {
 					abilities?: Json;
 					ac?: number | null;
 					character_id: string;
+					companion_instance_id?: string;
 					conditions?: Json;
 					created_at?: string;
 					equipment?: Json;
@@ -2356,6 +1987,7 @@ export type Database = {
 					abilities?: Json;
 					ac?: number | null;
 					character_id?: string;
+					companion_instance_id?: string;
 					conditions?: Json;
 					created_at?: string;
 					equipment?: Json;
@@ -2388,6 +2020,13 @@ export type Database = {
 						columns: ["character_id"];
 						isOneToOne: false;
 						referencedRelation: "user_characters";
+						referencedColumns: ["id"];
+					},
+					{
+						foreignKeyName: "character_extras_companion_instance_id_fkey";
+						columns: ["companion_instance_id"];
+						isOneToOne: false;
+						referencedRelation: "companion_instances";
 						referencedColumns: ["id"];
 					},
 					{
@@ -2482,6 +2121,9 @@ export type Database = {
 					name: string;
 					recharge: string | null;
 					source: string;
+					sovereign_definition_id: string | null;
+					sovereign_entity_id: string | null;
+					sovereign_projection_revision: string | null;
 					uses_current: number | null;
 					uses_max: number | null;
 				};
@@ -2501,6 +2143,9 @@ export type Database = {
 					name: string;
 					recharge?: string | null;
 					source: string;
+					sovereign_definition_id?: string | null;
+					sovereign_entity_id?: string | null;
+					sovereign_projection_revision?: string | null;
 					uses_current?: number | null;
 					uses_max?: number | null;
 				};
@@ -2520,6 +2165,9 @@ export type Database = {
 					name?: string;
 					recharge?: string | null;
 					source?: string;
+					sovereign_definition_id?: string | null;
+					sovereign_entity_id?: string | null;
+					sovereign_projection_revision?: string | null;
 					uses_current?: number | null;
 					uses_max?: number | null;
 				};
@@ -2536,6 +2184,13 @@ export type Database = {
 						columns: ["character_id"];
 						isOneToOne: false;
 						referencedRelation: "user_characters";
+						referencedColumns: ["id"];
+					},
+					{
+						foreignKeyName: "character_features_sovereign_definition_id_fkey";
+						columns: ["sovereign_definition_id"];
+						isOneToOne: false;
+						referencedRelation: "saved_sovereigns";
 						referencedColumns: ["id"];
 					},
 				];
@@ -2685,8 +2340,75 @@ export type Database = {
 					},
 				];
 			};
+			character_pending_regent_grants: {
+				Row: {
+					approved_at: string | null;
+					approved_unlock_id: string | null;
+					canonical_id: string;
+					character_id: string;
+					created_at: string;
+					grant_kind: string;
+					id: string;
+					original_unlock_id: string | null;
+					payload: Json;
+					regent_id: string;
+					status: string;
+				};
+				Insert: {
+					approved_at?: string | null;
+					approved_unlock_id?: string | null;
+					canonical_id: string;
+					character_id: string;
+					created_at?: string;
+					grant_kind: string;
+					id?: string;
+					original_unlock_id?: string | null;
+					payload: Json;
+					regent_id: string;
+					status?: string;
+				};
+				Update: {
+					approved_at?: string | null;
+					approved_unlock_id?: string | null;
+					canonical_id?: string;
+					character_id?: string;
+					created_at?: string;
+					grant_kind?: string;
+					id?: string;
+					original_unlock_id?: string | null;
+					payload?: Json;
+					regent_id?: string;
+					status?: string;
+				};
+				Relationships: [
+					{
+						foreignKeyName: "character_pending_regent_grants_approved_unlock_id_fkey";
+						columns: ["approved_unlock_id"];
+						isOneToOne: false;
+						referencedRelation: "character_regent_unlocks";
+						referencedColumns: ["id"];
+					},
+					{
+						foreignKeyName: "character_pending_regent_grants_character_id_fkey";
+						columns: ["character_id"];
+						isOneToOne: false;
+						referencedRelation: "characters";
+						referencedColumns: ["id"];
+					},
+					{
+						foreignKeyName: "character_pending_regent_grants_character_id_fkey";
+						columns: ["character_id"];
+						isOneToOne: false;
+						referencedRelation: "user_characters";
+						referencedColumns: ["id"];
+					},
+				];
+			};
 			character_powers: {
 				Row: {
+					acquired_level: number | null;
+					acquisition_kind: string;
+					canonical_source_id: string | null;
 					casting_time: string | null;
 					character_id: string;
 					concentration: boolean;
@@ -2703,11 +2425,16 @@ export type Database = {
 					power_level: number;
 					range: string | null;
 					recharge: string | null;
+					regent_id: string | null;
+					regent_unlock_id: string | null;
 					source: string | null;
 					uses_current: number | null;
 					uses_max: number | null;
 				};
 				Insert: {
+					acquired_level?: number | null;
+					acquisition_kind?: string;
+					canonical_source_id?: string | null;
 					casting_time?: string | null;
 					character_id: string;
 					concentration?: boolean;
@@ -2724,11 +2451,16 @@ export type Database = {
 					power_level?: number;
 					range?: string | null;
 					recharge?: string | null;
+					regent_id?: string | null;
+					regent_unlock_id?: string | null;
 					source?: string | null;
 					uses_current?: number | null;
 					uses_max?: number | null;
 				};
 				Update: {
+					acquired_level?: number | null;
+					acquisition_kind?: string;
+					canonical_source_id?: string | null;
 					casting_time?: string | null;
 					character_id?: string;
 					concentration?: boolean;
@@ -2745,6 +2477,8 @@ export type Database = {
 					power_level?: number;
 					range?: string | null;
 					recharge?: string | null;
+					regent_id?: string | null;
+					regent_unlock_id?: string | null;
 					source?: string | null;
 					uses_current?: number | null;
 					uses_max?: number | null;
@@ -2762,6 +2496,13 @@ export type Database = {
 						columns: ["character_id"];
 						isOneToOne: false;
 						referencedRelation: "user_characters";
+						referencedColumns: ["id"];
+					},
+					{
+						foreignKeyName: "character_powers_regent_unlock_id_fkey";
+						columns: ["regent_unlock_id"];
+						isOneToOne: false;
+						referencedRelation: "character_regent_unlocks";
 						referencedColumns: ["id"];
 					},
 				];
@@ -2811,36 +2552,132 @@ export type Database = {
 					},
 				];
 			};
-			character_regent_unlock_grants: {
+			character_regent_resonance: {
 				Row: {
 					character_id: string;
+					points_current: number;
+					points_max: number;
+					updated_at: string;
+				};
+				Insert: {
+					character_id: string;
+					points_current: number;
+					points_max: number;
+					updated_at?: string;
+				};
+				Update: {
+					character_id?: string;
+					points_current?: number;
+					points_max?: number;
+					updated_at?: string;
+				};
+				Relationships: [
+					{
+						foreignKeyName: "character_regent_resonance_character_id_fkey";
+						columns: ["character_id"];
+						isOneToOne: true;
+						referencedRelation: "characters";
+						referencedColumns: ["id"];
+					},
+					{
+						foreignKeyName: "character_regent_resonance_character_id_fkey";
+						columns: ["character_id"];
+						isOneToOne: true;
+						referencedRelation: "user_characters";
+						referencedColumns: ["id"];
+					},
+				];
+			};
+			character_regent_resonance_spends: {
+				Row: {
+					character_id: string;
+					cost: number;
+					grant_id: string;
+					grant_kind: string;
+					points_after: number;
+					request_id: string;
+					spent_at: string;
+				};
+				Insert: {
+					character_id: string;
+					cost: number;
+					grant_id: string;
+					grant_kind: string;
+					points_after: number;
+					request_id: string;
+					spent_at?: string;
+				};
+				Update: {
+					character_id?: string;
+					cost?: number;
+					grant_id?: string;
+					grant_kind?: string;
+					points_after?: number;
+					request_id?: string;
+					spent_at?: string;
+				};
+				Relationships: [
+					{
+						foreignKeyName: "character_regent_resonance_spends_character_id_fkey";
+						columns: ["character_id"];
+						isOneToOne: false;
+						referencedRelation: "characters";
+						referencedColumns: ["id"];
+					},
+					{
+						foreignKeyName: "character_regent_resonance_spends_character_id_fkey";
+						columns: ["character_id"];
+						isOneToOne: false;
+						referencedRelation: "user_characters";
+						referencedColumns: ["id"];
+					},
+				];
+			};
+			character_regent_unlock_grants: {
+				Row: {
+					candidate_regent_ids: string[] | null;
+					character_id: string;
+					configured_at: string | null;
+					configured_by: string | null;
 					consumed_at: string | null;
 					consumed_unlock_id: string | null;
 					granted_at: string;
 					granted_by: string | null;
 					id: string;
+					offer_version: number;
 					quest_id: string | null;
 					quest_title: string;
+					request_id: string | null;
 				};
 				Insert: {
+					candidate_regent_ids?: string[] | null;
 					character_id: string;
+					configured_at?: string | null;
+					configured_by?: string | null;
 					consumed_at?: string | null;
 					consumed_unlock_id?: string | null;
 					granted_at?: string;
 					granted_by?: string | null;
 					id?: string;
+					offer_version?: number;
 					quest_id?: string | null;
 					quest_title: string;
+					request_id?: string | null;
 				};
 				Update: {
+					candidate_regent_ids?: string[] | null;
 					character_id?: string;
+					configured_at?: string | null;
+					configured_by?: string | null;
 					consumed_at?: string | null;
 					consumed_unlock_id?: string | null;
 					granted_at?: string;
 					granted_by?: string | null;
 					id?: string;
+					offer_version?: number;
 					quest_id?: string | null;
 					quest_title?: string;
+					request_id?: string | null;
 				};
 				Relationships: [
 					{
@@ -3547,6 +3384,8 @@ export type Database = {
 					anomaly_id: string;
 					bond_level: number;
 					character_id: string;
+					companion_instance_id: string | null;
+					companion_source_snapshot: Json | null;
 					conditions: Json;
 					created_at: string;
 					current_hp: number;
@@ -3563,6 +3402,8 @@ export type Database = {
 					anomaly_id: string;
 					bond_level?: number;
 					character_id: string;
+					companion_instance_id?: string | null;
+					companion_source_snapshot?: Json | null;
 					conditions?: Json;
 					created_at?: string;
 					current_hp: number;
@@ -3579,6 +3420,8 @@ export type Database = {
 					anomaly_id?: string;
 					bond_level?: number;
 					character_id?: string;
+					companion_instance_id?: string | null;
+					companion_source_snapshot?: Json | null;
 					conditions?: Json;
 					created_at?: string;
 					current_hp?: number;
@@ -3604,6 +3447,13 @@ export type Database = {
 						columns: ["character_id"];
 						isOneToOne: false;
 						referencedRelation: "user_characters";
+						referencedColumns: ["id"];
+					},
+					{
+						foreignKeyName: "character_tamed_anomalies_companion_instance_id_fkey";
+						columns: ["companion_instance_id"];
+						isOneToOne: false;
+						referencedRelation: "companion_instances";
 						referencedColumns: ["id"];
 					},
 				];
@@ -3673,30 +3523,45 @@ export type Database = {
 			};
 			character_techniques: {
 				Row: {
+					acquired_level: number | null;
+					acquisition_kind: string;
+					canonical_source_id: string | null;
 					character_id: string;
 					id: string;
 					learned_at: string;
 					recharge: string | null;
+					regent_id: string | null;
+					regent_unlock_id: string | null;
 					source: string | null;
 					technique_id: string;
 					uses_current: number | null;
 					uses_max: number | null;
 				};
 				Insert: {
+					acquired_level?: number | null;
+					acquisition_kind?: string;
+					canonical_source_id?: string | null;
 					character_id: string;
 					id?: string;
 					learned_at?: string;
 					recharge?: string | null;
+					regent_id?: string | null;
+					regent_unlock_id?: string | null;
 					source?: string | null;
 					technique_id: string;
 					uses_current?: number | null;
 					uses_max?: number | null;
 				};
 				Update: {
+					acquired_level?: number | null;
+					acquisition_kind?: string;
+					canonical_source_id?: string | null;
 					character_id?: string;
 					id?: string;
 					learned_at?: string;
 					recharge?: string | null;
+					regent_id?: string | null;
+					regent_unlock_id?: string | null;
 					source?: string | null;
 					technique_id?: string;
 					uses_current?: number | null;
@@ -3715,6 +3580,13 @@ export type Database = {
 						columns: ["character_id"];
 						isOneToOne: false;
 						referencedRelation: "user_characters";
+						referencedColumns: ["id"];
+					},
+					{
+						foreignKeyName: "character_techniques_regent_unlock_id_fkey";
+						columns: ["regent_unlock_id"];
+						isOneToOne: false;
+						referencedRelation: "character_regent_unlocks";
 						referencedColumns: ["id"];
 					},
 				];
@@ -3792,6 +3664,9 @@ export type Database = {
 			character_vehicles: {
 				Row: {
 					character_id: string;
+					companion_imported_source_snapshot: Json | null;
+					companion_instance_id: string | null;
+					companion_source_snapshot: Json | null;
 					condition_state: string;
 					conditions: Json;
 					created_at: string;
@@ -3808,6 +3683,9 @@ export type Database = {
 				};
 				Insert: {
 					character_id: string;
+					companion_imported_source_snapshot?: Json | null;
+					companion_instance_id?: string | null;
+					companion_source_snapshot?: Json | null;
 					condition_state?: string;
 					conditions?: Json;
 					created_at?: string;
@@ -3824,6 +3702,9 @@ export type Database = {
 				};
 				Update: {
 					character_id?: string;
+					companion_imported_source_snapshot?: Json | null;
+					companion_instance_id?: string | null;
+					companion_source_snapshot?: Json | null;
 					condition_state?: string;
 					conditions?: Json;
 					created_at?: string;
@@ -3851,6 +3732,13 @@ export type Database = {
 						columns: ["character_id"];
 						isOneToOne: false;
 						referencedRelation: "user_characters";
+						referencedColumns: ["id"];
+					},
+					{
+						foreignKeyName: "character_vehicles_companion_instance_id_fkey";
+						columns: ["companion_instance_id"];
+						isOneToOne: false;
+						referencedRelation: "companion_instances";
 						referencedColumns: ["id"];
 					},
 				];
@@ -4201,6 +4089,549 @@ export type Database = {
 					},
 				];
 			};
+			companion_attempt_adjudications: {
+				Row: {
+					attempt_kind: string;
+					campaign_id: string;
+					character_id: string;
+					companion_instance_id: string | null;
+					consumed_at: string | null;
+					created_at: string;
+					created_by_user_id: string;
+					id: string;
+					proficiency_mode: string;
+					reason: string | null;
+					retry_of_attempt_id: string | null;
+					roll_mode: string;
+					specialization_mode: string;
+					target_source_id: string;
+				};
+				Insert: {
+					attempt_kind: string;
+					campaign_id: string;
+					character_id: string;
+					companion_instance_id?: string | null;
+					consumed_at?: string | null;
+					created_at?: string;
+					created_by_user_id: string;
+					id?: string;
+					proficiency_mode?: string;
+					reason?: string | null;
+					retry_of_attempt_id?: string | null;
+					roll_mode?: string;
+					specialization_mode?: string;
+					target_source_id: string;
+				};
+				Update: {
+					attempt_kind?: string;
+					campaign_id?: string;
+					character_id?: string;
+					companion_instance_id?: string | null;
+					consumed_at?: string | null;
+					created_at?: string;
+					created_by_user_id?: string;
+					id?: string;
+					proficiency_mode?: string;
+					reason?: string | null;
+					retry_of_attempt_id?: string | null;
+					roll_mode?: string;
+					specialization_mode?: string;
+					target_source_id?: string;
+				};
+				Relationships: [
+					{
+						foreignKeyName: "companion_attempt_adjudications_campaign_id_fkey";
+						columns: ["campaign_id"];
+						isOneToOne: false;
+						referencedRelation: "campaigns";
+						referencedColumns: ["id"];
+					},
+					{
+						foreignKeyName: "companion_attempt_adjudications_character_id_fkey";
+						columns: ["character_id"];
+						isOneToOne: false;
+						referencedRelation: "characters";
+						referencedColumns: ["id"];
+					},
+					{
+						foreignKeyName: "companion_attempt_adjudications_character_id_fkey";
+						columns: ["character_id"];
+						isOneToOne: false;
+						referencedRelation: "user_characters";
+						referencedColumns: ["id"];
+					},
+					{
+						foreignKeyName: "companion_attempt_adjudications_companion_instance_id_fkey";
+						columns: ["companion_instance_id"];
+						isOneToOne: false;
+						referencedRelation: "companion_instances";
+						referencedColumns: ["id"];
+					},
+					{
+						foreignKeyName: "companion_attempt_adjudications_retry_of_attempt_id_fkey";
+						columns: ["retry_of_attempt_id"];
+						isOneToOne: false;
+						referencedRelation: "companion_bond_attempts";
+						referencedColumns: ["id"];
+					},
+				];
+			};
+			companion_bond_attempts: {
+				Row: {
+					ability: string;
+					ability_modifier: number;
+					adjudication_id: string | null;
+					attempt_chain_id: string;
+					attempt_kind: string;
+					campaign_id: string;
+					character_id: string;
+					companion_instance_id: string | null;
+					created_at: string;
+					dc: number | null;
+					id: string;
+					invalid_reason: string | null;
+					outcome: string;
+					proficiency_bonus: number;
+					proficiency_source_id: string | null;
+					retry_of_attempt_id: string | null;
+					roll_mode: string;
+					roll_primary: number | null;
+					roll_secondary: number | null;
+					selected_roll: number | null;
+					specialization_bonus: number;
+					specialization_source_id: string | null;
+					target_rank: string | null;
+					target_source_id: string;
+					total: number | null;
+				};
+				Insert: {
+					ability?: string;
+					ability_modifier?: number;
+					adjudication_id?: string | null;
+					attempt_chain_id?: string;
+					attempt_kind: string;
+					campaign_id: string;
+					character_id: string;
+					companion_instance_id?: string | null;
+					created_at?: string;
+					dc?: number | null;
+					id?: string;
+					invalid_reason?: string | null;
+					outcome: string;
+					proficiency_bonus?: number;
+					proficiency_source_id?: string | null;
+					retry_of_attempt_id?: string | null;
+					roll_mode: string;
+					roll_primary?: number | null;
+					roll_secondary?: number | null;
+					selected_roll?: number | null;
+					specialization_bonus?: number;
+					specialization_source_id?: string | null;
+					target_rank?: string | null;
+					target_source_id: string;
+					total?: number | null;
+				};
+				Update: {
+					ability?: string;
+					ability_modifier?: number;
+					adjudication_id?: string | null;
+					attempt_chain_id?: string;
+					attempt_kind?: string;
+					campaign_id?: string;
+					character_id?: string;
+					companion_instance_id?: string | null;
+					created_at?: string;
+					dc?: number | null;
+					id?: string;
+					invalid_reason?: string | null;
+					outcome?: string;
+					proficiency_bonus?: number;
+					proficiency_source_id?: string | null;
+					retry_of_attempt_id?: string | null;
+					roll_mode?: string;
+					roll_primary?: number | null;
+					roll_secondary?: number | null;
+					selected_roll?: number | null;
+					specialization_bonus?: number;
+					specialization_source_id?: string | null;
+					target_rank?: string | null;
+					target_source_id?: string;
+					total?: number | null;
+				};
+				Relationships: [
+					{
+						foreignKeyName: "companion_bond_attempts_adjudication_id_fkey";
+						columns: ["adjudication_id"];
+						isOneToOne: false;
+						referencedRelation: "companion_attempt_adjudications";
+						referencedColumns: ["id"];
+					},
+					{
+						foreignKeyName: "companion_bond_attempts_campaign_id_fkey";
+						columns: ["campaign_id"];
+						isOneToOne: false;
+						referencedRelation: "campaigns";
+						referencedColumns: ["id"];
+					},
+					{
+						foreignKeyName: "companion_bond_attempts_character_id_fkey";
+						columns: ["character_id"];
+						isOneToOne: false;
+						referencedRelation: "characters";
+						referencedColumns: ["id"];
+					},
+					{
+						foreignKeyName: "companion_bond_attempts_character_id_fkey";
+						columns: ["character_id"];
+						isOneToOne: false;
+						referencedRelation: "user_characters";
+						referencedColumns: ["id"];
+					},
+					{
+						foreignKeyName: "companion_bond_attempts_companion_instance_id_fkey";
+						columns: ["companion_instance_id"];
+						isOneToOne: false;
+						referencedRelation: "companion_instances";
+						referencedColumns: ["id"];
+					},
+					{
+						foreignKeyName: "companion_bond_attempts_retry_of_attempt_id_fkey";
+						columns: ["retry_of_attempt_id"];
+						isOneToOne: false;
+						referencedRelation: "companion_bond_attempts";
+						referencedColumns: ["id"];
+					},
+				];
+			};
+			companion_bonds: {
+				Row: {
+					bonded_at: string;
+					campaign_id: string;
+					character_id: string;
+					companion_instance_id: string;
+					created_at: string;
+					created_by_attempt_id: string | null;
+					id: string;
+					release_reason: string | null;
+					released_at: string | null;
+				};
+				Insert: {
+					bonded_at?: string;
+					campaign_id: string;
+					character_id: string;
+					companion_instance_id: string;
+					created_at?: string;
+					created_by_attempt_id?: string | null;
+					id?: string;
+					release_reason?: string | null;
+					released_at?: string | null;
+				};
+				Update: {
+					bonded_at?: string;
+					campaign_id?: string;
+					character_id?: string;
+					companion_instance_id?: string;
+					created_at?: string;
+					created_by_attempt_id?: string | null;
+					id?: string;
+					release_reason?: string | null;
+					released_at?: string | null;
+				};
+				Relationships: [
+					{
+						foreignKeyName: "companion_bonds_campaign_id_fkey";
+						columns: ["campaign_id"];
+						isOneToOne: false;
+						referencedRelation: "campaigns";
+						referencedColumns: ["id"];
+					},
+					{
+						foreignKeyName: "companion_bonds_character_id_fkey";
+						columns: ["character_id"];
+						isOneToOne: false;
+						referencedRelation: "characters";
+						referencedColumns: ["id"];
+					},
+					{
+						foreignKeyName: "companion_bonds_character_id_fkey";
+						columns: ["character_id"];
+						isOneToOne: false;
+						referencedRelation: "user_characters";
+						referencedColumns: ["id"];
+					},
+					{
+						foreignKeyName: "companion_bonds_companion_instance_id_fkey";
+						columns: ["companion_instance_id"];
+						isOneToOne: false;
+						referencedRelation: "companion_instances";
+						referencedColumns: ["id"];
+					},
+					{
+						foreignKeyName: "companion_bonds_created_by_attempt_id_fkey";
+						columns: ["created_by_attempt_id"];
+						isOneToOne: false;
+						referencedRelation: "companion_bond_attempts";
+						referencedColumns: ["id"];
+					},
+				];
+			};
+			companion_control_events: {
+				Row: {
+					actor_character_id: string | null;
+					actor_user_id: string;
+					campaign_id: string;
+					companion_instance_id: string;
+					created_at: string;
+					event_type: string;
+					id: string;
+					next_controller_character_id: string | null;
+					previous_controller_character_id: string | null;
+					tamed_anomaly_id: string | null;
+				};
+				Insert: {
+					actor_character_id?: string | null;
+					actor_user_id: string;
+					campaign_id: string;
+					companion_instance_id: string;
+					created_at?: string;
+					event_type: string;
+					id?: string;
+					next_controller_character_id?: string | null;
+					previous_controller_character_id?: string | null;
+					tamed_anomaly_id?: string | null;
+				};
+				Update: {
+					actor_character_id?: string | null;
+					actor_user_id?: string;
+					campaign_id?: string;
+					companion_instance_id?: string;
+					created_at?: string;
+					event_type?: string;
+					id?: string;
+					next_controller_character_id?: string | null;
+					previous_controller_character_id?: string | null;
+					tamed_anomaly_id?: string | null;
+				};
+				Relationships: [
+					{
+						foreignKeyName: "companion_control_events_actor_character_id_fkey";
+						columns: ["actor_character_id"];
+						isOneToOne: false;
+						referencedRelation: "characters";
+						referencedColumns: ["id"];
+					},
+					{
+						foreignKeyName: "companion_control_events_actor_character_id_fkey";
+						columns: ["actor_character_id"];
+						isOneToOne: false;
+						referencedRelation: "user_characters";
+						referencedColumns: ["id"];
+					},
+					{
+						foreignKeyName: "companion_control_events_campaign_id_fkey";
+						columns: ["campaign_id"];
+						isOneToOne: false;
+						referencedRelation: "campaigns";
+						referencedColumns: ["id"];
+					},
+					{
+						foreignKeyName: "companion_control_events_companion_instance_id_fkey";
+						columns: ["companion_instance_id"];
+						isOneToOne: false;
+						referencedRelation: "companion_instances";
+						referencedColumns: ["id"];
+					},
+					{
+						foreignKeyName: "companion_control_events_next_controller_character_id_fkey";
+						columns: ["next_controller_character_id"];
+						isOneToOne: false;
+						referencedRelation: "characters";
+						referencedColumns: ["id"];
+					},
+					{
+						foreignKeyName: "companion_control_events_next_controller_character_id_fkey";
+						columns: ["next_controller_character_id"];
+						isOneToOne: false;
+						referencedRelation: "user_characters";
+						referencedColumns: ["id"];
+					},
+					{
+						foreignKeyName: "companion_control_events_previous_controller_character_id_fkey";
+						columns: ["previous_controller_character_id"];
+						isOneToOne: false;
+						referencedRelation: "characters";
+						referencedColumns: ["id"];
+					},
+					{
+						foreignKeyName: "companion_control_events_previous_controller_character_id_fkey";
+						columns: ["previous_controller_character_id"];
+						isOneToOne: false;
+						referencedRelation: "user_characters";
+						referencedColumns: ["id"];
+					},
+					{
+						foreignKeyName: "companion_control_events_tamed_anomaly_id_fkey";
+						columns: ["tamed_anomaly_id"];
+						isOneToOne: false;
+						referencedRelation: "campaign_tamed_anomalies";
+						referencedColumns: ["id"];
+					},
+				];
+			};
+			companion_instances: {
+				Row: {
+					combat_controller_character_id: string | null;
+					combat_state: Json;
+					combat_state_version: number;
+					created_at: string;
+					id: string;
+					identity_kind: string;
+					lifecycle_status: string;
+					mount_profile: Json | null;
+					origin_row_id: string;
+					origin_table: string;
+					owner_campaign_id: string | null;
+					owner_character_id: string | null;
+					owner_scope: string;
+					primary_handler_character_id: string | null;
+					profile_version: number;
+					progression_profile: Json;
+					retired_at: string | null;
+					rider_character_id: string | null;
+					source_collection: string | null;
+					source_id: string | null;
+					source_kind: string;
+					source_policy: string;
+					source_revision: string;
+					source_snapshot: Json | null;
+					source_snapshot_version: number;
+					stat_overrides: Json;
+					updated_at: string;
+				};
+				Insert: {
+					combat_controller_character_id?: string | null;
+					combat_state?: Json;
+					combat_state_version?: number;
+					created_at?: string;
+					id?: string;
+					identity_kind: string;
+					lifecycle_status?: string;
+					mount_profile?: Json | null;
+					origin_row_id: string;
+					origin_table: string;
+					owner_campaign_id?: string | null;
+					owner_character_id?: string | null;
+					owner_scope: string;
+					primary_handler_character_id?: string | null;
+					profile_version?: number;
+					progression_profile?: Json;
+					retired_at?: string | null;
+					rider_character_id?: string | null;
+					source_collection?: string | null;
+					source_id?: string | null;
+					source_kind: string;
+					source_policy?: string;
+					source_revision: string;
+					source_snapshot?: Json | null;
+					source_snapshot_version?: number;
+					stat_overrides?: Json;
+					updated_at?: string;
+				};
+				Update: {
+					combat_controller_character_id?: string | null;
+					combat_state?: Json;
+					combat_state_version?: number;
+					created_at?: string;
+					id?: string;
+					identity_kind?: string;
+					lifecycle_status?: string;
+					mount_profile?: Json | null;
+					origin_row_id?: string;
+					origin_table?: string;
+					owner_campaign_id?: string | null;
+					owner_character_id?: string | null;
+					owner_scope?: string;
+					primary_handler_character_id?: string | null;
+					profile_version?: number;
+					progression_profile?: Json;
+					retired_at?: string | null;
+					rider_character_id?: string | null;
+					source_collection?: string | null;
+					source_id?: string | null;
+					source_kind?: string;
+					source_policy?: string;
+					source_revision?: string;
+					source_snapshot?: Json | null;
+					source_snapshot_version?: number;
+					stat_overrides?: Json;
+					updated_at?: string;
+				};
+				Relationships: [
+					{
+						foreignKeyName: "companion_instances_combat_controller_character_id_fkey";
+						columns: ["combat_controller_character_id"];
+						isOneToOne: false;
+						referencedRelation: "characters";
+						referencedColumns: ["id"];
+					},
+					{
+						foreignKeyName: "companion_instances_combat_controller_character_id_fkey";
+						columns: ["combat_controller_character_id"];
+						isOneToOne: false;
+						referencedRelation: "user_characters";
+						referencedColumns: ["id"];
+					},
+					{
+						foreignKeyName: "companion_instances_owner_campaign_id_fkey";
+						columns: ["owner_campaign_id"];
+						isOneToOne: false;
+						referencedRelation: "campaigns";
+						referencedColumns: ["id"];
+					},
+					{
+						foreignKeyName: "companion_instances_owner_character_id_fkey";
+						columns: ["owner_character_id"];
+						isOneToOne: false;
+						referencedRelation: "characters";
+						referencedColumns: ["id"];
+					},
+					{
+						foreignKeyName: "companion_instances_owner_character_id_fkey";
+						columns: ["owner_character_id"];
+						isOneToOne: false;
+						referencedRelation: "user_characters";
+						referencedColumns: ["id"];
+					},
+					{
+						foreignKeyName: "companion_instances_primary_handler_character_id_fkey";
+						columns: ["primary_handler_character_id"];
+						isOneToOne: false;
+						referencedRelation: "characters";
+						referencedColumns: ["id"];
+					},
+					{
+						foreignKeyName: "companion_instances_primary_handler_character_id_fkey";
+						columns: ["primary_handler_character_id"];
+						isOneToOne: false;
+						referencedRelation: "user_characters";
+						referencedColumns: ["id"];
+					},
+					{
+						foreignKeyName: "companion_instances_rider_character_id_fkey";
+						columns: ["rider_character_id"];
+						isOneToOne: false;
+						referencedRelation: "characters";
+						referencedColumns: ["id"];
+					},
+					{
+						foreignKeyName: "companion_instances_rider_character_id_fkey";
+						columns: ["rider_character_id"];
+						isOneToOne: false;
+						referencedRelation: "user_characters";
+						referencedColumns: ["id"];
+					},
+				];
+			};
 			compendium_Anomalies: {
 				Row: {
 					actions: Json | null;
@@ -4232,7 +4663,6 @@ export type Database = {
 					license_note: string | null;
 					lore: string | null;
 					mechanics: Json | null;
-					monster_actions: Json | null;
 					name: string;
 					pre: number;
 					rank: string | null;
@@ -4287,7 +4717,6 @@ export type Database = {
 					license_note?: string | null;
 					lore?: string | null;
 					mechanics?: Json | null;
-					monster_actions?: Json | null;
 					name: string;
 					pre?: number;
 					rank?: string | null;
@@ -4342,7 +4771,6 @@ export type Database = {
 					license_note?: string | null;
 					lore?: string | null;
 					mechanics?: Json | null;
-					monster_actions?: Json | null;
 					name?: string;
 					pre?: number;
 					rank?: string | null;
@@ -4441,10 +4869,8 @@ export type Database = {
 					dangers: string[] | null;
 					description: string;
 					display_name: string | null;
-					equipment: Json | null;
 					feature_description: string | null;
 					feature_name: string | null;
-					features: Json | null;
 					flavor: string | null;
 					flaws: string[] | null;
 					generated_reason: string | null;
@@ -4452,13 +4878,11 @@ export type Database = {
 					ideals: string[] | null;
 					image_url: string | null;
 					language_count: number | null;
-					languages: Json | null;
 					license_note: string | null;
 					lore: string | null;
 					mechanics: Json | null;
 					name: string;
 					personality_traits: string[] | null;
-					rank: string | null;
 					skill_proficiencies: string[] | null;
 					skills: string[] | null;
 					source_book: string | null;
@@ -4470,7 +4894,6 @@ export type Database = {
 					tags: string[] | null;
 					theme_tags: string[] | null;
 					tool_proficiencies: string[] | null;
-					type: string | null;
 				};
 				Insert: {
 					abilities?: string[] | null;
@@ -4480,10 +4903,8 @@ export type Database = {
 					dangers?: string[] | null;
 					description: string;
 					display_name?: string | null;
-					equipment?: Json | null;
 					feature_description?: string | null;
 					feature_name?: string | null;
-					features?: Json | null;
 					flavor?: string | null;
 					flaws?: string[] | null;
 					generated_reason?: string | null;
@@ -4491,13 +4912,11 @@ export type Database = {
 					ideals?: string[] | null;
 					image_url?: string | null;
 					language_count?: number | null;
-					languages?: Json | null;
 					license_note?: string | null;
 					lore?: string | null;
 					mechanics?: Json | null;
 					name: string;
 					personality_traits?: string[] | null;
-					rank?: string | null;
 					skill_proficiencies?: string[] | null;
 					skills?: string[] | null;
 					source_book?: string | null;
@@ -4509,7 +4928,6 @@ export type Database = {
 					tags?: string[] | null;
 					theme_tags?: string[] | null;
 					tool_proficiencies?: string[] | null;
-					type?: string | null;
 				};
 				Update: {
 					abilities?: string[] | null;
@@ -4519,10 +4937,8 @@ export type Database = {
 					dangers?: string[] | null;
 					description?: string;
 					display_name?: string | null;
-					equipment?: Json | null;
 					feature_description?: string | null;
 					feature_name?: string | null;
-					features?: Json | null;
 					flavor?: string | null;
 					flaws?: string[] | null;
 					generated_reason?: string | null;
@@ -4530,13 +4946,11 @@ export type Database = {
 					ideals?: string[] | null;
 					image_url?: string | null;
 					language_count?: number | null;
-					languages?: Json | null;
 					license_note?: string | null;
 					lore?: string | null;
 					mechanics?: Json | null;
 					name?: string;
 					personality_traits?: string[] | null;
-					rank?: string | null;
 					skill_proficiencies?: string[] | null;
 					skills?: string[] | null;
 					source_book?: string | null;
@@ -4548,7 +4962,6 @@ export type Database = {
 					tags?: string[] | null;
 					theme_tags?: string[] | null;
 					tool_proficiencies?: string[] | null;
-					type?: string | null;
 				};
 				Relationships: [];
 			};
@@ -4641,7 +5054,6 @@ export type Database = {
 					tags: string[] | null;
 					theme_tags: string[] | null;
 					updated_at: string | null;
-					value_credits: number | null;
 					weight: number | null;
 				};
 				Insert: {
@@ -4672,7 +5084,6 @@ export type Database = {
 					tags?: string[] | null;
 					theme_tags?: string[] | null;
 					updated_at?: string | null;
-					value_credits?: number | null;
 					weight?: number | null;
 				};
 				Update: {
@@ -4703,7 +5114,6 @@ export type Database = {
 					tags?: string[] | null;
 					theme_tags?: string[] | null;
 					updated_at?: string | null;
-					value_credits?: number | null;
 					weight?: number | null;
 				};
 				Relationships: [];
@@ -6354,7 +6764,7 @@ export type Database = {
 					discovery_lore: string | null;
 					display_name: string | null;
 					duration: string | null;
-					effect_description: string | null;
+					effect_description: string;
 					effect_type: string;
 					effects: Json | null;
 					flavor: string | null;
@@ -6362,7 +6772,6 @@ export type Database = {
 					id: string;
 					image: string | null;
 					image_url: string | null;
-					is_attunement: boolean | null;
 					limitations: Json | null;
 					lore: string | null;
 					mechanics: Json | null;
@@ -6390,7 +6799,7 @@ export type Database = {
 					discovery_lore?: string | null;
 					display_name?: string | null;
 					duration?: string | null;
-					effect_description?: string | null;
+					effect_description: string;
 					effect_type: string;
 					effects?: Json | null;
 					flavor?: string | null;
@@ -6398,7 +6807,6 @@ export type Database = {
 					id?: string;
 					image?: string | null;
 					image_url?: string | null;
-					is_attunement?: boolean | null;
 					limitations?: Json | null;
 					lore?: string | null;
 					mechanics?: Json | null;
@@ -6426,7 +6834,7 @@ export type Database = {
 					discovery_lore?: string | null;
 					display_name?: string | null;
 					duration?: string | null;
-					effect_description?: string | null;
+					effect_description?: string;
 					effect_type?: string;
 					effects?: Json | null;
 					flavor?: string | null;
@@ -6434,7 +6842,6 @@ export type Database = {
 					id?: string;
 					image?: string | null;
 					image_url?: string | null;
-					is_attunement?: boolean | null;
 					limitations?: Json | null;
 					lore?: string | null;
 					mechanics?: Json | null;
@@ -7239,8 +7646,6 @@ export type Database = {
 					name: string;
 					rarity: string | null;
 					source: string | null;
-					source_book: string | null;
-					system_interaction: string | null;
 					tags: string[] | null;
 					theme_tags: string[] | null;
 					updated_at: string;
@@ -7262,8 +7667,6 @@ export type Database = {
 					name: string;
 					rarity?: string | null;
 					source?: string | null;
-					source_book?: string | null;
-					system_interaction?: string | null;
 					tags?: string[] | null;
 					theme_tags?: string[] | null;
 					updated_at?: string;
@@ -7285,8 +7688,6 @@ export type Database = {
 					name?: string;
 					rarity?: string | null;
 					source?: string | null;
-					source_book?: string | null;
-					system_interaction?: string | null;
 					tags?: string[] | null;
 					theme_tags?: string[] | null;
 					updated_at?: string;
@@ -7374,6 +7775,236 @@ export type Database = {
 				};
 				Relationships: [];
 			};
+			craft_formula_research: {
+				Row: {
+					character_id: string;
+					formula_id: string;
+					formula_revision: string;
+					iteration_bonus: number;
+					mastered: boolean;
+					state: string;
+					successful_productions: number;
+					updated_at: string;
+				};
+				Insert: {
+					character_id: string;
+					formula_id: string;
+					formula_revision: string;
+					iteration_bonus?: number;
+					mastered?: boolean;
+					state: string;
+					successful_productions?: number;
+					updated_at?: string;
+				};
+				Update: {
+					character_id?: string;
+					formula_id?: string;
+					formula_revision?: string;
+					iteration_bonus?: number;
+					mastered?: boolean;
+					state?: string;
+					successful_productions?: number;
+					updated_at?: string;
+				};
+				Relationships: [
+					{
+						foreignKeyName: "craft_formula_research_character_id_fkey";
+						columns: ["character_id"];
+						isOneToOne: false;
+						referencedRelation: "characters";
+						referencedColumns: ["id"];
+					},
+					{
+						foreignKeyName: "craft_formula_research_character_id_fkey";
+						columns: ["character_id"];
+						isOneToOne: false;
+						referencedRelation: "user_characters";
+						referencedColumns: ["id"];
+					},
+					{
+						foreignKeyName: "craft_formula_research_formula_id_fkey";
+						columns: ["formula_id"];
+						isOneToOne: false;
+						referencedRelation: "craft_formulas_m3";
+						referencedColumns: ["id"];
+					},
+				];
+			};
+			craft_formulas_m3: {
+				Row: {
+					ability: string;
+					adaptation_risks: Json | null;
+					created_at: string;
+					dc: number;
+					default_research_state: string;
+					discipline: string | null;
+					failure_policy: string;
+					id: string;
+					ingredient_roles: Json;
+					name: string;
+					output_definition_id: string;
+					output_quantity: number;
+					procedure_kind: string;
+					recipe_id: string;
+					recovery_policy: Json;
+					requirement_snapshot: Json;
+					revision: string;
+					skill: string;
+					tool_names: string[];
+					work_minutes: number;
+				};
+				Insert: {
+					ability: string;
+					adaptation_risks?: Json | null;
+					created_at?: string;
+					dc: number;
+					default_research_state?: string;
+					discipline?: string | null;
+					failure_policy: string;
+					id: string;
+					ingredient_roles: Json;
+					name: string;
+					output_definition_id: string;
+					output_quantity: number;
+					procedure_kind?: string;
+					recipe_id: string;
+					recovery_policy?: Json;
+					requirement_snapshot: Json;
+					revision: string;
+					skill: string;
+					tool_names: string[];
+					work_minutes: number;
+				};
+				Update: {
+					ability?: string;
+					adaptation_risks?: Json | null;
+					created_at?: string;
+					dc?: number;
+					default_research_state?: string;
+					discipline?: string | null;
+					failure_policy?: string;
+					id?: string;
+					ingredient_roles?: Json;
+					name?: string;
+					output_definition_id?: string;
+					output_quantity?: number;
+					procedure_kind?: string;
+					recipe_id?: string;
+					recovery_policy?: Json;
+					requirement_snapshot?: Json;
+					revision?: string;
+					skill?: string;
+					tool_names?: string[];
+					work_minutes?: number;
+				};
+				Relationships: [
+					{
+						foreignKeyName: "craft_formulas_m3_output_definition_id_fkey";
+						columns: ["output_definition_id"];
+						isOneToOne: false;
+						referencedRelation: "material_definitions";
+						referencedColumns: ["id"];
+					},
+				];
+			};
+			craft_projects_m3: {
+				Row: {
+					ability_modifier: number | null;
+					character_id: string;
+					created_at: string;
+					dc: number | null;
+					formula_id: string;
+					formula_revision: string;
+					formula_snapshot: Json;
+					id: string;
+					output_lot_id: string | null;
+					proficiency_bonus: number | null;
+					resolved_at: string | null;
+					risk_outcome: Json | null;
+					roll: number | null;
+					row_version: number;
+					started_at: string;
+					status: string;
+					total: number | null;
+					updated_at: string;
+					work_minutes: number;
+					worked_at: string | null;
+				};
+				Insert: {
+					ability_modifier?: number | null;
+					character_id: string;
+					created_at?: string;
+					dc?: number | null;
+					formula_id: string;
+					formula_revision: string;
+					formula_snapshot: Json;
+					id?: string;
+					output_lot_id?: string | null;
+					proficiency_bonus?: number | null;
+					resolved_at?: string | null;
+					risk_outcome?: Json | null;
+					roll?: number | null;
+					row_version?: number;
+					started_at?: string;
+					status?: string;
+					total?: number | null;
+					updated_at?: string;
+					work_minutes?: number;
+					worked_at?: string | null;
+				};
+				Update: {
+					ability_modifier?: number | null;
+					character_id?: string;
+					created_at?: string;
+					dc?: number | null;
+					formula_id?: string;
+					formula_revision?: string;
+					formula_snapshot?: Json;
+					id?: string;
+					output_lot_id?: string | null;
+					proficiency_bonus?: number | null;
+					resolved_at?: string | null;
+					risk_outcome?: Json | null;
+					roll?: number | null;
+					row_version?: number;
+					started_at?: string;
+					status?: string;
+					total?: number | null;
+					updated_at?: string;
+					work_minutes?: number;
+					worked_at?: string | null;
+				};
+				Relationships: [
+					{
+						foreignKeyName: "craft_projects_m3_character_id_fkey";
+						columns: ["character_id"];
+						isOneToOne: false;
+						referencedRelation: "characters";
+						referencedColumns: ["id"];
+					},
+					{
+						foreignKeyName: "craft_projects_m3_character_id_fkey";
+						columns: ["character_id"];
+						isOneToOne: false;
+						referencedRelation: "user_characters";
+						referencedColumns: ["id"];
+					},
+					{
+						foreignKeyName: "craft_projects_m3_formula_id_fkey";
+						columns: ["formula_id"];
+						isOneToOne: false;
+						referencedRelation: "craft_formulas_m3";
+						referencedColumns: ["id"];
+					},
+					{
+						foreignKeyName: "craft_projects_m3_output_lot_id_fkey";
+						columns: ["output_lot_id"];
+						isOneToOne: false;
+						referencedRelation: "material_lots";
+						referencedColumns: ["id"];
+					},
+				];
+			};
 			daily_quest_configs: {
 				Row: {
 					campaign_id: string | null;
@@ -7422,21 +8053,7 @@ export type Database = {
 						foreignKeyName: "daily_quest_configs_campaign_id_fkey";
 						columns: ["campaign_id"];
 						isOneToOne: false;
-						referencedRelation: "campaign_details";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "daily_quest_configs_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
 						referencedRelation: "campaigns";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "daily_quest_configs_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
-						referencedRelation: "campaigns_public_listings";
 						referencedColumns: ["id"];
 					},
 					{
@@ -7820,21 +8437,207 @@ export type Database = {
 						foreignKeyName: "guilds_campaign_id_fkey";
 						columns: ["campaign_id"];
 						isOneToOne: false;
-						referencedRelation: "campaign_details";
+						referencedRelation: "campaigns";
+						referencedColumns: ["id"];
+					},
+				];
+			};
+			harvest_attempts_m2: {
+				Row: {
+					actor_user_id: string;
+					authorization_id: string;
+					campaign_id: string;
+					character_id: string;
+					created_at: string;
+					dc: number;
+					fingerprint: string;
+					id: string;
+					intelligence_modifier: number;
+					lot_id: string | null;
+					operation_id: string;
+					proficiency_bonus: number;
+					result: Json;
+					roll: number;
+					skill: string;
+					success: boolean;
+					total: number;
+				};
+				Insert: {
+					actor_user_id: string;
+					authorization_id: string;
+					campaign_id: string;
+					character_id: string;
+					created_at?: string;
+					dc: number;
+					fingerprint: string;
+					id?: string;
+					intelligence_modifier: number;
+					lot_id?: string | null;
+					operation_id: string;
+					proficiency_bonus: number;
+					result: Json;
+					roll: number;
+					skill: string;
+					success: boolean;
+					total: number;
+				};
+				Update: {
+					actor_user_id?: string;
+					authorization_id?: string;
+					campaign_id?: string;
+					character_id?: string;
+					created_at?: string;
+					dc?: number;
+					fingerprint?: string;
+					id?: string;
+					intelligence_modifier?: number;
+					lot_id?: string | null;
+					operation_id?: string;
+					proficiency_bonus?: number;
+					result?: Json;
+					roll?: number;
+					skill?: string;
+					success?: boolean;
+					total?: number;
+				};
+				Relationships: [
+					{
+						foreignKeyName: "harvest_attempts_m2_authorization_id_fkey";
+						columns: ["authorization_id"];
+						isOneToOne: true;
+						referencedRelation: "harvest_authorizations_m2";
 						referencedColumns: ["id"];
 					},
 					{
-						foreignKeyName: "guilds_campaign_id_fkey";
+						foreignKeyName: "harvest_attempts_m2_campaign_id_fkey";
 						columns: ["campaign_id"];
 						isOneToOne: false;
 						referencedRelation: "campaigns";
 						referencedColumns: ["id"];
 					},
 					{
-						foreignKeyName: "guilds_campaign_id_fkey";
+						foreignKeyName: "harvest_attempts_m2_character_id_fkey";
+						columns: ["character_id"];
+						isOneToOne: false;
+						referencedRelation: "characters";
+						referencedColumns: ["id"];
+					},
+					{
+						foreignKeyName: "harvest_attempts_m2_character_id_fkey";
+						columns: ["character_id"];
+						isOneToOne: false;
+						referencedRelation: "user_characters";
+						referencedColumns: ["id"];
+					},
+					{
+						foreignKeyName: "harvest_attempts_m2_lot_id_fkey";
+						columns: ["lot_id"];
+						isOneToOne: false;
+						referencedRelation: "material_lots";
+						referencedColumns: ["id"];
+					},
+				];
+			};
+			harvest_authorizations_m2: {
+				Row: {
+					approval_fingerprint: string;
+					approval_operation_id: string;
+					approved_by_user_id: string;
+					approved_grade: string;
+					approved_quantity: number;
+					campaign_id: string;
+					character_id: string;
+					created_at: string;
+					dc: number;
+					duration_minutes: number;
+					id: string;
+					material_definition_id: string;
+					method: string;
+					resolved_at: string | null;
+					source_id: string;
+					source_kind: string;
+					source_note: string;
+					source_rank: string;
+					source_revision: string;
+					status: string;
+					tool_evidence: string;
+					tool_kind: string;
+				};
+				Insert: {
+					approval_fingerprint: string;
+					approval_operation_id: string;
+					approved_by_user_id: string;
+					approved_grade: string;
+					approved_quantity: number;
+					campaign_id: string;
+					character_id: string;
+					created_at?: string;
+					dc: number;
+					duration_minutes: number;
+					id?: string;
+					material_definition_id: string;
+					method: string;
+					resolved_at?: string | null;
+					source_id: string;
+					source_kind: string;
+					source_note: string;
+					source_rank: string;
+					source_revision: string;
+					status?: string;
+					tool_evidence: string;
+					tool_kind: string;
+				};
+				Update: {
+					approval_fingerprint?: string;
+					approval_operation_id?: string;
+					approved_by_user_id?: string;
+					approved_grade?: string;
+					approved_quantity?: number;
+					campaign_id?: string;
+					character_id?: string;
+					created_at?: string;
+					dc?: number;
+					duration_minutes?: number;
+					id?: string;
+					material_definition_id?: string;
+					method?: string;
+					resolved_at?: string | null;
+					source_id?: string;
+					source_kind?: string;
+					source_note?: string;
+					source_rank?: string;
+					source_revision?: string;
+					status?: string;
+					tool_evidence?: string;
+					tool_kind?: string;
+				};
+				Relationships: [
+					{
+						foreignKeyName: "harvest_authorizations_m2_campaign_id_fkey";
 						columns: ["campaign_id"];
 						isOneToOne: false;
-						referencedRelation: "campaigns_public_listings";
+						referencedRelation: "campaigns";
+						referencedColumns: ["id"];
+					},
+					{
+						foreignKeyName: "harvest_authorizations_m2_character_id_fkey";
+						columns: ["character_id"];
+						isOneToOne: false;
+						referencedRelation: "characters";
+						referencedColumns: ["id"];
+					},
+					{
+						foreignKeyName: "harvest_authorizations_m2_character_id_fkey";
+						columns: ["character_id"];
+						isOneToOne: false;
+						referencedRelation: "user_characters";
+						referencedColumns: ["id"];
+					},
+					{
+						foreignKeyName: "harvest_authorizations_m2_material_definition_id_fkey";
+						columns: ["material_definition_id"];
+						isOneToOne: false;
+						referencedRelation: "material_definitions";
 						referencedColumns: ["id"];
 					},
 				];
@@ -7902,28 +8705,14 @@ export type Database = {
 						foreignKeyName: "homebrew_content_campaign_id_fkey";
 						columns: ["campaign_id"];
 						isOneToOne: false;
-						referencedRelation: "campaign_details";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "homebrew_content_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
 						referencedRelation: "campaigns";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "homebrew_content_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
-						referencedRelation: "campaigns_public_listings";
 						referencedColumns: ["id"];
 					},
 					{
 						foreignKeyName: "homebrew_content_user_id_fkey";
 						columns: ["user_id"];
 						isOneToOne: false;
-						referencedRelation: "user_profiles";
+						referencedRelation: "profiles";
 						referencedColumns: ["id"];
 					},
 				];
@@ -7969,7 +8758,6 @@ export type Database = {
 			marketplace_items: {
 				Row: {
 					author_id: string;
-					bundled_item_ids: string[] | null;
 					category: string;
 					compatibility: Json;
 					content: Json;
@@ -7978,15 +8766,10 @@ export type Database = {
 					downloads_count: number;
 					file_url: string | null;
 					id: string;
-					is_bundle: boolean;
 					is_featured: boolean;
-					is_listed: boolean;
 					is_verified: boolean;
 					item_type: string;
 					license: string;
-					price_amount: number | null;
-					price_currency: string | null;
-					price_type: string;
 					rating_avg: number;
 					rating_count: number;
 					requirements: Json;
@@ -7998,7 +8781,6 @@ export type Database = {
 				};
 				Insert: {
 					author_id: string;
-					bundled_item_ids?: string[] | null;
 					category?: string;
 					compatibility?: Json;
 					content?: Json;
@@ -8007,15 +8789,10 @@ export type Database = {
 					downloads_count?: number;
 					file_url?: string | null;
 					id?: string;
-					is_bundle?: boolean;
 					is_featured?: boolean;
-					is_listed?: boolean;
 					is_verified?: boolean;
 					item_type: string;
 					license?: string;
-					price_amount?: number | null;
-					price_currency?: string | null;
-					price_type?: string;
 					rating_avg?: number;
 					rating_count?: number;
 					requirements?: Json;
@@ -8027,7 +8804,6 @@ export type Database = {
 				};
 				Update: {
 					author_id?: string;
-					bundled_item_ids?: string[] | null;
 					category?: string;
 					compatibility?: Json;
 					content?: Json;
@@ -8036,15 +8812,10 @@ export type Database = {
 					downloads_count?: number;
 					file_url?: string | null;
 					id?: string;
-					is_bundle?: boolean;
 					is_featured?: boolean;
-					is_listed?: boolean;
 					is_verified?: boolean;
 					item_type?: string;
 					license?: string;
-					price_amount?: number | null;
-					price_currency?: string | null;
-					price_type?: string;
 					rating_avg?: number;
 					rating_count?: number;
 					requirements?: Json;
@@ -8066,7 +8837,6 @@ export type Database = {
 					rating: number;
 					updated_at: string;
 					user_id: string;
-					verified_purchase: boolean;
 				};
 				Insert: {
 					comment?: string | null;
@@ -8077,7 +8847,6 @@ export type Database = {
 					rating: number;
 					updated_at?: string;
 					user_id: string;
-					verified_purchase?: boolean;
 				};
 				Update: {
 					comment?: string | null;
@@ -8088,7 +8857,6 @@ export type Database = {
 					rating?: number;
 					updated_at?: string;
 					user_id?: string;
-					verified_purchase?: boolean;
 				};
 				Relationships: [
 					{
@@ -8100,33 +8868,306 @@ export type Database = {
 					},
 				];
 			};
+			material_definitions: {
+				Row: {
+					created_at: string;
+					definition_metadata: Json;
+					family: string | null;
+					grade: string | null;
+					id: string;
+					name: string;
+					rarity: string | null;
+					regulation_metadata: Json;
+					source_revision: string;
+					unit: string | null;
+					updated_at: string;
+				};
+				Insert: {
+					created_at?: string;
+					definition_metadata?: Json;
+					family?: string | null;
+					grade?: string | null;
+					id: string;
+					name: string;
+					rarity?: string | null;
+					regulation_metadata?: Json;
+					source_revision?: string;
+					unit?: string | null;
+					updated_at?: string;
+				};
+				Update: {
+					created_at?: string;
+					definition_metadata?: Json;
+					family?: string | null;
+					grade?: string | null;
+					id?: string;
+					name?: string;
+					rarity?: string | null;
+					regulation_metadata?: Json;
+					source_revision?: string;
+					unit?: string | null;
+					updated_at?: string;
+				};
+				Relationships: [];
+			};
+			material_lot_discoveries: {
+				Row: {
+					character_id: string;
+					created_at: string;
+					discovered_metadata: Json;
+					discovery_revision: number;
+					id: string;
+					lot_id: string;
+					notes: string | null;
+					updated_at: string;
+				};
+				Insert: {
+					character_id: string;
+					created_at?: string;
+					discovered_metadata?: Json;
+					discovery_revision?: number;
+					id?: string;
+					lot_id: string;
+					notes?: string | null;
+					updated_at?: string;
+				};
+				Update: {
+					character_id?: string;
+					created_at?: string;
+					discovered_metadata?: Json;
+					discovery_revision?: number;
+					id?: string;
+					lot_id?: string;
+					notes?: string | null;
+					updated_at?: string;
+				};
+				Relationships: [
+					{
+						foreignKeyName: "material_lot_discoveries_character_id_fkey";
+						columns: ["character_id"];
+						isOneToOne: false;
+						referencedRelation: "characters";
+						referencedColumns: ["id"];
+					},
+					{
+						foreignKeyName: "material_lot_discoveries_character_id_fkey";
+						columns: ["character_id"];
+						isOneToOne: false;
+						referencedRelation: "user_characters";
+						referencedColumns: ["id"];
+					},
+					{
+						foreignKeyName: "material_lot_discoveries_lot_id_fkey";
+						columns: ["lot_id"];
+						isOneToOne: false;
+						referencedRelation: "material_lots";
+						referencedColumns: ["id"];
+					},
+				];
+			};
+			material_lot_operations: {
+				Row: {
+					actor_user_id: string;
+					created_at: string;
+					fingerprint: string;
+					id: string;
+					operation_id: string;
+					operation_kind: string;
+					result: Json;
+				};
+				Insert: {
+					actor_user_id: string;
+					created_at?: string;
+					fingerprint: string;
+					id?: string;
+					operation_id: string;
+					operation_kind: string;
+					result?: Json;
+				};
+				Update: {
+					actor_user_id?: string;
+					created_at?: string;
+					fingerprint?: string;
+					id?: string;
+					operation_id?: string;
+					operation_kind?: string;
+					result?: Json;
+				};
+				Relationships: [];
+			};
+			material_lot_reservations: {
+				Row: {
+					created_at: string;
+					created_by_user_id: string;
+					id: string;
+					lot_id: string;
+					quantity: number;
+					reference_id: string;
+					reservation_kind: string;
+					status: string;
+					updated_at: string;
+					usage_role: string;
+				};
+				Insert: {
+					created_at?: string;
+					created_by_user_id: string;
+					id?: string;
+					lot_id: string;
+					quantity: number;
+					reference_id: string;
+					reservation_kind?: string;
+					status?: string;
+					updated_at?: string;
+					usage_role?: string;
+				};
+				Update: {
+					created_at?: string;
+					created_by_user_id?: string;
+					id?: string;
+					lot_id?: string;
+					quantity?: number;
+					reference_id?: string;
+					reservation_kind?: string;
+					status?: string;
+					updated_at?: string;
+					usage_role?: string;
+				};
+				Relationships: [
+					{
+						foreignKeyName: "material_lot_reservations_lot_id_fkey";
+						columns: ["lot_id"];
+						isOneToOne: false;
+						referencedRelation: "material_lots";
+						referencedColumns: ["id"];
+					},
+				];
+			};
+			material_lots: {
+				Row: {
+					created_at: string;
+					grade: string | null;
+					id: string;
+					legacy_character_material_id: string | null;
+					material_definition_id: string;
+					notes: string | null;
+					owner_campaign_id: string | null;
+					owner_character_id: string | null;
+					owner_scope: string;
+					provenance_metadata: Json;
+					provenance_status: string;
+					quantity: number;
+					regulation_metadata: Json;
+					row_version: number;
+					source_rank: string | null;
+					unit: string | null;
+					updated_at: string;
+				};
+				Insert: {
+					created_at?: string;
+					grade?: string | null;
+					id?: string;
+					legacy_character_material_id?: string | null;
+					material_definition_id: string;
+					notes?: string | null;
+					owner_campaign_id?: string | null;
+					owner_character_id?: string | null;
+					owner_scope: string;
+					provenance_metadata?: Json;
+					provenance_status?: string;
+					quantity?: number;
+					regulation_metadata?: Json;
+					row_version?: number;
+					source_rank?: string | null;
+					unit?: string | null;
+					updated_at?: string;
+				};
+				Update: {
+					created_at?: string;
+					grade?: string | null;
+					id?: string;
+					legacy_character_material_id?: string | null;
+					material_definition_id?: string;
+					notes?: string | null;
+					owner_campaign_id?: string | null;
+					owner_character_id?: string | null;
+					owner_scope?: string;
+					provenance_metadata?: Json;
+					provenance_status?: string;
+					quantity?: number;
+					regulation_metadata?: Json;
+					row_version?: number;
+					source_rank?: string | null;
+					unit?: string | null;
+					updated_at?: string;
+				};
+				Relationships: [
+					{
+						foreignKeyName: "material_lots_legacy_character_material_id_fkey";
+						columns: ["legacy_character_material_id"];
+						isOneToOne: true;
+						referencedRelation: "character_materials";
+						referencedColumns: ["id"];
+					},
+					{
+						foreignKeyName: "material_lots_material_definition_id_fkey";
+						columns: ["material_definition_id"];
+						isOneToOne: false;
+						referencedRelation: "material_definitions";
+						referencedColumns: ["id"];
+					},
+					{
+						foreignKeyName: "material_lots_owner_campaign_id_fkey";
+						columns: ["owner_campaign_id"];
+						isOneToOne: false;
+						referencedRelation: "campaigns";
+						referencedColumns: ["id"];
+					},
+					{
+						foreignKeyName: "material_lots_owner_character_id_fkey";
+						columns: ["owner_character_id"];
+						isOneToOne: false;
+						referencedRelation: "characters";
+						referencedColumns: ["id"];
+					},
+					{
+						foreignKeyName: "material_lots_owner_character_id_fkey";
+						columns: ["owner_character_id"];
+						isOneToOne: false;
+						referencedRelation: "user_characters";
+						referencedColumns: ["id"];
+					},
+				];
+			};
 			profiles: {
 				Row: {
-					banned_at: string | null;
+					avatar_url: string | null;
 					created_at: string;
 					display_name: string | null;
 					email: string;
 					id: string;
 					role: string;
 					updated_at: string;
+					username: string | null;
 				};
 				Insert: {
-					banned_at?: string | null;
+					avatar_url?: string | null;
 					created_at?: string;
 					display_name?: string | null;
 					email: string;
 					id: string;
 					role?: string;
 					updated_at?: string;
+					username?: string | null;
 				};
 				Update: {
-					banned_at?: string | null;
+					avatar_url?: string | null;
 					created_at?: string;
 					display_name?: string | null;
 					email?: string;
 					id?: string;
 					role?: string;
 					updated_at?: string;
+					username?: string | null;
 				};
 				Relationships: [];
 			};
@@ -8231,6 +9272,38 @@ export type Database = {
 					},
 				];
 			};
+			regent_catch_up_options: {
+				Row: {
+					approved_at: string;
+					approved_by: string;
+					canonical_id: string;
+					kind: string;
+					unlock_id: string;
+				};
+				Insert: {
+					approved_at?: string;
+					approved_by: string;
+					canonical_id: string;
+					kind: string;
+					unlock_id: string;
+				};
+				Update: {
+					approved_at?: string;
+					approved_by?: string;
+					canonical_id?: string;
+					kind?: string;
+					unlock_id?: string;
+				};
+				Relationships: [
+					{
+						foreignKeyName: "regent_catch_up_options_unlock_id_fkey";
+						columns: ["unlock_id"];
+						isOneToOne: false;
+						referencedRelation: "character_regent_unlocks";
+						referencedColumns: ["id"];
+					},
+				];
+			};
 			roll_history: {
 				Row: {
 					campaign_id: string | null;
@@ -8276,21 +9349,7 @@ export type Database = {
 						foreignKeyName: "roll_history_campaign_id_fkey";
 						columns: ["campaign_id"];
 						isOneToOne: false;
-						referencedRelation: "campaign_details";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "roll_history_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
 						referencedRelation: "campaigns";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "roll_history_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
-						referencedRelation: "campaigns_public_listings";
 						referencedColumns: ["id"];
 					},
 					{
@@ -8312,12 +9371,15 @@ export type Database = {
 			saved_sovereigns: {
 				Row: {
 					abilities: Json;
+					canonical_source_revision: string | null;
 					created_at: string;
 					created_by: string;
+					definition: Json;
+					definition_id: string | null;
 					description: string;
 					fusion_description: string;
 					fusion_method: string;
-					fusion_stability: string;
+					fusion_stability: string | null;
 					fusion_theme: string;
 					id: string;
 					is_public: boolean;
@@ -8327,19 +9389,27 @@ export type Database = {
 					monarch_b_id: string | null;
 					name: string;
 					path_id: string;
-					power_multiplier: string;
+					power_multiplier: string | null;
+					projection_revision: string;
 					regent_a_id: string | null;
 					regent_b_id: string | null;
+					ruleset_revision: string | null;
+					save_fingerprint: string | null;
+					save_operation_id: string | null;
+					schema_version: number;
 					title: string;
 				};
 				Insert: {
 					abilities?: Json;
+					canonical_source_revision?: string | null;
 					created_at?: string;
 					created_by: string;
+					definition: Json;
+					definition_id?: string | null;
 					description: string;
 					fusion_description: string;
 					fusion_method: string;
-					fusion_stability: string;
+					fusion_stability?: string | null;
 					fusion_theme: string;
 					id?: string;
 					is_public?: boolean;
@@ -8349,19 +9419,27 @@ export type Database = {
 					monarch_b_id?: string | null;
 					name: string;
 					path_id: string;
-					power_multiplier: string;
+					power_multiplier?: string | null;
+					projection_revision?: string;
 					regent_a_id?: string | null;
 					regent_b_id?: string | null;
+					ruleset_revision?: string | null;
+					save_fingerprint?: string | null;
+					save_operation_id?: string | null;
+					schema_version?: number;
 					title: string;
 				};
 				Update: {
 					abilities?: Json;
+					canonical_source_revision?: string | null;
 					created_at?: string;
 					created_by?: string;
+					definition?: Json;
+					definition_id?: string | null;
 					description?: string;
 					fusion_description?: string;
 					fusion_method?: string;
-					fusion_stability?: string;
+					fusion_stability?: string | null;
 					fusion_theme?: string;
 					id?: string;
 					is_public?: boolean;
@@ -8371,19 +9449,17 @@ export type Database = {
 					monarch_b_id?: string | null;
 					name?: string;
 					path_id?: string;
-					power_multiplier?: string;
+					power_multiplier?: string | null;
+					projection_revision?: string;
 					regent_a_id?: string | null;
 					regent_b_id?: string | null;
+					ruleset_revision?: string | null;
+					save_fingerprint?: string | null;
+					save_operation_id?: string | null;
+					schema_version?: number;
 					title?: string;
 				};
 				Relationships: [
-					{
-						foreignKeyName: "saved_sovereigns_job_id_fkey";
-						columns: ["job_id"];
-						isOneToOne: false;
-						referencedRelation: "compendium_jobs";
-						referencedColumns: ["id"];
-					},
 					{
 						foreignKeyName: "saved_sovereigns_monarch_a_id_fkey";
 						columns: ["monarch_a_id"];
@@ -8396,13 +9472,6 @@ export type Database = {
 						columns: ["monarch_b_id"];
 						isOneToOne: false;
 						referencedRelation: "compendium_monarchs";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "saved_sovereigns_path_id_fkey";
-						columns: ["path_id"];
-						isOneToOne: false;
-						referencedRelation: "compendium_job_paths";
 						referencedColumns: ["id"];
 					},
 				];
@@ -8501,21 +9570,59 @@ export type Database = {
 						foreignKeyName: "session_quests_campaign_id_fkey";
 						columns: ["campaign_id"];
 						isOneToOne: false;
-						referencedRelation: "campaign_details";
-						referencedColumns: ["id"];
-					},
-					{
-						foreignKeyName: "session_quests_campaign_id_fkey";
-						columns: ["campaign_id"];
-						isOneToOne: false;
 						referencedRelation: "campaigns";
 						referencedColumns: ["id"];
 					},
+				];
+			};
+			sovereign_attachment_operations: {
+				Row: {
+					actor_id: string;
+					character_id: string;
+					created_at: string;
+					id: string;
+					operation_id: string;
+					result: Json;
+					sovereign_id: string;
+				};
+				Insert: {
+					actor_id: string;
+					character_id: string;
+					created_at?: string;
+					id?: string;
+					operation_id: string;
+					result: Json;
+					sovereign_id: string;
+				};
+				Update: {
+					actor_id?: string;
+					character_id?: string;
+					created_at?: string;
+					id?: string;
+					operation_id?: string;
+					result?: Json;
+					sovereign_id?: string;
+				};
+				Relationships: [
 					{
-						foreignKeyName: "session_quests_campaign_id_fkey";
-						columns: ["campaign_id"];
+						foreignKeyName: "sovereign_attachment_operations_character_id_fkey";
+						columns: ["character_id"];
 						isOneToOne: false;
-						referencedRelation: "campaigns_public_listings";
+						referencedRelation: "characters";
+						referencedColumns: ["id"];
+					},
+					{
+						foreignKeyName: "sovereign_attachment_operations_character_id_fkey";
+						columns: ["character_id"];
+						isOneToOne: false;
+						referencedRelation: "user_characters";
+						referencedColumns: ["id"];
+					},
+					{
+						foreignKeyName: "sovereign_attachment_operations_sovereign_id_fkey";
+						columns: ["sovereign_id"];
+						isOneToOne: false;
+						referencedRelation: "saved_sovereigns";
 						referencedColumns: ["id"];
 					},
 				];
@@ -8543,53 +9650,6 @@ export type Database = {
 					user_id?: string;
 				};
 				Relationships: [];
-			};
-			user_marketplace_entitlements: {
-				Row: {
-					created_at: string;
-					entitlement_type: string;
-					expires_at: string | null;
-					gift_message: string | null;
-					gifted_by: string | null;
-					granted_by: string | null;
-					id: string;
-					item_id: string;
-					updated_at: string;
-					user_id: string;
-				};
-				Insert: {
-					created_at?: string;
-					entitlement_type?: string;
-					expires_at?: string | null;
-					gift_message?: string | null;
-					gifted_by?: string | null;
-					granted_by?: string | null;
-					id?: string;
-					item_id: string;
-					updated_at?: string;
-					user_id: string;
-				};
-				Update: {
-					created_at?: string;
-					entitlement_type?: string;
-					expires_at?: string | null;
-					gift_message?: string | null;
-					gifted_by?: string | null;
-					granted_by?: string | null;
-					id?: string;
-					item_id?: string;
-					updated_at?: string;
-					user_id?: string;
-				};
-				Relationships: [
-					{
-						foreignKeyName: "user_marketplace_entitlements_item_id_fkey";
-						columns: ["item_id"];
-						isOneToOne: false;
-						referencedRelation: "marketplace_items";
-						referencedColumns: ["id"];
-					},
-				];
 			};
 			user_notifications: {
 				Row: {
@@ -8695,48 +9755,13 @@ export type Database = {
 			};
 		};
 		Views: {
-			campaign_details: {
+			regent_unresolved_ability_grants: {
 				Row: {
-					created_at: string | null;
-					description: string | null;
-					dm_email: string | null;
-					dm_id: string | null;
-					dm_name: string | null;
+					canonical_id: string | null;
+					character_id: string | null;
 					id: string | null;
-					is_active: boolean | null;
-					name: string | null;
-					party_gold: Json | null;
-					public_listing: Json | null;
-					settings: Json | null;
-					share_code: string | null;
-					updated_at: string | null;
-					warden_email: string | null;
-					warden_id: string | null;
-					warden_name: string | null;
-				};
-				Relationships: [];
-			};
-			campaigns_public_listings: {
-				Row: {
-					id: string | null;
-					name: string | null;
-					public_listing: Json | null;
-					share_code: string | null;
-					updated_at: string | null;
-				};
-				Insert: {
-					id?: string | null;
-					name?: string | null;
-					public_listing?: Json | null;
-					share_code?: string | null;
-					updated_at?: string | null;
-				};
-				Update: {
-					id?: string | null;
-					name?: string | null;
-					public_listing?: Json | null;
-					share_code?: string | null;
-					updated_at?: string | null;
+					kind: string | null;
+					source: string | null;
 				};
 				Relationships: [];
 			};
@@ -8856,6 +9881,16 @@ export type Database = {
 				};
 				Returns: string;
 			};
+			add_companion_to_combat: {
+				Args: {
+					p_anchor_character_id?: string;
+					p_companion_instance_id: string;
+					p_initiative?: number;
+					p_initiative_mode?: string;
+					p_session_id: string;
+				};
+				Returns: string;
+			};
 			add_player_character_to_campaign: {
 				Args: {
 					p_campaign_id: string;
@@ -8892,13 +9927,23 @@ export type Database = {
 				};
 				Returns: string;
 			};
-			admin_set_user_ban: {
-				Args: { p_banned: boolean; p_target: string };
-				Returns: undefined;
+			adjust_material_lot_m1: {
+				Args: {
+					p_delta: number;
+					p_expected_version: number;
+					p_lot_id: string;
+					p_operation_id: string;
+				};
+				Returns: Json;
 			};
-			admin_set_user_role: {
-				Args: { p_role: string; p_target: string };
-				Returns: undefined;
+			adjust_material_lot_m1_unchecked: {
+				Args: {
+					p_delta: number;
+					p_expected_version: number;
+					p_lot_id: string;
+					p_operation_id: string;
+				};
+				Returns: Json;
 			};
 			advance_combat_turn: {
 				Args: { p_session_id: string };
@@ -8906,6 +9951,33 @@ export type Database = {
 			};
 			approve_guild_join_request: {
 				Args: { p_request_id: string; p_role?: string };
+				Returns: string;
+			};
+			approve_harvest_yield_m2: {
+				Args: {
+					p_campaign_id: string;
+					p_character_id: string;
+					p_duration_minutes: number;
+					p_material_definition_id: string;
+					p_method: string;
+					p_operation_id: string;
+					p_quantity: number;
+					p_source_id: string;
+					p_source_kind: string;
+					p_source_note: string;
+					p_source_rank: string;
+					p_tool_evidence: string;
+					p_tool_kind: string;
+					p_warden_dc: number;
+				};
+				Returns: string;
+			};
+			approve_pending_regent_grant: {
+				Args: {
+					p_campaign_id: string;
+					p_pending_id: string;
+					p_unlock_id: string;
+				};
 				Returns: string;
 			};
 			asset_exists: { Args: { p_path: string }; Returns: boolean };
@@ -8971,6 +10043,14 @@ export type Database = {
 				};
 				Returns: undefined;
 			};
+			attach_saved_sovereign: {
+				Args: {
+					p_character_id: string;
+					p_operation_id: string;
+					p_sovereign_id: string;
+				};
+				Returns: Json;
+			};
 			attempt_taming: {
 				Args: {
 					p_anomaly_id: string;
@@ -8997,6 +10077,24 @@ export type Database = {
 				};
 				Returns: string;
 			};
+			attempt_taming_with_source: {
+				Args: {
+					p_anomaly_id: string;
+					p_bond_initial?: number;
+					p_campaign_id: string;
+					p_character_id: string;
+					p_dc: number;
+					p_initial_hp: number;
+					p_nickname?: string;
+					p_roll_total: number;
+					p_source_snapshot: Json;
+				};
+				Returns: string;
+			};
+			begin_craft_experiment_m4: {
+				Args: { p_character_id: string; p_formula_id: string };
+				Returns: Json;
+			};
 			bureau_guild_leaderboard: {
 				Args: never;
 				Returns: {
@@ -9012,13 +10110,13 @@ export type Database = {
 				Returns: number;
 			};
 			calculate_proficiency_bonus: { Args: { level: number }; Returns: number };
-			can_manage_homebrew_content: {
-				Args: { p_homebrew_id: string; p_user_id?: string };
-				Returns: boolean;
-			};
-			can_view_homebrew_content: {
-				Args: { p_homebrew_id: string; p_user_id?: string };
-				Returns: boolean;
+			cancel_craft_project_m3: {
+				Args: {
+					p_expected_version: number;
+					p_operation_id: string;
+					p_project_id: string;
+				};
+				Returns: Json;
 			};
 			claim_anomaly_controller: {
 				Args: { p_character_id: string; p_tamed_id: string };
@@ -9032,6 +10130,10 @@ export type Database = {
 				Args: { p_character_id: string; p_quest_id: string };
 				Returns: undefined;
 			};
+			clear_companion_rider: {
+				Args: { p_companion_instance_id: string };
+				Returns: undefined;
+			};
 			complete_regent_catch_up: {
 				Args: { p_unlock_id: string };
 				Returns: number;
@@ -9039,6 +10141,10 @@ export type Database = {
 			complete_session_quest: {
 				Args: { p_completion_notes?: string; p_quest_id: string };
 				Returns: undefined;
+			};
+			configure_regent_unlock_offer: {
+				Args: { p_candidate_regent_ids: string[]; p_grant_id: string };
+				Returns: number;
 			};
 			consume_regent_unlock_grant: {
 				Args: { p_grant_id: string; p_regent_id: string };
@@ -9080,6 +10186,36 @@ export type Database = {
 				};
 				Returns: string;
 			};
+			create_material_lot_m1: {
+				Args: {
+					p_character_id: string;
+					p_material_definition_id: string;
+					p_notes?: string;
+					p_operation_id: string;
+					p_quantity: number;
+				};
+				Returns: string;
+			};
+			create_material_lot_m1_unchecked: {
+				Args: {
+					p_character_id: string;
+					p_material_definition_id: string;
+					p_notes?: string;
+					p_operation_id: string;
+					p_quantity: number;
+				};
+				Returns: string;
+			};
+			create_regent_unlock_offer: {
+				Args: {
+					p_candidate_regent_ids: string[];
+					p_character_id: string;
+					p_quest_id: string;
+					p_quest_title: string;
+					p_request_id: string;
+				};
+				Returns: string;
+			};
 			create_session_quest: {
 				Args: {
 					p_campaign_id: string;
@@ -9093,6 +10229,14 @@ export type Database = {
 			deploy_campaign_encounter: {
 				Args: { p_encounter_id: string };
 				Returns: string;
+			};
+			detach_campaign_member_character: {
+				Args: {
+					p_campaign_id: string;
+					p_character_id: string;
+					p_member_id: string;
+				};
+				Returns: undefined;
 			};
 			discover_character_rune: {
 				Args: {
@@ -9112,15 +10256,13 @@ export type Database = {
 					mastery_level: number | null;
 					rune_id: string | null;
 					rune_key: string | null;
-				}[];
-			};
-			detach_campaign_member_character: {
-				Args: {
-					p_campaign_id: string;
-					p_character_id: string;
-					p_member_id: string;
 				};
-				Returns: undefined;
+				SetofOptions: {
+					from: "*";
+					to: "character_rune_knowledge";
+					isOneToOne: true;
+					isSetofReturn: false;
+				};
 			};
 			end_active_session: {
 				Args: { p_session_id: string };
@@ -9147,15 +10289,6 @@ export type Database = {
 				Returns: string;
 			};
 			generate_share_code: { Args: never; Returns: string };
-			get_accessible_sourcebooks: {
-				Args: { p_campaign_id?: string; p_user_id?: string };
-				Returns: {
-					access_type: string;
-					expires_at: string;
-					shared_by: string;
-					sourcebook_id: string;
-				}[];
-			};
 			get_campaign_by_share_code: {
 				Args: { p_share_code: string };
 				Returns: {
@@ -9292,14 +10425,6 @@ export type Database = {
 					isSetofReturn: true;
 				};
 			};
-			gift_marketplace_item: {
-				Args: {
-					p_item_id: string;
-					p_message?: string;
-					p_recipient_user_id: string;
-				};
-				Returns: string;
-			};
 			guild_member_role: {
 				Args: { p_guild_id: string; p_uid: string };
 				Returns: string;
@@ -9309,6 +10434,59 @@ export type Database = {
 				Returns: string;
 			};
 			hypopg_reset: { Args: never; Returns: undefined };
+			import_craft_state_authority: {
+				Args: {
+					p_lot_id_map: Json;
+					p_operation_id: string;
+					p_original_character_id: string;
+					p_target_character_id: string;
+				};
+				Returns: Json;
+			};
+			import_material_lots_m1: {
+				Args: {
+					p_character_id: string;
+					p_definitions: Json;
+					p_discoveries: Json;
+					p_lots: Json;
+					p_operation_id: string;
+				};
+				Returns: Json;
+			};
+			import_material_lots_m1_unchecked: {
+				Args: {
+					p_character_id: string;
+					p_definitions: Json;
+					p_discoveries: Json;
+					p_lots: Json;
+					p_operation_id: string;
+				};
+				Returns: Json;
+			};
+			import_regent_grant_authority: {
+				Args: {
+					p_grant_kind: string;
+					p_original_grant_id: string;
+					p_target_unlock_id: string;
+				};
+				Returns: string;
+			};
+			import_regent_resonance_state: {
+				Args: {
+					p_original_character_id: string;
+					p_requested_points: number;
+					p_target_character_id: string;
+				};
+				Returns: number;
+			};
+			import_regent_unlock_authority: {
+				Args: {
+					p_expected_regent_id: string;
+					p_original_unlock_id: string;
+					p_target_character_id: string;
+				};
+				Returns: string;
+			};
 			is_campaign_active: { Args: { p_campaign_id: string }; Returns: boolean };
 			is_campaign_dm: {
 				Args: { p_campaign_id: string; p_user_id?: string };
@@ -9326,8 +10504,6 @@ export type Database = {
 				Args: { p_campaign_id: string; p_user_id?: string };
 				Returns: boolean;
 			};
-			is_dm_or_admin: { Args: { p_user_id?: string }; Returns: boolean };
-			is_warden_or_admin: { Args: { p_user_id?: string }; Returns: boolean };
 			join_campaign_by_code: {
 				Args: { p_character_id?: string; p_code: string };
 				Returns: string;
@@ -9362,6 +10538,21 @@ export type Database = {
 				Args: { p_character_id: string };
 				Returns: undefined;
 			};
+			prepare_companion_attempt_adjudication: {
+				Args: {
+					p_attempt_kind: string;
+					p_campaign_id: string;
+					p_character_id: string;
+					p_companion_instance_id?: string;
+					p_proficiency_mode?: string;
+					p_reason?: string;
+					p_retry_of_attempt_id?: string;
+					p_roll_mode?: string;
+					p_specialization_mode?: string;
+					p_target_source_id: string;
+				};
+				Returns: string;
+			};
 			prepare_search_text: { Args: { p_text: string }; Returns: string };
 			record_marketplace_download: {
 				Args: { p_item_id: string; p_user_id?: string };
@@ -9379,6 +10570,14 @@ export type Database = {
 				Args: { p_character_id?: string; p_token: string };
 				Returns: string;
 			};
+			refill_regent_resonance: {
+				Args: { p_character_id: string };
+				Returns: number;
+			};
+			register_character_vehicle_mount: {
+				Args: { p_source_snapshot: Json; p_vehicle_link_id: string };
+				Returns: string;
+			};
 			release_anomaly_controller: {
 				Args: { p_tamed_id: string };
 				Returns: undefined;
@@ -9387,12 +10586,25 @@ export type Database = {
 				Args: { p_campaign_id: string; p_member_id: string };
 				Returns: undefined;
 			};
+			remove_campaign_tamed_anomaly: {
+				Args: { p_tamed_id: string };
+				Returns: boolean;
+			};
 			remove_regent_unlock: { Args: { p_unlock_id: string }; Returns: string };
 			request_to_join_guild: {
 				Args: {
 					p_character_id?: string;
 					p_message?: string;
 					p_share_code: string;
+				};
+				Returns: string;
+			};
+			reserve_craft_project_m3: {
+				Args: {
+					p_character_id: string;
+					p_formula_id: string;
+					p_inputs: Json;
+					p_operation_id: string;
 				};
 				Returns: string;
 			};
@@ -9416,6 +10628,52 @@ export type Database = {
 					used_count: number;
 				}[];
 			};
+			resolve_companion_bond_attempt_c2: {
+				Args: {
+					p_adjudication_id?: string;
+					p_campaign_id: string;
+					p_character_id: string;
+					p_companion_instance_id: string;
+					p_expected_source_id: string;
+					p_roll_primary: number;
+					p_roll_secondary?: number;
+				};
+				Returns: Json;
+			};
+			resolve_companion_tame_attempt_c2: {
+				Args: {
+					p_adjudication_id?: string;
+					p_anomaly_id: string;
+					p_campaign_id: string;
+					p_character_id: string;
+					p_nickname?: string;
+					p_roll_primary: number;
+					p_roll_secondary?: number;
+					p_source_snapshot: Json;
+				};
+				Returns: Json;
+			};
+			resolve_companion_tame_attempt_c2_unchecked: {
+				Args: {
+					p_adjudication_id?: string;
+					p_anomaly_id: string;
+					p_campaign_id: string;
+					p_character_id: string;
+					p_nickname?: string;
+					p_roll_primary: number;
+					p_roll_secondary?: number;
+					p_source_snapshot: Json;
+				};
+				Returns: Json;
+			};
+			resolve_craft_project_m3: {
+				Args: {
+					p_expected_version: number;
+					p_operation_id: string;
+					p_project_id: string;
+				};
+				Returns: Json;
+			};
 			resolve_guild_quest: {
 				Args: { p_quest_id: string; p_success: boolean };
 				Returns: undefined;
@@ -9424,9 +10682,29 @@ export type Database = {
 				Args: { p_quest_id: string; p_success: boolean };
 				Returns: undefined;
 			};
+			resolve_harvest_attempt_m2: {
+				Args: {
+					p_authorization_id: string;
+					p_operation_id: string;
+					p_skill: string;
+				};
+				Returns: Json;
+			};
+			rest_companions_for_character: {
+				Args: { p_character_id: string; p_rest_kind: string };
+				Returns: number;
+			};
 			revoke_campaign_invite: {
 				Args: { p_invite_id: string; p_reason?: string };
 				Returns: boolean;
+			};
+			revoke_harvest_approval_m2: {
+				Args: { p_authorization_id: string };
+				Returns: boolean;
+			};
+			revoke_regent_unlock_offer: {
+				Args: { p_grant_id: string };
+				Returns: string;
 			};
 			save_campaign_encounter: {
 				Args: {
@@ -9437,6 +10715,14 @@ export type Database = {
 					p_entries?: Json;
 					p_loot?: Json;
 					p_name?: string;
+				};
+				Returns: string;
+			};
+			save_sovereign_v2_definition: {
+				Args: {
+					p_definition: Json;
+					p_is_public?: boolean;
+					p_operation_id: string;
 				};
 				Returns: string;
 			};
@@ -9522,6 +10808,21 @@ export type Database = {
 				Args: { p_campaign_id: string; p_member_id: string; p_role: string };
 				Returns: undefined;
 			};
+			set_campaign_tamed_hp: {
+				Args: { p_current_hp: number; p_tamed_id: string };
+				Returns: boolean;
+			};
+			set_companion_rider: {
+				Args: {
+					p_companion_instance_id: string;
+					p_has_tack?: boolean;
+					p_is_trained?: boolean;
+					p_rider_character_id: string;
+					p_rider_size?: string;
+					p_terrain?: string;
+				};
+				Returns: undefined;
+			};
 			set_homebrew_content_status: {
 				Args: {
 					p_campaign_id?: string;
@@ -9534,6 +10835,27 @@ export type Database = {
 			set_primary_regent_unlock: {
 				Args: { p_unlock_id: string };
 				Returns: string;
+			};
+			set_regent_catch_up_options: {
+				Args: { p_campaign_id: string; p_options: Json; p_unlock_id: string };
+				Returns: number;
+			};
+			spend_companion_hit_dice: {
+				Args: {
+					p_companion_instance_id: string;
+					p_dice: number;
+					p_hp_recovered: number;
+				};
+				Returns: Json;
+			};
+			spend_regent_resonance: {
+				Args: {
+					p_character_id: string;
+					p_grant_id: string;
+					p_grant_kind: string;
+					p_request_id: string;
+				};
+				Returns: number;
 			};
 			start_active_session: {
 				Args: {
@@ -9610,6 +10932,14 @@ export type Database = {
 			warden_grant_character_equipment: {
 				Args: { p_campaign_id: string; p_items: Json };
 				Returns: number;
+			};
+			work_craft_project_m3: {
+				Args: {
+					p_expected_version: number;
+					p_operation_id: string;
+					p_project_id: string;
+				};
+				Returns: Json;
 			};
 		};
 		Enums: {

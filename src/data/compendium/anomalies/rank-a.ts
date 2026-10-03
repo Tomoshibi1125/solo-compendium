@@ -22,7 +22,7 @@ export const anomalies_a = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-eternal-demonic-knight-k4mxgm.webp",
 		description:
-			"A fearsome Anomaly that serves the shadow armies. This A rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Anomaly Anomaly cataloged at A rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast"],
 		weaknesses: ["Light", "Holy Damage"],
 		senses: "darkvision 60 ft., truesight 30 ft., passive Perception 16",
@@ -137,7 +137,7 @@ export const anomalies_a = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-eternal-demonic-overlord-id5lq5.webp",
 		description:
-			"A fearsome Humanoid that serves the shadow armies. This A rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Humanoid Anomaly cataloged at A rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
 		weaknesses: ["Light", "Holy Damage"],
 		senses: "darkvision 30 ft., passive Perception 16",
@@ -259,7 +259,7 @@ export const anomalies_a = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-eternal-demonic-warlord-nj9i8j.webp",
 		description:
-			"A fearsome Beast that serves the shadow armies. This A rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Beast Anomaly cataloged at A rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
 		weaknesses: ["Light"],
 		senses: "darkvision 60 ft., passive Perception 15",
@@ -380,7 +380,7 @@ export const anomalies_a = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-eternal-demonic-berserker-1l08ti.webp",
 		description:
-			"A fearsome anomaly that serves the shadow armies. This A rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A anomaly Anomaly cataloged at A rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
 		weaknesses: ["Light", "Holy Damage"],
 		senses: "darkvision 60 ft., truesight 30 ft., passive Perception 15",
@@ -488,7 +488,7 @@ export const anomalies_a = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-corrupted-demonic-knight-1fo8ys.webp",
 		description:
-			"A fearsome Elemental that serves the shadow armies. This A rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Elemental Anomaly cataloged at A rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
 		weaknesses: ["Light", "Holy Damage"],
 		senses: "darkvision 60 ft., passive Perception 15",
@@ -609,7 +609,7 @@ export const anomalies_a = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-corrupted-demonic-overlord-1pdpdy.webp",
 		description:
-			"A fearsome Dragon that serves the shadow armies. This A rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Dragon Anomaly cataloged at A rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
 		weaknesses: ["Light", "Holy Damage"],
 		senses: "darkvision 120 ft., blindsight 30 ft., passive Perception 15",
@@ -727,7 +727,7 @@ export const anomalies_a = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-corrupted-demonic-warlord-ilr6wx.webp",
 		description:
-			"A fearsome Anomaly that serves the shadow armies. This A rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Anomaly Anomaly cataloged at A rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
 		weaknesses: ["Light", "Holy Damage"],
 		senses: "darkvision 60 ft., truesight 30 ft., passive Perception 16",
@@ -842,7 +842,7 @@ export const anomalies_a = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-corrupted-demonic-berserker-bddr7m.webp",
 		description:
-			"A fearsome Humanoid that serves the shadow armies. This A rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Humanoid Anomaly cataloged at A rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
 		weaknesses: ["Light"],
 		senses: "darkvision 30 ft., passive Perception 16",
@@ -964,7 +964,7 @@ export const anomalies_a = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-blessed-demonic-knight-dk88a2.webp",
 		description:
-			"A fearsome Beast that serves the shadow armies. This A rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Beast Anomaly cataloged at A rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
 		weaknesses: ["Light"],
 		senses: "darkvision 60 ft., passive Perception 15",
@@ -1085,7 +1085,7 @@ export const anomalies_a = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-blessed-demonic-overlord-i0to55.webp",
 		description:
-			"A fearsome anomaly that serves the shadow armies. This A rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A anomaly Anomaly cataloged at A rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
 		weaknesses: ["Light"],
 		senses: "darkvision 60 ft., truesight 30 ft., passive Perception 15",
@@ -1193,7 +1193,7 @@ export const anomalies_a = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-blessed-demonic-warlord-1j4hqp.webp",
 		description:
-			"A fearsome Elemental that serves the shadow armies. This A rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Elemental Anomaly cataloged at A rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
 		weaknesses: ["Light"],
 		senses: "darkvision 60 ft., passive Perception 15",
@@ -1314,7 +1314,7 @@ export const anomalies_a = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-blessed-demonic-berserker-1cpofx.webp",
 		description:
-			"A fearsome Dragon that serves the shadow armies. This A rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Dragon Anomaly cataloged at A rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
 		weaknesses: ["Light"],
 		senses: "darkvision 120 ft., blindsight 30 ft., passive Perception 15",
@@ -1432,7 +1432,7 @@ export const anomalies_a = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-cursed-demonic-knight-f5185s.webp",
 		description:
-			"A fearsome Anomaly that serves the shadow armies. This A rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Anomaly Anomaly cataloged at A rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast"],
 		weaknesses: ["Light"],
 		senses: "darkvision 60 ft., truesight 30 ft., passive Perception 16",
@@ -1547,7 +1547,7 @@ export const anomalies_a = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-cursed-demonic-overlord-hp1d2f.webp",
 		description:
-			"A fearsome Humanoid that serves the shadow armies. This A rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Humanoid Anomaly cataloged at A rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast"],
 		weaknesses: ["Light"],
 		senses: "darkvision 30 ft., passive Perception 16",
@@ -1669,7 +1669,7 @@ export const anomalies_a = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-cursed-demonic-warlord-x79uv9.webp",
 		description:
-			"A fearsome Beast that serves the shadow armies. This A rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Beast Anomaly cataloged at A rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
 		weaknesses: ["Light", "Holy Damage"],
 		senses: "darkvision 60 ft., passive Perception 15",
@@ -1790,7 +1790,7 @@ export const anomalies_a = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-cursed-demonic-berserker-16f9lh.webp",
 		description:
-			"A fearsome anomaly that serves the shadow armies. This A rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A anomaly Anomaly cataloged at A rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
 		weaknesses: ["Light"],
 		senses: "darkvision 60 ft., truesight 30 ft., passive Perception 15",
@@ -1898,7 +1898,7 @@ export const anomalies_a = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-ancient-demonic-knight-15wi5s.webp",
 		description:
-			"A fearsome Elemental that serves the shadow armies. This A rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Elemental Anomaly cataloged at A rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
 		weaknesses: ["Light"],
 		senses: "darkvision 60 ft., passive Perception 15",
@@ -2019,7 +2019,7 @@ export const anomalies_a = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-ancient-demonic-overlord-1lubt5.webp",
 		description:
-			"A fearsome Dragon that serves the shadow armies. This A rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Dragon Anomaly cataloged at A rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
 		weaknesses: ["Light", "Holy Damage"],
 		senses: "darkvision 120 ft., blindsight 30 ft., passive Perception 15",
@@ -2137,7 +2137,7 @@ export const anomalies_a = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-ancient-demonic-warlord-35zli3.webp",
 		description:
-			"A fearsome Anomaly that serves the shadow armies. This A rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Anomaly Anomaly cataloged at A rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
 		weaknesses: ["Light", "Holy Damage"],
 		senses: "darkvision 60 ft., truesight 30 ft., passive Perception 16",
@@ -2252,7 +2252,7 @@ export const anomalies_a = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-ancient-demonic-berserker-144805.webp",
 		description:
-			"A fearsome Humanoid that serves the shadow armies. This A rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Humanoid Anomaly cataloged at A rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast"],
 		weaknesses: ["Light", "Holy Damage"],
 		senses: "darkvision 30 ft., passive Perception 16",
@@ -2374,7 +2374,7 @@ export const anomalies_a = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-primordial-demonic-knight-19eoc8.webp",
 		description:
-			"A fearsome Beast that serves the shadow armies. This A rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Beast Anomaly cataloged at A rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
 		weaknesses: ["Light"],
 		senses: "darkvision 60 ft., passive Perception 15",
@@ -2495,7 +2495,7 @@ export const anomalies_a = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-primordial-demonic-overlord-1w90vo.webp",
 		description:
-			"A fearsome anomaly that serves the shadow armies. This A rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A anomaly Anomaly cataloged at A rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
 		weaknesses: ["Light", "Holy Damage"],
 		senses: "darkvision 60 ft., truesight 30 ft., passive Perception 15",
@@ -2603,7 +2603,7 @@ export const anomalies_a = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-primordial-demonic-warlord-dzvm30.webp",
 		description:
-			"A fearsome Elemental that serves the shadow armies. This A rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Elemental Anomaly cataloged at A rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast"],
 		weaknesses: ["Light"],
 		senses: "darkvision 60 ft., passive Perception 15",
@@ -2724,7 +2724,7 @@ export const anomalies_a = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-primordial-demonic-berserker-1zncx7.webp",
 		description:
-			"A fearsome Dragon that serves the shadow armies. This A rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Dragon Anomaly cataloged at A rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
 		weaknesses: ["Light", "Holy Damage"],
 		senses: "darkvision 120 ft., blindsight 30 ft., passive Perception 15",
@@ -2842,7 +2842,7 @@ export const anomalies_a = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-supreme-demonic-knight-1l7lv0.webp",
 		description:
-			"A fearsome Anomaly that serves the shadow armies. This A rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Anomaly Anomaly cataloged at A rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast"],
 		weaknesses: ["Light", "Holy Damage"],
 		senses: "darkvision 60 ft., truesight 30 ft., passive Perception 16",
@@ -2957,7 +2957,7 @@ export const anomalies_a = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-supreme-demonic-overlord-ahlzo.webp",
 		description:
-			"A fearsome Humanoid that serves the shadow armies. This A rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Humanoid Anomaly cataloged at A rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
 		weaknesses: ["Light"],
 		senses: "darkvision 30 ft., passive Perception 16",
@@ -3079,7 +3079,7 @@ export const anomalies_a = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-supreme-demonic-warlord-1lwxtq.webp",
 		description:
-			"A fearsome Beast that serves the shadow armies. This A rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Beast Anomaly cataloged at A rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
 		weaknesses: ["Light"],
 		senses: "darkvision 60 ft., passive Perception 15",
@@ -3200,7 +3200,7 @@ export const anomalies_a = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-supreme-demonic-berserker-g2uval.webp",
 		description:
-			"A fearsome anomaly that serves the shadow armies. This A rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A anomaly Anomaly cataloged at A rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
 		weaknesses: ["Light"],
 		senses: "darkvision 60 ft., truesight 30 ft., passive Perception 15",
@@ -3308,7 +3308,7 @@ export const anomalies_a = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-legendary-demonic-knight-ydudmd.webp",
 		description:
-			"A fearsome Elemental that serves the shadow armies. This A rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Elemental Anomaly cataloged at A rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
 		weaknesses: ["Light", "Holy Damage"],
 		senses: "darkvision 60 ft., passive Perception 15",
@@ -3429,7 +3429,7 @@ export const anomalies_a = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-legendary-demonic-overlord-19zce0.webp",
 		description:
-			"A fearsome Dragon that serves the shadow armies. This A rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Dragon Anomaly cataloged at A rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast"],
 		weaknesses: ["Light"],
 		senses: "darkvision 120 ft., blindsight 30 ft., passive Perception 15",
@@ -3547,7 +3547,7 @@ export const anomalies_a = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-legendary-demonic-warlord-guv9q8.webp",
 		description:
-			"A fearsome Anomaly that serves the shadow armies. This A rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Anomaly Anomaly cataloged at A rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
 		weaknesses: ["Light"],
 		senses: "darkvision 60 ft., truesight 30 ft., passive Perception 16",
@@ -3662,7 +3662,7 @@ export const anomalies_a = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-legendary-demonic-berserker-1cdmi1.webp",
 		description:
-			"A fearsome Humanoid that serves the shadow armies. This A rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Humanoid Anomaly cataloged at A rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
 		weaknesses: ["Light", "Holy Damage"],
 		senses: "darkvision 30 ft., passive Perception 16",
@@ -3784,7 +3784,7 @@ export const anomalies_a = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-mythic-demonic-knight-1w3to5.webp",
 		description:
-			"A fearsome Beast that serves the shadow armies. This A rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Beast Anomaly cataloged at A rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
 		weaknesses: ["Light", "Holy Damage"],
 		senses: "darkvision 60 ft., passive Perception 15",
@@ -3905,7 +3905,7 @@ export const anomalies_a = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-mythic-demonic-overlord-50gxb4.webp",
 		description:
-			"A fearsome anomaly that serves the shadow armies. This A rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A anomaly Anomaly cataloged at A rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
 		weaknesses: ["Light"],
 		senses: "darkvision 60 ft., truesight 30 ft., passive Perception 15",
@@ -4013,7 +4013,7 @@ export const anomalies_a = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-mythic-demonic-warlord-1ru85y.webp",
 		description:
-			"A fearsome Elemental that serves the shadow armies. This A rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Elemental Anomaly cataloged at A rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
 		weaknesses: ["Light"],
 		senses: "darkvision 60 ft., passive Perception 15",
@@ -4134,7 +4134,7 @@ export const anomalies_a = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-mythic-demonic-berserker-rbkgvd.webp",
 		description:
-			"A fearsome Dragon that serves the shadow armies. This A rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Dragon Anomaly cataloged at A rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
 		weaknesses: ["Light", "Holy Damage"],
 		senses: "darkvision 120 ft., blindsight 30 ft., passive Perception 15",
@@ -4252,7 +4252,7 @@ export const anomalies_a = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-divine-demonic-knight-l30jeh.webp",
 		description:
-			"A fearsome Anomaly that serves the shadow armies. This A rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Anomaly Anomaly cataloged at A rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast"],
 		weaknesses: ["Light"],
 		senses: "darkvision 60 ft., truesight 30 ft., passive Perception 16",
@@ -4367,7 +4367,7 @@ export const anomalies_a = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-divine-demonic-overlord-92l3my.webp",
 		description:
-			"A fearsome Humanoid that serves the shadow armies. This A rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Humanoid Anomaly cataloged at A rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
 		weaknesses: ["Light", "Holy Damage"],
 		senses: "darkvision 30 ft., passive Perception 16",
@@ -4489,7 +4489,7 @@ export const anomalies_a = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-divine-demonic-warlord-1j166q.webp",
 		description:
-			"A fearsome Beast that serves the shadow armies. This A rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Beast Anomaly cataloged at A rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
 		weaknesses: ["Light"],
 		senses: "darkvision 60 ft., passive Perception 15",
@@ -4610,7 +4610,7 @@ export const anomalies_a = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-divine-demonic-berserker-14x6ds.webp",
 		description:
-			"A fearsome anomaly that serves the shadow armies. This A rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A anomaly Anomaly cataloged at A rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
 		weaknesses: ["Light", "Holy Damage"],
 		senses: "darkvision 60 ft., truesight 30 ft., passive Perception 15",
@@ -4718,7 +4718,7 @@ export const anomalies_a = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-infernal-demonic-knight-tia39g.webp",
 		description:
-			"A fearsome Elemental that serves the shadow armies. This A rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Elemental Anomaly cataloged at A rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
 		weaknesses: ["Light"],
 		senses: "darkvision 60 ft., passive Perception 15",
@@ -4839,7 +4839,7 @@ export const anomalies_a = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-infernal-demonic-overlord-7js8qb.webp",
 		description:
-			"A fearsome Dragon that serves the shadow armies. This A rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Dragon Anomaly cataloged at A rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
 		weaknesses: ["Light"],
 		senses: "darkvision 120 ft., blindsight 30 ft., passive Perception 15",
@@ -4957,7 +4957,7 @@ export const anomalies_a = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-infernal-demonic-warlord-1yv9nx.webp",
 		description:
-			"A fearsome Anomaly that serves the shadow armies. This A rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Anomaly Anomaly cataloged at A rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
 		weaknesses: ["Light", "Holy Damage"],
 		senses: "darkvision 60 ft., truesight 30 ft., passive Perception 16",
@@ -5072,7 +5072,7 @@ export const anomalies_a = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-infernal-demonic-berserker-10ctb1.webp",
 		description:
-			"A fearsome Humanoid that serves the shadow armies. This A rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Humanoid Anomaly cataloged at A rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
 		weaknesses: ["Light", "Holy Damage"],
 		senses: "darkvision 30 ft., passive Perception 16",
@@ -5194,7 +5194,7 @@ export const anomalies_a = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-celestial-demonic-knight-b1u3xq.webp",
 		description:
-			"A fearsome Beast that serves the shadow armies. This A rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Beast Anomaly cataloged at A rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
 		weaknesses: ["Light"],
 		senses: "darkvision 60 ft., passive Perception 15",
@@ -5315,7 +5315,7 @@ export const anomalies_a = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-celestial-demonic-overlord-1yhg5i.webp",
 		description:
-			"A fearsome anomaly that serves the shadow armies. This A rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A anomaly Anomaly cataloged at A rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
 		weaknesses: ["Light", "Holy Damage"],
 		senses: "darkvision 60 ft., truesight 30 ft., passive Perception 15",
@@ -5423,7 +5423,7 @@ export const anomalies_a = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-celestial-demonic-warlord-cy3zy3.webp",
 		description:
-			"A fearsome Elemental that serves the shadow armies. This A rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Elemental Anomaly cataloged at A rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
 		weaknesses: ["Light"],
 		senses: "darkvision 60 ft., passive Perception 15",
@@ -5544,7 +5544,7 @@ export const anomalies_a = [
 		image:
 			"/generated/compendium/anomalies/anomaly-anomaly-celestial-demonic-berserker-1icrgf.webp",
 		description:
-			"A fearsome Dragon that serves the shadow armies. This A rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A Dragon Anomaly cataloged at A rank. Its behavior depends on the individual and the circumstances of the encounter.",
 		abilities: ["Shadow Strike", "Void Blast"],
 		weaknesses: ["Light", "Holy Damage"],
 		senses: "darkvision 120 ft., blindsight 30 ft., passive Perception 15",

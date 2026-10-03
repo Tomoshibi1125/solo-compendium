@@ -1,13 +1,11 @@
 import { describe, expect, it } from "vitest";
 import migrationSource from "../../../supabase/migrations/20260906000000_supabase_security_hardening.sql?raw";
 import portraitSource from "../../components/character/PortraitUpload.tsx?raw";
-import adminHooksSource from "../../hooks/useAdminUsers.ts?raw";
 import campaignInvitesSource from "../../hooks/useCampaignInvites.ts?raw";
 import campaignsSource from "../../hooks/useCampaigns.ts?raw";
 import guildsSource from "../../hooks/useGuilds.ts?raw";
 import wardenDeliverySource from "../../hooks/useWardenItemDelivery.ts?raw";
 import generatedTypesSource from "../../integrations/supabase/types.ts?raw";
-import adminPageSource from "../../pages/Admin.tsx?raw";
 import authContextSource from "../auth/authContext.tsx?raw";
 
 const normalize = (source: string) => source.replace(/\r\n/g, "\n");
@@ -125,18 +123,14 @@ describe("Supabase security hardening source contract", () => {
 		);
 	});
 
-	it("uses canonical app_metadata for account administration", () => {
-		expect(migration).toContain(
-			"auth_user.raw_app_meta_data ->> 'account_role' = 'admin'",
-		);
+	it("has no admin role: the app knows only Warden and Ascendant", () => {
+		// Admin work happens outside the app (20260930120000 removed the
+		// account-admin helper, RPCs, and audit log).
 		expect(authContextSource).toContain(
-			'authUser.app_metadata?.account_role === "admin"',
+			'export type UserRole = "warden" | "ascendant";',
 		);
-		expect(adminHooksSource).toContain(
-			"enabled: isSupabaseConfigured && accountAdminId !== null",
-		);
-		expect(adminHooksSource).toContain("if (!user?.isAccountAdmin)");
-		expect(adminPageSource).toContain("{canManageAccounts && (");
+		expect(authContextSource).not.toContain("account_role");
+		expect(authContextSource).not.toContain("isAccountAdmin");
 	});
 
 	it("removes broad listing policies but preserves owner-prefixed known URLs", () => {

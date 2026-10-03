@@ -23,10 +23,6 @@ export interface GenerationHistoryState<T> {
 /** Maximum number of unpinned entries retained; pinned entries always survive. */
 export const HISTORY_CAP = 10;
 
-export function emptyHistory<T>(): GenerationHistoryState<T> {
-	return { current: null, history: [] };
-}
-
 export function makeEntryId(): string {
 	return `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`;
 }
@@ -71,14 +67,6 @@ export function togglePin<T>(
 			e.id === id ? { ...e, pinned: !e.pinned } : e,
 		),
 	};
-}
-
-export function restoreGeneration<T>(
-	state: GenerationHistoryState<T>,
-	id: string,
-): GenerationHistoryState<T> {
-	const entry = state.history.find((e) => e.id === id);
-	return entry ? { ...state, current: entry.record } : state;
 }
 
 export function removeGeneration<T>(

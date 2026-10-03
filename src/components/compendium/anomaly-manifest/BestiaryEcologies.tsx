@@ -11,18 +11,19 @@ import {
 import { AutoLinkText } from "@/components/compendium/AutoLinkText";
 import { SourceBookPage } from "@/components/compendium/SourceBookPage";
 import { RiftHeading } from "@/components/ui/AscendantText";
-import { regents } from "@/data/compendium/regents";
+import { anomalies } from "@/data/compendium/anomalies";
 
 export const BestiaryEcologies = () => {
 	const originText =
 		"Anomalies are biological, living creatures that reproduce naturally and evolve based on the specific Rift they originate from.";
 
 	const umbralText =
-		"The Umbral Legion represents the absolute mastery of Shadow Resonance. When a Shadow Sovereign defeats a high-rank Anomaly, they can extract its 'Shadow'—the residual mana essence—before it dissipates back into the Lattice. This echo is then re-bound to the Sovereign's own core, becoming a loyal Umbral Soldier. These entities are no longer Anomalies; they are manifestations of the master's own power, sustained by their mana reserve.";
+		"The Umbral Legion is an ability of the Umbral Regent. Its raised soldiers are manifestations of that Regent's power, not living Anomaly companions. A living tamed Anomaly keeps its own biology, belongs to the character who holds it, and scales with that character's level.";
 
-	const sortedRegents = [...regents].sort((a, b) =>
-		a.name.localeCompare(b.name),
-	);
+	const notableAnomalies = anomalies
+		.filter((entry) => entry.rank === "A" || entry.rank === "S")
+		.slice(0, 6)
+		.sort((a, b) => a.name.localeCompare(b.name));
 
 	return (
 		<SourceBookPage title="The Science of Anomalies">
@@ -37,8 +38,8 @@ export const BestiaryEcologies = () => {
 					</RiftHeading>
 					<p className="text-lg text-slate-400 leading-relaxed max-w-3xl mx-auto">
 						Anomalies do not spawn in a vacuum. This directory provides a
-						biological and aetheric analysis of Rift environments—how mana
-						radiation mutates native matter and the hierarchy of the Apex Nodes.
+						biological and ecological analysis of Rift environments, including
+						Anomaly habitats, life cycles, and relationships with other species.
 					</p>
 				</section>
 
@@ -59,14 +60,12 @@ export const BestiaryEcologies = () => {
 						<div className="grid md:grid-cols-2 gap-8">
 							<div className="space-y-4">
 								<h4 className="flex items-center gap-2 text-red-400 font-mono text-xs font-bold uppercase">
-									<Microscope className="w-4 h-4" /> Mutation Mechanics
+									<Microscope className="w-4 h-4" /> Native Biology
 								</h4>
 								<p className="text-xs text-slate-400 font-light">
-									Native lifeforms caught within a growing Rift undergo radical
-									hyper-evolution. A simple organism might mutate into a Dire
-									Anomaly within hours due to concentrated Aether exposure. The
-									ecosystem stabilizes rapidly under the control of the Apex
-									Node.
+									Anomaly species are native to Rift worlds. Their anatomy,
+									reproduction, feeding, and behavior vary by species and
+									habitat.
 								</p>
 							</div>
 							<div className="space-y-4">
@@ -74,10 +73,9 @@ export const BestiaryEcologies = () => {
 									<Globe className="w-4 h-4" /> Environmental Shift
 								</h4>
 								<p className="text-xs text-slate-400 font-light">
-									A Rift's climate always reflects the dominant soul-signature
-									of its Boss. The transition from Earth's atmosphere to the
-									interior of a Rift often results in instant environmental
-									shock, requiring specialized Relics for survival.
+									Rift worlds have their own climates and food webs. Conditions
+									at each threshold determine which species thrive there and
+									what field precautions an expedition needs.
 								</p>
 							</div>
 						</div>
@@ -89,30 +87,30 @@ export const BestiaryEcologies = () => {
 					<div className="flex items-center gap-3 mb-2 border-b border-gate-s/20 pb-4">
 						<ShieldAlert className="w-8 h-8 text-gate-s" />
 						<h2 className="text-3xl font-display font-bold text-white uppercase tracking-wider">
-							Registered Sovereign Anomalies
+							Notable Anomaly Species
 						</h2>
 					</div>
 
 					<div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-						{sortedRegents.map((regent) => (
+						{notableAnomalies.map((anomaly) => (
 							<div
-								key={regent.id}
+								key={anomaly.id}
 								className="bg-void/60 border border-white/5 p-5 rounded-lg hover:border-red-500/30 transition-all group"
 							>
 								<h3 className="text-white font-display uppercase tracking-widest text-base mb-1 group-hover:text-red-400 transition-colors">
-									{regent.name}
+									{anomaly.name}
 								</h3>
 								<div className="flex items-center gap-2 mb-3">
 									<span className="text-[10px] font-mono text-red-500 font-bold uppercase tracking-widest">
-										Rank: {regent.rank || "S"}
+										Rank: {anomaly.rank || "unknown"}
 									</span>
 									<span className="text-white/20 text-xs">|</span>
 									<span className="text-[10px] font-mono text-slate-500 uppercase">
-										{regent.theme || "Sovereign"}
+										{anomaly.type || "Anomaly"}
 									</span>
 								</div>
 								<p className="text-[11px] text-slate-400 leading-relaxed line-clamp-3">
-									{regent.description}
+									{anomaly.description}
 								</p>
 							</div>
 						))}
@@ -145,9 +143,7 @@ export const BestiaryEcologies = () => {
 											Extraction must occur within 180 seconds of vital
 											collapse.
 										</li>
-										<li>
-											Probability scales with the Sovereign's Soul-Resonance.
-										</li>
+										<li>Effects follow the Umbral Regent's authored rules.</li>
 									</ul>
 								</div>
 								<div className="bg-resurge-violet/20 p-5 rounded border border-resurge-violet/20 shadow-inner">
@@ -156,8 +152,7 @@ export const BestiaryEcologies = () => {
 									</h4>
 									<ul className="text-[10px] text-slate-400 space-y-2 list-disc pl-4 font-mono leading-relaxed">
 										<li>
-											Umbral Legionnaires consume a passive mana-drain from the
-											host.
+											Umbral Legionnaires draw their presence from the host.
 										</li>
 										<li>Destruction of the Umbral essence is permanent.</li>
 										<li>

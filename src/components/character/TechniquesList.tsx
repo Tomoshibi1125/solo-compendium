@@ -23,6 +23,11 @@ import { useTechniques } from "@/hooks/useTechniques";
 import { formatModifier } from "@/lib/characterCalculations";
 import { getJobTechniqueMode } from "@/lib/jobAbilityAccess";
 import {
+	spendRegentResonance,
+	useRegentResonance,
+} from "@/lib/regentResonance";
+import { getRegentResonanceCost } from "@/lib/regentResonanceRules";
+import {
 	resolveTechniqueUseFormula,
 	resolveTechniqueUseRollType,
 	type TechniqueActionFormulaSource,
@@ -54,6 +59,7 @@ export function TechniquesList({
 		removeTechnique,
 	} = useTechniques(characterId);
 	const { data: character } = useCharacter(characterId);
+	const resonance = useRegentResonance(characterId);
 	const { actions } = useCombatActions(characterId);
 	const { features, updateFeature } = useFeatures(characterId);
 	const { toast } = useToast();
@@ -79,7 +85,12 @@ export function TechniquesList({
 	const isTechniqueSpent = (
 		entry: (typeof techniques)[number],
 		hasRune: boolean,
-	) => !hasRune && entry.uses_max != null && (entry.uses_current ?? 0) <= 0;
+	) =>
+		entry.acquisition_kind === "regent"
+			? (resonance.data?.points_current ?? 0) <
+				(getRegentResonanceCost(entry.technique?.level_requirement ?? 0) ??
+					Number.POSITIVE_INFINITY)
+			: !hasRune && entry.uses_max != null && (entry.uses_current ?? 0) <= 0;
 
 	const handleUse = async (
 		entry: (typeof techniques)[number],
@@ -89,7 +100,19 @@ export function TechniquesList({
 		const displayName = formatRegentVernacular(name);
 		const runeFeature = getRuneFeature(entry.source);
 		try {
-			if (
+			if (entry.acquisition_kind === "regent") {
+				const remaining = await spendRegentResonance(
+					characterId,
+					"technique",
+					entry.id,
+					entry.technique?.level_requirement ?? 0,
+				);
+				await resonance.refresh();
+				toast({
+					title: "Regent Resonance Spent",
+					description: `${displayName} activated. ${remaining} remain.`,
+				});
+			} else if (
 				runeFeature?.uses_max !== null &&
 				runeFeature?.uses_max !== undefined
 			) {
@@ -187,6 +210,16 @@ export function TechniquesList({
 		<>
 			<div className="space-y-4">
 				<SpellcastingStatsCard characterId={characterId} scope="techniques" />
+				{resonance.data && (
+					<div
+						className="rounded-lg border bg-muted/30 p-2 text-sm"
+						role="status"
+						aria-label="Regent Resonance"
+					>
+						Regent Resonance: {resonance.data.points_current}/
+						{resonance.data.points_max} · Long Rest
+					</div>
+				)}
 				<div className="flex items-center justify-between gap-2">
 					<div className="flex flex-wrap items-center gap-2">
 						<span className="text-xs text-muted-foreground">
@@ -285,17 +318,33 @@ export function TechniquesList({
 														Level {levelReq}
 													</Badge>
 												)}
-												{!runeFeature && entry.uses_max != null && (
-													<Badge
-														variant={noPoints ? "destructive" : "secondary"}
-														className="text-xs"
-														title={`Recovers on a ${
-															entry.recharge === "long-rest" ? "long" : "short"
-														} rest`}
-													>
-														{entry.uses_current ?? 0}/{entry.uses_max}
+												{entry.acquisition_kind === "regent" && (
+													<Badge variant="secondary" className="text-xs">
+														Regent ·{" "}
+														{getRegentResonanceCost(levelReq ?? 0) ?? "?"}{" "}
+														Resonance
 													</Badge>
 												)}
+												{entry.source && (
+													<Badge variant="outline" className="text-xs">
+														{formatRegentVernacular(entry.source)}
+													</Badge>
+												)}
+												{entry.acquisition_kind !== "regent" &&
+													!runeFeature &&
+													entry.uses_max != null && (
+														<Badge
+															variant={noPoints ? "destructive" : "secondary"}
+															className="text-xs"
+															title={`Recovers on a ${
+																entry.recharge === "long-rest"
+																	? "long"
+																	: "short"
+															} rest`}
+														>
+															{entry.uses_current ?? 0}/{entry.uses_max}
+														</Badge>
+													)}
 												{actionFormula?.formulaAbility &&
 													actionFormula.formulaAbilityModifier !==
 														undefined && (

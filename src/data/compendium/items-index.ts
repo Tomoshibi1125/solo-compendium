@@ -60,7 +60,6 @@ export const itemRegistryResolution = mergeCanonicalCandidates(
 	"items",
 	allItemCandidates,
 );
-export const itemMergeConflicts = itemRegistryResolution.conflicts;
 
 /**
  * Compatibility list used by synchronous Node/book consumers. Distinct-id
