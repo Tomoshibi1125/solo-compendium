@@ -930,6 +930,156 @@ export const regents: Regent[] = [
 				frequency: "at-will",
 			},
 		],
+		progression_table: {
+		"1": {
+				"features_gained": [
+						"White Flame Mastery",
+						"Immolation Aura",
+						"Flame Dominion"
+				],
+				"abilities_improved": []
+		},
+		"2": {
+				"features_gained": [
+						"Regent Power Resonance"
+				],
+				"abilities_improved": []
+		},
+		"3": {
+				"features_gained": [
+						"White Flame Burst",
+						"Purification Flame",
+						"Purifying Presence"
+				],
+				"abilities_improved": []
+		},
+		"4": {
+				"features_gained": [
+						"Regent Attribute Enhancement"
+				],
+				"abilities_improved": [
+						"Primary Ability +2"
+				]
+		},
+		"5": {
+				"features_gained": [
+						"Seraphim Wings",
+						"Flame Authority",
+						"Phoenix Rebirth"
+				],
+				"abilities_improved": []
+		},
+		"6": {
+				"features_gained": [
+						"Regent Power Resonance"
+				],
+				"abilities_improved": []
+		},
+		"7": {
+				"features_gained": [
+						"Flame God",
+						"Purification Lord"
+				],
+				"abilities_improved": []
+		},
+		"8": {
+				"features_gained": [
+						"Regent Attribute Enhancement"
+				],
+				"abilities_improved": [
+						"Primary Ability +2"
+				]
+		},
+		"9": {
+				"features_gained": [
+						"Purification Authority",
+						"Flame Emperor"
+				],
+				"abilities_improved": []
+		},
+		"10": {
+				"features_gained": [
+						"Absolute Flame"
+				],
+				"abilities_improved": []
+		},
+		"11": {
+				"features_gained": [
+						"Flame Ascendant",
+						"Purification Lord",
+						"Fire God"
+				],
+				"abilities_improved": []
+		},
+		"12": {
+				"features_gained": [
+						"Regent Attribute Enhancement"
+				],
+				"abilities_improved": [
+						"Primary Ability +2"
+				]
+		},
+		"13": {
+				"features_gained": [
+						"Flame Apocalypse",
+						"Purification Dominion",
+						"Essence God"
+				],
+				"abilities_improved": []
+		},
+		"14": {
+				"features_gained": [
+						"Regent Power Resonance"
+				],
+				"abilities_improved": []
+		},
+		"15": {
+				"features_gained": [
+						"Flame Reality",
+						"Purification God",
+						"Fire Emperor"
+				],
+				"abilities_improved": []
+		},
+		"16": {
+				"features_gained": [
+						"Regent Attribute Enhancement"
+				],
+				"abilities_improved": [
+						"Primary Ability +2"
+				]
+		},
+		"17": {
+				"features_gained": [
+						"Flame Transcendence",
+						"Purification Emperor",
+						"Essence Emperor"
+				],
+				"abilities_improved": []
+		},
+		"18": {
+				"features_gained": [
+						"Regent Power Resonance"
+				],
+				"abilities_improved": []
+		},
+		"19": {
+				"features_gained": [
+						"Flame Omnipotence",
+						"Purification Regent",
+						"Fire Regent"
+				],
+				"abilities_improved": []
+		},
+		"20": {
+				"features_gained": [
+						"Flame Supremacy",
+						"Absolute Flame",
+						"Regent Power"
+				],
+				"abilities_improved": []
+		}
+},
 	},
 	{
 		id: "steel_regent",
@@ -1343,6 +1493,162 @@ export const regents: Regent[] = [
 				frequency: "at-will",
 			},
 		],
+		progression_table: {
+		"1": {
+				"features_gained": [
+						"Iron Body",
+						"Immovable Anchor",
+						"Infinite Stamina"
+				],
+				"abilities_improved": []
+		},
+		"2": {
+				"features_gained": [
+						"Regent Power Resonance"
+				],
+				"abilities_improved": []
+		},
+		"3": {
+				"features_gained": [
+						"Steel Weaving",
+						"Titan",
+						"Conceptual Invulnerability"
+				],
+				"abilities_improved": []
+		},
+		"4": {
+				"features_gained": [
+						"Regent Attribute Enhancement"
+				],
+				"abilities_improved": [
+						"Primary Ability +2"
+				]
+		},
+		"5": {
+				"features_gained": [
+						"Iron Dominion",
+						"Titan Authority",
+						"Regeneration Lord"
+				],
+				"abilities_improved": []
+		},
+		"6": {
+				"features_gained": [
+						"Regent Power Resonance"
+				],
+				"abilities_improved": []
+		},
+		"7": {
+				"features_gained": [
+						"Organic Manipulation",
+						"Flesh God",
+						"Regeneration Lord"
+				],
+				"abilities_improved": []
+		},
+		"8": {
+				"features_gained": [
+						"Regent Attribute Enhancement"
+				],
+				"abilities_improved": [
+						"Primary Ability +2"
+				]
+		},
+		"9": {
+				"features_gained": [
+						"Flesh Dominion",
+						"Steel Command",
+						"Flesh Emperor"
+				],
+				"abilities_improved": []
+		},
+		"10": {
+				"features_gained": [
+						"Steel Authority",
+						"Absolute Flesh"
+				],
+				"abilities_improved": []
+		},
+		"11": {
+				"features_gained": [
+						"Titan Ascendant",
+						"Steel Lord",
+						"Invulnerability God"
+				],
+				"abilities_improved": []
+		},
+		"12": {
+				"features_gained": [
+						"Regent Attribute Enhancement"
+				],
+				"abilities_improved": [
+						"Primary Ability +2"
+				]
+		},
+		"13": {
+				"features_gained": [
+						"Steel Apocalypse",
+						"Steel Dominion",
+						"Essence God"
+				],
+				"abilities_improved": []
+		},
+		"14": {
+				"features_gained": [
+						"Regent Power Resonance"
+				],
+				"abilities_improved": []
+		},
+		"15": {
+				"features_gained": [
+						"Titan Reality",
+						"Steel God",
+						"Invulnerability Emperor"
+				],
+				"abilities_improved": []
+		},
+		"16": {
+				"features_gained": [
+						"Regent Attribute Enhancement"
+				],
+				"abilities_improved": [
+						"Primary Ability +2"
+				]
+		},
+		"17": {
+				"features_gained": [
+						"Titan Transcendence",
+						"Steel Emperor",
+						"Essence Emperor"
+				],
+				"abilities_improved": []
+		},
+		"18": {
+				"features_gained": [
+						"Regent Power Resonance"
+				],
+				"abilities_improved": []
+		},
+		"19": {
+				"features_gained": [
+						"Titan Omnipotence",
+						"Steel Regent",
+						"Invulnerability Regent"
+				],
+				"abilities_improved": []
+		},
+		"20": {
+				"features_gained": [
+						"Regent Attribute Enhancement",
+						"Titan Supremacy",
+						"Absolute Invulnerability",
+						"Regent Power"
+				],
+				"abilities_improved": [
+						"Primary Ability +2"
+				]
+		}
+},
 	},
 	{
 		id: "destruction_regent",
@@ -1783,6 +2089,161 @@ export const regents: Regent[] = [
 				frequency: "at-will",
 			},
 		],
+		progression_table: {
+		"1": {
+				"features_gained": [
+						"Breath of Annihilation",
+						"Destruction Step",
+						"Destruction Dominion"
+				],
+				"abilities_improved": []
+		},
+		"2": {
+				"features_gained": [
+						"Regent Power Resonance"
+				],
+				"abilities_improved": []
+		},
+		"3": {
+				"features_gained": [
+						"Annihilation Presence",
+						"Destruction Mastery",
+						"Aura of Ruin"
+				],
+				"abilities_improved": []
+		},
+		"4": {
+				"features_gained": [
+						"Regent Attribute Enhancement"
+				],
+				"abilities_improved": [
+						"Primary Ability +2"
+				]
+		},
+		"5": {
+				"features_gained": [
+						"Decimation Field",
+						"True Dragon Form",
+						"Cataclysmic Rebirth"
+				],
+				"abilities_improved": []
+		},
+		"6": {
+				"features_gained": [
+						"Regent Power Resonance"
+				],
+				"abilities_improved": []
+		},
+		"7": {
+				"features_gained": [
+						"Vortex Shield",
+						"Destruction God",
+						"Ruin Lord"
+				],
+				"abilities_improved": []
+		},
+		"8": {
+				"features_gained": [
+						"Regent Attribute Enhancement"
+				],
+				"abilities_improved": [
+						"Primary Ability +2"
+				]
+		},
+		"9": {
+				"features_gained": [
+						"Calamity Wings",
+						"Dragon Ascendant",
+						"Apocalypse Herald"
+				],
+				"abilities_improved": []
+		},
+		"10": {
+				"features_gained": [
+						"Annihilation Authority",
+						"Absolute Destruction"
+				],
+				"abilities_improved": []
+		},
+		"11": {
+				"features_gained": [
+						"Dragon Lord",
+						"Destruction Reality",
+						"Ruin Emperor"
+				],
+				"abilities_improved": []
+		},
+		"12": {
+				"features_gained": [
+						"Regent Attribute Enhancement"
+				],
+				"abilities_improved": [
+						"Primary Ability +2"
+				]
+		},
+		"13": {
+				"features_gained": [
+						"Cataclysm Unleashed",
+						"Dragon Emperor",
+						"Annihilation Essence"
+				],
+				"abilities_improved": []
+		},
+		"14": {
+				"features_gained": [
+						"Regent Power Resonance"
+				],
+				"abilities_improved": []
+		},
+		"15": {
+				"features_gained": [
+						"Primordial Destruction",
+						"Void Weaver",
+						"Dragon Transcendence"
+				],
+				"abilities_improved": []
+		},
+		"16": {
+				"features_gained": [
+						"Regent Attribute Enhancement"
+				],
+				"abilities_improved": [
+						"Primary Ability +2"
+				]
+		},
+		"17": {
+				"features_gained": [
+						"Entropy Mastery",
+						"Annihilation Omnipotence",
+						"Apocalypse Incarnate"
+				],
+				"abilities_improved": []
+		},
+		"18": {
+				"features_gained": [
+						"Regent Power Resonance"
+				],
+				"abilities_improved": []
+		},
+		"19": {
+				"features_gained": [
+						"Reality Annihilation",
+						"Dragon Regent",
+						"Destruction Supremacy"
+				],
+				"abilities_improved": []
+		},
+		"20": {
+				"features_gained": [
+						"Regent Attribute Enhancement",
+						"Void King",
+						"Regent Power"
+				],
+				"abilities_improved": [
+						"Primary Ability +2"
+				]
+		}
+},
 	},
 	{
 		id: "war_regent",
@@ -3424,6 +3885,150 @@ export const regents: Regent[] = [
 				frequency: "at-will",
 			},
 		],
+		progression_table: {
+		"1": {
+				"features_gained": [
+						"Apex Form",
+						"Alpha"
+				],
+				"abilities_improved": []
+		},
+		"2": {
+				"features_gained": [
+						"Regent Power Resonance",
+						"Beast King"
+				],
+				"abilities_improved": []
+		},
+		"3": {
+				"features_gained": [
+						"Primordial Regeneration"
+				],
+				"abilities_improved": []
+		},
+		"4": {
+				"features_gained": [
+						"Regent Attribute Enhancement"
+				],
+				"abilities_improved": [
+						"Primary Ability +2"
+				]
+		},
+		"5": {
+				"features_gained": [
+						"Evolutionary Leap"
+				],
+				"abilities_improved": []
+		},
+		"6": {
+				"features_gained": [
+						"Regent Power Resonance"
+				],
+				"abilities_improved": []
+		},
+		"7": {
+				"features_gained": [
+						"Pack Tactics"
+				],
+				"abilities_improved": []
+		},
+		"8": {
+				"features_gained": [
+						"Regent Attribute Enhancement"
+				],
+				"abilities_improved": [
+						"Primary Ability +2"
+				]
+		},
+		"9": {
+				"features_gained": [
+						"Extinction Event"
+				],
+				"abilities_improved": []
+		},
+		"10": {
+				"features_gained": [
+						"Absolute Beast"
+				],
+				"abilities_improved": []
+		},
+		"11": {
+				"features_gained": [
+						"Beast Ascendant",
+						"Primal Lord",
+						"Evolution God"
+				],
+				"abilities_improved": []
+		},
+		"12": {
+				"features_gained": [
+						"Regent Attribute Enhancement"
+				],
+				"abilities_improved": [
+						"Primary Ability +2"
+				]
+		},
+		"13": {
+				"features_gained": [
+						"Beast Apocalypse",
+						"Primal Dominion",
+						"Essence God"
+				],
+				"abilities_improved": []
+		},
+		"14": {
+				"features_gained": [
+						"Regent Power Resonance"
+				],
+				"abilities_improved": []
+		},
+		"15": {
+				"features_gained": [
+						"Beast Reality",
+						"Primal God",
+						"Evolution Emperor"
+				],
+				"abilities_improved": []
+		},
+		"16": {
+				"features_gained": [
+						"Regent Attribute Enhancement"
+				],
+				"abilities_improved": [
+						"Primary Ability +2"
+				]
+		},
+		"17": {
+				"features_gained": [
+						"Beast Transcendence",
+						"Primal Emperor",
+						"Essence Emperor"
+				],
+				"abilities_improved": []
+		},
+		"18": {
+				"features_gained": [
+						"Regent Power Resonance"
+				],
+				"abilities_improved": []
+		},
+		"19": {
+				"features_gained": [
+						"Beast Omnipotence",
+						"Primal Regent",
+						"Evolution Regent"
+				],
+				"abilities_improved": []
+		},
+		"20": {
+				"features_gained": [
+						"Beast Supremacy",
+						"Absolute Beast",
+						"Regent Power"
+				],
+				"abilities_improved": []
+		}
+},
 	},
 	{
 		id: "plague_regent",
@@ -3758,6 +4363,150 @@ export const regents: Regent[] = [
 				frequency: "at-will",
 			},
 		],
+		progression_table: {
+		"1": {
+				"features_gained": [
+						"Typhoid Incarnate",
+						"Insect God"
+				],
+				"abilities_improved": []
+		},
+		"2": {
+				"features_gained": [
+						"Regent Power Resonance",
+						"Pandemic Decree"
+				],
+				"abilities_improved": []
+		},
+		"3": {
+				"features_gained": [
+						"Billion Swarm"
+				],
+				"abilities_improved": []
+		},
+		"4": {
+				"features_gained": [
+						"Regent Attribute Enhancement"
+				],
+				"abilities_improved": [
+						"Primary Ability +2"
+				]
+		},
+		"5": {
+				"features_gained": [
+						"Pathogen Mastery"
+				],
+				"abilities_improved": []
+		},
+		"6": {
+				"features_gained": [
+						"Regent Power Resonance"
+				],
+				"abilities_improved": []
+		},
+		"7": {
+				"features_gained": [
+						"Plague Vector"
+				],
+				"abilities_improved": []
+		},
+		"8": {
+				"features_gained": [
+						"Regent Attribute Enhancement"
+				],
+				"abilities_improved": [
+						"Primary Ability +2"
+				]
+		},
+		"9": {
+				"features_gained": [
+						"Miasma Apocalypse"
+				],
+				"abilities_improved": []
+		},
+		"10": {
+				"features_gained": [
+						"Absolute Plague"
+				],
+				"abilities_improved": []
+		},
+		"11": {
+				"features_gained": [
+						"Plague Ascendant",
+						"Swarm Lord",
+						"Disease God"
+				],
+				"abilities_improved": []
+		},
+		"12": {
+				"features_gained": [
+						"Regent Attribute Enhancement"
+				],
+				"abilities_improved": [
+						"Primary Ability +2"
+				]
+		},
+		"13": {
+				"features_gained": [
+						"Plague Apocalypse",
+						"Swarm Dominion",
+						"Pathogen God"
+				],
+				"abilities_improved": []
+		},
+		"14": {
+				"features_gained": [
+						"Regent Power Resonance"
+				],
+				"abilities_improved": []
+		},
+		"15": {
+				"features_gained": [
+						"Plague Reality",
+						"Swarm God",
+						"Disease Emperor"
+				],
+				"abilities_improved": []
+		},
+		"16": {
+				"features_gained": [
+						"Regent Attribute Enhancement"
+				],
+				"abilities_improved": [
+						"Primary Ability +2"
+				]
+		},
+		"17": {
+				"features_gained": [
+						"Plague Transcendence",
+						"Swarm Emperor",
+						"Pathogen Emperor"
+				],
+				"abilities_improved": []
+		},
+		"18": {
+				"features_gained": [
+						"Regent Power Resonance"
+				],
+				"abilities_improved": []
+		},
+		"19": {
+				"features_gained": [
+						"Plague Omnipotence",
+						"Swarm Regent",
+						"Disease Regent"
+				],
+				"abilities_improved": []
+		},
+		"20": {
+				"features_gained": [
+						"Plague Supremacy",
+						"Absolute Plague",
+						"Regent Power"
+				],
+				"abilities_improved": []
+		}
+},
 	},
 	{
 		id: "spatial_regent",
@@ -4095,6 +4844,150 @@ export const regents: Regent[] = [
 				frequency: "at-will",
 			},
 		],
+		progression_table: {
+		"1": {
+				"features_gained": [
+						"Void Singularity",
+						"Planar Blink"
+				],
+				"abilities_improved": []
+		},
+		"2": {
+				"features_gained": [
+						"Regent Power Resonance",
+						"Spatial Anchors"
+				],
+				"abilities_improved": []
+		},
+		"3": {
+				"features_gained": [
+						"Dimensional Sanctum"
+				],
+				"abilities_improved": []
+		},
+		"4": {
+				"features_gained": [
+						"Regent Attribute Enhancement"
+				],
+				"abilities_improved": [
+						"Primary Ability +2"
+				]
+		},
+		"5": {
+				"features_gained": [
+						"Dimensional Lock"
+				],
+				"abilities_improved": []
+		},
+		"6": {
+				"features_gained": [
+						"Regent Power Resonance"
+				],
+				"abilities_improved": []
+		},
+		"7": {
+				"features_gained": [
+						"Lattice Vision"
+				],
+				"abilities_improved": []
+		},
+		"8": {
+				"features_gained": [
+						"Regent Attribute Enhancement"
+				],
+				"abilities_improved": [
+						"Primary Ability +2"
+				]
+		},
+		"9": {
+				"features_gained": [
+						"Reality Rewrite"
+				],
+				"abilities_improved": []
+		},
+		"10": {
+				"features_gained": [
+						"Absolute Spatial"
+				],
+				"abilities_improved": []
+		},
+		"11": {
+				"features_gained": [
+						"Spatial Ascendant",
+						"Void Lord",
+						"Dimensional God"
+				],
+				"abilities_improved": []
+		},
+		"12": {
+				"features_gained": [
+						"Regent Attribute Enhancement"
+				],
+				"abilities_improved": [
+						"Primary Ability +2"
+				]
+		},
+		"13": {
+				"features_gained": [
+						"Spatial Apocalypse",
+						"Space Dominion",
+						"Reality God"
+				],
+				"abilities_improved": []
+		},
+		"14": {
+				"features_gained": [
+						"Regent Power Resonance"
+				],
+				"abilities_improved": []
+		},
+		"15": {
+				"features_gained": [
+						"Spatial Reality",
+						"Void God",
+						"Dimensional Emperor"
+				],
+				"abilities_improved": []
+		},
+		"16": {
+				"features_gained": [
+						"Regent Attribute Enhancement"
+				],
+				"abilities_improved": [
+						"Primary Ability +2"
+				]
+		},
+		"17": {
+				"features_gained": [
+						"Spatial Transcendence",
+						"Space Emperor",
+						"Reality Emperor"
+				],
+				"abilities_improved": []
+		},
+		"18": {
+				"features_gained": [
+						"Regent Power Resonance"
+				],
+				"abilities_improved": []
+		},
+		"19": {
+				"features_gained": [
+						"Spatial Omnipotence",
+						"Void Regent",
+						"Dimensional Regent"
+				],
+				"abilities_improved": []
+		},
+		"20": {
+				"features_gained": [
+						"Spatial Supremacy",
+						"Absolute Spatial",
+						"Regent Power"
+				],
+				"abilities_improved": []
+		}
+},
 	},
 	{
 		id: "mimic_regent",
@@ -4368,6 +5261,149 @@ export const regents: Regent[] = [
 				frequency: "long-rest",
 			},
 		],
+		progression_table: {
+		"1": {
+				"features_gained": [
+						"Perfect Imitation",
+						"Power Theft"
+				],
+				"abilities_improved": []
+		},
+		"2": {
+				"features_gained": [
+						"Reactive Evolution"
+				],
+				"abilities_improved": []
+		},
+		"3": {
+				"features_gained": [
+						"Quantum Existence"
+				],
+				"abilities_improved": []
+		},
+		"4": {
+				"features_gained": [
+						"Regent Attribute Enhancement"
+				],
+				"abilities_improved": [
+						"Primary Ability +2"
+				]
+		},
+		"5": {
+				"features_gained": [
+						"Memory Access"
+				],
+				"abilities_improved": []
+		},
+		"6": {
+				"features_gained": [
+						"Regent Power Resonance"
+				],
+				"abilities_improved": []
+		},
+		"7": {
+				"features_gained": [
+						"Form Archive"
+				],
+				"abilities_improved": []
+		},
+		"8": {
+				"features_gained": [
+						"Regent Attribute Enhancement"
+				],
+				"abilities_improved": [
+						"Primary Ability +2"
+				]
+		},
+		"9": {
+				"features_gained": [
+						"Perfect Copy"
+				],
+				"abilities_improved": []
+		},
+		"10": {
+				"features_gained": [
+						"Absolute Mimic"
+				],
+				"abilities_improved": []
+		},
+		"11": {
+				"features_gained": [
+						"Mimic Ascendant",
+						"Form Lord",
+						"Copy God"
+				],
+				"abilities_improved": []
+		},
+		"12": {
+				"features_gained": [
+						"Regent Attribute Enhancement"
+				],
+				"abilities_improved": [
+						"Primary Ability +2"
+				]
+		},
+		"13": {
+				"features_gained": [
+						"Mimic Apocalypse",
+						"Form Dominion",
+						"Copy Dominion"
+				],
+				"abilities_improved": []
+		},
+		"14": {
+				"features_gained": [
+						"Regent Power Resonance"
+				],
+				"abilities_improved": []
+		},
+		"15": {
+				"features_gained": [
+						"Mimic Reality",
+						"Form God",
+						"Copy Emperor"
+				],
+				"abilities_improved": []
+		},
+		"16": {
+				"features_gained": [
+						"Regent Attribute Enhancement"
+				],
+				"abilities_improved": [
+						"Primary Ability +2"
+				]
+		},
+		"17": {
+				"features_gained": [
+						"Mimic Transcendence",
+						"Form Emperor",
+						"Copy Transcendence"
+				],
+				"abilities_improved": []
+		},
+		"18": {
+				"features_gained": [
+						"Regent Power Resonance"
+				],
+				"abilities_improved": []
+		},
+		"19": {
+				"features_gained": [
+						"Mimic Omnipotence",
+						"Form Regent",
+						"Copy Regent"
+				],
+				"abilities_improved": []
+		},
+		"20": {
+				"features_gained": [
+						"Mimic Supremacy",
+						"Absolute Mimic",
+						"Regent Power"
+				],
+				"abilities_improved": []
+		}
+},
 	},
 	{
 		id: "blood_regent",
@@ -4690,6 +5726,150 @@ export const regents: Regent[] = [
 				type: "passive",
 			},
 		],
+		progression_table: {
+		"1": {
+				"features_gained": [
+						"Sanguine Command",
+						"Blood Shield"
+				],
+				"abilities_improved": []
+		},
+		"2": {
+				"features_gained": [
+						"Regent Power Resonance",
+						"Crimson Lance"
+				],
+				"abilities_improved": []
+		},
+		"3": {
+				"features_gained": [
+						"Life Drain Aura"
+				],
+				"abilities_improved": []
+		},
+		"4": {
+				"features_gained": [
+						"Regent Attribute Enhancement"
+				],
+				"abilities_improved": [
+						"Primary Ability +2"
+				]
+		},
+		"5": {
+				"features_gained": [
+						"Sanguine Rebirth"
+				],
+				"abilities_improved": []
+		},
+		"6": {
+				"features_gained": [
+						"Regent Power Resonance"
+				],
+				"abilities_improved": []
+		},
+		"7": {
+				"features_gained": [
+						"Hemocentric Control"
+				],
+				"abilities_improved": []
+		},
+		"8": {
+				"features_gained": [
+						"Regent Attribute Enhancement"
+				],
+				"abilities_improved": [
+						"Primary Ability +2"
+				]
+		},
+		"9": {
+				"features_gained": [
+						"Blood Apocalypse"
+				],
+				"abilities_improved": []
+		},
+		"10": {
+				"features_gained": [
+						"Absolute Blood"
+				],
+				"abilities_improved": []
+		},
+		"11": {
+				"features_gained": [
+						"Blood Ascendant",
+						"Sanguine Lord",
+						"Life God"
+				],
+				"abilities_improved": []
+		},
+		"12": {
+				"features_gained": [
+						"Regent Attribute Enhancement"
+				],
+				"abilities_improved": [
+						"Primary Ability +2"
+				]
+		},
+		"13": {
+				"features_gained": [
+						"Sanguine Cataclysm",
+						"Life Dominion",
+						"Essence God"
+				],
+				"abilities_improved": []
+		},
+		"14": {
+				"features_gained": [
+						"Regent Power Resonance"
+				],
+				"abilities_improved": []
+		},
+		"15": {
+				"features_gained": [
+						"Blood Reality",
+						"Sanguine God",
+						"Life Emperor"
+				],
+				"abilities_improved": []
+		},
+		"16": {
+				"features_gained": [
+						"Regent Attribute Enhancement"
+				],
+				"abilities_improved": [
+						"Primary Ability +2"
+				]
+		},
+		"17": {
+				"features_gained": [
+						"Blood Transcendence",
+						"Life Architect",
+						"Essence Emperor"
+				],
+				"abilities_improved": []
+		},
+		"18": {
+				"features_gained": [
+						"Regent Power Resonance"
+				],
+				"abilities_improved": []
+		},
+		"19": {
+				"features_gained": [
+						"Blood Omnipotence",
+						"Sanguine Regent",
+						"Life Regent"
+				],
+				"abilities_improved": []
+		},
+		"20": {
+				"features_gained": [
+						"Blood Supremacy",
+						"Absolute Sanguinity",
+						"Regent Power"
+				],
+				"abilities_improved": []
+		}
+},
 	},
 	{
 		id: "gravity_regent",
@@ -5008,6 +6188,149 @@ export const regents: Regent[] = [
 				type: "passive",
 			},
 		],
+		progression_table: {
+		"1": {
+				"features_gained": [
+						"Gravity Well",
+						"Weightless Step"
+				],
+				"abilities_improved": []
+		},
+		"2": {
+				"features_gained": [
+						"Crushing Blows"
+				],
+				"abilities_improved": []
+		},
+		"3": {
+				"features_gained": [
+						"Planetary Field"
+				],
+				"abilities_improved": []
+		},
+		"4": {
+				"features_gained": [
+						"Regent Attribute Enhancement"
+				],
+				"abilities_improved": [
+						"Primary Ability +2"
+				]
+		},
+		"5": {
+				"features_gained": [
+						"Event Horizon"
+				],
+				"abilities_improved": []
+		},
+		"6": {
+				"features_gained": [
+						"Regent Power Resonance"
+				],
+				"abilities_improved": []
+		},
+		"7": {
+				"features_gained": [
+						"Orbital Striker"
+				],
+				"abilities_improved": []
+		},
+		"8": {
+				"features_gained": [
+						"Regent Attribute Enhancement"
+				],
+				"abilities_improved": [
+						"Primary Ability +2"
+				]
+		},
+		"9": {
+				"features_gained": [
+						"Singularity Genesis"
+				],
+				"abilities_improved": []
+		},
+		"10": {
+				"features_gained": [
+						"Absolute Weight"
+				],
+				"abilities_improved": []
+		},
+		"11": {
+				"features_gained": [
+						"Gravity Ascendant",
+						"Weight Lord",
+						"Force God"
+				],
+				"abilities_improved": []
+		},
+		"12": {
+				"features_gained": [
+						"Regent Attribute Enhancement"
+				],
+				"abilities_improved": [
+						"Primary Ability +2"
+				]
+		},
+		"13": {
+				"features_gained": [
+						"Gravity Apocalypse",
+						"Force Dominion",
+						"Essence God"
+				],
+				"abilities_improved": []
+		},
+		"14": {
+				"features_gained": [
+						"Regent Power Resonance"
+				],
+				"abilities_improved": []
+		},
+		"15": {
+				"features_gained": [
+						"Gravity Reality",
+						"Weight God",
+						"Force Emperor"
+				],
+				"abilities_improved": []
+		},
+		"16": {
+				"features_gained": [
+						"Regent Attribute Enhancement"
+				],
+				"abilities_improved": [
+						"Primary Ability +2"
+				]
+		},
+		"17": {
+				"features_gained": [
+						"Gravity Transcendence",
+						"Fundamental Emperor",
+						"Essence Emperor"
+				],
+				"abilities_improved": []
+		},
+		"18": {
+				"features_gained": [
+						"Regent Power Resonance"
+				],
+				"abilities_improved": []
+		},
+		"19": {
+				"features_gained": [
+						"Gravity Omnipotence",
+						"Weight Regent",
+						"Force Regent"
+				],
+				"abilities_improved": []
+		},
+		"20": {
+				"features_gained": [
+						"Gravity Supremacy",
+						"Absolute Weightlessness",
+						"Regent Power"
+				],
+				"abilities_improved": []
+		}
+},
 	},
 ];
 
