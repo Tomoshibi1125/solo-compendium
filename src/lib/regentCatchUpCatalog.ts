@@ -1,3 +1,11 @@
+/**
+ * @deprecated These functions are no longer used. Regent catch-up no longer requires warden approval.
+ * Players now select abilities directly from the canonical catalog just like job/path progression.
+ * See: docs/deprecated/regent-catch-up-curation.md
+ *
+ * This file can be removed in a future cleanup pass.
+ */
+
 import { supabase } from "@/integrations/supabase/client";
 
 export type RegentCatchUpKind = "powers" | "techniques" | "cantrips" | "spells";

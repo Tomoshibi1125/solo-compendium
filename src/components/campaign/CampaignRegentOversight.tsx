@@ -8,7 +8,7 @@ import {
 	User,
 } from "lucide-react";
 import { useMemo, useState } from "react";
-import { RegentCatchUpCatalogDialog } from "@/components/campaign/RegentCatchUpCatalogDialog";
+
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -71,11 +71,7 @@ export function CampaignRegentOversight({
 	const [editingOffer, setEditingOffer] = useState<RegentOffer | null>(null);
 	const [requestId, setRequestId] = useState("");
 	const [submissionError, setSubmissionError] = useState<string | null>(null);
-	const [curatingUnlock, setCuratingUnlock] = useState<{
-		id: string;
-		regentId: string;
-		level: number;
-	} | null>(null);
+
 	const [approvingPendingId, setApprovingPendingId] = useState<string | null>(
 		null,
 	);
@@ -308,9 +304,6 @@ export function CampaignRegentOversight({
 			</div>
 		);
 	}
-	const curatingRegent = curatingUnlock
-		? canonicalRegents.find((regent) => regent.id === curatingUnlock.regentId)
-		: null;
 
 	return (
 		<div className="space-y-6">
@@ -420,24 +413,6 @@ export function CampaignRegentOversight({
 												</p>
 											</div>
 											<div className="flex items-center gap-1">
-												{unlock.resolved_regent_id &&
-													unlock.caught_up_at_level === null && (
-														<Button
-															variant="outline"
-															size="sm"
-															onClick={() => {
-																const regentId = unlock.resolved_regent_id;
-																if (!regentId) return;
-																setCuratingUnlock({
-																	id: unlock.id,
-																	regentId,
-																	level: character.level,
-																});
-															}}
-														>
-															<Pencil className="w-3 h-3 mr-1" /> Curate picks
-														</Button>
-													)}
 												<Button
 													variant="ghost"
 													size="icon"
@@ -646,18 +621,6 @@ export function CampaignRegentOversight({
 					</DialogFooter>
 				</DialogContent>
 			</Dialog>
-			{curatingUnlock && curatingRegent && (
-				<RegentCatchUpCatalogDialog
-					open
-					onOpenChange={(next) => {
-						if (!next) setCuratingUnlock(null);
-					}}
-					unlockId={curatingUnlock.id}
-					campaignId={campaignId}
-					characterLevel={curatingUnlock.level}
-					regent={curatingRegent}
-				/>
-			)}
 		</div>
 	);
 }

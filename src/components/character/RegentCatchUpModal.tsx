@@ -28,7 +28,6 @@ import {
 import { calculateTotalChoices } from "@/lib/choiceCalculations";
 import { isLocalCharacterId } from "@/lib/guestStore";
 import { resolveCanonicalRegentId } from "@/lib/regentIdentity";
-import { getMaxRegentAbilityTier } from "@/lib/regentProgression";
 import {
 	type CanonicalPickEntry,
 	persistRegentPowers,
@@ -36,7 +35,10 @@ import {
 	persistRegentTechniques,
 	type RegentPickPersistenceResult,
 } from "@/lib/regentPickPersistence";
-import { regentToChoiceSource } from "@/lib/regentProgression";
+import {
+	getMaxRegentAbilityTier,
+	regentToChoiceSource,
+} from "@/lib/regentProgression";
 import type { Regent } from "@/lib/regentTypes";
 import { cn } from "@/lib/utils";
 import { formatRegentVernacular, REGENT_LABEL } from "@/lib/vernacular";
@@ -369,41 +371,17 @@ export function RegentCatchUpModal({
 	}, [regent, level]);
 
 	const powerQuery = useQuery<CanonicalCastableEntry[]>({
-		queryKey: ["regent-catchup-powers", canonicalRegentId, level, campaignId, maxTier],
+		queryKey: [
+			"regent-catchup-powers",
+			canonicalRegentId,
+			level,
+			campaignId,
+			maxTier,
+		],
 		queryFn: async () => {
-			// Load regent powers from canonical pick options table (tier 5-9 only)
-			const { data: pickOptions, error: pickError } = await supabase
-				.from("regent_canonical_pick_options")
-				.select("canonical_id")
-				.eq("kind", "powers")
-				.lte("tier", maxTier)
-				.gte("tier", 5);
-			if (pickError) throw pickError;
-			
-			const regentPowerIds = new Set((pickOptions ?? []).map(row => row.canonical_id));
-			if (regentPowerIds.size === 0) return [];
-			
-			// Load full power entries from powers table
-			const { data: powers, error: powersError } = await supabase
-				.from("powers")
-				.select("id, name, power_level, casting_time, range, duration, concentration, ritual, description, higher_levels")
-				.in("id", Array.from(regentPowerIds))
-				.gte("power_level", 5)
-				.lte("power_level", maxTier);
-			if (powersError) throw powersError;
-			
-			return (powers ?? []).map(p => ({
-				id: p.id,
-				name: p.name,
-				power_level: p.power_level,
-				casting_time: p.casting_time,
-				range: p.range,
-				duration: p.duration,
-				concentration: p.concentration ?? false,
-				ritual: p.ritual ?? false,
-				description: p.description,
-				higher_levels: p.higher_levels,
-			})) as CanonicalCastableEntry[];
+			// Load all canonical powers directly from public powers table
+			// Filter to tier 5-maxTier happens in useMemo below
+			return await listCanonicalPowers(undefined, { campaignId });
 		},
 		enabled: baseQueryEnabled && owed.powers > 0,
 	});
@@ -417,35 +395,11 @@ export function RegentCatchUpModal({
 			maxTier,
 		],
 		queryFn: async () => {
-			// Load regent techniques from canonical pick options table (tier 5-9 only)
-			const { data: pickOptions, error: pickError } = await supabase
-				.from("regent_canonical_pick_options")
-				.select("canonical_id")
-				.eq("kind", "techniques")
-				.lte("tier", maxTier)
-				.gte("tier", 5);
-			if (pickError) throw pickError;
-			
-			const regentTechniqueIds = new Set((pickOptions ?? []).map(row => row.canonical_id));
-			if (regentTechniqueIds.size === 0) return [];
-			
-			// Load full technique entries from techniques table
-			const { data: techniques, error: techniquesError } = await supabase
-				.from("techniques")
-				.select("id, name, level, level_requirement, description")
-				.in("id", Array.from(regentTechniqueIds));
-			if (techniquesError) throw techniquesError;
-			
-			return (techniques ?? []).filter(t => {
-				const tier = Number(t.level_requirement ?? t.level ?? 0);
-				return tier >= 5 && tier <= maxTier;
-			}).map(t => ({
-				id: t.id,
-				name: t.name,
-				level: t.level,
-				level_requirement: t.level_requirement,
-				description: t.description,
-			})) as StaticCompendiumEntry[];
+			// Load all canonical techniques directly from public techniques table
+			// Filter to tier 5-maxTier happens in useMemo below
+			return await listCanonicalEntries("techniques", undefined, {
+				campaignId,
+			});
 		},
 		enabled: baseQueryEnabled && owed.techniques > 0,
 	});
@@ -654,7 +608,8 @@ export function RegentCatchUpModal({
 		(owed.powers > 0 && powerQuery.isLoading) ||
 		(owed.techniques > 0 && techniqueQuery.isLoading) ||
 		((owed.cantrips > 0 || owed.spells > 0) && spellQuery.isLoading);
-	const queryLoading = characterLoading || optionLoading || knownQuery.isLoading;
+	const queryLoading =
+		characterLoading || optionLoading || knownQuery.isLoading;
 	const optionError =
 		powerQuery.error ?? techniqueQuery.error ?? spellQuery.error;
 	const queryError = characterError ?? optionError ?? knownQuery.error;
