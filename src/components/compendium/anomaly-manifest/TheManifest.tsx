@@ -26,14 +26,13 @@ export const TheManifest = () => {
 					The Anomaly Manifest
 				</RiftHeading>
 				<p className="text-lg text-slate-400 leading-relaxed max-w-3xl mx-auto mb-8">
-					The absolute registry of dimensional entities documented by the
-					Ascendant Bureau. Anomalies are beings warped by Aether into walking
-					nightmares. Their Resonance Ranks range from localized threats to
-					Sovereign-tier catastrophes.
+					A registry of biological species native to Rift worlds. Each entry
+					describes a creature and its wild stat block. Rank measures encounter
+					scale; an individual creature's disposition belongs to the encounter.
 				</p>
 				<div className="inline-flex items-center gap-4 px-6 py-2 bg-gate-a/5 border border-gate-a/20 rounded-full text-[10px] uppercase font-mono text-gate-a/80 tracking-[0.2em]">
 					<Radio className="w-3 h-3 animate-pulse" />
-					Lattice Sync Active: {sortedAnomalies.length} Spirits Documented
+					{sortedAnomalies.length} Anomaly Species Documented
 				</div>
 			</section>
 

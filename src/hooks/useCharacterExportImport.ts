@@ -1,7 +1,7 @@
 import { useCallback } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
-import type { Database } from "@/integrations/supabase/types";
+import type { Database, Json } from "@/integrations/supabase/types";
 import { getMaxAbilityLevelForJobAtLevel } from "@/lib/abilityProgression";
 import { useAuth } from "@/lib/auth/authContext";
 import {
@@ -21,18 +21,28 @@ import { normalizeCharacterOverlayFields } from "@/lib/characterOverlayValidatio
 import {
 	addLocalEquipment,
 	addLocalFeature,
+	addLocalPendingRegentGrant,
 	addLocalPower,
 	addLocalSpell,
 	addLocalTechnique,
 	createLocalCharacter,
 	getLocalCharacterState,
 	isLocalCharacterId,
+	setLocalPendingRegentResonance,
+	setLocalPortableCanonState,
 } from "@/lib/guestStore";
 import {
 	classifyImportVersion,
 	collectContainerOriginalIds,
 	resolveImportedContainerId,
 } from "@/lib/importValidation";
+import { companionRowsFromRetiredTames } from "@/lib/retiredTamedAnomalies";
+import {
+	isRebuildableSovereignFeature,
+	sovereignAttachmentOperationId,
+	sovereignV2SaveOperationId,
+} from "@/lib/sovereign/sovereignPersistence";
+import { readSovereignDefinition } from "@/lib/sovereign/sovereignV2Contract";
 
 /**
  * Export schema version. Bump when the export shape changes in a way that
@@ -40,7 +50,7 @@ import {
  * legacy/unversioned file is loaded — D&D Beyond parity for graceful
  * handling of older backup files.
  */
-const EXPORT_VERSION = "2.5";
+const EXPORT_VERSION = "3.3";
 
 type _Character = Database["public"]["Tables"]["characters"]["Row"];
 type _CharacterUpdate = Database["public"]["Tables"]["characters"]["Update"];
@@ -59,7 +69,6 @@ type RuneInscriptionInsert =
 	Database["public"]["Tables"]["character_rune_inscriptions"]["Insert"];
 type SigilInscriptionInsert =
 	Database["public"]["Tables"]["character_sigil_inscriptions"]["Insert"];
-type RegentInsert = Database["public"]["Tables"]["character_regents"]["Insert"];
 type ShadowSoldierInsert =
 	Database["public"]["Tables"]["character_umbral_legionnaires"]["Insert"];
 type JournalInsert =
@@ -72,14 +81,10 @@ type ShadowArmyInsert =
 type ExtrasInsert = Database["public"]["Tables"]["character_extras"]["Insert"];
 type MonarchUnlockInsert =
 	Database["public"]["Tables"]["character_monarch_unlocks"]["Insert"];
-type RegentUnlockInsert =
-	Database["public"]["Tables"]["character_regent_unlocks"]["Insert"];
 type FeatureChoiceInsert =
 	Database["public"]["Tables"]["character_feature_choices"]["Insert"];
 type VehicleInsert =
 	Database["public"]["Tables"]["character_vehicles"]["Insert"];
-type TamedAnomalyInsert =
-	Database["public"]["Tables"]["character_tamed_anomalies"]["Insert"];
 type TattooInsert = Database["public"]["Tables"]["character_tattoos"]["Insert"];
 type SheetStateInsert =
 	Database["public"]["Tables"]["character_sheet_state"]["Insert"];
@@ -108,6 +113,11 @@ const recordOrNull = (value: unknown): Record<string, unknown> | null =>
 		: null;
 
 const createImportRowId = (): string => globalThis.crypto.randomUUID();
+const isUuid = (value: string | null): value is string =>
+	!!value &&
+	/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(
+		value,
+	);
 
 const stripImportOnlyFields = (
 	row: Record<string, unknown>,
@@ -158,7 +168,7 @@ async function resolveStaticReferenceId(
 const isCanonicalRuneKey = (value: string): boolean =>
 	/^rune-[a-z0-9]+(?:-[a-z0-9]+)*$/.test(value);
 
-async function buildImportedCharacterInsert(
+export async function buildImportedCharacterInsert(
 	charData: Record<string, unknown>,
 	userId: string,
 ): Promise<CharacterInsert> {
@@ -185,11 +195,13 @@ async function buildImportedCharacterInsert(
 		user_id: userId,
 		name: `${stringOrNull(charData.name) ?? "Imported Character"} (Imported)`,
 		level: numberOrDefault(charData.level, 1),
-		job,
+		// A resolved reference stores the canonical name, so a retired name
+		// matched through an alias is never persisted (RA-27).
+		job: jobResolution.entry?.name ?? job,
 		job_id: jobResolution.entry?.id ?? stringOrNull(charData.job_id) ?? null,
-		path,
+		path: pathResolution.entry?.name ?? path,
 		path_id: pathResolution.entry?.id ?? stringOrNull(charData.path_id) ?? null,
-		background,
+		background: backgroundResolution.entry?.name ?? background,
 		background_id:
 			backgroundResolution.entry?.id ??
 			stringOrNull(charData.background_id) ??
@@ -205,15 +217,13 @@ async function buildImportedCharacterInsert(
 			charData.hp_current ?? charData.current_hp ?? charData.hp_max,
 			10,
 		),
-		active_sovereign_id: stringOrNull(charData.active_sovereign_id),
-		sovereign_id: stringOrNull(charData.sovereign_id),
-		gemini_state: charData.gemini_state ?? null,
+		active_sovereign_id: null,
+		sovereign_id: null,
+		gemini_state: null,
 		monarch_overlays: Array.isArray(charData.monarch_overlays)
 			? charData.monarch_overlays
 			: null,
-		regent_overlays: Array.isArray(charData.regent_overlays)
-			? charData.regent_overlays
-			: null,
+		regent_overlays: [],
 		armor_class: numberOrDefault(charData.armor_class, 10),
 		speed: numberOrDefault(charData.speed, 30),
 		initiative: numberOrDefault(charData.initiative, 0),
@@ -282,26 +292,28 @@ async function buildImportedFeatureRows(
 	characterId: string,
 ): Promise<FeatureInsert[]> {
 	return Promise.all(
-		rows.map(async (feature) => {
-			const name = stringOrNull(feature.name);
-			const source = stringOrNull(feature.source);
-			const canonicalFeat = source?.toLowerCase().includes("feat")
-				? (
-						await resolveCanonicalReference("feats", {
-							id: stringOrNull(feature.feat_id),
-							name,
-						})
-					).entry
-				: null;
+		rows
+			.filter((feature) => !isRebuildableSovereignFeature(feature))
+			.map(async (feature) => {
+				const name = stringOrNull(feature.name);
+				const source = stringOrNull(feature.source);
+				const canonicalFeat = source?.toLowerCase().includes("feat")
+					? (
+							await resolveCanonicalReference("feats", {
+								id: stringOrNull(feature.feat_id),
+								name,
+							})
+						).entry
+					: null;
 
-			return {
-				...feature,
-				character_id: characterId,
-				id: undefined,
-				feat_id: canonicalFeat?.id ?? stringOrNull(feature.feat_id) ?? null,
-				feature_id: stringOrNull(feature.feature_id) ?? null,
-			} as FeatureInsert;
-		}),
+				return {
+					...feature,
+					character_id: characterId,
+					id: undefined,
+					feat_id: canonicalFeat?.id ?? stringOrNull(feature.feat_id) ?? null,
+					feature_id: stringOrNull(feature.feature_id) ?? null,
+				} as FeatureInsert;
+			}),
 	);
 }
 
@@ -321,7 +333,12 @@ async function buildImportedPowerRows(
 				)
 			).entry;
 			if (canonicalPower) {
-				assertCanonicalPowerLearnable(canonicalPower, context);
+				if (
+					power.acquisition_kind !== "regent" &&
+					!String(power.source ?? "").endsWith(" Attunement (Catch-Up)")
+				) {
+					assertCanonicalPowerLearnable(canonicalPower, context);
+				}
 			} else if (name) {
 				await assertHomebrewPowerLearnable(name, context);
 			} else {
@@ -400,7 +417,12 @@ async function buildImportedTechniqueRows(
 			if (!techniqueEntry) {
 				throw new Error("Imported technique is missing a canonical reference.");
 			}
-			assertCanonicalTechniqueLearnable(techniqueEntry, context);
+			if (
+				technique.acquisition_kind !== "regent" &&
+				!String(technique.source ?? "").endsWith(" Attunement (Catch-Up)")
+			) {
+				assertCanonicalTechniqueLearnable(techniqueEntry, context);
+			}
 
 			return {
 				...stripImportOnlyFields(technique, ["technique"]),
@@ -502,32 +524,6 @@ async function buildImportedSigilInscriptionRows(
 				equipment_id: equipmentId,
 				sigil_id: sigilId,
 			} as SigilInscriptionInsert;
-		}),
-	);
-
-	return built.filter(isPresent);
-}
-async function buildImportedRegentRows(
-	rows: Record<string, unknown>[],
-	characterId: string,
-): Promise<RegentInsert[]> {
-	const built = await Promise.all(
-		rows.map(async (regent) => {
-			const regentId = await resolveStaticReferenceId(
-				regent,
-				"regent_id",
-				"regents",
-				["regent"],
-			);
-
-			if (!regentId) return null;
-
-			return {
-				...stripImportOnlyFields(regent, ["regent"]),
-				character_id: characterId,
-				id: undefined,
-				regent_id: regentId,
-			} as RegentInsert;
 		}),
 	);
 
@@ -697,32 +693,6 @@ async function buildImportedMonarchUnlockRows(
 		.filter(isPresent);
 }
 
-async function buildImportedRegentUnlockRows(
-	rows: Record<string, unknown>[],
-	characterId: string,
-): Promise<RegentUnlockInsert[]> {
-	const built = await Promise.all(
-		rows.map(async (entry) => {
-			const regentId = await resolveStaticReferenceId(
-				entry,
-				"regent_id",
-				"regents",
-				["regent"],
-			);
-			const questName = stringOrNull(entry.quest_name);
-			if (!regentId || !questName) return null;
-			return {
-				...stripImportOnlyFields(entry, ["regent"]),
-				character_id: characterId,
-				regent_id: regentId,
-				quest_name: questName,
-			} as RegentUnlockInsert;
-		}),
-	);
-
-	return built.filter(isPresent);
-}
-
 async function buildImportedFeatureChoiceRows(
 	rows: Record<string, unknown>[],
 	characterId: string,
@@ -744,11 +714,72 @@ async function buildImportedFeatureChoiceRows(
 		.filter(isPresent);
 }
 
+type ImportedUnlockAuthority = { id: string; regentId: string };
+
+async function importVerifiedRegentUnlocks(
+	rows: Record<string, unknown>[],
+	characterId: string,
+): Promise<Map<string, ImportedUnlockAuthority>> {
+	const verified = new Map<string, ImportedUnlockAuthority>();
+	const ordered = [...rows].sort(
+		(a, b) => Number(b.is_primary === true) - Number(a.is_primary === true),
+	);
+	for (const row of ordered) {
+		const originalId = stringOrNull(row.id);
+		const regentId = await resolveStaticReferenceId(
+			row,
+			"regent_id",
+			"regents",
+			["regent"],
+		);
+		if (!isUuid(originalId) || !regentId) continue;
+		const { data, error } = await supabase.rpc(
+			"import_regent_unlock_authority",
+			{
+				p_original_unlock_id: originalId,
+				p_target_character_id: characterId,
+				p_expected_regent_id: regentId,
+			},
+		);
+		if (error) throw new Error(error.message);
+		if (data) verified.set(originalId, { id: data, regentId });
+	}
+	return verified;
+}
+
+async function stagePendingRegentGrant(
+	row: Record<string, unknown>,
+	characterId: string,
+	kind: "power" | "technique",
+	regentId: string,
+): Promise<void> {
+	const canonicalId =
+		stringOrNull(row[kind === "power" ? "power_id" : "technique_id"]) ??
+		"unresolved";
+	const originalUnlockId = stringOrNull(row.regent_unlock_id);
+	const { error } = await supabase
+		.from("character_pending_regent_grants")
+		.insert({
+			character_id: characterId,
+			original_unlock_id: isUuid(originalUnlockId) ? originalUnlockId : null,
+			regent_id: regentId,
+			grant_kind: kind,
+			canonical_id: canonicalId,
+			payload: row as Json,
+		});
+	if (error) throw new Error(error.message);
+}
+
 async function importRelatedCharacterRows(
 	data: Record<string, unknown>,
 	characterId: string,
 	userId: string,
-): Promise<void> {
+): Promise<{
+	pendingSovereign: boolean;
+	pendingCraftState: boolean;
+}> {
+	let pendingSovereign = false;
+	let pendingCraftState = false;
 	const charData = recordOrNull(data.character);
 	const importedJobName = stringOrNull(charData?.job);
 	const importedLevel = numberOrDefault(charData?.level, 1);
@@ -757,11 +788,7 @@ async function importRelatedCharacterRows(
 		accessContext: { campaignId: null },
 		jobName: importedJobName,
 		pathName: stringOrNull(charData?.path),
-		regentNames: Array.isArray(charData?.regent_overlays)
-			? charData.regent_overlays.filter(
-					(value): value is string => typeof value === "string",
-				)
-			: [],
+		regentNames: [],
 		characterLevel: importedLevel,
 		maxSpellLevel: importedJobName
 			? getMaxAbilityLevelForJobAtLevel(importedJobName, importedLevel, "spell")
@@ -770,6 +797,61 @@ async function importRelatedCharacterRows(
 			? getMaxAbilityLevelForJobAtLevel(importedJobName, importedLevel, "power")
 			: null,
 		maxTechniqueLevel: importedLevel,
+	};
+	const exportedUnlocks = Array.isArray(data.regent_unlocks)
+		? (data.regent_unlocks as Record<string, unknown>[])
+		: [];
+	const verifiedUnlocks = await importVerifiedRegentUnlocks(
+		exportedUnlocks,
+		characterId,
+	);
+	const originalUnlockById = new Map(
+		exportedUnlocks.map((row) => [String(row.id), row]),
+	);
+	const originalCharacterId = stringOrNull(charData?.id);
+	const exportedPool = recordOrNull(data.regent_resonance);
+	if (verifiedUnlocks.size > 0 && isUuid(originalCharacterId) && exportedPool) {
+		const requested = numberOrDefault(exportedPool.points_current, 0);
+		const { error } = await supabase.rpc("import_regent_resonance_state", {
+			p_original_character_id: originalCharacterId,
+			p_target_character_id: characterId,
+			p_requested_points: requested,
+		});
+		if (error) throw new Error(error.message);
+	}
+
+	const importRegentGrant = async (
+		row: Record<string, unknown>,
+		kind: "power" | "technique",
+	) => {
+		const originalGrantId = stringOrNull(row.id);
+		const originalUnlockId = stringOrNull(row.regent_unlock_id);
+		const verified = originalUnlockId
+			? verifiedUnlocks.get(originalUnlockId)
+			: undefined;
+		const exportedUnlock = originalUnlockId
+			? originalUnlockById.get(originalUnlockId)
+			: undefined;
+		const regentId =
+			stringOrNull(row.regent_id) ??
+			stringOrNull(exportedUnlock?.regent_id) ??
+			"unresolved";
+		if (verified && verified.regentId === regentId && isUuid(originalGrantId)) {
+			try {
+				const { data: copiedId, error } = await supabase.rpc(
+					"import_regent_grant_authority",
+					{
+						p_original_grant_id: originalGrantId,
+						p_grant_kind: kind,
+						p_target_unlock_id: verified.id,
+					},
+				);
+				if (!error && copiedId) return;
+			} catch {
+				// Retain an unaccepted grant for Warden review below.
+			}
+		}
+		await stagePendingRegentGrant(row, characterId, kind, regentId);
 	};
 
 	if (Array.isArray(data.abilities) && data.abilities.length > 0) {
@@ -805,12 +887,19 @@ async function importRelatedCharacterRows(
 	}
 
 	if (Array.isArray(data.powers) && data.powers.length > 0) {
+		const powerRows = data.powers as Record<string, unknown>[];
 		const powers = await buildImportedPowerRows(
-			data.powers as Record<string, unknown>[],
+			powerRows.filter((row) => row.acquisition_kind !== "regent"),
 			characterId,
 			importedAbilityContext,
 		);
-		await supabase.from("character_powers").insert(powers).throwOnError();
+		if (powers.length > 0)
+			await supabase.from("character_powers").insert(powers).throwOnError();
+		for (const row of powerRows.filter(
+			(entry) => entry.acquisition_kind === "regent",
+		)) {
+			await importRegentGrant(row, "power");
+		}
 	}
 
 	if (Array.isArray(data.spells) && data.spells.length > 0) {
@@ -823,8 +912,9 @@ async function importRelatedCharacterRows(
 	}
 
 	if (Array.isArray(data.techniques) && data.techniques.length > 0) {
+		const techniqueRows = data.techniques as Record<string, unknown>[];
 		const techniques = await buildImportedTechniqueRows(
-			data.techniques as Record<string, unknown>[],
+			techniqueRows.filter((row) => row.acquisition_kind !== "regent"),
 			characterId,
 			importedAbilityContext,
 		);
@@ -833,6 +923,11 @@ async function importRelatedCharacterRows(
 				.from("character_techniques")
 				.insert(techniques)
 				.throwOnError();
+		}
+		for (const row of techniqueRows.filter(
+			(entry) => entry.acquisition_kind === "regent",
+		)) {
+			await importRegentGrant(row, "technique");
 		}
 	}
 
@@ -882,15 +977,7 @@ async function importRelatedCharacterRows(
 				.throwOnError();
 		}
 	}
-	if (Array.isArray(data.regents) && data.regents.length > 0) {
-		const regents = await buildImportedRegentRows(
-			data.regents as Record<string, unknown>[],
-			characterId,
-		);
-		if (regents.length > 0) {
-			await supabase.from("character_regents").insert(regents).throwOnError();
-		}
-	}
+	// Regent projections are created only from server-verified unlocks above.
 
 	if (Array.isArray(data.shadow_soldiers) && data.shadow_soldiers.length > 0) {
 		const shadowSoldiers = await buildImportedShadowSoldierRows(
@@ -931,13 +1018,19 @@ async function importRelatedCharacterRows(
 		}
 	}
 
-	if (Array.isArray(data.extras) && data.extras.length > 0) {
-		const extras = await buildImportedExtrasRows(
-			data.extras as Record<string, unknown>[],
-			characterId,
-		);
-		if (extras.length > 0) {
-			await supabase.from("character_extras").insert(extras).throwOnError();
+	// Companions belong to the character; a creature needs no separate
+	// authority to come along. Older files' `companion_profiles` are ignored,
+	// and their personal `tamed_anomalies` import as companions (RA-9).
+	const importedExtras = [
+		...(Array.isArray(data.extras)
+			? (data.extras as Record<string, unknown>[])
+			: []),
+		...(await companionRowsFromRetiredTames(data.tamed_anomalies)),
+	];
+	if (importedExtras.length > 0) {
+		const extras = await buildImportedExtrasRows(importedExtras, characterId);
+		for (const extra of extras) {
+			await supabase.from("character_extras").insert(extra).throwOnError();
 		}
 	}
 
@@ -950,19 +1043,6 @@ async function importRelatedCharacterRows(
 			await supabase
 				.from("character_monarch_unlocks")
 				.insert(monarchUnlocks)
-				.throwOnError();
-		}
-	}
-
-	if (Array.isArray(data.regent_unlocks) && data.regent_unlocks.length > 0) {
-		const regentUnlocks = await buildImportedRegentUnlockRows(
-			data.regent_unlocks as Record<string, unknown>[],
-			characterId,
-		);
-		if (regentUnlocks.length > 0) {
-			await supabase
-				.from("character_regent_unlocks")
-				.insert(regentUnlocks)
 				.throwOnError();
 		}
 	}
@@ -1001,32 +1081,19 @@ async function importRelatedCharacterRows(
 		}
 	}
 
-	// v2.5 additions: vehicles, tamed anomalies, tattoos (list tables), plus the
-	// sheet-state singleton and per-level spell slots. These carry a canonical
-	// reference id (vehicle_id/anomaly_id/tattoo_id) as a plain string that
-	// survives re-import unchanged, so no canonical re-resolution is needed —
-	// only the owning character_id is re-keyed to the freshly created row.
+	// v2.5 additions: vehicles, tattoos (list tables), plus the sheet-state
+	// singleton and per-level spell slots. These carry a canonical reference id
+	// (vehicle_id/tattoo_id) as a plain string that survives re-import
+	// unchanged, so no canonical re-resolution is needed — only the owning
+	// character_id is re-keyed to the freshly created row.
 	if (Array.isArray(data.vehicles) && data.vehicles.length > 0) {
-		const vehicles = (data.vehicles as Record<string, unknown>[]).map(
-			(row) => ({
+		for (const row of data.vehicles as Record<string, unknown>[]) {
+			const vehicle = {
 				...stripImportOnlyFields(row),
 				character_id: characterId,
-			}),
-		) as VehicleInsert[];
-		await supabase.from("character_vehicles").insert(vehicles).throwOnError();
-	}
-
-	if (Array.isArray(data.tamed_anomalies) && data.tamed_anomalies.length > 0) {
-		const tamed = (data.tamed_anomalies as Record<string, unknown>[]).map(
-			(row) => ({
-				...stripImportOnlyFields(row),
-				character_id: characterId,
-			}),
-		) as TamedAnomalyInsert[];
-		await supabase
-			.from("character_tamed_anomalies")
-			.insert(tamed)
-			.throwOnError();
+			} as VehicleInsert;
+			await supabase.from("character_vehicles").insert(vehicle).throwOnError();
+		}
 	}
 
 	if (Array.isArray(data.tattoos) && data.tattoos.length > 0) {
@@ -1067,6 +1134,109 @@ async function importRelatedCharacterRows(
 			.upsert(spellSlots, { onConflict: "character_id,spell_level" })
 			.throwOnError();
 	}
+	if (Array.isArray(data.pending_regent_grants)) {
+		for (const pending of data.pending_regent_grants as Record<
+			string,
+			unknown
+		>[]) {
+			if (pending.status !== "pending") continue;
+			const payload = recordOrNull(pending.payload) ?? pending;
+			const kind = pending.grant_kind === "technique" ? "technique" : "power";
+			await stagePendingRegentGrant(
+				payload,
+				characterId,
+				kind,
+				stringOrNull(pending.regent_id) ?? "unresolved",
+			);
+		}
+	}
+	const materialState = recordOrNull(data.material_state);
+	if (
+		materialState &&
+		Array.isArray(materialState.definitions) &&
+		Array.isArray(materialState.lots) &&
+		Array.isArray(materialState.discoveries)
+	) {
+		const lots = (materialState.lots as Record<string, unknown>[]).map(
+			(lot) => ({
+				...lot,
+				provenance_metadata: lot.source_rank
+					? {
+							...(recordOrNull(lot.provenance_metadata) ?? {}),
+							sourceRank: lot.source_rank,
+						}
+					: lot.provenance_metadata,
+			}),
+		);
+		const { data: receipt, error } = await supabase.rpc(
+			"import_material_lots_m1",
+			{
+				p_character_id: characterId,
+				p_definitions: materialState.definitions as Json,
+				p_lots: lots as Json,
+				p_discoveries: materialState.discoveries as Json,
+				p_operation_id: `character-import-lots-${characterId}`,
+			},
+		);
+		if (error) throw new Error(error.message);
+		const lotMap = recordOrNull(recordOrNull(receipt)?.lot_id_map);
+		const sourceCharacterId = stringOrNull(charData?.id);
+		if (lotMap && isUuid(sourceCharacterId)) {
+			const { error: craftError } = await supabase.rpc(
+				"import_craft_state_authority",
+				{
+					p_original_character_id: sourceCharacterId,
+					p_target_character_id: characterId,
+					p_lot_id_map: lotMap as Json,
+					p_operation_id: `character-import-craft-${characterId}`,
+				},
+			);
+			pendingCraftState = Boolean(craftError);
+		} else {
+			pendingCraftState = true;
+		}
+	}
+	const exportedSovereign = recordOrNull(data.active_sovereign);
+	if (exportedSovereign) {
+		let sovereignId: string | null = null;
+		const originalId = stringOrNull(exportedSovereign.id);
+		if (isUuid(originalId)) {
+			const { data: verified } = await supabase
+				.from("saved_sovereigns")
+				.select("id, created_by")
+				.eq("id", originalId)
+				.maybeSingle();
+			if (verified?.created_by === userId) sovereignId = verified.id;
+		}
+		if (!sovereignId) {
+			const parsed = readSovereignDefinition(exportedSovereign.definition);
+			if (parsed.ok && parsed.kind === "v2") {
+				const { data: savedId, error } = await supabase.rpc(
+					"save_sovereign_v2_definition",
+					{
+						p_definition: parsed.definition as Json,
+						p_operation_id: sovereignV2SaveOperationId(parsed.definition),
+						p_is_public: false,
+					},
+				);
+				if (!error) sovereignId = savedId;
+			}
+		}
+		if (sovereignId) {
+			const { error } = await supabase.rpc("attach_saved_sovereign", {
+				p_character_id: characterId,
+				p_sovereign_id: sovereignId,
+				p_operation_id: sovereignAttachmentOperationId(
+					characterId,
+					sovereignId,
+				),
+			});
+			pendingSovereign = Boolean(error);
+		} else {
+			pendingSovereign = true;
+		}
+	}
+	return { pendingSovereign, pendingCraftState };
 }
 /**
  * Guest-import counterpart of importRelatedCharacterRows: replay the
@@ -1074,10 +1244,10 @@ async function importRelatedCharacterRows(
  * row types the guest store tracks; server-only tables (journal, backups,
  * unlocks) are skipped.
  */
-function importRelatedLocalRows(
+async function importRelatedLocalRows(
 	data: Record<string, unknown>,
 	characterId: string,
-): void {
+): Promise<void> {
 	const rows = (key: string): Record<string, unknown>[] =>
 		Array.isArray(data[key]) ? (data[key] as Record<string, unknown>[]) : [];
 
@@ -1088,14 +1258,47 @@ function importRelatedLocalRows(
 
 	for (const row of rows("equipment"))
 		addLocalEquipment(characterId, strip(row) as never);
-	for (const row of rows("features"))
-		addLocalFeature(characterId, strip(row) as never);
-	for (const row of rows("powers"))
-		addLocalPower(characterId, strip(row) as never);
+	for (const row of rows("features")) {
+		if (!isRebuildableSovereignFeature(row))
+			addLocalFeature(characterId, strip(row) as never);
+	}
+	for (const row of rows("powers")) {
+		if (row.acquisition_kind === "regent")
+			addLocalPendingRegentGrant(characterId, row);
+		else addLocalPower(characterId, strip(row) as never);
+	}
 	for (const row of rows("spells"))
 		addLocalSpell(characterId, strip(row) as never);
-	for (const row of rows("techniques"))
-		addLocalTechnique(characterId, strip(row) as never);
+	for (const row of rows("techniques")) {
+		if (row.acquisition_kind === "regent")
+			addLocalPendingRegentGrant(characterId, row);
+		else addLocalTechnique(characterId, strip(row) as never);
+	}
+	for (const row of rows("pending_regent_grants")) {
+		if (row.status === "pending") {
+			addLocalPendingRegentGrant(characterId, recordOrNull(row.payload) ?? row);
+		}
+	}
+	const pool = recordOrNull(data.regent_resonance);
+	if (pool) {
+		setLocalPendingRegentResonance(characterId, {
+			points_current: Math.max(0, numberOrDefault(pool.points_current, 0)),
+			points_max: Math.max(0, numberOrDefault(pool.points_max, 0)),
+		});
+	}
+	setLocalPortableCanonState(characterId, {
+		portableCompanionRows: {
+			// Older files' personal tames arrive as companions (RA-9).
+			extras: [
+				...rows("extras"),
+				...(await companionRowsFromRetiredTames(data.tamed_anomalies)),
+			],
+			vehicles: rows("vehicles"),
+			tamedAnomalies: [],
+		},
+		portableMaterialState: recordOrNull(data.material_state),
+		portableSovereign: recordOrNull(data.active_sovereign),
+	});
 }
 
 /** Trigger a browser download of the export envelope. */
@@ -1125,7 +1328,7 @@ export function useCharacterExport() {
 		async (characterId: string) => {
 			try {
 				// Guest characters live in the per-browser store — export the same
-				// v2.5 envelope from there so guests get full data backups too.
+				// The versioned envelope also preserves pending Regent authority.
 				if (isLocalCharacterId(characterId)) {
 					const entry = getLocalCharacterState(characterId);
 					if (!entry) throw new Error("Character not found");
@@ -1145,20 +1348,30 @@ export function useCharacterExport() {
 						shadow_soldiers: [],
 						shadow_army: [],
 						active_spells: [],
-						extras: [],
+						// Personal tames kept from older files leave as companions.
+						extras: [
+							...entry.portableCompanionRows.extras,
+							...(await companionRowsFromRetiredTames(
+								entry.portableCompanionRows.tamedAnomalies,
+							)),
+						],
 						monarch_unlocks: [],
 						regent_unlocks: [],
+						regent_resonance:
+							entry.regentResonance ?? entry.pendingRegentResonance,
+						pending_regent_grants: entry.pendingRegentGrants,
 						feature_choices: [],
 						journal: [],
 						backups: [],
-						// v2.5: guests don't track vehicles/tamed anomalies/tattoos
-						// (cloud-only features). Spell slots are stored as DB rows in
-						// the guest store, so they round-trip (and migrate to a cloud
-						// account on import). Sheet state is the app-level shape here,
-						// not the DB row shape the cloud envelope carries — omit it
-						// rather than emit a mismatched object.
-						vehicles: [],
-						tamed_anomalies: [],
+						// v2.5: guests don't track vehicles/tattoos (cloud-only
+						// features). Spell slots are stored as DB rows in the guest
+						// store, so they round-trip (and migrate to a cloud account on
+						// import). Sheet state is the app-level shape here, not the DB
+						// row shape the cloud envelope carries — omit it rather than
+						// emit a mismatched object.
+						vehicles: entry.portableCompanionRows.vehicles,
+						material_state: entry.portableMaterialState,
+						active_sovereign: entry.portableSovereign,
 						tattoos: [],
 						sheet_state: null,
 						spell_slots: entry.spellSlots ?? [],
@@ -1207,11 +1420,13 @@ export function useCharacterExport() {
 					extrasResult,
 					monarchUnlocksResult,
 					regentUnlocksResult,
+					regentResonanceResult,
+					activeSovereignResult,
+					pendingRegentGrantsResult,
 					featureChoicesResult,
 					journalResult,
 					backupsResult,
 					vehiclesResult,
-					tamedAnomaliesResult,
 					tattoosResult,
 					sheetStateResult,
 					spellSlotsResult,
@@ -1286,6 +1501,23 @@ export function useCharacterExport() {
 						.select("*")
 						.eq("character_id", characterId),
 					supabase
+						.from("character_regent_resonance")
+						.select("*")
+						.eq("character_id", characterId)
+						.maybeSingle(),
+					character.active_sovereign_id
+						? supabase
+								.from("saved_sovereigns")
+								.select("*")
+								.eq("id", character.active_sovereign_id)
+								.maybeSingle()
+						: Promise.resolve({ data: null, error: null }),
+					supabase
+						.from("character_pending_regent_grants")
+						.select("*")
+						.eq("character_id", characterId)
+						.eq("status", "pending"),
+					supabase
 						.from("character_feature_choices")
 						.select("*")
 						.eq("character_id", characterId),
@@ -1304,10 +1536,6 @@ export function useCharacterExport() {
 						.select("*")
 						.eq("character_id", characterId),
 					supabase
-						.from("character_tamed_anomalies")
-						.select("*")
-						.eq("character_id", characterId),
-					supabase
 						.from("character_tattoos")
 						.select("*")
 						.eq("character_id", characterId),
@@ -1320,13 +1548,72 @@ export function useCharacterExport() {
 						.select("*")
 						.eq("character_id", characterId),
 				]);
+				const [
+					materialLotsResult,
+					discoveriesResult,
+					projectsResult,
+					researchResult,
+				] = await Promise.all([
+					supabase
+						.from("material_lots" as never)
+						.select("*")
+						.eq("owner_scope", "character")
+						.eq("owner_character_id", characterId),
+					supabase
+						.from("material_lot_discoveries" as never)
+						.select("*")
+						.eq("character_id", characterId),
+					supabase
+						.from("craft_projects_m3" as never)
+						.select("*")
+						.eq("character_id", characterId),
+					supabase
+						.from("craft_formula_research" as never)
+						.select("*")
+						.eq("character_id", characterId),
+				]);
+				for (const result of [
+					materialLotsResult,
+					discoveriesResult,
+					projectsResult,
+					researchResult,
+				]) {
+					if (result.error) throw new Error(result.error.message);
+				}
+				const materialLots = (materialLotsResult.data ??
+					[]) as unknown as Array<{
+					id: string;
+					material_definition_id: string;
+				}>;
+				const definitionIds = [
+					...new Set(materialLots.map((lot) => lot.material_definition_id)),
+				];
+				const lotIds = materialLots.map((lot) => lot.id);
+				const [definitionsResult, reservationsResult] = await Promise.all([
+					definitionIds.length > 0
+						? supabase
+								.from("material_definitions" as never)
+								.select("*")
+								.in("id", definitionIds)
+						: Promise.resolve({ data: [], error: null }),
+					lotIds.length > 0
+						? supabase
+								.from("material_lot_reservations" as never)
+								.select("*")
+								.in("lot_id", lotIds)
+						: Promise.resolve({ data: [], error: null }),
+				]);
+				if (definitionsResult.error)
+					throw new Error(definitionsResult.error.message);
+				if (reservationsResult.error)
+					throw new Error(reservationsResult.error.message);
 				// The export format explicitly carries canonical IDs alongside
 				// the legacy name fields so importers (this app or external tools)
 				// can hydrate via canonical compendium even after renames. It
 				// carries the full set of character-owned tables: techniques,
 				// rune/sigil inscriptions, regents, shadow soldiers/army, active
 				// spells, extras, monarch/regent unlocks, feature choices, journal,
-				// backups, and (v2.5) vehicles, tamed anomalies, tattoos, the
+				// backups, and (v2.5) vehicles, tattoos, the
 				// sheet-state singleton, and per-level spell slots — remapping
 				// equipment row IDs through the import so attached runes and sigils
 				// survive re-import. Backups and sheet state are re-stamped with the
@@ -1349,12 +1636,23 @@ export function useCharacterExport() {
 					extras: extrasResult.data || [],
 					monarch_unlocks: monarchUnlocksResult.data || [],
 					regent_unlocks: regentUnlocksResult.data || [],
+					regent_resonance: regentResonanceResult.data ?? null,
+					active_sovereign: activeSovereignResult.data ?? null,
+					pending_regent_grants: pendingRegentGrantsResult.data || [],
 					feature_choices: featureChoicesResult.data || [],
 					journal: journalResult.data || [],
 					backups: backupsResult.data || [],
 					// v2.5 additions (see Promise.all above).
 					vehicles: vehiclesResult.data || [],
-					tamed_anomalies: tamedAnomaliesResult.data || [],
+					material_state: {
+						version: 1,
+						definitions: definitionsResult.data ?? [],
+						lots: materialLotsResult.data ?? [],
+						discoveries: discoveriesResult.data ?? [],
+						projects: projectsResult.data ?? [],
+						research: researchResult.data ?? [],
+						reservations: reservationsResult.data ?? [],
+					},
 					tattoos: tattoosResult.data || [],
 					sheet_state: sheetStateResult.data?.[0] ?? null,
 					spell_slots: spellSlotsResult.data || [],
@@ -1461,7 +1759,10 @@ export function useCharacterExport() {
 					const { user_id: _guestOwner, ...localInsert } =
 						guestInsert as CharacterInsert;
 					const created = createLocalCharacter(localInsert);
-					importRelatedLocalRows(data as Record<string, unknown>, created.id);
+					await importRelatedLocalRows(
+						data as Record<string, unknown>,
+						created.id,
+					);
 					toast({
 						title: "Import Successful",
 						description: `${charData.name} has been imported successfully`,
@@ -1490,7 +1791,7 @@ export function useCharacterExport() {
 				if (createError || !createdCharacter) {
 					throw new Error("Failed to create character");
 				}
-				await importRelatedCharacterRows(
+				const importResult = await importRelatedCharacterRows(
 					data as Record<string, unknown>,
 					createdCharacter.id,
 					user.id,
@@ -1498,7 +1799,19 @@ export function useCharacterExport() {
 
 				toast({
 					title: "Import Successful",
-					description: `${charData.name} has been imported successfully`,
+					description: [
+						`${charData.name} has been imported successfully`,
+						...(importResult.pendingSovereign
+							? [
+									"The Sovereign is pending until its complete definition and both Regent unlocks are verified.",
+								]
+							: []),
+						...(importResult.pendingCraftState
+							? [
+									"Craft project and research history needs same-owner verification; imported material lots remain available.",
+								]
+							: []),
+					].join(" "),
 				});
 
 				return createdCharacter;

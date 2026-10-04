@@ -163,8 +163,8 @@ export const DEFAULT_DAILY_QUEST_TEMPLATES: DailyQuestTemplate[] = [
 	},
 	{
 		id: "mana_meditation",
-		name: "Mana Meditation",
-		description: "Focus and restore magical energy through meditation.",
+		name: "Focus Meditation",
+		description: "Clear your mind through focused meditation.",
 		tags: ["magic", "meditation"],
 		tier: "I",
 		category: "Mana",
@@ -179,7 +179,7 @@ export const DEFAULT_DAILY_QUEST_TEMPLATES: DailyQuestTemplate[] = [
 		},
 		base_rewards: {
 			rift_favor: 2,
-			description: "Mana restoration reward",
+			description: "Meditation reward",
 			custom_rewards: {},
 		},
 		is_active: true,

@@ -40,7 +40,10 @@ export async function removeProgressionGrantsAboveLevel(
 			}
 		}
 		for (const power of listLocalPowers(characterId)) {
-			if (wasGrantedAboveLevel(power.source, targetLevel)) {
+			if (
+				(power.acquired_level != null && power.acquired_level > targetLevel) ||
+				wasGrantedAboveLevel(power.source, targetLevel)
+			) {
 				removeLocalPower(power.id);
 			}
 		}
@@ -50,7 +53,11 @@ export async function removeProgressionGrantsAboveLevel(
 			}
 		}
 		for (const technique of listLocalTechniques(characterId)) {
-			if (wasGrantedAboveLevel(technique.source, targetLevel)) {
+			if (
+				(technique.acquired_level != null &&
+					technique.acquired_level > targetLevel) ||
+				wasGrantedAboveLevel(technique.source, targetLevel)
+			) {
 				removeLocalTechnique(technique.id);
 			}
 		}
@@ -68,6 +75,17 @@ export async function removeProgressionGrantsAboveLevel(
 		.delete()
 		.eq("character_id", characterId)
 		.gt("level_chosen", targetLevel);
+
+	await supabase
+		.from("character_powers")
+		.delete()
+		.eq("character_id", characterId)
+		.gt("acquired_level", targetLevel);
+	await supabase
+		.from("character_techniques")
+		.delete()
+		.eq("character_id", characterId)
+		.gt("acquired_level", targetLevel);
 
 	for (let lvl = targetLevel + 1; lvl <= currentLevel; lvl += 1) {
 		const levelPattern = `Level ${lvl}%`;

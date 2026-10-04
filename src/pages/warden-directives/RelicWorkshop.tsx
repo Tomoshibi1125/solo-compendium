@@ -3,7 +3,6 @@ import {
 	Copy,
 	FileJson,
 	FileText,
-	Loader2,
 	Plus,
 	RotateCcw,
 	Save,
@@ -44,7 +43,6 @@ import {
 	type RelicType,
 } from "@/data/compendium/wardenToolConfig";
 import { useToast } from "@/hooks/use-toast";
-import { useAIEnhance } from "@/hooks/useAIEnhance";
 import { useDebounce } from "@/hooks/useDebounce";
 import { useUserToolState } from "@/hooks/useToolState";
 import { formatRarityLabel } from "@/lib/labels";
@@ -95,7 +93,7 @@ const RELIC_VALUE: Record<string, string> = {
 	artifact: "25,000+ Rift Credits",
 };
 
-function relicToMarkdown(relic: Relic, enhanced?: string | null): string {
+function relicToMarkdown(relic: Relic): string {
 	return `# ${relic.name}
 
 - **Type:** ${relic.type}
@@ -114,7 +112,7 @@ ${
 				.join("\n")
 		: "- None"
 }
-${enhanced ? `\n## Warden Detail (AI)\n${enhanced}\n` : ""}`;
+`;
 }
 
 const RelicWorkshop = () => {
@@ -195,37 +193,9 @@ const RelicWorkshop = () => {
 		});
 	};
 
-	const { isEnhancing, enhancedText, enhance } = useAIEnhance();
-
-	const handleAIEnhance = async () => {
-		if (!currentRelic.name) return;
-		const seed = `Generate a complete, detailed relic for a Rift Ascendant TTRPG campaign.
-
-SEED DATA:
-- Name: ${currentRelic.name}
-- Type: ${currentRelic.type}
-- Rank: ${currentRelic.rank}
-- Rarity: ${currentRelic.rarity}
-- Attunement: ${currentRelic.attunement ? "Yes" : "No"}
-- Description: ${currentRelic.description || "None provided"}
-- Properties: ${currentRelic.properties.map((p) => `${p.name} (${p.type}): ${p.description}`).join("; ") || "None"}
-
-Provide ALL of the following sections with full detail:
-
-1. STATS: Type, rarity, attunement requirements, weight, value in Bureau Credits
-2. PROPERTIES: Full mechanical effects at each awakening tier (dormant/awakened/exalted) with action types, uses, recharge, DCs, damage dice
-3. ABILITIES: 2-4 unique abilities with complete SRD-compatible mechanics
-4. CURSE/BLESSING: Optional curse mechanics with removal conditions, or blessing with activation
-5. LORE: Creation story, legendary wielders, connection to Regent domains or Rift origins
-6. ATTUNEMENT RITUAL: Flavor text describing the attunement process
-7. COMBAT USE: How to use effectively in combat, synergies with specific jobs/paths
-8. DESCRIPTION: Read-aloud boxed text for when players first discover this relic`;
-		await enhance("relic", seed);
-	};
-
 	const handleCopy = () => {
 		if (!currentRelic.name) return;
-		navigator.clipboard.writeText(relicToMarkdown(currentRelic, enhancedText));
+		navigator.clipboard.writeText(relicToMarkdown(currentRelic));
 		toast({
 			title: "Copied",
 			description: "Relic stat block copied to clipboard as Markdown.",
@@ -236,7 +206,7 @@ Provide ALL of the following sections with full detail:
 		if (!currentRelic.name) return;
 		downloadMarkdown(
 			`relic-${currentRelic.name}`,
-			relicToMarkdown(currentRelic, enhancedText),
+			relicToMarkdown(currentRelic),
 		);
 		toast({ title: "Exported", description: "Relic exported as Markdown." });
 	};
@@ -807,35 +777,6 @@ Provide ALL of the following sections with full detail:
 							<FileJson className="w-4 h-4" />
 							JSON
 						</Button>
-					</div>
-				)}
-				{currentRelic.name && (
-					<Button
-						onClick={handleAIEnhance}
-						className="w-full gap-2"
-						variant="outline"
-						size="lg"
-						disabled={isEnhancing}
-					>
-						{isEnhancing ? (
-							<Loader2 className="w-4 h-4 animate-spin" />
-						) : (
-							<Sparkles className="w-4 h-4" />
-						)}
-						{isEnhancing ? "Enhancing..." : "Enhance with AI"}
-					</Button>
-				)}
-				{enhancedText && (
-					<div className="pt-4 border-t border-primary/30">
-						<div className="flex items-center gap-2 mb-2">
-							<Sparkles className="w-4 h-4 text-primary" />
-							<span className="text-xs font-display text-primary">
-								AI-ENHANCED RELIC DETAILS
-							</span>
-						</div>
-						<div className="text-sm text-muted-foreground whitespace-pre-line bg-primary/5 rounded-lg p-4 max-h-none sm:max-h-[500px] overflow-y-auto">
-							<AutoLinkText text={enhancedText || ""} />
-						</div>
 					</div>
 				)}
 			</div>

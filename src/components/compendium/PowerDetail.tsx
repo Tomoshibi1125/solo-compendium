@@ -21,7 +21,11 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { setPendingResolution } from "@/lib/actionResolution";
 import { formatRarityLabel, getRarityBadgeClass } from "@/lib/labels";
-import { buildAttackRollFormula } from "@/lib/powerActionFormulas";
+import {
+	buildAttackRollFormula,
+	describeAbilityDamage,
+	readAbilityDamageBasis,
+} from "@/lib/powerActionFormulas";
 import { cn } from "@/lib/utils";
 import { formatRegentVernacular } from "@/lib/vernacular";
 
@@ -189,8 +193,12 @@ export const PowerDetail = ({ data }: { data: PowerData }) => {
 									)}
 									{data.damage_roll && (
 										<span>
-											Damage: {data.damage_roll}
-											{data.damage_type ? ` ${data.damage_type}` : ""}
+											Damage:{" "}
+											{describeAbilityDamage(
+												data.damage_roll,
+												readAbilityDamageBasis(mechanics),
+												data.damage_type,
+											)}
 										</span>
 									)}
 									{data.target && (
@@ -311,7 +319,16 @@ export const PowerDetail = ({ data }: { data: PowerData }) => {
 							[
 								["Action", mechanics.action],
 								["Ability", mechanics.ability],
-								["Damage", mechanics.damage_profile],
+								[
+									"Damage",
+									readAbilityDamageBasis(mechanics)
+										? describeAbilityDamage(
+												data.damage_roll,
+												readAbilityDamageBasis(mechanics),
+												data.damage_type,
+											)
+										: mechanics.damage_profile,
+								],
 								["Range", mechanics.range],
 								["Duration", mechanics.duration],
 								["Lattice Interaction", mechanics.lattice_interaction],
@@ -345,6 +362,16 @@ export const PowerDetail = ({ data }: { data: PowerData }) => {
 								"type" in attack.damage
 									? String((attack.damage as { type?: unknown }).type ?? "")
 									: "";
+							const damageBasis = readAbilityDamageBasis(typedMechanics);
+							const damageText = damageBasis
+								? describeAbilityDamage(
+										damageRoll,
+										damageBasis,
+										damageType || attack.damage_type,
+									)
+								: damageRoll
+									? `${damageRoll}${damageType ? ` ${damageType}` : ""}`
+									: null;
 							return (
 								<div className="flex items-start gap-2">
 									<Swords className="w-5 h-5 text-gate-a flex-shrink-0 mt-0.5" />
@@ -353,10 +380,8 @@ export const PowerDetail = ({ data }: { data: PowerData }) => {
 											{formatRegentVernacular(attack.type || "")} attack
 										</p>
 										<p className="text-sm text-muted-foreground">
-											{damageRoll
-												? formatRegentVernacular(
-														`Damage: ${damageRoll}${damageType ? ` ${damageType}` : ""}`,
-													)
+											{damageText
+												? formatRegentVernacular(`Damage: ${damageText}`)
 												: "Damage varies"}
 											{attack.modifier
 												? formatRegentVernacular(

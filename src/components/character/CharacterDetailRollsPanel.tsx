@@ -1,11 +1,18 @@
 import { Badge } from "@/components/ui/badge";
-import type { ActionResolutionPayload } from "@/lib/actionResolution";
+import {
+	type ActionResolutionPayload,
+	isActionResolutionPayload,
+} from "@/lib/actionResolution";
 import {
 	formatAttackLine,
 	formatDamageLine,
 	formatSaveLine,
 } from "@/lib/canonicalActionDisplay";
 import { formatModifier } from "@/lib/characterCalculations";
+import {
+	describeAbilityDamage,
+	readAbilityDamageBasis,
+} from "@/lib/powerActionFormulas";
 import { formatRegentVernacular } from "@/lib/vernacular";
 
 type DetailRecord = Record<string, unknown>;
@@ -150,13 +157,12 @@ function readStringArray(
 	);
 }
 
+/** A validated v1 or v2 payload; Sovereign v2 abilities carry save DCs only here. */
 function payloadField(
 	record: DetailRecord | null,
 ): ActionResolutionPayload | undefined {
-	const payload = asRecord(record?.payload);
-	if (payload?.version === 1)
-		return payload as unknown as ActionResolutionPayload;
-	return undefined;
+	const payload = record?.payload;
+	return isActionResolutionPayload(payload) ? payload : undefined;
 }
 
 function isActionLike(record: DetailRecord): boolean {
@@ -346,8 +352,15 @@ function buildCanonicalLines(
 		stringValue(mechanicsAttack?.damage);
 	const damage =
 		readString(canonical, entry, ["damage_roll", "damage"]) ?? mechanicsDamage;
-	const damageType = readString(canonical, entry, ["damage_type"]);
-	const damageLine = formatDamageLine({ damageRoll: damage, damageType });
+	const damageType =
+		readString(canonical, entry, ["damage_type"]) ??
+		stringValue(mechanicsAttack?.damage_type);
+	// Strike abilities say whether their dice are added to the strike or use
+	// the scaling unarmed die.
+	const damageBasis = readAbilityDamageBasis(mechanics);
+	const damageLine = damageBasis
+		? describeAbilityDamage(damage, damageBasis, damageType)
+		: formatDamageLine({ damageRoll: damage, damageType });
 	if (damageLine) lines.push({ label: "Base Damage", value: damageLine });
 
 	const armorClass = readString(canonical, entry, ["armor_class"]);

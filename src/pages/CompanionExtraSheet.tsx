@@ -16,9 +16,11 @@
 import { useDrag } from "@use-gesture/react";
 import {
 	ArrowLeft,
+	Award,
 	Heart,
 	LockKeyhole,
 	PawPrint,
+	Pencil,
 	Shield,
 	Sparkles,
 	Swords,
@@ -26,6 +28,8 @@ import {
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import { CompanionCombatSections } from "@/components/character/CompanionCombatDetails";
+import { CompanionStatBlock } from "@/components/character/CompanionStatBlock";
 import { Layout } from "@/components/layout/Layout";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
@@ -36,6 +40,12 @@ import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { useCharacterExtras } from "@/hooks/useCharacterExtras";
 import type { Json } from "@/integrations/supabase/types";
+import { companionScalingSummary } from "@/lib/companionProgression";
+import {
+	companionSpeciesFacts,
+	formatCompanionSpeeds,
+	mergeCompanionCombat,
+} from "@/lib/companionScaling";
 import {
 	type CompanionCondition,
 	type CompanionEquipment,
@@ -66,6 +76,8 @@ export default function CompanionExtraSheet() {
 		extra?.initiative != null ? String(extra.initiative) : "",
 	);
 	const [newCondition, setNewCondition] = useState("");
+	const [renaming, setRenaming] = useState(false);
+	const [draftName, setDraftName] = useState("");
 
 	// Equipment add-row form state.
 	const [newName, setNewName] = useState("");
@@ -121,18 +133,51 @@ export default function CompanionExtraSheet() {
 	const abilities = parseAbilities(extra.abilities);
 	const conditions = parseConditions(extra.conditions);
 	const canonicalSource = parseCanonicalCompanionSource(extra.npc_data);
-	const baseAc = extra.ac ?? 10;
+	// RA-10: a scaled creature's numbers, actions, and species facts follow its
+	// owner's level; every other companion keeps its saved stats.
+	const scaledInstance = extra.companion_instance ?? null;
+	const scaledCombat = scaledInstance
+		? (extra.effective_stats?.combatScaling ?? null)
+		: null;
+	const mergedCombat =
+		scaledInstance && scaledCombat
+			? mergeCompanionCombat(scaledInstance, scaledCombat)
+			: null;
+	const speciesFacts =
+		scaledInstance && scaledCombat
+			? companionSpeciesFacts(scaledInstance, scaledCombat)
+			: null;
+	const speciesRank =
+		extra.effective_stats?.rank ?? canonicalSource?.sourceFields.rank ?? null;
+	const capitalized = (value: string | null | undefined) =>
+		value ? value.charAt(0).toUpperCase() + value.slice(1) : null;
+	const speciesLine = [
+		speciesFacts?.speciesName && speciesFacts.speciesName !== extra.name
+			? speciesFacts.speciesName
+			: null,
+		[capitalized(speciesFacts?.size), speciesFacts?.creatureType]
+			.filter(Boolean)
+			.join(" "),
+	]
+		.filter(Boolean)
+		.join(" · ");
+	const speedText =
+		speciesFacts && speciesFacts.speeds.length > 0
+			? formatCompanionSpeeds(speciesFacts.speeds)
+			: `${extra.effective_stats?.speed ?? extra.speed ?? 30} ft.`;
+	const baseAc = extra.effective_stats?.baseAc ?? extra.ac ?? 10;
 	const effectiveAc = effectiveCompanionAc(baseAc, equipment);
 	const acBonus = equipmentAcBonus(equipment);
 
-	const hpMax = extra.hp_max;
+	const hpMax = extra.effective_stats?.hpMax ?? extra.hp_max;
+	const currentHp = Math.min(extra.hp_current, hpMax);
 	const hpPercent = Math.min(
 		100,
-		Math.max(0, hpMax > 0 ? (extra.hp_current / hpMax) * 100 : 0),
+		Math.max(0, hpMax > 0 ? (currentHp / hpMax) * 100 : 0),
 	);
 
 	const handleAdjustHp = (delta: number) => {
-		const next = Math.max(0, Math.min(hpMax, extra.hp_current + delta));
+		const next = Math.max(0, Math.min(hpMax, currentHp + delta));
 		updateExtra({ id: extra.id, data: { hp_current: next } });
 	};
 
@@ -146,6 +191,18 @@ export default function CompanionExtraSheet() {
 
 	const handleSaveNotes = () => {
 		updateExtra({ id: extra.id, data: { notes } });
+	};
+
+	const startRename = () => {
+		setDraftName(extra.name);
+		setRenaming(true);
+	};
+
+	const handleSaveName = () => {
+		const name = draftName.trim();
+		if (!name) return;
+		if (name !== extra.name) updateExtra({ id: extra.id, data: { name } });
+		setRenaming(false);
 	};
 
 	const persistEquipment = (next: CompanionEquipment[]) => {
@@ -205,12 +262,24 @@ export default function CompanionExtraSheet() {
 	const handleAddToInitiative = () => {
 		enqueueInitiativeAdditions({
 			name: extra.name,
-			hp: extra.hp_current,
-			maxHp: extra.hp_max,
+			hp: currentHp,
+			maxHp: hpMax,
 			ac: effectiveAc,
 			isHunter: false,
 			initiative: extra.initiative ?? 0,
 			conditions: [],
+			...(extra.companion_instance_id
+				? {
+						companionInstanceId: extra.companion_instance_id,
+						companionProfileVersion: extra.companion_instance?.profile_version,
+						companionStateVersion:
+							extra.companion_instance?.combat_state_version,
+					}
+				: {
+						companionOriginTable: "character_extras" as const,
+						companionOriginRowId: extra.id,
+						companionOwnerCharacterId: characterId,
+					}),
 		});
 		toast({
 			title: "Added to initiative",
@@ -233,17 +302,78 @@ export default function CompanionExtraSheet() {
 								Back to Ascendant
 							</Link>
 						</Button>
-						<div className="flex min-w-0 flex-wrap items-center gap-2">
-							<PawPrint
-								className="w-5 shrink-0 text-system-green"
-								aria-hidden="true"
-							/>
-							<h1 className="break-words font-display text-2xl">
-								{extra.name}
-							</h1>
-							<Badge variant="outline" className="text-xs uppercase">
-								{extra.extra_type}
-							</Badge>
+						<div className="min-w-0 space-y-1">
+							<div className="flex min-w-0 flex-wrap items-center gap-2">
+								<PawPrint
+									className="w-5 shrink-0 text-system-green"
+									aria-hidden="true"
+								/>
+								<h1 className="break-words font-display text-2xl">
+									{extra.name}
+								</h1>
+								<Button
+									type="button"
+									size="sm"
+									variant="ghost"
+									className="h-7 w-7 p-0"
+									onClick={startRename}
+									aria-label={`Rename ${extra.name}`}
+								>
+									<Pencil className="w-3.5" aria-hidden="true" />
+								</Button>
+								<Badge variant="outline" className="text-xs uppercase">
+									{extra.extra_type}
+								</Badge>
+								{scaledCombat && speciesRank && (
+									<Badge variant="secondary" className="text-xs">
+										Rank {speciesRank}
+									</Badge>
+								)}
+								{scaledCombat && (
+									<Badge variant="outline" className="text-xs">
+										Level {scaledCombat.level}
+									</Badge>
+								)}
+							</div>
+							{speciesLine && (
+								<p
+									className="text-xs text-muted-foreground"
+									data-testid="companion-species-line"
+								>
+									{speciesLine}
+								</p>
+							)}
+							{renaming && (
+								<form
+									className="flex flex-wrap items-center gap-2"
+									onSubmit={(event) => {
+										event.preventDefault();
+										handleSaveName();
+									}}
+								>
+									<label htmlFor="companion-name" className="sr-only">
+										Companion name
+									</label>
+									<Input
+										id="companion-name"
+										value={draftName}
+										onChange={(event) => setDraftName(event.target.value)}
+										className="h-8 w-56"
+										maxLength={80}
+									/>
+									<Button type="submit" size="sm" disabled={!draftName.trim()}>
+										Save name
+									</Button>
+									<Button
+										type="button"
+										size="sm"
+										variant="ghost"
+										onClick={() => setRenaming(false)}
+									>
+										Cancel
+									</Button>
+								</form>
+							)}
 						</div>
 					</div>
 					<Button
@@ -339,9 +469,11 @@ export default function CompanionExtraSheet() {
 							)}
 						</dl>
 						<p className="mt-3 border-t border-primary/20 pt-3 text-xs text-muted-foreground">
-							Name, maximum HP, base AC, speed, and source abilities are locked
-							to this saved snapshot. Current HP, initiative, equipment,
-							conditions, and notes remain editable instance state.
+							{scaledCombat
+								? "This creature scales with its owner's level: its maximum HP, AC, attacks, save DCs, and damage dice follow the rules for companions. Its species identity and authored abilities stay linked to the canonical creature."
+								: "Maximum HP, base AC, speed, and source abilities are locked to this saved snapshot."}{" "}
+							Its name, current HP, initiative, equipment, conditions, and notes
+							are yours to edit.
 						</p>
 					</section>
 				)}
@@ -356,12 +488,19 @@ export default function CompanionExtraSheet() {
 									<Heart className="w-4 text-destructive" aria-hidden="true" />
 									<div>
 										<div className="font-mono text-sm">
-											Current HP {extra.hp_current} / {hpMax}
+											Current HP {currentHp} / {hpMax}
 										</div>
-										{canonicalSource && (
+										{scaledCombat ? (
 											<div className="text-[10px] uppercase tracking-wide text-muted-foreground">
-												Maximum HP is source-locked
+												Hit Dice {scaledCombat.hitDice} at maximum · level{" "}
+												{scaledCombat.level}
 											</div>
+										) : (
+											canonicalSource && (
+												<div className="text-[10px] uppercase tracking-wide text-muted-foreground">
+													Maximum HP is source-locked
+												</div>
+											)
 										)}
 									</div>
 								</div>
@@ -418,8 +557,15 @@ export default function CompanionExtraSheet() {
 							/>
 						</div>
 
-						{/* AC / Speed / Initiative */}
-						<div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+						{/* AC / Speed / Initiative (+ proficiency for scaled creatures) */}
+						<div
+							className={cn(
+								"grid grid-cols-1 gap-3",
+								scaledCombat
+									? "sm:grid-cols-2 lg:grid-cols-4"
+									: "sm:grid-cols-3",
+							)}
+						>
 							<div className="rounded border border-border/40 bg-black/30 p-3 text-center">
 								<div className="mb-1 text-[10px] uppercase tracking-wider text-muted-foreground">
 									Armor Class
@@ -432,7 +578,8 @@ export default function CompanionExtraSheet() {
 								</div>
 								{canonicalSource ? (
 									<div className="mt-1 text-xs text-muted-foreground">
-										Source base {baseAc} · read-only
+										{scaledCombat ? "Level-scaled base" : "Source base"}{" "}
+										{baseAc} · read-only
 										{acBonus !== 0 &&
 											` · gear ${acBonus >= 0 ? "+" : ""}${acBonus}`}
 									</div>
@@ -448,12 +595,17 @@ export default function CompanionExtraSheet() {
 								<div className="mb-1 text-[10px] uppercase tracking-wider text-muted-foreground">
 									Speed
 								</div>
-								<div className="font-display text-xl font-bold">
-									{extra.speed ?? 30} ft
+								<div
+									className={cn(
+										"font-display font-bold",
+										speedText.length > 12 ? "text-base" : "text-xl",
+									)}
+								>
+									{speedText}
 								</div>
 								{canonicalSource && (
 									<div className="mt-1 text-xs text-muted-foreground">
-										Source · read-only
+										{scaledCombat ? "Species" : "Source"} · read-only
 									</div>
 								)}
 							</div>
@@ -477,9 +629,36 @@ export default function CompanionExtraSheet() {
 									/>
 								</div>
 							</div>
+							{scaledCombat && (
+								<div className="rounded border border-border/40 bg-black/30 p-3 text-center">
+									<div className="mb-1 text-[10px] uppercase tracking-wider text-muted-foreground">
+										Proficiency Bonus
+									</div>
+									<div className="flex items-center justify-center gap-1">
+										<Award className="w-4 text-gate-a" aria-hidden="true" />
+										<span className="font-display text-xl font-bold">
+											+{scaledCombat.proficiencyBonus}
+										</span>
+									</div>
+									<div className="mt-1 text-xs text-muted-foreground">
+										Attack +{scaledCombat.attackBonus} · save DC{" "}
+										{scaledCombat.saveDc}
+									</div>
+								</div>
+							)}
 						</div>
 					</div>
 				</AscendantWindow>
+
+				{/* Species stat block (scaled creatures) */}
+				{scaledCombat && speciesFacts && (
+					<div className="mt-4">
+						<AscendantWindow title="STAT BLOCK">
+							<h2 className="sr-only">Stat block</h2>
+							<CompanionStatBlock facts={speciesFacts} scaling={scaledCombat} />
+						</AscendantWindow>
+					</div>
+				)}
 
 				{/* Equipment */}
 				<div className="mt-4">
@@ -601,7 +780,22 @@ export default function CompanionExtraSheet() {
 									Source abilities · read-only
 								</p>
 							)}
-							{abilities.length === 0 ? (
+							{scaledCombat && mergedCombat && (
+								<div
+									className="space-y-3 text-xs"
+									data-testid="scaled-companion-actions"
+								>
+									<h2 className="sr-only">Actions and traits</h2>
+									<p className="text-muted-foreground">
+										{companionScalingSummary(scaledCombat)}
+									</p>
+									<CompanionCombatSections
+										combat={mergedCombat}
+										headingLevel="h3"
+									/>
+								</div>
+							)}
+							{scaledCombat ? null : abilities.length === 0 ? (
 								<p className="text-xs text-muted-foreground">
 									No actions recorded.
 								</p>

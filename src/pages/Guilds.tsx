@@ -5,7 +5,6 @@ import {
 	LogOut,
 	Plus,
 	Shield,
-	Sparkles,
 	Users,
 } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
@@ -38,7 +37,6 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
-import { useAIEnhance } from "@/hooks/useAIEnhance";
 import { useJoinedCampaigns, useMyCampaigns } from "@/hooks/useCampaigns";
 import { useCharacters } from "@/hooks/useCharacters";
 import {
@@ -86,7 +84,6 @@ const Guilds = () => {
 	const createGuild = useCreateGuild();
 	const leaveGuild = useLeaveGuild();
 	const requestToJoin = useRequestToJoinGuild();
-	const { enhance, isEnhancing } = useAIEnhance();
 
 	// The /guilds/join route opens the join-by-code dialog directly.
 	useEffect(() => {
@@ -117,18 +114,6 @@ const Guilds = () => {
 		() => new Map(campaignOptions.map((c) => [c.id, c.name])),
 		[campaignOptions],
 	);
-
-	const handleGenerateDescription = async () => {
-		const seed = `Guild name: ${guildName || "(unnamed)"}${
-			guildMotto ? `. Motto: ${guildMotto}` : ""
-		}`;
-		const text = await enhance(
-			"guild description",
-			seed,
-			"Write a vivid 2-3 sentence guild description for a dark fantasy TTRPG guild. Return only the prose, no preamble or quotes.",
-		);
-		if (text) setGuildDescription(text.trim());
-	};
 
 	const handleCreateGuild = async () => {
 		if (!guildName.trim()) {
@@ -383,24 +368,7 @@ const Guilds = () => {
 							/>
 						</div>
 						<div>
-							<div className="flex items-center justify-between">
-								<Label htmlFor="guild-description">Description</Label>
-								<Button
-									type="button"
-									variant="ghost"
-									size="sm"
-									className="h-7 gap-1.5 text-xs"
-									onClick={handleGenerateDescription}
-									disabled={isEnhancing}
-								>
-									{isEnhancing ? (
-										<Loader2 className="w-3.5 h-3.5 animate-spin" />
-									) : (
-										<Sparkles className="w-3.5 h-3.5" />
-									)}
-									Generate
-								</Button>
-							</div>
+							<Label htmlFor="guild-description">Description</Label>
 							<Textarea
 								id="guild-description"
 								value={guildDescription}

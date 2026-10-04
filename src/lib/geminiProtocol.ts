@@ -3,7 +3,6 @@
 // Unified Fusion System - Single comprehensive fusion approach
 
 import type { Tables } from "@/integrations/supabase/types";
-import { aiService } from "@/lib/ai/aiService";
 import {
 	type CanonicalRegentId,
 	requireDistinctCanonicalRegents,
@@ -152,12 +151,6 @@ const buildFusionName = (regentA: Regent, regentB: Regent): string => {
 	const nameB = stripRegentTerm(regentB.name);
 	return generateUnifiedFusionName(nameA, nameB);
 };
-
-// Generate fusion name while enforcing canonical, ordered, distinct inputs.
-export function generateFusionName(regentA: Regent, regentB: Regent): string {
-	const [canonicalA, canonicalB] = normalizeFusionRegents(regentA, regentB);
-	return buildFusionName(canonicalA, canonicalB);
-}
 
 // Fusion Theme Lattice with Dual Class-style power combinations
 const themeLattice: Record<
@@ -610,14 +603,6 @@ function buildFusionTheme(
 	};
 }
 
-export function getFusionTheme(
-	regentA: Regent,
-	regentB: Regent,
-): { theme: string; element: string; concept: string } {
-	const [canonicalA, canonicalB] = normalizeFusionRegents(regentA, regentB);
-	return buildFusionTheme(canonicalA, canonicalB);
-}
-
 // Unified Power Multiplier - Single comprehensive approach
 export function getPowerMultiplier(): string {
 	return "Base Power x Thousands (Unified Fusion - Permanent, Sovereign-Stabilized)";
@@ -901,10 +886,7 @@ export function generateSovereign(
 	};
 }
 
-/**
- * AI-powered sovereign generation using Gemini 2.0 Flash.
- * Falls back to deterministic generateSovereign() if AI is unavailable.
- */
+/** Legacy compatibility entry point. Normal Sovereign use is deterministic. */
 export async function generateSovereignWithAI(
 	job: Job,
 	path: Path,
@@ -912,153 +894,7 @@ export async function generateSovereignWithAI(
 	_regentB: Regent,
 ): Promise<GeneratedSovereign> {
 	const [regentA, regentB] = normalizeFusionRegents(_regentA, _regentB);
-	try {
-		const config = aiService.getConfiguration();
-
-		const pathShortName = path.name
-			.replace(/^Path of the\s*/i, "")
-			.replace(/\s*Path$/i, "");
-		const prompt = `You are the Gemini Protocol — the sovereign fusion engine of Rift Ascendant. Generate a UNIQUE and CREATIVE sovereign class overlay by fusing two Regents with a Job and Path.
-
-FUSION PHILOSOPHY:
-This is a TRUE ZENITH FUSION. The components do not just "work together"—they CEASE TO EXIST as individuals and MERGE into a FULLY NEW hybrid entity. The Sovereign's name, title, and every single ability MUST reflect this transformative synthesis. Every ability should feel like a perfectly balanced, inseparable hybrid of Job, Path, and both Regents. This is the highest expression of the Rift Ascendant's power.
-
-FUSION INPUTS:
-- Job: ${job.name} (${job.hit_die} hit die, ${(job.primary_abilities || []).join("/")} primary)
-- Path: ${pathShortName}
-- Regent A (Dominant): ${regentA.name} — Theme: ${getSourceBackedTheme(regentA)}, Damage: ${getAuthoredDamageType(regentA) ?? "not authored in canonical Regent data"}
-- Regent B (Merged): ${regentB.name} — Theme: ${getSourceBackedTheme(regentB)}, Damage: ${getAuthoredDamageType(regentB) ?? "not authored in canonical Regent data"}
-
-Generate a COMPLETE sovereign with these EXACT sections. Be creative — every sovereign must feel unique:
-
-1. FUSION NAME: A creative, evocative name. It should feel like the name of a new species or a legendary hero that is a TRUE HYBRID of the inputs.
-2. TITLE: "Sovereign of [theme]" — a dramatic, high-prestige title that defines the essence of the new being.
-3. FUSION THEME: The combined elemental/conceptual theme, expressed as a single unified concept (e.g., "Singularity Frost", "Ashen Void", "Supernova Iron").
-4. FUSION ORIGIN: 2-3 paragraphs describing the "Ascendant Event" where the Protocol triggered—the moment of merging where Job, Path, and Regents dissolved into one. Describe the new perspective and power this Sovereign now wields.
-5. COMBAT DOCTRINE: The "Fused Martial Style"—how the Sovereign's combat techniques have evolved into something neither Job nor Regent could achieve alone.
-6. POWER MULTIPLIER: A description of the Sovereign's fused power ceiling (e.g., "Zenith-Tier", "Rift-Anchored", "Prime-Architect Scale").
-7. FUSION STABILITY: The structural integrity of the merger.
-
-8. ABILITIES (exactly 8, one per level milestone):
-For EACH ability provide ALL of these fields:
-- Name: A fully unique name for the fused ability.
-- Level: (use levels 1, 3, 5, 7, 10, 14, 17, 20)
-- Action Type: (1 action / 1 bonus action / 1 reaction / Passive)
-- Recharge: (At will / Short Rest / Long Rest / null)
-- Is Capstone: (true for levels 17 and 20 only)
-- Description: 2-3 sentences. Every description MUST describe a merged effect. (e.g., instead of "fire and ice damage", say "Frostfire plasma that crystallizes targets while incinerating them"). Include specific mechanical effects (dice, DCs, ranges).
-- Origin Sources: Which inputs contributed (e.g., "Job+Path+RegentA").
-
-Return as plain text with clear section headers. Do NOT use JSON or code fences.`;
-
-		const response = await aiService.processRequest({
-			service: config.defaultService,
-			type: "generate-content",
-			input: prompt,
-			context: {
-				contentType: "sovereign",
-				universe: "Rift Ascendant",
-			},
-		});
-
-		if (response.success && response.data) {
-			const text =
-				typeof response.data === "string"
-					? response.data
-					: String(response.data);
-			if (text.trim().length > 200) {
-				// Parse AI text into GeneratedSovereign structure
-				const deterministic = generateSovereign(job, path, regentA, regentB);
-				return parseAISovereignText(
-					text,
-					deterministic,
-					job,
-					path,
-					regentA,
-					regentB,
-				);
-			}
-		}
-	} catch {
-		// AI unavailable — fall through to deterministic
-	}
-
 	return generateSovereign(job, path, regentA, regentB);
-}
-
-export function parseAISovereignText(
-	text: string,
-	fallback: GeneratedSovereign,
-	job: Job,
-	path: Path,
-	_regentA: Regent,
-	_regentB: Regent,
-): GeneratedSovereign {
-	const [regentA, regentB] = normalizeFusionRegents(_regentA, _regentB);
-	const extractSection = (header: string): string => {
-		const pattern = new RegExp(
-			`(?:^|\\n)\\s*\\d*\\.?\\s*${header}[:\\s]*([\\s\\S]*?)(?=\\n\\s*\\d+\\.\\s+[A-Z]|$)`,
-			"i",
-		);
-		const match = text.match(pattern);
-		return match?.[1]?.trim() || "";
-	};
-
-	const fusionName = extractSection("FUSION NAME") || fallback.name;
-	const title = extractSection("TITLE") || fallback.title;
-	const fusionTheme = extractSection("FUSION THEME") || fallback.fusion_theme;
-	const description = extractSection("FUSION ORIGIN") || fallback.description;
-	const fusionDescription =
-		extractSection("COMBAT DOCTRINE") || fallback.fusion_description;
-	const powerMultiplier =
-		extractSection("POWER MULTIPLIER") || fallback.power_multiplier;
-	const fusionStability =
-		extractSection("FUSION STABILITY") || fallback.fusion_stability;
-
-	// Try to parse abilities from the AI text; fall back to deterministic abilities
-	const abilities = fallback.abilities.map((ability, _index) => {
-		// Look for ability descriptions in the AI text that match the level
-		const levelPattern = new RegExp(
-			`Level\\s*${ability.level}[:\\s]*([\\s\\S]*?)(?=Level\\s*\\d|$)`,
-			"i",
-		);
-		const abilityMatch = text.match(levelPattern);
-		if (abilityMatch?.[1]?.trim()) {
-			const abilityText = abilityMatch[1].trim();
-			const nameMatch = abilityText.match(
-				/^(?:[-•*]\s*)?(?:Name:\s*)?([^\n]+)/i,
-			);
-			const descMatch = abilityText.match(
-				/Description:\s*([^\n](?:[\s\S]*?)?)(?=\n\s*(?:Action|Recharge|Origin|Level|Is Capstone)|$)/i,
-			);
-			return {
-				...ability,
-				name: formatRegentVernacular(
-					nameMatch?.[1]?.replace(/^Name:\s*/i, "").trim() || ability.name,
-				),
-				description: formatRegentVernacular(
-					descMatch?.[1]?.trim() || abilityText.slice(0, 300),
-				),
-			};
-		}
-		return ability;
-	});
-
-	return {
-		name: formatRegentVernacular(fusionName.replace(/^["']|["']$/g, "")),
-		title: formatRegentVernacular(title.replace(/^["']|["']$/g, "")),
-		description: formatRegentVernacular(description),
-		fusion_theme: formatRegentVernacular(fusionTheme),
-		fusion_description: formatRegentVernacular(fusionDescription),
-		fusion_method: "Gemini Protocol (AI-Enhanced Fusion)",
-		abilities,
-		job,
-		path,
-		regentA,
-		regentB,
-		power_multiplier: formatRegentVernacular(powerMultiplier),
-		fusion_stability: formatRegentVernacular(fusionStability),
-	};
 }
 
 // Calculate the total number of possible combinations

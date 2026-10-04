@@ -1,30 +1,21 @@
 import { describe, expect, it, vi } from "vitest";
 
+const supabaseMocks = vi.hoisted(() => ({
+	rpc: vi.fn(),
+	getSession: vi.fn(),
+}));
+
 vi.mock("@/integrations/supabase/client", () => ({
-	isSupabaseConfigured: false,
+	isSupabaseConfigured: true,
 	supabase: {
-		auth: {
-			getUser: async () => ({ data: { user: null }, error: null }),
-		},
-		rpc: async () => ({ data: [], error: null }),
-		from: () => ({
-			select: () => ({
-				eq: () => ({
-					order: () => ({
-						limit: () => ({
-							maybeSingle: async () => ({ data: null, error: null }),
-						}),
-					}),
-				}),
-			}),
-		}),
+		auth: { getSession: supabaseMocks.getSession },
+		rpc: supabaseMocks.rpc,
 	},
 }));
 
 import {
-	filterRowsByAccessibleSourcebooks,
-	isCanonicalSourcebook,
-	sourcebookCandidates,
+	filterRowsBySourcebookAccess,
+	isSourcebookAccessible,
 } from "@/lib/sourcebookAccess";
 
 type Row = {
@@ -32,54 +23,36 @@ type Row = {
 	source_book?: string | null;
 };
 
-describe("sourcebookAccess helpers", () => {
-	it("builds normalized sourcebook candidates", () => {
-		const candidates = sourcebookCandidates(" Rift Ascendant Canon ");
-
-		expect(candidates).toEqual(
-			expect.arrayContaining([
-				"Rift Ascendant Canon",
-				"rift ascendant canon",
-				"rift-ascendant-canon",
-			]),
-		);
-	});
-
-	it("recognizes canonical core sourcebooks after normalization", () => {
-		expect(isCanonicalSourcebook(" Rift Ascendant Canon ")).toBe(true);
-		expect(isCanonicalSourcebook("ascendant-core-rulebook")).toBe(true);
-		expect(isCanonicalSourcebook("Locked Deluxe Tome")).toBe(false);
-		expect(isCanonicalSourcebook(null)).toBe(false);
-	});
-
-	it("keeps sourceless rows and allows rows with matching accessible sourcebook", () => {
+// The entitlement layer is retired: every sourcebook is accessible and no
+// entitlement lookup reaches the network.
+describe("sourcebookAccess", () => {
+	it("keeps every row, including non-core sourcebooks", async () => {
 		const rows: Row[] = [
 			{ id: "free", source_book: null },
 			{ id: "canon", source_book: "Rift Ascendant Canon" },
-			{ id: "locked", source_book: "Locked Deluxe Tome" },
+			{ id: "other", source_book: "Locked Deluxe Tome" },
 		];
 
-		const filtered = filterRowsByAccessibleSourcebooks(
+		const filtered = await filterRowsBySourcebookAccess(
 			rows,
 			(row) => row.source_book,
-			new Set(["rift-ascendant-canon"]),
+			{ campaignId: "a1b2c3d4-0000-4000-8000-000000000000" },
 		);
 
-		expect(filtered.map((row) => row.id)).toEqual(["free", "canon"]);
+		expect(filtered).toBe(rows);
 	});
 
-	it("removes rows with inaccessible sourcebooks", () => {
-		const rows: Row[] = [
-			{ id: "a", source_book: "Book A" },
-			{ id: "b", source_book: "Book B" },
-		];
-
-		const filtered = filterRowsByAccessibleSourcebooks(
-			rows,
-			(row) => row.source_book,
-			new Set(["book-b"]),
+	it("treats every sourcebook as accessible", async () => {
+		await expect(isSourcebookAccessible("Locked Deluxe Tome")).resolves.toBe(
+			true,
 		);
+		await expect(isSourcebookAccessible(null)).resolves.toBe(true);
+	});
 
-		expect(filtered.map((row) => row.id)).toEqual(["b"]);
+	it("makes no entitlement request", async () => {
+		await filterRowsBySourcebookAccess([{ id: "x" }], () => "Any Book");
+		await isSourcebookAccessible("Any Book");
+		expect(supabaseMocks.rpc).not.toHaveBeenCalled();
+		expect(supabaseMocks.getSession).not.toHaveBeenCalled();
 	});
 });

@@ -1,5 +1,11 @@
 # Regent/Gemini System - Implementation Summary
 
+> **Archive (pre-canon implementation history).** This document describes an
+> earlier design. Current rules and implementation authority are in
+> [Rift Ascendant canon locks](canon/rift-ascendant-canon-locks.md), the live
+> compendium/runtime, and the active sourcebooks. References below to Regent
+> subclasses, Monarchs, and generated later abilities are historical only.
+
 ## What Was Implemented
 
 This implementation adds **Regent and Gemini Protocol** mechanics to the centralized character engine, allowing quest-gated sovereign subclasses and DBZ-style regent fusions to apply their effects automatically.

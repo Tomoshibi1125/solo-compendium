@@ -106,6 +106,7 @@ import {
 } from "@/lib/ProtocolDataManager";
 import { getEffectiveMaxAbilityLevel } from "@/lib/pathAbilityAccess";
 import { getPathEligibility } from "@/lib/pathEligibility";
+import { getPathChoiceLedger } from "@/lib/pathLedger";
 import {
 	buildCharacterCreationWorkflowPlanV1,
 	type CharacterCreationWorkflowInputV1,
@@ -790,6 +791,12 @@ const CharacterNew = () => {
 								?.job_traits ??
 							(jobData as { job_traits?: [] } | undefined)?.job_traits ??
 							[],
+						skill_choice_count:
+							(staticJobData as { skillChoiceCount?: number })
+								?.skillChoiceCount ??
+							(jobData as { skill_choice_count?: number })
+								?.skill_choice_count ??
+							0,
 						level_choices: staticJobLedgerData?.levelChoices,
 						cantrips_known: staticJobData?.spellcasting?.cantripsKnown,
 						spells_known: staticJobData?.spellcasting?.spellsKnown,
@@ -800,7 +807,17 @@ const CharacterNew = () => {
 				: null;
 		return calculateTotalChoices(
 			combinedJobData as Parameters<typeof calculateTotalChoices>[0],
-			selectedPathRow,
+			// Static rows carry the Path's structured choices and casting.
+			selectedPathRow
+				? {
+						...(selectedPathRow as unknown as ChoiceSourceData),
+						...getPathChoiceLedger(
+							selectedPathRow as unknown as Parameters<
+								typeof getPathChoiceLedger
+							>[0],
+						),
+					}
+				: null,
 			selectedBackgroundData
 				? [selectedBackgroundData as unknown as ChoiceSourceData]
 				: [],
@@ -1914,6 +1931,7 @@ const CharacterNew = () => {
 				name: name.trim(),
 				level: 1,
 				job: dbJob.name,
+				job_id: dbJob.id,
 				base_class: dbJob.name,
 				portrait_url: jobImage || dbJob.image_url || null,
 				path: paths.find((p) => p.id === selectedPath)?.name || null,

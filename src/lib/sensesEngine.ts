@@ -197,32 +197,19 @@ export function computeSenses(
 		}
 	}
 
-	// Add Regent senses
+	// Add Regent senses, keyed by canonical Regent id. Retired Regent names
+	// resolve to nothing (RA-27).
 	for (const regentId of regentIds) {
 		const rKey = regentId.toLowerCase().trim();
-		if (rKey === "shadow" || rKey === "umbral") {
+		if (rKey === "umbral_regent") {
 			allSources.push({
 				type: "regent",
-				name: "Shadow Regent",
+				name: "Umbral Regent",
 				sense: "darkvision",
 				range: 120,
 			});
 		}
-		if (rKey === "dragon") {
-			allSources.push({
-				type: "regent",
-				name: "Dragon Regent",
-				sense: "blindsight",
-				range: 30,
-			});
-			allSources.push({
-				type: "regent",
-				name: "Dragon Regent",
-				sense: "darkvision",
-				range: 120,
-			});
-		}
-		if (rKey === "beast") {
+		if (rKey === "beast_regent") {
 			allSources.push({
 				type: "regent",
 				name: "Beast Regent",

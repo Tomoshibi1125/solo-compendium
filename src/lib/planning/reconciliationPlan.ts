@@ -791,6 +791,3 @@ export function applyReconciliationPlanV1(
 		hasConflicts: false,
 	};
 }
-
-export const buildReconciliationPlan = buildReconciliationPlanV1;
-export const applyReconciliationPlan = applyReconciliationPlanV1;

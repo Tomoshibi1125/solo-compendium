@@ -1,0 +1,1383 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "type": "number",
+      "const": 2
+    },
+    "id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+    },
+    "identity": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "epithet": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        }
+      },
+      "required": [
+        "name",
+        "title",
+        "epithet"
+      ],
+      "additionalProperties": false
+    },
+    "description": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 12000
+    },
+    "manifestation": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 12000
+    },
+    "fusion_theme": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 160
+    },
+    "combat_doctrine": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 12000
+    },
+    "primary_abilities": {
+      "minItems": 1,
+      "maxItems": 6,
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "STR",
+          "AGI",
+          "VIT",
+          "INT",
+          "SENSE",
+          "PRE"
+        ]
+      }
+    },
+    "affinities": {
+      "maxItems": 256,
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 160
+          },
+          "description": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4000
+          },
+          "ancestry": {
+            "minItems": 1,
+            "maxItems": 4,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "job",
+                "path",
+                "regent-a",
+                "regent-b"
+              ]
+            }
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "ancestry"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "traits": {
+      "maxItems": 256,
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 160
+          },
+          "description": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 12000
+          },
+          "ancestry": {
+            "minItems": 1,
+            "maxItems": 4,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "job",
+                "path",
+                "regent-a",
+                "regent-b"
+              ]
+            }
+          },
+          "modifier_ids": {
+            "maxItems": 256,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+            }
+          },
+          "compatibility": {
+            "type": "string",
+            "enum": [
+              "native",
+              "manual-only"
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "description",
+          "ancestry",
+          "modifier_ids",
+          "compatibility"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "features": {
+      "maxItems": 256,
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 160
+          },
+          "description": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 12000
+          },
+          "ancestry": {
+            "minItems": 1,
+            "maxItems": 4,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "job",
+                "path",
+                "regent-a",
+                "regent-b"
+              ]
+            }
+          },
+          "modifier_ids": {
+            "maxItems": 256,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+            }
+          },
+          "compatibility": {
+            "type": "string",
+            "enum": [
+              "native",
+              "manual-only"
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "description",
+          "ancestry",
+          "modifier_ids",
+          "compatibility"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "abilities": {
+      "minItems": 8,
+      "maxItems": 8,
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 160
+          },
+          "description": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 12000
+          },
+          "level": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 20
+          },
+          "action_type": {
+            "type": "string",
+            "enum": [
+              "action",
+              "bonus-action",
+              "reaction",
+              "passive"
+            ]
+          },
+          "recharge": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "at-will",
+                  "short-rest",
+                  "long-rest"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "is_capstone": {
+            "type": "boolean"
+          },
+          "ancestry": {
+            "minItems": 1,
+            "maxItems": 4,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "job",
+                "path",
+                "regent-a",
+                "regent-b"
+              ]
+            }
+          },
+          "modifier_ids": {
+            "maxItems": 256,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+            }
+          },
+          "resource_costs": {
+            "maxItems": 64,
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "resource_id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128,
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+                },
+                "amount": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 1000000
+                }
+              },
+              "required": [
+                "resource_id",
+                "amount"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "mechanics": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "kind": {
+                    "type": "string",
+                    "const": "attack"
+                  },
+                  "ability": {
+                    "type": "string",
+                    "enum": [
+                      "STR",
+                      "AGI",
+                      "VIT",
+                      "INT",
+                      "SENSE",
+                      "PRE"
+                    ]
+                  },
+                  "range_ft": {
+                    "type": "integer",
+                    "minimum": 5,
+                    "maximum": 60
+                  },
+                  "damage": {
+                    "type": "object",
+                    "properties": {
+                      "count": {
+                        "type": "integer",
+                        "minimum": 1,
+                        "maximum": 4
+                      },
+                      "sides": {
+                        "anyOf": [
+                          {
+                            "type": "number",
+                            "const": 4
+                          },
+                          {
+                            "type": "number",
+                            "const": 6
+                          },
+                          {
+                            "type": "number",
+                            "const": 8
+                          }
+                        ]
+                      },
+                      "type": {
+                        "type": "string",
+                        "enum": [
+                          "acid",
+                          "bludgeoning",
+                          "cold",
+                          "fire",
+                          "force",
+                          "lightning",
+                          "necrotic",
+                          "piercing",
+                          "poison",
+                          "psychic",
+                          "radiant",
+                          "slashing",
+                          "thunder",
+                          "void"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "count",
+                      "sides",
+                      "type"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "condition": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "enum": [
+                          "deafened",
+                          "blinded"
+                        ]
+                      },
+                      "duration_rounds": {
+                        "type": "number",
+                        "const": 1
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "duration_rounds"
+                    ],
+                    "additionalProperties": false
+                  }
+                },
+                "required": [
+                  "kind",
+                  "ability",
+                  "range_ft",
+                  "damage"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "kind": {
+                    "type": "string",
+                    "const": "save"
+                  },
+                  "ability": {
+                    "type": "string",
+                    "enum": [
+                      "STR",
+                      "AGI",
+                      "VIT",
+                      "INT",
+                      "SENSE",
+                      "PRE"
+                    ]
+                  },
+                  "save_ability": {
+                    "type": "string",
+                    "enum": [
+                      "STR",
+                      "AGI",
+                      "VIT",
+                      "INT",
+                      "SENSE",
+                      "PRE"
+                    ]
+                  },
+                  "range_ft": {
+                    "type": "integer",
+                    "minimum": 5,
+                    "maximum": 60
+                  },
+                  "damage": {
+                    "type": "object",
+                    "properties": {
+                      "count": {
+                        "type": "integer",
+                        "minimum": 1,
+                        "maximum": 4
+                      },
+                      "sides": {
+                        "anyOf": [
+                          {
+                            "type": "number",
+                            "const": 4
+                          },
+                          {
+                            "type": "number",
+                            "const": 6
+                          },
+                          {
+                            "type": "number",
+                            "const": 8
+                          }
+                        ]
+                      },
+                      "type": {
+                        "type": "string",
+                        "enum": [
+                          "acid",
+                          "bludgeoning",
+                          "cold",
+                          "fire",
+                          "force",
+                          "lightning",
+                          "necrotic",
+                          "piercing",
+                          "poison",
+                          "psychic",
+                          "radiant",
+                          "slashing",
+                          "thunder",
+                          "void"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "count",
+                      "sides",
+                      "type"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "success_damage": {
+                    "type": "string",
+                    "enum": [
+                      "none",
+                      "half"
+                    ]
+                  },
+                  "condition": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "enum": [
+                          "deafened",
+                          "blinded"
+                        ]
+                      },
+                      "duration_rounds": {
+                        "type": "number",
+                        "const": 1
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "duration_rounds"
+                    ],
+                    "additionalProperties": false
+                  }
+                },
+                "required": [
+                  "kind",
+                  "ability",
+                  "save_ability",
+                  "range_ft",
+                  "damage",
+                  "success_damage"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "kind": {
+                    "type": "string",
+                    "const": "healing"
+                  },
+                  "range_ft": {
+                    "type": "integer",
+                    "minimum": 5,
+                    "maximum": 60
+                  },
+                  "healing": {
+                    "type": "object",
+                    "properties": {
+                      "count": {
+                        "type": "integer",
+                        "minimum": 1,
+                        "maximum": 4
+                      },
+                      "sides": {
+                        "anyOf": [
+                          {
+                            "type": "number",
+                            "const": 4
+                          },
+                          {
+                            "type": "number",
+                            "const": 6
+                          },
+                          {
+                            "type": "number",
+                            "const": 8
+                          }
+                        ]
+                      }
+                    },
+                    "required": [
+                      "count",
+                      "sides"
+                    ],
+                    "additionalProperties": false
+                  }
+                },
+                "required": [
+                  "kind",
+                  "range_ft",
+                  "healing"
+                ],
+                "additionalProperties": false
+              }
+            ]
+          },
+          "compatibility": {
+            "type": "string",
+            "enum": [
+              "native",
+              "manual-only"
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "description",
+          "level",
+          "action_type",
+          "recharge",
+          "is_capstone",
+          "ancestry",
+          "modifier_ids",
+          "resource_costs",
+          "compatibility"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "resources": {
+      "maxItems": 256,
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 160
+          },
+          "description": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 12000
+          },
+          "ancestry": {
+            "minItems": 1,
+            "maxItems": 4,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "job",
+                "path",
+                "regent-a",
+                "regent-b"
+              ]
+            }
+          },
+          "maximum": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "kind": {
+                    "type": "string",
+                    "const": "constant"
+                  },
+                  "value": {
+                    "type": "integer",
+                    "minimum": -1000000,
+                    "maximum": 1000000
+                  }
+                },
+                "required": [
+                  "kind",
+                  "value"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "kind": {
+                    "type": "string",
+                    "const": "proficiency-bonus"
+                  }
+                },
+                "required": [
+                  "kind"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "kind": {
+                    "type": "string",
+                    "const": "ability-modifier"
+                  },
+                  "ability": {
+                    "type": "string",
+                    "enum": [
+                      "STR",
+                      "AGI",
+                      "VIT",
+                      "INT",
+                      "SENSE",
+                      "PRE"
+                    ]
+                  }
+                },
+                "required": [
+                  "kind",
+                  "ability"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "kind": {
+                    "type": "string",
+                    "const": "dice"
+                  },
+                  "count": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 100
+                  },
+                  "sides": {
+                    "type": "integer",
+                    "minimum": 2,
+                    "maximum": 1000
+                  },
+                  "bonus": {
+                    "type": "integer",
+                    "minimum": -1000000,
+                    "maximum": 1000000
+                  }
+                },
+                "required": [
+                  "kind",
+                  "count",
+                  "sides"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "kind": {
+                    "type": "string",
+                    "const": "sum"
+                  },
+                  "terms": {
+                    "minItems": 1,
+                    "maxItems": 64,
+                    "type": "array",
+                    "items": {
+                      "oneOf": [
+                        {
+                          "type": "object",
+                          "properties": {
+                            "kind": {
+                              "type": "string",
+                              "const": "constant"
+                            },
+                            "value": {
+                              "type": "integer",
+                              "minimum": -1000000,
+                              "maximum": 1000000
+                            }
+                          },
+                          "required": [
+                            "kind",
+                            "value"
+                          ],
+                          "additionalProperties": false
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "kind": {
+                              "type": "string",
+                              "const": "proficiency-bonus"
+                            }
+                          },
+                          "required": [
+                            "kind"
+                          ],
+                          "additionalProperties": false
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "kind": {
+                              "type": "string",
+                              "const": "ability-modifier"
+                            },
+                            "ability": {
+                              "type": "string",
+                              "enum": [
+                                "STR",
+                                "AGI",
+                                "VIT",
+                                "INT",
+                                "SENSE",
+                                "PRE"
+                              ]
+                            }
+                          },
+                          "required": [
+                            "kind",
+                            "ability"
+                          ],
+                          "additionalProperties": false
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "kind": {
+                              "type": "string",
+                              "const": "dice"
+                            },
+                            "count": {
+                              "type": "integer",
+                              "minimum": 1,
+                              "maximum": 100
+                            },
+                            "sides": {
+                              "type": "integer",
+                              "minimum": 2,
+                              "maximum": 1000
+                            },
+                            "bonus": {
+                              "type": "integer",
+                              "minimum": -1000000,
+                              "maximum": 1000000
+                            }
+                          },
+                          "required": [
+                            "kind",
+                            "count",
+                            "sides"
+                          ],
+                          "additionalProperties": false
+                        }
+                      ]
+                    }
+                  }
+                },
+                "required": [
+                  "kind",
+                  "terms"
+                ],
+                "additionalProperties": false
+              }
+            ]
+          },
+          "recharge": {
+            "type": "string",
+            "enum": [
+              "short-rest",
+              "long-rest"
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "description",
+          "ancestry",
+          "maximum",
+          "recharge"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "modifiers": {
+      "maxItems": 512,
+      "type": "array",
+      "items": {
+        "oneOf": [
+          {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128,
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+              },
+              "source_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128,
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+              },
+              "ancestry": {
+                "minItems": 1,
+                "maxItems": 4,
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "job",
+                    "path",
+                    "regent-a",
+                    "regent-b"
+                  ]
+                }
+              },
+              "duration": {
+                "type": "string",
+                "const": "persistent"
+              },
+              "stacking": {
+                "type": "string",
+                "const": "engine-default"
+              },
+              "kind": {
+                "type": "string",
+                "const": "resistance"
+              },
+              "damage_type": {
+                "type": "string",
+                "enum": [
+                  "acid",
+                  "bludgeoning",
+                  "cold",
+                  "fire",
+                  "force",
+                  "lightning",
+                  "necrotic",
+                  "piercing",
+                  "poison",
+                  "psychic",
+                  "radiant",
+                  "slashing",
+                  "thunder",
+                  "void"
+                ]
+              }
+            },
+            "required": [
+              "id",
+              "source_id",
+              "ancestry",
+              "duration",
+              "stacking",
+              "kind",
+              "damage_type"
+            ],
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128,
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+              },
+              "source_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128,
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+              },
+              "ancestry": {
+                "minItems": 1,
+                "maxItems": 4,
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "job",
+                    "path",
+                    "regent-a",
+                    "regent-b"
+                  ]
+                }
+              },
+              "duration": {
+                "type": "string",
+                "const": "persistent"
+              },
+              "stacking": {
+                "type": "string",
+                "const": "engine-default"
+              },
+              "kind": {
+                "type": "string",
+                "const": "advantage"
+              },
+              "roll_type": {
+                "type": "string",
+                "enum": [
+                  "attack",
+                  "check",
+                  "save"
+                ]
+              },
+              "condition": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 240
+              }
+            },
+            "required": [
+              "id",
+              "source_id",
+              "ancestry",
+              "duration",
+              "stacking",
+              "kind",
+              "roll_type"
+            ],
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128,
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+              },
+              "source_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128,
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+              },
+              "ancestry": {
+                "minItems": 1,
+                "maxItems": 4,
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "job",
+                    "path",
+                    "regent-a",
+                    "regent-b"
+                  ]
+                }
+              },
+              "duration": {
+                "type": "string",
+                "const": "persistent"
+              },
+              "stacking": {
+                "type": "string",
+                "const": "engine-default"
+              },
+              "kind": {
+                "type": "string",
+                "const": "proficiency"
+              },
+              "proficiency_type": {
+                "type": "string",
+                "enum": [
+                  "skill",
+                  "save",
+                  "tool",
+                  "weapon",
+                  "armor",
+                  "language"
+                ]
+              },
+              "target": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 160
+              }
+            },
+            "required": [
+              "id",
+              "source_id",
+              "ancestry",
+              "duration",
+              "stacking",
+              "kind",
+              "proficiency_type",
+              "target"
+            ],
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128,
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+              },
+              "source_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128,
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+              },
+              "ancestry": {
+                "minItems": 1,
+                "maxItems": 4,
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "job",
+                    "path",
+                    "regent-a",
+                    "regent-b"
+                  ]
+                }
+              },
+              "duration": {
+                "type": "string",
+                "const": "persistent"
+              },
+              "stacking": {
+                "type": "string",
+                "const": "engine-default"
+              },
+              "kind": {
+                "type": "string",
+                "const": "expertise"
+              },
+              "skill": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 160
+              }
+            },
+            "required": [
+              "id",
+              "source_id",
+              "ancestry",
+              "duration",
+              "stacking",
+              "kind",
+              "skill"
+            ],
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128,
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+              },
+              "source_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128,
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+              },
+              "ancestry": {
+                "minItems": 1,
+                "maxItems": 4,
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "job",
+                    "path",
+                    "regent-a",
+                    "regent-b"
+                  ]
+                }
+              },
+              "duration": {
+                "type": "string",
+                "const": "persistent"
+              },
+              "stacking": {
+                "type": "string",
+                "const": "engine-default"
+              },
+              "kind": {
+                "type": "string",
+                "const": "save-proficiency"
+              },
+              "ability": {
+                "type": "string",
+                "enum": [
+                  "STR",
+                  "AGI",
+                  "VIT",
+                  "INT",
+                  "SENSE",
+                  "PRE"
+                ]
+              }
+            },
+            "required": [
+              "id",
+              "source_id",
+              "ancestry",
+              "duration",
+              "stacking",
+              "kind",
+              "ability"
+            ],
+            "additionalProperties": false
+          }
+        ]
+      }
+    },
+    "generation": {
+      "type": "object",
+      "properties": {
+        "contract_revision": {
+          "type": "number",
+          "const": 2
+        },
+        "ruleset_revision": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+        },
+        "canonical_source_revision": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+        },
+        "generator": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "generated_at": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z))$"
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+        },
+        "source_ids": {
+          "type": "object",
+          "properties": {
+            "job": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+            },
+            "path": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+            },
+            "regent_a": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+            },
+            "regent_b": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+            }
+          },
+          "required": [
+            "job",
+            "path",
+            "regent_a",
+            "regent_b"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "contract_revision",
+        "ruleset_revision",
+        "canonical_source_revision",
+        "generator",
+        "generated_at",
+        "operation_id",
+        "source_ids"
+      ],
+      "additionalProperties": false
+    },
+    "compatibility": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string",
+          "const": "native"
+        },
+        "notes": {
+          "maxItems": 64,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 500
+          }
+        }
+      },
+      "required": [
+        "status",
+        "notes"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "schema_version",
+    "id",
+    "identity",
+    "description",
+    "manifestation",
+    "fusion_theme",
+    "combat_doctrine",
+    "primary_abilities",
+    "affinities",
+    "traits",
+    "features",
+    "abilities",
+    "resources",
+    "modifiers",
+    "generation",
+    "compatibility"
+  ],
+  "additionalProperties": false
+}

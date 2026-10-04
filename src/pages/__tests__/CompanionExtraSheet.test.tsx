@@ -55,6 +55,10 @@ vi.mock("@/lib/initiativeQueue", () => ({
 	enqueueInitiativeAdditions: enqueueMock,
 }));
 
+import {
+	type CompanionInstanceRecord,
+	resolveCompanionEffectiveStats,
+} from "@/lib/companionInstances";
 import { createCanonicalCompanionSource } from "@/lib/companions";
 import CompanionExtraSheet from "@/pages/CompanionExtraSheet";
 
@@ -201,6 +205,9 @@ describe("CompanionExtraSheet source-aware controls", () => {
 		});
 
 		expect(enqueueMock).toHaveBeenCalledWith({
+			companionOriginRowId: "extra-1",
+			companionOriginTable: "character_extras",
+			companionOwnerCharacterId: "character-1",
 			name: "Test Stalker",
 			hp: 18,
 			maxHp: 24,
@@ -234,6 +241,147 @@ describe("CompanionExtraSheet source-aware controls", () => {
 		expect(updateExtraMock).toHaveBeenCalledWith({
 			id: "extra-1",
 			data: { conditions: [] },
+		});
+	});
+});
+
+const dragonSource = createCanonicalCompanionSource({
+	canonicalId: "anomaly-0006",
+	canonicalType: "anomaly",
+	canonicalCollection: "anomalies",
+	entryType: "Elemental",
+	name: "Eternal Ancient Dragon",
+	hpMax: 12,
+	baseAc: 13,
+	speed: 30,
+	rank: "D",
+});
+
+const dragonInstance: CompanionInstanceRecord = {
+	id: "instance-dragon",
+	owner_scope: "character",
+	owner_character_id: "character-1",
+	owner_campaign_id: null,
+	primary_handler_character_id: "character-1",
+	combat_controller_character_id: "character-1",
+	rider_character_id: null,
+	identity_kind: "companion",
+	source_kind: "canonical-anomaly",
+	source_collection: "anomalies",
+	source_id: "anomaly-0006",
+	source_policy: "snapshot",
+	source_revision: "canonical-snapshot-v1",
+	source_snapshot_version: 1,
+	source_snapshot: dragonSource,
+	profile_version: 1,
+	progression_profile: {},
+	stat_overrides: {},
+	mount_profile: null,
+	combat_state_version: 3,
+	origin_table: "character_extras",
+	origin_row_id: "extra-dragon",
+	created_at: "2026-09-28T00:00:00.000Z",
+	updated_at: "2026-09-28T00:00:00.000Z",
+};
+
+const dragonExtra = {
+	...extra,
+	id: "extra-1",
+	name: "Eternal Ancient Dragon",
+	hp_current: 30,
+	hp_max: 50,
+	ac: 12,
+	speed: 30,
+	equipment: [],
+	abilities: [],
+	conditions: [],
+	npc_data: dragonSource,
+	companion_instance_id: dragonInstance.id,
+	companion_instance: dragonInstance,
+	effective_stats: resolveCompanionEffectiveStats(
+		dragonInstance,
+		{ name: "Eternal Ancient Dragon", currentHp: 30, hpMax: 50, speed: 30 },
+		undefined,
+		5,
+	),
+};
+
+const setInputValue = (input: HTMLInputElement, value: string) => {
+	const setter = Object.getOwnPropertyDescriptor(
+		HTMLInputElement.prototype,
+		"value",
+	)?.set;
+	setter?.call(input, value);
+	input.dispatchEvent(new Event("input", { bubbles: true }));
+};
+
+describe("CompanionExtraSheet for a level-scaled companion", () => {
+	beforeEach(() => {
+		useCharacterExtrasMock.mockReturnValue({
+			extras: [dragonExtra],
+			updateExtra: updateExtraMock,
+			isLoading: false,
+		});
+	});
+
+	it("shows the owner-level vitals, species stat block, and grouped scaled actions", async () => {
+		mountSheet();
+		await flush();
+
+		const text = document.body.textContent ?? "";
+		expect(text).toContain("Rank D");
+		expect(text).toContain("Level 5");
+		expect(text).toContain("Current HP 30 / 50");
+		expect(text).toContain("Hit Dice 5d10 at maximum");
+		expect(text).toContain("Proficiency Bonus");
+		expect(text).toContain("Attack +6 · save DC 12");
+		expect(
+			document.querySelector('[data-testid="companion-species-line"]')
+				?.textContent,
+		).toBe("Large Elemental");
+
+		const statBlock = document.querySelector<HTMLElement>(
+			'[data-testid="companion-stat-block"]',
+		);
+		expect(statBlock?.textContent).toContain("VIT16+3");
+		expect(statBlock?.textContent).toContain("Agility +5, Vitality +6");
+		expect(statBlock?.textContent).toContain("passive Perception 13");
+		expect(statBlock?.textContent).toContain("Primordial");
+
+		const actions = document.querySelector<HTMLElement>(
+			'[data-testid="scaled-companion-actions"]',
+		);
+		const headings = Array.from(actions?.querySelectorAll("h3") ?? []).map(
+			(heading) => heading.textContent,
+		);
+		expect(headings).toEqual(["Traits", "Actions", "Bonus Actions"]);
+		expect(actions?.textContent).toContain("Hit: 2d6 + 3 necrotic damage.");
+		expect(actions?.textContent).toContain("Lightning Mote");
+		expect(text).not.toContain("Maximum HP is source-locked");
+	});
+
+	it("lets the owner rename the companion", async () => {
+		mountSheet();
+		await flush();
+
+		const rename = document.querySelector<HTMLButtonElement>(
+			'button[aria-label="Rename Eternal Ancient Dragon"]',
+		);
+		act(() => {
+			rename?.click();
+		});
+		const input = document.querySelector<HTMLInputElement>("#companion-name");
+		expect(input).toBeTruthy();
+		act(() => {
+			if (input) setInputValue(input, "Ember");
+		});
+		act(() => {
+			findButtonByText("Save name")?.click();
+		});
+
+		expect(updateExtraMock).toHaveBeenCalledWith({
+			id: "extra-1",
+			data: { name: "Ember" },
 		});
 	});
 });

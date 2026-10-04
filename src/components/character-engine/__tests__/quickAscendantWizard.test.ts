@@ -17,6 +17,7 @@ import { getJobASI } from "@/lib/characterCreation";
 import {
 	applyAbilityBonuses,
 	placeStandardArray,
+	quickAscendantHitDieSize,
 } from "@/lib/quickAscendantDefaults";
 
 describe("placeStandardArray", () => {
@@ -95,5 +96,32 @@ describe("applyAbilityBonuses (racial-ASI preview for creation math)", () => {
 		expect(hp).toBe(11);
 		// The buggy pre-ASI computation is pinned as distinct:
 		expect(calculateHPMax(1, 8, getAbilityModifier(base.VIT))).toBe(10);
+	});
+});
+
+describe("quickAscendantHitDieSize", () => {
+	it("uses each Job's authored die instead of a flat d8", () => {
+		const byName = (name: string) => {
+			const job = jobs.find((entry) => entry.name === name);
+			if (!job) throw new Error(`missing job ${name}`);
+			return job;
+		};
+		expect(quickAscendantHitDieSize(byName("Berserker"))).toBe(12);
+		expect(quickAscendantHitDieSize(byName("Destroyer"))).toBe(10);
+		expect(quickAscendantHitDieSize(byName("Assassin"))).toBe(8);
+		expect(quickAscendantHitDieSize(byName("Mage"))).toBe(6);
+	});
+
+	it("reads the authored die for every static Job", () => {
+		for (const job of jobs) {
+			const authored = Number(job.hitDie.match(/d(\d+)/)?.[1]);
+			expect([6, 8, 10, 12]).toContain(authored);
+			expect(quickAscendantHitDieSize(job)).toBe(authored);
+		}
+	});
+
+	it("falls back to a numeric size, then d8", () => {
+		expect(quickAscendantHitDieSize({ hit_die: 10 })).toBe(10);
+		expect(quickAscendantHitDieSize({})).toBe(8);
 	});
 });

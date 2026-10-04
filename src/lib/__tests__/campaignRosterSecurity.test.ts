@@ -112,7 +112,7 @@ describe("campaign roster security boundary", () => {
 			"character.user_id !== user?.id",
 		);
 		expect(characterSheetSource).toMatch(
-			/<CharacterExtrasPanel\s+characterId={character\.id}\s+isReadOnly={isReadOnly}\s*\/>/,
+			/<CharacterExtrasPanel\s+characterId={character\.id}\s+characterLevel={character\.level \|\| 1}\s+isReadOnly={isReadOnly}\s*\/>/,
 		);
 		expect(characterSheetSource).toContain(
 			"{!isReadOnly && <CharacterBackupPanel characterId={character.id} />}",

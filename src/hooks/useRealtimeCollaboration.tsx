@@ -105,40 +105,30 @@ export function useRealtimeCollaboration(campaignId: string) {
 
 	const handleUserJoin = useCallback(
 		(key: string, presences: PresencePayload[]) => {
-			presences.forEach((presence) => {
-				const userId = presence.user_id ?? key;
-				const activeUser: ActiveUser = {
-					id: userId,
-					name: presence.user_name || "Anonymous",
-					lastSeen: Date.now(),
-				};
-				setActiveUsers((prev) => new Map(prev.set(key, activeUser)));
-				toast({
-					title: "User Joined",
-					description: `${activeUser.name} joined the campaign`,
-				});
+			const presence = presences.at(-1);
+			if (!presence) return;
+			const activeUser: ActiveUser = {
+				id: presence.user_id ?? key,
+				name: presence.user_name || "Anonymous",
+				lastSeen: Date.now(),
+			};
+			setActiveUsers((previous) => {
+				const next = new Map(previous);
+				next.set(key, activeUser);
+				return next;
 			});
 		},
-		[toast],
+		[],
 	);
 
-	const handleUserLeave = useCallback(
-		(key: string, _presences: PresencePayload[]) => {
-			const activeUser = activeUsers.get(key);
-			if (activeUser) {
-				setActiveUsers((prev) => {
-					const newMap = new Map(prev);
-					newMap.delete(key);
-					return newMap;
-				});
-				toast({
-					title: "User Left",
-					description: `${activeUser.name} left the campaign`,
-				});
-			}
-		},
-		[toast, activeUsers],
-	);
+	const handleUserLeave = useCallback((key: string) => {
+		setActiveUsers((previous) => {
+			if (!previous.has(key)) return previous;
+			const next = new Map(previous);
+			next.delete(key);
+			return next;
+		});
+	}, []);
 
 	// Initialize real-time connection
 	useEffect(() => {
@@ -175,37 +165,14 @@ export function useRealtimeCollaboration(campaignId: string) {
 					.filter(isPresencePayload);
 				handleUserJoin(key, validated);
 			})
-			.on("presence", { event: "leave" }, ({ key, leftPresences }) => {
-				const validated: PresencePayload[] = (leftPresences || [])
-					.map((p: unknown) => {
-						const data = p as Record<string, unknown>;
-						return {
-							user_id:
-								typeof data.user_id === "string" ? data.user_id : undefined,
-							user_name:
-								typeof data.user_name === "string" ? data.user_name : undefined,
-						} as PresencePayload;
-					})
-					.filter(isPresencePayload);
-				handleUserLeave(key, validated);
+			.on("presence", { event: "leave" }, ({ key }) => {
+				handleUserLeave(key);
 			})
 			.on("presence", { event: "sync" }, () => {
 				// Handle initial sync
 			})
 			.subscribe((status) => {
 				setIsConnected(status === "SUBSCRIBED");
-				if (status === "SUBSCRIBED") {
-					toast({
-						title: "Connected to Campaign",
-						description: "Real-time collaboration enabled",
-					});
-				} else if (status === "CHANNEL_ERROR") {
-					toast({
-						title: "Connection Error",
-						description: "Unable to connect to real-time features",
-						variant: "destructive",
-					});
-				}
 			});
 
 		setChannel(newChannel);
@@ -213,13 +180,7 @@ export function useRealtimeCollaboration(campaignId: string) {
 		return () => {
 			newChannel.unsubscribe();
 		};
-	}, [
-		campaignId,
-		handleCollaborationEvent,
-		handleUserJoin,
-		handleUserLeave,
-		toast,
-	]);
+	}, [campaignId, handleCollaborationEvent, handleUserJoin, handleUserLeave]);
 
 	const broadcastDiceRoll = useCallback(
 		(formula: string, result: number, details?: Record<string, unknown>) => {

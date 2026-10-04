@@ -28,7 +28,7 @@ import {
 import { getAbilityUseFields } from "@/lib/characterCreation";
 import { getErrorMessage } from "@/lib/errorHandling";
 import { getCharacterCampaignId } from "@/lib/sourcebookAccess";
-import { formatRegentVernacular, MONARCH_LABEL } from "@/lib/vernacular";
+import { formatRegentVernacular, REGENT_LABEL } from "@/lib/vernacular";
 import type { AbilityScore } from "@/types/core-rules";
 
 type ChoiceGroupRow = {
@@ -408,7 +408,7 @@ export function FeatureChoicesPanel({
 						toast({
 							title: "Ineligible power",
 							description: formatRegentVernacular(
-								`"${invalidPower}" is not eligible for your Job / Path / ${MONARCH_LABEL} overlays.`,
+								`"${invalidPower}" is not eligible for your Job / Path / ${REGENT_LABEL} overlays.`,
 							),
 							variant: "destructive",
 						});

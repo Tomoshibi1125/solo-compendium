@@ -1,5 +1,7 @@
 # Local SDXL Model Setup
 
+> **Retired (RA-18).** AI image generation was removed from this project; only initial Sovereign creation may call AI. The scripts referenced below no longer exist. This page is kept as a historical record only.
+
 This project uses official SDXL Base 1.0 as the reproducible default for Rift Ascendant asset candidates.
 
 Required checkpoint:

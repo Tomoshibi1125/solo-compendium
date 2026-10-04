@@ -2,11 +2,9 @@
  * Misty Pearl I5 — Live encounter difficulty scaler.
  *
  * React wrapper around the pure `analyzeCombatRound` analyzer in
- * `@/lib/encounterScaling`. Computes a deterministic floor signal
- * synchronously; the Warden then optionally pipes the recommendation
- * through the existing AI policy (Pollinations / Gemini) for richer
- * narrative framing. Mutations on combat state stay manual — the
- * Warden must approve every adjustment.
+ * `@/lib/encounterScaling`. Computes a deterministic signal
+ * synchronously and makes no AI or network call (RA-18). Mutations on
+ * combat state stay manual — the Warden must approve every adjustment.
  *
  * RA theming: "Bureau Field Calibration".
  */

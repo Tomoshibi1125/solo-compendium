@@ -56,8 +56,6 @@ export interface PrereqValidation {
 // ── Versioned grouped contract ─────────────────────────────────────
 
 export const PREREQUISITE_SCHEMA_VERSION = 1 as const;
-/** Alias for callers that describe the schema as a contract version. */
-export const PREREQUISITE_CONTRACT_VERSION = PREREQUISITE_SCHEMA_VERSION;
 
 /** How an unmet or unverifiable prerequisite must be handled. */
 export type PrerequisiteOutcome = "strict" | "warning" | "manual";
@@ -619,9 +617,6 @@ export function normalizePrerequisiteInput(
 	};
 }
 
-/** Concise plural alias for collection-oriented callers. */
-export const normalizePrerequisites = normalizePrerequisiteInput;
-
 // ── Evaluation ─────────────────────────────────────────────────────
 
 function jobName(
@@ -825,9 +820,6 @@ export function evaluatePrerequisites(
 		character,
 	);
 }
-
-/** Singular alias for callers evaluating one prerequisite tree. */
-export const evaluatePrerequisite = evaluatePrerequisites;
 
 // ── Legacy validation API ──────────────────────────────────────────
 

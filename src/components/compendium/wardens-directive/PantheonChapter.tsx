@@ -13,7 +13,7 @@ export const PantheonChapter = () => {
 				<p className="text-lg text-muted-foreground leading-relaxed max-w-3xl mx-auto">
 					Beyond the physical constraints of the Grid exist the
 					Eternals—god-like beings who maintain the existential equilibrium of
-					the Remade World. Wardens must document these Sovereigns, as their
+					the Remade World. Wardens must document these Eternals, as their
 					influence governs the very laws of Awakening and the containment of
 					the Sprawl.
 				</p>
@@ -143,7 +143,7 @@ export const PantheonChapter = () => {
 										{regent.title}
 									</p>
 									<span className="px-4 py-1 bg-red-500/20 text-red-400 font-bold border border-red-500/40 rounded-sm font-mono text-sm shadow-lg">
-										Rank {regent.rank} Sovereign
+										Rank {regent.rank} Regent
 									</span>
 								</div>
 
@@ -155,7 +155,7 @@ export const PantheonChapter = () => {
 									<div className="grid sm:grid-cols-2 gap-4">
 										<div className="bg-void/60 p-4 rounded-sm border border-white/5 space-y-2">
 											<h4 className="text-[10px] font-bold text-slate-400 uppercase tracking-widest border-b border-white/10 pb-1">
-												Sovereign Domain
+												Regent Domain
 											</h4>
 											<p className="text-xs font-mono text-white/90">
 												{regent.theme}
@@ -173,7 +173,7 @@ export const PantheonChapter = () => {
 
 									<div>
 										<h4 className="text-xs font-bold text-resurge-violet uppercase tracking-widest mb-3 border-b border-resurge-violet/20 pb-1">
-											Sovereign Job Features
+											Regent Features
 										</h4>
 										<div className="grid sm:grid-cols-2 gap-3 max-h-64 overflow-y-auto pr-2 custom-scrollbar">
 											{regent.class_features?.map((feat) => (

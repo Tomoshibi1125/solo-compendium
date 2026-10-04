@@ -46,7 +46,6 @@ import { EquipmentList } from "@/components/character/EquipmentList";
 import { ExportDialog } from "@/components/character/ExportDialog";
 import { FeatureChoicesPanel } from "@/components/character/FeatureChoicesPanel";
 import { FeaturesList } from "@/components/character/FeaturesList";
-import { GuildBenefitsDisplay } from "@/components/character/GuildBenefitsDisplay";
 import { HomebrewFeatureApplicator } from "@/components/character/HomebrewFeatureApplicator";
 import { InlineSectionNote } from "@/components/character/InlineSectionNote";
 import { JournalPanel } from "@/components/character/JournalPanel";
@@ -57,6 +56,7 @@ import {
 	type PartyInventoryItem,
 	PartyInventoryPanel,
 } from "@/components/character/PartyInventoryPanel";
+import { PathChoicesPanel } from "@/components/character/PathChoicesPanel";
 import { PathFeaturesDisplay } from "@/components/character/PathFeaturesDisplay";
 import { RegentFeaturesDisplay } from "@/components/character/RegentFeaturesDisplay";
 import { RegentUnlocksPanel } from "@/components/character/RegentUnlocksPanel";
@@ -118,6 +118,7 @@ import {
 	getXPProgress,
 	type LevelingType,
 } from "@/lib/experience";
+import { isLocalCharacterId } from "@/lib/guestStore";
 import { applyDamage, applyHealing } from "@/lib/hpAdjustments";
 import { type HunterRank, hunterRankForLevel } from "@/lib/hunterRank";
 import { cn } from "@/lib/utils";
@@ -518,7 +519,14 @@ export default function CharacterSheetV2() {
 
 	const onHPClick = () => sheetController.setModal("health", true);
 	const onACClick = () => sheetController.setModal("defenses", true);
-	const onShortRest = () => handleShortRest();
+	// The Short Rest dialog rolls the spent Hit Dice; apply the healing and
+	// the spent dice before the short-rest recharges.
+	const onShortRest = (totalRecovered: number, hitDiceSpent: number) => {
+		if (totalRecovered > 0) handleHeal(totalRecovered);
+		if (hitDiceSpent > 0)
+			handleResourceAdjust("hit_dice_current", -hitDiceSpent);
+		void handleShortRest();
+	};
 	const onLongRest = () => handleLongRest();
 	const onLevelUp = () => sheetController.setModal("levelUp", true);
 	const onResourceAdjust = (
@@ -731,7 +739,6 @@ export default function CharacterSheetV2() {
 				onSelectDetail={(detail) => onSelectDetail(detail, "Feature", Zap)}
 				readOnly={isReadOnly}
 			/>
-			<GuildBenefitsDisplay characterId={character.id} />
 			<InlineSectionNote
 				section="features"
 				label="Features & Traits"
@@ -740,6 +747,7 @@ export default function CharacterSheetV2() {
 				readOnly={isReadOnly}
 			/>
 			<FeatureChoicesPanel characterId={character.id} readOnly={isReadOnly} />
+			<PathChoicesPanel characterId={character.id} readOnly={isReadOnly} />
 			<HomebrewFeatureApplicator
 				characterId={character.id}
 				readOnly={isReadOnly}
@@ -836,6 +844,7 @@ export default function CharacterSheetV2() {
 		<>
 			<CharacterExtrasPanel
 				characterId={character.id}
+				characterLevel={character.level || 1}
 				isReadOnly={isReadOnly}
 			/>
 			<VehiclesPanel characterId={character.id} readOnly={isReadOnly} />
@@ -979,6 +988,11 @@ export default function CharacterSheetV2() {
 							hpCurrent={displayHpCurrent}
 							hpMax={effectiveHpMax}
 							onFinishRest={onShortRest}
+							companionOwner={
+								isLocalCharacterId(character.id)
+									? undefined
+									: { characterId: character.id, level: character.level || 1 }
+							}
 						/>
 						<Button
 							variant="outline"

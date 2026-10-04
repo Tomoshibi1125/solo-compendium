@@ -1,12 +1,13 @@
 /**
- * Generator RA-canon guard.
+ * Warden-table RA-canon guard.
  *
- * The deterministic Warden-tool generators (Rift/NPC/Treasure/Random-Event/
- * Directive) and the compendium rollable tables drifted off-canon after the
- * brand overhaul ("Awakened Council" instead of the Bureau, Korean-only name
- * pools, D&D ability names, gold/gp currency). This scans every generator
- * surface for the banned pre-overhaul vocabulary so it can't creep back, and
- * covers the static rollable tables with the canon source-book audit.
+ * The retired AI generators (Rift/NPC/Treasure/Random-Event/Directive/art) were
+ * removed under RA-18. The surviving deterministic Warden tables (Rollable
+ * Tables, Relic Workshop, reward tables) and the Sovereign generator drifted
+ * off-canon after the brand overhaul ("Awakened Council" instead of the Bureau,
+ * Korean-only name pools, D&D ability names, gold/gp currency). This scans each
+ * surviving surface for the banned pre-overhaul vocabulary so it can't creep
+ * back, and covers the static rollable tables with the canon source-book audit.
  */
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
@@ -19,26 +20,16 @@ import {
 
 const SRC_ROOT = join(__dirname, "..", "..");
 
-/** Every file that feeds generator output (deterministic pools + prompts + UI). */
+/** Every surviving file that feeds Warden-table or Sovereign generator output. */
 const GENERATOR_SURFACE = [
 	"data/wardenGeneratorContent.ts",
 	"data/compendium/rollableTables.ts",
+	"data/compendium/wardenToolConfig.ts",
 	"data/toolCatalogs.ts",
-	"components/AIContentGeneratorClass.ts",
-	"components/warden-directives/DirectiveMatrix.tsx",
-	"components/warden-directives/NPCGenerator.tsx",
-	"components/warden-directives/DungeonMapGenerator.tsx",
 	"components/compendium/GeminiProtocolGenerator.tsx",
-	"components/art/ArtGenerator.tsx",
-	"components/art/AIEnhancedArtGenerator.tsx",
-	"lib/riftGenerator.ts",
-	"lib/treasureGenerator.ts",
 	"lib/geminiProtocol.ts",
-	"pages/warden-directives/GateGenerator.tsx",
-	"pages/warden-directives/NPCGenerator.tsx",
-	"pages/warden-directives/RandomEventGenerator.tsx",
-	"pages/warden-directives/TreasureGenerator.tsx",
-	"pages/warden-directives/ArtGenerator.tsx",
+	"pages/warden-directives/RollableTables.tsx",
+	"pages/warden-directives/RelicWorkshop.tsx",
 ] as const;
 
 /** Banned term → a synthetic string the pattern MUST match (self-probe). */

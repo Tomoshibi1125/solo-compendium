@@ -7,8 +7,7 @@ import { cn } from "@/lib/utils";
 
 /**
  * Inner roster — only mounted for authenticated Supabase sessions (see the
- * gate below), so the realtime channel never opens in guest/offline mode and
- * can't emit a spurious "connection error" toast.
+ * gate below), so the realtime channel never opens in guest/offline mode.
  */
 function PresenceRoster({ campaignId }: { campaignId: string }) {
 	const { activeUsers, updatePresence, isConnected } =
