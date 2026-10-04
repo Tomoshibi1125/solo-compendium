@@ -1,4 +1,4 @@
-﻿-- Repair migration: Insert seed data directly into public schema
+-- Repair migration: Insert seed data directly into public schema
 -- The original seed migration (20260926100100) ran before tables were created,
 -- so no data was ever inserted. This migration repairs that.
 
