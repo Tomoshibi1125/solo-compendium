@@ -41,15 +41,18 @@ export function assertRegentLock(expected: RegentLockExpectation): void {
 	if (!regent) return;
 
 	expect(regent.theme).toBe(expected.theme);
-	
+
 	// Requirements (quest, warden verification, prerequisite job) are no longer
 	// stored on regent objects - they're in quest-contracts.ts
-	
+
 	expect(REGENT_GRANTS[expected.id]).toEqual(expected.grants);
 
 	const features = regent.class_features ?? [];
-	const progressionFeatureCount = regent.progression_table 
-		? Object.values(regent.progression_table).reduce((total, row) => total + (row.features_gained?.length ?? 0), 0)
+	const progressionFeatureCount = regent.progression_table
+		? Object.values(regent.progression_table).reduce(
+				(total, row) => total + (row.features_gained?.length ?? 0),
+				0,
+			)
 		: expected.featureCount;
 	expect(features).toHaveLength(progressionFeatureCount);
 	expect(new Set(features.map((feature) => feature.id)).size).toBe(

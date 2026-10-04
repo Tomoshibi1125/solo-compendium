@@ -15,7 +15,7 @@ DECLARE
   v_owner UUID;
   v_level INTEGER;
   v_unlock public.character_regent_unlocks%ROWTYPE;
-  v_req app_private.regent_catch_up_requirements%ROWTYPE;
+  v_req public.regent_catch_up_requirements%ROWTYPE;
   v_source TEXT;
 BEGIN
   IF v_actor IS NULL THEN RAISE EXCEPTION 'AUTH_REQUIRED' USING ERRCODE = '42501'; END IF;
@@ -34,7 +34,7 @@ BEGIN
   IF v_level NOT BETWEEN 1 AND 20 THEN RAISE EXCEPTION 'INVALID_CHARACTER_LEVEL' USING ERRCODE = '22023'; END IF;
   IF v_unlock.caught_up_at_level IS NOT NULL THEN RETURN v_unlock.caught_up_at_level; END IF;
   
-  SELECT * INTO v_req FROM app_private.regent_catch_up_requirements
+  SELECT * INTO v_req FROM public.regent_catch_up_requirements
   WHERE regent_id = v_unlock.regent_id AND character_level = v_level;
   IF NOT FOUND THEN RAISE EXCEPTION 'REGENT_REQUIREMENTS_NOT_FOUND' USING ERRCODE = '22023'; END IF;
   v_source := v_req.regent_name || ' Attunement (Catch-Up)';

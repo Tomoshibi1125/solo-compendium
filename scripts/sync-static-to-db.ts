@@ -786,7 +786,7 @@ async function syncBackgrounds() {
 async function syncRegents() {
 	const data = await staticDataProvider.getRegents("");
 	log(`Syncing ${data.length} regents...`);
-	
+
 	const rows: Database["public"]["Tables"]["compendium_regents"]["Insert"][] =
 		data.map((m) => ({
 			name: m.name,
@@ -817,26 +817,39 @@ async function syncRegents() {
 		}));
 
 	// Debug: check what's in the row for umbral
-	const umbralRow = rows.find(r => r.name === 'Umbral Regent');
+	const umbralRow = rows.find((r) => r.name === "Umbral Regent");
 	if (umbralRow) {
-		log(`DEBUG: Umbral row has progression_table: ${!!umbralRow.progression_table}`);
-		log(`DEBUG: Row progression_table keys: ${umbralRow.progression_table ? Object.keys(umbralRow.progression_table as Record<string, unknown>).length : 0}`);
+		log(
+			`DEBUG: Umbral row has progression_table: ${!!umbralRow.progression_table}`,
+		);
+		log(
+			`DEBUG: Row progression_table keys: ${umbralRow.progression_table ? Object.keys(umbralRow.progression_table as Record<string, unknown>).length : 0}`,
+		);
 	}
 
 	const names = rows.map((r) => r.name);
 	await supabase.from("compendium_regents").delete().in("name", names);
-	const { data: insertedData, error } = await supabase.from("compendium_regents").insert(rows).select('name, progression_table');
+	const { data: insertedData, error } = await supabase
+		.from("compendium_regents")
+		.insert(rows)
+		.select("name, progression_table");
 	if (error) {
 		log(`  [Regents] ERROR: ${JSON.stringify(error)}`);
 	}
 	if (insertedData) {
-		const umbralData = insertedData.find(d => d.name === 'Umbral Regent');
+		const umbralData = insertedData.find((d) => d.name === "Umbral Regent");
 		if (umbralData) {
-			log(`DEBUG: Umbral returned from insert has progression_table: ${!!umbralData.progression_table}`);
+			log(
+				`DEBUG: Umbral returned from insert has progression_table: ${!!umbralData.progression_table}`,
+			);
 			if (umbralData.progression_table) {
-				const ptKeys = Object.keys(umbralData.progression_table as Record<string, unknown>);
+				const ptKeys = Object.keys(
+					umbralData.progression_table as Record<string, unknown>,
+				);
 				log(`DEBUG: Umbral progression_table has keys: ${ptKeys.length}`);
-				log(`DEBUG: Level 1 data: ${JSON.stringify((umbralData.progression_table as any)['1'])}`);
+				log(
+					`DEBUG: Level 1 data: ${JSON.stringify((umbralData.progression_table as any)["1"])}`,
+				);
 			}
 		}
 	}

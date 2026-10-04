@@ -14,13 +14,13 @@ SELECT
     WHEN COUNT(*) = 240 THEN '✓ PASS - All 240 requirement rows present'
     ELSE '✗ FAIL - Expected 240 rows, got ' || COUNT(*)::TEXT
   END as test_result
-FROM app_private.regent_catch_up_requirements;
+FROM public.regent_catch_up_requirements;
 
 \echo ''
 \echo 'Test 2: Each regent has exactly 20 level entries...'
 WITH regent_counts AS (
   SELECT regent_id, COUNT(*) as level_count
-  FROM app_private.regent_catch_up_requirements
+  FROM public.regent_catch_up_requirements
   GROUP BY regent_id
 )
 SELECT 
@@ -85,7 +85,7 @@ SELECT
   END as test_result
 FROM public.character_regent_unlocks u
 JOIN public.characters c ON c.id = u.character_id
-LEFT JOIN app_private.regent_catch_up_requirements req 
+LEFT JOIN public.regent_catch_up_requirements req 
   ON req.regent_id = u.regent_id 
   AND req.character_level = c.level
 WHERE u.caught_up_at_level IS NULL
@@ -99,7 +99,7 @@ SELECT
     WHEN COUNT(*) > 0 THEN '✓ PASS - ' || COUNT(*)::TEXT || ' pick options available'
     ELSE '✗ FAIL - No pick options found'
   END as test_result
-FROM app_private.regent_canonical_pick_options;
+FROM public.regent_canonical_pick_options;
 
 \echo ''
 \echo 'Test 7: All expected regents are present...'
@@ -113,7 +113,7 @@ WITH expected_regents AS (
 ),
 existing_regents AS (
   SELECT DISTINCT regent_id
-  FROM app_private.regent_catch_up_requirements
+  FROM public.regent_catch_up_requirements
 )
 SELECT 
   CASE 
@@ -132,14 +132,14 @@ WHERE ex.regent_id IS NULL;
 WITH test_results AS (
   -- Test 1: Requirements count
   SELECT CASE WHEN COUNT(*) = 240 THEN 1 ELSE 0 END as passed
-  FROM app_private.regent_catch_up_requirements
+  FROM public.regent_catch_up_requirements
   
   UNION ALL
   
   -- Test 2: Level coverage
   SELECT CASE WHEN COUNT(*) = 0 THEN 1 ELSE 0 END
   FROM (
-    SELECT regent_id FROM app_private.regent_catch_up_requirements
+    SELECT regent_id FROM public.regent_catch_up_requirements
     GROUP BY regent_id HAVING COUNT(*) != 20
   ) sub
   
@@ -182,7 +182,7 @@ WITH test_results AS (
     SELECT u.id
     FROM public.character_regent_unlocks u
     JOIN public.characters c ON c.id = u.character_id
-    LEFT JOIN app_private.regent_catch_up_requirements req 
+    LEFT JOIN public.regent_catch_up_requirements req 
       ON req.regent_id = u.regent_id AND req.character_level = c.level
     WHERE u.caught_up_at_level IS NULL AND u.regent_id IS NOT NULL AND req.regent_id IS NULL
   ) sub
@@ -191,7 +191,7 @@ WITH test_results AS (
   
   -- Test 6: Pick options
   SELECT CASE WHEN COUNT(*) > 0 THEN 1 ELSE 0 END
-  FROM app_private.regent_canonical_pick_options
+  FROM public.regent_canonical_pick_options
   
   UNION ALL
   
@@ -204,7 +204,7 @@ WITH test_results AS (
                            'war_regent','frost_regent','beast_regent','plague_regent',
                            'spatial_regent','mimic_regent','blood_regent','gravity_regent']) AS regent_id
     ) e
-    LEFT JOIN (SELECT DISTINCT regent_id FROM app_private.regent_catch_up_requirements) ex 
+    LEFT JOIN (SELECT DISTINCT regent_id FROM public.regent_catch_up_requirements) ex 
       ON e.regent_id = ex.regent_id
     WHERE ex.regent_id IS NULL
   ) sub

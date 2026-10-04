@@ -7,7 +7,7 @@ import type {
  * Regent option access grants. Regents receive explicit grants for:
  * - Caster Regents: School-based access + named additional_spells list
  * - Martial Regents: Job-based power & technique pools
- * 
+ *
  * All grants use source-backed, canonical ability identities. The named
  * additional_spells from the Regent source are granted explicitly by entryNames.
  * Martial Regents draw from Job-tagged power/technique pools appropriate to

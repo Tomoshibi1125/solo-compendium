@@ -1,5 +1,5 @@
 -- Regent Requirements Repair Script
--- Re-populates app_private.regent_catch_up_requirements
+-- Re-populates public.regent_catch_up_requirements
 -- Run with: npx supabase db execute --file scripts/repair-regent-requirements.sql
 -- Purpose: Fix missing or corrupted regent catch-up requirements data
 
@@ -12,7 +12,7 @@
 SELECT 
   COUNT(DISTINCT regent_id) as current_regent_count,
   COUNT(*) as current_total_rows
-FROM app_private.regent_catch_up_requirements;
+FROM public.regent_catch_up_requirements;
 
 \echo ''
 \echo 'Step 2: Re-running seed migration (idempotent with ON CONFLICT)...'
@@ -27,7 +27,7 @@ SELECT
   COUNT(*) as total_rows,
   MIN(character_level) as min_level,
   MAX(character_level) as max_level
-FROM app_private.regent_catch_up_requirements;
+FROM public.regent_catch_up_requirements;
 
 \echo ''
 \echo 'Step 4: Checking each regent has exactly 20 levels...'
@@ -35,7 +35,7 @@ SELECT
   regent_id,
   regent_name,
   COUNT(*) as level_count
-FROM app_private.regent_catch_up_requirements
+FROM public.regent_catch_up_requirements
 GROUP BY regent_id, regent_name
 ORDER BY regent_id;
 

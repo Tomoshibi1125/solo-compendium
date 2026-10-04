@@ -8,13 +8,13 @@
 \echo ''
 
 -- 1. Check if requirements table exists and has data
-\echo '1. Checking app_private.regent_catch_up_requirements table...'
+\echo '1. Checking public.regent_catch_up_requirements table...'
 SELECT 
   COUNT(DISTINCT regent_id) as regent_count,
   COUNT(*) as total_rows,
   MIN(character_level) as min_level,
   MAX(character_level) as max_level
-FROM app_private.regent_catch_up_requirements;
+FROM public.regent_catch_up_requirements;
 
 \echo ''
 \echo '2. Checking which regents are missing requirements...'
@@ -28,7 +28,7 @@ WITH expected_regents AS (
 ),
 existing_regents AS (
   SELECT DISTINCT regent_id
-  FROM app_private.regent_catch_up_requirements
+  FROM public.regent_catch_up_requirements
 )
 SELECT 
   e.regent_id,
@@ -43,7 +43,7 @@ SELECT
   regent_id,
   COUNT(*) as levels_present,
   array_agg(character_level ORDER BY character_level) as level_array
-FROM app_private.regent_catch_up_requirements
+FROM public.regent_catch_up_requirements
 GROUP BY regent_id
 HAVING COUNT(*) < 20
 ORDER BY regent_id;
@@ -72,7 +72,7 @@ SELECT
   END as requirements_status
 FROM public.character_regent_unlocks u
 JOIN public.characters c ON c.id = u.character_id
-LEFT JOIN app_private.regent_catch_up_requirements req 
+LEFT JOIN public.regent_catch_up_requirements req 
   ON req.regent_id = u.regent_id 
   AND req.character_level = c.level
 WHERE u.caught_up_at_level IS NULL
@@ -147,7 +147,7 @@ SELECT
 FROM public.character_regent_unlocks u
 JOIN public.characters c ON c.id = u.character_id
 LEFT JOIN public.regent_catch_up_options o ON o.unlock_id = u.id
-LEFT JOIN app_private.regent_catch_up_requirements req 
+LEFT JOIN public.regent_catch_up_requirements req 
   ON req.regent_id = u.regent_id 
   AND req.character_level = c.level
 WHERE u.caught_up_at_level IS NULL

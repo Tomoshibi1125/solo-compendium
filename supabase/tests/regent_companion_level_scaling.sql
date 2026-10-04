@@ -45,24 +45,24 @@ SELECT is((SELECT combat_state->>'hp' FROM public.companion_instances
 SELECT is((SELECT app_private.companion_c3_ac(instance)::INTEGER FROM public.companion_instances AS instance
   WHERE id = 'a7770000-7777-4777-8777-777777777777'), 12,
   'source AC is superseded by rank-and-level AC');
-SELECT is((SELECT count(*) FROM app_private.regent_catch_up_requirements
+SELECT is((SELECT count(*) FROM public.regent_catch_up_requirements
   WHERE regent_id = 'beast_regent' AND character_level = 3 AND powers = 3 AND techniques = 3), 1::bigint,
   'Beast Regent level 3 retains its complete owed count');
-SELECT ok((SELECT count(*) FROM app_private.regent_canonical_pick_options WHERE kind = 'powers' AND tier >= 5) >= 10
-  AND (SELECT count(*) FROM app_private.regent_canonical_pick_options WHERE kind = 'techniques' AND tier >= 5) >= 10,
+SELECT ok((SELECT count(*) FROM public.regent_canonical_pick_options WHERE kind = 'powers' AND tier >= 5) >= 10
+  AND (SELECT count(*) FROM public.regent_canonical_pick_options WHERE kind = 'techniques' AND tier >= 5) >= 10,
   'Warden curation has a canonical high-tier power and technique pool');
-SELECT is((SELECT count(*) FROM app_private.regent_catch_up_requirements), 240::bigint,
+SELECT is((SELECT count(*) FROM public.regent_catch_up_requirements), 240::bigint,
   'all twelve Regents have exact requirements at levels 1 through 20');
 SELECT ok(NOT EXISTS (
-  SELECT 1 FROM app_private.regent_catch_up_requirements AS req
-  WHERE req.powers > (SELECT count(*) FROM app_private.regent_canonical_pick_options WHERE kind = 'powers')
-     OR req.techniques > (SELECT count(*) FROM app_private.regent_canonical_pick_options WHERE kind = 'techniques')
-     OR req.cantrips > (SELECT count(*) FROM app_private.regent_canonical_pick_options WHERE kind = 'cantrips')
-     OR req.spells > (SELECT count(*) FROM app_private.regent_canonical_pick_options
+  SELECT 1 FROM public.regent_catch_up_requirements AS req
+  WHERE req.powers > (SELECT count(*) FROM public.regent_canonical_pick_options WHERE kind = 'powers')
+     OR req.techniques > (SELECT count(*) FROM public.regent_canonical_pick_options WHERE kind = 'techniques')
+     OR req.cantrips > (SELECT count(*) FROM public.regent_canonical_pick_options WHERE kind = 'cantrips')
+     OR req.spells > (SELECT count(*) FROM public.regent_canonical_pick_options
                       WHERE kind = 'spells' AND tier <= req.max_spell_tier)
 ), 'each Regent level has enough canonical options for every owed bucket');
 SELECT ok(NOT EXISTS (
-  SELECT 1 FROM app_private.regent_catch_up_requirements
+  SELECT 1 FROM public.regent_catch_up_requirements
   WHERE spells > 0 AND max_spell_tier = 0
 ), 'spellcasting Regents have an actionable spell tier when spells are owed');
 

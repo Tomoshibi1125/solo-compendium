@@ -370,18 +370,18 @@ export function regentToChoiceSource(regent: Regent): ChoiceSourceData {
  * Returns the maximum ability tier available for regent powers and techniques
  * based on character level. Scales linearly from tier 5 at level 1 to tier 9
  * at level 20.
- * 
+ *
  * Per RA-6: "Later Regent Power/Technique choices are selected by the player
  * from canonical tiers 5–9. High-tier effects are not weakened by low character
  * level; Resonance is their use limit."
- * 
+ *
  * Tier availability by level:
  * - Levels 1-5: Tier 5
  * - Levels 6-10: Tiers 5-6
  * - Levels 11-15: Tiers 5-7
  * - Levels 16-19: Tiers 5-8
  * - Level 20: Tiers 5-9
- * 
+ *
  * @param characterLevel - Character level (1-20)
  * @returns Maximum tier (5-9)
  */

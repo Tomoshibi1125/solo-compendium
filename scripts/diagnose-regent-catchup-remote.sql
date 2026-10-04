@@ -8,7 +8,7 @@ SELECT
   COUNT(*) as total_rows,
   MIN(character_level) as min_level,
   MAX(character_level) as max_level
-FROM app_private.regent_catch_up_requirements;
+FROM public.regent_catch_up_requirements;
 
 -- 2. Check which regents are missing
 WITH expected_regents AS (
@@ -20,7 +20,7 @@ WITH expected_regents AS (
   ]) AS regent_id
 ),
 existing_regents AS (
-  SELECT DISTINCT regent_id FROM app_private.regent_catch_up_requirements
+  SELECT DISTINCT regent_id FROM public.regent_catch_up_requirements
 )
 SELECT 
   'Missing Regents Check' as check_name,
@@ -35,7 +35,7 @@ SELECT
   'Level Coverage Check' as check_name,
   regent_id,
   COUNT(*) as levels_present
-FROM app_private.regent_catch_up_requirements
+FROM public.regent_catch_up_requirements
 GROUP BY regent_id
 HAVING COUNT(*) < 20
 ORDER BY regent_id;
@@ -59,7 +59,7 @@ SELECT
   CASE WHEN req.regent_id IS NULL THEN 'NO REQUIREMENTS' ELSE 'Requirements exist' END as status
 FROM public.character_regent_unlocks u
 JOIN public.characters c ON c.id = u.character_id
-LEFT JOIN app_private.regent_catch_up_requirements req 
+LEFT JOIN public.regent_catch_up_requirements req 
   ON req.regent_id = u.regent_id AND req.character_level = c.level
 WHERE u.caught_up_at_level IS NULL AND u.regent_id IS NOT NULL
 ORDER BY c.name, u.is_primary DESC
@@ -69,4 +69,4 @@ LIMIT 10;
 SELECT 
   'Pick Options Catalog' as check_name,
   COUNT(*) as total_options
-FROM app_private.regent_canonical_pick_options;
+FROM public.regent_canonical_pick_options;

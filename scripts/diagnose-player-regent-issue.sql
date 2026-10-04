@@ -1,4 +1,4 @@
--- Diagnostic: Player reports "regent powers still awaiting warden approval"
+.-- Diagnostic: Player reports "regent powers still awaiting warden approval"
 -- Run this to check the actual state of ALL pending regent-related items
 
 -- 1. List all characters with pending regent unlocks
@@ -68,7 +68,7 @@ SELECT
    AND t.source = req.regent_name || ' Attunement (Catch-Up)') as techniques_actual
 FROM public.character_regent_unlocks u
 JOIN public.characters c ON c.id = u.character_id
-JOIN app_private.regent_catch_up_requirements req 
+JOIN public.regent_catch_up_requirements req 
   ON req.regent_id = u.regent_id AND req.character_level = c.level
 WHERE u.caught_up_at_level IS NULL
 ORDER BY c.name;
