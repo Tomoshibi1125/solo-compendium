@@ -37,6 +37,8 @@ import {
 	useDeleteCampaignInvite,
 } from "@/hooks/useCampaignInvites";
 import type { Campaign } from "@/hooks/useCampaigns";
+import { isSupabaseConfigured } from "@/integrations/supabase/client";
+import { useAuth } from "@/lib/auth/authContext";
 import {
 	buildCampaignInviteUrl,
 	campaignInviteStatusLabel,
@@ -56,6 +58,8 @@ export function CampaignInviteModal({
 	onOpenChange,
 }: CampaignInviteModalProps) {
 	const { toast } = useToast();
+	const { user } = useAuth();
+	const canEmailInvite = isSupabaseConfigured && !!user;
 	const campaignId = campaign.id;
 
 	const { data: invites = [], isLoading: invitesLoading } =
@@ -113,7 +117,9 @@ export function CampaignInviteModal({
 		await navigator.clipboard.writeText(shareUrl);
 		toast({
 			title: "Global Share Link Copied",
-			description: "Anyone with this link can attempt to join the campaign.",
+			description: canEmailInvite
+				? "Anyone with this link can attempt to join the campaign."
+				: "This link works only in this browser profile. Sign in for cross-device collaboration.",
 		});
 	};
 
@@ -194,6 +200,13 @@ export function CampaignInviteModal({
 						secure single-use tokens.
 					</DialogDescription>
 				</DialogHeader>
+				{!canEmailInvite && (
+					<div className="rounded border border-primary/30 bg-primary/5 px-3 py-2 text-xs text-muted-foreground">
+						Guest invites are stored in this browser profile and work only here.
+						Sign in to send email invitations or share a secure link across
+						devices.
+					</div>
+				)}
 
 				<Tabs defaultValue="quick" className="w-full mt-4">
 					<TabsList className="grid w-full grid-cols-2">
@@ -210,7 +223,7 @@ export function CampaignInviteModal({
 					<TabsContent value="quick" className="space-y-6 pt-4">
 						<div className="bg-muted/30 p-6 rounded-lg border border-border text-center space-y-4">
 							<h3 className="font-heading text-lg font-semibold text-primary">
-								Permanent Share Code
+								{canEmailInvite ? "Permanent Share Code" : "Local Share Code"}
 							</h3>
 							<p
 								className="font-mono text-4xl tracking-[0.25em] font-bold"
@@ -219,8 +232,9 @@ export function CampaignInviteModal({
 								{campaign.share_code}
 							</p>
 							<AscendantText className="block text-sm text-muted-foreground max-w-md mx-auto">
-								This code never expires and can be used by anyone to immediately
-								join your campaign directly as an Ascendant.
+								{canEmailInvite
+									? "This code never expires and can be used by anyone to immediately join your campaign directly as an Ascendant."
+									: "This code is stored with this browser profile. Sign in to invite players across devices or accounts."}
 							</AscendantText>
 
 							{/* Misty Pearl E1 — QR for mobile scanning */}
@@ -318,7 +332,11 @@ export function CampaignInviteModal({
 									value={inviteEmail}
 									onChange={(e) => setInviteEmail(e.target.value)}
 									placeholder="ascendant@example.com"
+									disabled={!canEmailInvite}
 								/>
+								<p className="mt-1 text-xs text-muted-foreground">
+									Email delivery requires a signed-in Warden.
+								</p>
 							</div>
 							<Button
 								onClick={handleCreateInvite}

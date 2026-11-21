@@ -41,7 +41,8 @@ import {
 	useCampaignRegentUnlocks,
 	useRemoveRegentUnlock,
 } from "@/hooks/useRegentUnlocks";
-import { supabase } from "@/integrations/supabase/client";
+import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/lib/auth/authContext";
 import { resolveCanonicalRegentId } from "@/lib/regentIdentity";
 import { REGENT_LABEL } from "@/lib/vernacular";
 
@@ -78,6 +79,9 @@ export function CampaignRegentOversight({
 	const [pendingApprovalError, setPendingApprovalError] = useState<
 		string | null
 	>(null);
+	const { user, loading: authLoading } = useAuth();
+	const accountReady = isSupabaseConfigured && !authLoading && !!user;
+	const accountRequired = !isSupabaseConfigured || (!authLoading && !user);
 	const queryClient = useQueryClient();
 
 	const {
@@ -108,6 +112,11 @@ export function CampaignRegentOversight({
 		setApprovingPendingId(pendingId);
 		setPendingApprovalError(null);
 		try {
+			if (!accountReady) {
+				throw new Error(
+					"Sign in to approve Regent grants for a shared campaign.",
+				);
+			}
 			const { error } = await supabase.rpc("approve_pending_regent_grant", {
 				p_pending_id: pendingId,
 				p_unlock_id: unlockId,
@@ -230,6 +239,9 @@ export function CampaignRegentOversight({
 		if (!selectedCharId || !distinctCandidates) return;
 		setSubmissionError(null);
 		try {
+			if (!accountReady) {
+				throw new Error("Sign in to issue or configure Regent grants.");
+			}
 			if (selectedUnlockCount >= 2) {
 				throw new Error("This character already has two Regent unlocks.");
 			}
@@ -307,6 +319,15 @@ export function CampaignRegentOversight({
 
 	return (
 		<div className="space-y-6">
+			{accountRequired && (
+				<div
+					role="status"
+					className="rounded-lg border border-regent-gold/40 bg-regent-gold/10 p-4 text-sm"
+				>
+					Sign in to issue or approve Regent grants. Guest campaigns and local
+					characters stay in this browser and cannot share grants.
+				</div>
+			)}
 			<AscendantWindow title={`${REGENT_LABEL.toUpperCase()} OVERSIGHT`}>
 				<div className="flex justify-between items-start gap-4 mb-6">
 					<p className="text-sm text-muted-foreground max-w-2xl">
@@ -315,7 +336,7 @@ export function CampaignRegentOversight({
 						there is no level gate and a character can resolve at most two
 						Regents.
 					</p>
-					<Button onClick={openCreate}>
+					<Button onClick={openCreate} disabled={!accountReady}>
 						<Plus className="w-4 h-4 mr-2" />
 						Create {REGENT_LABEL} Offer
 					</Button>
@@ -380,6 +401,7 @@ export function CampaignRegentOversight({
 													<Button
 														size="sm"
 														variant="outline"
+														disabled={!accountReady}
 														onClick={() => openEdit(offer)}
 													>
 														<Pencil className="w-3 h-3 mr-1" />
@@ -388,7 +410,7 @@ export function CampaignRegentOversight({
 													<Button
 														size="sm"
 														variant="ghost"
-														disabled={isRevoking}
+														disabled={isRevoking || !accountReady}
 														onClick={() => handleRevokeOffer(offer)}
 													>
 														<Trash2 className="w-3 h-3 mr-1 text-destructive" />
@@ -420,7 +442,7 @@ export function CampaignRegentOversight({
 													onClick={() =>
 														handleDeleteUnlock(unlock.id, character.id)
 													}
-													disabled={isRemoving}
+													disabled={isRemoving || !accountReady}
 												>
 													<Trash2 className="w-3 h-3 text-destructive" />
 												</Button>
@@ -450,7 +472,10 @@ export function CampaignRegentOversight({
 															<Button
 																size="sm"
 																variant="outline"
-																disabled={approvingPendingId === grant.id}
+																disabled={
+																	approvingPendingId === grant.id ||
+																	!accountReady
+																}
 																onClick={() =>
 																	approvePendingGrant(
 																		grant.id,
@@ -604,6 +629,7 @@ export function CampaignRegentOversight({
 						<Button
 							onClick={handleSubmit}
 							disabled={
+								!accountReady ||
 								!selectedCharId ||
 								(!editingOffer && !selectedQuestId) ||
 								!distinctCandidates ||

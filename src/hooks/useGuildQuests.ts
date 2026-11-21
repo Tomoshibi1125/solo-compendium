@@ -1,23 +1,18 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useToast } from "@/hooks/use-toast";
-import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
-import type { Json } from "@/integrations/supabase/types";
+import { shouldUseLocalGuildStore } from "@/hooks/useGuilds";
+import { supabase } from "@/integrations/supabase/client";
+import { guildAdminAction } from "@/lib/guildAdminAction";
 import {
 	acceptGuildQuestLocal,
 	assignGuildQuestSquadLocal,
 	type GuildQuest,
 	type GuildQuestRank,
 	listLocalGuildQuests,
-	questRewardsForRank,
 	resolveGuildQuestLocal,
 } from "@/lib/guildQuests";
 
 export type { GuildQuest } from "@/lib/guildQuests";
-
-const guestEnabled = import.meta.env.VITE_GUEST_ENABLED !== "false";
-
-const isGuestGuildStore = (): boolean =>
-	!isSupabaseConfigured || import.meta.env.VITE_E2E === "true";
 
 /** A guild's quest board (active first, then resolved). */
 export const useGuildQuests = (guildId: string | undefined) => {
@@ -25,16 +20,14 @@ export const useGuildQuests = (guildId: string | undefined) => {
 		queryKey: ["guilds", guildId ?? "none", "quests"],
 		queryFn: async (): Promise<GuildQuest[]> => {
 			if (!guildId) return [];
-			if (isGuestGuildStore()) return listLocalGuildQuests(guildId);
+			if (await shouldUseLocalGuildStore())
+				return listLocalGuildQuests(guildId);
 			const { data, error } = await supabase
 				.from("guild_quests")
 				.select("*")
 				.eq("guild_id", guildId)
 				.order("created_at", { ascending: false });
-			if (error) {
-				if (guestEnabled) return listLocalGuildQuests(guildId);
-				throw error;
-			}
+			if (error) throw error;
 			return (data ?? []) as unknown as GuildQuest[];
 		},
 		enabled: !!guildId,
@@ -52,18 +45,15 @@ export const useAcceptGuildQuest = () => {
 			title: string;
 			rank: GuildQuestRank;
 		}) => {
-			if (isGuestGuildStore()) {
+			if (await shouldUseLocalGuildStore()) {
 				acceptGuildQuestLocal(params);
 				return;
 			}
-			const { error } = await supabase.from("guild_quests").insert({
-				guild_id: params.guildId,
+			await guildAdminAction(params.guildId, "accept_quest", {
 				source_quest_id: params.sourceQuestId,
 				title: params.title,
 				rank: params.rank,
-				rewards: questRewardsForRank(params.rank) as unknown as Json,
 			});
-			if (error) throw error;
 		},
 		onSuccess: (_, variables) => {
 			queryClient.invalidateQueries({
@@ -91,18 +81,17 @@ export const useAssignQuestSquad = () => {
 			questId: string;
 			memberIds: string[];
 		}) => {
-			if (isGuestGuildStore()) {
+			if (await shouldUseLocalGuildStore()) {
 				assignGuildQuestSquadLocal({
 					questId: params.questId,
 					memberIds: params.memberIds,
 				});
 				return;
 			}
-			const { error } = await supabase
-				.from("guild_quests")
-				.update({ assigned_member_ids: params.memberIds })
-				.eq("id", params.questId);
-			if (error) throw error;
+			await guildAdminAction(params.guildId, "assign_quest_squad", {
+				quest_id: params.questId,
+				member_ids: params.memberIds,
+			});
 		},
 		onSuccess: (_, variables) => {
 			queryClient.invalidateQueries({
@@ -129,7 +118,7 @@ export const useResolveGuildQuest = () => {
 			questId: string;
 			success: boolean;
 		}) => {
-			if (isGuestGuildStore()) {
+			if (await shouldUseLocalGuildStore()) {
 				resolveGuildQuestLocal({
 					questId: params.questId,
 					success: params.success,

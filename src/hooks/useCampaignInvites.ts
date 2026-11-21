@@ -14,9 +14,27 @@ import {
 	deriveCampaignInviteStatus,
 	normalizeInviteAccessKey,
 } from "@/lib/campaignInviteUtils";
+import {
+	attachLocalCampaignCharacter,
+	createLocalCampaignInvite,
+	getLocalCampaignInvite,
+	listLocalCampaignInviteAudit,
+	listLocalCampaignInvites,
+	redeemLocalCampaignInvite,
+	revokeLocalCampaignInvite,
+} from "@/lib/localCampaignInvites";
 import { notifyAsync } from "@/lib/notify";
 
 const guestEnabled = import.meta.env.VITE_GUEST_ENABLED !== "false";
+const isLocalInviteBuild =
+	!isSupabaseConfigured || import.meta.env.VITE_E2E === "true";
+
+const shouldUseLocalInvites = async (): Promise<boolean> => {
+	if (isLocalInviteBuild) return true;
+	if (!guestEnabled) return false;
+	const { data } = await supabase.auth.getSession();
+	return !data.session?.user;
+};
 
 interface CampaignInviteRecord {
 	id: string;
@@ -46,6 +64,8 @@ export interface CampaignInvitePreview {
 	role: "ascendant" | "co-warden";
 	expires_at: string | null;
 	status: "active" | "expired" | "revoked" | "used_up" | "unknown";
+	/** Guest invite tokens are only redeemable in their originating browser profile. */
+	local_only?: boolean;
 }
 
 interface CampaignInviteCreateResult {
@@ -192,7 +212,13 @@ export const useCampaignInvites = (campaignId: string) => {
 	return useQuery({
 		queryKey: ["campaigns", campaignId, "invites"],
 		queryFn: async (): Promise<CampaignInviteRecord[]> => {
-			if (!isSupabaseConfigured) return [];
+			if (await shouldUseLocalInvites()) {
+				return listLocalCampaignInvites(campaignId).map((invite) => ({
+					...invite,
+					status: deriveCampaignInviteStatus(invite),
+					metadata: {},
+				}));
+			}
 			const {
 				data: { user },
 			} = await supabase.auth.getUser();
@@ -230,20 +256,16 @@ export const useCreateCampaignInvite = () => {
 			const normalizedInviteEmail =
 				inviteEmail?.trim().toLowerCase() || undefined;
 
-			if (!isSupabaseConfigured) {
-				// Offline mock token generation so it always succeeds locally.
-				return {
-					id: crypto.randomUUID(),
-					token: `LCL${crypto.randomUUID().split("-")[0]}`,
-					join_code: `LCL${crypto.randomUUID().split("-")[0]}`
-						.toUpperCase()
-						.slice(0, 6),
+			if (await shouldUseLocalInvites()) {
+				const invite = createLocalCampaignInvite({
+					campaignId,
 					role,
-					expires_at: expiresAt || null,
-					max_uses: maxUses,
-					used_count: 0,
-					revoked_at: null,
-					invite_email: normalizedInviteEmail || null,
+					expiresAt,
+					maxUses,
+					inviteEmail: normalizedInviteEmail,
+				});
+				return {
+					...invite,
 					email_delivery: {
 						attempted: false,
 						sent: false,
@@ -323,8 +345,22 @@ export const useAddAscendantCharacterToCampaign = () => {
 			characterId: string;
 			inviteToken?: string;
 		}) => {
-			if (!isSupabaseConfigured) {
-				throw new AppError("Supabase not configured", "CONFIG");
+			if (await shouldUseLocalInvites()) {
+				if (inviteToken) {
+					const invite = getLocalCampaignInvite(inviteToken);
+					if (!invite || invite.campaign_id !== campaignId) {
+						throw new AppError(
+							"A valid local campaign invite is required",
+							"FORBIDDEN",
+						);
+					}
+					return redeemLocalCampaignInvite(inviteToken, characterId);
+				}
+				if (!characterId) {
+					throw new AppError("Choose an Ascendant to attach", "INVALID_INPUT");
+				}
+				attachLocalCampaignCharacter(campaignId, characterId);
+				return campaignId;
 			}
 
 			const { data, error } = await supabase.rpc(
@@ -367,7 +403,12 @@ export const useCampaignInviteAuditLogs = (campaignId: string) => {
 	return useQuery({
 		queryKey: ["campaigns", campaignId, "invite-audit"],
 		queryFn: async (): Promise<CampaignInviteAuditLog[]> => {
-			if (!isSupabaseConfigured || !campaignId) return [];
+			if (!campaignId) return [];
+			if (await shouldUseLocalInvites()) {
+				return listLocalCampaignInviteAudit(
+					campaignId,
+				) as CampaignInviteAuditLog[];
+			}
 
 			const { data, error } = await supabase
 				.from("campaign_invite_audit_logs")
@@ -406,8 +447,14 @@ export const useDeleteCampaignInvite = () => {
 			inviteId: string;
 			reason?: string;
 		}) => {
-			if (!isSupabaseConfigured) {
-				throw new AppError("Supabase not configured", "CONFIG");
+			if (await shouldUseLocalInvites()) {
+				if (!revokeLocalCampaignInvite(inviteId, reason)) {
+					throw new AppError(
+						"Invite is already revoked or unavailable",
+						"NOT_FOUND",
+					);
+				}
+				return;
 			}
 			const { data, error } = await supabase.rpc("revoke_campaign_invite", {
 				p_invite_id: inviteId,
@@ -449,7 +496,24 @@ export const useCampaignInviteByToken = (token: string) => {
 		queryKey: ["campaigns", "invite", token],
 		queryFn: async (): Promise<CampaignInvitePreview | null> => {
 			const accessKey = normalizeInviteAccessKey(token);
-			if (!accessKey || !isSupabaseConfigured) return null;
+			if (!accessKey) return null;
+			if (await shouldUseLocalInvites()) {
+				const invite = getLocalCampaignInvite(accessKey);
+				if (!invite) return null;
+				const campaign = loadLocalCampaigns().find(
+					(entry) => entry.id === invite.campaign_id,
+				);
+				if (!campaign) return null;
+				return {
+					campaign_id: campaign.id,
+					campaign_name: campaign.name,
+					campaign_description: campaign.description,
+					role: invite.role,
+					expires_at: invite.expires_at,
+					status: deriveCampaignInviteStatus(invite),
+					local_only: true,
+				};
+			}
 			const { data, error } = await supabase.rpc(
 				"get_campaign_invite_by_token",
 				{ p_token: accessKey },
@@ -474,12 +538,12 @@ export const useRedeemCampaignInvite = () => {
 			token: string;
 			characterId?: string;
 		}) => {
-			if (!isSupabaseConfigured) {
-				throw new AppError("Supabase not configured", "CONFIG");
-			}
 			const accessKey = normalizeInviteAccessKey(token);
 			if (!accessKey) {
 				throw new AppError("Invite token required", "INVALID_INPUT");
+			}
+			if (await shouldUseLocalInvites()) {
+				return redeemLocalCampaignInvite(accessKey, characterId);
 			}
 			const {
 				data: { user },

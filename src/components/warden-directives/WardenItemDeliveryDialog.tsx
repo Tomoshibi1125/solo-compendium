@@ -47,6 +47,8 @@ import {
 	type WardenDeliverableItem,
 	type WardenDeliveryMode,
 } from "@/hooks/useWardenItemDelivery";
+import { isSupabaseConfigured } from "@/integrations/supabase/client";
+import { useAuth } from "@/lib/auth/authContext";
 import { mapHomebrewItemForRuntime } from "@/lib/homebrewRuntime";
 import { formatRarityLabel } from "@/lib/labels";
 import { formatRegentVernacular } from "@/lib/vernacular";
@@ -153,6 +155,8 @@ export function WardenItemDeliveryDialog({
 		useState<string>("unassigned");
 	const [quantity, setQuantity] = useState(1);
 	const { toast } = useToast();
+	const { user, loading: authLoading } = useAuth();
+	const deliveryReady = isSupabaseConfigured && !authLoading && !!user;
 	const { data: members = [] } = useCampaignMembers(campaignId);
 	const { deliverItem, isDelivering } = useWardenItemDelivery();
 	const saveHomebrew = useSaveHomebrewContent();
@@ -337,6 +341,15 @@ export function WardenItemDeliveryDialog({
 
 	const handleDeliver = async () => {
 		if (!selectedItem) return;
+		if (!deliveryReady) {
+			toast({
+				title: "Sign in required",
+				description:
+					"Sign in to deliver items, abilities, or loot to a shared campaign. Guest campaigns stay in this browser.",
+				variant: "destructive",
+			});
+			return;
+		}
 
 		// Ability / rune types: route to the correct character table
 		if (isNonPhysicalType) {
@@ -431,6 +444,7 @@ export function WardenItemDeliveryDialog({
 	const disabled =
 		!selectedItem ||
 		isDelivering ||
+		!deliveryReady ||
 		(needsAscendant && selectedCharacterIds.length === 0);
 
 	return (
@@ -447,6 +461,15 @@ export function WardenItemDeliveryDialog({
 						Party Stash.
 					</DialogDescription>
 				</DialogHeader>
+				{!deliveryReady && !authLoading && (
+					<div
+						role="status"
+						className="rounded-lg border border-primary/30 bg-primary/5 p-3 text-sm text-muted-foreground"
+					>
+						Sign in to deliver items, abilities, or loot to a shared campaign.
+						Guest campaigns stay in this browser and cannot issue shared grants.
+					</div>
+				)}
 
 				<div className="grid grid-cols-1 xl:grid-cols-[1fr_300px] gap-4">
 					<div className="space-y-4 min-w-0">

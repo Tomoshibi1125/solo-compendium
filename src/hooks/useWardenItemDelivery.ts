@@ -192,20 +192,6 @@ export function useWardenItemDelivery() {
 
 			await grantViaRpc(campaignId, payloads);
 
-			await supabase.from("campaign_session_logs").insert({
-				campaign_id: campaignId,
-				author_id: user.id,
-				title: "Warden Item Grant",
-				content: `Granted ${quantity ?? item.quantity ?? 1}x ${item.name} to ${characterIds.length} Ascendant${characterIds.length === 1 ? "" : "s"}.`,
-				log_type: "loot",
-				metadata: {
-					item,
-					character_ids: characterIds,
-					mode: "direct",
-				} as unknown as Json,
-				is_player_visible: true,
-			});
-
 			return { count: characterIds.length };
 		},
 		onSuccess: (_, variables) => {
@@ -251,6 +237,22 @@ export function useWardenItemDelivery() {
 	});
 
 	const deliverItem = async (input: WardenItemDeliveryInput) => {
+		const {
+			data: { user },
+		} = isSupabaseConfigured
+			? await supabase.auth.getUser()
+			: { data: { user: null } };
+		if (!user) {
+			const error = new Error(
+				"Sign in to use Warden item delivery. Guest campaigns stay in this browser and cannot issue shared grants.",
+			);
+			toast({
+				title: "Sign in required",
+				description: error.message,
+				variant: "destructive",
+			});
+			throw error;
+		}
 		if (input.mode === "direct") {
 			return await directGrant.mutateAsync(input);
 		}
@@ -317,33 +319,18 @@ async function addToPartyStash(input: WardenItemDeliveryInput): Promise<void> {
 	const {
 		data: { user },
 	} = await supabase.auth.getUser();
-	const { data: existing, error: existingError } = await supabase
-		.from("campaign_inventory")
-		.select("id, quantity")
-		.eq("campaign_id", input.campaignId)
-		.eq("name", input.item.name)
-		.maybeSingle();
-	if (existingError) throw existingError;
-
-	if (existing) {
-		const { error } = await supabase
-			.from("campaign_inventory")
-			.update({ quantity: existing.quantity + quantity })
-			.eq("id", existing.id);
-		if (error) throw error;
-	} else {
-		const { error } = await supabase.from("campaign_inventory").insert({
-			campaign_id: input.campaignId,
-			added_by: user?.id ?? null,
-			name: input.item.name,
-			description: input.item.description ?? null,
-			item_type: input.item.type ?? "item",
-			quantity,
-			weight: input.item.weight ?? null,
-			is_identified: true,
-		});
-		if (error) throw error;
-	}
+	if (!user)
+		throw new Error("Must be signed in to deliver items to Party Stash.");
+	const { error } = await supabase.rpc("warden_deliver_campaign_inventory", {
+		p_campaign_id: input.campaignId,
+		p_name: input.item.name,
+		p_item_type: input.item.type ?? "item",
+		p_description: input.item.description ?? undefined,
+		p_quantity: quantity,
+		p_weight: input.item.weight ?? undefined,
+		p_is_identified: true,
+	});
+	if (error) throw error;
 }
 
 function buildEquipmentInsert(
@@ -391,13 +378,9 @@ async function grantViaRpc(
 	campaignId: string,
 	items: CharacterEquipmentInsert[],
 ): Promise<void> {
-	const rpcClient = supabase.rpc as unknown as (
-		fn: string,
-		args: Record<string, unknown>,
-	) => Promise<{ error: Error | null }>;
-	const { error } = await rpcClient("warden_grant_character_equipment", {
+	const { error } = await supabase.rpc("warden_grant_character_equipment", {
 		p_campaign_id: campaignId,
-		p_items: items,
+		p_items: items as unknown as Json,
 	});
 	if (error) throw error;
 }

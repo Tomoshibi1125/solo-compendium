@@ -1,8 +1,6 @@
 /**
- * Party Stash delivery from the Warden item dialog: it writes to the same
- * store the Party Stash page reads (guest-local stash without a session,
- * campaign_inventory otherwise), stacks same-name entries, and reports
- * failures instead of failing silently.
+ * Party Stash delivery from the Warden item dialog: guest/local workflows ask
+ * for sign-in, while cloud Warden deliveries use the guarded atomic RPC.
  */
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import type React from "react";
@@ -16,6 +14,8 @@ const mocks = vi.hoisted(() => {
 		selectError: null as Error | null,
 		updates: [] as Array<{ values: unknown; id: unknown }>,
 		inserts: [] as unknown[],
+		rpcError: null as Error | null,
+		authUser: { id: "warden-1" } as { id: string } | null,
 	};
 	const from = vi.fn(() => ({
 		select: () => {
@@ -39,9 +39,14 @@ const mocks = vi.hoisted(() => {
 			return { error: null };
 		},
 	}));
+	const rpc = vi.fn(async () => ({
+		data: "stash-row-1",
+		error: cloud.rpcError,
+	}));
 	return {
 		cloud,
 		from,
+		rpc,
 		toast: vi.fn(),
 		useLocalStash: { value: true },
 	};
@@ -55,9 +60,9 @@ vi.mock("@/integrations/supabase/client", () => ({
 	isSupabaseConfigured: true,
 	supabase: {
 		from: mocks.from,
-		rpc: vi.fn(),
+		rpc: mocks.rpc,
 		auth: {
-			getUser: async () => ({ data: { user: { id: "warden-1" } } }),
+			getUser: async () => ({ data: { user: mocks.cloud.authUser } }),
 			getSession: async () => ({ data: { session: null } }),
 		},
 	},
@@ -137,6 +142,9 @@ beforeEach(() => {
 	mocks.cloud.selectError = null;
 	mocks.cloud.updates.length = 0;
 	mocks.cloud.inserts.length = 0;
+	mocks.cloud.rpcError = null;
+	mocks.cloud.authUser = { id: "warden-1" };
+	mocks.rpc.mockClear();
 });
 
 afterEach(() => {
@@ -144,42 +152,39 @@ afterEach(() => {
 });
 
 describe("useWardenItemDelivery Party Stash mode", () => {
-	it("adds to the guest-local stash the Party Stash page reads and stacks same-name items", async () => {
+	it("requires sign-in before guest Warden delivery can write to a local stash", async () => {
+		mocks.cloud.authUser = null;
 		const delivery = mountDelivery();
 
+		let failure: unknown = null;
 		await act(async () => {
-			await delivery().deliverItem({
-				campaignId: "camp-1",
-				mode: "stash",
-				item: ampoule,
-				quantity: 2,
-			});
-		});
-		await act(async () => {
-			await delivery().deliverItem({
-				campaignId: "camp-1",
-				mode: "stash",
-				item: ampoule,
-				quantity: 1,
-			});
+			try {
+				await delivery().deliverItem({
+					campaignId: "camp-1",
+					mode: "stash",
+					item: ampoule,
+					quantity: 2,
+				});
+			} catch (error) {
+				failure = error;
+			}
 		});
 
-		const stash = readLocalStashItems("camp-1");
-		expect(stash).toHaveLength(1);
-		expect(stash[0]).toMatchObject({
-			name: "Healing Ampoule",
-			item_type: "items",
-			quantity: 3,
-		});
+		expect(failure).toBeInstanceOf(Error);
+		expect(readLocalStashItems("camp-1")).toEqual([]);
 		expect(mocks.from).not.toHaveBeenCalled();
 		expect(mocks.toast).toHaveBeenCalledWith(
-			expect.objectContaining({ title: "Item sent to Party Stash" }),
+			expect.objectContaining({
+				title: "Sign in required",
+				description: expect.stringContaining(
+					"Guest campaigns stay in this browser",
+				),
+			}),
 		);
 	});
 
-	it("stacks onto an existing campaign_inventory row for signed-in Wardens", async () => {
+	it("routes signed-in Party Stash delivery through the atomic Warden RPC", async () => {
 		mocks.useLocalStash.value = false;
-		mocks.cloud.existing = { id: "row-1", quantity: 2 };
 		const delivery = mountDelivery();
 
 		await act(async () => {
@@ -191,17 +196,26 @@ describe("useWardenItemDelivery Party Stash mode", () => {
 			});
 		});
 
-		expect(mocks.from).toHaveBeenCalledWith("campaign_inventory");
-		expect(mocks.cloud.updates).toEqual([
-			{ values: { quantity: 5 }, id: "row-1" },
-		]);
+		expect(mocks.from).not.toHaveBeenCalled();
+		expect(mocks.rpc).toHaveBeenCalledWith(
+			"warden_deliver_campaign_inventory",
+			{
+				p_campaign_id: "camp-1",
+				p_name: "Healing Ampoule",
+				p_item_type: "items",
+				p_description: "Restores a little HP.",
+				p_quantity: 3,
+				p_weight: 0.5,
+				p_is_identified: true,
+			},
+		);
 		expect(mocks.cloud.inserts).toEqual([]);
 		expect(readLocalStashItems("camp-1")).toEqual([]);
 	});
 
-	it("toasts and rejects when the stash write fails", async () => {
+	it("reports a server-side Warden authorization failure", async () => {
 		mocks.useLocalStash.value = false;
-		mocks.cloud.selectError = new Error("permission denied");
+		mocks.cloud.rpcError = new Error("CAMPAIGN_WARDEN_REQUIRED");
 		const delivery = mountDelivery();
 
 		let failure: unknown = null;
@@ -221,7 +235,7 @@ describe("useWardenItemDelivery Party Stash mode", () => {
 		expect(mocks.toast).toHaveBeenCalledWith(
 			expect.objectContaining({
 				title: "Party Stash delivery failed",
-				description: "permission denied",
+				description: "CAMPAIGN_WARDEN_REQUIRED",
 				variant: "destructive",
 			}),
 		);

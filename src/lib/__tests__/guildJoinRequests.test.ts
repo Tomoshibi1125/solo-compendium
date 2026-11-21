@@ -1,5 +1,6 @@
 import { beforeEach, describe, expect, it } from "vitest";
 import { AppError } from "@/lib/appError";
+import { createLocalCharacter } from "@/lib/guestStore";
 import {
 	approveJoinRequestLocal,
 	listLocalPendingJoinRequests,
@@ -11,7 +12,10 @@ import {
 const GUILDS_KEY = "solo-compendium.guilds.v1";
 const MEMBERS_KEY = "solo-compendium.guilds.members.v1";
 
-const seedGuild = (overrides: Record<string, unknown> = {}) => {
+const seedGuild = (
+	overrides: Record<string, unknown> = {},
+	leaderCharacterId = "c-leader",
+) => {
 	const guild = {
 		id: "g-1",
 		name: "Umbral Vanguard",
@@ -34,7 +38,7 @@ const seedGuild = (overrides: Record<string, unknown> = {}) => {
 				id: "m-leader",
 				guild_id: "g-1",
 				user_id: "u-leader",
-				character_id: "c-leader",
+				character_id: leaderCharacterId,
 				npc_id: null,
 				npc_name: null,
 				npc_data: null,
@@ -100,12 +104,13 @@ describe("guild join requests (local flow)", () => {
 	});
 
 	it("enforces one guild per character on approval", () => {
-		seedGuild();
-		// c-leader is already bound to the guild via the leader row.
+		const character = createLocalCharacter({ name: "Leader" });
+		seedGuild({}, character.id);
+		// The local character is already bound to the guild via the leader row.
 		const req = requestToJoinGuildLocal({
 			shareCode: "AB12CD",
 			userId: "u-applicant",
-			characterId: "c-leader",
+			characterId: character.id,
 		});
 		expect(() =>
 			approveJoinRequestLocal({ requestId: req.id, role: "member" }),

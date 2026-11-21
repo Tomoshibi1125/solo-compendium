@@ -193,7 +193,13 @@ describe("Supabase security hardening source contract", () => {
 		);
 
 		expect(wardenDeliveryHook).toContain(
-			'const { error } = await rpcClient("warden_grant_character_equipment"',
+			"await grantViaRpc(campaignId, payloads)",
+		);
+		expect(wardenDeliverySource).toContain(
+			'supabase.rpc("warden_grant_character_equipment"',
+		);
+		expect(wardenDeliverySource).toContain(
+			'supabase.rpc("warden_deliver_campaign_inventory"',
 		);
 		expect(wardenDeliveryHook).not.toMatch(
 			/\.from\("character_equipment"\)\s*\.(insert|upsert)/,

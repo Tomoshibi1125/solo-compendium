@@ -7,6 +7,7 @@ import { AppError } from "@/lib/appError";
 import { useAuth } from "@/lib/auth/authContext";
 import type { RaCurrencyId } from "@/lib/currency";
 import { getLocalUserId } from "@/lib/guestStore";
+import { guildAdminAction } from "@/lib/guildAdminAction";
 import type {
 	GuildBasePropertyState,
 	GuildBaseState,
@@ -92,12 +93,14 @@ const isLocalMode = (): boolean => {
  * guest mode is enabled — guests create guilds locally, so every hook must
  * read/write the same store or guests end up with guilds they can't open.
  */
-const shouldUseLocalGuilds = async (): Promise<boolean> => {
+export const shouldUseLocalGuildStore = async (): Promise<boolean> => {
 	if (isLocalMode()) return true;
 	if (!guestEnabled) return false;
 	const { data } = await supabase.auth.getSession();
 	return !data.session?.user;
 };
+
+const shouldUseLocalGuilds = shouldUseLocalGuildStore;
 
 export const loadLocalGuilds = (): Guild[] => {
 	if (typeof window === "undefined") return [];
@@ -462,17 +465,13 @@ export const useRecruitNPC = () => {
 				return;
 			}
 
-			const { error } = await supabase.from("guild_members").insert({
-				guild_id: params.guildId,
+			await guildAdminAction(params.guildId, "recruit_npc", {
 				npc_id: params.npc.id,
 				npc_name: params.npc.name,
 				npc_data: JSON.parse(JSON.stringify(params.npc)),
-				role: "recruit",
 				npc_level: params.npc.level,
-				npc_xp: 0,
 				npc_leveling_mode: params.levelingMode ?? "auto",
 			});
-			if (error) throw error;
 		},
 		onSuccess: (_, variables) => {
 			queryClient.invalidateQueries({
@@ -519,18 +518,9 @@ export const useLevelUpNPC = () => {
 				return members[idx];
 			}
 
-			const { data: memberRow, error: fetchError } = await supabase
-				.from("guild_members")
-				.select("npc_level, npc_data")
-				.eq("id", params.memberId)
-				.single();
-			if (fetchError) throw fetchError;
-			const currentLevel = (memberRow as { npc_level: number }).npc_level || 1;
-			const { error } = await supabase
-				.from("guild_members")
-				.update({ npc_level: currentLevel + 1, npc_xp: 0 })
-				.eq("id", params.memberId);
-			if (error) throw error;
+			await guildAdminAction(params.guildId, "level_npc", {
+				member_id: params.memberId,
+			});
 		},
 		onSuccess: (_, variables) => {
 			queryClient.invalidateQueries({
@@ -565,11 +555,7 @@ export const useDeleteGuild = () => {
 				);
 				return;
 			}
-			const { error } = await supabase
-				.from("guilds")
-				.delete()
-				.eq("id", guildId);
-			if (error) throw error;
+			await guildAdminAction(guildId, "disband_guild");
 		},
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: ["guilds"] });
@@ -604,16 +590,7 @@ export const useLeaveGuild = () => {
 				);
 				return;
 			}
-			const {
-				data: { user },
-			} = await supabase.auth.getUser();
-			if (!user) throw new AppError("Not authenticated", "AUTH_REQUIRED");
-			const { error } = await supabase
-				.from("guild_members")
-				.delete()
-				.eq("guild_id", guildId)
-				.eq("user_id", user.id);
-			if (error) throw error;
+			await guildAdminAction(guildId, "leave_guild");
 		},
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: ["guilds"] });
@@ -651,11 +628,10 @@ export const useSetNPCLevelingMode = () => {
 				}
 				return;
 			}
-			const { error } = await supabase
-				.from("guild_members")
-				.update({ npc_leveling_mode: params.mode })
-				.eq("id", params.memberId);
-			if (error) throw error;
+			await guildAdminAction(params.guildId, "set_npc_leveling_mode", {
+				member_id: params.memberId,
+				mode: params.mode,
+			});
 		},
 		onSuccess: (_, variables) => {
 			queryClient.invalidateQueries({
@@ -688,11 +664,10 @@ export const useChangeMemberRole = () => {
 				saveLocalGuildMembers(members);
 				return;
 			}
-			const { error } = await supabase
-				.from("guild_members")
-				.update({ role: params.role })
-				.eq("id", params.memberId);
-			if (error) throw error;
+			await guildAdminAction(params.guildId, "change_member_role", {
+				member_id: params.memberId,
+				role: params.role,
+			});
 		},
 		onSuccess: (_, variables) => {
 			queryClient.invalidateQueries({
@@ -723,11 +698,9 @@ export const useKickMember = () => {
 				);
 				return;
 			}
-			const { error } = await supabase
-				.from("guild_members")
-				.delete()
-				.eq("id", params.memberId);
-			if (error) throw error;
+			await guildAdminAction(params.guildId, "remove_member", {
+				member_id: params.memberId,
+			});
 		},
 		onSuccess: (_, variables) => {
 			queryClient.invalidateQueries({
@@ -779,25 +752,9 @@ export const useTransferLeadership = () => {
 				saveLocalGuildMembers(members);
 				return;
 			}
-			// Update member rows first (while the actor is still the leader), then
-			// flip the guild's leader_user_id last.
-			const promote = await supabase
-				.from("guild_members")
-				.update({ role: "leader" })
-				.eq("guild_id", params.guildId)
-				.eq("user_id", params.newLeaderUserId);
-			if (promote.error) throw promote.error;
-			const demote = await supabase
-				.from("guild_members")
-				.update({ role: "vice_master" })
-				.eq("guild_id", params.guildId)
-				.eq("user_id", params.currentLeaderUserId);
-			if (demote.error) throw demote.error;
-			const { error } = await supabase
-				.from("guilds")
-				.update({ leader_user_id: params.newLeaderUserId })
-				.eq("id", params.guildId);
-			if (error) throw error;
+			await guildAdminAction(params.guildId, "transfer_leadership", {
+				new_leader_user_id: params.newLeaderUserId,
+			});
 		},
 		onSuccess: (_, variables) => {
 			queryClient.invalidateQueries({ queryKey: ["guilds"] });
@@ -844,23 +801,11 @@ export const useAdjustGuildFunds = () => {
 				saveLocalGuilds(guilds);
 				return next;
 			}
-			const { data, error: readError } = await supabase
-				.from("guilds")
-				.select("funds")
-				.eq("id", params.guildId)
-				.single();
-			if (readError) throw readError;
-			const next = applyFundsDelta(
-				(data?.funds as GuildFunds | null) ?? {},
-				params.currency,
-				params.delta,
-			);
-			const { error } = await supabase
-				.from("guilds")
-				.update({ funds: next })
-				.eq("id", params.guildId);
-			if (error) throw error;
-			return next;
+			return (await guildAdminAction(params.guildId, "adjust_funds", {
+				currency: params.currency,
+				delta: params.delta,
+				note: params.note ?? null,
+			})) as GuildFunds;
 		},
 		onSuccess: (_, variables) => {
 			queryClient.invalidateQueries({
@@ -875,6 +820,55 @@ export const useAdjustGuildFunds = () => {
 		onError: (error: Error) => {
 			toast({
 				title: "Treasury update failed",
+				description: error.message,
+				variant: "destructive",
+			});
+		},
+	});
+};
+
+/** Edit public guild details through the role-checked guild mutation boundary. */
+export const useUpdateGuildInfo = () => {
+	const queryClient = useQueryClient();
+	const { toast } = useToast();
+	return useMutation({
+		mutationFn: async (params: {
+			guildId: string;
+			name: string;
+			description: string;
+			motto: string;
+		}) => {
+			const name = params.name.trim();
+			if (!name) throw new AppError("Guild name is required", "INVALID_INPUT");
+			if (await shouldUseLocalGuilds()) {
+				const guilds = loadLocalGuilds();
+				const index = guilds.findIndex((guild) => guild.id === params.guildId);
+				if (index < 0) throw new AppError("Guild not found", "NOT_FOUND");
+				guilds[index] = {
+					...guilds[index],
+					name,
+					description: params.description.trim() || null,
+					motto: params.motto.trim() || null,
+				};
+				saveLocalGuilds(guilds);
+			} else {
+				await guildAdminAction(params.guildId, "update_info", {
+					name,
+					description: params.description.trim(),
+					motto: params.motto.trim(),
+				});
+			}
+		},
+		onSuccess: (_, variables) => {
+			queryClient.invalidateQueries({
+				queryKey: ["guilds", variables.guildId],
+			});
+			queryClient.invalidateQueries({ queryKey: ["guilds"] });
+			toast({ title: "Guild details updated" });
+		},
+		onError: (error: Error) => {
+			toast({
+				title: "Failed to update guild details",
 				description: error.message,
 				variant: "destructive",
 			});

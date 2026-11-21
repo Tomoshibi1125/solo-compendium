@@ -10429,6 +10429,10 @@ export type Database = {
 				Args: { p_guild_id: string; p_uid: string };
 				Returns: string;
 			};
+			guild_admin_action: {
+				Args: { p_action: string; p_guild_id: string; p_payload?: Json };
+				Returns: Json;
+			};
 			hash_campaign_invite_token: {
 				Args: { p_token: string };
 				Returns: string;
@@ -10932,6 +10936,18 @@ export type Database = {
 			warden_grant_character_equipment: {
 				Args: { p_campaign_id: string; p_items: Json };
 				Returns: number;
+			};
+			warden_deliver_campaign_inventory: {
+				Args: {
+					p_campaign_id: string;
+					p_name: string;
+					p_item_type?: string;
+					p_description?: string;
+					p_quantity?: number;
+					p_weight?: number;
+					p_is_identified?: boolean;
+				};
+				Returns: string;
 			};
 			work_craft_project_m3: {
 				Args: {

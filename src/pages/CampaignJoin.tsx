@@ -28,6 +28,7 @@ import {
 } from "@/hooks/useCampaignInvites";
 import { useCampaignByShareCode, useJoinCampaign } from "@/hooks/useCampaigns";
 import { useCharacters } from "@/hooks/useCharacters";
+import { isSupabaseConfigured } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth/authContext";
 import {
 	campaignInviteStatusLabel,
@@ -89,13 +90,19 @@ const CampaignJoin = () => {
 		: false;
 	const isJoining = joinCampaign.isPending || redeemInvite.isPending;
 	const creationCampaignId = campaign?.id ?? invite?.campaign_id ?? "";
+	const requiresCloudSignIn =
+		!user &&
+		isSupabaseConfigured &&
+		(isInviteFlow
+			? !!invite && !invite.local_only
+			: !!campaign && !campaign.local_only);
 
 	const handleJoin = async () => {
 		try {
 			if (isInviteFlow) {
 				if (!invite) return;
-				if (authLoading) return;
-				if (!user) {
+				if (authLoading && isSupabaseConfigured) return;
+				if (!user && isSupabaseConfigured && !invite.local_only) {
 					navigate(`/login?next=${encodeURIComponent(resumePath)}`);
 					return;
 				}
@@ -111,6 +118,10 @@ const CampaignJoin = () => {
 				return;
 			}
 			if (!campaign) return;
+			if (!user && isSupabaseConfigured && !campaign.local_only) {
+				navigate(`/login?next=${encodeURIComponent(resumePath)}`);
+				return;
+			}
 			await joinCampaign.mutateAsync({
 				campaignId: campaign.id,
 				shareCode,
@@ -172,15 +183,16 @@ const CampaignJoin = () => {
 					}
 				/>
 
-				{isInviteFlow && !authLoading && !user && (
+				{requiresCloudSignIn && isSupabaseConfigured && !authLoading && (
 					<AscendantWindow
 						title="SIGN IN REQUIRED"
 						variant="quest"
 						className="mb-6"
 					>
 						<AscendantText className="block text-sm text-muted-foreground mb-4">
-							Secure invite tokens require an authenticated account. Sign in to
-							redeem this invite.
+							{isInviteFlow
+								? "Secure invite tokens require an authenticated account. Sign in to redeem this invite."
+								: "Joining a shared cloud campaign requires an authenticated account. Sign in to join and keep your roster in sync across devices."}
 						</AscendantText>
 						<Button
 							className="w-full"
@@ -189,6 +201,23 @@ const CampaignJoin = () => {
 							}
 						>
 							Sign in to Continue
+						</Button>
+					</AscendantWindow>
+				)}
+
+				{isInviteFlow && !loadingInvite && !invite && (
+					<AscendantWindow title="INVITE UNAVAILABLE" className="mb-6">
+						<AscendantText className="block text-sm text-muted-foreground">
+							{inviteError instanceof Error
+								? inviteError.message
+								: "This invite could not be found in this browser or may no longer be available. Ask your Warden for a fresh link."}
+						</AscendantText>
+						<Button
+							variant="ghost"
+							className="mt-3 w-full"
+							onClick={clearInviteToken}
+						>
+							Enter a Share Code Instead
 						</Button>
 					</AscendantWindow>
 				)}
@@ -430,7 +459,7 @@ const CampaignJoin = () => {
 								<Loader2 className="w-4 h-4 mr-2 animate-spin" />
 								Checking account...
 							</>
-						) : isInviteFlow && !user ? (
+						) : requiresCloudSignIn ? (
 							<>
 								<UserPlus className="w-4 h-4 mr-2" />
 								Sign in to Join
