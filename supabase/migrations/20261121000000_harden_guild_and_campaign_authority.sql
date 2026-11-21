@@ -425,6 +425,7 @@ DECLARE
   v_target public.guild_members%ROWTYPE;
   v_role TEXT;
   v_role_rank INTEGER;
+  v_target_rank INTEGER;
   v_new_leader UUID;
   v_funds JSONB;
   v_delta INTEGER;
@@ -485,9 +486,10 @@ BEGIN
       v_role_rank := CASE v_role
         WHEN 'vice_master' THEN 3 WHEN 'officer' THEN 2 WHEN 'member' THEN 1
         WHEN 'recruit' THEN 0 ELSE -1 END;
-      IF v_target.role = 'leader' OR v_actor_rank <= CASE v_target.role
+      v_target_rank := CASE v_target.role
         WHEN 'leader' THEN 4 WHEN 'vice_master' THEN 3 WHEN 'officer' THEN 2
-        WHEN 'member' THEN 1 WHEN 'recruit' THEN 0 ELSE -1 END
+        WHEN 'member' THEN 1 WHEN 'recruit' THEN 0 ELSE -1 END;
+      IF v_target.role = 'leader' OR v_actor_rank <= v_target_rank
         OR v_role_rank < 0 OR v_role_rank >= v_actor_rank THEN
         RAISE EXCEPTION 'GUILD_ROLE_HIERARCHY_VIOLATION' USING ERRCODE = '42501';
       END IF;
@@ -500,9 +502,10 @@ BEGIN
       WHERE id = NULLIF(p_payload->>'member_id', '')::UUID AND guild_id = p_guild_id
       FOR UPDATE;
       IF NOT FOUND THEN RAISE EXCEPTION 'GUILD_MEMBER_NOT_FOUND' USING ERRCODE = 'P0002'; END IF;
-      IF v_target.role = 'leader' OR v_actor_rank <= CASE v_target.role
+      v_target_rank := CASE v_target.role
         WHEN 'leader' THEN 4 WHEN 'vice_master' THEN 3 WHEN 'officer' THEN 2
-        WHEN 'member' THEN 1 WHEN 'recruit' THEN 0 ELSE -1 END THEN
+        WHEN 'member' THEN 1 WHEN 'recruit' THEN 0 ELSE -1 END;
+      IF v_target.role = 'leader' OR v_actor_rank <= v_target_rank THEN
         RAISE EXCEPTION 'GUILD_ROLE_HIERARCHY_VIOLATION' USING ERRCODE = '42501';
       END IF;
       DELETE FROM public.guild_members WHERE id = v_target.id;
@@ -924,3 +927,4 @@ CREATE POLICY pending_regent_grants_owner_select
   );
 NOTIFY pgrst, 'reload schema';
 COMMIT;
+
