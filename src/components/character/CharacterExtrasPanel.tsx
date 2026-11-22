@@ -121,8 +121,8 @@ export function CharacterExtrasPanel({
 	return (
 		<div className="space-y-4">
 			{/* Section header */}
-			<div className="flex items-start justify-between gap-3">
-				<div>
+			<div className="flex min-w-0 flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+				<div className="min-w-0">
 					<h3 className="font-display text-lg tracking-wide">Companions</h3>
 					<p className="text-xs text-muted-foreground max-w-prose">
 						Mounts, pets, familiars, sidekicks, and guild allies you take into
@@ -130,14 +130,14 @@ export function CharacterExtrasPanel({
 						initiative.
 					</p>
 				</div>
-				<div className="flex items-center gap-2 shrink-0">
+				<div className="flex w-full flex-wrap items-center gap-2 sm:w-auto sm:shrink-0">
 					{extras.length > 0 && (
 						<Badge variant="outline" className="text-xs">
 							{extras.length}
 						</Badge>
 					)}
 					{!isReadOnly && (
-						<div className="flex flex-wrap justify-end gap-2">
+						<div className="flex flex-wrap justify-start gap-2 sm:justify-end">
 							<Button size="sm" onClick={() => openPicker("statblock")}>
 								<Plus className="w-4 h-4" /> Add Companion
 							</Button>

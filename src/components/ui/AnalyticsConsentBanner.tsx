@@ -7,14 +7,21 @@
 
 import { BarChart3, Shield, X } from "lucide-react";
 import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useAnalyticsConsent } from "@/hooks/useAnalyticsConsent";
 import { initAnalytics } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
 
 export function AnalyticsConsentBanner() {
+	const location = useLocation();
 	const { showBanner, acceptConsent, rejectConsent, dismissBanner } =
 		useAnalyticsConsent();
+	const path = location.pathname;
+	const mobileNavVisible =
+		path !== "/" &&
+		path !== "/landing" &&
+		!["/login", "/auth", "/setup"].some((prefix) => path.startsWith(prefix));
 
 	// Initialize analytics if consent is accepted
 	useEffect(() => {
@@ -44,8 +51,9 @@ export function AnalyticsConsentBanner() {
 
 	return (
 		<div
+			data-mobile-nav-visible={mobileNavVisible}
 			className={cn(
-				"fixed bottom-0 left-0 right-0 z-50",
+				"analytics-consent-banner fixed bottom-0 left-0 right-0 z-50",
 				"bg-card border-t border-border",
 				"px-4 py-4 shadow-lg",
 				"backdrop-blur-sm",

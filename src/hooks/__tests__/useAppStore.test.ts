@@ -6,6 +6,8 @@ const get = () => useAppStore.getState();
 describe("useAppStore — command palette shell state", () => {
 	beforeEach(() => {
 		get().closeCommandPalette();
+		get().setSidebarOpen(false);
+		useAppStore.persist.clearStorage();
 	});
 
 	it("opens, closes, and sets the command palette", () => {
@@ -21,8 +23,10 @@ describe("useAppStore — command palette shell state", () => {
 		expect(get().commandPaletteOpen).toBe(true);
 	});
 
-	it("excludes commandPaletteOpen from the persisted snapshot (partialize)", () => {
+	it("persists durable preferences but excludes temporary overlay state", () => {
 		get().openCommandPalette();
+		get().setSidebarOpen(true);
+		get().setSidebarCollapsed(true);
 		// Trigger a durable-pref change to force a persist write.
 		get().setSoundEnabled(true);
 
@@ -33,8 +37,31 @@ describe("useAppStore — command palette shell state", () => {
 		const persisted = (parsed.state ?? parsed) as Record<string, unknown>;
 
 		expect(persisted).not.toHaveProperty("commandPaletteOpen");
+		expect(persisted).not.toHaveProperty("sidebarOpen");
 		expect(persisted).toHaveProperty("theme");
 		expect(persisted).toHaveProperty("soundEnabled");
-		expect(persisted).toHaveProperty("sidebarCollapsed");
+		expect(persisted.sidebarCollapsed).toBe(true);
+	});
+
+	it("clears a previously persisted open drawer during migration", async () => {
+		localStorage.setItem(
+			"app-storage",
+			JSON.stringify({
+				state: {
+					theme: "dark",
+					sidebarOpen: true,
+					sidebarCollapsed: true,
+					soundEnabled: false,
+				},
+				version: 0,
+			}),
+		);
+
+		await useAppStore.persist.rehydrate();
+
+		expect(get().sidebarOpen).toBe(false);
+		expect(get().sidebarCollapsed).toBe(true);
+		expect(get().theme).toBe("dark");
+		expect(get().soundEnabled).toBe(false);
 	});
 });

@@ -333,19 +333,18 @@ export default function CharacterSheetV2() {
 		"stats",
 	];
 	const bindMobileGestures = useDrag(
-		({ swipe: [swipeX] }: { swipe: [number, number] }) => {
-			if (swipeX !== 0) {
-				const currentIndex = mobileTabs.indexOf(activeMobileTab);
-				if (swipeX < 0 && currentIndex < mobileTabs.length - 1) {
-					// Swiped left, go next
-					setActiveMobileTab(mobileTabs[currentIndex + 1]);
-				} else if (swipeX > 0 && currentIndex > 0) {
-					// Swiped right, go prev
-					setActiveMobileTab(mobileTabs[currentIndex - 1]);
-				}
+		({ movement: [movementX], last }) => {
+			// Distance based detection keeps slower, deliberate phone swipes usable.
+			if (!last || Math.abs(movementX) < 60) return;
+
+			const currentIndex = mobileTabs.indexOf(activeMobileTab);
+			if (movementX < 0 && currentIndex < mobileTabs.length - 1) {
+				setActiveMobileTab(mobileTabs[currentIndex + 1]);
+			} else if (movementX > 0 && currentIndex > 0) {
+				setActiveMobileTab(mobileTabs[currentIndex - 1]);
 			}
 		},
-		{ axis: "x", filterTaps: true, pointerContext: true },
+		{ axis: "x", filterTaps: true, pointer: { capture: false } },
 	);
 
 	const characterState = character
@@ -1156,7 +1155,7 @@ export default function CharacterSheetV2() {
 				)}
 			/>
 			<div
-				className="flex flex-col gap-6 animate-in fade-in duration-500 max-w-7xl mx-auto px-4 py-8 sheet-themed-root book-print-root"
+				className="flex flex-col gap-6 animate-in fade-in duration-500 max-w-7xl mx-auto px-0 md:px-4 py-8 sheet-themed-root book-print-root"
 				data-sheet-theme={
 					themePreview?.sheet_theme ??
 					((character as { sheet_theme?: string | null }).sheet_theme ||
@@ -1267,7 +1266,7 @@ export default function CharacterSheetV2() {
 				)}
 
 				{/* Desktop 3-Column Layout */}
-				<div className="hidden md:grid grid-cols-[120px_300px_1fr] gap-8 items-start">
+				<div className="hidden lg:grid grid-cols-[120px_300px_1fr] gap-8 items-start">
 					{/* COLUMN 1: Ability Scores (Vertical) */}
 					<aside className="sticky top-16 pt-4 space-y-4 max-h-[calc(100dvh-120px)] overflow-y-auto pr-1 scrollbar-none hover:scrollbar-thin scrollbar-thumb-primary/20">
 						<AbilityScoreStrip
@@ -1433,7 +1432,7 @@ export default function CharacterSheetV2() {
 				</div>
 
 				{/* Mobile Layout (Single Column with Bottom HUD managed by MainLayout) */}
-				<div className="md:hidden space-y-6 pb-20">
+				<div className="character-sheet-mobile lg:hidden space-y-6 pb-20">
 					<StatusHeader
 						hp={{
 							current: displayHpCurrent,
@@ -1481,13 +1480,13 @@ export default function CharacterSheetV2() {
 						onValueChange={setActiveMobileTab}
 						className="w-full"
 					>
-						<TabsPrimitive.List className="grid grid-cols-4 gap-2 w-full mb-2">
+						<TabsPrimitive.List className="character-sheet-mobile-tabs grid grid-cols-4 gap-2 w-full mb-2">
 							{MOBILE_SECTIONS.map(({ value, label, icon: Icon }) => (
 								<TabsPrimitive.Trigger
 									key={value}
 									value={value}
 									className={cn(
-										"flex flex-col items-center justify-center gap-1 min-h-[56px] rounded-md border px-1 py-2 text-[10px] font-mono uppercase tracking-wide transition-colors",
+										"flex flex-col items-center justify-center gap-1 min-h-[56px] rounded-md border px-1 py-2 text-xs font-mono uppercase tracking-wide transition-colors",
 										"border-primary/15 text-muted-foreground hover:border-primary/40 hover:text-foreground",
 										"data-[state=active]:border-primary data-[state=active]:bg-primary/15 data-[state=active]:text-primary data-[state=active]:shadow-[0_0_12px_hsl(var(--primary)/0.25)]",
 										"focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary/50",
@@ -1500,7 +1499,10 @@ export default function CharacterSheetV2() {
 						</TabsPrimitive.List>
 
 						{/* Swipeable Container */}
-						<div {...bindMobileGestures()} className="touch-pan-y min-h-[50vh]">
+						<div
+							{...bindMobileGestures()}
+							className="character-sheet-mobile-content touch-pan-y min-h-[50vh]"
+						>
 							<TabsContent value="actions">{actions}</TabsContent>
 							<TabsContent value="powers">{powers}</TabsContent>
 							<TabsContent value="inventory">{inventory}</TabsContent>

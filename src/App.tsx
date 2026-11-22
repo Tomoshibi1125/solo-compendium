@@ -765,6 +765,7 @@ const App = () => {
 											<ErrorBoundary>
 												<AppContent />
 											</ErrorBoundary>
+											<AnalyticsConsentBanner />
 										</DiceTrayProvider>
 									</BrowserRouter>
 									<ServiceWorkerUpdatePrompt />
@@ -774,7 +775,6 @@ const App = () => {
 										connectionType="unknown"
 										syncQueueLength={queueLength}
 									/>
-									<AnalyticsConsentBanner />
 									<Analytics />
 									<SpeedInsights />
 								</AuthProvider>

@@ -4,6 +4,20 @@
    GLOBAL MOBILE UTILITIES
    ======================================== */
 
+/* Keep the optional consent banner above the fixed thumb navigation. */
+@media (max-width: 1023px) {
+	.analytics-consent-banner {
+		bottom: env(safe-area-inset-bottom);
+		max-height: calc(100dvh - 1rem - env(safe-area-inset-bottom));
+		overflow-y: auto;
+	}
+
+	.analytics-consent-banner[data-mobile-nav-visible="true"] {
+		bottom: calc(56px + env(safe-area-inset-bottom));
+		max-height: calc(100dvh - 4.5rem - env(safe-area-inset-bottom));
+	}
+}
+
 /* Touch-friendly sizing */
 @media (pointer: coarse) {
 	.touch-button {

@@ -1,5 +1,6 @@
 import type { LucideIcon } from "lucide-react";
 import { ChevronLeft, ChevronRight, LogOut, Sparkles } from "lucide-react";
+import { useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useDiceTray } from "@/components/dice/DiceTrayContext";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -26,6 +27,11 @@ export function AppSidebar() {
 
 	const activePath = location.pathname;
 
+	// Also close on browser history and query-only navigation, not just link taps.
+	useEffect(() => {
+		if (location.key) setSidebarOpen(false);
+	}, [location.key, setSidebarOpen]);
+
 	// Hrefs may carry a query (`/compendium?category=anomalies`), which
 	// `pathname.startsWith(href)` can never match. Compare the pathname and the
 	// category/tab param separately so exactly one compendium item highlights.
@@ -46,7 +52,7 @@ export function AppSidebar() {
 			{navigationConfig.map((section) => (
 				<div key={section.title} className="px-3">
 					{!collapsed && (
-						<h2 className="mb-2 px-4 text-xs font-mono font-bold tracking-[0.2em] text-primary/40 uppercase">
+						<h2 className="mb-2 px-4 text-xs font-mono font-bold tracking-[0.2em] text-foreground/80 uppercase">
 							{section.title}
 						</h2>
 					)}
@@ -56,7 +62,7 @@ export function AppSidebar() {
 							const isActive = isItemActive(item.href);
 
 							const buttonClassName = cn(
-								"w-full justify-start gap-4 transition-all duration-300 relative group overflow-hidden",
+								"w-full min-h-11 justify-start gap-4 transition-all duration-300 relative group overflow-hidden",
 								collapsed ? "px-2 justify-center" : "px-4",
 								isActive
 									? "bg-primary/10 text-primary border-r-2 border-primary"
@@ -97,7 +103,11 @@ export function AppSidebar() {
 								);
 							}
 							return (
-								<Link key={item.title} to={item.href}>
+								<Link
+									key={item.title}
+									to={item.href}
+									onClick={() => setSidebarOpen(false)}
+								>
 									<Button
 										variant="ghost"
 										className={buttonClassName}
@@ -119,7 +129,11 @@ export function AppSidebar() {
 		<>
 			{/* Mobile Drawer */}
 			<Sheet open={sidebarOpen} onOpenChange={setSidebarOpen}>
-				<SheetContent side="left" className="p-0 border-r-primary/20 w-72">
+				<SheetContent
+					side="left"
+					className="p-0 border-r-primary/20 w-72"
+					data-testid="mobile-navigation-drawer"
+				>
 					<div className="flex flex-col h-full bg-black/40 backdrop-blur-xl">
 						<div className="p-6 border-b border-primary/10">
 							<div className="flex items-center gap-3">
@@ -143,7 +157,7 @@ export function AppSidebar() {
 										<p className="text-xs font-bold truncate">
 											{user.displayName || "Ascendant"}
 										</p>
-										<p className="text-[11px] text-muted-foreground truncate">
+										<p className="text-xs text-muted-foreground truncate">
 											{user.email}
 										</p>
 									</div>
@@ -152,7 +166,10 @@ export function AppSidebar() {
 							<Button
 								variant="ghost"
 								className="w-full justify-start gap-4 text-destructive hover:text-destructive hover:bg-destructive/10"
-								onClick={() => signOut()}
+								onClick={() => {
+									setSidebarOpen(false);
+									void signOut();
+								}}
 							>
 								<LogOut className="h-5 w-5" />
 								<span>Terminate Session</span>

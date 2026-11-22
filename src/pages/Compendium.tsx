@@ -1273,7 +1273,7 @@ const Compendium = () => {
 								{filteredAndSortedEntries.length}{" "}
 								{filteredAndSortedEntries.length === 1 ? "result" : "results"}
 							</AscendantText>
-							<div className="flex gap-2">
+							<div className="flex min-w-0 max-w-full flex-wrap justify-end gap-2">
 								<Dialog
 									open={showGeminiProtocol}
 									onOpenChange={setShowGeminiProtocol}

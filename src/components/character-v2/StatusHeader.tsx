@@ -193,18 +193,18 @@ export function StatusHeader({
 
 	return (
 		<TooltipProvider delayDuration={200}>
-			<div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4 w-full">
+			<div className="character-status-grid grid grid-cols-2 lg:grid-cols-4 2xl:grid-cols-7 gap-4 w-full">
 				{/* Armor Class Block */}
 				<Tooltip>
 					<TooltipTrigger asChild>
 						<button
 							type="button"
 							onClick={onACClick}
-							className="relative group bg-obsidian-charcoal/60 border border-primary/20 rounded-[2px] p-4 flex flex-col items-center justify-center transition-all hover:bg-obsidian-charcoal/80 hover:border-primary/40 w-full"
+							className="character-status-card relative group bg-obsidian-charcoal/60 border border-primary/20 rounded-[2px] p-4 flex flex-col items-center justify-center transition-all hover:bg-obsidian-charcoal/80 hover:border-primary/40 w-full"
 						>
 							<Shield className="w-5 h-5 text-shadow-blue mb-2 transition-transform group-hover:scale-110" />
 							<span className="ra-stat-number text-3xl text-white">{ac}</span>
-							<span className="text-[10px] font-mono text-primary/70 uppercase tracking-widest mt-1">
+							<span className="character-status-label text-xs font-mono text-foreground/80 uppercase tracking-widest mt-1">
 								ARMOR_CLASS
 							</span>
 							<div className="absolute top-0 right-0 p-1 opacity-0 group-hover:opacity-100 transition-opacity">
@@ -236,7 +236,7 @@ export function StatusHeader({
 						<button
 							type="button"
 							onClick={onRollInitiative}
-							className="relative group bg-obsidian-charcoal/60 border border-primary/20 rounded-[2px] p-4 flex flex-col items-center justify-center transition-all hover:bg-obsidian-charcoal/80 hover:border-primary/40 w-full"
+							className="character-status-card relative group bg-obsidian-charcoal/60 border border-primary/20 rounded-[2px] p-4 flex flex-col items-center justify-center transition-all hover:bg-obsidian-charcoal/80 hover:border-primary/40 w-full"
 						>
 							<Zap className="w-5 h-5 text-gate-s mb-2 transition-transform group-hover:scale-110" />
 							<div className="flex items-center gap-1">
@@ -245,7 +245,7 @@ export function StatusHeader({
 								</span>
 								<Dice6 className="w-4 h-4 text-primary/60 group-hover:text-primary transition-colors" />
 							</div>
-							<span className="text-[10px] font-mono text-primary/70 uppercase tracking-widest mt-1">
+							<span className="character-status-label text-xs font-mono text-foreground/80 uppercase tracking-widest mt-1">
 								INITIATIVE
 							</span>
 						</button>
@@ -266,13 +266,13 @@ export function StatusHeader({
 				{/* Speed Block */}
 				<Tooltip>
 					<TooltipTrigger asChild>
-						<div className="bg-obsidian-charcoal/60 border border-primary/20 rounded-[2px] p-4 flex flex-col items-center justify-center w-full">
+						<div className="character-status-card bg-obsidian-charcoal/60 border border-primary/20 rounded-[2px] p-4 flex flex-col items-center justify-center w-full">
 							<Move className="w-5 h-5 text-system-green mb-2" />
 							<span className="ra-stat-number text-3xl text-white">
 								{speed}{" "}
 								<span className="text-sm font-mono text-primary/60">FT</span>
 							</span>
-							<span className="text-[10px] font-mono text-primary/70 uppercase tracking-widest mt-1">
+							<span className="character-status-label text-xs font-mono text-foreground/80 uppercase tracking-widest mt-1">
 								WALK_SPEED
 							</span>
 						</div>
@@ -295,13 +295,13 @@ export function StatusHeader({
 					<TooltipTrigger asChild>
 						<div
 							data-testid="status-proficiency-bonus"
-							className="bg-obsidian-charcoal/60 border border-primary/20 rounded-[2px] p-4 flex flex-col items-center justify-center w-full"
+							className="character-status-card bg-obsidian-charcoal/60 border border-primary/20 rounded-[2px] p-4 flex flex-col items-center justify-center w-full"
 						>
 							<Award className="w-5 h-5 text-gate-s mb-2" />
 							<span className="ra-stat-number text-3xl text-white">
 								{formatModifier(proficiencyBonus)}
 							</span>
-							<span className="text-[10px] font-mono text-primary/70 uppercase tracking-widest mt-1">
+							<span className="character-status-label text-xs font-mono text-foreground/80 uppercase tracking-widest mt-1">
 								PROF_BONUS
 							</span>
 						</div>
@@ -324,12 +324,12 @@ export function StatusHeader({
 				<button
 					type="button"
 					onClick={onHPClick}
-					className="relative col-span-2 group bg-obsidian-charcoal/60 border border-primary/20 rounded-[2px] p-4 flex flex-col transition-all hover:bg-obsidian-charcoal/80 hover:border-primary/40"
+					className="character-status-card relative col-span-2 group bg-obsidian-charcoal/60 border border-primary/20 rounded-[2px] p-4 flex flex-col transition-all hover:bg-obsidian-charcoal/80 hover:border-primary/40"
 				>
 					<div className="flex items-center justify-between mb-2">
 						<div className="flex items-center gap-2">
 							<Heart className="w-5 h-5 text-destructive fill-destructive/20" />
-							<span className="text-xs font-mono text-primary/60 uppercase tracking-widest">
+							<span className="character-status-label text-xs font-mono text-foreground/80 uppercase tracking-widest">
 								HIT_POINTS
 							</span>
 						</div>
@@ -355,8 +355,8 @@ export function StatusHeader({
 				</button>
 
 				{/* Resources (Hit Dice, Rift Favor & Inspiration) */}
-				<div className="grid grid-cols-3 gap-2 h-full">
-					<div className="bg-obsidian-charcoal/60 border border-primary/20 rounded-[2px] p-2 flex flex-col items-center justify-center relative group">
+				<div className="character-status-resources col-span-2 md:col-span-1 grid grid-cols-2 md:grid-cols-3 gap-2 h-full">
+					<div className="character-status-card character-status-resource-card col-span-2 lg:col-span-1 bg-obsidian-charcoal/60 border border-primary/20 rounded-[2px] p-2 flex flex-col items-center justify-center relative group">
 						<div className="flex items-center gap-1.5">
 							<button
 								type="button"
@@ -365,7 +365,7 @@ export function StatusHeader({
 									onAdjustResource("hit_dice_current", -1);
 								}}
 								aria-label="Decrease Hit Dice"
-								className="p-1 hover:bg-primary/10 rounded transition-colors"
+								className="min-h-11 min-w-11 p-1 hover:bg-primary/10 rounded transition-colors"
 							>
 								<Minus className="w-3 h-3 text-primary/60" />
 							</button>
@@ -373,7 +373,7 @@ export function StatusHeader({
 								type="button"
 								onClick={onRollHitDice}
 								aria-label="Roll Hit Dice"
-								className="flex flex-col items-center"
+								className="min-h-11 min-w-11 flex flex-col items-center justify-center"
 							>
 								<span className="text-sm font-bold text-white">
 									{hitDice.current}/{hitDice.max}
@@ -386,15 +386,15 @@ export function StatusHeader({
 									onAdjustResource("hit_dice_current", 1);
 								}}
 								aria-label="Increase Hit Dice"
-								className="p-1 hover:bg-primary/10 rounded transition-colors"
+								className="min-h-11 min-w-11 p-1 hover:bg-primary/10 rounded transition-colors"
 							>
 								<Plus className="w-3 h-3 text-primary/60" />
 							</button>
 						</div>
-						<span className="text-[10px] text-primary/70 uppercase">
+						<span className="character-status-label text-xs text-foreground/80 uppercase">
 							HIT_DICE
 						</span>
-						<span className="text-[10px] text-primary/60 italic">
+						<span className="text-xs text-muted-foreground italic">
 							d{hitDice.size}
 						</span>
 					</div>
@@ -403,17 +403,17 @@ export function StatusHeader({
 						<DropdownMenuTrigger asChild>
 							<button
 								type="button"
-								className="bg-obsidian-charcoal/60 border border-primary/20 rounded-[2px] p-2 flex flex-col items-center justify-center relative group font-mono hover:bg-gate-s/10 hover:border-gate-s/40 transition-colors w-full cursor-pointer h-full"
+								className="character-status-card character-status-resource-card bg-obsidian-charcoal/60 border border-primary/20 rounded-[2px] p-2 flex flex-col items-center justify-center relative group font-mono hover:bg-gate-s/10 hover:border-gate-s/40 transition-colors w-full cursor-pointer h-full"
 							>
 								<div className="flex items-center gap-1.5">
 									<span className="text-sm font-bold text-gate-s">
 										{riftFavor.current}/{riftFavor.max}
 									</span>
 								</div>
-								<span className="text-[10px] text-gate-s/70 uppercase mt-1 font-bold flex items-center gap-1">
+								<span className="character-status-label text-xs text-gate-s uppercase mt-1 font-bold flex items-center gap-1">
 									<Sparkles className="w-2 h-2" /> SPEND FAVOR
 								</span>
-								<span className="text-[10px] text-gate-s/50 mt-0.5">
+								<span className="text-xs text-muted-foreground mt-0.5">
 									d{riftFavor.die}
 								</span>
 							</button>
@@ -443,14 +443,14 @@ export function StatusHeader({
 						</DropdownMenuContent>
 					</DropdownMenu>
 
-					<div className="bg-obsidian-charcoal/60 border border-primary/20 rounded-[2px] p-2 flex flex-col items-center justify-center relative group">
+					<div className="character-status-card character-status-resource-card bg-obsidian-charcoal/60 border border-primary/20 rounded-[2px] p-2 flex flex-col items-center justify-center relative group">
 						<div className="flex items-center gap-1.5">
 							<button
 								type="button"
 								onClick={() => handleInspiration(-1)}
 								disabled={inspirationPoints <= 0}
 								aria-label="Spend Inspiration"
-								className="p-1 hover:bg-primary/10 rounded transition-colors disabled:opacity-40"
+								className="min-h-11 min-w-11 p-1 hover:bg-primary/10 rounded transition-colors disabled:opacity-40"
 							>
 								<Minus className="w-3 h-3 text-primary/60" />
 							</button>
@@ -463,12 +463,12 @@ export function StatusHeader({
 								type="button"
 								onClick={() => handleInspiration(1)}
 								aria-label="Gain Inspiration"
-								className="p-1 hover:bg-primary/10 rounded transition-colors"
+								className="min-h-11 min-w-11 p-1 hover:bg-primary/10 rounded transition-colors"
 							>
 								<Plus className="w-3 h-3 text-primary/60" />
 							</button>
 						</div>
-						<span className="text-[10px] text-primary/70 uppercase flex items-center gap-1">
+						<span className="character-status-label text-xs text-foreground/80 uppercase flex items-center gap-1">
 							<Award className="w-2 h-2" /> INSPIRATION
 						</span>
 					</div>
