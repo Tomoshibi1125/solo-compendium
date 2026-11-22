@@ -32,8 +32,6 @@ export interface AuthUser {
 	id: string;
 	email: string;
 	role: UserRole;
-	/** UI capability hint derived only from Supabase app_metadata. */
-	isAccountAdmin: boolean;
 	displayName?: string;
 	avatar?: string;
 	createdAt: string;
@@ -118,7 +116,6 @@ const buildFallbackUser = (authUser: User): AuthUser => {
 		role: normalizeRole(
 			typeof metadata.role === "string" ? metadata.role : undefined,
 		),
-		isAccountAdmin: authUser.app_metadata?.account_role === "admin",
 		displayName,
 		avatar,
 		createdAt: authUser.created_at ?? new Date().toISOString(),
@@ -216,7 +213,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 					id: data.id,
 					email: authUser.email ?? "",
 					role: resolvedRole,
-					isAccountAdmin: fallbackUser.isAccountAdmin,
 					displayName: fallbackUser.displayName,
 					avatar: fallbackUser.avatar,
 					createdAt: data.created_at,
@@ -300,21 +296,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 			if (error) return toAuthFailure(error, "sign-in");
 
 			if (data.user) {
-				// App-level suspension (admin_set_user_ban): banned accounts are
-				// bounced before any role/profile writes happen.
-				const { data: profileRow } = await supabase
-					.from("profiles")
-					.select("banned_at")
-					.eq("id", data.user.id)
-					.maybeSingle();
-				if (profileRow?.banned_at) {
-					await supabase.auth.signOut();
-					return toAuthFailure(
-						{ code: "user_banned", message: "Account has been suspended" },
-						"sign-in",
-					);
-				}
-
 				// Existing users logging in already have a profile due to the handle_new_user trigger.
 				// We use .update() instead of .upsert() to avoid strict INSERT RLS check violations for existing rows.
 				const { error: upsertError } = await supabase
@@ -330,8 +311,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 					return toAuthFailure(upsertError, "profile-update");
 				}
 
-				// Keep mutable gameplay metadata synchronized; account authority is
-				// never written here and comes only from app_metadata.
+				// Keep the role in user metadata in sync with the profile.
 				const { error: metadataError } = await supabase.auth.updateUser({
 					data: { role },
 				});

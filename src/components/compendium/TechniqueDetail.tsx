@@ -23,7 +23,11 @@ import {
 	setPendingResolution,
 } from "@/lib/actionResolution";
 import { formatRarityLabel, getRarityBadgeClass } from "@/lib/labels";
-import { buildAttackRollFormula } from "@/lib/powerActionFormulas";
+import {
+	buildAttackRollFormula,
+	describeAbilityDamage,
+	readAbilityDamageBasis,
+} from "@/lib/powerActionFormulas";
 import { formatRegentVernacular } from "@/lib/vernacular";
 import type {
 	CompendiumMechanics,
@@ -393,6 +397,16 @@ export const TechniqueDetail = ({ data }: { data: TechniqueData }) => {
 									"type" in attack.damage
 										? String((attack.damage as { type?: unknown }).type ?? "")
 										: "";
+								const damageBasis = readAbilityDamageBasis(mechanics);
+								const damageText = damageBasis
+									? describeAbilityDamage(
+											damageRoll,
+											damageBasis,
+											damageType || attack.damage_type,
+										)
+									: damageRoll
+										? `${damageRoll}${damageType ? ` ${damageType}` : ""}`
+										: null;
 								return (
 									<div className="flex items-start gap-2">
 										<Swords className="w-5 h-5 text-gate-a flex-shrink-0 mt-0.5" />
@@ -401,10 +415,8 @@ export const TechniqueDetail = ({ data }: { data: TechniqueData }) => {
 												{formatRegentVernacular(attack.type || "")} attack
 											</p>
 											<p className="text-sm text-muted-foreground">
-												{damageRoll
-													? formatRegentVernacular(
-															`Damage: ${damageRoll}${damageType ? ` ${damageType}` : ""}`,
-														)
+												{damageText
+													? formatRegentVernacular(`Damage: ${damageText}`)
 													: "Damage varies"}
 												{attack.modifier
 													? formatRegentVernacular(

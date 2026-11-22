@@ -1,7 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
-import type { Json } from "@/integrations/supabase/types";
 import { AppError } from "@/lib/appError";
 import type { FusionAbility, GeneratedSovereign } from "@/lib/geminiProtocol";
 import {
@@ -10,12 +9,20 @@ import {
 	listLocalFeatures,
 	removeLocalFeature,
 } from "@/lib/guestStore";
-import { requireDistinctCanonicalRegents } from "@/lib/regentIdentity";
 import {
-	buildSovereignGeminiState,
 	SOVEREIGN_FEATURE_SOURCE_PREFIX,
 	sovereignAbilitiesToFeatureRows,
 } from "@/lib/sovereign/applySovereign";
+import { isGeneratedSovereignV2Draft } from "@/lib/sovereign/sovereignGenerationClient";
+import {
+	SOVEREIGN_STORAGE_SCHEMA_VERSION,
+	sovereignAttachmentOperationId,
+	sovereignV2SaveOperationId,
+} from "@/lib/sovereign/sovereignPersistence";
+import {
+	readSovereignDefinition,
+	validateSovereignV2Definition,
+} from "@/lib/sovereign/sovereignV2Contract";
 
 export interface SavedSovereign {
 	id: string;
@@ -25,20 +32,47 @@ export interface SavedSovereign {
 	fusion_theme: string;
 	fusion_description: string;
 	fusion_method: string;
-	power_multiplier: string;
-	fusion_stability: string;
+	power_multiplier: string | null;
+	fusion_stability: string | null;
 	job_id: string;
 	path_id: string;
-	regent_a_id: string;
-	regent_b_id: string;
+	regent_a_id: string | null;
+	regent_b_id: string | null;
 	abilities: FusionAbility[];
 	created_by: string;
 	created_at: string;
 	is_public: boolean;
 	likes_count: number;
+	schema_version?: 1 | 2;
+	definition_id?: string | null;
+	definition?: unknown;
+	ruleset_revision?: string | null;
+	canonical_source_revision?: string | null;
+	projection_revision?: string | null;
 }
 
-/** Returns the saved sovereign that is currently linked to a character (if any). */
+type RpcError = { message: string };
+type UntypedRpcResult = PromiseLike<{
+	data: unknown;
+	error: RpcError | null;
+}>;
+type UntypedRpc = (
+	functionName: string,
+	args: Record<string, unknown>,
+) => UntypedRpcResult;
+
+const callRpc = supabase.rpc.bind(supabase) as unknown as UntypedRpc;
+
+async function runRpc<T>(
+	functionName: string,
+	args: Record<string, unknown>,
+): Promise<T> {
+	const { data, error } = await callRpc(functionName, args);
+	if (error) throw new AppError(error.message, "UNKNOWN", error);
+	return data as T;
+}
+
+/** Returns the saved Sovereign currently attached to a character, if readable. */
 export function useCharacterSovereign(characterId: string | undefined) {
 	return useQuery({
 		queryKey: ["character-sovereign", characterId],
@@ -46,21 +80,20 @@ export function useCharacterSovereign(characterId: string | undefined) {
 		retry: false,
 		queryFn: async () => {
 			if (!characterId) return null;
-			// Fetch the character to get active_sovereign_id
-			const { data: char, error: charErr } = await supabase
+			const { data: character, error: characterError } = await supabase
 				.from("characters")
 				.select("id, active_sovereign_id")
 				.eq("id", characterId)
 				.maybeSingle();
-			if (charErr || !char?.active_sovereign_id) return null;
+			if (characterError || !character?.active_sovereign_id) return null;
 
 			const { data, error } = await supabase
 				.from("saved_sovereigns")
 				.select("*")
-				.eq("id", char.active_sovereign_id)
+				.eq("id", character.active_sovereign_id)
 				.maybeSingle();
 			if (error || !data) return null;
-			// Use property-safe mapping to ensure SavedSovereign compliance
+
 			const sovereign = JSON.parse(JSON.stringify(data)) as Record<
 				string,
 				unknown
@@ -70,11 +103,92 @@ export function useCharacterSovereign(characterId: string | undefined) {
 				abilities: Array.isArray(sovereign.abilities)
 					? sovereign.abilities
 					: [],
-			} as SavedSovereign;
+			} as unknown as SavedSovereign;
 		},
 	});
 }
 
+function applyLocalLegacyProjection(
+	characterId: string,
+	sovereign: GeneratedSovereign,
+): void {
+	for (const existingFeature of listLocalFeatures(characterId)) {
+		const source = (existingFeature as { source?: string }).source;
+		if (
+			typeof source === "string" &&
+			source.startsWith(SOVEREIGN_FEATURE_SOURCE_PREFIX)
+		) {
+			removeLocalFeature((existingFeature as { id: string }).id);
+		}
+	}
+
+	for (const row of sovereignAbilitiesToFeatureRows(sovereign)) {
+		addLocalFeature(characterId, {
+			name: row.name,
+			source: row.source,
+			level_acquired: row.level_acquired,
+			description: row.description,
+			action_type: row.action_type,
+			recharge: row.recharge,
+			is_active: row.is_active,
+			modifiers: null as never,
+			homebrew_id: row.homebrew_id,
+		});
+	}
+}
+
+async function resolveAlreadySavedV2Draft(
+	sovereign: GeneratedSovereign,
+	userId: string,
+): Promise<string | null> {
+	if (!isGeneratedSovereignV2Draft(sovereign)) return null;
+
+	const { data, error } = await supabase
+		.from("saved_sovereigns")
+		.select("id, created_by, schema_version, definition")
+		.eq("id", sovereign.saved_sovereign_id)
+		.maybeSingle();
+	if (error) throw new AppError(error.message, "UNKNOWN", error);
+	if (
+		!data ||
+		data.created_by !== userId ||
+		data.schema_version !== SOVEREIGN_STORAGE_SCHEMA_VERSION
+	) {
+		throw new AppError(
+			"The generated Sovereign draft is not an owned v2 definition",
+			"AUTH_REQUIRED",
+		);
+	}
+
+	const persisted = readSovereignDefinition(data.definition);
+	if (!persisted.ok || persisted.kind !== "v2") {
+		throw new AppError(
+			"The saved Sovereign draft failed v2 validation",
+			"UNKNOWN",
+		);
+	}
+	const preview = readSovereignDefinition(sovereign.definition);
+	if (!preview.ok || preview.kind !== "v2") {
+		throw new AppError("The generated Sovereign preview is invalid", "UNKNOWN");
+	}
+	if (
+		persisted.definition.id !== preview.definition.id ||
+		persisted.definition.generation.operation_id !==
+			preview.definition.generation.operation_id
+	) {
+		throw new AppError(
+			"The generated Sovereign preview does not match its saved draft",
+			"UNKNOWN",
+		);
+	}
+	return String(data.id);
+}
+
+/**
+ * Built-in generation arrives as an already saved v2 draft. Outside imports
+ * must provide a complete v2 definition and pass the same save RPC boundary.
+ * Persisted v1 rows remain readable but cannot be created here.
+ */
 export function useSaveSovereign() {
 	const queryClient = useQueryClient();
 	const { toast } = useToast();
@@ -87,147 +201,76 @@ export function useSaveSovereign() {
 			sovereign: GeneratedSovereign;
 			characterId?: string;
 		}) => {
-			const [regentAId, regentBId] = requireDistinctCanonicalRegents(
-				sovereign.regentA?.id,
-				sovereign.regentB?.id,
-			);
-			const canonicalSovereign: GeneratedSovereign = {
-				...sovereign,
-				regentA:
-					sovereign.regentA.id === regentAId
-						? sovereign.regentA
-						: { ...sovereign.regentA, id: regentAId },
-				regentB:
-					sovereign.regentB.id === regentBId
-						? sovereign.regentB
-						: { ...sovereign.regentB, id: regentBId },
-			};
 			const {
 				data: { user },
 			} = await supabase.auth.getUser();
-			if (!user)
+			if (!user) {
 				throw new AppError(
 					"Must be logged in to save Sovereigns",
 					"AUTH_REQUIRED",
 				);
+			}
 
-			const insertData = {
-				name: canonicalSovereign.name,
-				title: canonicalSovereign.title,
-				description: canonicalSovereign.description,
-				fusion_theme: canonicalSovereign.fusion_theme,
-				fusion_description: canonicalSovereign.fusion_description,
-				fusion_method: canonicalSovereign.fusion_method,
-				power_multiplier: canonicalSovereign.power_multiplier,
-				fusion_stability: canonicalSovereign.fusion_stability,
-				job_id: canonicalSovereign.job.id,
-				path_id: canonicalSovereign.path.id,
-				regent_a_id: regentAId,
-				regent_b_id: regentBId,
-				abilities: JSON.parse(JSON.stringify(canonicalSovereign.abilities)),
-				created_by: user.id,
+			const candidate = sovereign as GeneratedSovereign & {
+				schema_version?: number;
+				definition?: unknown;
 			};
-
-			// The deployed table uses canonical Regent columns. Local generated types
-			// still describe the retired Monarch columns and are intentionally not
-			// hand-edited; constrain the compatibility cast to this insert boundary.
-			const { data, error } = await supabase
-				.from("saved_sovereigns")
-				.insert(insertData as never)
-				.select()
-				.single();
-
-			if (error) throw error;
-
-			// If a character is specified, stamp the new sovereign onto the
-			// character — both the display link (active_sovereign_id) AND the full
-			// gemini_state overlay, so the fusion applies as a complete class
-			// overlay (engine features + runtime metadata), not just a display card.
-			// This path is identical for embedded-AI and externally-imported
-			// Sovereigns, so an imported fusion lands exactly like a generated one.
-			if (characterId && data?.id) {
-				const overlayState = buildSovereignGeminiState(
-					canonicalSovereign,
-					data.id,
+			const validation =
+				candidate.schema_version === SOVEREIGN_STORAGE_SCHEMA_VERSION
+					? validateSovereignV2Definition(candidate.definition, {
+							job: String(sovereign.job.id),
+							path: String(sovereign.path.id),
+							regent_a: String(sovereign.regentA.id),
+							regent_b: String(sovereign.regentB.id),
+						})
+					: {
+							ok: false as const,
+							errors: [
+								`schema_version ${SOVEREIGN_STORAGE_SCHEMA_VERSION} is required`,
+							],
+						};
+			if (!validation.ok) {
+				throw new AppError(
+					`New Sovereigns require a complete v2 definition: ${validation.errors.join("; ")}`,
+					"INVALID_INPUT",
 				);
+			}
 
-				// Merge into any existing gemini_state (preserve leveling_type,
-				// conditions, and other runtime keys set elsewhere).
-				const { data: existing } = await supabase
-					.from("characters")
-					.select("gemini_state")
-					.eq("id", characterId)
-					.maybeSingle();
-				const prior =
-					existing?.gemini_state &&
-					typeof existing.gemini_state === "object" &&
-					!Array.isArray(existing.gemini_state)
-						? (existing.gemini_state as Record<string, unknown>)
-						: {};
-				const mergedGeminiState = { ...prior, ...overlayState };
+			let sovereignId = await resolveAlreadySavedV2Draft(sovereign, user.id);
+			const projectionSovereign = sovereign;
+			if (!sovereignId) {
+				sovereignId = await runRpc<string>("save_sovereign_v2_definition", {
+					p_definition: validation.definition,
+					p_operation_id: sovereignV2SaveOperationId(validation.definition),
+					p_is_public: false,
+				});
+			}
+			if (typeof sovereignId !== "string" || !sovereignId) {
+				throw new AppError(
+					"The Sovereign definition was not saved correctly",
+					"UNKNOWN",
+				);
+			}
 
-				await supabase
-					.from("characters")
-					.update({
-						active_sovereign_id: data.id,
-						gemini_state: mergedGeminiState as unknown as Json,
-					})
-					.eq("id", characterId)
-					.eq("user_id", user.id);
-
-				// Persist the 8 fusion abilities as real character_features rows so
-				// the Sovereign appears natively in the sheet's Features tab (grouped
-				// "Sovereign") and — for active abilities — the Actions tab, exactly
-				// like a class overlay. Idempotent: clear prior Sovereign features
-				// first so a re-lock never duplicates rows.
-				const featureRows = sovereignAbilitiesToFeatureRows(canonicalSovereign);
+			if (characterId) {
 				if (isLocalCharacterId(characterId)) {
-					for (const existingFeature of listLocalFeatures(characterId)) {
-						const src = (existingFeature as { source?: string }).source;
-						if (
-							typeof src === "string" &&
-							src.startsWith(SOVEREIGN_FEATURE_SOURCE_PREFIX)
-						) {
-							removeLocalFeature((existingFeature as { id: string }).id);
-						}
-					}
-					for (const row of featureRows) {
-						addLocalFeature(characterId, {
-							name: row.name,
-							source: row.source,
-							level_acquired: row.level_acquired,
-							description: row.description,
-							action_type: row.action_type,
-							recharge: row.recharge,
-							is_active: row.is_active,
-							modifiers: null as never,
-							homebrew_id: row.homebrew_id,
-						});
-					}
+					// Guest/local state cannot participate in the cloud attachment
+					// transaction. Keep the existing local display projection while the
+					// signed-in user's authoritative draft remains safely archived.
+					applyLocalLegacyProjection(characterId, projectionSovereign);
 				} else {
-					await supabase
-						.from("character_features")
-						.delete()
-						.eq("character_id", characterId)
-						.like("source", `${SOVEREIGN_FEATURE_SOURCE_PREFIX}%`);
-					await supabase.from("character_features").insert(
-						featureRows.map((row) => ({
-							character_id: characterId,
-							name: row.name,
-							source: row.source,
-							level_acquired: row.level_acquired,
-							description: row.description,
-							action_type: row.action_type,
-							recharge: row.recharge,
-							is_active: row.is_active,
-							modifiers: row.modifiers,
-							homebrew_id: row.homebrew_id,
-						})),
-					);
+					await runRpc<Record<string, unknown>>("attach_saved_sovereign", {
+						p_character_id: characterId,
+						p_sovereign_id: sovereignId,
+						p_operation_id: sovereignAttachmentOperationId(
+							characterId,
+							sovereignId,
+						),
+					});
 				}
 			}
 
-			return data;
+			return { id: sovereignId };
 		},
 		onSuccess: (_, variables) => {
 			queryClient.invalidateQueries({ queryKey: ["saved-sovereigns"] });
@@ -239,7 +282,6 @@ export function useSaveSovereign() {
 				queryClient.invalidateQueries({
 					queryKey: ["character-sovereign", variables.characterId],
 				});
-				// Refresh the Features/Actions tabs to show the new overlay abilities.
 				queryClient.invalidateQueries({
 					queryKey: ["character-features", variables.characterId],
 				});
@@ -253,7 +295,7 @@ export function useSaveSovereign() {
 		onError: (error) => {
 			toast({
 				title: "Save Failed",
-				description: error.message,
+				description: error instanceof Error ? error.message : "Unknown error",
 				variant: "destructive",
 			});
 		},

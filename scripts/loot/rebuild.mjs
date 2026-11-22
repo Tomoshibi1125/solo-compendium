@@ -14,7 +14,6 @@ import {
 } from "./lib.mjs";
 import {
 	consumableHpRange,
-	consumableManaRange,
 	detectTheme,
 	getVariant,
 	pickUniqueActive,
@@ -847,7 +846,8 @@ function mergeConsumable(merged, archetype, variant, theme, rarity, key) {
 	const actives = [];
 
 	if (archetype === "consumable_potion" || archetype === "consumable_stim") {
-		// Theme override takes priority over variant pick (so 'Mana X' is always mana, etc.).
+		// Theme override takes priority over variant pick. There is no mana
+		// subtype: Rift Ascendant has no mana system.
 		const subtype = theme?.consumableSubtype || variant.subtype || "healing";
 		const actName =
 			variant.action || (archetype === "consumable_stim" ? "Inject" : "Drink");
@@ -859,15 +859,6 @@ function mergeConsumable(merged, archetype, variant, theme, rarity, key) {
 			actives.push({
 				name: actName,
 				description: `${archetype === "consumable_stim" ? "Bonus action. Restore" : "Action. Drink the potion. Restore"} ${hp} HP${archetype === "consumable_stim" ? ` to a willing creature within ${range}` : ""}.`,
-				action: archetype === "consumable_stim" ? "bonus-action" : "action",
-				frequency: "at-will",
-			});
-		} else if (subtype === "mana") {
-			const mana = consumableManaRange(rarity);
-			passives.push(`On ${actVerb.toLowerCase()}, restore ${mana} mana.`);
-			actives.push({
-				name: actName,
-				description: `${archetype === "consumable_stim" ? "Bonus action" : "Action"}. Restore ${mana} mana.`,
 				action: archetype === "consumable_stim" ? "bonus-action" : "action",
 				frequency: "at-will",
 			});
@@ -957,8 +948,7 @@ function mergeConsumable(merged, archetype, variant, theme, rarity, key) {
 			];
 		const subtype = theme?.consumableSubtype || variant.subtype || "";
 		const riderRedundant =
-			(subtype === "mana" && /restores mana/i.test(rider)) ||
-			(subtype === "healing" && /^restores hp\b/i.test(rider));
+			subtype === "healing" && /^restores hp\b/i.test(rider);
 		if (!riderRedundant) passives.push(rider);
 	}
 

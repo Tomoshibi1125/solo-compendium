@@ -655,8 +655,6 @@ export function reduceConditionLifecycle(
 	return { conditions: next, changes };
 }
 
-export const applyConditionLifecycleEvent = reduceConditionLifecycle;
-
 export function advanceConditionRound(
 	conditions: ConditionEntry[],
 	currentRound: number,

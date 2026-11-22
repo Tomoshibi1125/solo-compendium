@@ -10,12 +10,14 @@ import {
 	getCasterType,
 	getSpellcastingAbility,
 } from "@/lib/characterCalculations";
+import type { CastingJobReference } from "@/lib/jobRules";
 import { logger } from "@/lib/logger";
 import { getAbilityModifier, getProficiencyBonus } from "@/types/core-rules";
 
 interface SpellSlotsDisplayProps {
 	characterId: string;
-	job: string | null;
+	/** A casting reference (toCastingReference) so Path casting counts. */
+	job: string | CastingJobReference | null;
 	level: number;
 	abilities?: Record<string, number>;
 	className?: string;

@@ -73,20 +73,61 @@ test.describe
 			}
 		});
 
-		test("Party Stash: add loot lands in the campaign stash inventory", async () => {
+		test("Guest Warden creates and redeems a same-browser invite", async () => {
+			await page.goto(`/campaigns/${campaignId}`);
+			await page.getByRole("button", { name: /Invite Ascendants/i }).click();
+			const dialog = page.getByRole("dialog", { name: /Invite Ascendants/i });
+			await expect(dialog).toBeVisible();
+			await dialog.getByRole("tab", { name: /Advanced Tokens/i }).click();
+			await dialog
+				.getByRole("button", { name: /Generate Secure Link/i })
+				.click();
+			await expect(
+				dialog.getByText("Active", { exact: true }).first(),
+			).toBeVisible({
+				timeout: 10_000,
+			});
+
+			const token = await page.evaluate(() => {
+				const invites = JSON.parse(
+					localStorage.getItem("solo-compendium.campaign-invites.v1") || "[]",
+				) as Array<{ token: string }>;
+				return invites[0]?.token;
+			});
+			expect(
+				token,
+				"guest invite token must persist in this profile",
+			).toBeTruthy();
+
+			await page.keyboard.press("Escape");
+			await page.goto(`/campaigns/join/${encodeURIComponent(token ?? "")}`);
+			const join = page.getByRole("button", { name: /^Join Campaign$/i });
+			await expect(join).toBeEnabled({ timeout: 10_000 });
+			await join.click();
+			await page.waitForURL(new RegExp(`/campaigns/${campaignId}$`), {
+				timeout: 15_000,
+			});
+		});
+
+		test("Guest Warden item delivery explains the account requirement", async () => {
 			await page.goto(`/party-stash?campaignId=${campaignId}`);
 			await expect(page.getByText("ADD LOOT").first()).toBeVisible({
 				timeout: 15_000,
 			});
 
-			const itemName = `Bureau Salvage Voucher ${Date.now()}`;
-			await page.getByPlaceholder(/Bureau salvage voucher/i).fill(itemName);
-			await page.getByRole("button", { name: /^Add$/i }).click();
-
-			await expect(page.getByText("STASH INVENTORY").first()).toBeVisible();
-			await expect(page.getByText(itemName).first()).toBeVisible({
-				timeout: 10_000,
+			// Guest campaigns are local to the browser; Warden grants require a
+			// signed-in cloud account and must not write a shared stash.
+			await page.getByRole("button", { name: /Browse Full Catalog/i }).click();
+			const dialog = page.getByRole("dialog", {
+				name: /Deliver to Party Stash/i,
 			});
+			await expect(dialog).toBeVisible();
+			await expect(
+				dialog.getByText(/Sign in to deliver items, abilities, or loot/i),
+			).toBeVisible();
+			await expect(
+				dialog.getByRole("button", { name: /^Deliver$/ }),
+			).toBeDisabled();
 		});
 
 		test("Session play route renders the live-combat shell gracefully", async () => {

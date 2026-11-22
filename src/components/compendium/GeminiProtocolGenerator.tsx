@@ -43,10 +43,9 @@ import { listCanonicalEntries } from "@/lib/canonicalCompendium";
 import {
 	calculateTotalCombinations,
 	type GeneratedSovereign,
-	generateSovereign,
-	generateSovereignWithAI,
 } from "@/lib/geminiProtocol";
 import { formatActionType, formatRecharge } from "@/lib/labels";
+import { generateSovereignWithAI } from "@/lib/sovereign/sovereignGenerationClient";
 import {
 	formatRegentVernacular,
 	REGENT_LABEL,
@@ -382,15 +381,16 @@ export function GeminiProtocolGenerator() {
 				);
 				setGeneratedSovereign(sovereign);
 				broadcastGeneration(sovereign);
-			} catch {
-				const sovereign = generateSovereign(
-					selectedJobEntry as never,
-					selectedPathEntry as never,
-					selectedRegentAEntry as never,
-					selectedRegentBEntry as never,
-				);
-				setGeneratedSovereign(sovereign);
-				broadcastGeneration(sovereign);
+			} catch (error) {
+				setGeneratedSovereign(null);
+				toast({
+					title: "Sovereign generation failed",
+					description:
+						error instanceof Error
+							? error.message
+							: "The dedicated Sovereign generator could not complete this request.",
+					variant: "destructive",
+				});
 			} finally {
 				setIsGenerating(false);
 			}
@@ -663,7 +663,6 @@ export function GeminiProtocolGenerator() {
 						</div>
 					) : (
 						<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-							{/* Job Selection */}
 							<div className="space-y-2">
 								<p className="text-sm font-medium">Job Class</p>
 								<Select
@@ -686,7 +685,6 @@ export function GeminiProtocolGenerator() {
 								</Select>
 							</div>
 
-							{/* Path Selection */}
 							<div className="space-y-2">
 								<p className="text-sm font-medium">Path Specialization</p>
 								<Select
@@ -711,7 +709,6 @@ export function GeminiProtocolGenerator() {
 								</Select>
 							</div>
 
-							{/* Regent A Selection */}
 							<div className="space-y-2">
 								<p className="text-sm font-medium">
 									Primary {REGENT_LABEL} (Dominant)
@@ -740,7 +737,6 @@ export function GeminiProtocolGenerator() {
 								</Select>
 							</div>
 
-							{/* Regent B Selection */}
 							<div className="space-y-2">
 								<p className="text-sm font-medium">
 									Secondary {REGENT_LABEL} (Merged)
@@ -771,8 +767,6 @@ export function GeminiProtocolGenerator() {
 						</div>
 					)}
 
-					{/* Choose how to forge the Sovereign: the app's built-in free AI,
-					    or your own outside AI (export the prompt, bring back the JSON). */}
 					<Tabs defaultValue="embedded" className="w-full">
 						<TabsList className="grid w-full grid-cols-2">
 							<TabsTrigger value="embedded">
@@ -830,7 +824,6 @@ export function GeminiProtocolGenerator() {
 				</CardContent>
 			</Card>
 
-			{/* Generated Sovereign Display */}
 			{generatedSovereign && displaySovereign && (
 				<Card className="border-primary/50">
 					<CardHeader className="bg-primary/5">
@@ -842,7 +835,6 @@ export function GeminiProtocolGenerator() {
 										{displaySovereign.name}
 									</CardTitle>
 								</div>
-								{/* Only show save if not already saved to this character */}
 								{!existingSovereign && (
 									<Button
 										variant="outline"
@@ -864,7 +856,6 @@ export function GeminiProtocolGenerator() {
 									</Button>
 								)}
 							</div>
-							{/* Share button — always shown when sovereign is displayed */}
 							<Button
 								variant="ghost"
 								size="sm"
@@ -892,7 +883,6 @@ export function GeminiProtocolGenerator() {
 								{displaySovereign.title}
 							</p>
 
-							{/* Component Badges */}
 							<div className="flex flex-wrap gap-2">
 								<Badge variant="outline">{displaySovereign.jobName}</Badge>
 								<Badge variant="outline">{displaySovereign.pathName}</Badge>
@@ -909,7 +899,6 @@ export function GeminiProtocolGenerator() {
 						</div>
 					</CardHeader>
 					<CardContent className="pt-4 space-y-4">
-						{/* Power Stats */}
 						<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 							<div className="p-3 rounded-lg bg-muted/50">
 								<h4 className="font-semibold text-sm mb-1">Power Multiplier</h4>

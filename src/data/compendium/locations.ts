@@ -734,7 +734,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Stolen from a Guild vault during the Three-Day War between rival Accord Ascendant factions.",
 			history:
-				"Intelligence reports link this to the Shadow Regent's army, though the connection remains unconfirmed.",
+				"Intelligence reports link this to the Umbral Regent's army, though the connection remains unconfirmed.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -2055,7 +2055,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Decoded from ancient sigil-stones found beneath the ruins of a pre-Awakening temple in Kyoto.",
 			history:
-				"Intelligence reports link this to the Shadow Regent's army, though the connection remains unconfirmed.",
+				"Intelligence reports link this to the Umbral Regent's army, though the connection remains unconfirmed.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -4460,7 +4460,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Reconstructed from fragments scattered across seven different C-Rank Rifts.",
 			history:
-				"Intelligence reports link this to the Shadow Regent's army, though the connection remains unconfirmed.",
+				"Intelligence reports link this to the Umbral Regent's army, though the connection remains unconfirmed.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -6961,7 +6961,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Gifted by a dying Regent as payment for a debt that predates human civilization.",
 			history:
-				"Intelligence reports link this to the Shadow Regent's army, though the connection remains unconfirmed.",
+				"Intelligence reports link this to the Umbral Regent's army, though the connection remains unconfirmed.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -7203,7 +7203,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Manifested spontaneously during a double-dungeon event in the American Midwest.",
 			history:
-				"Intelligence reports link this to the Shadow Regent's army, though the connection remains unconfirmed.",
+				"Intelligence reports link this to the Umbral Regent's army, though the connection remains unconfirmed.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -7329,7 +7329,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Manifested spontaneously during a double-dungeon event in the American Midwest.",
 			history:
-				"Intelligence reports link this to the Shadow Regent's army, though the connection remains unconfirmed.",
+				"Intelligence reports link this to the Umbral Regent's army, though the connection remains unconfirmed.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -9457,7 +9457,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Crystallized from raw mana overflow during the catastrophic Meridian City Rift Break of Year 7.",
 			history:
-				"Intelligence reports link this to the Shadow Regent's army, though the connection remains unconfirmed.",
+				"Intelligence reports link this to the Umbral Regent's army, though the connection remains unconfirmed.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -10274,7 +10274,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Extracted from the dimensional residue of a collapsed B-Rank Rift in downtown Meridian City.",
 			history:
-				"Intelligence reports link this to the Shadow Regent's army, though the connection remains unconfirmed.",
+				"Intelligence reports link this to the Umbral Regent's army, though the connection remains unconfirmed.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -11353,7 +11353,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Extracted from the dimensional residue of a collapsed B-Rank Rift in downtown Meridian City.",
 			history:
-				"Intelligence reports link this to the Shadow Regent's army, though the connection remains unconfirmed.",
+				"Intelligence reports link this to the Umbral Regent's army, though the connection remains unconfirmed.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -12770,7 +12770,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Excavated from a pocket dimension that existed for exactly one hour before collapsing.",
 			history:
-				"Intelligence reports link this to the Shadow Regent's army, though the connection remains unconfirmed.",
+				"Intelligence reports link this to the Umbral Regent's army, though the connection remains unconfirmed.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -14570,7 +14570,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Found clutched in the hand of a petrified E-Rank Ascendant who had been missing for three years.",
 			history:
-				"Intelligence reports link this to the Shadow Regent's army, though the connection remains unconfirmed.",
+				"Intelligence reports link this to the Umbral Regent's army, though the connection remains unconfirmed.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -20394,7 +20394,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Created by an unnamed Awakened blacksmith who fed their own life force into the forge.",
 			history:
-				"Intelligence reports link this to the Shadow Regent's army, though the connection remains unconfirmed.",
+				"Intelligence reports link this to the Umbral Regent's army, though the connection remains unconfirmed.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -24932,7 +24932,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Unearthed by a mining Guild operating in the mana-saturated quarries of the Australian Outback.",
 			history:
-				"Intelligence reports link this to the Shadow Regent's army, though the connection remains unconfirmed.",
+				"Intelligence reports link this to the Umbral Regent's army, though the connection remains unconfirmed.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -26510,7 +26510,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Unearthed by a mining Guild operating in the mana-saturated quarries of the Australian Outback.",
 			history:
-				"Intelligence reports link this to the Shadow Regent's army, though the connection remains unconfirmed.",
+				"Intelligence reports link this to the Umbral Regent's army, though the connection remains unconfirmed.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -28532,7 +28532,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Emerged from the Ascendant Bureau's classified Project: Lattice Break experiments.",
 			history:
-				"Intelligence reports link this to the Shadow Regent's army, though the connection remains unconfirmed.",
+				"Intelligence reports link this to the Umbral Regent's army, though the connection remains unconfirmed.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -28653,7 +28653,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Discovered embedded in the spine of a petrified World Tree fragment found in Scandinavia.",
 			history:
-				"Intelligence reports link this to the Shadow Regent's army, though the connection remains unconfirmed.",
+				"Intelligence reports link this to the Umbral Regent's army, though the connection remains unconfirmed.",
 			curse: "",
 			personality: "",
 			current_owner: "",

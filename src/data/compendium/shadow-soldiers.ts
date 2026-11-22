@@ -386,7 +386,7 @@ export const shadowSoldiers: ShadowSoldier[] = [
 			action_type: "Action",
 			frequency: "Per encounter",
 			lattice_interaction:
-				"Void-lattice conduit — suppresses enemy mana recovery within area",
+				"Void-lattice conduit — necrotic and force hits push targets away",
 		},
 		limitations: {
 			requires_attunement: false,

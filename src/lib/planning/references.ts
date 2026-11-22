@@ -228,15 +228,6 @@ export function resolveMechanicalReferenceV1(
 	};
 }
 
-export function resolveMechanicalReferencesV1(
-	inputs: readonly (
-		| MechanicalReferenceRequestInput
-		| MechanicalReferenceRequestV1
-	)[],
-): MechanicalReferenceResolutionV1[] {
-	return inputs.map(resolveMechanicalReferenceV1);
-}
-
 export function toUnresolvedMechanicalReferenceV1(
 	resolution: MechanicalReferenceResolutionV1,
 ): UnresolvedMechanicalReferenceV1 | null {
@@ -254,6 +245,3 @@ export function toUnresolvedMechanicalReferenceV1(
 		issues: resolution.issues.map((issue) => cloneSerializable(issue)),
 	};
 }
-
-/** Concise alias for callers that do not encode the schema version in names. */
-export const resolveMechanicalReference = resolveMechanicalReferenceV1;

@@ -9,11 +9,11 @@ import {
 	Plus,
 	RotateCcw,
 	ScrollText,
-	Sparkles,
 	Trash2,
 } from "lucide-react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import { CompanionCombatDetails } from "@/components/character/CompanionCombatDetails";
 import { Layout } from "@/components/layout/Layout";
 import { ManaFlowText } from "@/components/ui/AscendantText";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
@@ -30,7 +30,7 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
-import { useAIEnhance } from "@/hooks/useAIEnhance";
+import { useCampaignSharedCharacters } from "@/hooks/useCampaignCharacters";
 import { useSendCampaignMessage } from "@/hooks/useCampaignChat";
 import {
 	type Combatant as CampaignCombatantRow,
@@ -39,6 +39,7 @@ import {
 	useUpsertCombatants,
 } from "@/hooks/useCampaignCombat";
 import { useJoinedCampaigns, useMyCampaigns } from "@/hooks/useCampaigns";
+import { useCompanionInstance } from "@/hooks/useCompanionInstances";
 import { useDebounce } from "@/hooks/useDebounce";
 import { useAscendantTools } from "@/hooks/useGlobalDDBeyondIntegration";
 import { useHydratedPreferredCampaignId } from "@/hooks/usePreferredCampaignSelection";
@@ -55,6 +56,14 @@ import {
 } from "@/lib/actionResolution";
 import { useAuth } from "@/lib/auth/authContext";
 import { publishSessionEvent } from "@/lib/campaignSessionEvents";
+import {
+	combatantAllegianceBadges,
+	toEncounterDisposition,
+} from "@/lib/combatantAllegiance";
+import {
+	companionScalingCharacterId,
+	scaleCompanionInstance,
+} from "@/lib/companionScaling";
 import {
 	CONDITION_CATALOG_IDS,
 	CONDITION_EFFECTS,
@@ -74,6 +83,7 @@ import {
 	drainInitiativeAdditions,
 	type PendingCombatant,
 } from "@/lib/initiativeQueue";
+import type { EncounterDisposition } from "@/lib/planning/adapters/encounterWorkflow";
 import { downloadJson, downloadMarkdown } from "@/lib/toolExport";
 import { cn } from "@/lib/utils";
 
@@ -131,6 +141,12 @@ interface Combatant {
 	conditions: string[];
 	condition_timers?: Record<string, number>;
 	isHunter: boolean;
+	/** Character-owned companion or mount; never labeled by disposition. */
+	isCompanion?: boolean;
+	/** Encounter attitude from the Encounter Builder handoff. */
+	disposition?: EncounterDisposition;
+	/** Encounter Builder "Hostile now"; absent means it follows disposition. */
+	currentlyHostile?: boolean;
 	damage_resistances?: string[];
 	damage_immunities?: string[];
 	damage_vulnerabilities?: string[];
@@ -139,6 +155,14 @@ interface Combatant {
 	advancedConditions: ConditionEntry[];
 	/** Dex modifier used for auto-rolled anomaly initiative (P1-6). */
 	dexMod?: number;
+	memberId?: string | null;
+	companionInstanceId?: string | null;
+	companionProfileVersion?: number | null;
+	companionStateVersion?: number | null;
+	initiativeMode?: string | null;
+	initiativeAnchorCharacterId?: string | null;
+	persistedStats?: Json;
+	persistedFlags?: Json;
 }
 
 type CampaignWithRole = {
@@ -212,6 +236,14 @@ const mapCampaignCombatantToTracker = (
 			typeof flags.isHunter === "boolean"
 				? flags.isHunter
 				: Boolean(combatant.member_id),
+		isCompanion:
+			Boolean(combatant.companion_instance_id) ||
+			flags.actorKind === "companion",
+		disposition: toEncounterDisposition(flags.disposition),
+		currentlyHostile:
+			typeof flags.currentlyHostile === "boolean"
+				? flags.currentlyHostile
+				: undefined,
 		damage_resistances: toStringArray(
 			stats.damage_resistances ?? stats.damageResistances,
 		),
@@ -230,6 +262,14 @@ const mapCampaignCombatantToTracker = (
 				: null,
 		advancedConditions: normalizedConditions.advancedConditions,
 		dexMod: toNumber(stats.dex_mod ?? stats.dexMod),
+		memberId: combatant.member_id,
+		companionInstanceId: combatant.companion_instance_id,
+		companionProfileVersion: combatant.companion_profile_version,
+		companionStateVersion: combatant.companion_state_version,
+		initiativeMode: combatant.initiative_mode,
+		initiativeAnchorCharacterId: combatant.initiative_anchor_character_id,
+		persistedStats: combatant.stats,
+		persistedFlags: combatant.flags,
 	};
 };
 
@@ -237,11 +277,17 @@ const mapCampaignCombatantToTracker = (
  * Normalize combatants hydrated from persisted tool-state. The reusable,
  * unit-tested `normalizeCombatConditions` backfills the `advancedConditions`
  * the roster render reads unguarded (see its docblock for why this is a crash
- * guard, not a nicety).
+ * guard, not a nicety). Encounter handoffs store `disposition` and
+ * `currentlyHostile` on each row; anything else in those keys is dropped.
  */
 const normalizeStoredCombatant = (combatant: Combatant): Combatant => ({
 	...combatant,
 	...normalizeCombatConditions(combatant),
+	disposition: toEncounterDisposition(combatant.disposition),
+	currentlyHostile:
+		typeof combatant.currentlyHostile === "boolean"
+			? combatant.currentlyHostile
+			: undefined,
 });
 
 const STORAGE_KEY = "solo-compendium.Warden-tools.initiative.v1";
@@ -249,6 +295,26 @@ const STORAGE_KEY = "solo-compendium.Warden-tools.initiative.v1";
 const CONDITION_OPTIONS = CONDITION_CATALOG_IDS.map(
 	(conditionId) => CONDITION_EFFECTS[conditionId].name,
 );
+
+function TrackerCompanionCombatDetails({
+	campaignId,
+	instanceId,
+	profileVersion,
+}: {
+	campaignId: string;
+	instanceId: string;
+	profileVersion: number | null | undefined;
+}) {
+	const { data: roster = [] } = useCampaignSharedCharacters(campaignId);
+	const { data: instance } = useCompanionInstance(instanceId, profileVersion);
+	if (!instance) return null;
+	const ownerId = companionScalingCharacterId(instance);
+	const level = roster.find((entry) => entry.character_id === ownerId)
+		?.characters?.level;
+	const scaling = scaleCompanionInstance(instance, level);
+	if (!scaling) return null;
+	return <CompanionCombatDetails instance={instance} scaling={scaling} />;
+}
 
 const hasManualConditionDuration = (
 	payload: ActionResolutionPayload,
@@ -270,6 +336,8 @@ const InitiativeTracker = () => {
 	const hydratedContextRef = useRef<string | null>(null);
 	const hydratedCombatSessionRef = useRef<string | null>(null);
 	const skipNextCombatSyncRef = useRef(false);
+	const companionStateVersionRef = useRef(new Map<string, number>());
+	const removedCompanionIdsRef = useRef(new Set<string>());
 	const { data: myCampaigns = [], isLoading: myCampaignsLoading } =
 		useMyCampaigns();
 	const { data: joinedCampaigns = [], isLoading: joinedCampaignsLoading } =
@@ -284,9 +352,6 @@ const InitiativeTracker = () => {
 	const [currentTurn, setCurrentTurn] = useState(0);
 	const [round, setRound] = useState(1);
 	const [combatLog, setCombatLog] = useState<CombatLogEntry[]>([]);
-	const [narration, setNarration] = useState("");
-	const { isEnhancing: isNarrating, enhance: enhanceNarration } =
-		useAIEnhance();
 
 	const logEvent = useCallback(
 		(text: string, atRound: number, atTurn: number) => {
@@ -462,6 +527,41 @@ const InitiativeTracker = () => {
 		isSyncingCombatSession,
 	]);
 
+	// A companion handoff is inserted by the C3 RPC after initial hydration.
+	// Merge that persisted actor into the tracker without manufacturing a second
+	// generic row or resaving an unchanged companion state on every refetch.
+	useEffect(() => {
+		if (!isSyncingCombatSession || !combatSessionContext) return;
+		const liveIds = new Set(activeCombatants.map((row) => row.id));
+		for (const removedId of removedCompanionIdsRef.current) {
+			if (!liveIds.has(removedId))
+				removedCompanionIdsRef.current.delete(removedId);
+		}
+		for (const row of activeCombatants) {
+			if (row.companion_instance_id && row.companion_state_version !== null) {
+				companionStateVersionRef.current.set(
+					row.id,
+					row.companion_state_version,
+				);
+			}
+		}
+		const additions = activeCombatants
+			.filter(
+				(row) =>
+					row.companion_instance_id &&
+					!removedCompanionIdsRef.current.has(row.id),
+			)
+			.map(mapCampaignCombatantToTracker);
+		if (additions.length === 0) return;
+		setCombatants((current) => {
+			const ids = new Set(current.map((row) => row.id));
+			const missing = additions.filter((row) => !ids.has(row.id));
+			if (missing.length === 0) return current;
+			skipNextCombatSyncRef.current = true;
+			return [...current, ...missing];
+		});
+	}, [activeCombatants, combatSessionContext, isSyncingCombatSession]);
+
 	// Load persisted state (best-effort)
 	useEffect(() => {
 		if (isSyncingCombatSession) return;
@@ -501,6 +601,10 @@ const InitiativeTracker = () => {
 				ac: p.ac,
 				conditions: p.conditions ?? [],
 				isHunter: p.isHunter ?? false,
+				// Every queue producer is a companion sheet; the instance id (or the
+				// origin row an older sheet sends) marks the row as a companion.
+				isCompanion: Boolean(p.companionInstanceId || p.companionOriginRowId),
+				companionInstanceId: p.companionInstanceId ?? null,
 				advancedConditions: [],
 				dexMod: p.dexMod,
 			}));
@@ -532,6 +636,7 @@ const InitiativeTracker = () => {
 					name: combatant.name,
 					initiative: combatant.initiative,
 					stats: {
+						...toRecord(combatant.persistedStats),
 						hp: combatant.hp ?? null,
 						max_hp: combatant.maxHp ?? null,
 						temp_hp: combatant.tempHp ?? null,
@@ -550,9 +655,26 @@ const InitiativeTracker = () => {
 					},
 					conditions: getActiveConditionNames(combatant.advancedConditions),
 					flags: {
+						...toRecord(combatant.persistedFlags),
 						isHunter: combatant.isHunter,
+						...(combatant.disposition
+							? { disposition: combatant.disposition }
+							: {}),
+						...(typeof combatant.currentlyHostile === "boolean"
+							? { currentlyHostile: combatant.currentlyHostile }
+							: {}),
 					},
-					member_id: null,
+					member_id: combatant.memberId ?? null,
+					companion_instance_id: combatant.companionInstanceId ?? null,
+					companion_profile_version: combatant.companionProfileVersion ?? null,
+					companion_state_version: combatant.companionInstanceId
+						? (companionStateVersionRef.current.get(combatant.id) ??
+							combatant.companionStateVersion ??
+							null)
+						: null,
+					initiative_mode: combatant.initiativeMode ?? "independent",
+					initiative_anchor_character_id:
+						combatant.initiativeAnchorCharacterId ?? null,
 				})),
 			});
 
@@ -644,6 +766,9 @@ const InitiativeTracker = () => {
 	};
 
 	const removeCombatant = (id: string) => {
+		if (combatants.some((row) => row.id === id && row.companionInstanceId)) {
+			removedCompanionIdsRef.current.add(id);
+		}
 		setCombatants(combatants.filter((c) => c.id !== id));
 		if (currentTurn >= combatants.length - 1) {
 			setCurrentTurn(0);
@@ -1017,11 +1142,13 @@ const InitiativeTracker = () => {
 	}, [activeCombatSession]);
 
 	const resetCombat = () => {
+		for (const row of combatants) {
+			if (row.companionInstanceId) removedCompanionIdsRef.current.add(row.id);
+		}
 		setCombatants([]);
 		setCurrentTurn(0);
 		setRound(1);
 		setCombatLog([]);
-		setNarration("");
 
 		if (isSyncingCombatSession && activeCombatSession) {
 			void supabase
@@ -1061,11 +1188,6 @@ const InitiativeTracker = () => {
 				lines.push(`- **R${e.round}** ${e.text}`);
 			}
 		}
-		if (narration.trim()) {
-			lines.push("");
-			lines.push("## After-Action Narrative");
-			lines.push(narration.trim());
-		}
 		return `${lines.join("\n")}\n`;
 	};
 
@@ -1084,22 +1206,8 @@ const InitiativeTracker = () => {
 					maxHp: c.maxHp,
 				})),
 				log: combatLog,
-				narration,
 			});
 		}
-	};
-
-	const narrateCombat = async () => {
-		if (combatLog.length === 0) return;
-		const transcript = combatLog
-			.map((e) => `Round ${e.round}: ${e.text}`)
-			.join("\n");
-		const result = await enhanceNarration(
-			"combat-after-action",
-			transcript,
-			"Narrate this Rift Ascendant combat as a punchy after-action report for the Warden — concise, cinematic, and faithful to the rolls.",
-		);
-		if (result) setNarration(result);
 	};
 
 	useEffect(() => {
@@ -1497,14 +1605,16 @@ const InitiativeTracker = () => {
 													<div>
 														<div className="font-heading font-semibold flex items-center gap-2">
 															{combatant.name}
-															{combatant.isHunter ? (
-																<Badge variant="secondary" className="text-xs">
-																	Ascendant
-																</Badge>
-															) : (
-																<Badge variant="outline" className="text-xs">
-																	Anomaly
-																</Badge>
+															{combatantAllegianceBadges(combatant).map(
+																(badge) => (
+																	<Badge
+																		key={badge.label}
+																		variant={badge.variant}
+																		className="text-xs"
+																	>
+																		{badge.label}
+																	</Badge>
+																),
 															)}
 														</div>
 														<div className="text-xs text-muted-foreground">
@@ -1527,6 +1637,13 @@ const InitiativeTracker = () => {
 													<Trash2 className="w-3 h-3" />
 												</Button>
 											</div>
+											{campaignId && combatant.companionInstanceId && (
+												<TrackerCompanionCombatDetails
+													campaignId={campaignId}
+													instanceId={combatant.companionInstanceId}
+													profileVersion={combatant.companionProfileVersion}
+												/>
+											)}
 											<div className="grid grid-cols-2 gap-2">
 												<div>
 													<Label
@@ -1862,17 +1979,6 @@ const InitiativeTracker = () => {
 									type="button"
 									variant="outline"
 									size="sm"
-									onClick={narrateCombat}
-									disabled={combatLog.length === 0 || isNarrating}
-									className="gap-2"
-								>
-									<Sparkles className="w-3 h-3" />
-									{isNarrating ? "Narrating…" : "AI Narrate"}
-								</Button>
-								<Button
-									type="button"
-									variant="outline"
-									size="sm"
 									onClick={() => exportLog("md")}
 									disabled={combatLog.length === 0}
 									title="Export Markdown"
@@ -1914,17 +2020,6 @@ const InitiativeTracker = () => {
 									))
 							)}
 						</div>
-
-						{narration && (
-							<div className="rounded border border-accent/20 bg-accent/5 p-3">
-								<p className="text-[11px] uppercase tracking-widest text-accent/80 font-bold mb-1">
-									After-Action Narrative
-								</p>
-								<p className="text-sm text-muted-foreground whitespace-pre-wrap leading-snug">
-									{narration}
-								</p>
-							</div>
-						)}
 					</div>
 				</AscendantWindow>
 			</div>

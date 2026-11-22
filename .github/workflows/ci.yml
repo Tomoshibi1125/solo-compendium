@@ -536,11 +536,6 @@ jobs:
           cache: npm
 
       - run: npm ci
-      - name: Validate authored publication inventory and app/book canon parity
-        run: |
-          npx --no-install tsx scripts/validate-sourcebook-build-output.ts --source-only
-          npx --no-install tsx scripts/validate-sourcebook-canon-parity.ts
-
       - name: Install Chromium runtime
         run: npx playwright install --with-deps chromium
 
@@ -679,186 +674,6 @@ jobs:
           if-no-files-found: warn
           retention-days: 14
 
-  books-pdf:
-    name: Eight sourcebooks and PDF QA
-    runs-on: ubuntu-latest
-    timeout-minutes: 360
-    env:
-      USERPROFILE: ${{ runner.temp }}/book-tools
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: npm
-
-      - name: Require authored book build and validation sources
-        run: |
-          test -f books/scripts/build-books.ts || {
-            echo "::error::Missing tracked authored book builder books/scripts/build-books.ts."
-            exit 1
-          }
-          test -f books/scripts/qa-checks.ts || {
-            echo "::error::Missing tracked authored PDF QA script books/scripts/qa-checks.ts."
-            exit 1
-          }
-          test -f books/data/canonical-publication-manifest.json || {
-            echo "::error::Missing canonical publication manifest."
-            exit 1
-          }
-          test -f scripts/validate-sourcebook-build-output.ts || {
-            echo "::error::Missing sourcebook output validator."
-            exit 1
-          }
-          test -f scripts/validate-sourcebook-canon-parity.ts || {
-            echo "::error::Missing sourcebook canon parity validator."
-            exit 1
-          }
-          node -e 'const scripts = require("./package.json").scripts; if (!scripts?.["books:build"]) process.exit(1)' || {
-            echo "::error::Missing the books:build package script."
-            exit 1
-          }
-
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-
-      - run: npm ci
-      - name: Install Chromium runtime
-        run: npx playwright install --with-deps chromium
-      - name: Install pinned PDF inspection tools
-        run: |
-          set -euo pipefail
-          python -m pip install --disable-pip-version-check pypdf==5.4.0 pdfplumber==0.11.6
-          sudo apt-get update
-          sudo apt-get install --yes poppler-utils
-
-          # The current book scripts search Codex/Windows-shaped tool paths.
-          # Populate those paths with the runner's pinned Python and Poppler
-          # executables until native cross-platform discovery is implemented.
-          python_dir="$USERPROFILE/.cache/codex-runtimes/codex-primary-runtime/dependencies/python"
-          poppler_dir="$USERPROFILE/.cache/codex-runtimes/codex-primary-runtime/dependencies/native/poppler/Library/bin"
-          mkdir -p "$python_dir" "$poppler_dir"
-          ln -s "$(command -v python)" "$python_dir/python.exe"
-          ln -s "$(command -v pdfinfo)" "$poppler_dir/pdfinfo.exe"
-          ln -s "$(command -v pdftoppm)" "$poppler_dir/pdftoppm.exe"
-
-          "$python_dir/python.exe" -c 'import pdfplumber, pypdf'
-          "$poppler_dir/pdfinfo.exe" -v
-
-      - name: Build all eight books and run repository PDF QA
-        env:
-          # build-books.ts otherwise downloads the latest unpinned Vivliostyle.
-          # Offline mode makes that optional attempt fail closed into the
-          # already-installed Playwright PDF renderer.
-          npm_config_offline: "true"
-        run: |
-          set -euo pipefail
-          mkdir -p books/exports
-          npm run books:build 2>&1 | tee books/exports/build-output.log
-
-      # The authored validator is the publication/output authority. The shell
-      # and independent pypdf checks below provide defense-in-depth evidence.
-      - name: Require all eight PDFs and enforce QA reports
-        run: |
-          set -euo pipefail
-          npx --no-install tsx scripts/validate-sourcebook-build-output.ts
-
-          expected=(
-            "Rift Ascendant - Ascendant Guide"
-            "Rift Ascendant - Warden Guide"
-            "Rift Ascendant - Rift Age Worldbook"
-            "Rift Ascendant - Awakened Arts"
-            "Rift Ascendant - Vaults of the Rift"
-            "Rift Ascendant - Anomaly Manual"
-            "Rift Ascendant - Run Silent Campaign"
-            "Rift Ascendant - The Glassline Claim"
-          )
-
-          for base in "${expected[@]}"; do
-            pdf="books/exports/$base.pdf"
-            if [[ ! -s "$pdf" ]]; then
-              echo "::error::Missing or empty required PDF: $pdf"
-              exit 1
-            fi
-          done
-
-          actual_count=$(find books/exports -maxdepth 1 -type f -name '*.pdf' | wc -l | tr -d ' ')
-          if [[ "$actual_count" != "8" ]]; then
-            echo "::error::Expected exactly eight PDFs, found $actual_count."
-            exit 1
-          fi
-
-          test -s books/shared/validation_report.md || {
-            echo "::error::Book build did not produce validation_report.md."
-            exit 1
-          }
-          if grep -n 'FAIL:' books/shared/validation_report.md; then
-            echo "::error::The book validation report contains required failures."
-            exit 1
-          fi
-          if grep -nE '(^|[[:space:]])FAIL(:|[[:space:]]|$)' books/exports/build-output.log; then
-            echo "::error::The repository PDF QA printed a failure but did not return a failing status."
-            exit 1
-          fi
-
-          python - <<'PY'
-          import json
-          from pathlib import Path
-          from pypdf import PdfReader
-
-          export_root = Path("books/exports")
-          expected = [
-              "Rift Ascendant - Ascendant Guide",
-              "Rift Ascendant - Warden Guide",
-              "Rift Ascendant - Rift Age Worldbook",
-              "Rift Ascendant - Awakened Arts",
-              "Rift Ascendant - Vaults of the Rift",
-              "Rift Ascendant - Anomaly Manual",
-              "Rift Ascendant - Run Silent Campaign",
-              "Rift Ascendant - The Glassline Claim",
-          ]
-          hard_limit = 100 * 1024 * 1024
-          failures = []
-          results = []
-          for base in expected:
-              path = export_root / f"{base}.pdf"
-              size = path.stat().st_size
-              try:
-                  pages = len(PdfReader(path).pages)
-              except Exception as error:
-                  failures.append(f"{path}: unreadable PDF: {error}")
-                  pages = 0
-              if pages < 1:
-                  failures.append(f"{path}: no readable pages")
-              if size > hard_limit:
-                  failures.append(f"{path}: {size} bytes exceeds the 100 MiB hard limit")
-              results.append({"path": str(path), "bytes": size, "pages": pages})
-
-          report = {"expectedCount": 8, "results": results, "failures": failures}
-          report_path = Path("books/shared/ci-pdf-verification.json")
-          report_path.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
-          if failures:
-              raise SystemExit("\n".join(failures))
-          PY
-
-      - name: Upload generated PDFs and QA evidence
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: sourcebook-pdfs
-          path: |
-            books/exports/*.pdf
-            books/exports/build-output.log
-            books/exports/rendered-samples
-            books/shared/pdf_build_report.md
-            books/shared/validation_report.md
-            books/shared/ci-pdf-verification.json
-          if-no-files-found: warn
-          compression-level: 0
-          retention-days: 7
-
   supabase-edge:
     name: Supabase Edge Function typecheck
     runs-on: ubuntu-latest
@@ -878,6 +693,7 @@ jobs:
       - run: npm ci
       - name: Typecheck all Edge Functions with Deno
         run: |
+          set -o pipefail
           mkdir -p test-results/supabase-edge
           npm run check:deno 2>&1 | tee test-results/supabase-edge/deno-check.log
 
@@ -926,12 +742,20 @@ jobs:
           npx supabase migration up --local 2>&1 | tee test-results/supabase-db/migrations.log
 
       # No package script exists for DB lint, so keep the local-only CLI command
-      # explicit. Warning-level findings are required failures.
+      # explicit. Warning-level findings in the app's schemas are required
+      # failures (extensions.index_advisor ships with Supabase and is out of
+      # scope). pipefail keeps tee from masking the exit code.
       - name: Lint the migrated local database
-        run: npx supabase db lint --local --level warning --fail-on warning 2>&1 | tee test-results/supabase-db/db-lint.log
+        run: |
+          set -o pipefail
+          npx supabase db lint --local --schema public,app_private --level warning --fail-on warning 2>&1 | tee test-results/supabase-db/db-lint.log
 
-      - name: Run pgTAP security hardening contracts
-        run: npm run test:db:security 2>&1 | tee test-results/supabase-db/security-contracts.log
+      # Every pgTAP file, including the security hardening contracts and
+      # function_body_integrity.sql (plpgsql_check over public and app_private).
+      - name: Run pgTAP database contracts
+        run: |
+          set -o pipefail
+          npx supabase test db --local 2>&1 | tee test-results/supabase-db/pgtap.log
 
       - name: Stop local Supabase
         if: always()
@@ -965,7 +789,6 @@ jobs:
       - mobile
       - accessibility
       - standalone-sourcebook
-      - books-pdf
       - supabase-edge
       - supabase-db-security
     runs-on: ubuntu-latest

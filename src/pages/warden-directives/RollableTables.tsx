@@ -1,12 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import {
-	ArrowLeft,
-	Dice6,
-	FileJson,
-	FileText,
-	Loader2,
-	Sparkles,
-} from "lucide-react";
+import { ArrowLeft, Dice6, FileJson, FileText } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
@@ -19,7 +12,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useEmbedded } from "@/contexts/EmbeddedContext";
 import type { StaticCompendiumEntry } from "@/data/compendium/providers/types";
 import { useToast } from "@/hooks/use-toast";
-import { useAIEnhance } from "@/hooks/useAIEnhance";
 import { useDebounce } from "@/hooks/useDebounce";
 import { usePreferredCampaignSelection } from "@/hooks/usePreferredCampaignSelection";
 import { useUserToolState } from "@/hooks/useToolState";
@@ -246,30 +238,6 @@ const RollableTables = () => {
 		void saveNow(debouncedPayload);
 	}, [debouncedPayload, isStateLoading, saveNow]);
 
-	const { isEnhancing, enhancedText, enhance } = useAIEnhance();
-
-	const handleAIEnhance = async () => {
-		const filledResults = Object.entries(results)
-			.filter(([, value]) => value)
-			.map(([key, value]) => ({
-				label: tableIndex.get(key)?.name ?? key,
-				value,
-			}));
-		if (filledResults.length === 0) return;
-		const seed = `Expand these rollable table results into fully detailed TTRPG content for a Rift Ascendant campaign.
-
-ROLLED RESULTS:
-${filledResults.map(({ label, value }) => `- ${label}: ${value}`).join("\n")}
-
-For EACH result, provide:
-1. Full description (2-3 sentences) with sensory details and atmosphere
-2. Mechanical effects: DCs, damage, conditions, durations, saves as applicable
-3. Lore context: How it connects to Rifts, Regents, the Rift, Ascendants
-4. Tactical implications: How players/Warden should use this in play
-5. Follow-up hooks: What this result leads to next`;
-		await enhance("table-results", seed);
-	};
-
 	const roll = (tableId: string) => {
 		const table = tableIndex.get(tableId);
 		const rolled = table ? rollCanonicalTable(table) : null;
@@ -310,7 +278,7 @@ ${current}
 
 ## Roll Log
 ${logMd}
-${enhancedText ? `\n## AI-Enhanced\n${enhancedText}\n` : ""}`;
+`;
 	};
 
 	const handleExportMarkdown = () => {
@@ -417,8 +385,7 @@ ${enhancedText ? `\n## AI-Enhanced\n${enhancedText}\n` : ""}`;
 									speed="slow"
 									className="font-heading"
 								>
-									Rollable tables from the Warden's Guide, adapted for the
-									post-reset world.
+									Rollable tables from the Warden's Guide for the Rift Age.
 								</ManaFlowText>
 							}
 						/>
@@ -526,19 +493,6 @@ ${enhancedText ? `\n## AI-Enhanced\n${enhancedText}\n` : ""}`;
 					<div className="mt-6 space-y-4">
 						<div className="flex flex-wrap gap-2">
 							<Button
-								onClick={handleAIEnhance}
-								className="flex-1 gap-2 btn-umbral"
-								size="lg"
-								disabled={isEnhancing || !Object.values(results).some(Boolean)}
-							>
-								{isEnhancing ? (
-									<Loader2 className="w-4 h-4 animate-spin" />
-								) : (
-									<Sparkles className="w-4 h-4" />
-								)}
-								{isEnhancing ? "Enhancing..." : "Enhance All Results"}
-							</Button>
-							<Button
 								onClick={handleExportMarkdown}
 								variant="outline"
 								size="lg"
@@ -557,19 +511,6 @@ ${enhancedText ? `\n## AI-Enhanced\n${enhancedText}\n` : ""}`;
 								JSON
 							</Button>
 						</div>
-						{enhancedText && (
-							<AscendantWindow title="AI-ENHANCED RESULTS">
-								<div className="flex items-center gap-2 mb-2">
-									<Sparkles className="w-4 h-4 text-primary" />
-									<span className="text-xs font-display text-primary">
-										AI-ENHANCED DETAILS
-									</span>
-								</div>
-								<div className="text-sm text-muted-foreground whitespace-pre-line bg-primary/5 rounded-lg p-4 max-h-none sm:max-h-[500px] overflow-y-auto">
-									{enhancedText}
-								</div>
-							</AscendantWindow>
-						)}
 						{log.length > 0 && (
 							<AscendantWindow title="ROLL LOG">
 								<div className="space-y-1">

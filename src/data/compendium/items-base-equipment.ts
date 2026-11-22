@@ -11944,7 +11944,7 @@ export const baseEquipment: Item[] = [
 		name: "Strategy Board Set",
 		source_book: "Rift Ascendant Canon",
 		description:
-			"A modern tactics board game of Rifts and monarchs, popular in Bureau break rooms.",
+			"A modern tactics board game of Rifts and Regents, popular in Bureau break rooms.",
 		rarity: "common",
 		type: "wondrous",
 		image: "/generated/compendium/items/item-0599.webp",

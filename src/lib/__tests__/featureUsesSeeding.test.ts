@@ -160,10 +160,40 @@ describe("job classFeatures limited-use annotations (Phase D)", () => {
 			uses: { formula: "1", recharge: "short-rest" },
 			tracking: "uses",
 		});
-		expect(findFeature("stalker", "classFeatures", "Prey Lock")).toMatchObject({
+		const preyLock = findFeature("stalker", "classFeatures", "Prey Lock");
+		expect(preyLock).toMatchObject({
 			actionType: "Bonus action",
-			tracking: "manual",
+			uses: { formula: "PB", recharge: "long-rest", unlimitedAtLevel: 20 },
+			tracking: "uses",
 		});
+		if (!preyLock.uses) throw new Error("Missing Prey Lock uses");
+		expect(resolveFeatureUsesMax(preyLock.uses, 1, 2, SAMPLE_ABILITIES)).toBe(
+			2,
+		);
+		expect(resolveFeatureUsesMax(preyLock.uses, 19, 6, SAMPLE_ABILITIES)).toBe(
+			6,
+		);
+		expect(
+			resolveFeatureUsesMax(preyLock.uses, 20, 6, SAMPLE_ABILITIES),
+		).toBeNull();
+
+		const overload = findFeature(
+			"berserker",
+			"classFeatures",
+			"Overload State",
+		);
+		expect(overload).toMatchObject({
+			actionType: "Bonus action",
+			uses: { formula: "PB", recharge: "long-rest", unlimitedAtLevel: 20 },
+			tracking: "uses",
+		});
+		if (!overload.uses) throw new Error("Missing Overload State uses");
+		expect(resolveFeatureUsesMax(overload.uses, 5, 3, SAMPLE_ABILITIES)).toBe(
+			3,
+		);
+		expect(
+			resolveFeatureUsesMax(overload.uses, 20, 6, SAMPLE_ABILITIES),
+		).toBeNull();
 
 		const assist = findFeature(
 			"technomancer",

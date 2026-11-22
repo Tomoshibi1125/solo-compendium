@@ -331,6 +331,3 @@ export function createCharacterMechanicalSnapshotV1(
 		),
 	};
 }
-
-export const buildCharacterMechanicalSnapshotV1 =
-	createCharacterMechanicalSnapshotV1;

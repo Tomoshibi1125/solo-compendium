@@ -55,6 +55,13 @@ for (const [key, def] of Object.entries(SKILLS)) {
 	SKILL_LOOKUP.set(normalizeSkillName(def.name), def);
 }
 
+/** A skill by its 5e key ("Arcana") or RA display name ("Mana Flow"). */
+export function findSkillDefinition(skillName: string): SkillDefinition | null {
+	return (
+		SKILLS[skillName] ?? SKILL_LOOKUP.get(normalizeSkillName(skillName)) ?? null
+	);
+}
+
 const hasSkill = (values: string[], skillName: string): boolean => {
 	const key = normalizeSkillName(skillName);
 	return values.some((value) => normalizeSkillName(value) === key);
@@ -67,8 +74,7 @@ export function calculateSkillModifier(
 	expertise: string[],
 	proficiencyBonus: number,
 ): number {
-	const skill =
-		SKILLS[skillName] ?? SKILL_LOOKUP.get(normalizeSkillName(skillName));
+	const skill = findSkillDefinition(skillName);
 	if (!skill) return 0;
 
 	const abilityMod = getAbilityModifier(abilities[skill.ability]);

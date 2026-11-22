@@ -6,12 +6,14 @@ import {
 	addLocalSigilInscription,
 	addLocalSpell,
 	createLocalCharacter,
+	getLocalCharacterState,
 	listLocalEquipment,
 	listLocalFeatures,
 	listLocalPowers,
 	listLocalSigilInscriptions,
 	listLocalSpells,
 	removeLocalSigilInscription,
+	setLocalPortableCanonState,
 	updateLocalCharacter,
 } from "@/lib/guestStore";
 
@@ -85,6 +87,53 @@ describe("guestStore canonical ID parity", () => {
 
 		expect(updated?.job).toBe("Mage");
 		expect(updated?.job_id).toBe("mage");
+	});
+
+	it("keeps imported companion, material, and Sovereign records inert but portable in v4", () => {
+		const character = createLocalCharacter({ name: "Portable guest" });
+		setLocalPortableCanonState(character.id, {
+			portableCompanionRows: {
+				extras: [],
+				vehicles: [],
+				tamedAnomalies: [
+					{ anomaly_id: "species-1", companion_instance_id: "individual-1" },
+				],
+			},
+			portableMaterialState: {
+				version: 1,
+				lots: [{ id: "lot-1", source_rank: "B" }],
+			},
+			portableSovereign: {
+				schema_version: 2,
+				definition: { id: "sovereign-1" },
+			},
+		});
+		updateLocalCharacter(character.id, { name: "Renamed portable guest" });
+		const stored = getLocalCharacterState(character.id);
+		expect(window.localStorage.getItem("solo-compendium.guest.v4")).toContain(
+			'"version":4',
+		);
+		expect(stored?.portableCompanionRows.tamedAnomalies).toHaveLength(1);
+		expect(stored?.portableMaterialState).toMatchObject({ version: 1 });
+		expect(stored?.portableSovereign).toMatchObject({ schema_version: 2 });
+	});
+
+	it("drops retired companion profiles saved by older guest sessions", () => {
+		const character = createLocalCharacter({ name: "Older guest" });
+		const key = "solo-compendium.guest.v4";
+		const saved = JSON.parse(window.localStorage.getItem(key) ?? "{}");
+		saved.characters[character.id].portableCompanionProfiles = [
+			{ id: "individual-1", companion_profile: { version: 1 } },
+		];
+		window.localStorage.setItem(key, JSON.stringify(saved));
+
+		updateLocalCharacter(character.id, { name: "Older guest, reloaded" });
+		expect(window.localStorage.getItem(key)).not.toContain(
+			"portableCompanionProfiles",
+		);
+		expect(getLocalCharacterState(character.id)?.character.name).toBe(
+			"Older guest, reloaded",
+		);
 	});
 
 	it("addLocalPower writes power_id when supplied", () => {

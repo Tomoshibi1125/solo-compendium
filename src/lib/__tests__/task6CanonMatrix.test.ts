@@ -251,7 +251,8 @@ describe("Task 6 canonical job/path matrix", () => {
 		});
 		expect(classFeature("stalker", "Prey Lock")).toMatchObject({
 			actionType: "Bonus action",
-			tracking: "manual",
+			uses: { formula: "PB", recharge: "long-rest", unlimitedAtLevel: 20 },
+			tracking: "uses",
 		});
 		expect(awakeningFeature("stalker", "Pursuit Burst")).toMatchObject({
 			actionType: "Bonus action",

@@ -8,9 +8,12 @@ import {
 	type Guild,
 	loadLocalGuilds,
 	saveLocalGuilds,
+	shouldUseLocalGuildStore,
 } from "@/hooks/useGuilds";
-import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
+import { supabase } from "@/integrations/supabase/client";
+import type { Json } from "@/integrations/supabase/types";
 import { AppError } from "@/lib/appError";
+import { guildAdminAction } from "@/lib/guildAdminAction";
 import {
 	type AggregatedGuildEffects,
 	aggregateGuildEffects,
@@ -29,9 +32,6 @@ import {
 import type { GuildFunds } from "@/lib/guildTreasury";
 
 // Local (guest) store when Supabase isn't configured or under E2E.
-const isGuestGuildStore = (): boolean =>
-	!isSupabaseConfigured || import.meta.env.VITE_E2E === "true";
-
 /**
  * Derive a guild's current Base state — built facilities, unlocked skills, and
  * the resolved guild-wide benefits (member-cap bonus, Forge recipes, real sheet
@@ -71,7 +71,7 @@ const readGuildBaseRow = async (
 	base_property: GuildBasePropertyState;
 	funds: GuildFunds;
 }> => {
-	if (isGuestGuildStore()) {
+	if (await shouldUseLocalGuildStore()) {
 		const g = loadLocalGuilds().find((x) => x.id === guildId);
 		if (!g) throw new AppError("Guild not found", "NOT_FOUND");
 		return {
@@ -105,7 +105,7 @@ const writeGuildBaseRow = async (
 		funds: GuildFunds;
 	}>,
 ): Promise<void> => {
-	if (isGuestGuildStore()) {
+	if (await shouldUseLocalGuildStore()) {
 		const guilds = loadLocalGuilds();
 		const idx = guilds.findIndex((g) => g.id === guildId);
 		if (idx === -1) throw new AppError("Guild not found", "NOT_FOUND");
@@ -113,11 +113,11 @@ const writeGuildBaseRow = async (
 		saveLocalGuilds(guilds);
 		return;
 	}
-	const { error } = await supabase
-		.from("guilds")
-		.update(patch)
-		.eq("id", guildId);
-	if (error) throw error;
+	await guildAdminAction(
+		guildId,
+		"update_base_state",
+		patch as unknown as Json,
+	);
 };
 
 /** Buy the next tier of a facility with guild funds (ungated). */

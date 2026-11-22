@@ -187,7 +187,6 @@ export interface Regent {
 		quest_completion: string;
 		warden_verification: boolean;
 		prerequisite_job?: string;
-		power_level: number;
 	};
 
 	abilities?: {
@@ -201,6 +200,7 @@ export interface Regent {
 		uses?: RegentFeatureUseDefinition;
 		resource?: string;
 		tracking?: RegentFeatureTracking;
+		mechanics?: CompendiumMechanics;
 	}[];
 
 	features?: {
@@ -213,6 +213,7 @@ export interface Regent {
 		uses?: RegentFeatureUseDefinition;
 		resource?: string;
 		tracking?: RegentFeatureTracking;
+		mechanics?: CompendiumMechanics;
 	}[];
 
 	mechanics?: {

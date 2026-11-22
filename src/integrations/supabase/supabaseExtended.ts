@@ -53,4 +53,11 @@ export interface RegentExtended {
 		power_level?: number;
 	}>;
 	features?: Array<{ name: string; description: string; power_level?: number }>;
+	progression_table?: Record<
+		string,
+		{
+			features_gained: string[];
+			abilities_improved: string[];
+		}
+	>;
 }

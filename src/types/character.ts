@@ -146,6 +146,8 @@ export interface StaticJob {
 	toolProficiencies?: string[];
 	tool_proficiencies?: string[];
 	skillChoices?: string[];
+	skillChoiceCount?: number;
+	skill_choice_count?: number;
 	source?: string;
 	classFeatures?: Array<{
 		level: number;
@@ -161,6 +163,8 @@ export interface StaticJob {
 		uses?: FeatureUseDefinition;
 		resource?: string;
 		tracking?: FeatureTracking;
+		/** Earlier names of a renamed feature; level-up adopts rows stored under them. */
+		formerNames?: string[];
 	}>;
 	spellcasting?: {
 		ability: string;

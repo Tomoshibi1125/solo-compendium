@@ -4,7 +4,6 @@ import type {
 } from "@/data/compendium/providers/types";
 import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import type { Database } from "@/integrations/supabase/types";
-import { AppError } from "@/lib/appError";
 import {
 	isStaticCanonicalEntryType,
 	listCanonicalEntries,
@@ -185,7 +184,10 @@ export async function resolveRef(
 	const resolvedId = legacyIdMap[type]?.[id] ?? id;
 	const staticEntries = await listStaticEntries(type);
 	if (staticEntries) {
-		const entry = staticEntries.find((item) => item.id === resolvedId);
+		// Folded duplicate ids live on the surviving entry's aliases.
+		const entry =
+			staticEntries.find((item) => item.id === resolvedId) ??
+			staticEntries.find((item) => item.aliases?.includes(resolvedId));
 		if (entry) {
 			const resolvedName = entry.display_name || entry.name;
 			return {
@@ -290,22 +292,6 @@ export async function resolveRefs(
 
 	await Promise.all(promises);
 	return results;
-}
-
-/**
- * Get the Supabase table name for an entry type
- */
-export function getTableName(
-	type: EntryType,
-): keyof Database["public"]["Tables"] {
-	const tableName = supabaseTableMap[type];
-	if (!tableName) {
-		throw new AppError(
-			`No Supabase table for entry type: ${type}`,
-			"INVALID_INPUT",
-		);
-	}
-	return tableName;
 }
 
 /**

@@ -8144,7 +8144,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 		name: "Mana Siphon Strike",
 		display_name: "Mana Siphon Strike",
 		description:
-			"Channel entropic mana through a melee strike. On hit: 5d8 necrotic damage. You regain HP equal to half the damage dealt. If the target has mana-casting ability, you also recover one expended spell slot of 3rd level or lower.",
+			"Channel entropic mana through a melee strike. On hit: 5d8 necrotic damage. You regain HP equal to half the damage dealt. If the target can cast spells, you also recover one expended spell slot of 3rd level or lower.",
 		lore: {
 			origin: "Documented in the Rift Ascendant compendium.",
 			history: "",
@@ -8637,7 +8637,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 		name: "Lattice Severance",
 		display_name: "Lattice Severance",
 		description:
-			"As an action, you attempt to isolate a creature's mana circuit from the ambient lattice. The target must make a DC 18 Intelligence saving throw. On a failed save, the target is severed: it cannot cast spells, use any mana-based abilities, or benefit from the magical properties of magic items for the duration. The target can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success.",
+			"As an action, you attempt to isolate a creature's mana circuit from the ambient lattice. The target must make a DC 18 Intelligence saving throw. On a failed save, the target is severed: it cannot cast spells, use Powers, or benefit from the magical properties of magic items for the duration. The target can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success.",
 		lore: {
 			origin: "Documented in the Rift Ascendant compendium.",
 			history: "",
@@ -8666,7 +8666,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 			dc: 18,
 			success: "Its mana circuit stays connected.",
 			failure:
-				"Severed for the duration: it can't cast spells, use mana-based abilities, or benefit from magical items, and can repeat the save at the end of each turn.",
+				"Severed for the duration: it can't cast spells, use Powers, or benefit from magical items, and can repeat the save at the end of each turn.",
 		},
 		atHigherLevels:
 			"At 9th level, the target also loses resistance to non-magical damage.",
@@ -9243,7 +9243,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 		name: "Mana Cascade Failure",
 		display_name: "Mana Cascade Failure",
 		description:
-			"As an action, you trigger a catastrophic feedback cascade in a creature's mana circuit. The target must make a DC 17 Intelligence saving throw. On a failed save, it takes 8d6 force damage and loses its highest-level remaining spell slot. If the target does not have any spellcasting or mana-based abilities, it is stunned until the end of its next turn instead.",
+			"As an action, you trigger a catastrophic feedback cascade in a creature's mana circuit. The target must make a DC 17 Intelligence saving throw. On a failed save, it takes 8d6 force damage and loses its highest-level remaining spell slot. If the target does not have any spellcasting or Powers, it is stunned until the end of its next turn instead.",
 		lore: {
 			origin: "Documented in the Rift Ascendant compendium.",
 			history: "",
@@ -11189,7 +11189,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 		name: "Idol's Grand Finale",
 		display_name: "Idol's Grand Finale",
 		description:
-			"Perform the ultimate harmonic — a frequency that resonates with the mana-lattice itself. For 1 minute: every ally within 300 feet gains advantage on all rolls and +5 to attack rolls, damage rolls, saves, and checks. Every enemy in range: DC 20 PRS save or incapacitated. After casting, you can't use mana abilities for 7 days.",
+			"Perform the ultimate harmonic — a frequency that resonates with the mana-lattice itself. For 1 minute: every ally within 300 feet gains advantage on all rolls and +5 to attack rolls, damage rolls, saves, and checks. Every enemy in range: DC 20 PRS save or incapacitated. After casting, you can't cast spells or use Powers for 7 days.",
 		lore: {
 			origin: "Documented in the Rift Ascendant compendium.",
 			history: "",

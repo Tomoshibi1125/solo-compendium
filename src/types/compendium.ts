@@ -217,6 +217,11 @@ export interface CompendiumMechanics {
 	ability?: string;
 	save?: string;
 	dc?: number | string;
+	/**
+	 * For strike abilities: "added" dice ride on a strike's damage and stay as
+	 * written; "unarmed-die" damage uses the Striker unarmed die by level.
+	 */
+	damage_basis?: "added" | "unarmed-die";
 	attack?: {
 		type?: string;
 		mode?: string;
@@ -268,6 +273,43 @@ export interface CompendiumMechanics {
 		type?: string;
 		bonus?: number;
 	};
+	// Regent-specific mechanics
+	death_save_override?: boolean;
+	restoration?: string;
+	area_damage?: string;
+	damage_bonus?: string;
+	conceptual_purification?: boolean | string;
+	toggle?: boolean | string;
+	control_limit?: string;
+	persistence?: string;
+	form_stats?: string;
+	summoned_creatures?: Record<string, unknown> | string;
+	disease_lifecycle?: Record<string, unknown> | string;
+	swarm_lifecycle?: Record<string, unknown> | string;
+	anchor_lifecycle?: Record<string, unknown> | string;
+	demiplane_lifecycle?: Record<string, unknown> | string;
+	topology_lifecycle?: Record<string, unknown> | string;
+	blood_apocalypse_lifecycle?: Record<string, unknown> | string;
+	gravity_field_lifecycle?: Record<string, unknown> | string;
+	singularity_lifecycle?: Record<string, unknown> | string;
+	death_state_lifecycle?: Record<string, unknown> | string;
+	sanctification?: string;
+	dismissal?: string;
+	object_erasure?: string;
+	aura_range?: string;
+	temp_hp?: string;
+	enhances?: string;
+	targets?: string;
+	conditional_immunity?: string;
+	maximum?: string;
+	stat_block?: Record<string, unknown> | string;
+	magic_erasure?: Record<string, unknown> | string;
+	reaction_uses?: string;
+	last_stand_reaction?: Record<string, unknown> | string;
+	allies?: string;
+	effect?: string;
+	universal_command?: Record<string, unknown> | string;
+	bonus_attack?: string | boolean;
 }
 
 export interface CompendiumLimitations {
@@ -399,19 +441,24 @@ export interface AnomalyTrait {
 	id?: string;
 	name: string;
 	description: string;
+	/** Authored use limit, e.g. `once-per-day`. */
+	frequency?: string;
 }
 
 export interface AnomalyAction {
 	id?: string;
 	name: string;
 	description: string;
-	action_type:
+	action_type?:
 		| "action"
 		| "bonus"
 		| "reaction"
 		| "legendary"
 		| "mythic"
 		| "lair";
+	/** Authored delivery: `melee`, `ranged`, or `special`. */
+	type?: string;
+	range?: number;
 	attack_bonus?: number;
 	damage?: string;
 	damage_type?: string;
@@ -425,12 +472,30 @@ export interface AnomalyAction {
 export interface CompendiumAnomaly extends BaseCompendiumItem {
 	type: string;
 	rank: string;
+	/** Natural-history fields describe the species, not encounter allegiance. */
+	species?: { name: string; classification: string | null };
+	biology?: {
+		size: string | null;
+		creatureType: string | null;
+		senses: string | null;
+		landSpeed: number | null;
+	};
+	ecology?: {
+		habitats: string[];
+		organization: string | null;
+	};
 	ac?: number;
 	hp?: number;
+	/** Authored hit points and Hit Dice, e.g. `12 (1d10 + 6)`. */
+	hit_dice?: string;
 	size?: string;
 	alignment?: string;
 	speed?: string | number;
+	skills?: Record<string, number>;
 	stats?: {
+		speed?: number;
+		/** Non-walking speeds in feet, e.g. `{ fly: 80 }`. */
+		extra_speeds?: Record<string, number>;
 		ability_scores?: {
 			strength?: number;
 			agility?: number;
@@ -451,6 +516,8 @@ export interface CompendiumAnomaly extends BaseCompendiumItem {
 	languages?: string;
 	traits?: AnomalyTrait[];
 	actions?: AnomalyAction[];
+	bonus_actions?: AnomalyTrait[];
+	reactions?: AnomalyTrait[];
 	legendary_actions?: Array<{
 		name?: string;
 		description?: string;
@@ -518,6 +585,20 @@ export interface CompendiumVehicleAbility {
 	action_type: string;
 }
 
+/**
+ * A natural weapon of a combat-capable mount without an Anomaly stat block.
+ * It scales like any companion attack (RA-10): the dice count follows the
+ * owner's level and the damage adds proficiency bonus.
+ */
+export interface CompendiumMountNaturalAttack {
+	name: string;
+	damage_type: string;
+	/** Damage die size; defaults to the mount's size die (Medium d8, Large d10). */
+	die?: 4 | 6 | 8 | 10 | 12 | 20;
+	/** Melee reach in feet; defaults to 5. */
+	reach?: number;
+}
+
 export type VehicleConditionState =
 	| "operational"
 	| "strained"
@@ -566,6 +647,13 @@ export interface CompendiumVehicle extends BaseCompendiumItem {
 	 * CompendiumAnomaly. Only meaningful when `vehicle_type === "mount"`.
 	 */
 	anomaly_id?: string;
+	/**
+	 * A mount with no linked Anomaly that fights. It scales with its owner's
+	 * level from its size Hit Die (RA-10). Mounts without this flag or an
+	 * `anomaly_id` are utility mounts and keep their saved stats.
+	 */
+	combat_capable?: boolean;
+	natural_attacks?: CompendiumMountNaturalAttack[];
 	/** Resolved display name of the linked anomaly (provider-enriched). */
 	bonded_from_name?: string | null;
 	rank?: string;
@@ -1057,7 +1145,6 @@ export interface CompendiumPath extends BaseCompendiumItem {
 	stats?: {
 		primaryAttribute: string;
 		secondaryAttribute?: string;
-		bonusStats: Record<string, number>;
 	};
 }
 

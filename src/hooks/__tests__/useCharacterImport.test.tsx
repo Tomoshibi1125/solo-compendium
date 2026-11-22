@@ -179,7 +179,7 @@ describe("useCharacterImport", () => {
 		);
 	});
 
-	it("round-trips v2.5 RA-exclusive tables (vehicles, tamed anomalies, tattoos, sheet state, spell slots)", async () => {
+	it("round-trips v2.5 RA-exclusive tables (vehicles, retired tames as companions, tattoos, sheet state, spell slots)", async () => {
 		let importCharacterJson: (file: File) => Promise<unknown> = async () => {
 			throw new Error("Import hook did not initialize");
 		};
@@ -279,15 +279,32 @@ describe("useCharacterImport", () => {
 			(c) => c.table === "character_vehicles",
 		);
 		expect(vehicleInsert).toBeDefined();
-		expect(
-			(vehicleInsert?.payload as unknown as Record<string, unknown>[])[0],
-		).toMatchObject({
+		expect(vehicleInsert?.payload).toMatchObject({
 			character_id: "imported-character",
 			vehicle_id: "rift-skiff",
 		});
+		// A personal tame from an older file imports as the character's own
+		// companion; the retired tame table receives nothing (RA-9).
 		expect(
 			mocks.insertCalls.find((c) => c.table === "character_tamed_anomalies"),
-		).toBeDefined();
+		).toBeUndefined();
+		expect(
+			mocks.insertCalls.find((c) => c.table === "character_extras")?.payload,
+		).toMatchObject({
+			character_id: "imported-character",
+			extra_type: "companion",
+			name: "gloam-hound",
+			hp_current: 18,
+			is_active: false,
+			npc_data: {
+				kind: "canonical-compendium",
+				provenance: {
+					canonicalId: "gloam-hound",
+					canonicalType: "anomaly",
+					canonicalCollection: "anomalies",
+				},
+			},
+		});
 		expect(
 			mocks.insertCalls.find((c) => c.table === "character_tattoos"),
 		).toBeDefined();

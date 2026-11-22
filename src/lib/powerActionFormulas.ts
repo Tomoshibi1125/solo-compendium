@@ -21,6 +21,7 @@
  *   PRE:   Esper, Contractor, Holy Knight, Idol
  */
 import { getJobPrimaryAbility } from "@/lib/5eCharacterCalculations";
+import { getStrikerMartialArtsDie } from "@/lib/weaponAutomation";
 import { type AbilityScore, getAbilityModifier } from "@/types/core-rules";
 
 const DICE_ONLY_RE = /^\s*\d+d\d+\s*$/i;
@@ -63,6 +64,60 @@ export function appendAbilityModifierToDamageFormula(
 	if (abilityModifier === 0) return trimmed;
 	if (!DICE_ONLY_RE.test(trimmed)) return trimmed;
 	return `${trimmed}${formatSignedNumber(abilityModifier)}`;
+}
+
+/**
+ * How a strike ability's damage dice relate to the strike (`mechanics.damage_basis`):
+ * - "added": the dice are added to a strike's damage and stay as written.
+ * - "unarmed-die": the hit deals its own damage with the Striker unarmed die
+ *   for the character's level, so it scales the way unarmed strikes do.
+ */
+export type AbilityDamageBasis = "added" | "unarmed-die";
+
+/** The Striker unarmed die progression, for rules text and detail pages. */
+export const UNARMED_DIE_PROGRESSION =
+	"d4; d6 at 5th level, d8 at 11th, d10 at 17th";
+
+export function readAbilityDamageBasis(
+	mechanics: unknown,
+): AbilityDamageBasis | null {
+	if (!mechanics || typeof mechanics !== "object") return null;
+	const basis = (mechanics as { damage_basis?: unknown }).damage_basis;
+	return basis === "added" || basis === "unarmed-die" ? basis : null;
+}
+
+/** The damage roll an ability's action card uses at the character's level. */
+export function resolveAbilityDamageRoll(
+	formula: string | null | undefined,
+	basis: AbilityDamageBasis | null,
+	level: number,
+	abilityModifier: number,
+): string | undefined {
+	if (basis === "unarmed-die") {
+		return appendAbilityModifierToDamageFormula(
+			getStrikerMartialArtsDie(level),
+			abilityModifier,
+		);
+	}
+	// Added dice ride on a strike that already carries the modifier.
+	if (basis === "added") return formula?.trim() || undefined;
+	return appendAbilityModifierToDamageFormula(formula, abilityModifier);
+}
+
+/** A readable damage line for compendium and sheet detail views. */
+export function describeAbilityDamage(
+	formula: string | null | undefined,
+	basis: AbilityDamageBasis | null,
+	damageType?: string | null,
+): string | null {
+	const type = damageType?.trim() ? ` ${damageType.trim()}` : "";
+	if (basis === "unarmed-die") {
+		return `Unarmed die${type} (${UNARMED_DIE_PROGRESSION})`;
+	}
+	const dice = formula?.trim();
+	if (!dice) return null;
+	if (basis === "added") return `+${dice}${type}, added to the strike`;
+	return `${dice}${type}`;
 }
 
 /**

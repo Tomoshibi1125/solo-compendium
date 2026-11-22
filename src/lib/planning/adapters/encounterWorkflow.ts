@@ -24,6 +24,7 @@ const BUILDER_ENCOUNTER_ID = "encounter-builder-current";
 const INITIATIVE_ENCOUNTER_ID = "initiative-tracker-current";
 
 export type EncounterWorkflowSourceType = "canonical" | "homebrew";
+export type EncounterDisposition = "neutral" | "wary" | "friendly" | "hostile";
 
 export interface EncounterWorkflowSourceIdentityV1 {
 	version: typeof ENCOUNTER_WORKFLOW_VERSION;
@@ -37,6 +38,8 @@ export interface EncounterWorkflowRosterItemInputV1 {
 	displayName: string;
 	quantity: number;
 	runtimeState: unknown;
+	disposition?: EncounterDisposition;
+	currentlyHostile?: boolean;
 	source?: EncounterWorkflowSourceIdentityV1 | null;
 }
 
@@ -70,6 +73,8 @@ export interface EncounterWorkflowInitiativeCombatantV1 {
 	conditions: string[];
 	advancedConditions: [];
 	isHunter: false;
+	disposition: EncounterDisposition;
+	currentlyHostile: boolean;
 	encounterWorkflow: EncounterWorkflowAttachmentV1;
 }
 
@@ -98,6 +103,8 @@ export interface RestoredEncounterWorkflowStateV1 {
 		displayName: string;
 		quantity: number;
 		runtimeState: SerializableRecord;
+		disposition: EncounterDisposition;
+		currentlyHostile: boolean;
 		source: EncounterWorkflowSourceIdentityV1;
 	}>;
 }
@@ -297,6 +304,8 @@ function rosterEntry(
 		metadata: {
 			workflowVersion: ENCOUNTER_WORKFLOW_VERSION,
 			sourceVersion: source?.sourceVersion ?? null,
+			disposition: item.disposition ?? "neutral",
+			currentlyHostile: item.currentlyHostile === true,
 		},
 		sourceEvidence: evidence,
 	};
@@ -366,6 +375,10 @@ function initiativeStateFromPlan(
 				conditions: [],
 				advancedConditions: [],
 				isHunter: false,
+				disposition:
+					(expanded.metadata.disposition as EncounterDisposition | undefined) ??
+					"neutral",
+				currentlyHostile: expanded.metadata.currentlyHostile === true,
 				encounterWorkflow: {
 					version: ENCOUNTER_WORKFLOW_VERSION,
 					handoff: plan,
@@ -503,6 +516,10 @@ function restoreWorkflowPlan(plan: EncounterHandoffPlanV1):
 					displayName: entry.displayName,
 					quantity: entry.quantity,
 					runtimeState: toSerializableRecord(runtimeState),
+					disposition:
+						(entry.metadata.disposition as EncounterDisposition | undefined) ??
+						"neutral",
+					currentlyHostile: entry.metadata.currentlyHostile === true,
 					source,
 				},
 			];

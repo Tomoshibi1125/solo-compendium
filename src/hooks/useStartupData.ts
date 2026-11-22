@@ -257,59 +257,6 @@ async function loadSovereignStartupEntries(): Promise<{
 	};
 }
 
-async function loadMarketplaceStartupEntries(): Promise<CompendiumEntry[]> {
-	if (!isSupabaseConfigured) {
-		return [];
-	}
-
-	try {
-		const {
-			data: { user },
-		} = await supabase.auth.getUser();
-		if (!user) {
-			return [];
-		}
-
-		const { data: entitlements } = await supabase
-			.from("user_marketplace_entitlements")
-			.select("item_id")
-			.eq("user_id", user.id);
-
-		if (!entitlements || entitlements.length === 0) {
-			return [];
-		}
-
-		const entitledIds = entitlements.map((entitlement) => entitlement.item_id);
-		const { data: marketplaceItems } = await supabase
-			.from("marketplace_items")
-			.select("id, title, description, item_type, tags, content")
-			.in("id", entitledIds)
-			.eq("is_listed", true);
-
-		if (!marketplaceItems) {
-			return [];
-		}
-
-		return marketplaceItems.map((item) => ({
-			id: `marketplace:${item.id}`,
-			name: item.title,
-			type: (item.item_type === "item"
-				? "equipment"
-				: item.item_type) as CompendiumEntry["type"],
-			description: item.description || "Marketplace content",
-			tags: [...(item.tags || []), "marketplace"],
-			source_book: "Marketplace",
-			isFavorite: false,
-		}));
-	} catch (marketplaceError) {
-		logger.warn(
-			"Failed to load marketplace content for startup data:",
-			marketplaceError,
-		);
-		return [];
-	}
-}
-
 export const useStartupData = (options?: { enabled?: boolean }) => {
 	return useQuery({
 		enabled: options?.enabled ?? true,
@@ -326,9 +273,6 @@ export const useStartupData = (options?: { enabled?: boolean }) => {
 				const sovereignData = await loadSovereignStartupEntries();
 				allEntries.push(...sovereignData.entries);
 				totalCounts.sovereigns = sovereignData.count;
-
-				const marketplaceEntries = await loadMarketplaceStartupEntries();
-				allEntries.push(...marketplaceEntries);
 
 				return {
 					entries: dedupeStartupEntries(allEntries),

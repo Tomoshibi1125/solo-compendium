@@ -3592,7 +3592,7 @@ export const items_gap_fill: Item[] = [
 		effects: {
 			active: [
 				{
-					name: "Mana Surge",
+					name: "Spell Surge",
 					description:
 						"As a bonus action, regain 1 spell slot of 2nd level or lower.",
 					action: "bonus-action",
@@ -3655,7 +3655,7 @@ export const items_gap_fill: Item[] = [
 			},
 			active_rules: [
 				{
-					name: "Mana Surge",
+					name: "Spell Surge",
 					description:
 						"As a bonus action, regain 1 spell slot of 2nd level or lower.",
 					action: "bonus-action",
@@ -3693,7 +3693,7 @@ export const items_gap_fill: Item[] = [
 				type: "equipment_utility",
 				active_options: [
 					{
-						name: "Mana Surge",
+						name: "Spell Surge",
 						description:
 							"As a bonus action, regain 1 spell slot of 2nd level or lower.",
 						dc: null,
@@ -4198,7 +4198,7 @@ export const items_gap_fill: Item[] = [
 		effects: {
 			active: [
 				{
-					name: "Mana Surge",
+					name: "Spell Surge",
 					description:
 						"As a bonus action, regain 1 spell slot of 2nd level or lower.",
 					action: "bonus-action",
@@ -4262,7 +4262,7 @@ export const items_gap_fill: Item[] = [
 			},
 			active_rules: [
 				{
-					name: "Mana Surge",
+					name: "Spell Surge",
 					description:
 						"As a bonus action, regain 1 spell slot of 2nd level or lower.",
 					action: "bonus-action",
@@ -4300,7 +4300,7 @@ export const items_gap_fill: Item[] = [
 				type: "equipment_utility",
 				active_options: [
 					{
-						name: "Mana Surge",
+						name: "Spell Surge",
 						description:
 							"As a bonus action, regain 1 spell slot of 2nd level or lower.",
 						dc: null,
@@ -4798,7 +4798,7 @@ export const items_gap_fill: Item[] = [
 		effects: {
 			active: [
 				{
-					name: "Mana Cascade",
+					name: "Spell Cascade",
 					description:
 						"As an action, regain 2 spell slots of 3rd level or lower.",
 					action: "action",
@@ -4862,7 +4862,7 @@ export const items_gap_fill: Item[] = [
 			},
 			active_rules: [
 				{
-					name: "Mana Cascade",
+					name: "Spell Cascade",
 					description:
 						"As an action, regain 2 spell slots of 3rd level or lower.",
 					action: "action",
@@ -4900,7 +4900,7 @@ export const items_gap_fill: Item[] = [
 				type: "equipment_utility",
 				active_options: [
 					{
-						name: "Mana Cascade",
+						name: "Spell Cascade",
 						description:
 							"As an action, regain 2 spell slots of 3rd level or lower.",
 						dc: null,
@@ -5402,7 +5402,7 @@ export const items_gap_fill: Item[] = [
 		effects: {
 			active: [
 				{
-					name: "Mana Cascade",
+					name: "Spell Cascade",
 					description:
 						"As an action, regain 2 spell slots of 3rd level or lower.",
 					action: "action",
@@ -5465,7 +5465,7 @@ export const items_gap_fill: Item[] = [
 			},
 			active_rules: [
 				{
-					name: "Mana Cascade",
+					name: "Spell Cascade",
 					description:
 						"As an action, regain 2 spell slots of 3rd level or lower.",
 					action: "action",
@@ -5503,7 +5503,7 @@ export const items_gap_fill: Item[] = [
 				type: "equipment_utility",
 				active_options: [
 					{
-						name: "Mana Cascade",
+						name: "Spell Cascade",
 						description:
 							"As an action, regain 2 spell slots of 3rd level or lower.",
 						dc: null,
@@ -11361,7 +11361,7 @@ export const items_gap_fill: Item[] = [
 		effects: {
 			active: [
 				{
-					name: "Mana Surge",
+					name: "Spell Surge",
 					description:
 						"As a bonus action, regain 1 spell slot of 2nd level or lower.",
 					action: "bonus-action",
@@ -11425,7 +11425,7 @@ export const items_gap_fill: Item[] = [
 			},
 			active_rules: [
 				{
-					name: "Mana Surge",
+					name: "Spell Surge",
 					description:
 						"As a bonus action, regain 1 spell slot of 2nd level or lower.",
 					action: "bonus-action",
@@ -11464,7 +11464,7 @@ export const items_gap_fill: Item[] = [
 				type: "equipment_utility",
 				active_options: [
 					{
-						name: "Mana Surge",
+						name: "Spell Surge",
 						description:
 							"As a bonus action, regain 1 spell slot of 2nd level or lower.",
 						dc: null,
@@ -16048,7 +16048,7 @@ export const items_gap_fill: Item[] = [
 		effects: {
 			active: [
 				{
-					name: "Mana Surge",
+					name: "Spell Surge",
 					description:
 						"As a bonus action, regain 1 spell slot of 2nd level or lower.",
 					action: "bonus-action",
@@ -16111,7 +16111,7 @@ export const items_gap_fill: Item[] = [
 			},
 			active_rules: [
 				{
-					name: "Mana Surge",
+					name: "Spell Surge",
 					description:
 						"As a bonus action, regain 1 spell slot of 2nd level or lower.",
 					action: "bonus-action",
@@ -16144,7 +16144,7 @@ export const items_gap_fill: Item[] = [
 				type: "equipment_utility",
 				active_options: [
 					{
-						name: "Mana Surge",
+						name: "Spell Surge",
 						description:
 							"As a bonus action, regain 1 spell slot of 2nd level or lower.",
 						dc: null,
@@ -17090,7 +17090,7 @@ export const items_gap_fill: Item[] = [
 		effects: {
 			active: [
 				{
-					name: "Mana Cascade",
+					name: "Spell Cascade",
 					description:
 						"As an action, regain 2 spell slots of 3rd level or lower.",
 					action: "action",
@@ -17155,7 +17155,7 @@ export const items_gap_fill: Item[] = [
 			},
 			active_rules: [
 				{
-					name: "Mana Cascade",
+					name: "Spell Cascade",
 					description:
 						"As an action, regain 2 spell slots of 3rd level or lower.",
 					action: "action",
@@ -17189,7 +17189,7 @@ export const items_gap_fill: Item[] = [
 				type: "equipment_utility",
 				active_options: [
 					{
-						name: "Mana Cascade",
+						name: "Spell Cascade",
 						description:
 							"As an action, regain 2 spell slots of 3rd level or lower.",
 						dc: null,
@@ -19396,7 +19396,7 @@ export const items_gap_fill: Item[] = [
 		effects: {
 			active: [
 				{
-					name: "Mana Surge",
+					name: "Spell Surge",
 					description:
 						"As a bonus action, regain 1 spell slot of 2nd level or lower.",
 					action: "bonus-action",
@@ -19460,7 +19460,7 @@ export const items_gap_fill: Item[] = [
 			},
 			active_rules: [
 				{
-					name: "Mana Surge",
+					name: "Spell Surge",
 					description:
 						"As a bonus action, regain 1 spell slot of 2nd level or lower.",
 					action: "bonus-action",
@@ -19495,7 +19495,7 @@ export const items_gap_fill: Item[] = [
 				type: "equipment_utility",
 				active_options: [
 					{
-						name: "Mana Surge",
+						name: "Spell Surge",
 						description:
 							"As a bonus action, regain 1 spell slot of 2nd level or lower.",
 						dc: null,
@@ -25106,7 +25106,7 @@ export const items_gap_fill: Item[] = [
 		effects: {
 			active: [
 				{
-					name: "Mana Cascade",
+					name: "Spell Cascade",
 					description:
 						"As an action, regain 2 spell slots of 3rd level or lower.",
 					action: "action",
@@ -25168,7 +25168,7 @@ export const items_gap_fill: Item[] = [
 			},
 			active_rules: [
 				{
-					name: "Mana Cascade",
+					name: "Spell Cascade",
 					description:
 						"As an action, regain 2 spell slots of 3rd level or lower.",
 					action: "action",
@@ -25206,7 +25206,7 @@ export const items_gap_fill: Item[] = [
 				type: "equipment_utility",
 				active_options: [
 					{
-						name: "Mana Cascade",
+						name: "Spell Cascade",
 						description:
 							"As an action, regain 2 spell slots of 3rd level or lower.",
 						dc: null,
@@ -27452,7 +27452,7 @@ export const items_gap_fill: Item[] = [
 		effects: {
 			active: [
 				{
-					name: "Mana Surge",
+					name: "Spell Surge",
 					description:
 						"As a bonus action, regain 1 spell slot of 2nd level or lower.",
 					action: "bonus-action",
@@ -27516,7 +27516,7 @@ export const items_gap_fill: Item[] = [
 			},
 			active_rules: [
 				{
-					name: "Mana Surge",
+					name: "Spell Surge",
 					description:
 						"As a bonus action, regain 1 spell slot of 2nd level or lower.",
 					action: "bonus-action",
@@ -27551,7 +27551,7 @@ export const items_gap_fill: Item[] = [
 				type: "equipment_utility",
 				active_options: [
 					{
-						name: "Mana Surge",
+						name: "Spell Surge",
 						description:
 							"As a bonus action, regain 1 spell slot of 2nd level or lower.",
 						dc: null,
@@ -29717,7 +29717,7 @@ export const items_gap_fill: Item[] = [
 		effects: {
 			active: [
 				{
-					name: "Mana Surge",
+					name: "Spell Surge",
 					description:
 						"As a bonus action, regain 1 spell slot of 2nd level or lower.",
 					action: "bonus-action",
@@ -29781,7 +29781,7 @@ export const items_gap_fill: Item[] = [
 			},
 			active_rules: [
 				{
-					name: "Mana Surge",
+					name: "Spell Surge",
 					description:
 						"As a bonus action, regain 1 spell slot of 2nd level or lower.",
 					action: "bonus-action",
@@ -29820,7 +29820,7 @@ export const items_gap_fill: Item[] = [
 				type: "equipment_utility",
 				active_options: [
 					{
-						name: "Mana Surge",
+						name: "Spell Surge",
 						description:
 							"As a bonus action, regain 1 spell slot of 2nd level or lower.",
 						dc: null,
@@ -53307,118 +53307,6 @@ export const items_gap_fill: Item[] = [
 		},
 	},
 	{
-		id: "gap_consumable_potion_uncommon_5",
-		name: "Decorated Salve",
-		source_book: "Rift Ascendant Canon",
-		description:
-			"A field-stable potion. The Bureau's standard answer to early-fight injuries. Field teams know this pattern as the Decorated Salve.",
-		rarity: "uncommon",
-		type: "consumable",
-		image: "/generated/compendium/items/item-0349.webp",
-		weight: 0.5,
-		value: { currency: "gate", amount: 304 },
-		item_type: "consumable",
-		properties: {},
-		effects: {
-			active: [
-				{
-					name: "Drink",
-					description: "Action. Restore 4d4 mana.",
-					action: "action",
-					frequency: "at-will",
-				},
-			],
-			passive: ["On drink, restore 4d4 mana."],
-		},
-		source: "Gap-Fill Catalog",
-		tags: ["equipment", "consumable"],
-		theme_tags: [],
-		activation: {
-			type: "action",
-			consumes_item: true,
-			cost: "1 action",
-			frequency: "at-will",
-			trigger: "User activates the item.",
-		},
-		limitations: {
-			cursed: false,
-			charges: null,
-			attunement_required: false,
-			equipment_state:
-				"must be carried, consumed, or deployed as the activation describes",
-			recharge: "at-will",
-			restrictions: [],
-		},
-		mechanics: {
-			ability_modifiers: {
-				damage: [],
-				armor_class: [],
-				attack: [],
-				notes:
-					"Utility and consumable items only call for an ability when their explicit rule names one.",
-				save_dc: [],
-			},
-			action_economy: {
-				type: "action",
-				consumes_item: true,
-				cost: "1 action",
-				frequency: "at-will",
-				trigger: "User activates the item.",
-			},
-			active_rules: [
-				{
-					name: "Drink",
-					description: "Action. Restore 4d4 mana.",
-					action: "action",
-					dc: null,
-					frequency: "at-will",
-				},
-			],
-			audit: {
-				fingerprint: "2097d421",
-				payload_complete: true,
-				uniqueness_seed: "gap_consumable_potion_uncommon_5::Decorated Salve",
-				variant_note: "Restores mana on consumption.",
-			},
-			formulas: { effect_formula: "4d4", recharge: "at-will", save_dc: null },
-			identity: {
-				rarity: "uncommon",
-				archetype: "consumable_potion",
-				canon_basis: "RA enhanced catalog",
-				distinguishing_rule:
-					"Decorated Salve keys standard consumable potion rules through signature e585f1b1.",
-				role: "consumable",
-				signature: "e585f1b1",
-				theme: "standard",
-			},
-			passive_rules: ["On drink, restore 4d4 mana."],
-			resolution: {
-				type: "consumable",
-				damage_type: null,
-				consumes_item: true,
-				damage_formula: "4d4",
-				save: null,
-				use_rule: "Action. Restore 4d4 mana.",
-			},
-			rules_payload_version: "ra-item-v1",
-			source_integrity: {
-				allows_5e_baseline: false,
-				canon_guardrails: [
-					"Use RA ability names in formulas.",
-					"Preserve Rift, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
-				],
-				ra_specific_mundane: false,
-			},
-			targeting: {
-				range: "self",
-				area: null,
-				line_of_effect: "as item description permits",
-				target: "Self, touched object, or listed utility target",
-			},
-		},
-	},
-	{
 		id: "gap_consumable_potion_rare_0",
 		name: "Hexbound Potion",
 		source_book: "Rift Ascendant Canon",
@@ -54463,7 +54351,7 @@ export const items_gap_fill: Item[] = [
 				fingerprint: "6a7693a1",
 				payload_complete: true,
 				uniqueness_seed: "gap_consumable_potion_epic_1::Sanctified Flask",
-				variant_note: "Restores mana on consumption.",
+				variant_note: "On drink, restore 8d4 + 8 hit points.",
 			},
 			formulas: {
 				effect_formula: "8d4 + 8",
@@ -54988,119 +54876,6 @@ export const items_gap_fill: Item[] = [
 				damage_formula: null,
 				save: null,
 				use_rule: "Action. Cures the poisoned condition.",
-			},
-			rules_payload_version: "ra-item-v1",
-			source_integrity: {
-				allows_5e_baseline: false,
-				canon_guardrails: [
-					"Use RA ability names in formulas.",
-					"Preserve Rift, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
-				],
-				ra_specific_mundane: true,
-			},
-			targeting: {
-				range: "self",
-				area: null,
-				line_of_effect: "as item description permits",
-				target: "Self, touched object, or listed utility target",
-			},
-		},
-	},
-	{
-		id: "gap_consumable_purifier_common_2",
-		name: "Trainee Restorative Vial",
-		source_book: "Rift Ascendant Canon",
-		description:
-			"A pocket-sized recovery potion. Standard kit for any Ascendant on assignment. Issued under the Trainee Restorative Vial designation.",
-		rarity: "common",
-		type: "consumable",
-		image: "/generated/compendium/items/item-0144.webp",
-		weight: 0.5,
-		value: { currency: "crystal", amount: 270 },
-		item_type: "consumable",
-		properties: {},
-		effects: {
-			active: [
-				{
-					name: "Drink",
-					description: "Action. Restore 2d4 mana.",
-					action: "action",
-					frequency: "at-will",
-				},
-			],
-			passive: ["On drink, restore 2d4 mana."],
-		},
-		source: "Gap-Fill Catalog",
-		tags: ["equipment", "consumable"],
-		theme_tags: [],
-		activation: {
-			type: "action",
-			consumes_item: true,
-			cost: "1 action",
-			frequency: "at-will",
-			trigger: "User activates the item.",
-		},
-		limitations: {
-			cursed: false,
-			charges: null,
-			attunement_required: false,
-			equipment_state:
-				"must be carried, consumed, or deployed as the activation describes",
-			recharge: "at-will",
-			restrictions: [],
-		},
-		mechanics: {
-			ability_modifiers: {
-				damage: [],
-				armor_class: [],
-				attack: [],
-				notes:
-					"Utility and consumable items only call for an ability when their explicit rule names one.",
-				save_dc: [],
-			},
-			action_economy: {
-				type: "action",
-				consumes_item: true,
-				cost: "1 action",
-				frequency: "at-will",
-				trigger: "User activates the item.",
-			},
-			active_rules: [
-				{
-					name: "Drink",
-					description: "Action. Restore 2d4 mana.",
-					action: "action",
-					dc: null,
-					frequency: "at-will",
-				},
-			],
-			audit: {
-				fingerprint: "2cee4ba4",
-				payload_complete: true,
-				uniqueness_seed:
-					"gap_consumable_purifier_common_2::Trainee Restorative Vial",
-				variant_note: "Restores mana on consumption.",
-			},
-			formulas: { effect_formula: "2d4", recharge: "at-will", save_dc: null },
-			identity: {
-				rarity: "common",
-				archetype: "consumable_potion",
-				canon_basis: "RA mundane baseline",
-				distinguishing_rule:
-					"Trainee Restorative Vial keys standard consumable potion rules through signature fcb892fb.",
-				role: "consumable",
-				signature: "fcb892fb",
-				theme: "standard",
-			},
-			passive_rules: ["On drink, restore 2d4 mana."],
-			resolution: {
-				type: "consumable",
-				damage_type: null,
-				consumes_item: true,
-				damage_formula: "2d4",
-				save: null,
-				use_rule: "Action. Restore 2d4 mana.",
 			},
 			rules_payload_version: "ra-item-v1",
 			source_integrity: {
@@ -56735,119 +56510,6 @@ export const items_gap_fill: Item[] = [
 		},
 	},
 	{
-		id: "gap_consumable_stim_uncommon_2",
-		name: "Lattice-Stable Adrenal Injector",
-		source_book: "Rift Ascendant Canon",
-		description:
-			"An Ascendant-grade injector. Burns hot and fast. Trust the cap. On the requisition manifest it reads simply: Lattice-Stable Adrenal Injector.",
-		rarity: "uncommon",
-		type: "consumable",
-		image: "/generated/compendium/items/item-0904.webp",
-		weight: 0.5,
-		value: { currency: "gate", amount: 237 },
-		item_type: "consumable",
-		properties: {},
-		effects: {
-			active: [
-				{
-					name: "Inject",
-					description: "Bonus action. Restore 4d4 mana.",
-					action: "bonus-action",
-					frequency: "at-will",
-				},
-			],
-			passive: ["On inject, restore 4d4 mana."],
-		},
-		source: "Gap-Fill Catalog",
-		tags: ["equipment", "consumable"],
-		theme_tags: [],
-		activation: {
-			type: "bonus-action",
-			consumes_item: true,
-			cost: "1 bonus action",
-			frequency: "at-will",
-			trigger: "User activates the item.",
-		},
-		limitations: {
-			cursed: false,
-			charges: null,
-			attunement_required: false,
-			equipment_state:
-				"must be carried, consumed, or deployed as the activation describes",
-			recharge: "at-will",
-			restrictions: [],
-		},
-		mechanics: {
-			ability_modifiers: {
-				damage: [],
-				armor_class: [],
-				attack: [],
-				notes:
-					"Utility and consumable items only call for an ability when their explicit rule names one.",
-				save_dc: [],
-			},
-			action_economy: {
-				type: "bonus-action",
-				consumes_item: true,
-				cost: "1 bonus action",
-				frequency: "at-will",
-				trigger: "User activates the item.",
-			},
-			active_rules: [
-				{
-					name: "Inject",
-					description: "Bonus action. Restore 4d4 mana.",
-					action: "bonus-action",
-					dc: null,
-					frequency: "at-will",
-				},
-			],
-			audit: {
-				fingerprint: "d0816b83",
-				payload_complete: true,
-				uniqueness_seed:
-					"gap_consumable_stim_uncommon_2::Lattice-Stable Adrenal Injector",
-				variant_note: "Restores HP on injection.",
-			},
-			formulas: { effect_formula: "4d4", recharge: "at-will", save_dc: null },
-			identity: {
-				rarity: "uncommon",
-				archetype: "consumable_stim",
-				canon_basis: "RA enhanced catalog",
-				distinguishing_rule:
-					"Lattice-Stable Adrenal Injector keys aetheric consumable stim rules through signature 7bdfbef1.",
-				role: "consumable",
-				signature: "7bdfbef1",
-				theme: "aetheric",
-			},
-			passive_rules: ["On inject, restore 4d4 mana."],
-			resolution: {
-				type: "consumable",
-				damage_type: null,
-				consumes_item: true,
-				damage_formula: "4d4",
-				save: null,
-				use_rule: "Bonus action. Restore 4d4 mana.",
-			},
-			rules_payload_version: "ra-item-v1",
-			source_integrity: {
-				allows_5e_baseline: false,
-				canon_guardrails: [
-					"Use RA ability names in formulas.",
-					"Preserve Rift, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
-				],
-				ra_specific_mundane: false,
-			},
-			targeting: {
-				range: "self",
-				area: null,
-				line_of_effect: "as item description permits",
-				target: "Self, touched object, or listed utility target",
-			},
-		},
-	},
-	{
 		id: "gap_consumable_stim_uncommon_3",
 		name: "Salvaged Combat Injector",
 		source_book: "Rift Ascendant Canon",
@@ -57619,135 +57281,6 @@ export const items_gap_fill: Item[] = [
 				save: null,
 				use_rule:
 					"Bonus action. Grants advantage on the next attack roll within 1 minute. After, take 1 fatigue.",
-			},
-			rules_payload_version: "ra-item-v1",
-			source_integrity: {
-				allows_5e_baseline: false,
-				canon_guardrails: [
-					"Use RA ability names in formulas.",
-					"Preserve Rift, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
-				],
-				ra_specific_mundane: false,
-			},
-			targeting: {
-				range: "self",
-				area: null,
-				line_of_effect: "as item description permits",
-				target: "Self, touched object, or listed utility target",
-			},
-		},
-	},
-	{
-		id: "gap_consumable_stim_rare_3",
-		name: "Aetheric Adrenal Injector",
-		source_book: "Rift Ascendant Canon",
-		description:
-			"A close-fit auto-injector calibrated for fast subcutaneous delivery. Bureau quartermasters catalog it as the Aetheric Adrenal Injector.",
-		rarity: "rare",
-		type: "consumable",
-		image: "/generated/compendium/items/item-0943.webp",
-		weight: 0.5,
-		value: { currency: "gate", amount: 450 },
-		item_type: "consumable",
-		requires_attunement: true,
-		properties: {},
-		effects: {
-			active: [
-				{
-					name: "Inject",
-					description: "Bonus action. Restore 6d4 mana.",
-					action: "bonus-action",
-					frequency: "at-will",
-				},
-			],
-			passive: ["On inject, restore 6d4 mana."],
-		},
-		source: "Gap-Fill Catalog",
-		lore: {
-			current_owner: "",
-			curse: "",
-			history:
-				"Used in a controlled recovery operation that became the Bureau's textbook example. The Aetheric Adrenal Injector's service record notes as much.",
-			origin:
-				"Reverse-engineered by Bureau artificers from materials harvested in a lattice-bleed event. The Aetheric Adrenal Injector entered service from there.",
-			personality: "",
-			prior_owners: [],
-		},
-		flavor:
-			"For the part of the fight that comes after the fight. — the Aetheric Adrenal Injector.",
-		discovery_lore:
-			"Logged in an Ascendant's after-action report as 'recovered with the rest of the load.'. The recovery slip named it the Aetheric Adrenal Injector.",
-		tags: ["equipment", "consumable"],
-		theme_tags: [],
-		activation: {
-			type: "bonus-action",
-			consumes_item: true,
-			cost: "1 bonus action",
-			frequency: "at-will",
-			trigger: "User activates the item.",
-		},
-		limitations: {
-			cursed: false,
-			charges: null,
-			attunement_required: true,
-			equipment_state:
-				"must be carried, consumed, or deployed as the activation describes",
-			recharge: "at-will",
-			restrictions: [],
-		},
-		mechanics: {
-			ability_modifiers: {
-				damage: [],
-				armor_class: [],
-				attack: [],
-				notes:
-					"Utility and consumable items only call for an ability when their explicit rule names one.",
-				save_dc: [],
-			},
-			action_economy: {
-				type: "bonus-action",
-				consumes_item: true,
-				cost: "1 bonus action",
-				frequency: "at-will",
-				trigger: "User activates the item.",
-			},
-			active_rules: [
-				{
-					name: "Inject",
-					description: "Bonus action. Restore 6d4 mana.",
-					action: "bonus-action",
-					dc: null,
-					frequency: "at-will",
-				},
-			],
-			audit: {
-				fingerprint: "2bd43457",
-				payload_complete: true,
-				uniqueness_seed:
-					"gap_consumable_stim_rare_3::Aetheric Adrenal Injector",
-				variant_note:
-					"Grants resistance to non-magical bludgeoning, piercing, and slashing for 1 minute.",
-			},
-			formulas: { effect_formula: "6d4", recharge: "at-will", save_dc: null },
-			identity: {
-				rarity: "rare",
-				archetype: "consumable_stim",
-				canon_basis: "RA enhanced catalog",
-				distinguishing_rule:
-					"Aetheric Adrenal Injector keys aetheric consumable stim rules through signature e3492cdd.",
-				role: "consumable",
-				signature: "e3492cdd",
-				theme: "aetheric",
-			},
-			passive_rules: ["On inject, restore 6d4 mana."],
-			resolution: {
-				type: "consumable",
-				damage_type: null,
-				consumes_item: true,
-				damage_formula: "6d4",
-				save: null,
-				use_rule: "Bonus action. Restore 6d4 mana.",
 			},
 			rules_payload_version: "ra-item-v1",
 			source_integrity: {
@@ -62032,7 +61565,7 @@ export const items_gap_fill: Item[] = [
 		effects: {
 			active: [
 				{
-					name: "Mana Surge",
+					name: "Spell Surge",
 					description:
 						"As a bonus action, regain 1 spell slot of 2nd level or lower.",
 					action: "bonus-action",
@@ -62094,7 +61627,7 @@ export const items_gap_fill: Item[] = [
 			},
 			active_rules: [
 				{
-					name: "Mana Surge",
+					name: "Spell Surge",
 					description:
 						"As a bonus action, regain 1 spell slot of 2nd level or lower.",
 					action: "bonus-action",
@@ -62134,7 +61667,7 @@ export const items_gap_fill: Item[] = [
 				damage_type: "necrotic",
 				active_options: [
 					{
-						name: "Mana Surge",
+						name: "Spell Surge",
 						description:
 							"As a bonus action, regain 1 spell slot of 2nd level or lower.",
 						dc: null,
@@ -62352,7 +61885,7 @@ export const items_gap_fill: Item[] = [
 		effects: {
 			active: [
 				{
-					name: "Mana Surge",
+					name: "Spell Surge",
 					description:
 						"As a bonus action, regain 1 spell slot of 2nd level or lower.",
 					action: "bonus-action",
@@ -62415,7 +61948,7 @@ export const items_gap_fill: Item[] = [
 			},
 			active_rules: [
 				{
-					name: "Mana Surge",
+					name: "Spell Surge",
 					description:
 						"As a bonus action, regain 1 spell slot of 2nd level or lower.",
 					action: "bonus-action",
@@ -62456,7 +61989,7 @@ export const items_gap_fill: Item[] = [
 				damage_type: "cold",
 				active_options: [
 					{
-						name: "Mana Surge",
+						name: "Spell Surge",
 						description:
 							"As a bonus action, regain 1 spell slot of 2nd level or lower.",
 						dc: null,
@@ -63153,7 +62686,7 @@ export const items_gap_fill: Item[] = [
 		effects: {
 			active: [
 				{
-					name: "Mana Cascade",
+					name: "Spell Cascade",
 					description:
 						"As an action, regain 2 spell slots of 3rd level or lower.",
 					action: "action",
@@ -63216,7 +62749,7 @@ export const items_gap_fill: Item[] = [
 			},
 			active_rules: [
 				{
-					name: "Mana Cascade",
+					name: "Spell Cascade",
 					description:
 						"As an action, regain 2 spell slots of 3rd level or lower.",
 					action: "action",
@@ -63256,7 +62789,7 @@ export const items_gap_fill: Item[] = [
 				damage_type: "necrotic",
 				active_options: [
 					{
-						name: "Mana Cascade",
+						name: "Spell Cascade",
 						description:
 							"As an action, regain 2 spell slots of 3rd level or lower.",
 						dc: null,
@@ -63634,7 +63167,7 @@ export const items_gap_fill: Item[] = [
 		effects: {
 			active: [
 				{
-					name: "Mana Cascade",
+					name: "Spell Cascade",
 					description:
 						"As an action, regain 2 spell slots of 3rd level or lower.",
 					action: "action",
@@ -63697,7 +63230,7 @@ export const items_gap_fill: Item[] = [
 			},
 			active_rules: [
 				{
-					name: "Mana Cascade",
+					name: "Spell Cascade",
 					description:
 						"As an action, regain 2 spell slots of 3rd level or lower.",
 					action: "action",
@@ -63738,7 +63271,7 @@ export const items_gap_fill: Item[] = [
 				damage_type: "lightning",
 				active_options: [
 					{
-						name: "Mana Cascade",
+						name: "Spell Cascade",
 						description:
 							"As an action, regain 2 spell slots of 3rd level or lower.",
 						dc: null,
@@ -64102,7 +63635,7 @@ export const items_gap_fill: Item[] = [
 		properties: {},
 		effects: {
 			passive: [
-				"Acts as a written arcane focus. Records 3 cast spells; the wielder may recall and cast one without spending mana once per long rest.",
+				"Acts as a written arcane focus. Records 3 cast spells; the wielder may recall and cast one without expending a spell slot once per long rest.",
 			],
 		},
 		source: "Gap-Fill Catalog",
@@ -64146,7 +63679,7 @@ export const items_gap_fill: Item[] = [
 				payload_complete: true,
 				uniqueness_seed: "gap_focus_tome_common_0::Standard Tome",
 				variant_note:
-					"Acts as a written arcane focus. Records 3 cast spells; the wielder may recall and cast one without spending mana once per long rest.",
+					"Acts as a written arcane focus. Records 3 cast spells; the wielder may recall and cast one without expending a spell slot once per long rest.",
 			},
 			formulas: {
 				effect_formula: "explicit non-damage item effect",
@@ -64164,15 +63697,15 @@ export const items_gap_fill: Item[] = [
 				theme: "standard",
 			},
 			passive_rules: [
-				"Acts as a written arcane focus. Records 3 cast spells; the wielder may recall and cast one without spending mana once per long rest.",
+				"Acts as a written arcane focus. Records 3 cast spells; the wielder may recall and cast one without expending a spell slot once per long rest.",
 			],
 			resolution: {
 				type: "equipment_utility",
 				active_options: [],
 				non_damage_resolution:
-					"Acts as a written arcane focus. Records 3 cast spells; the wielder may recall and cast one without spending mana once per long rest.",
+					"Acts as a written arcane focus. Records 3 cast spells; the wielder may recall and cast one without expending a spell slot once per long rest.",
 				passive_effects: [
-					"Acts as a written arcane focus. Records 3 cast spells; the wielder may recall and cast one without spending mana once per long rest.",
+					"Acts as a written arcane focus. Records 3 cast spells; the wielder may recall and cast one without expending a spell slot once per long rest.",
 				],
 			},
 			rules_payload_version: "ra-item-v1",
@@ -64735,7 +64268,7 @@ export const items_gap_fill: Item[] = [
 		properties: {},
 		effects: {
 			passive: [
-				"Acts as a written arcane focus. Records 3 cast spells; the wielder may recall and cast one without spending mana once per long rest.",
+				"Acts as a written arcane focus. Records 3 cast spells; the wielder may recall and cast one without expending a spell slot once per long rest.",
 				"On a hit against a target you have not attacked this turn, deal +1d4 damage.",
 			],
 		},
@@ -64780,7 +64313,7 @@ export const items_gap_fill: Item[] = [
 				payload_complete: true,
 				uniqueness_seed: "gap_focus_tome_uncommon_2::Frontier Sigil Tome",
 				variant_note:
-					"Acts as a written arcane focus. Records 3 cast spells; the wielder may recall and cast one without spending mana once per long rest.",
+					"Acts as a written arcane focus. Records 3 cast spells; the wielder may recall and cast one without expending a spell slot once per long rest.",
 			},
 			formulas: {
 				effect_formula: "1d4",
@@ -64798,16 +64331,16 @@ export const items_gap_fill: Item[] = [
 				theme: "standard",
 			},
 			passive_rules: [
-				"Acts as a written arcane focus. Records 3 cast spells; the wielder may recall and cast one without spending mana once per long rest.",
+				"Acts as a written arcane focus. Records 3 cast spells; the wielder may recall and cast one without expending a spell slot once per long rest.",
 				"On a hit against a target you have not attacked this turn, deal +1d4 damage.",
 			],
 			resolution: {
 				type: "equipment_utility",
 				active_options: [],
 				non_damage_resolution:
-					"Acts as a written arcane focus. Records 3 cast spells; the wielder may recall and cast one without spending mana once per long rest.",
+					"Acts as a written arcane focus. Records 3 cast spells; the wielder may recall and cast one without expending a spell slot once per long rest.",
 				passive_effects: [
-					"Acts as a written arcane focus. Records 3 cast spells; the wielder may recall and cast one without spending mana once per long rest.",
+					"Acts as a written arcane focus. Records 3 cast spells; the wielder may recall and cast one without expending a spell slot once per long rest.",
 					"On a hit against a target you have not attacked this turn, deal +1d4 damage.",
 				],
 			},
@@ -64956,7 +64489,7 @@ export const items_gap_fill: Item[] = [
 		properties: {},
 		effects: {
 			passive: [
-				"Acts as a written arcane focus. Records 3 cast spells; the wielder may recall and cast one without spending mana once per long rest.",
+				"Acts as a written arcane focus. Records 3 cast spells; the wielder may recall and cast one without expending a spell slot once per long rest.",
 				"On a hit, the next ally's attack against the same target has advantage until the start of your next turn.",
 			],
 		},
@@ -65001,7 +64534,7 @@ export const items_gap_fill: Item[] = [
 				payload_complete: true,
 				uniqueness_seed: "gap_focus_tome_uncommon_4::Sworn Spellbook",
 				variant_note:
-					"Acts as a written arcane focus. Records 3 cast spells; the wielder may recall and cast one without spending mana once per long rest.",
+					"Acts as a written arcane focus. Records 3 cast spells; the wielder may recall and cast one without expending a spell slot once per long rest.",
 			},
 			formulas: {
 				effect_formula: "explicit non-damage item effect",
@@ -65019,16 +64552,16 @@ export const items_gap_fill: Item[] = [
 				theme: "standard",
 			},
 			passive_rules: [
-				"Acts as a written arcane focus. Records 3 cast spells; the wielder may recall and cast one without spending mana once per long rest.",
+				"Acts as a written arcane focus. Records 3 cast spells; the wielder may recall and cast one without expending a spell slot once per long rest.",
 				"On a hit, the next ally's attack against the same target has advantage until the start of your next turn.",
 			],
 			resolution: {
 				type: "equipment_utility",
 				active_options: [],
 				non_damage_resolution:
-					"Acts as a written arcane focus. Records 3 cast spells; the wielder may recall and cast one without spending mana once per long rest.",
+					"Acts as a written arcane focus. Records 3 cast spells; the wielder may recall and cast one without expending a spell slot once per long rest.",
 				passive_effects: [
-					"Acts as a written arcane focus. Records 3 cast spells; the wielder may recall and cast one without spending mana once per long rest.",
+					"Acts as a written arcane focus. Records 3 cast spells; the wielder may recall and cast one without expending a spell slot once per long rest.",
 					"On a hit, the next ally's attack against the same target has advantage until the start of your next turn.",
 				],
 			},
@@ -65185,7 +64718,7 @@ export const items_gap_fill: Item[] = [
 				},
 			],
 			passive: [
-				"Acts as a written arcane focus. Records 3 cast spells; the wielder may recall and cast one without spending mana once per long rest.",
+				"Acts as a written arcane focus. Records 3 cast spells; the wielder may recall and cast one without expending a spell slot once per long rest.",
 				"Resistance to force damage.",
 				"On a critical hit, deal an additional 2d6 damage of this weapon's damage type.",
 			],
@@ -65254,7 +64787,7 @@ export const items_gap_fill: Item[] = [
 				payload_complete: true,
 				uniqueness_seed: "gap_focus_tome_rare_0::Ember Mana Manual",
 				variant_note:
-					"Acts as a written arcane focus. Records 3 cast spells; the wielder may recall and cast one without spending mana once per long rest.",
+					"Acts as a written arcane focus. Records 3 cast spells; the wielder may recall and cast one without expending a spell slot once per long rest.",
 			},
 			formulas: {
 				effect_formula: "2d6",
@@ -65272,7 +64805,7 @@ export const items_gap_fill: Item[] = [
 				theme: "aetheric",
 			},
 			passive_rules: [
-				"Acts as a written arcane focus. Records 3 cast spells; the wielder may recall and cast one without spending mana once per long rest.",
+				"Acts as a written arcane focus. Records 3 cast spells; the wielder may recall and cast one without expending a spell slot once per long rest.",
 				"Resistance to force damage.",
 				"On a critical hit, deal an additional 2d6 damage of this weapon's damage type.",
 			],
@@ -65287,9 +64820,9 @@ export const items_gap_fill: Item[] = [
 					},
 				],
 				non_damage_resolution:
-					"Acts as a written arcane focus. Records 3 cast spells; the wielder may recall and cast one without spending mana once per long rest.",
+					"Acts as a written arcane focus. Records 3 cast spells; the wielder may recall and cast one without expending a spell slot once per long rest.",
 				passive_effects: [
-					"Acts as a written arcane focus. Records 3 cast spells; the wielder may recall and cast one without spending mana once per long rest.",
+					"Acts as a written arcane focus. Records 3 cast spells; the wielder may recall and cast one without expending a spell slot once per long rest.",
 					"Resistance to force damage.",
 					"On a critical hit, deal an additional 2d6 damage of this weapon's damage type.",
 				],
@@ -65489,7 +65022,7 @@ export const items_gap_fill: Item[] = [
 				},
 			],
 			passive: [
-				"Acts as a written arcane focus. Records 3 cast spells; the wielder may recall and cast one without spending mana once per long rest.",
+				"Acts as a written arcane focus. Records 3 cast spells; the wielder may recall and cast one without expending a spell slot once per long rest.",
 				"Resistance to force damage.",
 				"+2 to attack rolls against creatures with more HP than you.",
 			],
@@ -65558,7 +65091,7 @@ export const items_gap_fill: Item[] = [
 				payload_complete: true,
 				uniqueness_seed: "gap_focus_tome_rare_2::Manaforged Manual",
 				variant_note:
-					"Acts as a written arcane focus. Records 3 cast spells; the wielder may recall and cast one without spending mana once per long rest.",
+					"Acts as a written arcane focus. Records 3 cast spells; the wielder may recall and cast one without expending a spell slot once per long rest.",
 			},
 			formulas: {
 				effect_formula: "2d6",
@@ -65576,7 +65109,7 @@ export const items_gap_fill: Item[] = [
 				theme: "aetheric",
 			},
 			passive_rules: [
-				"Acts as a written arcane focus. Records 3 cast spells; the wielder may recall and cast one without spending mana once per long rest.",
+				"Acts as a written arcane focus. Records 3 cast spells; the wielder may recall and cast one without expending a spell slot once per long rest.",
 				"Resistance to force damage.",
 				"+2 to attack rolls against creatures with more HP than you.",
 			],
@@ -65591,9 +65124,9 @@ export const items_gap_fill: Item[] = [
 					},
 				],
 				non_damage_resolution:
-					"Acts as a written arcane focus. Records 3 cast spells; the wielder may recall and cast one without spending mana once per long rest.",
+					"Acts as a written arcane focus. Records 3 cast spells; the wielder may recall and cast one without expending a spell slot once per long rest.",
 				passive_effects: [
-					"Acts as a written arcane focus. Records 3 cast spells; the wielder may recall and cast one without spending mana once per long rest.",
+					"Acts as a written arcane focus. Records 3 cast spells; the wielder may recall and cast one without expending a spell slot once per long rest.",
 					"Resistance to force damage.",
 					"+2 to attack rolls against creatures with more HP than you.",
 				],
@@ -65940,7 +65473,7 @@ export const items_gap_fill: Item[] = [
 				},
 			],
 			passive: [
-				"Acts as a written arcane focus. Records 3 cast spells; the wielder may recall and cast one without spending mana once per long rest.",
+				"Acts as a written arcane focus. Records 3 cast spells; the wielder may recall and cast one without expending a spell slot once per long rest.",
 				"On a critical hit, you may make one additional weapon attack as part of the same action.",
 			],
 		},
@@ -66008,7 +65541,7 @@ export const items_gap_fill: Item[] = [
 				payload_complete: true,
 				uniqueness_seed: "gap_focus_tome_epic_0::Resonant Codex",
 				variant_note:
-					"Acts as a written arcane focus. Records 3 cast spells; the wielder may recall and cast one without spending mana once per long rest.",
+					"Acts as a written arcane focus. Records 3 cast spells; the wielder may recall and cast one without expending a spell slot once per long rest.",
 			},
 			formulas: {
 				effect_formula: "explicit non-damage item effect",
@@ -66026,7 +65559,7 @@ export const items_gap_fill: Item[] = [
 				theme: "standard",
 			},
 			passive_rules: [
-				"Acts as a written arcane focus. Records 3 cast spells; the wielder may recall and cast one without spending mana once per long rest.",
+				"Acts as a written arcane focus. Records 3 cast spells; the wielder may recall and cast one without expending a spell slot once per long rest.",
 				"On a critical hit, you may make one additional weapon attack as part of the same action.",
 			],
 			resolution: {
@@ -66040,9 +65573,9 @@ export const items_gap_fill: Item[] = [
 					},
 				],
 				non_damage_resolution:
-					"Acts as a written arcane focus. Records 3 cast spells; the wielder may recall and cast one without spending mana once per long rest.",
+					"Acts as a written arcane focus. Records 3 cast spells; the wielder may recall and cast one without expending a spell slot once per long rest.",
 				passive_effects: [
-					"Acts as a written arcane focus. Records 3 cast spells; the wielder may recall and cast one without spending mana once per long rest.",
+					"Acts as a written arcane focus. Records 3 cast spells; the wielder may recall and cast one without expending a spell slot once per long rest.",
 					"On a critical hit, you may make one additional weapon attack as part of the same action.",
 				],
 			},
@@ -66089,7 +65622,7 @@ export const items_gap_fill: Item[] = [
 				},
 			],
 			passive: [
-				"Acts as a written arcane focus. Records 3 cast spells; the wielder may recall and cast one without spending mana once per long rest.",
+				"Acts as a written arcane focus. Records 3 cast spells; the wielder may recall and cast one without expending a spell slot once per long rest.",
 				"Once per long rest, treat a single rolled 1 as a 20.",
 			],
 		},
@@ -66157,7 +65690,7 @@ export const items_gap_fill: Item[] = [
 				payload_complete: true,
 				uniqueness_seed: "gap_focus_tome_epic_1::Apocalypse Tome",
 				variant_note:
-					"Acts as a written arcane focus. Records 3 cast spells; the wielder may recall and cast one without spending mana once per long rest.",
+					"Acts as a written arcane focus. Records 3 cast spells; the wielder may recall and cast one without expending a spell slot once per long rest.",
 			},
 			formulas: {
 				effect_formula: "explicit non-damage item effect",
@@ -66175,7 +65708,7 @@ export const items_gap_fill: Item[] = [
 				theme: "standard",
 			},
 			passive_rules: [
-				"Acts as a written arcane focus. Records 3 cast spells; the wielder may recall and cast one without spending mana once per long rest.",
+				"Acts as a written arcane focus. Records 3 cast spells; the wielder may recall and cast one without expending a spell slot once per long rest.",
 				"Once per long rest, treat a single rolled 1 as a 20.",
 			],
 			resolution: {
@@ -66189,9 +65722,9 @@ export const items_gap_fill: Item[] = [
 					},
 				],
 				non_damage_resolution:
-					"Acts as a written arcane focus. Records 3 cast spells; the wielder may recall and cast one without spending mana once per long rest.",
+					"Acts as a written arcane focus. Records 3 cast spells; the wielder may recall and cast one without expending a spell slot once per long rest.",
 				passive_effects: [
-					"Acts as a written arcane focus. Records 3 cast spells; the wielder may recall and cast one without spending mana once per long rest.",
+					"Acts as a written arcane focus. Records 3 cast spells; the wielder may recall and cast one without expending a spell slot once per long rest.",
 					"Once per long rest, treat a single rolled 1 as a 20.",
 				],
 			},
@@ -70069,7 +69602,7 @@ export const items_gap_fill: Item[] = [
 		effects: {
 			active: [
 				{
-					name: "Mana Surge",
+					name: "Spell Surge",
 					description:
 						"As a bonus action, regain 1 spell slot of 2nd level or lower.",
 					action: "bonus-action",
@@ -70132,7 +69665,7 @@ export const items_gap_fill: Item[] = [
 			},
 			active_rules: [
 				{
-					name: "Mana Surge",
+					name: "Spell Surge",
 					description:
 						"As a bonus action, regain 1 spell slot of 2nd level or lower.",
 					action: "bonus-action",
@@ -70173,7 +69706,7 @@ export const items_gap_fill: Item[] = [
 				damage_type: "force",
 				active_options: [
 					{
-						name: "Mana Surge",
+						name: "Spell Surge",
 						description:
 							"As a bonus action, regain 1 spell slot of 2nd level or lower.",
 						dc: null,
@@ -73472,7 +73005,6 @@ export const items_gap_fill: Item[] = [
 		effects: {
 			passive: [
 				"When wielded two-handed, +1 to damage rolls.",
-				"On a hit, target loses 1 mana point (if any).",
 				"On a kill with this item, gain 1d4 temporary HP.",
 			],
 		},
@@ -73536,7 +73068,6 @@ export const items_gap_fill: Item[] = [
 			},
 			passive_rules: [
 				"When wielded two-handed, +1 to damage rolls.",
-				"On a hit, target loses 1 mana point (if any).",
 				"On a kill with this item, gain 1d4 temporary HP.",
 			],
 			resolution: {
@@ -73548,7 +73079,6 @@ export const items_gap_fill: Item[] = [
 				damage_roll: true,
 				on_hit: [
 					"When wielded two-handed, +1 to damage rolls.",
-					"On a hit, target loses 1 mana point (if any).",
 					"On a kill with this item, gain 1d4 temporary HP.",
 				],
 			},
@@ -73593,7 +73123,7 @@ export const items_gap_fill: Item[] = [
 		effects: {
 			active: [
 				{
-					name: "Mana Surge",
+					name: "Spell Surge",
 					description:
 						"As a bonus action, regain 1 spell slot of 2nd level or lower.",
 					action: "bonus-action",
@@ -73602,7 +73132,6 @@ export const items_gap_fill: Item[] = [
 			],
 			passive: [
 				"Slow swing: this weapon attacks last in initiative; deals double damage on a critical hit.",
-				"On a hit, target loses 1 mana point (if any).",
 				"On a hit, target's speed is reduced by 5 ft. until the start of your next turn.",
 			],
 		},
@@ -73656,7 +73185,7 @@ export const items_gap_fill: Item[] = [
 			},
 			active_rules: [
 				{
-					name: "Mana Surge",
+					name: "Spell Surge",
 					description:
 						"As a bonus action, regain 1 spell slot of 2nd level or lower.",
 					action: "bonus-action",
@@ -73689,7 +73218,6 @@ export const items_gap_fill: Item[] = [
 			},
 			passive_rules: [
 				"Slow swing: this weapon attacks last in initiative; deals double damage on a critical hit.",
-				"On a hit, target loses 1 mana point (if any).",
 				"On a hit, target's speed is reduced by 5 ft. until the start of your next turn.",
 			],
 			resolution: {
@@ -73697,7 +73225,7 @@ export const items_gap_fill: Item[] = [
 				damage_type: "force",
 				active_options: [
 					{
-						name: "Mana Surge",
+						name: "Spell Surge",
 						description:
 							"As a bonus action, regain 1 spell slot of 2nd level or lower.",
 						dc: null,
@@ -73708,7 +73236,6 @@ export const items_gap_fill: Item[] = [
 				damage_roll: true,
 				on_hit: [
 					"Slow swing: this weapon attacks last in initiative; deals double damage on a critical hit.",
-					"On a hit, target loses 1 mana point (if any).",
 					"On a hit, target's speed is reduced by 5 ft. until the start of your next turn.",
 				],
 			},
@@ -74076,10 +73603,7 @@ export const items_gap_fill: Item[] = [
 					frequency: "short-rest",
 				},
 			],
-			passive: [
-				"On a hit, target loses 1 mana point (if any).",
-				"+1d4 damage against creatures of the Anomaly tag.",
-			],
+			passive: ["+1d4 damage against creatures of the Anomaly tag."],
 		},
 		source: "Gap-Fill Catalog",
 		lore: {
@@ -74161,10 +73685,7 @@ export const items_gap_fill: Item[] = [
 				signature: "5a9a1fde",
 				theme: "aetheric",
 			},
-			passive_rules: [
-				"On a hit, target loses 1 mana point (if any).",
-				"+1d4 damage against creatures of the Anomaly tag.",
-			],
+			passive_rules: ["+1d4 damage against creatures of the Anomaly tag."],
 			resolution: {
 				type: "weapon_attack",
 				damage_type: "force",
@@ -74179,10 +73700,7 @@ export const items_gap_fill: Item[] = [
 				attack_roll: true,
 				damage_formula: "2d6 + STR modifier",
 				damage_roll: true,
-				on_hit: [
-					"On a hit, target loses 1 mana point (if any).",
-					"+1d4 damage against creatures of the Anomaly tag.",
-				],
+				on_hit: ["+1d4 damage against creatures of the Anomaly tag."],
 			},
 			rules_payload_version: "ra-item-v1",
 			source_integrity: {
@@ -76121,7 +75639,7 @@ export const items_gap_fill: Item[] = [
 		effects: {
 			active: [
 				{
-					name: "Mana Surge",
+					name: "Spell Surge",
 					description:
 						"As a bonus action, regain 1 spell slot of 2nd level or lower.",
 					action: "bonus-action",
@@ -76184,7 +75702,7 @@ export const items_gap_fill: Item[] = [
 			},
 			active_rules: [
 				{
-					name: "Mana Surge",
+					name: "Spell Surge",
 					description:
 						"As a bonus action, regain 1 spell slot of 2nd level or lower.",
 					action: "bonus-action",
@@ -76225,7 +75743,7 @@ export const items_gap_fill: Item[] = [
 				damage_type: "force",
 				active_options: [
 					{
-						name: "Mana Surge",
+						name: "Spell Surge",
 						description:
 							"As a bonus action, regain 1 spell slot of 2nd level or lower.",
 						dc: null,
@@ -79391,7 +78909,7 @@ export const items_gap_fill: Item[] = [
 		effects: {
 			active: [
 				{
-					name: "Mana Surge",
+					name: "Spell Surge",
 					description:
 						"As a bonus action, regain 1 spell slot of 2nd level or lower.",
 					action: "bonus-action",
@@ -79454,7 +78972,7 @@ export const items_gap_fill: Item[] = [
 			},
 			active_rules: [
 				{
-					name: "Mana Surge",
+					name: "Spell Surge",
 					description:
 						"As a bonus action, regain 1 spell slot of 2nd level or lower.",
 					action: "bonus-action",
@@ -79495,7 +79013,7 @@ export const items_gap_fill: Item[] = [
 				damage_type: "cold",
 				active_options: [
 					{
-						name: "Mana Surge",
+						name: "Spell Surge",
 						description:
 							"As a bonus action, regain 1 spell slot of 2nd level or lower.",
 						dc: null,
@@ -79711,7 +79229,7 @@ export const items_gap_fill: Item[] = [
 		effects: {
 			active: [
 				{
-					name: "Mana Cascade",
+					name: "Spell Cascade",
 					description:
 						"As an action, regain 2 spell slots of 3rd level or lower.",
 					action: "action",
@@ -79773,7 +79291,7 @@ export const items_gap_fill: Item[] = [
 			},
 			active_rules: [
 				{
-					name: "Mana Cascade",
+					name: "Spell Cascade",
 					description:
 						"As an action, regain 2 spell slots of 3rd level or lower.",
 					action: "action",
@@ -79813,7 +79331,7 @@ export const items_gap_fill: Item[] = [
 				damage_type: "slashing",
 				active_options: [
 					{
-						name: "Mana Cascade",
+						name: "Spell Cascade",
 						description:
 							"As an action, regain 2 spell slots of 3rd level or lower.",
 						dc: null,
@@ -80523,7 +80041,6 @@ export const items_gap_fill: Item[] = [
 		effects: {
 			passive: [
 				"When wielded two-handed, +1 to damage rolls.",
-				"On a hit, target loses 1 mana point (if any).",
 				"Once per short rest, treat a single failed Vitality save as a success.",
 			],
 		},
@@ -80587,7 +80104,6 @@ export const items_gap_fill: Item[] = [
 			},
 			passive_rules: [
 				"When wielded two-handed, +1 to damage rolls.",
-				"On a hit, target loses 1 mana point (if any).",
 				"Once per short rest, treat a single failed Vitality save as a success.",
 			],
 			resolution: {
@@ -80599,7 +80115,6 @@ export const items_gap_fill: Item[] = [
 				damage_roll: true,
 				on_hit: [
 					"When wielded two-handed, +1 to damage rolls.",
-					"On a hit, target loses 1 mana point (if any).",
 					"Once per short rest, treat a single failed Vitality save as a success.",
 				],
 			},
@@ -83403,7 +82918,7 @@ export const items_gap_fill: Item[] = [
 		effects: {
 			active: [
 				{
-					name: "Mana Cascade",
+					name: "Spell Cascade",
 					description:
 						"As an action, regain 2 spell slots of 3rd level or lower.",
 					action: "action",
@@ -83464,7 +82979,7 @@ export const items_gap_fill: Item[] = [
 			},
 			active_rules: [
 				{
-					name: "Mana Cascade",
+					name: "Spell Cascade",
 					description:
 						"As an action, regain 2 spell slots of 3rd level or lower.",
 					action: "action",
@@ -83502,7 +83017,7 @@ export const items_gap_fill: Item[] = [
 				damage_type: "slashing",
 				active_options: [
 					{
-						name: "Mana Cascade",
+						name: "Spell Cascade",
 						description:
 							"As an action, regain 2 spell slots of 3rd level or lower.",
 						dc: null,
@@ -88411,7 +87926,7 @@ export const items_gap_fill: Item[] = [
 		effects: {
 			active: [
 				{
-					name: "Mana Surge",
+					name: "Spell Surge",
 					description:
 						"As a bonus action, regain 1 spell slot of 2nd level or lower.",
 					action: "bonus-action",
@@ -88474,7 +87989,7 @@ export const items_gap_fill: Item[] = [
 			},
 			active_rules: [
 				{
-					name: "Mana Surge",
+					name: "Spell Surge",
 					description:
 						"As a bonus action, regain 1 spell slot of 2nd level or lower.",
 					action: "bonus-action",
@@ -88514,7 +88029,7 @@ export const items_gap_fill: Item[] = [
 				damage_type: "force",
 				active_options: [
 					{
-						name: "Mana Surge",
+						name: "Spell Surge",
 						description:
 							"As a bonus action, regain 1 spell slot of 2nd level or lower.",
 						dc: null,
@@ -88884,7 +88399,7 @@ export const items_gap_fill: Item[] = [
 		effects: {
 			active: [
 				{
-					name: "Mana Cascade",
+					name: "Spell Cascade",
 					description:
 						"As an action, regain 2 spell slots of 3rd level or lower.",
 					action: "action",
@@ -88943,7 +88458,7 @@ export const items_gap_fill: Item[] = [
 			},
 			active_rules: [
 				{
-					name: "Mana Cascade",
+					name: "Spell Cascade",
 					description:
 						"As an action, regain 2 spell slots of 3rd level or lower.",
 					action: "action",
@@ -88981,7 +88496,7 @@ export const items_gap_fill: Item[] = [
 				damage_type: "slashing",
 				active_options: [
 					{
-						name: "Mana Cascade",
+						name: "Spell Cascade",
 						description:
 							"As an action, regain 2 spell slots of 3rd level or lower.",
 						dc: null,
@@ -89692,7 +89207,6 @@ export const items_gap_fill: Item[] = [
 		effects: {
 			passive: [
 				"Bladed knuckles. Finesse.",
-				"On a hit, target loses 1 mana point (if any).",
 				"On a hit, the next ally's attack against the same target has advantage until the start of your next turn.",
 			],
 		},
@@ -89756,7 +89270,6 @@ export const items_gap_fill: Item[] = [
 			},
 			passive_rules: [
 				"Bladed knuckles. Finesse.",
-				"On a hit, target loses 1 mana point (if any).",
 				"On a hit, the next ally's attack against the same target has advantage until the start of your next turn.",
 			],
 			resolution: {
@@ -89768,7 +89281,6 @@ export const items_gap_fill: Item[] = [
 				damage_roll: true,
 				on_hit: [
 					"Bladed knuckles. Finesse.",
-					"On a hit, target loses 1 mana point (if any).",
 					"On a hit, the next ally's attack against the same target has advantage until the start of your next turn.",
 				],
 			},
@@ -90983,7 +90495,7 @@ export const items_gap_fill: Item[] = [
 		effects: {
 			active: [
 				{
-					name: "Mana Surge",
+					name: "Spell Surge",
 					description:
 						"As a bonus action, regain 1 spell slot of 2nd level or lower.",
 					action: "bonus-action",
@@ -91045,7 +90557,7 @@ export const items_gap_fill: Item[] = [
 			},
 			active_rules: [
 				{
-					name: "Mana Surge",
+					name: "Spell Surge",
 					description:
 						"As a bonus action, regain 1 spell slot of 2nd level or lower.",
 					action: "bonus-action",
@@ -91085,7 +90597,7 @@ export const items_gap_fill: Item[] = [
 				damage_type: "slashing",
 				active_options: [
 					{
-						name: "Mana Surge",
+						name: "Spell Surge",
 						description:
 							"As a bonus action, regain 1 spell slot of 2nd level or lower.",
 						dc: null,
@@ -91140,7 +90652,7 @@ export const items_gap_fill: Item[] = [
 		effects: {
 			active: [
 				{
-					name: "Mana Surge",
+					name: "Spell Surge",
 					description:
 						"As a bonus action, regain 1 spell slot of 2nd level or lower.",
 					action: "bonus-action",
@@ -91202,7 +90714,7 @@ export const items_gap_fill: Item[] = [
 			},
 			active_rules: [
 				{
-					name: "Mana Surge",
+					name: "Spell Surge",
 					description:
 						"As a bonus action, regain 1 spell slot of 2nd level or lower.",
 					action: "bonus-action",
@@ -91243,7 +90755,7 @@ export const items_gap_fill: Item[] = [
 				damage_type: "fire",
 				active_options: [
 					{
-						name: "Mana Surge",
+						name: "Spell Surge",
 						description:
 							"As a bonus action, regain 1 spell slot of 2nd level or lower.",
 						dc: null,
@@ -94265,7 +93777,7 @@ export const items_gap_fill: Item[] = [
 		effects: {
 			active: [
 				{
-					name: "Mana Surge",
+					name: "Spell Surge",
 					description:
 						"As a bonus action, regain 1 spell slot of 2nd level or lower.",
 					action: "bonus-action",
@@ -94329,7 +93841,7 @@ export const items_gap_fill: Item[] = [
 			},
 			active_rules: [
 				{
-					name: "Mana Surge",
+					name: "Spell Surge",
 					description:
 						"As a bonus action, regain 1 spell slot of 2nd level or lower.",
 					action: "bonus-action",
@@ -95320,7 +94832,7 @@ export const items_gap_fill: Item[] = [
 		effects: {
 			active: [
 				{
-					name: "Mana Cascade",
+					name: "Spell Cascade",
 					description:
 						"As an action, regain 2 spell slots of 3rd level or lower.",
 					action: "action",
@@ -95385,7 +94897,7 @@ export const items_gap_fill: Item[] = [
 			},
 			active_rules: [
 				{
-					name: "Mana Cascade",
+					name: "Spell Cascade",
 					description:
 						"As an action, regain 2 spell slots of 3rd level or lower.",
 					action: "action",
@@ -96918,7 +96430,7 @@ export const items_gap_fill: Item[] = [
 		effects: {
 			active: [
 				{
-					name: "Mana Cascade",
+					name: "Spell Cascade",
 					description:
 						"As an action, regain 2 spell slots of 3rd level or lower.",
 					action: "action",
@@ -96983,7 +96495,7 @@ export const items_gap_fill: Item[] = [
 			},
 			active_rules: [
 				{
-					name: "Mana Cascade",
+					name: "Spell Cascade",
 					description:
 						"As an action, regain 2 spell slots of 3rd level or lower.",
 					action: "action",
@@ -99204,7 +98716,7 @@ export const items_gap_fill: Item[] = [
 		effects: {
 			active: [
 				{
-					name: "Mana Surge",
+					name: "Spell Surge",
 					description:
 						"As a bonus action, regain 1 spell slot of 2nd level or lower.",
 					action: "bonus-action",
@@ -99268,7 +98780,7 @@ export const items_gap_fill: Item[] = [
 			},
 			active_rules: [
 				{
-					name: "Mana Surge",
+					name: "Spell Surge",
 					description:
 						"As a bonus action, regain 1 spell slot of 2nd level or lower.",
 					action: "bonus-action",
@@ -101179,7 +100691,7 @@ export const items_gap_fill: Item[] = [
 		effects: {
 			active: [
 				{
-					name: "Mana Surge",
+					name: "Spell Surge",
 					description:
 						"As a bonus action, regain 1 spell slot of 2nd level or lower.",
 					action: "bonus-action",
@@ -101244,7 +100756,7 @@ export const items_gap_fill: Item[] = [
 			},
 			active_rules: [
 				{
-					name: "Mana Surge",
+					name: "Spell Surge",
 					description:
 						"As a bonus action, regain 1 spell slot of 2nd level or lower.",
 					action: "bonus-action",
@@ -101483,7 +100995,7 @@ export const items_gap_fill: Item[] = [
 		effects: {
 			active: [
 				{
-					name: "Mana Surge",
+					name: "Spell Surge",
 					description:
 						"As a bonus action, regain 1 spell slot of 2nd level or lower.",
 					action: "bonus-action",
@@ -101547,7 +101059,7 @@ export const items_gap_fill: Item[] = [
 			},
 			active_rules: [
 				{
-					name: "Mana Surge",
+					name: "Spell Surge",
 					description:
 						"As a bonus action, regain 1 spell slot of 2nd level or lower.",
 					action: "bonus-action",
@@ -103222,7 +102734,7 @@ export const items_gap_fill: Item[] = [
 		effects: {
 			active: [
 				{
-					name: "Mana Surge",
+					name: "Spell Surge",
 					description:
 						"As a bonus action, regain 1 spell slot of 2nd level or lower.",
 					action: "bonus-action",
@@ -103285,7 +102797,7 @@ export const items_gap_fill: Item[] = [
 			},
 			active_rules: [
 				{
-					name: "Mana Surge",
+					name: "Spell Surge",
 					description:
 						"As a bonus action, regain 1 spell slot of 2nd level or lower.",
 					action: "bonus-action",
@@ -103325,7 +102837,7 @@ export const items_gap_fill: Item[] = [
 				damage_type: "fire",
 				active_options: [
 					{
-						name: "Mana Surge",
+						name: "Spell Surge",
 						description:
 							"As a bonus action, regain 1 spell slot of 2nd level or lower.",
 						dc: null,
@@ -103518,6 +103030,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_firearm_pistol_rare_2",
 		name: "Aetheric Revolver",
+		aliases: ["item_p4_5"],
 		source_book: "Rift Ascendant Canon",
 		description:
 			"A short-barrel handgun tuned for fast draw and reliable function inside cramped Rift corridors. Bureau quartermasters catalog it as the Aetheric Revolver.",
@@ -103548,7 +103061,6 @@ export const items_gap_fill: Item[] = [
 			],
 			passive: [
 				"Sidearm. Reload (1) on a bonus action.",
-				"On a hit, target loses 1 mana point (if any).",
 				"On a hit, target makes a DC 13 Vitality save or is disarmed of one held item.",
 			],
 		},
@@ -103634,7 +103146,6 @@ export const items_gap_fill: Item[] = [
 			},
 			passive_rules: [
 				"Sidearm. Reload (1) on a bonus action.",
-				"On a hit, target loses 1 mana point (if any).",
 				"On a hit, target makes a DC 13 Vitality save or is disarmed of one held item.",
 			],
 			resolution: {
@@ -103653,7 +103164,6 @@ export const items_gap_fill: Item[] = [
 				damage_roll: true,
 				on_hit: [
 					"Sidearm. Reload (1) on a bonus action.",
-					"On a hit, target loses 1 mana point (if any).",
 					"On a hit, target makes a DC 13 Vitality save or is disarmed of one held item.",
 				],
 			},
@@ -103708,7 +103218,6 @@ export const items_gap_fill: Item[] = [
 			],
 			passive: [
 				"Snub-frame. Counts as a finesse weapon.",
-				"On a hit, target loses 1 mana point (if any).",
 				"Once per long rest, gain advantage on all attacks for 1 round as a bonus action.",
 			],
 		},
@@ -103794,7 +103303,6 @@ export const items_gap_fill: Item[] = [
 			},
 			passive_rules: [
 				"Snub-frame. Counts as a finesse weapon.",
-				"On a hit, target loses 1 mana point (if any).",
 				"Once per long rest, gain advantage on all attacks for 1 round as a bonus action.",
 			],
 			resolution: {
@@ -103813,7 +103321,6 @@ export const items_gap_fill: Item[] = [
 				damage_roll: true,
 				on_hit: [
 					"Snub-frame. Counts as a finesse weapon.",
-					"On a hit, target loses 1 mana point (if any).",
 					"Once per long rest, gain advantage on all attacks for 1 round as a bonus action.",
 				],
 			},
@@ -103868,7 +103375,6 @@ export const items_gap_fill: Item[] = [
 			],
 			passive: [
 				"Suppressed. Doesn't reveal your position when fired.",
-				"On a hit, target loses 1 mana point (if any).",
 				"Once per short rest, when you make an attack, you may choose to land a critical hit instead of rolling damage normally.",
 			],
 		},
@@ -103954,7 +103460,6 @@ export const items_gap_fill: Item[] = [
 			},
 			passive_rules: [
 				"Suppressed. Doesn't reveal your position when fired.",
-				"On a hit, target loses 1 mana point (if any).",
 				"Once per short rest, when you make an attack, you may choose to land a critical hit instead of rolling damage normally.",
 			],
 			resolution: {
@@ -103973,7 +103478,6 @@ export const items_gap_fill: Item[] = [
 				damage_roll: true,
 				on_hit: [
 					"Suppressed. Doesn't reveal your position when fired.",
-					"On a hit, target loses 1 mana point (if any).",
 					"Once per short rest, when you make an attack, you may choose to land a critical hit instead of rolling damage normally.",
 				],
 			},
@@ -108255,7 +107759,7 @@ export const items_gap_fill: Item[] = [
 		effects: {
 			active: [
 				{
-					name: "Mana Cascade",
+					name: "Spell Cascade",
 					description:
 						"As an action, regain 2 spell slots of 3rd level or lower.",
 					action: "action",
@@ -108317,7 +107821,7 @@ export const items_gap_fill: Item[] = [
 			},
 			active_rules: [
 				{
-					name: "Mana Cascade",
+					name: "Spell Cascade",
 					description:
 						"As an action, regain 2 spell slots of 3rd level or lower.",
 					action: "action",
@@ -108356,7 +107860,7 @@ export const items_gap_fill: Item[] = [
 				damage_type: "radiant",
 				active_options: [
 					{
-						name: "Mana Cascade",
+						name: "Spell Cascade",
 						description:
 							"As an action, regain 2 spell slots of 3rd level or lower.",
 						dc: null,
@@ -110545,7 +110049,6 @@ export const items_gap_fill: Item[] = [
 			],
 			passive: [
 				"Incendiary. AoE 10 ft.: ignites flammable objects on a fail.",
-				"On a hit, target loses 1 mana point (if any).",
 				"Once per short rest, treat a roll of 1-9 on an attack as a 10.",
 			],
 		},
@@ -110633,7 +110136,6 @@ export const items_gap_fill: Item[] = [
 			},
 			passive_rules: [
 				"Incendiary. AoE 10 ft.: ignites flammable objects on a fail.",
-				"On a hit, target loses 1 mana point (if any).",
 				"Once per short rest, treat a roll of 1-9 on an attack as a 10.",
 			],
 			resolution: {
@@ -110652,7 +110154,6 @@ export const items_gap_fill: Item[] = [
 				damage_roll: true,
 				on_hit: [
 					"Incendiary. AoE 10 ft.: ignites flammable objects on a fail.",
-					"On a hit, target loses 1 mana point (if any).",
 					"Once per short rest, treat a roll of 1-9 on an attack as a 10.",
 				],
 			},

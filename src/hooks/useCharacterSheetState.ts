@@ -7,6 +7,7 @@ import {
 import { useCallback, useMemo } from "react";
 import { useToast } from "@/hooks/use-toast";
 import type { useUpdateCharacter } from "@/hooks/useCharacters";
+import { invalidateCharacterCompanions } from "@/hooks/useCompanionInstances";
 import type { useAscendantTools } from "@/hooks/useGlobalDDBeyondIntegration";
 import { useSheetUiPersistence } from "@/hooks/useSheetUiPersistence";
 import { supabase } from "@/integrations/supabase/client";
@@ -406,6 +407,8 @@ export function useCharacterSheetState(
 		) => {
 			const { executeLongRest } = await import("@/lib/restSystem");
 			const result = await executeLongRest(id);
+			// Companions rest with the character (RA-10).
+			invalidateCharacterCompanions(queryClient, id);
 			queryClient.invalidateQueries({ queryKey: ["character", id] });
 			queryClient.invalidateQueries({ queryKey: ["features", id] });
 			// Slots + per-ability uses reset on a long rest — refresh their
@@ -445,6 +448,12 @@ export function useCharacterSheetState(
 				toast({
 					title: "Daily quests not assigned",
 					description: result.questAssignmentError,
+					variant: "destructive",
+				});
+			if (result?.companionRestError)
+				toast({
+					title: "Companions did not rest",
+					description: result.companionRestError,
 					variant: "destructive",
 				});
 		},

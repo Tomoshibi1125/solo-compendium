@@ -10,12 +10,14 @@ import {
 	getRiftFavorDie,
 	getRiftFavorMax,
 } from "./5eRulesEngine";
+import { normalizeAbilityScoreCode } from "./abilityScoreCodes";
 import {
 	getCanonicalJob,
 	getCanonicalJobAbilityAccessMode,
 	getCanonicalJobCasterType,
 	getCanonicalJobPrimaryAbility,
 	getCanonicalJobSpellcastingAbility,
+	getCanonicalPathSpellcasting,
 } from "./jobRules";
 import { computePassiveScore } from "./sensesEngine";
 
@@ -287,6 +289,12 @@ export function getCasterType(
 	const jobName = typeof job === "string" ? job : job?.name;
 	if (!jobName) return "none";
 	const authoredCasterType = getCanonicalJobCasterType(job);
+	if (authoredCasterType && authoredCasterType !== "none")
+		return authoredCasterType;
+	// A non-casting Job can still cast through its Path (a casting reference
+	// carries the character's Path; see toCastingReference).
+	const pathSpellcasting = getCanonicalPathSpellcasting(job);
+	if (pathSpellcasting) return pathSpellcasting.casterType;
 	if (authoredCasterType) return authoredCasterType;
 
 	// Compatibility fallback for legacy 5e-named saved data. All Rift
@@ -425,6 +433,38 @@ export function getSpellSlotsPerLevel(
 		}
 	}
 
+	// Third-caster progression (Path casting; the 5e Eldritch Knight table)
+	if (casterType === "third") {
+		const thirdCasterTable: Record<number, number[]> = {
+			1: [0, 0, 0, 0, 0, 0, 0, 0, 0],
+			2: [0, 0, 0, 0, 0, 0, 0, 0, 0],
+			3: [2, 0, 0, 0, 0, 0, 0, 0, 0],
+			4: [3, 0, 0, 0, 0, 0, 0, 0, 0],
+			5: [3, 0, 0, 0, 0, 0, 0, 0, 0],
+			6: [3, 0, 0, 0, 0, 0, 0, 0, 0],
+			7: [4, 2, 0, 0, 0, 0, 0, 0, 0],
+			8: [4, 2, 0, 0, 0, 0, 0, 0, 0],
+			9: [4, 2, 0, 0, 0, 0, 0, 0, 0],
+			10: [4, 3, 0, 0, 0, 0, 0, 0, 0],
+			11: [4, 3, 0, 0, 0, 0, 0, 0, 0],
+			12: [4, 3, 0, 0, 0, 0, 0, 0, 0],
+			13: [4, 3, 2, 0, 0, 0, 0, 0, 0],
+			14: [4, 3, 2, 0, 0, 0, 0, 0, 0],
+			15: [4, 3, 2, 0, 0, 0, 0, 0, 0],
+			16: [4, 3, 3, 0, 0, 0, 0, 0, 0],
+			17: [4, 3, 3, 0, 0, 0, 0, 0, 0],
+			18: [4, 3, 3, 0, 0, 0, 0, 0, 0],
+			19: [4, 3, 3, 1, 0, 0, 0, 0, 0],
+			20: [4, 3, 3, 1, 0, 0, 0, 0, 0],
+		};
+
+		const levelSlots =
+			thirdCasterTable[Math.min(level, 20)] || thirdCasterTable[20];
+		for (let i = 0; i < 9; i++) {
+			slots[i + 1] = levelSlots[i];
+		}
+	}
+
 	// Artificer progression (Tasha's Cauldron)
 	if (casterType === "artificer") {
 		const artificerTable: Record<number, number[]> = {
@@ -464,7 +504,12 @@ export function getSpellSlotsPerLevel(
 export function getSpellcastingAbility(
 	job: string | { name: string } | null | undefined,
 ): AbilityScore | null {
-	return getCanonicalJobSpellcastingAbility(job);
+	const jobAbility = getCanonicalJobSpellcastingAbility(job);
+	if (jobAbility) return jobAbility;
+	const pathSpellcasting = getCanonicalPathSpellcasting(job);
+	return pathSpellcasting
+		? normalizeAbilityScoreCode(pathSpellcasting.ability)
+		: null;
 }
 
 /**
@@ -492,11 +537,22 @@ export function getSpellsKnownLimit(
 	job: string | { name: string } | null | undefined,
 	level: number,
 ): number | null {
-	if (getCanonicalJobAbilityAccessMode(job, "spell") !== "known") return null;
-	const table = getCanonicalJob(job)?.spellcasting?.spellsKnown;
+	const pathTable = getPathKnownTable(job, "spellsKnown");
+	if (getCanonicalJobAbilityAccessMode(job, "spell") !== "known" && !pathTable)
+		return null;
+	const table = getCanonicalJob(job)?.spellcasting?.spellsKnown ?? pathTable;
 	if (!table?.length) return null;
 	const idx = Math.max(0, Math.min(level - 1, table.length - 1));
 	return table[idx] ?? null;
+}
+
+/** A Path caster's known-count table, when the Job itself has no casting. */
+function getPathKnownTable(
+	job: string | { name: string } | null | undefined,
+	table: "cantripsKnown" | "spellsKnown",
+): readonly number[] | null {
+	if (getCanonicalJob(job)?.spellcasting) return null;
+	return getCanonicalPathSpellcasting(job)?.[table] ?? null;
 }
 
 // Calculate spells prepared limit (standard 5e)
@@ -547,7 +603,9 @@ export function getCantripsKnownLimit(
 	job: string | { name: string } | null | undefined,
 	level: number,
 ): number | null {
-	const table = getCanonicalJob(job)?.spellcasting?.cantripsKnown;
+	const table =
+		getCanonicalJob(job)?.spellcasting?.cantripsKnown ??
+		getPathKnownTable(job, "cantripsKnown");
 	if (!table?.length) return null;
 	const idx = Math.max(0, Math.min(level - 1, table.length - 1));
 	return table[idx] ?? null;

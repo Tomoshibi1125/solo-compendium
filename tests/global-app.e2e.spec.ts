@@ -86,40 +86,19 @@ test.describe
 					await dmTools.testRollableTables();
 				});
 
-				// ── 6. Rift Generator ───────────────────────────────────────
-				test("6. Rift Generator: generate and copy", async () => {
-					const dmTools = new DMToolsPage(dmPage);
-					await dmTools.testRiftGenerator();
-				});
+				// Tests 6-8, 11, and 16 (Rift, NPC, Treasure, Random Event, and
+				// Art generators) were removed with those tools under RA-18.
 
-				// ── 7. NPC Generator ────────────────────────────────────────
-				test("7. NPC Generator: generate and copy", async () => {
+				// ── 9. Retired generators ───────────────────────────────────
+				test("9. Retired generators: old URLs land on Warden tools", async () => {
 					const dmTools = new DMToolsPage(dmPage);
-					await dmTools.testNPCGenerator();
-				});
-
-				// ── 8. Treasure Generator ───────────────────────────────────
-				test("8. Treasure Generator: rank select, generate, copy", async () => {
-					const dmTools = new DMToolsPage(dmPage);
-					await dmTools.testTreasureGenerator();
-				});
-
-				// ── 9. Quest Generator ──────────────────────────────────────
-				test("9. Quest Generator: selects, generate, copy", async () => {
-					const dmTools = new DMToolsPage(dmPage);
-					await dmTools.testQuestGenerator();
+					await dmTools.testRetiredGeneratorRedirects();
 				});
 
 				// ── 10. Session Planner ─────────────────────────────────────
 				test("10. Session Planner: campaign select, sessions panel", async () => {
 					const dmTools = new DMToolsPage(dmPage);
 					await dmTools.testSessionPlanner();
-				});
-
-				// ── 11. Random Event Generator ──────────────────────────────
-				test("11. Random Event Generator: generate events", async () => {
-					const dmTools = new DMToolsPage(dmPage);
-					await dmTools.testRandomEventGenerator();
 				});
 
 				// ── 12. Relic Workshop ──────────────────────────────────────
@@ -139,22 +118,13 @@ test.describe
 				// standalone dungeon-map tool, token library, session audio, and
 				// VTT were scraped from the app (see docs/pending-wiring.md).
 
-				// ── 16. Art Generator ───────────────────────────────────────
-				test("16. Art Generator: tabs, generator panel", async () => {
+				// ── 19. Retired admin/dev URLs ────────────────────────────
+				// (Former tests 20, Content Audit, and 34, the retired Art
+				// Generation URL, are folded in here: admin and development work
+				// happens outside the app, so those pages were removed.)
+				test("19. Retired admin URLs: redirect to Warden Protocols", async () => {
 					const dmTools = new DMToolsPage(dmPage);
-					await dmTools.testArtGenerator();
-				});
-
-				// ── 19. Rift Console ──────────────────────────────────────
-				test("19. Rift Console: admin page loads", async () => {
-					const dmTools = new DMToolsPage(dmPage);
-					await dmTools.testSystemConsole();
-				});
-
-				// ── 20. Content Audit ───────────────────────────────────────
-				test("20. Content Audit: audit page loads", async () => {
-					const dmTools = new DMToolsPage(dmPage);
-					await dmTools.testContentAudit();
+					await dmTools.testRetiredAdminUrls();
 				});
 
 				// ── 21. Campaign Create ─────────────────────────────────────
@@ -291,7 +261,7 @@ test.describe
 				});
 
 				// ── 32. Campaign Detail Tabs ──────────────────────────────────
-				test("32. Campaign Detail: exercise all tabs (Overview, Wiki, Sessions, Chat, Notes, Handouts, Characters, Settings)", async () => {
+				test("32. Campaign Detail: exercise all tabs (Overview, Wiki, Sessions, Chat, Notes, Characters, Guilds, Activity, Assets, Quests, Settings, Oversight)", async () => {
 					expect(campaignId).toBeTruthy();
 					const shared = new SharedPage(dmPage);
 					await shared.gotoCampaignDetail(campaignId);
@@ -303,12 +273,6 @@ test.describe
 					const shared = new SharedPage(dmPage);
 					await shared.gotoCampaigns();
 					await shared.verifyCampaignListLoads();
-				});
-
-				// ── 34. DM Art Generation Admin ───────────────────────────────
-				test("34. DM Art Generation admin: page loads", async () => {
-					const dmTools = new DMToolsPage(dmPage);
-					await dmTools.testArtGenerationAdmin();
 				});
 
 				// ── 35. Character Level Up ────────────────────────────────────
@@ -472,10 +436,10 @@ test.describe
 					await shared.verifyMarketplaceLoads();
 				});
 
-				// ── 46. Player Character Art ──────────────────────────────────
-				test("46. Player Character Art: tool page loads", async () => {
+				// ── 46. Retired Character Art Generator ───────────────────────
+				test("46. Retired Character Art: old tool URL returns to tools", async () => {
 					const player = new PlayerPage(playerPage);
-					await player.verifyCharacterArtTool();
+					await player.verifyRetiredCharacterArtTool();
 				});
 
 				// ── 47. Player Party View ─────────────────────────────────────
@@ -528,58 +492,16 @@ test.describe
 			});
 
 		// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-		// PHASE 3 — PERMISSION BOUNDARIES
+		// PHASE 3 — PERMISSION BOUNDARIES (retired)
 		// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-		test.describe
-			.serial("Phase 3: Permission Boundaries", () => {
-				test.beforeAll(async ({ browser }) => {
-					// Create a fresh player context for permission tests
-					playerContext = await browser.newContext();
-					playerPage = await playerContext.newPage();
-					const auth = new AuthPage(playerPage);
-					await auth.continueAsGuest("player");
-					await playerPage.waitForURL(/\/(ascendant|player)-tools/, {
-						timeout: 15_000,
-					});
-				});
-
-				test.afterAll(async () => {
-					if (playerContext) await playerContext.close();
-				});
-
-				// (Former tests 46/47 — player denied /warden-protocols and the
-				// encounter builder — removed: ProtectedRoute intentionally lets
-				// unauthenticated guests through routes without allowGuest={false};
-				// the guest role gates navigation, not URLs. The real boundary is
-				// the auth-required admin routes asserted below.)
-
-				// ── 48. Player denied /warden-directives/rift-console ───────
-				test("48. Player denied access to /warden-directives/rift-console", async () => {
-					const player = new PlayerPage(playerPage);
-					await player.verifyDMRouteBlocked("/warden-directives/rift-console");
-				});
-
-				// ── 54. Player denied /warden-directives/art-generation ───────
-				test("54. Player denied access to /warden-directives/art-generation", async () => {
-					const player = new PlayerPage(playerPage);
-					await player.verifyDMRouteBlocked(
-						"/warden-directives/art-generation",
-					);
-				});
-
-				// ── 55. Player denied /warden-directives/content-audit ────────
-				test("55. Player denied access to /warden-directives/content-audit", async () => {
-					const player = new PlayerPage(playerPage);
-					await player.verifyDMRouteBlocked("/warden-directives/content-audit");
-				});
-
-				// ── 56. Player denied /admin ──────────────────────────────────
-				test("56. Player denied access to /admin", async () => {
-					const player = new PlayerPage(playerPage);
-					await player.verifyDMRouteBlocked("/admin");
-				});
-			});
+		// Former tests 46/47 (player denied /warden-protocols and the encounter
+		// builder) were removed because ProtectedRoute intentionally lets
+		// unauthenticated guests through routes without allowGuest={false}; the
+		// guest role gates navigation, not URLs. Former tests 48 and 54–56
+		// guarded the in-app admin pages, which were removed: admin and
+		// development work happens outside the app, and those URLs now redirect
+		// to the Warden hub (test 19). Data access is enforced by RLS and covered
+		// by the pgTAP suites.
 
 		// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 		// PHASE 4 — CROSS-CONTEXT VALIDATION

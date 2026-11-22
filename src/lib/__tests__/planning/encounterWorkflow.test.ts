@@ -32,6 +32,8 @@ function workflowInput(): EncounterWorkflowInputV1 {
 				entryId: createEncounterWorkflowEntryId(canonical),
 				displayName: "Mirror Hound",
 				quantity: 2,
+				disposition: "neutral",
+				currentlyHostile: false,
 				source: canonical,
 				runtimeState: {
 					id: canonical.sourceId,
@@ -46,6 +48,8 @@ function workflowInput(): EncounterWorkflowInputV1 {
 				entryId: createEncounterWorkflowEntryId(homebrew),
 				displayName: "Mirror Hound",
 				quantity: 1,
+				disposition: "hostile",
+				currentlyHostile: true,
 				source: homebrew,
 				runtimeState: {
 					id: homebrew.sourceId,
@@ -124,6 +128,14 @@ describe("encounter workflow adapter", () => {
 		expect(attached.state.runtimeState).toEqual(
 			workflowInput().roster[0].runtimeState,
 		);
+		expect(
+			first.state.combatants.map((entry) => entry.currentlyHostile),
+		).toEqual([false, false, true]);
+		expect(first.state.combatants.map((entry) => entry.disposition)).toEqual([
+			"neutral",
+			"neutral",
+			"hostile",
+		]);
 	});
 
 	it("fails closed when an entry has no explicit source identity", () => {
@@ -175,8 +187,14 @@ describe("encounter workflow adapter", () => {
 		expect(restored.state.roster[0]).toMatchObject({
 			entryId: createEncounterWorkflowEntryId(canonical),
 			quantity: 2,
+			disposition: "neutral",
+			currentlyHostile: false,
 			source: canonical,
 			runtimeState: input.roster[0].runtimeState,
+		});
+		expect(restored.state.roster[1]).toMatchObject({
+			disposition: "hostile",
+			currentlyHostile: true,
 		});
 		expect(restored.removeExpandedInstanceIds).toEqual(
 			plan.expandedEntities.map((entry) => entry.entity.instanceId),

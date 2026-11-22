@@ -11,9 +11,6 @@ const item = (
 	title: "Rift Atlas",
 	item_type: "map",
 	category: "exploration",
-	price_type: "paid",
-	price_amount: 5,
-	price_currency: "USD",
 	rating_avg: 4.5,
 	rating_count: 12,
 	downloads_count: 30,
@@ -23,41 +20,34 @@ const item = (
 });
 
 describe("marketplace export builders", () => {
-	it("renders markdown with a count, priced label, rating, and tags", () => {
+	it("renders markdown with a count, type, rating, downloads, and tags", () => {
 		const md = buildMarketplaceMarkdown([item()]);
 		expect(md).toContain("# Marketplace Listings");
 		expect(md).toContain("**Listings:** 1");
 		expect(md).toContain("## Rift Atlas");
-		expect(md).toContain("USD 5"); // paid price label
+		expect(md).toContain("map · exploration");
 		expect(md).toContain("4.50 (12)"); // rating avg + count
+		expect(md).toContain("**Downloads:** 30");
 		expect(md).toContain("rift, atlas");
 		expect(md).toContain("A gilded map of the rifts.");
 	});
 
-	it("labels free listings by their price type", () => {
-		const md = buildMarketplaceMarkdown([
-			item({ title: "Freebie", price_type: "free", price_amount: null }),
-		]);
-		expect(md).toMatch(/\*\*Price:\*\* free/);
+	it("has no price line: every listing is free", () => {
+		const md = buildMarketplaceMarkdown([item()]);
+		expect(md).not.toMatch(/\*\*Price:\*\*/);
 	});
 
-	it("builds CSV rows/columns with joined tags", () => {
+	it("builds CSV rows/columns with joined tags and no price columns", () => {
 		const { rows, columns } = buildMarketplaceCsv([item()]);
 		expect(columns).toContain("title");
 		expect(columns).toContain("downloads_count");
+		expect(columns.some((column) => column.startsWith("price"))).toBe(false);
 		expect(rows).toHaveLength(1);
 		expect(rows[0]).toMatchObject({
 			title: "Rift Atlas",
 			item_type: "map",
-			price_amount: 5,
+			downloads_count: 30,
 			tags: "rift; atlas",
 		});
-	});
-
-	it("blanks a null price amount in CSV", () => {
-		const { rows } = buildMarketplaceCsv([
-			item({ price_type: "free", price_amount: null }),
-		]);
-		expect(rows[0].price_amount).toBe("");
 	});
 });

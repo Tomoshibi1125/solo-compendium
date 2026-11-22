@@ -1,8 +1,8 @@
 /**
  * Book-brand print theme — turns the dark Rift Ascendant app surfaces that opt
  * in (the character sheet, the Contract Log, and the Session Plan) into a
- * cohesive cream / serif / platinum handout that reads like the printed
- * sourcebooks (see `books/layout/book.css`) instead of a dark-mode screenshot.
+ * cohesive cream / serif / platinum handout that reads like a printed
+ * sourcebook page instead of a dark-mode screenshot.
  *
  * Scoped to `.book-print-root`: only a container that adds the class is printed.
  * The Meridian visibility technique is reused (`.book-print-root *` outranks

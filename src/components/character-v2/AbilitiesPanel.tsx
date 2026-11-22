@@ -25,6 +25,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useCharacter } from "@/hooks/useCharacters";
 import type { useSpellCasting } from "@/hooks/useSpellCasting";
 import { getCasterType } from "@/lib/characterCalculations";
+import { toCastingReference } from "@/lib/jobRules";
 import type { DetailData } from "@/types/character";
 
 interface AbilitiesPanelProps {
@@ -44,7 +45,10 @@ export function AbilitiesPanel({
 		"spells" | "powers" | "techniques" | "resources"
 	>("spells");
 	const { data: character } = useCharacter(characterId);
-	const isCaster = !!character?.job && getCasterType(character.job) !== "none";
+	// The casting reference carries the Path, so Path casters show slots too.
+	const castingReference = toCastingReference(character);
+	const isCaster =
+		!!castingReference && getCasterType(castingReference) !== "none";
 
 	return (
 		<AscendantWindow title="ABILITIES">
@@ -121,7 +125,7 @@ export function AbilitiesPanel({
 					{isCaster && (
 						<SpellSlotsDisplay
 							characterId={characterId}
-							job={character?.job ?? null}
+							job={castingReference}
 							level={character?.level ?? 1}
 							abilities={character?.abilities ?? undefined}
 						/>

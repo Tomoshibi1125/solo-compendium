@@ -93,6 +93,26 @@ export function getStrikerMartialArtsDie(level: number): string {
 	return "1d4";
 }
 
+/**
+ * Paths whose unarmed strikes also use the Striker unarmed die (by id and by
+ * stored name). The Dance Resonance's Combat Choreography grants it to Idols.
+ */
+const STRIKER_UNARMED_DIE_PATHS = new Set([
+	"idol--dance-resonance",
+	"path of the dance resonance",
+]);
+
+export function pathUsesStrikerUnarmedDie(
+	character:
+		| { path?: string | null; path_id?: string | null }
+		| null
+		| undefined,
+): boolean {
+	return [character?.path_id, character?.path].some((value) =>
+		STRIKER_UNARMED_DIE_PATHS.has((value ?? "").trim().toLowerCase()),
+	);
+}
+
 const diceAverage = (dice: string): number => {
 	const parsed = dice.match(/^(\d+)d(\d+)$/i);
 	if (!parsed) return 0;

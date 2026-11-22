@@ -252,8 +252,8 @@ export const artifacts: Item[] = [
 	},
 	{
 		id: "artifact_3",
-		name: "Shadow Regent's Mantle",
-		display_name: "Shadow Regent's Mantle",
+		name: "Umbral Regent's Mantle",
+		display_name: "Umbral Regent's Mantle",
 		source_book: "Rift Ascendant Canon",
 		description:
 			"A pitch-black cloak spun from condensed abyssal mana, so light it registers no weight and so dark it swallows the shadows it stands in. It drifts as though caught in a wind that does not exist.",
@@ -320,7 +320,7 @@ export const artifacts: Item[] = [
 			audit: {
 				fingerprint: "33ac3a21",
 				payload_complete: true,
-				uniqueness_seed: "artifact_3::Shadow Regent's Mantle",
+				uniqueness_seed: "artifact_3::Umbral Regent's Mantle",
 				variant_note:
 					"+1 to Persuasion checks made in Bureau or guild-administrative settings; +1 to Deception in those same settings.",
 			},
@@ -334,7 +334,7 @@ export const artifacts: Item[] = [
 				archetype: "gear_attire",
 				canon_basis: "RA canon",
 				distinguishing_rule:
-					"Shadow Regent's Mantle keys shadow gear attire rules through signature dcfba3d7.",
+					"Umbral Regent's Mantle keys shadow gear attire rules through signature dcfba3d7.",
 				role: "utility",
 				signature: "dcfba3d7",
 				theme: "shadow",

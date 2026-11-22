@@ -28,10 +28,6 @@ export const RANK_TO_CR: Record<string, string[]> = {
 	],
 };
 
-const lowRankRarities = new Set(["common", "uncommon"]);
-const midRankRarities = new Set(["rare", "very_rare"]);
-const highRankRarities = new Set(["legendary", "very_rare"]);
-
 function pickRandomEntry<T>(entries: T[]): T | null {
 	if (entries.length === 0) {
 		return null;
@@ -58,48 +54,10 @@ function matchesRank(entry: StaticCompendiumEntry, rank: string): boolean {
 	return false;
 }
 
-function filterEquipmentByRank(
-	entries: StaticCompendiumEntry[],
-	rank?: string,
-): StaticCompendiumEntry[] {
-	if (!rank) {
-		return entries;
-	}
-
-	const normalizedRank = rank.trim().toUpperCase();
-	if (normalizedRank === "E" || normalizedRank === "D") {
-		return entries.filter((entry) => lowRankRarities.has(entry.rarity || ""));
-	}
-	if (normalizedRank === "C" || normalizedRank === "B") {
-		return entries.filter((entry) => midRankRarities.has(entry.rarity || ""));
-	}
-	if (normalizedRank === "A" || normalizedRank === "S") {
-		return entries.filter((entry) => highRankRarities.has(entry.rarity || ""));
-	}
-
-	return entries;
-}
-
 export async function getRandomAnomaly(rank?: string) {
 	const anomalies = await listCanonicalEntries("anomalies");
 	const filtered = rank
 		? anomalies.filter((entry) => matchesRank(entry, rank))
 		: anomalies;
 	return pickRandomEntry(filtered.length > 0 ? filtered : anomalies);
-}
-
-export async function getRandomEquipment(rank?: string) {
-	const equipment = await listCanonicalEntries("equipment");
-	const filtered = filterEquipmentByRank(equipment, rank);
-	return pickRandomEntry(filtered.length > 0 ? filtered : equipment);
-}
-
-export async function getRandomFeat() {
-	const feats = await listCanonicalEntries("feats");
-	return pickRandomEntry(feats);
-}
-
-export async function getRandomRune() {
-	const runes = await listCanonicalEntries("runes");
-	return pickRandomEntry(runes);
 }

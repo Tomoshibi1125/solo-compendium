@@ -1,25 +1,15 @@
 import type { LucideIcon } from "lucide-react";
 import {
-	AlertTriangle,
-	BarChart3,
 	BookOpen,
 	Calendar,
 	Clock,
 	Crown,
 	Dice6,
-	Flame,
-	Gem,
-	Globe,
 	Grid3x3,
 	Heart,
-	Image as ImageIcon,
-	Palette,
-	Scroll,
 	Settings,
 	Settings2,
 	Shield,
-	Sparkles,
-	Star,
 	Store,
 	Sword,
 	Target,
@@ -55,12 +45,9 @@ export interface ToolCatalogCategory {
 export const WARDEN_TOOL_CATEGORIES: ToolCatalogCategory[] = [
 	{ id: "all", name: "All Protocols", icon: Grid3x3 },
 	{ id: "combat", name: "Combat", icon: Sword },
-	{ id: "world", name: "World Building", icon: Globe },
 	{ id: "content", name: "Content", icon: BookOpen },
 	{ id: "items", name: "Items & Equipment", icon: Shield },
 	{ id: "party", name: "Party & Session", icon: UsersRound },
-	{ id: "creative", name: "Creative", icon: Palette },
-	{ id: "rift", name: "System", icon: Settings },
 ];
 
 export const WARDEN_TOOLS: ToolCatalogItem[] = [
@@ -90,33 +77,6 @@ export const WARDEN_TOOLS: ToolCatalogItem[] = [
 		glow: "group-hover:shadow-blue-500/20",
 		category: "combat",
 		priority: 2,
-	},
-	{
-		id: "gate-generator",
-		name: "Rift Generator",
-		description:
-			"Generate random Rifts (theme, rank, biome, boss) and auto-generate procedural Rift map layouts.",
-		icon: Flame,
-		status: "available",
-		color:
-			"from-gate-a/20 to-gate-a/10 border-gate-a/30 hover:border-gate-a/60",
-		iconColor: "text-gate-a",
-		glow: "group-hover:shadow-gate-a/20",
-		category: "world",
-		priority: 3,
-	},
-	{
-		id: "npc-generator",
-		name: "NPC Generator",
-		description: "Create NPCs with mannerisms, secrets, and motivations.",
-		icon: Users,
-		status: "available",
-		color:
-			"from-purple-500/20 to-purple-600/10 border-purple-500/30 hover:border-purple-500/60",
-		iconColor: "text-purple-400",
-		glow: "group-hover:shadow-purple-500/20",
-		category: "world",
-		priority: 4,
 	},
 	{
 		id: "rollable-tables",
@@ -149,33 +109,6 @@ export const WARDEN_TOOLS: ToolCatalogItem[] = [
 		buttonText: "Read Module",
 	},
 	{
-		id: "directive-lattice",
-		name: "Directive Lattice",
-		description:
-			"Synthesize operational directives, localized contracts, and mission parameters.",
-		icon: Scroll,
-		status: "available",
-		color:
-			"from-shadow-blue/20 to-shadow-blue/10 border-shadow-blue/30 hover:border-shadow-blue/60",
-		iconColor: "text-shadow-blue",
-		glow: "group-hover:shadow-shadow-blue/20",
-		category: "content",
-		priority: 7,
-	},
-	{
-		id: "random-event-generator",
-		name: "Random Events",
-		description: "Generate unexpected events to add dynamism to your sessions.",
-		icon: AlertTriangle,
-		status: "available",
-		color:
-			"from-gate-s/20 to-gate-s/10 border-gate-s/30 hover:border-gate-s/60",
-		iconColor: "text-gate-s",
-		glow: "group-hover:shadow-gate-s/20",
-		category: "content",
-		priority: 8,
-	},
-	{
 		id: "relic-workshop",
 		name: "Relic Workshop",
 		description: "Design custom relics balanced within the rift guidelines.",
@@ -187,20 +120,6 @@ export const WARDEN_TOOLS: ToolCatalogItem[] = [
 		glow: "group-hover:shadow-gate-s/20",
 		category: "items",
 		priority: 9,
-	},
-	{
-		id: "treasure-generator",
-		name: "Treasure Generator",
-		description:
-			"Generate treasure hoards by Rift Rank with credits, items, materials, and relics.",
-		icon: Gem,
-		status: "available",
-		color:
-			"from-resurge-violet/20 to-resurge-violet/10 border-resurge-violet/30 hover:border-resurge-violet/60",
-		iconColor: "text-resurge-violet",
-		glow: "group-hover:shadow-resurge-violet/20",
-		category: "items",
-		priority: 10,
 	},
 	{
 		id: "party-tracker",
@@ -228,39 +147,11 @@ export const WARDEN_TOOLS: ToolCatalogItem[] = [
 		category: "party",
 		priority: 12,
 	},
-	{
-		id: "art-generator",
-		name: "Art Generation",
-		description: "Generate character portraits, scenes, and concept art.",
-		icon: ImageIcon,
-		status: "available",
-		color:
-			"from-mana-cyan/20 to-mana-cyan/10 border-mana-cyan/30 hover:border-mana-cyan/60",
-		iconColor: "text-mana-cyan",
-		glow: "group-hover:shadow-mana-cyan/20",
-		category: "creative",
-		priority: 16,
-	},
-	{
-		id: "content-audit",
-		name: "Content Audit",
-		description:
-			"Review database completeness, link integrity, and coverage gaps.",
-		icon: BarChart3,
-		status: "available",
-		color:
-			"from-zinc-500/20 to-zinc-600/10 border-zinc-500/30 hover:border-zinc-500/60",
-		iconColor: "text-zinc-400",
-		glow: "group-hover:shadow-zinc-500/20",
-		category: "rift",
-		priority: 19,
-	},
 ];
 
 export const PLAYER_TOOL_CATEGORIES: ToolCatalogCategory[] = [
 	{ id: "all", name: "All Tools", icon: Grid3x3 },
 	{ id: "core", name: "Core", icon: Heart },
-	{ id: "creative", name: "Creative", icon: Sparkles },
 	{ id: "reference", name: "Reference", icon: BookOpen },
 	{ id: "progression", name: "Progression", icon: TrendingUp },
 	{ id: "social", name: "Social", icon: Users },
@@ -310,19 +201,6 @@ export const PLAYER_TOOLS: ToolCatalogItem[] = [
 		glow: "group-hover:shadow-purple-500/20",
 		category: "core",
 		priority: 3,
-	},
-	{
-		id: "character-art",
-		name: "Character Art Generator",
-		description: "Generate custom artwork for your Ascendant character.",
-		icon: Star,
-		status: "available",
-		color:
-			"from-resurge-violet/20 to-resurge-violet/10 border-resurge-violet/30 hover:border-resurge-violet/60",
-		iconColor: "text-resurge-violet",
-		glow: "group-hover:shadow-resurge-violet/20",
-		category: "creative",
-		priority: 4,
 	},
 	{
 		id: "compendium-viewer",

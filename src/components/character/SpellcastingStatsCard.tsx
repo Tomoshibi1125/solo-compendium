@@ -10,6 +10,7 @@ import {
 	getProficiencyBonus,
 	getSpellcastingAbility,
 } from "@/lib/characterCalculations";
+import { toCastingReference } from "@/lib/jobRules";
 import { resolvePowerActionFormula } from "@/lib/powerActionFormulas";
 import { cn } from "@/lib/utils";
 import type { AbilityScore } from "@/types/core-rules";
@@ -83,7 +84,9 @@ export function SpellcastingStatsCard({
 			proficiencyBonus: profBonus,
 			abilityOverride:
 				scope === "spells"
-					? (getSpellcastingAbility(character.job) as AbilityScore | null)
+					? (getSpellcastingAbility(
+							toCastingReference(character) ?? character.job,
+						) as AbilityScore | null)
 					: null,
 		});
 		return {

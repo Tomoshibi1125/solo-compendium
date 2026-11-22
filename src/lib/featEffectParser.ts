@@ -329,10 +329,6 @@ export function getFeatEffects(
 	return factory ? freezeEffects(factory(level)) : EMPTY_EFFECTS;
 }
 
-/** Lookup-style aliases for callers that prefer verb-first naming. */
-export const lookupFightingStyleEffects = getFightingStyleEffects;
-export const lookupFeatEffects = getFeatEffects;
-
 // ─── Parser Functions ───────────────────────────────────────
 
 /**

@@ -490,7 +490,7 @@ function WikiEditorDialog({
 							<Input
 								value={title}
 								onChange={(e) => setTitle(e.target.value)}
-								placeholder="e.g. The Shadow Regent"
+								placeholder="e.g. The Umbral Regent"
 								required
 								className="font-bold border-muted-foreground/30 focus-visible:ring-primary"
 							/>

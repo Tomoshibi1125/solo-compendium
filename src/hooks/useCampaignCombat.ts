@@ -4,6 +4,7 @@ import { useToast } from "@/hooks/use-toast";
 import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import type { Database, Json } from "@/integrations/supabase/types";
 import { AppError } from "@/lib/appError";
+import { resolveTurnOrder } from "@/lib/companionCombat";
 import { clientChannelName } from "@/lib/realtimeChannel";
 import { enqueueSyncItem } from "@/lib/syncManager";
 
@@ -31,6 +32,11 @@ type UpsertCombatantsInput = {
 		conditions: Json;
 		flags: Json;
 		member_id?: string | null;
+		companion_instance_id?: string | null;
+		companion_profile_version?: number | null;
+		companion_state_version?: number | null;
+		initiative_mode?: string | null;
+		initiative_anchor_character_id?: string | null;
 	}>;
 };
 
@@ -159,7 +165,8 @@ export const useCampaignCombatSession = (
 				.order("created_at", { ascending: true });
 
 			if (combatantError) throw combatantError;
-			return { session, combatants: (combatantData || []) as Combatant[] };
+			const combatants = (combatantData || []) as Combatant[];
+			return { session, combatants: resolveTurnOrder(combatants) };
 		},
 		enabled: !!campaignId,
 	});
@@ -262,17 +269,25 @@ export const useUpsertCombatants = () => {
 					conditions: combatant.conditions,
 					flags: combatant.flags,
 					member_id: combatant.member_id ?? null,
+					companion_instance_id: combatant.companion_instance_id ?? null,
+					companion_profile_version:
+						combatant.companion_profile_version ?? null,
+					companion_state_version: combatant.companion_state_version ?? null,
+					initiative_mode: combatant.initiative_mode ?? "independent",
+					initiative_anchor_character_id:
+						combatant.initiative_anchor_character_id ?? null,
 				}));
 
 				const { data: existingRows, error: existingError } = await supabase
 					.from("campaign_combatants")
-					.select("id")
+					.select("id, companion_instance_id")
 					.eq("session_id", sessionId);
 
 				if (existingError) throw existingError;
 
 				const nextIds = new Set(payload.map((combatant) => combatant.id));
 				const staleIds = (existingRows ?? [])
+					.filter((row) => row.companion_instance_id === null)
 					.map((row) => row.id)
 					.filter((id) => !nextIds.has(id));
 
@@ -302,6 +317,12 @@ export const useUpsertCombatants = () => {
 			} catch (error) {
 				if (!isOfflineError(error)) {
 					throw error;
+				}
+				if (combatants.some((combatant) => combatant.companion_instance_id)) {
+					throw new AppError(
+						"Companion combat changes require a live connection to preserve their state.",
+						"SERVICE_UNAVAILABLE",
+					);
 				}
 
 				void enqueueSyncItem("campaign_combat", "update", {

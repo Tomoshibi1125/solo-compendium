@@ -126,16 +126,16 @@ function EquipmentItemComponent({
 	return (
 		<div
 			className={cn(
-				"p-3 rounded-lg border bg-muted/30",
+				"w-full min-w-0 p-3 rounded-lg border bg-muted/30",
 				item.is_equipped && "border-primary/50 bg-primary/5",
 			)}
 		>
-			<div className="flex items-start justify-between gap-2">
-				<div className="flex-1">
-					<div className="flex items-center gap-2 mb-1">
+			<div className="flex min-w-0 items-start justify-between gap-2">
+				<div className="min-w-0 flex-1">
+					<div className="mb-1 flex min-w-0 flex-wrap items-center gap-2">
 						<button
 							type="button"
-							className="font-heading font-semibold text-left hover:text-primary transition-colors cursor-pointer"
+							className="max-w-full break-words text-left font-heading font-semibold transition-colors hover:text-primary"
 							onClick={onSelect}
 						>
 							{displayName}
@@ -351,7 +351,7 @@ function EquipmentItemComponent({
 						</div>
 					)}
 				</div>
-				<div className="flex items-center gap-2">
+				<div className="flex shrink-0 items-center gap-2">
 					<div className="flex flex-col gap-1">
 						{canEquip && (
 							<Button

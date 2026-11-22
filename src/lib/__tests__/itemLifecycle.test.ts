@@ -4,7 +4,7 @@ import {
 	type ItemLifecycleCompatibilityDecisionV1,
 	type ItemLifecycleEquipmentRow,
 	type ItemLifecycleSourceInput,
-	planItemLifecycle,
+	planItemLifecycleV1,
 } from "@/lib/itemLifecycle";
 
 const source = (
@@ -54,8 +54,8 @@ describe("item lifecycle plan v1", () => {
 			equipment: equipment(),
 			action: { kind: "equip" as const },
 		};
-		const first = planItemLifecycle(input);
-		const second = planItemLifecycle(input);
+		const first = planItemLifecycleV1(input);
+		const second = planItemLifecycleV1(input);
 
 		expect(first).toMatchObject({
 			version: 1,
@@ -80,7 +80,7 @@ describe("item lifecycle plan v1", () => {
 		);
 
 		expect(
-			planItemLifecycle({
+			planItemLifecycleV1({
 				...input,
 				equipment: equipment({ is_equipped: true }),
 				action: { kind: "unequip" },
@@ -98,12 +98,12 @@ describe("item lifecycle plan v1", () => {
 	});
 
 	it("keeps plan and operation identities stable across display-only renames", () => {
-		const beforeRename = planItemLifecycle({
+		const beforeRename = planItemLifecycleV1({
 			source: source("compendium-item", "canonical-item-1"),
 			equipment: equipment({ name: "Original Display Name" }),
 			action: { kind: "equip" },
 		});
-		const afterRename = planItemLifecycle({
+		const afterRename = planItemLifecycleV1({
 			source: source("compendium-item", "canonical-item-1"),
 			equipment: equipment({ name: "Renamed Display Label" }),
 			action: { kind: "equip" },
@@ -114,7 +114,7 @@ describe("item lifecycle plan v1", () => {
 		);
 
 		const compatibilityPlan = (label: string) =>
-			planItemLifecycle({
+			planItemLifecycleV1({
 				source: source("character-equipment", "equipment-row-1"),
 				target: { kind: "rune", targetId: "rune-target-1", label },
 				action: {
@@ -135,7 +135,7 @@ describe("item lifecycle plan v1", () => {
 			equipment: equipment(),
 		};
 		expect(
-			planItemLifecycle({
+			planItemLifecycleV1({
 				...base,
 				action: { kind: "attune", currentAttunedCount: 1 },
 			}),
@@ -162,7 +162,7 @@ describe("item lifecycle plan v1", () => {
 			],
 		});
 
-		const atLimit = planItemLifecycle({
+		const atLimit = planItemLifecycleV1({
 			...base,
 			action: {
 				kind: "attune",
@@ -178,7 +178,7 @@ describe("item lifecycle plan v1", () => {
 		});
 
 		expect(
-			planItemLifecycle({
+			planItemLifecycleV1({
 				...base,
 				equipment: equipment({ is_attuned: true }),
 				action: { kind: "attune", currentAttunedCount: 1 },
@@ -186,7 +186,7 @@ describe("item lifecycle plan v1", () => {
 		).toMatchObject({ status: "automated", outcome: "noop", operations: [] });
 
 		expect(
-			planItemLifecycle({
+			planItemLifecycleV1({
 				...base,
 				equipment: equipment({ is_attuned: true }),
 				action: { kind: "unattune" },
@@ -213,7 +213,7 @@ describe("item lifecycle plan v1", () => {
 			}),
 		};
 		expect(
-			planItemLifecycle({
+			planItemLifecycleV1({
 				...base,
 				action: { kind: "set-charges", chargesCurrent: 2 },
 			}),
@@ -236,7 +236,7 @@ describe("item lifecycle plan v1", () => {
 		});
 
 		expect(
-			planItemLifecycle({
+			planItemLifecycleV1({
 				...base,
 				action: { kind: "set-charges", chargesCurrent: 6 },
 			}),
@@ -248,7 +248,7 @@ describe("item lifecycle plan v1", () => {
 		});
 
 		expect(
-			planItemLifecycle({
+			planItemLifecycleV1({
 				...base,
 				equipment: equipment({ charges_current: null, charges_max: 5 }),
 				action: { kind: "set-charges", chargesCurrent: 5 },
@@ -260,7 +260,7 @@ describe("item lifecycle plan v1", () => {
 	});
 
 	it("requires source-backed compatibility before changing socket capacity", () => {
-		const plan = planItemLifecycle({
+		const plan = planItemLifecycleV1({
 			source: source("compendium-item", "socket-item-1"),
 			equipment: equipment({ item_id: "socket-item-1" }),
 			action: {
@@ -286,7 +286,7 @@ describe("item lifecycle plan v1", () => {
 			],
 		});
 
-		const rejected = planItemLifecycle({
+		const rejected = planItemLifecycleV1({
 			source: source("compendium-item", "socket-item-1"),
 			equipment: equipment({ item_id: "socket-item-1" }),
 			action: {
@@ -309,7 +309,7 @@ describe("item lifecycle plan v1", () => {
 		"tattoo",
 		"rune",
 	] as const)("represents explicit %s compatibility without inferring from names", (compatibilityKind) => {
-		const plan = planItemLifecycle({
+		const plan = planItemLifecycleV1({
 			source: source("character-equipment", "equipment-row-1"),
 			target: {
 				kind: compatibilityKind,
@@ -349,7 +349,7 @@ describe("item lifecycle plan v1", () => {
 	});
 
 	it("keeps Aetheric Infusion review-blocked without creating item rules", () => {
-		const plan = planItemLifecycle({
+		const plan = planItemLifecycleV1({
 			source: source(
 				"path-feature",
 				"technomancer--aether-chemist-design:aetheric-infusion",
@@ -389,8 +389,8 @@ describe("item lifecycle plan v1", () => {
 		});
 	});
 
-	it("keeps Spell Capacitor lifecycle manual instead of assigning device charges", () => {
-		const plan = planItemLifecycle({
+	it("keeps a manual job-feature resolution blocked instead of assigning equipment charges", () => {
+		const plan = planItemLifecycleV1({
 			source: source("job-feature", "technomancer:spell-capacitor"),
 			equipment: equipment({
 				id: "proposed-capacitor-device",
@@ -401,8 +401,8 @@ describe("item lifecycle plan v1", () => {
 			resolution: {
 				status: "manual",
 				reason:
-					"Device count, replacement, attunement, destruction, and charge ownership are unresolved.",
-				instructions: "Await authored device lifecycle rules.",
+					"Spell Capacitor charges are tracked as the feature's uses, not on an equipment row.",
+				instructions: "Spend charges from the Spell Capacitor feature.",
 			},
 		});
 
@@ -411,12 +411,14 @@ describe("item lifecycle plan v1", () => {
 			outcome: "blocked",
 			canApply: false,
 			operations: [],
-			manual: { instructions: "Await authored device lifecycle rules." },
+			manual: {
+				instructions: "Spend charges from the Spell Capacitor feature.",
+			},
 		});
 	});
 
 	it("blocks automated compatibility when candidate or rule IDs are absent", () => {
-		const missingCandidate = planItemLifecycle({
+		const missingCandidate = planItemLifecycleV1({
 			source: source("character-equipment", "equipment-row-1"),
 			target: { kind: "rune", targetId: "rune-target", label: null },
 			action: {
@@ -433,7 +435,7 @@ describe("item lifecycle plan v1", () => {
 			issues: [{ code: "item-lifecycle-candidate-source-id-missing" }],
 		});
 
-		const missingRule = planItemLifecycle({
+		const missingRule = planItemLifecycleV1({
 			source: source("character-equipment", "equipment-row-1"),
 			target: { kind: "tattoo", targetId: "tattoo-target", label: null },
 			action: {

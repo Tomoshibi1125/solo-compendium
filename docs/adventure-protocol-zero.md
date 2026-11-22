@@ -2042,7 +2042,7 @@ Recovered from the depths of a Shadow Rift. This necklace pulses with void reson
 
 #### Umbral Gauntlets
 *Scroll, legendary — Requires Attunement*
-Whispers in the tongue of the Monarchs. This gauntlets pulses with void resonance.
+Whispers in the tongue of the Regents. This gauntlet pulses with void resonance.
 
 #### Mana-Flow Boots
 *Accessory, uncommon — Requires Attunement*
@@ -2197,7 +2197,7 @@ Cold enough to freeze the blood in mid-air. This blade pulses with glacial reson
 
 #### Dredge Cloak
 *Wand, rare — Requires Attunement*
-Whispers in the tongue of the Monarchs. This cloak pulses with void resonance.
+Whispers in the tongue of the Regents. This cloak pulses with void resonance.
 
 #### Ice-Veined Gauntlets
 *Consumable, uncommon — Requires Attunement*

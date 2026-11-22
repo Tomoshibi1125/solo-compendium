@@ -46,7 +46,6 @@ import { EquipmentList } from "@/components/character/EquipmentList";
 import { ExportDialog } from "@/components/character/ExportDialog";
 import { FeatureChoicesPanel } from "@/components/character/FeatureChoicesPanel";
 import { FeaturesList } from "@/components/character/FeaturesList";
-import { GuildBenefitsDisplay } from "@/components/character/GuildBenefitsDisplay";
 import { HomebrewFeatureApplicator } from "@/components/character/HomebrewFeatureApplicator";
 import { InlineSectionNote } from "@/components/character/InlineSectionNote";
 import { JournalPanel } from "@/components/character/JournalPanel";
@@ -57,6 +56,7 @@ import {
 	type PartyInventoryItem,
 	PartyInventoryPanel,
 } from "@/components/character/PartyInventoryPanel";
+import { PathChoicesPanel } from "@/components/character/PathChoicesPanel";
 import { PathFeaturesDisplay } from "@/components/character/PathFeaturesDisplay";
 import { RegentFeaturesDisplay } from "@/components/character/RegentFeaturesDisplay";
 import { RegentUnlocksPanel } from "@/components/character/RegentUnlocksPanel";
@@ -118,6 +118,7 @@ import {
 	getXPProgress,
 	type LevelingType,
 } from "@/lib/experience";
+import { isLocalCharacterId } from "@/lib/guestStore";
 import { applyDamage, applyHealing } from "@/lib/hpAdjustments";
 import { type HunterRank, hunterRankForLevel } from "@/lib/hunterRank";
 import { cn } from "@/lib/utils";
@@ -332,19 +333,18 @@ export default function CharacterSheetV2() {
 		"stats",
 	];
 	const bindMobileGestures = useDrag(
-		({ swipe: [swipeX] }: { swipe: [number, number] }) => {
-			if (swipeX !== 0) {
-				const currentIndex = mobileTabs.indexOf(activeMobileTab);
-				if (swipeX < 0 && currentIndex < mobileTabs.length - 1) {
-					// Swiped left, go next
-					setActiveMobileTab(mobileTabs[currentIndex + 1]);
-				} else if (swipeX > 0 && currentIndex > 0) {
-					// Swiped right, go prev
-					setActiveMobileTab(mobileTabs[currentIndex - 1]);
-				}
+		({ movement: [movementX], last }) => {
+			// Distance based detection keeps slower, deliberate phone swipes usable.
+			if (!last || Math.abs(movementX) < 60) return;
+
+			const currentIndex = mobileTabs.indexOf(activeMobileTab);
+			if (movementX < 0 && currentIndex < mobileTabs.length - 1) {
+				setActiveMobileTab(mobileTabs[currentIndex + 1]);
+			} else if (movementX > 0 && currentIndex > 0) {
+				setActiveMobileTab(mobileTabs[currentIndex - 1]);
 			}
 		},
-		{ axis: "x", filterTaps: true, pointerContext: true },
+		{ axis: "x", filterTaps: true, pointer: { capture: false } },
 	);
 
 	const characterState = character
@@ -518,7 +518,14 @@ export default function CharacterSheetV2() {
 
 	const onHPClick = () => sheetController.setModal("health", true);
 	const onACClick = () => sheetController.setModal("defenses", true);
-	const onShortRest = () => handleShortRest();
+	// The Short Rest dialog rolls the spent Hit Dice; apply the healing and
+	// the spent dice before the short-rest recharges.
+	const onShortRest = (totalRecovered: number, hitDiceSpent: number) => {
+		if (totalRecovered > 0) handleHeal(totalRecovered);
+		if (hitDiceSpent > 0)
+			handleResourceAdjust("hit_dice_current", -hitDiceSpent);
+		void handleShortRest();
+	};
 	const onLongRest = () => handleLongRest();
 	const onLevelUp = () => sheetController.setModal("levelUp", true);
 	const onResourceAdjust = (
@@ -731,7 +738,6 @@ export default function CharacterSheetV2() {
 				onSelectDetail={(detail) => onSelectDetail(detail, "Feature", Zap)}
 				readOnly={isReadOnly}
 			/>
-			<GuildBenefitsDisplay characterId={character.id} />
 			<InlineSectionNote
 				section="features"
 				label="Features & Traits"
@@ -740,6 +746,7 @@ export default function CharacterSheetV2() {
 				readOnly={isReadOnly}
 			/>
 			<FeatureChoicesPanel characterId={character.id} readOnly={isReadOnly} />
+			<PathChoicesPanel characterId={character.id} readOnly={isReadOnly} />
 			<HomebrewFeatureApplicator
 				characterId={character.id}
 				readOnly={isReadOnly}
@@ -836,6 +843,7 @@ export default function CharacterSheetV2() {
 		<>
 			<CharacterExtrasPanel
 				characterId={character.id}
+				characterLevel={character.level || 1}
 				isReadOnly={isReadOnly}
 			/>
 			<VehiclesPanel characterId={character.id} readOnly={isReadOnly} />
@@ -979,6 +987,11 @@ export default function CharacterSheetV2() {
 							hpCurrent={displayHpCurrent}
 							hpMax={effectiveHpMax}
 							onFinishRest={onShortRest}
+							companionOwner={
+								isLocalCharacterId(character.id)
+									? undefined
+									: { characterId: character.id, level: character.level || 1 }
+							}
 						/>
 						<Button
 							variant="outline"
@@ -1142,7 +1155,7 @@ export default function CharacterSheetV2() {
 				)}
 			/>
 			<div
-				className="flex flex-col gap-6 animate-in fade-in duration-500 max-w-7xl mx-auto px-4 py-8 sheet-themed-root book-print-root"
+				className="flex flex-col gap-6 animate-in fade-in duration-500 max-w-7xl mx-auto px-0 md:px-4 py-8 sheet-themed-root book-print-root"
 				data-sheet-theme={
 					themePreview?.sheet_theme ??
 					((character as { sheet_theme?: string | null }).sheet_theme ||
@@ -1253,7 +1266,7 @@ export default function CharacterSheetV2() {
 				)}
 
 				{/* Desktop 3-Column Layout */}
-				<div className="hidden md:grid grid-cols-[120px_300px_1fr] gap-8 items-start">
+				<div className="hidden lg:grid grid-cols-[120px_300px_1fr] gap-8 items-start">
 					{/* COLUMN 1: Ability Scores (Vertical) */}
 					<aside className="sticky top-16 pt-4 space-y-4 max-h-[calc(100dvh-120px)] overflow-y-auto pr-1 scrollbar-none hover:scrollbar-thin scrollbar-thumb-primary/20">
 						<AbilityScoreStrip
@@ -1419,7 +1432,7 @@ export default function CharacterSheetV2() {
 				</div>
 
 				{/* Mobile Layout (Single Column with Bottom HUD managed by MainLayout) */}
-				<div className="md:hidden space-y-6 pb-20">
+				<div className="character-sheet-mobile lg:hidden space-y-6 pb-20">
 					<StatusHeader
 						hp={{
 							current: displayHpCurrent,
@@ -1467,13 +1480,13 @@ export default function CharacterSheetV2() {
 						onValueChange={setActiveMobileTab}
 						className="w-full"
 					>
-						<TabsPrimitive.List className="grid grid-cols-4 gap-2 w-full mb-2">
+						<TabsPrimitive.List className="character-sheet-mobile-tabs grid grid-cols-4 gap-2 w-full mb-2">
 							{MOBILE_SECTIONS.map(({ value, label, icon: Icon }) => (
 								<TabsPrimitive.Trigger
 									key={value}
 									value={value}
 									className={cn(
-										"flex flex-col items-center justify-center gap-1 min-h-[56px] rounded-md border px-1 py-2 text-[10px] font-mono uppercase tracking-wide transition-colors",
+										"flex flex-col items-center justify-center gap-1 min-h-[56px] rounded-md border px-1 py-2 text-xs font-mono uppercase tracking-wide transition-colors",
 										"border-primary/15 text-muted-foreground hover:border-primary/40 hover:text-foreground",
 										"data-[state=active]:border-primary data-[state=active]:bg-primary/15 data-[state=active]:text-primary data-[state=active]:shadow-[0_0_12px_hsl(var(--primary)/0.25)]",
 										"focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary/50",
@@ -1486,7 +1499,10 @@ export default function CharacterSheetV2() {
 						</TabsPrimitive.List>
 
 						{/* Swipeable Container */}
-						<div {...bindMobileGestures()} className="touch-pan-y min-h-[50vh]">
+						<div
+							{...bindMobileGestures()}
+							className="character-sheet-mobile-content touch-pan-y min-h-[50vh]"
+						>
 							<TabsContent value="actions">{actions}</TabsContent>
 							<TabsContent value="powers">{powers}</TabsContent>
 							<TabsContent value="inventory">{inventory}</TabsContent>

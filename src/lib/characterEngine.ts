@@ -174,7 +174,7 @@ export interface ActiveSpellEffect {
 export interface CharacterJob {
 	job: string; // Rift Ascendant job name (Destroyer, Mage, etc.)
 	path?: string; // Rift Ascendant subclass/path name (level 3, automatic)
-	regent?: string; // Regent path ID (quest-gated, Warden unlocks)
+	regent?: string; // Regent overlay ID (quest-gated, Warden unlocks)
 	gemini?: {
 		id?: string;
 		sovereignId?: string;

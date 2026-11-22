@@ -66,7 +66,12 @@ export const requestToJoinGuildLocal = (params: {
 
 	const guild = loadLocalGuilds().find((g) => g.share_code === code);
 	if (!guild)
-		throw new AppError("No guild found for that share code", "NOT_FOUND");
+		throw new AppError(
+			"No guild in this browser matches that code. If it is a shared cloud guild, sign in and try again.",
+			"NOT_FOUND",
+		);
+	if (!guild.is_active)
+		throw new AppError("This guild is not accepting requests", "FORBIDDEN");
 
 	if (
 		loadLocalGuildMembers().some(
@@ -92,10 +97,13 @@ export const requestToJoinGuildLocal = (params: {
 			"INVALID_INPUT",
 		);
 
-	const characterName = params.characterId
-		? (listLocalCharacters().find((c) => c.id === params.characterId)?.name ??
-			null)
+	const character = params.characterId
+		? listLocalCharacters().find((entry) => entry.id === params.characterId)
 		: null;
+	if (params.characterId && !character) {
+		throw new AppError("Character ownership validation failed", "FORBIDDEN");
+	}
+	const characterName = character?.name ?? null;
 	const request: GuildJoinRequest = {
 		id: crypto.randomUUID(),
 		guild_id: guild.id,

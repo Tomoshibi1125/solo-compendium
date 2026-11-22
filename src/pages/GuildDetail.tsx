@@ -11,6 +11,7 @@ import {
 	Hammer,
 	Loader2,
 	MoreVertical,
+	Pencil,
 	ScrollText,
 	Settings,
 	Shield,
@@ -49,6 +50,7 @@ import {
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { PageHeader } from "@/components/ui/PageHeader";
 import {
 	Select,
@@ -101,6 +103,7 @@ import {
 	useRecruitNPC,
 	useSetNPCLevelingMode,
 	useTransferLeadership,
+	useUpdateGuildInfo,
 } from "@/hooks/useGuilds";
 import {
 	useApproveJoinRequest,
@@ -146,6 +149,10 @@ const GuildDetail = () => {
 	const [recruitDialogOpen, setRecruitDialogOpen] = useState(false);
 	const [selectedNPC, setSelectedNPC] = useState<SandboxNPC | null>(null);
 	const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+	const [editGuildDialogOpen, setEditGuildDialogOpen] = useState(false);
+	const [editGuildName, setEditGuildName] = useState("");
+	const [editGuildMotto, setEditGuildMotto] = useState("");
+	const [editGuildDescription, setEditGuildDescription] = useState("");
 	const [recruitSearch, setRecruitSearch] = useState("");
 	const [recruitFactionFilter, setRecruitFactionFilter] = useState("all");
 	const [recruitKindFilter, setRecruitKindFilter] = useState<
@@ -168,6 +175,7 @@ const GuildDetail = () => {
 	const changeMemberRole = useChangeMemberRole();
 	const kickMember = useKickMember();
 	const transferLeadership = useTransferLeadership();
+	const updateGuildInfo = useUpdateGuildInfo();
 	const activity = useActivityFeed({
 		toolKey: `guild-activity:${id ?? "none"}`,
 		enabled: !!id,
@@ -202,6 +210,23 @@ const GuildDetail = () => {
 			newLeaderUserId,
 			currentLeaderUserId: perms.currentUserId,
 		});
+	};
+	const openGuildInfoEditor = () => {
+		if (!guild) return;
+		setEditGuildName(guild.name);
+		setEditGuildMotto(guild.motto ?? "");
+		setEditGuildDescription(guild.description ?? "");
+		setEditGuildDialogOpen(true);
+	};
+	const saveGuildInfo = async () => {
+		if (!id) return;
+		await updateGuildInfo.mutateAsync({
+			guildId: id,
+			name: editGuildName,
+			motto: editGuildMotto,
+			description: editGuildDescription,
+		});
+		setEditGuildDialogOpen(false);
 	};
 
 	// Join-request approval queue (only fetched for staff who can approve).
@@ -497,6 +522,15 @@ const GuildDetail = () => {
 					}
 					actions={
 						<div className="flex flex-col items-end gap-2">
+							{caps.canEditInfo && (
+								<Button
+									variant="outline"
+									size="sm"
+									onClick={openGuildInfoEditor}
+								>
+									<Pencil className="mr-2 h-4 w-4" /> Edit guild details
+								</Button>
+							)}
 							{isLeader && (
 								<Badge className="bg-primary/20 text-primary border-primary/30 w-fit">
 									<Crown className="w-3 h-3 mr-1" /> Guild Leader
@@ -1799,6 +1833,65 @@ const GuildDetail = () => {
 					)}
 				</Tabs>
 			</div>
+
+			{/* Add Guild Ally to Character Sheet Dialog */}
+			<Dialog open={editGuildDialogOpen} onOpenChange={setEditGuildDialogOpen}>
+				<DialogContent className="sm:max-w-lg">
+					<DialogHeader>
+						<DialogTitle>Edit guild details</DialogTitle>
+						<DialogDescription>
+							Update the name and public description shown to guild members.
+						</DialogDescription>
+					</DialogHeader>
+					<div className="space-y-4">
+						<div className="space-y-2">
+							<Label htmlFor="guild-edit-name">Guild name</Label>
+							<Input
+								id="guild-edit-name"
+								value={editGuildName}
+								onChange={(event) => setEditGuildName(event.target.value)}
+								maxLength={80}
+							/>
+						</div>
+						<div className="space-y-2">
+							<Label htmlFor="guild-edit-motto">Motto</Label>
+							<Input
+								id="guild-edit-motto"
+								value={editGuildMotto}
+								onChange={(event) => setEditGuildMotto(event.target.value)}
+								maxLength={160}
+							/>
+						</div>
+						<div className="space-y-2">
+							<Label htmlFor="guild-edit-description">Description</Label>
+							<textarea
+								id="guild-edit-description"
+								className="min-h-28 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+								value={editGuildDescription}
+								onChange={(event) =>
+									setEditGuildDescription(event.target.value)
+								}
+								maxLength={2000}
+							/>
+						</div>
+					</div>
+					<DialogFooter>
+						<Button
+							variant="outline"
+							onClick={() => setEditGuildDialogOpen(false)}
+							disabled={updateGuildInfo.isPending}
+						>
+							Cancel
+						</Button>
+						<Button
+							onClick={() => void saveGuildInfo()}
+							disabled={updateGuildInfo.isPending || !editGuildName.trim()}
+						>
+							{updateGuildInfo.isPending ? "Saving..." : "Save details"}
+						</Button>
+					</DialogFooter>
+				</DialogContent>
+			</Dialog>
 
 			{/* Add Guild Ally to Character Sheet Dialog */}
 			<Dialog

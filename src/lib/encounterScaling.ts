@@ -3,14 +3,12 @@
  *
  * Pure helpers that turn a combat snapshot into a difficulty signal
  * the Warden can act on between rounds. The downstream UI fires this
- * after each round-end, runs it through the AI policy (per memory
- * `41818241` — Pollinations / Gemini), and surfaces the recommendation
- * for **explicit Warden approval** before any combat-state mutation.
+ * after each round-end and surfaces the recommendation for **explicit
+ * Warden approval** before any combat-state mutation.
  *
  * Design contract: this module never mutates state and never calls the
- * network. It produces a typed `EncounterScalingSignal` that the UI +
- * AI layer reads. The actual model call lives in `useLiveEncounterScaler`
- * (separate hook) and remains opt-in per-campaign.
+ * network or an AI model (RA-18). It produces a typed
+ * `EncounterScalingSignal` that `useLiveEncounterScaler` and the UI read.
  *
  * RA theming: "Bureau Field Calibration" — the System adjusting the
  * trial's intensity without violating Warden authority.

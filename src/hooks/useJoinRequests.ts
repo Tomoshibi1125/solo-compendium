@@ -1,8 +1,10 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useToast } from "@/hooks/use-toast";
-import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
+import { shouldUseLocalGuildStore } from "@/hooks/useGuilds";
+import { supabase } from "@/integrations/supabase/client";
 import { AppError } from "@/lib/appError";
 import { getLocalUserId } from "@/lib/guestStore";
+import { guildAdminAction } from "@/lib/guildAdminAction";
 import {
 	type ApprovableRole,
 	approveJoinRequestLocal,
@@ -14,14 +16,6 @@ import {
 
 export type { GuildJoinRequest } from "@/lib/guildJoinRequests";
 
-const guestEnabled = import.meta.env.VITE_GUEST_ENABLED !== "false";
-
-const isLocalMode = (): boolean =>
-	!isSupabaseConfigured || import.meta.env.VITE_E2E === "true";
-
-const isGuestGuildStore = (): boolean =>
-	isLocalMode() || (!isSupabaseConfigured && guestEnabled);
-
 // ============================================================================
 // Queries
 // ============================================================================
@@ -32,17 +26,15 @@ export const useGuildJoinRequests = (guildId: string | undefined) => {
 		queryKey: ["guilds", guildId ?? "none", "join-requests"],
 		queryFn: async (): Promise<GuildJoinRequest[]> => {
 			if (!guildId) return [];
-			if (isGuestGuildStore()) return listLocalPendingJoinRequests(guildId);
+			if (await shouldUseLocalGuildStore())
+				return listLocalPendingJoinRequests(guildId);
 			const { data, error } = await supabase
 				.from("guild_join_requests")
 				.select("*")
 				.eq("guild_id", guildId)
 				.eq("status", "pending")
 				.order("created_at", { ascending: true });
-			if (error) {
-				if (guestEnabled) return listLocalPendingJoinRequests(guildId);
-				throw error;
-			}
+			if (error) throw error;
 			return (data ?? []) as GuildJoinRequest[];
 		},
 		enabled: !!guildId,
@@ -66,7 +58,7 @@ export const useRequestToJoinGuild = () => {
 			const code = params.shareCode.trim().toUpperCase();
 			if (!code) throw new AppError("Enter a share code", "INVALID_INPUT");
 
-			if (isGuestGuildStore()) {
+			if (await shouldUseLocalGuildStore()) {
 				return requestToJoinGuildLocal({
 					shareCode: code,
 					userId: getLocalUserId(),
@@ -122,7 +114,7 @@ export const useApproveJoinRequest = () => {
 			role?: ApprovableRole;
 		}) => {
 			const role: ApprovableRole = params.role ?? "member";
-			if (isGuestGuildStore()) {
+			if (await shouldUseLocalGuildStore()) {
 				approveJoinRequestLocal({ requestId: params.requestId, role });
 				return;
 			}
@@ -162,18 +154,13 @@ export const useRejectJoinRequest = () => {
 
 	return useMutation({
 		mutationFn: async (params: { requestId: string; guildId: string }) => {
-			if (isGuestGuildStore()) {
+			if (await shouldUseLocalGuildStore()) {
 				rejectJoinRequestLocal(params.requestId);
 				return;
 			}
-			const { error } = await supabase
-				.from("guild_join_requests")
-				.update({
-					status: "rejected",
-					resolved_at: new Date().toISOString(),
-				})
-				.eq("id", params.requestId);
-			if (error) throw error;
+			await guildAdminAction(params.guildId, "reject_join_request", {
+				request_id: params.requestId,
+			});
 		},
 		onSuccess: (_, variables) => {
 			queryClient.invalidateQueries({

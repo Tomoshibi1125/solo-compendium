@@ -782,6 +782,3 @@ export function buildLevelTransitionPlanV1(
 		canApply: blockers.length === 0,
 	};
 }
-
-export const buildCharacterCreationPlan = buildCharacterCreationPlanV1;
-export const buildLevelTransitionPlan = buildLevelTransitionPlanV1;

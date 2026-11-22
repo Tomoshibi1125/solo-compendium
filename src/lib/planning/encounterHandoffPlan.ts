@@ -475,6 +475,3 @@ export function restoreEncounterSnapshotV1(
 ): EncounterSnapshotV1 {
 	return cloneSerializable(plan.snapshot);
 }
-
-export const buildEncounterHandoffPlan = buildEncounterHandoffPlanV1;
-export const buildEncounterRestorationPlan = buildEncounterRestorationPlanV1;

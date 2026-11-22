@@ -657,7 +657,8 @@ export const powers_supplemental: CompendiumPower[] = [
 		source_book: "Rift Ascendant Canon",
 		effects: {
 			primary: "Bonus damage after movement + free disengage move.",
-			secondary: "Damage increases by 1d6 per level above 1st.",
+			secondary:
+				"The added 2d6 stays as written; the strike itself deals its normal unarmed damage.",
 		},
 		power_type: "Innate",
 		power_level: 1,
@@ -669,14 +670,13 @@ export const powers_supplemental: CompendiumPower[] = [
 		school: "Transmutation",
 		target: "One creature",
 		has_save: false,
-		save_ability: "Strength",
 		damage_roll: "2d6",
 		damage_type: "bludgeoning",
-		higher_levels: "Damage increases by 1d6 per level above 1st.",
 		components: { verbal: true, somatic: true, material: false },
 		mechanics: {
 			duration: "Instantaneous",
 			damage_profile: "2d6 bludgeoning",
+			damage_basis: "added",
 			range: "Self",
 			type: "kinetic",
 			action: "1 bonus action",
@@ -690,12 +690,6 @@ export const powers_supplemental: CompendiumPower[] = [
 				modifier: "Agility",
 				damage: "2d6",
 				damage_type: "bludgeoning",
-			},
-			saving_throw: {
-				ability: "Strength",
-				dc: 13,
-				success: "Half damage and no rider.",
-				failure: "Bonus damage after movement + free disengage move.",
 			},
 		},
 		limitations: {
@@ -789,7 +783,7 @@ export const powers_supplemental: CompendiumPower[] = [
 		name: "Shockwave Palm",
 		display_name: "Shockwave Palm",
 		description:
-			"Channel kinetic energy through your palm and release it on contact. Make an unarmed strike. On a hit, deal weapon damage plus 4d8 force damage and push the target 20 feet. If the target collides with a solid surface, it takes an additional 2d6 bludgeoning damage.",
+			"Channel kinetic energy through your palm and release it on contact. Make an unarmed strike. On a hit, it deals its normal damage plus 4d8 force damage and pushes the target 20 feet. If the target collides with a solid surface, it takes an additional 2d6 bludgeoning damage.",
 		lore: {
 			origin:
 				"The impact crater was 3 inches deep in reinforced concrete. The Striker's palm was unharmed.",
@@ -807,7 +801,8 @@ export const powers_supplemental: CompendiumPower[] = [
 		source_book: "Rift Ascendant Canon",
 		effects: {
 			primary: "Palm strike + massive push + collision damage.",
-			secondary: "Damage increases by 1d6 per level above 3rd.",
+			secondary:
+				"The added 4d8 force and the 2d6 collision damage stay as written; the strike itself deals its normal unarmed damage.",
 		},
 		power_type: "Innate",
 		power_level: 3,
@@ -819,14 +814,13 @@ export const powers_supplemental: CompendiumPower[] = [
 		school: "Evocation",
 		target: "One creature",
 		has_save: false,
-		save_ability: "Strength",
-		damage_roll: "4d6",
+		damage_roll: "4d8",
 		damage_type: "force",
-		higher_levels: "Damage increases by 1d6 per level above 3rd.",
 		components: { verbal: true, somatic: true, material: false },
 		mechanics: {
 			duration: "Instantaneous",
-			damage_profile: "4d6 force",
+			damage_profile: "4d8 force",
+			damage_basis: "added",
 			range: "Self",
 			type: "kinetic",
 			action: "1 bonus action",
@@ -838,14 +832,8 @@ export const powers_supplemental: CompendiumPower[] = [
 				mode: "melee",
 				resolution: "martial_attack",
 				modifier: "Agility",
-				damage: "4d6",
+				damage: "4d8",
 				damage_type: "force",
-			},
-			saving_throw: {
-				ability: "Strength",
-				dc: 15,
-				success: "Half damage and no rider.",
-				failure: "Palm strike + massive push + collision damage.",
 			},
 		},
 		limitations: {
@@ -1518,7 +1506,7 @@ export const powers_supplemental: CompendiumPower[] = [
 		source_book: "Rift Ascendant Canon",
 		effects: {
 			primary: "Bonus thunder + attack debuff.",
-			secondary: "Damage increases by 1d6 per level above 1st.",
+			secondary: "The added 1d8 thunder stays as written.",
 		},
 		power_type: "Innate",
 		power_level: 1,
@@ -1531,13 +1519,13 @@ export const powers_supplemental: CompendiumPower[] = [
 		target: "One creature",
 		has_save: true,
 		save_ability: "Presence",
-		damage_roll: "2d6",
+		damage_roll: "1d8",
 		damage_type: "thunder",
-		higher_levels: "Damage increases by 1d6 per level above 1st.",
 		components: { verbal: true, somatic: true, material: false },
 		mechanics: {
 			duration: "Instantaneous",
-			damage_profile: "2d6 thunder",
+			damage_profile: "1d8 thunder",
+			damage_basis: "added",
 			range: "Self",
 			type: "resonance",
 			action: "1 bonus action",
@@ -1547,8 +1535,8 @@ export const powers_supplemental: CompendiumPower[] = [
 			saving_throw: {
 				ability: "Presence",
 				dc: 13,
-				success: "Half damage and no rider.",
-				failure: "Bonus thunder + attack debuff.",
+				success: "The target's next attack roll is unaffected.",
+				failure: "The target has disadvantage on its next attack roll.",
 			},
 		},
 		limitations: {
@@ -2121,7 +2109,7 @@ export const powers_supplemental: CompendiumPower[] = [
 		name: "Second Wind",
 		display_name: "Second Wind",
 		description:
-			"Draw on your mana reserves for an emergency burst of healing. As a bonus action, regain 1d10 + your character level in hit points. Usable once per short rest.",
+			"Draw on your reserves for an emergency burst of healing. As a bonus action, regain 1d10 + your character level in hit points. Usable once per short rest.",
 		lore: {
 			origin:
 				"Every martial Awakened learns this. Those who don't learn it don't survive to learn anything else.",
@@ -3389,7 +3377,7 @@ export const powers_supplemental: CompendiumPower[] = [
 		name: "Killing Tempo",
 		display_name: "Killing Tempo",
 		description:
-			"Enter a heightened combat trance for 1 minute. Your movement speed doubles, you have advantage on all attack rolls, you can't be surprised, and your first hit each turn deals an extra 3d6 damage. You must make a DC 15 Presence save at the end of the duration or gain 1 level of exhaustion.",
+			"Enter a heightened combat trance for 1 minute. Your movement speed doubles, you have advantage on all attack rolls, you can't be surprised, and your first hit each turn deals an extra 3d6 force damage. You must make a DC 15 Presence save at the end of the duration or gain 1 level of exhaustion.",
 		lore: {
 			origin:
 				"Bureau combat analysts rate an awakened in full Killing Tempo as 'equivalent to a B-Rank Rift boss.' The comparison is conservative.",
@@ -3407,29 +3395,26 @@ export const powers_supplemental: CompendiumPower[] = [
 		source_book: "Rift Ascendant Canon",
 		effects: {
 			primary: "Ultimate hunting mode with exhaustion risk.",
-			secondary:
-				"Damage increases by 1d6 per level above 5th. At 7th level, the secondary effect also intensifies.",
+			secondary: "The extra 3d6 force damage stays as written.",
 		},
 		power_type: "Innate",
 		power_level: 5,
 		casting_time: "1 bonus action",
-		range: "60 feet",
+		range: "Self",
 		duration: "Concentration, up to 1 minute",
 		concentration: true,
 		ritual: false,
 		school: "Transmutation",
-		target: "One creature you can see",
-		has_save: true,
-		save_ability: "Strength",
-		damage_roll: "6d6",
+		target: "Self",
+		has_save: false,
+		damage_roll: "3d6",
 		damage_type: "force",
-		higher_levels:
-			"Damage increases by 1d6 per level above 5th. At 7th level, the secondary effect also intensifies.",
 		components: { verbal: true, somatic: true, material: false },
 		mechanics: {
 			duration: "Concentration, up to 1 minute",
-			damage_profile: "6d6 force",
-			range: "60 feet",
+			damage_profile: "3d6 force",
+			damage_basis: "added",
+			range: "Self",
 			type: "tracking",
 			action: "1 bonus action",
 			ability: "Sense",
@@ -3699,8 +3684,7 @@ export const powers_supplemental: CompendiumPower[] = [
 		source_book: "Rift Ascendant Canon",
 		effects: {
 			primary: "Sustained speed + multi-attack + cumulative slow.",
-			secondary:
-				"Damage increases by 1d6 per level above 6th. At 8th level, the secondary effect also intensifies.",
+			secondary: "The extra 2d6 force damage stays as written.",
 		},
 		power_type: "Innate",
 		power_level: 6,
@@ -3712,15 +3696,13 @@ export const powers_supplemental: CompendiumPower[] = [
 		school: "Transmutation",
 		target: "One creature",
 		has_save: false,
-		save_ability: "Strength",
-		damage_roll: "7d6",
+		damage_roll: "2d6",
 		damage_type: "force",
-		higher_levels:
-			"Damage increases by 1d6 per level above 6th. At 8th level, the secondary effect also intensifies.",
 		components: { verbal: true, somatic: true, material: false },
 		mechanics: {
 			duration: "Concentration, up to 1 minute",
-			damage_profile: "7d6 force",
+			damage_profile: "2d6 force",
+			damage_basis: "added",
 			range: "Self",
 			type: "kinetic",
 			action: "1 bonus action",
@@ -3732,14 +3714,8 @@ export const powers_supplemental: CompendiumPower[] = [
 				mode: "melee",
 				resolution: "martial_attack",
 				modifier: "Agility",
-				damage: "7d6",
+				damage: "2d6",
 				damage_type: "force",
-			},
-			saving_throw: {
-				ability: "Strength",
-				dc: 17,
-				success: "Half damage and no rider.",
-				failure: "Sustained speed + multi-attack + cumulative slow.",
 			},
 		},
 		limitations: {

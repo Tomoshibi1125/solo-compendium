@@ -49,7 +49,7 @@ export function MobileBottomNav() {
 							to={item.href}
 							aria-current={active ? "page" : undefined}
 							className={cn(
-								"flex flex-col items-center justify-center gap-0.5 min-h-[56px] py-1.5 px-1 text-[10px] font-heading tracking-wide transition-colors",
+								"flex flex-col items-center justify-center gap-0.5 min-h-[56px] py-1.5 px-1 text-xs font-heading tracking-wide transition-colors",
 								active
 									? "text-primary"
 									: "text-muted-foreground hover:text-foreground",
@@ -69,7 +69,7 @@ export function MobileBottomNav() {
 					type="button"
 					onClick={() => setSidebarOpen(true)}
 					aria-label="Open full menu"
-					className="flex flex-col items-center justify-center gap-0.5 min-h-[56px] py-1.5 px-1 text-[10px] font-heading tracking-wide text-muted-foreground hover:text-foreground transition-colors"
+					className="flex flex-col items-center justify-center gap-0.5 min-h-[56px] py-1.5 px-1 text-xs font-heading tracking-wide text-muted-foreground hover:text-foreground transition-colors"
 				>
 					<Menu className="h-5 w-5 shrink-0" />
 					<span>More</span>

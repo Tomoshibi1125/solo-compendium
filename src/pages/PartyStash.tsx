@@ -312,6 +312,7 @@ export default function PartyStash() {
 					open={deliveryDialogOpen}
 					onOpenChange={setDeliveryDialogOpen}
 					campaignId={campaignId}
+					initialMode="stash"
 					title="Deliver to Party Stash"
 				/>
 			)}

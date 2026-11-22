@@ -4,7 +4,7 @@
 
 This runbook deploys `supabase/migrations/20260906000000_supabase_security_hardening.sql` after local validation. The migration is forward-only and changes function ACLs/bodies, RLS policy behavior, anonymous DTOs, storage listing policies, and supporting constraints.
 
-Do **not** link a project, run linked tests, query a live catalog, apply migrations, change Supabase Advisor state, modify Dashboard Auth settings, provision account admins, restore data, or touch staging/production until the environment owner explicitly approves that action and project reference.
+Do **not** link a project, run linked tests, query a live catalog, apply migrations, change Supabase Advisor state, modify Dashboard Auth settings, restore data, or touch staging/production until the environment owner explicitly approves that action and project reference.
 
 Roll out staging first, collect fresh evidence, soak, obtain sign-off, then repeat the complete process for production. A staging pass is not production evidence.
 
@@ -163,7 +163,7 @@ Run the inventory script again. Compare pre/post and verify:
 - stale overloads and unchecked wrappers are not API-executable;
 - all retained definers have fixed search paths;
 - exact authenticated grants match the exception register;
-- `app_private.is_account_admin()` is not anonymous or PostgREST-exposed;
+- `app_private` is not anonymous or PostgREST-exposed, and no admin helper or admin RPC exists;
 - the five public asset buckets remain public while broad object-listing policies are gone;
 - owner-specific default function ACLs do not restore `PUBLIC` execution.
 
@@ -187,16 +187,16 @@ Use dedicated non-production test identities and synthetic records. Do not inclu
 | --- | --- | --- |
 | Anonymous RPCs | Active share code and invite token return their documented DTOs. | Every other application RPC is denied; DTOs contain no Warden ID, settings, token data, invite email, use counters, or audit data. |
 | Removed SQL bridge | Normal application flows operate. | `exec_sql(text)` does not resolve and cannot be called by API roles. |
-| Account admin | A deliberately provisioned account-admin can view account registry/audit and run guarded role/suspension operations. | Ordinary Ascendant and gameplay Warden cannot enumerate users, read admin audit data, or invoke successful account-admin mutations. |
+| Profiles | A user reads and edits only their own profile. | No caller can enumerate other users' profiles; `app_metadata.account_role` grants nothing. |
 | Actor binding | Campaign/guild creation succeeds when asserted actor equals the JWT subject. | A different supplied UUID fails with authorization error and creates no rows. |
 | Campaign sharing | Share-code join creates only the actor's membership and optional owned-character link. | Direct `join_campaign_by_id` is unavailable; another user's character cannot be attached. |
 | Invite lifecycle | Valid invite redemption is atomic; prior acceptor behavior is idempotent. | Revoked, expired, unknown, and newly exhausted-invite users are rejected; concurrent final-use attempts do not over-consume. |
 | Notifications | Self notifications and valid campaign relationship notifications succeed. | Arbitrary cross-user fan-out, missing/invalid campaign payload, and unrelated targets are denied. |
 | Rewards and quests | Warden awards linked-character XP/loot and eligible owner claims quest rewards. | Non-Warden cross-user award, unlinked target, duplicate claim, negative reward, and mismatched campaign references fail. Confirm XP writes a valid `reward` log. |
-| Sourcebooks | Actor receives free, current owned, and authorized campaign-shared books. | Mismatched user UUID and unrelated campaign context are denied; legacy `user_has_sourcebook_access` is not a browser RPC. |
+| Sourcebooks | Every account can read every sourcebook. | The retired entitlement RPCs (`user_has_sourcebook_access`, `get_accessible_sourcebooks`) do not resolve. |
 | Storage delivery | Existing known public URLs remain fetchable; owner-prefixed upload/delete succeeds. | Anonymous/broad bucket listing fails; a user cannot write/delete another owner's prefix; foreign-origin portrait URLs are rejected by the client. |
 | Password change | Signed-in user completes reauthentication, nonce confirmation, and password update; recovery session completes once. | Weak/breached passwords, invalid/expired nonce, ordinary session on recovery page, and unsafe error detail are rejected or normalized. |
-| Account-admin claim | JWT with trusted `app_metadata.account_role = admin` enables server and UI capability after refresh. | `profiles.role`, `user_metadata`, and gameplay Warden selection never grant account administration. |
+| Roles | Warden and Ascendant gameplay roles work as documented. | No metadata (`app_metadata`, `user_metadata`, or `profiles.role`) grants admin authority; the profile role check allows only `warden` and `ascendant`. |
 
 ### 6. Supabase Advisor and Auth settings
 
@@ -213,26 +213,13 @@ Do not change Advisor remediations or Auth settings during this rollout unless s
 
 Monitor Auth failures, PostgREST 401/403/404/5xx rates, RPC errors, invite redemption conflicts, storage upload/list errors, and client error reporting for the agreed staging soak period. Obtain application owner, database owner, and security reviewer sign-off before production scheduling.
 
-## Account-admin provisioning — separate trusted operation
+## Administration — outside the app
 
-Account-admin status must be provisioned only through a trusted Supabase Dashboard/Auth Admin API/service-role workflow after explicit approval.
+The app has two roles, Warden and Ascendant, and neither is administrative. `20260930120000_remove_admin_paid_and_public_listing.sql` removed the in-app account-admin claim, RPCs, audit log, and suspension flag. Account and content administration happens outside the app:
 
-Canonical metadata:
-
-```json
-{
-  "account_role": "admin"
-}
-```
-
-Rules:
-
-- Set this under **app metadata**, preserving unrelated existing app-metadata keys.
-- Never use `profiles.role`, `user_metadata`, client `updateUser`, or gameplay Warden status.
+- Accounts, bans, and password resets: the Supabase Dashboard (Auth).
+- Compendium and schema changes: reviewed migrations or service-role scripts.
 - Never place a service-role key in the browser, repository, terminal transcript, or deployment evidence.
-- Provision only named approved operators and record approval separately from user PII.
-- Force or request a JWT refresh after the update: sign out/in or use the approved session-refresh flow. Validate both server denial/allow and `AuthUser.isAccountAdmin` UI gating.
-- To revoke, remove or change the app-metadata claim through the same trusted path and invalidate/refresh sessions according to incident policy.
 
 ## Gate 4: production rollout — fresh approval and evidence required
 
@@ -269,8 +256,8 @@ Stop after deployment and enter incident handling if any of these is true:
 
 - migration or linked pgTAP fails;
 - anonymous access exceeds two RPCs or a DTO leaks extra fields;
-- ordinary/gameplay users gain account-admin behavior;
-- expected account-admin, invite, campaign, sourcebook, or storage owner flows fail materially;
+- any API caller gains admin behavior or reads another user's profile;
+- expected invite, campaign, sourcebook, or storage owner flows fail materially;
 - direct ID join, unchecked wrappers, `exec_sql`, or broad storage listing becomes reachable;
 - error rates, authorization denials, latency, or data integrity indicators exceed the agreed threshold;
 - pre/post inventory cannot be reconciled.
@@ -299,7 +286,6 @@ Linked type/DTO diff result:
 Smoke matrix result and synthetic test-record cleanup:
 Security/Performance Advisor summary:
 Leaked-password protection state:
-Account-admin provisioning performed? approval reference only:
 Monitoring/soak result:
 Exceptions and follow-up owners:
 Final sign-off:

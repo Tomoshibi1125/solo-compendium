@@ -1,5 +1,9 @@
 # Solo Leveling Monarchs - Analysis for Regent System
 
+> **Archive (inspiration research only).** Names and mechanics in this file are
+> not Rift Ascendant canon or publication input. Current Regent, Gemini, and
+> Sovereign rules are locked in [Rift Ascendant canon locks](canon/rift-ascendant-canon-locks.md).
+
 ## The Nine Monarchs of Solo Leveling
 
 ### 1. **Shadow Monarch (Ashborn)**

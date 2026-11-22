@@ -333,24 +333,15 @@ describe("canonicalCompendium resolver", () => {
 	it("keeps unsupported supplemental Idol entries out of native resonance path access", async () => {
 		const powers = await listCanonicalPowers();
 		const techniques = await listCanonicalEntries("techniques");
+		// The Dance Resonance's Dance Repertoire names its entries explicitly, so
+		// its Dissonant Strike and Rhythmic Strike grants are covered in
+		// task5PathCanon.test.ts instead.
 		const cases = [
-			{
-				entry: powers.find((entry) => entry.name === "Dissonant Strike"),
-				kind: "power",
-				pathName: "Path of the Dance Resonance",
-				level: 3,
-			},
 			{
 				entry: powers.find((entry) => entry.name === "Encore Performance"),
 				kind: "power",
 				pathName: "Path of the Hypnotic Resonance",
 				level: 7,
-			},
-			{
-				entry: techniques.find((entry) => entry.name === "Rhythmic Strike"),
-				kind: "technique",
-				pathName: "Path of the Dance Resonance",
-				level: 3,
 			},
 			{
 				entry: techniques.find((entry) => entry.name === "Resonance Slash"),

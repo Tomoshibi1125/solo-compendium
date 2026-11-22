@@ -275,17 +275,20 @@ export const BackgroundStep: React.FC<BackgroundStepProps> = ({
 	const selectedBackgroundData = allBackgrounds.find(
 		(background) => background.id === selectedBackground,
 	);
+	const backgroundDetails = selectedBackgroundData as
+		| (Background & { languages?: unknown; features?: unknown })
+		| undefined;
 	const backgroundLanguages: string[] = Array.isArray(
-		selectedBackgroundData?.languages,
+		backgroundDetails?.languages,
 	)
-		? (selectedBackgroundData.languages as unknown[]).filter(
+		? (backgroundDetails.languages as unknown[]).filter(
 				(language): language is string => typeof language === "string",
 			)
 		: [];
 	const backgroundFeatures: BackgroundFeature[] = Array.isArray(
-		selectedBackgroundData?.features,
+		backgroundDetails?.features,
 	)
-		? (selectedBackgroundData.features as unknown[]).filter(isBackgroundFeature)
+		? (backgroundDetails.features as unknown[]).filter(isBackgroundFeature)
 		: [];
 	const backgroundInventory = collectStringValues(
 		selectedBackgroundData?.starting_equipment ??

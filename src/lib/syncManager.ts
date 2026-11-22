@@ -448,12 +448,27 @@ const processCampaignCombat = async (data: Record<string, unknown>) => {
 					combatant !== null,
 			);
 
-		const { error: clearError } = await supabase
+		const { data: existingRows, error: readError } = await supabase
 			.from("campaign_combatants")
-			.delete()
+			.select("id")
 			.eq("campaign_id", campaignId)
-			.eq("session_id", sessionId);
-		if (clearError) throw clearError;
+			.eq("session_id", sessionId)
+			.is("companion_instance_id", null);
+		if (readError) throw readError;
+		const nextIds = new Set(payload.map((combatant) => combatant.id));
+		const staleIds = (existingRows ?? [])
+			.map((row) => row.id)
+			.filter((id) => !nextIds.has(id));
+		if (staleIds.length > 0) {
+			const { error: clearError } = await supabase
+				.from("campaign_combatants")
+				.delete()
+				.eq("campaign_id", campaignId)
+				.eq("session_id", sessionId)
+				.is("companion_instance_id", null)
+				.in("id", staleIds);
+			if (clearError) throw clearError;
+		}
 
 		if (payload.length === 0) return;
 

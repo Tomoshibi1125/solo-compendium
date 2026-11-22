@@ -4,13 +4,11 @@ import {
 	Dice6,
 	FlaskConical,
 	ScrollText,
-	Sparkles,
 	Store,
 } from "lucide-react";
 import { useMemo } from "react";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
 import { ActionsList } from "@/components/character/ActionsList";
-import { CharacterArtPanel } from "@/components/character/CharacterArtPanel";
 import { CurrencyManager } from "@/components/character/CurrencyManager";
 import { EquipmentList } from "@/components/character/EquipmentList";
 import { FeaturesList } from "@/components/character/FeaturesList";
@@ -48,10 +46,6 @@ const TOOL_TITLES: Record<string, { title: string; subtitle: string }> = {
 		title: "Abilities & Skills",
 		subtitle: "Track actions, powers, and feature uses.",
 	},
-	"character-art": {
-		title: "Character Art Generator",
-		subtitle: "Create portrait art for your ascendant.",
-	},
 	"compendium-viewer": {
 		title: "Compendium Viewer",
 		subtitle: "Browse the complete compendium.",
@@ -87,7 +81,6 @@ const requiresCharacter = (toolId: string) =>
 		"character-sheet",
 		"inventory",
 		"abilities",
-		"character-art",
 		"quest-log",
 		"regent-status",
 	].includes(toolId);
@@ -205,19 +198,6 @@ export default function AscendantToolDetail() {
 						<FeaturesList characterId={activeCharacter.id} />
 					</div>
 				) : null;
-			case "character-art":
-				return activeCharacter ? (
-					<CharacterArtPanel
-						characterId={activeCharacter.id}
-						characterData={{
-							name: activeCharacter.name,
-							appearance: activeCharacter.appearance || "",
-							backstory: activeCharacter.backstory || "",
-							job: activeCharacter.job || undefined,
-							level: activeCharacter.level,
-						}}
-					/>
-				) : null;
 			case "quest-log":
 				return activeCharacter ? (
 					<QuestLog characterId={activeCharacter.id} />
@@ -277,16 +257,6 @@ export default function AscendantToolDetail() {
 									<Button onClick={() => navigate("/dice")} className="gap-2">
 										<Dice6 className="w-4 h-4" />
 										Open Dice Roller
-									</Button>
-								)}
-								{toolId === "character-art" && (
-									<Button
-										onClick={() => navigate("/warden-directives/art-generator")}
-										variant="outline"
-										className="gap-2"
-									>
-										<Sparkles className="w-4 h-4" />
-										Warden Art Tools
 									</Button>
 								)}
 								{toolId === "homebrew-studio" && (

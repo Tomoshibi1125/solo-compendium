@@ -12,6 +12,7 @@
 		"lint": "npx @biomejs/biome check --write ./src ./scripts ./tests ./tools ./supabase/functions ./vite.config.ts ./vite.sourcebook.config.ts ./vitest.config.ts ./playwright.config.ts",
 		"lint:check": "npx @biomejs/biome check ./src ./scripts ./tests ./tools ./supabase/functions ./vite.config.ts ./vite.sourcebook.config.ts ./vitest.config.ts ./playwright.config.ts",
 		"check:deno": "deno check supabase/functions/**/*.ts",
+		"check:ai-isolation": "vitest run src/lib/__tests__/aiIsolation.test.ts",
 		"build": "node scripts/write-runtime-env.mjs && vite build",
 		"build:vercel": "node scripts/write-runtime-env.mjs && vite build",
 		"preview": "vite preview --host",
@@ -24,17 +25,10 @@
 		"test:db:security:linked": "supabase test db --linked supabase/tests/security_hardening.sql",
 		"test:db:legacy-removal": "supabase test db --local supabase/tests/legacy_integration_removal.sql",
 		"audit:compendium": "tsx scripts/audit-compendium.ts && node scripts/audit-assets.mjs",
-		"audit:sourcebooks:local": "tsx scripts/audit-local-sourcebooks.ts",
-		"audit:sourcebooks:strict": "tsx scripts/audit-local-sourcebooks.ts --strict",
-		"audit:jobs-paths:local": "tsx scripts/audit-local-sourcebooks.ts --jobs-paths-only",
 		"audit:assets": "node scripts/audit-assets.mjs",
 		"audit:assets:update": "node scripts/audit-assets.mjs --update-baseline",
 		"enrich:compendium": "tsx scripts/enrich-compendium.ts",
 		"export:book": "tsx scripts/export-sandbox-book.ts",
-		"books:build": "tsx books/scripts/build-books.ts && tsx books/scripts/qa-checks.ts",
-		"books:build:run-silent": "tsx books/scripts/build-books.ts --only=run-silent --vivlio-only && tsx books/scripts/qa-checks.ts --only=run-silent",
-		"books:build:glassline": "tsx books/scripts/qa-glassline-claim.ts && tsx books/scripts/build-books.ts --only=glassline-claim --vivlio-only && tsx books/scripts/qa-checks.ts --only=glassline-claim",
-		"books:verify": "tsx books/scripts/build-books.ts --verify-only && tsx books/scripts/qa-checks.ts",
 		"test": "vitest",
 		"test:ui": "vitest --ui",
 		"test:run": "vitest run",
@@ -64,8 +58,6 @@
 		"script:enrichCompendium": "node scripts/enrichCompendium.mjs",
 		"script:enrichMassiveArchives": "node scripts/enrichMassiveArchives.mjs",
 		"script:find-duplicates": "tsx scripts/find-duplicates.ts",
-		"script:generate-ai-tokens": "tsx scripts/generate-ai-tokens.ts",
-		"script:generate-ai-unique-content": "tsx scripts/generate-ai-unique-content.ts",
 		"script:generate-algorithmic-uniqueness": "tsx scripts/generate-algorithmic-uniqueness.ts",
 		"script:generate-backgrounds": "tsx scripts/generate-backgrounds.ts",
 		"script:generate-items": "node scripts/generate-items.js",
@@ -78,7 +70,6 @@
 		"@dnd-kit/core": "^6.3.1",
 		"@dnd-kit/sortable": "^10.0.0",
 		"@dnd-kit/utilities": "^3.2.2",
-		"@google/genai": "^2.10.0",
 		"@hookform/resolvers": "^5.4.0",
 		"@radix-ui/react-alert-dialog": "^1.1.18",
 		"@radix-ui/react-avatar": "^1.2.1",
@@ -194,7 +185,8 @@
 		],
 		"ignore": [
 			"src/integrations/supabase/types.ts",
-			"src/components/ui/**/*.tsx"
+			"src/components/ui/**/*.tsx",
+			"src/lib/nineRegents.ts"
 		]
 	}
 }

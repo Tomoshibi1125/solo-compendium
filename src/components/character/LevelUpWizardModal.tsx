@@ -33,7 +33,9 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 import { getFightingStylesForJob } from "@/data/compendium/fightingStyles";
+import type { Path } from "@/data/compendium/paths";
 import type { StaticCompendiumEntry } from "@/data/compendium/providers/types";
+import { regents as canonicalRegents } from "@/data/compendium/regents";
 import { useToast } from "@/hooks/use-toast";
 import { useCampaignByCharacterId } from "@/hooks/useCampaigns";
 import { useCharacter, useUpdateCharacter } from "@/hooks/useCharacters";
@@ -42,6 +44,7 @@ import { usePublishedHomebrew } from "@/hooks/useHomebrewContent";
 import { useRegentUnlocks } from "@/hooks/useRegentUnlocks";
 import { useInitializeSpellSlots } from "@/hooks/useSpellSlots";
 import { useStaticJobs } from "@/hooks/useStaticJobs";
+import { useStaticPathCatalog } from "@/hooks/useStaticPathCatalog";
 import { supabase } from "@/integrations/supabase/client";
 import type { Database } from "@/integrations/supabase/types";
 import { getAbilityModifier } from "@/lib/5eRulesEngine";
@@ -49,6 +52,7 @@ import { getLevelingMode } from "@/lib/campaignSettings";
 import {
 	type CanonicalCastableEntry,
 	listCanonicalEntries,
+	listCanonicalPowers,
 	listLearnablePowers,
 	listLearnableSpells,
 	listLearnableTechniques,
@@ -106,6 +110,7 @@ import {
 	runtimePathMatchesJob,
 	runtimeSpellMatchesCharacter,
 } from "@/lib/homebrewRuntime";
+import { toCastingReference } from "@/lib/jobRules";
 import { removeProgressionGrantsAboveLevel } from "@/lib/levelDownCleanup";
 import { getStaticPathUnlockLevel, isASILevel } from "@/lib/levelGating";
 import {
@@ -121,6 +126,7 @@ import { logger } from "@/lib/logger";
 import { getStaticPaths, getStaticRegents } from "@/lib/ProtocolDataManager";
 import { getEffectiveMaxAbilityLevel } from "@/lib/pathAbilityAccess";
 import { getPathEligibility } from "@/lib/pathEligibility";
+import { withStaticPathLedger } from "@/lib/pathLedger";
 import {
 	buildCharacterLevelDownPreflightV1,
 	buildCharacterLevelUpWorkflowPlanV1,
@@ -133,10 +139,13 @@ import {
 	summarizeCharacterWorkflowBlockersV1,
 } from "@/lib/planning/adapters/characterWorkflowAdapter";
 import { rankToGateToken } from "@/lib/rankColors";
+import { getRegentHpContributionForIds } from "@/lib/regentGestalt";
 import {
+	getMaxRegentAbilityTier,
 	getRegentFeaturesAtLevel,
 	regentToChoiceSource,
 } from "@/lib/regentProgression";
+import { getRegentAbilityKnownCount } from "@/lib/regentResonanceRules";
 import type { Regent } from "@/lib/regentTypes";
 import { filterRowsBySourcebookAccess } from "@/lib/sourcebookAccess";
 import { cn } from "@/lib/utils";
@@ -304,7 +313,12 @@ function toChoiceSourceData(
 	if (!job) return null;
 	return {
 		name: name ?? job.name,
-		skill_choice_count: 0,
+		skill_choice_count:
+			(job as { skill_choice_count?: number; skillChoiceCount?: number })
+				.skill_choice_count ??
+			(job as { skill_choice_count?: number; skillChoiceCount?: number })
+				.skillChoiceCount ??
+			0,
 		awakening_features: job.awakeningFeatures ?? [],
 		job_traits: job.jobTraits ?? [],
 		level_choices: job.levelChoices,
@@ -317,14 +331,23 @@ function toChoiceSourceData(
 }
 
 function toPathChoiceSourceData(
-	path: Pick<ChoiceSourceData, "features" | "name"> | null | undefined,
-	name?: string | null,
+	path:
+		| (Pick<ChoiceSourceData, "features" | "name"> & { id?: string | null })
+		| null
+		| undefined,
+	name: string | null | undefined,
+	catalog: readonly Path[] | undefined,
 ): ChoiceSourceData | null {
 	if (!path) return null;
-	return {
-		name: name ?? path.name,
-		features: path.features ?? [],
-	};
+	// Structured Path choices and Path casting come from the static catalog.
+	return withStaticPathLedger(
+		{
+			name: name ?? path.name,
+			features: path.features ?? [],
+		},
+		{ id: path.id, name: name ?? path.name },
+		catalog,
+	);
 }
 
 function getExperienceForNextLevel(currentLevel: number): number {
@@ -362,9 +385,18 @@ export const LevelUpWizardModal = ({
 	const [asiChoices, setAsiChoices] = useState<Record<string, number>>({});
 	const [selectedFeats, setSelectedFeats] = useState<string[]>([]);
 	const [selectedPowerIds, setSelectedPowerIds] = useState<string[]>([]);
+	const [selectedPathPowerIds, setSelectedPathPowerIds] = useState<string[]>(
+		[],
+	);
 	const [selectedTechniqueIds, setSelectedTechniqueIds] = useState<string[]>(
 		[],
 	);
+	const [selectedPathTechniqueIds, setSelectedPathTechniqueIds] = useState<
+		string[]
+	>([]);
+	const [selectedRegentAbilityIds, setSelectedRegentAbilityIds] = useState<
+		Record<string, string[]>
+	>({});
 	const [selectedCantripIds, setSelectedCantripIds] = useState<string[]>([]);
 	const [selectedSpellIds, setSelectedSpellIds] = useState<string[]>([]);
 	const [selectedSpellbookIds, setSelectedSpellbookIds] = useState<string[]>(
@@ -556,6 +588,9 @@ export const LevelUpWizardModal = ({
 		character?.path ??
 		selectedPathRow?.name ??
 		null;
+	const { data: staticPathCatalog } = useStaticPathCatalog(
+		Boolean(effectivePathName),
+	);
 	const characterRegentNames = useMemo(() => {
 		const overlays = Array.isArray(character?.regent_overlays)
 			? character.regent_overlays.filter(
@@ -585,12 +620,19 @@ export const LevelUpWizardModal = ({
 	const pathChoiceSource = useMemo(() => {
 		if (!character?.job || !effectivePathName) return null;
 		if (selectedPathRow) {
-			return toPathChoiceSourceData(selectedPathRow, effectivePathName);
+			return toPathChoiceSourceData(
+				selectedPathRow,
+				effectivePathName,
+				staticPathCatalog,
+			);
 		}
 		if (resolvedCanonicalPath) {
 			return toPathChoiceSourceData(
-				resolvedCanonicalPath as Pick<ChoiceSourceData, "features" | "name">,
+				resolvedCanonicalPath as Pick<ChoiceSourceData, "features" | "name"> & {
+					id?: string | null;
+				},
 				effectivePathName,
+				staticPathCatalog,
 			);
 		}
 		const jobNameKey = normalizeCompendiumKey(character.job);
@@ -611,6 +653,7 @@ export const LevelUpWizardModal = ({
 		return toPathChoiceSourceData(
 			staticPath ?? homebrewPath,
 			effectivePathName,
+			staticPathCatalog,
 		);
 	}, [
 		character?.job,
@@ -618,6 +661,7 @@ export const LevelUpWizardModal = ({
 		homebrewPaths,
 		resolvedCanonicalPath,
 		selectedPathRow,
+		staticPathCatalog,
 	]);
 
 	// Active regent overlays as choice sources so their full independent
@@ -633,7 +677,13 @@ export const LevelUpWizardModal = ({
 		return characterRegentNames
 			.map((name) => byKey.get(normalizeCompendiumKey(name)))
 			.filter((r): r is Regent => Boolean(r))
-			.map((r) => regentToChoiceSource(r));
+			.map((r) => ({
+				...regentToChoiceSource(r),
+				// Regent Power and Technique picks use their own provenance and
+				// canonical high-tier catalog below. Caster progression stays here.
+				powers_known: undefined,
+				techniques_known: undefined,
+			}));
 	}, [characterRegentNames]);
 
 	const availableChoices = useMemo(
@@ -664,13 +714,43 @@ export const LevelUpWizardModal = ({
 		regentChoiceSources,
 		newLevel,
 	]);
+	const jobOnlyChoiceDeltas = useMemo(() => {
+		if (!character || !jobChoiceSource) return {};
+		return getLevelUpChoiceDeltas(
+			jobChoiceSource,
+			null,
+			[],
+			character.level,
+			newLevel,
+			null,
+		);
+	}, [character, jobChoiceSource, newLevel]);
 
 	const requiredPowerChoices = choiceDeltas.powers ?? 0;
 	const requiredTechniqueChoices = choiceDeltas.techniques ?? 0;
+	const jobPowerChoices = Math.min(
+		requiredPowerChoices,
+		jobOnlyChoiceDeltas.powers ?? 0,
+	);
+	const jobTechniqueChoices = Math.min(
+		requiredTechniqueChoices,
+		jobOnlyChoiceDeltas.techniques ?? 0,
+	);
+	const pathPowerChoices = requiredPowerChoices - jobPowerChoices;
+	const pathTechniqueChoices = requiredTechniqueChoices - jobTechniqueChoices;
 	const requiredCantripChoices = choiceDeltas.cantrips ?? 0;
 	const requiredSpellChoices = choiceDeltas.spells ?? 0;
 	const requiredSpellbookInscriptions = choiceDeltas.spellbookInscriptions ?? 0;
 	const requiredFightingStyleChoices = choiceDeltas.fightingStyles ?? 0;
+	const regentHpNow = getRegentHpContributionForIds(
+		character?.regent_overlays,
+		character?.level ?? 1,
+	);
+	const regentHpNext = getRegentHpContributionForIds(
+		character?.regent_overlays,
+		newLevel,
+	);
+	const regentHpLevelGain = Math.max(0, regentHpNext - regentHpNow);
 
 	// Fetch available feats for selection at ASI levels
 	const { data: availableFeats = [] } = useQuery({
@@ -1110,6 +1190,112 @@ export const LevelUpWizardModal = ({
 
 	// Regent progression: show new regent features unlocked at this level
 	const { unlocks: regentUnlocks } = useRegentUnlocks(characterId || "");
+	const { data: existingRegentAbilityGrants = { powers: [], techniques: [] } } =
+		useQuery<{
+			powers: Array<{
+				regent_unlock_id: string | null;
+				power_id: string | null;
+			}>;
+			techniques: Array<{
+				regent_unlock_id: string | null;
+				technique_id: string;
+			}>;
+		}>({
+			queryKey: ["regent-level-grants", characterId, character?.level],
+			enabled: !!characterId && regentUnlocks.length > 0,
+			queryFn: async () => {
+				if (isLocalCharacterId(characterId)) {
+					return {
+						powers: listLocalPowers(characterId).filter(
+							(row) => row.acquisition_kind === "regent",
+						),
+						techniques: listLocalTechniques(characterId).filter(
+							(row) => row.acquisition_kind === "regent",
+						),
+					};
+				}
+				const [powersResult, techniquesResult] = await Promise.all([
+					supabase
+						.from("character_powers")
+						.select("regent_unlock_id, power_id")
+						.eq("character_id", characterId)
+						.eq("acquisition_kind", "regent"),
+					supabase
+						.from("character_techniques")
+						.select("regent_unlock_id, technique_id")
+						.eq("character_id", characterId)
+						.eq("acquisition_kind", "regent"),
+				]);
+				if (powersResult.error) throw powersResult.error;
+				if (techniquesResult.error) throw techniquesResult.error;
+				return {
+					powers: powersResult.data ?? [],
+					techniques: techniquesResult.data ?? [],
+				};
+			},
+		});
+	const regentLaterChoiceNeeds = regentUnlocks.flatMap((unlock) => {
+		if (
+			!unlock.regent_id ||
+			unlock.caught_up_at_level === null ||
+			newLevel <= (character?.level ?? 0)
+		)
+			return [];
+		const regent = canonicalRegents.find(
+			(entry) => entry.id === unlock.regent_id,
+		);
+		if (!regent) return [];
+		const known = getRegentAbilityKnownCount(newLevel);
+		const powerCount = existingRegentAbilityGrants.powers.filter(
+			(row) => row.regent_unlock_id === unlock.id,
+		).length;
+		const techniqueCount = existingRegentAbilityGrants.techniques.filter(
+			(row) => row.regent_unlock_id === unlock.id,
+		).length;
+		return [
+			{
+				unlockId: unlock.id,
+				regentId: unlock.regent_id,
+				regentName: regent.name,
+				powers: regent.powersKnown ? Math.max(0, known - powerCount) : 0,
+				techniques: regent.techniquesKnown
+					? Math.max(0, known - techniqueCount)
+					: 0,
+			},
+		];
+	});
+	const { data: regentPowerCatalog = [] } = useQuery<CanonicalCastableEntry[]>({
+		queryKey: ["regent-level-power-catalog", campaignId, newLevel],
+		enabled: regentLaterChoiceNeeds.some((entry) => entry.powers > 0),
+		queryFn: async () => {
+			const maxTier = getMaxRegentAbilityTier(newLevel);
+			return (await listCanonicalPowers(undefined, { campaignId })).filter(
+				(entry) => entry.power_level >= 5 && entry.power_level <= maxTier,
+			);
+		},
+	});
+	const { data: regentTechniqueCatalog = [] } = useQuery<
+		StaticCompendiumEntry[]
+	>({
+		queryKey: ["regent-level-technique-catalog", campaignId, newLevel],
+		enabled: regentLaterChoiceNeeds.some((entry) => entry.techniques > 0),
+		queryFn: async () => {
+			const maxTier = getMaxRegentAbilityTier(newLevel);
+			return (
+				await listCanonicalEntries("techniques", undefined, { campaignId })
+			).filter((entry) => {
+				const tier = Number(entry.level_requirement);
+				return tier >= 5 && tier <= maxTier;
+			});
+		},
+	});
+	const regentLaterChoicesMet = regentLaterChoiceNeeds.every(
+		(need) =>
+			(selectedRegentAbilityIds[`${need.unlockId}:power`]?.length ?? 0) >=
+				need.powers &&
+			(selectedRegentAbilityIds[`${need.unlockId}:technique`]?.length ?? 0) >=
+				need.techniques,
+	);
 	const primaryRegentUnlock =
 		regentUnlocks.find((u: { is_primary?: boolean }) => u.is_primary) ??
 		regentUnlocks[0];
@@ -1351,9 +1537,25 @@ export const LevelUpWizardModal = ({
 			return next.length === current.length ? current : next;
 		});
 	}, [availablePowers]);
+	useEffect(() => {
+		setSelectedPathPowerIds((current) => {
+			const next = current.filter((id) =>
+				availablePowers.some((power) => power.id === id),
+			);
+			return next.length === current.length ? current : next;
+		});
+	}, [availablePowers]);
 
 	useEffect(() => {
 		setSelectedTechniqueIds((current) => {
+			const next = current.filter((id) =>
+				availableTechniques.some((technique) => technique.id === id),
+			);
+			return next.length === current.length ? current : next;
+		});
+	}, [availableTechniques]);
+	useEffect(() => {
+		setSelectedPathTechniqueIds((current) => {
 			const next = current.filter((id) =>
 				availableTechniques.some((technique) => technique.id === id),
 			);
@@ -1515,7 +1717,7 @@ export const LevelUpWizardModal = ({
 			try {
 				await initializeSpellSlots.mutateAsync({
 					characterId: character.id,
-					job: jobObj || character.job,
+					job: toCastingReference(character) ?? jobObj ?? character.job,
 					level: newLevel,
 				});
 			} catch (error) {
@@ -1617,7 +1819,10 @@ export const LevelUpWizardModal = ({
 			return;
 		}
 
-		if (selectedPowerIds.length < requiredPowerChoices) {
+		if (
+			selectedPowerIds.length < jobPowerChoices ||
+			selectedPathPowerIds.length < pathPowerChoices
+		) {
 			toast({
 				title: "Power selection required",
 				description: `Choose ${requiredPowerChoices} power${requiredPowerChoices === 1 ? "" : "s"} before completing this level up.`,
@@ -1626,10 +1831,22 @@ export const LevelUpWizardModal = ({
 			return;
 		}
 
-		if (selectedTechniqueIds.length < requiredTechniqueChoices) {
+		if (
+			selectedTechniqueIds.length < jobTechniqueChoices ||
+			selectedPathTechniqueIds.length < pathTechniqueChoices
+		) {
 			toast({
 				title: "Technique selection required",
 				description: `Choose ${requiredTechniqueChoices} technique${requiredTechniqueChoices === 1 ? "" : "s"} before completing this level up.`,
+				variant: "destructive",
+			});
+			return;
+		}
+		if (!regentLaterChoicesMet) {
+			toast({
+				title: "Regent selection required",
+				description:
+					"Choose each Regent's new Power and Technique grants before completing this level up.",
 				variant: "destructive",
 			});
 			return;
@@ -1818,6 +2035,7 @@ export const LevelUpWizardModal = ({
 		const levelWorkflowChoices: CharacterWorkflowChoiceInputV1[] = [];
 		const addCatalogChoice = (input: {
 			kind: CharacterWorkflowChoiceInputV1["kind"];
+			source?: CharacterWorkflowChoiceInputV1["source"];
 			sourceIndex: number;
 			count: number;
 			prompt: string;
@@ -1833,7 +2051,7 @@ export const LevelUpWizardModal = ({
 			if (input.count <= 0) return;
 			levelWorkflowChoices.push({
 				kind: input.kind,
-				source: jobWorkflowIdentity,
+				source: input.source ?? jobWorkflowIdentity,
 				sourceIndex: input.sourceIndex,
 				level: newLevel,
 				count: input.count,
@@ -1856,20 +2074,42 @@ export const LevelUpWizardModal = ({
 		addCatalogChoice({
 			kind: "power",
 			sourceIndex: 0,
-			count: requiredPowerChoices,
-			prompt: "Choose powers unlocked by this level.",
+			count: jobPowerChoices,
+			prompt: "Choose Job powers unlocked by this level.",
 			entries: availablePowers,
 			selectedIds: selectedPowerIds,
 			collection: "powers",
 			grantType: "power",
 		});
 		addCatalogChoice({
+			kind: "power",
+			source: activePathWorkflowIdentity ?? undefined,
+			sourceIndex: 0,
+			count: pathPowerChoices,
+			prompt: "Choose Path powers unlocked by this level.",
+			entries: availablePowers,
+			selectedIds: selectedPathPowerIds,
+			collection: "powers",
+			grantType: "power",
+		});
+		addCatalogChoice({
 			kind: "technique",
 			sourceIndex: 1,
-			count: requiredTechniqueChoices,
-			prompt: "Choose techniques unlocked by this level.",
+			count: jobTechniqueChoices,
+			prompt: "Choose Job techniques unlocked by this level.",
 			entries: availableTechniques,
 			selectedIds: selectedTechniqueIds,
+			collection: "techniques",
+			grantType: "technique",
+		});
+		addCatalogChoice({
+			kind: "technique",
+			source: activePathWorkflowIdentity ?? undefined,
+			sourceIndex: 1,
+			count: pathTechniqueChoices,
+			prompt: "Choose Path techniques unlocked by this level.",
+			entries: availableTechniques,
+			selectedIds: selectedPathTechniqueIds,
 			collection: "techniques",
 			grantType: "technique",
 		});
@@ -2038,7 +2278,9 @@ export const LevelUpWizardModal = ({
 					level: newLevel,
 					proficiency_bonus: newProficiencyBonus,
 					hp_max: newHP,
-					hp_current: character.hp_current + hpIncrease,
+					// A higher maximum from leveling (including Regent gestalt)
+					// never heals the character on its own.
+					hp_current: character.hp_current,
 					hit_dice_max: newHitDiceMax,
 					hit_dice_current: newHitDiceMax,
 					rift_favor_die: newRiftFavorDie,
@@ -2124,11 +2366,28 @@ export const LevelUpWizardModal = ({
 				}
 			}
 
-			const selectedPowerEntries = availablePowers.filter((power) =>
-				selectedPowerIds.includes(power.id),
-			);
-			for (const power of selectedPowerEntries) {
+			const selectedPowerEntries = [
+				...selectedPowerIds.map((id) => ({
+					id,
+					acquisitionKind: "job" as const,
+				})),
+				...selectedPathPowerIds.map((id) => ({
+					id,
+					acquisitionKind: "path" as const,
+				})),
+			].flatMap(({ id, acquisitionKind }) => {
+				const power = availablePowers.find((entry) => entry.id === id);
+				return power ? [{ power, acquisitionKind }] : [];
+			});
+			for (const { power, acquisitionKind } of selectedPowerEntries) {
 				assertCanonicalPowerLearnable(power, levelUpAbilityContext);
+				const canonicalSourceId =
+					acquisitionKind === "job"
+						? (character.job_id ?? character.job ?? "job")
+						: (selectedPathRow?.id ??
+							character.path_id ??
+							effectivePathName ??
+							"path");
 				const powerUseFields = await getAbilityUseFields(character.id, {
 					kind: "power",
 					powerLevel: power.power_level,
@@ -2138,7 +2397,10 @@ export const LevelUpWizardModal = ({
 					power_id: power.id,
 					name: power.name,
 					power_level: power.power_level,
-					source: `Level ${newLevel} Power Choice`,
+					source: `Level ${newLevel} ${acquisitionKind === "job" ? "Job" : "Path"} Power Choice`,
+					acquisition_kind: acquisitionKind,
+					canonical_source_id: canonicalSourceId,
+					acquired_level: newLevel,
 					casting_time: power.casting_time || null,
 					range: power.range || null,
 					duration: power.duration || null,
@@ -2155,8 +2417,10 @@ export const LevelUpWizardModal = ({
 					if (
 						existingPowers.some(
 							(existing) =>
-								(power.id && existing.power_id === power.id) ||
-								existing.name === power.name,
+								existing.acquisition_kind === acquisitionKind &&
+								existing.canonical_source_id === canonicalSourceId &&
+								((power.id && existing.power_id === power.id) ||
+									existing.name === power.name),
 						)
 					)
 						continue;
@@ -2172,23 +2436,45 @@ export const LevelUpWizardModal = ({
 					.from("character_powers")
 					.select("id")
 					.eq("character_id", character.id)
+					.eq("acquisition_kind", acquisitionKind)
+					.eq("canonical_source_id", canonicalSourceId)
 					.limit(1);
 				const { data: existingPower } = power.id
 					? await dedupQuery.eq("power_id", power.id)
 					: await dedupQuery.eq("name", power.name);
 				if ((existingPower?.length ?? 0) > 0) continue;
 
-				await supabase.from("character_powers").insert({
-					character_id: character.id,
-					...powerPayload,
-				});
+				await supabase
+					.from("character_powers")
+					.insert({
+						character_id: character.id,
+						...powerPayload,
+					})
+					.throwOnError();
 			}
 
-			const selectedTechniqueEntries = availableTechniques.filter((technique) =>
-				selectedTechniqueIds.includes(technique.id),
-			);
-			for (const technique of selectedTechniqueEntries) {
+			const selectedTechniqueEntries = [
+				...selectedTechniqueIds.map((id) => ({
+					id,
+					acquisitionKind: "job" as const,
+				})),
+				...selectedPathTechniqueIds.map((id) => ({
+					id,
+					acquisitionKind: "path" as const,
+				})),
+			].flatMap(({ id, acquisitionKind }) => {
+				const technique = availableTechniques.find((entry) => entry.id === id);
+				return technique ? [{ technique, acquisitionKind }] : [];
+			});
+			for (const { technique, acquisitionKind } of selectedTechniqueEntries) {
 				assertCanonicalTechniqueLearnable(technique, levelUpAbilityContext);
+				const canonicalSourceId =
+					acquisitionKind === "job"
+						? (character.job_id ?? character.job ?? "job")
+						: (selectedPathRow?.id ??
+							character.path_id ??
+							effectivePathName ??
+							"path");
 				const techniqueUseFields = await getAbilityUseFields(character.id, {
 					kind: "technique",
 					levelRequirement:
@@ -2200,14 +2486,20 @@ export const LevelUpWizardModal = ({
 					const existingTechniques = listLocalTechniques(character.id);
 					if (
 						existingTechniques.some(
-							(existing) => existing.technique_id === technique.id,
+							(existing) =>
+								existing.acquisition_kind === acquisitionKind &&
+								existing.canonical_source_id === canonicalSourceId &&
+								existing.technique_id === technique.id,
 						)
 					)
 						continue;
 
 					addLocalTechnique(character.id, {
 						technique_id: technique.id,
-						source: `Level ${newLevel} Technique Choice`,
+						source: `Level ${newLevel} ${acquisitionKind === "job" ? "Job" : "Path"} Technique Choice`,
+						acquisition_kind: acquisitionKind,
+						canonical_source_id: canonicalSourceId,
+						acquired_level: newLevel,
 						...techniqueUseFields,
 					});
 					continue;
@@ -2218,15 +2510,87 @@ export const LevelUpWizardModal = ({
 					.select("id")
 					.eq("character_id", character.id)
 					.eq("technique_id", technique.id)
+					.eq("acquisition_kind", acquisitionKind)
+					.eq("canonical_source_id", canonicalSourceId)
 					.limit(1);
 				if ((existingTechnique?.length ?? 0) > 0) continue;
 
-				await supabase.from("character_techniques").insert({
-					character_id: character.id,
-					technique_id: technique.id,
-					source: `Level ${newLevel} Technique Choice`,
-					...techniqueUseFields,
-				});
+				await supabase
+					.from("character_techniques")
+					.insert({
+						character_id: character.id,
+						technique_id: technique.id,
+						source: `Level ${newLevel} ${acquisitionKind === "job" ? "Job" : "Path"} Technique Choice`,
+						acquisition_kind: acquisitionKind,
+						canonical_source_id: canonicalSourceId,
+						acquired_level: newLevel,
+						...techniqueUseFields,
+					})
+					.throwOnError();
+			}
+			for (const need of regentLaterChoiceNeeds) {
+				for (const id of selectedRegentAbilityIds[`${need.unlockId}:power`] ??
+					[]) {
+					const power = regentPowerCatalog.find((entry) => entry.id === id);
+					if (!power)
+						throw new Error(
+							"Selected Regent Power is not in the canonical tier 5–9 catalog.",
+						);
+					const grant = {
+						power_id: power.id,
+						name: power.name,
+						power_level: power.power_level,
+						source: `${need.regentName} Attunement (Level ${newLevel})`,
+						description: power.description ?? null,
+						acquisition_kind: "regent" as const,
+						canonical_source_id: need.regentId,
+						regent_id: need.regentId,
+						regent_unlock_id: need.unlockId,
+						acquired_level: newLevel,
+						uses_max: null,
+						uses_current: null,
+						recharge: null,
+						is_known: true,
+						is_prepared: true,
+					};
+					if (isLocalCharacterId(character.id))
+						addLocalPower(character.id, grant);
+					else
+						await supabase
+							.from("character_powers")
+							.insert({ character_id: character.id, ...grant })
+							.throwOnError();
+				}
+				for (const id of selectedRegentAbilityIds[
+					`${need.unlockId}:technique`
+				] ?? []) {
+					const technique = regentTechniqueCatalog.find(
+						(entry) => entry.id === id,
+					);
+					if (!technique)
+						throw new Error(
+							"Selected Regent Technique is not in the canonical tier 5–9 catalog.",
+						);
+					const grant = {
+						technique_id: technique.id,
+						source: `${need.regentName} Attunement (Level ${newLevel})`,
+						acquisition_kind: "regent" as const,
+						canonical_source_id: need.regentId,
+						regent_id: need.regentId,
+						regent_unlock_id: need.unlockId,
+						acquired_level: newLevel,
+						uses_max: null,
+						uses_current: null,
+						recharge: null,
+					};
+					if (isLocalCharacterId(character.id))
+						addLocalTechnique(character.id, grant);
+					else
+						await supabase
+							.from("character_techniques")
+							.insert({ character_id: character.id, ...grant })
+							.throwOnError();
+				}
 			}
 
 			const selectedCantripEntries = availableCantrips.filter((spell) =>
@@ -2512,11 +2876,21 @@ export const LevelUpWizardModal = ({
 				data: characterUpdates,
 			});
 
-			// Initialize/update spell slots for new level
+			// Initialize/update spell slots for new level. The casting reference
+			// carries the Path (including one chosen in this level-up), so a
+			// third-caster Path gains its slots.
 			try {
 				await initializeSpellSlots.mutateAsync({
 					characterId: character.id,
-					job: jobObj || character.job,
+					job:
+						toCastingReference({
+							job: character.job,
+							job_id: character.job_id,
+							path: characterUpdates.path ?? character.path,
+							path_id: characterUpdates.path_id ?? character.path_id,
+						}) ??
+						jobObj ??
+						character.job,
 					level: newLevel,
 				});
 			} catch (error) {
@@ -3065,6 +3439,12 @@ export const LevelUpWizardModal = ({
 													Roll d{hitDieSize} {vitModifier >= 0 ? "+" : ""}
 													{vitModifier} (VIT) | Range: {minHP} - {maxHP}
 												</p>
+												{regentHpLevelGain > 0 && (
+													<p className="text-xs text-regent-gold mt-1">
+														Enter Job HP only. Regent maximum Hit Dice add +
+														{regentHpLevelGain} at this level.
+													</p>
+												)}
 											</div>
 											<Button
 												variant="outline"
@@ -3558,16 +3938,15 @@ export const LevelUpWizardModal = ({
 									</div>
 								)}
 
-								{requiredPowerChoices > 0 && (
+								{jobPowerChoices > 0 && (
 									<div className="p-4 rounded-lg bg-gradient-to-r from-mana-cyan/10 to-transparent border border-mana-cyan/20">
 										<Label className="font-resurge text-mana-cyan tracking-wide flex items-center gap-2 mb-4">
 											<Sparkles className="w-4 h-4" />
-											POWERS
+											JOB POWERS
 										</Label>
 										<p className="text-sm text-muted-foreground mb-3 font-heading">
-											Choose {requiredPowerChoices} power
-											{requiredPowerChoices === 1 ? "" : "s"} unlocked by this
-											level.
+											Choose {jobPowerChoices} Job power
+											{jobPowerChoices === 1 ? "" : "s"} unlocked by this level.
 										</p>
 										<div className="space-y-2 max-h-56 overflow-y-auto">
 											{availablePowers.map((power) => {
@@ -3589,8 +3968,7 @@ export const LevelUpWizardModal = ({
 															onChange={(e) => {
 																if (e.target.checked) {
 																	if (
-																		selectedPowerIds.length <
-																		requiredPowerChoices
+																		selectedPowerIds.length < jobPowerChoices
 																	) {
 																		setSelectedPowerIds([
 																			...selectedPowerIds,
@@ -3607,7 +3985,7 @@ export const LevelUpWizardModal = ({
 															}}
 															disabled={
 																!isSelected &&
-																selectedPowerIds.length >= requiredPowerChoices
+																selectedPowerIds.length >= jobPowerChoices
 															}
 															className="mt-1 rounded border-mana-cyan/30"
 														/>
@@ -3639,21 +4017,79 @@ export const LevelUpWizardModal = ({
 											})}
 										</div>
 										<p className="text-xs text-muted-foreground mt-2 font-heading">
-											Selected: {selectedPowerIds.length}/{requiredPowerChoices}
+											Selected: {selectedPowerIds.length}/{jobPowerChoices}
+										</p>
+									</div>
+								)}
+								{pathPowerChoices > 0 && (
+									<div className="p-4 rounded-lg bg-gradient-to-r from-mana-cyan/10 to-transparent border border-mana-cyan/20">
+										<Label className="font-resurge text-mana-cyan tracking-wide mb-3 block">
+											PATH POWERS
+										</Label>
+										<p className="text-sm text-muted-foreground mb-3 font-heading">
+											Choose {pathPowerChoices} Path power
+											{pathPowerChoices === 1 ? "" : "s"}. A Power can also be
+											selected for the Job as a separate grant.
+										</p>
+										<div className="space-y-2 max-h-56 overflow-y-auto">
+											{availablePowers.map((power) => {
+												const selected = selectedPathPowerIds.includes(
+													power.id,
+												);
+												return (
+													<label
+														key={power.id}
+														className="flex items-start gap-3 p-2 rounded-lg border border-mana-cyan/20 cursor-pointer"
+													>
+														<input
+															type="checkbox"
+															checked={selected}
+															disabled={
+																!selected &&
+																selectedPathPowerIds.length >= pathPowerChoices
+															}
+															onChange={(event) =>
+																setSelectedPathPowerIds((current) =>
+																	event.target.checked
+																		? [...current, power.id]
+																		: current.filter((id) => id !== power.id),
+																)
+															}
+															className="mt-1 rounded border-mana-cyan/30"
+														/>
+														<span className="flex-1 text-sm">
+															<span className="font-resurge text-mana-cyan">
+																{formatRegentVernacular(power.name)}
+															</span>{" "}
+															<Badge variant="secondary" className="text-xs">
+																Level {power.power_level}
+															</Badge>
+															{power.description && (
+																<span className="block text-muted-foreground mt-1">
+																	{formatRegentVernacular(power.description)}
+																</span>
+															)}
+														</span>
+													</label>
+												);
+											})}
+										</div>
+										<p className="text-xs text-muted-foreground mt-2 font-heading">
+											Selected: {selectedPathPowerIds.length}/{pathPowerChoices}
 										</p>
 									</div>
 								)}
 
-								{requiredTechniqueChoices > 0 && (
+								{jobTechniqueChoices > 0 && (
 									<div className="p-4 rounded-lg bg-gradient-to-r from-gate-a/10 to-transparent border border-gate-a/20">
 										<Label className="font-resurge text-gate-a tracking-wide flex items-center gap-2 mb-4">
 											<Swords className="w-4 h-4" />
-											TECHNIQUES
+											JOB TECHNIQUES
 										</Label>
 										<p className="text-sm text-muted-foreground mb-3 font-heading">
-											Choose {requiredTechniqueChoices} technique
-											{requiredTechniqueChoices === 1 ? "" : "s"} unlocked by
-											this level.
+											Choose {jobTechniqueChoices} Job technique
+											{jobTechniqueChoices === 1 ? "" : "s"} unlocked by this
+											level.
 										</p>
 										<div className="space-y-2 max-h-56 overflow-y-auto">
 											{availableTechniques.map((technique) => {
@@ -3678,7 +4114,7 @@ export const LevelUpWizardModal = ({
 																if (e.target.checked) {
 																	if (
 																		selectedTechniqueIds.length <
-																		requiredTechniqueChoices
+																		jobTechniqueChoices
 																	) {
 																		setSelectedTechniqueIds([
 																			...selectedTechniqueIds,
@@ -3696,7 +4132,7 @@ export const LevelUpWizardModal = ({
 															disabled={
 																!isSelected &&
 																selectedTechniqueIds.length >=
-																	requiredTechniqueChoices
+																	jobTechniqueChoices
 															}
 															className="mt-1 rounded border-gate-a/30"
 														/>
@@ -3738,10 +4174,196 @@ export const LevelUpWizardModal = ({
 										</div>
 										<p className="text-xs text-muted-foreground mt-2 font-heading">
 											Selected: {selectedTechniqueIds.length}/
-											{requiredTechniqueChoices}
+											{jobTechniqueChoices}
 										</p>
 									</div>
 								)}
+								{pathTechniqueChoices > 0 && (
+									<div className="p-4 rounded-lg bg-gradient-to-r from-gate-a/10 to-transparent border border-gate-a/20">
+										<Label className="font-resurge text-gate-a tracking-wide mb-3 block">
+											PATH TECHNIQUES
+										</Label>
+										<p className="text-sm text-muted-foreground mb-3 font-heading">
+											Choose {pathTechniqueChoices} Path technique
+											{pathTechniqueChoices === 1 ? "" : "s"}. A Technique can
+											also be selected for the Job as a separate grant.
+										</p>
+										<div className="space-y-2 max-h-56 overflow-y-auto">
+											{availableTechniques.map((technique) => {
+												const selected = selectedPathTechniqueIds.includes(
+													technique.id,
+												);
+												return (
+													<label
+														key={technique.id}
+														className="flex items-start gap-3 p-2 rounded-lg border border-gate-a/20 cursor-pointer"
+													>
+														<input
+															type="checkbox"
+															checked={selected}
+															disabled={
+																!selected &&
+																selectedPathTechniqueIds.length >=
+																	pathTechniqueChoices
+															}
+															onChange={(event) =>
+																setSelectedPathTechniqueIds((current) =>
+																	event.target.checked
+																		? [...current, technique.id]
+																		: current.filter(
+																				(id) => id !== technique.id,
+																			),
+																)
+															}
+															className="mt-1 rounded border-gate-a/30"
+														/>
+														<span className="flex-1 text-sm">
+															<span className="font-resurge text-gate-a">
+																{formatRegentVernacular(technique.name)}
+															</span>
+															{technique.description && (
+																<span className="block text-muted-foreground mt-1">
+																	{formatRegentVernacular(
+																		technique.description,
+																	)}
+																</span>
+															)}
+														</span>
+													</label>
+												);
+											})}
+										</div>
+										<p className="text-xs text-muted-foreground mt-2 font-heading">
+											Selected: {selectedPathTechniqueIds.length}/
+											{pathTechniqueChoices}
+										</p>
+									</div>
+								)}
+								{regentLaterChoiceNeeds
+									.filter((need) => need.powers > 0 || need.techniques > 0)
+									.map((need) => {
+										const powerKey = `${need.unlockId}:power`;
+										const techniqueKey = `${need.unlockId}:technique`;
+										const knownPowers = new Set(
+											existingRegentAbilityGrants.powers
+												.filter((row) => row.regent_unlock_id === need.unlockId)
+												.map((row) => row.power_id),
+										);
+										const knownTechniques = new Set(
+											existingRegentAbilityGrants.techniques
+												.filter((row) => row.regent_unlock_id === need.unlockId)
+												.map((row) => row.technique_id),
+										);
+										return (
+											<div
+												key={need.unlockId}
+												className="p-4 rounded-lg border border-regent-gold/40 bg-regent-gold/10 space-y-3"
+											>
+												<Label className="font-resurge text-regent-gold">
+													{need.regentName} · Regent choices
+												</Label>
+												<p className="text-xs text-muted-foreground">
+													Player chosen from canonical tier 5–9 abilities. Each
+													grant belongs to this Regent and spends shared
+													Resonance.
+												</p>
+												{need.powers > 0 && (
+													<div>
+														<p className="text-sm font-semibold mb-2">
+															Powers:{" "}
+															{
+																(selectedRegentAbilityIds[powerKey] ?? [])
+																	.length
+															}
+															/{need.powers}
+														</p>
+														<div className="max-h-48 overflow-y-auto space-y-1">
+															{regentPowerCatalog
+																.filter((entry) => !knownPowers.has(entry.id))
+																.map((entry) => (
+																	<label
+																		key={entry.id}
+																		className="flex items-center gap-2 rounded border border-border/50 p-2 text-sm cursor-pointer"
+																	>
+																		<input
+																			type="checkbox"
+																			checked={(
+																				selectedRegentAbilityIds[powerKey] ?? []
+																			).includes(entry.id)}
+																			onChange={() =>
+																				setSelectedRegentAbilityIds(
+																					(current) => ({
+																						...current,
+																						[powerKey]: toggleLimitedSelection(
+																							current[powerKey] ?? [],
+																							entry.id,
+																							need.powers,
+																						),
+																					}),
+																				)
+																			}
+																		/>
+																		<span>
+																			{entry.name} · tier {entry.power_level}
+																		</span>
+																	</label>
+																))}
+														</div>
+													</div>
+												)}
+												{need.techniques > 0 && (
+													<div>
+														<p className="text-sm font-semibold mb-2">
+															Techniques:{" "}
+															{
+																(selectedRegentAbilityIds[techniqueKey] ?? [])
+																	.length
+															}
+															/{need.techniques}
+														</p>
+														<div className="max-h-48 overflow-y-auto space-y-1">
+															{regentTechniqueCatalog
+																.filter(
+																	(entry) => !knownTechniques.has(entry.id),
+																)
+																.map((entry) => (
+																	<label
+																		key={entry.id}
+																		className="flex items-center gap-2 rounded border border-border/50 p-2 text-sm cursor-pointer"
+																	>
+																		<input
+																			type="checkbox"
+																			checked={(
+																				selectedRegentAbilityIds[
+																					techniqueKey
+																				] ?? []
+																			).includes(entry.id)}
+																			onChange={() =>
+																				setSelectedRegentAbilityIds(
+																					(current) => ({
+																						...current,
+																						[techniqueKey]:
+																							toggleLimitedSelection(
+																								current[techniqueKey] ?? [],
+																								entry.id,
+																								need.techniques,
+																							),
+																					}),
+																				)
+																			}
+																		/>
+																		<span>
+																			{entry.name} · tier{" "}
+																			{entry.level_requirement}
+																		</span>
+																	</label>
+																))}
+														</div>
+													</div>
+												)}
+											</div>
+										);
+									})}
 
 								{swapKindOptions.length > 0 && (
 									<div className="p-4 rounded-lg bg-gradient-to-r from-mana-cyan/10 to-transparent border border-mana-cyan/20">
@@ -4142,9 +4764,11 @@ export const LevelUpWizardModal = ({
 													Max HP
 												</span>
 												<span className="font-resurge text-lg">
-													{character.hp_max} {"->"}{" "}
+													{character.hp_max + regentHpNow} {"->"}{" "}
 													<span className="text-destructive">
-														{character.hp_max + (hpIncrease || 0)}
+														{character.hp_max +
+															(hpIncrease || 0) +
+															regentHpNext}
 													</span>
 												</span>
 											</div>
@@ -4180,9 +4804,12 @@ export const LevelUpWizardModal = ({
 									(!isLevelDown && !isMilestone && !canLevelUp) ||
 									(!isLevelDown && showPathSelection && !selectedPathRow) ||
 									(!isLevelDown &&
-										selectedPowerIds.length < requiredPowerChoices) ||
+										(selectedPowerIds.length < jobPowerChoices ||
+											selectedPathPowerIds.length < pathPowerChoices)) ||
 									(!isLevelDown &&
-										selectedTechniqueIds.length < requiredTechniqueChoices) ||
+										(selectedTechniqueIds.length < jobTechniqueChoices ||
+											selectedPathTechniqueIds.length <
+												pathTechniqueChoices)) ||
 									(!isLevelDown &&
 										selectedCantripIds.length < requiredCantripChoices) ||
 									(!isLevelDown &&
@@ -4193,7 +4820,8 @@ export const LevelUpWizardModal = ({
 									(!isLevelDown &&
 										selectedFightingStyleIds.length <
 											requiredFightingStyleChoices) ||
-									(!isLevelDown && !ledgerOptionRequirementsMet)
+									(!isLevelDown && !ledgerOptionRequirementsMet) ||
+									(!isLevelDown && !regentLaterChoicesMet)
 								}
 								className={cn(
 									"gap-2 font-heading transition-all",

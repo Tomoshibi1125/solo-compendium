@@ -77,9 +77,6 @@ export const providerBackedCompendiumCategories = [
 	"vehicles",
 ] as const satisfies readonly CompendiumCategory[];
 
-export type ProviderBackedCompendiumCategory =
-	(typeof providerBackedCompendiumCategories)[number];
-
 export const canonicalPublicEntryTypes = [
 	"jobs",
 	"paths",
@@ -215,8 +212,7 @@ export type CompendiumLineageKind =
 	| "normalization"
 	| "provider-transform"
 	| "public-view"
-	| "audit"
-	| "publication";
+	| "audit";
 
 export interface CompendiumLineageDescriptor {
 	id: string;
@@ -1198,15 +1194,6 @@ export const compendiumLineageRegistry: readonly CompendiumLineageDescriptor[] =
 		independentEvidence: false,
 		description: "Blocking source, conflict, reference, and transformed-content audit.",
 	},
-	{
-		id: "publication/books-direct",
-		kind: "publication",
-		modulePath: "books/scripts/build-books.ts",
-		inputIds: ["aggregate/anomalies", "aggregate/backgrounds", "aggregate/feats", "aggregate/items-static", "aggregate/spells", "aggregate/powers", "aggregate/techniques", "jobs/catalog", "paths/catalog"],
-		outputCategories: providerBackedCompendiumCategories,
-		independentEvidence: false,
-		description: "Current book build lineage; publication output is derived and never corroborating evidence.",
-	},
 ];
 
 const sourceById = new Map(
@@ -2071,22 +2058,9 @@ export function loadCanonicalRegistry(): Promise<CanonicalRegistrySnapshot> {
 	return canonicalRegistryPromise;
 }
 
-export function clearCanonicalRegistryCache(): void {
-	canonicalRegistryPromise = null;
-}
-
 export function getRegisteredSource(
 	sourceId: string,
 ): CompendiumSourceDescriptor | null {
 	const source = sourceById.get(sourceId);
 	return source ? descriptorWithoutLoader(source) : null;
-}
-
-export function getRegisteredSourcesForCategory(
-	category: CompendiumCategory,
-): CompendiumSourceDescriptor[] {
-	return compendiumCategoryDefinitions[category].sourceIds
-		.map((sourceId) => sourceById.get(sourceId))
-		.filter((source): source is RegisteredCompendiumSource => Boolean(source))
-		.map(descriptorWithoutLoader);
 }

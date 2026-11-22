@@ -1,5 +1,7 @@
 # Rift Local Image Generation
 
+> **Retired (RA-18).** AI image generation is no longer part of this project; only initial Sovereign creation may call AI. The generator scripts, ComfyUI launchers, workflow configs, prompt packs, and review gallery described below were deleted. Existing authored assets remain. `npm run audit:assets` still audits asset paths and replacement priority. This page is kept as a historical record only.
+
 This workflow audits Rift Ascendant image references, builds lore-grounded SDXL prompts, generates local candidates, and provides a review gallery before any production image is replaced.
 
 It is designed to preserve existing assets by default.

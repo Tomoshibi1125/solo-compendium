@@ -52,11 +52,13 @@ describe("levelDownCleanup", () => {
 		addLocalPower(character.id, {
 			name: "Kept Power",
 			power_level: 2,
+			acquired_level: 4,
 			source: "Level 4 Power Choice",
 		});
 		addLocalPower(character.id, {
 			name: "Removed Power",
 			power_level: 4,
+			acquired_level: 7,
 			source: "Level 7 Power Choice",
 		});
 		addLocalSpell(character.id, {
@@ -71,10 +73,12 @@ describe("levelDownCleanup", () => {
 		});
 		addLocalTechnique(character.id, {
 			technique_id: "kept-technique",
+			acquired_level: 4,
 			source: "Level 4 Technique Choice",
 		});
 		addLocalTechnique(character.id, {
 			technique_id: "removed-technique",
+			acquired_level: 7,
 			source: "Level 7 Technique Choice",
 		});
 

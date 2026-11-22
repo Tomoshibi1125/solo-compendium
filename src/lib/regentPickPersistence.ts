@@ -6,7 +6,6 @@ import {
 	listCanonicalPowers,
 	listCanonicalSpells,
 } from "@/lib/canonicalCompendium";
-import { getAbilityUseFields } from "@/lib/characterCreation";
 import { isLocalCharacterId } from "@/lib/guestStore";
 
 /** Canonical catalog fields required by Regent catch-up persistence. */
@@ -36,6 +35,8 @@ export interface RegentPickPersistenceResult {
 export interface RegentPickPersistenceOptions {
 	campaignId?: string;
 	countsAgainstLimit?: boolean;
+	regentId?: string;
+	unlockId?: string;
 }
 
 type ExistingPick = {
@@ -176,7 +177,7 @@ function findExistingPick(
 	);
 
 	for (const candidate of collisions.values()) {
-		if (candidate.canonicalId !== entry.id || candidate.source !== source) {
+		if (candidate.canonicalId !== entry.id) {
 			throw new Error(
 				`${bucket} "${entry.name}" collides with an existing ability from ${candidate.source ?? "another source"}.`,
 			);
@@ -277,6 +278,8 @@ export async function persistRegentPowers(
 ): Promise<RegentPickPersistenceResult> {
 	assertRemoteCharacter(characterId);
 	assertCatchUpSource(source);
+	if (!options.regentId || !options.unlockId)
+		throw new Error("Regent unlock provenance is required.");
 	validateEntries(entries, "Power");
 	if (entries.length === 0) return createResult(entries);
 
@@ -311,11 +314,6 @@ export async function persistRegentPowers(
 		if (sameSource) {
 			result.existingSameSource += 1;
 		} else {
-			const useFields = await getAbilityUseFields(characterId, {
-				kind: "power",
-				powerLevel: power.power_level,
-				atWill: power.atWill ?? null,
-			});
 			const { error: insertError } = await supabase
 				.from("character_powers")
 				.insert({
@@ -324,6 +322,10 @@ export async function persistRegentPowers(
 					name: power.name,
 					power_level: power.power_level ?? 0,
 					source,
+					acquisition_kind: "regent",
+					canonical_source_id: options.regentId,
+					regent_id: options.regentId,
+					regent_unlock_id: options.unlockId,
 					casting_time: power.casting_time ?? null,
 					range: power.range ?? null,
 					duration: power.duration ?? null,
@@ -332,7 +334,9 @@ export async function persistRegentPowers(
 					higher_levels: power.higher_levels ?? null,
 					is_prepared: false,
 					is_known: true,
-					...useFields,
+					uses_max: null,
+					uses_current: null,
+					recharge: null,
 				});
 			if (insertError) throw insertError;
 			result.inserted += 1;
@@ -359,6 +363,8 @@ export async function persistRegentTechniques(
 ): Promise<RegentPickPersistenceResult> {
 	assertRemoteCharacter(characterId);
 	assertCatchUpSource(source);
+	if (!options.regentId || !options.unlockId)
+		throw new Error("Regent unlock provenance is required.");
 	validateEntries(entries, "Technique");
 	if (entries.length === 0) return createResult(entries);
 
@@ -402,18 +408,19 @@ export async function persistRegentTechniques(
 		if (sameSource) {
 			result.existingSameSource += 1;
 		} else {
-			const useFields = await getAbilityUseFields(characterId, {
-				kind: "technique",
-				levelRequirement: technique.level_requirement ?? null,
-				atWill: technique.atWill ?? null,
-			});
 			const { error: insertError } = await supabase
 				.from("character_techniques")
 				.insert({
 					character_id: characterId,
 					technique_id: technique.id,
 					source,
-					...useFields,
+					acquisition_kind: "regent",
+					canonical_source_id: options.regentId,
+					regent_id: options.regentId,
+					regent_unlock_id: options.unlockId,
+					uses_max: null,
+					uses_current: null,
+					recharge: null,
 				});
 			if (insertError) throw insertError;
 			result.inserted += 1;

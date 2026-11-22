@@ -4,7 +4,7 @@ import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import type { Database } from "@/integrations/supabase/types";
 import { AppError } from "@/lib/appError";
 
-type ProfileRole = "warden" | "ascendant" | "admin";
+type ProfileRole = "warden" | "ascendant";
 
 interface Profile {
 	id: string;
@@ -24,8 +24,6 @@ const normalizeProfileRole = (
 		case "ascendant":
 		case "player":
 			return "ascendant";
-		case "admin":
-			return "admin";
 		default:
 			return "ascendant";
 	}

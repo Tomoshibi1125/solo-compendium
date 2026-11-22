@@ -87,6 +87,16 @@ test.describe
 					await expect(trigger).toHaveAttribute("data-state", "active");
 				}
 			}
+
+			await page.getByRole("button", { name: /Edit guild details/i }).click();
+			const editDialog = page.getByRole("dialog", {
+				name: /Edit guild details/i,
+			});
+			await expect(editDialog).toBeVisible();
+			await editDialog.locator("#guild-edit-motto").fill("We rise together");
+			await editDialog.getByRole("button", { name: /Save details/i }).click();
+			await expect(editDialog).toBeHidden();
+			await expect(page.getByText('"We rise together"')).toBeVisible();
 		});
 
 		test("Companions: add a companion from the sheet and open its sub-sheet", async () => {

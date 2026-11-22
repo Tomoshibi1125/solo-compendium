@@ -9,6 +9,8 @@ import {
 	getGestaltSpellSlots,
 	getRegentCasterFraction,
 	getRegentHitDieContribution,
+	getRegentHpContribution,
+	getRegentHpContributionForIds,
 	normalizeSaveToCode,
 	normalizeSkillToId,
 	parseHitDieSize,
@@ -62,6 +64,15 @@ describe("regentGestalt — name normalization", () => {
 });
 
 describe("regentGestalt — additive hit dice", () => {
+	it("adds one maximum Regent die at each level, including late unlocks", () => {
+		expect(getRegentHpContribution(10, 3)).toBe(30);
+		expect(getRegentHpContribution(12, 10)).toBe(120);
+		expect(
+			getRegentHpContribution(10, 4) - getRegentHpContribution(10, 3),
+		).toBe(10);
+		expect(getRegentHpContribution(0, 10)).toBe(0);
+		expect(getRegentHpContributionForIds(["war_regent"], 3)).toBe(30);
+	});
 	it("parses hit-die strings", () => {
 		expect(parseHitDieSize("1d12")).toBe(12);
 		expect(parseHitDieSize("d8")).toBe(8);

@@ -33,6 +33,13 @@ import {
 	getSpellsPreparedLimit,
 } from "@/lib/characterCalculations";
 import { getJobPowerMode } from "@/lib/jobAbilityAccess";
+import { toCastingReference } from "@/lib/jobRules";
+import {
+	spendRegentResonance,
+	usePendingRegentGrants,
+	useRegentResonance,
+} from "@/lib/regentResonance";
+import { getRegentResonanceCost } from "@/lib/regentResonanceRules";
 import { cn } from "@/lib/utils";
 import { formatRegentVernacular } from "@/lib/vernacular";
 import type { DetailData } from "@/types/character";
@@ -100,12 +107,15 @@ export function PowersList({
 	const { features, updateFeature } = useFeatures(characterId);
 	const powers = rawPowers as Power[];
 	const { data: character } = useCharacter(characterId);
+	const castingReference = toCastingReference(character);
 	const { data: spellSlots = [] } = useSpellSlots(
 		characterId,
-		character?.job || null,
+		castingReference,
 		character?.level || 1,
 	);
 	const { actions } = useCombatActions(characterId);
+	const resonance = useRegentResonance(characterId);
+	const pendingRegentGrants = usePendingRegentGrants(characterId);
 	const { toast } = useToast();
 	const recordRoll = useRecordRoll();
 	const ascendantTools = useAscendantTools();
@@ -161,14 +171,17 @@ export function PowersList({
 	// At-will (martial) power jobs track each leveled power's uses per rest on the
 	// power row (uses_max/uses_current); cantrips and untracked powers stay free.
 	const isPowerSpent = (power: Power) =>
-		isAtWillMode &&
-		power.power_level > 0 &&
-		power.uses_max != null &&
-		(power.uses_current ?? 0) <= 0;
+		power.acquisition_kind === "regent"
+			? (resonance.data?.points_current ?? 0) <
+				(getRegentResonanceCost(power.power_level) ?? Number.POSITIVE_INFINITY)
+			: isAtWillMode &&
+				power.power_level > 0 &&
+				power.uses_max != null &&
+				(power.uses_current ?? 0) <= 0;
 
 	// Calculate spell limits
-	const spellcastingAbility = character
-		? getSpellcastingAbility(character.job)
+	const spellcastingAbility = castingReference
+		? getSpellcastingAbility(castingReference)
 		: null;
 	const abilityModifier =
 		character && spellcastingAbility
@@ -247,6 +260,31 @@ export function PowersList({
 
 	const handleCastSpell = async (power: Power) => {
 		const displayName = formatRegentVernacular(power.name);
+		if (power.acquisition_kind === "regent") {
+			try {
+				const remaining = await spendRegentResonance(
+					characterId,
+					"power",
+					power.id,
+					power.power_level,
+				);
+				await resonance.refresh();
+				toast({
+					title: "Regent Power Used",
+					description: `${displayName} used Regent Resonance. ${remaining} remain.`,
+				});
+			} catch (error) {
+				toast({
+					title: "Regent Power Unavailable",
+					description:
+						error instanceof Error
+							? error.message
+							: "Could not spend Regent Resonance.",
+					variant: "destructive",
+				});
+			}
+			return;
+		}
 		const runeFeature = power.source?.startsWith("Rune:")
 			? features.find(
 					(feature) =>
@@ -437,6 +475,22 @@ export function PowersList({
 		<>
 			<div className="space-y-4">
 				<SpellcastingStatsCard characterId={characterId} scope="powers" />
+				{resonance.data && (
+					<div
+						className="rounded-lg border bg-muted/30 p-2 text-sm"
+						role="status"
+						aria-label="Regent Resonance"
+					>
+						Regent Resonance: {resonance.data.points_current}/
+						{resonance.data.points_max} · Long Rest
+					</div>
+				)}
+				{(pendingRegentGrants.data?.length ?? 0) > 0 && (
+					<div className="rounded-lg border border-regent-gold/40 bg-regent-gold/10 p-2 text-sm">
+						{pendingRegentGrants.data?.length} imported Regent grant(s) await
+						server verification or Warden approval.
+					</div>
+				)}
 				{/* Spell Limits Display */}
 				{(spellsPreparedLimit !== null ||
 					spellsKnownLimit !== null ||
@@ -673,6 +727,14 @@ export function PowersList({
 																{displaySource}
 															</Badge>
 														)}
+														{power.acquisition_kind === "regent" && (
+															<Badge variant="secondary" className="text-xs">
+																Regent ·{" "}
+																{getRegentResonanceCost(power.power_level) ??
+																	"?"}{" "}
+																Resonance
+															</Badge>
+														)}
 													</div>
 													{displayDescription && (
 														<ExpandableText
@@ -747,6 +809,7 @@ export function PowersList({
 														</div>
 													)}
 													{isAtWillMode &&
+														power.acquisition_kind !== "regent" &&
 														power.power_level > 0 &&
 														power.uses_max != null && (
 															<Badge
@@ -768,20 +831,24 @@ export function PowersList({
 													{/* Cast is available for known/at-will powers always, and
 													    for prepared powers only once prepared. At-will powers
 													    (martials) ignore the per-tier slot gate. */}
-													{(!isPreparedMode || power.is_prepared) && (
+													{(power.acquisition_kind === "regent" ||
+														!isPreparedMode ||
+														power.is_prepared) && (
 														<Button
 															variant="outline"
 															size="sm"
 															onClick={() => handleCastSpell(power)}
 															disabled={
 																power.power_level > 0 &&
-																(isAtWillMode
+																(power.acquisition_kind === "regent"
 																	? isPowerSpent(power)
-																	: !spellSlots.find(
-																			(s) =>
-																				s.level === power.power_level &&
-																				s.current > 0,
-																		))
+																	: isAtWillMode
+																		? isPowerSpent(power)
+																		: !spellSlots.find(
+																				(s) =>
+																					s.level === power.power_level &&
+																					s.current > 0,
+																			))
 															}
 															className="text-xs"
 														>

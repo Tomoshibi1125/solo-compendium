@@ -46,28 +46,6 @@ export function rankToGateBadge(rank: string): string {
 }
 
 /**
- * Item rarity tier → badge className (text + border) on the cool gate ordinal
- * ramp, ending in a crimson capstone for artifacts. Keeps the prestige
- * escalation without any warm gold. Literal strings for the Tailwind scanner.
- */
-const RARITY_TIER_BADGE: Record<string, string> = {
-	common: "text-gate-e border-gate-e/40",
-	uncommon: "text-gate-d border-gate-d/40",
-	rare: "text-gate-c border-gate-c/40",
-	"very-rare": "text-gate-b border-gate-b/40",
-	epic: "text-gate-national border-gate-national/40",
-	legendary: "text-gate-s border-gate-s/40",
-	mythic: "text-gate-ss border-gate-ss/40",
-	artifact: "text-gate-red border-gate-red/50",
-};
-
-export function rarityToGateBadge(rarity: string): string {
-	return (
-		RARITY_TIER_BADGE[rarity.trim().toLowerCase()] ?? RARITY_TIER_BADGE.common
-	);
-}
-
-/**
  * Umbral Legion soldier-grade → badge className (background + text + border +
  * glow) using Rift Ascendant entity tokens. Centralized from the roster panels.
  */

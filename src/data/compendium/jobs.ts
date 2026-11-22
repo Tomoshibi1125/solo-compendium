@@ -153,6 +153,11 @@ export interface Job extends AuthoritativeStaticJob {
 		uses?: FeatureUseDefinition;
 		resource?: string;
 		tracking?: "uses" | "resource" | "manual";
+		/**
+		 * Earlier names of a renamed feature. Level-up reconciliation adopts a
+		 * stored row under one of these names instead of leaving a stale copy.
+		 */
+		formerNames?: string[];
 	}[];
 	abilities: string[];
 	stats: {
@@ -577,9 +582,11 @@ export const jobs: Job[] = [
 			{
 				level: 1,
 				name: "Overload State",
-				uses: { formula: "2", recharge: "long-rest" },
+				actionType: "Bonus action",
+				uses: { formula: "PB", recharge: "long-rest", unlimitedAtLevel: 20 },
+				tracking: "uses",
 				description:
-					"Bonus action: trigger an Absolute Surge — your veins glow, your muscles visibly swell, and nearby electronics emit static. Melee damage bonus = STR mod, resistance to bludgeoning/piercing/slashing, and HP temporarily increases by Berserker level (lost when Overload ends). 2/long rest, scaling to unlimited at 20th.",
+					"Bonus action: trigger an Absolute Surge — your veins glow, your muscles visibly swell, and nearby electronics emit static. Overload lasts 1 minute. It ends early if you are knocked unconscious, if you end it (no action), or if your turn ends and you haven't attacked a hostile creature or taken damage since your last turn. While in Overload, your melee weapon attacks deal extra damage equal to your STR modifier and you have resistance to bludgeoning, piercing, and slashing damage. When Overload starts, you gain temporary hit points equal to your Berserker level; any left when it ends are lost, and they never change your hit point maximum or current hit points. You can enter Overload a number of times equal to your proficiency bonus, regaining all uses when you finish a long rest. At 20th level you can enter it any number of times.",
 			},
 			{
 				level: 1,
@@ -659,7 +666,7 @@ export const jobs: Job[] = [
 				level: 15,
 				name: "Sustained Overload",
 				description:
-					"Overload only ends when you fall unconscious or choose to end it. The mana feedback loop is self-sustaining — some Berserkers have maintained it for days, never sleeping, never eating, just fighting.",
+					"Overload no longer lasts only 1 minute and no longer ends when a turn passes without attacking or taking damage: it ends only when you fall unconscious or choose to end it. The mana feedback loop is self-sustaining — some Berserkers have maintained it for days, never sleeping, never eating, just fighting.",
 			},
 			{
 				level: 18,
@@ -870,7 +877,7 @@ export const jobs: Job[] = [
 				level: 1,
 				name: "Vulnerability Analysis",
 				description:
-					"Your Aetheric-Sight highlights the anatomical and structural weaknesses of any target you've observed, perceiving joints and arteries through a mana-resonant overlay. Deal bonus damage: 1d6 at 1st, scaling +1d6 every 2 Assassin levels (10d6 at 19th). Requires finesse or ranged weapon.",
+					"Your Aetheric-Sight highlights the anatomical and structural weaknesses of any creature you can see, perceiving joints and arteries through a mana-resonant overlay. Once per turn, when you hit a creature you can see with an attack that uses a finesse or ranged weapon, you can deal extra damage to it if you have advantage on the attack roll, or if another enemy of the target is within 5 feet of it, isn't incapacitated, and you don't have disadvantage on the roll. The extra damage is 1d6 at 1st level and increases by 1d6 at every odd Assassin level (10d6 at 19th). On a critical hit these dice are part of the attack's damage, so they are maximized and rolled again like the weapon's dice.",
 			},
 			{
 				level: 1,
@@ -1107,8 +1114,9 @@ export const jobs: Job[] = [
 			{
 				name: "Kinetic Deflection",
 				description:
-					"Reaction: intercept incoming projectiles — bullets, arrows, thrown objects — with your bare hands. Reduce damage by 1d10+AGI mod+level. If reduced to 0, catch it and throw it back. Viral videos of Strikers catching bullets have billions of views.",
+					"Reaction when a ranged weapon attack hits you: intercept the projectile — bullet, arrow, or thrown object — with your bare hands and reduce its damage by 1d10 + your AGI modifier + your Striker level. If you reduce the damage to 0 and have a free hand, you catch the projectile if it is small enough to hold in one hand. From 3rd level, Kinetic Return lets you throw it back. Viral videos of Strikers catching bullets have billions of views.",
 				type: "active",
+				actionType: "Reaction",
 				frequency: "at-will",
 			},
 		],
@@ -1159,9 +1167,12 @@ export const jobs: Job[] = [
 			},
 			{
 				level: 3,
-				name: "Kinetic Deflection",
+				name: "Kinetic Return",
+				formerNames: ["Kinetic Deflection"],
+				resource: "1 Impulse point",
+				tracking: "resource",
 				description:
-					"Reaction: snatch an incoming projectile from the air — even bullets at point-blank range. Reduce damage by 1d10+AGI mod+level. If reduced to 0, catch and hurl it back (1 impulse point, your attack bonus).",
+					"When you catch a projectile with your Kinetic Deflection trait, you can spend 1 Impulse point to hurl it back as part of the same reaction — even bullets at point-blank range. Make a ranged attack with it against a creature you can see within 60 feet, using your AGI modifier and proficiency bonus (normal range 20 feet, long range 60 feet). On a hit it deals damage of the projectile's type equal to your Impulse Combat die + your AGI modifier, and it counts as an unarmed strike for Striker features.",
 			},
 			{
 				level: 4,
@@ -1936,7 +1947,7 @@ export const jobs: Job[] = [
 				level: 1,
 				name: "Remnant Harvest",
 				description:
-					"You reclaim the severed life-essence of the dying. Once per turn, when a creature dies within 5 feet of you or you deal necrotic damage to a creature marked for the reaping, you bank 1 Remnant. You can hold a number of Remnants equal to your Intelligence modifier + your proficiency bonus (minimum 1). Any necrotic damage you deal marks that creature for the reaping until the end of your next turn.",
+					"You reclaim the severed life-essence of the dying. Once per turn, when a creature dies within 5 feet of you or you deal necrotic damage to a creature marked for the reaping, you bank 1 Remnant. You can hold a number of Remnants equal to your Intelligence modifier + your proficiency bonus (minimum 1). Any necrotic damage you deal marks that creature for the reaping until the end of your next turn. You gain this feature holding a full bank — the death that Awakened you. Remnants stay banked until you spend them: short and long rests neither restore nor clear them, and when your maximum rises your current Remnants stay the same. If your maximum falls, any Remnants above it are lost.",
 			},
 			{
 				level: 2,
@@ -2836,7 +2847,7 @@ export const jobs: Job[] = [
 				uses: { formula: "2 * INT mod", recharge: "long-rest" },
 				tracking: "uses",
 				description:
-					"Store a 1st or 2nd-level spell in a constructed device. Any creature holding it can discharge the spell using your save DC and spell attack bonus. 2 × INT mod charges, recharges on long rest.",
+					"When you finish a long rest, you can touch one weapon or spellcasting focus and wire it into a Spell Capacitor, storing a 1st- or 2nd-level Technomancer spell whose casting time is 1 action; you needn't have the spell prepared, and the work costs nothing and takes no extra time. Only one Spell Capacitor exists at a time: making another, or storing a new spell, empties the old one. Any creature holding the device can take an action to cast the stored spell from it, using your spell save DC and spell attack bonus; no attunement is needed, and the holder concentrates if the spell requires it. The charges belong to the device: it holds a number equal to twice your INT modifier and recharges when you finish a long rest. If the device is destroyed, the stored spell and its charges are lost.",
 			},
 			{
 				level: 14,
@@ -3639,7 +3650,7 @@ export const jobs: Job[] = [
 			{
 				name: "Aetheric Bandwidth",
 				description:
-					"Your pact feeds you more mana per recovery than your rank should allow. You regain all expended pact spell slots when you finish a short or long rest.",
+					"Your pact restores more than your rank should allow. You regain all expended pact spell slots when you finish a short or long rest.",
 				type: "passive",
 				actionType: "passive",
 			},
@@ -4031,9 +4042,10 @@ export const jobs: Job[] = [
 				level: 1,
 				name: "Prey Lock",
 				actionType: "Bonus action",
-				tracking: "manual",
+				uses: { formula: "PB", recharge: "long-rest", unlimitedAtLevel: 20 },
+				tracking: "uses",
 				description:
-					"As a bonus action, mark a creature you can see as your prey. Track their location within 1 mile until you rest. Deal +1d6 damage on the first hit each turn against the marked prey.",
+					"As a bonus action, mark a creature you can see as your prey. The mark lasts until you finish a short or long rest, the prey dies, or you mark another creature; you can have one prey at a time. While it lasts, you know the prey's location whenever it is within 1 mile of you, and the first time you hit it with an attack on each of your turns, the attack deals an extra 1d6 damage. You can use Prey Lock a number of times equal to your proficiency bonus, regaining all uses when you finish a long rest. From 20th level (Zenith Apex Predator) its uses are unlimited.",
 			},
 			{
 				level: 1,

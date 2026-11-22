@@ -42,14 +42,27 @@ export const useAppStore = create<AppState>()(
 		}),
 		{
 			name: "app-storage",
+			version: 1,
 			storage: createJSONStorage(() => localStorage),
-			// Only persist durable preferences; ephemeral shell state (command
-			// palette open/close) must not leak into localStorage.
+			// Persist durable preferences only. Open overlays and drawers are
+			// temporary UI state and must always start closed after reload.
 			partialize: (state) => ({
 				theme: state.theme,
-				sidebarOpen: state.sidebarOpen,
 				sidebarCollapsed: state.sidebarCollapsed,
 				soundEnabled: state.soundEnabled,
+			}),
+			// Version 0 persisted sidebarOpen. Remove that stale drawer state so
+			// upgrading while the mobile menu is open cannot reopen it.
+			migrate: (persistedState) => {
+				const { sidebarOpen: _sidebarOpen, ...preferences } =
+					persistedState as Partial<AppState>;
+				return preferences as AppState;
+			},
+			// Also ignore sidebarOpen if a persisted snapshot still contains it.
+			merge: (persistedState, currentState) => ({
+				...currentState,
+				...(persistedState as Partial<AppState>),
+				sidebarOpen: false,
 			}),
 		},
 	),

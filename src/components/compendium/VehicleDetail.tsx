@@ -13,6 +13,7 @@ import { AutoLinkText } from "@/components/compendium/AutoLinkText";
 import { CompendiumImage } from "@/components/compendium/CompendiumImage";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
+import { naturalAttackDie } from "@/lib/companionProgression";
 import { formatRaCurrencyValue } from "@/lib/currency";
 import { formatRegentVernacular } from "@/lib/vernacular";
 import type { CompendiumVehicle } from "@/types/compendium";
@@ -54,6 +55,15 @@ export const VehicleDetail = ({ data }: { data: VehicleData }) => {
 	const bonded = data.bonded;
 	const anomalyId = data.anomaly_id;
 	const bondedFromName = data.bonded_from_name;
+	const naturalAttacks = data.natural_attacks ?? [];
+	// RA-10: which mounts scale with their owner's level as companions.
+	const companionScaling = !isMount
+		? null
+		: anomalyId
+			? "As a companion, this mount scales with its owner's level from its linked Anomaly's stat block."
+			: data.combat_capable
+				? "Combat capable. As a companion, this mount scales with its owner's level from its size Hit Die."
+				: "Utility mount. As a companion, it keeps these stats.";
 
 	const formatSpeed = (speedValue: number | undefined): string => {
 		if (!speedValue) return "—";
@@ -159,6 +169,14 @@ export const VehicleDetail = ({ data }: { data: VehicleData }) => {
 									? formatRegentVernacular(bondedFromName)
 									: "View source anomaly"}
 							</Link>
+						</p>
+					)}
+					{companionScaling && (
+						<p
+							className="text-sm text-muted-foreground"
+							data-testid="vehicle-companion-scaling"
+						>
+							{companionScaling}
 						</p>
 					)}
 				</div>
@@ -302,6 +320,28 @@ export const VehicleDetail = ({ data }: { data: VehicleData }) => {
 							</div>
 						))}
 					</div>
+				</AscendantWindow>
+			)}
+
+			{/* Natural attacks (combat-capable mounts without a stat block) */}
+			{naturalAttacks.length > 0 && (
+				<AscendantWindow title="NATURAL ATTACKS">
+					<ul className="space-y-3">
+						{naturalAttacks.map((attack) => (
+							<li
+								key={attack.name}
+								className="p-3 rounded-lg bg-background/20 border border-border/50 text-sm"
+							>
+								<span className="font-semibold">{attack.name}.</span>{" "}
+								<span className="text-muted-foreground">
+									Melee attack, reach {attack.reach ?? 5} ft., d
+									{naturalAttackDie(attack, data.size)} {attack.damage_type}{" "}
+									damage. The dice count follows the owner's level, and the
+									attack adds proficiency bonus to its damage.
+								</span>
+							</li>
+						))}
+					</ul>
 				</AscendantWindow>
 			)}
 

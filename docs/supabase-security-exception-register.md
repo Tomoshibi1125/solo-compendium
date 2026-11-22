@@ -12,7 +12,7 @@ The migrated local catalog is the implementation baseline. It is not evidence th
 2. `anon` can execute exactly two narrow preview RPCs. Every other application RPC requires `authenticated` or remains internal.
 3. Every application definer has a fixed `search_path`; privileged bodies use qualified object names and disable RLS only where required.
 4. Browser identity comes from `auth.uid()`. A legacy actor UUID parameter is an equality assertion, never delegated authority.
-5. Account administration is derived only from `auth.users.raw_app_meta_data ->> 'account_role' = 'admin'`. Gameplay roles, `profiles.role`, and user-editable metadata are not account-admin authority.
+5. The app has two roles, Warden and Ascendant, and neither is administrative. No API caller has admin authority: admin and development work happens outside the app (Supabase dashboard, migrations, service-role scripts). `20260930120000` removed the in-app account-admin helper, RPCs, audit log, and suspension flag, and left the shared compendium tables and the `compendium-images` bucket read-only through the API.
 6. Checked wrappers own the API contract. Renamed `*_unchecked` bodies and helper routines are not executable by API roles.
 7. Grants identify an exact `regprocedure`. Adding an overload never inherits approval.
 8. This register does not assert `service_role` behavior. Verify its effective privileges from each environment's inventory and use it only from trusted server-side administration paths.
@@ -28,25 +28,17 @@ These are the complete anonymous function surface. Both signatures are also exec
 
 No other `public` or `app_private` function may be executable by `anon`.
 
-## RLS-only account-admin helper
+## RLS-only helpers
+
+`anon` has no usage on `app_private`; `authenticated` has schema usage and execution only so policies can evaluate these. `app_private` is not a PostgREST-exposed schema.
 
 | Exact signature | Caller | Authorization and contract | Why definer is retained |
 | --- | --- | --- | --- |
-| `app_private.is_account_admin()` | RLS policies and guarded account-admin/homebrew functions; no frontend RPC | Binds to `auth.uid()` and returns whether that Auth user has `app_metadata.account_role = 'admin'`. `anon` has neither schema usage nor execution. `authenticated` receives schema usage and execution only so policies can evaluate it. `app_private` is not a PostgREST-exposed schema. | Must read `auth.users.raw_app_meta_data`, which ordinary users cannot query, without exposing an account-directory RPC. |
 | `app_private.can_read_campaign_character(uuid,uuid)` | Character-sheet RLS policies; no frontend RPC | Requires the asserted actor to equal `auth.uid()`, requires primary/co-Warden authority, and confirms the character is actually linked or shared with that campaign. It has no `anon` grant. | Lets sheet tables check a campaign relationship without recursive policy reads or exposing a raw-character lookup routine. |
 
 ## Authenticated exceptions
 
 All signatures in this section are granted to `authenticated` only unless they also appear in the anonymous table.
-
-### Account and gameplay authority
-
-| Exact signature | Caller | Authorization invariant and contract | Why definer is retained |
-| --- | --- | --- | --- |
-| `public.admin_set_user_role(uuid,text)` | `src/hooks/useAdminUsers.ts` | Canonical account-admin claim required. Locks the target, accepts only gameplay roles `warden` or `ascendant`, updates the profile, and atomically records an admin audit event. It cannot grant account-admin status. | Controlled cross-user profile update and audit insert. |
-| `public.admin_set_user_ban(uuid,boolean)` | `src/hooks/useAdminUsers.ts` | Canonical account-admin claim required; self-suspension is rejected. Sets or clears `profiles.banned_at` and writes an audit event. This is application suspension, not an Auth Admin API ban. | Controlled cross-user profile update and audit insert. |
-| `public.is_warden_or_admin(uuid)` | Legacy SQL/RLS helper | Returns whether the queried profile carries a gameplay/content role. It accepts a queried UUID and is not account-admin authority. | Avoids recursive profile-policy evaluation across legacy profile tables. |
-| `public.is_dm_or_admin(uuid)` | Legacy SQL/RLS compatibility helper | Delegates to `is_warden_or_admin`; the same arbitrary-UUID and gameplay-authority caveats apply. | Preserves old policy/function dependencies while avoiding RLS recursion. |
 
 ### Campaign predicates, creation, joining, and invites
 
@@ -80,14 +72,14 @@ All signatures in this section are granted to `authenticated` only unless they a
 | `public.deploy_campaign_encounter(uuid)` | `src/hooks/useCampaignEncounters.ts` | Resolves the encounter, requires primary/co-Warden, creates combat session/combatants, emits a rule event, and returns session UUID. | Atomic multi-table deployment through combat RLS. |
 | `public.export_campaign_bundle(uuid)` | `src/hooks/useCampaignExport.ts` | Primary/co-Warden required. Returns the campaign's multi-table export bundle. | One authorized aggregate read across otherwise independent RLS policies. |
 | `public.assign_campaign_loot(uuid,jsonb,uuid,uuid,uuid)` | `src/hooks/useCampaignRewards.ts` | Primary/co-Warden required. Requires a valid item array with positive quantities/nonnegative values and campaign-owned optional references; applies economy caps, writes loot and rule event, and returns loot UUID. | Validated atomic campaign ledger/event update. |
-| `public.assign_campaign_relic(uuid,uuid,text,text,jsonb,numeric,uuid,boolean)` | Compatibility surface; no current direct caller found | Primary/co-Warden required. Rejects negative values and cross-campaign member bindings; validates name/economy cap in the internal body, writes relic and rule event, and returns instance UUID. | Validated atomic campaign ledger/event update. |
+| `public.assign_campaign_relic(uuid,text,text,text,jsonb,numeric,uuid,boolean)` | `src/hooks/useCampaignRelics.ts` | Primary/co-Warden required. Takes the canonical relic slug. Rejects negative values and cross-campaign member bindings; validates name/economy cap in the internal body, writes relic and rule event, and returns instance UUID. The vault has no direct insert policy. | Validated atomic campaign ledger/event update. |
 | `public.update_character_xp(uuid,integer,uuid,text)` | `src/hooks/useEncounterRewards.ts` | Requires positive XP and locks the character. With campaign context, requires primary/co-Warden and a campaign-linked target; without campaign context, requires character ownership. Updates XP and writes a `reward` campaign log when applicable; returns success, total, and message. | Serialized character update and campaign audit write, including controlled cross-user awards. |
 | `public.warden_grant_character_equipment(uuid,jsonb)` | `src/hooks/useWardenItemDelivery.ts` | Primary/co-Warden required; every target character must be linked to the campaign. Stacks or inserts validated equipment and returns processed count. | Controlled cross-user inventory mutation in one transaction. |
 | `public.create_session_quest(uuid,text,text,text[],jsonb)` | `src/hooks/useSessionQuests.ts` | Authenticated primary Warden required. Creates a campaign quest with objectives/rewards and returns quest UUID. | Privileged quest insert through campaign RLS. |
 | `public.complete_session_quest(uuid,text)` | `src/hooks/useSessionQuests.ts` | Authenticated primary Warden of the quest campaign required. Marks the quest complete and stores optional notes. | Privileged quest state transition. |
 | `public.claim_quest_rewards(uuid,uuid)` | `src/hooks/useSessionQuests.ts` | Completed quest, campaign membership/Warden status, owned character, and explicit character-campaign link are all required. The internal body prevents duplicate claims and awards configured rewards atomically. | Cross-table reward issuance through quest and character RLS. |
 
-### Character lifecycle and tamed anomalies
+### Character lifecycle
 
 | Exact signature | Caller | Authorization invariant and contract | Why definer is retained |
 | --- | --- | --- | --- |
@@ -95,9 +87,15 @@ All signatures in this section are granted to `authenticated` only unless they a
 | `public.on_long_rest_assign_quests(uuid)` | `src/lib/restSystem.ts` | Character must belong to `auth.uid()`. Expires old daily quests, applies configured penalties, and assigns the next set atomically. | Owner-bound multi-table long-rest transition. |
 | `public.generate_character_share_token_for_character(uuid)` | `src/hooks/useCharacters.ts` | Character ownership required. Rotates a persisted unique token and returns it. | Owner-bound token rotation and collision checks across RLS. |
 | `public.get_character_by_share_token(uuid,text)` | `src/hooks/useCharacters.ts` | Authenticated bearer must supply both exact character UUID and persisted nonblank token. Returns the matching full character row or no row. | Bearer-controlled read of a character hidden by owner RLS. |
-| `public.attempt_taming(uuid,uuid,text,integer,integer,integer,integer,text)` | `src/hooks/useTamedAnomalies.ts` | Requires owned character, valid input ranges, canonical anomaly ID, exact server-derived DC/HP, and campaign link when scoped. Returns null on failed roll or created anomaly UUID on success. | Validated write to owner/shared anomaly tables. |
-| `public.claim_anomaly_controller(uuid,uuid)` | `src/hooks/useTamedAnomalies.ts` | Owned character and link to the anomaly's campaign required. Claims only an empty, same, or stale controller slot; returns whether update occurred. | Atomic mutation of shared party state. |
-| `public.release_anomaly_controller(uuid)` | `src/hooks/useTamedAnomalies.ts` | Clears only when the actor owns the controlling character or is primary campaign Warden; otherwise no-ops. | Controlled update of shared party state. |
+
+### Companions
+
+| Exact signature | Caller | Authorization invariant and contract | Why definer is retained |
+| --- | --- | --- | --- |
+| `public.rest_companions_for_character(uuid,text)` | `src/lib/restSystem.ts` (Long Rest) | Character must belong to `auth.uid()`; rest kind must be `short` or `long`. A Short Rest returns 0 without changes. A Long Rest locks every active companion the character owns or handles, restores all HP, clears downed, ends conditions by the character rest policy, gives back spent Hit Dice up to half the companion's total (minimum 1), and syncs the companion sheet row. Returns the number rested. | Owner-bound update of companion instances and their sheet rows, which clients cannot write directly. |
+| `public.spend_companion_hit_dice(uuid,integer,integer)` | `src/hooks/useCompanionRest.ts` (Short Rest dialog) | Caller must own the companion's owner or primary-handler character; the companion must be active and level-scaled. Dice must be between 1 and the unspent count, and healing between 0 and dice × Hit Die. Heals up to the maximum, counts the dice as spent, syncs the sheet row, and returns HP and Hit Dice totals. | Validated owner-bound update of companion instance state, which clients cannot write directly. |
+
+The campaign tamed roster and its tame, bond, controller, HP, removal, and retry-adjudication RPCs are retired: `supabase/migrations/20260928110000_retire_tamed_companion_rosters.sql` revokes client execution and moves each creature to a character's companion sheet (RA-9).
 
 ### Guild and Bureau
 
@@ -111,17 +109,17 @@ All signatures in this section are granted to `authenticated` only unless they a
 | `public.accept_bureau_contract(uuid,uuid)` | `src/hooks/useBureauContracts.ts` | Guild leader/vice-master/officer required; locks a published contract, creates the rank-scaled quest, marks acceptance, and returns quest UUID. | Atomic cross-table contract acceptance. |
 | `public.bureau_guild_leaderboard()` | `src/hooks/useBureauContracts.ts` | Any authenticated caller receives only the top 50 active guild projection: ID, name, rank, contribution, and member count. | Intentional minimal global projection across member-scoped guild RLS. |
 
-### Notifications, marketplace, homebrew, and sourcebooks
+### Notifications, marketplace, and homebrew
 
 | Exact signature | Caller | Authorization invariant and contract | Why definer is retained |
 | --- | --- | --- | --- |
 | `public.add_user_notification(uuid,text,text,text,text,text,jsonb,text,timestamptz)` | `src/lib/notify.ts` and sync manager | Self-targeting is allowed. Cross-user delivery is limited to `mention` or `campaign_invite`, requires a UUID `payload.campaign_id`, verifies actor relationship, and verifies the target is a member or the campaign's primary Warden as appropriate. Returns notification UUID. | Narrowly controlled cross-user inbox write. |
 | `public.mark_user_notification_read(uuid)` | `src/hooks/useUserNotifications.ts` | Updates only an unread notification owned by `auth.uid()` and returns whether a row changed. | Self-bound update retained for compatibility; candidate for conversion to invoker. |
-| `public.record_marketplace_download(uuid,uuid)` | `src/hooks/useMarketplaceData.ts` and sync manager | Supplied/default user must equal `auth.uid()`. Requires entitlement, inserts idempotent download, and recomputes item count. | Self-bound ledger plus aggregate update in one transaction. |
-| `public.upsert_marketplace_review(uuid,integer,text,uuid)` | `src/hooks/useMarketplaceData.ts` and sync manager | Supplied/default user must equal `auth.uid()`; rating is 1–5. Upserts review and recomputes item rating aggregates; returns review UUID. | Self-bound review plus aggregate update in one transaction. |
-| `public.gift_marketplace_item(uuid,uuid,text)` | `src/hooks/useMarketplaceData.ts` | Authenticated entitled giver and distinct existing recipient required. Copies primary and bundle-child entitlements idempotently. | Intentional, contract-limited cross-user entitlement write. |
-| `public.set_homebrew_content_status(uuid,text,text,uuid)` | `src/hooks/useHomebrewContent.ts` and sync manager | Actor must be owner, canonical account admin, or Warden/co-Warden of the content's existing campaign. Validates status/scope; campaign visibility also requires target-campaign authority. Returns content UUID. | Controlled moderation beyond owner RLS. |
-| `public.get_accessible_sourcebooks(uuid,uuid)` | `src/lib/sourcebookAccess.ts` | Requires auth, supplied user must equal `auth.uid()`, and optional campaign requires actor membership or primary-Warden status. Returns only free, current owned, and current campaign-shared entitlement projections. The broader legacy helper remains revoked. | Actor-bound entitlement projection must verify a sharer's current entitlement across RLS without exposing an arbitrary-user oracle. |
+| `public.record_marketplace_download(uuid,uuid)` | `src/hooks/useMarketplaceData.ts` and sync manager | Supplied/default user must equal `auth.uid()` and the listing must exist (every listing is free and public). Records one row per person in the internal `app_private.marketplace_downloads` ledger and recomputes the item count. | Self-bound ledger plus aggregate update in one transaction. |
+| `public.upsert_marketplace_review(uuid,integer,text,uuid)` | `src/hooks/useMarketplaceData.ts` and sync manager | Supplied/default user must equal `auth.uid()`; rating is 1–5. Upserts the review and recomputes item rating aggregates; returns review UUID. | Self-bound review plus aggregate update in one transaction. |
+| `public.set_homebrew_content_status(uuid,text,text,uuid)` | `src/hooks/useHomebrewContent.ts` and sync manager | Actor must be the owner or a Warden/co-Warden of the content's existing campaign. Validates status/scope; campaign visibility also requires target-campaign authority. Returns content UUID. | Controlled moderation beyond owner RLS. |
+
+The marketplace is free: `20260930120000` removed prices, entitlements, gifting, bundles, hidden listings, and the verified-purchase flag.
 
 ### Compendium search projections
 
@@ -138,12 +136,13 @@ All six search RPCs require authentication, accept `(query, limit, offset)`, ran
 
 ## Exact-granted SECURITY INVOKER helpers
 
-These signatures are authenticated and exact-granted because RLS expressions depend on them, but they are **not definer exceptions**:
+None. `20260930110100` dropped `can_manage_homebrew_content(uuid,uuid)` and `can_view_homebrew_content(uuid,uuid)`: homebrew RLS no longer uses them, and both trusted the editable `profiles.role`. Homebrew policies use `app_private.actor_in_campaign(uuid)` and `public.is_campaign_system(uuid,uuid)` instead. `20260930120000` also dropped `is_warden_or_admin(uuid)` and `is_dm_or_admin(uuid)`, the last helpers that trusted `profiles.role`.
 
-- `public.can_manage_homebrew_content(uuid,uuid)`
-- `public.can_view_homebrew_content(uuid,uuid)`
+Direct Data API writes to `homebrew_content` and `marketplace_items` also pass SECURITY INVOKER guard triggers in `app_private` (`guard_homebrew_content_api_write`, `guard_marketplace_item_api_write`). They act only when `current_user` is `anon` or `authenticated`, so the definer RPCs keep their own rules: ownership and authorship cannot move, and marketplace counters and moderation flags stay with the RPCs.
 
-`public.get_accessible_sourcebooks(uuid,uuid)` is intentionally not in this list: the hardening migration makes it an actor-bound definer so it can validate the current entitlement behind a campaign share. `public.user_has_sourcebook_access(text,uuid,uuid)` remains internal and revoked.
+The shared compendium tables are read-only through the API; compendium content changes ship as migrations or service-role scripts.
+
+The sourcebook entitlement layer is retired: `20260725000000` dropped its tables and `user_has_sourcebook_access`, and `20260930100100` dropped `get_accessible_sourcebooks(uuid,uuid)` and the tables' trigger functions. Every sourcebook is available to every account.
 
 ## Internal, revoked, and removed routines
 
@@ -151,8 +150,9 @@ These signatures are authenticated and exact-granted because RLS expressions dep
 | --- | --- | --- |
 | Guarded legacy delegates | `upsert_campaign_session_unchecked`, `add_user_notification_unchecked`, `assign_daily_quests_unchecked`, `on_long_rest_assign_quests_unchecked`, `record_marketplace_download_unchecked`, `upsert_marketplace_review_unchecked`, `claim_quest_rewards_unchecked`, `attempt_taming_unchecked`, `redeem_campaign_invite_unchecked`, `resolve_guild_quest_unchecked`, `assign_campaign_loot_unchecked`, `assign_campaign_relic_unchecked` | Owner-internal only; no API execution. Call only from the checked wrappers. |
 | Join and invite internals | `join_campaign_by_id(uuid,uuid)`, `attach_campaign_member_character`, `resolve_campaign_invite`, `normalize_campaign_invite_role`, token/code/hash generators, and invite audit logger | Retained as owner-internal dependencies; no direct API execution. ID-only joining is deliberately revoked. |
-| Sourcebook internals | `user_has_sourcebook_access(text,uuid,uuid)` and any grant/share administration routine not in the final exact list | No browser execution. Use only through reviewed wrappers or trusted administration. |
 | Legacy combat/session entry points | `advance_combat_turn(uuid)`, `start_active_session`, `end_active_session`, `start_session_combat`, `end_session_combat` | Revoked from API roles; application uses the campaign-combat/session model. |
+| Retired tamed rosters | `attempt_taming`, `attempt_taming_with_source`, `resolve_companion_tame_attempt_c2`, `resolve_companion_bond_attempt_c2`, `prepare_companion_attempt_adjudication`, `claim_anomaly_controller`, `release_anomaly_controller`, `set_campaign_tamed_hp`, `remove_campaign_tamed_anomaly` | Revoked from API roles. Companions are character-owned sheet rows; the roster tables are read-only history. |
+| Retired companion scaling and profiles | `set_companion_scaling_profile`, `set_companion_profile_v1`, `import_companion_profile_authority` | Dropped. Companions scale from their owner's level and have no per-creature profile (RA-9, RA-10). |
 | Trigger/event routines | Character-limit enforcement, timestamp/version triggers, `rls_auto_enable`, and other trigger-only functions | Trigger/event invocation only; no client execution. |
 | Utilities and maintenance | `asset_exists(text)`, `get_campaign_member_count(uuid)`, `prepare_search_text(text)`, `hypopg_reset()`, `sync_compendium_data`, share-code/token helpers | Internal or revoked. `hypopg_reset` and maintenance helpers must never be browser RPCs. |
 | Removed attack surface | `exec_sql(text)`, stale quest overloads, and `get_character_by_share_token(text)` | Dropped. Maintenance scripts must use trusted direct SQL rather than recreating `exec_sql`. |
@@ -160,23 +160,21 @@ These signatures are authenticated and exact-granted because RLS expressions dep
 ## Review and removal candidates
 
 - Remove `add_player_character_to_campaign` after old clients are retired.
-- Confirm callers before retaining `save_campaign_encounter`, `assign_campaign_relic`, `get_campaign_linked_characters`, and the six compendium searches.
+- Confirm callers before retaining `save_campaign_encounter`, `get_campaign_linked_characters`, and the six compendium searches.
 - Move `guild_member_role` and campaign/profile role predicates to a non-exposed schema when RLS dependencies can be migrated; today they are membership/role oracles.
 - Convert `mark_user_notification_read` and other strictly self-bound routines to invoker when policy coverage is proven.
 - Review `asset_exists`, `get_campaign_member_count`, `prepare_search_text`, `hypopg_reset`, `resolve_campaign_invite`, and timestamp-only definers for deletion or invoker conversion.
-- `is_dm_or_admin` and `is_warden_or_admin` are gameplay/content compatibility helpers. They must never gate account administration.
 
 ## Reviewed residual caveats
 
 - Share-code joining is intentionally separate from invite redemption and does not consume invite expiry/use limits.
 - `guild_member_role` and campaign role predicates accept queried UUIDs and can reveal membership/role state; they remain for RLS recursion avoidance.
 - The taming roll total remains client-supplied gameplay input but is range-checked; DC and HP are derived from canonical anomaly data.
-- Marketplace gifting intentionally creates another user's entitlement. That is its exact business contract, not account administration.
 - Cross-user notifications are limited to verified campaign mentions or notification of the campaign's primary Warden.
 - Owner-scoped `update_character_xp` without campaign context permits self-awards by design; campaign-scoped cross-user awards require Warden authority and a linked character. Revisit if XP must become exclusively server-awarded.
 - Character share lookup is authenticated-only and returns the full character row. If anonymous sharing is ever required, add a new minimal DTO instead of granting the current function to `anon`.
 - Session quest creation/completion currently requires the primary Warden, while many other campaign operations include co-Wardens.
-- Compendium search projections need future row-level entitlement and maximum-limit review.
+- Compendium search projections need a future maximum-limit review.
 - Supabase Auth leaked-password protection remains intentionally deferred as an operational follow-up; it is not an RLS or RPC exception and must be enabled/reviewed separately before a production security milestone.
 
 ## Inventory reconciliation
@@ -206,3 +204,5 @@ Any new function, overload, result change, grant, or authorization change requir
 - this register and rollout evidence updated.
 
 Name-based allowlists are not approval. Do not expose an unchecked body, broad helper, maintenance routine, or new anonymous function for compatibility.
+
+Tables follow the same rule. Production predates Supabase's May 2026 default change, and `20260930110000` restates its legacy defaults everywhere, so a new `public` table is granted ALL to `anon`, `authenticated`, and `service_role` the moment it is created. RLS is the only boundary: enable it and add caller-scoped policies (`TO authenticated`, bound to `auth.uid()` or an actor helper) for exactly the commands the app uses, in the same migration, with allow and deny cases in `supabase/tests/scoped_rls_policies.sql` or a sibling test.

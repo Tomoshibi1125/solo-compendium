@@ -47,6 +47,8 @@ import {
 	type WardenDeliverableItem,
 	type WardenDeliveryMode,
 } from "@/hooks/useWardenItemDelivery";
+import { isSupabaseConfigured } from "@/integrations/supabase/client";
+import { useAuth } from "@/lib/auth/authContext";
 import { mapHomebrewItemForRuntime } from "@/lib/homebrewRuntime";
 import { formatRarityLabel } from "@/lib/labels";
 import { formatRegentVernacular } from "@/lib/vernacular";
@@ -65,6 +67,8 @@ interface WardenItemDeliveryDialogProps {
 	campaignId: string;
 	initialItem?: WardenDeliverableItem | null;
 	initialCharacterId?: string | null;
+	/** Delivery mode selected each time the dialog opens. */
+	initialMode?: WardenDeliveryMode;
 	title?: string;
 }
 
@@ -130,9 +134,10 @@ export function WardenItemDeliveryDialog({
 	campaignId,
 	initialItem,
 	initialCharacterId,
+	initialMode = "direct",
 	title = "Deliver Item",
 }: WardenItemDeliveryDialogProps) {
-	const [mode, setMode] = useState<WardenDeliveryMode>("direct");
+	const [mode, setMode] = useState<WardenDeliveryMode>(initialMode);
 	const [search, setSearch] = useState("");
 	const [typeFilter, setTypeFilter] = useState("all");
 	const [activePanel, setActivePanel] = useState<DeliveryPanel>("catalog");
@@ -150,6 +155,8 @@ export function WardenItemDeliveryDialog({
 		useState<string>("unassigned");
 	const [quantity, setQuantity] = useState(1);
 	const { toast } = useToast();
+	const { user, loading: authLoading } = useAuth();
+	const deliveryReady = isSupabaseConfigured && !authLoading && !!user;
 	const { data: members = [] } = useCampaignMembers(campaignId);
 	const { deliverItem, isDelivering } = useWardenItemDelivery();
 	const saveHomebrew = useSaveHomebrewContent();
@@ -167,6 +174,7 @@ export function WardenItemDeliveryDialog({
 
 	useEffect(() => {
 		if (!open) return;
+		setMode(initialMode);
 		setSelectedCharacterIds(initialCharacterId ? [initialCharacterId] : []);
 		setSelectedMemberId("unassigned");
 		setSelectedCatalogKey("");
@@ -176,7 +184,7 @@ export function WardenItemDeliveryDialog({
 		setTypeFilter("all");
 		setSearch("");
 		setHomebrewForm(createDefaultHomebrewItemForm());
-	}, [initialCharacterId, open]);
+	}, [initialCharacterId, initialMode, open]);
 
 	const { data: context, isLoading: isContextLoading } = useQuery({
 		queryKey: ["warden-item-delivery-context-v2", campaignId],
@@ -333,6 +341,15 @@ export function WardenItemDeliveryDialog({
 
 	const handleDeliver = async () => {
 		if (!selectedItem) return;
+		if (!deliveryReady) {
+			toast({
+				title: "Sign in required",
+				description:
+					"Sign in to deliver items, abilities, or loot to a shared campaign. Guest campaigns stay in this browser.",
+				variant: "destructive",
+			});
+			return;
+		}
 
 		// Ability / rune types: route to the correct character table
 		if (isNonPhysicalType) {
@@ -404,20 +421,31 @@ export function WardenItemDeliveryDialog({
 			return;
 		}
 
-		// Physical item path (existing)
-		await deliverItem({
-			campaignId,
-			mode,
-			item: selectedItem,
-			characterIds: selectedCharacterIds,
-			memberId: selectedMemberId === "unassigned" ? null : selectedMemberId,
-			quantity,
-		});
+		// Physical item path. Each mode's mutation toasts its own failure, so a
+		// rejection only needs to keep the dialog open.
+		try {
+			await deliverItem({
+				campaignId,
+				mode,
+				item: selectedItem,
+				characterIds: selectedCharacterIds,
+				memberId: selectedMemberId === "unassigned" ? null : selectedMemberId,
+				quantity,
+			});
+		} catch {
+			return;
+		}
 		onOpenChange(false);
 	};
 
+	// Only direct grants and ability/rune deliveries target Ascendants; Party
+	// Stash and Assigned Loot hide the Ascendant picker and ignore it.
+	const needsAscendant = mode === "direct" || isNonPhysicalType;
 	const disabled =
-		!selectedItem || isDelivering || selectedCharacterIds.length === 0;
+		!selectedItem ||
+		isDelivering ||
+		!deliveryReady ||
+		(needsAscendant && selectedCharacterIds.length === 0);
 
 	return (
 		<Dialog open={open} onOpenChange={onOpenChange}>
@@ -433,6 +461,15 @@ export function WardenItemDeliveryDialog({
 						Party Stash.
 					</DialogDescription>
 				</DialogHeader>
+				{!deliveryReady && !authLoading && (
+					<div
+						role="status"
+						className="rounded-lg border border-primary/30 bg-primary/5 p-3 text-sm text-muted-foreground"
+					>
+						Sign in to deliver items, abilities, or loot to a shared campaign.
+						Guest campaigns stay in this browser and cannot issue shared grants.
+					</div>
+				)}
 
 				<div className="grid grid-cols-1 xl:grid-cols-[1fr_300px] gap-4">
 					<div className="space-y-4 min-w-0">

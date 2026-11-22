@@ -184,6 +184,54 @@ describe("ActionResolutionPayload v1/v2 storage", () => {
 describe("resolveAction orchestration", () => {
 	afterEach(() => vi.restoreAllMocks());
 
+	it("maximizes normal critical dice, rolls critical and extra dice, then doubles vulnerability", () => {
+		const random = vi.spyOn(Math, "random");
+		random.mockReturnValueOnce(0.95).mockReturnValue(0);
+		const result = resolveAction(
+			typedPayload({
+				attack: { roll: "1d20+5", critExtraDice: 1 },
+				damage: { roll: "2d6+1d4+3", type: "fire" },
+			}),
+			{
+				target: {
+					id: "target-1",
+					armorClass: 20,
+					hitPoints: 100,
+					damageVulnerabilities: ["fire"],
+				},
+			},
+		);
+		expect(result.outcome).toMatchObject({
+			kind: "attack",
+			criticalHit: true,
+			damageRolls: [6, 6, 4, 1, 1, 1, 1],
+			damageTotal: 23,
+		});
+		expect(result.application.damage).toMatchObject({
+			rawDamage: 23,
+			finalDamage: 46,
+			vulnerabilityApplied: true,
+		});
+		expect(result.stateChangeIntents).toContainEqual(
+			expect.objectContaining({ type: "hit-points", delta: -46, after: 54 }),
+		);
+	});
+
+	it("applies a critical flat penalty only once", () => {
+		const random = vi.spyOn(Math, "random");
+		random.mockReturnValueOnce(0.95).mockReturnValue(0);
+		const outcome = resolveAttack(
+			typedPayload({ damage: { roll: "1d8-1", type: "slashing" } }),
+			10,
+		);
+		expect(outcome).toMatchObject({
+			kind: "attack",
+			criticalHit: true,
+			damageRolls: [8, 1],
+			damageTotal: 8,
+		});
+	});
+
 	it("makes a natural 1 miss a standard attack despite a high modifier", () => {
 		vi.spyOn(Math, "random").mockReturnValue(0);
 		const outcome = resolveAttack(

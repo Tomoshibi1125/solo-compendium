@@ -49,7 +49,7 @@ export default defineConfig({
 
 		/* Reduced slowMo for faster execution while maintaining visibility */
 		launchOptions: {
-			slowMo: 400, // Reduced from 800ms
+			slowMo: process.env.PW_NO_SLOWMO ? 0 : 400, // Reduced from 800ms
 			args: [
 				"--disable-web-security", // Help with CORS issues
 				"--disable-features=VizDisplayCompositor", // Stability improvement

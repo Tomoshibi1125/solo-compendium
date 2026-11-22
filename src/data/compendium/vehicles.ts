@@ -105,10 +105,12 @@ const mountsRealWorld: CompendiumVehicle[] = [
 			{
 				name: "Trample",
 				description:
-					"On a turn this mount dashes, it can attempt a hoof strike against any creature it passes through.",
+					"On a turn this mount dashes, it can make a Hooves attack against any creature it passes through.",
 				action_type: "action",
 			},
 		],
+		combat_capable: true,
+		natural_attacks: [{ name: "Hooves", damage_type: "bludgeoning" }],
 		bonded: false,
 		rank: "C",
 		source_book: RA_SOURCE,
@@ -183,6 +185,8 @@ const mountsRealWorld: CompendiumVehicle[] = [
 				action_type: "passive",
 			},
 		],
+		// Its authored Bite keeps the d6 and scales like a natural attack.
+		combat_capable: true,
 		bonded: false,
 		rank: "D",
 		source_book: RA_SOURCE,
@@ -208,9 +212,14 @@ const mountsRealWorld: CompendiumVehicle[] = [
 			},
 			{
 				name: "Multiattack",
-				description: "Bite + Claws.",
+				description: "The bear makes one Bite attack and one Claws attack.",
 				action_type: "action",
 			},
+		],
+		combat_capable: true,
+		natural_attacks: [
+			{ name: "Bite", damage_type: "piercing" },
+			{ name: "Claws", damage_type: "slashing" },
 		],
 		bonded: false,
 		rank: "C",
@@ -626,6 +635,8 @@ const mountsNetNew: CompendiumVehicle[] = [
 				action_type: "passive",
 			},
 		],
+		combat_capable: true,
+		natural_attacks: [{ name: "Bite", damage_type: "piercing" }],
 		bonded: true,
 		rank: "D",
 		source_book: RA_SOURCE,
@@ -656,9 +667,10 @@ const mountsNetNew: CompendiumVehicle[] = [
 		source_book: RA_SOURCE,
 	},
 	{
+		// The id predates the RA-17 rename and stays stable for saved companions.
 		id: "mount-sovereign-steed",
-		name: "Sovereign Steed",
-		display_name: "Sovereign Steed",
+		name: "Pantheon Steed",
+		display_name: "Pantheon Steed",
 		description:
 			"Pantheon-blessed mount granted by an Eternal to Holy Knights at level 5+. Rider's proficiency bonus adds to the mount's AC.",
 		vehicle_type: "mount",
@@ -676,6 +688,8 @@ const mountsNetNew: CompendiumVehicle[] = [
 				action_type: "passive",
 			},
 		],
+		combat_capable: true,
+		natural_attacks: [{ name: "Hooves", damage_type: "bludgeoning" }],
 		bonded: true,
 		rank: "B",
 		source_book: RA_SOURCE,

@@ -106,7 +106,7 @@ describe("universal compendium registry inventory", () => {
 			.filter((entry) => entry.loadPolicy === "eager")
 			.map((entry) => entry.id);
 		expect(new Set(registry.loadedSourceIds)).toEqual(new Set(eagerSourceIds));
-		expect(registry.candidateCount).toBeGreaterThan(4_000);
+		expect(registry.candidateCount).toBeGreaterThan(3_800);
 		expect(registry.entryCount).toBeGreaterThan(3_500);
 		expect(registry.references.length).toBeGreaterThan(0);
 		expect(
@@ -126,16 +126,9 @@ describe("universal compendium registry inventory", () => {
 			}
 		}
 
-		// Current known debt is observable rather than silently last-wins: all
-		// unresolved foundation conflicts are duplicate item names with distinct ids.
-		expect(registry.blockingConflicts.length).toBeGreaterThan(0);
-		expect(
-			registry.blockingConflicts.every(
-				(conflict) =>
-					conflict.category === "items" &&
-					conflict.kind === "identity-collision",
-			),
-		).toBe(true);
+		// Duplicate item names with distinct ids were folded into the entry the
+		// app showed, with the folded ids kept as aliases; nothing is unresolved.
+		expect(registry.blockingConflicts).toEqual([]);
 	}, 30_000);
 });
 

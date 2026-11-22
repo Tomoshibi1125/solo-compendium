@@ -19,9 +19,6 @@ export type GrantAbility = (typeof GRANT_ABILITIES)[number];
 // ── Versioned grant contract ───────────────────────────────────────
 
 export const FEATURE_CHOICE_GRANT_SCHEMA_VERSION = 1 as const;
-/** Alias for callers that describe the schema as a contract version. */
-export const FEATURE_CHOICE_GRANT_CONTRACT_VERSION =
-	FEATURE_CHOICE_GRANT_SCHEMA_VERSION;
 
 export type FeatureChoiceGrantStatus = "strict" | "warning" | "manual";
 export type FeatureChoiceGrantTargetCategory = "feature" | "feat" | "ability";
@@ -89,8 +86,6 @@ export type FeatureChoiceGrantV1 =
 	| FeatureChoiceFeatureGrantV1
 	| FeatureChoiceFeatGrantV1
 	| FeatureChoiceAbilityIncreaseGrantV1;
-export type CanonicalFeatureChoiceGrant = FeatureChoiceGrantV1;
-export type FeatureChoiceGrant = FeatureChoiceGrantV1;
 
 const LEGACY_NAME_GRANT_TYPES = [
 	"tool_proficiency",
@@ -277,10 +272,6 @@ export function createFeatureChoiceGrantSourceKey(
 	});
 }
 
-/** Concise aliases for consumers that prefer lookup-style naming. */
-export const featureChoiceGrantSourceKey = createFeatureChoiceGrantSourceKey;
-export const getFeatureChoiceGrantSourceKey = createFeatureChoiceGrantSourceKey;
-
 function projectionSeed(grant: ParsedFeatureChoiceGrantV1): Json {
 	if (grant.type === "legacy_passthrough") {
 		return {
@@ -323,11 +314,6 @@ export function createFeatureChoiceGrantProjectionKey(
 ): string {
 	return stableKey("feature-choice-grant-projection", projectionSeed(grant));
 }
-
-export const featureChoiceGrantProjectionKey =
-	createFeatureChoiceGrantProjectionKey;
-export const getFeatureChoiceGrantProjectionKey =
-	createFeatureChoiceGrantProjectionKey;
 
 function issue(
 	status: FeatureChoiceGrantStatus,
@@ -1047,9 +1033,6 @@ export function parseFeatureChoiceGrants(
 	}
 	return finalizeParse(grants, issues, persistedGrants);
 }
-
-/** Validate with the same compatibility boundary used by parsing and CSV. */
-export const validateFeatureChoiceGrants = parseFeatureChoiceGrants;
 
 export interface FeatureChoiceGrantSingleParseResult {
 	ok: boolean;

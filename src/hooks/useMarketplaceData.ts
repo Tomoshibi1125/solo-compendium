@@ -13,8 +13,10 @@ export type MarketplaceItemType =
 	| "module"
 	| "template";
 
-export type MarketplacePriceType = "free" | "paid" | "donation";
+/** Browse every listing, or only the signed-in author's own. */
+export type MarketplaceScope = "all" | "mine";
 
+/** A marketplace listing. The marketplace is free and every listing is public. */
 export interface MarketplaceItemRecord {
 	id: string;
 	author_id: string;
@@ -23,16 +25,12 @@ export interface MarketplaceItemRecord {
 	item_type: MarketplaceItemType;
 	category: string;
 	tags: string[];
-	price_type: MarketplacePriceType;
-	price_amount: number | null;
-	price_currency: string | null;
 	requirements: unknown;
 	compatibility: unknown;
 	license: string;
 	content: Record<string, unknown>;
 	file_url: string | null;
 	version: string;
-	is_listed: boolean;
 	is_featured: boolean;
 	is_verified: boolean;
 	downloads_count: number;
@@ -41,11 +39,6 @@ export interface MarketplaceItemRecord {
 	rating_count: number;
 	created_at: string;
 	updated_at: string;
-	has_access?: boolean;
-	/** F6: bundle composite item — entitlement fan-outs to children. */
-	is_bundle?: boolean;
-	/** F6: child item IDs when is_bundle is true. */
-	bundled_item_ids?: string[] | null;
 }
 
 type MarketplaceSaveInput = {
@@ -55,16 +48,12 @@ type MarketplaceSaveInput = {
 	itemType: MarketplaceItemType;
 	category: string;
 	tags?: string[];
-	priceType: MarketplacePriceType;
-	priceAmount?: number | null;
-	priceCurrency?: string | null;
 	requirements?: unknown;
 	compatibility?: unknown;
 	license?: string;
 	content?: Record<string, unknown>;
 	fileUrl?: string | null;
 	version?: string;
-	isListed?: boolean;
 };
 
 type MutationResult = {
@@ -112,11 +101,11 @@ const ensureAuthenticatedUser = async (): Promise<string> => {
 };
 
 export const useMarketplaceItems = ({
-	scope = "listed",
+	scope = "all",
 	search,
 	itemType,
 }: {
-	scope?: "listed" | "mine" | "all";
+	scope?: MarketplaceScope;
 	search?: string;
 	itemType?: MarketplaceItemType | null;
 }) => {
@@ -125,15 +114,11 @@ export const useMarketplaceItems = ({
 		queryFn: async (): Promise<MarketplaceItemRecord[]> => {
 			if (!isSupabaseConfigured) return [];
 
-			const userId = await getCurrentUserId();
 			let query = supabase
 				.from("marketplace_items")
 				.select("*")
 				.order("updated_at", { ascending: false });
 
-			if (scope === "listed") {
-				query = query.eq("is_listed", true);
-			}
 			if (scope === "mine") {
 				const authedUserId = await ensureAuthenticatedUser();
 				query = query.eq("author_id", authedUserId);
@@ -147,37 +132,7 @@ export const useMarketplaceItems = ({
 
 			const { data, error } = await query;
 			if (error) throw error;
-
-			const items = (data || []) as MarketplaceItemRecord[];
-			if (!userId) {
-				return items.map((item) => ({
-					...item,
-					has_access: item.price_type === "free",
-				}));
-			}
-
-			const { data: entitlementData, error: entitlementError } = await supabase
-				.from("user_marketplace_entitlements")
-				.select("item_id")
-				.eq("user_id", userId);
-
-			if (entitlementError) {
-				throw entitlementError;
-			}
-
-			const entitledIds = new Set(
-				((entitlementData || []) as Array<{ item_id: string | null }>)
-					.map((entry) => entry.item_id)
-					.filter((entry): entry is string => typeof entry === "string"),
-			);
-
-			return items.map((item) => ({
-				...item,
-				has_access:
-					item.price_type === "free" ||
-					item.author_id === userId ||
-					entitledIds.has(item.id),
-			}));
+			return (data || []) as MarketplaceItemRecord[];
 		},
 		enabled: isSupabaseConfigured,
 	});
@@ -202,17 +157,12 @@ export const useSaveMarketplaceItem = () => {
 				item_type: input.itemType,
 				category: input.category.trim() || "General",
 				tags: normalizeTags(input.tags),
-				price_type: input.priceType,
-				price_amount:
-					input.priceType === "paid" ? (input.priceAmount ?? 0) : null,
-				price_currency: input.priceCurrency || "USD",
 				requirements: input.requirements ?? [],
 				compatibility: input.compatibility ?? [],
 				license: input.license || "Custom",
 				content: input.content ?? {},
 				file_url: input.fileUrl ?? null,
 				version: input.version || "1.0.0",
-				is_listed: input.isListed ?? true,
 			};
 
 			try {
@@ -377,69 +327,12 @@ export const useRecordMarketplaceDownload = () => {
 				title: result.queued ? "Download queued offline" : "Download recorded",
 				description: result.queued
 					? "Download will be recorded when online."
-					: "Download access has been recorded.",
+					: "Your download has been recorded.",
 			});
 		},
 		onError: (error: Error) => {
 			toast({
 				title: "Download failed",
-				description: error.message,
-				variant: "destructive",
-			});
-		},
-	});
-};
-
-/**
- * F6 of May 2026 remediation plan — gift a marketplace item to another
- * user. Calls the `gift_marketplace_item` RPC defined in
- * `supabase/migrations/20260525122000_add_marketplace_gifting_and_bundles.sql`.
- * Caller must already be entitled to the item.
- */
-export const useGiftMarketplaceItem = () => {
-	const queryClient = useQueryClient();
-	const { toast } = useToast();
-
-	return useMutation({
-		mutationFn: async ({
-			itemId,
-			recipientUserId,
-			message,
-		}: {
-			itemId: string;
-			recipientUserId: string;
-			message?: string;
-		}): Promise<{ entitlementId: string }> => {
-			if (!isSupabaseConfigured) {
-				throw new AppError("Supabase not configured", "CONFIG");
-			}
-			await ensureAuthenticatedUser();
-			// RPC types are regenerated after the migration deploys; cast
-			// through unknown until the next types pull. See
-			// supabase/migrations/20260525122000_add_marketplace_gifting_and_bundles.sql.
-			const { data, error } = await (
-				supabase.rpc as unknown as (
-					name: string,
-					params: Record<string, unknown>,
-				) => Promise<{ data: unknown; error: Error | null }>
-			)("gift_marketplace_item", {
-				p_item_id: itemId,
-				p_recipient_user_id: recipientUserId,
-				p_message: message ?? null,
-			});
-			if (error) throw error;
-			return { entitlementId: (data as string) ?? "" };
-		},
-		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: KEY });
-			toast({
-				title: "Gift sent",
-				description: "Recipient now has access to the item.",
-			});
-		},
-		onError: (error: Error) => {
-			toast({
-				title: "Gift failed",
 				description: error.message,
 				variant: "destructive",
 			});

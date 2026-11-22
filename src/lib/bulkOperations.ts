@@ -95,7 +95,12 @@ function toChoiceSourceData(job: StaticJob): ChoiceSourceData {
 	const extended = job as StaticJobWithLedger;
 	return {
 		name: job.name,
-		skill_choice_count: 0,
+		skill_choice_count:
+			(job as { skill_choice_count?: number; skillChoiceCount?: number })
+				.skill_choice_count ??
+			(job as { skill_choice_count?: number; skillChoiceCount?: number })
+				.skillChoiceCount ??
+			0,
 		awakening_features: job.awakeningFeatures ?? [],
 		job_traits: job.jobTraits ?? [],
 		level_choices: Array.isArray(extended.levelChoices)

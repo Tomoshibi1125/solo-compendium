@@ -32,7 +32,7 @@ export function CharacterScrollHeader({
 	return (
 		<div
 			className={cn(
-				"sticky top-16 z-30 w-full border-b border-primary/20 bg-obsidian-charcoal/90 backdrop-blur-md shadow-lg transition-all duration-300 animate-in slide-in-from-top-4",
+				"character-scroll-header sticky top-16 z-30 w-full border-b border-primary/20 bg-obsidian-charcoal/90 backdrop-blur-md shadow-lg transition-all duration-300 animate-in slide-in-from-top-4",
 				className,
 			)}
 		>

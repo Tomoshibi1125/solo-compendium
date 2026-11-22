@@ -1,5 +1,6 @@
 import { Dices, Heart, Moon } from "lucide-react";
 import { useState } from "react";
+import { CompanionShortRestSection } from "@/components/CharacterSheet/CompanionShortRestSection";
 import { Button } from "@/components/ui/button";
 import {
 	Dialog,
@@ -10,6 +11,10 @@ import {
 	DialogTitle,
 	DialogTrigger,
 } from "@/components/ui/dialog";
+import {
+	type CompanionHitDiceSpend,
+	useSpendCompanionHitDice,
+} from "@/hooks/useCompanionRest";
 import { useAscendantTools } from "@/hooks/useGlobalDDBeyondIntegration";
 import { useHitDiceSpending } from "@/hooks/useHitDiceSpending";
 import { cn } from "@/lib/utils";
@@ -32,6 +37,11 @@ interface ShortRestDialogProps {
 	open?: boolean;
 	onOpenChange?: (open: boolean) => void;
 	characterId?: string;
+	/**
+	 * The resting character. Its level-scaled companions spend their own Hit
+	 * Dice in this dialog (RA-10), applied when the rest finishes.
+	 */
+	companionOwner?: { characterId: string; level: number };
 }
 
 export function ShortRestDialog({
@@ -46,6 +56,7 @@ export function ShortRestDialog({
 	open: controlledOpen,
 	onOpenChange,
 	characterId,
+	companionOwner,
 }: ShortRestDialogProps) {
 	const [uncontrolledOpen, setUncontrolledOpen] = useState(false);
 	const isControlled = controlledOpen !== undefined;
@@ -68,10 +79,17 @@ export function ShortRestDialog({
 	);
 
 	const ascendantTools = useAscendantTools();
+	const [companionSpends, setCompanionSpends] = useState<
+		CompanionHitDiceSpend[]
+	>([]);
+	const spendCompanionHitDice = useSpendCompanionHitDice(
+		companionOwner?.characterId ?? "",
+	);
 
 	const handleOpen = (isOpen: boolean) => {
 		if (isOpen) {
 			resetSession();
+			setCompanionSpends([]);
 		}
 		setOpen(isOpen);
 	};
@@ -91,8 +109,13 @@ export function ShortRestDialog({
 	};
 
 	const handleFinish = () => {
-		const hitDiceSpent = hitDiceAvailable - remainingDice;
+		// One roll per die spent this rest, whatever the sheet shows now.
+		const hitDiceSpent = rolls.length;
 		onFinishRest(totalRecovered, hitDiceSpent);
+		for (const spend of companionSpends) {
+			spendCompanionHitDice.mutate(spend);
+		}
+		setCompanionSpends([]);
 		setOpen(false);
 	};
 
@@ -175,6 +198,14 @@ export function ShortRestDialog({
 								</div>
 							))}
 						</div>
+					)}
+
+					{companionOwner && (
+						<CompanionShortRestSection
+							characterId={companionOwner.characterId}
+							characterLevel={companionOwner.level}
+							onSpendsChange={setCompanionSpends}
+						/>
 					)}
 				</div>
 

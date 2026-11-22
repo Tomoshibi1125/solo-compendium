@@ -71,6 +71,7 @@ import {
 	ALL_ABILITIES_CANONICAL_ORDER,
 	applyAbilityBonuses,
 	placeStandardArray,
+	quickAscendantHitDieSize,
 } from "@/lib/quickAscendantDefaults";
 import type { AbilityScore } from "@/types/core-rules";
 
@@ -79,6 +80,7 @@ const ALL_ABILITIES = ALL_ABILITIES_CANONICAL_ORDER;
 interface StaticJobLite {
 	id: string;
 	name: string;
+	hitDie?: string;
 	hit_die?: number;
 	speed?: number;
 	image?: string | null;
@@ -205,10 +207,7 @@ export function QuickAscendantWizard({
 				getJobPrimaryAbility(job.name);
 			const abilities = placeStandardArray(primary ?? null);
 
-			const hitDieSize =
-				typeof job.hit_die === "number" && Number.isFinite(job.hit_die)
-					? job.hit_die
-					: 8;
+			const hitDieSize = quickAscendantHitDieSize(job);
 			// Racial-ASI preview: derived values captured at creation (HP, AC)
 			// must use post-awakening scores, matching CharacterNew's
 			// effectiveAbilities. The stored scores stay BASE — the idempotent

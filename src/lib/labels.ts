@@ -91,9 +91,9 @@ export function formatActionType(value: string | null | undefined): string {
 	return ACTION_TYPE_KNOWN.has(v.toLowerCase()) ? formatEnumLabel(v) : v;
 }
 
-// Canonical per-tier badge classes on the cool gate ordinal ramp (mirrors
-// rankColors.ts rarityToGateBadge, plus a bg wash). Normalizes the underscore
-// very_rare spelling so data in either form styles correctly.
+// Canonical per-tier badge classes on the cool gate ordinal ramp, with a bg
+// wash. Normalizes the underscore very_rare spelling so data in either form
+// styles correctly.
 const RARITY_BADGE_CLASS: Record<string, string> = {
 	common: "text-muted-foreground border-border bg-card",
 	uncommon: "text-gate-d border-gate-d/40 bg-gate-d/10",

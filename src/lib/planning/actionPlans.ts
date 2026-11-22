@@ -669,9 +669,6 @@ export function buildCombatActionPlanV1(
 	};
 }
 
-export const buildCombatActionPlan = buildCombatActionPlanV1;
-export const createCombatActionPlanV1 = buildCombatActionPlanV1;
-
 function restOperation(input: {
 	kind: ActionPlanOperationKind;
 	targetId: string;
@@ -962,9 +959,3 @@ export function buildRestActionPlanV1(
 		canApply: blockers.length === 0,
 	};
 }
-
-export const buildRestActionPlan = buildRestActionPlanV1;
-export const createRestActionPlanV1 = buildRestActionPlanV1;
-
-export type CombatActionPlan = CombatActionPlanV1;
-export type RestActionPlan = RestActionPlanV1;

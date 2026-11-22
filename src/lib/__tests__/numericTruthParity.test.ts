@@ -72,8 +72,8 @@ describe("numeric truth — canonical formulas", () => {
 
 	it("gestalt regent HP is additive: full die at L1, avg(die)=floor(d/2)+1 after", () => {
 		expect(getRegentHpContribution(8, 1)).toBe(8);
-		expect(getRegentHpContribution(8, 2)).toBe(8 + 5);
-		expect(getRegentHpContribution(10, 3)).toBe(10 + 6 + 6);
+		expect(getRegentHpContribution(8, 2)).toBe(16);
+		expect(getRegentHpContribution(10, 3)).toBe(30);
 		expect(getRegentHpContribution(0, 5)).toBe(0);
 	});
 

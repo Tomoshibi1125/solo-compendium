@@ -72,6 +72,3 @@ export function adaptLegacyConditionTimers(
 		];
 	});
 }
-
-/** Descriptive alias for callers migrating persisted timer state. */
-export const legacyConditionTimersToEntries = adaptLegacyConditionTimers;

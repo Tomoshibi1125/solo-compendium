@@ -1,9 +1,7 @@
 /**
- * Shared FREE AI provider chain — single source of truth for BOTH the Vercel
- * serverless proxy (api/ai.js) and the Vite dev middleware (vite.config.ts),
- * so local dev and production can never drift apart. The `_` filename prefix
- * keeps Vercel from treating this as a routable function while still bundling
- * it for import.
+ * AI provider chain used only by the authenticated Sovereign creation route.
+ * The `_` filename prefix keeps Vercel from treating this as a routable
+ * function while still bundling it for that route.
  *
  * Tries an ordered list of 100% FREE providers and returns the first success.
  * All keys stay server-side. The keyless Pollinations leg guarantees the app

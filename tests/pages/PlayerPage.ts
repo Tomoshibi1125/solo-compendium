@@ -811,16 +811,15 @@ export class PlayerPage {
 
 	// ─── Additional Player Tool Details ─────────────────────────
 
-	/** Verify character art generator tool loads. */
-	async verifyCharacterArtTool() {
+	/** The retired Character Art Generator (RA-18) falls back to the tools hub. */
+	async verifyRetiredCharacterArtTool() {
 		await this.page.goto("/ascendant-tools/character-art");
-		await this.page.waitForTimeout(2_000);
-		const heading = this.page
-			.getByText(
-				/Character Art|Art Generator|ACTIVE ASCENDANT|NO ACTIVE ASCENDANT/i,
-			)
-			.first();
-		await expect(heading).toBeVisible({ timeout: 10_000 });
+		await expect(this.page).toHaveURL(/\/ascendant-tools$/, {
+			timeout: 15_000,
+		});
+		await expect(this.page.getByText(/Character Art Generator/i)).toHaveCount(
+			0,
+		);
 	}
 
 	/** Verify party view tool loads. */
@@ -831,18 +830,6 @@ export class PlayerPage {
 			.getByText(/Party|Members|View|NO ACTIVE ASCENDANT/i)
 			.first();
 		await expect(heading).toBeVisible({ timeout: 10_000 });
-	}
-
-	/** Attempt to access a Warden route and verify access is denied. */
-	async verifyDMRouteBlocked(route: string) {
-		await this.page.goto(route);
-		await this.page.waitForTimeout(2_000);
-		const accessDenied = this.page
-			.getByText(
-				/Access Denied|Warden Access Required|Authentication Required/i,
-			)
-			.first();
-		await expect(accessDenied).toBeVisible({ timeout: 10_000 });
 	}
 
 	// ─── Enhanced character creation ─────────────────────────────────

@@ -291,7 +291,7 @@ describe("AuthProvider <-> authStore bridge", () => {
 		}
 	});
 
-	it("derives account administration only from trusted app_metadata", async () => {
+	it("ignores the retired account_role app metadata: there is no admin role", async () => {
 		getSessionMock.mockResolvedValue({
 			data: {
 				session: sessionWith({
@@ -315,13 +315,16 @@ describe("AuthProvider <-> authStore bridge", () => {
 		});
 		try {
 			await waitUntil(() => (latest as Snapshot | null)?.user !== null);
-			expect((latest as unknown as Snapshot).user?.isAccountAdmin).toBe(true);
+			const snap = latest as unknown as Snapshot;
+			expect(snap.user?.role).toBe("ascendant");
+			expect(snap.user && "isAccountAdmin" in snap.user).toBe(false);
+			expect(snap.isWarden()).toBe(false);
 		} finally {
 			unmount();
 		}
 	});
 
-	it("does not trust a forged user_metadata account role or Warden mode", async () => {
+	it("keeps Warden a gameplay role whatever the user metadata claims", async () => {
 		getSessionMock.mockResolvedValue({
 			data: {
 				session: sessionWith({
@@ -347,7 +350,7 @@ describe("AuthProvider <-> authStore bridge", () => {
 			await waitUntil(() => (latest as Snapshot | null)?.user !== null);
 			const user = (latest as unknown as Snapshot).user;
 			expect(user?.role).toBe("warden");
-			expect(user?.isAccountAdmin).toBe(false);
+			expect(user && "isAccountAdmin" in user).toBe(false);
 		} finally {
 			unmount();
 		}

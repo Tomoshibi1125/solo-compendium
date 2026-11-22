@@ -218,6 +218,19 @@ describe("classes carry no rarity (jobs & paths are not items)", () => {
 	});
 });
 
+describe("provider-normalized job hit dice", () => {
+	// hit_die is the die size (6/8/10/12). The provider once stripped every
+	// non-digit from "1d8", turning d8 into 18 and d6 into 16.
+	it("matches the die each Job authors", async () => {
+		const entries = await staticDataProvider.getJobs();
+		for (const job of jobs) {
+			const entry = entries.find((candidate) => candidate.id === job.id);
+			const authored = Number(job.hitDie.match(/d(\d+)/)?.[1]);
+			expect(entry?.hit_die, job.name).toBe(authored);
+		}
+	});
+});
+
 describe("job skill-choice count is the canonical CHOOSE count (not the pool size)", () => {
 	// The "Choose N skills" number must be the canonical per-job count, never the
 	// size of the skill-options pool. Idol's pool is 18 but it chooses 4.

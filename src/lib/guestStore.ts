@@ -11,6 +11,7 @@ import {
 	type CharacterSheetState,
 	createDefaultCharacterSheetState,
 } from "@/lib/characterSheetState";
+import { getRegentResonanceMax } from "@/lib/regentResonanceRules";
 
 type AbilityScore = Database["public"]["Enums"]["ability_score"];
 type CharacterRow = Database["public"]["Tables"]["characters"]["Row"];
@@ -55,6 +56,25 @@ type RollHistoryRow = Database["public"]["Tables"]["roll_history"]["Row"];
 
 interface GuestCharacterState {
 	character: CharacterRow;
+	/** Portable cloud-only records remain inert in guest mode, but round-trip. */
+	portableCompanionRows: {
+		extras: Record<string, unknown>[];
+		vehicles: Record<string, unknown>[];
+		/**
+		 * Personal tames imported before the tamed rosters retired (RA-9).
+		 * Nothing adds to it; export converts each entry into a companion.
+		 */
+		tamedAnomalies: Record<string, unknown>[];
+	};
+	portableMaterialState: Record<string, unknown> | null;
+	portableSovereign: Record<string, unknown> | null;
+	pendingRegentGrants: Record<string, unknown>[];
+	pendingRegentResonance: { points_current: number; points_max: number } | null;
+	regentResonance: {
+		character_id: string;
+		points_current: number;
+		points_max: number;
+	} | null;
 	abilities: Record<AbilityScore, number>;
 	equipment: EquipmentRow[];
 	powers: PowerRow[];
@@ -69,14 +89,19 @@ interface GuestCharacterState {
 	sheetState: CharacterSheetState;
 }
 
-interface GuestStateV1 {
-	version: 1;
+interface GuestStateV4 {
+	version: 4;
 	updatedAt: string;
 	characters: Record<string, GuestCharacterState>;
 	rollHistory: RollHistoryRow[];
 }
 
-const STORAGE_KEY = "solo-compendium.guest.v1";
+const STORAGE_KEY = "solo-compendium.guest.v4";
+const LEGACY_STORAGE_KEYS = [
+	"solo-compendium.guest.v3",
+	"solo-compendium.guest.v2",
+	"solo-compendium.guest.v1",
+];
 const USER_KEY = "solo-compendium.guest.user";
 const ROLE_KEY = "solo-compendium.guest.role";
 
@@ -134,9 +159,23 @@ export function setLocalGuestRole(role: GuestRole): void {
 	window.localStorage.setItem(ROLE_KEY, role);
 }
 
-function loadGuestState(): GuestStateV1 {
-	const empty: GuestStateV1 = {
-		version: 1,
+function hasLocalRegent(character: CharacterRow): boolean {
+	return (character.regent_overlays?.length ?? 0) > 0;
+}
+
+function defaultLocalRegentResonance(character: CharacterRow) {
+	if (!hasLocalRegent(character)) return null;
+	const maximum = getRegentResonanceMax(character.level);
+	return {
+		character_id: character.id,
+		points_current: maximum,
+		points_max: maximum,
+	};
+}
+
+function loadGuestState(): GuestStateV4 {
+	const empty: GuestStateV4 = {
+		version: 4,
 		updatedAt: nowIso(),
 		characters: {},
 		rollHistory: [],
@@ -145,15 +184,81 @@ function loadGuestState(): GuestStateV1 {
 	if (!hasLocalStorage()) return empty;
 
 	try {
-		const raw = window.localStorage.getItem(STORAGE_KEY);
+		const raw =
+			window.localStorage.getItem(STORAGE_KEY) ??
+			LEGACY_STORAGE_KEYS.map((key) => window.localStorage.getItem(key)).find(
+				Boolean,
+			);
 		if (!raw) return empty;
-		const parsed = JSON.parse(raw) as Partial<GuestStateV1> | null;
-		if (parsed?.version !== 1 || !parsed.characters) return empty;
+		const parsed = JSON.parse(raw) as
+			| (Partial<Omit<GuestStateV4, "version">> & { version?: number })
+			| null;
+		if (
+			(parsed?.version !== 1 &&
+				parsed?.version !== 2 &&
+				parsed?.version !== 3 &&
+				parsed?.version !== 4) ||
+			!parsed.characters
+		)
+			return empty;
+		const characters = Object.fromEntries(
+			Object.entries(parsed.characters).map(([id, stored]) => {
+				// Companion profiles are retired (RA-9); drop any saved copy.
+				const { portableCompanionProfiles: _retired, ...entry } =
+					stored as GuestCharacterState & {
+						portableCompanionProfiles?: unknown;
+					};
+				return [
+					id,
+					{
+						...entry,
+						portableCompanionRows: {
+							extras: Array.isArray(entry.portableCompanionRows?.extras)
+								? entry.portableCompanionRows.extras
+								: [],
+							vehicles: Array.isArray(entry.portableCompanionRows?.vehicles)
+								? entry.portableCompanionRows.vehicles
+								: [],
+							tamedAnomalies: Array.isArray(
+								entry.portableCompanionRows?.tamedAnomalies,
+							)
+								? entry.portableCompanionRows.tamedAnomalies
+								: [],
+						},
+						portableMaterialState: entry.portableMaterialState ?? null,
+						portableSovereign: entry.portableSovereign ?? null,
+						pendingRegentGrants: Array.isArray(entry.pendingRegentGrants)
+							? entry.pendingRegentGrants
+							: [],
+						pendingRegentResonance: entry.pendingRegentResonance ?? null,
+						powers: (entry.powers ?? []).map((power) => ({
+							...power,
+							acquisition_kind: power.acquisition_kind ?? "manual",
+							canonical_source_id: power.canonical_source_id ?? null,
+							regent_id: power.regent_id ?? null,
+							regent_unlock_id: power.regent_unlock_id ?? null,
+							acquired_level: power.acquired_level ?? null,
+						})),
+						techniques: (entry.techniques ?? []).map((technique) => ({
+							...technique,
+							acquisition_kind: technique.acquisition_kind ?? "manual",
+							canonical_source_id: technique.canonical_source_id ?? null,
+							regent_id: technique.regent_id ?? null,
+							regent_unlock_id: technique.regent_unlock_id ?? null,
+							acquired_level: technique.acquired_level ?? null,
+						})),
+						regentResonance:
+							entry.regentResonance ??
+							defaultLocalRegentResonance(entry.character),
+					},
+				];
+			}),
+		) as GuestStateV4["characters"];
 		return {
-			version: 1,
+			version: 4,
 			updatedAt:
 				typeof parsed.updatedAt === "string" ? parsed.updatedAt : nowIso(),
-			characters: parsed.characters as GuestStateV1["characters"],
+			characters,
 			rollHistory: Array.isArray(parsed.rollHistory)
 				? (parsed.rollHistory as RollHistoryRow[])
 				: [],
@@ -163,10 +268,11 @@ function loadGuestState(): GuestStateV1 {
 	}
 }
 
-function saveGuestState(state: GuestStateV1): void {
+function saveGuestState(state: GuestStateV4): void {
 	if (!hasLocalStorage()) return;
 	try {
 		window.localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+		for (const key of LEGACY_STORAGE_KEYS) window.localStorage.removeItem(key);
 	} catch {
 		// Ignore quota/serialization errors; guest mode is best-effort.
 	}
@@ -228,9 +334,36 @@ function upsertLocalCharacter(
 ): void {
 	const state = loadGuestState();
 	const existing = state.characters[character.id];
+	const previousPool = existing?.regentResonance ?? null;
+	const maximum = getRegentResonanceMax(character.level);
+	const regentResonance = hasLocalRegent(character)
+		? previousPool
+			? {
+					character_id: character.id,
+					points_max: maximum,
+					points_current: Math.min(
+						maximum,
+						Math.max(
+							0,
+							previousPool.points_current + maximum - previousPool.points_max,
+						),
+					),
+				}
+			: defaultLocalRegentResonance(character)
+		: null;
 
 	state.characters[character.id] = {
 		character,
+		portableCompanionRows: existing?.portableCompanionRows ?? {
+			extras: [],
+			vehicles: [],
+			tamedAnomalies: [],
+		},
+		portableMaterialState: existing?.portableMaterialState ?? null,
+		portableSovereign: existing?.portableSovereign ?? null,
+		regentResonance,
+		pendingRegentGrants: existing?.pendingRegentGrants ?? [],
+		pendingRegentResonance: existing?.pendingRegentResonance ?? null,
 		abilities: abilities || existing?.abilities || defaultAbilities(),
 		equipment: existing?.equipment || [],
 		powers: existing?.powers || [],
@@ -245,6 +378,85 @@ function upsertLocalCharacter(
 		sheetState: existing?.sheetState || createDefaultCharacterSheetState(),
 	};
 
+	state.updatedAt = nowIso();
+	saveGuestState(state);
+}
+
+export function setLocalPortableCanonState(
+	characterId: string,
+	input: Pick<
+		GuestCharacterState,
+		"portableCompanionRows" | "portableMaterialState" | "portableSovereign"
+	>,
+): void {
+	const state = loadGuestState();
+	const entry = state.characters[characterId];
+	if (!entry) return;
+	entry.portableCompanionRows = input.portableCompanionRows;
+	entry.portableMaterialState = input.portableMaterialState;
+	entry.portableSovereign = input.portableSovereign;
+	state.updatedAt = nowIso();
+	saveGuestState(state);
+}
+
+export function getLocalRegentResonance(characterId: string) {
+	return getLocalCharacterState(characterId)?.regentResonance ?? null;
+}
+
+export function addLocalPendingRegentGrant(
+	characterId: string,
+	grant: Record<string, unknown>,
+): void {
+	const state = loadGuestState();
+	const entry = state.characters[characterId];
+	if (!entry) throw new AppError("Character not found", "NOT_FOUND");
+	entry.pendingRegentGrants.push(grant);
+	state.updatedAt = nowIso();
+	saveGuestState(state);
+}
+
+export function setLocalPendingRegentResonance(
+	characterId: string,
+	pool: { points_current: number; points_max: number } | null,
+): void {
+	const state = loadGuestState();
+	const entry = state.characters[characterId];
+	if (!entry) throw new AppError("Character not found", "NOT_FOUND");
+	entry.pendingRegentResonance = pool;
+	state.updatedAt = nowIso();
+	saveGuestState(state);
+}
+
+export function spendLocalRegentResonance(
+	characterId: string,
+	cost: number,
+): number {
+	const state = loadGuestState();
+	const entry = state.characters[characterId];
+	const pool = entry?.regentResonance;
+	if (
+		!pool ||
+		!Number.isInteger(cost) ||
+		cost < 1 ||
+		pool.points_current < cost
+	) {
+		throw new AppError("Insufficient Regent Resonance", "INVALID_INPUT");
+	}
+	const current = pool.points_current - cost;
+	entry.regentResonance = { ...pool, points_current: current };
+	state.updatedAt = nowIso();
+	saveGuestState(state);
+	return current;
+}
+
+export function refillLocalRegentResonance(characterId: string): void {
+	const state = loadGuestState();
+	const entry = state.characters[characterId];
+	if (!entry?.regentResonance) return;
+	entry.regentResonance = {
+		...entry.regentResonance,
+		points_current: entry.regentResonance.points_max,
+	};
 	state.updatedAt = nowIso();
 	saveGuestState(state);
 }
@@ -544,6 +756,11 @@ export function addLocalPower(
 
 	const now = nowIso();
 	const next: PowerRow = {
+		acquired_level: power.acquired_level ?? entry.character.level,
+		acquisition_kind: power.acquisition_kind ?? "manual",
+		canonical_source_id: power.canonical_source_id ?? null,
+		regent_id: power.regent_id ?? null,
+		regent_unlock_id: power.regent_unlock_id ?? null,
 		id: createLocalId("local_power"),
 		power_id: power.power_id ?? null,
 		character_id: characterId,
@@ -756,6 +973,10 @@ export function addLocalFeature(
 		feature_id: feature.feature_id ?? null,
 		name: feature.name,
 		source: feature.source,
+		sovereign_definition_id: feature.sovereign_definition_id ?? null,
+		sovereign_entity_id: feature.sovereign_entity_id ?? null,
+		sovereign_projection_revision:
+			feature.sovereign_projection_revision ?? null,
 		description: feature.description ?? null,
 		level_acquired: feature.level_acquired ?? 1,
 		action_type: feature.action_type ?? null,
@@ -958,6 +1179,11 @@ export function addLocalTechnique(
 
 	const now = nowIso();
 	const next: TechniqueRow = {
+		acquired_level: technique.acquired_level ?? entry.character.level,
+		acquisition_kind: technique.acquisition_kind ?? "manual",
+		canonical_source_id: technique.canonical_source_id ?? null,
+		regent_id: technique.regent_id ?? null,
+		regent_unlock_id: technique.regent_unlock_id ?? null,
 		id: createLocalId("local_tech"),
 		character_id: characterId,
 		learned_at: now,

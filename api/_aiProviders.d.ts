@@ -1,6 +1,5 @@
 /**
- * Type surface for the plain-JS shared provider chain (api/_aiProviders.js),
- * so TypeScript consumers (vite.config.ts dev proxy, tests) get types.
+ * Type surface for the Sovereign creation provider chain.
  */
 export interface AiImage {
 	mimeType: string;

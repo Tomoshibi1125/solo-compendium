@@ -24,7 +24,7 @@ import { getAbilityModifier } from "@/lib/characterCalculations";
 import { formatRecharge } from "@/lib/labels";
 import { numericCrToLabel } from "@/lib/monster5eTable";
 import { cn } from "@/lib/utils";
-import { formatRegentVernacular, MONARCH_LABEL } from "@/lib/vernacular";
+import { formatRegentVernacular, REGENT_LABEL } from "@/lib/vernacular";
 
 import type { CompendiumAnomaly } from "@/types/compendium";
 
@@ -418,7 +418,7 @@ export const AnomalyDetail = ({ data }: { data: AnomalyData }) => {
 								className="border-resurge-violet/50 text-resurge-violet font-heading shadow-[0_0_10px_hsl(var(--resurge-violet)/0.4)]"
 							>
 								<Zap className="h-3 w-3 mr-1" />
-								{MONARCH_LABEL}
+								{REGENT_LABEL} bearer
 							</Badge>
 						)}
 						{data.tags?.includes("guild-master") && (

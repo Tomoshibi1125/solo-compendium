@@ -27,6 +27,8 @@ export interface CampaignPreview {
 	description: string | null;
 	share_code: string;
 	is_active: boolean;
+	/** Guest campaigns are local to this browser and cannot be joined across devices. */
+	local_only?: boolean;
 }
 
 export interface CampaignMember {
@@ -38,6 +40,8 @@ export interface CampaignMember {
 	role: "ascendant" | "warden" | "co-warden";
 	joined_at: string;
 	is_shared?: boolean;
+	/** Guest mode can attach several local characters without a server link table. */
+	character_ids?: string[];
 }
 
 type CampaignUpdate = {
@@ -149,7 +153,62 @@ const toCampaignPreview = (value: unknown): CampaignPreview | null => {
 			typeof candidate.description === "string" ? candidate.description : null,
 		share_code: candidate.share_code,
 		is_active: candidate.is_active,
+		local_only: candidate.local_only === true,
 	};
+};
+
+const toLocalCampaignPreview = (value: unknown): CampaignPreview | null => {
+	const preview = toCampaignPreview(value);
+	return preview ? { ...preview, local_only: true } : null;
+};
+
+const joinLocalCampaign = (
+	campaignId: string,
+	shareCode: string,
+	characterId?: string,
+): void => {
+	const campaign = loadLocalCampaigns().find(
+		(entry) =>
+			entry.id === campaignId &&
+			entry.share_code.toUpperCase() === shareCode.toUpperCase(),
+	);
+	if (!campaign?.is_active) {
+		throw new AppError("Campaign not found or inactive", "NOT_FOUND");
+	}
+	if (
+		characterId &&
+		!listLocalCharacters().some((character) => character.id === characterId)
+	) {
+		throw new AppError("Character ownership validation failed", "FORBIDDEN");
+	}
+
+	const userId = getLocalUserId();
+	const members = loadLocalMembers();
+	const existingMemberIndex = members.findIndex(
+		(member) => member.campaign_id === campaignId && member.user_id === userId,
+	);
+	if (existingMemberIndex === -1) {
+		members.push({
+			id: crypto.randomUUID(),
+			campaign_id: campaignId,
+			user_id: userId,
+			character_id: characterId || null,
+			character_ids: characterId ? [characterId] : [],
+			role: "ascendant",
+			joined_at: new Date().toISOString(),
+		});
+	} else if (characterId) {
+		const existing = members[existingMemberIndex];
+		const characterIds = new Set(existing.character_ids ?? []);
+		if (existing.character_id) characterIds.add(existing.character_id);
+		characterIds.add(characterId);
+		members[existingMemberIndex] = {
+			...existing,
+			character_id: existing.character_id ?? characterId,
+			character_ids: [...characterIds],
+		};
+	}
+	saveLocalMembers(members);
 };
 
 // Fetch campaigns where user is Warden
@@ -420,21 +479,31 @@ export const useCampaignByShareCode = (shareCode: string) => {
 		queryKey: ["campaigns", "share-code", shareCode],
 		queryFn: async (): Promise<CampaignPreview | null> => {
 			const upperCode = shareCode.toUpperCase();
-			const localPreview = toCampaignPreview(
+			const localPreview = toLocalCampaignPreview(
 				loadLocalCampaigns().find(
 					(campaign) => campaign.share_code === upperCode,
 				),
 			);
 
 			if (isLocalMode()) return localPreview;
+			const {
+				data: { user },
+			} = await supabase.auth.getUser();
+			if (!user && localPreview) return localPreview;
 
 			const { data, error } = await supabase.rpc("get_campaign_by_share_code", {
 				p_share_code: upperCode,
 			});
-			if (error) throw error;
+			if (error) {
+				if (!user && guestEnabled && localPreview) return localPreview;
+				throw error;
+			}
 
 			const response = Array.isArray(data) ? data[0] : data;
-			return toCampaignPreview(response) ?? localPreview;
+			const cloudPreview = toCampaignPreview(response);
+			return cloudPreview
+				? { ...cloudPreview, local_only: false }
+				: localPreview;
 		},
 		enabled: !!shareCode && shareCode.length === 6,
 	});
@@ -480,48 +549,66 @@ export const useCampaignMembers = (campaignId: string) => {
 				const localCharacters = listLocalCharacters();
 				return loadLocalMembers()
 					.filter((member) => member.campaign_id === campaignId)
-					.map((member) => ({
-						...member,
-						characters: member.character_id
-							? (() => {
-									const character = localCharacters.find(
-										(entry) => entry.id === member.character_id,
-									);
-									return character
+					.flatMap((member) => {
+						const linkedIds = [
+							...new Set(
+								member.character_ids ??
+									(member.character_id ? [member.character_id] : []),
+							),
+						];
+						return (linkedIds.length ? linkedIds : [null]).map(
+							(characterId) => {
+								const character = characterId
+									? localCharacters.find((entry) => entry.id === characterId)
+									: null;
+								return {
+									...member,
+									character_id: characterId,
+									characters: character
 										? {
 												id: character.id,
 												name: character.name,
 												level: character.level ?? 1,
 												job: character.job ?? "Unknown",
 											}
-										: null;
-								})()
-							: null,
-					}));
+										: null,
+								};
+							},
+						);
+					});
 			}
 			if (!user) {
 				if (guestEnabled) {
 					const localCharacters = listLocalCharacters();
 					return loadLocalMembers()
 						.filter((member) => member.campaign_id === campaignId)
-						.map((member) => ({
-							...member,
-							characters: member.character_id
-								? (() => {
-										const character = localCharacters.find(
-											(entry) => entry.id === member.character_id,
-										);
-										return character
+						.flatMap((member) => {
+							const linkedIds = [
+								...new Set(
+									member.character_ids ??
+										(member.character_id ? [member.character_id] : []),
+								),
+							];
+							return (linkedIds.length ? linkedIds : [null]).map(
+								(characterId) => {
+									const character = characterId
+										? localCharacters.find((entry) => entry.id === characterId)
+										: null;
+									return {
+										...member,
+										character_id: characterId,
+										characters: character
 											? {
 													id: character.id,
 													name: character.name,
 													level: character.level ?? 1,
 													job: character.job ?? "Unknown",
 												}
-											: null;
-									})()
-								: null,
-						}));
+											: null,
+									};
+								},
+							);
+						});
 				}
 				return [];
 			}
@@ -803,28 +890,7 @@ export const useJoinCampaign = () => {
 			characterId?: string;
 		}) => {
 			if (isLocalMode()) {
-				const userId = getLocalUserId();
-				const members = loadLocalMembers();
-				const existingMemberIndex = members.findIndex(
-					(member) =>
-						member.campaign_id === campaignId && member.user_id === userId,
-				);
-				if (existingMemberIndex === -1) {
-					members.push({
-						id: crypto.randomUUID(),
-						campaign_id: campaignId,
-						user_id: userId,
-						character_id: characterId || null,
-						role: "ascendant",
-						joined_at: new Date().toISOString(),
-					});
-				} else if (characterId) {
-					members[existingMemberIndex] = {
-						...members[existingMemberIndex],
-						character_id: characterId,
-					};
-				}
-				saveLocalMembers(members);
+				joinLocalCampaign(campaignId, shareCode, characterId);
 				return;
 			}
 
@@ -833,28 +899,18 @@ export const useJoinCampaign = () => {
 			} = await supabase.auth.getUser();
 			if (!user) {
 				if (guestEnabled) {
-					const userId = getLocalUserId();
-					const members = loadLocalMembers();
-					const existingMemberIndex = members.findIndex(
-						(member) =>
-							member.campaign_id === campaignId && member.user_id === userId,
+					const localCampaign = loadLocalCampaigns().find(
+						(campaign) =>
+							campaign.id === campaignId &&
+							campaign.share_code.toUpperCase() === shareCode.toUpperCase(),
 					);
-					if (existingMemberIndex === -1) {
-						members.push({
-							id: crypto.randomUUID(),
-							campaign_id: campaignId,
-							user_id: userId,
-							character_id: characterId || null,
-							role: "ascendant",
-							joined_at: new Date().toISOString(),
-						});
-					} else if (characterId) {
-						members[existingMemberIndex] = {
-							...members[existingMemberIndex],
-							character_id: characterId,
-						};
+					if (!localCampaign) {
+						throw new AppError(
+							"Sign in to join a shared cloud campaign across devices.",
+							"AUTH_REQUIRED",
+						);
 					}
-					saveLocalMembers(members);
+					joinLocalCampaign(campaignId, shareCode, characterId);
 					return;
 				}
 				throw new AppError("Not authenticated", "AUTH_REQUIRED");
@@ -960,9 +1016,14 @@ export const useLinkCampaignCharacter = () => {
 					throw new AppError("Not a member of this campaign", "NOT_FOUND");
 				}
 
+				const existing = members[existingMemberIndex];
+				const characterIds = new Set(existing.character_ids ?? []);
+				if (existing.character_id) characterIds.add(existing.character_id);
+				characterIds.add(characterId);
 				members[existingMemberIndex] = {
-					...members[existingMemberIndex],
-					character_id: characterId,
+					...existing,
+					character_id: existing.character_id ?? characterId,
+					character_ids: [...characterIds],
 				};
 
 				saveLocalMembers(members);
@@ -986,9 +1047,14 @@ export const useLinkCampaignCharacter = () => {
 						throw new AppError("Not a member of this campaign", "NOT_FOUND");
 					}
 
+					const existing = members[existingMemberIndex];
+					const characterIds = new Set(existing.character_ids ?? []);
+					if (existing.character_id) characterIds.add(existing.character_id);
+					characterIds.add(characterId);
 					members[existingMemberIndex] = {
-						...members[existingMemberIndex],
-						character_id: characterId,
+						...existing,
+						character_id: existing.character_id ?? characterId,
+						character_ids: [...characterIds],
 					};
 
 					saveLocalMembers(members);
@@ -1230,7 +1296,11 @@ export const useDetachCampaignMemberCharacter = () => {
 				);
 				const members = loadLocalMembers();
 				const index = members.findIndex((entry) => entry.id === memberId);
-				if (index === -1 || members[index].character_id !== characterId) {
+				const linkedIds = new Set(
+					members[index]?.character_ids ??
+						(members[index]?.character_id ? [members[index].character_id] : []),
+				);
+				if (index === -1 || !linkedIds.has(characterId)) {
 					throw new AppError("Character link not found", "NOT_FOUND");
 				}
 				if (
@@ -1242,7 +1312,12 @@ export const useDetachCampaignMemberCharacter = () => {
 				) {
 					throw new AppError("Campaign manager access required", "FORBIDDEN");
 				}
-				members[index] = { ...members[index], character_id: null };
+				linkedIds.delete(characterId);
+				members[index] = {
+					...members[index],
+					character_ids: [...linkedIds],
+					character_id: linkedIds.values().next().value ?? null,
+				};
 				saveLocalMembers(members);
 				return;
 			}

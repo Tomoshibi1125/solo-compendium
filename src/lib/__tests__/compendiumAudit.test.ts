@@ -1,6 +1,9 @@
 import { describe, expect, it } from "vitest";
 import { staticDataProvider } from "@/data/compendium/providers";
-import { loadCanonicalRegistry } from "@/data/compendium/registry";
+import {
+	loadCanonicalRegistry,
+	type MergeConflict,
+} from "@/data/compendium/registry";
 import {
 	formatCompendiumAuditReport,
 	runCompendiumAudit,
@@ -49,23 +52,58 @@ describe("compendium audit (provider-backed)", () => {
 
 	it("turns every unresolved registry conflict into a blocking audit error with source evidence", async () => {
 		const registry = await loadCanonicalRegistry();
-		const summary = await runCompendiumAudit(staticDataProvider, { registry });
+		// The shipped registry has no unresolved conflicts since duplicate item
+		// names were folded, so a synthetic one proves the conversion.
+		expect(registry.blockingConflicts).toEqual([]);
+		const probe: MergeConflict = {
+			id: "items|items:name:probe item|identity-collision|normalized-name",
+			kind: "identity-collision",
+			category: "items",
+			canonicalKey: "items:name:probe item",
+			fieldPath: "name",
+			candidates: [
+				{
+					sourceId: "items/part-2",
+					ordinal: 0,
+					rawId: "probe-a",
+					value: "Probe Item",
+				},
+				{
+					sourceId: "items/part-3",
+					ordinal: 0,
+					rawId: "probe-b",
+					value: "Probe Item",
+				},
+			],
+			message: 'Normalized name "probe item" identifies 2 distinct ids.',
+			status: "unresolved",
+			blocking: true,
+		};
+		const summary = await runCompendiumAudit(staticDataProvider, {
+			registry: {
+				...registry,
+				conflicts: [...registry.conflicts, probe],
+				blockingConflicts: [probe],
+			},
+		});
 		expect(summary.registry.registeredSources).toBeGreaterThan(0);
 		expect(summary.registry.loadedSources).toBe(
 			registry.loadedSourceIds.length,
 		);
-		expect(summary.blockingConflicts).toEqual(registry.blockingConflicts);
+		expect(summary.blockingConflicts).toEqual([probe]);
 		const registryErrors = summary.errors.filter((issue) =>
 			issue.code.startsWith("registry_"),
 		);
-		expect(registryErrors).toHaveLength(registry.blockingConflicts.length);
-		expect(registryErrors.length).toBeGreaterThan(0);
-		expect(
-			registryErrors.every(
-				(issue) =>
-					issue.dataset === "items" && issue.message.includes("Evidence:"),
-			),
-		).toBe(true);
+		expect(registryErrors).toEqual([
+			expect.objectContaining({
+				dataset: "items",
+				code: "registry_identity_collision",
+				entryId: "items:name:probe item",
+			}),
+		]);
+		expect(registryErrors[0]?.message).toContain(
+			"Evidence: items/part-2, items/part-3.",
+		);
 	}, 30_000);
 
 	it("never has duplicate ids in canonical datasets", async () => {
